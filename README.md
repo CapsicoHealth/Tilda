@@ -31,6 +31,11 @@ ANY KIND, either express or implied. See the License for the specific language g
 
 The copyright is retained by CapsicoHealth Inc as Copyright (C) 2015 CapsicoHealth Inc.
 
+<H1>Setting up the code</H1>
+The code is currently setup as an Eclipse Java project. Once you fork/clone the repo, you should be able to simply
+import the project into your workspace. Tilda is all self-contained at this time, and can generally be used as
+a base project, for your application. You can also of course build your own JAR and take the libraries independently.
+
 <H1>Dependencies</H1>
 Tilda is currently dependent on several other libraries both for the tooling and at runtime:
   * <A href="https://commons.apache.org/proper/commons-dbcp/">Apache Commons DPCP2 V2.1</A>
