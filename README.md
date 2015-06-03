@@ -51,3 +51,6 @@ Tilda is currently used in high-performance production environments and runtime 
   * Extension of the Postgres support to access the NOSQL features such as the JSON store.
   * Updating the JSON parsing code to make it dynamic so that handlers could be separately generated to extend the platform (the code is currently a bit too monolythic on the parsing side).
   * Implementing additional patterns such as Smart Objects, distributed caching, HL7 integration etc...
+  * Creating stand-alone HTML documentation, including ER diagrams, so share with customers for example, and auto-document the data models in addition to the code documentation.
+  * Help with docs, tests and automated builds etc... :)
+  
