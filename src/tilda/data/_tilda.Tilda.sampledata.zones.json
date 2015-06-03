@@ -1,0 +1,23 @@
+{
+  "zones": [
+	    { "id":"UTC"  , "label":"UTC"                , "value":"Etc/UTC"             }
+	   ,{ "id":"Zulu" , "label":"Zulu"               , "value":"Etc/Zulu"            }
+	   ,{ "id":"Green", "label":"Greenwich"          , "value":"Etc/Greenwich"       }
+	   ,{ "id":"CaNe" , "label":"Canada Newfoundland", "value":"Canada/Newfoundland" }
+	   ,{ "id":"CaAt" , "label":"Canada Atlantic"    , "value":"Canada/Atlantic"     }
+	   ,{ "id":"USEa" , "label":"US Eastern"         , "value":"US/Eastern"          }
+	   ,{ "id":"AmNYC", "label":"New York City"      , "value":"America/New_York"    }
+	   ,{ "id":"CaEa" , "label":"Canada Eastern"     , "value":"Canada/Eastern"      }
+	   ,{ "id":"USCe" , "label":"US Central"         , "value":"US/Central"          }
+	   ,{ "id":"CaCe" , "label":"Canada Central"     , "value":"Canada/Central"      }
+	   ,{ "id":"CaSa" , "label":"Canada Saskatchewan", "value":"Canada/Saskatchewan" }
+	   ,{ "id":"USAr" , "label":"US Arizona"         , "value":"US/Arizona"          }
+	   ,{ "id":"USMo" , "label":"US Mountain"        , "value":"US/Mountain"         }
+	   ,{ "id":"CaMo" , "label":"Canada Mountain"    , "value":"Canada/Mountain"     }
+	   ,{ "id":"USPa" , "label":"US Pacific"         , "value":"US/Pacific"          }
+	   ,{ "id":"CaPa" , "label":"Canada Pacific"     , "value":"Canada/Pacific"      }
+	   ,{ "id":"USAl" , "label":"US Alaska"          , "value":"US/Alaska"           }
+	   ,{ "id":"USHa" , "label":"US Hawaii"          , "value":"US/Hawaii"           }
+	   ,{ "id":"USSa" , "label":"US Samoa"           , "value":"US/Samoa"            }
+  ]
+}

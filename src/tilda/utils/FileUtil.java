@@ -1,0 +1,80 @@
+/* ===========================================================================
+ * Copyright (C) 2015 CapsicoHealth Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package tilda.utils;
+
+import java.io.File;
+import java.io.InputStream;
+import java.util.Arrays;
+
+import tilda.utils.comparators.FileNameComparator;
+
+public class FileUtil
+  {
+    public static InputStream getResourceAsStream(String ResourceName)
+      {
+        return FileUtil.class.getClassLoader().getResourceAsStream(ResourceName);
+      }
+
+    public static interface FileProcessor
+      {
+        public void startFolder(File D)
+          throws Exception;
+
+        public void processFile(File F)
+          throws Exception;
+
+        public void endFolder(File D)
+          throws Exception;
+      }
+
+    public static void Iterate(File StartingFolder, FileProcessor FP, String[] Excludes)
+        throws Exception
+        {
+          Iterate(StartingFolder, FP, Excludes, 0);
+        }
+    public static void Iterate(File StartingFolder, FileProcessor FP, String[] Excludes, int Level)
+      throws Exception
+      {
+        File[] Files = StartingFolder.listFiles();
+        Arrays.sort(Files, new FileNameComparator());
+        System.out.println(PaddingUtil.getPad(Level*2)+StartingFolder.getCanonicalPath());
+        FP.startFolder(StartingFolder);
+        if (Files != null)
+          {
+            for (File F : Files)
+              {
+                if (isExcluded(F, Excludes) == false && F.isFile() == true)
+                  FP.processFile(F);
+              }
+            for (File F : Files)
+              {
+                if (isExcluded(F, Excludes) == false && F.isDirectory() == true)
+                  Iterate(F, FP, Excludes, Level+1);
+              }
+          }
+        FP.endFolder(StartingFolder);
+      }
+
+    public static boolean isExcluded(File f, String[] Excludes)
+      {
+        if (Excludes != null)
+         for (String s : Excludes)
+          if (TextUtil.StarEqual(f.getName(), s) == true)
+           return true;
+        return false;
+      }
+  }

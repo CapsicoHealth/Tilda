@@ -1,0 +1,62 @@
+/* ===========================================================================
+ * Copyright (C) 2015 CapsicoHealth Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package tilda.db;
+
+
+class LookupParams
+  {
+    public LookupParams()
+      {
+        _CountTotalRows = false;
+        _ReadOnly = false;
+        _NoLock = false;
+      }
+
+    public LookupParams CountTotalRows()
+      {
+        _CountTotalRows = true;
+        return this;
+      }
+
+    public LookupParams ReadOnly()
+      {
+        _ReadOnly = true;
+        return this;
+      }
+
+    public LookupParams NoLock()
+      {
+        _NoLock = true;
+        return this;
+      }
+
+    protected boolean _CountTotalRows;
+    protected boolean _ReadOnly;
+    protected boolean _NoLock;
+
+    protected int     _RowCount = 0;
+
+    public void incrementRowCount()
+      {
+        ++_RowCount;
+      }
+
+    public long getRowCount()
+      {
+        return _CountTotalRows == true ? _RowCount : -1;
+      }
+  }

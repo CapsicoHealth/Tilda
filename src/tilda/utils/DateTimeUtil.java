@@ -1,0 +1,370 @@
+/* ===========================================================================
+ * Copyright (C) 2015 CapsicoHealth Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package tilda.utils;
+
+import java.time.Period;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
+import java.util.Calendar;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import tilda.db.JDBCHelper;
+
+public class DateTimeUtil
+  {
+    protected static final Logger     LOG                 = LogManager.getLogger(JDBCHelper.class.getName());
+
+    protected static final ZoneId     _UTC                = ZoneId.of("Etc/UTC");
+
+    public static final ZonedDateTime NOW_PLACEHOLDER_ZDT = NewUTC(1, 1, 1, 0, 0, 0, 0);
+
+    public static boolean isNowPlaceholder(ZonedDateTime ZDT)
+      {
+        return ZDT != null && ZDT.equals(NOW_PLACEHOLDER_ZDT);
+      }
+
+    public static final ZonedDateTime UNDEFINED_PLACEHOLDER_ZDT = NewUTC(1, 1, 1, 0, 0, 0, 0);
+
+    public static boolean isUndefinedPlaceholder(ZonedDateTime ZDT)
+      {
+        return ZDT != null && ZDT.equals(UNDEFINED_PLACEHOLDER_ZDT);
+      }
+
+    public static final Calendar _UTC_CALENDAR = Calendar.getInstance(java.util.TimeZone.getTimeZone(_UTC.getId()));
+
+    /**
+     * Returns a new ZonedDateTime object in the UTC timezone, based on the information provided using
+     * the ZonedDateTime class conventions.
+     */
+    public static ZonedDateTime NewUTC(int Year, int Month, int Day, int Hour, int Minutes, int Seconds, int Milliseconds)
+      {
+        return New(Year, Month, Day, Hour, Minutes, Seconds, Milliseconds * 1000000, _UTC);
+      }
+
+    /**
+     * Returns a new ZonedDateTime object based on the information provided using
+     * the ZonedDateTime class conventions.
+     */
+    public static ZonedDateTime New(int Year, int Month, int Day, int Hour, int Minutes, int Seconds, int Milliseconds, ZoneId Z)
+      {
+        return ZonedDateTime.of(Year, Month, Day, Hour, Minutes, Seconds, Milliseconds * 1000000, Z);
+      }
+
+    public static ZonedDateTime New(int Year, int Month, int Day, int Hour, int Minutes, int Seconds, int Milliseconds, DateTimeZone Z)
+      {
+        return ZonedDateTime.of(Year, Month, Day, Hour, Minutes, Seconds, Milliseconds * 1000000, Z._ZoneId);
+      }
+
+    public static ZonedDateTime NowUTC()
+      {
+        return ZonedDateTime.now(_UTC);
+      }
+
+    public static ZonedDateTime Now(ZoneId Z)
+      {
+        return ZonedDateTime.now(Z);
+      }
+
+    public static ZonedDateTime Now(DateTimeZone Z)
+      {
+        return ZonedDateTime.now(Z._ZoneId);
+      }
+
+    public static ZonedDateTime Oldest(ZonedDateTime ZDT1, ZonedDateTime ZDT2)
+      {
+        return ZDT1 == null ? ZDT2 : ZDT2 == null ? ZDT1 : ZDT1.compareTo(ZDT2) < 0 ? ZDT1 : ZDT2;
+      }
+    
+    public static ZonedDateTime Youngest(ZonedDateTime ZDT1, ZonedDateTime ZDT2)
+      {
+        return ZDT1 == null ? ZDT2 : ZDT2 == null ? ZDT1 : ZDT1.compareTo(ZDT2) > 0 ? ZDT1 : ZDT2;
+      }
+
+    private static final DateTimeFormatter HTTPDateFormater = DateTimeFormatter.ofPattern("EEE, d MMM yyyy kk:mm:ss z");
+
+    public static String printDateTimeForHTTP(ZonedDateTime ZDT)
+      {
+        return ZDT.format(HTTPDateFormater);
+      }
+
+    /**
+     * Simple method to get a Calendar object out of a string and a pattern
+     */
+    public static ZonedDateTime parse(String DateTimeStr, String Pattern)
+      {
+        if (TextUtil.isNullOrEmpty(DateTimeStr) == true)
+          return null;
+        return ZonedDateTime.parse(DateTimeStr, DateTimeFormatter.ofPattern(Pattern));
+      }
+
+    public static String printDateTime(ZonedDateTime ZDT, String Pattern)
+      {
+        return ZDT.format(DateTimeFormatter.ofPattern(Pattern));
+      }
+
+    public static String printDateTime(ZonedDateTime ZDT)
+      {
+        return ZDT.format(DateTimeFormatter.ISO_ZONED_DATE_TIME);
+      }
+
+
+    public static String printDateTimeForSQL(ZonedDateTime ZDT)
+      {
+        return ZDT == null ? null : ZDT.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+      }
+
+    public static String printDateTimeForJSON(ZonedDateTime ZDT)
+      {
+        return ZDT == null ? null : ZDT.format(DateTimeFormatter.ISO_ZONED_DATE_TIME);
+      }
+
+    public static ZonedDateTime parsefromJSON(String DateTimeStr)
+      {
+        if (TextUtil.isNullOrEmpty(DateTimeStr) == true)
+          return null;
+        try
+          {
+            return ZonedDateTime.parse(DateTimeStr, DateTimeFormatter.ISO_ZONED_DATE_TIME);
+          }
+        catch (Exception E)
+          {
+            LOG.catching(E);
+          }
+        return null;
+      }
+
+
+    private static final DateTimeFormatter GeneralFormater        = DateTimeFormatter.ofPattern("MMM d yyyy");
+    private static final DateTimeFormatter GeneralFormaterTime    = DateTimeFormatter.ofPattern("MMM d yyyy, HH:mmz");
+    private static final DateTimeFormatter GeneralFormaterTimeSec = DateTimeFormatter.ofPattern("MMM d yyyy, HH:mm:ssz");
+
+    public static String printDateTimeFriendly(ZonedDateTime ZDT, boolean PrintTime, boolean PrintSeconds)
+      {
+        return ZDT == null ? "NA" : ZDT.format(PrintTime == true ? PrintSeconds == true ? GeneralFormaterTimeSec : GeneralFormaterTime : GeneralFormater);
+      }
+
+    private static final DateTimeFormatter CompactFormater        = DateTimeFormatter.ofPattern("YYYY.MM.dd");
+    private static final DateTimeFormatter CompactFormaterTime    = DateTimeFormatter.ofPattern("YYYY.MM.dd_HH:mmz");
+    private static final DateTimeFormatter CompactFormaterTimeSec = DateTimeFormatter.ofPattern("YYYY.MM.dd_HH:mm:ssz");
+
+    public static String printDateTimeCompact(ZonedDateTime ZDT, boolean PrintTime, boolean PrintSeconds)
+      {
+        return ZDT == null ? "NA" : ZDT.format(PrintTime == true ? PrintSeconds == true ? CompactFormaterTimeSec : CompactFormaterTime : CompactFormater);
+      }
+
+    private static final DateTimeFormatter SuperCompactFormater = DateTimeFormatter.ofPattern("YYYY-MM-dd_HH-mm-ss");
+
+    public static String printDateTimeSuperCompact(ZonedDateTime ZDT)
+      {
+        return ZDT == null ? "NA" : ZDT.format(SuperCompactFormater);
+      }
+
+
+    private static final DateTimeFormatter DayTimeFormater = DateTimeFormatter.ofPattern("HH:mm");
+    private static final DateTimeFormatter WeekFormater    = DateTimeFormatter.ofPattern("EEEE d, HH:mm");
+
+    /**
+     * Compute a contextual date based on now. For example, if the date passed is from today, will print only
+     * "10:54am today". If yesterday, will print "4:24pm yesterday". If within a week, will print
+     * "last/this Monday 1:30pm". If
+     * the date is older, will simply print "March 23" or "March 23, 12:30pm" if AlwaysPrintTime is true.<BR>
+     * This method is not localized.
+     * 
+     * @param ZDT The date whose value to print
+     * @param AlwaysPrintTime Whether Time should be printed for "beyond the week" dates
+     * @return a stringwith the printed date.
+     */
+    public static String printDateTimeContextual(ZonedDateTime ZDT, boolean PrintTime, boolean PrintSeconds)
+      {
+        if (ZDT == null)
+          return "N/A";
+        int Days = computeDaysToNow(ZDT);
+        if (Days > -8 && Days < -1) // last week
+          return ZDT.format(WeekFormater);
+        else if (Days == -1) // yesterday
+          return ZDT.format(DayTimeFormater) + " yesterday";
+        else if (Days == 0) // today
+          return ZDT.format(DayTimeFormater) + " today";
+        else if (Days == 1) // tomorrow
+          return ZDT.format(DayTimeFormater) + " tomorrow";
+        else if (Days > 1 && Days < 8) // this week
+          return ZDT.format(WeekFormater);
+        return printDateTimeFriendly(ZDT, PrintTime, PrintSeconds);
+      }
+
+
+
+    /**
+     * Expects a TimeStanmp object directly form the database, typically in local time,
+     * and converts it to the right date and time in the supplied timezone ZoneStr. If
+     * ZoneStr is null of invalid, the returned Zon3dDateTime will be in UTC.
+     * 
+     * @param T
+     * @param ZoneStr
+     * @return
+     */
+    public static ZonedDateTime toZonedDateTime(java.sql.Timestamp T, String ZoneStr)
+      {
+        if (T == null)
+          return null;
+
+        ZonedDateTime ZDT = ZonedDateTime.of(T.toLocalDateTime(), ZoneId.systemDefault());
+        try
+          {
+            return ZDT.withZoneSameInstant(ZoneStr == null ? _UTC : ZoneId.of(ZoneStr));
+          }
+        catch (Exception E)
+          {
+            LOG.warn("Invalid zone id '" + ZoneStr + "'. Used zone offset instead");
+          }
+        return ZDT.withZoneSameInstant(_UTC);
+      }
+
+
+
+    /**
+     * Adds/substract randomly between minDays and maxDays number of days to this date
+     * and sets the hours within the range prescribed (min/maxHours), and a randomly selected minute between 0 and 60.
+     */
+    public static ZonedDateTime addRandomDeltaDays(ZonedDateTime ZDT, int minDays, int maxDays, int minHour, int maxHour)
+      {
+        if (ZDT == null)
+          return null;
+
+        int days = (int) Math.floor((Math.random() * (maxDays - minDays)) + minDays);
+        int hours = (int) Math.floor((Math.random() * (maxHour - minHour)) + minHour);
+        int minutes = (int) Math.floor((Math.random() * 60));
+
+        return ZDT.plusDays(days).withHour(hours).withMinute(minutes);
+      }
+
+    /**
+     * Adds/substract randomly between min/maxHours number of hours to this date, and a randomly selected minute between 0 and 60.
+     */
+    public static ZonedDateTime addRandomDeltaHours(ZonedDateTime ZDT, int minHour, int maxHour)
+      {
+        if (ZDT == null)
+          return null;
+
+        int hours = (int) Math.floor((Math.random() * (maxHour - minHour)) + minHour);
+        int minutes = (int) Math.floor((Math.random() * 60));
+
+        return ZDT.plusHours(hours).withMinute(minutes);
+      }
+
+    /**
+     * Adds/substract randomly between min/maxMinutes number of minutes to this date.
+     */
+    public static ZonedDateTime addRandomDeltaMinutes(ZonedDateTime ZDT, int minMinutes, int maxMinutes)
+      {
+        if (ZDT == null)
+          return null;
+
+        int minutes = (int) Math.round((Math.random() * (minMinutes - minMinutes)) + minMinutes);
+
+        return ZDT.plusMinutes(minutes);
+      }
+
+
+    public static int computeAgeNow(ZonedDateTime BirthDate)
+      {
+        return computeAgeWhen(BirthDate, ZonedDateTime.now());
+      }
+
+    public static int computeAgeWhen(ZonedDateTime BirthDate, ZonedDateTime When)
+      {
+        if (BirthDate == null)
+          return -1;
+        return Period.between(BirthDate.toLocalDate(), When.toLocalDate()).getYears();
+      }
+
+    public static int computeDaysToNow(ZonedDateTime Start)
+      {
+        return computeDays(Start, ZonedDateTime.now());
+      }
+
+    public static int computeDays(ZonedDateTime Start, ZonedDateTime End)
+      {
+        return (int) ChronoUnit.DAYS.between(Start, End);
+      }
+
+
+
+    /**
+     * Returns a ZonedDateTime for the very beginning of Today at 00:00:00:0000 if Start == true,
+     * or 23:59:59:999999999 is Start == false.
+     * 
+     * @return
+     */
+    public static ZonedDateTime getTodayTimestamp(boolean Start)
+      {
+        return Start == true ? ZonedDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0)
+            : ZonedDateTime.now().withHour(23).withMinute(59).withSecond(59).withNano(999999999);
+      }
+
+    /**
+     * Returns a ZonedDateTime for the very beginning of Yesterday at 00:00:00:0000 or
+     * 23:59:59:999999999 depending on whether Start == true or false respectively.
+     * 
+     * @return
+     */
+    public static ZonedDateTime getYesterdayTimestamp(boolean Start)
+      {
+        return getIthDayTimestamp(Start, -1);
+      }
+
+
+    /**
+     * Returns a ZonedDateTime for the very beginning of tomorrow at 00:00:00:0000 or
+     * 23:59:59:999999999 depending on whether Start == true or false respectively.
+     * 
+     * @return
+     */
+    public static ZonedDateTime getTomorrowTimestamp(boolean Start)
+      {
+        return getIthDayTimestamp(Start, 1);
+      }
+
+
+    /**
+     * Returns a ZonedDateTime for the very beginning of the ith day from today at 00:00:00:0000 or
+     * 23:59:59:999999999 depending on whether Start == true or false respectively. +1 for example gives
+     * tomorrow, while -1 gets yesterday.
+     * 
+     * @return
+     */
+    public static ZonedDateTime getIthDayTimestamp(boolean Start, int i)
+      {
+        return getTodayTimestamp(Start).plusDays(i);
+      }
+
+
+    public static ZonedDateTime getThisMonthTimestamp(boolean Start)
+      {
+        return getTodayTimestamp(Start).with(Start == true ? TemporalAdjusters.firstDayOfMonth() : TemporalAdjusters.lastDayOfMonth());
+      }
+    
+    public static ZonedDateTime getIthMonthTimestamp(boolean Start, int i)
+      {
+        return getTodayTimestamp(Start).plusMonths(1).with(Start == true ? TemporalAdjusters.firstDayOfMonth() : TemporalAdjusters.lastDayOfMonth());
+      }
+  }

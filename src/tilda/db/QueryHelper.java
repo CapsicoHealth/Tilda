@@ -1,0 +1,988 @@
+/* ===========================================================================
+ * Copyright (C) 2015 CapsicoHealth Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package tilda.db;
+
+import java.time.ZonedDateTime;
+
+import tilda.db.processors.RecordProcessor;
+import tilda.enums.ColumnDefinition;
+import tilda.enums.StatementType;
+import tilda.utils.DateTimeUtil;
+import tilda.utils.TextUtil;
+
+/**
+ * <B>LDH-NOTE</B>
+ * This class helps build queries more safely, but it's not a compile-time tool. Therefore, there is no point
+ * in trying to catch syntax errors as the database will do that plenty fine.<BR>
+ * It's tempting to add extra features to catch mismatched parentheses, checking there is no duplicate
+ * table names in the From clause. The only thing that was interesting is that using operators in the SET part
+ * of a select or update causes weird things. For example, select a=3 evaluates as a boolean expression which
+ * i find weird, so i check for it. Other than that, nothing except major issues like
+ * 
+ * @author ldh
+ *
+ */
+public class QueryHelper
+  {
+    public QueryHelper(Connection C, StatementType ST, String TableName)
+      throws Exception
+      {
+        _TableName = TableName;
+        _C = C;
+        _ST = ST;
+        
+        if (_ST == StatementType.SELECT)
+          _QueryStr.append("select ");
+        else if (_ST == StatementType.UPDATE)
+          _QueryStr.append("update ").append(_TableName).append(" set ");
+        else if (_ST == StatementType.DELETE)
+          _QueryStr.append("delete from ").append(_TableName).append(" ");
+        else
+          throw new Exception("Unsupported Statement Type '"+ST+"' for the QueryHelper.");
+
+        _Section = S.START;
+      }
+    
+    public void setConnection(Connection C)
+    {
+      _C = C;
+    }
+
+    protected static enum S
+      {
+        START, FROM, SET, WHERE;
+      }
+
+    protected final String        _TableName;
+    protected final StatementType _ST;
+    
+    protected Connection          _C;
+    protected StringBuilder       _QueryStr = new StringBuilder();
+    protected S                   _Section  = null;
+
+
+    protected final void valuesBase()
+      throws Exception
+      {
+        if (_Section != S.SET || _ST != StatementType.INSERT)
+          throw new Exception("Invalid query syntax: Calling values() after a " + _Section + " in a query of type " + _ST);
+        _QueryStr.append(") values (");
+      }
+
+    protected final void setColumn(ColumnDefinition Col)
+      throws Exception
+      {
+        if (_Section != S.START && _Section != S.SET)
+          throw new Exception("Invalid query syntax: Calling set() after a " + _Section);
+        if (_Section == S.SET)
+          _QueryStr.append(", ");
+        _QueryStr.append(Col.toString(_ST));
+        _Section = S.SET;
+      }
+
+    protected final void fromTable(String TableName)
+      throws Exception
+      {
+        if (_Section != S.FROM && _Section != S.SET || _ST != StatementType.SELECT)
+          throw new Exception("Invalid query syntax: Calling from() with '" + TableName + "' after a " + _Section + " in a query of type " + _ST);
+        if (_Section != S.FROM)
+          _QueryStr.append(" from ").append(_TableName);
+        if (TableName.equalsIgnoreCase(_TableName) == false)
+          _QueryStr.append(", ").append(TableName);
+        _Section = S.FROM;
+      }
+
+    protected final void whereColumn(ColumnDefinition Col)
+      throws Exception
+      {
+        if (_Section != S.FROM && _Section != S.SET)
+          throw new Exception("Invalid query syntax: Calling where() after a " + _Section);
+        if (_Section != S.WHERE)
+          {
+            if (_Section != S.FROM && _ST == StatementType.SELECT)
+              _QueryStr.append("from ").append(_TableName);
+            _QueryStr.append(" where ");
+          }
+        _QueryStr.append(Col.toString(_ST));
+        _Section = S.WHERE;
+      }
+
+    protected final void andColumn(ColumnDefinition Col)
+      throws Exception
+      {
+        if (_Section != S.WHERE)
+          throw new Exception("Invalid query syntax: Calling and() after a " + _Section);
+        _QueryStr.append(" and ").append(Col.toString(_ST));
+        _Section = S.WHERE;
+      }
+
+    protected final void orColumn(ColumnDefinition Col)
+      throws Exception
+      {
+        if (_Section != S.WHERE)
+          throw new Exception("Invalid query syntax: Calling and() after a " + _Section);
+        _QueryStr.append(" or ").append(Col.toString(_ST));
+        _Section = S.WHERE;
+      }
+
+    protected final void openPar()
+      throws Exception
+      {
+        if (_Section != S.WHERE)
+          throw new Exception("Invalid query syntax: Calling and() after a " + _Section);
+        _QueryStr.append(" (");
+        _Section = S.WHERE;
+      }
+
+    protected final void closePar()
+      throws Exception
+      {
+        if (_Section != S.WHERE)
+          throw new Exception("Invalid query syntax: Calling closePar() after a " + _Section + " (Outside of a where clause).");
+        _QueryStr.append(" )");
+        _Section = S.WHERE;
+      }
+
+
+    protected final void OpCol(Op O, ColumnDefinition Col)
+      throws Exception
+      {
+        if (_Section != S.SET && _Section != S.WHERE)
+          throw new Exception("Invalid query syntax: Calling equals() after a " + _Section);
+        _QueryStr.append(O._Str).append(Col.toString(_ST));
+      }
+
+    public static enum Op
+      {
+        EQUALS("=")
+        , LT("<")
+        , LTE("<=")
+        , GT(">")
+        , GTE(">=")
+        , NOT_EQUALS("<>")
+        , PLUS("+")
+        , MINUS("-")
+        , MULTIPLY("*")
+        , DIVIDE("/");
+
+        Op(String Str)
+          {
+            _Str = Str;
+          }
+
+        public final String _Str;
+      }
+
+    protected final void OpVal(Op O, String V)
+      throws Exception
+      {
+        if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+          {
+            _QueryStr.append(O._Str);
+            TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V);
+          }
+        else
+          throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST);
+      }
+
+    protected final void OpVal(Op O, boolean V)
+      throws Exception
+      {
+        if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+          {
+            _QueryStr.append(O._Str).append(V);
+          }
+        else
+          throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST);
+      }
+
+    protected final void OpVal(Op O, double V)
+      throws Exception
+      {
+        if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+          {
+            _QueryStr.append(O._Str).append(V);
+          }
+        else
+          throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST);
+      }
+
+    protected final void OpVal(Op O, float V)
+      throws Exception
+      {
+        if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+          {
+            _QueryStr.append(O._Str).append(V);
+          }
+        else
+          throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST);
+      }
+
+    protected final void OpVal(Op O, int V)
+      throws Exception
+      {
+        if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+          {
+            _QueryStr.append(O._Str).append(V);
+          }
+        else
+          throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST);
+      }
+
+    protected final void OpVal(Op O, long V)
+      throws Exception
+      {
+        if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+          {
+            _QueryStr.append(O._Str).append(V);
+          }
+        else
+          throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST);
+      }
+
+    protected final void OpVal(Op O, char V)
+      throws Exception
+      {
+        if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+          {
+            _QueryStr.append(O._Str).append('\'').append(V).append('\'');
+          }
+        else
+          throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST);
+      }
+
+    protected final void OpVal(Op O, ZonedDateTime V)
+      throws Exception
+      {
+        if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+          {
+            if (DateTimeUtil.isNowPlaceholder(V) == true)
+              _QueryStr.append(O._Str).append(_C.getCurrentTimestampStr());
+            else if (V == null)
+              {
+                if (_Section == S.WHERE)
+                 {
+                   if (O == Op.EQUALS)
+                     _QueryStr.append("IS NULL");
+                   else if(O != Op.NOT_EQUALS)
+                     _QueryStr.append("IS NOT NULL");
+                   else
+                     throw new Exception("Invalid query syntax: cannot use the operator "+O+" with a NULL value");
+                 }
+                else
+                 _QueryStr.append("= NULL");
+              }
+            else
+              {
+                _QueryStr.append(O._Str).append("'").append(DateTimeUtil.printDateTimeForSQL(V)).append("'");
+              }
+          }
+        else
+          throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST);
+      }
+
+    public int executeSelect(RecordProcessor RP, int Start, int Size)
+      throws Exception
+      {
+        if (_ST != StatementType.SELECT)
+          throw new Exception("Error: Calling executeSelect on a " + _ST + " query.");
+        return _C.ExecuteSelect(_TableName, _QueryStr.toString(), RP, Start, Size);
+      }
+
+    public int executeUpdate()
+      throws Exception
+      {
+        if (_ST == StatementType.SELECT)
+          throw new Exception("Error: Calling executeUpdate on a " + _ST + " query.");
+        return _C.ExecuteUpdate(_TableName, _QueryStr.toString());
+      }
+
+
+
+    public QueryHelper values()
+      throws Exception
+      {
+        valuesBase();
+        return this;
+      }
+
+    public QueryHelper set(ColumnDefinition Col)
+      throws Exception
+      {
+        setColumn(Col);
+        return this;
+      }
+
+    public QueryHelper from(String Table)
+      throws Exception
+      {
+        fromTable(Table);
+        return this;
+      }
+
+    public QueryHelper where(ColumnDefinition Col)
+      throws Exception
+      {
+        whereColumn(Col);
+        return this;
+      }
+
+    public QueryHelper or(ColumnDefinition Col)
+      throws Exception
+      {
+        orColumn(Col);
+        return this;
+      }
+
+    public QueryHelper and(ColumnDefinition Col)
+      throws Exception
+      {
+        andColumn(Col);
+        return this;
+      }
+
+    public QueryHelper equals(ColumnDefinition Col)
+      throws Exception
+      {
+        OpCol(Op.EQUALS, Col);
+        return this;
+      }
+
+    public QueryHelper equals(String V)
+      throws Exception
+      {
+        OpVal(Op.EQUALS, V);
+        return this;
+      }
+
+    public QueryHelper equals(char V)
+      throws Exception
+      {
+        OpVal(Op.EQUALS, V);
+        return this;
+      }
+
+    public QueryHelper equals(boolean V)
+      throws Exception
+      {
+        OpVal(Op.EQUALS, V);
+        return this;
+      }
+
+    public QueryHelper equals(int V)
+      throws Exception
+      {
+        OpVal(Op.EQUALS, V);
+        return this;
+      }
+
+    public QueryHelper equals(long V)
+      throws Exception
+      {
+        OpVal(Op.EQUALS, V);
+        return this;
+      }
+
+    public QueryHelper equals(float V)
+      throws Exception
+      {
+        OpVal(Op.EQUALS, V);
+        return this;
+      }
+
+    public QueryHelper equals(double V)
+      throws Exception
+      {
+        OpVal(Op.EQUALS, V);
+        return this;
+      }
+
+    public QueryHelper equals(ZonedDateTime ODT)
+      throws Exception
+      {
+        OpVal(Op.EQUALS, ODT);
+        return this;
+      }
+
+    public QueryHelper lt(ColumnDefinition Col)
+      throws Exception
+      {
+        OpCol(Op.LT, Col);
+        return this;
+      }
+
+    public QueryHelper lt(String V)
+      throws Exception
+      {
+        OpVal(Op.LT, V);
+        return this;
+      }
+
+    public QueryHelper lt(char V)
+      throws Exception
+      {
+        OpVal(Op.LT, V);
+        return this;
+      }
+
+    public QueryHelper lt(boolean V)
+      throws Exception
+      {
+        OpVal(Op.LT, V);
+        return this;
+      }
+
+    public QueryHelper lt(int V)
+      throws Exception
+      {
+        OpVal(Op.LT, V);
+        return this;
+      }
+
+    public QueryHelper lt(long V)
+      throws Exception
+      {
+        OpVal(Op.LT, V);
+        return this;
+      }
+
+    public QueryHelper lt(float V)
+      throws Exception
+      {
+        OpVal(Op.LT, V);
+        return this;
+      }
+
+    public QueryHelper lt(double V)
+      throws Exception
+      {
+        OpVal(Op.LT, V);
+        return this;
+      }
+
+    public QueryHelper lt(ZonedDateTime ODT)
+      throws Exception
+      {
+        OpVal(Op.LT, ODT);
+        return this;
+      }
+
+    public QueryHelper lte(ColumnDefinition Col)
+      throws Exception
+      {
+        OpCol(Op.LTE, Col);
+        return this;
+      }
+
+    public QueryHelper lte(String V)
+      throws Exception
+      {
+        OpVal(Op.LTE, V);
+        return this;
+      }
+
+    public QueryHelper lte(char V)
+      throws Exception
+      {
+        OpVal(Op.LTE, V);
+        return this;
+      }
+
+    public QueryHelper lte(boolean V)
+      throws Exception
+      {
+        OpVal(Op.LTE, V);
+        return this;
+      }
+
+    public QueryHelper lte(int V)
+      throws Exception
+      {
+        OpVal(Op.LTE, V);
+        return this;
+      }
+
+    public QueryHelper lte(long V)
+      throws Exception
+      {
+        OpVal(Op.LTE, V);
+        return this;
+      }
+
+    public QueryHelper lte(float V)
+      throws Exception
+      {
+        OpVal(Op.LTE, V);
+        return this;
+      }
+
+    public QueryHelper lte(double V)
+      throws Exception
+      {
+        OpVal(Op.LTE, V);
+        return this;
+      }
+
+    public QueryHelper lte(ZonedDateTime ODT)
+      throws Exception
+      {
+        OpVal(Op.LTE, ODT);
+        return this;
+      }
+
+    public QueryHelper gt(ColumnDefinition Col)
+      throws Exception
+      {
+        OpCol(Op.GT, Col);
+        return this;
+      }
+
+    public QueryHelper gt(String V)
+      throws Exception
+      {
+        OpVal(Op.GT, V);
+        return this;
+      }
+
+    public QueryHelper gt(char V)
+      throws Exception
+      {
+        OpVal(Op.GT, V);
+        return this;
+      }
+
+    public QueryHelper gt(boolean V)
+      throws Exception
+      {
+        OpVal(Op.GT, V);
+        return this;
+      }
+
+    public QueryHelper gt(int V)
+      throws Exception
+      {
+        OpVal(Op.GT, V);
+        return this;
+      }
+
+    public QueryHelper gt(long V)
+      throws Exception
+      {
+        OpVal(Op.GT, V);
+        return this;
+      }
+
+    public QueryHelper gt(float V)
+      throws Exception
+      {
+        OpVal(Op.GT, V);
+        return this;
+      }
+
+    public QueryHelper gt(double V)
+      throws Exception
+      {
+        OpVal(Op.GT, V);
+        return this;
+      }
+
+    public QueryHelper gt(ZonedDateTime ODT)
+      throws Exception
+      {
+        OpVal(Op.GT, ODT);
+        return this;
+      }
+
+    public QueryHelper gte(ColumnDefinition Col)
+      throws Exception
+      {
+        OpCol(Op.GTE, Col);
+        return this;
+      }
+
+    public QueryHelper gte(String V)
+      throws Exception
+      {
+        OpVal(Op.GTE, V);
+        return this;
+      }
+
+    public QueryHelper gte(char V)
+      throws Exception
+      {
+        OpVal(Op.GTE, V);
+        return this;
+      }
+
+    public QueryHelper gte(boolean V)
+      throws Exception
+      {
+        OpVal(Op.GTE, V);
+        return this;
+      }
+
+    public QueryHelper gte(int V)
+      throws Exception
+      {
+        OpVal(Op.GTE, V);
+        return this;
+      }
+
+    public QueryHelper gte(long V)
+      throws Exception
+      {
+        OpVal(Op.GTE, V);
+        return this;
+      }
+
+    public QueryHelper gte(float V)
+      throws Exception
+      {
+        OpVal(Op.GTE, V);
+        return this;
+      }
+
+    public QueryHelper gte(double V)
+      throws Exception
+      {
+        OpVal(Op.GTE, V);
+        return this;
+      }
+
+    public QueryHelper gte(ZonedDateTime ODT)
+      throws Exception
+      {
+        OpVal(Op.GTE, ODT);
+        return this;
+      }
+
+    public QueryHelper not_equals(ColumnDefinition Col)
+      throws Exception
+      {
+        OpCol(Op.NOT_EQUALS, Col);
+        return this;
+      }
+
+    public QueryHelper not_equals(String V)
+      throws Exception
+      {
+        OpVal(Op.NOT_EQUALS, V);
+        return this;
+      }
+
+    public QueryHelper not_equals(char V)
+      throws Exception
+      {
+        OpVal(Op.NOT_EQUALS, V);
+        return this;
+      }
+
+    public QueryHelper not_equals(boolean V)
+      throws Exception
+      {
+        OpVal(Op.NOT_EQUALS, V);
+        return this;
+      }
+
+    public QueryHelper not_equals(int V)
+      throws Exception
+      {
+        OpVal(Op.NOT_EQUALS, V);
+        return this;
+      }
+
+    public QueryHelper not_equals(long V)
+      throws Exception
+      {
+        OpVal(Op.NOT_EQUALS, V);
+        return this;
+      }
+
+    public QueryHelper not_equals(float V)
+      throws Exception
+      {
+        OpVal(Op.NOT_EQUALS, V);
+        return this;
+      }
+
+    public QueryHelper not_equals(double V)
+      throws Exception
+      {
+        OpVal(Op.NOT_EQUALS, V);
+        return this;
+      }
+
+    public QueryHelper not_equals(ZonedDateTime ODT)
+      throws Exception
+      {
+        OpVal(Op.NOT_EQUALS, ODT);
+        return this;
+      }
+
+    public QueryHelper plus(ColumnDefinition Col)
+      throws Exception
+      {
+        OpCol(Op.PLUS, Col);
+        return this;
+      }
+
+    public QueryHelper plus(String V)
+      throws Exception
+      {
+        OpVal(Op.PLUS, V);
+        return this;
+      }
+
+    public QueryHelper plus(char V)
+      throws Exception
+      {
+        OpVal(Op.PLUS, V);
+        return this;
+      }
+
+    public QueryHelper plus(boolean V)
+      throws Exception
+      {
+        OpVal(Op.PLUS, V);
+        return this;
+      }
+
+    public QueryHelper plus(int V)
+      throws Exception
+      {
+        OpVal(Op.PLUS, V);
+        return this;
+      }
+
+    public QueryHelper plus(long V)
+      throws Exception
+      {
+        OpVal(Op.PLUS, V);
+        return this;
+      }
+
+    public QueryHelper plus(float V)
+      throws Exception
+      {
+        OpVal(Op.PLUS, V);
+        return this;
+      }
+
+    public QueryHelper plus(double V)
+      throws Exception
+      {
+        OpVal(Op.PLUS, V);
+        return this;
+      }
+
+    public QueryHelper plus(ZonedDateTime ODT)
+      throws Exception
+      {
+        OpVal(Op.PLUS, ODT);
+        return this;
+      }
+
+    public QueryHelper minus(ColumnDefinition Col)
+      throws Exception
+      {
+        OpCol(Op.MINUS, Col);
+        return this;
+      }
+
+    public QueryHelper minus(String V)
+      throws Exception
+      {
+        OpVal(Op.MINUS, V);
+        return this;
+      }
+
+    public QueryHelper minus(char V)
+      throws Exception
+      {
+        OpVal(Op.MINUS, V);
+        return this;
+      }
+
+    public QueryHelper minus(boolean V)
+      throws Exception
+      {
+        OpVal(Op.MINUS, V);
+        return this;
+      }
+
+    public QueryHelper minus(int V)
+      throws Exception
+      {
+        OpVal(Op.MINUS, V);
+        return this;
+      }
+
+    public QueryHelper minus(long V)
+      throws Exception
+      {
+        OpVal(Op.MINUS, V);
+        return this;
+      }
+
+    public QueryHelper minus(float V)
+      throws Exception
+      {
+        OpVal(Op.MINUS, V);
+        return this;
+      }
+
+    public QueryHelper minus(double V)
+      throws Exception
+      {
+        OpVal(Op.MINUS, V);
+        return this;
+      }
+
+    public QueryHelper minus(ZonedDateTime ODT)
+      throws Exception
+      {
+        OpVal(Op.MINUS, ODT);
+        return this;
+      }
+
+    public QueryHelper multiply(ColumnDefinition Col)
+      throws Exception
+      {
+        OpCol(Op.MULTIPLY, Col);
+        return this;
+      }
+
+    public QueryHelper multiply(String V)
+      throws Exception
+      {
+        OpVal(Op.MULTIPLY, V);
+        return this;
+      }
+
+    public QueryHelper multiply(char V)
+      throws Exception
+      {
+        OpVal(Op.MULTIPLY, V);
+        return this;
+      }
+
+    public QueryHelper multiply(boolean V)
+      throws Exception
+      {
+        OpVal(Op.MULTIPLY, V);
+        return this;
+      }
+
+    public QueryHelper multiply(int V)
+      throws Exception
+      {
+        OpVal(Op.MULTIPLY, V);
+        return this;
+      }
+
+    public QueryHelper multiply(long V)
+      throws Exception
+      {
+        OpVal(Op.MULTIPLY, V);
+        return this;
+      }
+
+    public QueryHelper multiply(float V)
+      throws Exception
+      {
+        OpVal(Op.MULTIPLY, V);
+        return this;
+      }
+
+    public QueryHelper multiply(double V)
+      throws Exception
+      {
+        OpVal(Op.MULTIPLY, V);
+        return this;
+      }
+
+    public QueryHelper multiply(ZonedDateTime ODT)
+      throws Exception
+      {
+        OpVal(Op.MULTIPLY, ODT);
+        return this;
+      }
+
+    public QueryHelper divide(ColumnDefinition Col)
+      throws Exception
+      {
+        OpCol(Op.DIVIDE, Col);
+        return this;
+      }
+
+    public QueryHelper divide(String V)
+      throws Exception
+      {
+        OpVal(Op.DIVIDE, V);
+        return this;
+      }
+
+    public QueryHelper divide(char V)
+      throws Exception
+      {
+        OpVal(Op.DIVIDE, V);
+        return this;
+      }
+
+    public QueryHelper divide(boolean V)
+      throws Exception
+      {
+        OpVal(Op.DIVIDE, V);
+        return this;
+      }
+
+    public QueryHelper divide(int V)
+      throws Exception
+      {
+        OpVal(Op.DIVIDE, V);
+        return this;
+      }
+
+    public QueryHelper divide(long V)
+      throws Exception
+      {
+        OpVal(Op.DIVIDE, V);
+        return this;
+      }
+
+    public QueryHelper divide(float V)
+      throws Exception
+      {
+        OpVal(Op.DIVIDE, V);
+        return this;
+      }
+
+    public QueryHelper divide(double V)
+      throws Exception
+      {
+        OpVal(Op.DIVIDE, V);
+        return this;
+      }
+
+    public QueryHelper divide(ZonedDateTime ODT)
+      throws Exception
+      {
+        OpVal(Op.DIVIDE, ODT);
+        return this;
+      }
+
+  }

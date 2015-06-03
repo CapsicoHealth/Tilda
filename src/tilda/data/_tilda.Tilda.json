@@ -1,0 +1,140 @@
+{
+  "package": "tilda.data",
+  "dependencies": null,
+
+  "enumerations": [
+
+    { "name": "ZoneInfo",
+      "description": "blah blah",
+      "id"    : { "type": "STRING", "size":  5  },
+      "value" : { "type": "STRING", "size":  50 }
+    }
+   ],
+    
+
+  "objects":[
+    { "name": "Key", "occ": false, // OCC=false because the fields here also serve as a reference for other tables.
+                                   // So we need to define them explicitly here.
+      "description": "The table to keep track of unique keys acroiss distributed objects/tables",
+      "columns":[
+        { "name": "refnum"       , "type": "LONG"       , "nullable": false,                          "invariant": true, "description": "The primary key for this record" },
+        { "name": "name"         , "type": "STRING"     , "nullable": false, "size": 128,             "invariant": true, "description": "The name of the table/object tracked" },
+        { "name": "max"          , "type": "LONG"       , "nullable": false,                                             "description": "The pre-allocated max RefNum for this table/object." },
+        { "name": "count"        , "type": "INTEGER"    , "nullable": false,                                             "description": "The size of the pre-allocation required by this table/object." },
+        
+        { "name": "created"      , "type": "DATETIME"   , "nullable": false,            "mode": "AUTO", "invariant": true, "description": "The timestamp for when the record was created.",
+                                 "values": [ { "name": "Creation", "value": "NOW", "description": "Creation time", "default": "CREATE"} ]
+        },
+        { "name": "lastUpdated"  , "type": "DATETIME"   , "nullable": false,            "mode": "AUTO",                  "description": "The timestamp for when the record was last updated.",
+                                 "values": [ { "name": "Update", "value": "NOW", "description": "Last updated time", "default": "ALWAYS"} ]
+        },
+        { "name": "deleted"      , "type": "DATETIME"   , "nullable": true,                                            "description": "The timestamp for when the record was deleted." }
+      ],
+      // No autogen since this is the KEY table itself
+      // Also, because the KEY table serves as a reference, the refnum column is also used as a reference and so must be defined. 
+      "primary": { "columns": ["refnum"], "autogen": false },
+      "indices":[ 
+      	{ "name": "Name"     , "columns": ["name"],                          "db": true },
+      	{ "name": "AllByName"                     , "orderBy": ["name asc"], "db": false, "subWhere": "deleted is null" } 
+      ]
+    },
+
+
+    { "name": "ObjectPerf", "occ": true,
+      "description": "Performance logs for the Tilda framework",
+      "columns":[
+        { "name": "schemaName"         , "type": "STRING"     , "nullable": false, "size": 64, "invariant": true, "description": "The name of the schema tracked" },
+        { "name": "objectName"         , "type": "STRING"     , "nullable": false, "size": 64, "invariant": true, "description": "The name of the table/object tracked" },
+        { "name": "startPeriod"        , "type": "DATETIME"   , "nullable": false,             "invariant": true, "description": "The timestamp for when the record was created." },
+        { "name": "endPeriod"          , "type": "DATETIME"   , "nullable": false,                            "description": "The timestamp for when the record was created." },
+        { "name": "selectNano"         , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
+        { "name": "selectCount"        , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
+        { "name": "selectRecords"      , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
+        { "name": "insertNano"         , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
+        { "name": "insertCount"        , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
+        { "name": "insertRecords"      , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
+        { "name": "updateNano"         , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
+        { "name": "updateCount"        , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
+        { "name": "updateRecords"      , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
+        { "name": "deleteNano"         , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
+        { "name": "deleteCount"        , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
+        { "name": "deleteRecords"      , "type": "LONG"       , "nullable": false,                            "description": "Blah..." }
+      ],
+      "primary": { "columns": ["schemaName", "objectName", "startPeriod"], "autogen": false },
+      "indices":[ 
+      	{ "name": "SchemaByObjectStart", "columns": ["schemaName"], "orderBy": ["objectName", "startPeriod desc"], "db": true },
+      	{ "name": "SchemaObjectByStart", "columns": ["schemaName", "objectName"], "orderBy": ["startPeriod desc"], "db": false }
+      ]
+    },
+    
+    { "name": "TransPerf", "occ": true,
+      "description": "Performance logs for the Tilda framework",
+      "columns":[
+        { "name": "schemaName"         , "type": "STRING"     , "nullable": false, "size": 64, "invariant": true, "description": "The name of the schema tracked" },
+        { "name": "objectName"         , "type": "STRING"     , "nullable": false, "size": 64, "invariant": true, "description": "The name of the table/object tracked" },
+	    { "name": "startPeriod"        , "type": "DATETIME"   , "nullable": false,             "invariant": true, "description": "The timestamp for when the record was created." },
+        { "name": "endPeriod"          , "type": "DATETIME"   , "nullable": false,                                "description": "The timestamp for when the record was created." },
+        { "name": "commitNano"         , "type": "LONG"       , "nullable": false,                                "description": "Blah..." },
+        { "name": "commitCount"        , "type": "LONG"       , "nullable": false,                                "description": "Blah..." },
+        { "name": "rollbackNano"       , "type": "LONG"       , "nullable": false,                                "description": "Blah..." },
+        { "name": "rollbackCount"      , "type": "LONG"       , "nullable": false,                                "description": "Blah..." }
+      ],
+      "primary": { "columns": ["schemaName", "objectName", "startPeriod"], "autogen": false },
+      "indices":[ 
+      	{ "name": "AllBySchemaName", "columns": ["schemaName"], "orderBy": ["objectName", "startPeriod desc"], "db": true },
+      	{ "name": "AllByObjectName", "columns": ["schemaName", "objectName"], "orderBy": ["startPeriod desc"], "db": false }
+      ]
+    },
+    
+    
+    { "name": "Testing",
+      "description": "blah blah",
+      "columns":[
+        { "name": "refnum2"      , "type": "LONG[``]"   , "nullable": false,                "invariant": true , "description": "The person's primary key" },
+        { "name": "name"         , "type": "STRING"     , "nullable": false, "size":    10,                     "description": "Medical system unique enterprise id" },
+        { "name": "description"  , "type": "STRING"     ,                    "size":   250,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
+        { "name": "desc2"        , "type": "STRING"     ,                    "size":  3000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
+        { "name": "desc3"        , "type": "STRING"     ,                    "size":  5000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
+        { "name": "desc4"        , "type": "STRING"     ,                    "size":  9000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
+        { "name": "desc5"        , "type": "STRING"     ,                    "size": 17000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
+        { "name": "desc6"        , "type": "STRING"     ,                    "size": 33000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
+        { "name": "tops"         , "type": "STRING[,]"  ,                                                       "description": "The blah"},
+        { "name": "tops2"        , "type": "STRING{,}"  ,                                                       "description": "The blah"},
+        { "name": "a1"           , "type": "BITFIELD"   ,                                                       "description": "The blah"},
+        { "name": "a2"           , "type": "CHAR"       ,                                                       "description": "The blah"},
+        { "name": "a2b"          , "type": "CHAR[,]"    ,                                                       "description": "The blah"},
+        { "name": "a2c"          , "type": "CHAR{,}"    ,                                                       "description": "The blah"},
+        { "name": "a3"           , "type": "BOOLEAN"    ,                                                       "description": "The blah"},
+        { "name": "a3b"          , "type": "BOOLEAN[,]" ,                                                       "description": "The blah"},
+        { "name": "a4"           , "type": "DOUBLE"     ,                                                       "description": "The blah"},
+        { "name": "a4b"          , "type": "DOUBLE[,]"  ,                                                       "description": "The blah"},
+        { "name": "a5"           , "type": "FLOAT"      ,                                                       "description": "The blah"},
+        { "name": "a5b"          , "type": "FLOAT[,]"   ,                                                       "description": "The blah"},
+        { "name": "a6"           , "type": "LONG"       ,                                                       "description": "The blah"},
+        { "name": "a6b"          , "type": "LONG[,]"    ,                                                       "description": "The blah"},
+        { "name": "a6c"          , "type": "LONG{,}"    ,                                                       "description": "The blah"},
+        { "name": "a7"           , "type": "INTEGER"    ,                                                       "description": "The blah"},
+        { "name": "a7b"          , "type": "INTEGER[,]" ,                                                       "description": "The blah"},
+        { "name": "a8"           , "type": "BINARY"     ,                                                       "description": "The blah"},
+        { "name": "a9"           , "type": "DATETIME"   ,                                                       "description": "The blah"}
+      ],
+      "primary": { "autogen": true },
+      "indices":[ 
+      	{ "name": "AllByName" , "orderBy": ["name asc"], "db": false 
+      	},
+      	{ "name": "AllByName2", "orderBy": ["name asc"], "db": true, "subQuery": { "from"  : ["ObjectPerf"], 
+      	                                                                           "wheres": [ { "db": "*", "clause": "deleted is null and desc2 >= ?(Lower) and a5 < ?(Upper) or name = ?() and created > ?()" } 
+      	                                                                                     ] 
+      	                                                                         }
+      	},
+      	{ "name": "AllByName3", "orderBy": ["name asc"], "db": true, "subWhere": "deleted is null and name = ?() and created > ?()" }
+      ],
+      "json":[
+        { "name": "AAA", "columns": ["refnum", "refnum2", "name", "description", "desc2", "desc3", "desc4", "desc5", "desc6", "tops", "tops2", "a1", "a2", "a2b", "a2c", "a3", "a3b", "a4", "a4b", "a5", "a5b", "a6", "a6b", "a6c", "a7", "a7b", "a9", "created", "lastupdated"] }
+      ],
+      "http":[
+        { "name": "", "mandatories": ["refnum", "name", "description"] }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "package":"com.capsico.people.data", // The package name for generating the Tilda objects, and where this file would be located 
+  "dependencies": ["com/capsico/people/data/_tilda.People.json", "com/capsico/apps/data/_tilda.Apps.json"], // paths to Tilda json files relative to the classpath
+  "objects":[ // A list of objects for this schema
+
+    { "name"       : "Person", // The name of the object/table
+      "description": "blah blah", // a description
+      "occ"        : true|false // Whether the object should have time keeping columns created/lastUpdated/deleted. True by default.
+      "lc"         : "NORMAL|READONLY|WORM" // whether the object should be read/write (normal), readonly, or WORM (Write Once, Read Many). NORMAL is default. 
+      "columns":[ // The columns/fields
+        { "name"     : "eid"    , // the name of the column/field
+          "type"     : "STRING|CHAR|INTEGER|LONG|FLOAT|DOUBLE|BOOLEAN|DATETIME|BINARY|BITFIELD" , // The type of the column/field
+          "nullable" : true|false, // Whether the column/field is nullable 
+          "size"     : 64        , // The size of the column/field. Only valid for STRING type.
+          "mode"     : "NORMAL|AUTO|CALCULATED", // The mode for the column/field. Normal is default. 
+                                                 // AUTO means that this is an application-managed field that cannot be directly set.
+                                                 // CALCULATED means this is a value that only exists in the application and is calculated. There is no database persistence.
+          "invariant": true|false, // whether the field can be changed once the object has been created.
+          "protect"  : "NONE|SMART|ABSOLUTE", // Only valid for STRING type. Defines how the string value should be parsed to protect for HTML/JavaScript injections.
+                                              // ABSOLUTE is the default, and very fast. All '<' and '>' are rewritten as '&lt;' and '&gt;' respectively.
+                                              // SMART actually analyzes content and actively disables SCRIPT, FRAME, LINK, STYLE and BODY HTML tags, onXXX event handlers,
+                                              // and inline javascript in src and href attributes. Reporting and sysadmin email alerts are then available if configured.
+          "description": "Medical system unique enterprise id" // Description.
+        },
+        { "name"       : "nameFirst" ,  // the name of the column/field
+          "sameas"     : "nameLast"  ,  // A reference to another column/field whose definition you wish to reuse.
+                                        // If used, only Description can be set. No other attribute can be changed/overriden.
+          "description": "The first name for a person" // description
+        }
+      ],
+      "primary": // Define the primary key for the object/table
+           { "autogen": true|false, // If true, the PK is defined by default as "refnum" and as a LONG. In that case, "columns" is not needed. False by default.
+             "columns": ["a", "b", "c"]  // the list of columns. At least one. If defined, "autogen" must be false or undefined.
+           },
+      "indices":[ // list of indices
+      	{ "name"   : "ByEId", // name of the index
+      	  "columns":["a"], // list of columns for the index.
+      	  "orderBy":["b desc"] // if orderBy is not defined, this is a unique index. Otherwise, this is a regular index. Use "asc" and "desc" for columns. "Asc" is default.
+        }
+      ],
+      "json":[ // JSON mappings
+      	{ "name": "AAA",  // the name of the mapping. The empty string "" is a valid name.
+      	  "columns": // columns mapped. Must declare auto-generated columns such as refnum/created/lastUpdated/deleted if needed. 
+      	     ["refnum", "eid", "nameTitle", "nameLast", "nameFirst", "nameMiddle", "dob", "dod", "gender", "created", "lastUpdated"]
+        }
+      ],
+      "http":[
+      	{ "name": "", // name of the mapping. The empty string "" is a valid name.
+      	  "mandatory": // mandatory fields on an incoming HTTP request.
+      	      ["eid", "nameLast", "nameFirst", "nameMiddle", "dob", "dod", "gender"], 
+      	  "optional": // optional fields on an incoming HTTP request.
+              ["nameTitle", "nameMiddle", "dod", "languages", "marital"]
+        }
+      ]
+    },
+   ...
+}
