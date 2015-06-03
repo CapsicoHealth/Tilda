@@ -42,7 +42,8 @@ Tilda is currently dependent on several other libraries both for the tooling and
   * <A href="https://code.google.com/p/google-gson/">GSON V2.3.1</A>
   * <A href="http://logging.apache.org/log4j/2.x/">Apache Log4j 2 V2.3</A>
   * <A href="https://jdbc.postgresql.org/">Postgres 9.4 JDBC 4.1 driver</A>
-We expect to stay up to date with all those libraries and will update them regularly.
+
+We expect to stay up to date with all those libraries and will update them regularly.<BR>
 <H1>To-Do's</H1>
 Tilda is currently used in high-performance production environments and runtime features have been priviledged to get off the ground as fast as possible. There are several features that we are looking to build and would love to have contributors:
   * A utility to generate database migration scripts (using <A href="http://schemaspy.sourceforge.net/">SchemaSpy</A> for example.
