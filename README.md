@@ -20,6 +20,17 @@ framework was built to support targetting other languages (such as .Net for exam
 Over the next few months, we will be trying to add more documentation and sample apps, but we are prioritizing work 
 that directly affects production-ready features for our own Healthcare data platform currently deployed at several 
 customers.
+
+<H1>License</H1>
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF 
+ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+The copyright is retained by CapsicoHealth Inc as Copyright (C) 2015 CapsicoHealth Inc.
+
 <H1>Dependencies</H1>
 Tilda is currently dependent on several other libraries both for the tooling and at runtime:
   * <A href="https://commons.apache.org/proper/commons-dbcp/">Apache Commons DPCP2 V2.1</A>
