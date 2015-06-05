@@ -59,7 +59,7 @@ In order to support its tooling and runtime, Tilda also includes a number of uti
 You are free to use those in your application if they fit your needs. However, we are always in the lookout to use other libraries if their functionality matches our needs, so it's very possible that over time, some of the Tilda utilities get deprecated and phased out.
 
 <H1>To-Do's</H1>
-Tilda is currently used in high-performance production environments and runtime features have been priviledged to get off the ground as fast as possible. There are several features that we are looking to build and would love to have contributors:
+Tilda is currently used in high-performance production environments and runtime features have been priviledged to get off the ground as fast as possible. However, there is still a lot of work to be done, and we expect to have a stable V1.0 before the end of 2015. In the meantime, changes in runtime implementation, APIs and features are to be expected. In particular, there are several features that we are looking to build and would love to have contributors:
   * A utility to generate database migration scripts (using <A href="http://schemaspy.sourceforge.net/">SchemaSpy</A> for example.
   * A stand-alone browser-based tool (using something like a Chrome App) to allow developers to easily create/edit the JSON Tilda configuration file.
   * Runtime checks to make sure the database matches the application's data model (i.e., a runtime version of the migration tool in some way)
