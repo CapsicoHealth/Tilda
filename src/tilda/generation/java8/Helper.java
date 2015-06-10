@@ -557,7 +557,7 @@ public class Helper
         String Mask = getRuntimeMask(C);
         if (C._Nullable == true)
          {
-           if (C._Mode == ColumnMode.CALCULATED && C._MapperDef != null)
+           if (C._Mode == ColumnMode.CALCULATED)
              {
                if (C.isCollection() == true || C._Type.isPrimitive() == false)
                 Out.println("      if (Obj.get"+TextUtil.CapitalizeFirstCharacter(C._Name)+"() != null)");
@@ -573,7 +573,7 @@ public class Helper
         if (C.isCollection() == false)
          Out.println("        JSONUtil.Print(Out, \""+C._Name+"\", "+First+", Obj.get" + TextUtil.CapitalizeFirstCharacter(C._Name) + "());");
         else
-         Out.println("        JSONUtil.Print(Out, \""+C._Name+"\", "+First+", ("+JavaJDBCType.getFieldTypeBaseClass(C)+"[]) Obj._" + C._Name + ".toArray());");
+         Out.println("        JSONUtil.Print(Out, \""+C._Name+"\", "+First+", Obj._" + C._Name + ".toArray(new "+JavaJDBCType.getFieldTypeBaseClass(C)+"[Obj._" + C._Name +".size()]));");
         Out.println();
         return false;
       }

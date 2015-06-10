@@ -1565,13 +1565,14 @@ public class TextUtil
         return new String(str);
       }
 
-    public static final String StandardizeFullName(String Last, String First, String Middle)
+    public static final String StandardizeFullName(String Title, String Last, String First, String Middle)
       {
+        Title = isNullOrEmpty(Title) ? "" : Title+" ";
         Last = isNullOrEmpty(Last) ? "" : Last.trim().toUpperCase();
         First = isNullOrEmpty(First) ? "" : CapitalizeEachWord(First.trim());
         Middle = isNullOrEmpty(Middle) ? "" : " " + Character.toUpperCase(Middle.trim().charAt(0)) + ".";
 
-        return Last + ", " + First + Middle;
+        return Title + Last + ", " + First + Middle;
       }
 
     public static final String MaskName(String Last, String First, long RefNum)
