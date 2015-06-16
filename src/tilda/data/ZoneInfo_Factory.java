@@ -55,7 +55,6 @@ public class ZoneInfo_Factory extends tilda.data._Tilda.TILDA__ZONEINFO_Factory
              LOG.info("ZoneInfo id="+info.getId()+" and value="+info.getValue()+" has an alternate value "+ZDT.getZone().getId());
              __ENUMERATIONS_BY_VALUE.put(ZDT.getZone().getId(), info);
            }
-          
         }
      }
    

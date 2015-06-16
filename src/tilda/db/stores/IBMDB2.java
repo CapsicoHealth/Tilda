@@ -18,6 +18,8 @@ package tilda.db.stores;
 
 import java.sql.SQLException;
 
+import tilda.db.Connection;
+import tilda.parsing.parts.Column;
 import tilda.utils.TextUtil;
 
 public class IBMDB2 implements DBType
@@ -75,5 +77,11 @@ public class IBMDB2 implements DBType
     public boolean FullIdentifierOnUpdate()
       {
         return false;
+      }
+
+    @Override
+    public boolean alterTableAddColumn(Connection Con, Column Col) throws Exception
+      {
+        throw new UnsupportedOperationException();
       }
   }

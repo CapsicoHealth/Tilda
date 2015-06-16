@@ -23,9 +23,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Method;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -33,7 +36,13 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.enums.ColumnMode;
 import tilda.enums.TransactionType;
+import tilda.generation.interfaces.CodeGenSql;
+import tilda.parsing.Parser;
+import tilda.parsing.ParserSession;
+import tilda.parsing.parts.Column;
+import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.performance.PerfTracker;
 import tilda.utils.CollectionUtil;
@@ -155,10 +164,51 @@ public class ConnectionPool
                     gson = new GsonBuilder().setPrettyPrinting().create();
                     Schema S = gson.fromJson(R, Schema.class);
                     S.setOrigin(name);
-                    Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
-                    M.invoke(null, C);
-                    C.commit();
-                    _SchemaPackage.put(S._Name, S._Package);
+                    CodeGenSql Sql = (CodeGenSql) Class.forName("tilda.generation.postgres9.Sql" ).newInstance();
+                    ParserSession PS = new ParserSession(S, Sql);
+                    if (Parser.loadDependencies(PS, S) == true)
+                     {
+                       Iterator<Schema> I = PS.getDependencies();
+                       while (I.hasNext() == true)
+                         if (I.next().Validate(PS) == false)
+                           break;
+                       if (PS.getErrorCount() == 0)
+                         {
+                           if (PS.getDependency(S._Package,  S._Name) == null)
+                             PS.addDependency(S);
+                           S.Validate(PS);
+                           for (Object Obj : S._Objects)
+                             {
+                               DatabaseMetaData meta = C._C.getMetaData();
+                               LOG.debug("Getting columns for table "+S._Name+"."+Obj._Name+".");
+                               ResultSet RS = meta.getColumns(null, S._Name.toLowerCase(), Obj._Name.toLowerCase(), null);
+                               Set<String> DBColumns = new HashSet<String>();
+                               while (RS.next() != false)
+                                 DBColumns.add(RS.getString("COLUMN_NAME").toLowerCase());
+                               for (Column Col : Obj._Columns)
+                                 {
+                                   if (Col._Mode != ColumnMode.CALCULATED && DBColumns.contains(Col._Name.toLowerCase()) == false)
+                                    if (C.alterTableAddColumn(Col) == false)
+                                     throw new Exception("Cannot upgrade table '"+Obj.getShortName()+"' by adding the new required column '"+Col.getShortName()+"'.");
+                                 }
+                               C.commit();
+                             }
+                         }
+                       LOG.debug("\n");
+                       LOG.debug("Initializing Schema objects");
+                       Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
+                       M.invoke(null, C);
+                       C.commit();
+                       _SchemaPackage.put(S._Name, S._Package);
+                     }
+                    if (PS.getErrorCount() > 0)
+                      {
+                        LOG.error("==============================================================================================");
+                        LOG.error("There were " + PS.getErrorCount() + " errors when trying to validate the schema set");
+                        int i = 0;
+                        for (String Err : PS.getErrors())
+                          LOG.error("    "+(++i)+" - "+Err);
+                      }
                   }
               }
           }

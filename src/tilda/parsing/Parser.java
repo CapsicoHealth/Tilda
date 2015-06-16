@@ -48,13 +48,6 @@ public abstract class Parser
         if (S == null)
           return null;
         
-        final String TildaBasePackage = "tilda/data/_tilda.Tilda.json";
-        
-        if (S._Dependencies == null || S._Dependencies.length == 0)
-         S._Dependencies = new String[] { TildaBasePackage };
-        else if (TextUtil.FindElement(S._Dependencies, TildaBasePackage, false, 0) == -1)
-          S._Dependencies = CollectionUtil.prepend(S._Dependencies, TildaBasePackage);
-
         ParserSession PS = new ParserSession(S, CGSql);
         if (loadDependencies(PS, S) == false)
           return null;
@@ -147,8 +140,15 @@ public abstract class Parser
           }
       }
 
-    private static boolean loadDependencies(ParserSession PS, Schema S)
+    public static boolean loadDependencies(ParserSession PS, Schema S)
       {
+        final String TildaBasePackage = "tilda/data/_tilda.Tilda.json";
+        
+        if (S._Dependencies == null || S._Dependencies.length == 0)
+         S._Dependencies = new String[] { TildaBasePackage };
+        else if (TextUtil.FindElement(S._Dependencies, TildaBasePackage, false, 0) == -1)
+          S._Dependencies = CollectionUtil.prepend(S._Dependencies, TildaBasePackage);
+
         if (S._Dependencies != null)
           for (String d : S._Dependencies)
             {

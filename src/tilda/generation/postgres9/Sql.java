@@ -68,14 +68,6 @@ public class Sql extends PostgreSQL implements CodeGenSql
         return getColumnType(C._Type, C._Size, C._Mode, C.isCollection());
       }
 
-    public String getColumnType(ColumnType T, Integer S, ColumnMode M, boolean Collection)
-      {
-        if (T == ColumnType.STRING && M != ColumnMode.CALCULATED)
-          return Collection == true ? "text[]" : S < 15 ? PostgresType.CHAR._SQLType + "(" + S + ")" : S < 4096 ? PostgresType.STRING._SQLType + "(" + S + ")" : "text";
-        return PostgresType.get(T)._SQLType + (Collection == true ? "[]" : "");
-      }
-
-
     @Override
     public String getColumnTypeRaw(Column C)
       {

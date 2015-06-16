@@ -18,6 +18,9 @@ package tilda.db.stores;
 
 import java.sql.SQLException;
 
+import tilda.db.Connection;
+import tilda.parsing.parts.Column;
+
 public interface DBType
   {
     public String  getName();
@@ -27,6 +30,7 @@ public interface DBType
     public boolean needsSavepoint();
     public boolean supportsSelectSubsetting();
     public boolean getSelectSubsettingClause(StringBuilder Str, int Start, int Size);
+    public boolean alterTableAddColumn(Connection Con, Column Col) throws Exception;
 
     public static DBType DB2       = new IBMDB2    ();
     public static DBType SQLServer = new MSSQL     ();

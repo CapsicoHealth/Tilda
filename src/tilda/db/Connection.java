@@ -32,6 +32,7 @@ import org.apache.logging.log4j.Logger;
 import tilda.db.processors.RecordProcessor;
 import tilda.db.stores.DBType;
 import tilda.enums.TransactionType;
+import tilda.parsing.parts.Column;
 import tilda.performance.PerfTracker;
 import tilda.utils.AnsiUtil;
 import tilda.utils.SystemValues;
@@ -326,5 +327,10 @@ public final class Connection
             _C.rollback(_SavePoints.pop());
             PerfTracker.add(TransactionType.SAVEPOINT_ROLLBACK, System.nanoTime() - T0);
           }
+      }
+
+    public boolean alterTableAddColumn(Column Col) throws Exception
+      {
+        return _DB.alterTableAddColumn(this, Col);
       }
   }

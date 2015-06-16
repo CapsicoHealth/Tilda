@@ -18,6 +18,11 @@ package tilda.db.stores;
 
 import java.sql.SQLException;
 
+import tilda.db.Connection;
+import tilda.enums.ColumnMode;
+import tilda.enums.ColumnType;
+import tilda.generation.postgres9.PostgresType;
+import tilda.parsing.parts.Column;
 import tilda.utils.TextUtil;
 
 public class PostgreSQL implements DBType
@@ -87,5 +92,22 @@ public class PostgreSQL implements DBType
     public boolean FullIdentifierOnUpdate()
       {
         return true;
+      }
+
+
+    @Override
+    public boolean alterTableAddColumn(Connection Con, Column Col) throws Exception
+      {
+        String Q ="ALTER TABLE "+Col._ParentThing.getShortName()+" ADD COLUMN \""+Col._Name+"\" "+getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection());
+        if (Col._Nullable == false)
+         Q+=" not null";
+        return Con.ExecuteUpdate(Col._ParentThing.getShortName(), Q) >= 0;
+      }
+    
+    public static String getColumnType(ColumnType T, Integer S, ColumnMode M, boolean Collection)
+      {
+        if (T == ColumnType.STRING && M != ColumnMode.CALCULATED)
+          return Collection == true ? "text[]" : S < 15 ? PostgresType.CHAR._SQLType + "(" + S + ")" : S < 4096 ? PostgresType.STRING._SQLType + "(" + S + ")" : "text";
+        return PostgresType.get(T)._SQLType + (Collection == true ? "[]" : "");
       }
   }
