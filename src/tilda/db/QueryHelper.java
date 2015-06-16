@@ -44,23 +44,28 @@ public class QueryHelper
         _TableName = TableName;
         _C = C;
         _ST = ST;
+
+        _Section = S.START;
         
         if (_ST == StatementType.SELECT)
-          _QueryStr.append("select ");
+         {
+           if (C != null)
+            _QueryStr.append("select ");
+           else
+            _Section = S.WHERE;
+         }
         else if (_ST == StatementType.UPDATE)
           _QueryStr.append("update ").append(_TableName).append(" set ");
         else if (_ST == StatementType.DELETE)
           _QueryStr.append("delete from ").append(_TableName).append(" ");
         else
-          throw new Exception("Unsupported Statement Type '"+ST+"' for the QueryHelper.");
-
-        _Section = S.START;
+          throw new Exception("Unsupported Statement Type '" + ST + "' for the QueryHelper.");
       }
-    
+
     public void setConnection(Connection C)
-    {
-      _C = C;
-    }
+      {
+        _C = C;
+      }
 
     protected static enum S
       {
@@ -69,7 +74,7 @@ public class QueryHelper
 
     protected final String        _TableName;
     protected final StatementType _ST;
-    
+
     protected Connection          _C;
     protected StringBuilder       _QueryStr = new StringBuilder();
     protected S                   _Section  = null;
@@ -106,7 +111,15 @@ public class QueryHelper
         _Section = S.FROM;
       }
 
-    protected final void whereColumn(ColumnDefinition Col)
+    public final QueryHelper where(ColumnDefinition Col)
+      throws Exception
+      {
+        where();
+        _QueryStr.append(Col.toString(_ST));
+        return this;
+      }
+
+    public final QueryHelper where()
       throws Exception
       {
         if (_Section != S.FROM && _Section != S.SET)
@@ -117,44 +130,75 @@ public class QueryHelper
               _QueryStr.append("from ").append(_TableName);
             _QueryStr.append(" where ");
           }
+        _Section = S.WHERE;
+        return this;
+     }
+
+
+    public final QueryHelper and()
+        throws Exception
+        {
+          if (_Section != S.WHERE)
+            throw new Exception("Invalid query syntax: Calling and() after a " + _Section);
+          _QueryStr.append(" and ");
+          _Section = S.WHERE;
+          return this;
+        }
+
+    public final QueryHelper and(ColumnDefinition Col)
+      throws Exception
+      {
+        and();
         _QueryStr.append(Col.toString(_ST));
         _Section = S.WHERE;
+        return this;
       }
 
-    protected final void andColumn(ColumnDefinition Col)
+    public final QueryHelper or()
+        throws Exception
+        {
+          if (_Section != S.WHERE)
+            throw new Exception("Invalid query syntax: Calling and() after a " + _Section);
+          _QueryStr.append(" or ");
+          _Section = S.WHERE;
+          return this;
+        }
+
+    public final QueryHelper or(ColumnDefinition Col)
       throws Exception
       {
-        if (_Section != S.WHERE)
-          throw new Exception("Invalid query syntax: Calling and() after a " + _Section);
-        _QueryStr.append(" and ").append(Col.toString(_ST));
+        or();
+        _QueryStr.append(Col.toString(_ST));
         _Section = S.WHERE;
+        return this;
       }
 
-    protected final void orColumn(ColumnDefinition Col)
+    public final QueryHelper openPar()
       throws Exception
       {
         if (_Section != S.WHERE)
-          throw new Exception("Invalid query syntax: Calling and() after a " + _Section);
-        _QueryStr.append(" or ").append(Col.toString(_ST));
-        _Section = S.WHERE;
-      }
-
-    protected final void openPar()
-      throws Exception
-      {
-        if (_Section != S.WHERE)
-          throw new Exception("Invalid query syntax: Calling and() after a " + _Section);
+          throw new Exception("Invalid query syntax: Calling openPar() after a " + _Section);
         _QueryStr.append(" (");
         _Section = S.WHERE;
+        return this;
       }
+    
+    public QueryHelper openPar(ColumnDefinition Col)
+        throws Exception
+        {
+          openPar();
+          _QueryStr.append(Col.toString(_ST));
+          return this;
+        }
 
-    protected final void closePar()
+    public final QueryHelper closePar()
       throws Exception
       {
         if (_Section != S.WHERE)
           throw new Exception("Invalid query syntax: Calling closePar() after a " + _Section + " (Outside of a where clause).");
         _QueryStr.append(" )");
         _Section = S.WHERE;
+        return this;
       }
 
 
@@ -275,16 +319,16 @@ public class QueryHelper
             else if (V == null)
               {
                 if (_Section == S.WHERE)
-                 {
-                   if (O == Op.EQUALS)
-                     _QueryStr.append("IS NULL");
-                   else if(O != Op.NOT_EQUALS)
-                     _QueryStr.append("IS NOT NULL");
-                   else
-                     throw new Exception("Invalid query syntax: cannot use the operator "+O+" with a NULL value");
-                 }
+                  {
+                    if (O == Op.EQUALS)
+                      _QueryStr.append("IS NULL");
+                    else if (O != Op.NOT_EQUALS)
+                      _QueryStr.append("IS NOT NULL");
+                    else
+                      throw new Exception("Invalid query syntax: cannot use the operator " + O + " with a NULL value");
+                  }
                 else
-                 _QueryStr.append("= NULL");
+                  _QueryStr.append("= NULL");
               }
             else
               {
@@ -294,12 +338,143 @@ public class QueryHelper
         else
           throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST);
       }
+    
+    public QueryHelper in(String[] v) throws Exception
+      {
+        if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+          {
+            _QueryStr.append(" in (");
+            if (v != null)
+             for (int i = 0; i < v.length; ++i)
+               {
+                 if (i != 0)
+                   _QueryStr.append(", ");
+                 TextUtil.EscapeSingleQuoteForSQL(_QueryStr, v[i]);
+               }
+            _QueryStr.append(")");
+            return this;
+          }
+        throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST);
+      }
+
+    protected QueryHelper in(char[] v) throws Exception
+      {
+        if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+          {
+            _QueryStr.append(" in (");
+            if (v != null)
+             for (int i = 0; i < v.length; ++i)
+               {
+                 if (i != 0)
+                   _QueryStr.append(", ");
+                 TextUtil.EscapeSingleQuoteForSQL(_QueryStr, ""+v[i]);
+               }
+            _QueryStr.append(")");
+            return this;
+          }
+        throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST);
+      }
+    
+    protected QueryHelper in(int[] v) throws Exception
+      {
+        if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+          {
+            _QueryStr.append(" in (");
+            if (v != null)
+             for (int i = 0; i < v.length; ++i)
+               {
+                 if (i != 0)
+                   _QueryStr.append(", ");
+                 _QueryStr.append(v[i]);
+               }
+            _QueryStr.append(")");
+            return this;
+          }
+        throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST);
+      }
+
+    protected QueryHelper in(long[] v) throws Exception
+      {
+        if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+          {
+            _QueryStr.append(" in (");
+            if (v != null)
+             for (int i = 0; i < v.length; ++i)
+               {
+                 if (i != 0)
+                   _QueryStr.append(", ");
+                 _QueryStr.append(v[i]);
+               }
+            _QueryStr.append(")");
+            return this;
+          }
+        throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST);
+      }
+
+    protected QueryHelper in(float[] v) throws Exception
+      {
+        if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+          {
+            _QueryStr.append(" in (");
+            if (v != null)
+             for (int i = 0; i < v.length; ++i)
+               {
+                 if (i != 0)
+                   _QueryStr.append(", ");
+                 _QueryStr.append(v[i]);
+               }
+            _QueryStr.append(")");
+            return this;
+          }
+        throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST);
+      }
+    
+    protected QueryHelper in(double[] v) throws Exception
+      {
+        if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+          {
+            _QueryStr.append(" in (");
+            if (v != null)
+             for (int i = 0; i < v.length; ++i)
+               {
+                 if (i != 0)
+                   _QueryStr.append(", ");
+                 _QueryStr.append(v[i]);
+               }
+            _QueryStr.append(")");
+            return this;
+          }
+        throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST);
+      }
+
+    protected QueryHelper in(ZonedDateTime[] v) throws Exception
+      {
+        if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+          {
+            _QueryStr.append(" in (");
+            if (v != null)
+              for (int i = 0; i < v.length; ++i)
+                {
+                  if (i != 0)
+                    _QueryStr.append(", ");
+                  if (DateTimeUtil.isNowPlaceholder(v[i]) == true)
+                    _QueryStr.append(_C.getCurrentTimestampStr());
+                  else if (v[i] != null)
+                    _QueryStr.append("ULL");
+                  else
+                    _QueryStr.append("'").append(DateTimeUtil.printDateTimeForSQL(v[i])).append("'");
+                }
+            _QueryStr.append(")");
+            return this;
+          }
+        throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST);
+      }
 
     public int executeSelect(RecordProcessor RP, int Start, int Size)
       throws Exception
       {
         if (_ST != StatementType.SELECT)
-          throw new Exception("Error: Calling executeSelect on a " + _ST + " query.");
+          throw new Exception("Error: Calling executeSelect() on a " + _ST + " query.");
         return _C.ExecuteSelect(_TableName, _QueryStr.toString(), RP, Start, Size);
       }
 
@@ -307,11 +482,16 @@ public class QueryHelper
       throws Exception
       {
         if (_ST == StatementType.SELECT)
-          throw new Exception("Error: Calling executeUpdate on a " + _ST + " query.");
+          throw new Exception("Error: Calling executeUpdate() on a " + _ST + " query.");
         return _C.ExecuteUpdate(_TableName, _QueryStr.toString());
       }
-
-
+    
+    public String getWhereClause() throws Exception
+      {
+        if (_ST == StatementType.SELECT && _C == null)
+         return _QueryStr.toString();
+        throw new Exception("Error: Calling getWhereClause() on non 'where clause' QueryHelper object (constructed as a SELECT with a null Connection).");
+      }
 
     public QueryHelper values()
       throws Exception
@@ -334,89 +514,69 @@ public class QueryHelper
         return this;
       }
 
-    public QueryHelper where(ColumnDefinition Col)
-      throws Exception
-      {
-        whereColumn(Col);
-        return this;
-      }
-
-    public QueryHelper or(ColumnDefinition Col)
-      throws Exception
-      {
-        orColumn(Col);
-        return this;
-      }
-
-    public QueryHelper and(ColumnDefinition Col)
-      throws Exception
-      {
-        andColumn(Col);
-        return this;
-      }
-
     public QueryHelper equals(ColumnDefinition Col)
-      throws Exception
-      {
-        OpCol(Op.EQUALS, Col);
-        return this;
-      }
+        throws Exception
+        {
+          OpCol(Op.EQUALS, Col);
+          return this;
+        }
 
-    public QueryHelper equals(String V)
-      throws Exception
-      {
-        OpVal(Op.EQUALS, V);
-        return this;
-      }
+      public QueryHelper equals(String V)
+        throws Exception
+        {
+          OpVal(Op.EQUALS, V);
+          return this;
+        }
 
-    public QueryHelper equals(char V)
-      throws Exception
-      {
-        OpVal(Op.EQUALS, V);
-        return this;
-      }
+      public QueryHelper equals(char V)
+        throws Exception
+        {
+          OpVal(Op.EQUALS, V);
+          return this;
+        }
 
-    public QueryHelper equals(boolean V)
-      throws Exception
-      {
-        OpVal(Op.EQUALS, V);
-        return this;
-      }
+      public QueryHelper equals(boolean V)
+        throws Exception
+        {
+          OpVal(Op.EQUALS, V);
+          return this;
+        }
 
-    public QueryHelper equals(int V)
-      throws Exception
-      {
-        OpVal(Op.EQUALS, V);
-        return this;
-      }
+      public QueryHelper equals(int V)
+        throws Exception
+        {
+          OpVal(Op.EQUALS, V);
+          return this;
+        }
 
-    public QueryHelper equals(long V)
-      throws Exception
-      {
-        OpVal(Op.EQUALS, V);
-        return this;
-      }
+      public QueryHelper equals(long V)
+        throws Exception
+        {
+          OpVal(Op.EQUALS, V);
+          return this;
+        }
 
-    public QueryHelper equals(float V)
-      throws Exception
-      {
-        OpVal(Op.EQUALS, V);
-        return this;
-      }
+      public QueryHelper equals(float V)
+        throws Exception
+        {
+          OpVal(Op.EQUALS, V);
+          return this;
+        }
 
-    public QueryHelper equals(double V)
-      throws Exception
-      {
-        OpVal(Op.EQUALS, V);
-        return this;
-      }
+      public QueryHelper equals(double V)
+        throws Exception
+        {
+          OpVal(Op.EQUALS, V);
+          return this;
+        }
 
-    public QueryHelper equals(ZonedDateTime ODT)
-      throws Exception
-      {
-        OpVal(Op.EQUALS, ODT);
-        return this;
-      }
+      public QueryHelper equals(ZonedDateTime ZDT)
+        throws Exception
+        {
+          OpVal(Op.EQUALS, ZDT);
+          return this;
+        }
+    
 
     public QueryHelper lt(ColumnDefinition Col)
       throws Exception
@@ -474,10 +634,10 @@ public class QueryHelper
         return this;
       }
 
-    public QueryHelper lt(ZonedDateTime ODT)
+    public QueryHelper lt(ZonedDateTime ZDT)
       throws Exception
       {
-        OpVal(Op.LT, ODT);
+        OpVal(Op.LT, ZDT);
         return this;
       }
 
@@ -537,10 +697,10 @@ public class QueryHelper
         return this;
       }
 
-    public QueryHelper lte(ZonedDateTime ODT)
+    public QueryHelper lte(ZonedDateTime ZDT)
       throws Exception
       {
-        OpVal(Op.LTE, ODT);
+        OpVal(Op.LTE, ZDT);
         return this;
       }
 
@@ -600,10 +760,10 @@ public class QueryHelper
         return this;
       }
 
-    public QueryHelper gt(ZonedDateTime ODT)
+    public QueryHelper gt(ZonedDateTime ZDT)
       throws Exception
       {
-        OpVal(Op.GT, ODT);
+        OpVal(Op.GT, ZDT);
         return this;
       }
 
@@ -663,10 +823,10 @@ public class QueryHelper
         return this;
       }
 
-    public QueryHelper gte(ZonedDateTime ODT)
+    public QueryHelper gte(ZonedDateTime ZDT)
       throws Exception
       {
-        OpVal(Op.GTE, ODT);
+        OpVal(Op.GTE, ZDT);
         return this;
       }
 
@@ -726,10 +886,10 @@ public class QueryHelper
         return this;
       }
 
-    public QueryHelper not_equals(ZonedDateTime ODT)
+    public QueryHelper not_equals(ZonedDateTime ZDT)
       throws Exception
       {
-        OpVal(Op.NOT_EQUALS, ODT);
+        OpVal(Op.NOT_EQUALS, ZDT);
         return this;
       }
 
@@ -789,10 +949,10 @@ public class QueryHelper
         return this;
       }
 
-    public QueryHelper plus(ZonedDateTime ODT)
+    public QueryHelper plus(ZonedDateTime ZDT)
       throws Exception
       {
-        OpVal(Op.PLUS, ODT);
+        OpVal(Op.PLUS, ZDT);
         return this;
       }
 
@@ -852,10 +1012,10 @@ public class QueryHelper
         return this;
       }
 
-    public QueryHelper minus(ZonedDateTime ODT)
+    public QueryHelper minus(ZonedDateTime ZDT)
       throws Exception
       {
-        OpVal(Op.MINUS, ODT);
+        OpVal(Op.MINUS, ZDT);
         return this;
       }
 
@@ -915,10 +1075,10 @@ public class QueryHelper
         return this;
       }
 
-    public QueryHelper multiply(ZonedDateTime ODT)
+    public QueryHelper multiply(ZonedDateTime ZDT)
       throws Exception
       {
-        OpVal(Op.MULTIPLY, ODT);
+        OpVal(Op.MULTIPLY, ZDT);
         return this;
       }
 
@@ -978,10 +1138,10 @@ public class QueryHelper
         return this;
       }
 
-    public QueryHelper divide(ZonedDateTime ODT)
+    public QueryHelper divide(ZonedDateTime ZDT)
       throws Exception
       {
-        OpVal(Op.DIVIDE, ODT);
+        OpVal(Op.DIVIDE, ZDT);
         return this;
       }
 

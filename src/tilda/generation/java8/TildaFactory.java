@@ -194,8 +194,6 @@ public class TildaFactory implements CodeGenTildaFactory
         Str.setCharAt("selec".length(), 't');
         Str.append(" from ").append(G.getSql().getFullTableVar(O));
         Out.println("       S.append(" + TextUtil.EscapeDoubleQuoteWithSlash(Str.toString()) + ");");
-//        Out.println("       if (TextUtil.isNullOrEmpty(From) == false)");
-//        Out.println("        S.append(\", \").append(From);");
         Helper.SwitchLookupIdWhereClauses(Out, G, O, "       ", false);
         Out.println();
         if (G.getSql().supportsSelectSubsetting() == true)
@@ -429,7 +427,12 @@ public class TildaFactory implements CodeGenTildaFactory
     @Override
     public void genQueryHelper(PrintWriter Out, GeneratorSession G, Object O)
       {
-        Out.println("   public static QueryHelper newSelectQuery(Connection C) throws Exception { return new QueryHelper(C, StatementType.SELECT, "+O.getBaseClassName()+"_Factory.TABLENAME); }");
+        Out.println("   public static QueryHelper newSelectQuery(Connection C) throws Exception { return new QueryHelper(C   , StatementType.SELECT, "+O.getBaseClassName()+"_Factory.TABLENAME); }");
+        Out.println("   public static QueryHelper newWhereQuery (            ) throws Exception { return new QueryHelper(null, StatementType.SELECT, "+O.getBaseClassName()+"_Factory.TABLENAME); }");
+        Out.println("   public static ListResults<" + Helper.getFullAppDataClassName(O) + "> runSelect(Connection C, QueryHelper Q, int Start, int Size) throws Exception");
+        Out.println("     {"); 
+        Out.println("       return ReadMany(C, -7, null, Q, Start, Size);"); 
+        Out.println("     }");
         if (O._LC == ObjectLifecycle.NORMAL)
           {
             Out.println("   public static QueryHelper newUpdateQuery(Connection C) throws Exception { return new QueryHelper(C, StatementType.UPDATE, "+O.getBaseClassName()+"_Factory.TABLENAME); }");

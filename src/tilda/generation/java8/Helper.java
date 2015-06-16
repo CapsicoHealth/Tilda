@@ -314,6 +314,12 @@ public class Helper
         String LookupIdStr = (UniqueConstraints == true ? "__" : "") + "LookupId";
         Out.println(Lead + "switch (" + LookupIdStr + ")");
         Out.println(Lead + " {");
+        if (UniqueConstraints == false)
+          {
+            Out.println(Lead + "   case -7:");
+            Out.println(Lead + "      S.append(\" where \").append(((QueryHelper)ExtraParams).getWhereClause());");
+            Out.println(Lead + "      break;");
+          }
         int LookupId = -1;
         if (O._PrimaryKey != null)
           {
@@ -406,6 +412,11 @@ public class Helper
         String LookupIdStr = (UniqueConstraints == true ? "__" : "") + "LookupId";
         Out.println(Lead + "switch (" + LookupIdStr + ")");
         Out.println(Lead + " {");
+        if (UniqueConstraints == false)
+          {
+            Out.println(Lead + "   case -7:");
+            Out.println(Lead + "      break;");
+          }
         int LookupId = -1;
         if (O._PrimaryKey != null)
           {
