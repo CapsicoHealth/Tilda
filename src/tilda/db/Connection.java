@@ -36,6 +36,7 @@ import tilda.enums.TransactionType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
+import tilda.parsing.parts.Schema;
 import tilda.performance.PerfTracker;
 import tilda.utils.AnsiUtil;
 import tilda.utils.SystemValues;
@@ -350,6 +351,11 @@ public final class Connection
     public boolean createTable(Object Obj)  throws Exception
       {
         return _DB.createTable(this, Obj);
+      }
+
+    public boolean createSchema(Schema S) throws Exception
+      {
+        return _DB.createSchema(this, S);
       }
         
   }

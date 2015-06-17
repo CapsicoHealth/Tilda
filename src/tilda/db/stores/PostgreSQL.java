@@ -28,6 +28,7 @@ import tilda.generation.interfaces.CodeGenSql;
 import tilda.generation.postgres9.PostgresType;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
+import tilda.parsing.parts.Schema;
 import tilda.utils.TextUtil;
 
 public class PostgreSQL implements DBType
@@ -99,6 +100,30 @@ public class PostgreSQL implements DBType
         return true;
       }
 
+    @Override
+    public CodeGenSql getSQlCodeGen()
+      {
+        return new tilda.generation.postgres9.Sql();
+      }
+
+    @Override
+    public boolean createSchema(Connection Con, Schema S) throws Exception
+      {
+        StringWriter Str = new StringWriter();
+        PrintWriter Out = new PrintWriter(Str);
+        getSQlCodeGen().genFileStart(Out, S);
+        return Con.ExecuteUpdate(S.getShortName(), Str.toString()) >= 0;
+      }
+
+    @Override
+    public boolean createTable(Connection Con, Object Obj) throws Exception
+      {
+        StringWriter Str = new StringWriter();
+        PrintWriter Out = new PrintWriter(Str);
+        Generator.getFullTableDDL(getSQlCodeGen(), Out, Obj);
+        return Con.ExecuteUpdate(Obj.getShortName(), Str.toString()) >= 0;
+      }
+
 
     @Override
     public boolean alterTableAddColumn(Connection Con, Column Col, String DefaultValue) throws Exception
@@ -118,22 +143,5 @@ public class PostgreSQL implements DBType
           return Collection == true ? "text[]" : S < 15 ? PostgresType.CHAR._SQLType + "(" + S + ")" : S < 4096 ? PostgresType.STRING._SQLType + "(" + S + ")" : "text";
         return PostgresType.get(T)._SQLType + (Collection == true ? "[]" : "");
       }
-
-
-    @Override
-    public CodeGenSql getSQlCodeGen()
-      {
-        return new tilda.generation.postgres9.Sql();
-      }
-
-
-    @Override
-    public boolean createTable(Connection Con, Object Obj) throws Exception
-      {
-        StringWriter Str = new StringWriter();
-        PrintWriter Out = new PrintWriter(Str);
-        Generator.getFullTableDDL(getSQlCodeGen(), Out, Obj);
-        String Q = Str.toString();
-        return Con.ExecuteUpdate(Obj.getShortName(), Q) >= 0;
-      }
+    
   }

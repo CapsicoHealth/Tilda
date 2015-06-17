@@ -22,6 +22,7 @@ import tilda.db.Connection;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
+import tilda.parsing.parts.Schema;
 
 public interface DBType
   {
@@ -34,6 +35,7 @@ public interface DBType
     public boolean getSelectSubsettingClause(StringBuilder Str, int Start, int Size);
     
     public CodeGenSql getSQlCodeGen();    
+    public boolean createSchema(Connection Con, Schema S) throws Exception;
     public boolean createTable(Connection Con, Object Obj) throws Exception;
     public boolean alterTableAddColumn(Connection Con, Column Col, String DefaultValue) throws Exception;
 
@@ -44,5 +46,5 @@ public interface DBType
     public static DBType[] _DBTypes = { Postgres, SQLServer, DB2 };
 
     public boolean FullIdentifierOnUpdate();
-
+    
   }

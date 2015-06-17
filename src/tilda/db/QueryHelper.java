@@ -17,6 +17,8 @@
 package tilda.db;
 
 import java.time.ZonedDateTime;
+import java.util.Collection;
+import java.util.Iterator;
 
 import tilda.db.processors.RecordProcessor;
 import tilda.enums.ColumnDefinition;
@@ -356,6 +358,28 @@ public class QueryHelper
           }
         throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST);
       }
+    
+    public QueryHelper in(Collection<String> v) throws Exception
+      {
+        if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+          {
+            _QueryStr.append(" in (");
+            if (v != null)
+             {
+               Iterator<String> I = v.iterator();
+               boolean first = true;
+               while (I.hasNext() == true)
+                {
+                  if (first == true) first = false; else _QueryStr.append(", ");
+                  TextUtil.EscapeSingleQuoteForSQL(_QueryStr, I.next());
+                }
+             }
+            _QueryStr.append(")");
+            return this;
+          }
+        throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST);
+      }
+    
 
     protected QueryHelper in(char[] v) throws Exception
       {

@@ -159,7 +159,7 @@ public class ConnectionPool
             
             for (String name : Defs._Schemas)
               {
-                LOG.info("Initializing "+name);
+                LOG.info("Inspecting "+name);
                 R = new BufferedReader(new InputStreamReader(FileUtil.getResourceAsStream(name)));
                 gson = new GsonBuilder().setPrettyPrinting().create();
                 Schema S = gson.fromJson(R, Schema.class);
@@ -168,8 +168,8 @@ public class ConnectionPool
                 LOG.debug("Initializing Schema objects");
                 Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
                 M.invoke(null, C);
-                C.commit();
                 _SchemaPackage.put(S._Name, S._Package);
+                C.commit();
               }
           }
         catch (Throwable T)

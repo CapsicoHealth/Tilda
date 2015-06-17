@@ -22,6 +22,7 @@ import tilda.db.Connection;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
+import tilda.parsing.parts.Schema;
 import tilda.utils.TextUtil;
 
 public class IBMDB2 implements DBType
@@ -95,6 +96,13 @@ public class IBMDB2 implements DBType
 
     @Override
     public boolean createTable(Connection Con, Object Obj)
+      throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public boolean createSchema(Connection Con, Schema S)
       throws Exception
       {
         throw new UnsupportedOperationException();
