@@ -105,16 +105,22 @@ public class Generator
               Out.println();
               Out.println();
               DG.ObjectDocs(Out, G, O);
-              CG.genDDL(Out, G, O);
-              for (Index I : O._Indices)
-                if (I != null)
-                  CG.genIndex(Out, G, I);
-              if (O._PrimaryKey != null && O._PrimaryKey._Autogen == true)
-                CG.genKeysManagement(Out, G, O);
+              getFullTableDDL(CG, Out, O);
             }
         Out.println();
         Out.println();
         Out.close();
+      }
+
+
+    public static void getFullTableDDL(CodeGenSql CG, PrintWriter Out, Object O)
+      {
+        CG.genDDL(Out, O);
+        for (Index I : O._Indices)
+          if (I != null)
+            CG.genIndex(Out, I);
+        if (O._PrimaryKey != null && O._PrimaryKey._Autogen == true)
+          CG.genKeysManagement(Out, O);
       }
 
 

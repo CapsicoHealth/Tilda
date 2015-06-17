@@ -19,7 +19,9 @@ package tilda.db.stores;
 import java.sql.SQLException;
 
 import tilda.db.Connection;
+import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
+import tilda.parsing.parts.Object;
 import tilda.utils.TextUtil;
 
 public class IBMDB2 implements DBType
@@ -80,7 +82,20 @@ public class IBMDB2 implements DBType
       }
 
     @Override
-    public boolean alterTableAddColumn(Connection Con, Column Col) throws Exception
+    public boolean alterTableAddColumn(Connection Con, Column Col, String DefaultValue) throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public CodeGenSql getSQlCodeGen()
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public boolean createTable(Connection Con, Object Obj)
+      throws Exception
       {
         throw new UnsupportedOperationException();
       }

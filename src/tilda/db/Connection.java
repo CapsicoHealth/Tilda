@@ -17,6 +17,7 @@
 package tilda.db;
 
 import java.sql.Array;
+import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Savepoint;
@@ -32,7 +33,9 @@ import org.apache.logging.log4j.Logger;
 import tilda.db.processors.RecordProcessor;
 import tilda.db.stores.DBType;
 import tilda.enums.TransactionType;
+import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
+import tilda.parsing.parts.Object;
 import tilda.performance.PerfTracker;
 import tilda.utils.AnsiUtil;
 import tilda.utils.SystemValues;
@@ -283,7 +286,7 @@ public final class Connection
         return JDBCHelper.ExecuteUpdate(_C, TableName, Query);
       }
 
-    public Array createArrayOf(String TypeName, Object[] A)
+    public Array createArrayOf(String TypeName, java.lang.Object[] A)
       throws SQLException
       {
         return _C.createArrayOf(TypeName, A);
@@ -329,8 +332,24 @@ public final class Connection
           }
       }
 
-    public boolean alterTableAddColumn(Column Col) throws Exception
+    public CodeGenSql getSQlCodeGen()
       {
-        return _DB.alterTableAddColumn(this, Col);
+        return _DB.getSQlCodeGen();
       }
+
+    public DatabaseMetaData getMetaData() throws SQLException
+      {
+        return _C.getMetaData();
+      }
+
+    public boolean alterTableAddColumn(Column Col, String DefaultValue) throws Exception
+      {
+        return _DB.alterTableAddColumn(this, Col, DefaultValue);
+      }
+
+    public boolean createTable(Object Obj)  throws Exception
+      {
+        return _DB.createTable(this, Obj);
+      }
+        
   }

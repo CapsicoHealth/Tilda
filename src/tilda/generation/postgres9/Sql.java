@@ -121,7 +121,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
       }
 
     @Override
-    public void genDDL(PrintWriter Out, GeneratorSession G, Object O)
+    public void genDDL(PrintWriter Out, Object O)
       {
         Out.println("create table if not exists " + O._ParentSchema._Name + "." + O._Name + " -- " + O._Description);
         Out.print(" (  ");
@@ -161,7 +161,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
       }
 
     @Override
-    public void genIndex(PrintWriter Out, GeneratorSession G, Index I)
+    public void genIndex(PrintWriter Out, Index I)
       {
         if (I._Db == false)
           Out.print("-- app-level index only -- ");
@@ -184,7 +184,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
       }
 
     @Override
-    public void genKeysManagement(PrintWriter Out, GeneratorSession G, Object O)
+    public void genKeysManagement(PrintWriter Out, Object O)
       {
         Out.println("delete from TILDA.KEY where \"name\" = '" + O._ParentSchema._Name + "." + O._Name + "';");
         Out.println("insert into TILDA.KEY (\"refnum\", \"name\", \"max\", \"count\", \"created\", \"lastUpdated\") values ((select COALESCE(max(\"refnum\"),0)+1 from TILDA.KEY), '"

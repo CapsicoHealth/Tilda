@@ -16,13 +16,18 @@
 
 package tilda.db.stores;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.sql.SQLException;
 
 import tilda.db.Connection;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.generation.Generator;
+import tilda.generation.interfaces.CodeGenSql;
 import tilda.generation.postgres9.PostgresType;
 import tilda.parsing.parts.Column;
+import tilda.parsing.parts.Object;
 import tilda.utils.TextUtil;
 
 public class PostgreSQL implements DBType
@@ -96,11 +101,14 @@ public class PostgreSQL implements DBType
 
 
     @Override
-    public boolean alterTableAddColumn(Connection Con, Column Col) throws Exception
+    public boolean alterTableAddColumn(Connection Con, Column Col, String DefaultValue) throws Exception
       {
+        if (Col._Nullable == false && DefaultValue == null)
+         throw new Exception("Cannot add a new 'not null' column to a table without a default value");
         String Q ="ALTER TABLE "+Col._ParentThing.getShortName()+" ADD COLUMN \""+Col._Name+"\" "+getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection());
         if (Col._Nullable == false)
-         Q+=" not null";
+         Q+=" not null DEFAULT "+DefaultValue; // LDH-NOTE: Not sure if this actually works... Needs to do type-based escaping right?
+          
         return Con.ExecuteUpdate(Col._ParentThing.getShortName(), Q) >= 0;
       }
     
@@ -109,5 +117,23 @@ public class PostgreSQL implements DBType
         if (T == ColumnType.STRING && M != ColumnMode.CALCULATED)
           return Collection == true ? "text[]" : S < 15 ? PostgresType.CHAR._SQLType + "(" + S + ")" : S < 4096 ? PostgresType.STRING._SQLType + "(" + S + ")" : "text";
         return PostgresType.get(T)._SQLType + (Collection == true ? "[]" : "");
+      }
+
+
+    @Override
+    public CodeGenSql getSQlCodeGen()
+      {
+        return new tilda.generation.postgres9.Sql();
+      }
+
+
+    @Override
+    public boolean createTable(Connection Con, Object Obj) throws Exception
+      {
+        StringWriter Str = new StringWriter();
+        PrintWriter Out = new PrintWriter(Str);
+        Generator.getFullTableDDL(getSQlCodeGen(), Out, Obj);
+        String Q = Str.toString();
+        return Con.ExecuteUpdate(Obj.getShortName(), Q) >= 0;
       }
   }

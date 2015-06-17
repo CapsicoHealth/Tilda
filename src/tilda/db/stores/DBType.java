@@ -19,7 +19,9 @@ package tilda.db.stores;
 import java.sql.SQLException;
 
 import tilda.db.Connection;
+import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
+import tilda.parsing.parts.Object;
 
 public interface DBType
   {
@@ -30,7 +32,10 @@ public interface DBType
     public boolean needsSavepoint();
     public boolean supportsSelectSubsetting();
     public boolean getSelectSubsettingClause(StringBuilder Str, int Start, int Size);
-    public boolean alterTableAddColumn(Connection Con, Column Col) throws Exception;
+    
+    public CodeGenSql getSQlCodeGen();    
+    public boolean createTable(Connection Con, Object Obj) throws Exception;
+    public boolean alterTableAddColumn(Connection Con, Column Col, String DefaultValue) throws Exception;
 
     public static DBType DB2       = new IBMDB2    ();
     public static DBType SQLServer = new MSSQL     ();
@@ -39,4 +44,5 @@ public interface DBType
     public static DBType[] _DBTypes = { Postgres, SQLServer, DB2 };
 
     public boolean FullIdentifierOnUpdate();
+
   }

@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -33,12 +34,14 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.enums.ColumnMode;
 import tilda.enums.TransactionType;
 import tilda.generation.interfaces.CodeGenSql;
+import tilda.migration.Migrator;
 import tilda.parsing.Parser;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Column;
@@ -47,6 +50,7 @@ import tilda.parsing.parts.Schema;
 import tilda.performance.PerfTracker;
 import tilda.utils.CollectionUtil;
 import tilda.utils.FileUtil;
+import tilda.utils.LogUtil;
 import tilda.utils.TextUtil;
 
 import com.google.gson.Gson;
@@ -139,105 +143,54 @@ public class ConnectionPool
             LOG.info("Initializing Tilda.");
             InputStream In = FileUtil.getResourceAsStream("tilda.config.json");
             if (In == null)
-              {
-                LOG.error("Cannot find Tilda configuration file '/tilda.config.json'.");
-              }
-            else
-              {
-                R = new BufferedReader(new InputStreamReader(In));
-                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                ConnDefs Defs = gson.fromJson(R, ConnDefs.class);
-                if (Defs.validate() == true)
-                  for (Conn Co : Defs._Conns)
-                    init(Co._Id, Co._Driver, Co._DB, Co._User, Co._Pswd, Co._Initial, Co._Max);
+             throw new Exception("Cannot find Tilda configuration file '/tilda.config.json'.");
+            R = new BufferedReader(new InputStreamReader(In));
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            ConnDefs Defs = gson.fromJson(R, ConnDefs.class);
+            if (Defs.validate() == true)
+              for (Conn Co : Defs._Conns)
+                init(Co._Id, Co._Driver, Co._DB, Co._User, Co._Pswd, Co._Initial, Co._Max);
 
-                LOG.info("Initializing registered Tilda schemas");
-                C = get("MAIN");
-                final String TildaJSON = "tilda/data/_tilda.Tilda.json";
-                if (TextUtil.FindElement(Defs._Schemas, TildaJSON, true, 0) == -1)
-                  Defs._Schemas = CollectionUtil.prepend(Defs._Schemas, TildaJSON);
-                
-                for (String name : Defs._Schemas)
-                  {
-                    LOG.info("Initializing "+name);
-                    R = new BufferedReader(new InputStreamReader(FileUtil.getResourceAsStream(name)));
-                    gson = new GsonBuilder().setPrettyPrinting().create();
-                    Schema S = gson.fromJson(R, Schema.class);
-                    S.setOrigin(name);
-                    CodeGenSql Sql = (CodeGenSql) Class.forName("tilda.generation.postgres9.Sql" ).newInstance();
-                    ParserSession PS = new ParserSession(S, Sql);
-                    if (Parser.loadDependencies(PS, S) == true)
-                     {
-                       Iterator<Schema> I = PS.getDependencies();
-                       while (I.hasNext() == true)
-                         if (I.next().Validate(PS) == false)
-                           break;
-                       if (PS.getErrorCount() == 0)
-                         {
-                           if (PS.getDependency(S._Package,  S._Name) == null)
-                             PS.addDependency(S);
-                           S.Validate(PS);
-                           for (Object Obj : S._Objects)
-                             {
-                               DatabaseMetaData meta = C._C.getMetaData();
-                               LOG.debug("Getting columns for table "+S._Name+"."+Obj._Name+".");
-                               ResultSet RS = meta.getColumns(null, S._Name.toLowerCase(), Obj._Name.toLowerCase(), null);
-                               Set<String> DBColumns = new HashSet<String>();
-                               while (RS.next() != false)
-                                 DBColumns.add(RS.getString("COLUMN_NAME").toLowerCase());
-                               for (Column Col : Obj._Columns)
-                                 {
-                                   if (Col._Mode != ColumnMode.CALCULATED && DBColumns.contains(Col._Name.toLowerCase()) == false)
-                                    if (C.alterTableAddColumn(Col) == false)
-                                     throw new Exception("Cannot upgrade table '"+Obj.getShortName()+"' by adding the new required column '"+Col.getShortName()+"'.");
-                                 }
-                               C.commit();
-                             }
-                         }
-                       LOG.debug("\n");
-                       LOG.debug("Initializing Schema objects");
-                       Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
-                       M.invoke(null, C);
-                       C.commit();
-                       _SchemaPackage.put(S._Name, S._Package);
-                     }
-                    if (PS.getErrorCount() > 0)
-                      {
-                        LOG.error("==============================================================================================");
-                        LOG.error("There were " + PS.getErrorCount() + " errors when trying to validate the schema set");
-                        int i = 0;
-                        for (String Err : PS.getErrors())
-                          LOG.error("    "+(++i)+" - "+Err);
-                      }
-                  }
+            LOG.info("Initializing registered Tilda schemas");
+            C = get("MAIN");
+            final String TildaJSON = "tilda/data/_tilda.Tilda.json";
+            if (TextUtil.FindElement(Defs._Schemas, TildaJSON, true, 0) == -1)
+              Defs._Schemas = CollectionUtil.prepend(Defs._Schemas, TildaJSON);
+            
+            for (String name : Defs._Schemas)
+              {
+                LOG.info("Initializing "+name);
+                R = new BufferedReader(new InputStreamReader(FileUtil.getResourceAsStream(name)));
+                gson = new GsonBuilder().setPrettyPrinting().create();
+                Schema S = gson.fromJson(R, Schema.class);
+                S.setOrigin(name);
+                Migrator.migrate(C, S);
+                LOG.debug("Initializing Schema objects");
+                Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
+                M.invoke(null, C);
+                C.commit();
+                _SchemaPackage.put(S._Name, S._Package);
               }
           }
         catch (Throwable T)
           {
-            LOG.error("Cannot initialize Tilda", T);
+            LOG.error("Cannot initialize Tilda\n", T);
             System.exit(1);
           }
         finally
           {
-            if (R != null)
-              try
-                {
-                  R.close();
-                }
-              catch (IOException E)
-                {
-                  LOG.error("Cannot initialize Tilda", E);
-                  System.exit(1);
-                }
-            if (C != null)
-              try
-                {
-                  C.close();
-                }
-              catch (SQLException e)
-                {
-                  System.exit(1);
-                }
+            try
+             {
+               if (R != null)
+                R.close();
+               if (C != null)
+                C.close();
+             }
+            catch (IOException | SQLException E)
+             {
+               LOG.error("Cannot initialize Tilda", E);
+               System.exit(1);
+             }
           }
       }
 

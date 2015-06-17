@@ -20,7 +20,6 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import tilda.db.stores.DBType;
-import tilda.generation.GeneratorSession;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
@@ -43,7 +42,7 @@ public interface CodeGenSql extends DBType, CodeGenBase
     public String getEqualCurentTimestamp();
     public String getCommaCurentTimestamp();
 
-    public void genDDL(PrintWriter Out, GeneratorSession G, Object O);
-    public void genIndex(PrintWriter Out, GeneratorSession G, Index I);
-    public void genKeysManagement(PrintWriter Out, GeneratorSession G, Object O);
+    public void genDDL(PrintWriter Out, Object O);
+    public void genIndex(PrintWriter Out, Index I);
+    public void genKeysManagement(PrintWriter Out, Object O);
   }
