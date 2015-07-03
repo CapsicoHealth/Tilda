@@ -88,6 +88,13 @@ public class Schema
             return O;
         return null;
       }
+    
+    public boolean isDefinedInOrder(Object FirstObj, Object SecondObj)
+      {
+        int i = _Objects.indexOf(FirstObj);
+        int j = _Objects.indexOf(SecondObj);
+        return i != -1 && j != -1 && i <= j; 
+      }
 
     public View getView(String Name)
       {
@@ -135,6 +142,7 @@ public class Schema
                 PS.AddError("The Object '" + O._Name + "' conflicts with another Thing already defined with the same name in Schema '" + getFullName() + "'.");
               O.Validate(PS, this);
             }
+        
 //        for (View V : _Views)
 //          if (V != null)
 //            {

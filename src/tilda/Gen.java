@@ -56,8 +56,8 @@ public class Gen
                     LOG.info("Loaded Tilda schema '" + PS._Main.getFullName() + "'.");
                     if (PS.hasDependencies() == true)
                       {
-                        LOG.info("  Loaded dependencies:");
-                        Iterator<Schema> I = PS.getDependencies();
+                        LOG.info("  Loaded and validated dependencies:");
+                        Iterator<Schema> I = PS.getDependenciesIterator();
                         while (I.hasNext() == true)
                           LOG.debug("    - " + I.next().getFullName() + ".");
                       }

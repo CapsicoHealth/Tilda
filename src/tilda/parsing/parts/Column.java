@@ -107,7 +107,7 @@ public class Column extends TypeDef
       {
         int Errs = PS.getErrorCount();
         _ParentThing = Thing;
-        LOG.debug("    Validating Column " + getFullName() + ".");
+//        LOG.debug("    Validating Column " + getFullName() + ".");
 
         // Mandatories
         if (TextUtil.isNullOrEmpty(_Name) == true)

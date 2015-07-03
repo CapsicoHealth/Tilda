@@ -17,9 +17,11 @@
 package tilda.parsing;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
@@ -42,52 +44,33 @@ public class ParserSession
 
     public Schema          _Main;
     public CodeGenSql      _CGSql;
-    protected List<Schema> _Dependencies     = new ArrayList<Schema>();
+    protected Map<String, Schema>  _Dependencies = new HashMap<String, Schema>();
     protected Set<String>  _ValidatedSchemas = new HashSet<String>();
     protected List<String> _Errors           = new ArrayList<String>();
 
-
-    public Schema getDependency(String PackageName, String SchemaName)
-      {
-        String FullName = PackageName+"."+SchemaName;
-        for (Schema S : _Dependencies)
-         if (S.getFullName().equalsIgnoreCase(FullName) == true)
-          return S;
-        return null;
-      }
-
-    public void addDependency(Schema D)
-      {
-        Schema S = getDependency(D._Package, D._Name);
-        if (S == null)
-         _Dependencies.add(D);
-      }
-
-    public Iterator<Schema> getDependencies()
-      {
-        return _Dependencies.iterator();
-      }
-
+    public Iterator<Schema> getDependenciesIterator()
+     {
+       return _Dependencies.values().iterator();
+     }
     public boolean hasDependencies()
      {
        return _Dependencies.isEmpty()==false;
      }
-
-
 
     public boolean hasSchemaBeenValidated(Schema S)
       {
         return _ValidatedSchemas.contains(S.getFullName());
       }
 
-    public void ValidateSchema(Schema S)
+    public void addValidatedSchema(Schema S)
       {
         _ValidatedSchemas.add(S.getFullName());
       }
 
     public Schema getSchema(String PackageName, String SchemaName)
       {
-        return getDependency(PackageName, SchemaName);
+        String FullName = PackageName+"."+SchemaName;
+        return _Dependencies.get(FullName);
       }
 
     public Object getObject(String PackageName, String SchemaName, String ObjectName)

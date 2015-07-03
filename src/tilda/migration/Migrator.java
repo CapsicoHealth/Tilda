@@ -55,80 +55,70 @@ public class Migrator
           {
             if (Parser.loadDependencies(PS, S) == true)
               {
-                Iterator<Schema> I = PS.getDependencies();
-                while (I.hasNext() == true)
-                  if (I.next().Validate(PS) == false)
-                    break;
-                if (PS.getErrorCount() == 0)
-                  {
-                    if (PS.getDependency(S._Package, S._Name) == null)
-                      PS.addDependency(S);
-                    S.Validate(PS);
-                    LogUtil.setLogLevel(LogLevel);
-                    DatabaseMetaData meta = C.getMetaData();
+                LogUtil.setLogLevel(LogLevel);
+                DatabaseMetaData meta = C.getMetaData();
 
-                    RS = meta.getSchemas();
-                    Set<String> DBSchemas = new HashSet<String>();
+                RS = meta.getSchemas();
+                Set<String> DBSchemas = new HashSet<String>();
+                while (RS.next() != false)
+                 DBSchemas.add(RS.getString("TABLE_SCHEM").toLowerCase());
+                RS.close();
+                
+                if (DBSchemas.contains(S._Name.toLowerCase()) == false)
+                  {
+                    LOG.info("The application's data model defines the schema '"+S.getShortName()+"' which cannot be found in the database. Trying to create it...");
+                    if (C.createSchema(S) == false)
+                     throw new Exception("Cannot upgrade database by adding the new schema '" + S.getShortName() + "'.");
+                    C.commit();
+                  }
+                
+                RS = meta.getTables(null,  S._Name.toLowerCase(), null, null);
+                Set<String> DBTables = new HashSet<String>();
+                Set<String> DBViews  = new HashSet<String>();
+                while (RS.next() != false)
+                  {
+                    String Type = RS.getString("TABLE_TYPE");
+                    String Name = RS.getString("TABLE_NAME");
+                    if ("view".equalsIgnoreCase(Type) == true)
+                      DBViews.add(Name.toLowerCase());
+                    else
+                     DBTables.add(Name.toLowerCase());
+                  }
+                RS.close();
+                boolean didSomething = false;
+                for (Object Obj : S._Objects)
+                 if (DBTables.contains(Obj._Name.toLowerCase()) == false)
+                   {
+                     LOG.info("The application's data model defines the table '"+Obj.getShortName()+"' which cannot be found in the database. Trying to create it...");
+                     if (C.createTable(Obj) == false)
+                      throw new Exception("Cannot upgrade schema by adding the new table '" + Obj.getShortName() + "'.");
+                     didSomething = true;
+                   }
+                if (didSomething == true)
+                 C.commit();
+                
+                for (Object Obj : S._Objects)
+                  {
+                    RS = meta.getColumns(null, S._Name.toLowerCase(), Obj._Name.toLowerCase(), null);
+                    Set<String> DBColumns = new HashSet<String>();
                     while (RS.next() != false)
-                     DBSchemas.add(RS.getString("TABLE_SCHEM").toLowerCase());
+                      DBColumns.add(RS.getString("COLUMN_NAME").toLowerCase());
                     RS.close();
-                    
-                    if (DBSchemas.contains(S._Name.toLowerCase()) == false)
-                      {
-                        LOG.info("The application's data model defines the schema '"+S.getShortName()+"' which cannot be found in the database. Trying to create it...");
-                        if (C.createSchema(S) == false)
-                         throw new Exception("Cannot upgrade database by adding the new schema '" + S.getShortName() + "'.");
-                        C.commit();
-                      }
-                    
-                    RS = meta.getTables(null,  S._Name.toLowerCase(), null, null);
-                    Set<String> DBTables = new HashSet<String>();
-                    Set<String> DBViews  = new HashSet<String>();
-                    while (RS.next() != false)
-                      {
-                        String Type = RS.getString("TABLE_TYPE");
-                        String Name = RS.getString("TABLE_NAME");
-                        if ("view".equalsIgnoreCase(Type) == true)
-                          DBViews.add(Name.toLowerCase());
-                        else
-                         DBTables.add(Name.toLowerCase());
-                      }
-                    RS.close();
-                    boolean didSomething = false;
-                    for (Object Obj : S._Objects)
-                     if (DBTables.contains(Obj._Name.toLowerCase()) == false)
-                       {
-                         LOG.info("The application's data model defines the table '"+Obj.getShortName()+"' which cannot be found in the database. Trying to create it...");
-                         if (C.createTable(Obj) == false)
-                          throw new Exception("Cannot upgrade schema by adding the new table '" + Obj.getShortName() + "'.");
-                         didSomething = true;
-                       }
+                    if (DBColumns.isEmpty() == true)
+                     throw new Exception("Cannot retrieve columns for table '"+Obj.getShortName()+"'.");
+                    didSomething = false;
+                    for (Column Col : Obj._Columns)
+                     {
+                       if (Col._Mode != ColumnMode.CALCULATED && DBColumns.contains(Col._Name.toLowerCase()) == false)
+                        {
+                          LOG.info("The application's data model defines the column '"+Col.getShortName()+"' which cannot be found in the database. Trying to create it...");
+                          if (C.alterTableAddColumn(Col, null) == false)
+                           throw new Exception("Cannot upgrade table '" + Obj.getShortName() + "' by adding the new required column '" + Col.getShortName() + "'.");
+                          didSomething = true;
+                        }
+                     }
                     if (didSomething == true)
                      C.commit();
-                    
-                    for (Object Obj : S._Objects)
-                      {
-                        RS = meta.getColumns(null, S._Name.toLowerCase(), Obj._Name.toLowerCase(), null);
-                        Set<String> DBColumns = new HashSet<String>();
-                        while (RS.next() != false)
-                          DBColumns.add(RS.getString("COLUMN_NAME").toLowerCase());
-                        RS.close();
-                        if (DBColumns.isEmpty() == true)
-                         throw new Exception("Cannot retrieve columns for table '"+Obj.getShortName()+"'.");
-                        didSomething = false;
-                        for (Column Col : Obj._Columns)
-                         {
-                           if (Col._Mode != ColumnMode.CALCULATED && DBColumns.contains(Col._Name.toLowerCase()) == false)
-                            {
-                              LOG.info("The application's data model defines the column '"+Col.getShortName()+"' which cannot be found in the database. Trying to create it...");
-                              if (C.alterTableAddColumn(Col, null) == false)
-                               throw new Exception("Cannot upgrade table '" + Obj.getShortName() + "' by adding the new required column '" + Col.getShortName() + "'.");
-                              didSomething = true;
-                            }
-                         }
-                        if (didSomething == true)
-                         C.commit();
-                      }
                   }
               }
             if (PS.getErrorCount() > 0)

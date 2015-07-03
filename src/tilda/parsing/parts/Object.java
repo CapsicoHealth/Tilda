@@ -50,6 +50,7 @@ public class Object extends View
 
     public transient FrameworkSourcedType _FST         = FrameworkSourcedType.NONE;
     public transient ObjectLifecycle      _LC;
+    public transient boolean _Validated = false;
 
     @Override
     public String getThingType()
@@ -109,7 +110,8 @@ public class Object extends View
         if (_PrimaryKey == null && _HasUniqueIndex == false)
           PS.AddError("Object '" + getFullName() + "' doesn't have any identity. You must define at least a primary key or a unique index.");
 
-        return Errs == PS.getErrorCount();
+        _Validated = Errs == PS.getErrorCount();
+        return _Validated;
       }
 
     private boolean CreateAutogenPK(ParserSession PS)
@@ -262,5 +264,4 @@ public class Object extends View
             }
         return false;
       }
-
   }

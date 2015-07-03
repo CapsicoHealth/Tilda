@@ -22,16 +22,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Schema;
-import tilda.utils.CollectionUtil;
 import tilda.utils.FileUtil;
-import tilda.utils.TextUtil;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -51,17 +52,6 @@ public abstract class Parser
         ParserSession PS = new ParserSession(S, CGSql);
         if (loadDependencies(PS, S) == false)
           return null;
-
-        Iterator<Schema> I = PS.getDependencies();
-        while (I.hasNext() == true)
-          if (I.next().Validate(PS) == false)
-            break;
-        if (PS.getErrorCount() == 0)
-          {
-            if (PS.getDependency(S._Package,  S._Name) == null)
-              PS.addDependency(S);
-            S.Validate(PS);
-          }
 
         if (PS.getErrorCount() != 0)
           {
@@ -140,33 +130,115 @@ public abstract class Parser
           }
       }
 
-    public static boolean loadDependencies(ParserSession PS, Schema S)
+    public static boolean loadDependencies(ParserSession PS, Schema BaseSchema)
       {
-        final String TildaBasePackage = "tilda/data/_tilda.Tilda.json";
-        
-        if (S._Dependencies == null || S._Dependencies.length == 0)
-         S._Dependencies = new String[] { TildaBasePackage };
-        else if (TextUtil.FindElement(S._Dependencies, TildaBasePackage, false, 0) == -1)
-          S._Dependencies = CollectionUtil.prepend(S._Dependencies, TildaBasePackage);
+        String BaseTildaSchemaResource = "tilda/data/_tilda.Tilda.json";
+        Schema BaseTilda = null;
+        if (BaseSchema._ResourceName.endsWith(BaseTildaSchemaResource) == false)
+          {
+            LOG.info("Loading base Tilda schema from '" + BaseTildaSchemaResource + "'.");
+            BaseTilda = fromResource(BaseTildaSchemaResource);
+            if (BaseTilda == null)
+             return false;
+            PS._Dependencies.put(BaseTilda.getFullName(), BaseTilda);
+            if (loadDependencies(BaseSchema, PS._Dependencies) == false)
+              return false;
+          }
+        else
+         BaseTilda = BaseSchema;
+         
+        // We need to reorder the list of dependent schemas for validation to work properly, i.e.,
+        // if schema A depends on Schema B, then B should be before in the list.
+        List<Schema> Schemas = new ArrayList<Schema>(PS._Dependencies.values());
+        Schema S1 = null;
+        Schema S2 = null;
+        for (int i = 0; i < Schemas.size(); ++i)
+          {
+            Schema s = Schemas.get(i);
+            if (s == null)
+              continue;
+            // Let's find the index the dependency schema that's highest in the list.
+            int highestDependentindex = -1;
+            if (s._DependencySchemas.isEmpty() == false)
+              for (Schema d : s._DependencySchemas)
+                {
+                  int k = Schemas.indexOf(d);
+                  if (k > highestDependentindex)
+                    highestDependentindex = k;
+                }
+            // May repeat if the base Tilda schema was explicitly defined as a dependency, but this is
+            // such a small operation, it's not worth optimizing.
+            int k = Schemas.indexOf(BaseTilda);
+            if (k > highestDependentindex)
+              highestDependentindex = k;
 
+            // If the highest index is greater than that of the current schema, we need to swap.
+            if (highestDependentindex > i)
+              {
+                Schema NewS1 = Schemas.get(highestDependentindex);
+                if (S1 != null) // no check for the first loop.
+                  {
+                    // Check if there is a circular dependency!
+                    if (   S1.getFullName().equals(NewS1.getFullName()) && S2.getFullName().equals(s    .getFullName())
+                        || S1.getFullName().equals(s    .getFullName()) && S2.getFullName().equals(NewS1.getFullName()))
+                      {
+                        PS.AddError("There is a circular dependency between schemas '" + S1.getFullName() + "' and '" + S2.getFullName() + "'.");
+                        return false;
+                      }
+                  }
+                // Update the running swapping state
+                S1 = NewS1;
+                S2 = s;
+                // Do the swapping
+                Schemas.set(i, S1);
+                Schemas.set(highestDependentindex, S2);
+                // Go back one in the index to make sure we re-process the element again that was just swapped.
+                // By definition, it was after the current schema in the loop and therefore wasn't processed yet.
+                --i;
+              }
+          }
+
+        LOG.debug("  Reordered dependencies:");
+        Iterator<Schema> I = Schemas.iterator();
+        while (I.hasNext() == true)
+          LOG.debug("    - " + I.next().getFullName() + ".");
+
+        I = Schemas.iterator();
+        while (I.hasNext() == true)
+          if (I.next().Validate(PS) == false)
+            break;
+        if (PS.getErrorCount() == 0)
+          {
+            if (PS.getSchema(BaseSchema._Package, BaseSchema._Name) == null)
+             {
+              PS._Dependencies.put(BaseSchema.getFullName(), BaseSchema);
+             }
+            BaseSchema.Validate(PS);
+          }
+
+        return true;
+      }
+
+    private static boolean loadDependencies(Schema S, Map<String, Schema> Dependencies)
+      {
         if (S._Dependencies != null)
           for (String d : S._Dependencies)
             {
-              LOG.info("Loading Tilda dependency schema '" + d + "'.");
+              LOG.info("Loading dependency schema from '" + d + "'.");
               Schema D = fromResource(d);
               if (D == null)
                 return false;
-              Schema Pre = PS.getDependency(D._Package, D._Name);
+              Schema Pre = Dependencies.get(D.getFullName());
               if (Pre != null)
                 {
-                  LOG.info("   Tilda dependency schema '" + d + "' has been loaded already");
+                  LOG.info("   Tilda dependency schema '" + Pre.getFullName() + "' has been loaded already");
                   S._DependencySchemas.add(Pre);
                 }
               else
                 {
                   S._DependencySchemas.add(D);
-                  PS.addDependency(D);
-                  if (loadDependencies(PS, D) == false)
+                  Dependencies.put(D.getFullName(), D);
+                  if (loadDependencies(D, Dependencies) == false)
                     return false;
                 }
             }

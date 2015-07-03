@@ -96,6 +96,13 @@ public class ForeignKey
             _DestObjectObj = PS.getObject(R._P, R._S, R._O);
             if (_DestObjectObj == null)
               return PS.AddError("Object '" + _ParentObject.getFullName() + "' declares foreign key '" + _Name + "' with destination Object '" + _DestObject + "' resolving to '"+R.getFullName()+"' which cannot be found.");
+            if (_ParentObject != _DestObjectObj && _DestObjectObj._Validated == false)
+              {
+                if (_ParentObject.getSchema().isDefinedInOrder(_DestObjectObj, _ParentObject) == false)
+                 return PS.AddError("Object '" + _ParentObject.getFullName() + "' declares foreign key to destination Object '" + _DestObject + "', but is defined before. Dependent object must be defined first.");
+                else
+                 return PS.AddError("Object '" + _ParentObject.getFullName() + "' declares foreign key to destination Object '" + _DestObject + "' which has failed validation.");
+              }
           }
 
         return true;
