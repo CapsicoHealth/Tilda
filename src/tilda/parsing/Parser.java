@@ -48,7 +48,7 @@ public abstract class Parser
         Schema S = fromFile(FilePath);
         if (S == null)
           return null;
-        
+
         ParserSession PS = new ParserSession(S, CGSql);
         if (loadDependencies(PS, S) == false)
           return null;
@@ -59,7 +59,7 @@ public abstract class Parser
             LOG.error("There were " + PS.getErrorCount() + " errors when trying to validate the schema set");
             int i = 0;
             for (String Err : PS._Errors)
-              LOG.error("    "+(++i)+" - "+Err);
+              LOG.error("    " + (++i) + " - " + Err);
             return null;
           }
 
@@ -139,14 +139,14 @@ public abstract class Parser
             LOG.info("Loading base Tilda schema from '" + BaseTildaSchemaResource + "'.");
             BaseTilda = fromResource(BaseTildaSchemaResource);
             if (BaseTilda == null)
-             return false;
+              return false;
             PS._Dependencies.put(BaseTilda.getFullName(), BaseTilda);
             if (loadDependencies(BaseSchema, PS._Dependencies) == false)
               return false;
           }
         else
-         BaseTilda = BaseSchema;
-         
+          BaseTilda = BaseSchema;
+
         // We need to reorder the list of dependent schemas for validation to work properly, i.e.,
         // if schema A depends on Schema B, then B should be before in the list.
         List<Schema> Schemas = new ArrayList<Schema>(PS._Dependencies.values());
@@ -179,8 +179,8 @@ public abstract class Parser
                 if (S1 != null) // no check for the first loop.
                   {
                     // Check if there is a circular dependency!
-                    if (   S1.getFullName().equals(NewS1.getFullName()) && S2.getFullName().equals(s    .getFullName())
-                        || S1.getFullName().equals(s    .getFullName()) && S2.getFullName().equals(NewS1.getFullName()))
+                    if (S1.getFullName().equals(NewS1.getFullName()) && S2.getFullName().equals(s.getFullName())
+                        || S1.getFullName().equals(s.getFullName()) && S2.getFullName().equals(NewS1.getFullName()))
                       {
                         PS.AddError("There is a circular dependency between schemas '" + S1.getFullName() + "' and '" + S2.getFullName() + "'.");
                         return false;
@@ -210,9 +210,9 @@ public abstract class Parser
         if (PS.getErrorCount() == 0)
           {
             if (PS.getSchema(BaseSchema._Package, BaseSchema._Name) == null)
-             {
-              PS._Dependencies.put(BaseSchema.getFullName(), BaseSchema);
-             }
+              {
+                PS._Dependencies.put(BaseSchema.getFullName(), BaseSchema);
+              }
             BaseSchema.Validate(PS);
           }
 
