@@ -620,6 +620,10 @@ public class TextUtil
       {
         return Val == null ? Default : Val;
       }
+    public static String NoNullOrEmptyPrint(String Val, String Default)
+      {
+        return isNullOrEmpty(Val) == true ? Default : Val;
+      }
 
     /**
      * Takes a string and rewrites it by replacing all special characters with an '_'. Special characters include

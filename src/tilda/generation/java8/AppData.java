@@ -48,6 +48,8 @@ public class AppData implements CodeGenAppData
         Out.println();
         Out.println("import org.apache.logging.log4j.LogManager;");
         Out.println("import org.apache.logging.log4j.Logger;");
+        Out.println();
+        Out.println("import tilda.db.Connection;");
       }
 
     @Override
@@ -79,7 +81,7 @@ public class AppData implements CodeGenAppData
           {
             Out.println();
             Out.println("   @Override");
-            Out.println("   protected boolean BeforeWrite() throws Exception");
+            Out.println("   protected boolean BeforeWrite(Connection C) throws Exception");
             Out.println("     {");
             Out.println("       // Do things before writing the object to disk, for example, take care of AUTO fields.");
             Out.println("       return true;");
@@ -87,7 +89,7 @@ public class AppData implements CodeGenAppData
           }
         Out.println();
         Out.println("   @Override");
-        Out.println("   protected boolean AfterRead() throws Exception");
+        Out.println("   protected boolean AfterRead(Connection C) throws Exception");
         Out.println("     {");
         Out.println("       // Do things after an object has just been read form the data store, for example, take care of AUTO fields.");
         Out.println("       return true;");

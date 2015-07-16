@@ -49,7 +49,7 @@ public class Key_Data extends tilda.data._Tilda.TILDA__KEY
       }
 
     @Override
-    protected boolean BeforeWrite()
+    protected boolean BeforeWrite(Connection C)
       throws Exception
       {
         // Do things before writing the object to disk, for example, take care of AUTO fields.
@@ -57,7 +57,7 @@ public class Key_Data extends tilda.data._Tilda.TILDA__KEY
       }
 
     @Override
-    protected boolean AfterRead()
+    protected boolean AfterRead(Connection C)
       throws Exception
       {
         // Do things after an object has just been read form the data store, for example, take care of AUTO fields.

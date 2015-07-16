@@ -25,7 +25,6 @@ import org.apache.logging.log4j.Logger;
 import tilda.enums.ColumnMapperMode;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
-import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.ProtectionType;
 import tilda.generation.GeneratorSession;
@@ -682,7 +681,7 @@ public class TildaData implements CodeGenTildaData
         Out.println();
         Out.println("       StringBuilder S = new StringBuilder(1024);");
         Out.println();
-        Out.println("       if (BeforeWrite() == false)");
+        Out.println("       if (BeforeWrite(C) == false)");
         Out.println("        {");
         Out.println("          LOG.debug(\"The " + O.getFullName() + " object's BeforeWrite() failed.\");");
         Out.println("          QueryDetails.setLastQuery("+O.getBaseClassName()+"_Factory.TABLENAME, \"\");");
@@ -879,7 +878,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("       return true;");
         Out.println("     }");
         Out.println();
-        Out.println("   protected abstract boolean BeforeWrite() throws Exception;");
+        Out.println("   protected abstract boolean BeforeWrite(Connection C) throws Exception;");
       }
 
     @Override
@@ -963,12 +962,12 @@ public class TildaData implements CodeGenTildaData
         Out.println("              return false;");
         Out.println("            }");
         Out.println("          count = 1;");
-        Out.println("          return Init(RS);");
+        Out.println("          return Init(C, RS);");
         Out.println("        }");
         Helper.CatchFinallyBlock(Out, O, "selected", "StatementType.SELECT", false, false);
         Out.println("    }");
         Out.println();
-        Out.println("   boolean Init(java.sql.ResultSet RS) throws Exception");
+        Out.println("   boolean Init(Connection C, java.sql.ResultSet RS) throws Exception");
         Out.println("    {");
         Out.println("      int i = 0;");
         Out.println("      java.sql.Array A;");
@@ -1023,7 +1022,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("     __LookupId = 0;");
         Out.println("     __Init     = InitMode.READ;");
         Out.println("     __Changes  = 0L;");
-        Out.println("     return AfterRead();");
+        Out.println("     return AfterRead(C);");
         Out.println("   }");
         Out.println();
         Out.println("  private final ZonedDateTime ProcessZDT(String TimezoneId, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, "+O._BaseClassName+"_Factory.COLS DTField, "+O._BaseClassName+"_Factory.COLS TZField)");
@@ -1042,7 +1041,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("     return ZDT;");
         Out.println("   }");
         Out.println();
-        Out.println("   protected abstract boolean AfterRead() throws Exception;");
+        Out.println("   protected abstract boolean AfterRead(Connection C) throws Exception;");
       }
     
     @Override
