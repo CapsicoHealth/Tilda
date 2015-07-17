@@ -21,7 +21,7 @@ import java.util.List;
 
 import tilda.Importer;
 import tilda.data.ZoneInfo_Factory;
-import tilda.data._Tilda.TILDA__ZONEINFO_Json;
+import tilda.data.ZoneInfo_Json;
 import tilda.db.Connection;
 
 import com.google.gson.annotations.SerializedName;
@@ -29,7 +29,7 @@ import com.google.gson.annotations.SerializedName;
 public class RootImporter implements Importer
   {
     /*@formatter:off*/
-    @SerializedName("zones") public List<TILDA__ZONEINFO_Json> _Zones = new ArrayList<TILDA__ZONEINFO_Json>();
+    @SerializedName("zones") public List<ZoneInfo_Json> _Zones = new ArrayList<ZoneInfo_Json>();
     /*@formatter:on*/
     
     @Override
@@ -37,7 +37,7 @@ public class RootImporter implements Importer
       {
         int Count = 0;
         
-        for (TILDA__ZONEINFO_Json          obj : _Zones        ) { ++Count; obj.Create(C); }
+        for (ZoneInfo_Json          obj : _Zones        ) { ++Count; obj.Create(C); }
         ZoneInfo_Factory.initMappings(C);
         
         return Count;
