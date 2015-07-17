@@ -189,6 +189,13 @@ public class TextUtil
       {
         EscapeSomethingWithSlash(X, '"', S, Before, End, false);
       }
+    
+    public static final String EscapeDoubleQuoteForCSV(String S)
+      {
+        StringBuilder X = new StringBuilder();
+        EscapeSomethingWithSomething(X, '"', "\"", S, "\"", "\"");
+        return X.toString();
+      }
 
     public static final String EscapeSingleQuoteWithSlashDouble(String S)
       {
@@ -228,6 +235,11 @@ public class TextUtil
 
     public static final void EscapeSomethingWithSlash(StringBuilder X, char Something, String S, String Before, String End, boolean Double)
       {
+        EscapeSomethingWithSomething(X, Something, Double ? "\\\\\\" : "\\", S, Before, End);
+      }
+    
+    private static final void EscapeSomethingWithSomething(StringBuilder X, char Something1, String Something2, String S, String Before, String End)
+      {
         if (Before != null)
           {
             X.append(Before);
@@ -238,14 +250,14 @@ public class TextUtil
             char[] s = S.toCharArray();
             int i = 0;
             int j = 0;
-            while (j < l && s[j] != Something)
+            while (j < l && s[j] != Something1)
               ++j;
             while (j < l)
               {
-                X.append(s, i, j - i).append(Double ? "\\\\\\" : "\\").append(Something);
+                X.append(s, i, j - i).append(Something2).append(Something1);
                 ++j;
                 i = j;
-                while (j < l && s[j] != Something)
+                while (j < l && s[j] != Something1)
                   ++j;
               }
             X.append(s, i, l - i);
@@ -256,6 +268,7 @@ public class TextUtil
             X.append(End);
           }
       }
+    
 
     public static final String EscapeHTMLQuotes(String S)
       {
