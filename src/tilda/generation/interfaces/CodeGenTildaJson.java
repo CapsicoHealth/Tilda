@@ -44,7 +44,7 @@ public interface CodeGenTildaJson extends CodeGenBase
      * @param O
      * @throws Exception
      */
-    public void genMethodCreate(PrintWriter Out, GeneratorSession G, Object O, List<Column> CreateColumns, List<Column> JsonColumns) throws Exception;
+    public void genMethodWrite(PrintWriter Out, GeneratorSession G, Object O, List<Column> CreateColumns, List<Column> JsonColumns) throws Exception;
 
     /**
      * 

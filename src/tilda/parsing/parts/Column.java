@@ -52,6 +52,7 @@ public class Column extends TypeDef
     @SerializedName("protect"    ) public String         _ProtectStr ;
     @SerializedName("description") public String         _Description;
     @SerializedName("mapper"     ) public ColumnMapper   _Mapper     ;
+    @SerializedName("enum"       ) public ColumnEnum     _Enum       ;
     @SerializedName("values"     ) public ColumnValue[]  _Values     ;
     /*@formatter:on*/
     
@@ -141,8 +142,12 @@ public class Column extends TypeDef
 
         ValidateValues(PS);
 
-        if (_Mapper != null)
+        if (_Mapper != null && _Enum != null)
+         PS.AddError("Column '" + getFullName() + "' is defining both a mapper and an enum, which is not allowed: only one can be defined at a time.");
+        else if (_Mapper != null)
          _Mapper.Validate(PS, this);
+        else if (_Enum != null)
+         _Enum.Validate(PS, this);
         
         return Errs == PS.getErrorCount();
       }
@@ -191,13 +196,18 @@ public class Column extends TypeDef
                      : _Mapper._Multi == MultiType.SET  ? "{``}"
                      : null;
           }
+        else if (_Enum != null && _Enum._Multi != MultiType.NONE)
+          {
+            _TypeStr+= _Enum._Multi == MultiType.LIST ? "[``]"
+                     : _Enum._Multi == MultiType.SET  ? "{``}"
+                     : null;
+          }
         else if (_MapperDef != null && _MapperDef._Multi != MultiType.NONE)
           {
             _TypeStr+= _MapperDef._Multi == MultiType.LIST ? "[``]"
                      : _MapperDef._Multi == MultiType.SET  ? "{``}"
                      : null;
           }
-
         else
           {
             _Size = _SameAsObj._Size;

@@ -431,7 +431,7 @@ public class Generator
             List<Column> JsonColumns = O.getJsonColumns();
             CG.genJsonSerializableField(Out, G, JsonColumns);
             Out.println();
-            CG.genMethodCreate(Out, G, O, CreateColumns, JsonColumns);
+            CG.genMethodWrite(Out, G, O, CreateColumns, JsonColumns);
             Out.println();
             CG.genMethodToString(Out, G, O);
           }

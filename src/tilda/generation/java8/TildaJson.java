@@ -101,10 +101,10 @@ public class TildaJson implements CodeGenTildaJson
 
 
     @Override
-    public void genMethodCreate(PrintWriter Out, GeneratorSession G, Object O, List<Column> CreateColumns, List<Column> JsonColumns)
+    public void genMethodWrite(PrintWriter Out, GeneratorSession G, Object O, List<Column> CreateColumns, List<Column> JsonColumns)
       throws Exception
       {
-        Out.println("   public " + Helper.getFullAppDataClassName(O) + " Create(Connection C) throws Exception");
+        Out.println("   public " + Helper.getFullAppDataClassName(O) + " Write(Connection C) throws Exception");
         Out.println("    {");
         for (Column C : JsonColumns)
             {

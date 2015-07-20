@@ -58,6 +58,10 @@ public class Enumeration
           return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring an enumeration '" + _Name + "' with a name which is not valid. " + ValidationHelper._ValidIdentifierMessage);
         if (TextUtil.isNullOrEmpty(_Description) == true)
           return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring an enumeration '" + _Name + "' without a description.");
+        if (_Id == null)
+          return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring an enumeration '" + _Name + "' without an Id type.");
+        if (_Value == null)
+          return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring an enumeration '" + _Name + "' without a Value type.");
 
         Object O = new Object();
         O._FST = FrameworkSourcedType.ENUMERATION;
