@@ -26,6 +26,8 @@ import tilda.data.Key_Factory;
 import tilda.data.Testing_Factory;
 import tilda.db.Connection;
 import tilda.db.ConnectionPool;
+import tilda.db.SelectQuery;
+import tilda.db.UpdateQuery;
 import tilda.db.processors.StringListRP;
 
 public class QueryTest extends Key_Factory
@@ -43,22 +45,24 @@ public class QueryTest extends Key_Factory
         try
           {
             C = ConnectionPool.get("MAIN");
-            
+
             Key_Data K = Key_Factory.Create(-3, "TOTO", 0, 100);
 
-            newUpdateQuery(C)
-                       .set(COLS.MAX).equals(COLS.MAX).plus(COLS.COUNT).set(COLS.COUNT).equals(100)
-                       .where(COLS.REFNUM).equals(K.getRefnum()).and(COLS.NAME).equals("TOTO")
-                       .executeUpdate();
-            
-            newSelectQuery(C)
-                .set(COLS.MAX).set(COLS.COUNT)
-                .from(Testing_Factory.TABLENAME)
-                .from(Key_Factory.TABLENAME)
-                .where(COLS.REFNUM).equals(K.getRefnum()).and(COLS.NAME).equals("TOTO")
-                .executeSelect(new StringListRP(), 0, -1);
-            
-            
+              {
+                UpdateQuery Q = newUpdateQuery(C);
+                Q.set(COLS.MAX).equals(COLS.MAX).plus(COLS.COUNT).set(COLS.COUNT).equals(100)
+                    .where(COLS.REFNUM).equals(K.getRefnum()).and(COLS.NAME).equals("TOTO");
+                Q.execute();
+              }
+              {
+                SelectQuery Q = newSelectQuery(C);
+                Q.set(COLS.MAX).set(COLS.COUNT)
+                    .from(Testing_Factory.TABLENAME)
+                    .from(Key_Factory.TABLENAME)
+                    .where(COLS.REFNUM).equals(K.getRefnum()).and(COLS.NAME).equals("TOTO");
+                Q.execute(new StringListRP(), 0, -1);
+              }
+
             C.ExecuteUpdate(TABLENAME, "update " + TABLENAME + " set " + COLS.MAX + "=" + COLS.MAX + "+" + COLS.COUNT + " where " + COLS.REFNUM + "=" + K.getRefnum());
 
             C.rollback();

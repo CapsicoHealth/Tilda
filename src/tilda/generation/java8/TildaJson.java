@@ -249,6 +249,10 @@ public class TildaJson implements CodeGenTildaJson
                 Out.println("         if (Obj.Write(C) == false)");
                 Out.println("          throw new Exception(\"Cannot update the " + O.getFullName() + " object: \"+Obj.toString());");
               }
+            else
+              {
+                Out.println("         LOG.debug(\"Nothing has changed in the object, so no update necessary.\");");
+              }
             Out.println();
 
           }

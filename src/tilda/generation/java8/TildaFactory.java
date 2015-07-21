@@ -78,7 +78,9 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("import tilda.db.JDBCHelper;");
         Out.println("import tilda.db.ListResults;");
         Out.println("import tilda.db.QueryDetails;");
-        Out.println("import tilda.db.QueryHelper;");
+        Out.println("import tilda.db.SelectQuery;");
+        Out.println("import tilda.db.UpdateQuery;");
+        Out.println("import tilda.db.DeleteQuery;");
         Out.println("import tilda.db.processors.RecordProcessor;");
         Out.println("import tilda.enums.ColumnType;");
         Out.println("import tilda.enums.StatementType;");
@@ -429,16 +431,16 @@ public class TildaFactory implements CodeGenTildaFactory
     @Override
     public void genQueryHelper(PrintWriter Out, GeneratorSession G, Object O)
       {
-        Out.println("   public static QueryHelper newSelectQuery(Connection C) throws Exception { return new QueryHelper(C   , StatementType.SELECT, "+O.getBaseClassName()+"_Factory.TABLENAME); }");
-        Out.println("   public static QueryHelper newWhereQuery (            ) throws Exception { return new QueryHelper(null, StatementType.SELECT, "+O.getBaseClassName()+"_Factory.TABLENAME); }");
-        Out.println("   public static ListResults<" + Helper.getFullAppDataClassName(O) + "> runSelect(Connection C, QueryHelper Q, int Start, int Size) throws Exception");
+        Out.println("   public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C   , "+O.getBaseClassName()+"_Factory.TABLENAME); }");
+        Out.println("   public static SelectQuery newWhereQuery (            ) throws Exception { return new SelectQuery(null, "+O.getBaseClassName()+"_Factory.TABLENAME); }");
+        Out.println("   public static ListResults<" + Helper.getFullAppDataClassName(O) + "> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception");
         Out.println("     {"); 
         Out.println("       return ReadMany(C, -7, null, Q, Start, Size);"); 
         Out.println("     }");
         if (O._LC == ObjectLifecycle.NORMAL)
           {
-            Out.println("   public static QueryHelper newUpdateQuery(Connection C) throws Exception { return new QueryHelper(C, StatementType.UPDATE, "+O.getBaseClassName()+"_Factory.TABLENAME); }");
-            Out.println("   public static QueryHelper newDeleteQuery(Connection C) throws Exception { return new QueryHelper(C, StatementType.DELETE, "+O.getBaseClassName()+"_Factory.TABLENAME); }");
+            Out.println("   public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, "+O.getBaseClassName()+"_Factory.TABLENAME); }");
+            Out.println("   public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, "+O.getBaseClassName()+"_Factory.TABLENAME); }");
           }
         Out.println();
       }

@@ -38,9 +38,9 @@ import tilda.utils.TextUtil;
  * @author ldh
  *
  */
-public class QueryHelper
+public abstract class QueryHelper
   {
-    public QueryHelper(Connection C, StatementType ST, String TableName)
+    protected QueryHelper(Connection C, StatementType ST, String TableName)
       throws Exception
       {
         _TableName = TableName;
@@ -497,22 +497,6 @@ public class QueryHelper
         throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST);
       }
 
-    public int executeSelect(RecordProcessor RP, int Start, int Size)
-      throws Exception
-      {
-        if (_ST != StatementType.SELECT)
-          throw new Exception("Error: Calling executeSelect() on a " + _ST + " query.");
-        return _C.ExecuteSelect(_TableName, _QueryStr.toString(), RP, Start, Size);
-      }
-
-    public int executeUpdate()
-      throws Exception
-      {
-        if (_ST == StatementType.SELECT)
-          throw new Exception("Error: Calling executeUpdate() on a " + _ST + " query.");
-        return _C.ExecuteUpdate(_TableName, _QueryStr.toString());
-      }
-    
     public String getWhereClause() throws Exception
       {
         if (_ST == StatementType.SELECT && _C == null)

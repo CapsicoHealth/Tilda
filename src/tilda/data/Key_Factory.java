@@ -53,8 +53,10 @@ public class Key_Factory extends tilda.data._Tilda.TILDA__KEY_Factory
          try
            {
              C = ConnectionPool.get("KEYS");
-             newUpdateQuery(C).set(COLS.MAX).equals(COLS.MAX).plus(COLS.COUNT)
-                              .where(COLS.REFNUM).equals(K.getRefnum()).executeUpdate();
+             UpdateQuery Q = newUpdateQuery(C);
+             Q.set(COLS.MAX).equals(COLS.MAX).plus(COLS.COUNT)
+              .where(COLS.REFNUM).equals(K.getRefnum());
+             Q.execute();
              K.Refresh(C);
              K._K.set(K.getCount());
              LOG.debug("Refilled '"+K.getName()+"' keys "+(K.getMax()-K.getCount()+1)+" - "+K.getMax());

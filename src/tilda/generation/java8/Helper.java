@@ -317,7 +317,7 @@ public class Helper
         if (UniqueConstraints == false)
           {
             Out.println(Lead + "   case -7:");
-            Out.println(Lead + "      S.append(\" where \").append(((QueryHelper)ExtraParams).getWhereClause());");
+            Out.println(Lead + "      S.append(\" where \").append(((SelectQuery)ExtraParams).getWhereClause());");
             Out.println(Lead + "      break;");
           }
         int LookupId = -1;
