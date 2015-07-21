@@ -384,7 +384,7 @@ public class QueryHelper
       }
     
 
-    protected QueryHelper in(char[] v) throws Exception
+    public QueryHelper in(char[] v) throws Exception
       {
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
@@ -402,7 +402,7 @@ public class QueryHelper
         throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST);
       }
     
-    protected QueryHelper in(int[] v) throws Exception
+    public QueryHelper in(int[] v) throws Exception
       {
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
@@ -420,7 +420,7 @@ public class QueryHelper
         throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST);
       }
 
-    protected QueryHelper in(long[] v) throws Exception
+    public QueryHelper in(long[] v) throws Exception
       {
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
@@ -438,7 +438,7 @@ public class QueryHelper
         throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST);
       }
 
-    protected QueryHelper in(float[] v) throws Exception
+    public QueryHelper in(float[] v) throws Exception
       {
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
@@ -456,7 +456,7 @@ public class QueryHelper
         throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST);
       }
     
-    protected QueryHelper in(double[] v) throws Exception
+    public QueryHelper in(double[] v) throws Exception
       {
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
@@ -474,7 +474,7 @@ public class QueryHelper
         throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST);
       }
 
-    protected QueryHelper in(ZonedDateTime[] v) throws Exception
+    public QueryHelper in(ZonedDateTime[] v) throws Exception
       {
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
