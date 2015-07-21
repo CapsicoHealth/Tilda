@@ -295,7 +295,7 @@ public class QueryHelper
     protected final void OpVal(Op O, long V)
       throws Exception
       {
-        if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+        if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET) || _ST == StatementType.DELETE && _Section == S.WHERE)
           {
             _QueryStr.append(O._Str).append(V);
           }
