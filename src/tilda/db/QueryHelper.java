@@ -61,7 +61,7 @@ public class QueryHelper
         else if (_ST == StatementType.DELETE)
           {
             _QueryStr.append("delete from ").append(_TableName).append(" ");
-            _Section = S.WHERE;
+            _Section = S.FROM;
           }
         else
           throw new Exception("Unsupported Statement Type '" + ST + "' for the QueryHelper.");
