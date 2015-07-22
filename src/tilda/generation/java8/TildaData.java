@@ -353,9 +353,19 @@ public class TildaData implements CodeGenTildaData
             if (C._Mapper != null)
               {
                 if (C._Mapper._Name != ColumnMapperMode.NONE)
-                  Out.println("       _" + C._Name +"MappedName.clear();");
-                 if (C._Mapper._Group != ColumnMapperMode.NONE)
-                  Out.println("          _" + C._Name +"MappedGroup.clear();");
+                 {
+                   Out.println("          if (_" + C._Name +"MappedName == null)");
+                   Out.println("           _" + C._Name + "MappedName = new "+(C.isList() == true ? "ArrayList": "TreeSet")+"<"+ JavaJDBCType.getFieldTypeBaseClass(C)+">();");
+                   Out.println("          else");
+                   Out.println("           _" + C._Name +"MappedName.clear();");
+                 }
+                if (C._Mapper._Group != ColumnMapperMode.NONE)
+                  {
+                    Out.println("          if (_" + C._Name +"MappedGroup == null)");
+                    Out.println("           _" + C._Name + "MappedGroup = new "+(C.isList() == true ? "ArrayList": "TreeSet")+"<"+ JavaJDBCType.getFieldTypeBaseClass(C)+">();");
+                    Out.println("          else");
+                    Out.println("           _" + C._Name +"MappedGroup.clear();");
+                  }
               }
             Out.println("          for ("+ JavaJDBCType.getFieldTypeBase(C)+" i : v)");
             Out.println("           {");
