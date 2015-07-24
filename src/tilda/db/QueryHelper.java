@@ -20,7 +20,6 @@ import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.Iterator;
 
-import tilda.db.processors.RecordProcessor;
 import tilda.enums.ColumnDefinition;
 import tilda.enums.StatementType;
 import tilda.utils.DateTimeUtil;
@@ -217,16 +216,17 @@ public abstract class QueryHelper
 
     public static enum Op
       {
-        EQUALS("=")
-        , LT("<")
-        , LTE("<=")
-        , GT(">")
-        , GTE(">=")
-        , NOT_EQUALS("<>")
-        , PLUS("+")
-        , MINUS("-")
-        , MULTIPLY("*")
-        , DIVIDE("/");
+        EQUALS(" = ")
+        , LT(" < ")
+        , LTE(" <= ")
+        , GT(" > ")
+        , GTE(" >= ")
+        , NOT_EQUALS(" <> ")
+        , PLUS(" + ")
+        , MINUS(" - ")
+        , MULTIPLY(" * ")
+        , DIVIDE(" / ")
+        , LIKE(" like ");
 
         Op(String Str)
           {
@@ -342,7 +342,7 @@ public abstract class QueryHelper
           }
         else
           throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST);
-      }
+    }
     
     public QueryHelper in(String[] v) throws Exception
       {
@@ -903,6 +903,18 @@ public abstract class QueryHelper
         OpVal(Op.NOT_EQUALS, ZDT);
         return this;
       }
+    
+    public QueryHelper isNull() throws Exception
+     {
+       OpVal(Op.EQUALS, (String) null);
+       return this;
+     }
+
+    public QueryHelper isNotNull() throws Exception
+      {
+        OpVal(Op.NOT_EQUALS, (String) null);
+        return this;
+      }
 
     public QueryHelper plus(ColumnDefinition Col)
       throws Exception
@@ -1156,4 +1168,53 @@ public abstract class QueryHelper
         return this;
       }
 
+    public QueryHelper like(String V)
+        throws Exception
+        {
+          OpVal(Op.LIKE, V);
+          return this;
+        }
+    public QueryHelper like(ColumnDefinition Col, String V)
+        throws Exception
+        {
+          _QueryStr.append(Col.toString(_ST));
+          OpVal(Op.LIKE, V);
+          return this;
+        }
+
+    public QueryHelper like(ColumnDefinition Col, String[] Vals) throws Exception
+      {
+        if (Vals == null)
+         return this;
+        boolean First = true;
+        for (String v : Vals)
+          {
+            if (First == true) First = false; else or();
+            like(Col, v);
+          }
+        return this;
+      }
+
+    public QueryHelper any(ColumnDefinition Col, String V)
+      {
+        TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V);
+        _QueryStr.append(" any ").append(Col.toString(_ST));
+        return this;
+      }
+
+    public QueryHelper any(ColumnDefinition Col, String[] Vals)
+      {
+        if (Vals == null)
+          return this;
+        _QueryStr.append(Col.toString(_ST))
+                 .append(" && ARRAY[");
+         boolean First = true;
+         for (String v : Vals)
+           {
+             if (First == true) First = false; else _QueryStr.append(", ");
+             TextUtil.EscapeSingleQuoteForSQL(_QueryStr, v);
+           }
+         _QueryStr.append("]");
+         return this;
+      }
   }
