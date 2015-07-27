@@ -241,8 +241,25 @@ public abstract class QueryHelper
       {
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
-            _QueryStr.append(O._Str);
-            TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V);
+            if (V == null)
+              {
+                if (_Section == S.WHERE)
+                  {
+                    if (O == Op.EQUALS)
+                      _QueryStr.append(" IS NULL ");
+                    else if (O != Op.NOT_EQUALS)
+                      _QueryStr.append(" IS NOT NULL ");
+                    else
+                      throw new Exception("Invalid query syntax: cannot use the operator " + O + " with a NULL value");
+                  }
+                else
+                  _QueryStr.append(" = NULL ");
+              }
+            else
+              {
+                _QueryStr.append(O._Str);
+                TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V);
+              }
           }
         else
           throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST);
@@ -326,14 +343,14 @@ public abstract class QueryHelper
                 if (_Section == S.WHERE)
                   {
                     if (O == Op.EQUALS)
-                      _QueryStr.append("IS NULL");
+                      _QueryStr.append(" IS NULL ");
                     else if (O != Op.NOT_EQUALS)
-                      _QueryStr.append("IS NOT NULL");
+                      _QueryStr.append(" IS NOT NULL ");
                     else
                       throw new Exception("Invalid query syntax: cannot use the operator " + O + " with a NULL value");
                   }
                 else
-                  _QueryStr.append("= NULL");
+                  _QueryStr.append(" = NULL ");
               }
             else
               {
