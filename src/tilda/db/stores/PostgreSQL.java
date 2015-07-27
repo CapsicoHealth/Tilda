@@ -29,6 +29,7 @@ import tilda.generation.postgres9.PostgresType;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
+import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.utils.TextUtil;
 
 public class PostgreSQL implements DBType
@@ -129,11 +130,13 @@ public class PostgreSQL implements DBType
     public boolean alterTableAddColumn(Connection Con, Column Col, String DefaultValue) throws Exception
       {
         if (Col._Nullable == false && DefaultValue == null)
-         throw new Exception("Cannot add a new 'not null' column to a table without a default value");
+         throw new Exception("Cannot add a new 'not null' column to a table without a default value. Add a default value in the model, or manually migrate your database.");
         String Q ="ALTER TABLE "+Col._ParentThing.getShortName()+" ADD COLUMN \""+Col._Name+"\" "+getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection());
         if (Col._Nullable == false)
-         Q+=" not null DEFAULT "+DefaultValue; // LDH-NOTE: Not sure if this actually works... Needs to do type-based escaping right?
-          
+          {
+            Q+=" not null DEFAULT "+ValueHelper.printValue(Col, DefaultValue);
+          }
+           
         return Con.ExecuteUpdate(Col._ParentThing.getShortName(), Q) >= 0;
       }
     

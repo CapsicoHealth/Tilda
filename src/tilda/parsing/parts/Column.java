@@ -213,10 +213,13 @@ public class Column extends TypeDef
             _Size = _SameAsObj._Size;
           }
 
-        if (_Values != null)
-          PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining 'values', which is not allowed.");
-        else
-          _Values = ColumnValue.deepCopy(_SameAsObj._Values);
+        if (_SameAsObj._Values != null)
+         {
+           if (_Values != null)
+             PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining 'values', which is not allowed.");
+            else
+             _Values = ColumnValue.deepCopy(_SameAsObj._Values);
+          }
 
         if (_ProtectStr != null)
           PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining 'protect', which is not allowed.");

@@ -112,7 +112,7 @@ public class Migrator
                        if (Col._Mode != ColumnMode.CALCULATED && DBColumns.contains(Col._Name.toLowerCase()) == false)
                         {
                           LOG.info("The application's data model defines the column '"+Col.getShortName()+"' which cannot be found in the database. Trying to create it...");
-                          if (C.alterTableAddColumn(Col, null) == false)
+                          if (C.alterTableAddColumn(Col, Col._DefaultCreateValue == null ? null : Col._DefaultCreateValue._Value) == false)
                            throw new Exception("Cannot upgrade table '" + Obj.getShortName() + "' by adding the new required column '" + Col.getShortName() + "'.");
                           didSomething = true;
                         }

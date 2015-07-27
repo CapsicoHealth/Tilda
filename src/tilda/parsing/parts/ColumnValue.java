@@ -19,6 +19,7 @@ package tilda.parsing.parts;
 import tilda.enums.DefaultType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ValidationHelper;
+import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
 
@@ -74,47 +75,7 @@ public class ColumnValue
           PS.AddError("Column '" + _ParentColumn.getFullName() + "' defines a Value without a 'description'.");
 
         // if (_Raw == false)
-        switch (_ParentColumn._Type)
-          {
-            case BINARY:
-            case BITFIELD:
-              PS.AddError("Column '" + _ParentColumn.getFullName() + "' defines values which is not allowed for type '" + _ParentColumn._Type + "'.");
-              break;
-            case BOOLEAN:
-              break;
-            case CHAR:
-              if (_Value.length() != 1)
-                PS.AddError("Column '" + _ParentColumn.getFullName() + "' defines Value '" + _Name + "' with value '" + _Value + "' which is incompatible with type '" + _ParentColumn._Type + "'.");
-              break;
-            case DOUBLE:
-              if (TextUtil.parseDouble(_Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
-                PS.AddError("Column '" + _ParentColumn.getFullName() + "' defines Value '" + _Name + "' with value '" + _Value + "' which is incompatible with type '" + _ParentColumn._Type + "'.");
-              break;
-            case FLOAT:
-              if (TextUtil.parseFloat(_Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
-                PS.AddError("Column '" + _ParentColumn.getFullName() + "' defines Value '" + _Name + "' with value '" + _Value + "' which is incompatible with type '" + _ParentColumn._Type + "'.");
-              break;
-            case INTEGER:
-              if (TextUtil.parseInt(_Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
-                PS.AddError("Column '" + _ParentColumn.getFullName() + "' defines Value '" + _Name + "' with value '" + _Value + "' which is incompatible with type '" + _ParentColumn._Type + "'.");
-              break;
-            case LONG:
-              if (TextUtil.parseLong(_Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
-                PS.AddError("Column '" + _ParentColumn.getFullName() + "' defines Value '" + _Name + "' with value '" + _Value + "' which is incompatible with type '" + _ParentColumn._Type + "'.");
-              break;
-            case STRING:
-              if (_ParentColumn.isCollection() == false && _Value.length() > _ParentColumn._Size)
-                PS.AddError("Column '" + _ParentColumn.getFullName() + "' defines Value '" + _Name + "' with value '" + _Value + "' larger than the defined size=" + _ParentColumn._Size + ".");
-              break;
-            case DATETIME:
-              if (_Value.equalsIgnoreCase("NOW") == false && _Value.equalsIgnoreCase("UNDEFINED") == false)
-                PS.AddError("Column '" + _ParentColumn.getFullName() + "' defines Value '" + _Name + "' which is not a default NOW or UNDEFINED value. Only these pre-defined values are allowed for timestamps.");
-              if (_Default == DefaultType.NONE)
-                PS.AddError("Column '" + _ParentColumn.getFullName() + "' defines Value '" + _Name + "' which is not set as a default. Only default values are allowed for timestamps.");
-              break;
-            default:
-              throw new Error("Unhandled case in switch for type '" + _ParentColumn._Type + "'.");
-          }
+        ValueHelper.CheckColumnValue(PS, _ParentColumn, _Name, _Value, _Default);
 
         return Errs == PS.getErrorCount();
       }
