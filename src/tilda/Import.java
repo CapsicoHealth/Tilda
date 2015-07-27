@@ -16,8 +16,11 @@
 
 package tilda;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.sql.SQLException;
 import java.util.regex.Matcher;
@@ -30,6 +33,7 @@ import tilda.db.Connection;
 import tilda.db.ConnectionPool;
 import tilda.performance.PerfTracker;
 import tilda.utils.DurationUtil;
+import tilda.utils.FileUtil;
 import tilda.utils.SystemValues;
 
 import com.google.gson.Gson;
@@ -97,8 +101,18 @@ public class Import
     protected static int Do(String ImportFileName, Connection C)
       throws Exception
       {
+        Reader R = null;
         if (new File(ImportFileName).exists() == false)
-          throw new Exception("The file '" + ImportFileName + "' cannot be found. ");
+         {
+           InputStream In = FileUtil.getResourceAsStream(ImportFileName);
+           if (In == null)
+             {
+               throw new Exception("Cannot find import file/resource '" + ImportFileName + "'.");
+             }
+           R = new BufferedReader(new InputStreamReader(In));
+         }
+        else
+         R = new BufferedReader(new FileReader(ImportFileName));
 
         Pattern P = Pattern.compile("\\.*\\_tilda\\.([^\\.]+)\\.sampledata\\.([^\\.]+)\\.json\\z");
         Matcher M = P.matcher(ImportFileName);
@@ -124,7 +138,6 @@ public class Import
 
         long T = System.nanoTime();
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        Reader R = new FileReader(ImportFileName);
         Importer I = (Importer) gson.fromJson(R, RootClass);
         R.close();
         int Total = I.process(C);

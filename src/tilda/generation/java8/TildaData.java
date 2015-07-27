@@ -323,7 +323,7 @@ public class TildaData implements CodeGenTildaData
               }
             Out.println("       if (v == null)");
             if (C._Nullable == true)
-             Out.println("        setNull" + TextUtil.CapitalizeFirstCharacter(C._Name) + "();");
+              Out.println("        setNull" + TextUtil.CapitalizeFirstCharacter(C._Name) + "();");
             else
               Out.println("        throw new Exception(\"Cannot set " + C.getFullName() + " to null: it's not nullable.\");");
             Out.println("       else if (CollectionUtil.equals(v, _"+C._Name+") == false)");
@@ -650,10 +650,13 @@ public class TildaData implements CodeGenTildaData
         Out.println("   " + Visibility + " void setNull" + TextUtil.CapitalizeFirstCharacter(C._Name) + "()");
         Out.println("     {");
         Out.println("       long T0 = System.nanoTime();");
-        Out.println("       if ((" + Mask + " & __Nulls) != 0L)");
-        Out.println("        return;");
-        Out.println("       __Changes |= " + Mask + ";");
-        Out.println("       __Nulls   |= " + Mask + ";");
+        if (C._Mode != ColumnMode.CALCULATED)
+         {
+            Out.println("       if ((" + Mask + " & __Nulls) != 0L)");
+            Out.println("        return;");
+            Out.println("       __Changes |= " + Mask + ";");
+            Out.println("       __Nulls   |= " + Mask + ";");
+         }
 
         if (C.isCollection() == true)
           Out.println("       _" + C._Name + "=null;");

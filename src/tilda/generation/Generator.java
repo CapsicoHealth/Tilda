@@ -212,6 +212,13 @@ public class Generator
                   Out.println();
                   DG.docField(Out, G, C, "setter");
                   CG.genMethodSet(Out, G, C);
+
+                  if (C._PrimaryKey == false && C._Nullable == true)
+                    {
+                      Out.println();
+                      DG.docField(Out, G, C, "null setter");
+                      CG.genMethodSetNull(Out, G, C);
+                    }
                 }
 
               if (C._Mode != ColumnMode.CALCULATED)
