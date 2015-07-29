@@ -19,7 +19,6 @@ package tilda.migration;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 import org.apache.logging.log4j.Level;
