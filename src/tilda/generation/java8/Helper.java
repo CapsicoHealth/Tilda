@@ -521,7 +521,7 @@ public class Helper
             String Pad = O._PadderColumnNames.getPad(C._Name);
             Out.print(Lead + "     ");
             if (C._Nullable == true)
-             Out.print("if ("+Pred+"isNull"+TextUtil.CapitalizeFirstCharacter(C._Name)+"() == true) PS.setNull(++i, java.sql.Types." + JavaJDBCType.get(C._Type)._JDBCSQLType + ");  else");
+             Out.print("if ("+Pred+"isNull"+TextUtil.CapitalizeFirstCharacter(C._Name)+"() == true) PS.setNull(++i, java.sql.Types." + JavaJDBCType.get(C._Type)._JDBCSQLType + ");  else ");
             if (C._Type == ColumnType.DATETIME)
               Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(_" + C._Name + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
             else
