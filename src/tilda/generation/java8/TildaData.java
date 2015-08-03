@@ -217,12 +217,14 @@ public class TildaData implements CodeGenTildaData
                   switch (V._ParentColumn._Type)
                     {
                       case BOOLEAN:
-                      case CHAR:
                       case DOUBLE:
                       case FLOAT:
                       case INTEGER:
                       case LONG:
                         Out.print(V._Value);
+                        break;
+                      case CHAR:
+                        Out.print(TextUtil.EscapeSingleQuoteForSQL(V._Value));
                         break;
                       case DATETIME:
                         if (V._Value.equalsIgnoreCase("NOW") == true)

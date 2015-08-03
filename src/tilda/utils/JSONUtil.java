@@ -150,6 +150,11 @@ public class JSONUtil
       throws IOException
       {
         Print(Out, Name, FirstElement);
+        if (a == null)
+          {
+            Out.write("null");
+            return;
+          }
         Out.write("[");
         boolean First = true;
         for (boolean i : a)
@@ -167,6 +172,11 @@ public class JSONUtil
       throws IOException
       {
         Print(Out, Name, FirstElement);
+        if (a == null)
+          {
+            Out.write("null");
+            return;
+          }
         Out.write("[");
         boolean First = true;
         for (Boolean i : a)
@@ -184,6 +194,11 @@ public class JSONUtil
       throws IOException
       {
         Print(Out, Name, FirstElement);
+        if (a == null)
+          {
+            Out.write("null");
+            return;
+          }
         Out.write("[");
         boolean First = true;
         for (int i : a)
@@ -201,6 +216,11 @@ public class JSONUtil
       throws IOException
       {
         Print(Out, Name, FirstElement);
+        if (a == null)
+          {
+            Out.write("null");
+            return;
+          }
         Out.write("[");
         boolean First = true;
         for (Integer i : a)
@@ -218,6 +238,11 @@ public class JSONUtil
       throws IOException
       {
         Print(Out, Name, FirstElement);
+        if (a == null)
+          {
+            Out.write("null");
+            return;
+          }
         Out.write("[");
         boolean First = true;
         for (long i : a)
@@ -235,6 +260,11 @@ public class JSONUtil
       throws IOException
       {
         Print(Out, Name, FirstElement);
+        if (a == null)
+          {
+            Out.write("null");
+            return;
+          }
         Out.write("[");
         boolean First = true;
         for (Long i : a)
@@ -252,6 +282,11 @@ public class JSONUtil
       throws IOException
       {
         Print(Out, Name, FirstElement);
+        if (a == null)
+          {
+            Out.write("null");
+            return;
+          }
         Out.write("[");
         boolean First = true;
         for (char i : a)
@@ -269,6 +304,11 @@ public class JSONUtil
       throws IOException
       {
         Print(Out, Name, FirstElement);
+        if (a == null)
+          {
+            Out.write("null");
+            return;
+          }
         Out.write("[");
         boolean First = true;
         for (Character i : a)
@@ -286,6 +326,11 @@ public class JSONUtil
       throws IOException
       {
         Print(Out, Name, FirstElement);
+        if (a == null)
+          {
+            Out.write("null");
+            return;
+          }
         Out.write("[");
         boolean First = true;
         for (float i : a)
@@ -303,6 +348,11 @@ public class JSONUtil
       throws IOException
       {
         Print(Out, Name, FirstElement);
+        if (a == null)
+          {
+            Out.write("null");
+            return;
+          }
         Out.write("[");
         boolean First = true;
         for (Float i : a)
@@ -320,6 +370,11 @@ public class JSONUtil
       throws IOException
       {
         Print(Out, Name, FirstElement);
+        if (a == null)
+          {
+            Out.write("null");
+            return;
+          }
         Out.write("[");
         boolean First = true;
         for (double i : a)
@@ -337,6 +392,11 @@ public class JSONUtil
       throws IOException
       {
         Print(Out, Name, FirstElement);
+        if (a == null)
+          {
+            Out.write("null");
+            return;
+          }
         Out.write("[");
         boolean First = true;
         for (Double i : a)
@@ -354,6 +414,11 @@ public class JSONUtil
       throws IOException
       {
         Print(Out, Name, FirstElement);
+        if (a == null)
+          {
+            Out.write("null");
+            return;
+          }
         Out.write("[");
         boolean First = true;
         for (String i : a)
@@ -371,6 +436,11 @@ public class JSONUtil
       throws IOException
       {
         Print(Out, Name, FirstElement);
+        if (a == null)
+          {
+            Out.write("null");
+            return;
+          }
         Out.write("[");
         boolean First = true;
         for (ZonedDateTime i : a)
