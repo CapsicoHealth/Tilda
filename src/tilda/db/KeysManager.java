@@ -49,10 +49,10 @@ public class KeysManager
 
     protected static void Init() throws SQLException
       {
-        if (_M == null)
+        if (_M == null || _M.isEmpty() == true)
           synchronized (_SEM)
             {
-              if (_M == null)
+              if (_M == null || _M.isEmpty() == true)
                 {
                   Connection C = null;
                   try
