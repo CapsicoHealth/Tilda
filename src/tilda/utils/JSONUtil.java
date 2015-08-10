@@ -17,6 +17,7 @@
 package tilda.utils;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Writer;
 import java.time.ZonedDateTime;
 
@@ -452,5 +453,15 @@ public class JSONUtil
             PrintZonedDateTime(Out, i);
           }
         Out.write("]");
+      }
+
+    public static void startOK(PrintWriter Out)
+      {
+        Out.println("{\"code\":" + HttpStatus.OK._Code + ",\"data\":");
+      }
+
+    public static void end(PrintWriter Out)
+      {
+        Out.println("}");        
       }
   }
