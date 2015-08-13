@@ -60,15 +60,15 @@ public class ForeignKey
         return Errs == PS.getErrorCount();
       }
 
-    protected static boolean CheckForeignKeyMapping(ParserSession PS, IThing SrcThing, List<Column> SrcColumns, Object DestObject, String What)
+    protected static boolean CheckForeignKeyMapping(ParserSession PS, Object ParentObject, List<Column> SrcColumns, Object DestObject, String What)
       {
         PrimaryKey DPK = DestObject._PrimaryKey;
         if (DPK == null)
-          return PS.AddError("Object '" + SrcThing.getFullName() + "' declares "+What+" to Object  '" + DestObject.getFullName() + " with no primary key.");
+          return PS.AddError("Object '" + ParentObject.getFullName() + "' declares "+What+" to Object  '" + DestObject.getFullName() + " with no primary key.");
         if (DPK._ColumnObjs == null)
-          return PS.AddError("Object '" + SrcThing.getFullName() + "' declares "+What+" to Object  '" + DestObject.getFullName() + " which incorrectly defined a primary key.");
+          return PS.AddError("Object '" + ParentObject.getFullName() + "' declares "+What+" to Object  '" + DestObject.getFullName() + " which incorrectly defined a primary key.");
         if (SrcColumns.size() != DPK._ColumnObjs.size())
-          return PS.AddError("Object '" + SrcThing.getFullName() + "' declares "+What+" with " + SrcColumns.size() + " columns against a primary key on '" + DestObject.getFullName() + "' with  " + DPK._ColumnObjs.size() + " columns.");
+          return PS.AddError("Object '" + ParentObject.getFullName() + "' declares "+What+" with " + SrcColumns.size() + " columns against a primary key on '" + DestObject.getFullName() + "' with  " + DPK._ColumnObjs.size() + " columns.");
 
         for (int i = 0; i < SrcColumns.size(); ++i)
           {
@@ -76,9 +76,9 @@ public class ForeignKey
             Column FK = DestObject._PrimaryKey._ColumnObjs.get(i);
 
             if (S._SameAsObj == null)
-              PS.AddError("Object '" + SrcThing.getFullName() + "' declares "+What+" with src column '" + S.getFullName() + "' which doesn't define a SameAs.");
+              PS.AddError("Object '" + ParentObject.getFullName() + "' declares "+What+" with src column '" + S.getFullName() + "' which doesn't define a SameAs.");
             else if (SameAsHelper.checkRootSameAs(S, FK) == false)
-              PS.AddError("Object '" + SrcThing.getFullName() + "' declares "+What+" with src column '" + S.getFullName() + "' with a SameAs which doesn't match the intended primary key column '" + FK.getFullName() + "'.");
+              PS.AddError("Object '" + ParentObject.getFullName() + "' declares "+What+" with src column '" + S.getFullName() + "' with a SameAs which doesn't match the intended primary key column '" + FK.getFullName() + "'.");
           }
         return true;
       }

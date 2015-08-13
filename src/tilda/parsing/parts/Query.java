@@ -57,7 +57,7 @@ public class Query
         _Clause = _SubWhere;
       }
 
-    public boolean Validate(ParserSession PS, IThing ParentThing, String OwnerObjName)
+    public boolean Validate(ParserSession PS, Object ParentObject, String OwnerObjName)
       {
         int Errs = PS.getErrorCount();
 
@@ -80,7 +80,7 @@ public class Query
             String col = M.group(1);
             String var = M.group(2);
 //            LOG.debug("    match: "+M.group()+"; col: "+col+"; var: "+var+";");
-            ReferenceHelper R = ReferenceHelper.parseColumnReference(col, ParentThing);
+            ReferenceHelper R = ReferenceHelper.parseColumnReference(col, ParentObject);
             Column C = PS.getColumn(R._P, R._S, R._O, R._C);
             if (C == null)
               {

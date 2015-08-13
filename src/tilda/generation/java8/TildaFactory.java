@@ -296,7 +296,7 @@ public class TildaFactory implements CodeGenTildaFactory
         for (Column C : PK._ColumnObjs)
           if (C != null)
             {
-              String Pad = C._ParentThing.getColumnPad(C._Name);
+              String Pad = C._ParentObject.getColumnPad(C._Name);
               Out.println("       Obj.set" + TextUtil.CapitalizeFirstCharacter(C._Name) + Pad + "(" + C._Name + Pad + "); Obj.__Saved_" + C._Name + Pad + " = Obj._" + C._Name + Pad + ";");
             }
         Out.println();
@@ -307,7 +307,7 @@ public class TildaFactory implements CodeGenTildaFactory
     @Override
     public void genMethodLookupByUniqueIndex(PrintWriter Out, GeneratorSession G, Index I, long LookupId)
       {
-        Out.print("   static public " + Helper.getFullAppDataClassName(I._ParentThing) + " LookupBy" + I._Name + "(");
+        Out.print("   static public " + Helper.getFullAppDataClassName(I._ParentObject) + " LookupBy" + I._Name + "(");
         boolean First = true;
         for (Column C : I._ColumnObjs)
           if (C != null)
@@ -317,17 +317,17 @@ public class TildaFactory implements CodeGenTildaFactory
             }
         Out.println(") throws Exception");
         Out.println("     {");
-        Out.println("       " + Helper.getFullBaseClassName(I._ParentThing) + " Obj = new " + Helper.getFullAppDataClassName(I._ParentThing) + "();");
+        Out.println("       " + Helper.getFullBaseClassName(I._ParentObject) + " Obj = new " + Helper.getFullAppDataClassName(I._ParentObject) + "();");
         Out.println("       Obj.initForLookup(" + LookupId + ");");
         Out.println();
         for (Column C : I._ColumnObjs)
           if (C != null)
             {
-              String Pad = C._ParentThing.getColumnPad(C._Name);
+              String Pad = C._ParentObject.getColumnPad(C._Name);
               Out.println("       Obj.set" + TextUtil.CapitalizeFirstCharacter(C._Name) + Pad + "(" + C._Name + Pad + "); Obj.__Saved_" + C._Name + Pad + " = Obj._" + C._Name + Pad + ";");
             }
         Out.println();
-        Out.println("       return (" + Helper.getFullAppDataClassName(I._ParentThing) + ") Obj;");
+        Out.println("       return (" + Helper.getFullAppDataClassName(I._ParentObject) + ") Obj;");
         Out.println("     }");
       }
 
@@ -335,7 +335,7 @@ public class TildaFactory implements CodeGenTildaFactory
     public void genMethodLookupWhereIndex(PrintWriter Out, GeneratorSession G, Index I, int LookupId)
       {
         String MethodName = "LookupWhere" + I._Name;
-        Out.print("   static public ListResults<" + Helper.getFullAppDataClassName(I._ParentThing) + "> " + MethodName + "(Connection C");
+        Out.print("   static public ListResults<" + Helper.getFullAppDataClassName(I._ParentObject) + "> " + MethodName + "(Connection C");
         for (Column C : I._ColumnObjs)
           if (C != null)
             Out.print(", " + JavaJDBCType.getFieldType(C) + " " + C._Name);
@@ -351,13 +351,13 @@ public class TildaFactory implements CodeGenTildaFactory
           }
         Out.println(", int Start, int Size) throws Exception");
         Out.println("     {");
-        Out.println("       " + Helper.getFullBaseClassName(I._ParentThing) + " Obj = new " + Helper.getFullAppDataClassName(I._ParentThing) + "();");
+        Out.println("       " + Helper.getFullBaseClassName(I._ParentObject) + " Obj = new " + Helper.getFullAppDataClassName(I._ParentObject) + "();");
         Out.println("       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);");
         Out.println();
         for (Column C : I._ColumnObjs)
           if (C != null)
             {
-              String Pad = C._ParentThing.getColumnPad(C._Name);
+              String Pad = C._ParentObject.getColumnPad(C._Name);
               Out.println("       Obj.set" + TextUtil.CapitalizeFirstCharacter(C._Name) + Pad + "(" + C._Name + Pad + ");");
             }
         Out.println();
@@ -390,7 +390,7 @@ public class TildaFactory implements CodeGenTildaFactory
     public void genMethodLookupWithQuery(PrintWriter Out, GeneratorSession G, SubWhereClause SWC, int LookupId)
       {
         String MethodName = "LookupWith" + SWC._Name;
-        Out.print("   static public ListResults<" + Helper.getFullAppDataClassName(SWC._ParentThing) + "> " + MethodName + "(Connection C");
+        Out.print("   static public ListResults<" + Helper.getFullAppDataClassName(SWC._ParentObject) + "> " + MethodName + "(Connection C");
         for (int i = 0; i < SWC._ColumnObjs.size(); ++i)
           {
             Column c = SWC._ColumnObjs.get(i);
@@ -399,7 +399,7 @@ public class TildaFactory implements CodeGenTildaFactory
           }
         Out.println(", int Start, int Size) throws Exception");
         Out.println("     {");
-        Out.println("       " + Helper.getFullBaseClassName(SWC._ParentThing) + " Obj = new " + Helper.getFullAppDataClassName(SWC._ParentThing) + "();");
+        Out.println("       " + Helper.getFullBaseClassName(SWC._ParentObject) + " Obj = new " + Helper.getFullAppDataClassName(SWC._ParentObject) + "();");
         Out.println("       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);");
         Out.println();
         Out.print("       " + MethodName + "Params P = new " + MethodName + "Params(");

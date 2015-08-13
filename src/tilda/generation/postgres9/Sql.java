@@ -53,7 +53,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
     @Override
     public String getFullColumnVar(Column C)
       {
-        return C._ParentThing.getSchema()._Name + "." + C._ParentThing.getBaseName() + ".\"" + C._Name + "\"";
+        return C._ParentObject.getSchema()._Name + "." + C._ParentObject.getBaseName() + ".\"" + C._Name + "\"";
       }
 
     @Override
@@ -165,7 +165,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
       {
         if (I._Db == false)
           Out.print("-- app-level index only -- ");
-        Out.print("CREATE" + (I._Unique == true ? " UNIQUE" : "") + " INDEX " + I._ParentThing.getBaseName() + "_" + I._Name + " ON " + I._ParentThing.getShortName() + " (");
+        Out.print("CREATE" + (I._Unique == true ? " UNIQUE" : "") + " INDEX " + I._ParentObject.getBaseName() + "_" + I._Name + " ON " + I._ParentObject.getShortName() + " (");
         if (I._ColumnObjs.isEmpty() == false)
           PrintColumnList(Out, I._ColumnObjs);
         if (I._OrderByObjs.isEmpty() == false)

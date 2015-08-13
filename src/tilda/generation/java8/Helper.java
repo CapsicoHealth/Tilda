@@ -26,7 +26,6 @@ import tilda.generation.Generator;
 import tilda.generation.GeneratorSession;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
-import tilda.parsing.parts.IThing;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Query;
@@ -71,20 +70,20 @@ public class Helper
 
     public final static String TILDA_GEN_PACKAGE      = "_Tilda";
 
-    public static String getFullAppDataClassName(IThing Thing)
+    public static String getFullAppDataClassName(Object ParentObject)
       {
-        return Thing.getSchema()._Package + "." + Thing.getAppDataClassName();
+        return ParentObject.getSchema()._Package + "." + ParentObject.getAppDataClassName();
       }
     
-    public static String getFullAppFactoryClassName(IThing Thing)
+    public static String getFullAppFactoryClassName(Object ParentObject)
       {
-        return Thing.getSchema()._Package + "." + Thing.getAppFactoryClassName();
+        return ParentObject.getSchema()._Package + "." + ParentObject.getAppFactoryClassName();
       }
     
 
-    public static String getFullBaseClassName(IThing Thing)
+    public static String getFullBaseClassName(Object ParentObject)
       {
-        return Thing.getSchema()._Package + "." + TILDA_GEN_PACKAGE + "." + Thing.getBaseClassName();
+        return ParentObject.getSchema()._Package + "." + TILDA_GEN_PACKAGE + "." + ParentObject.getBaseClassName();
       }
 
     public static String getSupportClassFullName(Schema S)
@@ -94,22 +93,22 @@ public class Helper
 
     public static String getRuntimeMask(Column C)
       {
-        return C._ParentThing.getBaseClassName()+"_Factory.COLS." + C._Name.toUpperCase() + "._Mask";
+        return C._ParentObject.getBaseClassName()+"_Factory.COLS." + C._Name.toUpperCase() + "._Mask";
       }
 
     public static String getRuntimeSelectStr(Column C)
       {
-        return C._ParentThing.getBaseClassName()+"_Factory.COLS." + C._Name.toUpperCase() + "._Full";
+        return C._ParentObject.getBaseClassName()+"_Factory.COLS." + C._Name.toUpperCase() + "._Full";
       }
 
     public static String getRuntimeInsertStr(Column C)
       {
-        return C._ParentThing.getBaseClassName()+"_Factory.COLS." + C._Name.toUpperCase() + "._Insert";
+        return C._ParentObject.getBaseClassName()+"_Factory.COLS." + C._Name.toUpperCase() + "._Insert";
       }
 
     public static String getRuntimeUpdateStr(Column C)
       {
-        return C._ParentThing.getBaseClassName()+"_Factory.COLS." + C._Name.toUpperCase() + "._Update";
+        return C._ParentObject.getBaseClassName()+"_Factory.COLS." + C._Name.toUpperCase() + "._Update";
       }
 
     public static String getVisibility(Column C, boolean PackageForPrivate)
@@ -214,9 +213,9 @@ public class Helper
       throws Error
       {
         if (V._Value.equalsIgnoreCase("NOW") == true)
-          return getSupportClassFullName(C._ParentThing.getSchema())+"._COMMACURRENTTIMESTAMP";
+          return getSupportClassFullName(C._ParentObject.getSchema())+"._COMMACURRENTTIMESTAMP";
         else if (V._Value.equalsIgnoreCase("UNDEFINED") == true)
-          return getSupportClassFullName(C._ParentThing.getSchema())+"._COMMAQUESTION";
+          return getSupportClassFullName(C._ParentObject.getSchema())+"._COMMAQUESTION";
 
         throw new Error("Trying to generate a setter call to TIMESTAMP column '" + C.getFullName() + "' for the value '" + V._Value
             + "'. TIMESTAMP fields are not supposed to have explicit values.");
@@ -226,9 +225,9 @@ public class Helper
       throws Error
       {
         if (V._Value.equalsIgnoreCase("NOW") == true)
-          return getSupportClassFullName(C._ParentThing.getSchema())+"._EQUALCURRENTTIMESTAMP";
+          return getSupportClassFullName(C._ParentObject.getSchema())+"._EQUALCURRENTTIMESTAMP";
         else if (V._Value.equalsIgnoreCase("UNDEFINED") == true)
-          return getSupportClassFullName(C._ParentThing.getSchema())+"._EQUALQUESTION";
+          return getSupportClassFullName(C._ParentObject.getSchema())+"._EQUALQUESTION";
 
         throw new Error("Trying to generate a setter call to TIMESTAMP column '" + C.getFullName() + "' for the value '" + V._Value
             + "'. TIMESTAMP fields are not supposed to have explicit values.");

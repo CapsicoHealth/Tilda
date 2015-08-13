@@ -49,7 +49,7 @@ public class SubWhereClause
     public transient List<Column>    _OrderByObjs   = new ArrayList<Column>();
     public transient List<OrderType> _OrderByOrders = new ArrayList<OrderType>();
 
-    public transient IThing          _ParentThing;
+    public transient Object          _ParentObject;
     
     public SubWhereClause()
       {
@@ -59,9 +59,9 @@ public class SubWhereClause
         _Wheres = new Query[] { new Query(_SubWhere) };
       }
 
-    public boolean Validate(ParserSession PS, IThing ParentThing, String What, boolean TopLevel)
+    public boolean Validate(ParserSession PS, Object ParentObject, String What, boolean TopLevel)
       {
-        _ParentThing = ParentThing;
+        _ParentObject = ParentObject;
         // Does it have a name?
         if (TopLevel == true && TextUtil.isNullOrEmpty(_Name) == true)
           return PS.AddError(What + " is defining a SubWhereClause without a name.");
@@ -79,7 +79,7 @@ public class SubWhereClause
           {
             if (DBs.add(q._DB) == false)
               PS.AddError(What + " is defining a SubWhereClause with a duplicate DB value '" + q._DB + ".");
-            q.Validate(PS, _ParentThing, What);
+            q.Validate(PS, _ParentObject, What);
           }
 
         _ColumnObjs = _Wheres[0]._ColumnObjs;
@@ -134,7 +134,7 @@ public class SubWhereClause
               {
                 if (TextUtil.isNullOrEmpty(s) == true)
                   continue;
-                ReferenceHelper R = ReferenceHelper.parseObjectReference(s, _ParentThing.getSchema());
+                ReferenceHelper R = ReferenceHelper.parseObjectReference(s, _ParentObject.getSchema());
                 Object O = PS.getObject(R._P, R._S, R._O);
                 if (O == null)
                   {
@@ -143,14 +143,14 @@ public class SubWhereClause
                   }
                 if (Froms.add(O.getFullName()) == false)
                   PS.AddError(What + " is defining SubWhereClauses with a duplicate from '" + s + "'.");
-                else if (O == _ParentThing)
+                else if (O == _ParentObject)
                   PS.AddError(What + " is defining SubWhereClauses with a from '" + s + "' refering to itself.");
                 else
                   _FromObj.add(O);
               }
           }
 
-        Index.processOrderBy(PS, "Object '" + _ParentThing.getFullName() + "' defines Query '" + _Name + "'", new HashSet<String>(), _ParentThing, _OrderBy, _OrderByObjs, _OrderByOrders);
+        Index.processOrderBy(PS, "Object '" + _ParentObject.getFullName() + "' defines Query '" + _Name + "'", new HashSet<String>(), _ParentObject, _OrderBy, _OrderByObjs, _OrderByOrders);
         
         return Errs == PS.getErrorCount();
       }

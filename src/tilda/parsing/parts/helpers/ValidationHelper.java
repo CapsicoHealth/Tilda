@@ -23,12 +23,13 @@ import java.util.Set;
 
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Column;
-import tilda.parsing.parts.IThing;
 import tilda.utils.TextUtil;
+import tilda.parsing.parts.Object;
+
 
 public class ValidationHelper
   {
-    public static List<Column> ProcessColumn(ParserSession PS, IThing Thing, String What, String[] ColumnNames, Processor P)
+    public static List<Column> ProcessColumn(ParserSession PS, Object ParentObject, String What, String[] ColumnNames, Processor P)
       {
         List<Column> Columns = new ArrayList<Column>();
         Set<String> Names = new HashSet<String>();
@@ -37,24 +38,24 @@ public class ValidationHelper
             {
               if (TextUtil.isNullOrEmpty(c) == true)
                 return null;
-              Column C = Thing.getColumn(c);
+              Column C = ParentObject.getColumn(c);
               if (C == null)
                 {
-                  PS.AddError("Object '" + Thing.getFullName() + "' is defining " + What + " with column '" + c + "' which cannot be found.");
+                  PS.AddError("Object '" + ParentObject.getFullName() + "' is defining " + What + " with column '" + c + "' which cannot be found.");
                   return null;
                 }
               if (C._FailedValidation == true)
                 {
-                  PS.AddError("Object '" + Thing.getFullName() + "' is defining " + What + " with column '" + c + "' which has failed validation previously and cannot be processed any more.");
+                  PS.AddError("Object '" + ParentObject.getFullName() + "' is defining " + What + " with column '" + c + "' which has failed validation previously and cannot be processed any more.");
                   return null;
                 }
               if (Names.add(C._Name.toUpperCase()) == false)
                 {
-                  PS.AddError("Object '" + Thing.getFullName() + "' is defining " + What + " with duplicated column '" + c + "'.");
+                  PS.AddError("Object '" + ParentObject.getFullName() + "' is defining " + What + " with duplicated column '" + c + "'.");
                   return null;
                 }
               Columns.add(C);
-              if (P != null && P.process(PS, Thing, What, C) == false)
+              if (P != null && P.process(PS, ParentObject, What, C) == false)
                 return null;
             }
         return Columns;
@@ -62,7 +63,7 @@ public class ValidationHelper
 
     public static interface Processor
       {
-        public boolean process(ParserSession PS, IThing Thing, String What, Column C);
+        public boolean process(ParserSession PS, Object ParentObject, String What, Column C);
       }
 
     public static String _ValidIdentifierMessage = "Names must conform to a common subset of SQL, C++, Java, .Net and JavaScript identifier conventions.";

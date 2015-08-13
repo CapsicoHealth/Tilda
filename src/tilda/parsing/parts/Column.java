@@ -76,7 +76,7 @@ public class Column extends TypeDef
     public transient ColumnMode     _Mode;
     public transient ProtectionType _Protect;
     public transient Column         _SameAsObj;
-    public transient IThing         _ParentThing;
+    public transient Object         _ParentObject;
     public transient PaddingTracker _PadderValueNames  = new PaddingTracker();
     public transient PaddingTracker _PadderValueValues = new PaddingTracker();
     public transient boolean        _PrimaryKey        = false;
@@ -90,12 +90,12 @@ public class Column extends TypeDef
 
     public String getFullName()
       {
-        return _ParentThing.getFullName() + "." + _Name;
+        return _ParentObject.getFullName() + "." + _Name;
       }
 
     public String getShortName()
       {
-        return _ParentThing.getShortName() + "." + _Name;
+        return _ParentObject.getShortName() + "." + _Name;
       }
     
     public String getBaseName()
@@ -104,10 +104,10 @@ public class Column extends TypeDef
       }
     
     
-    public boolean Validate(ParserSession PS, IThing Thing)
+    public boolean Validate(ParserSession PS, Object ParentObject)
       {
         int Errs = PS.getErrorCount();
-        _ParentThing = Thing;
+        _ParentObject = ParentObject;
 //        LOG.debug("    Validating Column " + getFullName() + ".");
 
         // Mandatories
@@ -160,7 +160,7 @@ public class Column extends TypeDef
 
         int Errs = PS.getErrorCount();
 
-        ReferenceHelper R = ReferenceHelper.parseColumnReference(_SameAs, _ParentThing);
+        ReferenceHelper R = ReferenceHelper.parseColumnReference(_SameAs, _ParentObject);
 
         if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true || TextUtil.isNullOrEmpty(R._C) == true)
           PS.AddError("Column '" + getFullName() + "' is declaring sameas '" + _SameAs + "' with an incorrect syntax. It should be '(((package\\.)?schema\\.)?object\\.)?column'.");
@@ -306,7 +306,7 @@ public class Column extends TypeDef
       {
         return _FrameworkManaged == false 
             && _Mode == ColumnMode.NORMAL 
-            && _ParentThing.isAutoGenPrimaryKey(this) == false 
+            && _ParentObject.isAutoGenPrimaryKey(this) == false 
             && _DefaultCreateValue == null
             && (   _Invariant == false && _Nullable == false
                 || _Invariant == true
@@ -316,7 +316,7 @@ public class Column extends TypeDef
 
     public VisibilityType getVisibility()
       {
-        return _ParentThing.getLifecycle() == ObjectLifecycle.READONLY || _MapperDef != null || _FrameworkManaged == true ? VisibilityType.PRIVATE
+        return _ParentObject.getLifecycle() == ObjectLifecycle.READONLY || _MapperDef != null || _FrameworkManaged == true ? VisibilityType.PRIVATE
             : _Invariant == true || _PrimaryKey == true || _Mode == ColumnMode.AUTO ? VisibilityType.PROTECTED 
             : VisibilityType.PUBLIC;
       }
@@ -332,12 +332,12 @@ public class Column extends TypeDef
       }
     public boolean isOCCGenerated()
       {
-        return _ParentThing.isOCC() == true && _Type == ColumnType.DATETIME && (_Name.equals("created") == true || _Name.equals("lastUpdated") == true || _Name.equals("deleted") == true);
+        return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && (_Name.equals("created") == true || _Name.equals("lastUpdated") == true || _Name.equals("deleted") == true);
       }
     
     public boolean isJSONColumn()
       {
-        return (_PrimaryKey == false || _ParentThing.isAutoGenPrimaryKey(this) == false) 
+        return (_PrimaryKey == false || _ParentObject.isAutoGenPrimaryKey(this) == false) 
             && _Mode == ColumnMode.NORMAL && _FrameworkManaged == false && _Name.equals("deleted") == false
             ;
       }

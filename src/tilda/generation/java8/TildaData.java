@@ -318,7 +318,7 @@ public class TildaData implements CodeGenTildaData
             Out.println("   "+Visibility+" void set" + TextUtil.CapitalizeFirstCharacter(C._Name) + "(" + JavaJDBCType.getFieldType(C) + " v) throws Exception");
             Out.println("     {");
             Out.println("       long T0 = System.nanoTime();");
-            if (C._Invariant == true || C._ParentThing.getLifecycle() != ObjectLifecycle.NORMAL)
+            if (C._Invariant == true || C._ParentObject.getLifecycle() != ObjectLifecycle.NORMAL)
               {
                 Out.println("       if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)");
                 Out.println("        throw new Exception(\"Cannot set field '" + C.getFullName() + "' that is invariant, or part of a read-only or pre-existing WORM object.\");");
@@ -338,13 +338,13 @@ public class TildaData implements CodeGenTildaData
                   {
                     if (C._Mapper._Name == ColumnMapperMode.DB)
                       {
-                        Out.println("          __Changes |= " +  Helper.getRuntimeMask(C._ParentThing.getColumn(C._Name +"MappedName")) + ";");
-                        Out.println("          __Nulls   &= ~" +  Helper.getRuntimeMask(C._ParentThing.getColumn(C._Name +"MappedName")) + ";");
+                        Out.println("          __Changes |= " +  Helper.getRuntimeMask(C._ParentObject.getColumn(C._Name +"MappedName")) + ";");
+                        Out.println("          __Nulls   &= ~" +  Helper.getRuntimeMask(C._ParentObject.getColumn(C._Name +"MappedName")) + ";");
                       }
                     if (C._Mapper._Group == ColumnMapperMode.DB)
                       {
-                        Out.println("          __Changes |= " +  Helper.getRuntimeMask(C._ParentThing.getColumn(C._Name +"MappedGroup")) + ";");
-                        Out.println("          __Nulls   &= ~" +  Helper.getRuntimeMask(C._ParentThing.getColumn(C._Name +"MappedGroup")) + ";");
+                        Out.println("          __Changes |= " +  Helper.getRuntimeMask(C._ParentObject.getColumn(C._Name +"MappedGroup")) + ";");
+                        Out.println("          __Nulls   &= ~" +  Helper.getRuntimeMask(C._ParentObject.getColumn(C._Name +"MappedGroup")) + ";");
                       }
                   }
               }
@@ -509,7 +509,7 @@ public class TildaData implements CodeGenTildaData
               throw new Error("ERROR! Cannot match ColumnType " + C._Type + " when generating a setter");
           }
 
-        if (C._Invariant == true || C._ParentThing.getLifecycle() != ObjectLifecycle.NORMAL)
+        if (C._Invariant == true || C._ParentObject.getLifecycle() != ObjectLifecycle.NORMAL)
           {
             Out.println("          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)");
             Out.println("           throw new Exception(\"Cannot set field '" + C.getFullName() + "' that is invariant, or part of a read-only or pre-existing WORM object.\");");

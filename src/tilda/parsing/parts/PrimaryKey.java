@@ -64,7 +64,7 @@ public class PrimaryKey
           }
         _ColumnObjs = ValidationHelper.ProcessColumn(PS, O, "a primary key", _Columns, new ValidationHelper.Processor() {
           @Override
-          public boolean process(ParserSession PS, IThing Thing, String What, Column C)
+          public boolean process(ParserSession PS, Object ParentObject, String What, Column C)
             {
               if (C._Nullable == true)
                 PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a primary key with column '" + C._Name + "' which is nullable.");

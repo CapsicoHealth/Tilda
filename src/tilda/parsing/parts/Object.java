@@ -25,42 +25,125 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.enums.ColumnMode;
+import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
 import tilda.parsing.ParserSession;
+import tilda.parsing.parts.helpers.ValidationHelper;
+import tilda.utils.PaddingTracker;
+import tilda.utils.TextUtil;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Object extends View
+public class Object
   {
 
     static final Logger              LOG                = LogManager.getLogger(Object.class.getName());
 
     /*@formatter:off*/
-    @SerializedName("occ"        ) public boolean         _OCC        = true ;
-    @SerializedName("lc"         ) public String          _LCStr      = ObjectLifecycle.NORMAL.toString();
+    @SerializedName("name"       ) public String               _Name       = null;
+    @SerializedName("description") public String               _Description= null;
+    @SerializedName("occ"        ) public boolean              _OCC        = true ;
+    @SerializedName("lc"         ) public String               _LCStr      = ObjectLifecycle.NORMAL.toString();
 
-    @SerializedName("primary"    ) public PrimaryKey       _PrimaryKey;
-    @SerializedName("foreign"    ) public List<ForeignKey> _ForeignKeys = new ArrayList<ForeignKey>();
-	
-    @SerializedName("http"       ) public HttpMapping[]   _Http = { };
-    
-    @SerializedName("history"    ) public String     []   _History;
+    @SerializedName("columns"    ) public List<Column>         _Columns    = new ArrayList<Column        >();
+
+    @SerializedName("primary"    ) public PrimaryKey           _PrimaryKey = null;
+    @SerializedName("foreign"    ) public List<ForeignKey>     _ForeignKeys= new ArrayList<ForeignKey>();
+    @SerializedName("indices"    ) public List<Index>          _Indices    = new ArrayList<Index         >();
+    @SerializedName("queries"    ) public List<SubWhereClause> _Queries    = new ArrayList<SubWhereClause>();
+
+    @SerializedName("json"       ) public List<JsonMapping>    _Json       = new ArrayList<JsonMapping   >();
+    @SerializedName("http"       ) public HttpMapping[]        _Http       = { };
+    @SerializedName("history"    ) public String     []        _History    = { };
     /*@formatter:on*/
 
+    public transient Schema               _ParentSchema;
+    public transient PaddingTracker       _PadderColumnNames = new PaddingTracker();
+    public transient String               _OriginalName;
+    public transient String               _BaseClassName;
+    public transient String               _AppDataClassName;
+    public transient String               _AppFactoryClassName;
+    public transient boolean              _HasUniqueIndex;
     public transient FrameworkSourcedType _FST         = FrameworkSourcedType.NONE;
     public transient ObjectLifecycle      _LC;
-    public transient boolean _Validated = false;
+    public transient boolean              _Validated = false;
 
-    @Override
-    public String getThingType()
+    public Column getColumn(String name)
       {
-        return "Object";
+        for (Column C : _Columns)
+          if (C != null && C._Name != null && C._Name.equalsIgnoreCase(name) == true)
+            return C;
+        return null;
       }
 
+    public String getFullName()
+      {
+        return _ParentSchema.getFullName() + "." + _Name;
+      }
+
+    public String getShortName()
+      {
+        return _ParentSchema.getShortName() + "." + _Name;
+      }
+    
+    public String getBaseName()
+      {
+        return _Name;
+      }
+
+    public Schema getSchema()
+      {
+        return _ParentSchema;
+      }
+
+    public String getAppDataClassName()
+      {
+        return _AppDataClassName;
+      }
+    
+    public String getAppFactoryClassName()
+      {
+        return _AppFactoryClassName;
+      }
+    
+
+    public String getBaseClassName()
+      {
+        return _BaseClassName;
+      }
+
+    public String getColumnPad(String Name)
+      {
+        return _PadderColumnNames.getPad(Name);
+      }
+    
+    public boolean Setup(ParserSession PS, Schema ParentSchema)
+      {
+        _ParentSchema = ParentSchema;
+        LOG.debug("  Validating Object " + getFullName() + ".");
+
+        // Mandatories
+        if (TextUtil.isNullOrEmpty(_Name) == true)
+          return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring an object without a name.");
+        if (ValidationHelper.isValidIdentifier(_Name) == false)
+          return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring a view '" + getFullName() + "' with a name '"+_Name+"' which is not valid. "+ValidationHelper._ValidIdentifierMessage);
+        if (TextUtil.isNullOrEmpty(_Description) == true)
+          return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring an object without a description name.");
+
+        _OriginalName = _Name;
+        _Name = _Name.toUpperCase();
+
+        _BaseClassName = "TILDA__" + _Name;
+        _AppDataClassName    = _OriginalName+"_Data";
+        _AppFactoryClassName = _OriginalName+"_Factory";
+        
+        return true;
+      }
+    
     public boolean Validate(ParserSession PS, Schema ParentSchema)
       {
-        if (super.Setup(PS, ParentSchema) == false)
+        if (Setup(PS, ParentSchema) == false)
           return false;
 
         int Errs = PS.getErrorCount();
@@ -88,8 +171,82 @@ public class Object extends View
           }
 
 
-        if (super.Validate(PS, ParentSchema) == false)
-          return false;
+        if (_Columns == null || _Columns.isEmpty() == true)
+          PS.AddError("Object '" + getFullName() + "' doesn't define any columns!");
+        else
+          {
+            Set<String> ColumnNames = new HashSet<String>();
+            for (int i = 0; i < _Columns.size(); ++i)
+              {
+                Column C = _Columns.get(i);
+                if (C == null)
+                  continue;
+                if (i >= 64)
+                  PS.AddError("Object '" + getFullName() + "' has declared more than 64 columns!");
+                else
+                  {
+                    _PadderColumnNames.track(C._Name);
+                    if (C.Validate(PS, this) == true)
+                      {
+                        if (ColumnNames.add(C._Name.toUpperCase()) == false)
+                         PS.AddError("Column '" + C.getFullName() + "' is defined more than once in Object '" + getFullName() + "'.");
+                        if (C._Type == ColumnType.DATETIME && Object.isOCCColumn(C) == false)
+                          {
+                            Column TZCol = new Column();
+                            TZCol._Name = C._Name+"TZ";
+                            TZCol._SameAs = "tilda.data.TILDA.ZONEINFO.id";
+                            TZCol._Invariant = C._Invariant;
+                            TZCol._Description = "Generated helper column to hold the time zone ID for '"+C._Name+"'.";
+                            TZCol._Mode = ColumnMode.AUTO;
+                            TZCol._Nullable = C._Nullable; 
+                            TZCol._FrameworkManaged = true;
+                            _Columns.add(i, TZCol);
+                            ++i;
+                            _PadderColumnNames.track(TZCol._Name);
+                            if (ColumnNames.add(TZCol._Name.toUpperCase()) == false)
+                              PS.AddError("Generated column '" + TZCol.getFullName() + "' conflicts with another column already named the same in Object '" + getFullName() + "'.");
+                            if (TZCol.Validate(PS, this) == false)
+                              TZCol._FailedValidation = true;
+                            addForeignKey(C._Name, new String[] { TZCol._Name }, "tilda.data.TILDA.ZONEINFO");
+                          }
+                      }
+                    else
+                     C._FailedValidation = true;
+                  }
+              }
+          }
+
+        _HasUniqueIndex = false;
+        Set<String> Names = new HashSet<String>();
+        for (Index I : _Indices)
+          {
+            if (I == null)
+              continue;
+            if (I.Validate(PS, this) == true)
+              if (Names.add(I._Name.toUpperCase()) == false)
+                PS.AddError("Object '" + getFullName() + "' is defining a duplicate index '" + I._Name + "'.");
+            if (I._Unique == true)
+              _HasUniqueIndex = true;
+          }
+
+        Names.clear();
+        for (SubWhereClause SWC : _Queries)
+          {
+            if (SWC == null)
+              continue;
+            if (SWC.Validate(PS, this, "Object '" + getFullName()+"'", true) == true)
+              if (Names.add(SWC._Name.toUpperCase()) == false)
+                PS.AddError("Object '" + getFullName() + "' is defining a duplicate query '" + SWC._Name + "'.");
+          }
+
+        Names.clear();
+        for (JsonMapping J : _Json)
+          if (J != null)
+            {
+              if (Names.add(J._Name) == false)
+                PS.AddError("Object '" + getFullName() + "' is defining a duplicate JSON mapping '" + J._Name + "'.");
+              J.Validate(PS, this);
+            }
 
         if ((_LC = ObjectLifecycle.parse(_LCStr)) == null)
           return PS.AddError("Object '" + getFullName() + "' defined an invalid 'lc' '" + _LCStr + "'.");
@@ -176,24 +333,27 @@ public class Object extends View
      * @param C
      * @return
      */
-    @Override
     public boolean isAutoGenPrimaryKey(Column C)
       {
         return _PrimaryKey != null && _PrimaryKey._Autogen == true && C == _PrimaryKey._ColumnObjs.get(0);
       }
 
-    @Override
     public ObjectLifecycle getLifecycle()
       {
         return _LC;
       }
 
-    @Override
     public boolean isOCC()
       {
         return _OCC;
       }
 
+    public void AddColumnAfter(Column SiblingCol, Column NewCol)
+      {
+        int i = _Columns.indexOf(SiblingCol);
+        if (i != -1)
+         _Columns.add(i+1, NewCol);
+      }
 
     public List<Column> getDefaultCreateColumns()
       {
@@ -252,7 +412,6 @@ public class Object extends View
         _ForeignKeys.add(FK);
       }
 
-    @Override
     public boolean isAutoGenForeignKey(String Name)
       {
         for (ForeignKey FK : _ForeignKeys)

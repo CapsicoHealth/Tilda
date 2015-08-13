@@ -39,19 +39,19 @@ public class JsonMapping
 
     public transient List<Column> _ColumnObjs;
 
-    public transient IThing       _ParentThing;
+    public transient Object       _ParentObject;
 
-    public boolean Validate(ParserSession PS, IThing Thing)
+    public boolean Validate(ParserSession PS, Object ParentObject)
       {
         int Errs = PS.getErrorCount();
-        _ParentThing = Thing;
+        _ParentObject = ParentObject;
 
-        _ColumnObjs = ValidationHelper.ProcessColumn(PS, Thing, "JSONMapping '" + _Name + "'", _Columns, new ValidationHelper.Processor() {
+        _ColumnObjs = ValidationHelper.ProcessColumn(PS, ParentObject, "JSONMapping '" + _Name + "'", _Columns, new ValidationHelper.Processor() {
           @Override
-          public boolean process(ParserSession PS, IThing Thing, String What, Column C)
+          public boolean process(ParserSession PS, Object ParentObject, String What, Column C)
             {
               if (C._Type == ColumnType.BINARY)
-                PS.AddError("Object '" + _ParentThing.getFullName() + "' is defining a JSON mapping with column '" + C._Name + "' which is a binary. Binaries cannot be JSONed.");
+                PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a JSON mapping with column '" + C._Name + "' which is a binary. Binaries cannot be JSONed.");
               return true;
             }
         });
