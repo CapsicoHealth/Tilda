@@ -47,6 +47,7 @@ import tilda.parsing.parts.JsonMapping;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.SubWhereClause;
+import tilda.parsing.parts.View;
 
 public class Generator
   {
@@ -108,6 +109,15 @@ public class Generator
               getFullTableDDL(CG, Out, O);
             }
         Out.println();
+        for (View V : S._Views)
+          if (V != null)
+            {
+              Out.println();
+              Out.println();
+              Out.println();
+              DG.ObjectDocs(Out, G, null);
+              getFullViewDDL (CG, Out, V);
+            }
         Out.println();
         Out.close();
       }
@@ -121,6 +131,11 @@ public class Generator
             CG.genIndex(Out, I);
         if (O._PrimaryKey != null && O._PrimaryKey._Autogen == true)
           CG.genKeysManagement(Out, O);
+      }
+
+    public static void getFullViewDDL(CodeGenSql CG, PrintWriter Out, View V)
+      {
+        CG.genDDL(Out, V);
       }
 
 

@@ -72,7 +72,7 @@ public class Column extends TypeDef
         _ProtectStr = Protect == null ? null : Protect.name();
         _Description = Description;
       }
-
+    
     public transient ColumnMode     _Mode;
     public transient ProtectionType _Protect;
     public transient Column         _SameAsObj;

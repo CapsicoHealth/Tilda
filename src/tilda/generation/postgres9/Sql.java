@@ -17,6 +17,7 @@
 package tilda.generation.postgres9;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -168,7 +169,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
     public void genDDL(PrintWriter Out, View V)
       {
         Out.println("create view if not exists " + V._ParentSchema._Name + "." + V._Name + " -- " + V._Description);
-        Out.print(" as select ");
+        Out.print("  as select ");
         boolean First = true;
         for (ViewColumn C : V._ViewColumns)
           if (C != null)
@@ -179,44 +180,54 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 Out.print("  , ");
               Out.print(getFullColumnVar(C._SameAsObj));
             }
-        Out.println("from "+V._ViewColumns.get(0)._ParentView.getFullName());
+        Out.println();
         Set<String> Names = new HashSet<String>();
+        List<Object> Tables = new ArrayList<Object>();
+        Object TMain = V._ViewColumns.get(0)._SameAsObj._ParentObject;
+        Out.println("     from "+TMain.getFullName());
+        Names.add(TMain.getFullName());
+        Tables.add(TMain);
         for (ViewColumn C : V._ViewColumns)
           if (C != null)
             {
-              if (Names.add(C._Name) == false)
+              Object T = C._SameAsObj._ParentObject;
+              if (Names.add(T.getFullName()) == true)
                {
-                 Out.print(getFullColumnVar(C._SameAsObj));
+                 Tables.add(T);
+                 Out.print("     left join "+T.getFullName()+" on ");
+                 boolean Found = false;
+                 for (ForeignKey FK : T._ForeignKeys)
+                  if (FK._DestObjectObj == TMain)
+                    {
+                      for (int i = 0; i < FK._SrcColumnObjs.size(); ++i)
+                        {
+                          if (i != 0)
+                           Out.print(" AND ");
+                          Out.print(getFullColumnVar(FK._SrcColumnObjs.get(i))+"="+getFullColumnVar(TMain._PrimaryKey._ColumnObjs.get(i)));
+                        }
+                      Found = true;
+                      break;
+                    }
+                 if (Found == false)
+                   {
+                     for (ForeignKey FK : TMain._ForeignKeys)
+                       if (FK._DestObjectObj == T)
+                         {
+                           for (int i = 0; i < FK._SrcColumnObjs.size(); ++i)
+                             {
+                               if (i != 0)
+                                 Out.print(" AND ");
+                                Out.print(getFullColumnVar(FK._SrcColumnObjs.get(i))+"="+getFullColumnVar(T._PrimaryKey._ColumnObjs.get(i)));
+                             }
+                           Found = true;
+                           break;
+                         }
+                   }
+                 if (Found == false)
+                  throw new Error("Cannot find a FK relationship between "+T.getFullName()+" and "+TMain.getFullName()+".");
                }
             }
-        
-        First = true;
-        for (Column C : O._Columns)
-          if (C != null && C._Mode != ColumnMode.CALCULATED)
-            {
-              if (First == true)
-                First = false;
-              else
-                Out.print("  , ");
-              Out.print("\"" + C._Name + "\"" + O._PadderColumnNames.getPad(C._Name) + "  " + PadderColumnTypes.pad(getColumnType(C)));
-              Out.print(C._Nullable == false ? "  not null" : "          ");
-              Out.println("   -- " + C._Description);
-            }
-        if (O._PrimaryKey != null)
-          {
-            Out.print("  , PRIMARY KEY(");
-            PrintColumnList(Out, O._PrimaryKey._ColumnObjs);
-            Out.println(")");
-          }
-        if (O._ForeignKeys != null)
-          for (ForeignKey FK : O._ForeignKeys)
-            if (FK != null)
-              {
-                Out.print("  , FOREIGN KEY (");
-                PrintColumnList(Out, FK._SrcColumnObjs);
-                Out.println(") REFERENCES " + FK._DestObjectObj._ParentSchema._Name + "." + FK._DestObjectObj._Name + " ON DELETE restrict ON UPDATE cascade");
-              }
-        Out.println(" );");
+        Out.println(";");
       }
     
     @Override

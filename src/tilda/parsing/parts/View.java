@@ -24,8 +24,6 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.enums.ObjectLifecycle;
 import tilda.parsing.ParserSession;
-import tilda.parsing.parts.helpers.ValidationHelper;
-import tilda.utils.TextUtil;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -42,7 +40,12 @@ public class View extends Base
       {
         for (ViewColumn C : _ViewColumns)
           if (C != null && C._Name != null && C._Name.equalsIgnoreCase(name) == true)
-            return C._SameAsObj;
+            {
+              Column Col = new Column();
+              C._SameAsObj;
+              Col._Name = C._Name;
+              return Col;
+            }
         return null;
       }
 

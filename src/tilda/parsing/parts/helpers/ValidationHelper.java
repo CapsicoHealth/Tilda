@@ -25,7 +25,6 @@ import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.utils.TextUtil;
-import tilda.parsing.parts.Object;
 
 
 public class ValidationHelper

@@ -17,7 +17,6 @@
 package tilda.parsing.parts.helpers;
 
 import tilda.parsing.parts.Base;
-import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 
 public class ReferenceHelper

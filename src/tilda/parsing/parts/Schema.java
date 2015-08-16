@@ -143,14 +143,13 @@ public class Schema
               O.Validate(PS, this);
             }
         
-//        for (View V : _Views)
-//          if (V != null)
-//            {
-//              if (ThingNames.add(V._Name.toUpperCase()) == false)
-//                PS.AddError("The Object '" + V._Name + "' conflicts with another Thing already defined with the same name in Schema '" + getFullName() + "'.");
-//              V.        
-//              V.Validate(PS, this);
-//            }
+        for (View V : _Views)
+          if (V != null)
+            {
+              if (ThingNames.add(V._Name.toUpperCase()) == false)
+                PS.AddError("The View '" + V._Name + "' conflicts with another Thing already defined with the same name in Schema '" + getFullName() + "'.");
+              V.Validate(PS, this);
+            }
         
         return Errs == PS.getErrorCount();
       }
