@@ -882,7 +882,10 @@ public class TextUtil
               First = false;
             else
               s.append(", ");
-            s.append(O.getClass()==ZonedDateTime.class ? DateTimeUtil.printDateTimeCompact((ZonedDateTime)O, true, true) : O.toString());
+            if (O==null)
+             s.append("null");
+            else
+             s.append(O.getClass()==ZonedDateTime.class ? DateTimeUtil.printDateTimeCompact((ZonedDateTime)O, true, true) : O.toString());
           }
       }
     
