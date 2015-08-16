@@ -206,7 +206,8 @@ public class CollectionUtil
       throws SQLException
       {
         List<T> L = new ArrayList<T>();
-        for (T t : A)
+        if (A != null)
+         for (T t : A)
           L.add(t);
         return L;
       }
@@ -215,7 +216,8 @@ public class CollectionUtil
       throws SQLException
       {
         Set<T> L = new HashSet<T>();
-        for (T t : A)
+        if (A != null)
+         for (T t : A)
           L.add(t);
         return L;
       }
