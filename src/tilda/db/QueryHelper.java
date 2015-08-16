@@ -378,6 +378,11 @@ public abstract class QueryHelper
           }
         throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST);
       }
+    public QueryHelper in(ColumnDefinition Col, String[] v) throws Exception
+      {
+        _QueryStr.append(Col.toString(_ST));
+        return in(v);
+      }
     
     public QueryHelper in(Collection<String> v) throws Exception
       {
@@ -399,6 +404,11 @@ public abstract class QueryHelper
           }
         throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST);
       }
+    public QueryHelper in(ColumnDefinition Col, Collection<String> v) throws Exception
+      {
+        _QueryStr.append(Col.toString(_ST));
+        return in(v);
+      }
     
 
     public QueryHelper in(char[] v) throws Exception
@@ -418,6 +428,11 @@ public abstract class QueryHelper
           }
         throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST);
       }
+    public QueryHelper in(ColumnDefinition Col, char[] v) throws Exception
+      {
+        _QueryStr.append(Col.toString(_ST));
+        return in(v);
+      }
     
     public QueryHelper in(int[] v) throws Exception
       {
@@ -435,6 +450,11 @@ public abstract class QueryHelper
             return this;
           }
         throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST);
+      }
+    public QueryHelper in(ColumnDefinition Col, int[] v) throws Exception
+      {
+        _QueryStr.append(Col.toString(_ST));
+        return in(v);
       }
 
     public QueryHelper in(long[] v) throws Exception
@@ -454,6 +474,11 @@ public abstract class QueryHelper
           }
         throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST);
       }
+    public QueryHelper in(ColumnDefinition Col, long[] v) throws Exception
+      {
+        _QueryStr.append(Col.toString(_ST));
+        return in(v);
+      }
 
     public QueryHelper in(float[] v) throws Exception
       {
@@ -472,6 +497,11 @@ public abstract class QueryHelper
           }
         throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST);
       }
+    public QueryHelper in(ColumnDefinition Col, float[] v) throws Exception
+      {
+        _QueryStr.append(Col.toString(_ST));
+        return in(v);
+      }
     
     public QueryHelper in(double[] v) throws Exception
       {
@@ -489,6 +519,11 @@ public abstract class QueryHelper
             return this;
           }
         throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST);
+      }
+    public QueryHelper in(ColumnDefinition Col, double[] v) throws Exception
+      {
+        _QueryStr.append(Col.toString(_ST));
+        return in(v);
       }
 
     public QueryHelper in(ZonedDateTime[] v) throws Exception
@@ -512,6 +547,11 @@ public abstract class QueryHelper
             return this;
           }
         throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST);
+      }
+    public QueryHelper in(ColumnDefinition Col, ZonedDateTime[] v) throws Exception
+      {
+        _QueryStr.append(Col.toString(_ST));
+        return in(v);
       }
 
     public String getWhereClause() throws Exception
@@ -927,10 +967,22 @@ public abstract class QueryHelper
        return this;
      }
 
+    public QueryHelper isNull(ColumnDefinition Col) throws Exception
+      {
+        _QueryStr.append(Col.toString(_ST));
+        return isNull();
+      }
+
     public QueryHelper isNotNull() throws Exception
       {
         OpVal(Op.NOT_EQUALS, (String) null);
         return this;
+      }
+
+    public QueryHelper isNotNull(ColumnDefinition Col) throws Exception
+      {
+        _QueryStr.append(Col.toString(_ST));
+        return isNotNull();
       }
 
     public QueryHelper plus(ColumnDefinition Col)
