@@ -35,14 +35,12 @@ import tilda.utils.TextUtil;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Object
+public class Object extends Base
   {
 
     static final Logger              LOG                = LogManager.getLogger(Object.class.getName());
 
     /*@formatter:off*/
-    @SerializedName("name"       ) public String               _Name       = null;
-    @SerializedName("description") public String               _Description= null;
     @SerializedName("occ"        ) public boolean              _OCC        = true ;
     @SerializedName("lc"         ) public String               _LCStr      = ObjectLifecycle.NORMAL.toString();
 
@@ -51,24 +49,15 @@ public class Object
     @SerializedName("primary"    ) public PrimaryKey           _PrimaryKey = null;
     @SerializedName("foreign"    ) public List<ForeignKey>     _ForeignKeys= new ArrayList<ForeignKey>();
     @SerializedName("indices"    ) public List<Index>          _Indices    = new ArrayList<Index         >();
-    @SerializedName("queries"    ) public List<SubWhereClause> _Queries    = new ArrayList<SubWhereClause>();
-
-    @SerializedName("json"       ) public List<JsonMapping>    _Json       = new ArrayList<JsonMapping   >();
     @SerializedName("http"       ) public HttpMapping[]        _Http       = { };
     @SerializedName("history"    ) public String     []        _History    = { };
     /*@formatter:on*/
 
-    public transient Schema               _ParentSchema;
-    public transient PaddingTracker       _PadderColumnNames = new PaddingTracker();
-    public transient String               _OriginalName;
-    public transient String               _BaseClassName;
-    public transient String               _AppDataClassName;
-    public transient String               _AppFactoryClassName;
     public transient boolean              _HasUniqueIndex;
-    public transient FrameworkSourcedType _FST         = FrameworkSourcedType.NONE;
+    public transient FrameworkSourcedType _FST = FrameworkSourcedType.NONE;
     public transient ObjectLifecycle      _LC;
-    public transient boolean              _Validated = false;
 
+    @Override
     public Column getColumn(String name)
       {
         for (Column C : _Columns)
@@ -77,74 +66,28 @@ public class Object
         return null;
       }
 
-    public String getFullName()
+    @Override
+    public ObjectLifecycle getLifecycle()
       {
-        return _ParentSchema.getFullName() + "." + _Name;
+        return _LC;
       }
 
-    public String getShortName()
+    @Override
+    public boolean isOCC()
       {
-        return _ParentSchema.getShortName() + "." + _Name;
-      }
-    
-    public String getBaseName()
-      {
-        return _Name;
+        return _OCC;
       }
 
-    public Schema getSchema()
+    @Override
+    public String getWhat()
       {
-        return _ParentSchema;
+        return "Object";
       }
 
-    public String getAppDataClassName()
-      {
-        return _AppDataClassName;
-      }
-    
-    public String getAppFactoryClassName()
-      {
-        return _AppFactoryClassName;
-      }
-    
-
-    public String getBaseClassName()
-      {
-        return _BaseClassName;
-      }
-
-    public String getColumnPad(String Name)
-      {
-        return _PadderColumnNames.getPad(Name);
-      }
-    
-    public boolean Setup(ParserSession PS, Schema ParentSchema)
-      {
-        _ParentSchema = ParentSchema;
-        LOG.debug("  Validating Object " + getFullName() + ".");
-
-        // Mandatories
-        if (TextUtil.isNullOrEmpty(_Name) == true)
-          return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring an object without a name.");
-        if (ValidationHelper.isValidIdentifier(_Name) == false)
-          return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring a view '" + getFullName() + "' with a name '"+_Name+"' which is not valid. "+ValidationHelper._ValidIdentifierMessage);
-        if (TextUtil.isNullOrEmpty(_Description) == true)
-          return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring an object without a description name.");
-
-        _OriginalName = _Name;
-        _Name = _Name.toUpperCase();
-
-        _BaseClassName = "TILDA__" + _Name;
-        _AppDataClassName    = _OriginalName+"_Data";
-        _AppFactoryClassName = _OriginalName+"_Factory";
-        
-        return true;
-      }
-    
     public boolean Validate(ParserSession PS, Schema ParentSchema)
       {
-        if (Setup(PS, ParentSchema) == false)
-          return false;
+        if (super.Validate(PS, ParentSchema) == false)
+         return false;
 
         int Errs = PS.getErrorCount();
 
@@ -239,15 +182,8 @@ public class Object
                 PS.AddError("Object '" + getFullName() + "' is defining a duplicate query '" + SWC._Name + "'.");
           }
 
-        Names.clear();
-        for (JsonMapping J : _Json)
-          if (J != null)
-            {
-              if (Names.add(J._Name) == false)
-                PS.AddError("Object '" + getFullName() + "' is defining a duplicate JSON mapping '" + J._Name + "'.");
-              J.Validate(PS, this);
-            }
-
+        super.ValidateJsonMapping(PS);
+        
         if ((_LC = ObjectLifecycle.parse(_LCStr)) == null)
           return PS.AddError("Object '" + getFullName() + "' defined an invalid 'lc' '" + _LCStr + "'.");
 
@@ -336,16 +272,6 @@ public class Object
     public boolean isAutoGenPrimaryKey(Column C)
       {
         return _PrimaryKey != null && _PrimaryKey._Autogen == true && C == _PrimaryKey._ColumnObjs.get(0);
-      }
-
-    public ObjectLifecycle getLifecycle()
-      {
-        return _LC;
-      }
-
-    public boolean isOCC()
-      {
-        return _OCC;
       }
 
     public void AddColumnAfter(Column SiblingCol, Column NewCol)

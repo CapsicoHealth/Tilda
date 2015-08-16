@@ -24,31 +24,20 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.enums.ObjectLifecycle;
 import tilda.parsing.ParserSession;
-import tilda.utils.PaddingTracker;
+import tilda.parsing.parts.helpers.ValidationHelper;
+import tilda.utils.TextUtil;
 
 import com.google.gson.annotations.SerializedName;
 
-public class View
+public class View extends Base
   {
     static final Logger              LOG                = LogManager.getLogger(View.class.getName());
 
     /*@formatter:off*/
-    @SerializedName("name"       ) public String               _Name       = null;
-    @SerializedName("description") public String               _Description= null;
-
     @SerializedName("columns"    ) public List<ViewColumn>     _ViewColumns= new ArrayList<ViewColumn    >();
-    
-    @SerializedName("queries"    ) public List<SubWhereClause> _Queries    = new ArrayList<SubWhereClause>();
-    @SerializedName("json"       ) public List<JsonMapping>    _Json       = new ArrayList<JsonMapping   >();
     /*@formatter:on*/
 
-    public transient Schema               _ParentSchema;
-    public transient PaddingTracker       _PadderColumnNames = new PaddingTracker();
-    public transient String               _BaseClassName;
-    public transient String               _AppDataClassName;
-    public transient String               _AppFactoryClassName;
-    
-
+    @Override
     public Column getColumn(String name)
       {
         for (ViewColumn C : _ViewColumns)
@@ -57,63 +46,40 @@ public class View
         return null;
       }
 
-    public String getFullName()
-      {
-        return _ParentSchema.getFullName() + "." + _Name;
-      }
-
-    public String getShortName()
-      {
-        return _ParentSchema.getShortName() + "." + _Name;
-      }
-    
-    public String getBaseName()
-      {
-        return _Name;
-      }
-
-    public Schema getSchema()
-      {
-        return _ParentSchema;
-      }
-
-    public boolean isAutoGenPrimaryKey(Column column)
-      {
-        return false;
-      }
-
+    @Override
     public ObjectLifecycle getLifecycle()
       {
         return ObjectLifecycle.READONLY;
       }
     
-    public String getAppDataClassName()
+    @Override
+    public boolean isOCC()
       {
-        return _AppDataClassName;
+        return false;
       }
     
-    public String getAppFactoryClassName()
+    @Override
+    public String getWhat()
       {
-        return _AppFactoryClassName;
+        return "View";
       }
-    
-
-    public String getBaseClassName()
-      {
-        return _BaseClassName;
-      }
-
-    public String getColumnPad(String Name)
-      {
-        return _PadderColumnNames.getPad(Name);
-      }
-
     
     public boolean Validate(ParserSession PS, Schema ParentSchema)
       {
+        if (super.Validate(PS, ParentSchema) == false)
+          return false;
+
         int Errs = PS.getErrorCount();
 
+        if (_ViewColumns == null || _ViewColumns.isEmpty() == true)
+          return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring a view without any columns.");
+         
+        for (ViewColumn C : _ViewColumns)
+         C.Validate(PS, this);
         
-        return Errs == PS.getErrorCount();
+        super.ValidateJsonMapping(PS);
+        
+        _Validated = Errs == PS.getErrorCount();
+        return _Validated;
       }
   }

@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Set;
 
 import tilda.parsing.ParserSession;
+import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.utils.TextUtil;
 import tilda.parsing.parts.Object;
@@ -29,7 +30,7 @@ import tilda.parsing.parts.Object;
 
 public class ValidationHelper
   {
-    public static List<Column> ProcessColumn(ParserSession PS, Object ParentObject, String What, String[] ColumnNames, Processor P)
+    public static List<Column> ProcessColumn(ParserSession PS, Base ParentObject, String What, String[] ColumnNames, Processor P)
       {
         List<Column> Columns = new ArrayList<Column>();
         Set<String> Names = new HashSet<String>();
@@ -63,7 +64,7 @@ public class ValidationHelper
 
     public static interface Processor
       {
-        public boolean process(ParserSession PS, Object ParentObject, String What, Column C);
+        public boolean process(ParserSession PS, Base ParentObject, String What, Column C);
       }
 
     public static String _ValidIdentifierMessage = "Names must conform to a common subset of SQL, C++, Java, .Net and JavaScript identifier conventions.";

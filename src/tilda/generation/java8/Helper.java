@@ -24,6 +24,7 @@ import tilda.enums.ColumnType;
 import tilda.enums.OrderType;
 import tilda.generation.Generator;
 import tilda.generation.GeneratorSession;
+import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
 import tilda.parsing.parts.Index;
@@ -70,18 +71,18 @@ public class Helper
 
     public final static String TILDA_GEN_PACKAGE      = "_Tilda";
 
-    public static String getFullAppDataClassName(Object ParentObject)
+    public static String getFullAppDataClassName(Base ParentObject)
       {
         return ParentObject.getSchema()._Package + "." + ParentObject.getAppDataClassName();
       }
     
-    public static String getFullAppFactoryClassName(Object ParentObject)
+    public static String getFullAppFactoryClassName(Base ParentObject)
       {
         return ParentObject.getSchema()._Package + "." + ParentObject.getAppFactoryClassName();
       }
     
 
-    public static String getFullBaseClassName(Object ParentObject)
+    public static String getFullBaseClassName(Base ParentObject)
       {
         return ParentObject.getSchema()._Package + "." + TILDA_GEN_PACKAGE + "." + ParentObject.getBaseClassName();
       }

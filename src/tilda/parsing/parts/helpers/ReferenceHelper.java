@@ -16,6 +16,7 @@
 
 package tilda.parsing.parts.helpers;
 
+import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 
@@ -45,7 +46,7 @@ public class ReferenceHelper
       }
 
 
-    public static ReferenceHelper parseColumnReference(String Ref, Object ParentObject)
+    public static ReferenceHelper parseColumnReference(String Ref, Base ParentObject)
       {
         String[] parts = Ref.split("\\.");
         String P = ParsePackage(parts, 4);

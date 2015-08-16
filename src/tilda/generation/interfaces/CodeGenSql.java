@@ -23,6 +23,7 @@ import tilda.db.stores.DBType;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
+import tilda.parsing.parts.View;
 
 
 public interface CodeGenSql extends DBType, CodeGenBase
@@ -43,6 +44,7 @@ public interface CodeGenSql extends DBType, CodeGenBase
     public String getCommaCurentTimestamp();
 
     public void genDDL(PrintWriter Out, Object O);
+    public void genDDL(PrintWriter Out, View   V);
     public void genIndex(PrintWriter Out, Index I);
     public void genKeysManagement(PrintWriter Out, Object O);
   }

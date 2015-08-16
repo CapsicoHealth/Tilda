@@ -63,7 +63,7 @@ public class Index
 
         _ColumnObjs = ValidationHelper.ProcessColumn(PS, _ParentObject, "index '" + _Name + "'", _Columns, new ValidationHelper.Processor() {
           @Override
-          public boolean process(ParserSession PS, Object ParentObject, String What, Column C)
+          public boolean process(ParserSession PS, Base ParentObject, String What, Column C)
             {
               if (C._Mode == ColumnMode.CALCULATED)
                 PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining an index with column '" + C._Name + "' which is calculated.");

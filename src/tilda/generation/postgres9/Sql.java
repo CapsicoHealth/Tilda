@@ -17,7 +17,9 @@
 package tilda.generation.postgres9;
 
 import java.io.PrintWriter;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,6 +34,8 @@ import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
+import tilda.parsing.parts.View;
+import tilda.parsing.parts.ViewColumn;
 import tilda.utils.PaddingTracker;
 
 public class Sql extends PostgreSQL implements CodeGenSql
@@ -160,6 +164,61 @@ public class Sql extends PostgreSQL implements CodeGenSql
         Out.println(" );");
       }
 
+    @Override
+    public void genDDL(PrintWriter Out, View V)
+      {
+        Out.println("create view if not exists " + V._ParentSchema._Name + "." + V._Name + " -- " + V._Description);
+        Out.print(" as select ");
+        boolean First = true;
+        for (ViewColumn C : V._ViewColumns)
+          if (C != null)
+            {
+              if (First == true)
+                First = false;
+              else
+                Out.print("  , ");
+              Out.print(getFullColumnVar(C._SameAsObj));
+            }
+        Out.println("from "+V._ViewColumns.get(0)._ParentView.getFullName());
+        Set<String> Names = new HashSet<String>();
+        for (ViewColumn C : V._ViewColumns)
+          if (C != null)
+            {
+              if (Names.add(C._Name) == false)
+               {
+                 Out.print(getFullColumnVar(C._SameAsObj));
+               }
+            }
+        
+        First = true;
+        for (Column C : O._Columns)
+          if (C != null && C._Mode != ColumnMode.CALCULATED)
+            {
+              if (First == true)
+                First = false;
+              else
+                Out.print("  , ");
+              Out.print("\"" + C._Name + "\"" + O._PadderColumnNames.getPad(C._Name) + "  " + PadderColumnTypes.pad(getColumnType(C)));
+              Out.print(C._Nullable == false ? "  not null" : "          ");
+              Out.println("   -- " + C._Description);
+            }
+        if (O._PrimaryKey != null)
+          {
+            Out.print("  , PRIMARY KEY(");
+            PrintColumnList(Out, O._PrimaryKey._ColumnObjs);
+            Out.println(")");
+          }
+        if (O._ForeignKeys != null)
+          for (ForeignKey FK : O._ForeignKeys)
+            if (FK != null)
+              {
+                Out.print("  , FOREIGN KEY (");
+                PrintColumnList(Out, FK._SrcColumnObjs);
+                Out.println(") REFERENCES " + FK._DestObjectObj._ParentSchema._Name + "." + FK._DestObjectObj._Name + " ON DELETE restrict ON UPDATE cascade");
+              }
+        Out.println(" );");
+      }
+    
     @Override
     public void genIndex(PrintWriter Out, Index I)
       {
