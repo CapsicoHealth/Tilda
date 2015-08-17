@@ -35,17 +35,14 @@ public class View extends Base
     @SerializedName("columns"    ) public List<ViewColumn>     _ViewColumns= new ArrayList<ViewColumn    >();
     /*@formatter:on*/
 
+    public transient List<Column>         _Columns = new ArrayList<Column>();
+    
     @Override
     public Column getColumn(String name)
       {
-        for (ViewColumn C : _ViewColumns)
+        for (Column C : _Columns)
           if (C != null && C._Name != null && C._Name.equalsIgnoreCase(name) == true)
-            {
-              Column Col = new Column();
-              C._SameAsObj;
-              Col._Name = C._Name;
-              return Col;
-            }
+           return C;
         return null;
       }
 

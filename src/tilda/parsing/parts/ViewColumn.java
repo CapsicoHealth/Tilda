@@ -36,7 +36,6 @@ public class ViewColumn
     
     public ViewColumn()
      {
-      
      }
 
     public ViewColumn(String Name, String SameAs)
@@ -45,10 +44,9 @@ public class ViewColumn
         _SameAs = SameAs;
       }
 
-    public transient Column         _SameAsObj;
-    public transient View           _ParentView;
-
-    public transient boolean        _FailedValidation = false;
+    public transient Column   _SameAsObj;
+    public transient View     _ParentView;
+    public transient boolean  _FailedValidation = false;
 
     public String getFullName()
       {
