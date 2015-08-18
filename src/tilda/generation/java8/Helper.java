@@ -94,22 +94,22 @@ public class Helper
 
     public static String getRuntimeMask(Column C)
       {
-        return C._ParentObject.getBaseClassName()+"_Factory.COLS." + C._Name.toUpperCase() + "._Mask";
+        return C._ParentObject.getBaseClassName()+"_Factory.COLS." + C.getName().toUpperCase() + "._Mask";
       }
 
     public static String getRuntimeSelectStr(Column C)
       {
-        return C._ParentObject.getBaseClassName()+"_Factory.COLS." + C._Name.toUpperCase() + "._Full";
+        return C._ParentObject.getBaseClassName()+"_Factory.COLS." + C.getName().toUpperCase() + "._Full";
       }
 
     public static String getRuntimeInsertStr(Column C)
       {
-        return C._ParentObject.getBaseClassName()+"_Factory.COLS." + C._Name.toUpperCase() + "._Insert";
+        return C._ParentObject.getBaseClassName()+"_Factory.COLS." + C.getName().toUpperCase() + "._Insert";
       }
 
     public static String getRuntimeUpdateStr(Column C)
       {
-        return C._ParentObject.getBaseClassName()+"_Factory.COLS." + C._Name.toUpperCase() + "._Update";
+        return C._ParentObject.getBaseClassName()+"_Factory.COLS." + C.getName().toUpperCase() + "._Update";
       }
 
     public static String getVisibility(Column C, boolean PackageForPrivate)
@@ -172,8 +172,8 @@ public class Helper
             for (Column C : O._PrimaryKey._ColumnObjs)
               if (C != null)
                 {
-                  String Pad = O._PadderColumnNames.getPad(C._Name);
-                  Out.println("             __Saved_" + C._Name + Pad + " = _" + C._Name + Pad + ";");
+                  String Pad = O._PadderColumnNames.getPad(C.getName());
+                  Out.println("             __Saved_" + C.getName() + Pad + " = _" + C.getName() + Pad + ";");
                 }
             Out.println("             break;");
           }
@@ -187,8 +187,8 @@ public class Helper
                   for (Column C : I._ColumnObjs)
                     if (C != null)
                       {
-                        String Pad = O._PadderColumnNames.getPad(C._Name);
-                        Out.println("             __Saved_" + C._Name + Pad + " = _" + C._Name + Pad + ";");
+                        String Pad = O._PadderColumnNames.getPad(C.getName());
+                        Out.println("             __Saved_" + C.getName() + Pad + " = _" + C.getName() + Pad + ";");
                       }
                   Out.println("             break;");
                 }
@@ -202,9 +202,9 @@ public class Helper
       throws Error
       {
         if (V._Value.equalsIgnoreCase("NOW") == true)
-          return "set" + TextUtil.CapitalizeFirstCharacter(C._Name) + "Now();";
+          return "set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "Now();";
         else if (V._Value.equalsIgnoreCase("UNDEFINED") == true)
-          return "set" + TextUtil.CapitalizeFirstCharacter(C._Name) + "Undefined();";
+          return "set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "Undefined();";
 
         throw new Error("Trying to generate a setter call to TIMESTAMP column '" + C.getFullName() + "' for the value '" + V._Value
             + "'. TIMESTAMP fields are not supposed to have explicit values.");
@@ -240,16 +240,16 @@ public class Helper
       {
         PaddingTracker Padder = new PaddingTracker();
         for (Column C : DefaultUpdateColumns)
-          Padder.track(C._Name + C._DefaultCreateValue._Name);
+          Padder.track(C.getName() + C._DefaultCreateValue._Name);
         for (Column C : DefaultUpdateColumns)
           {
-            String MethodName = Padder.pad(TextUtil.CapitalizeFirstCharacter(C._Name) + TextUtil.CapitalizeFirstCharacter(C._DefaultCreateValue._Name));
+            String MethodName = Padder.pad(TextUtil.CapitalizeFirstCharacter(C.getName()) + TextUtil.CapitalizeFirstCharacter(C._DefaultCreateValue._Name));
             if (C._Type == ColumnType.DATETIME)
               {
                 if (C._DefaultCreateValue._Value.equalsIgnoreCase("NOW") == true)
-                  Out.println(Prefix + "set" + Padder.pad(TextUtil.CapitalizeFirstCharacter(C._Name) + "Now") + "();");
+                  Out.println(Prefix + "set" + Padder.pad(TextUtil.CapitalizeFirstCharacter(C.getName()) + "Now") + "();");
                 else if (C._DefaultCreateValue._Value.equalsIgnoreCase("UNDEFINED") == true)
-                  Out.println(Prefix + "set" + Padder.pad(TextUtil.CapitalizeFirstCharacter(C._Name) + "Undefined") + "();");
+                  Out.println(Prefix + "set" + Padder.pad(TextUtil.CapitalizeFirstCharacter(C.getName()) + "Undefined") + "();");
                 else
                   throw new Error("Trying to generate a setter call to TIMESTAMP column '" + C.getFullName() + "' for the value '" + C._DefaultCreateValue._Value
                       + "'. TIMESTAMP fields are not supposed to have explicit values.");
@@ -462,12 +462,12 @@ public class Helper
                           Column C = I._SubQuery._ColumnObjs.get(i);
                           String V = I._SubQuery._VarNames.get(i);
 //                          String Mask = getRuntimeMask(C);
-                          String Pad = O._PadderColumnNames.getPad(C._Name);
+                          String Pad = O._PadderColumnNames.getPad(C.getName());
                           Out.print(Lead + "     ");
                           if (C._Type.isPrimitive() == false)
                             Out.print("if (P._" + V + "==null) PS.setNull(++i, java.sql.Types." + JavaJDBCType.get(C._Type)._JDBCSQLType + "); else ");
                           if (C._Type == ColumnType.DATETIME)
-                            Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(P._" + C._Name + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
+                            Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(P._" + C.getName() + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
                           else
                             Out.println("PS.set" + JavaJDBCType.get(C._Type)._JDBCType + "(++i, " + (C._Type == ColumnType.CHAR ? "\"\"+" : "") + "P._" + V + Pad + ");");
                         }
@@ -490,7 +490,7 @@ public class Helper
                       Column C = SWC._ColumnObjs.get(i);
                       String V = SWC._VarNames.get(i);
                       // String Mask = getRuntimeMask(C);
-                      String Pad = O._PadderColumnNames.getPad(C._Name);
+                      String Pad = O._PadderColumnNames.getPad(C.getName());
                       Out.print(Lead + "     ");
                       if (C._Type.isPrimitive() == false)
                         Out.print("if (P._" + V + "==null) PS.setNull(++i, java.sql.Types." + JavaJDBCType.get(C._Type)._JDBCSQLType + "); else ");
@@ -517,15 +517,14 @@ public class Helper
         String Pred = Static == true ? "Obj." : "";
         if (C != null)
           {
-            String Mask = Helper.getRuntimeMask(C);
-            String Pad = O._PadderColumnNames.getPad(C._Name);
+            String Pad = O._PadderColumnNames.getPad(C.getName());
             Out.print(Lead + "     ");
             if (C._Nullable == true)
-             Out.print("if ("+Pred+"isNull"+TextUtil.CapitalizeFirstCharacter(C._Name)+"() == true) PS.setNull(++i, java.sql.Types." + JavaJDBCType.get(C._Type)._JDBCSQLType + ");  else ");
+             Out.print("if ("+Pred+"isNull"+TextUtil.CapitalizeFirstCharacter(C.getName())+"() == true) PS.setNull(++i, java.sql.Types." + JavaJDBCType.get(C._Type)._JDBCSQLType + ");  else ");
             if (C._Type == ColumnType.DATETIME)
-              Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(_" + C._Name + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
+              Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(_" + C.getName() + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
             else
-              Out.println("PS.set" + JavaJDBCType.get(C._Type)._JDBCType + "(++i, " + (C._Type == ColumnType.CHAR ? "\"\"+" : "") + Pred + "_" + C._Name + Pad + ");");
+              Out.println("PS.set" + JavaJDBCType.get(C._Type)._JDBCType + "(++i, " + (C._Type == ColumnType.CHAR ? "\"\"+" : "") + Pred + "_" + C.getName() + Pad + ");");
           }
       }
     
@@ -565,26 +564,25 @@ public class Helper
     
     public static boolean JSONExport(PrintWriter Out, boolean First, Column C)
       {
-        String Mask = getRuntimeMask(C);
         if (C._Nullable == true)
          {
            if (C._Mode == ColumnMode.CALCULATED)
              {
                if (C.isCollection() == true || C._Type.isPrimitive() == false)
-                Out.println("      if (Obj.get"+TextUtil.CapitalizeFirstCharacter(C._Name)+"() != null)");
+                Out.println("      if (Obj.get"+TextUtil.CapitalizeFirstCharacter(C.getName())+"() != null)");
              }
            else
              {
-               Out.print("      if (Obj.isNull" + TextUtil.CapitalizeFirstCharacter(C._Name) + "() == false");
+               Out.print("      if (Obj.isNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "() == false");
                if (C.isCollection() == true || C._Type.isPrimitive() == false)
-                Out.print(" && Obj.get"+TextUtil.CapitalizeFirstCharacter(C._Name)+"() != null");
+                Out.print(" && Obj.get"+TextUtil.CapitalizeFirstCharacter(C.getName())+"() != null");
                Out.println(")");
              }
          }
         if (C.isCollection() == false)
-         Out.println("        JSONUtil.Print(Out, \""+C._Name+"\", "+First+", Obj.get" + TextUtil.CapitalizeFirstCharacter(C._Name) + "());");
+         Out.println("        JSONUtil.Print(Out, \""+C.getName()+"\", "+First+", Obj.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "());");
         else
-         Out.println("        JSONUtil.Print(Out, \""+C._Name+"\", "+First+", Obj._" + C._Name + ".toArray(new "+JavaJDBCType.getFieldTypeBaseClass(C)+"[Obj._" + C._Name +".size()]));");
+         Out.println("        JSONUtil.Print(Out, \""+C.getName()+"\", "+First+", Obj._" + C.getName() + ".toArray(new "+JavaJDBCType.getFieldTypeBaseClass(C)+"[Obj._" + C.getName() +".size()]));");
         Out.println();
         return false;
       }

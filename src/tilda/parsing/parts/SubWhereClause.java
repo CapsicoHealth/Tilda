@@ -49,7 +49,7 @@ public class SubWhereClause
     public transient List<Column>    _OrderByObjs   = new ArrayList<Column>();
     public transient List<OrderType> _OrderByOrders = new ArrayList<OrderType>();
 
-    public transient Object          _ParentObject;
+    public transient Base          _ParentObject;
     
     public SubWhereClause()
       {
@@ -59,7 +59,7 @@ public class SubWhereClause
         _Wheres = new Query[] { new Query(_SubWhere) };
       }
 
-    public boolean Validate(ParserSession PS, Object ParentObject, String What, boolean TopLevel)
+    public boolean Validate(ParserSession PS, Base ParentObject, String What, boolean TopLevel)
       {
         _ParentObject = ParentObject;
         // Does it have a name?

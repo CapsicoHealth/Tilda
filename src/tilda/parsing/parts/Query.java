@@ -57,7 +57,7 @@ public class Query
         _Clause = _SubWhere;
       }
 
-    public boolean Validate(ParserSession PS, Object ParentObject, String OwnerObjName)
+    public boolean Validate(ParserSession PS, Base ParentObject, String OwnerObjName)
       {
         int Errs = PS.getErrorCount();
 

@@ -44,7 +44,8 @@ public class ViewColumn
         _SameAs = SameAs;
       }
 
-    public transient Column   _SameAsObj;
+    public transient ViewColumnWrapper   _SameAsObj;
+    public transient boolean  _Aliased = true;
     public transient View     _ParentView;
     public transient boolean  _FailedValidation = false;
 
@@ -58,11 +59,10 @@ public class ViewColumn
         return _ParentView.getShortName() + "." + _Name;
       }
     
-    public String getBaseName()
+    public String getName()
       {
         return _Name;
       }
-    
     
     public boolean Validate(ParserSession PS, View ParentView)
       {
@@ -77,7 +77,10 @@ public class ViewColumn
           return false;
         
         if (TextUtil.isNullOrEmpty(_Name) == true)
-         _Name = _SameAsObj._Name;
+          {
+            _Aliased = false;
+            _Name = _SameAsObj._Name;
+          }
         
         return Errs == PS.getErrorCount();
       }
@@ -96,9 +99,13 @@ public class ViewColumn
           PS.AddError("Column '" + getFullName() + "' is declaring sameas '" + _SameAs + "' with an incorrect syntax. It should be '(((package\\.)?schema\\.)?object\\.)?column'.");
         else
           {
-            _SameAsObj = PS.getColumn(R._P, R._S, R._O, R._C);
-            if (_SameAsObj == null)
+            Column Col = PS.getColumn(R._P, R._S, R._O, R._C);
+            if (Col == null)
               PS.AddError("Column '" + getFullName() + "' is declaring sameas '" + _SameAs + "' resolving to '" + R.getFullName() + "' which cannot be found.");
+            else
+              {
+                _SameAsObj = new ViewColumnWrapper(Col, this);
+              }
           }
 
         return Errs == PS.getErrorCount();

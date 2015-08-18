@@ -71,16 +71,13 @@ public class ColumnMapper
         
         if (_Group != ColumnMapperMode.NONE)
           {
-            if (_ParentColumn._ParentObject.getColumn(_ParentColumn._Name+"MappedGroup") != null)
-             PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares a mapper which automatically adds the column '"+_ParentColumn._Name+"MappedGroup'. That column has already been defined.");
+            if (_ParentColumn._ParentObject.getColumn(_ParentColumn.getName()+"MappedGroup") != null)
+             PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares a mapper which automatically adds the column '"+_ParentColumn.getName()+"MappedGroup'. That column has already been defined.");
             else
               {
-                Column Col = new Column();
-                Col._Name = _ParentColumn._Name+"MappedGroup";
+                Column Col = new Column(_ParentColumn.getName()+"MappedGroup", null, 0, _ParentColumn._Nullable, _Group == ColumnMapperMode.DB ? ColumnMode.AUTO : ColumnMode.CALCULATED, 
+                                        false, null, "Mapped group for '"+C.getName()+"' through '"+_DestObjectObj.getFullName()+"'.");
                 Col._SameAs = _DestObjectObj.getColumn("group").getFullName();
-                Col._Nullable = _ParentColumn._Nullable;
-                Col._Description = "Mapped group for '"+C._Name+"' through '"+_DestObjectObj.getFullName()+"'.";
-                Col._ModeStr = _Group == ColumnMapperMode.DB ? ColumnMode.AUTO.name() : ColumnMode.CALCULATED.name();
                 Col._FrameworkManaged = true;
                 Col._MapperDef = this;
                 _ParentColumn._ParentObject.AddColumnAfter(_ParentColumn, Col);
@@ -88,16 +85,13 @@ public class ColumnMapper
           }
         if (_Name != ColumnMapperMode.NONE)
           {
-            if (_ParentColumn._ParentObject.getColumn(_ParentColumn._Name+"MappedName") != null)
-             PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares a mapper which automatically adds the column '"+_ParentColumn._Name+"MappedName'. That name clashes with an already defined column.");
+            if (_ParentColumn._ParentObject.getColumn(_ParentColumn.getName()+"MappedName") != null)
+             PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares a mapper which automatically adds the column '"+_ParentColumn.getName()+"MappedName'. That name clashes with an already defined column.");
             else
               {
-                Column Col = new Column();
-                Col._Name = _ParentColumn._Name+"MappedName";
+                Column Col = new Column(_ParentColumn.getName()+"MappedName", null, 0, _ParentColumn._Nullable, _Name == ColumnMapperMode.DB ? ColumnMode.AUTO : ColumnMode.CALCULATED, 
+                                        _ParentColumn._Invariant, null, "Mapped name for '"+C.getName()+"' through '"+_DestObjectObj.getFullName()+"'.");
                 Col._SameAs = _DestObjectObj.getColumn("name").getFullName();
-                Col._Nullable = _ParentColumn._Nullable;
-                Col._Description = "Mapped name for '"+C._Name+"' through '"+_DestObjectObj.getFullName()+"'.";
-                Col._ModeStr = _Name == ColumnMapperMode.DB ? ColumnMode.AUTO.name() : ColumnMode.CALCULATED.name();
                 Col._FrameworkManaged = true;
                 Col._MapperDef = this;
                 _ParentColumn._ParentObject.AddColumnAfter(_ParentColumn, Col);

@@ -42,7 +42,7 @@ public class Column extends TypeDef
     static final Logger             LOG                = LogManager.getLogger(Column.class.getName());
 
     /*@formatter:off*/
-	@SerializedName("name"       ) public String         _Name       ;
+	@SerializedName("name"       ) protected String         _Name       ;
 
 	@SerializedName("sameas"     ) public String         _SameAs     ;
 	
@@ -98,11 +98,15 @@ public class Column extends TypeDef
         return _ParentObject.getShortName() + "." + _Name;
       }
     
-    public String getBaseName()
+    public String getName()
       {
         return _Name;
       }
     
+    public String getBaseName()
+      {
+        return _Name;
+      }
     
     public boolean Validate(ParserSession PS, Object ParentObject)
       {
@@ -188,7 +192,7 @@ public class Column extends TypeDef
         else
           _TypeStr = _SameAsObj._TypeStr;
 
-        if (_Size != null)
+        if (_Size != null && _Size > 0)
           PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining 'size', which is not allowed.");
         else if (_Mapper != null && _Mapper._Multi != MultiType.NONE)
           {

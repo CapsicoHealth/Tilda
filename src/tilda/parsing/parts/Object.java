@@ -58,23 +58,20 @@ public class Object extends Base
     public Column getColumn(String name)
       {
         for (Column C : _Columns)
-          if (C != null && C._Name != null && C._Name.equalsIgnoreCase(name) == true)
+          if (C != null && C.getName() != null && C.getName().equalsIgnoreCase(name) == true)
             return C;
         return null;
       }
-
     @Override
     public ObjectLifecycle getLifecycle()
       {
         return _LC;
       }
-
     @Override
     public boolean isOCC()
       {
         return _OCC;
       }
-
     @Override
     public String getWhat()
       {
@@ -125,29 +122,24 @@ public class Object extends Base
                   PS.AddError("Object '" + getFullName() + "' has declared more than 64 columns!");
                 else
                   {
-                    _PadderColumnNames.track(C._Name);
+                    _PadderColumnNames.track(C.getName());
                     if (C.Validate(PS, this) == true)
                       {
-                        if (ColumnNames.add(C._Name.toUpperCase()) == false)
+                        if (ColumnNames.add(C.getName().toUpperCase()) == false)
                          PS.AddError("Column '" + C.getFullName() + "' is defined more than once in Object '" + getFullName() + "'.");
                         if (C._Type == ColumnType.DATETIME && Object.isOCCColumn(C) == false)
                           {
-                            Column TZCol = new Column();
-                            TZCol._Name = C._Name+"TZ";
+                            Column TZCol = new Column(C.getName()+"TZ", null, 0, C._Nullable, ColumnMode.AUTO, C._Invariant, null, "Generated helper column to hold the time zone ID for '"+C.getName()+"'.");
                             TZCol._SameAs = "tilda.data.TILDA.ZONEINFO.id";
-                            TZCol._Invariant = C._Invariant;
-                            TZCol._Description = "Generated helper column to hold the time zone ID for '"+C._Name+"'.";
-                            TZCol._Mode = ColumnMode.AUTO;
-                            TZCol._Nullable = C._Nullable; 
                             TZCol._FrameworkManaged = true;
                             _Columns.add(i, TZCol);
                             ++i;
-                            _PadderColumnNames.track(TZCol._Name);
-                            if (ColumnNames.add(TZCol._Name.toUpperCase()) == false)
+                            _PadderColumnNames.track(TZCol.getName());
+                            if (ColumnNames.add(TZCol.getName().toUpperCase()) == false)
                               PS.AddError("Generated column '" + TZCol.getFullName() + "' conflicts with another column already named the same in Object '" + getFullName() + "'.");
                             if (TZCol.Validate(PS, this) == false)
                               TZCol._FailedValidation = true;
-                            addForeignKey(C._Name, new String[] { TZCol._Name }, "tilda.data.TILDA.ZONEINFO");
+                            addForeignKey(C.getName(), new String[] { TZCol.getName() }, "tilda.data.TILDA.ZONEINFO");
                           }
                       }
                     else
@@ -204,61 +196,6 @@ public class Object extends Base
         return _Validated;
       }
 
-    private boolean CreateAutogenPK(ParserSession PS)
-      {
-        for (Column C : _Columns)
-          if (C != null && C._Name.equalsIgnoreCase("refnum") == true)
-            return PS.AddError("Object '" + getFullName() + "' has defined an autogen primary key but is also defining column 'refnum', which is a reserved name.");
-
-        Column C = new Column();
-        C._Name = "refnum";
-        C._SameAs = "tilda.data.TILDA.KEY.refnum";
-        C._Invariant = true;
-        C._Description = PS.getColumn("tilda.data", "TILDA", "KEY", "refnum")._Description;
-        _Columns.add(0, C);
-
-        return true;
-      }
-
-    private boolean CreateOCCColumns(ParserSession PS)
-      {
-        for (Column C : _Columns)
-          if (C != null && (C._Name.equalsIgnoreCase("created") == true || C._Name.equalsIgnoreCase("lastUpdated") == true || C._Name.equalsIgnoreCase("deleted") == true))
-            return PS.AddError("Object '" + getFullName() + "' has defined OCC to be true but is also defining column '" + C._Name + "', which is a reserved name.");
-
-        Column C = new Column();
-        C._Name = "created";
-        C._SameAs = "tilda.data.TILDA.KEY.created";
-        C._Invariant = true;
-        C._Description = PS.getColumn("tilda.data", "TILDA", "KEY", "created")._Description;
-        C._Mode = ColumnMode.AUTO;
-        C._FrameworkManaged = true;
-        _Columns.add(C);
-
-        C = new Column();
-        C._Name = "lastUpdated";
-        C._SameAs = "tilda.data.TILDA.KEY.lastUpdated";
-        C._Description = PS.getColumn("tilda.data", "TILDA", "KEY", "lastUpdated")._Description;
-        C._Mode = ColumnMode.AUTO;
-        C._FrameworkManaged = true;
-        _Columns.add(C);
-
-        C = new Column();
-        C._Name = "deleted";
-        C._SameAs = "tilda.data.TILDA.KEY.deleted";
-        C._Description = PS.getColumn("tilda.data", "TILDA", "KEY", "deleted")._Description;
-        C._Mode = ColumnMode.AUTO;
-        C._FrameworkManaged = true;
-        _Columns.add(C);
-
-        return true;
-      }
-
-    public static boolean isOCCColumn(Column C)
-      {
-        return C.isOCCGenerated();
-      }
-
     /**
      * A Column is an autogen PK if and only if it is the one column defined by the PK. All AutoGen PKs must
      * have only one column (and also be a LONG).
@@ -269,6 +206,48 @@ public class Object extends Base
     public boolean isAutoGenPrimaryKey(Column C)
       {
         return _PrimaryKey != null && _PrimaryKey._Autogen == true && C == _PrimaryKey._ColumnObjs.get(0);
+      }
+
+    private boolean CreateAutogenPK(ParserSession PS)
+      {
+        for (Column C : _Columns)
+          if (C != null && C.getName().equalsIgnoreCase("refnum") == true)
+            return PS.AddError("Object '" + getFullName() + "' has defined an autogen primary key but is also defining column 'refnum', which is a reserved name.");
+
+        Column C = new Column("refnum", null, 0, false, null, true, null, PS.getColumn("tilda.data", "TILDA", "KEY", "refnum")._Description);
+        C._SameAs = "tilda.data.TILDA.KEY.refnum";
+        _Columns.add(0, C);
+
+        return true;
+      }
+
+    private boolean CreateOCCColumns(ParserSession PS)
+      {
+        for (Column C : _Columns)
+          if (C != null && (C.getName().equalsIgnoreCase("created") == true || C.getName().equalsIgnoreCase("lastUpdated") == true || C.getName().equalsIgnoreCase("deleted") == true))
+            return PS.AddError("Object '" + getFullName() + "' has defined OCC to be true but is also defining column '" + C.getName() + "', which is a reserved name.");
+
+        Column C = new Column("created", null, 0, false, ColumnMode.AUTO, true, null, PS.getColumn("tilda.data", "TILDA", "KEY", "created")._Description);
+        C._SameAs = "tilda.data.TILDA.KEY.created";
+        C._FrameworkManaged = true;
+        _Columns.add(C);
+
+        C = new Column("lastUpdated", null, 0, false, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "KEY", "lastUpdated")._Description);
+        C._SameAs = "tilda.data.TILDA.KEY.lastUpdated";
+        C._FrameworkManaged = true;
+        _Columns.add(C);
+
+        C = new Column("deleted", null, 0, true, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "KEY", "deleted")._Description);
+        C._SameAs = "tilda.data.TILDA.KEY.deleted";
+        C._FrameworkManaged = true;
+        _Columns.add(C);
+
+        return true;
+      }
+
+    public static boolean isOCCColumn(Column C)
+      {
+        return C.isOCCGenerated();
       }
 
     public void AddColumnAfter(Column SiblingCol, Column NewCol)
@@ -339,7 +318,7 @@ public class Object extends Base
       {
         for (ForeignKey FK : _ForeignKeys)
          for (Column C : FK._SrcColumnObjs)
-           if (C._Name.equals(Name) == true)
+           if (C.getName().equals(Name) == true)
             {
               if (FK._DestObjectObj._PrimaryKey._Autogen == true)
                return true;

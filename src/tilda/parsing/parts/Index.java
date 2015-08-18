@@ -66,9 +66,9 @@ public class Index
           public boolean process(ParserSession PS, Base ParentObject, String What, Column C)
             {
               if (C._Mode == ColumnMode.CALCULATED)
-                PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining an index with column '" + C._Name + "' which is calculated.");
+                PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining an index with column '" + C.getName() + "' which is calculated.");
               else if (_Unique == true && C._Nullable == true)
-                PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a unique index with column '" + C._Name + "' which is nullable.");
+                PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a unique index with column '" + C.getName() + "' which is nullable.");
               else
                 {
                   if (_Unique == true)
@@ -85,7 +85,7 @@ public class Index
             Set<String> Names = new HashSet<String>();
             if (_ColumnObjs != null)
              for (Column C : _ColumnObjs)
-              Names.add(C._Name.toUpperCase());
+              Names.add(C.getName().toUpperCase());
             
             processOrderBy(PS, "Object '" + _ParentObject.getFullName() + "' defines index '" + _Name + "'", Names, _ParentObject, _OrderBy, _OrderByObjs, _OrderByOrders);
             
@@ -116,7 +116,7 @@ public class Index
         return Errs == PS.getErrorCount();
       }
 
-    public static void processOrderBy(ParserSession PS, String What, Set<String> Names, Object ParentObject, String[] OrderBy, List<Column> OrderByObjs, List<OrderType> OrderByOrders)
+    public static void processOrderBy(ParserSession PS, String What, Set<String> Names, Base ParentObject, String[] OrderBy, List<Column> OrderByObjs, List<OrderType> OrderByOrders)
       {
         for (String ob : OrderBy)
           {

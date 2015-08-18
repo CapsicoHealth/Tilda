@@ -118,11 +118,11 @@ public class TildaFactory implements CodeGenTildaFactory
                 First = false;
               else
                 Out.println(",");
-              String Pad = O._PadderColumnNames.getPad(C._Name);
+              String Pad = O._PadderColumnNames.getPad(C.getName());
               String ColVarFull = TextUtil.EscapeDoubleQuoteWithSlash(G.getSql().getFullColumnVar(C), "", false);
               String ColVarShort = TextUtil.EscapeDoubleQuoteWithSlash(G.getSql().getShortColumnVar(C), "", false);
               String ColVarOthers = TextUtil.EscapeDoubleQuoteWithSlash(G.getSql().getShortColumnVar(C), "", false);
-              Out.print("     " + C._Name.toUpperCase() + Pad + "(\"" + ColVarFull + "\"" + Pad + ", \"" + ColVarShort + "\"" + Pad + ", \", " + ColVarOthers + "\"" + Pad + ", \", " + ColVarOthers + "=?\"" + Pad
+              Out.print("     " + C.getName().toUpperCase() + Pad + "(\"" + ColVarFull + "\"" + Pad + ", \"" + ColVarShort + "\"" + Pad + ", \", " + ColVarOthers + "\"" + Pad + ", \", " + ColVarOthers + "=?\"" + Pad
                   + ", ColumnType." + C._Type + ")");
             }
         Out.println(";");
@@ -238,7 +238,7 @@ public class TildaFactory implements CodeGenTildaFactory
           if (C != null && (C._PrimaryKey == false || O._PrimaryKey._Autogen == false))
             {
               if (First == true) First = false; else Out.print(", ");
-              Out.print(JavaJDBCType.getFieldType(C) + " " + C._Name);
+              Out.print(JavaJDBCType.getFieldType(C) + " " + C.getName());
             }
         Out.println(") throws Exception");
         Out.println("     {");
@@ -250,7 +250,7 @@ public class TildaFactory implements CodeGenTildaFactory
             Out.println();
             Out.println("       // Auto PK");
             Column PK = O._PrimaryKey._ColumnObjs.get(0);
-            Out.println("       Obj.set" + TextUtil.CapitalizeFirstCharacter(PK._Name) + "(tilda.db.KeysManager.getKey("+TextUtil.EscapeDoubleQuoteWithSlash(O.getShortName())+"));");
+            Out.println("       Obj.set" + TextUtil.CapitalizeFirstCharacter(PK.getName()) + "(tilda.db.KeysManager.getKey("+TextUtil.EscapeDoubleQuoteWithSlash(O.getShortName())+"));");
           }
         if (CreateColumns != null && CreateColumns.isEmpty() == false)
           {
@@ -258,8 +258,8 @@ public class TildaFactory implements CodeGenTildaFactory
             Out.println("       // Explicit setters");
             for (Column C : CreateColumns)
               {
-                String Pad = O._PadderColumnNames.getPad(C._Name);
-                Out.println("       Obj.set" + TextUtil.CapitalizeFirstCharacter(C._Name) + Pad + "(" + C._Name + Pad + ");");
+                String Pad = O._PadderColumnNames.getPad(C.getName());
+                Out.println("       Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(" + C.getName() + Pad + ");");
               }
           }
 
@@ -286,7 +286,7 @@ public class TildaFactory implements CodeGenTildaFactory
           if (C != null)
             {
               if (First == true) First = false; else Out.print(", ");
-              Out.print(JavaJDBCType.getFieldType(C) + " " + C._Name);
+              Out.print(JavaJDBCType.getFieldType(C) + " " + C.getName());
             }
         Out.println(") throws Exception");
         Out.println("     {");
@@ -296,8 +296,8 @@ public class TildaFactory implements CodeGenTildaFactory
         for (Column C : PK._ColumnObjs)
           if (C != null)
             {
-              String Pad = C._ParentObject.getColumnPad(C._Name);
-              Out.println("       Obj.set" + TextUtil.CapitalizeFirstCharacter(C._Name) + Pad + "(" + C._Name + Pad + "); Obj.__Saved_" + C._Name + Pad + " = Obj._" + C._Name + Pad + ";");
+              String Pad = C._ParentObject.getColumnPad(C.getName());
+              Out.println("       Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(" + C.getName() + Pad + "); Obj.__Saved_" + C.getName() + Pad + " = Obj._" + C.getName() + Pad + ";");
             }
         Out.println();
         Out.println("       return (" + Helper.getFullAppDataClassName(PK._ParentObject) + ") Obj;");
@@ -313,7 +313,7 @@ public class TildaFactory implements CodeGenTildaFactory
           if (C != null)
             {
               if (First == true) First = false; else Out.print(", ");
-              Out.print(JavaJDBCType.getFieldType(C) + " " + C._Name);
+              Out.print(JavaJDBCType.getFieldType(C) + " " + C.getName());
             }
         Out.println(") throws Exception");
         Out.println("     {");
@@ -323,8 +323,8 @@ public class TildaFactory implements CodeGenTildaFactory
         for (Column C : I._ColumnObjs)
           if (C != null)
             {
-              String Pad = C._ParentObject.getColumnPad(C._Name);
-              Out.println("       Obj.set" + TextUtil.CapitalizeFirstCharacter(C._Name) + Pad + "(" + C._Name + Pad + "); Obj.__Saved_" + C._Name + Pad + " = Obj._" + C._Name + Pad + ";");
+              String Pad = C._ParentObject.getColumnPad(C.getName());
+              Out.println("       Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(" + C.getName() + Pad + "); Obj.__Saved_" + C.getName() + Pad + " = Obj._" + C.getName() + Pad + ";");
             }
         Out.println();
         Out.println("       return (" + Helper.getFullAppDataClassName(I._ParentObject) + ") Obj;");
@@ -338,7 +338,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.print("   static public ListResults<" + Helper.getFullAppDataClassName(I._ParentObject) + "> " + MethodName + "(Connection C");
         for (Column C : I._ColumnObjs)
           if (C != null)
-            Out.print(", " + JavaJDBCType.getFieldType(C) + " " + C._Name);
+            Out.print(", " + JavaJDBCType.getFieldType(C) + " " + C.getName());
         Query q = I._SubQuery == null ? null : I._SubQuery.getQuery(G.getSql());
         if (q != null)
           {
@@ -357,8 +357,8 @@ public class TildaFactory implements CodeGenTildaFactory
         for (Column C : I._ColumnObjs)
           if (C != null)
             {
-              String Pad = C._ParentObject.getColumnPad(C._Name);
-              Out.println("       Obj.set" + TextUtil.CapitalizeFirstCharacter(C._Name) + Pad + "(" + C._Name + Pad + ");");
+              String Pad = C._ParentObject.getColumnPad(C.getName());
+              Out.println("       Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(" + C.getName() + Pad + ");");
             }
         Out.println();
         if (q != null && q._ColumnObjs.isEmpty() == false)
@@ -455,7 +455,7 @@ public class TildaFactory implements CodeGenTildaFactory
          if (C != null)
            {
              if (First == true) First = false; else FuncParams.append(", ");
-             FuncParams.append(JavaJDBCType.getFieldType(C)).append(" ").append(C._Name);
+             FuncParams.append(JavaJDBCType.getFieldType(C)).append(" ").append(C.getName());
            }
         
         StringBuilder CallParams = new StringBuilder();
@@ -464,7 +464,7 @@ public class TildaFactory implements CodeGenTildaFactory
          if (C != null)
            {
              if (First == true) First = false; else CallParams.append(", ");
-             CallParams.append(C._Name);
+             CallParams.append(C.getName());
            }
         
         
@@ -486,7 +486,7 @@ public class TildaFactory implements CodeGenTildaFactory
          if (C != null)
            {
              if (First == true) First = false; else Out.print(" + \"``\" + ");
-             Out.print("obj.get"+TextUtil.CapitalizeFirstCharacter(C._Name)+"()");
+             Out.print("obj.get"+TextUtil.CapitalizeFirstCharacter(C.getName())+"()");
            }
         Out.println(", obj);");
         Out.println("        }");
@@ -500,7 +500,7 @@ public class TildaFactory implements CodeGenTildaFactory
          if (C != null)
            {
              if (First == true) First = false; else Out.print(" + \"``\" + ");
-             Out.print(C._Name);
+             Out.print(C.getName());
            }
         Out.println(");");
         
@@ -514,7 +514,7 @@ public class TildaFactory implements CodeGenTildaFactory
              if (C != null)
                {
                  if (First == true) First = false; else Out.print(" + \"``\" + ");
-                 Out.print(count >= i && count != O._PrimaryKey._ColumnObjs.size()-1 ? "\"*\"" : C._Name);
+                 Out.print(count >= i && count != O._PrimaryKey._ColumnObjs.size()-1 ? "\"*\"" : C.getName());
                  ++count;
                }
             Out.println(");");
@@ -527,7 +527,7 @@ public class TildaFactory implements CodeGenTildaFactory
            Out.println("   public static String getMappedName("+FuncParams+")");
            Out.println("     {");
            Out.println("       "+Helper.getFullAppDataClassName(O)+" Obj = getMapping("+CallParams+");");
-           Out.println("       return Obj == null ? "+O._PrimaryKey._ColumnObjs.get(O._PrimaryKey._ColumnObjs.size()-1)._Name+" : Obj.getName();");
+           Out.println("       return Obj == null ? "+O._PrimaryKey._ColumnObjs.get(O._PrimaryKey._ColumnObjs.size()-1).getName()+" : Obj.getName();");
            Out.println("     }");
          }
         if (O.getColumn("group") != null)
@@ -535,7 +535,7 @@ public class TildaFactory implements CodeGenTildaFactory
             Out.println("   public static String getMappedGroup("+FuncParams+")");
             Out.println("     {");
             Out.println("       "+Helper.getFullAppDataClassName(O)+" Obj = getMapping("+CallParams+");");
-            Out.println("       return Obj == null ? "+O._PrimaryKey._ColumnObjs.get(O._PrimaryKey._ColumnObjs.size()-1)._Name+" : Obj.getGroup();");
+            Out.println("       return Obj == null ? "+O._PrimaryKey._ColumnObjs.get(O._PrimaryKey._ColumnObjs.size()-1).getName()+" : Obj.getGroup();");
             Out.println("     }");
           }
       }
@@ -549,7 +549,7 @@ public class TildaFactory implements CodeGenTildaFactory
          if (C != null)
            {
              if (First == true) First = false; else FuncParams.append(", ");
-             FuncParams.append(JavaJDBCType.getFieldType(C)).append(" ").append(C._Name);
+             FuncParams.append(JavaJDBCType.getFieldType(C)).append(" ").append(C.getName());
            }
         
         StringBuilder CallParams = new StringBuilder();
@@ -558,7 +558,7 @@ public class TildaFactory implements CodeGenTildaFactory
          if (C != null)
            {
              if (First == true) First = false; else CallParams.append(", ");
-             CallParams.append(C._Name);
+             CallParams.append(C.getName());
            }
         
         

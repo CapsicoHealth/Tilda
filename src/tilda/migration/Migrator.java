@@ -108,7 +108,7 @@ public class Migrator
                     didSomething = false;
                     for (Column Col : Obj._Columns)
                      {
-                       if (Col._Mode != ColumnMode.CALCULATED && DBColumns.contains(Col._Name.toLowerCase()) == false)
+                       if (Col._Mode != ColumnMode.CALCULATED && DBColumns.contains(Col.getName().toLowerCase()) == false)
                         {
                           LOG.info("The application's data model defines the column '"+Col.getShortName()+"' which cannot be found in the database. Trying to create it...");
                           if (C.alterTableAddColumn(Col, Col._DefaultCreateValue == null ? null : Col._DefaultCreateValue._Value) == false)

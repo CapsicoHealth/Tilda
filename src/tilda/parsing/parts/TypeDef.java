@@ -99,12 +99,12 @@ public class TypeDef
           {
             if (isCollection() == true)
               {
-                if (_Size != null)
+                if (_Size != null && _Size > 0)
                   PS.AddError(What + " is defined as a '" + _Type + "' Array and also defines a size. Size is not valid for array types.");
               }
             else
               {
-                if (_Size == null)
+                if (_Size == null || _Size == 0)
                   {
                     if (StringSizeOptional == false)
                       PS.AddError(What + " is defined as a '" + _Type + "' but doesn't define a size.");
@@ -115,7 +115,7 @@ public class TypeDef
           }
         else
           {
-            if (_Size != null)
+            if (_Size != null && _Size > 0)
               PS.AddError(What + " is defined as a '" + _Type + "' with a 'size'. Only String columns should have a 'size' defined.");
           }
 

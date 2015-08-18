@@ -131,7 +131,7 @@ public class PostgreSQL implements DBType
       {
         if (Col._Nullable == false && DefaultValue == null)
          throw new Exception("Cannot add a new 'not null' column to a table without a default value. Add a default value in the model, or manually migrate your database.");
-        String Q ="ALTER TABLE "+Col._ParentObject.getShortName()+" ADD COLUMN \""+Col._Name+"\" "+getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection());
+        String Q ="ALTER TABLE "+Col._ParentObject.getShortName()+" ADD COLUMN \""+Col.getName()+"\" "+getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection());
         if (Col._Nullable == false)
           {
             Q+=" not null DEFAULT "+ValueHelper.printValue(Col, DefaultValue);

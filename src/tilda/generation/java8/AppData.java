@@ -72,7 +72,7 @@ public class AppData implements CodeGenAppData
             {
               Out.println();
               Out.println("   @Override");
-              Out.println("   public " + JavaJDBCType.getFieldType(C) + " get" + TextUtil.CapitalizeFirstCharacter(C._Name) + "()");
+              Out.println("   public " + JavaJDBCType.getFieldType(C) + " get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()");
               Out.println("    {");
               Out.println("      // return something");
               Out.println("    }");

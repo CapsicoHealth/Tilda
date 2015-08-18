@@ -24,25 +24,28 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.enums.ObjectLifecycle;
 import tilda.parsing.ParserSession;
+import tilda.utils.TextUtil;
 
 import com.google.gson.annotations.SerializedName;
 
 public class View extends Base
   {
+
+
     static final Logger              LOG                = LogManager.getLogger(View.class.getName());
 
     /*@formatter:off*/
-    @SerializedName("columns"    ) public List<ViewColumn>     _ViewColumns= new ArrayList<ViewColumn    >();
+    @SerializedName("columns" ) public List<ViewColumn>     _ViewColumns= new ArrayList<ViewColumn    >();
+    @SerializedName("subWhere") public String               _SubWhere;
+    @SerializedName("subQuery") public SubWhereClause       _SubQuery;
     /*@formatter:on*/
 
-    public transient List<Column>         _Columns = new ArrayList<Column>();
-    
     @Override
     public Column getColumn(String name)
       {
-        for (Column C : _Columns)
+        for (ViewColumn C : _ViewColumns)
           if (C != null && C._Name != null && C._Name.equalsIgnoreCase(name) == true)
-           return C;
+            return C._SameAsObj;
         return null;
       }
 
@@ -51,19 +54,19 @@ public class View extends Base
       {
         return ObjectLifecycle.READONLY;
       }
-    
+
     @Override
     public boolean isOCC()
       {
         return false;
       }
-    
+
     @Override
     public String getWhat()
       {
         return "View";
       }
-    
+
     public boolean Validate(ParserSession PS, Schema ParentSchema)
       {
         if (super.Validate(PS, ParentSchema) == false)
@@ -73,9 +76,30 @@ public class View extends Base
 
         if (_ViewColumns == null || _ViewColumns.isEmpty() == true)
           return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring a view without any columns.");
-         
+
         for (ViewColumn C : _ViewColumns)
-         C.Validate(PS, this);
+          C.Validate(PS, this);
+
+        if (TextUtil.isNullOrEmpty(_SubWhere) == false && _SubQuery != null)
+          PS.AddError("View '" + getFullName() + "' is defining both a subWhere AND a subQuery: only one is allowed.");
+        else
+          {
+            if (TextUtil.isNullOrEmpty(_SubWhere) == false)
+             _SubQuery = new SubWhereClause(_SubWhere);
+
+            if (_SubQuery != null)
+              {
+                if (_SubQuery._From != null && _SubQuery._From.length > 0)
+                  PS.AddError("View '" + getFullName() + "' is defining a subQuery with a from clause: that is not allowed for views.");
+                if (_SubQuery._OrderBy != null && _SubQuery._OrderBy.length > 0)
+                  PS.AddError("View '" + getFullName() + "' is defining a subQuery with an orderBy: that is not allowed for views.");
+                
+                _SubQuery.Validate(PS, this, "View " + getFullName() + "'s "+(TextUtil.isNullOrEmpty(_SubWhere)==false?"subWhere":"subQuery"), false);
+                
+                if (_SubQuery._ColumnObjs.isEmpty() == false)
+                 PS.AddError("View '" + getFullName() + "' is defining a subQuery with parameters: that is not allowed for views.");
+              }
+          }
         
         super.ValidateJsonMapping(PS);
         

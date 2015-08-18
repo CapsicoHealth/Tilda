@@ -51,7 +51,7 @@ public class JsonMapping
            public boolean process(ParserSession PS, Base ParentObject, String What, Column C)
             {
               if (C._Type == ColumnType.BINARY)
-                PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining a JSON mapping with column '" + C._Name + "' which is a binary. Binaries cannot be JSONed.");
+                PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining a JSON mapping with column '" + C.getName() + "' which is a binary. Binaries cannot be JSONed.");
               return true;
             }
         });

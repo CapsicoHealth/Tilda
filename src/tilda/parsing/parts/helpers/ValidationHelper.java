@@ -49,7 +49,7 @@ public class ValidationHelper
                   PS.AddError("Object '" + ParentObject.getFullName() + "' is defining " + What + " with column '" + c + "' which has failed validation previously and cannot be processed any more.");
                   return null;
                 }
-              if (Names.add(C._Name.toUpperCase()) == false)
+              if (Names.add(C.getName().toUpperCase()) == false)
                 {
                   PS.AddError("Object '" + ParentObject.getFullName() + "' is defining " + What + " with duplicated column '" + c + "'.");
                   return null;

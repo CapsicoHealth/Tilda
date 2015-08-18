@@ -86,15 +86,15 @@ public class TildaJson implements CodeGenTildaJson
         Out.println("   /*@formatter:off*/");
         for (Column C : Cols)
           {
-            String Pad = C._ParentObject.getColumnPad(C._Name);
+            String Pad = C._ParentObject.getColumnPad(C.getName());
             if (C._Type == ColumnType.DATETIME)
               {
-                Out.println("   @SerializedName(\"" + C._Name + "\"" + Pad + ") public " + (C.isList() == true ? "List<String>" : C.isSet() == true ? "Set<String>" : "String") + "  Str_" + C._Name + Pad + ";");
-                Out.println("   transient          " + PaddingUtil.getPad(C._Name.length()) + Pad + " public " + (C.isCollection() == true ? JavaJDBCType.getFieldType(C) : JavaJDBCType.getFieldTypeBaseClass(C)) + "  _"
-                    + C._Name + Pad + ";");
+                Out.println("   @SerializedName(\"" + C.getName() + "\"" + Pad + ") public " + (C.isList() == true ? "List<String>" : C.isSet() == true ? "Set<String>" : "String") + "  Str_" + C.getName() + Pad + ";");
+                Out.println("   transient          " + PaddingUtil.getPad(C.getName().length()) + Pad + " public " + (C.isCollection() == true ? JavaJDBCType.getFieldType(C) : JavaJDBCType.getFieldTypeBaseClass(C)) + "  _"
+                    + C.getName() + Pad + ";");
               }
             else
-              Out.println("   @SerializedName(\"" + C._Name + "\"" + Pad + ") public " + (C.isCollection() == true ? JavaJDBCType.getFieldType(C) : JavaJDBCType.getFieldTypeBaseClass(C)) + "  _" + C._Name + Pad + ";");
+              Out.println("   @SerializedName(\"" + C.getName() + "\"" + Pad + ") public " + (C.isCollection() == true ? JavaJDBCType.getFieldType(C) : JavaJDBCType.getFieldTypeBaseClass(C)) + "  _" + C.getName() + Pad + ";");
           }
         Out.println("   /*@formatter:on*/");
       }
@@ -108,32 +108,32 @@ public class TildaJson implements CodeGenTildaJson
         Out.println("    {");
         for (Column C : JsonColumns)
             {
-              String Pad = C._ParentObject.getColumnPad(C._Name);
+              String Pad = C._ParentObject.getColumnPad(C.getName());
               if (C._Nullable == false)
                 {
-                  Out.println("      if (" + (C._Type == ColumnType.DATETIME ? "Str_" : "   _") + C._Name + Pad + "== null) throw new Exception(\"Incoming value for '" + C.getFullName()
+                  Out.println("      if (" + (C._Type == ColumnType.DATETIME ? "Str_" : "   _") + C.getName() + Pad + "== null) throw new Exception(\"Incoming value for '" + C.getFullName()
                       + "' was null. It's not nullable in the model.\\n\"+toString());");
                 }
               if (C._Type == ColumnType.DATETIME)
                 {
                   if (C._Nullable == true)
                     {
-                      Out.println("      if (Str_" + C._Name + Pad + " != null)");
+                      Out.println("      if (Str_" + C.getName() + Pad + " != null)");
                       Out.println("       {");
                     }
                   String ExtraPad = C._Nullable == true ? "   " : "";
-                  Out.println(ExtraPad + "      _" + C._Name + Pad + " = DateTimeUtil.parsefromJSON(Str_" + C._Name + Pad + ");");
-                  Out.println(ExtraPad + "      if (   _" + C._Name + Pad + " == null) throw new Exception(\"Incoming value for '" + C.getFullName()
+                  Out.println(ExtraPad + "      _" + C.getName() + Pad + " = DateTimeUtil.parsefromJSON(Str_" + C.getName() + Pad + ");");
+                  Out.println(ExtraPad + "      if (   _" + C.getName() + Pad + " == null) throw new Exception(\"Incoming value for '" + C.getFullName()
                       + "' was not in the expected format. Dates should follow the ISO format.\\n\"+toString());");
                   if (C._Nullable == true)
                     {
                       Out.println("       }");
                     }
                 }
-              if (O._FST == FrameworkSourcedType.MAPPER && C._Name.equals("group") == true)
+              if (O._FST == FrameworkSourcedType.MAPPER && C.getName().equals("group") == true)
                 {
-                  Out.println("      if (TextUtil.FindElement(" + Helper.getFullAppDataClassName(O) + "._" + C._Name + "_Values, _" + C._Name + ", 0, true, 0) == -1) throw new Exception(\"Invalid value " + C._Name + "='\"+_" + C._Name
-                      + "+\"'. As per the model, valid values are: \"+TextUtil.Print(" + Helper.getFullAppDataClassName(O) + "._" + C._Name + "_Values, 0)+\".\\n\"+toString());");
+                  Out.println("      if (TextUtil.FindElement(" + Helper.getFullAppDataClassName(O) + "._" + C.getName() + "_Values, _" + C.getName() + ", 0, true, 0) == -1) throw new Exception(\"Invalid value " + C.getName() + "='\"+_" + C.getName()
+                      + "+\"'. As per the model, valid values are: \"+TextUtil.Print(" + Helper.getFullAppDataClassName(O) + "._" + C.getName() + "_Values, 0)+\".\\n\"+toString());");
                 }
             }
         Out.println();
@@ -146,15 +146,15 @@ public class TildaJson implements CodeGenTildaJson
                 First = false;
               else
                 Out.print(", ");
-              Out.print("_" + C._Name);
+              Out.print("_" + C.getName());
             }
         Out.println(");");
         Out.println();
         for (Column C : O._Columns)
           if (C != null && C.isJSONColumn() == true && CreateColumns.contains(C) == false)
             {
-              String Pad = O._PadderColumnNames.getPad(C._Name);
-              Out.println("      if (_" + C._Name + Pad + "!= null) Obj.set" + TextUtil.CapitalizeFirstCharacter(C._Name) + Pad + "(_" + C._Name + Pad + ");");
+              String Pad = O._PadderColumnNames.getPad(C.getName());
+              Out.println("      if (_" + C.getName() + Pad + "!= null) Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + ");");
             }
         Out.println();
         Out.println("      if (Obj.Write(C) == false)");
@@ -170,7 +170,7 @@ public class TildaJson implements CodeGenTildaJson
                     FirstGoodIndex = I;
                   boolean GoodIndex = true;
                   for (Column C : I._ColumnObjs)
-                    if (C != null && C._ParentObject.isAutoGenForeignKey(C._Name) == true)
+                    if (C != null && C._ParentObject.isAutoGenForeignKey(C.getName()) == true)
                       {
                         GoodIndex = false;
                         break;
@@ -193,7 +193,7 @@ public class TildaJson implements CodeGenTildaJson
                         First = false;
                       else
                         Out.print(", ");
-                      Out.print("_" + C._Name);
+                      Out.print("_" + C.getName());
                     }
                 Out.println(");");
                 Cols = FirstGoodIndex._ColumnObjs;
@@ -211,7 +211,7 @@ public class TildaJson implements CodeGenTildaJson
                     First = false;
                   else
                     Out.print(", ");
-                  Out.print("_" + C._Name);
+                  Out.print("_" + C.getName());
                 }
             Out.println(");");
             Cols = O._PrimaryKey._ColumnObjs;
@@ -230,17 +230,17 @@ public class TildaJson implements CodeGenTildaJson
                 {
                   if (C._Invariant == false)
                     {
-                      String Pad = O._PadderColumnNames.getPad(C._Name);
-                      Out.println("         if (_" + C._Name + Pad + "!= null) Obj.set" + TextUtil.CapitalizeFirstCharacter(C._Name) + Pad + "(_" + C._Name + Pad + ");");
+                      String Pad = O._PadderColumnNames.getPad(C.getName());
+                      Out.println("         if (_" + C.getName() + Pad + "!= null) Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + ");");
                       ++count;
                     }
                   else if (C._PrimaryKey == false)
                     {
-                      String Pad = O._PadderColumnNames.getPad(C._Name);
+                      String Pad = O._PadderColumnNames.getPad(C.getName());
                       if (C.isCollection() == false && C._Type.isPrimitive() == true)
-                        Out.println("         if (_" + C._Name + Pad + "!= Obj.get" + TextUtil.CapitalizeFirstCharacter(C._Name) + Pad + "())");
+                        Out.println("         if (_" + C.getName() + Pad + "!= Obj.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "())");
                       else
-                        Out.println("         if (_" + C._Name + Pad + ".equals(Obj.get" + TextUtil.CapitalizeFirstCharacter(C._Name) + Pad + "()) == false)");
+                        Out.println("         if (_" + C.getName() + Pad + ".equals(Obj.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "()) == false)");
                       Out.println("          throw new Exception(\"Cannot update the invariant field '" + C.getFullName() + "': \"+Obj.toString());");
                     }
                 }
@@ -290,7 +290,7 @@ public class TildaJson implements CodeGenTildaJson
             {
               First = Helper.JSONExport(Out, First, C);
               // if (C._Type == ColumnType.DATETIME && C.isOCCGenerated() == false)
-              // First = JSONExport(Out, First, C._ParentObject.getColumn(C._Name+"TZ"));
+              // First = JSONExport(Out, First, C._ParentObject.getColumn(C.getName()+"TZ"));
             }
         Out.println("      if (FullObject == true) Out.write(\"}\");");
         Out.println("      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);");
@@ -359,26 +359,26 @@ public class TildaJson implements CodeGenTildaJson
         for (Column C : O._Columns)
           if (C != null && C.isJSONColumn() == true)
             {
-              String Pad = O._PadderColumnNames.getPad(C._Name);
-              Out.print((First == false ? "         + \"; " : "             \"") + C._Name);
+              String Pad = O._PadderColumnNames.getPad(C.getName());
+              Out.print((First == false ? "         + \"; " : "             \"") + C.getName());
               if (First == true)
                 First = false;
-              Out.print("\"" + Pad + "+ (_" + C._Name + Pad + " == null ? \": NULL\" : \"");
+              Out.print("\"" + Pad + "+ (_" + C.getName() + Pad + " == null ? \": NULL\" : \"");
               if (C._Type == ColumnType.DATETIME)
                 {
-                  Out.print(": \"+DateTimeUtil.printDateTimeForSQL(_" + C._Name + ")");
+                  Out.print(": \"+DateTimeUtil.printDateTimeForSQL(_" + C.getName() + ")");
                 }
               else if (C._Type == ColumnType.STRING && C.isCollection() == false)
                 {
                   if (C._Size != null && C._Size > 100) // test for NULL for CALCULATED fields
-                    Out.print("(\" + (_" + C._Name + Pad + " == null ? 0 : _" + C._Name + Pad + ".length())+\"): \"+(_" + C._Name + Pad + " == null || _" + C._Name + Pad + ".length() < 100 ? _" + C._Name + Pad + " : _"
-                        + C._Name + Pad + ".substring(0, 100)+\"...\")");
+                    Out.print("(\" + (_" + C.getName() + Pad + " == null ? 0 : _" + C.getName() + Pad + ".length())+\"): \"+(_" + C.getName() + Pad + " == null || _" + C.getName() + Pad + ".length() < 100 ? _" + C.getName() + Pad + " : _"
+                        + C.getName() + Pad + ".substring(0, 100)+\"...\")");
                   else
-                    Out.print("(\" + (_" + C._Name + Pad + " == null ? 0 : _" + C._Name + Pad + ".length())+\"): \"+_" + C._Name);
+                    Out.print("(\" + (_" + C.getName() + Pad + " == null ? 0 : _" + C.getName() + Pad + ".length())+\"): \"+_" + C.getName());
                 }
               else
                 {
-                  Out.print(": \" + _" + C._Name + Pad);
+                  Out.print(": \" + _" + C.getName() + Pad);
                 }
               Out.println(")");
             }
