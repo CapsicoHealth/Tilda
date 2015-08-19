@@ -80,6 +80,9 @@ public class Object extends Base
 
     public boolean Validate(ParserSession PS, Schema ParentSchema)
       {
+        if (_Validated == true)
+          return true;
+
         if (super.Validate(PS, ParentSchema) == false)
          return false;
 
@@ -138,12 +141,12 @@ public class Object extends Base
                             if (ColumnNames.add(TZCol.getName().toUpperCase()) == false)
                               PS.AddError("Generated column '" + TZCol.getFullName() + "' conflicts with another column already named the same in Object '" + getFullName() + "'.");
                             if (TZCol.Validate(PS, this) == false)
-                              TZCol._FailedValidation = true;
+                              TZCol._Validated = false;
                             addForeignKey(C.getName(), new String[] { TZCol.getName() }, "tilda.data.TILDA.ZONEINFO");
                           }
                       }
                     else
-                     C._FailedValidation = true;
+                     C._Validated = false;
                   }
               }
           }
@@ -189,7 +192,7 @@ public class Object extends Base
                 PS.AddError("Object '" + getFullName() + "' is defining a duplicate foreignKey '" + FK._Name + "'.");
           }
 
-        if (_PrimaryKey == null && _HasUniqueIndex == false)
+        if (_PrimaryKey == null && _HasUniqueIndex == false && _FST != FrameworkSourcedType.VIEW)
           PS.AddError("Object '" + getFullName() + "' doesn't have any identity. You must define at least a primary key or a unique index.");
 
         _Validated = Errs == PS.getErrorCount();

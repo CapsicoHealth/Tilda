@@ -65,7 +65,7 @@ public class Generator
         File Res = new File(S._ResourceName);
         File GenFolder = new File(Res.getParentFile().getAbsolutePath() + File.separator + "_Tilda");
         if (GenFolder.exists() == true)
-         FileUtils.deleteDirectory(GenFolder);
+          FileUtils.deleteDirectory(GenFolder);
         if (GenFolder.mkdir() == false)
           throw new Exception("Cannot create the Tilda folder " + GenFolder.getAbsolutePath());
 
@@ -75,12 +75,17 @@ public class Generator
         for (Object O : S._Objects)
           if (O != null)
             {
-              genTildaData   (G, GenFolder, O);
+              if (O._Name.equalsIgnoreCase("PersonView") == true)
+                {
+                  int i = 0;
+                  ++i;
+                }
+              genTildaData(G, GenFolder, O);
               genTildaFactory(G, GenFolder, O);
-              genTildaJson   (G, GenFolder, O);
-              genAppData     (G, Res.getParentFile(), O);
-              genAppFactory  (G, Res.getParentFile(), O);
-              genAppJson     (G, Res.getParentFile(), O);
+              genTildaJson(G, GenFolder, O);
+              genAppData(G, Res.getParentFile(), O);
+              genAppFactory(G, Res.getParentFile(), O);
+              genAppJson(G, Res.getParentFile(), O);
             }
         return true;
       }
@@ -100,7 +105,7 @@ public class Generator
         Out.println();
         CG.genFileStart(Out, S);
         for (Object O : S._Objects)
-          if (O != null)
+          if (O != null && O._FST != FrameworkSourcedType.VIEW)
             {
               Out.println();
               Out.println();
@@ -116,7 +121,7 @@ public class Generator
               Out.println();
               Out.println();
               DG.ObjectDocs(Out, G, null);
-              getFullViewDDL (CG, Out, V);
+              getFullViewDDL(CG, Out, V);
             }
         Out.println();
         Out.close();
@@ -222,64 +227,67 @@ public class Generator
                   CG.genMethodIsNull(Out, G, C);
                 }
 
-              if (C._Mode == ColumnMode.CALCULATED && C._MapperDef != null)
+              if (O._FST != FrameworkSourcedType.VIEW)
                 {
-                  Out.println();
-                  DG.docField(Out, G, C, "setter");
-                  CG.genMethodSet(Out, G, C);
-
-                  if (C._PrimaryKey == false && C._Nullable == true)
+                  if (C._Mode == ColumnMode.CALCULATED && C._MapperDef != null)
                     {
                       Out.println();
-                      DG.docField(Out, G, C, "null setter");
-                      CG.genMethodSetNull(Out, G, C);
-                    }
-                }
+                      DG.docField(Out, G, C, "setter");
+                      CG.genMethodSet(Out, G, C);
 
-              if (C._Mode != ColumnMode.CALCULATED)
-                {
-                  Out.println();
-                  DG.docField(Out, G, C, "setter");
-                  CG.genMethodSet(Out, G, C);
-
-                  if (C._PrimaryKey == false && C._Nullable == true)
-                    {
-                      Out.println();
-                      DG.docField(Out, G, C, "null setter");
-                      CG.genMethodSetNull(Out, G, C);
-                    }
-
-
-                  if (O._LC == ObjectLifecycle.NORMAL || O._LC == ObjectLifecycle.WORM)
-                    {
-                      if (C._Values != null && C._Type != ColumnType.DATETIME)
-                        for (ColumnValue V : C._Values)
-                          if (V != null)
-                            {
-                              Out.println();
-                              DG.docMethodIs(Out, G, V, "setter-as");
-                              CG.genMethodSetAs(Out, G, V);
-                            }
-
-
-                      if (C._PrimaryKey == false) // only non pk columns can be changed.
+                      if (C._PrimaryKey == false && C._Nullable == true)
                         {
-                          if (C._Type == ColumnType.DATETIME && C._TypeSep == null)
-                            {
-                              Out.println();
-                              DG.docField(Out, G, C, "NOW setter");
-                              CG.genMethodSetDateTimeNow(Out, G, C);
-                              Out.println();
-                              DG.docField(Out, G, C, "UNDEFINED setter");
-                              CG.genMethodSetDateTimeUndefined(Out, G, C);
-                              Out.println();
-                              DG.docField(Out, G, C, "explicit setter %%CALENDAR_SETTER%%");
-                              CG.genMethodSetDateTimeExplicit(Out, G, C);
-                            }
-
                           Out.println();
-                          DG.docField(Out, G, C, "hasChanged");
-                          CG.genMethodHasChanged(Out, G, C);
+                          DG.docField(Out, G, C, "null setter");
+                          CG.genMethodSetNull(Out, G, C);
+                        }
+                    }
+
+                  if (C._Mode != ColumnMode.CALCULATED)
+                    {
+                      Out.println();
+                      DG.docField(Out, G, C, "setter");
+                      CG.genMethodSet(Out, G, C);
+
+                      if (C._PrimaryKey == false && C._Nullable == true)
+                        {
+                          Out.println();
+                          DG.docField(Out, G, C, "null setter");
+                          CG.genMethodSetNull(Out, G, C);
+                        }
+
+
+                      if (O._LC == ObjectLifecycle.NORMAL || O._LC == ObjectLifecycle.WORM)
+                        {
+                          if (C._Values != null && C._Type != ColumnType.DATETIME)
+                            for (ColumnValue V : C._Values)
+                              if (V != null)
+                                {
+                                  Out.println();
+                                  DG.docMethodIs(Out, G, V, "setter-as");
+                                  CG.genMethodSetAs(Out, G, V);
+                                }
+
+
+                          if (C._PrimaryKey == false) // only non pk columns can be changed.
+                            {
+                              if (C._Type == ColumnType.DATETIME && C._TypeSep == null)
+                                {
+                                  Out.println();
+                                  DG.docField(Out, G, C, "NOW setter");
+                                  CG.genMethodSetDateTimeNow(Out, G, C);
+                                  Out.println();
+                                  DG.docField(Out, G, C, "UNDEFINED setter");
+                                  CG.genMethodSetDateTimeUndefined(Out, G, C);
+                                  Out.println();
+                                  DG.docField(Out, G, C, "explicit setter %%CALENDAR_SETTER%%");
+                                  CG.genMethodSetDateTimeExplicit(Out, G, C);
+                                }
+
+                              Out.println();
+                              DG.docField(Out, G, C, "hasChanged");
+                              CG.genMethodHasChanged(Out, G, C);
+                            }
                         }
                     }
                 }
@@ -334,7 +342,7 @@ public class Generator
       throws Exception
       {
         CodeGenTildaFactory CG = G.getGenTildaFactory();
-        CodeGenDocs    DG = G.getGenDocs   ();
+        CodeGenDocs DG = G.getGenDocs();
 
         File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(O));
         PrintWriter Out = new PrintWriter(f);
@@ -474,7 +482,7 @@ public class Generator
       throws Exception
       {
         CodeGenAppData CG = G.getGenAppData();
-        CodeGenDocs DG = G.getGenDocs  ();
+        CodeGenDocs DG = G.getGenDocs();
         File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(O));
         if (f.exists() == false)
           {
@@ -497,59 +505,59 @@ public class Generator
           }
         return f;
       }
-    
+
     protected static File genAppFactory(GeneratorSession G, File GenFolder, Object O)
-        throws Exception
-        {
-          CodeGenAppFactory CG = G.getGenAppFactory();
-          CodeGenDocs       DG = G.getGenDocs      ();
-          File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(O));
-          if (f.exists() == false)
-            {
-              PrintWriter Out = new PrintWriter(f);
-              LOG.debug("  Generating template App Factory class for Object '" + O.getFullName() + "'.");
-              LOG.debug("       -> " + f.getCanonicalPath());
-              DG.AppFileDocs(Out, G);
-              Out.println();
-              CG.genFileStart(Out, O._ParentSchema);
-              Out.println();
-              DG.AppClassDocs(Out, G, O);
-              CG.genClassStart(Out, G, O);
-              Out.println();
-              DG.AppCustomizeHere(Out, G, O);
-              Out.println();
-              CG.genClassCustomizations(Out, G, O);
-              Out.println();
-              CG.genClassEnd(Out, G);
-              Out.close();
-            }
-          return f;
-        }
-    
+      throws Exception
+      {
+        CodeGenAppFactory CG = G.getGenAppFactory();
+        CodeGenDocs DG = G.getGenDocs();
+        File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(O));
+        if (f.exists() == false)
+          {
+            PrintWriter Out = new PrintWriter(f);
+            LOG.debug("  Generating template App Factory class for Object '" + O.getFullName() + "'.");
+            LOG.debug("       -> " + f.getCanonicalPath());
+            DG.AppFileDocs(Out, G);
+            Out.println();
+            CG.genFileStart(Out, O._ParentSchema);
+            Out.println();
+            DG.AppClassDocs(Out, G, O);
+            CG.genClassStart(Out, G, O);
+            Out.println();
+            DG.AppCustomizeHere(Out, G, O);
+            Out.println();
+            CG.genClassCustomizations(Out, G, O);
+            Out.println();
+            CG.genClassEnd(Out, G);
+            Out.close();
+          }
+        return f;
+      }
+
     protected static File genAppJson(GeneratorSession G, File GenFolder, Object O)
-        throws Exception
-        {
-          CodeGenAppJson CG = G.getGenAppJson();
-          CodeGenDocs    DG = G.getGenDocs   ();
-          File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(O));
-          if (f.exists() == false)
-            {
-              PrintWriter Out = new PrintWriter(f);
-              LOG.debug("  Generating template App Json class for Object '" + O.getFullName() + "'.");
-              LOG.debug("       -> " + f.getCanonicalPath());
-              DG.AppFileDocs(Out, G);
-              Out.println();
-              CG.genFileStart(Out, O._ParentSchema);
-              Out.println();
-              DG.AppClassDocs(Out, G, O);
-              CG.genClassStart(Out, G, O);
-              Out.println();
-              DG.AppCustomizeHere(Out, G, O);
-              Out.println();
-              CG.genClassEnd(Out, G);
-              Out.close();
-            }
-          return f;
-        }
+      throws Exception
+      {
+        CodeGenAppJson CG = G.getGenAppJson();
+        CodeGenDocs DG = G.getGenDocs();
+        File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(O));
+        if (f.exists() == false)
+          {
+            PrintWriter Out = new PrintWriter(f);
+            LOG.debug("  Generating template App Json class for Object '" + O.getFullName() + "'.");
+            LOG.debug("       -> " + f.getCanonicalPath());
+            DG.AppFileDocs(Out, G);
+            Out.println();
+            CG.genFileStart(Out, O._ParentSchema);
+            Out.println();
+            DG.AppClassDocs(Out, G, O);
+            CG.genClassStart(Out, G, O);
+            Out.println();
+            DG.AppCustomizeHere(Out, G, O);
+            Out.println();
+            CG.genClassEnd(Out, G);
+            Out.close();
+          }
+        return f;
+      }
 
   }

@@ -27,10 +27,14 @@ public class ViewColumnWrapper extends Column
       {
         _VCol             = VCol;
         
-        _TypeStr          = Col._TypeStr;
-        _Size             = Col._Size;
         _Name             = Col.getName();
         _SameAs           = Col._SameAs;
+        if (_SameAs == null)
+         {
+           _TypeStr          = Col._TypeStr;
+           _Size             = Col._Size;
+         }
+        
         _Nullable         = Col._Nullable;
         _ModeStr          = Col._ModeStr;
         _Invariant        = Col._Invariant;
@@ -39,21 +43,19 @@ public class ViewColumnWrapper extends Column
         _Mapper           = Col._Mapper;
         _Enum             = Col._Enum;
         _Values           = Col._Values;
-        _FrameworkManaged = Col._FrameworkManaged;
+//        _FrameworkManaged = Col._FrameworkManaged;
         
-        _Mode               = Col._Mode;
-        _Protect            = Col._Protect;
-        _SameAsObj          = Col._SameAsObj;
-        _ParentObject       = Col._ParentObject;
-        _PadderValueNames   = Col._PadderValueNames;
-        _PadderValueValues  = Col._PadderValueValues;
-        _PrimaryKey         = Col._PrimaryKey;
-        _UniqueIndex        = Col._UniqueIndex;
-        _MapperDef          = Col._MapperDef;
-        _DefaultCreateValue = Col._DefaultCreateValue;
-        _DefaultUpdateValue = Col._DefaultUpdateValue;
-
-        _FailedValidation   = Col._FailedValidation;
+//        _Mode               = Col._Mode;
+//        _Protect            = Col._Protect;
+//        _SameAsObj          = Col._SameAsObj;
+//        _ParentObject       = Col._ParentObject;
+//        _PadderValueNames   = Col._PadderValueNames;
+//        _PadderValueValues  = Col._PadderValueValues;
+//        _PrimaryKey         = Col._PrimaryKey;
+//        _UniqueIndex        = Col._UniqueIndex;
+//        _MapperDef          = Col._MapperDef;
+//        _DefaultCreateValue = Col._DefaultCreateValue;
+//        _DefaultUpdateValue = Col._DefaultUpdateValue;
       }
     
     protected ViewColumn _VCol;

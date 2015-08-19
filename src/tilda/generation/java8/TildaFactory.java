@@ -27,6 +27,7 @@ import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
 import tilda.generation.GeneratorSession;
 import tilda.generation.interfaces.CodeGenTildaFactory;
+import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
@@ -43,7 +44,7 @@ public class TildaFactory implements CodeGenTildaFactory
     protected static final Logger LOG = LogManager.getLogger(TildaFactory.class.getName());
 
     @Override
-    public String getFileName(Object O)
+    public String getFileName(Base O)
       {
         return O._BaseClassName + "_Factory.java";
       }
@@ -156,7 +157,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("         {");
         Out.println("           if (__INITIALIZED == false)");
         Out.println("            {");
-        if (O._FST != FrameworkSourcedType.NONE) 
+        if (O._FST == FrameworkSourcedType.ENUMERATION || O._FST == FrameworkSourcedType.MAPPER) 
          Out.println("              initMappings(C);");
         Out.println("              "+Helper.getFullAppFactoryClassName(O)+".init(C);");
         Out.println("              __INITIALIZED = true;");

@@ -99,6 +99,9 @@ public abstract class Base
     
     protected boolean Validate(ParserSession PS, Schema ParentSchema)
       {
+        if (_Validated == true)
+         return true;
+         
         int Errs = PS.getErrorCount();
 
         _ParentSchema = ParentSchema;

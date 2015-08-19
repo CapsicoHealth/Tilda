@@ -105,6 +105,7 @@ public class ViewColumn
             else
               {
                 _SameAsObj = new ViewColumnWrapper(Col, this);
+                _SameAsObj.Validate(PS, Col._ParentObject);
               }
           }
 

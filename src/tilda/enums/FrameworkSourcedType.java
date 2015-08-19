@@ -23,6 +23,8 @@ public enum FrameworkSourcedType
     , MAPPER 
     
     , ENUMERATION
+
+    , VIEW
     ;
     
 

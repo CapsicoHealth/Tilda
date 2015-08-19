@@ -29,6 +29,7 @@ import tilda.enums.ObjectLifecycle;
 import tilda.enums.ProtectionType;
 import tilda.generation.GeneratorSession;
 import tilda.generation.interfaces.CodeGenTildaData;
+import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
 import tilda.parsing.parts.Object;
@@ -42,7 +43,7 @@ public class TildaData implements CodeGenTildaData
     protected static final Logger LOG = LogManager.getLogger(TildaData.class.getName());
 
     @Override
-    public String getFileName(Object O)
+    public String getFileName(Base O)
       {
         return O._BaseClassName + ".java";
       }

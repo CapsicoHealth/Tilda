@@ -44,7 +44,7 @@ public class ValidationHelper
                   PS.AddError("Object '" + ParentObject.getFullName() + "' is defining " + What + " with column '" + c + "' which cannot be found.");
                   return null;
                 }
-              if (C._FailedValidation == true)
+              if (C._Validated == false)
                 {
                   PS.AddError("Object '" + ParentObject.getFullName() + "' is defining " + What + " with column '" + c + "' which has failed validation previously and cannot be processed any more.");
                   return null;

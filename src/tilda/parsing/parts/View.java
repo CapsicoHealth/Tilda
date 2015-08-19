@@ -22,6 +22,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
@@ -101,8 +102,20 @@ public class View extends Base
               }
           }
         
-        super.ValidateJsonMapping(PS);
-        
+        Object O = new Object();
+        O._FST = FrameworkSourcedType.VIEW;
+        O._Name = _OriginalName;
+        O._Description = _Description;
+        O._Queries = _Queries;
+        O._Json   = _Json;
+        O._LCStr = ObjectLifecycle.READONLY.name();
+        O._OCC = false;
+        for (ViewColumn C : _ViewColumns)
+          if (C != null)
+            O._Columns.add(new ViewColumnWrapper(C._SameAsObj, C));
+        _ParentSchema._Objects.add(O);
+        O.Validate(PS, ParentSchema);
+
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
       }

@@ -23,6 +23,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.generation.GeneratorSession;
 import tilda.generation.interfaces.CodeGenAppJson;
+import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 
@@ -31,7 +32,7 @@ public class AppJson implements CodeGenAppJson
     protected static final Logger LOG = LogManager.getLogger(AppJson.class.getName());
 
     @Override
-    public String getFileName(Object O)
+    public String getFileName(Base O)
       {
         return O._OriginalName + "_Json.java";
       }

@@ -86,7 +86,7 @@ public class Column extends TypeDef
     public transient ColumnValue    _DefaultCreateValue;
     public transient ColumnValue    _DefaultUpdateValue;
 
-    public transient boolean        _FailedValidation = false;
+    public transient boolean        _Validated = false;
 
     public String getFullName()
       {
@@ -110,6 +110,9 @@ public class Column extends TypeDef
     
     public boolean Validate(ParserSession PS, Object ParentObject)
       {
+        if (_Validated == true)
+          return true;
+        
         int Errs = PS.getErrorCount();
         _ParentObject = ParentObject;
 //        LOG.debug("    Validating Column " + getFullName() + ".");
@@ -153,7 +156,8 @@ public class Column extends TypeDef
         else if (_Enum != null)
          _Enum.Validate(PS, this);
         
-        return Errs == PS.getErrorCount();
+        _Validated = Errs == PS.getErrorCount();
+        return _Validated;
       }
 
 

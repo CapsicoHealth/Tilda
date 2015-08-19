@@ -26,6 +26,7 @@ import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.generation.GeneratorSession;
 import tilda.generation.interfaces.CodeGenTildaJson;
+import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.JsonMapping;
@@ -39,7 +40,7 @@ public class TildaJson implements CodeGenTildaJson
     protected static final Logger LOG = LogManager.getLogger(TildaJson.class.getName());
 
     @Override
-    public String getFileName(Object O)
+    public String getFileName(Base O)
       {
         return O._BaseClassName + "_Json.java";
       }

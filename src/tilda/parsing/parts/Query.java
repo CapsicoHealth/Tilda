@@ -87,7 +87,7 @@ public class Query
                 PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which refers to an unknown column '"+col+"'.");
                 continue;
               }
-            if (C._FailedValidation == true)
+            if (C._Validated == false)
               {
                 PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which refers to column '" + C.getShortName() + "' which has failed validation previously and cannot be processed any more.");
                 continue;

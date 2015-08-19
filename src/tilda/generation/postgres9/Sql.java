@@ -30,7 +30,7 @@ import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.generation.GeneratorSession;
 import tilda.generation.interfaces.CodeGenSql;
-import tilda.generation.java8.Helper;
+import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
@@ -46,7 +46,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
     protected static final Logger LOG = LogManager.getLogger(Sql.class.getName());
 
     @Override
-    public String getFileName(Object O)
+    public String getFileName(Base O)
       {
         return "TILDA___" + getName() + "." + O.getSchema()._Name + ".sql";
       }
