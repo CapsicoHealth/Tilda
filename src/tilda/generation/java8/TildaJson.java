@@ -112,14 +112,19 @@ public class TildaJson implements CodeGenTildaJson
               String Pad = C._ParentObject.getColumnPad(C.getName());
               if (C._Nullable == false)
                 {
-                  Out.println("      if (" + (C._Type == ColumnType.DATETIME ? "Str_" : "   _") + C.getName() + Pad + "== null) throw new Exception(\"Incoming value for '" + C.getFullName()
-                      + "' was null. It's not nullable in the model.\\n\"+toString());");
+                  if (C._Type == ColumnType.STRING)
+                    Out.println("      if (TextUtil.isNullOrEmpty(_" + C.getName() + Pad + ") == true)");
+                  else if (C._Type == ColumnType.DATETIME)
+                    Out.println("      if (TextUtil.isNullOrEmpty(Str_" + C.getName() + Pad + ") == true)");
+                  else
+                    Out.println("      if (_" + C.getName() + Pad + " == null)");
+                  Out.println("       throw new Exception(\"Incoming value for '" + C.getFullName()+ "' was null. It's not nullable in the model.\\n\"+toString());");
                 }
               if (C._Type == ColumnType.DATETIME)
                 {
                   if (C._Nullable == true)
                     {
-                      Out.println("      if (Str_" + C.getName() + Pad + " != null)");
+                      Out.println("      if (TextUtil.isNullOrEmpty(Str_" + C.getName() + Pad + ") == false)");
                       Out.println("       {");
                     }
                   String ExtraPad = C._Nullable == true ? "   " : "";
