@@ -17,11 +17,15 @@
 package tilda.parsing.parts;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.enums.ColumnMode;
+import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
 import tilda.parsing.ParserSession;
@@ -78,8 +82,27 @@ public class View extends Base
         if (_ViewColumns == null || _ViewColumns.isEmpty() == true)
           return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring a view without any columns.");
 
-        for (ViewColumn C : _ViewColumns)
-          C.Validate(PS, this);
+        Set<String> ColumnNames = new HashSet<String>();        
+        for (int i = 0; i < _ViewColumns.size(); ++i)
+         {
+           ViewColumn C = _ViewColumns.get(i);
+           C.Validate(PS, this);
+           if (ColumnNames.add(C.getName().toUpperCase()) == false)
+             PS.AddError("Column '" + C.getFullName() + "' is defined more than once in View '" + getFullName() + "'.");
+           if (C._SameAsObj._Type == ColumnType.DATETIME && Object.isOCCColumn(C._SameAsObj) == false)
+              {
+                ViewColumn TZCol = new ViewColumn();
+                TZCol._SameAs = C._SameAs+"TZ";
+                TZCol._FrameworkGenerated = true;
+                TZCol._Name = C._Name==null?null:C._Name+"TZ";
+                TZCol.Validate(PS, this);
+                _ViewColumns.add(i, TZCol);
+                ++i;
+                if (ColumnNames.add(TZCol.getName().toUpperCase()) == false)
+                  PS.AddError("Generated column '" + TZCol.getFullName() + "' conflicts with another column already named the same in view '" + getFullName() + "'.");
+                _PadderColumnNames.track(TZCol.getName());
+              }
+         }
 
         if (TextUtil.isNullOrEmpty(_SubWhere) == false && _SubQuery != null)
           PS.AddError("View '" + getFullName() + "' is defining both a subWhere AND a subQuery: only one is allowed.");
@@ -111,7 +134,7 @@ public class View extends Base
         O._LCStr = ObjectLifecycle.READONLY.name();
         O._OCC = false;
         for (ViewColumn C : _ViewColumns)
-          if (C != null)
+          if (C != null && C._FrameworkGenerated == false)
             O._Columns.add(new ViewColumnWrapper(C._SameAsObj, C));
         _ParentSchema._Objects.add(O);
         O.Validate(PS, ParentSchema);

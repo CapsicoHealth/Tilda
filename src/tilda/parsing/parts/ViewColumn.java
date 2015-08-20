@@ -49,6 +49,9 @@ public class ViewColumn
     public transient View     _ParentView;
     public transient boolean  _FailedValidation = false;
 
+    public boolean _FrameworkGenerated = false;
+    
+
     public String getFullName()
       {
         return _ParentView.getFullName() + "." + _Name;
