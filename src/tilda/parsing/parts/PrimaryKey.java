@@ -64,14 +64,14 @@ public class PrimaryKey
           }
         _ColumnObjs = ValidationHelper.ProcessColumn(PS, O, "a primary key", _Columns, new ValidationHelper.Processor() {
           @Override
-          public boolean process(ParserSession PS, IThing Thing, String What, Column C)
+          public boolean process(ParserSession PS, Base ParentObject, String What, Column C)
             {
               if (C._Nullable == true)
-                PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a primary key with column '" + C._Name + "' which is nullable.");
+                PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a primary key with column '" + C.getName() + "' which is nullable.");
               if (C._Invariant == false)
-                PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a primary key with column '" + C._Name + "' which is not an invariant.");
+                PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a primary key with column '" + C.getName() + "' which is not an invariant.");
               if (C._Mode == ColumnMode.CALCULATED)
-                PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a primary key with column '" + C._Name + "' which is calculated.");
+                PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a primary key with column '" + C.getName() + "' which is calculated.");
               C._PrimaryKey = true;
               return true;
             }

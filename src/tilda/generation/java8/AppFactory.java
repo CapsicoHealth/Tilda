@@ -23,6 +23,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.generation.GeneratorSession;
 import tilda.generation.interfaces.CodeGenAppFactory;
+import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 
@@ -31,7 +32,7 @@ public class AppFactory implements CodeGenAppFactory
     protected static final Logger LOG = LogManager.getLogger(AppFactory.class.getName());
 
     @Override
-    public String getFileName(Object O)
+    public String getFileName(Base O)
       {
         return O._OriginalName + "_Factory.java";
       }

@@ -47,6 +47,7 @@ import tilda.parsing.parts.JsonMapping;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.SubWhereClause;
+import tilda.parsing.parts.View;
 
 public class Generator
   {
@@ -64,7 +65,7 @@ public class Generator
         File Res = new File(S._ResourceName);
         File GenFolder = new File(Res.getParentFile().getAbsolutePath() + File.separator + "_Tilda");
         if (GenFolder.exists() == true)
-         FileUtils.deleteDirectory(GenFolder);
+          FileUtils.deleteDirectory(GenFolder);
         if (GenFolder.mkdir() == false)
           throw new Exception("Cannot create the Tilda folder " + GenFolder.getAbsolutePath());
 
@@ -74,12 +75,17 @@ public class Generator
         for (Object O : S._Objects)
           if (O != null)
             {
-              genTildaData   (G, GenFolder, O);
+              if (O._Name.equalsIgnoreCase("PersonView") == true)
+                {
+                  int i = 0;
+                  ++i;
+                }
+              genTildaData(G, GenFolder, O);
               genTildaFactory(G, GenFolder, O);
-              genTildaJson   (G, GenFolder, O);
-              genAppData     (G, Res.getParentFile(), O);
-              genAppFactory  (G, Res.getParentFile(), O);
-              genAppJson     (G, Res.getParentFile(), O);
+              genTildaJson(G, GenFolder, O);
+              genAppData(G, Res.getParentFile(), O);
+              genAppFactory(G, Res.getParentFile(), O);
+              genAppJson(G, Res.getParentFile(), O);
             }
         return true;
       }
@@ -99,7 +105,7 @@ public class Generator
         Out.println();
         CG.genFileStart(Out, S);
         for (Object O : S._Objects)
-          if (O != null)
+          if (O != null && O._FST != FrameworkSourcedType.VIEW)
             {
               Out.println();
               Out.println();
@@ -108,6 +114,15 @@ public class Generator
               getFullTableDDL(CG, Out, O);
             }
         Out.println();
+        for (View V : S._Views)
+          if (V != null)
+            {
+              Out.println();
+              Out.println();
+              Out.println();
+              DG.ObjectDocs(Out, G, null);
+              getFullViewDDL(CG, Out, V);
+            }
         Out.println();
         Out.close();
       }
@@ -121,6 +136,11 @@ public class Generator
             CG.genIndex(Out, I);
         if (O._PrimaryKey != null && O._PrimaryKey._Autogen == true)
           CG.genKeysManagement(Out, O);
+      }
+
+    public static void getFullViewDDL(CodeGenSql CG, PrintWriter Out, View V)
+      {
+        CG.genDDL(Out, V);
       }
 
 
@@ -319,7 +339,7 @@ public class Generator
       throws Exception
       {
         CodeGenTildaFactory CG = G.getGenTildaFactory();
-        CodeGenDocs    DG = G.getGenDocs   ();
+        CodeGenDocs DG = G.getGenDocs();
 
         File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(O));
         PrintWriter Out = new PrintWriter(f);
@@ -363,11 +383,6 @@ public class Generator
                 DG.docMethodLookupByUniqueIndex(Out, G, I);
                 CG.genMethodLookupByUniqueIndex(Out, G, I, ++LookupId);
               }
-
-        Out.println();
-        Out.println();
-        DG.MustNotBeModified(Out, G);
-
         if (O._Indices != null)
           for (Index I : O._Indices)
             if (I != null && I._Unique == false)
@@ -379,11 +394,19 @@ public class Generator
 
         if (O._Queries != null)
           for (SubWhereClause Q : O._Queries)
-            if (Q != null)
+            if (Q != null && Q._Unique == true)
               {
                 Out.println();
-                DG.docMethodLookupWithQuery(Out, G, Q);
-                CG.genMethodLookupWithQuery(Out, G, Q, ++LookupId);
+                DG.docMethodLookupByUniqueQuery(Out, G, Q);
+                CG.genMethodLookupByUniqueQuery(Out, G, Q, ++LookupId);
+              }
+        if (O._Queries != null)
+          for (SubWhereClause Q : O._Queries)
+            if (Q != null && Q._Unique == false)
+              {
+                Out.println();
+                DG.docMethodLookupWhereQuery(Out, G, Q);
+                CG.genMethodLookupWhereQuery(Out, G, Q, ++LookupId);
               }
 
         if (O._ForeignKeys != null)
@@ -459,7 +482,7 @@ public class Generator
       throws Exception
       {
         CodeGenAppData CG = G.getGenAppData();
-        CodeGenDocs DG = G.getGenDocs  ();
+        CodeGenDocs DG = G.getGenDocs();
         File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(O));
         if (f.exists() == false)
           {
@@ -482,59 +505,59 @@ public class Generator
           }
         return f;
       }
-    
+
     protected static File genAppFactory(GeneratorSession G, File GenFolder, Object O)
-        throws Exception
-        {
-          CodeGenAppFactory CG = G.getGenAppFactory();
-          CodeGenDocs       DG = G.getGenDocs      ();
-          File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(O));
-          if (f.exists() == false)
-            {
-              PrintWriter Out = new PrintWriter(f);
-              LOG.debug("  Generating template App Factory class for Object '" + O.getFullName() + "'.");
-              LOG.debug("       -> " + f.getCanonicalPath());
-              DG.AppFileDocs(Out, G);
-              Out.println();
-              CG.genFileStart(Out, O._ParentSchema);
-              Out.println();
-              DG.AppClassDocs(Out, G, O);
-              CG.genClassStart(Out, G, O);
-              Out.println();
-              DG.AppCustomizeHere(Out, G, O);
-              Out.println();
-              CG.genClassCustomizations(Out, G, O);
-              Out.println();
-              CG.genClassEnd(Out, G);
-              Out.close();
-            }
-          return f;
-        }
-    
+      throws Exception
+      {
+        CodeGenAppFactory CG = G.getGenAppFactory();
+        CodeGenDocs DG = G.getGenDocs();
+        File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(O));
+        if (f.exists() == false)
+          {
+            PrintWriter Out = new PrintWriter(f);
+            LOG.debug("  Generating template App Factory class for Object '" + O.getFullName() + "'.");
+            LOG.debug("       -> " + f.getCanonicalPath());
+            DG.AppFileDocs(Out, G);
+            Out.println();
+            CG.genFileStart(Out, O._ParentSchema);
+            Out.println();
+            DG.AppClassDocs(Out, G, O);
+            CG.genClassStart(Out, G, O);
+            Out.println();
+            DG.AppCustomizeHere(Out, G, O);
+            Out.println();
+            CG.genClassCustomizations(Out, G, O);
+            Out.println();
+            CG.genClassEnd(Out, G);
+            Out.close();
+          }
+        return f;
+      }
+
     protected static File genAppJson(GeneratorSession G, File GenFolder, Object O)
-        throws Exception
-        {
-          CodeGenAppJson CG = G.getGenAppJson();
-          CodeGenDocs    DG = G.getGenDocs   ();
-          File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(O));
-          if (f.exists() == false)
-            {
-              PrintWriter Out = new PrintWriter(f);
-              LOG.debug("  Generating template App Json class for Object '" + O.getFullName() + "'.");
-              LOG.debug("       -> " + f.getCanonicalPath());
-              DG.AppFileDocs(Out, G);
-              Out.println();
-              CG.genFileStart(Out, O._ParentSchema);
-              Out.println();
-              DG.AppClassDocs(Out, G, O);
-              CG.genClassStart(Out, G, O);
-              Out.println();
-              DG.AppCustomizeHere(Out, G, O);
-              Out.println();
-              CG.genClassEnd(Out, G);
-              Out.close();
-            }
-          return f;
-        }
+      throws Exception
+      {
+        CodeGenAppJson CG = G.getGenAppJson();
+        CodeGenDocs DG = G.getGenDocs();
+        File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(O));
+        if (f.exists() == false)
+          {
+            PrintWriter Out = new PrintWriter(f);
+            LOG.debug("  Generating template App Json class for Object '" + O.getFullName() + "'.");
+            LOG.debug("       -> " + f.getCanonicalPath());
+            DG.AppFileDocs(Out, G);
+            Out.println();
+            CG.genFileStart(Out, O._ParentSchema);
+            Out.println();
+            DG.AppClassDocs(Out, G, O);
+            CG.genClassStart(Out, G, O);
+            Out.println();
+            DG.AppCustomizeHere(Out, G, O);
+            Out.println();
+            CG.genClassEnd(Out, G);
+            Out.close();
+          }
+        return f;
+      }
 
   }

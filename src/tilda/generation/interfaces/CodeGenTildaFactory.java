@@ -65,6 +65,14 @@ public interface CodeGenTildaFactory extends CodeGenBase
      */
     public void genMethodLookupWhereIndex(PrintWriter Out, GeneratorSession G, Index I, int LookupId);
 
+    /**
+     * 
+     * @param Out
+     * @param G
+     * @param Q
+     * @param LookupId
+     */
+    public void genMethodLookupByUniqueQuery(PrintWriter Out, GeneratorSession G, SubWhereClause Q, int LookupId);
 
     /**
      * 
@@ -73,7 +81,7 @@ public interface CodeGenTildaFactory extends CodeGenBase
      * @param Q
      * @param LookupId
      */
-    public void genMethodLookupWithQuery(PrintWriter Out, GeneratorSession G, SubWhereClause Q, int LookupId);
+    public void genMethodLookupWhereQuery(PrintWriter Out, GeneratorSession G, SubWhereClause Q, int LookupId);
 
     /**
      * 

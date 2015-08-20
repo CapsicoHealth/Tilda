@@ -25,6 +25,7 @@ import tilda.enums.ColumnMode;
 import tilda.enums.ObjectLifecycle;
 import tilda.generation.GeneratorSession;
 import tilda.generation.interfaces.CodeGenAppData;
+import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
@@ -35,7 +36,7 @@ public class AppData implements CodeGenAppData
     protected static final Logger LOG = LogManager.getLogger(AppData.class.getName());
 
     @Override
-    public String getFileName(Object O)
+    public String getFileName(Base O)
       {
         return O._AppDataClassName + ".java";
       }
@@ -72,7 +73,7 @@ public class AppData implements CodeGenAppData
             {
               Out.println();
               Out.println("   @Override");
-              Out.println("   public " + JavaJDBCType.getFieldType(C) + " get" + TextUtil.CapitalizeFirstCharacter(C._Name) + "()");
+              Out.println("   public " + JavaJDBCType.getFieldType(C) + " get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()");
               Out.println("    {");
               Out.println("      // return something");
               Out.println("    }");

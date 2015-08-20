@@ -99,8 +99,8 @@ public class Mapper
           PK._Columns = new String[_PrimaryColumns.size() + 1];
           int i = 0;
           for (i = 0; i < _PrimaryColumns.size(); ++i)
-            PK._Columns[i] = _PrimaryColumns.get(i)._Name;
-          PK._Columns[i] = _MappingColumns._IdColumn._Name;
+            PK._Columns[i] = _PrimaryColumns.get(i).getName();
+          PK._Columns[i] = _MappingColumns._IdColumn.getName();
           O._PrimaryKey = PK;
         }
 

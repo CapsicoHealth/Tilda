@@ -188,7 +188,7 @@ public class Docs implements CodeGenDocs
             Out.println(
                 "  <TR valign=\"top\" bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#EEEEEE") + "\">"
                     + "<TD>" + i + "&nbsp;&nbsp;</TD>"
-                    + "<TD align=\"right\"><B>" + C._Name + "</B>&nbsp;&nbsp;</TD>"
+                    + "<TD align=\"right\"><B>" + C.getName() + "</B>&nbsp;&nbsp;</TD>"
                     + "<TD>" + JavaJDBCType.getFieldType(C) + (C.isList()==true?" List<>" : C.isSet() == true ? " Set<>" : "") + "&nbsp;&nbsp;</TD>"
                     + "<TD><B>" + C.getShortName() + "</B>&nbsp;&nbsp;</TD>"
                     + "<TD>" + G.getSql().getColumnType(C) + "&nbsp;&nbsp;</TD>"
@@ -355,8 +355,8 @@ public class Docs implements CodeGenDocs
         for (Column C : CreateColumns)
           if (C != null)
             {
-              String Pad = O._PadderColumnNames.getPad(C._Name);
-              Out.println(" @param " + C._Name + Pad + " " + (C._Size == null || C._Size == 0 ? "" : "(max size " + C._Size + ") ") + C._Description);
+              String Pad = O._PadderColumnNames.getPad(C.getName());
+              Out.println(" @param " + C.getName() + Pad + " " + (C._Size == null || C._Size == 0 ? "" : "(max size " + C._Size + ") ") + C._Description);
             }
         Out.println(Helper.getMultiLineCommentEnd());
       }
@@ -408,7 +408,13 @@ public class Docs implements CodeGenDocs
       }
 
     @Override
-    public void docMethodLookupWithQuery(PrintWriter Out, GeneratorSession G, SubWhereClause Q)
+    public void docMethodLookupWhereQuery(PrintWriter Out, GeneratorSession G, SubWhereClause Q)
+      {
+        // TODO Auto-generated method stub
+        
+      }
+    @Override
+    public void docMethodLookupByUniqueQuery(PrintWriter Out, GeneratorSession G, SubWhereClause Q)
       {
         // TODO Auto-generated method stub
         

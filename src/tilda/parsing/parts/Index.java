@@ -45,30 +45,30 @@ public class Index
     public transient List<OrderType> _OrderByOrders = new ArrayList<OrderType>();
     public transient boolean         _Unique;
 
-    public transient IThing          _ParentThing;
+    public transient Object          _ParentObject;
 
-    public boolean Validate(ParserSession PS, IThing Thing)
+    public boolean Validate(ParserSession PS, Object ParentObject)
       {
         int Errs = PS.getErrorCount();
-        _ParentThing = Thing;
+        _ParentObject = ParentObject;
 
         // Does it have a name?
         if (TextUtil.isNullOrEmpty(_Name) == true)
-          return PS.AddError("Object '" + _ParentThing.getFullName() + "' is defining an index without a name.");
+          return PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining an index without a name.");
 
         if ((_Columns == null || _Columns.length == 0) && (_OrderBy == null || _OrderBy.length == 0))
-          return PS.AddError("Object '" + _ParentThing.getFullName() + "' is defining index '"+_Name+"' without columns and/or order by.");
+          return PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining index '"+_Name+"' without columns and/or order by.");
 
         _Unique = _OrderBy == null || _OrderBy.length == 0;
 
-        _ColumnObjs = ValidationHelper.ProcessColumn(PS, _ParentThing, "index '" + _Name + "'", _Columns, new ValidationHelper.Processor() {
+        _ColumnObjs = ValidationHelper.ProcessColumn(PS, _ParentObject, "index '" + _Name + "'", _Columns, new ValidationHelper.Processor() {
           @Override
-          public boolean process(ParserSession PS, IThing Thing, String What, Column C)
+          public boolean process(ParserSession PS, Base ParentObject, String What, Column C)
             {
               if (C._Mode == ColumnMode.CALCULATED)
-                PS.AddError("Object '" + _ParentThing.getFullName() + "' is defining an index with column '" + C._Name + "' which is calculated.");
+                PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining an index with column '" + C.getName() + "' which is calculated.");
               else if (_Unique == true && C._Nullable == true)
-                PS.AddError("Object '" + _ParentThing.getFullName() + "' is defining a unique index with column '" + C._Name + "' which is nullable.");
+                PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a unique index with column '" + C.getName() + "' which is nullable.");
               else
                 {
                   if (_Unique == true)
@@ -85,12 +85,12 @@ public class Index
             Set<String> Names = new HashSet<String>();
             if (_ColumnObjs != null)
              for (Column C : _ColumnObjs)
-              Names.add(C._Name.toUpperCase());
+              Names.add(C.getName().toUpperCase());
             
-            processOrderBy(PS, "Object '" + _ParentThing.getFullName() + "' defines index '" + _Name + "'", Names, _ParentThing, _OrderBy, _OrderByObjs, _OrderByOrders);
+            processOrderBy(PS, "Object '" + _ParentObject.getFullName() + "' defines index '" + _Name + "'", Names, _ParentObject, _OrderBy, _OrderByObjs, _OrderByOrders);
             
             if (TextUtil.isNullOrEmpty(_SubWhere) == false && _SubQuery != null)
-              PS.AddError("Object '" + _ParentThing.getFullName() + "' is defining unique index '" + _Name + "' with both a subWhere AND a subQuery: only one is allowed.");
+              PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining unique index '" + _Name + "' with both a subWhere AND a subQuery: only one is allowed.");
             else
               {
                 if (_SubWhere != null)
@@ -99,24 +99,24 @@ public class Index
                 if (_SubQuery != null)
                   {
                     if (_SubQuery._OrderBy != null && _SubQuery._OrderBy.length != 0)
-                      PS.AddError("Object '" + _ParentThing.getFullName() + "' defines index '" + _Name + "' with a subQuery that contains an orderBy: this is not allowed as the index already defines one.");
-                    _SubQuery.Validate(PS, _ParentThing, "Object " + _ParentThing.getFullName() + "'s index '" + _Name + "'", false);
+                      PS.AddError("Object '" + _ParentObject.getFullName() + "' defines index '" + _Name + "' with a subQuery that contains an orderBy: this is not allowed as the index already defines one.");
+                    _SubQuery.Validate(PS, _ParentObject, "Object " + _ParentObject.getFullName() + "'s index '" + _Name + "'", false);
                   }
               }
           }
         else
           {
             if (_SubQuery != null)
-              PS.AddError("Object '" + _ParentThing.getFullName() + "' is defining unique index '" + _Name + "' with a subQuery, which is not allowed.");
+              PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining unique index '" + _Name + "' with a subQuery, which is not allowed.");
             if (TextUtil.isNullOrEmpty(_SubWhere) == false)
-              PS.AddError("Object '" + _ParentThing.getFullName() + "' is defining unique index '" + _Name + "' with a subWhere, which is not allowed.");
+              PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining unique index '" + _Name + "' with a subWhere, which is not allowed.");
           }
 
 
         return Errs == PS.getErrorCount();
       }
 
-    public static void processOrderBy(ParserSession PS, String What, Set<String> Names, IThing Parent, String[] OrderBy, List<Column> OrderByObjs, List<OrderType> OrderByOrders)
+    public static void processOrderBy(ParserSession PS, String What, Set<String> Names, Base ParentObject, String[] OrderBy, List<Column> OrderByObjs, List<OrderType> OrderByOrders)
       {
         for (String ob : OrderBy)
           {
@@ -135,7 +135,7 @@ public class Index
                 PS.AddError(What + " with an orderBy '" + ob + "' that is formatted incorrectly: asc or desc expected.");
                 continue;
               }
-            Column C = Parent.getColumn(Col);
+            Column C = ParentObject.getColumn(Col);
             if (C == null)
               {
                 PS.AddError(What + " with orderby '" + Col + "' which cannot be found.");

@@ -57,7 +57,7 @@ public class Query
         _Clause = _SubWhere;
       }
 
-    public boolean Validate(ParserSession PS, IThing ParentThing, String OwnerObjName)
+    public boolean Validate(ParserSession PS, Base ParentObject, String OwnerObjName)
       {
         int Errs = PS.getErrorCount();
 
@@ -80,14 +80,14 @@ public class Query
             String col = M.group(1);
             String var = M.group(2);
 //            LOG.debug("    match: "+M.group()+"; col: "+col+"; var: "+var+";");
-            ReferenceHelper R = ReferenceHelper.parseColumnReference(col, ParentThing);
+            ReferenceHelper R = ReferenceHelper.parseColumnReference(col, ParentObject);
             Column C = PS.getColumn(R._P, R._S, R._O, R._C);
             if (C == null)
               {
                 PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which refers to an unknown column '"+col+"'.");
                 continue;
               }
-            if (C._FailedValidation == true)
+            if (C._Validated == false)
               {
                 PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which refers to column '" + C.getShortName() + "' which has failed validation previously and cannot be processed any more.");
                 continue;

@@ -56,7 +56,7 @@ public class ColumnEnum
         if (Errs != PS.getErrorCount())
           return false;
 
-        ForeignKey.CheckForeignKeyMapping(PS, _ParentColumn._ParentThing, _SrcColumnObjs, _DestObjectObj, "enum");
+        ForeignKey.CheckForeignKeyMapping(PS, _ParentColumn._ParentObject, _SrcColumnObjs, _DestObjectObj, "enum");
         
         return Errs == PS.getErrorCount();
       }
@@ -64,7 +64,7 @@ public class ColumnEnum
     private boolean ValidateSourceColumns(ParserSession PS)
       {
         if (_SrcColumns != null && _SrcColumns.length> 0)
-         _SrcColumnObjs = ValidationHelper.ProcessColumn(PS, _ParentColumn._ParentThing, "enum", _SrcColumns, null);
+         _SrcColumnObjs = ValidationHelper.ProcessColumn(PS, _ParentColumn._ParentObject, "enum", _SrcColumns, null);
 
         return true;
       }
@@ -74,7 +74,7 @@ public class ColumnEnum
         if (TextUtil.isNullOrEmpty(_DestObject) == true)
           return PS.AddError("Column '" + _ParentColumn.getFullName() + "' is defining a mapper without a destination object.");
 
-        ReferenceHelper R = ReferenceHelper.parseObjectReference(_DestObject, _ParentColumn._ParentThing.getSchema());
+        ReferenceHelper R = ReferenceHelper.parseObjectReference(_DestObject, _ParentColumn._ParentObject.getSchema());
         if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true)
          return PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares mapper with an incorrect syntax for the destination object '" + _DestObject + "'. It should be '((package\\.)?schema\\.)?object'.");
         

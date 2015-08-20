@@ -25,43 +25,67 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.enums.ColumnMode;
+import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
 import tilda.parsing.ParserSession;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Object extends View
+public class Object extends Base
   {
 
     static final Logger              LOG                = LogManager.getLogger(Object.class.getName());
 
     /*@formatter:off*/
-    @SerializedName("occ"        ) public boolean         _OCC        = true ;
-    @SerializedName("lc"         ) public String          _LCStr      = ObjectLifecycle.NORMAL.toString();
+    @SerializedName("occ"        ) public boolean              _OCC        = true ;
+    @SerializedName("lc"         ) public String               _LCStr      = ObjectLifecycle.NORMAL.toString();
 
-    @SerializedName("primary"    ) public PrimaryKey       _PrimaryKey;
-    @SerializedName("foreign"    ) public List<ForeignKey> _ForeignKeys = new ArrayList<ForeignKey>();
-	
-    @SerializedName("http"       ) public HttpMapping[]   _Http = { };
-    
-    @SerializedName("history"    ) public String     []   _History;
+    @SerializedName("columns"    ) public List<Column>         _Columns    = new ArrayList<Column        >();
+
+    @SerializedName("primary"    ) public PrimaryKey           _PrimaryKey = null;
+    @SerializedName("foreign"    ) public List<ForeignKey>     _ForeignKeys= new ArrayList<ForeignKey>();
+    @SerializedName("indices"    ) public List<Index>          _Indices    = new ArrayList<Index         >();
+    @SerializedName("http"       ) public HttpMapping[]        _Http       = { };
+    @SerializedName("history"    ) public String     []        _History    = { };
     /*@formatter:on*/
 
-    public transient FrameworkSourcedType _FST         = FrameworkSourcedType.NONE;
+    public transient boolean              _HasUniqueIndex;
+    public transient boolean              _HasUniqueQuery;
+    public transient FrameworkSourcedType _FST = FrameworkSourcedType.NONE;
     public transient ObjectLifecycle      _LC;
-    public transient boolean _Validated = false;
 
     @Override
-    public String getThingType()
+    public Column getColumn(String name)
+      {
+        for (Column C : _Columns)
+          if (C != null && C.getName() != null && C.getName().equalsIgnoreCase(name) == true)
+            return C;
+        return null;
+      }
+    @Override
+    public ObjectLifecycle getLifecycle()
+      {
+        return _LC;
+      }
+    @Override
+    public boolean isOCC()
+      {
+        return _OCC;
+      }
+    @Override
+    public String getWhat()
       {
         return "Object";
       }
 
     public boolean Validate(ParserSession PS, Schema ParentSchema)
       {
-        if (super.Setup(PS, ParentSchema) == false)
-          return false;
+        if (_Validated == true)
+          return true;
+
+        if (super.Validate(PS, ParentSchema) == false)
+         return false;
 
         int Errs = PS.getErrorCount();
 
@@ -88,9 +112,74 @@ public class Object extends View
           }
 
 
-        if (super.Validate(PS, ParentSchema) == false)
-          return false;
+        if (_Columns == null || _Columns.isEmpty() == true)
+          PS.AddError("Object '" + getFullName() + "' doesn't define any columns!");
+        else
+          {
+            Set<String> ColumnNames = new HashSet<String>();
+            for (int i = 0; i < _Columns.size(); ++i)
+              {
+                Column C = _Columns.get(i);
+                if (C == null)
+                  continue;
+                if (i >= 64)
+                  PS.AddError("Object '" + getFullName() + "' has declared more than 64 columns!");
+                else
+                  {
+                    _PadderColumnNames.track(C.getName());
+                    if (C.Validate(PS, this) == true)
+                      {
+                        if (ColumnNames.add(C.getName().toUpperCase()) == false)
+                         PS.AddError("Column '" + C.getFullName() + "' is defined more than once in Object '" + getFullName() + "'.");
+                        if (C._Type == ColumnType.DATETIME && Object.isOCCColumn(C) == false)
+                          {
+                            Column TZCol = new Column(C.getName()+"TZ", null, 0, C._Nullable, ColumnMode.AUTO, C._Invariant, null, "Generated helper column to hold the time zone ID for '"+C.getName()+"'.");
+                            TZCol._SameAs = "tilda.data.TILDA.ZONEINFO.id";
+                            TZCol._FrameworkManaged = true;
+                            _Columns.add(i, TZCol);
+                            ++i;
+                            _PadderColumnNames.track(TZCol.getName());
+                            if (ColumnNames.add(TZCol.getName().toUpperCase()) == false)
+                              PS.AddError("Generated column '" + TZCol.getFullName() + "' conflicts with another column already named the same in Object '" + getFullName() + "'.");
+                            if (TZCol.Validate(PS, this) == false)
+                              TZCol._Validated = false;
+                            addForeignKey(C.getName(), new String[] { TZCol.getName() }, "tilda.data.TILDA.ZONEINFO");
+                          }
+                      }
+                    else
+                     C._Validated = false;
+                  }
+              }
+          }
 
+        _HasUniqueIndex = false;
+        Set<String> Names = new HashSet<String>();
+        for (Index I : _Indices)
+          {
+            if (I == null)
+              continue;
+            if (I.Validate(PS, this) == true)
+              if (Names.add(I._Name.toUpperCase()) == false)
+                PS.AddError("Object '" + getFullName() + "' is defining a duplicate index '" + I._Name + "'.");
+            if (I._Unique == true)
+              _HasUniqueIndex = true;
+          }
+
+        Names.clear();
+        _HasUniqueQuery = false;
+        for (SubWhereClause SWC : _Queries)
+          {
+            if (SWC == null)
+              continue;
+            if (SWC.Validate(PS, this, "Object '" + getFullName()+"'", true) == true)
+              if (Names.add(SWC._Name.toUpperCase()) == false)
+                PS.AddError("Object '" + getFullName() + "' is defining a duplicate query '" + SWC._Name + "'.");
+            if (SWC._Unique == true)
+              _HasUniqueQuery = true;
+          }
+
+        super.ValidateJsonMapping(PS);
+        
         if ((_LC = ObjectLifecycle.parse(_LCStr)) == null)
           return PS.AddError("Object '" + getFullName() + "' defined an invalid 'lc' '" + _LCStr + "'.");
 
@@ -107,24 +196,33 @@ public class Object extends View
                 PS.AddError("Object '" + getFullName() + "' is defining a duplicate foreignKey '" + FK._Name + "'.");
           }
 
-        if (_PrimaryKey == null && _HasUniqueIndex == false)
+        if (_PrimaryKey == null && _HasUniqueIndex == false && _FST != FrameworkSourcedType.VIEW)
           PS.AddError("Object '" + getFullName() + "' doesn't have any identity. You must define at least a primary key or a unique index.");
 
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
       }
 
+    /**
+     * A Column is an autogen PK if and only if it is the one column defined by the PK. All AutoGen PKs must
+     * have only one column (and also be a LONG).
+     * 
+     * @param C
+     * @return
+     */
+    public boolean isAutoGenPrimaryKey(Column C)
+      {
+        return _PrimaryKey != null && _PrimaryKey._Autogen == true && C == _PrimaryKey._ColumnObjs.get(0);
+      }
+
     private boolean CreateAutogenPK(ParserSession PS)
       {
         for (Column C : _Columns)
-          if (C != null && C._Name.equalsIgnoreCase("refnum") == true)
+          if (C != null && C.getName().equalsIgnoreCase("refnum") == true)
             return PS.AddError("Object '" + getFullName() + "' has defined an autogen primary key but is also defining column 'refnum', which is a reserved name.");
 
-        Column C = new Column();
-        C._Name = "refnum";
+        Column C = new Column("refnum", null, 0, false, null, true, null, PS.getColumn("tilda.data", "TILDA", "KEY", "refnum")._Description);
         C._SameAs = "tilda.data.TILDA.KEY.refnum";
-        C._Invariant = true;
-        C._Description = PS.getColumn("tilda.data", "TILDA", "KEY", "refnum")._Description;
         _Columns.add(0, C);
 
         return true;
@@ -133,31 +231,21 @@ public class Object extends View
     private boolean CreateOCCColumns(ParserSession PS)
       {
         for (Column C : _Columns)
-          if (C != null && (C._Name.equalsIgnoreCase("created") == true || C._Name.equalsIgnoreCase("lastUpdated") == true || C._Name.equalsIgnoreCase("deleted") == true))
-            return PS.AddError("Object '" + getFullName() + "' has defined OCC to be true but is also defining column '" + C._Name + "', which is a reserved name.");
+          if (C != null && (C.getName().equalsIgnoreCase("created") == true || C.getName().equalsIgnoreCase("lastUpdated") == true || C.getName().equalsIgnoreCase("deleted") == true))
+            return PS.AddError("Object '" + getFullName() + "' has defined OCC to be true but is also defining column '" + C.getName() + "', which is a reserved name.");
 
-        Column C = new Column();
-        C._Name = "created";
+        Column C = new Column("created", null, 0, false, ColumnMode.AUTO, true, null, PS.getColumn("tilda.data", "TILDA", "KEY", "created")._Description);
         C._SameAs = "tilda.data.TILDA.KEY.created";
-        C._Invariant = true;
-        C._Description = PS.getColumn("tilda.data", "TILDA", "KEY", "created")._Description;
-        C._Mode = ColumnMode.AUTO;
         C._FrameworkManaged = true;
         _Columns.add(C);
 
-        C = new Column();
-        C._Name = "lastUpdated";
+        C = new Column("lastUpdated", null, 0, false, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "KEY", "lastUpdated")._Description);
         C._SameAs = "tilda.data.TILDA.KEY.lastUpdated";
-        C._Description = PS.getColumn("tilda.data", "TILDA", "KEY", "lastUpdated")._Description;
-        C._Mode = ColumnMode.AUTO;
         C._FrameworkManaged = true;
         _Columns.add(C);
 
-        C = new Column();
-        C._Name = "deleted";
+        C = new Column("deleted", null, 0, true, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "KEY", "deleted")._Description);
         C._SameAs = "tilda.data.TILDA.KEY.deleted";
-        C._Description = PS.getColumn("tilda.data", "TILDA", "KEY", "deleted")._Description;
-        C._Mode = ColumnMode.AUTO;
         C._FrameworkManaged = true;
         _Columns.add(C);
 
@@ -169,31 +257,12 @@ public class Object extends View
         return C.isOCCGenerated();
       }
 
-    /**
-     * A Column is an autogen PK if and only if it is the one column defined by the PK. All AutoGen PKs must
-     * have only one column (and also be a LONG).
-     * 
-     * @param C
-     * @return
-     */
-    @Override
-    public boolean isAutoGenPrimaryKey(Column C)
+    public void AddColumnAfter(Column SiblingCol, Column NewCol)
       {
-        return _PrimaryKey != null && _PrimaryKey._Autogen == true && C == _PrimaryKey._ColumnObjs.get(0);
+        int i = _Columns.indexOf(SiblingCol);
+        if (i != -1)
+         _Columns.add(i+1, NewCol);
       }
-
-    @Override
-    public ObjectLifecycle getLifecycle()
-      {
-        return _LC;
-      }
-
-    @Override
-    public boolean isOCC()
-      {
-        return _OCC;
-      }
-
 
     public List<Column> getDefaultCreateColumns()
       {
@@ -252,12 +321,11 @@ public class Object extends View
         _ForeignKeys.add(FK);
       }
 
-    @Override
     public boolean isAutoGenForeignKey(String Name)
       {
         for (ForeignKey FK : _ForeignKeys)
          for (Column C : FK._SrcColumnObjs)
-           if (C._Name.equals(Name) == true)
+           if (C.getName().equals(Name) == true)
             {
               if (FK._DestObjectObj._PrimaryKey._Autogen == true)
                return true;

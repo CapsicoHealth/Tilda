@@ -23,6 +23,7 @@ import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
+import tilda.parsing.parts.View;
 import tilda.utils.TextUtil;
 
 public class MSSQL implements DBType
@@ -98,6 +99,13 @@ public class MSSQL implements DBType
 
     @Override
     public boolean createTable(Connection Con, Object Obj)
+      throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+    
+    @Override
+    public boolean createView(Connection Con, View V)
       throws Exception
       {
         throw new UnsupportedOperationException();

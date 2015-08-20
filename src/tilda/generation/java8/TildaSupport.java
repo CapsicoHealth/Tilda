@@ -24,6 +24,7 @@ import org.apache.logging.log4j.Logger;
 import tilda.generation.Generator;
 import tilda.generation.GeneratorSession;
 import tilda.generation.interfaces.CodeGenTildaSupport;
+import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 
@@ -32,7 +33,7 @@ public class TildaSupport implements CodeGenTildaSupport
     protected static final Logger LOG = LogManager.getLogger(TildaSupport.class.getName());
 
     @Override
-    public String getFileName(Object O)
+    public String getFileName(Base O)
       {
         return "TILDA__" + Generator.TILDA_VERSION_VAROK + ".java";
       }

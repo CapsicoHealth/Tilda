@@ -29,6 +29,7 @@ import tilda.generation.postgres9.PostgresType;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
+import tilda.parsing.parts.View;
 import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.utils.TextUtil;
 
@@ -125,19 +126,27 @@ public class PostgreSQL implements DBType
         return Con.ExecuteUpdate(Obj.getShortName(), Str.toString()) >= 0;
       }
 
+    @Override
+    public boolean createView(Connection Con, View V) throws Exception
+      {
+        StringWriter Str = new StringWriter();
+        PrintWriter Out = new PrintWriter(Str);
+        Generator.getFullViewDDL(getSQlCodeGen(), Out, V);
+        return Con.ExecuteUpdate(V.getShortName(), Str.toString()) >= 0;
+      }
 
     @Override
     public boolean alterTableAddColumn(Connection Con, Column Col, String DefaultValue) throws Exception
       {
         if (Col._Nullable == false && DefaultValue == null)
          throw new Exception("Cannot add a new 'not null' column to a table without a default value. Add a default value in the model, or manually migrate your database.");
-        String Q ="ALTER TABLE "+Col._ParentThing.getShortName()+" ADD COLUMN \""+Col._Name+"\" "+getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection());
+        String Q ="ALTER TABLE "+Col._ParentObject.getShortName()+" ADD COLUMN \""+Col.getName()+"\" "+getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection());
         if (Col._Nullable == false)
           {
             Q+=" not null DEFAULT "+ValueHelper.printValue(Col, DefaultValue);
           }
            
-        return Con.ExecuteUpdate(Col._ParentThing.getShortName(), Q) >= 0;
+        return Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q) >= 0;
       }
     
     public static String getColumnType(ColumnType T, Integer S, ColumnMode M, boolean Collection)
