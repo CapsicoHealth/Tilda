@@ -112,10 +112,12 @@ public class TildaJson implements CodeGenTildaJson
               String Pad = C._ParentObject.getColumnPad(C.getName());
               if (C._Nullable == false)
                 {
-                  if (C._Type == ColumnType.STRING)
+                  if (C.isCollection() == false && C._Type == ColumnType.STRING)
                     Out.println("      if (TextUtil.isNullOrEmpty(_" + C.getName() + Pad + ") == true)");
-                  else if (C._Type == ColumnType.DATETIME)
+                  else if (C.isCollection() == false && C._Type == ColumnType.DATETIME)
                     Out.println("      if (TextUtil.isNullOrEmpty(Str_" + C.getName() + Pad + ") == true)");
+                  else if (C.isCollection() == true)
+                    Out.println("      if (_" + C.getName() + Pad + " == null || _" + C.getName() + Pad + ".isEmpty() == true)");
                   else
                     Out.println("      if (_" + C.getName() + Pad + " == null)");
                   Out.println("       throw new Exception(\"Incoming value for '" + C.getFullName()+ "' was null. It's not nullable in the model.\\n\"+toString());");
@@ -129,8 +131,8 @@ public class TildaJson implements CodeGenTildaJson
                     }
                   String ExtraPad = C._Nullable == true ? "   " : "";
                   Out.println(ExtraPad + "      _" + C.getName() + Pad + " = DateTimeUtil.parsefromJSON(Str_" + C.getName() + Pad + ");");
-                  Out.println(ExtraPad + "      if (   _" + C.getName() + Pad + " == null) throw new Exception(\"Incoming value for '" + C.getFullName()
-                      + "' was not in the expected format. Dates should follow the ISO format.\\n\"+toString());");
+                  Out.println(ExtraPad + "      if (   _" + C.getName() + Pad + " == null)");
+                  Out.println(ExtraPad + "       throw new Exception(\"Incoming value for '" + C.getFullName()+ "' was not in the expected format. Dates should follow the ISO format.\\n\"+toString());");
                   if (C._Nullable == true)
                     {
                       Out.println("       }");
@@ -138,8 +140,8 @@ public class TildaJson implements CodeGenTildaJson
                 }
               if (O._FST == FrameworkSourcedType.MAPPER && C.getName().equals("group") == true)
                 {
-                  Out.println("      if (TextUtil.FindElement(" + Helper.getFullAppDataClassName(O) + "._" + C.getName() + "_Values, _" + C.getName() + ", 0, true, 0) == -1) throw new Exception(\"Invalid value " + C.getName() + "='\"+_" + C.getName()
-                      + "+\"'. As per the model, valid values are: \"+TextUtil.Print(" + Helper.getFullAppDataClassName(O) + "._" + C.getName() + "_Values, 0)+\".\\n\"+toString());");
+                  Out.println("      if (TextUtil.FindElement(" + Helper.getFullAppDataClassName(O) + "._" + C.getName() + "_Values, _" + C.getName() + ", 0, true, 0) == -1)");
+                  Out.println("       throw new Exception(\"Invalid value " + C.getName() + "='\"+_" + C.getName()+ "+\"'. As per the model, valid values are: \"+TextUtil.Print(" + Helper.getFullAppDataClassName(O) + "._" + C.getName() + "_Values, 0)+\".\\n\"+toString());");
                 }
             }
         Out.println();
