@@ -22,6 +22,7 @@ import tilda.generation.GeneratorSession;
 import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
+import tilda.parsing.parts.SubWhereClause;
 
 public interface CodeGenBase
 {

@@ -51,6 +51,7 @@ public class Object extends Base
     /*@formatter:on*/
 
     public transient boolean              _HasUniqueIndex;
+    public transient boolean              _HasUniqueQuery;
     public transient FrameworkSourcedType _FST = FrameworkSourcedType.NONE;
     public transient ObjectLifecycle      _LC;
 
@@ -165,6 +166,7 @@ public class Object extends Base
           }
 
         Names.clear();
+        _HasUniqueQuery = false;
         for (SubWhereClause SWC : _Queries)
           {
             if (SWC == null)
@@ -172,6 +174,8 @@ public class Object extends Base
             if (SWC.Validate(PS, this, "Object '" + getFullName()+"'", true) == true)
               if (Names.add(SWC._Name.toUpperCase()) == false)
                 PS.AddError("Object '" + getFullName() + "' is defining a duplicate query '" + SWC._Name + "'.");
+            if (SWC._Unique == true)
+              _HasUniqueQuery = true;
           }
 
         super.ValidateJsonMapping(PS);

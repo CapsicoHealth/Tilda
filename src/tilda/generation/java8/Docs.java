@@ -408,7 +408,13 @@ public class Docs implements CodeGenDocs
       }
 
     @Override
-    public void docMethodLookupWithQuery(PrintWriter Out, GeneratorSession G, SubWhereClause Q)
+    public void docMethodLookupWhereQuery(PrintWriter Out, GeneratorSession G, SubWhereClause Q)
+      {
+        // TODO Auto-generated method stub
+        
+      }
+    @Override
+    public void docMethodLookupByUniqueQuery(PrintWriter Out, GeneratorSession G, SubWhereClause Q)
       {
         // TODO Auto-generated method stub
         

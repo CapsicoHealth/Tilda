@@ -94,9 +94,9 @@ public interface CodeGenDocs
 
     public void docMethodLookupWhereIndex(PrintWriter Out, GeneratorSession G, Index I);
     
-    public void docMethodLookupWithQuery(PrintWriter Out, GeneratorSession G, SubWhereClause Q);
+    public void docMethodLookupByUniqueQuery(PrintWriter Out, GeneratorSession G, SubWhereClause Q);
+    public void docMethodLookupWhereQuery(PrintWriter out, GeneratorSession g, SubWhereClause q);
 
     public void docMethodLookupParent(PrintWriter Out, GeneratorSession G, ForeignKey FK);
-    
     
   }

@@ -37,10 +37,11 @@ public class SubWhereClause
     protected static final Logger LOG         = LogManager.getLogger(SubWhereClause.class.getName());
 
     /*@formatter:off*/
-    @SerializedName("name"   ) public String   _Name   ;
-    @SerializedName("from"   ) public String[] _From   = { };
-    @SerializedName("wheres" ) public Query [] _Wheres = { };
-    @SerializedName("orderBy") public String[] _OrderBy= { };
+    @SerializedName("name"       ) public String   _Name       ;
+    @SerializedName("description") public String   _Description;
+    @SerializedName("from"       ) public String[] _From   = { };
+    @SerializedName("wheres"     ) public Query [] _Wheres = { };
+    @SerializedName("orderBy"    ) public String[] _OrderBy= { };
     /*@formatter:on*/
 
     public transient List<Column>    _ColumnObjs    = new ArrayList<Column>();
@@ -48,6 +49,8 @@ public class SubWhereClause
     public transient List<Object>    _FromObj       = new ArrayList<Object>();
     public transient List<Column>    _OrderByObjs   = new ArrayList<Column>();
     public transient List<OrderType> _OrderByOrders = new ArrayList<OrderType>();
+    public transient boolean         _Unique;
+    
 
     public transient Base          _ParentObject;
     
@@ -65,6 +68,9 @@ public class SubWhereClause
         // Does it have a name?
         if (TopLevel == true && TextUtil.isNullOrEmpty(_Name) == true)
           return PS.AddError(What + " is defining a SubWhereClause without a name.");
+
+        if (TopLevel == true && TextUtil.isNullOrEmpty(_Description) == true)
+          return PS.AddError(What + " is defining a SubWhereClause '"+_Name+"' without a description.");
 
         if (_Wheres.length == 0)
           {
@@ -151,6 +157,8 @@ public class SubWhereClause
           }
 
         Index.processOrderBy(PS, "Object '" + _ParentObject.getFullName() + "' defines Query '" + _Name + "'", new HashSet<String>(), _ParentObject, _OrderBy, _OrderByObjs, _OrderByOrders);
+
+        _Unique = _OrderBy == null || _OrderBy.length == 0;
         
         return Errs == PS.getErrorCount();
       }

@@ -227,67 +227,64 @@ public class Generator
                   CG.genMethodIsNull(Out, G, C);
                 }
 
-              if (O._FST != FrameworkSourcedType.VIEW)
+              if (C._Mode == ColumnMode.CALCULATED && C._MapperDef != null)
                 {
-                  if (C._Mode == ColumnMode.CALCULATED && C._MapperDef != null)
+                  Out.println();
+                  DG.docField(Out, G, C, "setter");
+                  CG.genMethodSet(Out, G, C);
+
+                  if (C._PrimaryKey == false && C._Nullable == true)
                     {
                       Out.println();
-                      DG.docField(Out, G, C, "setter");
-                      CG.genMethodSet(Out, G, C);
+                      DG.docField(Out, G, C, "null setter");
+                      CG.genMethodSetNull(Out, G, C);
+                    }
+                }
 
-                      if (C._PrimaryKey == false && C._Nullable == true)
-                        {
-                          Out.println();
-                          DG.docField(Out, G, C, "null setter");
-                          CG.genMethodSetNull(Out, G, C);
-                        }
+              if (C._Mode != ColumnMode.CALCULATED)
+                {
+                  Out.println();
+                  DG.docField(Out, G, C, "setter");
+                  CG.genMethodSet(Out, G, C);
+
+                  if (C._PrimaryKey == false && C._Nullable == true)
+                    {
+                      Out.println();
+                      DG.docField(Out, G, C, "null setter");
+                      CG.genMethodSetNull(Out, G, C);
                     }
 
-                  if (C._Mode != ColumnMode.CALCULATED)
+
+                  if (O._LC == ObjectLifecycle.NORMAL || O._LC == ObjectLifecycle.WORM)
                     {
-                      Out.println();
-                      DG.docField(Out, G, C, "setter");
-                      CG.genMethodSet(Out, G, C);
-
-                      if (C._PrimaryKey == false && C._Nullable == true)
-                        {
-                          Out.println();
-                          DG.docField(Out, G, C, "null setter");
-                          CG.genMethodSetNull(Out, G, C);
-                        }
-
-
-                      if (O._LC == ObjectLifecycle.NORMAL || O._LC == ObjectLifecycle.WORM)
-                        {
-                          if (C._Values != null && C._Type != ColumnType.DATETIME)
-                            for (ColumnValue V : C._Values)
-                              if (V != null)
-                                {
-                                  Out.println();
-                                  DG.docMethodIs(Out, G, V, "setter-as");
-                                  CG.genMethodSetAs(Out, G, V);
-                                }
-
-
-                          if (C._PrimaryKey == false) // only non pk columns can be changed.
+                      if (C._Values != null && C._Type != ColumnType.DATETIME)
+                        for (ColumnValue V : C._Values)
+                          if (V != null)
                             {
-                              if (C._Type == ColumnType.DATETIME && C._TypeSep == null)
-                                {
-                                  Out.println();
-                                  DG.docField(Out, G, C, "NOW setter");
-                                  CG.genMethodSetDateTimeNow(Out, G, C);
-                                  Out.println();
-                                  DG.docField(Out, G, C, "UNDEFINED setter");
-                                  CG.genMethodSetDateTimeUndefined(Out, G, C);
-                                  Out.println();
-                                  DG.docField(Out, G, C, "explicit setter %%CALENDAR_SETTER%%");
-                                  CG.genMethodSetDateTimeExplicit(Out, G, C);
-                                }
-
                               Out.println();
-                              DG.docField(Out, G, C, "hasChanged");
-                              CG.genMethodHasChanged(Out, G, C);
+                              DG.docMethodIs(Out, G, V, "setter-as");
+                              CG.genMethodSetAs(Out, G, V);
                             }
+
+
+                      if (C._PrimaryKey == false) // only non pk columns can be changed.
+                        {
+                          if (C._Type == ColumnType.DATETIME && C._TypeSep == null)
+                            {
+                              Out.println();
+                              DG.docField(Out, G, C, "NOW setter");
+                              CG.genMethodSetDateTimeNow(Out, G, C);
+                              Out.println();
+                              DG.docField(Out, G, C, "UNDEFINED setter");
+                              CG.genMethodSetDateTimeUndefined(Out, G, C);
+                              Out.println();
+                              DG.docField(Out, G, C, "explicit setter %%CALENDAR_SETTER%%");
+                              CG.genMethodSetDateTimeExplicit(Out, G, C);
+                            }
+
+                          Out.println();
+                          DG.docField(Out, G, C, "hasChanged");
+                          CG.genMethodHasChanged(Out, G, C);
                         }
                     }
                 }
@@ -386,11 +383,6 @@ public class Generator
                 DG.docMethodLookupByUniqueIndex(Out, G, I);
                 CG.genMethodLookupByUniqueIndex(Out, G, I, ++LookupId);
               }
-
-        Out.println();
-        Out.println();
-        DG.MustNotBeModified(Out, G);
-
         if (O._Indices != null)
           for (Index I : O._Indices)
             if (I != null && I._Unique == false)
@@ -402,11 +394,19 @@ public class Generator
 
         if (O._Queries != null)
           for (SubWhereClause Q : O._Queries)
-            if (Q != null)
+            if (Q != null && Q._Unique == true)
               {
                 Out.println();
-                DG.docMethodLookupWithQuery(Out, G, Q);
-                CG.genMethodLookupWithQuery(Out, G, Q, ++LookupId);
+                DG.docMethodLookupByUniqueQuery(Out, G, Q);
+                CG.genMethodLookupByUniqueQuery(Out, G, Q, ++LookupId);
+              }
+        if (O._Queries != null)
+          for (SubWhereClause Q : O._Queries)
+            if (Q != null && Q._Unique == false)
+              {
+                Out.println();
+                DG.docMethodLookupWhereQuery(Out, G, Q);
+                CG.genMethodLookupWhereQuery(Out, G, Q, ++LookupId);
               }
 
         if (O._ForeignKeys != null)

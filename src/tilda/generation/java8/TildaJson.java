@@ -138,7 +138,7 @@ public class TildaJson implements CodeGenTildaJson
                 }
             }
         Out.println();
-        Out.print("      " + Helper.getFullAppDataClassName(O) + " Obj = " + Helper.getFullBaseClassName(O) + "_Factory.Create(");
+        Out.print("      " + Helper.getFullAppDataClassName(O) + " Obj = " + Helper.getFullAppFactoryClassName(O) + ".Create(");
         boolean First = true;
         for (Column C : CreateColumns)
           if (C != null && (C._PrimaryKey == false || O._PrimaryKey._Autogen == false))
@@ -185,7 +185,7 @@ public class TildaJson implements CodeGenTildaJson
                 }
             if (FirstGoodIndex != null)
               {
-                Out.print("         Obj = " + Helper.getFullBaseClassName(O) + "_Factory.LookupBy" + FirstGoodIndex._Name + "(");
+                Out.print("         Obj = " + Helper.getFullAppFactoryClassName(O) + ".LookupBy" + FirstGoodIndex._Name + "(");
                 First = true;
                 for (Column C : FirstGoodIndex._ColumnObjs)
                   if (C != null)
@@ -203,7 +203,7 @@ public class TildaJson implements CodeGenTildaJson
           }
         if (Cols == null && O._PrimaryKey != null && O._PrimaryKey._Autogen == false)
           {
-            Out.print("         Obj = " + Helper.getFullBaseClassName(O) + "_Factory.LookupByPrimaryKey(");
+            Out.print("         Obj = " + Helper.getFullAppFactoryClassName(O) + ".LookupByPrimaryKey(");
             First = true;
             for (Column C : O._PrimaryKey._ColumnObjs)
               if (C != null)
@@ -280,9 +280,10 @@ public class TildaJson implements CodeGenTildaJson
         Out.println("        }");
         Out.println("    }");
         Out.println();
-        Out.println("   public static void toJSON" + J._Name + "(Writer Out, "+Helper.getFullBaseClassName(J._ParentObject)+" Obj, boolean FullObject) throws IOException");
+        Out.println("   public static void toJSON" + J._Name + "(Writer Out, "+Helper.getFullAppDataClassName(J._ParentObject)+" ObjApp, boolean FullObject) throws IOException");
         Out.println("    {");
         Out.println("      long T0 = System.nanoTime();");
+        Out.println("      "+Helper.getFullBaseClassName(J._ParentObject)+" Obj = ("+Helper.getFullBaseClassName(J._ParentObject)+") ObjApp;");
         Out.println("      if (FullObject == true) Out.write(\"{\");");
         Out.println();
         boolean First = true;
@@ -300,7 +301,7 @@ public class TildaJson implements CodeGenTildaJson
         if (J._ParentObject.isOCC() == true && J._Sync == true)
           {
             Out.println();
-            Out.println("   public static boolean toJSON" + J._Name + "(Writer Out, "+Helper.getFullBaseClassName(J._ParentObject)+" Data, String ElementName, String Lead, ZonedDateTime LastSync)");
+            Out.println("   public static boolean toJSON" + J._Name + "(Writer Out, "+Helper.getFullAppDataClassName(J._ParentObject)+" Data, String ElementName, String Lead, ZonedDateTime LastSync)");
             Out.println("   throws IOException");
             Out.println("    {");
             Out.println("      SyncStatus s = SyncStatus.get(LastSync, Data);");
@@ -336,7 +337,7 @@ public class TildaJson implements CodeGenTildaJson
             Out.println("      Lead = PaddingUtil.getPad(Lead.length());");
             Out.println("      String LeadFirst = Lead+\"      \";");
             Out.println("      String LeadNext  = Lead+\"    , \";");
-            Out.println("      for ("+Helper.getFullBaseClassName(J._ParentObject)+" Data : L)");
+            Out.println("      for ("+Helper.getFullAppDataClassName(J._ParentObject)+" Data : L)");
             Out.println("       {");
             Out.println("         if (toJSON" + J._Name + "(Out, Data, null, First == true ? LeadFirst : LeadNext, LastSync) == false)");
             Out.println("          continue;");

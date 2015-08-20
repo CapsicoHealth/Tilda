@@ -22,35 +22,23 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.enums.ColumnMode;
 import tilda.enums.TransactionType;
-import tilda.generation.interfaces.CodeGenSql;
 import tilda.migration.Migrator;
-import tilda.parsing.Parser;
-import tilda.parsing.ParserSession;
-import tilda.parsing.parts.Column;
-import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.performance.PerfTracker;
 import tilda.utils.CollectionUtil;
 import tilda.utils.FileUtil;
-import tilda.utils.LogUtil;
 import tilda.utils.TextUtil;
 
 import com.google.gson.Gson;

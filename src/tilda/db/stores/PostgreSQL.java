@@ -29,6 +29,7 @@ import tilda.generation.postgres9.PostgresType;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
+import tilda.parsing.parts.View;
 import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.utils.TextUtil;
 
@@ -125,6 +126,14 @@ public class PostgreSQL implements DBType
         return Con.ExecuteUpdate(Obj.getShortName(), Str.toString()) >= 0;
       }
 
+    @Override
+    public boolean createView(Connection Con, View V) throws Exception
+      {
+        StringWriter Str = new StringWriter();
+        PrintWriter Out = new PrintWriter(Str);
+        Generator.getFullViewDDL(getSQlCodeGen(), Out, V);
+        return Con.ExecuteUpdate(V.getShortName(), Str.toString()) >= 0;
+      }
 
     @Override
     public boolean alterTableAddColumn(Connection Con, Column Col, String DefaultValue) throws Exception

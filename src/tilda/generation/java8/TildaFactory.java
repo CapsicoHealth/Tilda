@@ -157,9 +157,9 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("         {");
         Out.println("           if (__INITIALIZED == false)");
         Out.println("            {");
-        if (O._FST == FrameworkSourcedType.ENUMERATION || O._FST == FrameworkSourcedType.MAPPER) 
-         Out.println("              initMappings(C);");
-        Out.println("              "+Helper.getFullAppFactoryClassName(O)+".init(C);");
+        if (O._FST == FrameworkSourcedType.ENUMERATION || O._FST == FrameworkSourcedType.MAPPER)
+          Out.println("              initMappings(C);");
+        Out.println("              " + Helper.getFullAppFactoryClassName(O) + ".init(C);");
         Out.println("              __INITIALIZED = true;");
         Out.println("            }");
         Out.println("         }");
@@ -238,7 +238,10 @@ public class TildaFactory implements CodeGenTildaFactory
         for (Column C : CreateColumns)
           if (C != null && (C._PrimaryKey == false || O._PrimaryKey._Autogen == false))
             {
-              if (First == true) First = false; else Out.print(", ");
+              if (First == true)
+                First = false;
+              else
+                Out.print(", ");
               Out.print(JavaJDBCType.getFieldType(C) + " " + C.getName());
             }
         Out.println(") throws Exception");
@@ -251,7 +254,7 @@ public class TildaFactory implements CodeGenTildaFactory
             Out.println();
             Out.println("       // Auto PK");
             Column PK = O._PrimaryKey._ColumnObjs.get(0);
-            Out.println("       Obj.set" + TextUtil.CapitalizeFirstCharacter(PK.getName()) + "(tilda.db.KeysManager.getKey("+TextUtil.EscapeDoubleQuoteWithSlash(O.getShortName())+"));");
+            Out.println("       Obj.set" + TextUtil.CapitalizeFirstCharacter(PK.getName()) + "(tilda.db.KeysManager.getKey(" + TextUtil.EscapeDoubleQuoteWithSlash(O.getShortName()) + "));");
           }
         if (CreateColumns != null && CreateColumns.isEmpty() == false)
           {
@@ -286,7 +289,10 @@ public class TildaFactory implements CodeGenTildaFactory
         for (Column C : PK._ColumnObjs)
           if (C != null)
             {
-              if (First == true) First = false; else Out.print(", ");
+              if (First == true)
+                First = false;
+              else
+                Out.print(", ");
               Out.print(JavaJDBCType.getFieldType(C) + " " + C.getName());
             }
         Out.println(") throws Exception");
@@ -298,7 +304,10 @@ public class TildaFactory implements CodeGenTildaFactory
           if (C != null)
             {
               String Pad = C._ParentObject.getColumnPad(C.getName());
-              Out.println("       Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(" + C.getName() + Pad + "); Obj.__Saved_" + C.getName() + Pad + " = Obj._" + C.getName() + Pad + ";");
+              Out.print("       Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(" + C.getName() + Pad + "); ");
+              if (PK._ParentObject.getLifecycle() != ObjectLifecycle.READONLY)
+               Out.print("Obj.__Saved_" + C.getName() + Pad + " = Obj._" + C.getName() + Pad + ";");
+              Out.println();
             }
         Out.println();
         Out.println("       return (" + Helper.getFullAppDataClassName(PK._ParentObject) + ") Obj;");
@@ -308,12 +317,18 @@ public class TildaFactory implements CodeGenTildaFactory
     @Override
     public void genMethodLookupByUniqueIndex(PrintWriter Out, GeneratorSession G, Index I, long LookupId)
       {
+        if (I._Unique == false)
+          throw new Error("ERROR: called genMethodLookupByUniqueIndex with a non-Unique Index");
+        
         Out.print("   static public " + Helper.getFullAppDataClassName(I._ParentObject) + " LookupBy" + I._Name + "(");
         boolean First = true;
         for (Column C : I._ColumnObjs)
           if (C != null)
             {
-              if (First == true) First = false; else Out.print(", ");
+              if (First == true)
+                First = false;
+              else
+                Out.print(", ");
               Out.print(JavaJDBCType.getFieldType(C) + " " + C.getName());
             }
         Out.println(") throws Exception");
@@ -325,7 +340,10 @@ public class TildaFactory implements CodeGenTildaFactory
           if (C != null)
             {
               String Pad = C._ParentObject.getColumnPad(C.getName());
-              Out.println("       Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(" + C.getName() + Pad + "); Obj.__Saved_" + C.getName() + Pad + " = Obj._" + C.getName() + Pad + ";");
+              Out.print("       Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(" + C.getName() + Pad + "); ");
+              if (I._ParentObject.getLifecycle() != ObjectLifecycle.READONLY)
+               Out.print("Obj.__Saved_" + C.getName() + Pad + " = Obj._" + C.getName() + Pad + ";");
+              Out.println();
             }
         Out.println();
         Out.println("       return (" + Helper.getFullAppDataClassName(I._ParentObject) + ") Obj;");
@@ -335,6 +353,9 @@ public class TildaFactory implements CodeGenTildaFactory
     @Override
     public void genMethodLookupWhereIndex(PrintWriter Out, GeneratorSession G, Index I, int LookupId)
       {
+        if (I._Unique == true)
+          throw new Error("ERROR: called genMethodLookupWhereIndex with a Unique Index");
+
         String MethodName = "LookupWhere" + I._Name;
         Out.print("   static public ListResults<" + Helper.getFullAppDataClassName(I._ParentObject) + "> " + MethodName + "(Connection C");
         for (Column C : I._ColumnObjs)
@@ -368,7 +389,7 @@ public class TildaFactory implements CodeGenTildaFactory
             boolean First = true;
             for (int i = 0; i < q._ColumnObjs.size(); ++i)
               {
-//                Column c = q._ColumnObjs.get(i);
+                // Column c = q._ColumnObjs.get(i);
                 String v = q._VarNames.get(i);
                 if (First == true)
                   First = false;
@@ -386,12 +407,16 @@ public class TildaFactory implements CodeGenTildaFactory
           Helper.MakeParamStaticClass(Out, q._ColumnObjs, q._VarNames, MethodName);
       }
 
-    
+
     @Override
-    public void genMethodLookupWithQuery(PrintWriter Out, GeneratorSession G, SubWhereClause SWC, int LookupId)
+    public void genMethodLookupWhereQuery(PrintWriter Out, GeneratorSession G, SubWhereClause SWC, int LookupId)
       {
-        String MethodName = "LookupWith" + SWC._Name;
-        Out.print("   static public ListResults<" + Helper.getFullAppDataClassName(SWC._ParentObject) + "> " + MethodName + "(Connection C");
+        if (SWC._Unique == true)
+          throw new Error("ERROR: called genMethodLookupWhereQuery with a Unique SubWhereclause");
+        
+        String MethodName = "LookupWhere" + SWC._Name;
+        Out.print("   static public ListResults<" + Helper.getFullAppDataClassName(SWC._ParentObject) + "> " + MethodName
+            + "(Connection C");
         for (int i = 0; i < SWC._ColumnObjs.size(); ++i)
           {
             Column c = SWC._ColumnObjs.get(i);
@@ -403,24 +428,67 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("       " + Helper.getFullBaseClassName(SWC._ParentObject) + " Obj = new " + Helper.getFullAppDataClassName(SWC._ParentObject) + "();");
         Out.println("       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);");
         Out.println();
-        Out.print("       " + MethodName + "Params P = new " + MethodName + "Params(");
-        boolean First = true;
-        for (int i = 0; i < SWC._ColumnObjs.size(); ++i)
+        if (SWC._ColumnObjs.isEmpty() == false)
           {
-            // Column c = q._ColumnObjs.get(i);
-            String v = SWC._VarNames.get(i);
-            if (First == true)
-              First = false;
-            else
-              Out.print(", ");
-            Out.print(v);
+            Out.print("       " + MethodName + "Params P = new " + MethodName + "Params(");
+            boolean First = true;
+            for (int i = 0; i < SWC._ColumnObjs.size(); ++i)
+              {
+                // Column c = q._ColumnObjs.get(i);
+                String v = SWC._VarNames.get(i);
+                if (First == true)
+                  First = false;
+                else
+                  Out.print(", ");
+                Out.print(v);
+              }
+            Out.println(");");
           }
-        Out.println(");");
         Out.println();
-        Out.println("       return ReadMany(C, " + LookupId + ", Obj, P, Start, Size);");
+        Out.println("       return ReadMany(C, " + LookupId + ", Obj, " + (SWC._ColumnObjs.isEmpty() == false ? "P" : "null") + ", Start, Size);");
         Out.println("     }");
         Out.println();
-        Helper.MakeParamStaticClass(Out, SWC._ColumnObjs, SWC._VarNames, MethodName);
+        if (SWC._ColumnObjs.isEmpty() == false)
+          Helper.MakeParamStaticClass(Out, SWC._ColumnObjs, SWC._VarNames, MethodName);
+      }
+
+
+    @Override
+    public void genMethodLookupByUniqueQuery(PrintWriter Out, GeneratorSession G, SubWhereClause SWC, int LookupId)
+      {
+        if (SWC._Unique == false)
+          throw new Error("ERROR: called genMethodLookupByUniqueQuery with a non-Unique SubWhereclause");
+        
+        String MethodName = "LookupBy" + SWC._Name;
+        Out.print("   static public " + Helper.getFullAppDataClassName(SWC._ParentObject) + " " + MethodName + "(");
+        boolean First = true;
+        for (Column C : SWC._ColumnObjs)
+          if (C != null)
+            {
+              if (First == true)
+                First = false;
+              else
+                Out.print(", ");
+              Out.print(JavaJDBCType.getFieldType(C) + " " + C.getName());
+            }
+        Out.println(") throws Exception");
+        Out.println("     {");
+        Out.println("       " + Helper.getFullBaseClassName(SWC._ParentObject) + " Obj = new " + Helper.getFullAppDataClassName(SWC._ParentObject) + "();");
+        Out.println("       Obj.initForLookup(" + LookupId + ");");
+        Out.println();
+        for (Column C : SWC._ColumnObjs)
+          if (C != null)
+            {
+              String Pad = C._ParentObject.getColumnPad(C.getName());
+              Out.print("       Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(" + C.getName() + Pad + "); ");
+              if (SWC._ParentObject.getLifecycle() != ObjectLifecycle.READONLY)
+               Out.print("Obj.__Saved_" + C.getName() + Pad + " = Obj._" + C.getName() + Pad + ";");
+              Out.println();
+            }
+        Out.println();
+        Out.println("       return (" + Helper.getFullAppDataClassName(SWC._ParentObject) + ") Obj;");
+        Out.println("     }");
+        Out.println();
       }
 
     @Override
@@ -432,162 +500,184 @@ public class TildaFactory implements CodeGenTildaFactory
     @Override
     public void genQueryHelper(PrintWriter Out, GeneratorSession G, Object O)
       {
-        Out.println("   public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C   , "+O.getBaseClassName()+"_Factory.TABLENAME); }");
-        Out.println("   public static SelectQuery newWhereQuery (            ) throws Exception { return new SelectQuery(null, "+O.getBaseClassName()+"_Factory.TABLENAME); }");
+        Out.println("   public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C   , " + O.getBaseClassName() + "_Factory.TABLENAME); }");
+        Out.println("   public static SelectQuery newWhereQuery (            ) throws Exception { return new SelectQuery(null, " + O.getBaseClassName() + "_Factory.TABLENAME); }");
         Out.println("   public static ListResults<" + Helper.getFullAppDataClassName(O) + "> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception");
-        Out.println("     {"); 
-        Out.println("       return ReadMany(C, -7, null, Q, Start, Size);"); 
+        Out.println("     {");
+        Out.println("       return ReadMany(C, -7, null, Q, Start, Size);");
         Out.println("     }");
         if (O._LC == ObjectLifecycle.NORMAL)
           {
-            Out.println("   public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, "+O.getBaseClassName()+"_Factory.TABLENAME); }");
-            Out.println("   public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, "+O.getBaseClassName()+"_Factory.TABLENAME); }");
+            Out.println("   public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, " + O.getBaseClassName() + "_Factory.TABLENAME); }");
+            Out.println("   public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, " + O.getBaseClassName() + "_Factory.TABLENAME); }");
           }
         Out.println();
       }
 
-    
+
     @Override
     public void genMappingSupport(PrintWriter Out, GeneratorSession G, Object O)
       {
         StringBuilder FuncParams = new StringBuilder();
         boolean First = true;
         for (Column C : O._PrimaryKey._ColumnObjs)
-         if (C != null)
-           {
-             if (First == true) First = false; else FuncParams.append(", ");
-             FuncParams.append(JavaJDBCType.getFieldType(C)).append(" ").append(C.getName());
-           }
-        
+          if (C != null)
+            {
+              if (First == true)
+                First = false;
+              else
+                FuncParams.append(", ");
+              FuncParams.append(JavaJDBCType.getFieldType(C)).append(" ").append(C.getName());
+            }
+
         StringBuilder CallParams = new StringBuilder();
         First = true;
         for (Column C : O._PrimaryKey._ColumnObjs)
-         if (C != null)
-           {
-             if (First == true) First = false; else CallParams.append(", ");
-             CallParams.append(C.getName());
-           }
-        
-        
-        Out.println("   protected static Map<String, "+Helper.getFullAppDataClassName(O)+"> __MAPPINGS = new HashMap<String, "+Helper.getFullAppDataClassName(O)+">();");
+          if (C != null)
+            {
+              if (First == true)
+                First = false;
+              else
+                CallParams.append(", ");
+              CallParams.append(C.getName());
+            }
+
+
+        Out.println("   protected static Map<String, " + Helper.getFullAppDataClassName(O) + "> __MAPPINGS = new HashMap<String, " + Helper.getFullAppDataClassName(O) + ">();");
         Out.println("   public static void initMappings(Connection C) throws Exception");
         Out.println("     {");
         Out.println("       __MAPPINGS.clear();");
-        Out.println("       ListResults<"+Helper.getFullAppDataClassName(O)+"> L = LookupWhereAll(C, 0, -1);");
-        Out.println("       for ("+Helper.getFullAppDataClassName(O)+" obj : L)");
+        Out.println("       ListResults<" + Helper.getFullAppDataClassName(O) + "> L = LookupWhereAll(C, 0, -1);");
+        Out.println("       for (" + Helper.getFullAppDataClassName(O) + " obj : L)");
         Out.println("        {");
         if (O.getColumn("group") != null)
           {
-            Out.println("          if (TextUtil.FindElement("+Helper.getFullAppDataClassName(O)+"._group_Values, obj.getGroup(), 0, true, 0) == -1)");
-            Out.println("           throw new Exception(\"Could not validate against the model. Invalid group value in object \"+obj+\". Allowed values are: \"+TextUtil.Print("+Helper.getFullAppDataClassName(O)+"._group_Values, 0)+\".\");");
+            Out.println("          if (TextUtil.FindElement(" + Helper.getFullAppDataClassName(O) + "._group_Values, obj.getGroup(), 0, true, 0) == -1)");
+            Out.println("           throw new Exception(\"Could not validate against the model. Invalid group value in object \"+obj+\". Allowed values are: \"+TextUtil.Print(" + Helper.getFullAppDataClassName(O)
+                + "._group_Values, 0)+\".\");");
           }
         Out.print("          __MAPPINGS.put(");
         First = true;
         for (Column C : O._PrimaryKey._ColumnObjs)
-         if (C != null)
-           {
-             if (First == true) First = false; else Out.print(" + \"``\" + ");
-             Out.print("obj.get"+TextUtil.CapitalizeFirstCharacter(C.getName())+"()");
-           }
+          if (C != null)
+            {
+              if (First == true)
+                First = false;
+              else
+                Out.print(" + \"``\" + ");
+              Out.print("obj.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()");
+            }
         Out.println(", obj);");
         Out.println("        }");
         Out.println("     }");
 
-        Out.println("   private static "+Helper.getFullAppDataClassName(O)+" getMapping("+FuncParams+")");
+        Out.println("   private static " + Helper.getFullAppDataClassName(O) + " getMapping(" + FuncParams + ")");
         Out.println("     {");
-        Out.print  ("       "+Helper.getFullAppDataClassName(O)+" Obj = __MAPPINGS.get(");
+        Out.print("       " + Helper.getFullAppDataClassName(O) + " Obj = __MAPPINGS.get(");
         First = true;
         for (Column C : O._PrimaryKey._ColumnObjs)
-         if (C != null)
-           {
-             if (First == true) First = false; else Out.print(" + \"``\" + ");
-             Out.print(C.getName());
-           }
+          if (C != null)
+            {
+              if (First == true)
+                First = false;
+              else
+                Out.print(" + \"``\" + ");
+              Out.print(C.getName());
+            }
         Out.println(");");
-        
-        for (int i = O._PrimaryKey._ColumnObjs.size()-2; i >= 0; --i)
+
+        for (int i = O._PrimaryKey._ColumnObjs.size() - 2; i >= 0; --i)
           {
             Out.println("       if (Obj == null)");
-            Out.print  ("        Obj = __MAPPINGS.get(");
+            Out.print("        Obj = __MAPPINGS.get(");
             First = true;
             int count = 0;
             for (Column C : O._PrimaryKey._ColumnObjs)
-             if (C != null)
-               {
-                 if (First == true) First = false; else Out.print(" + \"``\" + ");
-                 Out.print(count >= i && count != O._PrimaryKey._ColumnObjs.size()-1 ? "\"*\"" : C.getName());
-                 ++count;
-               }
+              if (C != null)
+                {
+                  if (First == true)
+                    First = false;
+                  else
+                    Out.print(" + \"``\" + ");
+                  Out.print(count >= i && count != O._PrimaryKey._ColumnObjs.size() - 1 ? "\"*\"" : C.getName());
+                  ++count;
+                }
             Out.println(");");
           }
         Out.println("       return Obj;");
         Out.println("     }");
 
         if (O.getColumn("name") != null)
-         {
-           Out.println("   public static String getMappedName("+FuncParams+")");
-           Out.println("     {");
-           Out.println("       "+Helper.getFullAppDataClassName(O)+" Obj = getMapping("+CallParams+");");
-           Out.println("       return Obj == null ? "+O._PrimaryKey._ColumnObjs.get(O._PrimaryKey._ColumnObjs.size()-1).getName()+" : Obj.getName();");
-           Out.println("     }");
-         }
+          {
+            Out.println("   public static String getMappedName(" + FuncParams + ")");
+            Out.println("     {");
+            Out.println("       " + Helper.getFullAppDataClassName(O) + " Obj = getMapping(" + CallParams + ");");
+            Out.println("       return Obj == null ? " + O._PrimaryKey._ColumnObjs.get(O._PrimaryKey._ColumnObjs.size() - 1).getName() + " : Obj.getName();");
+            Out.println("     }");
+          }
         if (O.getColumn("group") != null)
           {
-            Out.println("   public static String getMappedGroup("+FuncParams+")");
+            Out.println("   public static String getMappedGroup(" + FuncParams + ")");
             Out.println("     {");
-            Out.println("       "+Helper.getFullAppDataClassName(O)+" Obj = getMapping("+CallParams+");");
-            Out.println("       return Obj == null ? "+O._PrimaryKey._ColumnObjs.get(O._PrimaryKey._ColumnObjs.size()-1).getName()+" : Obj.getGroup();");
+            Out.println("       " + Helper.getFullAppDataClassName(O) + " Obj = getMapping(" + CallParams + ");");
+            Out.println("       return Obj == null ? " + O._PrimaryKey._ColumnObjs.get(O._PrimaryKey._ColumnObjs.size() - 1).getName() + " : Obj.getGroup();");
             Out.println("     }");
           }
       }
-    
+
     @Override
     public void genEnumerationSupport(PrintWriter Out, GeneratorSession G, Object O)
       {
         StringBuilder FuncParams = new StringBuilder();
         boolean First = true;
         for (Column C : O._PrimaryKey._ColumnObjs)
-         if (C != null)
-           {
-             if (First == true) First = false; else FuncParams.append(", ");
-             FuncParams.append(JavaJDBCType.getFieldType(C)).append(" ").append(C.getName());
-           }
-        
+          if (C != null)
+            {
+              if (First == true)
+                First = false;
+              else
+                FuncParams.append(", ");
+              FuncParams.append(JavaJDBCType.getFieldType(C)).append(" ").append(C.getName());
+            }
+
         StringBuilder CallParams = new StringBuilder();
         First = true;
         for (Column C : O._PrimaryKey._ColumnObjs)
-         if (C != null)
-           {
-             if (First == true) First = false; else CallParams.append(", ");
-             CallParams.append(C.getName());
-           }
-        
-        
-        Out.println("   protected static Map<String, "+Helper.getFullAppDataClassName(O)+"> __ENUMERATIONS_BY_ID    = new HashMap<String, "+Helper.getFullAppDataClassName(O)+">();");
-        Out.println("   protected static Map<String, "+Helper.getFullAppDataClassName(O)+"> __ENUMERATIONS_BY_VALUE = new HashMap<String, "+Helper.getFullAppDataClassName(O)+">();");
+          if (C != null)
+            {
+              if (First == true)
+                First = false;
+              else
+                CallParams.append(", ");
+              CallParams.append(C.getName());
+            }
+
+
+        Out.println("   protected static Map<String, " + Helper.getFullAppDataClassName(O) + "> __ENUMERATIONS_BY_ID    = new HashMap<String, " + Helper.getFullAppDataClassName(O) + ">();");
+        Out.println("   protected static Map<String, " + Helper.getFullAppDataClassName(O) + "> __ENUMERATIONS_BY_VALUE = new HashMap<String, " + Helper.getFullAppDataClassName(O) + ">();");
         Out.println("   public static void initMappings(Connection C) throws Exception");
         Out.println("     {");
         Out.println("       __ENUMERATIONS_BY_ID   .clear();");
         Out.println("       __ENUMERATIONS_BY_VALUE.clear();");
-        Out.println("       ListResults<"+Helper.getFullAppDataClassName(O)+"> L = LookupWhereAll(C, 0, -1);");
-        Out.println("       for ("+Helper.getFullAppDataClassName(O)+" obj : L)");
+        Out.println("       ListResults<" + Helper.getFullAppDataClassName(O) + "> L = LookupWhereAll(C, 0, -1);");
+        Out.println("       for (" + Helper.getFullAppDataClassName(O) + " obj : L)");
         Out.println("        {");
         Out.println("          __ENUMERATIONS_BY_ID   .put(obj.getId   (), obj);");
         Out.println("          __ENUMERATIONS_BY_VALUE.put(obj.getValue(), obj);");
         Out.println("        }");
         Out.println("     }");
         Out.println();
-        Out.println("   public static "+Helper.getFullAppDataClassName(O)+" getEnumerationById(String Id)");
+        Out.println("   public static " + Helper.getFullAppDataClassName(O) + " getEnumerationById(String Id)");
         Out.println("     {");
         Out.println("       return Id == null ? null : __ENUMERATIONS_BY_ID.get(Id);");
         Out.println("     }");
         Out.println();
-        Out.println("   public static "+Helper.getFullAppDataClassName(O)+" getEnumerationByValue(String Value)");
+        Out.println("   public static " + Helper.getFullAppDataClassName(O) + " getEnumerationByValue(String Value)");
         Out.println("     {");
         Out.println("       return Value == null ? null : __ENUMERATIONS_BY_VALUE.get(Value);");
         Out.println("     }");
       }
-    
+
     @Override
     public void genClassEnd(PrintWriter Out, GeneratorSession G)
       throws Exception
