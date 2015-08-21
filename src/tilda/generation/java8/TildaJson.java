@@ -120,7 +120,7 @@ public class TildaJson implements CodeGenTildaJson
                     Out.println("      if (_" + C.getName() + Pad + " == null || _" + C.getName() + Pad + ".isEmpty() == true)");
                   else
                     Out.println("      if (_" + C.getName() + Pad + " == null)");
-                  Out.println("       throw new Exception(\"Incoming value for '" + C.getFullName()+ "' was null. It's not nullable in the model.\\n\"+toString());");
+                  Out.println("       throw new Exception(\"Incoming value for '" + C.getFullName()+ "' was null or empty. It's not nullable in the model.\\n\"+toString());");
                 }
               if (C._Type == ColumnType.DATETIME)
                 {
