@@ -197,7 +197,6 @@ public class Sql extends PostgreSQL implements CodeGenSql
               Object T = C._SameAsObj._ParentObject;
               if (Names.add(T.getFullName()) == true)
                {
-                 Out.print("     left join "+T.getShortName()+" on ");
                  Object FoundFK = null;
                  for (Object Obj : Objects)
                   if (CheckFK(Out, Obj, T) == true)
@@ -208,7 +207,6 @@ public class Sql extends PostgreSQL implements CodeGenSql
                    }
                  if (FoundFK == null)
                   throw new Error("Cannot find a FK relationship between "+T.getFullName()+" and "+ObjectMain.getFullName()+".");
-                 Out.println();
                  Objects.add(T);
                }
             }
@@ -227,12 +225,14 @@ public class Sql extends PostgreSQL implements CodeGenSql
          for (ForeignKey FK : Obj2._ForeignKeys)
           if (FK._DestObjectObj == Obj1)
             {
+              Out.print("     left join "+Obj2.getShortName()+" on ");
               for (int i = 0; i < FK._SrcColumnObjs.size(); ++i)
                 {
                   if (i != 0)
                    Out.print(" AND ");
                   Out.print(getFullColumnVar(FK._SrcColumnObjs.get(i))+"="+getFullColumnVar(Obj1._PrimaryKey._ColumnObjs.get(i)));
                 }
+              Out.println();
               Found = true;
               break;
             }
@@ -241,12 +241,14 @@ public class Sql extends PostgreSQL implements CodeGenSql
              for (ForeignKey FK : Obj1._ForeignKeys)
                if (FK._DestObjectObj == Obj2)
                  {
+                   Out.print("     inner join "+Obj2.getShortName()+" on ");
                    for (int i = 0; i < FK._SrcColumnObjs.size(); ++i)
                      {
                        if (i != 0)
                          Out.print(" AND ");
                         Out.print(getFullColumnVar(FK._SrcColumnObjs.get(i))+"="+getFullColumnVar(Obj2._PrimaryKey._ColumnObjs.get(i)));
                      }
+                   Out.println();
                    Found = true;
                    break;
                  }
