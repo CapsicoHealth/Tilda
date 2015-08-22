@@ -127,7 +127,7 @@ public class TildaFactory implements CodeGenTildaFactory
 //              String ColVarShort = TextUtil.EscapeDoubleQuoteWithSlash(G.getSql().getShortColumnVar(C), "", false);
 //              String ColVarOthers = TextUtil.EscapeDoubleQuoteWithSlash(G.getSql().getShortColumnVar(C), "", false);
               String ColumnTypeClassName = "Type_"+TextUtil.NormalCapitalization(C._Type.name())+(C.isCollection()?"Collection":"Single")+(C._Nullable==true?"Null":"NotNull");
-              Out.println("     public static "+ColumnTypeClassName+TypePad+" " + C.getName().toUpperCase() + ColumnPad + "= new "+ColumnTypeClassName+TypePad+"(\"" + C._ParentObject.getShortName() + "\", \"" + C.getShortName() + "\"" + ColumnPad + ", " + (++Counter) +");");
+              Out.println("     public static "+ColumnTypeClassName+TypePad+" " + C.getName().toUpperCase() + ColumnPad + "= new "+ColumnTypeClassName+TypePad+"(\"" + C._ParentObject.getShortName() + "\", \"" + C.getBaseName() + "\"" + ColumnPad + ", " + (++Counter) +");");
             }
         Out.println(";");
         Out.println("   }");
