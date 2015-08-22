@@ -75,11 +75,6 @@ public class Generator
         for (Object O : S._Objects)
           if (O != null)
             {
-              if (O._Name.equalsIgnoreCase("PersonView") == true)
-                {
-                  int i = 0;
-                  ++i;
-                }
               genTildaData(G, GenFolder, O);
               genTildaFactory(G, GenFolder, O);
               genTildaJson(G, GenFolder, O);

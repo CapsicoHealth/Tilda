@@ -14,11 +14,15 @@
  * limitations under the License.
  */
 
-package tilda.enums;
+package tilda.types;
 
-public interface ColumnDefinition
+import tilda.enums.ColumnType;
+
+public class Type_DoubleCollectionNull extends ColumnDefinition
   {
-    public String     toString(StatementType ST);
-    public ColumnType getType ();
-    public String     getTableName();
+    public Type_DoubleCollectionNull(String TableName, String ColumnName, long Count)
+      {
+        super(TableName, ColumnName, Count, ColumnType.DOUBLE, true, true);
+      }
+    
   }

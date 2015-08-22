@@ -16,6 +16,8 @@
 
 package tilda.enums;
 
+import tilda.utils.PaddingTracker;
+
 public enum ColumnType
   {
 
@@ -38,8 +40,15 @@ public enum ColumnType
         _Primitive = Primitive;
       }
 
+    public static  PaddingTracker  _PadderTypeNames = new PaddingTracker();
     public boolean _ArrayCompatible;
     public boolean _Primitive;
+    
+    static
+      {
+        for (ColumnType T : ColumnType.values())
+         _PadderTypeNames.track(T.name());
+      }
 
     public static ColumnType parse(String Str)
       {
@@ -73,5 +82,9 @@ public enum ColumnType
                +Enums[0].getClass().getName()+"."+Enums[i].toString()+".");
       }
 
-
+    public String getPad()
+     {
+       return _PadderTypeNames.getPad(name());
+     }
+    
   }

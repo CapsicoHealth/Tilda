@@ -20,7 +20,7 @@ import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.Iterator;
 
-import tilda.enums.ColumnDefinition;
+import tilda.types.ColumnDefinition;
 import tilda.enums.StatementType;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.TextUtil;

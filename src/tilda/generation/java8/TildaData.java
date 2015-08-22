@@ -1082,7 +1082,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("     return AfterRead(C);");
         Out.println("   }");
         Out.println();
-        Out.println("  private final ZonedDateTime ProcessZDT(String TimezoneId, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, "+O._BaseClassName+"_Factory.COLS DTField, "+O._BaseClassName+"_Factory.COLS TZField)");
+        Out.println("  private final ZonedDateTime ProcessZDT(String TimezoneId, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)");
         Out.println("  throws Exception");
         Out.println("   {");
         Out.println("     tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);");
