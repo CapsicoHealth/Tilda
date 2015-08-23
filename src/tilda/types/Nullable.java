@@ -16,13 +16,9 @@
 
 package tilda.types;
 
-import tilda.enums.ColumnType;
+import tilda.enums.StatementType;
 
-public class Type_BooleanSingleNotNull extends ColumnDefinition
+public interface Nullable
   {
-    public Type_BooleanSingleNotNull(String TableName, String ColumnName, long Count)
-      {
-        super(TableName, ColumnName, Count, ColumnType.BOOLEAN, false, false);
-      }
-    
+    public String toString(StatementType ST);
   }

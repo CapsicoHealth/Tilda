@@ -16,13 +16,12 @@
 
 package tilda.types;
 
-import tilda.enums.ColumnType;
 
-public class Type_LongCollectionNull extends ColumnDefinition
+public class Type_LongCollectionNull extends Type_LongCollection implements Nullable
   {
     public Type_LongCollectionNull(String TableName, String ColumnName, long Count)
       {
-        super(TableName, ColumnName, Count, ColumnType.LONG, true, true);
+        super(TableName, ColumnName, Count);
       }
     
   }

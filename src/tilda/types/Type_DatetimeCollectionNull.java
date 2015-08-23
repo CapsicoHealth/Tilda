@@ -18,11 +18,11 @@ package tilda.types;
 
 import tilda.enums.ColumnType;
 
-public class Type_DatetimeCollectionNull extends ColumnDefinition
+public class Type_DatetimeCollectionNull extends Type_DatetimeCollection implements Nullable
   {
     public Type_DatetimeCollectionNull(String TableName, String ColumnName, long Count)
       {
-        super(TableName, ColumnName, Count, ColumnType.DATETIME, true, true);
+        super(TableName, ColumnName, Count);
       }
     
   }

@@ -18,11 +18,11 @@ package tilda.types;
 
 import tilda.enums.ColumnType;
 
-public class Type_BooleanCollectionNotNull extends ColumnDefinition
+public class Type_LongCollection extends ColumnDefinition
   {
-    public Type_BooleanCollectionNotNull(String TableName, String ColumnName, long Count)
+    public Type_LongCollection(String TableName, String ColumnName, long Count)
       {
-        super(TableName, ColumnName, Count, ColumnType.BOOLEAN, true, false);
+        super(TableName, ColumnName, Count, ColumnType.LONG, true);
       }
     
   }

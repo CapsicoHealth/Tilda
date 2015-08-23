@@ -16,13 +16,12 @@
 
 package tilda.types;
 
-import tilda.enums.ColumnType;
 
-public class Type_BitfieldSingleNull extends ColumnDefinition
+public class Type_CharPrimitiveNull extends Type_CharPrimitive implements Nullable
   {
-    public Type_BitfieldSingleNull(String TableName, String ColumnName, long Count)
+    public Type_CharPrimitiveNull(String TableName, String ColumnName, long Count)
       {
-        super(TableName, ColumnName, Count, ColumnType.BITFIELD, false, true);
+        super(TableName, ColumnName, Count);
       }
     
   }

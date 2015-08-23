@@ -16,13 +16,11 @@
 
 package tilda.types;
 
-import tilda.enums.ColumnType;
-
-public class Type_BinaryCollectionNull extends ColumnDefinition
+public class Type_BinaryCollectionNull extends Type_BinaryCollection implements Nullable
   {
     public Type_BinaryCollectionNull(String TableName, String ColumnName, long Count)
       {
-        super(TableName, ColumnName, Count, ColumnType.BINARY, true, true);
+        super(TableName, ColumnName, Count);
       }
     
   }

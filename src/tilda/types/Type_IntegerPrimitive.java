@@ -18,11 +18,11 @@ package tilda.types;
 
 import tilda.enums.ColumnType;
 
-public class Type_StringCollectionNotNull extends ColumnDefinition
+public class Type_IntegerPrimitive extends ColumnDefinition
   {
-    public Type_StringCollectionNotNull(String TableName, String ColumnName, long Count)
+    public Type_IntegerPrimitive(String TableName, String ColumnName, long Count)
       {
-        super(TableName, ColumnName, Count, ColumnType.STRING, true, false);
+        super(TableName, ColumnName, Count, ColumnType.INTEGER, false);
       }
     
   }

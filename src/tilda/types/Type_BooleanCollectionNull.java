@@ -16,13 +16,12 @@
 
 package tilda.types;
 
-import tilda.enums.ColumnType;
 
-public class Type_BooleanCollectionNull extends ColumnDefinition
+public class Type_BooleanCollectionNull extends Type_BooleanCollection implements Nullable
   {
     public Type_BooleanCollectionNull(String TableName, String ColumnName, long Count)
       {
-        super(TableName, ColumnName, Count, ColumnType.BOOLEAN, true, true);
+        super(TableName, ColumnName, Count);
       }
     
   }

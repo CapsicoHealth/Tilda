@@ -21,7 +21,7 @@ import tilda.enums.StatementType;
 
 public class ColumnDefinition
   {
-    public ColumnDefinition(String TableName, String ColumnName, long Count, ColumnType Type, boolean Collection, boolean Nullable)
+    public ColumnDefinition(String TableName, String ColumnName, long Count, ColumnType Type, boolean Collection)
       {
         _TableName  = TableName;
         _Short      = "\""+ColumnName+"\"";
@@ -30,7 +30,6 @@ public class ColumnDefinition
         _Update     = ", "+_Short+"=?";
         _Type       = Type;
         _Collection = Collection;
-        _Nullable   = Nullable;
         _Mask       = 1L << Count;
       }
 
@@ -43,7 +42,6 @@ public class ColumnDefinition
 
     public final ColumnType _Type;
     public final boolean    _Collection;
-    public final boolean    _Nullable;
     public final long       _Mask;
 
     public final String toString()

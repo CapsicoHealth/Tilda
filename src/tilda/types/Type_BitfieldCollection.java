@@ -18,11 +18,11 @@ package tilda.types;
 
 import tilda.enums.ColumnType;
 
-public class Type_BitfieldCollectionNotNull extends ColumnDefinition
+public class Type_BitfieldCollection extends ColumnDefinition
   {
-    public Type_BitfieldCollectionNotNull(String TableName, String ColumnName, long Count)
+    public Type_BitfieldCollection(String TableName, String ColumnName, long Count)
       {
-        super(TableName, ColumnName, Count, ColumnType.BITFIELD, true, false);
+        super(TableName, ColumnName, Count, ColumnType.BITFIELD, true);
       }
     
   }

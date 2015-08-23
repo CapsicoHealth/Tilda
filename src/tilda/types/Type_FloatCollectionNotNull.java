@@ -22,7 +22,7 @@ public class Type_FloatCollectionNotNull extends ColumnDefinition
   {
     public Type_FloatCollectionNotNull(String TableName, String ColumnName, long Count)
       {
-        super(TableName, ColumnName, Count, ColumnType.FLOAT, true, false);
+        super(TableName, ColumnName, Count, ColumnType.FLOAT, true);
       }
     
   }

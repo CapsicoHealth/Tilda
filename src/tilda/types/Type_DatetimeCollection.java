@@ -18,11 +18,11 @@ package tilda.types;
 
 import tilda.enums.ColumnType;
 
-public class Type_StringSingleNull extends ColumnDefinition
+public class Type_DatetimeCollection extends ColumnDefinition
   {
-    public Type_StringSingleNull(String TableName, String ColumnName, long Count)
+    public Type_DatetimeCollection(String TableName, String ColumnName, long Count)
       {
-        super(TableName, ColumnName, Count, ColumnType.STRING, false, true);
+        super(TableName, ColumnName, Count, ColumnType.DATETIME, true);
       }
     
   }

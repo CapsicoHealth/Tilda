@@ -16,13 +16,12 @@
 
 package tilda.types;
 
-import tilda.enums.ColumnType;
 
-public class Type_DoubleCollectionNotNull extends ColumnDefinition
+public class Type_BooleanPrimitiveNull extends Type_BooleanPrimitive implements Nullable
   {
-    public Type_DoubleCollectionNotNull(String TableName, String ColumnName, long Count)
+    public Type_BooleanPrimitiveNull(String TableName, String ColumnName, long Count)
       {
-        super(TableName, ColumnName, Count, ColumnType.DOUBLE, true, false);
+        super(TableName, ColumnName, Count);
       }
     
   }
