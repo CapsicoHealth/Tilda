@@ -14,11 +14,14 @@
  * limitations under the License.
  */
 
-package tilda.enums;
+package tilda.types;
 
-public interface ColumnDefinition
+
+public class Type_CharCollectionNull extends Type_CharCollection implements Nullable
   {
-    public String     toString(StatementType ST);
-    public ColumnType getType ();
-    public String     getTableName();
+    public Type_CharCollectionNull(String TableName, String ColumnName, long Count)
+      {
+        super(TableName, ColumnName, Count);
+      }
+    
   }

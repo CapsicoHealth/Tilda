@@ -1633,6 +1633,16 @@ public class TextUtil
         return Character.toUpperCase(Str.charAt(0))+Str.substring(1);
       }
 
+    public static final String NormalCapitalization(String Str)
+      {
+        if (isNullOrEmpty(Str) == true)
+          return null;
+        if (Str.length() == 1)
+         return ""+Character.toUpperCase(Str.charAt(0));
+        return Character.toUpperCase(Str.charAt(0))+Str.substring(1).toLowerCase();
+      }
+    
+    
     public static final void ListPrint(StringBuilder Str, String Sep, String Val)
       {
         if (isNullOrEmpty(Val) == false)

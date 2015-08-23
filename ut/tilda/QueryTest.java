@@ -50,16 +50,16 @@ public class QueryTest extends Key_Factory
 
               {
                 UpdateQuery Q = newUpdateQuery(C);
-                Q.set(COLS.MAX).equals(COLS.MAX).plus(COLS.COUNT).set(COLS.COUNT).equals(100)
-                    .where(COLS.REFNUM).equals(K.getRefnum()).and(COLS.NAME).equals("TOTO");
+                Q.set(COLS.MAX, COLS.MAX).plus(COLS.COUNT).set(COLS.COUNT, 100)
+                    .where().equals(COLS.REFNUM, K.getRefnum()).and().equals(COLS.NAME, "TOTO");
                 Q.execute();
               }
               {
                 SelectQuery Q = newSelectQuery(C);
-                Q.set(COLS.MAX).set(COLS.COUNT)
+                Q.set(COLS.MAX, COLS.COUNT)
                     .from(Testing_Factory.TABLENAME)
                     .from(Key_Factory.TABLENAME)
-                    .where(COLS.REFNUM).equals(K.getRefnum()).and(COLS.NAME).equals("TOTO");
+                    .where().equals(COLS.REFNUM, K.getRefnum()).and().equals(COLS.NAME, "TOTO");
                 Q.execute(new StringListRP(), 0, -1);
               }
 

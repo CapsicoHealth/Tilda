@@ -87,6 +87,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("import tilda.enums.StatementType;");
         Out.println("import tilda.enums.TransactionType;");
         Out.println("import tilda.performance.PerfTracker;");
+        Out.println("import tilda.types.*;");
         Out.println("import tilda.utils.CollectionUtil;");
         Out.println("import tilda.utils.DateTimeUtil;");
         Out.println("import tilda.utils.DurationUtil;");
@@ -110,43 +111,24 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println();
         Out.println("   public static final String TABLENAME = TextUtil.Print(" + TextUtil.EscapeDoubleQuoteWithSlash(O.getShortName()) + ", \"\");");
         Out.println();
-        Out.println("   protected static enum COLS implements tilda.enums.ColumnDefinition {");
-        boolean First = true;
+        Out.println("   protected static abstract class COLS {");
+        int Counter = -1;
         for (Column C : O._Columns)
           if (C != null && C._Mode != ColumnMode.CALCULATED)
             {
-              if (First == true)
-                First = false;
-              else
-                Out.println(",");
-              String Pad = O._PadderColumnNames.getPad(C.getName());
-              String ColVarFull = TextUtil.EscapeDoubleQuoteWithSlash(G.getSql().getFullColumnVar(C), "", false);
-              String ColVarShort = TextUtil.EscapeDoubleQuoteWithSlash(G.getSql().getShortColumnVar(C), "", false);
-              String ColVarOthers = TextUtil.EscapeDoubleQuoteWithSlash(G.getSql().getShortColumnVar(C), "", false);
-              Out.print("     " + C.getName().toUpperCase() + Pad + "(\"" + ColVarFull + "\"" + Pad + ", \"" + ColVarShort + "\"" + Pad + ", \", " + ColVarOthers + "\"" + Pad + ", \", " + ColVarOthers + "=?\"" + Pad
-                  + ", ColumnType." + C._Type + ")");
+              String ColumnPad = O._PadderColumnNames.getPad(C.getName());
+              String TypePad   = C._Type.getPad();
+              if (C._Nullable == false)
+               TypePad+="    ";
+              if (C.isCollection() == false)
+                TypePad+="  ";
+//              String ColVarFull = TextUtil.EscapeDoubleQuoteWithSlash(G.getSql().getFullColumnVar(C), "", false);
+//              String ColVarShort = TextUtil.EscapeDoubleQuoteWithSlash(G.getSql().getShortColumnVar(C), "", false);
+//              String ColVarOthers = TextUtil.EscapeDoubleQuoteWithSlash(G.getSql().getShortColumnVar(C), "", false);
+              String ColumnTypeClassName = "Type_"+TextUtil.NormalCapitalization(C._Type.name())+(C.isCollection()?"Collection":"Primitive")+(C._Nullable==true?"Null":"");
+              Out.println("     public static "+ColumnTypeClassName+TypePad+" " + C.getName().toUpperCase() + ColumnPad + "= new "+ColumnTypeClassName+TypePad+"(\"" + C._ParentObject.getShortName() + "\", \"" + C.getBaseName() + "\"" + ColumnPad + ", " + (++Counter) +");");
             }
         Out.println(";");
-        Out.println("     private COLS(String FullColumn, String ShortColumn, String Insert, String Update, ColumnType Type) {");
-        Out.println("       _Full   = FullColumn ;");
-        Out.println("       _Short  = ShortColumn;");
-        Out.println("       _Insert = Insert;");
-        Out.println("       _Update = Update;");
-        Out.println("       _Type   = Type;");
-        Out.println("       _TableName= TABLENAME;");
-        Out.println("       _Mask = 1L << ordinal();");
-        Out.println("     }");
-        Out.println("     final String     _Full  ;");
-        Out.println("     final String     _Short ;");
-        Out.println("     final String     _Insert;");
-        Out.println("     final String     _Update;");
-        Out.println("     final ColumnType _Type  ;");
-        Out.println("     final String     _TableName;");
-        Out.println("     final long       _Mask  ;");
-        Out.println("     public String toString() { return _Short; }");
-        Out.println("     public String toString(StatementType ST) { return ST==StatementType.SELECT ? _Full : _Short; }");
-        Out.println("     public ColumnType getType() { return _Type; }");
-        Out.println("     public String getTableName() { return _TableName; }");
         Out.println("   }");
         Out.println();
         Out.println("   private static Boolean  __INITIALIZED = false;");
