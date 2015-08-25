@@ -16,7 +16,6 @@
 
 package tilda.types;
 
-import tilda.enums.ColumnType;
 
 public class Type_LongPrimitiveNull extends Type_LongPrimitive implements Nullable
   {

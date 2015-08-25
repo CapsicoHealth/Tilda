@@ -24,7 +24,6 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
@@ -40,8 +39,10 @@ public class View extends Base
     static final Logger              LOG                = LogManager.getLogger(View.class.getName());
 
     /*@formatter:off*/
-    @SerializedName("columns" ) public List<ViewColumn>     _ViewColumns= new ArrayList<ViewColumn    >();
+    @SerializedName("columns" ) public List<ViewColumn>     _ViewColumns= new ArrayList<ViewColumn>();
+    @SerializedName("joins"   ) public List<ViewJoin>       _Joins      = new ArrayList<ViewJoin  >();
     @SerializedName("subWhere") public String               _SubWhere;
+    @SerializedName("groupBy" ) public GroupBy              _GroupBy;
     @SerializedName("subQuery") public SubWhereClause       _SubQuery;
     /*@formatter:on*/
 
@@ -71,6 +72,15 @@ public class View extends Base
       {
         return "View";
       }
+    
+    public ViewJoin getViewjoin(String ObjectName)
+     {
+       if (_Joins != null)
+        for (ViewJoin vj : _Joins)
+         if (vj != null && vj._ObjectObj.getBaseName().equals(ObjectName) == true)
+          return vj;
+       return null;
+     }
 
     public boolean Validate(ParserSession PS, Schema ParentSchema)
       {
@@ -83,12 +93,22 @@ public class View extends Base
           return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring a view without any columns.");
 
         Set<String> ColumnNames = new HashSet<String>();        
+        Set<String> ObjectNames = new HashSet<String>();        
         for (int i = 0; i < _ViewColumns.size(); ++i)
          {
            ViewColumn C = _ViewColumns.get(i);
            C.Validate(PS, this);
            if (ColumnNames.add(C.getName().toUpperCase()) == false)
              PS.AddError("Column '" + C.getFullName() + "' is defined more than once in View '" + getFullName() + "'.");
+           if (ObjectNames.add(C._SameAsObj._ParentObject.getFullName()) == false)
+             {
+               if (C._Join != null)
+                 PS.AddError("Column '" + C.getFullName() + "' is defining a join type: only the first column of a refered table can define a join type.");
+             }
+           else if (ObjectNames.size() ==1 && C._Join != null)
+             {
+               PS.AddError("Column '" + C.getFullName() + "' is defining a join type: columns of the first refered table are considered part of the 'from' clause of a view and cannot define a join type.");
+             }
            if (C._SameAsObj._Type == ColumnType.DATETIME && Object.isOCCColumn(C._SameAsObj) == false)
               {
                 ViewColumn TZCol = new ViewColumn();
@@ -125,6 +145,13 @@ public class View extends Base
               }
           }
         
+        if (_Joins != null)
+         for (ViewJoin VJ : _Joins)
+           VJ.Validate(PS, this);
+        
+        if (_GroupBy != null)
+          _GroupBy.Validate(PS, this);
+        
         Object O = new Object();
         O._FST = FrameworkSourcedType.VIEW;
         O._Name = _OriginalName;
@@ -134,7 +161,7 @@ public class View extends Base
         O._LCStr = ObjectLifecycle.READONLY.name();
         O._OCC = false;
         for (ViewColumn C : _ViewColumns)
-          if (C != null && C._FrameworkGenerated == false)
+          if (C != null && C._FrameworkGenerated == false && C._JoinOnly == false)
             O._Columns.add(new ViewColumnWrapper(C._SameAsObj, C));
         _ParentSchema._Objects.add(O);
         O.Validate(PS, ParentSchema);

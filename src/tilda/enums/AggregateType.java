@@ -14,14 +14,30 @@
  * limitations under the License.
  */
 
-package tilda.types;
+package tilda.enums;
 
-
-public class Type_DatetimeCollectionNull extends Type_DatetimeCollection implements Nullable
+public enum AggregateType
   {
-    public Type_DatetimeCollectionNull(String TableName, String ColumnName, long Count)
-      {
-        super(TableName, ColumnName, Count);
-      }
+    SUM, 
     
+    AVG,
+    
+    MAX,
+    
+    MIN,
+    
+    DEV,
+    
+    VAR
+
+    ;
+    
+    public static AggregateType parse(String Str)
+      {
+        for (AggregateType e : AggregateType.values())
+          if (Str.equalsIgnoreCase(e.name()) == true)
+            return e;
+        return null;
+      }
+
   }

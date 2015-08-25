@@ -14,14 +14,22 @@
  * limitations under the License.
  */
 
-package tilda.types;
+package tilda.enums;
 
-
-public class Type_DatetimeCollectionNull extends Type_DatetimeCollection implements Nullable
+public enum JoinType
   {
-    public Type_DatetimeCollectionNull(String TableName, String ColumnName, long Count)
-      {
-        super(TableName, ColumnName, Count);
-      }
+    INNER, 
     
+    LEFT,
+    
+    RIGHT;
+
+    public static JoinType parse(String Str)
+      {
+        for (JoinType e : JoinType.values())
+          if (Str.equalsIgnoreCase(e.name()) == true)
+            return e;
+        return null;
+      }
+
   }

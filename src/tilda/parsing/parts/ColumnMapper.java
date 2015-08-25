@@ -44,6 +44,19 @@ public class ColumnMapper
     public transient Object       _DestObjectObj;
     
     public transient Column  _ParentColumn ;
+    
+    public ColumnMapper()
+      {
+      }
+     
+    public ColumnMapper(String[] SrcColumns, String DestObject, ColumnMapperMode  Name, ColumnMapperMode  Group, MultiType Multi)
+     {
+       SrcColumns = _SrcColumns;
+       DestObject = _DestObject;
+       Name       = _Name;
+       Group      = _Group;
+       Multi      = _Multi;
+     }
 
     public boolean Validate(ParserSession PS, Column C)
       {

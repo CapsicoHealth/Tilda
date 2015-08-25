@@ -20,7 +20,6 @@ import tilda.enums.DefaultType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.parsing.parts.helpers.ValueHelper;
-import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
 
 import com.google.gson.annotations.SerializedName;

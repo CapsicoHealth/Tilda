@@ -19,6 +19,9 @@ package tilda.parsing.parts;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.enums.AggregateType;
+import tilda.enums.JoinType;
+import tilda.enums.ProtectionType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.utils.TextUtil;
@@ -30,23 +33,35 @@ public class ViewColumn
     static final Logger             LOG                = LogManager.getLogger(ViewColumn.class.getName());
 
     /*@formatter:off*/
-	@SerializedName("name"       ) public String         _Name       ;
-	@SerializedName("sameas"     ) public String         _SameAs     ;
+	@SerializedName("name"       ) public String         _Name         ;
+	@SerializedName("sameas"     ) public String         _SameAs       ;
+    @SerializedName("joinType"   ) public String         _JoinStr      ;
+    @SerializedName("joinOnly"   ) public boolean        _JoinOnly      = false;
+    @SerializedName("aggregate"  ) public String         _AggregateStr ;
     /*@formatter:on*/
+    
+    
+    
     
     public ViewColumn()
      {
      }
-
-    public ViewColumn(String Name, String SameAs)
+/*
+    public ViewColumn(String Name, String SameAs, JoinType Join, boolean JoinOnly, AggregateType  Aggregate)
       {
         _Name = Name;
         _SameAs = SameAs;
+        _Join = Join;
+        _JoinOnly = JoinOnly;
+        _Aggregate = Aggregate;
       }
+*/
 
+    public transient View     _ParentView;
     public transient ViewColumnWrapper   _SameAsObj;
     public transient boolean  _Aliased = true;
-    public transient View     _ParentView;
+    public transient JoinType _Join;
+    public transient AggregateType _Aggregate;    
     public transient boolean  _FailedValidation = false;
 
     public boolean _FrameworkGenerated = false;
@@ -84,6 +99,14 @@ public class ViewColumn
             _Aliased = false;
             _Name = _SameAsObj._Name;
           }
+        
+        if (_JoinStr != null)
+          if ((_Join = JoinType.parse(_JoinStr)) == null)
+            return PS.AddError("View Column '" + getFullName() + "' defined an invalid 'joinType' '" + _JoinStr + "'.");
+        
+        if (_AggregateStr != null)
+          if ((_Aggregate = AggregateType.parse(_AggregateStr)) == null)
+            return PS.AddError("View Column '" + getFullName() + "' defined an invalid 'joinType' '" + _AggregateStr + "'.");
         
         return Errs == PS.getErrorCount();
       }

@@ -761,7 +761,7 @@ public abstract class QueryHelper
     public QueryHelper equals(ColumnDefinition Col1)
       throws Exception
       {
-        _QueryStr.append(Col1.toString(_ST));
+        OpCol(Op.EQUALS, Col1);
         return this;
       }
 

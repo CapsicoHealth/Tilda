@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tilda.enums.ColumnMapperMode;
-import tilda.enums.ColumnMode;
 import tilda.enums.MultiType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
@@ -40,8 +39,18 @@ public class ColumnEnum
 
     public transient List<Column> _SrcColumnObjs = new ArrayList<Column>();
     public transient Object       _DestObjectObj;
+    public transient Column       _ParentColumn ;
     
-    public transient Column  _ParentColumn ;
+    public ColumnEnum()
+     {
+     }
+    
+    public ColumnEnum(String[] SrcColumns, String DestObject, MultiType Multi)
+      {
+        SrcColumns = _SrcColumns;
+        DestObject = _DestObject;
+        Multi      = _Multi;
+      }
 
     public boolean Validate(ParserSession PS, Column C)
       {
