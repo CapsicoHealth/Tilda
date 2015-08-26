@@ -54,6 +54,7 @@ public class Import
           {
             LOG.error("This utility must be called with at least 1 argument: the path to an JSON import file named as _tilda.<Schema>.sampledata.<samplePackage>.json.");
             LOG.error("The utility will then execute the class <Schema.package>+'.importers.'+<samplesPackage>.Root which must implement the ImportProcessor class.");
+            LOG.error("Alternatively, the utility can be called with 3 parameters '-package <packageName> <path-to-json-file> where the packageName from the JSON file name will be overriden by the suplied packageName to resolve to the right importer.");
             System.exit(1);
           }
 
@@ -63,9 +64,14 @@ public class Import
             int Total = 0;
             long T0 = System.nanoTime();
             C = ConnectionPool.get("MAIN");
-            for (String a : args)
+            if (args[0].equalsIgnoreCase("-packageName") == true)
               {
-                Total += Do(a, C);
+                Total += Do(args[1], args[2], C);
+                C.commit();
+              }
+            else for (String a : args)
+              {
+                Total += Do(null, a, C);
                 C.commit();
               }
             T0 = System.nanoTime() - T0;
@@ -98,7 +104,7 @@ public class Import
           }
       }
     
-    protected static int Do(String ImportFileName, Connection C)
+    protected static int Do(String OverridePackageName, String ImportFileName, Connection C)
       throws Exception
       {
         Reader R = null;
@@ -119,7 +125,7 @@ public class Import
         if (M.find() == false)
           throw new Exception("The argument '" + ImportFileName + "' is invalid: it should match the format '_tilda.'+<SchemaName>+'.sampledata.'+<samplesPackage>+'.json'.");
         String SchemaName = M.group(1);
-        String SamplePackageName = M.group(2);
+        String SamplePackageName = OverridePackageName == null ? M.group(2) : OverridePackageName;
 
         String SchemaPackage = ConnectionPool.getSchemaPackage(SchemaName);
         if (SchemaPackage == null)
