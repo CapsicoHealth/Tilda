@@ -370,7 +370,7 @@ public class Helper
                 {
                   Out.println(Lead + "   case " + LookupId + ":");
                   if (SWC._ColumnObjs.isEmpty() == false)
-                    Out.println(Lead + "      S.append(" + TextUtil.EscapeDoubleQuoteWithSlash(" where (" + PrintWhereClause(G, SWC._ColumnObjs, SWC) + ")") + ");");
+                    Out.println(Lead + "      S.append(" + TextUtil.EscapeDoubleQuoteWithSlash(" where (" + PrintWhereClause(G, null, SWC) + ")") + ");");
                   Out.println(Lead + "      break;");
                 }
             }
