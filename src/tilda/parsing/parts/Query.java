@@ -46,7 +46,8 @@ public class Query
     public transient List<Column> _ColumnObjs = new ArrayList<Column>();
     public transient List<String> _VarNames   = new ArrayList<String>();
 
-    private static final Pattern _P1 = Pattern.compile("\\b([a-zA-Z_][\\w\\.]*)((\\s*is\\s+(not\\s+)?null)|(\\W*\\?\\(([a-z_A-Z]\\w*)?\\)))");
+//  private static final Pattern _P1 = Pattern.compile("\\b([a-zA-Z_][\\w\\.]*)(\\W+\\?\\(([a-z_A-Z]\\w*)?\\))");
+    private static final Pattern _P1 = Pattern.compile("\\b([a-zA-Z_][\\w\\.]*)((?:\\s+is\\s+(?:not)?null)|(?:\\W*\\?\\((?:[a-z_A-Z]\\w*)?\\)))");
     private static final Pattern _P2 = Pattern.compile("\\?\\(([a-z_A-Z]\\w*)?\\)");
 
     public Query()
@@ -71,12 +72,8 @@ public class Query
         StringBuilder NewClause = new StringBuilder();
         int i = 0;
         
-        if (_Clause.indexOf("is not null") != -1 || _Clause.indexOf("is null") != -1)
-          {
-            int xxx = 0;
-            ++xxx;
-          }
         Set<String> VarNames = new HashSet<String>();
+        LOG.debug("    input clause: "+_Clause+";");
         Matcher M = _P1.matcher(_Clause);
         while (M.find() == true)
           {
@@ -84,7 +81,7 @@ public class Query
              NewClause.append(_Clause, i, M.start());
             String col = M.group(1);
             String var = M.group(2);
-//            LOG.debug("    match: "+M.group()+"; col: "+col+"; var: "+var+";");
+            LOG.debug("       match: "+M.group()+"; col: "+col+"; var: "+var+";");
             ReferenceHelper R = ReferenceHelper.parseColumnReference(col, ParentObject);
             Column C = PS.getColumn(R._P, R._S, R._O, R._C);
             if (C == null)
@@ -109,6 +106,13 @@ public class Query
               }
             if (var != null && var.matches("\\s*is\\s+(not\\s+)?null\\s*") == false)
               {
+                Matcher M2 = _P2.matcher(var);
+                if (M2.find() == false)
+                 {
+                   PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which has a column espression '" + var + "' which cannot be parsed out.");
+                   continue;
+                 }
+                var = M2.group(1);
                 if (TextUtil.isNullOrEmpty(var) == true)
                  var = col;
                 else
@@ -118,6 +122,7 @@ public class Query
                     PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' with a duplicate variable name '"+var+"'.");
                     continue;
                   }
+                LOG.debug("       --> var: "+var+";");
                 _ColumnObjs.add(C);
                 _VarNames.add(var);
               }
@@ -145,7 +150,7 @@ public class Query
         
         _Clause = _Clause.replaceAll(_P2.pattern(), "?");
         
-        
+        LOG.debug("    final clause: "+_Clause+";");
 
         return Errs == PS.getErrorCount();
       }
