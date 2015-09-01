@@ -46,7 +46,7 @@ public class Query
     public transient List<Column> _ColumnObjs = new ArrayList<Column>();
     public transient List<String> _VarNames   = new ArrayList<String>();
 
-    private static final Pattern _P1 = Pattern.compile("\\b([a-zA-Z_]\\w*)\\W*\\?\\(([a-z_A-Z]\\w*)?\\)");
+    private static final Pattern _P1 = Pattern.compile("\\b([a-zA-Z_][\\w\\.]*)((\\s*is\\s+(not\\s+)?null)|(\\W*\\?\\(([a-z_A-Z]\\w*)?\\)))");
     private static final Pattern _P2 = Pattern.compile("\\?\\(([a-z_A-Z]\\w*)?\\)");
 
     public Query()
@@ -71,6 +71,11 @@ public class Query
         StringBuilder NewClause = new StringBuilder();
         int i = 0;
         
+        if (_Clause.indexOf("is not null") != -1 || _Clause.indexOf("is null") != -1)
+          {
+            int xxx = 0;
+            ++xxx;
+          }
         Set<String> VarNames = new HashSet<String>();
         Matcher M = _P1.matcher(_Clause);
         while (M.find() == true)
@@ -102,17 +107,20 @@ public class Query
                 PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which refers to a "+C._Type+" column which is not a supported type.");
                 continue;
               }
-            if (TextUtil.isNullOrEmpty(var) == true)
-             var = col;
-            else
-             var = col+TextUtil.CapitalizeFirstCharacter(var);
-            if (VarNames.add(var) == false)
+            if (var != null && var.matches("\\s*is\\s+(not\\s+)?null\\s*") == false)
               {
-                PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' with a duplicate variable name '"+var+"'.");
-                continue;
+                if (TextUtil.isNullOrEmpty(var) == true)
+                 var = col;
+                else
+                 var = col+TextUtil.CapitalizeFirstCharacter(var);
+                if (VarNames.add(var) == false)
+                  {
+                    PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' with a duplicate variable name '"+var+"'.");
+                    continue;
+                  }
+                _ColumnObjs.add(C);
+                _VarNames.add(var);
               }
-            _ColumnObjs.add(C);
-            _VarNames.add(var);
             NewClause.append(PS._CGSql.getFullColumnVar(C)).append(_Clause, M.end(1), M.end());
             i = M.end();
           }
