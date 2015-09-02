@@ -67,7 +67,7 @@ public class Gen
               }
             catch (Throwable T)
               {
-                LOG.error("Couldn't load the schema '" + path + "'.", T);
+                LOG.error("Couldn't load the schema '" + path + "'.\n", T);
                 break;
               }
           }

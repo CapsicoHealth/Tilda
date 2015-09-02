@@ -89,8 +89,11 @@ public class View extends Base
 
         int Errs = PS.getErrorCount();
 
+        if (_OriginalName.endsWith("View") == false)
+         PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring the view '"+getFullName()+"' with a name that doesn't end with 'View'.");
+         
         if (_ViewColumns == null || _ViewColumns.isEmpty() == true)
-          return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring a view without any columns.");
+          return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring the view '"+getFullName()+"' without any columns.");
 
         Set<String> ColumnNames = new HashSet<String>();        
         Set<String> ObjectNames = new HashSet<String>();        

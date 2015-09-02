@@ -105,7 +105,7 @@ public abstract class Base
         int Errs = PS.getErrorCount();
 
         _ParentSchema = ParentSchema;
-        LOG.debug("  Validating Object " + getFullName() + ".");
+        LOG.debug("  Validating "+getWhat()+" " + getFullName() + ".");
 
         // Mandatories
         if (TextUtil.isNullOrEmpty(_Name) == true)

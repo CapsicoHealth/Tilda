@@ -25,6 +25,7 @@ import org.apache.logging.log4j.Logger;
 import tilda.enums.ColumnType;
 import tilda.enums.DefaultType;
 import tilda.enums.MultiType;
+import tilda.enums.ValidationStatus;
 import tilda.parsing.ParserSession;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
@@ -33,65 +34,86 @@ import com.google.gson.annotations.SerializedName;
 
 public class TypeDef
   {
-    static final Logger         LOG             = LogManager.getLogger(Mapper.class.getName());
+    static final Logger                LOG             = LogManager.getLogger(Mapper.class.getName());
 
     /*@formatter:off*/
     @SerializedName("type" ) public String         _TypeStr    ;
     @SerializedName("size" ) public Integer        _Size       ;
     /*@formatter:on*/
 
-    public transient ColumnType _Type;
-    public transient String     _TypeSep;
-    public transient MultiType  _TypeCollection = MultiType.NONE;
+    public transient ColumnType        _Type;
+    public transient String            _TypeSep;
+    public transient MultiType         _TypeCollection = MultiType.NONE;
+
+    private transient ValidationStatus _Validation     = ValidationStatus.NONE;
 
 
     public TypeDef()
       {
       }
 
-    public TypeDef(String Type, Integer Size)
+    public TypeDef(String TypeStr, Integer Size)
       {
-        _TypeStr = Type;
+        _TypeStr = TypeStr;
         _Size = Size;
       }
 
-    protected static final Pattern _PList = Pattern.compile(".*\\[(.+)\\]");
-    protected static final Pattern _PSet  = Pattern.compile(".*\\{(.+)\\}");
+    protected static final Pattern _PList = Pattern.compile(".*\\[(\\W+)\\]");
+    protected static final Pattern _PSet  = Pattern.compile(".*\\{(\\W+)\\}");
 
     public boolean Validate(ParserSession PS, String What, boolean AllowArrays, boolean StringSizeOptional)
       {
+        if (_Validation != ValidationStatus.NONE)
+          return _Validation == ValidationStatus.SUCCESS;
         int Errs = PS.getErrorCount();
+        ValidateBase(PS, What, AllowArrays, StringSizeOptional);
+        _Validation = Errs == PS.getErrorCount() ? ValidationStatus.SUCCESS : ValidationStatus.FAIL;
+        return _Validation == ValidationStatus.SUCCESS;
+      }
 
+    private void ValidateBase(ParserSession PS, String What, boolean AllowArrays, boolean StringSizeOptional)
+      {
         if (_TypeStr == null)
-          return PS.AddError(What + " didn't define a 'type'. It is mandatory.");
+          {
+            PS.AddError(What + " didn't define a 'type'. It is mandatory.");
+            return;
+          }
+        Matcher M = Column._PList.matcher(_TypeStr);
+        String BaseType = _TypeStr;
+        if (M.matches() == true)
+          {
+            _TypeCollection = MultiType.LIST;
+            _TypeSep = M.group(1);
+            BaseType = BaseType.substring(0, M.start(1) - 1);
+          }
         else
           {
-            Matcher M = Column._PList.matcher(_TypeStr);
+            M = Column._PSet.matcher(_TypeStr);
             if (M.matches() == true)
               {
-                _TypeCollection = MultiType.LIST;
+                _TypeCollection = MultiType.SET;
                 _TypeSep = M.group(1);
-                _TypeStr = _TypeStr.substring(0, M.start(1) - 1);
+                BaseType = BaseType.substring(0, M.start(1) - 1);
               }
-            else
-              {
-                M = Column._PSet.matcher(_TypeStr);
-                if (M.matches() == true)
-                  {
-                    _TypeCollection = MultiType.SET;
-                    _TypeSep = M.group(1);
-                    _TypeStr = _TypeStr.substring(0, M.start(1) - 1);
-                  }
+          }
+        
+        if ((_Type = ColumnType.parse(BaseType)) == null)
+          {
+            PS.AddError(What + " defined an invalid 'type' '" + _TypeStr + "'.");
+            return;
+          }
 
-              }
-            if ((_Type = ColumnType.parse(_TypeStr)) == null)
-              return PS.AddError(What + " defined an invalid 'type' '" + _TypeStr + "'.");
-            if (isCollection() == true)
+        if (isCollection() == true)
+          {
+            if (AllowArrays == false)
               {
-                if (AllowArrays == false)
-                  return PS.AddError(What + " is defined as an array type which is not supported in this context");
-                if (_Type.isArrayCompatible() == false)
-                  return PS.AddError(What + "is defined as a 'type' '" + _Type + "' which is not supported as an Array.");
+                PS.AddError(What + " is defined as an array type which is not supported in this context");
+                return;
+              }
+            if (_Type.isArrayCompatible() == false)
+              {
+                PS.AddError(What + "is defined as a 'type' '" + _Type + "' which is not supported as an Array.");
+                return;
               }
           }
 
@@ -118,8 +140,6 @@ public class TypeDef
             if (_Size != null && _Size > 0)
               PS.AddError(What + " is defined as a '" + _Type + "' with a 'size'. Only String columns should have a 'size' defined.");
           }
-
-        return Errs == PS.getErrorCount();
       }
 
     public boolean isCollection()

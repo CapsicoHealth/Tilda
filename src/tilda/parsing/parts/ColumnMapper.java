@@ -22,6 +22,7 @@ import java.util.List;
 import tilda.enums.ColumnMapperMode;
 import tilda.enums.ColumnMode;
 import tilda.enums.MultiType;
+import tilda.enums.ValidationStatus;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.parsing.parts.helpers.ValidationHelper;
@@ -42,45 +43,60 @@ public class ColumnMapper
 
     public transient List<Column> _SrcColumnObjs = new ArrayList<Column>();
     public transient Object       _DestObjectObj;
+    public transient Column       _ParentColumn ;
     
-    public transient Column  _ParentColumn ;
+    private transient ValidationStatus _Validation = ValidationStatus.NONE;
     
     public ColumnMapper()
       {
       }
      
-    public ColumnMapper(String[] SrcColumns, String DestObject, ColumnMapperMode  Name, ColumnMapperMode  Group, MultiType Multi)
-     {
-       SrcColumns = _SrcColumns;
-       DestObject = _DestObject;
-       Name       = _Name;
-       Group      = _Group;
-       Multi      = _Multi;
-     }
+// LDH-NOTE: kept for reference, but should eventually be removed
+//    public ColumnMapper(String[] SrcColumns, String DestObject, ColumnMapperMode  Name, ColumnMapperMode  Group, MultiType Multi)
+//      {
+//        _SrcColumns = SrcColumns;
+//        _DestObject = DestObject;
+//        _Name       = Name      ;
+//        _Group      = Group     ;
+//        _Multi      = Multi     ;
+//     }
 
-    public boolean Validate(ParserSession PS, Column C)
+    public boolean Validate(ParserSession PS, Column ParentColumn)
       {
+        if (_Validation != ValidationStatus.NONE)
+          return _Validation == ValidationStatus.SUCCESS;
         int Errs = PS.getErrorCount();
-
-        _ParentColumn = C;
+        ValidateBase(PS, ParentColumn);
+        _Validation = Errs == PS.getErrorCount() ? ValidationStatus.SUCCESS : ValidationStatus.FAIL;
+        return _Validation == ValidationStatus.SUCCESS;
+      }
+    private void ValidateBase(ParserSession PS, Column ParentColumn)
+      {
+        _ParentColumn = ParentColumn;
         
-        ValidateDestinationObject(PS);
-        ValidateSourceColumns(PS);
+        if (ValidateDestinationObject(PS) == false)
+          return;
+        if (ValidateSourceColumns(PS) == false)
+          return;
         _SrcColumnObjs.add(_ParentColumn);
 
         if (_Name == ColumnMapperMode.NONE && _Group == ColumnMapperMode.NONE)
          PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares a mapper where both 'name' and 'group' are set to NONE. Why is a mapper defined then? At least one must not be NONE.");
         
-        if (Errs != PS.getErrorCount())
-          return false;
-
-        ForeignKey.CheckForeignKeyMapping(PS, _ParentColumn._ParentObject, _SrcColumnObjs, _DestObjectObj, "mapper");
+        if (ForeignKey.CheckForeignKeyMapping(PS, _ParentColumn._ParentObject, _SrcColumnObjs, _DestObjectObj, "mapper") == false)
+          return;
         
         if (_DestObjectObj.getColumn("name") == null && _Name != ColumnMapperMode.NONE)
-         return PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares a mapper for 'name' but the mapper object '"+_DestObjectObj.getFullName()+"' doesn't define a 'name' column.");
+         {
+           PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares a mapper for 'name' but the mapper object '"+_DestObjectObj.getFullName()+"' doesn't define a 'name' column.");
+           return;
+         }
 
         if (_DestObjectObj.getColumn("group") == null && _Group != ColumnMapperMode.NONE)
-          return PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares a mapper for 'group' but the mapper object '"+_DestObjectObj.getFullName()+"' doesn't define a 'group' column.");
+          {
+            PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares a mapper for 'group' but the mapper object '"+_DestObjectObj.getFullName()+"' doesn't define a 'group' column.");
+            return;
+          }
         
         if (_Group != ColumnMapperMode.NONE)
           {
@@ -89,7 +105,7 @@ public class ColumnMapper
             else
               {
                 Column Col = new Column(_ParentColumn.getName()+"MappedGroup", null, 0, _ParentColumn._Nullable, _Group == ColumnMapperMode.DB ? ColumnMode.AUTO : ColumnMode.CALCULATED, 
-                                        false, null, "Mapped group for '"+C.getName()+"' through '"+_DestObjectObj.getFullName()+"'.");
+                                        false, null, "Mapped group for '"+_ParentColumn.getName()+"' through '"+_DestObjectObj.getFullName()+"'.");
                 Col._SameAs = _DestObjectObj.getColumn("group").getFullName();
                 Col._FrameworkManaged = true;
                 Col._MapperDef = this;
@@ -103,15 +119,14 @@ public class ColumnMapper
             else
               {
                 Column Col = new Column(_ParentColumn.getName()+"MappedName", null, 0, _ParentColumn._Nullable, _Name == ColumnMapperMode.DB ? ColumnMode.AUTO : ColumnMode.CALCULATED, 
-                                        _ParentColumn._Invariant, null, "Mapped name for '"+C.getName()+"' through '"+_DestObjectObj.getFullName()+"'.");
+                                        _ParentColumn._Invariant, null, "Mapped name for '"+_ParentColumn.getName()+"' through '"+_DestObjectObj.getFullName()+"'.");
                 Col._SameAs = _DestObjectObj.getColumn("name").getFullName();
                 Col._FrameworkManaged = true;
                 Col._MapperDef = this;
                 _ParentColumn._ParentObject.AddColumnAfter(_ParentColumn, Col);
               }
           }
-
-        return Errs == PS.getErrorCount();
+        
       }
 
     private boolean ValidateSourceColumns(ParserSession PS)

@@ -73,7 +73,7 @@ public class Query
         int i = 0;
         
         Set<String> VarNames = new HashSet<String>();
-        LOG.debug("    input clause: "+_Clause+";");
+//        LOG.debug("    input clause: "+_Clause+";");
         Matcher M = _P1.matcher(_Clause);
         while (M.find() == true)
           {
@@ -81,7 +81,7 @@ public class Query
              NewClause.append(_Clause, i, M.start());
             String col = M.group(1);
             String var = M.group(2);
-            LOG.debug("       match: "+M.group()+"; col: "+col+"; var: "+var+";");
+//            LOG.debug("       match: "+M.group()+"; col: "+col+"; var: "+var+";");
             ReferenceHelper R = ReferenceHelper.parseColumnReference(col, ParentObject);
             Column C = PS.getColumn(R._P, R._S, R._O, R._C);
             if (C == null)
@@ -89,7 +89,7 @@ public class Query
                 PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which refers to an unknown column '"+col+"'.");
                 continue;
               }
-            if (C._Validated == false)
+            if (C.hasBeenValidatedSuccessfully() == false)
               {
                 PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which refers to column '" + C.getShortName() + "' which has failed validation previously and cannot be processed any more.");
                 continue;
@@ -122,7 +122,7 @@ public class Query
                     PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' with a duplicate variable name '"+var+"'.");
                     continue;
                   }
-                LOG.debug("       --> var: "+var+";");
+//                LOG.debug("       --> var: "+var+";");
                 _ColumnObjs.add(C);
                 _VarNames.add(var);
               }
@@ -150,7 +150,7 @@ public class Query
         
         _Clause = _Clause.replaceAll(_P2.pattern(), "?");
         
-        LOG.debug("    final clause: "+_Clause+";");
+//        LOG.debug("    final clause: "+_Clause+";");
 
         return Errs == PS.getErrorCount();
       }

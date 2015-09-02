@@ -23,53 +23,10 @@ public class ViewColumnWrapper extends Column
   {
     static final Logger              LOG                = LogManager.getLogger(View.class.getName());
 
-    public ViewColumnWrapper(Column Col, ViewColumn VCol)
+    public ViewColumnWrapper(Column SameAsCol, ViewColumn VCol)
       {
-        _VCol             = VCol;
-        
-        _Name             = Col.getName();
-        _SameAs           = Col._SameAs;
-        if (_SameAs == null)
-         {
-           _TypeStr          = Col._TypeStr;
-           _Size             = Col._Size;
-         }
-        
-        _Nullable         = Col._Nullable;
-        _ModeStr          = Col._ModeStr;
-        _Invariant        = Col._Invariant;
-        _ProtectStr       = Col._ProtectStr;
-        _Description      = Col._Description;
-        if (Col._Mapper != null)
-         {
-           _Mapper = new ColumnMapper(Col._Mapper._SrcColumns, Col._Mapper._DestObject, Col._Mapper._Name, Col._Mapper._Group, Col._Mapper._Multi);
-         }
-        if (Col._Enum != null)
-          {
-            _Enum = new ColumnEnum(Col._Enum._SrcColumns, Col._Enum._DestObject, Col._Enum._Multi);
-          }
-        if (Col._Values != null)
-         {
-           _Values           = new ColumnValue[Col._Values.length];
-           for (int i = 0; i < Col._Values.length; ++i)
-            {
-              ColumnValue cv = Col._Values[i];
-              _Values[i] = new ColumnValue(cv._Name, cv._Value, cv._Label, cv._Description, cv._Default);
-            }
-         }
-//        _FrameworkManaged = Col._FrameworkManaged;
-        
-//        _Mode               = Col._Mode;
-//        _Protect            = Col._Protect;
-//        _SameAsObj          = Col._SameAsObj;
-//        _ParentObject       = Col._ParentObject;
-//        _PadderValueNames   = Col._PadderValueNames;
-//        _PadderValueValues  = Col._PadderValueValues;
-//        _PrimaryKey         = Col._PrimaryKey;
-//        _UniqueIndex        = Col._UniqueIndex;
-//        _MapperDef          = Col._MapperDef;
-//        _DefaultCreateValue = Col._DefaultCreateValue;
-//        _DefaultUpdateValue = Col._DefaultUpdateValue;
+        super(SameAsCol._Name, VCol._SameAs, SameAsCol._Description);
+        _VCol = VCol;
       }
     
     protected ViewColumn _VCol;

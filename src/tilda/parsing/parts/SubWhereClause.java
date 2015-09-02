@@ -103,14 +103,14 @@ public class SubWhereClause
               {
                 Column C1 = q._ColumnObjs.get(i);
                 Column C2 = _ColumnObjs.get(i);
-                if (C1._Validated == false)
+                if (C1.hasBeenValidatedSuccessfully() == false)
                   {
                     PS.AddError(What + " is defining SubWhereClauses with column in position " + i + " " + C1.getFullName() + " which has failed validation previously and cannot be processed any more.");
                     continue;
                   }
-                if (C2._Validated == false)
+                if (C2.hasBeenValidatedSuccessfully() == false)
                   {
-                    PS.AddError(What + " is defining SubWhereClauses with column in position " + i + " " + C1.getFullName() + " which has failed validation previously and cannot be processed any more.");
+                    PS.AddError(What + " is defining SubWhereClauses with column in position " + i + " " + C2.getFullName() + " which has failed validation previously and cannot be processed any more.");
                     continue;
                   }
                 if (C1 != C2)

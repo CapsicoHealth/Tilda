@@ -173,13 +173,20 @@ public class Sql extends PostgreSQL implements CodeGenSql
       {
         switch (AT)
           {
-            case AVG: return "avg";
-            case DEV: return "stddev";
-            case MAX: return "max";
-            case MIN: return "min";
-            case SUM: return "sum";
-            case VAR: return "variance";
-            default: throw new Error("Cannot convert AggregateType "+AT+" to a database aggregate function name.");
+            case AVG:
+              return "avg";
+            case DEV:
+              return "stddev";
+            case MAX:
+              return "max";
+            case MIN:
+              return "min";
+            case SUM:
+              return "sum";
+            case VAR:
+              return "variance";
+            default:
+              throw new Error("Cannot convert AggregateType " + AT + " to a database aggregate function name.");
           }
       }
 
@@ -266,37 +273,49 @@ public class Sql extends PostgreSQL implements CodeGenSql
     private boolean CheckFK(PrintWriter Out, Object Obj1, Object Obj2, ViewColumn C)
       {
         boolean Found = false;
+//        LOG.debug("Checking FKs to " + Obj1.getBaseName());
         for (ForeignKey FK : Obj2._ForeignKeys)
-          if (FK._DestObjectObj == Obj1)
-            {
-              Out.print("     " + (C._Join == null ? "left" : C._Join) + " join " + Obj2.getShortName() + " on ");
-              for (int i = 0; i < FK._SrcColumnObjs.size(); ++i)
-                {
-                  if (i != 0)
-                    Out.print(" AND ");
-                  Out.print(getFullColumnVar(FK._SrcColumnObjs.get(i)) + "=" + getFullColumnVar(Obj1._PrimaryKey._ColumnObjs.get(i)));
-                }
-              Out.println();
-              Found = true;
-              break;
-            }
+          {
+//            LOG.debug("    . Checking FK " + FK._ParentObject.getBaseName() + " to " + FK._DestObjectObj.getBaseName());
+            if (FK._DestObjectObj == Obj1)
+              {
+                Out.print("     " + (C._Join == null ? "left" : C._Join) + " join " + Obj2.getShortName() + " on ");
+                for (int i = 0; i < FK._SrcColumnObjs.size(); ++i)
+                  {
+                    if (i != 0)
+                      Out.print(" AND ");
+                    Out.print(getFullColumnVar(FK._SrcColumnObjs.get(i)) + "=" + getFullColumnVar(Obj1._PrimaryKey._ColumnObjs.get(i)));
+                  }
+                Out.println();
+                Found = true;
+//                LOG.debug("    --> FOUND");
+                break;
+              }
+          }
         if (Found == false)
           {
+//            LOG.debug("Checking FKs to " + Obj2.getBaseName());
             for (ForeignKey FK : Obj1._ForeignKeys)
-              if (FK._DestObjectObj == Obj2)
-                {
-                  Out.print("     " + (C._Join == null ? "inner" : C._Join) + " join " + Obj2.getShortName() + " on ");
-                  for (int i = 0; i < FK._SrcColumnObjs.size(); ++i)
-                    {
-                      if (i != 0)
-                        Out.print(" AND ");
-                      Out.print(getFullColumnVar(FK._SrcColumnObjs.get(i)) + "=" + getFullColumnVar(Obj2._PrimaryKey._ColumnObjs.get(i)));
-                    }
-                  Out.println();
-                  Found = true;
-                  break;
-                }
+              {
+//                LOG.debug("    . Checking FK "+FK._ParentObject.getBaseName()+" to "+FK._DestObjectObj.getBaseName());
+                if (FK._DestObjectObj == Obj2)
+                  {
+                    Out.print("     " + (C._Join == null ? "inner" : C._Join) + " join " + Obj2.getShortName() + " on ");
+                    for (int i = 0; i < FK._SrcColumnObjs.size(); ++i)
+                      {
+                        if (i != 0)
+                          Out.print(" AND ");
+                        Out.print(getFullColumnVar(FK._SrcColumnObjs.get(i)) + "=" + getFullColumnVar(Obj2._PrimaryKey._ColumnObjs.get(i)));
+                      }
+                    Out.println();
+                    Found = true;
+//                    LOG.debug("    --> FOUND");
+                    break;
+                  }
+              }
           }
+//        if (Found == false)
+//         LOG.debug("    !!!  NOT FOUND  !!!");
         return Found;
       }
 

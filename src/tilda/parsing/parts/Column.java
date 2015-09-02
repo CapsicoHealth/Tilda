@@ -28,6 +28,7 @@ import tilda.enums.DefaultType;
 import tilda.enums.MultiType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.ProtectionType;
+import tilda.enums.ValidationStatus;
 import tilda.enums.VisibilityType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
@@ -42,10 +43,8 @@ public class Column extends TypeDef
     static final Logger             LOG                = LogManager.getLogger(Column.class.getName());
 
     /*@formatter:off*/
-	@SerializedName("name"       ) protected String         _Name       ;
-
+	@SerializedName("name"       ) protected String      _Name       ;
 	@SerializedName("sameas"     ) public String         _SameAs     ;
-	
     @SerializedName("nullable"   ) public Boolean        _Nullable   ;
     @SerializedName("mode"       ) public String         _ModeStr    ;
     @SerializedName("invariant"  ) public Boolean        _Invariant  ;
@@ -56,23 +55,7 @@ public class Column extends TypeDef
     @SerializedName("values"     ) public ColumnValue[]  _Values     ;
     /*@formatter:on*/
     
-    public transient boolean _FrameworkManaged = false;
-    
-    public Column()
-     {
-      
-      }
-    public Column(String Name, String Type, Integer Size, boolean Nullable, ColumnMode Mode, boolean Invariant, ProtectionType Protect, String Description)
-      {
-        super(Type, Size);
-        _Name = Name;
-        _Nullable = Nullable;
-        _ModeStr = Mode == null ? null : Mode.name();
-        _Invariant = Invariant;
-        _ProtectStr = Protect == null ? null : Protect.name();
-        _Description = Description;
-      }
-    
+    public transient boolean        _FrameworkManaged = false;
     public transient ColumnMode     _Mode;
     public transient ProtectionType _Protect;
     public transient Column         _SameAsObj;
@@ -82,11 +65,40 @@ public class Column extends TypeDef
     public transient boolean        _PrimaryKey        = false;
     public transient boolean        _UniqueIndex       = false;
     public transient ColumnMapper   _MapperDef         ;
-
     public transient ColumnValue    _DefaultCreateValue;
     public transient ColumnValue    _DefaultUpdateValue;
 
-    public transient boolean        _Validated = false;
+    private transient ValidationStatus _Validation = ValidationStatus.NONE;
+
+    public Column()
+     {
+      
+      }
+    public Column(String Name, String TypeStr, Integer Size, boolean Nullable, ColumnMode Mode, boolean Invariant, ProtectionType Protect, String Description)
+      {
+        super(TypeStr, Size);
+        _Name = Name;
+        _Nullable = Nullable;
+        _ModeStr = Mode == null ? null : Mode.name();
+        _Invariant = Invariant;
+        _ProtectStr = Protect == null ? null : Protect.name();
+        _Description = Description;
+      }
+    
+    public Column(String Name, String SameAs, String Description)
+      {
+        _Name = Name;
+        _SameAs = SameAs;
+        _Description = Description;
+        
+//        if (Mapper != null)
+//         _Mapper = new ColumnMapper(Mapper._SrcColumns, Mapper._DestObject, Mapper._Name, Mapper._Group, Mapper._Multi);
+//        
+//        if (Enum != null)
+//          _Enum = new ColumnEnum(Enum._SrcColumns, Enum._DestObject, Enum._Multi);
+//
+//        _Values = ColumnValue.deepCopy(Values);
+      }
 
     public String getFullName()
       {
@@ -110,36 +122,51 @@ public class Column extends TypeDef
     
     public boolean Validate(ParserSession PS, Object ParentObject)
       {
-        if (_Validated == true)
-          return true;
-        
-        int Errs = PS.getErrorCount();
         _ParentObject = ParentObject;
-//        LOG.debug("    Validating Column " + getFullName() + ".");
+        if (_Validation != ValidationStatus.NONE)
+          return _Validation == ValidationStatus.SUCCESS;
+        int Errs = PS.getErrorCount();
+        ValidateBase(PS, ParentObject);
+        _Validation = Errs == PS.getErrorCount() ? ValidationStatus.SUCCESS : ValidationStatus.FAIL;
+        return _Validation == ValidationStatus.SUCCESS;
+      }
 
-        // Mandatories
+    private void ValidateBase(ParserSession PS, Object ParentObject)
+      {
         if (TextUtil.isNullOrEmpty(_Name) == true)
-          return PS.AddError("Column '" + getFullName() + "' didn't define a 'name'. It is mandatory.");
+          {
+            PS.AddError("Column '" + getFullName() + "' didn't define a 'name'. It is mandatory.");
+            return;
+          }
         
         if (ValidationHelper.isValidIdentifier(_Name) == false)
-         return PS.AddError("Column '" + getFullName() + "' has a name '"+_Name+"' which is not valid. "+ValidationHelper._ValidIdentifierMessage);
+         {
+           PS.AddError("Column '" + getFullName() + "' has a name '"+_Name+"' which is not valid. "+ValidationHelper._ValidIdentifierMessage);
+           return;
+         }
 
         if (ValidateSameAs(PS) == false)
-          return false;
+          return;
         
         // Checking values
         if (_ModeStr != null)
           if ((_Mode = ColumnMode.parse(_ModeStr)) == null)
-            return PS.AddError("Column '" + getFullName() + "' defined an invalid 'mode' '" + _ModeStr + "'.");
+            {
+              PS.AddError("Column '" + getFullName() + "' defined an invalid 'mode' '" + _ModeStr + "'.");
+              return;
+            }
 
         if (_ProtectStr != null)
           if ((_Protect = ProtectionType.parse(_ProtectStr)) == null)
-            return PS.AddError("Column '" + getFullName() + "' defined an invalid 'protect' '" + _ProtectStr + "'.");
+            {
+              PS.AddError("Column '" + getFullName() + "' defined an invalid 'protect' '" + _ProtectStr + "'.");
+              return;
+            }
 
         setDefaults();
 
-        if (super.Validate(PS, "Column '" + getFullName() + "'", true, _Mode==ColumnMode.CALCULATED) == false)
-         return false;
+        if (super.Validate(PS, "Column '" + getFullName() + "'", true, _SameAsObj!=null || _Mode==ColumnMode.CALCULATED) == false)
+         return;
 
         if (TextUtil.isNullOrEmpty(_Description) == true)
           PS.AddError("Column '" + getFullName() + "' didn't define a 'description'. It is mandatory.");
@@ -155,9 +182,6 @@ public class Column extends TypeDef
          _Mapper.Validate(PS, this);
         else if (_Enum != null)
          _Enum.Validate(PS, this);
-        
-        _Validated = Errs == PS.getErrorCount();
-        return _Validated;
       }
 
 
@@ -191,13 +215,13 @@ public class Column extends TypeDef
         if (_SameAsObj == null)
           return;
 
-        if (_TypeStr != null)
-          PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining 'type', which is not allowed.");
+        if (_TypeStr != null && _TypeStr.equals(_SameAsObj._TypeStr) == false)
+          PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining a type '"+_TypeStr+"' which doesn't match the destination column's type '"+_SameAsObj._TypeStr+"'. Note that redefining a type for a sameas column is superfluous in the first place.");
         else
           _TypeStr = _SameAsObj._TypeStr;
 
-        if (_Size != null && _Size > 0)
-          PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining 'size', which is not allowed.");
+        if (_Size != null && _Size != 0 && _Size != _SameAsObj._Size)
+          PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining a size '"+_Size+"' which doesn't match the destination column's size '"+_SameAsObj._Size+"'. Note that redefining a size for a sameas column is superfluous in the first place.");
         else if (_Mapper != null && _Mapper._Multi != MultiType.NONE)
           {
             _TypeStr+= _Mapper._Multi == MultiType.LIST ? "[``]"
@@ -348,5 +372,9 @@ public class Column extends TypeDef
         return (_PrimaryKey == false || _ParentObject.isAutoGenPrimaryKey(this) == false) 
             && _Mode == ColumnMode.NORMAL && _FrameworkManaged == false && _Name.equals("deleted") == false
             ;
+      }
+    public boolean hasBeenValidatedSuccessfully()
+      {
+        return _Validation == ValidationStatus.SUCCESS;
       }
   }

@@ -141,13 +141,10 @@ public class Object extends Base
                             _PadderColumnNames.track(TZCol.getName());
                             if (ColumnNames.add(TZCol.getName().toUpperCase()) == false)
                               PS.AddError("Generated column '" + TZCol.getFullName() + "' conflicts with another column already named the same in Object '" + getFullName() + "'.");
-                            if (TZCol.Validate(PS, this) == false)
-                              TZCol._Validated = false;
+                            TZCol.Validate(PS, this);
                             addForeignKey(C.getName(), new String[] { TZCol.getName() }, "tilda.data.TILDA.ZONEINFO");
                           }
                       }
-                    else
-                     C._Validated = false;
                   }
               }
           }

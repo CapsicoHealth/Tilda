@@ -21,7 +21,6 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.enums.AggregateType;
 import tilda.enums.JoinType;
-import tilda.enums.ProtectionType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.utils.TextUtil;

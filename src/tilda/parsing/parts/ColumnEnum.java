@@ -19,8 +19,8 @@ package tilda.parsing.parts;
 import java.util.ArrayList;
 import java.util.List;
 
-import tilda.enums.ColumnMapperMode;
 import tilda.enums.MultiType;
+import tilda.enums.ValidationStatus;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.parsing.parts.helpers.ValidationHelper;
@@ -37,47 +37,57 @@ public class ColumnEnum
     @SerializedName("multi"     ) public MultiType         _Multi  = MultiType.NONE;
     /*@formatter:on*/
 
-    public transient List<Column> _SrcColumnObjs = new ArrayList<Column>();
-    public transient Object       _DestObjectObj;
-    public transient Column       _ParentColumn ;
-    
+    public transient List<Column>      _SrcColumnObjs = new ArrayList<Column>();
+    public transient Object            _DestObjectObj;
+    public transient Column            _ParentColumn;
+
+    private transient ValidationStatus _Validation    = ValidationStatus.NONE;
+
     public ColumnEnum()
-     {
-     }
-    
-    public ColumnEnum(String[] SrcColumns, String DestObject, MultiType Multi)
       {
-        SrcColumns = _SrcColumns;
-        DestObject = _DestObject;
-        Multi      = _Multi;
       }
 
-    public boolean Validate(ParserSession PS, Column C)
-      {
-        int Errs = PS.getErrorCount();
+ // LDH-NOTE: kept for reference, but should eventually be removed
+//    public ColumnEnum(String[] SrcColumns, String DestObject, MultiType Multi)
+//      {
+//        _SrcColumns = SrcColumns;
+//        _DestObject = DestObject;
+//        _Multi = Multi;
+//      }
 
-        _ParentColumn = C;
-        
-        ValidateDestinationObject(PS);
-        ValidateSourceColumns(PS);
+    public boolean Validate(ParserSession PS, Column ParentColumn)
+      {
+        if (_Validation != ValidationStatus.NONE)
+          return _Validation == ValidationStatus.SUCCESS;
+        int Errs = PS.getErrorCount();
+        ValidateBase(PS, ParentColumn);
+        _Validation = Errs == PS.getErrorCount() ? ValidationStatus.SUCCESS : ValidationStatus.FAIL;
+        return _Validation == ValidationStatus.SUCCESS;
+      }
+
+    private void ValidateBase(ParserSession PS, Column ParentColumn)
+      {
+        _ParentColumn = ParentColumn;
+
+        if (ValidateDestinationObject(PS) == false)
+          return;
+        if (ValidateSourceColumns(PS) == false)
+          return;
+
         _SrcColumnObjs.add(_ParentColumn);
 
-        if (Errs != PS.getErrorCount())
-          return false;
-
         ForeignKey.CheckForeignKeyMapping(PS, _ParentColumn._ParentObject, _SrcColumnObjs, _DestObjectObj, "enum");
-        
-        return Errs == PS.getErrorCount();
+
       }
 
     private boolean ValidateSourceColumns(ParserSession PS)
       {
-        if (_SrcColumns != null && _SrcColumns.length> 0)
-         _SrcColumnObjs = ValidationHelper.ProcessColumn(PS, _ParentColumn._ParentObject, "enum", _SrcColumns, null);
+        if (_SrcColumns != null && _SrcColumns.length > 0)
+          _SrcColumnObjs = ValidationHelper.ProcessColumn(PS, _ParentColumn._ParentObject, "enum", _SrcColumns, null);
 
         return true;
       }
-    
+
     private boolean ValidateDestinationObject(ParserSession PS)
       {
         if (TextUtil.isNullOrEmpty(_DestObject) == true)
@@ -85,13 +95,13 @@ public class ColumnEnum
 
         ReferenceHelper R = ReferenceHelper.parseObjectReference(_DestObject, _ParentColumn._ParentObject.getSchema());
         if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true)
-         return PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares mapper with an incorrect syntax for the destination object '" + _DestObject + "'. It should be '((package\\.)?schema\\.)?object'.");
-        
+          return PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares mapper with an incorrect syntax for the destination object '" + _DestObject + "'. It should be '((package\\.)?schema\\.)?object'.");
+
         _DestObjectObj = PS.getObject(R._P, R._S, R._O);
         if (_DestObjectObj == null)
-         return PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares mapper with destination Object '" + _DestObject + "' resolving to '"+R.getFullName()+"' which cannot be found.");
+          return PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares mapper with destination Object '" + _DestObject + "' resolving to '" + R.getFullName() + "' which cannot be found.");
 
         return true;
       }
-    
+
   }
