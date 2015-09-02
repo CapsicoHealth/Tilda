@@ -115,11 +115,6 @@ public class Column extends TypeDef
         return _Name;
       }
     
-    public String getBaseName()
-      {
-        return _Name;
-      }
-    
     public boolean Validate(ParserSession PS, Object ParentObject)
       {
         _ParentObject = ParentObject;

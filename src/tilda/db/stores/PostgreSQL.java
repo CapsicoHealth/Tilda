@@ -127,8 +127,12 @@ public class PostgreSQL implements DBType
       }
 
     @Override
-    public boolean createView(Connection Con, View V) throws Exception
+    public boolean createView(Connection Con, View V, boolean Drop) throws Exception
       {
+        if (Drop == true)
+          {
+            Con.ExecuteUpdate(V.getShortName(), "DROP VIEW "+V.getShortName()+" CASCADE");
+          }
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
         Generator.getFullViewDDL(getSQlCodeGen(), Out, V);

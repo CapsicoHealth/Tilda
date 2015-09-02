@@ -354,9 +354,9 @@ public final class Connection
         return _DB.createTable(this, Obj);
       }
 
-    public boolean createView(View V)  throws Exception
+    public boolean createView(View V, boolean Drop)  throws Exception
       {
-        return _DB.createView(this, V);
+        return _DB.createView(this, V, Drop);
       }
 
     public boolean createSchema(Schema S) throws Exception

@@ -80,8 +80,15 @@ public abstract class QueryHelper
     protected final StatementType _ST;
 
     protected Connection          _C;
-    protected StringBuilder       _QueryStr = new StringBuilder();
-    protected S                   _Section  = null;
+    protected StringBuilder       _QueryStr    = new StringBuilder();
+    protected S                   _Section     = null;
+    protected int                 _WherePos    = -1;
+    protected int                 _Cardinality = 0;
+
+    public int getCardinality()
+      {
+        return _Cardinality;
+      }
 
 
     protected final void valuesBase()
@@ -92,18 +99,21 @@ public abstract class QueryHelper
         _QueryStr.append(") values (");
       }
 
-    protected final void setColumn(ColumnDefinition Col)
+    public final QueryHelper selectColumn(ColumnDefinition Col)
       throws Exception
       {
-        if (_Section != S.START && _Section != S.SET)
-          throw new Exception("Invalid query syntax: Calling set() after a " + _Section);
+        if (_Section != S.START && _Section != S.SET || _ST != StatementType.SELECT)
+          throw new Exception("Invalid query syntax: Listing a column in a Select clause after a " + _Section + " in a query of type " + _ST);
         if (_Section == S.SET)
           _QueryStr.append(", ");
         _QueryStr.append(Col.toString(_ST));
+        ++_Cardinality;
         _Section = S.SET;
+        return this;
       }
 
-    protected final void fromTable(String TableName)
+
+    protected final QueryHelper fromTable(String TableName)
       throws Exception
       {
         if (_Section != S.FROM && _Section != S.SET || _ST != StatementType.SELECT)
@@ -113,6 +123,7 @@ public abstract class QueryHelper
         if (TableName.equalsIgnoreCase(_TableName) == false)
           _QueryStr.append(", ").append(TableName);
         _Section = S.FROM;
+        return this;
       }
 
     public final QueryHelper where(ColumnDefinition Col)
@@ -131,8 +142,9 @@ public abstract class QueryHelper
         if (_Section != S.WHERE)
           {
             if (_Section != S.FROM && _ST == StatementType.SELECT)
-              _QueryStr.append("from ").append(_TableName);
+              _QueryStr.append(" from ").append(_TableName);
             _QueryStr.append(" where ");
+            _WherePos = _QueryStr.length();
           }
         _Section = S.WHERE;
         return this;
@@ -144,7 +156,8 @@ public abstract class QueryHelper
       {
         if (_Section != S.WHERE)
           throw new Exception("Invalid query syntax: Calling and() after a " + _Section);
-        _QueryStr.append(" and ");
+        if (_QueryStr.length() != _WherePos)
+          _QueryStr.append(" and ");
         _Section = S.WHERE;
         return this;
       }
@@ -154,7 +167,8 @@ public abstract class QueryHelper
       {
         if (_Section != S.WHERE)
           throw new Exception("Invalid query syntax: Calling and() after a " + _Section);
-        _QueryStr.append(" or ");
+        if (_QueryStr.length() != _WherePos)
+          _QueryStr.append(" or ");
         _Section = S.WHERE;
         return this;
       }
@@ -180,7 +194,8 @@ public abstract class QueryHelper
       }
 
 
-    public final QueryHelper Truism() throws Exception
+    public final QueryHelper Truism()
+      throws Exception
       {
         if (_Section != S.WHERE)
           throw new Exception("Invalid query syntax: Calling openPar() after a " + _Section);
@@ -368,117 +383,144 @@ public abstract class QueryHelper
 
 
 
-    
-    
+
+
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // SETTERS
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public QueryHelper set(Type_StringPrimitive Col1, Type_StringPrimitive Col2)
-        throws Exception
-        {
-          setColumn(Col1);
-          return equals(Col2);
-        }
-    public QueryHelper set(Type_CharPrimitive Col1, Type_CharPrimitive Col2)
-        throws Exception
-        {
-          setColumn(Col1);
-          return equals(Col2);
-        }
-    public QueryHelper set(Type_BooleanPrimitive Col1, Type_BooleanPrimitive Col2)
-        throws Exception
-        {
-          setColumn(Col1);
-          return equals(Col2);
-        }
-    public QueryHelper set(Type_IntegerPrimitive Col1, Type_IntegerPrimitive Col2)
-        throws Exception
-        {
-          setColumn(Col1);
-          return equals(Col2);
-        }
-    public QueryHelper set(Type_LongPrimitive Col1, Type_IntegerPrimitive Col2)
-        throws Exception
-        {
-          setColumn(Col1);
-          return equals(Col2);
-        }
-    public QueryHelper set(Type_LongPrimitive Col1, Type_LongPrimitive Col2)
-        throws Exception
-        {
-          setColumn(Col1);
-          return equals(Col2);
-        }
-    public QueryHelper set(Type_FloatPrimitive Col1, Type_FloatPrimitive Col2)
-        throws Exception
-        {
-          setColumn(Col1);
-          return equals(Col2);
-        }
-    public QueryHelper set(Type_DoublePrimitive Col1, Type_DoublePrimitive Col2)
-        throws Exception
-        {
-          setColumn(Col1);
-          return equals(Col2);
-        }
-    public QueryHelper set(Type_DatetimePrimitive Col1, Type_DatetimePrimitive Col2)
-        throws Exception
-        {
-          setColumn(Col1);
-          return equals(Col2);
-        }
-    public QueryHelper set(Type_StringPrimitive Col1, String V)
-        throws Exception
-        {
-          setColumn(Col1);
-          return equals(V);
-        }
-    public QueryHelper set(Type_CharPrimitive Col1, char V)
-        throws Exception
-        {
-          setColumn(Col1);
-          return equals(V);
-        }
-    public QueryHelper set(Type_BooleanPrimitive Col1, boolean  V)
-        throws Exception
-        {
-          setColumn(Col1);
-          return equals(V);
-        }
-    public QueryHelper set(Type_IntegerPrimitive Col1, int V)
-        throws Exception
-        {
-          setColumn(Col1);
-          return equals(V);
-        }
-    public QueryHelper set(Type_LongPrimitive Col1, long V)
-        throws Exception
-        {
-          setColumn(Col1);
-          return equals(V);
-        }
-    public QueryHelper set(Type_FloatPrimitive Col1, float V)
-        throws Exception
-        {
-          setColumn(Col1);
-          return equals(V);
-        }
-    public QueryHelper set(Type_DoublePrimitive Col1, double V)
-        throws Exception
-        {
-          setColumn(Col1);
-          return equals(V);
-        }
-    public QueryHelper set(Type_DatetimePrimitive Col1, ZonedDateTime V)
-        throws Exception
-        {
-          setColumn(Col1);
-          return equals(V);
-        }
+    protected final void setColumn(ColumnDefinition Col)
+      throws Exception
+      {
+        if (_Section != S.START && _Section != S.SET || _ST != StatementType.UPDATE)
+          throw new Exception("Invalid query syntax: Calling set() after a " + _Section);
+        if (_Section == S.SET)
+          _QueryStr.append(", ");
+        _QueryStr.append(Col.toString(_ST));
+        _Section = S.SET;
+      }
 
-    
-    
-    
+    public QueryHelper set(Type_StringPrimitive Col1, Type_StringPrimitive Col2)
+      throws Exception
+      {
+        setColumn(Col1);
+        return equals(Col2);
+      }
+
+    public QueryHelper set(Type_CharPrimitive Col1, Type_CharPrimitive Col2)
+      throws Exception
+      {
+        setColumn(Col1);
+        return equals(Col2);
+      }
+
+    public QueryHelper set(Type_BooleanPrimitive Col1, Type_BooleanPrimitive Col2)
+      throws Exception
+      {
+        setColumn(Col1);
+        return equals(Col2);
+      }
+
+    public QueryHelper set(Type_IntegerPrimitive Col1, Type_IntegerPrimitive Col2)
+      throws Exception
+      {
+        setColumn(Col1);
+        return equals(Col2);
+      }
+
+    public QueryHelper set(Type_LongPrimitive Col1, Type_IntegerPrimitive Col2)
+      throws Exception
+      {
+        setColumn(Col1);
+        return equals(Col2);
+      }
+
+    public QueryHelper set(Type_LongPrimitive Col1, Type_LongPrimitive Col2)
+      throws Exception
+      {
+        setColumn(Col1);
+        return equals(Col2);
+      }
+
+    public QueryHelper set(Type_FloatPrimitive Col1, Type_FloatPrimitive Col2)
+      throws Exception
+      {
+        setColumn(Col1);
+        return equals(Col2);
+      }
+
+    public QueryHelper set(Type_DoublePrimitive Col1, Type_DoublePrimitive Col2)
+      throws Exception
+      {
+        setColumn(Col1);
+        return equals(Col2);
+      }
+
+    public QueryHelper set(Type_DatetimePrimitive Col1, Type_DatetimePrimitive Col2)
+      throws Exception
+      {
+        setColumn(Col1);
+        return equals(Col2);
+      }
+
+    public QueryHelper set(Type_StringPrimitive Col1, String V)
+      throws Exception
+      {
+        setColumn(Col1);
+        return equals(V);
+      }
+
+    public QueryHelper set(Type_CharPrimitive Col1, char V)
+      throws Exception
+      {
+        setColumn(Col1);
+        return equals(V);
+      }
+
+    public QueryHelper set(Type_BooleanPrimitive Col1, boolean V)
+      throws Exception
+      {
+        setColumn(Col1);
+        return equals(V);
+      }
+
+    public QueryHelper set(Type_IntegerPrimitive Col1, int V)
+      throws Exception
+      {
+        setColumn(Col1);
+        return equals(V);
+      }
+
+    public QueryHelper set(Type_LongPrimitive Col1, long V)
+      throws Exception
+      {
+        setColumn(Col1);
+        return equals(V);
+      }
+
+    public QueryHelper set(Type_FloatPrimitive Col1, float V)
+      throws Exception
+      {
+        setColumn(Col1);
+        return equals(V);
+      }
+
+    public QueryHelper set(Type_DoublePrimitive Col1, double V)
+      throws Exception
+      {
+        setColumn(Col1);
+        return equals(V);
+      }
+
+    public QueryHelper set(Type_DatetimePrimitive Col1, ZonedDateTime V)
+      throws Exception
+      {
+        setColumn(Col1);
+        return equals(V);
+      }
+
+
+
+
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // IN
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -684,6 +726,21 @@ public abstract class QueryHelper
           }
         throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST);
       }
+    
+    public QueryHelper in(ColumnDefinition Col, SelectQuery Q)
+        throws Exception
+        {
+          _QueryStr.append(Col.toString(_ST));
+          if (Q._Cardinality != 1)
+           throw new Exception("Invalid query syntax: Calling the operator 'in' with a subquery that has a column cardinality " + Q._Cardinality);
+          if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+            {
+              _QueryStr.append(" in (").append(Q._QueryStr).append(")");
+              return this;
+            }
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST);
+        }
+    
 
 
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1534,7 +1591,31 @@ public abstract class QueryHelper
         return this;
       }
 
+    public QueryHelper like(Type_StringPrimitive[] Cols, String V)
+      throws Exception
+      {
+        boolean First = true;
+        for (Type_StringPrimitive c : Cols)
+          {
+            if (First == true)
+              First = false;
+            else
+              _QueryStr.append(" || ' ' || ");
+            _QueryStr.append(c.toString(_ST));
+          }
+        OpVal(Op.LIKE, V);
+        return this;
+      }
+
+
+    @Deprecated
     public QueryHelper like(Type_StringPrimitive Col, String[] Vals)
+      throws Exception
+      {
+        return like(Col, Vals, true);
+      }
+
+    public QueryHelper like(Type_StringPrimitive Col, String[] Vals, boolean Or)
       throws Exception
       {
         if (Vals == null)
@@ -1544,13 +1625,33 @@ public abstract class QueryHelper
           {
             if (First == true)
               First = false;
-            else
+            else if (Or == true)
               or();
+            else
+              and();
             like(Col, v);
           }
         return this;
       }
 
+    public QueryHelper like(Type_StringPrimitive[] Cols, String[] Vals, boolean Or)
+      throws Exception
+      {
+        if (Vals == null)
+          return this;
+        boolean First = true;
+        for (String v : Vals)
+          {
+            if (First == true)
+              First = false;
+            else if (Or == true)
+              or();
+            else
+              and();
+            like(Cols, v);
+          }
+        return this;
+      }
 
 
 
@@ -1634,5 +1735,9 @@ public abstract class QueryHelper
         _QueryStr.append("]");
         return this;
       }
-    
+
+    public String toString()
+     {
+       return _QueryStr.toString(); 
+     }
   }

@@ -57,7 +57,7 @@ public class ViewColumn
 */
 
     public transient View     _ParentView;
-    public transient ViewColumnWrapper   _SameAsObj;
+    public transient Column   _SameAsObj;
     public transient boolean  _Aliased = true;
     public transient JoinType _Join;
     public transient AggregateType _Aggregate;    
@@ -128,10 +128,7 @@ public class ViewColumn
             if (Col == null)
               PS.AddError("Column '" + getFullName() + "' is declaring sameas '" + _SameAs + "' resolving to '" + R.getFullName() + "' which cannot be found.");
             else
-              {
-                _SameAsObj = new ViewColumnWrapper(Col, this);
-                _SameAsObj.Validate(PS, Col._ParentObject);
-              }
+              _SameAsObj = Col;
           }
 
         return Errs == PS.getErrorCount();

@@ -62,13 +62,13 @@ public class Sql extends PostgreSQL implements CodeGenSql
     @Override
     public String getFullColumnVar(Column C)
       {
-        return C._ParentObject.getSchema()._Name + "." + C._ParentObject.getBaseName() + ".\"" + C.getBaseName() + "\"";
+        return C._ParentObject.getSchema()._Name + "." + C._ParentObject.getBaseName() + ".\"" + C.getName() + "\"";
       }
 
     @Override
     public String getShortColumnVar(Column C)
       {
-        return "\"" + C.getBaseName() + "\"";
+        return "\"" + C.getName() + "\"";
       }
 
     @Override
