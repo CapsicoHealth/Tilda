@@ -152,7 +152,22 @@ public class PostgreSQL implements DBType
            
         return Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q) >= 0;
       }
-    
+
+    @Override
+    public boolean alterTableAlterColumnNull(Connection Con, Column Col, String DefaultValue) throws Exception
+      {
+        if (Col._Nullable == false)
+         {
+           if (DefaultValue == null)
+            throw new Exception("Cannot alter a column to not null without a default value. Add a default value in the model, or manually migrate your database.");
+           String Q = "UPDATE "+Col._ParentObject.getShortName()+" set \""+Col.getName()+"\" = "+ValueHelper.printValue(Col, DefaultValue)+" where \""+Col.getName()+"\" IS NULL";
+           Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q);
+         }
+        
+        String Q = "ALTER TABLE "+Col._ParentObject.getShortName()+" ALTER COLUMN \""+Col.getName()+"\" "+(Col._Nullable == false ? "SET" : "DROP")+" NOT NULL";
+        return Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q) >= 0;
+      }
+
     public static String getColumnType(ColumnType T, Integer S, ColumnMode M, boolean Collection)
       {
         if (T == ColumnType.STRING && M != ColumnMode.CALCULATED)

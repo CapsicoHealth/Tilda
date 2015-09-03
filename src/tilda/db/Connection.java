@@ -348,7 +348,12 @@ public final class Connection
       {
         return _DB.alterTableAddColumn(this, Col, DefaultValue);
       }
-
+    
+    public boolean alterTableAlterColumnNull(Column Col, String DefaultValue) throws Exception
+      {
+        return _DB.alterTableAlterColumnNull(this, Col, DefaultValue);
+      }
+    
     public boolean createTable(Object Obj)  throws Exception
       {
         return _DB.createTable(this, Obj);
@@ -363,5 +368,4 @@ public final class Connection
       {
         return _DB.createSchema(this, S);
       }
-        
   }

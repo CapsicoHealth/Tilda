@@ -18,7 +18,11 @@ package tilda.migration;
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.logging.log4j.Level;
@@ -43,6 +47,22 @@ public class Migrator
 
     public static final String    TILDA_VERSION       = "1.0";
     public static final String    TILDA_VERSION_VAROK = "1_0";
+    
+    private static class ColInfo
+    {
+      protected ColInfo(ResultSet RS) throws SQLException
+      {
+        _Name     = RS.getString("COLUMN_NAME").toLowerCase();
+        _Nullable = RS.getInt("NULLABLE");
+        _Size     = RS.getInt("COLUMN_SIZE");
+        _Type     = RS.getInt("DATA_TYPE");
+      }
+      
+      public final String _Name;
+      public final int _Nullable;
+      public final int _Size;
+      public final int _Type;
+    }
 
     public static String migrate(Connection C, Schema S)
       throws Exception
@@ -115,20 +135,40 @@ public class Migrator
                     if (Obj._FST == FrameworkSourcedType.VIEW)
                       continue;
                     RS = meta.getColumns(null, S._Name.toLowerCase(), Obj._Name.toLowerCase(), null);
-                    Set<String> DBColumns = new HashSet<String>();
+                    Map<String, ColInfo> DBColumns = new HashMap<String, ColInfo>();
                     while (RS.next() != false)
-                      DBColumns.add(RS.getString("COLUMN_NAME").toLowerCase());
+                      {
+                        ColInfo CI = new ColInfo(RS);
+                        DBColumns.put(CI._Name, CI);
+                      }
                     RS.close();
                     if (DBColumns.isEmpty() == true)
                       throw new Exception("Cannot retrieve columns for table '" + Obj.getShortName() + "'.");
                     didSomething = false;
                     for (Column Col : Obj._Columns)
                       {
-                        if (Col._Mode != ColumnMode.CALCULATED && DBColumns.contains(Col.getName().toLowerCase()) == false)
+                        if (Col._Mode == ColumnMode.CALCULATED)
+                         continue;
+                        ColInfo CI = DBColumns.get(Col.getName().toLowerCase());
+                        if (CI == null)
                           {
                             LOG.info("The application's data model defines the column '" + Col.getShortName() + "' which cannot be found in the database. Trying to create it...");
                             if (C.alterTableAddColumn(Col, Col._DefaultCreateValue == null ? null : Col._DefaultCreateValue._Value) == false)
                               throw new Exception("Cannot upgrade table '" + Obj.getShortName() + "' by adding the new required column '" + Col.getShortName() + "'.");
+                            didSomething = true;
+                          }
+                        else if (CI._Nullable == 1 && Col._Nullable == false)
+                          {
+                            LOG.info("The application's data model defines the column '" + Col.getShortName() + "' as not nullable, but it's nullable in the DB. Trying to alter it...");
+                            if (C.alterTableAlterColumnNull(Col, Col._DefaultCreateValue == null ? null : Col._DefaultCreateValue._Value) == false)
+                              throw new Exception("Cannot upgrade table '" + Obj.getShortName() + "' by updating the column '" + Col.getShortName() + "' from nullable to not nullable.");
+                            didSomething = true;
+                          }
+                        else if (CI._Nullable == 0 && Col._Nullable == true)
+                          {
+                            LOG.info("The application's data model defines the column '" + Col.getShortName() + "' as nullable, but it's not nullable in the DB. Trying to alter it...");
+                            if (C.alterTableAlterColumnNull(Col, null) == false)
+                              throw new Exception("Cannot upgrade table '" + Obj.getShortName() + "' by updating the column '" + Col.getShortName() + "' from not nullable to nullable.");
                             didSomething = true;
                           }
                       }
