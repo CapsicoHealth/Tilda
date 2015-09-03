@@ -54,7 +54,10 @@ public abstract class QueryHelper
             if (C != null)
               _QueryStr.append("select ");
             else
-              _Section = S.WHERE;
+              {
+                _Section = S.WHERE;
+                _WherePos = 0;
+              }
           }
         else if (_ST == StatementType.UPDATE)
           _QueryStr.append("update ").append(_TableName).append(" set ");
@@ -1770,6 +1773,8 @@ public abstract class QueryHelper
           throw new Exception("Invalid query syntax: GroupBy after a " + _Section + " in a query of type " + _ST);
         if (_Section == S.GROUPBY)
           _QueryStr.append(", ");
+        else
+          _QueryStr.append(" group by ");
         _QueryStr.append(Col.toString(_ST));
         _Section = S.GROUPBY;
         return this;
@@ -1782,6 +1787,8 @@ public abstract class QueryHelper
           throw new Exception("Invalid query syntax: OrderBy after a " + _Section + " in a query of type " + _ST);
         if (_Section == S.ORDERBY)
           _QueryStr.append(", ");
+        else
+          _QueryStr.append(" order by ");
         _QueryStr.append(Col.toString(_ST)).append(Asc==true?" ASC":" DESC");
         _Section = S.ORDERBY;
         return this;
