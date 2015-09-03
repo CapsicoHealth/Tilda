@@ -314,7 +314,8 @@ public class Helper
         if (UniqueConstraints == false)
           {
             Out.println(Lead + "   case -7:");
-            Out.println(Lead + "      S.append(\" where \").append(((SelectQuery)ExtraParams).getWhereClause());");
+            Out.println(Lead + "      String clause = ((SelectQuery)ExtraParams).getWhereClause();");
+            Out.println(Lead + "      if (TextUtil.isNullOrEmpty(clause) == false) S.append(\" where \").append(clause);");
             Out.println(Lead + "      break;");
           }
         int LookupId = -1;

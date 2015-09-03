@@ -20,9 +20,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import com.google.gson.Gson;
 
 import tilda.db.JDBCHelper;
 
@@ -463,5 +467,12 @@ public class JSONUtil
     public static void end(PrintWriter Out)
       {
         Out.println("}");        
+      }
+    
+    public static Map<String, Object> fromJSON(String JsonStr)
+      {
+        Map<String, Object> Filter = new HashMap<String, Object>();
+        Gson gson = new Gson();
+        return (Map<String, Object>) gson.fromJson(JsonStr, Filter.getClass());
       }
   }

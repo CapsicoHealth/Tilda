@@ -27,6 +27,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.db.JDBCHelper;
+import tilda.utils.pairs.StringStringPair;
 
 public class CollectionUtil
   {
@@ -290,5 +291,59 @@ public class CollectionUtil
         return NewA;
       }
 
-
+    public static int[] toIntArray(String[] v) throws Exception
+      {
+        int[] result = new int[v.length];
+        for (int i = 0; i < v.length; ++i)
+          {
+            result[i] = TextUtil.parseInt(v[i], SystemValues.EVIL_VALUE);
+            if (result[i] == SystemValues.EVIL_VALUE)
+             throw new Exception("Invalid integer value coming in as "+v[i]+".");
+          }
+        return result;
+      }
+    public static long[] toLongArray(String[] v) throws Exception
+      {
+        long[] result = new long[v.length];
+        for (int i = 0; i < v.length; ++i)
+          {
+            result[i] = TextUtil.parseLong(v[i], SystemValues.EVIL_VALUE);
+            if (result[i] == SystemValues.EVIL_VALUE)
+             throw new Exception("Invalid long value coming in as "+v[i]+".");
+          }
+        return result;
+      }
+    public static float[] toFloatArray(String[] v) throws Exception
+      {
+        float[] result = new float[v.length];
+        for (int i = 0; i < v.length; ++i)
+          {
+            result[i] = TextUtil.parseFloat(v[i], SystemValues.EVIL_VALUE);
+            if (result[i] == SystemValues.EVIL_VALUE)
+             throw new Exception("Invalid float value coming in as "+v[i]+".");
+          }
+        return result;
+      }
+    public static double[] toDoubleArray(String[] v) throws Exception
+      {
+        double[] result = new double[v.length];
+        for (int i = 0; i < v.length; ++i)
+          {
+            result[i] = TextUtil.parseDouble(v[i], SystemValues.EVIL_VALUE);
+            if (result[i] == SystemValues.EVIL_VALUE)
+             throw new Exception("Invalid double value coming in as "+v[i]+".");
+          }
+        return result;
+      }
+    public static char[] toCharArray(String[] v) throws Exception
+      {
+        char[] result = new char[v.length];
+        for (int i = 0; i < v.length; ++i)
+          {
+            if (v[i].length() != 1)
+             throw new Exception("Invalid char value coming in as "+v[i]+".");
+            result[i] = v[i].charAt(0);
+          }
+        return result;
+      }
   }
