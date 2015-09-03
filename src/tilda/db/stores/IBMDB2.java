@@ -115,4 +115,11 @@ public class IBMDB2 implements DBType
       {
         throw new UnsupportedOperationException();
       }
+
+    @Override
+    public boolean alterTableAlterColumnNull(Connection Con, Column Col, String DefaultValue)
+      throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
   }
