@@ -194,6 +194,7 @@ public abstract class QueryHelper
       }
 
 
+    @Deprecated
     public final QueryHelper Truism()
       throws Exception
       {
@@ -1683,6 +1684,26 @@ public abstract class QueryHelper
         _QueryStr.append("]");
         return this;
       }
+    
+    public QueryHelper any(Type_StringCollection Col, Collection<String> Vals)
+      {
+        if (Vals == null)
+          return this;
+        _QueryStr.append(Col.toString(_ST))
+            .append(" && ARRAY[");
+        boolean First = true;
+        for (String v : Vals)
+          {
+            if (First == true)
+              First = false;
+            else
+              _QueryStr.append(", ");
+            TextUtil.EscapeSingleQuoteForSQL(_QueryStr, v);
+          }
+        _QueryStr.append("]");
+        return this;
+      }
+    
 
     public QueryHelper any(Type_IntegerCollection Col, int v)
       {
