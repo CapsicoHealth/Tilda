@@ -19,6 +19,7 @@ package tilda.db.stores;
 import java.sql.SQLException;
 
 import tilda.db.Connection;
+import tilda.enums.AggregateType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
@@ -85,6 +86,28 @@ public class MSSQL implements DBType
         return false;
       }
     
+    @Override
+    public String getAggregateStr(AggregateType AT)
+      {
+        switch (AT)
+          {
+            case AVG:
+              return "avg";
+            case DEV:
+              return "stddev";
+            case MAX:
+              return "max";
+            case MIN:
+              return "min";
+            case SUM:
+              return "sum";
+            case VAR:
+              return "var";
+            default:
+              throw new Error("Cannot convert AggregateType " + AT + " to a database aggregate function name.");
+          }
+      }
+
     @Override
     public boolean alterTableAddColumn(Connection Con, Column Col, String DefaultValue) throws Exception
       {

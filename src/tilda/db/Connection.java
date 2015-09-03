@@ -32,6 +32,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.db.processors.RecordProcessor;
 import tilda.db.stores.DBType;
+import tilda.enums.AggregateType;
 import tilda.enums.TransactionType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
@@ -54,9 +55,9 @@ public final class Connection
         _Url = _C.getMetaData().getURL();
         // LDH-NOTE: YEAH YEAH.... This is ugly!!! Need a virtual constructor pattern here.
         _DB = _Url.startsWith("jdbc:postgresql:") ? DBType.Postgres
-            : _Url.startsWith("jdbc:sqlserver:") ? DBType.SQLServer
-                : _Url.startsWith("jdbc:db2:") ? DBType.DB2
-                    : null;
+        : _Url.startsWith("jdbc:sqlserver:") ? DBType.SQLServer
+        : _Url.startsWith("jdbc:db2:") ? DBType.DB2
+        : null;
         if (_DB == null)
           throw new Exception("Can't find the DBType based on URL " + _Url);
         _PoolId = _C.toString();
@@ -66,7 +67,7 @@ public final class Connection
       throws Exception, SQLException
       {
         this(C);
-        _PoolId = PoolId + " ---- (#" + _PoolId+")";
+        _PoolId = PoolId + " ---- (#" + _PoolId + ")";
       }
 
 
@@ -85,13 +86,14 @@ public final class Connection
      * 
      * @return
      * @return an SQException (instead of throwing) if one happens.
-     * @throws SQLException 
+     * @throws SQLException
      */
-    public final void commit() throws SQLException
+    public final void commit()
+    throws SQLException
       {
         try
           {
-            LOG.info("---------- "+AnsiUtil.NEGATIVE+"C O M M I T"+AnsiUtil.NEGATIVE_OFF+" ----------------------------------- " + _PoolId + " ------------------------------");
+            LOG.info("---------- " + AnsiUtil.NEGATIVE + "C O M M I T" + AnsiUtil.NEGATIVE_OFF + " ----------------------------------- " + _PoolId + " ------------------------------");
             long T0 = System.nanoTime();
             _C.commit();
             _SavePoints.clear();
@@ -99,7 +101,7 @@ public final class Connection
           }
         catch (SQLException E)
           {
-            LOG.error(AnsiUtil.NEGATIVE+">>>>>>>>>>>>>>>"+AnsiUtil.NEGATIVE_OFF+"  F A I L U R E   C O M M I T  "+AnsiUtil.NEGATIVE+"<<<<<<<<<<<<<<<"+AnsiUtil.NEGATIVE_OFF);
+            LOG.error(AnsiUtil.NEGATIVE + ">>>>>>>>>>>>>>>" + AnsiUtil.NEGATIVE_OFF + "  F A I L U R E   C O M M I T  " + AnsiUtil.NEGATIVE + "<<<<<<<<<<<<<<<" + AnsiUtil.NEGATIVE_OFF);
             LOG.catching(E);
             LOG.error(SystemValues.NEWLINEx2);
             _SavePoints.clear();
@@ -112,11 +114,12 @@ public final class Connection
      * 
      * @return an SQException (instead of throwing) if one happens.
      */
-    public final void rollback() throws SQLException
+    public final void rollback()
+    throws SQLException
       {
         try
           {
-            LOG.info("---------- "+AnsiUtil.NEGATIVE+"R O L L B A C K"+AnsiUtil.NEGATIVE_OFF+" ------------------------------- " + _PoolId + " ------------------------------");
+            LOG.info("---------- " + AnsiUtil.NEGATIVE + "R O L L B A C K" + AnsiUtil.NEGATIVE_OFF + " ------------------------------- " + _PoolId + " ------------------------------");
             long T0 = System.nanoTime();
             _C.rollback();
             _SavePoints.clear();
@@ -124,7 +127,7 @@ public final class Connection
           }
         catch (SQLException E)
           {
-            LOG.error(AnsiUtil.NEGATIVE+">>>>>>>>>>>>>>>"+AnsiUtil.NEGATIVE_OFF+"  F A I L U R E   R O L L B A C K  "+AnsiUtil.NEGATIVE+"<<<<<<<<<<<<<<<"+AnsiUtil.NEGATIVE_OFF);
+            LOG.error(AnsiUtil.NEGATIVE + ">>>>>>>>>>>>>>>" + AnsiUtil.NEGATIVE_OFF + "  F A I L U R E   R O L L B A C K  " + AnsiUtil.NEGATIVE + "<<<<<<<<<<<<<<<" + AnsiUtil.NEGATIVE_OFF);
             LOG.catching(E);
             LOG.error(SystemValues.NEWLINEx2);
             _SavePoints.clear();
@@ -137,23 +140,25 @@ public final class Connection
      * 
      * @param Commit true if commit is needed, or false if rollback
      * @return an SQException (instead of throwing) if one happens.
-     * @throws SQLException 
+     * @throws SQLException
      */
-    public final void CommitRollbackConnection(boolean Commit) throws SQLException
+    public final void CommitRollbackConnection(boolean Commit)
+    throws SQLException
       {
-        if(Commit == true)
-         commit();
+        if (Commit == true)
+          commit();
         else
-         rollback();
+          rollback();
       }
 
     /**
      * Wrapper to {@link java.sql.Connection#close()} with extra logging and performance tracking
      * 
      * @return an SQException (instead of throwing) if one happens.
-     * @throws SQLException 
+     * @throws SQLException
      */
-    public final void close() throws SQLException
+    public final void close()
+    throws SQLException
       {
         try
           {
@@ -169,7 +174,7 @@ public final class Connection
           }
         catch (SQLException E)
           {
-            LOG.error(AnsiUtil.NEGATIVE+">>>>>>>>>>>>>>>"+AnsiUtil.NEGATIVE_OFF+"  F A I L U R E   C L O S I N G   C O N N E C T I O N  "+AnsiUtil.NEGATIVE+"<<<<<<<<<<<<<<<"+AnsiUtil.NEGATIVE_OFF, E);
+            LOG.error(AnsiUtil.NEGATIVE + ">>>>>>>>>>>>>>>" + AnsiUtil.NEGATIVE_OFF + "  F A I L U R E   C L O S I N G   C O N N E C T I O N  " + AnsiUtil.NEGATIVE + "<<<<<<<<<<<<<<<" + AnsiUtil.NEGATIVE_OFF, E);
             LOG.catching(E);
             LOG.error(SystemValues.NEWLINEx2);
             _SavePoints.clear();
@@ -185,14 +190,14 @@ public final class Connection
      * @throws SQLException
      */
     public final Statement createStatement()
-      throws SQLException
+    throws SQLException
       {
         return _C.createStatement();
       }
 
 
     public String getIsolation()
-      throws SQLException
+    throws SQLException
       {
         switch (_C.getTransactionIsolation())
           {
@@ -218,32 +223,32 @@ public final class Connection
      * @throws SQLException
      */
     public PreparedStatement prepareStatement(String Q)
-      throws SQLException
+    throws SQLException
       {
         return _C.prepareStatement(Q);
       }
 
     public boolean isErrNoData(String SQLState, int ErrorCode)
-      throws SQLException
+    throws SQLException
       {
         return _DB.isErrNoData(SQLState, ErrorCode);
       }
 
     public String getCurrentTimestampStr()
-      throws SQLException
+    throws SQLException
       {
         return _DB.getCurrentTimestampStr();
       }
 
     public boolean getSelectSubsettingClause(StringBuilder Str, int Start, int Size)
-      throws SQLException
+    throws SQLException
       {
         return _DB.getSelectSubsettingClause(Str, Start, Size);
       }
 
 
     public boolean isLockOrConnectionError(Throwable T)
-      throws SQLException
+    throws SQLException
       {
         if (T == null)
           return false;
@@ -263,7 +268,7 @@ public final class Connection
 
 
     public int ExecuteSelect(String TableName, String Query, RecordProcessor RP)
-      throws Exception
+    throws Exception
       {
         return JDBCHelper.ExecuteSelect(_C, TableName, Query, RP, 0, 0);
       }
@@ -272,43 +277,44 @@ public final class Connection
      * Executes a query with a record processor, starting at Start (0 is beginning), and for Size records.
      */
     public int ExecuteSelect(String TableName, String Query, RecordProcessor RP, int Start, int Size)
-      throws Exception
+    throws Exception
       {
         return JDBCHelper.ExecuteSelect(_C, TableName, Query, RP, Start, Size);
       }
 
     public int ExecuteUpdate(String TableName, String Query)
-      throws Exception
+    throws Exception
       {
-//        if (_DB.FullIdentifierOnUpdate() == true)
-//          {
-//            LOG.debug("TILDA("+AnsiUtil.NEGATIVE + TableName + AnsiUtil.NEGATIVE_OFF+") Original query: " + Query);
-//            Query = TextUtil.SearchReplace(Query, TableName+".", "");
-//          }
+        // if (_DB.FullIdentifierOnUpdate() == true)
+        // {
+        // LOG.debug("TILDA("+AnsiUtil.NEGATIVE + TableName + AnsiUtil.NEGATIVE_OFF+") Original query: " + Query);
+        // Query = TextUtil.SearchReplace(Query, TableName+".", "");
+        // }
         return JDBCHelper.ExecuteUpdate(_C, TableName, Query);
       }
 
     public Array createArrayOf(String TypeName, java.lang.Object[] A)
-      throws SQLException
+    throws SQLException
       {
         return _C.createArrayOf(TypeName, A);
       }
-    
+
     public Array createArrayOf(String TypeName, Set<?> A)
-        throws SQLException
-        {
-          return _C.createArrayOf(TypeName, A.toArray());
-        }
+    throws SQLException
+      {
+        return _C.createArrayOf(TypeName, A.toArray());
+      }
+
     public Array createArrayOf(String TypeName, List<?> A)
-        throws SQLException
-        {
-          return _C.createArrayOf(TypeName, A.toArray());
-        }
-    
+    throws SQLException
+      {
+        return _C.createArrayOf(TypeName, A.toArray());
+      }
+
     Deque<Savepoint> _SavePoints = new ArrayDeque<Savepoint>();
 
     public void setSavepoint()
-      throws SQLException
+    throws SQLException
       {
         long T0 = System.nanoTime();
         _SavePoints.add(_C.setSavepoint());
@@ -316,11 +322,11 @@ public final class Connection
       }
 
     public void releaseSavepoint(boolean commit)
-      throws SQLException
+    throws SQLException
       {
         if (_SavePoints.isEmpty() == true)
-         return;
-        
+          return;
+
         long T0 = System.nanoTime();
         if (commit == true)
           {
@@ -339,33 +345,44 @@ public final class Connection
         return _DB.getSQlCodeGen();
       }
 
-    public DatabaseMetaData getMetaData() throws SQLException
+    public DatabaseMetaData getMetaData()
+    throws SQLException
       {
         return _C.getMetaData();
       }
 
-    public boolean alterTableAddColumn(Column Col, String DefaultValue) throws Exception
+    public boolean alterTableAddColumn(Column Col, String DefaultValue)
+    throws Exception
       {
         return _DB.alterTableAddColumn(this, Col, DefaultValue);
       }
-    
-    public boolean alterTableAlterColumnNull(Column Col, String DefaultValue) throws Exception
+
+    public boolean alterTableAlterColumnNull(Column Col, String DefaultValue)
+    throws Exception
       {
         return _DB.alterTableAlterColumnNull(this, Col, DefaultValue);
       }
-    
-    public boolean createTable(Object Obj)  throws Exception
+
+    public boolean createTable(Object Obj)
+    throws Exception
       {
         return _DB.createTable(this, Obj);
       }
 
-    public boolean createView(View V, boolean Drop)  throws Exception
+    public boolean createView(View V, boolean Drop)
+    throws Exception
       {
         return _DB.createView(this, V, Drop);
       }
 
-    public boolean createSchema(Schema S) throws Exception
+    public boolean createSchema(Schema S)
+    throws Exception
       {
         return _DB.createSchema(this, S);
+      }
+
+    public String getAggregateStr(AggregateType Agg)
+      {
+        return _DB.getAggregateStr(Agg);
       }
   }

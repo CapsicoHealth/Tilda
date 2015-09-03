@@ -55,7 +55,7 @@ public class Key_Factory extends tilda.data._Tilda.TILDA__KEY_Factory
              C = ConnectionPool.get("KEYS");
              UpdateQuery Q = newUpdateQuery(C);
              Q.set(COLS.MAX, COLS.MAX).plus(COLS.COUNT)
-              .where(COLS.REFNUM).equals(K.getRefnum());
+              .where().equals(COLS.REFNUM, K.getRefnum());
              Q.execute();
              K.Refresh(C);
              K._K.set(K.getCount());

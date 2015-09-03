@@ -26,7 +26,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.db.stores.PostgreSQL;
-import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.generation.GeneratorSession;
@@ -167,27 +166,6 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 Out.println(") REFERENCES " + FK._DestObjectObj._ParentSchema._Name + "." + FK._DestObjectObj._Name + " ON DELETE restrict ON UPDATE cascade");
               }
         Out.println(" );");
-      }
-
-    protected static String getAggregateStr(AggregateType AT)
-      {
-        switch (AT)
-          {
-            case AVG:
-              return "avg";
-            case DEV:
-              return "stddev";
-            case MAX:
-              return "max";
-            case MIN:
-              return "min";
-            case SUM:
-              return "sum";
-            case VAR:
-              return "variance";
-            default:
-              throw new Error("Cannot convert AggregateType " + AT + " to a database aggregate function name.");
-          }
       }
 
     @Override

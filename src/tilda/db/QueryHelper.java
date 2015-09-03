@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import tilda.types.*;
+import tilda.enums.AggregateType;
 import tilda.enums.StatementType;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.TextUtil;
@@ -73,7 +74,7 @@ public abstract class QueryHelper
 
     protected static enum S
       {
-        START, FROM, SET, WHERE;
+        START, FROM, SET, WHERE, GROUPBY, ORDERBY;
       }
 
     protected final String        _TableName;
@@ -92,29 +93,47 @@ public abstract class QueryHelper
 
 
     protected final void valuesBase()
-      throws Exception
+    throws Exception
       {
         if (_Section != S.SET || _ST != StatementType.INSERT)
           throw new Exception("Invalid query syntax: Calling values() after a " + _Section + " in a query of type " + _ST);
         _QueryStr.append(") values (");
       }
 
-    public final QueryHelper selectColumn(ColumnDefinition Col)
-      throws Exception
+    private final QueryHelper selectColumnBase(String ColStr)
+    throws Exception
       {
         if (_Section != S.START && _Section != S.SET || _ST != StatementType.SELECT)
           throw new Exception("Invalid query syntax: Listing a column in a Select clause after a " + _Section + " in a query of type " + _ST);
         if (_Section == S.SET)
           _QueryStr.append(", ");
-        _QueryStr.append(Col.toString(_ST));
+        _QueryStr.append(ColStr);
         ++_Cardinality;
         _Section = S.SET;
         return this;
       }
 
+    public final QueryHelper selectColumn(ColumnDefinition Col)
+    throws Exception
+      {
+        return selectColumnBase(Col.toString(_ST));
+      }
+
+    public final QueryHelper selectCountStar()
+    throws Exception
+      {
+        return selectColumnBase("count(*)");
+      }
+    
+    public final QueryHelper selectColumn(ColumnDefinition Col, AggregateType Agg, String Alias)
+    throws Exception
+      {
+        return selectColumnBase(_C.getAggregateStr(Agg)+"("+Col.toString(_ST)+") as \""+Alias+"\"");
+      }
+    
 
     protected final QueryHelper fromTable(String TableName)
-      throws Exception
+    throws Exception
       {
         if (_Section != S.FROM && _Section != S.SET || _ST != StatementType.SELECT)
           throw new Exception("Invalid query syntax: Calling from() with '" + TableName + "' after a " + _Section + " in a query of type " + _ST);
@@ -126,16 +145,8 @@ public abstract class QueryHelper
         return this;
       }
 
-    public final QueryHelper where(ColumnDefinition Col)
-      throws Exception
-      {
-        where();
-        _QueryStr.append(Col.toString(_ST));
-        return this;
-      }
-
     public final QueryHelper where()
-      throws Exception
+    throws Exception
       {
         if (_Section != S.FROM && _Section != S.SET)
           throw new Exception("Invalid query syntax: Calling where() after a " + _Section);
@@ -151,8 +162,14 @@ public abstract class QueryHelper
       }
 
 
+    public QueryHelper subWhere(SelectQuery subWhere)
+      {
+        _QueryStr.append(subWhere.toString());
+        return this;
+      }
+    
     public final QueryHelper and()
-      throws Exception
+    throws Exception
       {
         if (_Section != S.WHERE)
           throw new Exception("Invalid query syntax: Calling and() after a " + _Section);
@@ -163,7 +180,7 @@ public abstract class QueryHelper
       }
 
     public final QueryHelper or()
-      throws Exception
+    throws Exception
       {
         if (_Section != S.WHERE)
           throw new Exception("Invalid query syntax: Calling and() after a " + _Section);
@@ -174,7 +191,7 @@ public abstract class QueryHelper
       }
 
     public final QueryHelper openPar()
-      throws Exception
+    throws Exception
       {
         if (_Section != S.WHERE)
           throw new Exception("Invalid query syntax: Calling openPar() after a " + _Section);
@@ -184,7 +201,7 @@ public abstract class QueryHelper
       }
 
     public final QueryHelper closePar()
-      throws Exception
+    throws Exception
       {
         if (_Section != S.WHERE)
           throw new Exception("Invalid query syntax: Calling closePar() after a " + _Section + " (Outside of a where clause).");
@@ -193,19 +210,8 @@ public abstract class QueryHelper
         return this;
       }
 
-
-    @Deprecated
-    public final QueryHelper Truism()
-      throws Exception
-      {
-        if (_Section != S.WHERE)
-          throw new Exception("Invalid query syntax: Calling openPar() after a " + _Section);
-        _QueryStr.append(" 1=1");
-        return this;
-      }
-
     protected final void OpCol(Op O, ColumnDefinition Col)
-      throws Exception
+    throws Exception
       {
         if (_Section != S.SET && _Section != S.WHERE)
           throw new Exception("Invalid query syntax: Calling equals() after a " + _Section);
@@ -235,7 +241,7 @@ public abstract class QueryHelper
       }
 
     protected final void OpVal(Op O, String V)
-      throws Exception
+    throws Exception
       {
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
@@ -264,7 +270,7 @@ public abstract class QueryHelper
       }
 
     protected final void OpVal(Op O, boolean V)
-      throws Exception
+    throws Exception
       {
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
@@ -275,7 +281,7 @@ public abstract class QueryHelper
       }
 
     protected final void OpVal(Op O, double V)
-      throws Exception
+    throws Exception
       {
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
@@ -286,7 +292,7 @@ public abstract class QueryHelper
       }
 
     protected final void OpVal(Op O, float V)
-      throws Exception
+    throws Exception
       {
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
@@ -297,7 +303,7 @@ public abstract class QueryHelper
       }
 
     protected final void OpVal(Op O, int V)
-      throws Exception
+    throws Exception
       {
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
@@ -308,7 +314,7 @@ public abstract class QueryHelper
       }
 
     protected final void OpVal(Op O, long V)
-      throws Exception
+    throws Exception
       {
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET) || _ST == StatementType.DELETE && _Section == S.WHERE)
           {
@@ -319,7 +325,7 @@ public abstract class QueryHelper
       }
 
     protected final void OpVal(Op O, char V)
-      throws Exception
+    throws Exception
       {
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
@@ -330,7 +336,7 @@ public abstract class QueryHelper
       }
 
     protected final void OpVal(Op O, ZonedDateTime V)
-      throws Exception
+    throws Exception
       {
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
@@ -361,7 +367,7 @@ public abstract class QueryHelper
 
 
     public String getWhereClause()
-      throws Exception
+    throws Exception
       {
         if (_ST == StatementType.SELECT && _C == null)
           return _QueryStr.toString();
@@ -369,14 +375,14 @@ public abstract class QueryHelper
       }
 
     public QueryHelper values()
-      throws Exception
+    throws Exception
       {
         valuesBase();
         return this;
       }
 
     public QueryHelper from(String Table)
-      throws Exception
+    throws Exception
       {
         fromTable(Table);
         return this;
@@ -390,7 +396,7 @@ public abstract class QueryHelper
     // SETTERS
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     protected final void setColumn(ColumnDefinition Col)
-      throws Exception
+    throws Exception
       {
         if (_Section != S.START && _Section != S.SET || _ST != StatementType.UPDATE)
           throw new Exception("Invalid query syntax: Calling set() after a " + _Section);
@@ -401,119 +407,119 @@ public abstract class QueryHelper
       }
 
     public QueryHelper set(Type_StringPrimitive Col1, Type_StringPrimitive Col2)
-      throws Exception
+    throws Exception
       {
         setColumn(Col1);
         return equals(Col2);
       }
 
     public QueryHelper set(Type_CharPrimitive Col1, Type_CharPrimitive Col2)
-      throws Exception
+    throws Exception
       {
         setColumn(Col1);
         return equals(Col2);
       }
 
     public QueryHelper set(Type_BooleanPrimitive Col1, Type_BooleanPrimitive Col2)
-      throws Exception
+    throws Exception
       {
         setColumn(Col1);
         return equals(Col2);
       }
 
     public QueryHelper set(Type_IntegerPrimitive Col1, Type_IntegerPrimitive Col2)
-      throws Exception
+    throws Exception
       {
         setColumn(Col1);
         return equals(Col2);
       }
 
     public QueryHelper set(Type_LongPrimitive Col1, Type_IntegerPrimitive Col2)
-      throws Exception
+    throws Exception
       {
         setColumn(Col1);
         return equals(Col2);
       }
 
     public QueryHelper set(Type_LongPrimitive Col1, Type_LongPrimitive Col2)
-      throws Exception
+    throws Exception
       {
         setColumn(Col1);
         return equals(Col2);
       }
 
     public QueryHelper set(Type_FloatPrimitive Col1, Type_FloatPrimitive Col2)
-      throws Exception
+    throws Exception
       {
         setColumn(Col1);
         return equals(Col2);
       }
 
     public QueryHelper set(Type_DoublePrimitive Col1, Type_DoublePrimitive Col2)
-      throws Exception
+    throws Exception
       {
         setColumn(Col1);
         return equals(Col2);
       }
 
     public QueryHelper set(Type_DatetimePrimitive Col1, Type_DatetimePrimitive Col2)
-      throws Exception
+    throws Exception
       {
         setColumn(Col1);
         return equals(Col2);
       }
 
     public QueryHelper set(Type_StringPrimitive Col1, String V)
-      throws Exception
+    throws Exception
       {
         setColumn(Col1);
         return equals(V);
       }
 
     public QueryHelper set(Type_CharPrimitive Col1, char V)
-      throws Exception
+    throws Exception
       {
         setColumn(Col1);
         return equals(V);
       }
 
     public QueryHelper set(Type_BooleanPrimitive Col1, boolean V)
-      throws Exception
+    throws Exception
       {
         setColumn(Col1);
         return equals(V);
       }
 
     public QueryHelper set(Type_IntegerPrimitive Col1, int V)
-      throws Exception
+    throws Exception
       {
         setColumn(Col1);
         return equals(V);
       }
 
     public QueryHelper set(Type_LongPrimitive Col1, long V)
-      throws Exception
+    throws Exception
       {
         setColumn(Col1);
         return equals(V);
       }
 
     public QueryHelper set(Type_FloatPrimitive Col1, float V)
-      throws Exception
+    throws Exception
       {
         setColumn(Col1);
         return equals(V);
       }
 
     public QueryHelper set(Type_DoublePrimitive Col1, double V)
-      throws Exception
+    throws Exception
       {
         setColumn(Col1);
         return equals(V);
       }
 
     public QueryHelper set(Type_DatetimePrimitive Col1, ZonedDateTime V)
-      throws Exception
+    throws Exception
       {
         setColumn(Col1);
         return equals(V);
@@ -526,7 +532,7 @@ public abstract class QueryHelper
     // IN
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public QueryHelper in(Type_StringPrimitive Col, String[] v)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
@@ -546,7 +552,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper in(Type_StringPrimitive Col, Collection<String> v)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
@@ -572,7 +578,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper in(Type_CharPrimitive Col, char[] v)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
@@ -592,7 +598,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper in(Type_IntegerPrimitive Col, int[] v)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
@@ -612,7 +618,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper in(Type_LongPrimitive Col, long[] v)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
@@ -632,7 +638,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper in(Type_FloatPrimitive Col, float[] v)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
@@ -652,7 +658,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper in(Type_DoublePrimitive Col, double[] v)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
@@ -672,7 +678,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper in(Type_DatetimePrimitive Col, ZonedDateTime[] v)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
@@ -697,7 +703,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper in(Type_DatetimePrimitive Col, Collection<ZonedDateTime> v)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
@@ -727,77 +733,77 @@ public abstract class QueryHelper
           }
         throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST);
       }
-    
+
     public QueryHelper in(ColumnDefinition Col, SelectQuery Q)
-        throws Exception
-        {
-          _QueryStr.append(Col.toString(_ST));
-          if (Q._Cardinality != 1)
-           throw new Exception("Invalid query syntax: Calling the operator 'in' with a subquery that has a column cardinality " + Q._Cardinality);
-          if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
-            {
-              _QueryStr.append(" in (").append(Q._QueryStr).append(")");
-              return this;
-            }
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST);
-        }
-    
+    throws Exception
+      {
+        _QueryStr.append(Col.toString(_ST));
+        if (Q._Cardinality != 1)
+          throw new Exception("Invalid query syntax: Calling the operator 'in' with a subquery that has a column cardinality " + Q._Cardinality);
+        if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+          {
+            _QueryStr.append(" in (").append(Q._QueryStr).append(")");
+            return this;
+          }
+        throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST);
+      }
+
 
 
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Col EQUALS Col
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public QueryHelper equals(String V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.EQUALS, V);
         return this;
       }
 
     public QueryHelper equals(char V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.EQUALS, V);
         return this;
       }
 
     public QueryHelper equals(boolean V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.EQUALS, V);
         return this;
       }
 
     public QueryHelper equals(int V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.EQUALS, V);
         return this;
       }
 
     public QueryHelper equals(long V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.EQUALS, V);
         return this;
       }
 
     public QueryHelper equals(float V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.EQUALS, V);
         return this;
       }
 
     public QueryHelper equals(double V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.EQUALS, V);
         return this;
       }
 
     public QueryHelper equals(ZonedDateTime ZDT)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.EQUALS, ZDT);
         return this;
@@ -809,7 +815,7 @@ public abstract class QueryHelper
     // Col EQUALS Col
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     protected QueryHelper equalsBase(ColumnDefinition Col1, ColumnDefinition Col2)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col1.toString(_ST));
         OpCol(Op.EQUALS, Col2);
@@ -817,56 +823,56 @@ public abstract class QueryHelper
       }
 
     public QueryHelper equals(ColumnDefinition Col1)
-      throws Exception
+    throws Exception
       {
         OpCol(Op.EQUALS, Col1);
         return this;
       }
 
     public QueryHelper equals(Type_StringPrimitive Col1, Type_StringPrimitive Col2)
-      throws Exception
+    throws Exception
       {
         return equalsBase(Col1, Col2);
       }
 
     public QueryHelper equals(Type_DatetimePrimitive Col1, Type_DatetimePrimitive Col2)
-      throws Exception
+    throws Exception
       {
         return equalsBase(Col1, Col2);
       }
 
     public QueryHelper equals(Type_CharPrimitive Col1, Type_CharPrimitive Col2)
-      throws Exception
+    throws Exception
       {
         return equalsBase(Col1, Col2);
       }
 
     public QueryHelper equals(Type_BooleanPrimitive Col1, Type_BooleanPrimitive Col2)
-      throws Exception
+    throws Exception
       {
         return equalsBase(Col1, Col2);
       }
 
     public QueryHelper equals(Type_IntegerPrimitive Col1, Type_IntegerPrimitive Col2)
-      throws Exception
+    throws Exception
       {
         return equalsBase(Col1, Col2);
       }
 
     public QueryHelper equals(Type_LongPrimitive Col1, Type_LongPrimitive Col2)
-      throws Exception
+    throws Exception
       {
         return equalsBase(Col1, Col2);
       }
 
     public QueryHelper equals(Type_FloatPrimitive Col1, Type_FloatPrimitive Col2)
-      throws Exception
+    throws Exception
       {
         return equalsBase(Col1, Col2);
       }
 
     public QueryHelper equals(Type_DoublePrimitive Col1, Type_DoublePrimitive Col2)
-      throws Exception
+    throws Exception
       {
         return equalsBase(Col1, Col2);
       }
@@ -877,7 +883,7 @@ public abstract class QueryHelper
     // Col EQUALS value
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public QueryHelper equals(Type_StringPrimitive Col, String V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.EQUALS, V);
@@ -885,7 +891,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper equals(Type_CharPrimitive Col, char V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.EQUALS, V);
@@ -893,7 +899,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper equals(Type_BooleanPrimitive Col, boolean V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.EQUALS, V);
@@ -901,7 +907,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper equals(Type_IntegerPrimitive Col, int V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.EQUALS, V);
@@ -909,7 +915,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper equals(Type_LongPrimitive Col, long V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.EQUALS, V);
@@ -917,7 +923,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper equals(Type_FloatPrimitive Col, float V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.EQUALS, V);
@@ -925,7 +931,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper equals(Type_DoublePrimitive Col, double V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.EQUALS, V);
@@ -933,7 +939,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper equals(Type_DatetimePrimitive Col, ZonedDateTime ZDT)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.EQUALS, ZDT);
@@ -945,7 +951,7 @@ public abstract class QueryHelper
     // Col < value
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public QueryHelper lt(Type_StringPrimitive Col, String V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.LT, V);
@@ -953,7 +959,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper lt(Type_CharPrimitive Col, char V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.LT, V);
@@ -961,7 +967,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper lt(Type_BooleanPrimitive Col, boolean V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.LT, V);
@@ -969,7 +975,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper lt(Type_IntegerPrimitive Col, int V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.LT, V);
@@ -977,7 +983,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper lt(Type_LongPrimitive Col, long V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.LT, V);
@@ -985,7 +991,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper lt(Type_FloatPrimitive Col, float V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.LT, V);
@@ -993,7 +999,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper lt(Type_DoublePrimitive Col, double V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.LT, V);
@@ -1001,7 +1007,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper lt(Type_DatetimePrimitive Col, ZonedDateTime ZDT)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.LT, ZDT);
@@ -1013,7 +1019,7 @@ public abstract class QueryHelper
     // Col <= value
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public QueryHelper lte(Type_StringPrimitive Col, String V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.LTE, V);
@@ -1021,7 +1027,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper lte(Type_CharPrimitive Col, char V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.LTE, V);
@@ -1029,7 +1035,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper lte(Type_BooleanPrimitive Col, boolean V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.LTE, V);
@@ -1037,7 +1043,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper lte(Type_IntegerPrimitive Col, int V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.LTE, V);
@@ -1045,7 +1051,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper lte(Type_LongPrimitive Col, long V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.LTE, V);
@@ -1053,7 +1059,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper lte(Type_FloatPrimitive Col, float V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.LTE, V);
@@ -1061,7 +1067,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper lte(Type_DoublePrimitive Col, double V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.LTE, V);
@@ -1069,7 +1075,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper lte(Type_DatetimePrimitive Col, ZonedDateTime ZDT)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.LTE, ZDT);
@@ -1083,7 +1089,7 @@ public abstract class QueryHelper
     // Col > value
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public QueryHelper gt(Type_StringPrimitive Col, String V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.GT, V);
@@ -1091,7 +1097,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper gt(Type_CharPrimitive Col, char V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.GT, V);
@@ -1099,7 +1105,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper gt(Type_BooleanPrimitive Col, boolean V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.GT, V);
@@ -1107,7 +1113,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper gt(Type_IntegerPrimitive Col, int V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.GT, V);
@@ -1115,7 +1121,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper gt(Type_LongPrimitive Col, long V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.GT, V);
@@ -1123,7 +1129,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper gt(Type_FloatPrimitive Col, float V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.GT, V);
@@ -1131,7 +1137,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper gt(Type_DoublePrimitive Col, double V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.GT, V);
@@ -1139,7 +1145,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper gt(Type_DatetimePrimitive Col, ZonedDateTime ZDT)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.GT, ZDT);
@@ -1153,7 +1159,7 @@ public abstract class QueryHelper
     // Col >= value
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public QueryHelper gte(ColumnDefinition Col)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpCol(Op.GTE, Col);
@@ -1161,7 +1167,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper gte(Type_StringPrimitive Col, String V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.GTE, V);
@@ -1169,7 +1175,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper gte(Type_CharPrimitive Col, char V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.GTE, V);
@@ -1177,7 +1183,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper gte(Type_BooleanPrimitive Col, boolean V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.GTE, V);
@@ -1185,7 +1191,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper gte(Type_IntegerPrimitive Col, int V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.GTE, V);
@@ -1193,7 +1199,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper gte(Type_LongPrimitive Col, long V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.GTE, V);
@@ -1201,7 +1207,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper gte(Type_FloatPrimitive Col, float V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.GTE, V);
@@ -1209,7 +1215,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper gte(Type_DoublePrimitive Col, double V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.GTE, V);
@@ -1217,7 +1223,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper gte(Type_DatetimePrimitive Col, ZonedDateTime ZDT)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.GTE, ZDT);
@@ -1231,7 +1237,7 @@ public abstract class QueryHelper
     // Col <> value
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public QueryHelper not_equals(Type_StringPrimitive Col, String V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.NOT_EQUALS, V);
@@ -1239,7 +1245,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper not_equals(Type_CharPrimitive Col, char V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.NOT_EQUALS, V);
@@ -1247,7 +1253,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper not_equals(Type_BooleanPrimitive Col, boolean V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.NOT_EQUALS, V);
@@ -1255,7 +1261,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper not_equals(Type_IntegerPrimitive Col, int V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.NOT_EQUALS, V);
@@ -1263,7 +1269,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper not_equals(Type_LongPrimitive Col, long V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.NOT_EQUALS, V);
@@ -1271,7 +1277,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper not_equals(Type_FloatPrimitive Col, float V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.NOT_EQUALS, V);
@@ -1279,7 +1285,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper not_equals(Type_DoublePrimitive Col, double V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.NOT_EQUALS, V);
@@ -1287,7 +1293,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper not_equals(Type_DatetimePrimitive Col, ZonedDateTime ZDT)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.NOT_EQUALS, ZDT);
@@ -1303,252 +1309,252 @@ public abstract class QueryHelper
     // Operators
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public QueryHelper plus(ColumnDefinition Col)
-      throws Exception
+    throws Exception
       {
         OpCol(Op.PLUS, Col);
         return this;
       }
 
     public QueryHelper plus(String V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.PLUS, V);
         return this;
       }
 
     public QueryHelper plus(char V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.PLUS, V);
         return this;
       }
 
     public QueryHelper plus(boolean V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.PLUS, V);
         return this;
       }
 
     public QueryHelper plus(int V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.PLUS, V);
         return this;
       }
 
     public QueryHelper plus(long V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.PLUS, V);
         return this;
       }
 
     public QueryHelper plus(float V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.PLUS, V);
         return this;
       }
 
     public QueryHelper plus(double V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.PLUS, V);
         return this;
       }
 
     public QueryHelper plus(ZonedDateTime ZDT)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.PLUS, ZDT);
         return this;
       }
 
     public QueryHelper minus(ColumnDefinition Col)
-      throws Exception
+    throws Exception
       {
         OpCol(Op.MINUS, Col);
         return this;
       }
 
     public QueryHelper minus(String V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.MINUS, V);
         return this;
       }
 
     public QueryHelper minus(char V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.MINUS, V);
         return this;
       }
 
     public QueryHelper minus(boolean V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.MINUS, V);
         return this;
       }
 
     public QueryHelper minus(int V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.MINUS, V);
         return this;
       }
 
     public QueryHelper minus(long V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.MINUS, V);
         return this;
       }
 
     public QueryHelper minus(float V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.MINUS, V);
         return this;
       }
 
     public QueryHelper minus(double V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.MINUS, V);
         return this;
       }
 
     public QueryHelper minus(ZonedDateTime ZDT)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.MINUS, ZDT);
         return this;
       }
 
     public QueryHelper multiply(ColumnDefinition Col)
-      throws Exception
+    throws Exception
       {
         OpCol(Op.MULTIPLY, Col);
         return this;
       }
 
     public QueryHelper multiply(String V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.MULTIPLY, V);
         return this;
       }
 
     public QueryHelper multiply(char V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.MULTIPLY, V);
         return this;
       }
 
     public QueryHelper multiply(boolean V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.MULTIPLY, V);
         return this;
       }
 
     public QueryHelper multiply(int V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.MULTIPLY, V);
         return this;
       }
 
     public QueryHelper multiply(long V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.MULTIPLY, V);
         return this;
       }
 
     public QueryHelper multiply(float V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.MULTIPLY, V);
         return this;
       }
 
     public QueryHelper multiply(double V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.MULTIPLY, V);
         return this;
       }
 
     public QueryHelper multiply(ZonedDateTime ZDT)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.MULTIPLY, ZDT);
         return this;
       }
 
     public QueryHelper divide(ColumnDefinition Col)
-      throws Exception
+    throws Exception
       {
         OpCol(Op.DIVIDE, Col);
         return this;
       }
 
     public QueryHelper divide(String V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.DIVIDE, V);
         return this;
       }
 
     public QueryHelper divide(char V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.DIVIDE, V);
         return this;
       }
 
     public QueryHelper divide(boolean V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.DIVIDE, V);
         return this;
       }
 
     public QueryHelper divide(int V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.DIVIDE, V);
         return this;
       }
 
     public QueryHelper divide(long V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.DIVIDE, V);
         return this;
       }
 
     public QueryHelper divide(float V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.DIVIDE, V);
         return this;
       }
 
     public QueryHelper divide(double V)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.DIVIDE, V);
         return this;
       }
 
     public QueryHelper divide(ZonedDateTime ZDT)
-      throws Exception
+    throws Exception
       {
         OpVal(Op.DIVIDE, ZDT);
         return this;
@@ -1564,7 +1570,7 @@ public abstract class QueryHelper
     // IS NULL and IS NOT NULL
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public QueryHelper isNull(Nullable Col)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.EQUALS, (String) null);
@@ -1572,7 +1578,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper isNotNull(Nullable Col)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.NOT_EQUALS, (String) null);
@@ -1585,7 +1591,7 @@ public abstract class QueryHelper
     // LIKE
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public QueryHelper like(Type_StringPrimitive Col, String V)
-      throws Exception
+    throws Exception
       {
         _QueryStr.append(Col.toString(_ST));
         OpVal(Op.LIKE, V);
@@ -1593,7 +1599,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper like(Type_StringPrimitive[] Cols, String V)
-      throws Exception
+    throws Exception
       {
         boolean First = true;
         for (Type_StringPrimitive c : Cols)
@@ -1611,13 +1617,13 @@ public abstract class QueryHelper
 
     @Deprecated
     public QueryHelper like(Type_StringPrimitive Col, String[] Vals)
-      throws Exception
+    throws Exception
       {
         return like(Col, Vals, true);
       }
 
     public QueryHelper like(Type_StringPrimitive Col, String[] Vals, boolean Or)
-      throws Exception
+    throws Exception
       {
         if (Vals == null)
           return this;
@@ -1636,7 +1642,7 @@ public abstract class QueryHelper
       }
 
     public QueryHelper like(Type_StringPrimitive[] Cols, String[] Vals, boolean Or)
-      throws Exception
+    throws Exception
       {
         if (Vals == null)
           return this;
@@ -1671,7 +1677,7 @@ public abstract class QueryHelper
         if (Vals == null)
           return this;
         _QueryStr.append(Col.toString(_ST))
-            .append(" && ARRAY[");
+        .append(" && ARRAY[");
         boolean First = true;
         for (String v : Vals)
           {
@@ -1684,13 +1690,13 @@ public abstract class QueryHelper
         _QueryStr.append("]");
         return this;
       }
-    
+
     public QueryHelper any(Type_StringCollection Col, Collection<String> Vals)
       {
         if (Vals == null)
           return this;
         _QueryStr.append(Col.toString(_ST))
-            .append(" && ARRAY[");
+        .append(" && ARRAY[");
         boolean First = true;
         for (String v : Vals)
           {
@@ -1703,7 +1709,7 @@ public abstract class QueryHelper
         _QueryStr.append("]");
         return this;
       }
-    
+
 
     public QueryHelper any(Type_IntegerCollection Col, int v)
       {
@@ -1717,7 +1723,7 @@ public abstract class QueryHelper
         if (Vals == null)
           return this;
         _QueryStr.append(Col.toString(_ST))
-            .append(" && ARRAY[");
+        .append(" && ARRAY[");
         boolean First = true;
         for (int v : Vals)
           {
@@ -1743,7 +1749,7 @@ public abstract class QueryHelper
         if (Vals == null)
           return this;
         _QueryStr.append(Col.toString(_ST))
-            .append(" && ARRAY[");
+        .append(" && ARRAY[");
         boolean First = true;
         for (int v : Vals)
           {
@@ -1757,8 +1763,32 @@ public abstract class QueryHelper
         return this;
       }
 
+    public QueryHelper groupBy(ColumnDefinition Col)
+    throws Exception
+      {
+        if (_Section != S.WHERE && _Section != S.GROUPBY || _ST != StatementType.SELECT)
+          throw new Exception("Invalid query syntax: GroupBy after a " + _Section + " in a query of type " + _ST);
+        if (_Section == S.GROUPBY)
+          _QueryStr.append(", ");
+        _QueryStr.append(Col.toString(_ST));
+        _Section = S.GROUPBY;
+        return this;
+      }
+
+    public QueryHelper orderBy(ColumnDefinition Col, boolean Asc)
+    throws Exception
+      {
+        if (_Section != S.WHERE && _Section != S.GROUPBY && _Section == S.ORDERBY || _ST != StatementType.SELECT)
+          throw new Exception("Invalid query syntax: OrderBy after a " + _Section + " in a query of type " + _ST);
+        if (_Section == S.ORDERBY)
+          _QueryStr.append(", ");
+        _QueryStr.append(Col.toString(_ST)).append(Asc==true?" ASC":" DESC");
+        _Section = S.ORDERBY;
+        return this;
+      }
+    
     public String toString()
-     {
-       return _QueryStr.toString(); 
-     }
+      {
+        return _QueryStr.toString();
+      }
   }

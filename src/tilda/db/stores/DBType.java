@@ -19,6 +19,7 @@ package tilda.db.stores;
 import java.sql.SQLException;
 
 import tilda.db.Connection;
+import tilda.enums.AggregateType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
@@ -49,5 +50,6 @@ public interface DBType
     public static DBType[] _DBTypes = { Postgres, SQLServer, DB2 };
 
     public boolean FullIdentifierOnUpdate();
+    public String getAggregateStr(AggregateType AT);
     
   }

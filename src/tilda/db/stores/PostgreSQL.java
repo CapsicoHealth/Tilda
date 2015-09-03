@@ -21,6 +21,7 @@ import java.io.StringWriter;
 import java.sql.SQLException;
 
 import tilda.db.Connection;
+import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.generation.Generator;
@@ -95,6 +96,29 @@ public class PostgreSQL implements DBType
 
         return true;
       }
+    
+    @Override
+    public String getAggregateStr(AggregateType AT)
+      {
+        switch (AT)
+          {
+            case AVG:
+              return "avg";
+            case DEV:
+              return "stddev";
+            case MAX:
+              return "max";
+            case MIN:
+              return "min";
+            case SUM:
+              return "sum";
+            case VAR:
+              return "variance";
+            default:
+              throw new Error("Cannot convert AggregateType " + AT + " to a database aggregate function name.");
+          }
+      }
+    
     
     @Override
     public boolean FullIdentifierOnUpdate()
