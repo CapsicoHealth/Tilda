@@ -60,38 +60,55 @@ public class JDBCHelper
       }
 
 
-    public static int Process(ResultSet RS, RecordProcessor RP, int Start, int Size)
-      throws Exception
+    public static int Process(ResultSet RS, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited)
+    throws Exception
+      {
+        return Process(RS, RP, Start, Offsetted, Size, Limited, false);
+      }
+
+    public static int Process(ResultSet RS, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited, boolean CountAll)
+    throws Exception
       {
         RP.Start();
         int count = 0;
-        if (Start > 0 && RS.relative(Start) == false)
+        if (Offsetted == false && Start > 0 && RS.relative(Start) == false)
           return -1;
-        while (RS.next() == true)
+        while (Size <= -1 || count < Size)
           {
-            if (Size > 0 && count >= Size)
+            if (RS.next() == false)
               break;
             if (RP.Process(count, RS) == false)
               return -1;
             ++count;
           }
-        RP.End(RS.next() == true, SystemValues.EVIL_VALUE);
+        boolean More = RS.next();
+        int MaxCount = CountAll == true && RS.last() == true ? RS.getRow() : SystemValues.EVIL_VALUE;
+        RP.End(More, MaxCount);
         return count;
       }
 
     public static int ExecuteSelect(Connection C, String TableName, String Query, RecordProcessor RP)
-      throws Exception
+    throws Exception
       {
-        return ExecuteSelect(C, TableName, Query, RP, 0, 0);
+        return ExecuteSelect(C, TableName, Query, RP, 0, false, 0, false, false);
       }
 
     /**
      * Executes a query with a record processor, starting at Start (0 is beginning), and for Size records.
      */
-    public static int ExecuteSelect(Connection C, String TableName, String Query, RecordProcessor RP, int Start, int Size)
-      throws Exception
+    public static int ExecuteSelect(Connection C, String TableName, String Query, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited)
+    throws Exception
       {
-        LOG.debug("TILDA("+AnsiUtil.NEGATIVE + TableName + AnsiUtil.NEGATIVE_OFF+"): " + Query);
+        return ExecuteSelect(C, TableName, Query, RP, Start, Offsetted, Size, Limited, false);
+      }
+
+    /**
+     * Executes a query with a record processor, starting at Start (0 is beginning), and for Size records.
+     */
+    public static int ExecuteSelect(Connection C, String TableName, String Query, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited, boolean CountAll)
+    throws Exception
+      {
+        LOG.debug("TILDA(" + AnsiUtil.NEGATIVE + TableName + AnsiUtil.NEGATIVE_OFF + "): " + Query);
         Statement S = null;
         try
           {
@@ -99,8 +116,8 @@ public class JDBCHelper
             QueryDetails.setLastQuery(TableName, Query);
             S = C.createStatement();
             ResultSet RS = S.executeQuery(Query);
-            int count = JDBCHelper.Process(RS, RP, Start, Size);
-            PerfTracker.add(TableName, StatementType.SELECT,  System.nanoTime()-T0, count);
+            int count = JDBCHelper.Process(RS, RP, Start, Offsetted, Size, Limited, CountAll);
+            PerfTracker.add(TableName, StatementType.SELECT, System.nanoTime() - T0, count);
             return count;
           }
         finally
@@ -110,9 +127,9 @@ public class JDBCHelper
       }
 
     public static int ExecuteUpdate(Connection C, String TableName, String Query)
-      throws Exception
+    throws Exception
       {
-        LOG.debug("TILDA("+AnsiUtil.NEGATIVE + TableName + AnsiUtil.NEGATIVE_OFF+"): " + Query);
+        LOG.debug("TILDA(" + AnsiUtil.NEGATIVE + TableName + AnsiUtil.NEGATIVE_OFF + "): " + Query);
         Statement S = null;
         try
           {
@@ -120,7 +137,7 @@ public class JDBCHelper
             QueryDetails.setLastQuery(TableName, Query);
             S = C.createStatement();
             int count = S.executeUpdate(Query);
-            PerfTracker.add(TableName, StatementType.UPDATE, System.nanoTime()-T0, count);
+            PerfTracker.add(TableName, StatementType.UPDATE, System.nanoTime() - T0, count);
             return count;
           }
         finally
@@ -130,23 +147,23 @@ public class JDBCHelper
       }
 
     public static int ExecuteInsert(Connection C, String TableName, String Query)
-        throws Exception
-        {
-          LOG.debug("TILDA("+AnsiUtil.NEGATIVE + TableName + AnsiUtil.NEGATIVE_OFF+"): " + Query);
-          Statement S = null;
-          try
-            {
-              long T0 = System.nanoTime();
-              QueryDetails.setLastQuery(TableName, Query);
-              S = C.createStatement();
-              int count = S.executeUpdate(Query);
-              PerfTracker.add(TableName, StatementType.INSERT, System.nanoTime()-T0, count);
-              return count;
-            }
-          finally
-            {
-              JDBCHelper.CloseStatement(S);
-            }
-        }
+    throws Exception
+      {
+        LOG.debug("TILDA(" + AnsiUtil.NEGATIVE + TableName + AnsiUtil.NEGATIVE_OFF + "): " + Query);
+        Statement S = null;
+        try
+          {
+            long T0 = System.nanoTime();
+            QueryDetails.setLastQuery(TableName, Query);
+            S = C.createStatement();
+            int count = S.executeUpdate(Query);
+            PerfTracker.add(TableName, StatementType.INSERT, System.nanoTime() - T0, count);
+            return count;
+          }
+        finally
+          {
+            JDBCHelper.CloseStatement(S);
+          }
+      }
 
   }

@@ -33,8 +33,9 @@ public interface DBType
     public String  getCurrentTimestampStr();
     public boolean isLockOrConnectionError(SQLException t);
     public boolean needsSavepoint();
-    public boolean supportsSelectSubsetting();
-    public boolean getSelectSubsettingClause(StringBuilder Str, int Start, int Size);
+    public boolean supportsSelectLimit();
+    public boolean supportsSelectOffset();
+    public String  getSelectLimitClause(int Start, int Size);
     
     public CodeGenSql getSQlCodeGen();    
     public boolean createSchema(Connection Con, Schema S) throws Exception;

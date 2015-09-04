@@ -240,13 +240,6 @@ public final class Connection
         return _DB.getCurrentTimestampStr();
       }
 
-    public boolean getSelectSubsettingClause(StringBuilder Str, int Start, int Size)
-    throws SQLException
-      {
-        return _DB.getSelectSubsettingClause(Str, Start, Size);
-      }
-
-
     public boolean isLockOrConnectionError(Throwable T)
     throws SQLException
       {
@@ -270,16 +263,24 @@ public final class Connection
     public int ExecuteSelect(String TableName, String Query, RecordProcessor RP)
     throws Exception
       {
-        return JDBCHelper.ExecuteSelect(_C, TableName, Query, RP, 0, 0);
+        return JDBCHelper.ExecuteSelect(_C, TableName, Query, RP);
       }
 
     /**
      * Executes a query with a record processor, starting at Start (0 is beginning), and for Size records.
      */
-    public int ExecuteSelect(String TableName, String Query, RecordProcessor RP, int Start, int Size)
+    public int ExecuteSelect(String TableName, String Query, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited)
     throws Exception
       {
-        return JDBCHelper.ExecuteSelect(_C, TableName, Query, RP, Start, Size);
+        return ExecuteSelect(TableName, Query, RP, Start, Offsetted, Size, Limited, false);
+      }
+    /**
+     * Executes a query with a record processor, starting at Start (0 is beginning), and for Size records.
+     */
+    public int ExecuteSelect(String TableName, String Query, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited, boolean CountAll)
+    throws Exception
+      {
+        return JDBCHelper.ExecuteSelect(_C, TableName, Query, RP, Start, Offsetted, Size, Limited, CountAll);
       }
 
     public int ExecuteUpdate(String TableName, String Query)
@@ -385,4 +386,20 @@ public final class Connection
       {
         return _DB.getAggregateStr(Agg);
       }
+    
+    public boolean supportsSelectLimit()
+      {
+        return _DB.supportsSelectLimit();
+      }
+    public boolean supportsSelectOffset()
+      {
+        return _DB.supportsSelectLimit();
+      }
+    public String getSelectLimitClause(int Start, int Size)
+      {
+        return _DB.getSelectLimitClause(Start, Size);
+      }
+    
   }
+
+

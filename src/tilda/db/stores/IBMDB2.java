@@ -67,15 +67,21 @@ public class IBMDB2 implements DBType
       }
 
     @Override
-    public boolean supportsSelectSubsetting()
+    public boolean supportsSelectLimit()
       {
         return false;
       }
 
     @Override
-    public boolean getSelectSubsettingClause(StringBuilder Str, int Start, int Size)
+    public boolean supportsSelectOffset()
       {
         return false;
+      }
+
+    @Override
+    public String getSelectLimitClause(int Start, int Size)
+      {
+        return "";
       }
 
     @Override

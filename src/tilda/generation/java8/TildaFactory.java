@@ -183,11 +183,11 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("       S.append(" + TextUtil.EscapeDoubleQuoteWithSlash(Str.toString()) + ");");
         Helper.SwitchLookupIdWhereClauses(Out, G, O, "       ", false);
         Out.println();
-        if (G.getSql().supportsSelectSubsetting() == true)
-          {
-            Out.println("       C.getSelectSubsettingClause(S, Start, Size+1);");
-          }
-        Out.println("       String Q = S.toString();");
+        Out.println("       ");
+        if (G.getSql().supportsSelectLimit() == true || G.getSql().supportsSelectOffset() == true)
+         Out.println("       String Q = S.toString() + C.getSelectLimitClause(Start, Size+1);");
+        else
+         Out.println("       String Q = S.toString();");
         Out.println("       S.setLength(0);");
         Out.println("       S = null;");
         Out.println("       QueryDetails.setLastQuery(TABLENAME, Q);");
@@ -203,7 +203,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("          int i = 0;");
         Helper.SwitchLookupIdPreparedStatement(Out, O, "          ", false, true);
         Out.println();
-        Out.println("          count = JDBCHelper.Process(PS.executeQuery(), RPL, " + (G.getSql().supportsSelectSubsetting() == true ? "0" : "Start") + ", Size);");
+        Out.println("          count = JDBCHelper.Process(PS.executeQuery(), RPL, Start, "+G.getSql().supportsSelectOffset()+", Size, "+G.getSql().supportsSelectOffset()+");");
         Out.println("        }");
         Helper.CatchFinallyBlock(Out, O, "selected", "StatementType.SELECT", false, true);
         Out.println();

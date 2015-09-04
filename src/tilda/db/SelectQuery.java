@@ -38,10 +38,10 @@ public class SelectQuery extends QueryHelper
       {
         super(C, StatementType.SELECT, TableName);
       }
-
+    
     public int execute(RecordProcessor RP, int Start, int Size)
       throws Exception
       {
-        return _C.ExecuteSelect(_TableName, _QueryStr.toString(), RP, Start, Size);
+        return _C.ExecuteSelect(_TableName, _QueryStr.toString()+_C.getSelectLimitClause(Start, Size+1), RP, Start, _C.supportsSelectOffset(), Size, _C.supportsSelectLimit());
       }
   }

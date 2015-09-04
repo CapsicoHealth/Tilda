@@ -35,21 +35,25 @@ public class ArrayListResults<E> extends ArrayList<E> implements ListResults<E>
     protected boolean _HasMore = false;
     protected int     _Max     = SystemValues.EVIL_VALUE;
 
+    @Override
     public int getStart()
       {
         return _Start;
       }
 
+    @Override
     public int getEnd()
       {
-        return _Start+size();
+        return _Start+size()-1;
       }
 
+    @Override
     public boolean hasMore()
       {
         return _HasMore;
       }
 
+    @Override
     public int getMax()
       {
         return _Max;

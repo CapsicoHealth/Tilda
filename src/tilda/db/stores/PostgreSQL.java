@@ -76,17 +76,24 @@ public class PostgreSQL implements DBType
       }
 
     @Override
-    public boolean supportsSelectSubsetting()
+    public boolean supportsSelectLimit()
       {
         return true;
       }
 
     @Override
-    public boolean getSelectSubsettingClause(StringBuilder Str, int Start, int Size)
+    public boolean supportsSelectOffset()
+      {
+        return true;
+      }
+
+    @Override
+    public String getSelectLimitClause(int Start, int Size)
       {
         if (Start <= 0 && Size <= 0)
-         return false;
+         return "";
         
+        StringBuilder Str = new StringBuilder();
         if (Size <= 0)
          Str.append(" LIMIT ALL");
         else
@@ -94,7 +101,7 @@ public class PostgreSQL implements DBType
         if (Start > 0)
          Str.append(" OFFSET "+Start);
 
-        return true;
+        return Str.toString();
       }
     
     @Override

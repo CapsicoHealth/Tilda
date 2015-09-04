@@ -73,25 +73,25 @@ public class NumberFormatUtil
         return F2c.format(Number);
       }
     
-    public static final String LeadingZero1(int X)
+    public static final String LeadingZero1(long X)
       {
-        return X >= 10 || X <= -10 ? Integer.toString(X) 
+        return X >= 10 || X <= -10 ? Long.toString(X) 
              : X >= 0 ? "0"+X 
              : "-0"+(-X);
       }
 
-    public static final String LeadingZero2(int X)
+    public static final String LeadingZero2(long X)
       {
-        return X >= 100 || X <= -100 ? Integer.toString(X) 
+        return X >= 100 || X <= -100 ? Long.toString(X) 
              : X > -100 && X <= -10 ? "-0"+(-X)
              : X > -10 && X < 0 ? "-00"+(-X) 
              : X >= 0 && X < 10 ? "00"+X
              : "0"+X;
       }
 
-    public static final String LeadingZero3(int X)
+    public static final String LeadingZero3(long X)
       {
-        return X >=  1000 || X <= -1000 ? Integer.toString(X) 
+        return X >=  1000 || X <= -1000 ? Long.toString(X) 
              : X >  -1000 && X <=  -100 ?   "-0"+(-X) 
              : X >   -100 && X <=   -10 ?  "-00"+(-X)
              : X >    -10 && X <      0 ? "-000"+(-X) 
