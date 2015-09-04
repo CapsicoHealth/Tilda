@@ -1794,7 +1794,7 @@ public abstract class QueryHelper
         return this;
       }
 
-    public void age(Type_DatetimePrimitive Col, int[] ageRange)
+    public QueryHelper ageBetween(Type_DatetimePrimitive Col, int[] ageRange)
       {
         ZonedDateTime Today = DateTimeUtil.getTodayTimestamp(true);
         ZonedDateTime D1 = Today.minusYears(ageRange[1]);
@@ -1802,8 +1802,48 @@ public abstract class QueryHelper
         _QueryStr.append(Col.toString(_ST))
                  .append(" BETWEEN ").append("'").append(DateTimeUtil.printDateTimeForSQL(D1)).append("'")
                  .append(" AND ").append("'").append(DateTimeUtil.printDateTimeForSQL(D2)).append("'");
+        return this;
       }
     
+    public QueryHelper ageGreaterThan(Type_DatetimePrimitive Col, int Age)
+    throws Exception
+      {
+        ZonedDateTime Today = DateTimeUtil.getTodayTimestamp(true);
+        ZonedDateTime D = Today.minusYears(Age);
+        return gt(Col, D);
+      }
+    public QueryHelper ageGreaterThanOrEqual(Type_DatetimePrimitive Col, int Age)
+    throws Exception
+      {
+        ZonedDateTime Today = DateTimeUtil.getTodayTimestamp(true);
+        ZonedDateTime D = Today.minusYears(Age);
+        return gte(Col, D);
+      }
+    public QueryHelper ageLessThan(Type_DatetimePrimitive Col, int Age)
+    throws Exception
+      {
+        ZonedDateTime Today = DateTimeUtil.getTodayTimestamp(true);
+        ZonedDateTime D = Today.minusYears(Age);
+        return lt(Col, D);
+      }
+    public QueryHelper ageLessThanOrEqual(Type_DatetimePrimitive Col, int Age)
+    throws Exception
+      {
+        ZonedDateTime Today = DateTimeUtil.getTodayTimestamp(true);
+        ZonedDateTime D = Today.minusYears(Age);
+        return lte(Col, D);
+      }
+    public QueryHelper ageEquals(Type_DatetimePrimitive Col, int Age)
+    throws Exception
+      {
+        ZonedDateTime Yesterday = DateTimeUtil.getIthDayTimestamp(true, -1);
+        ZonedDateTime D1 = Yesterday.minusYears(Age-1);
+        _QueryStr.append(Col.toString(_ST))
+                 .append(" BETWEEN ").append("'").append(DateTimeUtil.printDateTimeForSQL(D1)).append("'")
+                 .append(" AND ").append("'").append(DateTimeUtil.printDateTimeForSQL(Yesterday)).append("'");
+        return this;
+      }
+
     public String toString()
       {
         return _QueryStr.toString();
