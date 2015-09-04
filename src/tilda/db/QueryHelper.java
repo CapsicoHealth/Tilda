@@ -88,6 +88,7 @@ public abstract class QueryHelper
     protected S                   _Section     = null;
     protected int                 _WherePos    = -1;
     protected int                 _Cardinality = 0;
+    protected int                 _SubSelectCount = 0;
 
     public int getCardinality()
       {
@@ -103,7 +104,7 @@ public abstract class QueryHelper
         _QueryStr.append(") values (");
       }
 
-    private final QueryHelper selectColumnBase(String ColStr)
+    protected final QueryHelper selectColumnBase(String ColStr)
     throws Exception
       {
         if (_Section != S.START && _Section != S.SET || _ST != StatementType.SELECT)
@@ -134,6 +135,11 @@ public abstract class QueryHelper
         return selectColumnBase(_C.getAggregateStr(Agg)+"("+Col.toString(_ST)+") as \""+Alias+"\"");
       }
     
+    public final QueryHelper selectColumn(int TableId, String ColumnName, AggregateType Agg, String AliasName)
+    throws Exception
+      {
+        return selectColumnBase(_C.getAggregateStr(Agg)+"(T"+TableId+".\""+ColumnName+"\") as \""+AliasName+"\"");
+      }
 
     protected final QueryHelper fromTable(String TableName)
     throws Exception
@@ -141,13 +147,26 @@ public abstract class QueryHelper
         if (_Section != S.FROM && _Section != S.SET || _ST != StatementType.SELECT)
           throw new Exception("Invalid query syntax: Calling from() with '" + TableName + "' after a " + _Section + " in a query of type " + _ST);
         if (_Section != S.FROM)
-          _QueryStr.append(" from ").append(_TableName);
+          _QueryStr.append(" from ").append(TextUtil.Print(_TableName, ""));
         if (TableName.equalsIgnoreCase(_TableName) == false)
-          _QueryStr.append(", ").append(TableName);
+          _QueryStr.append(_Section == S.FROM || _TableName != null? ", " : "").append(TableName);
         _Section = S.FROM;
         return this;
       }
-
+    
+    protected final QueryHelper fromSubSelect(SelectQuery FullSelect)
+    throws Exception
+      {
+        if (_Section != S.FROM && _Section != S.SET || _ST != StatementType.SELECT)
+          throw new Exception("Invalid query syntax: Calling from() with a subselect after a " + _Section + " in a query of type " + _ST);
+        if (_Section != S.FROM)
+          _QueryStr.append(" from ").append(TextUtil.Print(_TableName, ""));
+         _QueryStr.append(_Section == S.FROM || _TableName != null? ", (" : " (").append(FullSelect._QueryStr).append(") as T").append(++_SubSelectCount);
+        _Section = S.FROM;
+        return this;
+      }
+    
+    
     public final QueryHelper where()
     throws Exception
       {
@@ -391,6 +410,12 @@ public abstract class QueryHelper
         return this;
       }
 
+    public QueryHelper from(SelectQuery Q)
+    throws Exception
+      {
+        fromSubSelect(Q);
+        return this;
+      }
 
 
 
@@ -1783,7 +1808,7 @@ public abstract class QueryHelper
     public QueryHelper orderBy(ColumnDefinition Col, boolean Asc)
     throws Exception
       {
-        if (_Section != S.WHERE && _Section != S.GROUPBY && _Section == S.ORDERBY || _ST != StatementType.SELECT)
+        if (_Section != S.WHERE && _Section != S.GROUPBY && _Section != S.ORDERBY || _ST != StatementType.SELECT)
           throw new Exception("Invalid query syntax: OrderBy after a " + _Section + " in a query of type " + _ST);
         if (_Section == S.ORDERBY)
           _QueryStr.append(", ");
