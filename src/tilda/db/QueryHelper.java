@@ -1793,6 +1793,16 @@ public abstract class QueryHelper
         _Section = S.ORDERBY;
         return this;
       }
+
+    public void age(Type_DatetimePrimitive Col, int[] ageRange)
+      {
+        ZonedDateTime Today = DateTimeUtil.getTodayTimestamp(true);
+        ZonedDateTime D1 = Today.minusYears(ageRange[1]);
+        ZonedDateTime D2 = Today.minusYears(ageRange[0]);
+        _QueryStr.append(Col.toString(_ST))
+                 .append(" BETWEEN ").append("'").append(DateTimeUtil.printDateTimeForSQL(D1)).append("'")
+                 .append(" AND ").append("'").append(DateTimeUtil.printDateTimeForSQL(D2)).append("'");
+      }
     
     public String toString()
       {
