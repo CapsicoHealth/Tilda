@@ -50,8 +50,9 @@ public class ConnectionPool
     private static class ConnDefs
       {
         /*@formatter:off*/
-       @SerializedName("connections") public Conn  []  _Conns   = new Conn[0];
-       @SerializedName("schemas"    ) public String[]  _Schemas = new String[0];
+       @SerializedName("connections") public Conn  []  _Conns       = new Conn[0];
+       @SerializedName("schemas"    ) public String[]  _Schemas     = new String[0];
+       @SerializedName("email"      ) public EmailConfig  _EmailConfig;
        /*@formatter:on*/
 
         public boolean validate()
@@ -100,9 +101,17 @@ public class ConnectionPool
           }
       }
 
+    private static class EmailConfig
+      {
+        /*@formatter:off*/
+        @SerializedName("smtp"   ) public String _SMTP    = null;
+        @SerializedName("userId" ) public String _UserId  = null;
+        @SerializedName("pswd"   ) public String _Pswd    = null;
+        /*@formatter:on*/
+      }
+
     private static class Conn
       {
-
       /*@formatter:off*/
       @SerializedName("id"     ) public String _Id      = null;
       @SerializedName("driver" ) public String _Driver  = null;

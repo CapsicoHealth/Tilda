@@ -25,6 +25,19 @@ public class MailUtil
   {
     protected static final Logger LOG = LogManager.getLogger(MailUtil.class.getName());
 
+    /**
+     * 
+     * @param SmtpInfo A string such as smtp.mydomain.com:422:ssl to connect to an SMTP server
+     * @param From the user ID used to send emails from
+     * @param Password The password for the account we send emails from
+     * @param To Destination email(s)
+     * @param Cc CC email(s)
+     * @param Bcc BCC emails(s)
+     * @param Subject The Subject
+     * @param Message The message (HTML allowed)
+     * @param Urgent Whether to send the message as urgent or not.
+     * @return
+     */
     public static boolean send(String SmtpInfo, String From, String Password, String[] To, String[] Cc, String[] Bcc, String Subject, String Message, boolean Urgent)
      {
       String LastAddress = null;
