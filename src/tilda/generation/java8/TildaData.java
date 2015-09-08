@@ -1080,7 +1080,7 @@ public class TildaData implements CodeGenTildaData
                   String Header = (C.isCollection() == true ? "             " : "          ") + PaddingUtil.getPad(C.getName().length() + Pad.length()) + "   ";
                   if (C.isCollection() == true)
                    {
-                     Out.println(Header+" for ("+ JavaJDBCType.getFieldTypeBase(C)+" v : _"+C.getName()+")");
+                     Out.println(Header+" if (_"+C.getName()+" != null) for ("+ JavaJDBCType.getFieldTypeBase(C)+" v : _"+C.getName()+")");
                      Out.println(Header+"  {");
                    }
                   String ClassName = Helper.getFullAppFactoryClassName(C._Mapper._DestObjectObj);
