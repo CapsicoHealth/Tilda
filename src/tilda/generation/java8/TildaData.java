@@ -1075,6 +1075,22 @@ public class TildaData implements CodeGenTildaData
               if (G.getSql().stringNeedsTrim(C) == true)
                Out.print(" else _"+C.getName()+Pad+" = _"+C.getName()+Pad+".trim();");
               Out.println();
+              if (C._Mapper != null && C._Mapper._Name == ColumnMapperMode.MEMORY)
+                {
+                   Out.print("        " + PaddingUtil.getPad(C.getName().length() + Pad.length()) + "   ");
+                   String ClassName = Helper.getFullAppFactoryClassName(C._Mapper._DestObjectObj);
+                   Str.setLength(0);
+                   for (int c = 0; c < C._Mapper._SrcColumnObjs.size()-1; ++c)
+                     {
+                       Column col = C._Mapper._SrcColumnObjs.get(c);
+                       if (c != 0) Str.append(", ");
+                       Str.append("get" + TextUtil.CapitalizeFirstCharacter(col.getName()) + "()");
+                     }
+                   if (C._Mapper._Name == ColumnMapperMode.MEMORY)
+                    Out.println("      "+(C.isCollection()==true?"addTo":"set") + TextUtil.CapitalizeFirstCharacter(C.getName()) +"MappedName("+ClassName+".getMappedName("+Str+", _"+C.getName()+"));");
+                   if (C._Mapper._Group == ColumnMapperMode.MEMORY)
+                    Out.println("      "+(C.isCollection()==true?"addTo":"set") + TextUtil.CapitalizeFirstCharacter(C.getName()) +"MappedGroup("+ClassName+".getMappedGroup("+Str+", _"+C.getName()+"));");
+                 }
             }
         Out.println("     __LookupId = 0;");
         Out.println("     __Init     = InitMode.READ;");
