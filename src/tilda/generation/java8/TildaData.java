@@ -1077,19 +1077,29 @@ public class TildaData implements CodeGenTildaData
               Out.println();
               if (C._Mapper != null && C._Mapper._Name == ColumnMapperMode.MEMORY)
                 {
-                   Out.print("        " + PaddingUtil.getPad(C.getName().length() + Pad.length()) + "   ");
-                   String ClassName = Helper.getFullAppFactoryClassName(C._Mapper._DestObjectObj);
-                   Str.setLength(0);
-                   for (int c = 0; c < C._Mapper._SrcColumnObjs.size()-1; ++c)
-                     {
-                       Column col = C._Mapper._SrcColumnObjs.get(c);
-                       if (c != 0) Str.append(", ");
-                       Str.append("get" + TextUtil.CapitalizeFirstCharacter(col.getName()) + "()");
-                     }
-                   if (C._Mapper._Name == ColumnMapperMode.MEMORY)
-                    Out.println("      "+(C.isCollection()==true?"addTo":"set") + TextUtil.CapitalizeFirstCharacter(C.getName()) +"MappedName("+ClassName+".getMappedName("+Str+", _"+C.getName()+"));");
-                   if (C._Mapper._Group == ColumnMapperMode.MEMORY)
-                    Out.println("      "+(C.isCollection()==true?"addTo":"set") + TextUtil.CapitalizeFirstCharacter(C.getName()) +"MappedGroup("+ClassName+".getMappedGroup("+Str+", _"+C.getName()+"));");
+                  String Header = (C.isCollection() == true ? "             " : "          ") + PaddingUtil.getPad(C.getName().length() + Pad.length()) + "   ";
+                  if (C.isCollection() == true)
+                   {
+                     Out.println(Header+" for ("+ JavaJDBCType.getFieldTypeBase(C)+" v : _"+C.getName()+")");
+                     Out.println(Header+"  {");
+                   }
+                  String ClassName = Helper.getFullAppFactoryClassName(C._Mapper._DestObjectObj);
+                  String VarName = C.isCollection() == true ? "v" : "_"+C.getName();
+                  Str.setLength(0);
+                  for (int c = 0; c < C._Mapper._SrcColumnObjs.size()-1; ++c)
+                    {
+                      Column col = C._Mapper._SrcColumnObjs.get(c);
+                      if (c != 0) Str.append(", ");
+                      Str.append("get" + TextUtil.CapitalizeFirstCharacter(col.getName()) + "()");
+                    }
+                  if (C._Mapper._Name == ColumnMapperMode.MEMORY)
+                   Out.println(Header+"    "+(C.isCollection()==true?"addTo":"set") + TextUtil.CapitalizeFirstCharacter(C.getName()) +"MappedName("+ClassName+".getMappedName("+Str+", "+VarName+"));");
+                  if (C._Mapper._Group == ColumnMapperMode.MEMORY)
+                   Out.println(Header+"    "+(C.isCollection()==true?"addTo":"set") + TextUtil.CapitalizeFirstCharacter(C.getName()) +"MappedGroup("+ClassName+".getMappedGroup("+Str+", "+VarName+"));");
+                  if (C.isCollection() == true)
+                    {
+                      Out.println(Header+"  }");
+                    }
                  }
             }
         Out.println("     __LookupId = 0;");
