@@ -85,7 +85,10 @@ public class Mapper
         O._Description = _Description;
         for (Column C : _PrimaryColumns)
           if (C != null)
-            O._Columns.add(C);
+            {
+              C._Invariant = true;
+              O._Columns.add(C);
+            }
         O._Columns.add(_MappingColumns._IdColumn);
         O._Columns.add(_MappingColumns._NameColumn);
         if (_MappingColumns._GroupColumn != null)
