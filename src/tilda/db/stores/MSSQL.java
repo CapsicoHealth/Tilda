@@ -153,4 +153,17 @@ public class MSSQL implements DBType
       {
         throw new UnsupportedOperationException();
       }
+    
+    @Override
+    public int getCLOBThreshhold()
+      {
+        return 4096;
+      }
+    
+    @Override
+    public boolean alterTableAlterColumnStringSize(Connection Con, Column Col, int DBSize)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
   }

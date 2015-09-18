@@ -52,5 +52,8 @@ public interface DBType
 
     public boolean FullIdentifierOnUpdate();
     public String getAggregateStr(AggregateType AT);
+
+    public int getCLOBThreshhold();
+    public boolean alterTableAlterColumnStringSize(Connection Con, Column Col, int DBSize) throws Exception; 
     
   }

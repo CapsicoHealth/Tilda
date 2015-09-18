@@ -88,6 +88,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("import tilda.utils.DateTimeUtil;");
         Out.println("import tilda.utils.DurationUtil;");
         Out.println("import tilda.utils.HTMLFilter;");
+        Out.println("import tilda.utils.ParseUtil;");
         Out.println("import tilda.utils.JSONUtil;");
         Out.println("import tilda.utils.SystemValues;");
         Out.println("import tilda.utils.TextUtil;");
@@ -1055,7 +1056,7 @@ public class TildaData implements CodeGenTildaData
                     if (C.isCollection() == true)
                      Out.print("A = RS.getArray(++i); _" + C.getName() + Pad + " = A==null?null:CollectionUtil.to"+(C.isList()==true?"List":"Set ")+"(("+ JavaJDBCType.getFieldTypeBaseClass(C)+"[])A.getArray()); if (A != null) A.free();");
                     else if (C._Type == ColumnType.CHAR)
-                      Out.print("_" + C.getName() + Pad + " = TextUtil.getChar            (RS.get" + JavaJDBCType.get(C._Type)._JDBCType + "(++i)); ");
+                      Out.print("_" + C.getName() + Pad + " = ParseUtil.parseCharacter    (RS.get" + JavaJDBCType.get(C._Type)._JDBCType + "(++i)); ");
                     else
                       Out.print("_" + C.getName() + Pad + " =                              RS.get" + JavaJDBCType.get(C._Type)._JDBCType + "(++i) ; ");
                     Out.print(" if (RS.wasNull() == true) __Nulls |= " + Mask + Pad + ";");

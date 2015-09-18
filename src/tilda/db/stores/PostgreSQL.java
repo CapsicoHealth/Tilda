@@ -21,6 +21,7 @@ import java.io.StringWriter;
 import java.sql.SQLException;
 
 import tilda.db.Connection;
+import tilda.db.processors.ScalarRP;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
@@ -174,7 +175,7 @@ public class PostgreSQL implements DBType
     public boolean alterTableAddColumn(Connection Con, Column Col, String DefaultValue) throws Exception
       {
         if (Col._Nullable == false && DefaultValue == null)
-         throw new Exception("Cannot add a new 'not null' column to a table without a default value. Add a default value in the model, or manually migrate your database.");
+         throw new Exception("Cannot add new 'not null' column '"+Col.getFullName()+"' to a table without a default value. Add a default value in the model, or manually migrate your database.");
         String Q ="ALTER TABLE "+Col._ParentObject.getShortName()+" ADD COLUMN \""+Col.getName()+"\" "+getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection());
         if (Col._Nullable == false)
           {
@@ -190,7 +191,7 @@ public class PostgreSQL implements DBType
         if (Col._Nullable == false)
          {
            if (DefaultValue == null)
-            throw new Exception("Cannot alter a column to not null without a default value. Add a default value in the model, or manually migrate your database.");
+            throw new Exception("Cannot alter column '"+Col.getFullName()+"' to not null without a default value. Add a default value in the model, or manually migrate your database.");
            String Q = "UPDATE "+Col._ParentObject.getShortName()+" set \""+Col.getName()+"\" = "+ValueHelper.printValue(Col, DefaultValue)+" where \""+Col.getName()+"\" IS NULL";
            Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q);
          }
@@ -199,11 +200,36 @@ public class PostgreSQL implements DBType
         return Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q) >= 0;
       }
 
-    public static String getColumnType(ColumnType T, Integer S, ColumnMode M, boolean Collection)
+    @Override
+    public int getCLOBThreshhold()
       {
-        if (T == ColumnType.STRING && M != ColumnMode.CALCULATED)
-          return Collection == true ? "text[]" : S < 15 ? PostgresType.CHAR._SQLType + "(" + S + ")" : S < 4096 ? PostgresType.STRING._SQLType + "(" + S + ")" : "text";
-        return PostgresType.get(T)._SQLType + (Collection == true ? "[]" : "");
+        return 4096;
       }
     
+    public String getColumnType(ColumnType T, Integer S, ColumnMode M, boolean Collection)
+      {
+        if (T == ColumnType.STRING && M != ColumnMode.CALCULATED)
+          return Collection == true ? "text[]" : S < 15 ? PostgresType.CHAR._SQLType + "(" + S + ")" : S < getCLOBThreshhold() ? PostgresType.STRING._SQLType + "(" + S + ")" : "text";
+        return PostgresType.get(T)._SQLType + (Collection == true ? "[]" : "");
+      }
+
+
+    @Override
+    public boolean alterTableAlterColumnStringSize(Connection Con, Column Col, int DBSize) throws Exception
+      {
+        // Is it shrinking?
+        if (  Col._Size < getCLOBThreshhold() && DBSize < getCLOBThreshhold() && Col._Size < DBSize
+           || Col._Size < getCLOBThreshhold() && DBSize >= getCLOBThreshhold() )
+          {
+            String Q = "SELECT max(length(\""+Col.getName()+"\")) from "+Col._ParentObject.getShortName();
+            ScalarRP RP = new ScalarRP();
+            Con.ExecuteSelect(Col._ParentObject.getShortName(), Q, RP);
+            if (RP.getResult() > Col._Size)
+             throw new Exception("Cannot alter String column '"+Col.getFullName()+"' from size "+DBSize+" down to "+Col._Size+" because there are values with sizes up to "+RP.getResult()+" that would be truncated. You need to manually migrate your database.");
+          }
+        
+        String Q ="ALTER TABLE "+Col._ParentObject.getShortName()+" ALTER COLUMN \""+Col.getName()+"\" TYPE "+getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection());
+        return Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q) >= 0;
+      }
+
   }

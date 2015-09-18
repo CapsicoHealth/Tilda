@@ -90,7 +90,7 @@ public class JDBCHelper
     public static int ExecuteSelect(Connection C, String TableName, String Query, RecordProcessor RP)
     throws Exception
       {
-        return ExecuteSelect(C, TableName, Query, RP, 0, false, 0, false, false);
+        return ExecuteSelect(C, TableName, Query, RP, 0, false, -1, false, false);
       }
 
     /**

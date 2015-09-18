@@ -168,9 +168,11 @@ public class Migrator
                                 throw new Exception("The application's data model defines the column '" + Col.getShortName() + "' as an base type, but it's an array in the DB. The database needs to be migrated manually.");
                               }
                             
-                            if (Col._Type == ColumnType.STRING && CI._Size < 16384 && CI._Size != Col._Size)
+                            if (Col._Type == ColumnType.STRING && Col.isCollection() == false && (CI._Size < C.getCLOBThreshhold() && CI._Size != Col._Size || CI._Size >= C.getCLOBThreshhold() && Col._Size < C.getCLOBThreshhold()) )
                               {
-                                throw new Exception("The application's data model defines the column '" + Col.getShortName() + "' as a String of size "+Col._Size+", but it's "+CI._Size+" in the DB. The database needs to be migrated manually.");
+                                if (C.alterTableAlterColumnStringSize(Col, CI._Size) == false)
+                                 throw new Exception("The application's data model defines the column '" + Col.getShortName() + "' as a String of size "+Col._Size+", but it's "+CI._Size+" in the DB and failed migration. The database needs to be migrated manually.");
+                                didSomething = true;
                               }
                           }
 

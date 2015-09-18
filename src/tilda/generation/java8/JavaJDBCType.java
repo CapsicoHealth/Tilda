@@ -82,7 +82,7 @@ public enum JavaJDBCType
             case NONE:
               return JavaJDBCType.get(C._Type)._JavaType;
             case SET:
-              return "Set<" + JavaJDBCType.get(C._Type)._JavaClassType + ">";
+              return "Set <" + JavaJDBCType.get(C._Type)._JavaClassType + ">";
             default:
               throw new Error("Unhandled case in switch for type '" + C._TypeCollection + "'.");
           }

@@ -399,6 +399,17 @@ public final class Connection
       {
         return _DB.getSelectLimitClause(Start, Size);
       }
+
+    public int getCLOBThreshhold()
+      {
+        return _DB.getCLOBThreshhold();
+      }
+
+    public boolean alterTableAlterColumnStringSize(Column Col, int DBSize)
+    throws Exception
+      {
+        return _DB.alterTableAlterColumnStringSize(this, Col, DBSize);
+      }
     
   }
 

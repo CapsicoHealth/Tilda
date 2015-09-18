@@ -23,6 +23,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.enums.ColumnMode;
+import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
 import tilda.generation.GeneratorSession;
@@ -37,6 +38,7 @@ import tilda.parsing.parts.Query;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.SubWhereClause;
 import tilda.utils.AnsiUtil;
+import tilda.utils.CollectionUtil;
 import tilda.utils.TextUtil;
 
 public class TildaFactory implements CodeGenTildaFactory
@@ -93,6 +95,8 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("import tilda.utils.DurationUtil;");
         Out.println("import tilda.utils.HTMLFilter;");
         Out.println("import tilda.utils.JSONUtil;");
+        Out.println("import tilda.utils.ParseUtil;");
+        Out.println("import tilda.utils.pairs.StringStringPair;");
         Out.println("import tilda.utils.SystemValues;");
         Out.println("import tilda.utils.TextUtil;");
       }
@@ -259,6 +263,69 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println();
         Out.println("       return (" + Helper.getFullAppDataClassName(O) + ") Obj;");
         Out.println("     }");
+        Out.println();
+
+        
+        Out.println("   static public " + Helper.getFullAppDataClassName(O) + " Create(Map<String, String> Values, List<StringStringPair> Errors)");
+        Out.println("   throws Exception");
+        Out.println("     {");
+        Out.println("       int IncomingErrors = Errors.size();");
+        Out.println();
+        for (Column C : O._Columns)
+          {
+            if (C._Type == ColumnType.BINARY)
+              {
+                Out.println("       if (Values.get("+TextUtil.EscapeDoubleQuoteWithSlash(C.getName())+") != null)");
+                Out.println("        Errors.add(new StringStringPair("+TextUtil.EscapeDoubleQuoteWithSlash(C.getName())+", \"Parameter is of a binary type and cannot be passed as a string value.\"));");
+                continue;
+              }
+            if (C._FrameworkManaged == true || C._Mode != ColumnMode.NORMAL)
+             continue;
+            String Pad = C._ParentObject.getColumnPad(C.getName());
+            Out.print("       " + (C.isCollection() == true ? JavaJDBCType.getFieldType(C) : JavaJDBCType.getFieldTypeBaseClass(C)+"      ") 
+                        + "  _" + C.getName() + Pad 
+                        + " = "+(C.isList()==true?"CollectionUtil.toList("
+                                :C.isSet ()==true?"CollectionUtil.toSet ("
+                                                 :"                      "
+                                )
+                               +"ParseUtil.parse"+JavaJDBCType.getFieldTypeBaseClass(C)
+                                 +"("+TextUtil.EscapeDoubleQuoteWithSlash(C.getName())+Pad
+                                 +", "+(C._Nullable == true ? "false":"true ")
+                                 +", Values.get("+TextUtil.EscapeDoubleQuoteWithSlash(C.getName())+Pad+")"
+                     );
+            if (C.isCollection() == true)
+             Out.print(", "+TextUtil.EscapeDoubleQuoteWithSlash(C._TypeSep));
+            Out.println(", Errors"
+                      +(C.isCollection()==true ? ")" : " ")
+                      +");");
+          }
+        Out.println();
+        Out.println("       if (IncomingErrors != Errors.size())");
+        Out.println("        return null;");
+        Out.println();
+        Out.print("      " + Helper.getFullAppDataClassName(O) + " Obj = " + Helper.getFullAppFactoryClassName(O) + ".Create(");
+        First = true;
+        for (Column C : CreateColumns)
+          if (C != null && (C._PrimaryKey == false || O._PrimaryKey._Autogen == false))
+            {
+              if (First == true)
+                First = false;
+              else
+                Out.print(", ");
+              Out.print("_" + C.getName());
+            }
+        Out.println(");");
+        Out.println();
+        for (Column C : O._Columns)
+          if (C != null && C._Type != ColumnType.BINARY && C._FrameworkManaged == false && C._Mode == ColumnMode.NORMAL && CreateColumns.contains(C) == false)
+            {
+              String Pad = O._PadderColumnNames.getPad(C.getName());
+              Out.println("      if (_" + C.getName() + Pad + "!= null) Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + ");");
+            }
+        Out.println();
+        Out.println("      return Obj;");
+        Out.println("     }");
+        
       }
 
 

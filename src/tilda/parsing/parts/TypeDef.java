@@ -27,6 +27,7 @@ import tilda.enums.DefaultType;
 import tilda.enums.MultiType;
 import tilda.enums.ValidationStatus;
 import tilda.parsing.ParserSession;
+import tilda.utils.ParseUtil;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
 
@@ -180,19 +181,19 @@ public class TypeDef
                 return PS.AddError(What + " has a value '" + Value + "' which is invalid for type '" + _Type + "'.");
               break;
             case DOUBLE:
-              if (TextUtil.parseDouble(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
+              if (ParseUtil.parseDouble(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
                 return PS.AddError(What + " has a value '" + Value + "' which is invalid for type '" + _Type + "'.");
               break;
             case FLOAT:
-              if (TextUtil.parseFloat(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
+              if (ParseUtil.parseFloat(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
                 return PS.AddError(What + " has a value '" + Value + "' which is invalid for type '" + _Type + "'.");
               break;
             case INTEGER:
-              if (TextUtil.parseInt(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
+              if (ParseUtil.parseInteger(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
                 return PS.AddError(What + " has a value '" + Value + "' which is invalid for type '" + _Type + "'.");
               break;
             case LONG:
-              if (TextUtil.parseLong(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
+              if (ParseUtil.parseLong(Value, SystemValues.EVIL_VALUE) == SystemValues.EVIL_VALUE)
                 return PS.AddError(What + " has a value '" + Value + "' which is invalid for type '" + _Type + "'.");
               break;
             case STRING:

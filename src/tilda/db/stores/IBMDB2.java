@@ -48,11 +48,11 @@ public class IBMDB2 implements DBType
       }
 
     protected static final String[] _LOCK_CONN_ERROR_SUBSTR = { "deadlocked on lock"
-        , "lock request time out"
-        , "lock inconsistency found"
-        , "connection reset"
-        , "connection is closed"
-        };
+                                                            , "lock request time out"
+                                                            , "lock inconsistency found"
+                                                            , "connection reset"
+                                                            , "connection is closed"
+                                                            };
 
     @Override
     public boolean isLockOrConnectionError(SQLException E)
@@ -89,7 +89,7 @@ public class IBMDB2 implements DBType
       {
         return false;
       }
-    
+
     @Override
     public String getAggregateStr(AggregateType AT)
       {
@@ -111,10 +111,11 @@ public class IBMDB2 implements DBType
               throw new Error("Cannot convert AggregateType " + AT + " to a database aggregate function name.");
           }
       }
-    
+
 
     @Override
-    public boolean alterTableAddColumn(Connection Con, Column Col, String DefaultValue) throws Exception
+    public boolean alterTableAddColumn(Connection Con, Column Col, String DefaultValue)
+    throws Exception
       {
         throw new UnsupportedOperationException();
       }
@@ -127,28 +128,41 @@ public class IBMDB2 implements DBType
 
     @Override
     public boolean createTable(Connection Con, Object Obj)
-      throws Exception
+    throws Exception
       {
         throw new UnsupportedOperationException();
       }
 
     @Override
     public boolean createView(Connection Con, View V, boolean Drop)
-      throws Exception
+    throws Exception
       {
         throw new UnsupportedOperationException();
       }
-    
+
     @Override
     public boolean createSchema(Connection Con, Schema S)
-      throws Exception
+    throws Exception
       {
         throw new UnsupportedOperationException();
       }
 
     @Override
     public boolean alterTableAlterColumnNull(Connection Con, Column Col, String DefaultValue)
-      throws Exception
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public int getCLOBThreshhold()
+      {
+        return 4096;
+      }
+
+    @Override
+    public boolean alterTableAlterColumnStringSize(Connection Con, Column Col, int DBSize)
+    throws Exception
       {
         throw new UnsupportedOperationException();
       }
