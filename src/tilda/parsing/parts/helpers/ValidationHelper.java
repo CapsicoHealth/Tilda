@@ -37,26 +37,26 @@ public class ValidationHelper
           for (String c : ColumnNames)
             {
               if (TextUtil.isNullOrEmpty(c) == true)
-                return null;
+                continue;
               Column C = ParentObject.getColumn(c);
               if (C == null)
                 {
                   PS.AddError("Object '" + ParentObject.getFullName() + "' is defining " + What + " with column '" + c + "' which cannot be found.");
-                  return null;
+                  continue;
                 }
               if (C.hasBeenValidatedSuccessfully() == false)
                 {
                   PS.AddError("Object '" + ParentObject.getFullName() + "' is defining " + What + " with column '" + c + "' which has failed validation previously and cannot be processed any more.");
-                  return null;
+                  continue;
                 }
               if (Names.add(C.getName().toUpperCase()) == false)
                 {
                   PS.AddError("Object '" + ParentObject.getFullName() + "' is defining " + What + " with duplicated column '" + c + "'.");
-                  return null;
+                  continue;
                 }
               Columns.add(C);
               if (P != null && P.process(PS, ParentObject, What, C) == false)
-                return null;
+                continue;
             }
         return Columns;
       }

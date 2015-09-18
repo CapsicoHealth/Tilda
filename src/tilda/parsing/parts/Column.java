@@ -215,6 +215,24 @@ public class Column extends TypeDef
         else
           _TypeStr = _SameAsObj._TypeStr;
 
+/* Should we do this or not? For mappers with extra PKs, this adds additional requirements on the new table with 
+ * column names and all... Not very flexible. 
+        if (_SameAsObj._Mapper != null)
+          {
+            if (_Mapper != null)
+             PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining a mapper, which is not allowed.");
+            else
+             _Mapper = new ColumnMapper(_SameAsObj._Mapper);
+          }
+        else if (_SameAsObj._Enum != null)
+          {
+            if (_Enum != null)
+             PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining an enum, which is not allowed.");
+            else
+             _Enum = new ColumnEnum(_SameAsObj._Enum);
+          }
+*/
+
         if (_Size != null && _Size != 0 && _Size != _SameAsObj._Size)
           PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining a size '"+_Size+"' which doesn't match the destination column's size '"+_SameAsObj._Size+"'. Note that redefining a size for a sameas column is superfluous in the first place.");
         else if (_Mapper != null && _Mapper._Multi != MultiType.NONE)

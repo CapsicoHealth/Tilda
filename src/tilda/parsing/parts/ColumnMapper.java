@@ -50,16 +50,18 @@ public class ColumnMapper
     public ColumnMapper()
       {
       }
-     
-// LDH-NOTE: kept for reference, but should eventually be removed
-//    public ColumnMapper(String[] SrcColumns, String DestObject, ColumnMapperMode  Name, ColumnMapperMode  Group, MultiType Multi)
-//      {
-//        _SrcColumns = SrcColumns;
-//        _DestObject = DestObject;
-//        _Name       = Name      ;
-//        _Group      = Group     ;
-//        _Multi      = Multi     ;
-//     }
+    public ColumnMapper(ColumnMapper CM)
+      {
+        this(CM._SrcColumns, CM._DestObject, CM._Name, CM._Group, CM._Multi);
+      }
+    public ColumnMapper(String[] SrcColumns, String DestObject, ColumnMapperMode  Name, ColumnMapperMode  Group, MultiType Multi)
+      {
+        _SrcColumns = SrcColumns;
+        _DestObject = DestObject;
+        _Name       = Name      ;
+        _Group      = Group     ;
+        _Multi      = Multi     ;
+     }
 
     public boolean Validate(ParserSession PS, Column ParentColumn)
       {

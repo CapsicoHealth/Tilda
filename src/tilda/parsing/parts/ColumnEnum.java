@@ -46,14 +46,16 @@ public class ColumnEnum
     public ColumnEnum()
       {
       }
-
- // LDH-NOTE: kept for reference, but should eventually be removed
-//    public ColumnEnum(String[] SrcColumns, String DestObject, MultiType Multi)
-//      {
-//        _SrcColumns = SrcColumns;
-//        _DestObject = DestObject;
-//        _Multi = Multi;
-//      }
+    public ColumnEnum(ColumnEnum CE)
+      {
+        this(CE._SrcColumns, CE._DestObject, CE._Multi);
+      }
+    public ColumnEnum(String[] SrcColumns, String DestObject, MultiType Multi)
+      {
+        _SrcColumns = SrcColumns;
+        _DestObject = DestObject;
+        _Multi = Multi;
+      }
 
     public boolean Validate(ParserSession PS, Column ParentColumn)
       {
