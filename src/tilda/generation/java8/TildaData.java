@@ -1032,6 +1032,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("      tilda.data.ZoneInfo_Data ZI;");
         Out.println("      boolean DateTimeFieldNull;");
         Out.println("      boolean ZoneFieldNull;");
+        Out.println("     __Init = InitMode.LOOKUP;");
         for (Column C : O._Columns)
           if (C != null && C._Mode != ColumnMode.CALCULATED)
             {

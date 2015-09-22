@@ -24,10 +24,12 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.enums.ColumnMapperMode;
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
 import tilda.parsing.ParserSession;
+import tilda.parsing.parts.helpers.SameAsHelper;
 import tilda.utils.TextUtil;
 
 import com.google.gson.annotations.SerializedName;
@@ -45,6 +47,8 @@ public class View extends Base
     @SerializedName("groupBy" ) public GroupBy              _GroupBy;
     @SerializedName("subQuery") public SubWhereClause       _SubQuery;
     /*@formatter:on*/
+    
+    public transient boolean _OCC = false;
 
     @Override
     public Column getColumn(String name)
@@ -64,7 +68,7 @@ public class View extends Base
     @Override
     public boolean isOCC()
       {
-        return false;
+        return _OCC;
       }
 
     @Override
@@ -96,13 +100,24 @@ public class View extends Base
           return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring the view '"+getFullName()+"' without any columns.");
 
         Set<String> ColumnNames = new HashSet<String>();        
-        Set<String> ObjectNames = new HashSet<String>();        
+        Set<String> ObjectNames = new HashSet<String>();
+        boolean CreatedCol     = false;
+        boolean LastUpdatedCol = false;
+        boolean DeletedCol     = false;
         for (int i = 0; i < _ViewColumns.size(); ++i)
          {
            ViewColumn C = _ViewColumns.get(i);
            C.Validate(PS, this);
            if (ColumnNames.add(C.getName().toUpperCase()) == false)
              PS.AddError("Column '" + C.getFullName() + "' is defined more than once in View '" + getFullName() + "'.");
+
+           if (C.getName().equals("created") == true && SameAsHelper.checkRootSameAs(C._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "created")) == true)
+             CreatedCol = true;
+           else if (C.getName().equals("lastUpdated") == true && SameAsHelper.checkRootSameAs(C._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "lastUpdated")) == true)
+             LastUpdatedCol = true;
+           else if (C.getName().equals("deleted") == true && SameAsHelper.checkRootSameAs(C._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "deleted")) == true)
+             DeletedCol = true;
+           
            if (ObjectNames.add(C._SameAsObj._ParentObject.getFullName()) == false)
              {
                if (C._Join != null)
@@ -125,7 +140,17 @@ public class View extends Base
                   PS.AddError("Generated column '" + TZCol.getFullName() + "' conflicts with another column already named the same in view '" + getFullName() + "'.");
                 _PadderColumnNames.track(TZCol.getName());
               }
+           if (C._SameAsObj._Mapper != null && C._UseMapper == true)
+             {
+               if (C._SameAsObj._Mapper._Group == ColumnMapperMode.DB)
+                CreateMappedViewColumn(PS, ColumnNames, i++, C, "Group");
+               if (C._SameAsObj._Mapper._Name == ColumnMapperMode.DB)
+                CreateMappedViewColumn(PS, ColumnNames, i++, C, "Name");
+             }
          }
+        
+        if (CreatedCol == true && LastUpdatedCol == true && DeletedCol == true)
+         _OCC = true;
 
         if (TextUtil.isNullOrEmpty(_SubWhere) == false && _SubQuery != null)
           PS.AddError("View '" + getFullName() + "' is defining both a subWhere AND a subQuery: only one is allowed.");
@@ -162,14 +187,28 @@ public class View extends Base
         O._Queries = _Queries;
         O._Json   = _Json;
         O._LCStr = ObjectLifecycle.READONLY.name();
-        O._OCC = false;
+        O._OCC = _OCC;
         for (ViewColumn C : _ViewColumns)
           if (C != null && C._FrameworkGenerated == false && C._JoinOnly == false)
-            O._Columns.add(new ViewColumnWrapper(C._SameAsObj, C));
+            {
+              if (_OCC == false || C.getName().equals("created") == false && C.getName().equals("lastUpdated") == false && C.getName().equals("deleted") == false)
+               O._Columns.add(new ViewColumnWrapper(C._SameAsObj, C));
+            }
         _ParentSchema._Objects.add(O);
         O.Validate(PS, ParentSchema);
 
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
+      }
+
+    private void CreateMappedViewColumn(ParserSession PS, Set<String> ColumnNames, int i, ViewColumn C, String ExtraName)
+      {
+        ViewColumn VC = new ViewColumn();
+        VC._SameAs = C._SameAs+"Mapped"+ExtraName;
+        VC._FrameworkGenerated = true;
+        VC.Validate(PS, this);
+        if (ColumnNames.add(VC.getName().toUpperCase()) == false)
+          PS.AddError("Generated column '" + VC.getFullName() + "' conflicts with another column already named the same in view '" + getFullName() + "'.");
+        _ViewColumns.add(i, VC);
       }
   }

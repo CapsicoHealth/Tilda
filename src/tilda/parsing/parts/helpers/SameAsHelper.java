@@ -31,5 +31,4 @@ public class SameAsHelper
         C = C._SameAsObj;
        return C;
      }
-
   }

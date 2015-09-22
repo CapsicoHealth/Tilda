@@ -26,6 +26,10 @@ public class ViewColumnWrapper extends Column
     public ViewColumnWrapper(Column SameAsCol, ViewColumn VCol)
       {
         super(SameAsCol._Name, VCol._SameAs, SameAsCol._Description);
+        if (VCol._UseMapper == true && SameAsCol._Mapper != null)
+         _Mapper = new ColumnMapper(SameAsCol._Mapper._SrcColumns, SameAsCol._Mapper._DestObject, SameAsCol._Mapper._Name, SameAsCol._Mapper._Group, SameAsCol._Mapper._Multi);
+        if (VCol._UseEnum == true && SameAsCol._Enum != null)
+          _Enum = new ColumnEnum(SameAsCol._Enum._SrcColumns, SameAsCol._Enum._DestObject, SameAsCol._Enum._Multi);
         _VCol = VCol;
       }
     
