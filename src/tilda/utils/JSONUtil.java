@@ -35,7 +35,7 @@ public class JSONUtil
     protected static final Logger LOG = LogManager.getLogger(JDBCHelper.class.getName());
 
     protected static void PrintString(Writer Out, String v)
-      throws IOException
+    throws IOException
       {
         if (v == null)
           {
@@ -52,7 +52,7 @@ public class JSONUtil
       }
 
     protected static void PrintZonedDateTime(Writer Out, ZonedDateTime v)
-      throws IOException
+    throws IOException
       {
         if (v == null)
           {
@@ -63,96 +63,103 @@ public class JSONUtil
         Out.write(DateTimeUtil.printDateTimeForJSON(v));
         Out.write("\"");
       }
-    
+
     protected static void PrintChar(Writer Out, char v)
-        throws IOException
-        {
-          Out.write("\"");
-          Out.write(v == '"' ? "\\\"" : Character.toString(v));
-          Out.write("\"");
-        }
-    
-    
+    throws IOException
+      {
+        if (v == Character.UNASSIGNED)
+          Out.write("null");
+        else
+          {
+            Out.write("\"");
+            Out.write(v == '"' ? "\\\"" : Character.toString(v));
+            Out.write("\"");
+          }
+      }
+
+    protected static void PrintFloat(Writer Out, float v)
+    throws IOException
+      {
+        Out.write(v == Float.NaN ? "null" : Float.toString(v));
+      }
+
+    protected static void PrintDouble(Writer Out, double v)
+    throws IOException
+      {
+        Out.write(v == Double.NaN ? "null" : Double.toString(v));
+      }
+
     protected static void Print(Writer Out, String Name, boolean FirstElement)
-      throws IOException
+    throws IOException
       {
         if (FirstElement == false)
           Out.write(", ");
         if (Name == null)
-         return;
+          return;
         Out.write("\"");
         Out.write(Name);
         Out.write("\":");
       }
 
     public static void Print(Writer Out, String Name, boolean FirstElement, String v)
-      throws IOException
+    throws IOException
       {
         Print(Out, Name, FirstElement);
         PrintString(Out, v);
       }
 
     public static void Print(Writer Out, String Name, boolean FirstElement, char v)
-      throws IOException
+    throws IOException
       {
         Print(Out, Name, FirstElement);
-        Out.write("\"");
-        Out.write(v == '"' ? "\\\"" : Character.toString(v));
-        Out.write("\"");
+        PrintChar(Out, v);
       }
 
     public static void Print(Writer Out, String Name, boolean FirstElement, ZonedDateTime v)
-      throws IOException
+    throws IOException
       {
         Print(Out, Name, FirstElement);
-        if (v == null)
-         Out.write("null");
-        else
-          {
-            Out.write("\"");
-            Out.write(DateTimeUtil.printDateTimeForJSON(v));
-            Out.write("\"");
-          }
+        PrintZonedDateTime(Out, v);
       }
 
     public static void Print(Writer Out, String Name, boolean FirstElement, boolean v)
-      throws IOException
+    throws IOException
       {
         Print(Out, Name, FirstElement);
         Out.write(Boolean.toString(v));
       }
 
     public static void Print(Writer Out, String Name, boolean FirstElement, int v)
-      throws IOException
+    throws IOException
       {
         Print(Out, Name, FirstElement);
         Out.write(Integer.toString(v));
       }
 
     public static void Print(Writer Out, String Name, boolean FirstElement, long v)
-      throws IOException
+    throws IOException
       {
         Print(Out, Name, FirstElement);
         Out.write(Long.toString(v));
       }
 
     public static void Print(Writer Out, String Name, boolean FirstElement, float v)
-      throws IOException
+    throws IOException
       {
         Print(Out, Name, FirstElement);
-        Out.write(Float.toString(v));
+        PrintFloat(Out, v);
       }
 
     public static void Print(Writer Out, String Name, boolean FirstElement, double v)
-      throws IOException
+    throws IOException
       {
         Print(Out, Name, FirstElement);
-        Out.write(Double.toString(v));
+        PrintDouble(Out, v);
       }
 
 
     public static void Print(Writer Out, String Name, boolean FirstElement, boolean[] a)
-      throws IOException
+    throws IOException
       {
         Print(Out, Name, FirstElement);
         if (a == null)
@@ -174,7 +181,7 @@ public class JSONUtil
       }
 
     public static void Print(Writer Out, String Name, boolean FirstElement, Boolean[] a)
-      throws IOException
+    throws IOException
       {
         Print(Out, Name, FirstElement);
         if (a == null)
@@ -196,7 +203,7 @@ public class JSONUtil
       }
 
     public static void Print(Writer Out, String Name, boolean FirstElement, int[] a)
-      throws IOException
+    throws IOException
       {
         Print(Out, Name, FirstElement);
         if (a == null)
@@ -218,7 +225,7 @@ public class JSONUtil
       }
 
     public static void Print(Writer Out, String Name, boolean FirstElement, Integer[] a)
-      throws IOException
+    throws IOException
       {
         Print(Out, Name, FirstElement);
         if (a == null)
@@ -240,7 +247,7 @@ public class JSONUtil
       }
 
     public static void Print(Writer Out, String Name, boolean FirstElement, long[] a)
-      throws IOException
+    throws IOException
       {
         Print(Out, Name, FirstElement);
         if (a == null)
@@ -262,7 +269,7 @@ public class JSONUtil
       }
 
     public static void Print(Writer Out, String Name, boolean FirstElement, Long[] a)
-      throws IOException
+    throws IOException
       {
         Print(Out, Name, FirstElement);
         if (a == null)
@@ -284,7 +291,7 @@ public class JSONUtil
       }
 
     public static void Print(Writer Out, String Name, boolean FirstElement, char[] a)
-      throws IOException
+    throws IOException
       {
         Print(Out, Name, FirstElement);
         if (a == null)
@@ -306,7 +313,7 @@ public class JSONUtil
       }
 
     public static void Print(Writer Out, String Name, boolean FirstElement, Character[] a)
-      throws IOException
+    throws IOException
       {
         Print(Out, Name, FirstElement);
         if (a == null)
@@ -322,13 +329,13 @@ public class JSONUtil
               First = false;
             else
               Out.write(",");
-            Out.write(i == null ? "null" : i.toString());
+            PrintChar(Out, i);
           }
         Out.write("]");
       }
 
     public static void Print(Writer Out, String Name, boolean FirstElement, float[] a)
-      throws IOException
+    throws IOException
       {
         Print(Out, Name, FirstElement);
         if (a == null)
@@ -344,13 +351,13 @@ public class JSONUtil
               First = false;
             else
               Out.write(",");
-            Out.write(((Float) i).toString());
+            PrintFloat(Out, i);
           }
         Out.write("]");
       }
 
     public static void Print(Writer Out, String Name, boolean FirstElement, Float[] a)
-      throws IOException
+    throws IOException
       {
         Print(Out, Name, FirstElement);
         if (a == null)
@@ -366,13 +373,13 @@ public class JSONUtil
               First = false;
             else
               Out.write(",");
-            Out.write(i == null ? "null" : i.toString());
+            PrintFloat(Out, i);
           }
         Out.write("]");
       }
 
     public static void Print(Writer Out, String Name, boolean FirstElement, double[] a)
-      throws IOException
+    throws IOException
       {
         Print(Out, Name, FirstElement);
         if (a == null)
@@ -388,13 +395,13 @@ public class JSONUtil
               First = false;
             else
               Out.write(",");
-            Out.write(((Double) i).toString());
+            PrintDouble(Out, i);
           }
         Out.write("]");
       }
 
     public static void Print(Writer Out, String Name, boolean FirstElement, Double[] a)
-      throws IOException
+    throws IOException
       {
         Print(Out, Name, FirstElement);
         if (a == null)
@@ -410,13 +417,13 @@ public class JSONUtil
               First = false;
             else
               Out.write(",");
-            Out.write(i == null ? "null" : i.toString());
+            PrintDouble(Out, i);
           }
         Out.write("]");
       }
 
     public static void Print(Writer Out, String Name, boolean FirstElement, String[] a)
-      throws IOException
+    throws IOException
       {
         Print(Out, Name, FirstElement);
         if (a == null)
@@ -438,7 +445,7 @@ public class JSONUtil
       }
 
     public static void Print(Writer Out, String Name, boolean FirstElement, ZonedDateTime[] a)
-      throws IOException
+    throws IOException
       {
         Print(Out, Name, FirstElement);
         if (a == null)
@@ -466,9 +473,9 @@ public class JSONUtil
 
     public static void end(PrintWriter Out)
       {
-        Out.println("}");        
+        Out.println("}");
       }
-    
+
     public static Map<String, Object> fromJSON(String JsonStr)
       {
         Map<String, Object> Filter = new HashMap<String, Object>();

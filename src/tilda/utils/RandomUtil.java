@@ -44,6 +44,18 @@ public class RandomUtil
       {
         return (int) Math.round((Math.random() * (Max - Min)) + Min);
       }
+
+    /**
+     * picks a random number and returns true if that is < Odds, or false otherwise. So,
+     * calling with 0.75 means a 75% chance true Vs. false
+     * @param Odds a number between 0 and 1
+     * @return
+     */
+    public static boolean pick(double Odds)
+     {
+       return Math.random() < Odds;
+     }
+    
     
     public static double pick(double Min, double Max)
       {
