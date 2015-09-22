@@ -101,9 +101,9 @@ public class View extends Base
 
         Set<String> ColumnNames = new HashSet<String>();        
         Set<String> ObjectNames = new HashSet<String>();
-        boolean CreatedCol     = false;
-        boolean LastUpdatedCol = false;
-        boolean DeletedCol     = false;
+        String CreatedColObjName     = null;
+        String LastUpdatedColObjName = null;
+        String DeletedColObjName     = null;
         for (int i = 0; i < _ViewColumns.size(); ++i)
          {
            ViewColumn C = _ViewColumns.get(i);
@@ -112,11 +112,11 @@ public class View extends Base
              PS.AddError("Column '" + C.getFullName() + "' is defined more than once in View '" + getFullName() + "'.");
 
            if (C.getName().equals("created") == true && SameAsHelper.checkRootSameAs(C._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "created")) == true)
-             CreatedCol = true;
+             CreatedColObjName = C._SameAsObj._ParentObject.getFullName();
            else if (C.getName().equals("lastUpdated") == true && SameAsHelper.checkRootSameAs(C._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "lastUpdated")) == true)
-             LastUpdatedCol = true;
+             LastUpdatedColObjName = C._SameAsObj._ParentObject.getFullName();
            else if (C.getName().equals("deleted") == true && SameAsHelper.checkRootSameAs(C._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "deleted")) == true)
-             DeletedCol = true;
+             DeletedColObjName = C._SameAsObj._ParentObject.getFullName();
            
            if (ObjectNames.add(C._SameAsObj._ParentObject.getFullName()) == false)
              {
@@ -149,8 +149,13 @@ public class View extends Base
              }
          }
         
-        if (CreatedCol == true && LastUpdatedCol == true && DeletedCol == true)
-         _OCC = true;
+        if (CreatedColObjName != null && LastUpdatedColObjName != null && DeletedColObjName != null )
+          {
+            if (CreatedColObjName.equals(LastUpdatedColObjName) && LastUpdatedColObjName.equals(DeletedColObjName))
+             _OCC = true;
+            else
+             LOG.warn("This view defined the three OCC columns 'created', 'lastUpdated', and 'deleted' but they came from different objects ('"+CreatedColObjName+"', '"+LastUpdatedColObjName+"', and '"+DeletedColObjName+"' respectively) so the view will not be considered an OCC view.");
+          }
 
         if (TextUtil.isNullOrEmpty(_SubWhere) == false && _SubQuery != null)
           PS.AddError("View '" + getFullName() + "' is defining both a subWhere AND a subQuery: only one is allowed.");

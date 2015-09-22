@@ -55,6 +55,9 @@ public class JsonMapping
               return true;
             }
         });
+        
+        if (_Sync == true && _ParentObject.isOCC() == false)
+         PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining a 'sync' JSON mapping but the parent object is not OCC.");
 
         return Errs == PS.getErrorCount();
       }
