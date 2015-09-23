@@ -126,7 +126,7 @@ public abstract class Base
         return _Validated;
       }
 
-    protected boolean ValidateJsonMapping(ParserSession PS)
+    protected boolean ValidateJsonMappings(ParserSession PS)
       {
         int Errs = PS.getErrorCount();
         Set<String> Names = new HashSet<String>();

@@ -154,7 +154,7 @@ public class View extends Base
             if (CreatedColObjName.equals(LastUpdatedColObjName) && LastUpdatedColObjName.equals(DeletedColObjName))
              _OCC = true;
             else
-             LOG.warn("This view defined the three OCC columns 'created', 'lastUpdated', and 'deleted' but they came from different objects ('"+CreatedColObjName+"', '"+LastUpdatedColObjName+"', and '"+DeletedColObjName+"' respectively) so the view will not be considered an OCC view.");
+             LOG.warn("The view "+ getFullName()+" defined the three OCC columns 'created', 'lastUpdated', and 'deleted' but they came from different objects ('"+CreatedColObjName+"', '"+LastUpdatedColObjName+"', and '"+DeletedColObjName+"' respectively) so the view will not be considered an OCC view.");
           }
 
         if (TextUtil.isNullOrEmpty(_SubWhere) == false && _SubQuery != null)

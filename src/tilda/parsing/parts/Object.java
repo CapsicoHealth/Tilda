@@ -175,7 +175,7 @@ public class Object extends Base
               _HasUniqueQuery = true;
           }
 
-        super.ValidateJsonMapping(PS);
+        super.ValidateJsonMappings(PS);
         
         if ((_LC = ObjectLifecycle.parse(_LCStr)) == null)
           return PS.AddError("Object '" + getFullName() + "' defined an invalid 'lc' '" + _LCStr + "'.");
