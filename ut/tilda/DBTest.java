@@ -19,6 +19,8 @@ package tilda;
 import java.sql.SQLException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,6 +28,8 @@ import org.apache.logging.log4j.Logger;
 import tilda.data.Key_Data;
 import tilda.data.Key_Factory;
 import tilda.data.ObjectPerf_Factory;
+import tilda.data.Testing_Data;
+import tilda.data.Testing_Factory;
 import tilda.data.TransPerf_Data;
 import tilda.data.TransPerf_Factory;
 import tilda.db.Connection;
@@ -45,13 +49,14 @@ public class DBTest
     public static void main(String[] args)
       {
 
-        Connection CM = null;
+        Connection C = null;
         try
           {
-            CM = ConnectionPool.get("MAIN");
-            // Test1(CM);
-            // Test2(CM);
-            Test3(CM);
+            C = ConnectionPool.get("MAIN");
+            // Test1(C);
+            // Test2(C);
+            // Test3(C);
+            Test4(C);
           }
         catch (Exception E)
           {
@@ -59,11 +64,11 @@ public class DBTest
           }
         finally
           {
-            if (CM != null)
+            if (C != null)
               try
                 {
-                  CM.rollback();
-                  CM.close();
+                  C.rollback();
+                  C.close();
                 }
               catch (SQLException E)
                 {
@@ -71,6 +76,28 @@ public class DBTest
           }
       }
 
+    private static void Test4(Connection C)
+    throws Exception
+      {
+        List<Long> L = new ArrayList<Long>();
+        L.add(1l);
+        L.add(10l);
+        L.add(100l);
+        Testing_Data D = Testing_Factory.Create(L, "Blah");
+        if (D.Write(C) == false)
+         throw new Exception("Bad stuff!");
+        C.commit();
+        
+        D.setA1(777);
+        D.setA2('G');
+        D.setDesc2("blah blah blah blah blah blah blah");
+        if (D.Write(C) == false)
+          throw new Exception("Bad stuff!");
+        C.commit();
+        
+      }
+    
+    
     private static void Test3(Connection C)
     throws Exception
       {
