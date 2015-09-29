@@ -2,6 +2,7 @@
   "zones": [
 	    { "id":"UTC"  , "label":"UTC"                , "value":"Etc/UTC"             }
 	   ,{ "id":"Zulu" , "label":"Zulu"               , "value":"Etc/Zulu"            }
+       ,{ "id":"Z"    , "label":"Z"                  , "value":"Z"                   }
 	   ,{ "id":"Green", "label":"Greenwich"          , "value":"Etc/Greenwich"       }
 	   ,{ "id":"CaNe" , "label":"Canada Newfoundland", "value":"Canada/Newfoundland" }
 	   ,{ "id":"CaAt" , "label":"Canada Atlantic"    , "value":"Canada/Atlantic"     }

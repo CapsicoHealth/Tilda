@@ -43,8 +43,8 @@ public class DateTimeUtilTest
         try
           {
 //            Test1();
-//            Test2();
-//            Test3();
+            Test2();
+            Test3();
             Test4();
           }
         catch (Exception e)

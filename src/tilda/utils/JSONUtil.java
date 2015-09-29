@@ -37,7 +37,7 @@ public class JSONUtil
     protected static void PrintString(Writer Out, String v)
     throws IOException
       {
-        if (v == null)
+        if (v == null || v.equals("null") == true || v.equals("undefined") == true)
           {
             Out.write("null");
             return;
