@@ -1633,11 +1633,17 @@ public abstract class QueryHelper
         for (Type_StringPrimitive c : Cols)
           {
             if (First == true)
-              First = false;
+              {
+                _QueryStr.append(" lower(");
+                First = false;
+              }
             else
               _QueryStr.append(" || ' ' || ");
             _QueryStr.append(c.toString(_ST));
           }
+        if (First == false)
+         _QueryStr.append(")");
+         
         OpVal(Op.LIKE, V);
         return this;
       }

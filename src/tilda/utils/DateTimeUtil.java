@@ -23,6 +23,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -35,7 +37,7 @@ public class DateTimeUtil
 
     protected static final ZoneId     _UTC                = ZoneId.of("Etc/UTC");
 
-    public static final ZonedDateTime NOW_PLACEHOLDER_ZDT = NewUTC(1, 1, 1, 0, 0, 0, 0);
+    public static final ZonedDateTime NOW_PLACEHOLDER_ZDT = NewUTC(999, 12, 31, 23, 59, 0, 0);
 
     public static boolean isNowPlaceholder(ZonedDateTime ZDT)
       {
@@ -366,5 +368,39 @@ public class DateTimeUtil
     public static ZonedDateTime getIthMonthTimestamp(boolean Start, int i)
       {
         return getTodayTimestamp(Start).plusMonths(1).with(Start == true ? TemporalAdjusters.firstDayOfMonth() : TemporalAdjusters.lastDayOfMonth());
+      }
+
+    private static Pattern _DELTA_DATETIME = Pattern.compile("(\\+|\\-)(\\d{2})y(\\d{2})m(\\d{2})d\\s([01][0-9]|2[0-4])\\:([0-5][0-9])");
+    /**
+     * If the string passed in is not null and of exactly 16 characters in the form of "(+|-)(\d{2})y(\d{2})m(\d{2})d\s([01][0-9]|2[0-4])\:([0-5][0-9])",
+     * will return a JSON text representation of the baseTimeMarker with the delta specified by the pattern. For example if the date time passed is
+     * <B>2015-02-10</B> (irrespective of the time specified)<BR>
+     * <UL><LI>"-01y00m05d 10:50" -> 2014-02-05 10:50:00</LI>
+     *     <LI>"+00y00m04d 14:50" -> 2015-02-14 14:50:00</LI>
+     * </UL>
+     * @param Val
+     * @param baseTimeMarker
+     * @return
+     */
+    public static String preProcess(String Val, ZonedDateTime BaseTimeMarker)
+      {
+        if (Val == null || Val.length() != 16)
+         return Val;
+
+        Matcher M = _DELTA_DATETIME.matcher(Val);
+        if (M.matches() == false)
+         return Val;
+
+        boolean Plus = M.group(1).equals("+");
+        int years = Integer.parseInt(M.group(2));
+        int months= Integer.parseInt(M.group(3));
+        int days  = Integer.parseInt(M.group(4));
+        int hour  = Integer.parseInt(M.group(5));
+        int minute= Integer.parseInt(M.group(6));
+        Period P = Period.of(years, months, days);
+        BaseTimeMarker = Plus ? BaseTimeMarker.plus(P) : BaseTimeMarker.minus(P);
+        BaseTimeMarker = BaseTimeMarker.withHour(hour).withMinute(minute);
+        
+        return printDateTimeForJSON(BaseTimeMarker);
       }
   }
