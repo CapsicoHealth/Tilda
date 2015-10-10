@@ -19,6 +19,8 @@ package tilda.parsing.parts;
 import java.util.ArrayList;
 import java.util.List;
 
+import tilda.enums.ColumnMapperMode;
+import tilda.enums.ColumnMode;
 import tilda.enums.MultiType;
 import tilda.enums.ValidationStatus;
 import tilda.parsing.ParserSession;
@@ -34,6 +36,7 @@ public class ColumnEnum
     /*@formatter:off*/
     @SerializedName("srcColumns") public String[]          _SrcColumns ;
     @SerializedName("destObject") public String            _DestObject ;
+    @SerializedName("name"      ) public ColumnMapperMode  _Name   = ColumnMapperMode.MEMORY;
     @SerializedName("multi"     ) public MultiType         _Multi  = MultiType.NONE;
     /*@formatter:on*/
 
@@ -79,7 +82,21 @@ public class ColumnEnum
         _SrcColumnObjs.add(_ParentColumn);
 
         ForeignKey.CheckForeignKeyMapping(PS, _ParentColumn._ParentObject, _SrcColumnObjs, _DestObjectObj, "enum");
-
+        
+        if (_Name != ColumnMapperMode.NONE)
+          {
+            if (_ParentColumn._ParentObject.getColumn(_ParentColumn.getName()+"MappedName") != null)
+             PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares a mapper which automatically adds the column '"+_ParentColumn.getName()+"MappedName'. That name clashes with an already defined column.");
+            else
+              {
+                Column Col = new Column(_ParentColumn.getName()+"EnumValue", null, 0, _ParentColumn._Nullable, _Name == ColumnMapperMode.DB ? ColumnMode.AUTO : ColumnMode.CALCULATED, 
+                                        _ParentColumn._Invariant, null, "Enum value for '"+_ParentColumn.getName()+"' through '"+_DestObjectObj.getFullName()+"'.");
+                Col._SameAs = _DestObjectObj.getColumn("value").getFullName();
+                Col._FrameworkManaged = true;
+                Col._MapperDef = new ColumnMapper(_SrcColumns, _DestObject, _Name, null, _Multi);
+                _ParentColumn._ParentObject.AddColumnAfter(_ParentColumn, Col);
+              }
+          }
       }
 
     private boolean ValidateSourceColumns(ParserSession PS)
