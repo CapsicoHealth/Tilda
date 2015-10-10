@@ -1824,6 +1824,15 @@ public abstract class QueryHelper
         _Section = S.ORDERBY;
         return this;
       }
+    
+    public QueryHelper orderBy(ColumnDefinition Col, boolean Asc, boolean NullsLast)
+    throws Exception
+      {
+        orderBy(Col, Asc);
+        _QueryStr.append(" NULLS ").append(NullsLast == true ? "LAST" : "FIRST");
+        return this;
+      }
+    
 
     public QueryHelper ageBetween(Type_DatetimePrimitive Col, int[] ageRange)
       {

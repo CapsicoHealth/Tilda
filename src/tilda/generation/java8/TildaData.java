@@ -449,7 +449,7 @@ public class TildaData implements CodeGenTildaData
             Out.println("           throw new Exception(\"Cannot set " + C.getFullName() + ": the value \'\"+v+\"\' is not a valid Enumerated value as per \'" + FactoryClassName + "\'.\");");
             Out.println("          v = e.getId();");
             if (C._Enum._Name != ColumnMapperMode.NONE)
-             Out.println("          set"+TextUtil.CapitalizeFirstCharacter(C.getName())+"EnumValue(e.getValue());");
+             Out.println("          "+(C.isCollection() == true ? "addTo":"set")+TextUtil.CapitalizeFirstCharacter(C.getName())+"EnumValue(e.getValue());");
             Out.println("        }");
           }
         switch (C._Type)
