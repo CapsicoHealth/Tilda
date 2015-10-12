@@ -34,13 +34,11 @@ public class ColumnEnum
   {
 
     /*@formatter:off*/
-    @SerializedName("srcColumns") public String[]          _SrcColumns ;
     @SerializedName("destObject") public String            _DestObject ;
     @SerializedName("name"      ) public ColumnMapperMode  _Name   = ColumnMapperMode.MEMORY;
     @SerializedName("multi"     ) public MultiType         _Multi  = MultiType.NONE;
     /*@formatter:on*/
 
-    public transient List<Column>      _SrcColumnObjs = new ArrayList<Column>();
     public transient Object            _DestObjectObj;
     public transient Column            _ParentColumn;
 
@@ -51,11 +49,10 @@ public class ColumnEnum
       }
     public ColumnEnum(ColumnEnum CE)
       {
-        this(CE._SrcColumns, CE._DestObject, CE._Multi);
+        this(CE._DestObject, CE._Multi);
       }
-    public ColumnEnum(String[] SrcColumns, String DestObject, MultiType Multi)
+    public ColumnEnum(String DestObject, MultiType Multi)
       {
-        _SrcColumns = SrcColumns;
         _DestObject = DestObject;
         _Multi = Multi;
       }
@@ -76,12 +73,11 @@ public class ColumnEnum
 
         if (ValidateDestinationObject(PS) == false)
           return;
-        if (ValidateSourceColumns(PS) == false)
-          return;
 
-        _SrcColumnObjs.add(_ParentColumn);
+        List<Column> SrcColumnObjs = new ArrayList<Column>();
+        SrcColumnObjs.add(_ParentColumn);
 
-        ForeignKey.CheckForeignKeyMapping(PS, _ParentColumn._ParentObject, _SrcColumnObjs, _DestObjectObj, "enum");
+        ForeignKey.CheckForeignKeyMapping(PS, _ParentColumn._ParentObject, SrcColumnObjs, _DestObjectObj, "enum");
         
         if (_Name != ColumnMapperMode.NONE)
           {
@@ -93,18 +89,10 @@ public class ColumnEnum
                                         _ParentColumn._Invariant, null, "Enum value for '"+_ParentColumn.getName()+"' through '"+_DestObjectObj.getFullName()+"'.");
                 Col._SameAs = _DestObjectObj.getColumn("value").getFullName();
                 Col._FrameworkManaged = true;
-                Col._MapperDef = new ColumnMapper(_SrcColumns, _DestObject, _Name, null, _Multi);
+                Col._MapperDef = new ColumnMapper(new String[] { _ParentColumn.getName() }, _DestObject, _Name, null, _Multi);
                 _ParentColumn._ParentObject.AddColumnAfter(_ParentColumn, Col);
               }
           }
-      }
-
-    private boolean ValidateSourceColumns(ParserSession PS)
-      {
-        if (_SrcColumns != null && _SrcColumns.length > 0)
-          _SrcColumnObjs = ValidationHelper.ProcessColumn(PS, _ParentColumn._ParentObject, "enum", _SrcColumns, null);
-
-        return true;
       }
 
     private boolean ValidateDestinationObject(ParserSession PS)

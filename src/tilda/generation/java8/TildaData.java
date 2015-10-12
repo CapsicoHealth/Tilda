@@ -375,18 +375,9 @@ public class TildaData implements CodeGenTildaData
             Out.println("           {");
             if (C._Enum != null)
               {
-                StringBuilder Str = new StringBuilder();
-                for (int c = 0; c < C._Enum._SrcColumnObjs.size()-1; ++c)
-                  {
-                    Column col = C._Enum._SrcColumnObjs.get(c);
-                    if (c != 0) Str.append(", ");
-                    Str.append("get" + TextUtil.CapitalizeFirstCharacter(col.getName()) + "()");
-                  }
-                if (Str.length() != 0)
-                 Str.append(", ");
                 String FactoryClassName = Helper.getFullAppFactoryClassName(C._Enum._DestObjectObj);
                 String DataClassName    = Helper.getFullAppDataClassName(C._Enum._DestObjectObj);
-                Out.println("             "+ DataClassName +" e = "+FactoryClassName+".getEnumerationById("+Str+"i);");
+                Out.println("             "+ DataClassName +" e = "+FactoryClassName+".getEnumerationById(i);");
                 Out.println("             if (e == null)");
                 Out.println("              throw new Exception(\"Cannot set " + C.getFullName() + ": the value \'\"+i+\"\' is not a valid Enumerated value as per \'"+FactoryClassName+"\'.\");");
                 Out.println("             _" + C.getName() + ".add(e.getId());");
@@ -430,21 +421,11 @@ public class TildaData implements CodeGenTildaData
           }
         if (C._Enum != null)
           {
-            StringBuilder Str = new StringBuilder();
-            for (int c = 0; c < C._Enum._SrcColumnObjs.size() - 1; ++c)
-              {
-                Column col = C._Enum._SrcColumnObjs.get(c);
-                if (c != 0)
-                  Str.append(", ");
-                Str.append("get" + TextUtil.CapitalizeFirstCharacter(col.getName()) + "()");
-              }
-            if (Str.length() != 0)
-              Str.append(", ");
             String FactoryClassName = Helper.getFullAppFactoryClassName(C._Enum._DestObjectObj);
             String DataClassName = Helper.getFullAppDataClassName(C._Enum._DestObjectObj);
             Out.println("       if (v != null)");
             Out.println("        {");
-            Out.println("          " + DataClassName + " e = " + FactoryClassName + ".getEnumerationById(" + Str + "v);");
+            Out.println("          " + DataClassName + " e = " + FactoryClassName + ".getEnumerationById(v);");
             Out.println("          if (e == null)");
             Out.println("           throw new Exception(\"Cannot set " + C.getFullName() + ": the value \'\"+v+\"\' is not a valid Enumerated value as per \'" + FactoryClassName + "\'.\");");
             Out.println("          v = e.getId();");
@@ -1105,6 +1086,31 @@ public class TildaData implements CodeGenTildaData
                       Out.println(Header+"  }");
                     }
                  }
+              else if (C._Enum != null && C._Enum._Name == ColumnMapperMode.MEMORY)
+                {
+                  String Header = (C.isCollection() == true ? "             " : "          ") + PaddingUtil.getPad(C.getName().length() + Pad.length()) + "   ";
+                  if (C.isCollection() == true)
+                   {
+                     Out.println(Header+" if (_"+C.getName()+" != null) for ("+ JavaJDBCType.getFieldTypeBase(C)+" v : _"+C.getName()+")");
+                     Out.println(Header+"  {");
+                   }
+                  String ClassName = Helper.getFullAppFactoryClassName(C._Enum._DestObjectObj);
+                  String VarName = C.isCollection() == true ? "v" : "_"+C.getName();
+                  if (C._Enum._Name == ColumnMapperMode.MEMORY)
+                    {
+                      String FactoryClassName = Helper.getFullAppFactoryClassName(C._Enum._DestObjectObj);
+                      String DataClassName    = Helper.getFullAppDataClassName(C._Enum._DestObjectObj);
+                      Out.println(Header+"    "+ DataClassName +" e = "+FactoryClassName+".getEnumerationById("+VarName+");");
+                      Out.println(Header+"    if (e == null)");
+                      Out.println(Header+"     throw new Exception(\"Cannot set " + C.getFullName() + ": the value \'\"+i+\"\' is not a valid Enumerated value as per \'"+FactoryClassName+"\'.\");");
+                      Out.println(Header+"    "+(C.isCollection()==true?"addTo":"set") + TextUtil.CapitalizeFirstCharacter(C.getName()) +"EnumValue(e.getValue());");
+                    }
+                  if (C.isCollection() == true)
+                    {
+                      Out.println(Header+"  }");
+                    }
+                  
+                }
             }
         Out.println("     __LookupId = 0;");
         Out.println("     __Init     = InitMode.READ;");
