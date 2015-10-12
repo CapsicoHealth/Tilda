@@ -272,32 +272,33 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("       int IncomingErrors = Errors.size();");
         Out.println();
         for (Column C : O._Columns)
-          {
-            if (C._Type == ColumnType.BINARY)
-              {
-                Out.println("       if (Values.get("+TextUtil.EscapeDoubleQuoteWithSlash(C.getName())+") != null)");
-                Out.println("        Errors.add(new StringStringPair("+TextUtil.EscapeDoubleQuoteWithSlash(C.getName())+", \"Parameter is of a binary type and cannot be passed as a string value.\"));");
-                continue;
-              }
-            if (C._FrameworkManaged == true || C._Mode != ColumnMode.NORMAL)
-             continue;
-            String Pad = C._ParentObject.getColumnPad(C.getName());
-            Out.print("       " + (C.isCollection() == true ? JavaJDBCType.getFieldType(C) : JavaJDBCType.getFieldTypeBaseClass(C)+"      ") 
-                        + "  _" + C.getName() + Pad 
-                        + " = "+(C.isList()==true?"CollectionUtil.toList("
-                                :C.isSet ()==true?"CollectionUtil.toSet ("
-                                                 :"                      "
-                                )
-                               +"ParseUtil.parse"+JavaJDBCType.getFieldTypeBaseClass(C)
-                                 +"("+TextUtil.EscapeDoubleQuoteWithSlash(C.getName())+Pad
-                                 +", "+(C._Nullable == true ? "false":"true ")
-                                 +", Values.get("+TextUtil.EscapeDoubleQuoteWithSlash(C.getName())+Pad+")"
-                     );
-            if (C.isCollection() == true)
-             Out.print(", "+TextUtil.EscapeDoubleQuoteWithSlash(C._TypeSep));
-            Out.println(", Errors"
-                      +(C.isCollection()==true ? ")" : " ")
-                      +");");
+          if (C != null)
+            {
+              if (C._Type == ColumnType.BINARY)
+                {
+                  Out.println("       if (Values.get("+TextUtil.EscapeDoubleQuoteWithSlash(C.getName())+") != null)");
+                  Out.println("        Errors.add(new StringStringPair("+TextUtil.EscapeDoubleQuoteWithSlash(C.getName())+", \"Parameter is of a binary type and cannot be passed as a string value.\"));");
+                  continue;
+                }
+              if (C._FrameworkManaged == true || C._Mode != ColumnMode.NORMAL)
+               continue;
+              String Pad = C._ParentObject.getColumnPad(C.getName());
+              Out.print("       " + (C.isCollection() == true ? JavaJDBCType.getFieldType(C) : JavaJDBCType.getFieldTypeBaseClass(C)+"      ") 
+                          + "  _" + C.getName() + Pad 
+                          + " = "+(C.isList()==true?"CollectionUtil.toList("
+                                  :C.isSet ()==true?"CollectionUtil.toSet ("
+                                                   :"                      "
+                                  )
+                                 +"ParseUtil.parse"+JavaJDBCType.getFieldTypeBaseClass(C)
+                                   +"("+TextUtil.EscapeDoubleQuoteWithSlash(C.getName())+Pad
+                                   +", "+(C._Nullable == true ? "false":"true ")
+                                   +", Values.get("+TextUtil.EscapeDoubleQuoteWithSlash(C.getName())+Pad+")"
+                       );
+              if (C.isCollection() == true)
+               Out.print(", "+TextUtil.EscapeDoubleQuoteWithSlash(C._TypeSep));
+              Out.println(", Errors"
+                        +(C.isCollection()==true ? ")" : " ")
+                        +");");
           }
         Out.println();
         Out.println("       if (IncomingErrors != Errors.size())");
