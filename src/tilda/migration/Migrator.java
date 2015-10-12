@@ -48,7 +48,7 @@ public class Migrator
     public static final String    TILDA_VERSION_VAROK = "1_0";
 
     public static String migrate(Connection C, Schema S)
-      throws Exception
+    throws Exception
       {
         StringBuilder Str = new StringBuilder();
         CodeGenSql Sql = C.getSQlCodeGen();
@@ -91,40 +91,22 @@ public class Migrator
                 RS.close();
                 boolean didSomething = false;
                 for (Object Obj : S._Objects)
-                  if (Obj._FST != FrameworkSourcedType.VIEW && DBTables.contains(Obj._Name.toLowerCase()) == false)
-                    {
-                      LOG.info("The application's data model defines the table '" + Obj.getShortName() + "' which cannot be found in the database. Trying to create it...");
-                      if (C.createTable(Obj) == false)
-                        throw new Exception("Cannot upgrade schema by adding the new table '" + Obj.getShortName() + "'.");
-                      didSomething = true;
-                    }
-                if (didSomething == true)
-                  C.commit();
-
-                didSomething = false;
-                for (View V : S._Views)
-                  {
-                    LOG.info("The application's data model defines the view '" + V.getShortName() + "' which cannot be found in the database. Trying to create it...");
-                    if (C.createView(V, DBViews.contains(V._Name.toLowerCase())) == false)
-                      throw new Exception("Cannot upgrade schema by adding the new view '" + V.getShortName() + "'.");
-                    didSomething = true;
-                  }
-                if (didSomething == true)
-                  C.commit();
-
-                didSomething = false;
-                for (Object Obj : S._Objects)
                   {
                     if (Obj._FST == FrameworkSourcedType.VIEW)
                       continue;
+                    if (DBTables.contains(Obj._Name.toLowerCase()) == false)
+                      {
+                        LOG.info("The application's data model defines the table '" + Obj.getShortName() + "' which cannot be found in the database. Trying to create it...");
+                        if (C.createTable(Obj) == false)
+                          throw new Exception("Cannot upgrade schema by adding the new table '" + Obj.getShortName() + "'.");
+                        didSomething = true;
+                      }
                     RS = meta.getColumns(null, S._Name.toLowerCase(), Obj._Name.toLowerCase(), null);
                     Map<String, ColInfo> DBColumns = new HashMap<String, ColInfo>();
-//                    LOG.debug(" Columns for " + Obj.getFullName());
                     while (RS.next() != false)
                       {
                         ColInfo CI = new ColInfo(RS);
                         DBColumns.put(CI._Name, CI);
-//                        LOG.debug("      " + CI);
                       }
                     RS.close();
                     if (DBColumns.isEmpty() == true)
@@ -167,19 +149,32 @@ public class Migrator
                               {
                                 throw new Exception("The application's data model defines the column '" + Col.getShortName() + "' as an base type, but it's an array in the DB. The database needs to be migrated manually.");
                               }
-                            
-                            if (Col._Type == ColumnType.STRING && Col.isCollection() == false && (CI._Size < C.getCLOBThreshhold() && CI._Size != Col._Size || CI._Size >= C.getCLOBThreshhold() && Col._Size < C.getCLOBThreshhold()) )
+
+                            if (Col._Type == ColumnType.STRING && Col.isCollection() == false
+                            && (CI._Size < C.getCLOBThreshhold() && CI._Size != Col._Size || CI._Size >= C.getCLOBThreshhold() && Col._Size < C.getCLOBThreshhold()))
                               {
                                 if (C.alterTableAlterColumnStringSize(Col, CI._Size) == false)
-                                 throw new Exception("The application's data model defines the column '" + Col.getShortName() + "' as a String of size "+Col._Size+", but it's "+CI._Size+" in the DB and failed migration. The database needs to be migrated manually.");
+                                  throw new Exception("The application's data model defines the column '" + Col.getShortName() + "' as a String of size " + Col._Size + ", but it's " + CI._Size
+                                  + " in the DB and failed migration. The database needs to be migrated manually.");
                                 didSomething = true;
                               }
                           }
-
                       }
-                    if (didSomething == true)
-                      C.commit();
                   }
+                if (didSomething == true)
+                  C.commit();
+
+                didSomething = false;
+                for (View V : S._Views)
+                  {
+                    LOG.info("The application's data model defines the view '" + V.getShortName() + "' which cannot be found in the database. Trying to create it...");
+                    if (C.createView(V, DBViews.contains(V._Name.toLowerCase())) == false)
+                      throw new Exception("Cannot upgrade schema by adding the new view '" + V.getShortName() + "'.");
+                    didSomething = true;
+                  }
+                if (didSomething == true)
+                  C.commit();
+
               }
             if (PS.getErrorCount() > 0)
               {
