@@ -18,6 +18,9 @@ package tilda.db;
 
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import tilda.utils.SystemValues;
 
 
@@ -25,6 +28,8 @@ public class ArrayListResults<E> extends ArrayList<E> implements ListResults<E>
   {
     private static final long serialVersionUID = 6012219269542129556L;
 
+    static final Logger LOG = LogManager.getLogger(ArrayListResults.class.getName());
+    
     public ArrayListResults(int Start)
       {
         super();

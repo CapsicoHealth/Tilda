@@ -167,8 +167,12 @@ public class Migrator
                 didSomething = false;
                 for (View V : S._Views)
                   {
-                    LOG.info("The application's data model defines the view '" + V.getShortName() + "' which cannot be found in the database. Trying to create it...");
-                    if (C.createView(V, DBViews.contains(V._Name.toLowerCase())) == false)
+                    boolean Drop = DBViews.contains(V._Name.toLowerCase());
+                    if (Drop == false)
+                     LOG.info("The application's data model defines the view '" + V.getShortName() + "' which cannot be found in the database. Trying to create it...");
+                    else
+                      LOG.info("The application's data model defines the view '" + V.getShortName() + "' which needs to be re-created...");
+                    if (C.createView(V, Drop) == false)
                       throw new Exception("Cannot upgrade schema by adding the new view '" + V.getShortName() + "'.");
                     didSomething = true;
                   }

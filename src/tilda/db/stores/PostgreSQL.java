@@ -20,6 +20,10 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.SQLException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import tilda.db.ArrayListResults;
 import tilda.db.Connection;
 import tilda.db.processors.ScalarRP;
 import tilda.enums.AggregateType;
@@ -37,6 +41,8 @@ import tilda.utils.TextUtil;
 
 public class PostgreSQL implements DBType
   {
+    static final Logger LOG = LogManager.getLogger(PostgreSQL.class.getName());
+    
     @Override
     public boolean isErrNoData(String SQLState, int ErrorCode)
       {
@@ -163,7 +169,7 @@ public class PostgreSQL implements DBType
       {
         if (Drop == true)
           {
-            Con.ExecuteUpdate(V.getShortName(), "DROP VIEW "+V.getShortName()+" CASCADE");
+            Con.ExecuteUpdate(V.getShortName(), "DROP VIEW IF EXISTS "+V.getShortName()+" CASCADE");
           }
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);

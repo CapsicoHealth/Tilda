@@ -18,6 +18,9 @@ package tilda.db.stores;
 
 import java.sql.SQLException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import tilda.db.Connection;
 import tilda.enums.AggregateType;
 import tilda.generation.interfaces.CodeGenSql;
@@ -29,6 +32,9 @@ import tilda.utils.TextUtil;
 
 public class IBMDB2 implements DBType
   {
+    
+    static final Logger LOG = LogManager.getLogger(IBMDB2.class.getName());
+    
     @Override
     public boolean isErrNoData(String SQLState, int ErrorCode)
       {
