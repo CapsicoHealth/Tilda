@@ -114,6 +114,8 @@ public class Migrator
                     didSomething = false;
                     for (Column Col : Obj._Columns)
                       {
+                        if (Col == null)
+                         continue;
                         if (Col._Mode == ColumnMode.CALCULATED)
                           continue;
                         ColInfo CI = DBColumns.get(Col.getName().toLowerCase());
