@@ -76,5 +76,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="lib/quartz-2.2.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons-csv-1.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
