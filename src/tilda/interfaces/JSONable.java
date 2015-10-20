@@ -20,7 +20,7 @@ import java.io.Writer;
 
 
 
-public interface JSONable extends ReaderObject
+public interface JSONable
   {
     public void toJSON(Writer Out, String JsonExportName, boolean FullObject) throws Exception;
   }

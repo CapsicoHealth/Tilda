@@ -17,7 +17,6 @@
 package tilda.utils;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Writer;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
@@ -512,6 +511,16 @@ public class JSONUtil
         end(Out, ' ');
       }
 
+    public static void response(Writer Out, String[][] groupValues)
+    throws IOException
+      {
+        Out.write("{\"code\":");
+        Out.write(Integer.toString(HttpStatus.OK._Code));
+        Print(Out, "data", false, groupValues, "");
+        end(Out, ' ');
+      }
+
+
     public static Map<String, Object> fromJSON(String JsonStr)
       {
         Map<String, Object> Filter = new HashMap<String, Object>();
@@ -557,6 +566,17 @@ public class JSONUtil
 
       }
 
+    public static void Print(Writer Out, String elementName, String JsonExportName, boolean firstElement, JSONable Obj, String Header)
+    throws Exception
+      {
+        Out.write(Header);
+        Print(Out, elementName, firstElement);
+        if (Obj == null)
+          Out.write(" null ");
+        else
+          Obj.toJSON(Out, JsonExportName, true);
+      }
+
     public static void Print(Writer Out, String elementName, boolean firstElement, String[][] Values, String Header)
     throws IOException
       {
@@ -566,18 +586,23 @@ public class JSONUtil
         boolean First = true;
         for (String[] Value : Values)
           {
-            if (First == true) First = false; else Out.write(", ");
+            if (First == true)
+              First = false;
+            else
+              Out.write(", ");
             Out.write("[");
             boolean First2 = true;
             for (String s : Value)
               {
-                if (First2 == true) First2 = false; else Out.write(", ");
+                if (First2 == true)
+                  First2 = false;
+                else
+                  Out.write(", ");
                 PrintString(Out, s);
               }
             Out.write("]");
           }
         Out.write(" ]\n");
       }
-
 
   }
