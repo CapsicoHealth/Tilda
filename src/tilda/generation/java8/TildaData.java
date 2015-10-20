@@ -1218,7 +1218,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("        { ");
         for (JsonMapping j : O._Json)
           Out.println("          case \""+j._Name+"\": "+Helper.getFullAppJsonClassName(O)+".toJSON"+j._Name+"(Out, ("+Helper.getFullAppDataClassName(O)+") this, FullObject); break;");
-        Out.println("          default: throw new Exception(\"Unknown JSON exporter '\"+\"' for "+Helper.getFullAppJsonClassName(O)+"\");");
+        Out.println("          default: throw new Exception(\"Unknown JSON exporter '\"+JsonExportName+\"' for "+Helper.getFullAppJsonClassName(O)+"\");");
         Out.println("        } ");
         Out.println("    }");
       }

@@ -21,6 +21,7 @@ import java.io.PrintWriter;
 import java.io.Writer;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
@@ -94,13 +95,13 @@ public class JSONUtil
     protected static void Print(Writer Out, String Name, boolean FirstElement)
     throws IOException
       {
-        if (FirstElement == false)
-          Out.write(", ");
-        if (Name == null)
-          return;
-        Out.write("\"");
-        Out.write(Name);
-        Out.write("\":");
+        Out.write(FirstElement == false ? "," : " ");
+        if (Name != null)
+          {
+            Out.write("\"");
+            Out.write(Name);
+            Out.write("\":");
+          }
       }
 
     public static void Print(Writer Out, String Name, boolean FirstElement, String v)
@@ -468,28 +469,31 @@ public class JSONUtil
         Out.write("]");
       }
 
-    public static void startOK(PrintWriter Out, char openObjectOrArray)
+    public static void startOK(Writer Out, char openObjectOrArray)
+    throws IOException
       {
-        Out.print("{\"code\":");
-        Out.print(HttpStatus.OK._Code);
-        Out.print(",\"data\": ");
-        Out.println(openObjectOrArray);
+        Out.write("{\"code\":");
+        Out.write(Integer.toString(HttpStatus.OK._Code));
+        Out.write(",\"data\": ");
+        Out.write(openObjectOrArray);
+        Out.write("\n");
       }
 
-    public static void end(PrintWriter Out, char closeObjectOrArray)
+    public static void end(Writer Out, char closeObjectOrArray)
+    throws IOException
       {
-        Out.print(closeObjectOrArray);
-        Out.println("}");
+        Out.write(closeObjectOrArray);
+        Out.write("}\n");
       }
 
-    public static void response(PrintWriter Out, String JsonExportName, JSONable Obj)
+    public static void response(Writer Out, String JsonExportName, JSONable Obj)
     throws Exception
       {
         if (Obj == null)
           {
-            Out.print("{\"code\":");
-            Out.print(HttpStatus.OK._Code);
-            Out.print(",\"data\": null}");
+            Out.write("{\"code\":");
+            Out.write(Integer.toString(HttpStatus.OK._Code));
+            Out.write(",\"data\": null}");
           }
         else
           {
@@ -498,36 +502,16 @@ public class JSONUtil
             end(Out, '}');
           }
       }
-    public static void response(PrintWriter Out, String JsonExportName, ListResults<? extends JSONable> L)
+
+    public static void response(Writer Out, String JsonExportName, ListResults<? extends JSONable> L)
     throws Exception
       {
-        if (L == null)
-         {
-           Out.print("{\"code\":");
-           Out.print(HttpStatus.OK._Code);
-           Out.print(",\"data\": null}");
-         }
-        else if (L.isEmpty() == true)
-          {
-            Out.print("{\"code\":");
-            Out.print(HttpStatus.OK._Code);
-            Out.print(",\"data\": [ ] }");
-          }
-        else
-         {
-           startOK(Out, '[');
-           boolean First = true;
-           for (JSONable Obj : L)
-             {
-               if (L == null)
-                continue;
-               if (First == true) { First = false; Out.write("       "); } else Out.write("     , ");
-               Obj.toJSON(Out, JsonExportName, true);
-             }
-           end(Out, ']');
-         }
+        Out.write("{\"code\":");
+        Out.write(Integer.toString(HttpStatus.OK._Code));
+        Print(Out, "data", JsonExportName, false, L, " ");
+        end(Out, ' ');
       }
-    
+
     public static Map<String, Object> fromJSON(String JsonStr)
       {
         Map<String, Object> Filter = new HashMap<String, Object>();
@@ -535,5 +519,65 @@ public class JSONUtil
         return (Map<String, Object>) gson.fromJson(JsonStr, Filter.getClass());
       }
 
-    
+    public static void Print(Writer Out, String elementName, String JsonExportName, boolean firstElement, List<? extends JSONable> L, String Header)
+    throws Exception
+      {
+        Out.write(Header);
+        Print(Out, elementName, firstElement);
+
+        if (L == null)
+          {
+            Out.write(" null ");
+          }
+        else if (L.isEmpty() == true)
+          {
+            Out.write(" [ ] ");
+          }
+        else
+          {
+            Out.write(" [\n");
+            boolean First = true;
+            for (JSONable Obj : L)
+              {
+                if (L == null)
+                  continue;
+                Out.write(Header);
+                if (First == true)
+                  {
+                    Out.write("     ");
+                    First = false;
+                  }
+                else
+                  Out.write("    ,");
+                Obj.toJSON(Out, JsonExportName, true);
+              }
+            Out.write(Header);
+            Out.write("  ]\n");
+          }
+
+      }
+
+    public static void Print(Writer Out, String elementName, boolean firstElement, String[][] Values, String Header)
+    throws IOException
+      {
+        Out.write(Header);
+        Print(Out, elementName, firstElement);
+        Out.write(" [ ");
+        boolean First = true;
+        for (String[] Value : Values)
+          {
+            if (First == true) First = false; else Out.write(", ");
+            Out.write("[");
+            boolean First2 = true;
+            for (String s : Value)
+              {
+                if (First2 == true) First2 = false; else Out.write(", ");
+                PrintString(Out, s);
+              }
+            Out.write("]");
+          }
+        Out.write(" ]\n");
+      }
+
+
   }

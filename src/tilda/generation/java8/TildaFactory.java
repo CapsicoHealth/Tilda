@@ -390,7 +390,7 @@ public class TildaFactory implements CodeGenTildaFactory
             {
               String Pad = C._ParentObject.getColumnPad(C.getName());
               Out.print("       Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(" + C.getName() + Pad + "); ");
-              if (I._ParentObject.getLifecycle() != ObjectLifecycle.READONLY)
+              if (C._PrimaryKey == true && I._ParentObject.getLifecycle() != ObjectLifecycle.READONLY)
                Out.print("Obj.__Saved_" + C.getName() + Pad + " = Obj._" + C.getName() + Pad + ";");
               Out.println();
             }
@@ -530,7 +530,7 @@ public class TildaFactory implements CodeGenTildaFactory
             {
               String Pad = C._ParentObject.getColumnPad(C.getName());
               Out.print("       Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(" + C.getName() + Pad + "); ");
-              if (SWC._ParentObject.getLifecycle() != ObjectLifecycle.READONLY)
+              if (C._PrimaryKey == true && SWC._ParentObject.getLifecycle() != ObjectLifecycle.READONLY)
                Out.print("Obj.__Saved_" + C.getName() + Pad + " = Obj._" + C.getName() + Pad + ";");
               Out.println();
             }
