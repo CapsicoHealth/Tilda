@@ -50,6 +50,7 @@ public abstract class Base
     public transient String               _BaseClassName;
     public transient String               _AppDataClassName;
     public transient String               _AppFactoryClassName;
+    public transient String               _AppJsonClassName;
     public transient boolean              _Validated = false;
 
     public abstract Column getColumn(String name);
@@ -87,6 +88,11 @@ public abstract class Base
         return _AppFactoryClassName;
       }
     
+    public String getAppJsonClassName()
+      {
+        return _AppJsonClassName;
+      }
+
     public String getBaseClassName()
       {
         return _BaseClassName;
@@ -121,6 +127,7 @@ public abstract class Base
         _BaseClassName = "TILDA__" + _Name;
         _AppDataClassName    = _OriginalName+"_Data";
         _AppFactoryClassName = _OriginalName+"_Factory";
+        _AppJsonClassName = _OriginalName+"_Json";
         
         _Validated = Errs == PS.getErrorCount();
         return _Validated;

@@ -32,6 +32,7 @@ import tilda.generation.interfaces.CodeGenTildaData;
 import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
+import tilda.parsing.parts.JsonMapping;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.utils.AnsiUtil;
@@ -107,6 +108,8 @@ public class TildaData implements CodeGenTildaData
           Out.print(" tilda.interfaces.WriterObject");
         if (O.isOCC() == true)
          Out.print(", tilda.interfaces.OCCObject");
+        if (O._Json.isEmpty() == false)
+          Out.print(", tilda.interfaces.JSONable");
         Out.println();
         Out.println(" {");
         Out.println("   protected static final Logger LOG = LogManager.getLogger(" + O._BaseClassName + ".class.getName());");
@@ -1194,6 +1197,30 @@ public class TildaData implements CodeGenTildaData
       throws Exception
       {
         Out.println(" }");
+      }
+
+
+    @Override
+    public void genMethodToJSON(PrintWriter Out, GeneratorSession G, Object O)
+      {
+//        Out.println("   public void toJSON(Writer Out, String JsonExportName, List<" + Helper.getFullAppDataClassName(O) + "> L, boolean FullList) throws Exception");
+//        Out.println("    {");
+//        Out.println("      switch (JsonExportName)");
+//        Out.println("        { ");
+//        for (JsonMapping j : O._Json)
+//          Out.println("          case \""+j._Name+"\": "+Helper.getFullAppJsonClassName(O)+".toJson"+j._Name+"(Out, L, \"   \", FullList); break;");
+//        Out.println("          default: throw new Exception(\"Unknown JSON exporter '\"+\"' for "+Helper.getFullAppJsonClassName(O)+"\");");
+//        Out.println("        } ");
+//        Out.println("    }");
+        Out.println("   public void toJSON(Writer Out, String JsonExportName, boolean FullObject) throws Exception");
+        Out.println("    {");
+        Out.println("      switch (JsonExportName)");
+        Out.println("        { ");
+        for (JsonMapping j : O._Json)
+          Out.println("          case \""+j._Name+"\": "+Helper.getFullAppJsonClassName(O)+".toJSON"+j._Name+"(Out, ("+Helper.getFullAppDataClassName(O)+") this, FullObject); break;");
+        Out.println("          default: throw new Exception(\"Unknown JSON exporter '\"+\"' for "+Helper.getFullAppJsonClassName(O)+"\");");
+        Out.println("        } ");
+        Out.println("    }");
       }
 
   }

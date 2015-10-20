@@ -479,4 +479,11 @@ public class Docs implements CodeGenDocs
         
       }
 
+    @Override
+    public void docMethodToJSON(PrintWriter Out, GeneratorSession G, Object O)
+      {
+        // TODO Auto-generated method stub
+        
+      }
+
   }

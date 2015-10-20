@@ -29,6 +29,8 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.Gson;
 
 import tilda.db.JDBCHelper;
+import tilda.db.ListResults;
+import tilda.interfaces.JSONable;
 
 public class JSONUtil
   {
@@ -466,20 +468,72 @@ public class JSONUtil
         Out.write("]");
       }
 
-    public static void startOK(PrintWriter Out)
+    public static void startOK(PrintWriter Out, char openObjectOrArray)
       {
-        Out.println("{\"code\":" + HttpStatus.OK._Code + ",\"data\":");
+        Out.print("{\"code\":");
+        Out.print(HttpStatus.OK._Code);
+        Out.print(",\"data\": ");
+        Out.println(openObjectOrArray);
       }
 
-    public static void end(PrintWriter Out)
+    public static void end(PrintWriter Out, char closeObjectOrArray)
       {
+        Out.print(closeObjectOrArray);
         Out.println("}");
       }
 
+    public static void response(PrintWriter Out, String JsonExportName, JSONable Obj)
+    throws Exception
+      {
+        if (Obj != null)
+          {
+            Out.print("{\"code\":");
+            Out.print(HttpStatus.OK._Code);
+            Out.print(",\"data\": null}");
+          }
+        else
+          {
+            startOK(Out, '{');
+            Obj.toJSON(Out, JsonExportName, false);
+            end(Out, '}');
+          }
+      }
+    public static void response(PrintWriter Out, String JsonExportName, ListResults<? extends JSONable> L)
+    throws Exception
+      {
+        if (L != null)
+         {
+           Out.print("{\"code\":");
+           Out.print(HttpStatus.OK._Code);
+           Out.print(",\"data\": null}");
+         }
+        else if (L.isEmpty() == true)
+          {
+            Out.print("{\"code\":");
+            Out.print(HttpStatus.OK._Code);
+            Out.print(",\"data\": [ ] }");
+          }
+        else
+         {
+           startOK(Out, '[');
+           boolean First = true;
+           for (JSONable Obj : L)
+             {
+               if (L == null)
+                continue;
+               if (First == true) { First = false; Out.write("       "); } else Out.write("     , ");
+               Obj.toJSON(Out, JsonExportName, true);
+             }
+           end(Out, ']');
+         }
+      }
+    
     public static Map<String, Object> fromJSON(String JsonStr)
       {
         Map<String, Object> Filter = new HashMap<String, Object>();
         Gson gson = new Gson();
         return (Map<String, Object>) gson.fromJson(JsonStr, Filter.getClass());
       }
+
+    
   }

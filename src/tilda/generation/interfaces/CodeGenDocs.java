@@ -98,5 +98,7 @@ public interface CodeGenDocs
     public void docMethodLookupWhereQuery(PrintWriter out, GeneratorSession g, SubWhereClause q);
 
     public void docMethodLookupParent(PrintWriter Out, GeneratorSession G, ForeignKey FK);
+
+    public void docMethodToJSON(PrintWriter Out, GeneratorSession G, Object O);
     
   }

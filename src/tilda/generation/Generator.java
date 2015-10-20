@@ -326,6 +326,13 @@ public class Generator
         DG.docMethodToString(Out, G, O);
         CG.genMethodToString(Out, G, O);
 
+        if (O._Json.isEmpty() == false)
+         {
+           Out.println();
+           DG.docMethodToJSON(Out, G, O);
+           CG.genMethodToJSON(Out, G, O);
+         }
+
         CG.genClassEnd(Out, G);
         Out.close();
       }

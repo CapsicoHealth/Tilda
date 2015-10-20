@@ -38,7 +38,6 @@ import tilda.parsing.parts.Query;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.SubWhereClause;
 import tilda.utils.AnsiUtil;
-import tilda.utils.CollectionUtil;
 import tilda.utils.TextUtil;
 
 public class TildaFactory implements CodeGenTildaFactory

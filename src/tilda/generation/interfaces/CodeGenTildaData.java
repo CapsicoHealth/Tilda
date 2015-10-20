@@ -22,6 +22,7 @@ import java.util.List;
 import tilda.generation.GeneratorSession;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
+import tilda.parsing.parts.JsonMapping;
 import tilda.parsing.parts.Object;
 
 /**
@@ -187,7 +188,16 @@ public interface CodeGenTildaData extends CodeGenBase
      * @param G
      * @param O
      */
-    void genMethodToString(PrintWriter Out, GeneratorSession G, Object O);
+    public void genMethodToString(PrintWriter Out, GeneratorSession G, Object O);
+
+    
+    /**
+     * 
+     * @param out
+     * @param g
+     * @param _Json
+     */
+    public void genMethodToJSON(PrintWriter Out, GeneratorSession G, Object O);
 
 
   }
