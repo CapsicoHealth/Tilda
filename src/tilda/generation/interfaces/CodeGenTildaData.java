@@ -22,7 +22,6 @@ import java.util.List;
 import tilda.generation.GeneratorSession;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
-import tilda.parsing.parts.JsonMapping;
 import tilda.parsing.parts.Object;
 
 /**

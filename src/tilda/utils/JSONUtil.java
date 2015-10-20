@@ -485,7 +485,7 @@ public class JSONUtil
     public static void response(PrintWriter Out, String JsonExportName, JSONable Obj)
     throws Exception
       {
-        if (Obj != null)
+        if (Obj == null)
           {
             Out.print("{\"code\":");
             Out.print(HttpStatus.OK._Code);
@@ -501,7 +501,7 @@ public class JSONUtil
     public static void response(PrintWriter Out, String JsonExportName, ListResults<? extends JSONable> L)
     throws Exception
       {
-        if (L != null)
+        if (L == null)
          {
            Out.print("{\"code\":");
            Out.print(HttpStatus.OK._Code);

@@ -23,7 +23,6 @@ import java.sql.SQLException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.db.ArrayListResults;
 import tilda.db.Connection;
 import tilda.db.processors.ScalarRP;
 import tilda.enums.AggregateType;

@@ -22,6 +22,8 @@ import java.util.regex.Pattern;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.gson.annotations.SerializedName;
+
 import tilda.enums.ColumnType;
 import tilda.enums.DefaultType;
 import tilda.enums.MultiType;
@@ -29,9 +31,6 @@ import tilda.enums.ValidationStatus;
 import tilda.parsing.ParserSession;
 import tilda.utils.ParseUtil;
 import tilda.utils.SystemValues;
-import tilda.utils.TextUtil;
-
-import com.google.gson.annotations.SerializedName;
 
 public class TypeDef
   {

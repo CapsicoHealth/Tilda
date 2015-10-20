@@ -1097,7 +1097,7 @@ public class TildaData implements CodeGenTildaData
                      Out.println(Header+" if (_"+C.getName()+" != null) for ("+ JavaJDBCType.getFieldTypeBase(C)+" v : _"+C.getName()+")");
                      Out.println(Header+"  {");
                    }
-                  String ClassName = Helper.getFullAppFactoryClassName(C._Enum._DestObjectObj);
+                  //String ClassName = Helper.getFullAppFactoryClassName(C._Enum._DestObjectObj);
                   String VarName = C.isCollection() == true ? "v" : "_"+C.getName();
                   if (C._Enum._Name == ColumnMapperMode.MEMORY)
                     {
