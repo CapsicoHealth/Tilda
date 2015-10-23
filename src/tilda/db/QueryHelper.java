@@ -219,6 +219,7 @@ public abstract class QueryHelper
           throw new Exception("Invalid query syntax: Calling openPar() after a " + _Section);
         _QueryStr.append(" (");
         _Section = S.WHERE;
+        _WherePos = _QueryStr.length();
         return this;
       }
 

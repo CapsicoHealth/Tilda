@@ -135,7 +135,7 @@ public class ParseUtil
          return SystemValues.EVIL_VALUE;
         
         int v = ParseUtil.parseInteger(Value, SystemValues.EVIL_VALUE);
-        if (v == SystemValues.EVIL_VALUE)
+        if (v == SystemValues.EVIL_VALUE && Mandatory == true)
           {
             LOG.error("Invalid value '" + Value + "' for parameter '" + Name + "'.");
             Errors.add(new StringStringPair(Name, "Invalid parameter value '" + Value + "': expecting a long."));
@@ -249,7 +249,7 @@ public class ParseUtil
          return SystemValues.EVIL_VALUE;
         
         long v = ParseUtil.parseLong(Value, SystemValues.EVIL_VALUE);
-        if (v == SystemValues.EVIL_VALUE)
+        if (v == SystemValues.EVIL_VALUE && Mandatory == true)
           {
             LOG.error("Invalid value '" + Value + "' for parameter '" + Name + "'.");
             Errors.add(new StringStringPair(Name, "Invalid parameter value '" + Value + "': expecting a long."));
@@ -339,7 +339,7 @@ public class ParseUtil
          return SystemValues.EVIL_VALUE;
         
         float v = ParseUtil.parseFloat(Value, SystemValues.EVIL_VALUE);
-        if (v == SystemValues.EVIL_VALUE)
+        if (v == SystemValues.EVIL_VALUE && Mandatory == true)
           {
             LOG.error("Invalid value '" + Value + "' for parameter '" + Name + "'.");
             Errors.add(new StringStringPair(Name, "Invalid parameter value '" + Value + "': expecting a float."));
@@ -429,7 +429,7 @@ public class ParseUtil
          return SystemValues.EVIL_VALUE;
         
         double v = ParseUtil.parseDouble(Value, SystemValues.EVIL_VALUE);
-        if (v == SystemValues.EVIL_VALUE)
+        if (v == SystemValues.EVIL_VALUE && Mandatory == true)
           {
             LOG.error("Invalid value '" + Value + "' for parameter '" + Name + "'.");
             Errors.add(new StringStringPair(Name, "Invalid parameter value '" + Value + "': expecting a double."));
@@ -586,7 +586,7 @@ public class ParseUtil
          return Character.UNASSIGNED;
         
         char v = ParseUtil.parseCharacter(Value);
-        if (v == Character.UNASSIGNED)
+        if (v == Character.UNASSIGNED && Mandatory == true)
           {
             LOG.error("Invalid value '" + Value + "' for parameter '" + Name + "'.");
             Errors.add(new StringStringPair(Name, "Invalid parameter value '" + Value + "': expecting a char."));
@@ -668,7 +668,7 @@ public class ParseUtil
          return null;
         
         ZonedDateTime ZDT = parseZonedDateTime(Value);
-        if (ZDT == null)
+        if (ZDT == null && Mandatory == true)
           {
             LOG.error("Invalid parameter format '" + Name + "'.");
             Errors.add(new StringStringPair(Name, "Invalid parameter value '"+Value+"': expecting a zoned date time formatted string."));
