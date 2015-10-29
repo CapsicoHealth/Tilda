@@ -148,7 +148,9 @@ public class ConnectionPool
               for (Conn Co : Defs._Conns)
                 init(Co._Id, Co._Driver, Co._DB, Co._User, Co._Pswd, Co._Initial, Co._Max);
 
-            LOG.info("Initializing registered Tilda schemas");
+            if (Defs._Schemas.length == 0)
+              throw new Exception("Cannot find any defined schemas in Tilda configuration file '/tilda.config.json'.");
+            LOG.info("Initializing "+Defs._Schemas.length+" registered Tilda schemas");
             C = get("MAIN");
             final String TildaJSON = "tilda/data/_tilda.Tilda.json";
             if (TextUtil.FindElement(Defs._Schemas, TildaJSON, true, 0) == -1)
