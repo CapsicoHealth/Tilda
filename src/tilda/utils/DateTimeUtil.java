@@ -29,6 +29,8 @@ import java.util.regex.Pattern;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.data.ZoneInfo_Data;
+import tilda.data.ZoneInfo_Factory;
 import tilda.db.JDBCHelper;
 
 public class DateTimeUtil
@@ -117,6 +119,17 @@ public class DateTimeUtil
           return null;
         return ZonedDateTime.parse(DateTimeStr, DateTimeFormatter.ofPattern(Pattern));
       }
+    
+    public static java.sql.Timestamp parseToSqlTimestamp(String DateTimeStr, String Pattern)
+      {
+        return new java.sql.Timestamp(parse(DateTimeStr, Pattern).toInstant().toEpochMilli());
+      }
+    public static Calendar nowAsCalendar(String ZoneInfoId)
+      {
+        ZoneInfo_Data ZoneInfo = ZoneInfo_Factory.getEnumerationById(ZoneInfoId);
+        return Calendar.getInstance(java.util.TimeZone.getTimeZone(ZoneInfo.getValue()));
+      }
+    
 
     public static String printDateTime(ZonedDateTime ZDT, String Pattern)
       {

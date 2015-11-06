@@ -1,14 +1,17 @@
 package tilda.migration;
 
+import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.db.Connection;
 import tilda.enums.ColumnType;
 
-class ColInfo
+public class ColInfo
   {
     protected static final Logger LOG                 = LogManager.getLogger(ColInfo.class.getName());
     
@@ -99,4 +102,18 @@ class ColInfo
       {
         return "Name: " + _Name + "; Nullable: " + _Nullable + "; Size: " + _Size + "; Type: " + _Type + "/" + _TypeSql + "; TypeName: " + _TypeName + ";";
       }
+    
+    
+    public static Map<String, ColInfo> getTableDefinition(Connection C, String SchemaName, String TableName) throws Exception
+     {
+       Map<String, ColInfo> M = new HashMap<String, ColInfo>();
+       DatabaseMetaData meta = C.getMetaData();
+       ResultSet RS = meta.getColumns(null, SchemaName, TableName, null);
+       while (RS.next() != false)
+        {
+          ColInfo CI = new ColInfo(RS);
+          M.put(CI._Name, CI);
+        }
+       return M;
+     }
   }

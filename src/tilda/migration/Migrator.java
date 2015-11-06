@@ -27,7 +27,6 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.data.ZoneInfo_Data;
 import tilda.data.ZoneInfo_Factory;
 import tilda.db.Connection;
 import tilda.enums.ColumnMode;
@@ -103,14 +102,7 @@ public class Migrator
                           throw new Exception("Cannot upgrade schema by adding the new table '" + Obj.getShortName() + "'.");
                         didSomething = true;
                       }
-                    RS = meta.getColumns(null, S._Name.toLowerCase(), Obj._Name.toLowerCase(), null);
-                    Map<String, ColInfo> DBColumns = new HashMap<String, ColInfo>();
-                    while (RS.next() != false)
-                      {
-                        ColInfo CI = new ColInfo(RS);
-                        DBColumns.put(CI._Name, CI);
-                      }
-                    RS.close();
+                    Map<String, ColInfo> DBColumns = ColInfo.getTableDefinition(C, S._Name.toLowerCase(), Obj._Name.toLowerCase());
                     if (DBColumns.isEmpty() == true)
                       throw new Exception("Cannot retrieve columns for table '" + Obj.getShortName() + "'.");
                     didSomething = false;
