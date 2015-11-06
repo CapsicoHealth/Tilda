@@ -21,8 +21,10 @@ import java.sql.SQLException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
 import tilda.enums.AggregateType;
+import tilda.enums.ColumnType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
@@ -171,5 +173,11 @@ public class IBMDB2 implements DBType
     throws Exception
       {
         throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public boolean alterTableAlterColumnType(Connection Con, ColumnType fromType, Column Col, ZoneInfo_Data defaultZI)
+      {
+        return false;
       }
   }

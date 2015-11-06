@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
 import tilda.db.processors.ScalarRP;
 import tilda.enums.AggregateType;
@@ -235,6 +236,37 @@ public class PostgreSQL implements DBType
         
         String Q ="ALTER TABLE "+Col._ParentObject.getShortName()+" ALTER COLUMN \""+Col.getName()+"\" TYPE "+getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection());
         return Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q) >= 0;
+      }
+
+
+    @Override
+    public boolean alterTableAlterColumnType(Connection Con, ColumnType fromType, Column Col, ZoneInfo_Data defaultZI)
+    throws Exception
+      {
+        if (fromType == ColumnType.STRING)
+          {
+            if (Col._Type == ColumnType.INTEGER || Col._Type == ColumnType.LONG || Col._Type == ColumnType.FLOAT || Col._Type == ColumnType.DOUBLE)
+              {
+                String Q ="ALTER TABLE "+Col._ParentObject.getShortName()+" ALTER COLUMN \""+Col.getName()
+                         +"\" TYPE "+getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection())
+                         +" USING (trim(\""+Col.getName()+"\")::"+getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection())+");";
+                return Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q) >= 0;
+              }
+            else if (Col._Type == ColumnType.DATETIME)
+              {
+                String Q ="ALTER TABLE "+Col._ParentObject.getShortName()+" ALTER COLUMN \""+Col.getName()
+                         +"\" TYPE "+getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection())
+                         +" USING (trim(\""+Col.getName()+"\")::"+getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection())+");";
+                if (Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q) < 0)
+                 return false;
+                
+                Col = Col._ParentObject.getColumn(Col.getName()+"TZ");
+                Q ="UPDATE "+Col._ParentObject.getShortName()+" SET \""+Col.getName()+"\" = 'UTC' WHERE \""+Col.getName()+"\" IS NULL";
+                
+                return Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q) >= 0;
+              }
+          }
+        return false;
       }
 
   }

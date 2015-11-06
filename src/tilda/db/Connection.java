@@ -30,9 +30,11 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.data.ZoneInfo_Data;
 import tilda.db.processors.RecordProcessor;
 import tilda.db.stores.DBType;
 import tilda.enums.AggregateType;
+import tilda.enums.ColumnType;
 import tilda.enums.TransactionType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
@@ -409,6 +411,11 @@ public final class Connection
     throws Exception
       {
         return _DB.alterTableAlterColumnStringSize(this, Col, DBSize);
+      }
+
+    public boolean alterTableAlterColumnType(ColumnType FromType, Column Col, ZoneInfo_Data defaultZI) throws Exception
+      {
+        return _DB.alterTableAlterColumnType(this, FromType, Col, defaultZI);
       }
     
   }

@@ -27,6 +27,8 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.data.ZoneInfo_Data;
+import tilda.data.ZoneInfo_Factory;
 import tilda.db.Connection;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
@@ -152,13 +154,18 @@ public class Migrator
                                 throw new Exception("The application's data model defines the column '" + Col.getShortName() + "' as an base type, but it's an array in the DB. The database needs to be migrated manually.");
                               }
 
-                            if (Col._Type == ColumnType.STRING && Col.isCollection() == false
-                            && (CI._Size < C.getCLOBThreshhold() && CI._Size != Col._Size || CI._Size >= C.getCLOBThreshhold() && Col._Size < C.getCLOBThreshhold()))
+                            if (    Col._Type == ColumnType.STRING && Col.isCollection() == false
+                                && (CI._Size < C.getCLOBThreshhold() && CI._Size != Col._Size || CI._Size >= C.getCLOBThreshhold() && Col._Size < C.getCLOBThreshhold()))
                               {
                                 if (C.alterTableAlterColumnStringSize(Col, CI._Size) == false)
                                   throw new Exception("The application's data model defines the column '" + Col.getShortName() + "' as a String of size " + Col._Size + ", but it's " + CI._Size
                                   + " in the DB and failed migration. The database needs to be migrated manually.");
                                 didSomething = true;
+                              }
+                            if (Col.isCollection() == false && (Col._Type == ColumnType.BITFIELD && CI._TildaType != ColumnType.INTEGER || Col._Type != ColumnType.BITFIELD && Col._Type != CI._TildaType))
+                              {
+                                if (C.alterTableAlterColumnType(CI._TildaType, Col, ZoneInfo_Factory.getEnumerationById("UTC")) == false)
+                                 throw new Exception("The application's data model defines the column '" + Col.getShortName() + "' as a '"+Col._Type+"' which cannot be changed from '"+CI._Type+"/"+CI._TypeSql+"/"+CI._TildaType+"') currently in the database. The database needs to be migrated manually.");
                               }
                           }
                       }
