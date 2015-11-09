@@ -108,7 +108,7 @@ public class ColInfo
      {
        Map<String, ColInfo> M = new HashMap<String, ColInfo>();
        DatabaseMetaData meta = C.getMetaData();
-       ResultSet RS = meta.getColumns(null, SchemaName, TableName, null);
+       ResultSet RS = meta.getColumns(null, SchemaName.toLowerCase(), TableName.toLowerCase(), null);
        while (RS.next() != false)
         {
           ColInfo CI = new ColInfo(RS);
