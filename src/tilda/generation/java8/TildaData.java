@@ -1105,7 +1105,7 @@ public class TildaData implements CodeGenTildaData
                       String DataClassName    = Helper.getFullAppDataClassName(C._Enum._DestObjectObj);
                       Out.println(Header+"    "+ DataClassName +" e = "+FactoryClassName+".getEnumerationById("+VarName+");");
                       Out.println(Header+"    if (e == null)");
-                      Out.println(Header+"     throw new Exception(\"Cannot set " + C.getFullName() + ": the value \'\"+i+\"\' is not a valid Enumerated value as per \'"+FactoryClassName+"\'.\");");
+                      Out.println(Header+"     throw new Exception(\"Cannot set " + C.getFullName() + ": the value \'\"+"+VarName+"+\"\' is not a valid Enumerated value as per \'"+FactoryClassName+"\'.\");");
                       Out.println(Header+"    "+(C.isCollection()==true?"addTo":"set") + TextUtil.CapitalizeFirstCharacter(C.getName()) +"EnumValue(e.getValue());");
                     }
                   if (C.isCollection() == true)

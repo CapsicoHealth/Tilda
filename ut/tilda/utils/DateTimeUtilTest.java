@@ -24,6 +24,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Map;
@@ -43,9 +44,10 @@ public class DateTimeUtilTest
         try
           {
 //            Test1();
-            Test2();
-            Test3();
-            Test4();
+//            Test2();
+//            Test3();
+//            Test4();
+            Test5();
           }
         catch (Exception e)
           {
@@ -307,4 +309,20 @@ public class DateTimeUtilTest
        
        C.rollback();
      }
+    
+    public static void Test5()
+      {
+        ZonedDateTime ZDT1 = DateTimeUtil.getYesterdayTimestamp(true).plusHours(10);
+        ZonedDateTime ZDT2 = DateTimeUtil.getTomorrowTimestamp(true).plusHours(9);
+        LOG.debug(DateTimeUtil.printDateTime(ZDT1));
+        LOG.debug(DateTimeUtil.printDateTime(ZDT2));
+        LOG.debug("Days between: "+DateTimeUtil.computeDays(ZDT1, ZDT2));
+
+        ZDT1 = DateTimeUtil.getYesterdayTimestamp(true).plusHours(10);
+        ZDT2 = DateTimeUtil.getTomorrowTimestamp(true).plusHours(11);
+        LOG.debug(DateTimeUtil.printDateTime(ZDT1));
+        LOG.debug(DateTimeUtil.printDateTime(ZDT2));
+        LOG.debug("Days between: "+DateTimeUtil.computeDays(ZDT1, ZDT2));
+
+      }
   }
