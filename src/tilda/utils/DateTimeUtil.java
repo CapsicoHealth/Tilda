@@ -317,12 +317,28 @@ public class DateTimeUtil
         return computeDays(Start, ZonedDateTime.now());
       }
 
+    /**
+     * Comput ethe number of days using th emidnight rule, i.e., from 23:59 Monday night to 00:01 Tuesday morning, that 
+     * counts as one day.
+     * @param Start
+     * @param End
+     * @return
+     */
     public static int computeDays(ZonedDateTime Start, ZonedDateTime End)
       {
-        return (int) ChronoUnit.DAYS.between(Start, End);
+        int days = (int) ChronoUnit.DAYS.between(Start, End);
+        if (secondsSinceMidnight(Start) > secondsSinceMidnight(End))
+         ++days;
+        return days;
       }
 
 
+
+    private static int secondsSinceMidnight(ZonedDateTime ZDT)
+      {
+        LOG.debug("hour: "+ZDT.getHour()+"; minute: "+ZDT.getMinute()+"; second: "+ZDT.getSecond()+";");
+        return ZDT.getHour()*60*60+ZDT.getMinute()*60+ZDT.getSecond();
+      }
 
     /**
      * Returns a ZonedDateTime for the very beginning of Today at 00:00:00:0000 if Start == true,
