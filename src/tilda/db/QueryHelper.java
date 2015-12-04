@@ -17,11 +17,14 @@
 package tilda.db;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import tilda.types.*;
 import tilda.enums.AggregateType;
+import tilda.enums.ColumnType;
 import tilda.enums.StatementType;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.TextUtil;
@@ -88,12 +91,18 @@ public abstract class QueryHelper
     protected S                   _Section     = null;
     protected int                 _WherePos    = -1;
     protected int                 _Cardinality = 0;
+    List<ColumnDefinition>        _Columns = new ArrayList<ColumnDefinition>();
     protected int                 _SubSelectCount = 0;
 
     public int getCardinality()
       {
         return _Cardinality;
       }
+    
+    public Iterator<ColumnDefinition> getColumns()
+     {
+       return _Columns.iterator();
+     }
 
 
     protected final void valuesBase()
@@ -120,26 +129,29 @@ public abstract class QueryHelper
     public final QueryHelper selectColumn(ColumnDefinition Col)
     throws Exception
       {
+        _Columns.add(Col);
         return selectColumnBase(Col.toString(_ST));
       }
 
     public final QueryHelper selectCountStar()
     throws Exception
       {
+        _Columns.add(new ColumnDefinition(_TableName, "count", 0, ColumnType.LONG, false));
         return selectColumnBase("count(*)");
       }
     
     public final QueryHelper selectColumn(ColumnDefinition Col, AggregateType Agg, String Alias)
     throws Exception
       {
+        _Columns.add(Col);
         return selectColumnBase(_C.getAggregateStr(Agg)+"("+Col.toString(_ST)+") as \""+Alias+"\"");
       }
     
     public final QueryHelper selectColumn(int TableId, String ColumnName, AggregateType Agg, String AliasName)
     throws Exception
-      {
-        return selectColumnBase(_C.getAggregateStr(Agg)+"(T"+TableId+".\""+ColumnName+"\") as \""+AliasName+"\"");
-      }
+     {
+       return selectColumnBase(_C.getAggregateStr(Agg)+"(T"+TableId+".\""+ColumnName+"\") as \""+AliasName+"\"");
+     }
 
     protected final QueryHelper fromTable(String TableName)
     throws Exception

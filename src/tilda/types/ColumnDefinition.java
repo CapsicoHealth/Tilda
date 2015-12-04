@@ -24,6 +24,7 @@ public class ColumnDefinition
     public ColumnDefinition(String TableName, String ColumnName, long Count, ColumnType Type, boolean Collection)
       {
         _TableName  = TableName;
+        _ColumnName = ColumnName;
         _Short      = "\""+ColumnName+"\"";
         _Full       = TableName+"."+_Short;
         _Insert     = ", "+_Short;
@@ -36,6 +37,7 @@ public class ColumnDefinition
     final String     _TableName;
     final String     _Full;
     final String     _Short;
+    final String     _ColumnName;
     
     public final String     _Insert;
     public final String     _Update;
@@ -53,4 +55,9 @@ public class ColumnDefinition
       {
         return ST == StatementType.SELECT ? _Full : _Short;
       }
+    
+    public String getName()
+     {
+       return _ColumnName;
+     }
   }
