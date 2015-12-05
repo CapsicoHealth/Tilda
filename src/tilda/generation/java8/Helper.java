@@ -548,7 +548,7 @@ public class Helper
             if (C._Nullable == true)
               Out.print("if (" + Pred + "isNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "() == true) PS.setNull(++i, java.sql.Types." + JavaJDBCType.get(C._Type)._JDBCSQLType + ");  else ");
             if (C._Type == ColumnType.DATETIME)
-              Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(_" + C.getName() + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
+              Out.println("PS.setTimestamp(++i, new java.sql.Timestamp("+Pred+"_" + C.getName() + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
             else
               Out.println("PS.set" + JavaJDBCType.get(C._Type)._JDBCType + "(++i, " + (C._Type == ColumnType.CHAR ? "\"\"+" : "") + Pred + "_" + C.getName() + Pad + ");");
           }

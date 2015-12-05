@@ -18,6 +18,7 @@ package tilda.data;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Calendar;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -56,6 +57,13 @@ public class ZoneInfo_Factory extends tilda.data._tilda.TILDA__ZONEINFO_Factory
              __ENUMERATIONS_BY_VALUE.put(ZDT.getZone().getId(), info);
            }
         }
+     }
+   
+   
+   public static Calendar nowAsCalendar(String ZoneInfoId)
+     {
+       ZoneInfo_Data ZoneInfo = ZoneInfo_Factory.getEnumerationById(ZoneInfoId);
+       return Calendar.getInstance(java.util.TimeZone.getTimeZone(ZoneInfo.getValue()));
      }
    
  }
