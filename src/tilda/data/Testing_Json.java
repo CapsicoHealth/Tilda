@@ -21,9 +21,9 @@ import org.apache.logging.log4j.Logger;
 
 /**
 This is the application class <B>Data_TESTING</B> mapped to the table <B>TILDA.TESTING</B>.
-@see tilda.data._Tilda.TILDA__TESTING
+@see tilda.data._tilda.TILDA__TESTING
 */
-public class Testing_Json extends tilda.data._Tilda.TILDA__TESTING_Json
+public class Testing_Json extends tilda.data._tilda.TILDA__TESTING_Json
  {
    protected static final Logger LOG = LogManager.getLogger(Testing_Json.class.getName());
 

@@ -21,9 +21,9 @@ import org.apache.logging.log4j.Logger;
 
 /**
 This is the application class <B>Data_ZONEINFO</B> mapped to the table <B>TILDA.ZONEINFO</B>.
-@see tilda.data._Tilda.TILDA__ZONEINFO
+@see tilda.data._tilda.TILDA__ZONEINFO
 */
-public class ZoneInfo_Json extends tilda.data._Tilda.TILDA__ZONEINFO_Json
+public class ZoneInfo_Json extends tilda.data._tilda.TILDA__ZONEINFO_Json
  {
    protected static final Logger LOG = LogManager.getLogger(ZoneInfo_Json.class.getName());
 

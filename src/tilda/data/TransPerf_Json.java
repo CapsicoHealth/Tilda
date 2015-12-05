@@ -21,9 +21,9 @@ import org.apache.logging.log4j.Logger;
 
 /**
 This is the application class <B>Data_TRANSPERF</B> mapped to the table <B>TILDA.TRANSPERF</B>.
-@see tilda.data._Tilda.TILDA__TRANSPERF
+@see tilda.data._tilda.TILDA__TRANSPERF
 */
-public class TransPerf_Json extends tilda.data._Tilda.TILDA__TRANSPERF_Json
+public class TransPerf_Json extends tilda.data._tilda.TILDA__TRANSPERF_Json
  {
    protected static final Logger LOG = LogManager.getLogger(TransPerf_Json.class.getName());
 

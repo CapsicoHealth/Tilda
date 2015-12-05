@@ -21,9 +21,9 @@ import org.apache.logging.log4j.Logger;
 
 /**
 This is the application class <B>Data_OBJECTPERF</B> mapped to the table <B>TILDA.OBJECTPERF</B>.
-@see tilda.data._Tilda.TILDA__OBJECTPERF
+@see tilda.data._tilda.TILDA__OBJECTPERF
 */
-public class ObjectPerf_Json extends tilda.data._Tilda.TILDA__OBJECTPERF_Json
+public class ObjectPerf_Json extends tilda.data._tilda.TILDA__OBJECTPERF_Json
  {
    protected static final Logger LOG = LogManager.getLogger(ObjectPerf_Json.class.getName());
 

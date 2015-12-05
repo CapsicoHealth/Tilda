@@ -23,9 +23,9 @@ import tilda.db.*;
 
 /**
 This is the application class <B>Data_TESTING</B> mapped to the table <B>TILDA.TESTING</B>.
-@see tilda.data._Tilda.TILDA__TESTING
+@see tilda.data._tilda.TILDA__TESTING
 */
-public class Testing_Factory extends tilda.data._Tilda.TILDA__TESTING_Factory
+public class Testing_Factory extends tilda.data._tilda.TILDA__TESTING_Factory
  {
    protected static final Logger LOG = LogManager.getLogger(Testing_Factory.class.getName());
 

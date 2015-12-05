@@ -11,9 +11,9 @@ import tilda.db.Connection;
 
 /**
 This is the application class <B>Data_ZONEINFO</B> mapped to the table <B>TILDA.ZONEINFO</B>.
-@see tilda.data._Tilda.TILDA__ZONEINFO
+@see tilda.data._tilda.TILDA__ZONEINFO
 */
-public class ZoneInfo_Data extends tilda.data._Tilda.TILDA__ZONEINFO
+public class ZoneInfo_Data extends tilda.data._tilda.TILDA__ZONEINFO
  {
    protected static final Logger LOG = LogManager.getLogger(ZoneInfo_Data.class.getName());
 

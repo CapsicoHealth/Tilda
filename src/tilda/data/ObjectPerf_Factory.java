@@ -23,9 +23,9 @@ import tilda.db.*;
 
 /**
 This is the application class <B>Data_OBJECTPERF</B> mapped to the table <B>TILDA.OBJECTPERF</B>.
-@see tilda.data._Tilda.TILDA__OBJECTPERF
+@see tilda.data._tilda.TILDA__OBJECTPERF
 */
-public class ObjectPerf_Factory extends tilda.data._Tilda.TILDA__OBJECTPERF_Factory
+public class ObjectPerf_Factory extends tilda.data._tilda.TILDA__OBJECTPERF_Factory
  {
    protected static final Logger LOG = LogManager.getLogger(ObjectPerf_Factory.class.getName());
 

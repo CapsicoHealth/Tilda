@@ -11,9 +11,9 @@ import tilda.db.Connection;
 
 /**
 This is the application class <B>Data_TRANSPERF</B> mapped to the table <B>TILDA.TRANSPERF</B>.
-@see tilda.data._Tilda.TILDA__TRANSPERF
+@see tilda.data._tilda.TILDA__TRANSPERF
 */
-public class TransPerf_Data extends tilda.data._Tilda.TILDA__TRANSPERF
+public class TransPerf_Data extends tilda.data._tilda.TILDA__TRANSPERF
  {
    protected static final Logger LOG = LogManager.getLogger(TransPerf_Data.class.getName());
 

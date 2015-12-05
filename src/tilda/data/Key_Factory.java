@@ -26,9 +26,9 @@ import tilda.db.*;
 
 /**
 This is the application class <B>Data_KEY</B> mapped to the table <B>TILDA.KEY</B>.
-@see tilda.data._Tilda.TILDA__KEY
+@see tilda.data._tilda.TILDA__KEY
 */
-public class Key_Factory extends tilda.data._Tilda.TILDA__KEY_Factory
+public class Key_Factory extends tilda.data._tilda.TILDA__KEY_Factory
  {
    protected static final Logger LOG = LogManager.getLogger(Key_Factory.class.getName());
 
