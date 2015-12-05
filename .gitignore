@@ -1,3 +1,4 @@
 /bin/
 /src/tilda/data/_Tilda
 *.DS_Store
+/target/
