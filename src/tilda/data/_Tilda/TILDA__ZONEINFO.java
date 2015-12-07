@@ -81,7 +81,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Dec 3 2015, 21:15:09EST
+ @generated Dec 7 2015, 10:52:40EST
 */
 @SuppressWarnings({ "unchecked", "unused" })
 public abstract class TILDA__ZONEINFO implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -97,8 +97,8 @@ public abstract class TILDA__ZONEINFO implements tilda.interfaces.WriterObject, 
 
    private long     __Changes= 0L;
 
-   protected boolean hasChanged    () { return __Changes != 0L; }
-   public    boolean isNewlyCreated() { return __NewlyCreated; }
+   public  boolean hasChanged    () { return __Changes != 0L; }
+   public  boolean isNewlyCreated() { return __NewlyCreated; }
 
    void initForCreate()
      {
@@ -136,7 +136,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   protected String _id;
+   String _id;
    protected String __Saved_id;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -220,7 +220,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   protected String _value;
+   String _value;
    protected String __Saved_value;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -325,7 +325,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>ABSOLUTE</TD></TR>
 </TABLE>
 */
-   public String _label;
+   String _label;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -428,7 +428,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    String _deactivatedTZ;
+   String _deactivatedTZ;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -469,7 +469,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public boolean isNullDeactivatedTZ()
+   public final boolean isNullDeactivatedTZ()
      { return (TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask & __Nulls) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -581,7 +581,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    ZonedDateTime _deactivated;
+   ZonedDateTime _deactivated;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -620,7 +620,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public boolean isNullDeactivated()
+   public final boolean isNullDeactivated()
      { return (TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask & __Nulls) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -805,7 +805,7 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-    ZonedDateTime _created;
+   ZonedDateTime _created;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1018,7 +1018,7 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-    ZonedDateTime _lastUpdated;
+   ZonedDateTime _lastUpdated;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1222,7 +1222,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    ZonedDateTime _deleted;
+   ZonedDateTime _deleted;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1261,7 +1261,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public boolean isNullDeleted()
+   public final boolean isNullDeleted()
      { return (TILDA__ZONEINFO_Factory.COLS.DELETED._Mask & __Nulls) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

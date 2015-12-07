@@ -123,8 +123,8 @@ public class TildaData implements CodeGenTildaData
         Out.println();
         Out.println("   private long     __Changes= 0L;");
         Out.println();
-        Out.println("   protected boolean hasChanged    () { return __Changes != 0L; }");
-        Out.println("   public    boolean isNewlyCreated() { return __NewlyCreated; }");
+        Out.println("   public  boolean hasChanged    () { return __Changes != 0L; }");
+        Out.println("   public  boolean isNewlyCreated() { return __NewlyCreated; }");
         Out.println();
         Out.println("   void initForCreate()");
         Out.println("     {");
@@ -145,7 +145,7 @@ public class TildaData implements CodeGenTildaData
       {
         String Visibility = Helper.getVisibility(C, true);
 
-        Out.print("   "+Visibility+" " + JavaJDBCType.getFieldType(C) + " _" + C.getName());
+        Out.print("   " + JavaJDBCType.getFieldType(C) + " _" + C.getName());
         if (C.isCollection() == false)
          switch (C._Type)
           {
@@ -694,7 +694,7 @@ public class TildaData implements CodeGenTildaData
       throws Exception
       {
         String Mask = Helper.getRuntimeMask(C);
-        Out.println("   public boolean isNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()");
+        Out.println("   public final boolean isNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()");
         Out.println("     { return (" + Mask + " & __Nulls) != 0L; }");
       }
 

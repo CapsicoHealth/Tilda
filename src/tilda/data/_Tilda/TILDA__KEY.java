@@ -80,7 +80,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Dec 3 2015, 21:15:09EST
+ @generated Dec 7 2015, 10:52:40EST
 */
 @SuppressWarnings({ "unchecked", "unused" })
 public abstract class TILDA__KEY implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -96,8 +96,8 @@ public abstract class TILDA__KEY implements tilda.interfaces.WriterObject, tilda
 
    private long     __Changes= 0L;
 
-   protected boolean hasChanged    () { return __Changes != 0L; }
-   public    boolean isNewlyCreated() { return __NewlyCreated; }
+   public  boolean hasChanged    () { return __Changes != 0L; }
+   public  boolean isNewlyCreated() { return __NewlyCreated; }
 
    void initForCreate()
      {
@@ -134,7 +134,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   protected long _refnum= SystemValues.EVIL_VALUE;
+   long _refnum= SystemValues.EVIL_VALUE;
    protected long __Saved_refnum;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -212,7 +212,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   protected String _name;
+   String _name;
    protected String __Saved_name;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -316,7 +316,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public long _max= SystemValues.EVIL_VALUE;
+   long _max= SystemValues.EVIL_VALUE;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -410,7 +410,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public int _count= SystemValues.EVIL_VALUE;
+   int _count= SystemValues.EVIL_VALUE;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -511,7 +511,7 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   protected ZonedDateTime _created;
+   ZonedDateTime _created;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -724,7 +724,7 @@ This is the definition for:<BR>
 
 </TABLE>
 */
-   protected ZonedDateTime _lastUpdated;
+   ZonedDateTime _lastUpdated;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -928,7 +928,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public ZonedDateTime _deleted;
+   ZonedDateTime _deleted;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -967,7 +967,7 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public boolean isNullDeleted()
+   public final boolean isNullDeleted()
      { return (TILDA__KEY_Factory.COLS.DELETED._Mask & __Nulls) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
