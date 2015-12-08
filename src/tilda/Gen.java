@@ -37,7 +37,10 @@ public class Gen
         SystemValues.autoInit();
 
         if (Args.length == 0)
-          throw new Error("The utility must be called with a path to a Tilda json file");
+          {
+            LOG.error("The utility must be called with a path to a Tilda json file");
+            System.exit(-1);
+          }
 
         for (String path : Args)
           {
@@ -68,7 +71,7 @@ public class Gen
             catch (Throwable T)
               {
                 LOG.error("Couldn't load the schema '" + path + "'.\n", T);
-                break;
+                System.exit(-1);
               }
           }
       }
