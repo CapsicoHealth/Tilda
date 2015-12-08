@@ -520,7 +520,7 @@ public class JSONUtil
         end(Out, ' ');
       }
 
-
+    @SuppressWarnings("unchecked")
     public static Map<String, Object> fromJSON(String JsonStr)
       {
         Map<String, Object> Filter = new HashMap<String, Object>();
