@@ -23,6 +23,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.generation.Generator;
 import tilda.generation.GeneratorSession;
+import tilda.generation.Manifest;
 import tilda.parsing.ParserSession;
 import tilda.parsing.Parser;
 import tilda.parsing.parts.Schema;
@@ -65,6 +66,7 @@ public class Gen
                           LOG.debug("    - " + I.next().getFullName() + ".");
                       }
                     Generator.generate(PS._Main, G);
+                    Manifest.update(PS);
                     LOG.info("Generated Tilda code for schema '" + PS._Main.getFullName() + "'.");
                   }
               }

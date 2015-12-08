@@ -48,9 +48,11 @@ public class Schema
 
     transient public String        _Name;
     transient public String        _ResourceName;
+    transient public String        _ResourceNameShort;
+    transient public String        _ProjectRoot;
     transient public List<Schema>  _DependencySchemas = new ArrayList<Schema>();
 
-    protected static final Pattern P                  = Pattern.compile(".*_tilda\\.(\\w+)\\.json");
+    protected static final Pattern P                  = Pattern.compile("_tilda\\.(\\w+)\\.json");
 
     public void setOrigin(String ResourceName)
       throws Exception
@@ -62,7 +64,10 @@ public class Schema
         if (i == -1)
           throw new Exception("The Schema being loaded from resource '" + ResourceName + "' does not match its package declaration '" + _Package + "'.");
 
-        Matcher M = P.matcher(ResourceName);
+        _ProjectRoot = ResourceName.substring(0,  i);
+        _ResourceNameShort = ResourceName.substring(i);
+        String res = ResourceName.substring(i+Pack.length()+1);
+        Matcher M = P.matcher(res);
         while (M.matches() == true)
           {
             _Name = M.group(1).toUpperCase();
