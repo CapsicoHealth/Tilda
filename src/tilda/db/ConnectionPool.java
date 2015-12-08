@@ -39,6 +39,7 @@ import tilda.parsing.parts.Schema;
 import tilda.performance.PerfTracker;
 import tilda.utils.CollectionUtil;
 import tilda.utils.FileUtil;
+import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
 
 import com.google.gson.Gson;
@@ -129,7 +130,10 @@ public class ConnectionPool
     protected static Map<String, BasicDataSource> _DataSourcesBySig = new HashMap<String, BasicDataSource>();
     protected static Map<String, String         > _SchemaPackage    = new HashMap<String, String         >();
 
-    public static void autoInit() { }
+    public static void autoInit()
+     {
+       SystemValues.autoInit();
+     }
 
     static
       {
