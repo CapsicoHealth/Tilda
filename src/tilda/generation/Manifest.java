@@ -43,11 +43,13 @@ public class Manifest
             In.close();
             String Tildas = TextUtil.Print(P.getProperty("Tilda"), "");
             if (TextUtil.FindElement(PS._Main._ResourceNameShort, Tildas, File.pathSeparatorChar) == -1)
-             Tildas+=PS._Main._ResourceNameShort+File.pathSeparatorChar;
-            P.setProperty("Tilda", Tildas);
-            FileOutputStream Out = new FileOutputStream(ManifestFile);
-            P.store(Out, null);
-            Out.close();
+             {
+               Tildas+=PS._Main._ResourceNameShort+File.pathSeparatorChar;
+               P.setProperty("Tilda", Tildas);
+               FileOutputStream Out = new FileOutputStream(ManifestFile);
+               P.store(Out, null);
+               Out.close();
+             }
           }
         catch (IOException e)
           {
