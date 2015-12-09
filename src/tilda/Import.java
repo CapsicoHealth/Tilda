@@ -35,6 +35,7 @@ import tilda.performance.PerfTracker;
 import tilda.utils.DurationUtil;
 import tilda.utils.FileUtil;
 import tilda.utils.SystemValues;
+import tilda.utils.TextUtil;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -78,7 +79,8 @@ public class Import
             LOG.info("All in all, processed a total of " + Total + " records in " + DurationUtil.getDurationSeconds(T0) + "s (" + DurationUtil.PrintPerformancePerMinute(T0, Total) + " records/mn).");
             StringBuilder Str = new StringBuilder();
             PerfTracker.print(Str);
-            LOG.info(Str);
+            // LDH-NOTE: there is a bug in the Log4j code with a limit on buffer size if out to a file!
+            LOG.info(TextUtil.toMaxLength(Str.toString(), 20000));
           }
         catch (Throwable T)
           {
@@ -102,6 +104,7 @@ public class Import
                 {
                 }
           }
+        LOG.info("Import completed.");
       }
     
     protected static int Do(String OverridePackageName, String ImportFileName, Connection C)
