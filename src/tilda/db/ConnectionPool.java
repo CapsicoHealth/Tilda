@@ -18,33 +18,40 @@ package tilda.db;
 
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Method;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
+import java.util.jar.JarFile;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.SerializedName;
+
 import tilda.enums.TransactionType;
 import tilda.migration.Migrator;
 import tilda.parsing.parts.Schema;
 import tilda.performance.PerfTracker;
-import tilda.utils.CollectionUtil;
 import tilda.utils.FileUtil;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.annotations.SerializedName;
 
 public class ConnectionPool
   {
@@ -52,7 +59,6 @@ public class ConnectionPool
       {
         /*@formatter:off*/
        @SerializedName("connections") public Conn  []  _Conns       = new Conn[0];
-       @SerializedName("schemas"    ) public String[]  _Schemas     = new String[0];
        @SerializedName("email"      ) public EmailConfig  _EmailConfig;
        /*@formatter:on*/
 
@@ -83,21 +89,6 @@ public class ConnectionPool
                     OK = false;
                   }
               }
-            
-            if (_Schemas == null || _Schemas.length == 0)
-              {
-                LOG.error("No active schema was defined in the Tilda configuration file. At least one must be defined for initialization.");
-                return false;
-              }
-            for (String name : _Schemas)
-              {
-                if (FileUtil.getResourceAsStream(name) == null)
-                  {
-                    LOG.error("Tilda schema definition '" + name + "' could not be found in the classpath.");
-                    OK = false;
-                  }
-              }
-            
             return OK;
           }
       }
@@ -128,12 +119,12 @@ public class ConnectionPool
 
     protected static Map<String, BasicDataSource> _DataSourcesById  = new HashMap<String, BasicDataSource>();
     protected static Map<String, BasicDataSource> _DataSourcesBySig = new HashMap<String, BasicDataSource>();
-    protected static Map<String, String         > _SchemaPackage    = new HashMap<String, String         >();
+    protected static Map<String, String>          _SchemaPackage    = new HashMap<String, String>();
 
     public static void autoInit()
-     {
-       SystemValues.autoInit();
-     }
+      {
+        SystemValues.autoInit();
+      }
 
     static
       {
@@ -141,10 +132,11 @@ public class ConnectionPool
         Connection C = null;
         try
           {
-            LOG.info("Initializing Tilda.");
+            LOG.info("Initializing Tilda: loading configuration file '/tilda.config.json'.");
+
             InputStream In = FileUtil.getResourceAsStream("tilda.config.json");
             if (In == null)
-             throw new Exception("Cannot find Tilda configuration file '/tilda.config.json'.");
+              throw new Exception("Cannot find Tilda configuration file '/tilda.config.json'.");
             R = new BufferedReader(new InputStreamReader(In));
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             ConnDefs Defs = gson.fromJson(R, ConnDefs.class);
@@ -152,48 +144,104 @@ public class ConnectionPool
               for (Conn Co : Defs._Conns)
                 init(Co._Id, Co._Driver, Co._DB, Co._User, Co._Pswd, Co._Initial, Co._Max);
 
-            if (Defs._Schemas.length == 0)
-              throw new Exception("Cannot find any defined schemas in Tilda configuration file '/tilda.config.json'.");
-            LOG.info("Initializing "+Defs._Schemas.length+" registered Tilda schemas");
             C = get("MAIN");
-            final String TildaJSON = "tilda/data/_tilda.Tilda.json";
-            if (TextUtil.FindElement(Defs._Schemas, TildaJSON, true, 0) == -1)
-              Defs._Schemas = CollectionUtil.prepend(Defs._Schemas, TildaJSON);
-            
-            for (String name : Defs._Schemas)
-              {
-                LOG.info("Inspecting "+name);
-                R = new BufferedReader(new InputStreamReader(FileUtil.getResourceAsStream(name)));
-                gson = new GsonBuilder().setPrettyPrinting().create();
-                Schema S = gson.fromJson(R, Schema.class);
-                S.setOrigin(name);
-                Migrator.migrate(C, S);
-                LOG.debug("Initializing Schema objects");
-                Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
-                M.invoke(null, C);
-                _SchemaPackage.put(S._Name, S._Package);
-                C.commit();
-              }
+            LoadTildaResources(C);
           }
         catch (Throwable T)
           {
             LOG.error("Cannot initialize Tilda\n", T);
-            System.exit(1);
+            System.exit(-1);
           }
         finally
           {
             try
-             {
-               if (R != null)
-                R.close();
-               if (C != null)
-                C.close();
-             }
+              {
+                if (R != null)
+                  R.close();
+                if (C != null)
+                  C.close();
+              }
             catch (IOException | SQLException E)
-             {
-               LOG.error("Cannot initialize Tilda", E);
-               System.exit(1);
-             }
+              {
+                LOG.error("Cannot initialize Tilda", E);
+                System.exit(-11);
+              }
+          }
+      }
+
+    private static void LoadTildaResources(Connection C)
+      {
+        List<String> TildaResources = new ArrayList<String>();
+        Reader R = null;
+        try
+          {
+            boolean OK = true;
+            Enumeration<URL> resEnum = ConnectionPool.class.getClassLoader().getResources(JarFile.MANIFEST_NAME);
+            while (resEnum.hasMoreElements())
+              {
+                try
+                  {
+                    URL url = (URL) resEnum.nextElement();
+                    InputStream In = url.openStream();
+                    if (In != null)
+                      {
+                        Properties P = new Properties();
+                        P.load(In);
+                        In.close();
+                        String Tildas = P.getProperty("Tilda");
+                        if (TextUtil.isNullOrEmpty(Tildas) == false)
+                          {
+                            LOG.debug("Found Tilda(s) " + Tildas + " in "+url.toString());
+                            String[] parts = Tildas.split(File.pathSeparator);
+                            if (parts != null)
+                              for (String p : parts)
+                                {
+                                  TildaResources.add(p);
+                                  In = FileUtil.getResourceAsStream(p);
+                                  if (In == null)
+                                    {
+                                      LOG.error("      Tilda schema definition '" + p + "' could not be found in the classpath.");
+                                      OK = false;
+                                    }
+                                  else
+                                    {
+                                      LOG.info("Inspecting " + p);
+                                      R = new BufferedReader(new InputStreamReader(In));
+                                      Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                                      Schema S = gson.fromJson(R, Schema.class);
+                                      S.setOrigin(p);
+                                      Migrator.migrate(C, S);
+                                      LOG.debug("Initializing Schema objects");
+                                      Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
+                                      M.invoke(null, C);
+                                      _SchemaPackage.put(S._Name, S._Package);
+                                      C.commit();
+                                      In.close();
+                                    }
+                                }
+                          }
+                      }
+                  }
+                catch (Exception e)
+                  {
+                    LOG.catching(e);
+                  }
+              }
+          }
+        catch (IOException e)
+          {
+            LOG.catching(e);
+          }
+        finally
+          {
+            if (R != null)
+              try
+                {
+                  R.close();
+                }
+              catch (Exception E)
+                {
+                }
           }
       }
 
@@ -239,7 +287,7 @@ public class ConnectionPool
       }
 
     public static Connection get(String Id)
-      throws Exception
+    throws Exception
       {
         BasicDataSource BDS = _DataSourcesById.get(Id);
         if (BDS == null)
@@ -251,9 +299,9 @@ public class ConnectionPool
         LOG.info("-------- O B T A I N E D   C O N N E C T I O N --------- " + Conn._PoolId + " ---- (" + BDS.getNumActive() + "/" + BDS.getNumIdle() + "/" + BDS.getMaxTotal() + ")   ----------");
         return Conn;
       }
-    
+
     public static String getSchemaPackage(String SchemaName)
-     {
-       return _SchemaPackage.get(SchemaName.toUpperCase());
-     }
+      {
+        return _SchemaPackage.get(SchemaName.toUpperCase());
+      }
   }

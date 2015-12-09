@@ -17,8 +17,8 @@
 package tilda.generation;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -37,7 +37,7 @@ public class Manifest
         String ManifestFile = PS._Main._ProjectRoot+File.separatorChar+"META-INF"+File.separatorChar+"MANIFEST.MF";
         try
           {
-            FileReader In = new FileReader(ManifestFile);
+            FileInputStream In = new FileInputStream(ManifestFile);
             Properties P = new Properties();
             P.load(In);
             In.close();
