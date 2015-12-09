@@ -35,6 +35,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.jar.JarFile;
+import java.util.jar.Manifest;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.logging.log4j.LogManager;
@@ -170,78 +171,48 @@ public class ConnectionPool
       }
 
     private static void LoadTildaResources(Connection C)
+    throws Exception
       {
-        List<String> TildaResources = new ArrayList<String>();
         Reader R = null;
-        try
+        InputStream In = null;
+        Enumeration<URL> resEnum = ConnectionPool.class.getClassLoader().getResources(JarFile.MANIFEST_NAME);
+        while (resEnum.hasMoreElements())
           {
-            boolean OK = true;
-            Enumeration<URL> resEnum = ConnectionPool.class.getClassLoader().getResources(JarFile.MANIFEST_NAME);
-            while (resEnum.hasMoreElements())
+            URL url = (URL) resEnum.nextElement();
+            In = url.openStream();
+            if (In != null)
               {
-                try
+                Manifest Man = new Manifest();
+                Man.read(In);
+                In.close();
+                String Tildas = Man.getMainAttributes().getValue("Tilda");
+                if (TextUtil.isNullOrEmpty(Tildas) == false)
                   {
-                    URL url = (URL) resEnum.nextElement();
-                    InputStream In = url.openStream();
-                    if (In != null)
-                      {
-                        Properties P = new Properties();
-                        P.load(In);
-                        In.close();
-                        String Tildas = P.getProperty("Tilda");
-                        if (TextUtil.isNullOrEmpty(Tildas) == false)
-                          {
-                            LOG.debug("Found Tilda(s) " + Tildas + " in "+url.toString());
-                            String[] parts = Tildas.split(File.pathSeparator);
-                            if (parts != null)
-                              for (String p : parts)
-                                {
-                                  TildaResources.add(p);
-                                  In = FileUtil.getResourceAsStream(p);
-                                  if (In == null)
-                                    {
-                                      LOG.error("      Tilda schema definition '" + p + "' could not be found in the classpath.");
-                                      OK = false;
-                                    }
-                                  else
-                                    {
-                                      LOG.info("Inspecting " + p);
-                                      R = new BufferedReader(new InputStreamReader(In));
-                                      Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                                      Schema S = gson.fromJson(R, Schema.class);
-                                      S.setOrigin(p);
-                                      Migrator.migrate(C, S);
-                                      LOG.debug("Initializing Schema objects");
-                                      Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
-                                      M.invoke(null, C);
-                                      _SchemaPackage.put(S._Name, S._Package);
-                                      C.commit();
-                                      In.close();
-                                    }
-                                }
-                          }
-                      }
-                  }
-                catch (Exception e)
-                  {
-                    LOG.catching(e);
+                    LOG.debug("Found Tilda(s) " + Tildas + " in " + url.toString());
+                    String[] parts = Tildas.split(File.pathSeparator);
+                    if (parts != null)
+                      for (String p : parts)
+                        {
+                          if (TextUtil.isNullOrEmpty(p) == true)
+                           continue;
+                          In = FileUtil.getResourceAsStream(p);
+                          if (In == null)
+                            throw new Exception("Tilda schema definition '" + p + "' could not be found in the classpath.");
+                          LOG.info("Inspecting " + p);
+                          R = new BufferedReader(new InputStreamReader(In));
+                          Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                          Schema S = gson.fromJson(R, Schema.class);
+                          S.setOrigin(p);
+                          Migrator.migrate(C, S);
+                          LOG.debug("Initializing Schema objects");
+                          Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
+                          M.invoke(null, C);
+                          _SchemaPackage.put(S._Name, S._Package);
+                          C.commit();
+                          In.close();
+                        }
                   }
               }
-          }
-        catch (IOException e)
-          {
-            LOG.catching(e);
-          }
-        finally
-          {
-            if (R != null)
-              try
-                {
-                  R.close();
-                }
-              catch (Exception E)
-                {
-                }
           }
       }
 

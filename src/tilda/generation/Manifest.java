@@ -38,16 +38,16 @@ public class Manifest
         try
           {
             FileInputStream In = new FileInputStream(ManifestFile);
-            Properties P = new Properties();
-            P.load(In);
+            java.util.jar.Manifest Man = new java.util.jar.Manifest();
+            Man.read(In);
             In.close();
-            String Tildas = TextUtil.Print(P.getProperty("Tilda"), "");
+            String Tildas = TextUtil.Print(Man.getMainAttributes().getValue("Tilda"), "");
             if (TextUtil.FindElement(PS._Main._ResourceNameShort, Tildas, File.pathSeparatorChar) == -1)
              {
-               Tildas+=PS._Main._ResourceNameShort+File.pathSeparatorChar;
-               P.setProperty("Tilda", Tildas);
+               Tildas=Tildas.trim()+PS._Main._ResourceNameShort+File.pathSeparatorChar+" ";
+               Man.getMainAttributes().putValue("Tilda", Tildas);
                FileOutputStream Out = new FileOutputStream(ManifestFile);
-               P.store(Out, null);
+               Man.write(Out);
                Out.close();
              }
           }

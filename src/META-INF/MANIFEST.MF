@@ -1,4 +1,4 @@
-#Tue Dec 08 21:30:04 EST 2015
-Tilda=tilda/data/_tilda.Tilda.json;
-Class-Path=
-Manifest-Version=1.0
+Manifest-Version: 1.0
+Tilda: tilda/data/_tilda.Tilda.json; 
+Class-Path: 
+
