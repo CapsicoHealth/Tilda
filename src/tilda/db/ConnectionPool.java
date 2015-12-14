@@ -32,7 +32,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
@@ -176,6 +175,7 @@ public class ConnectionPool
         Reader R = null;
         InputStream In = null;
         Enumeration<URL> resEnum = ConnectionPool.class.getClassLoader().getResources(JarFile.MANIFEST_NAME);
+        List<Schema> TildaList = new ArrayList<Schema>();
         while (resEnum.hasMoreElements())
           {
             URL url = (URL) resEnum.nextElement();
@@ -203,16 +203,55 @@ public class ConnectionPool
                           Gson gson = new GsonBuilder().setPrettyPrinting().create();
                           Schema S = gson.fromJson(R, Schema.class);
                           S.setOrigin(p);
-                          Migrator.migrate(C, S);
-                          LOG.debug("Initializing Schema objects");
-                          Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
-                          M.invoke(null, C);
-                          _SchemaPackage.put(S._Name, S._Package);
-                          C.commit();
+                          TildaList.add(S);
                           In.close();
                         }
                   }
               }
+          }
+        ReorderTildaListWithDependencies(TildaList);
+//        LOG.debug("All Tildas in order of dependencies:");
+//        for (Schema S : TildaList)
+//         LOG.debug("   "+S._ResourceNameShort);
+        for (Schema S : TildaList)
+          {
+            Migrator.migrate(C, S);
+            LOG.debug("Initializing Schema objects");
+            Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
+            M.invoke(null, C);
+            _SchemaPackage.put(S._Name, S._Package);
+            C.commit();
+          }
+      }
+
+    private static void ReorderTildaListWithDependencies(List<Schema> L)
+      {
+        for (int i = 0; i < L.size(); ++i)
+          {
+            Schema Si = L.get(i);
+            int minIndex = 0;
+//            LOG.debug("Checking dependencies for "+Si._ResourceNameShort);
+            if (Si._Dependencies != null)
+             for (String Dep : Si._Dependencies)
+              {
+//                LOG.debug("   Checking dependency "+Dep);
+                for (int j = 0; j < i; ++j)
+                 {
+                   Schema Sj = L.get(j);
+//                   LOG.debug("      Comparing "+Dep+" Vs. "+Sj._ResourceNameShort);
+                   if ((Sj._ResourceNameShort.equals(Dep) == true || Sj._ResourceNameShort.equals("tilda/data/_tilda.Tilda.json") == true) && minIndex < j+1)
+                    {
+                      minIndex = j+1;
+//                      LOG.debug("         Found dependency. Setting minIndex="+minIndex);
+                    }
+                 }
+              }
+            if (L.get(0)._ResourceNameShort.equals("tilda/data/_tilda.Tilda.json") == true && minIndex == 0)
+             minIndex = 1;
+//            LOG.debug("   minIndex="+minIndex);
+            Schema S = L.remove(i);
+            L.add(minIndex, S);
+            
           }
       }
 
