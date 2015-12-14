@@ -239,7 +239,7 @@ public class ConnectionPool
                  {
                    Schema Sj = L.get(j);
 //                   LOG.debug("      Comparing "+Dep+" Vs. "+Sj._ResourceNameShort);
-                   if ((Sj._ResourceNameShort.equals(Dep) == true || Sj._ResourceNameShort.equals("tilda/data/_tilda.Tilda.json") == true) && minIndex < j+1)
+                   if (Sj._ResourceNameShort.equals(Dep) == true && minIndex < j+1)
                     {
                       minIndex = j+1;
 //                      LOG.debug("         Found dependency. Setting minIndex="+minIndex);
