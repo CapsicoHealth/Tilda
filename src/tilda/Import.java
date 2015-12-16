@@ -29,16 +29,15 @@ import java.util.regex.Pattern;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import tilda.db.Connection;
 import tilda.db.ConnectionPool;
 import tilda.performance.PerfTracker;
 import tilda.utils.DurationUtil;
 import tilda.utils.FileUtil;
-import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 public class Import
   {
@@ -47,7 +46,6 @@ public class Import
     public static void main(String[] args)
       {
         LOG.info("\n*************************************************************************************************************************************");
-        SystemValues.autoInit();
         ConnectionPool.autoInit();
         LOG.info("\n*************************************************************************************************************************************\n");
 
