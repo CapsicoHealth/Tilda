@@ -25,6 +25,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
+import tilda.db.processors.RecordProcessor;
 import tilda.db.processors.ScalarRP;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
@@ -196,10 +197,16 @@ public class PostgreSQL implements DBType
       {
         if (Col._Nullable == false)
          {
-           if (DefaultValue == null)
-            throw new Exception("Cannot alter column '"+Col.getFullName()+"' to not null without a default value. Add a default value in the model, or manually migrate your database.");
-           String Q = "UPDATE "+Col._ParentObject.getShortName()+" set \""+Col.getName()+"\" = "+ValueHelper.printValue(Col, DefaultValue)+" where \""+Col.getName()+"\" IS NULL";
-           Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q);
+           String Q = "SELECT count(*) from "+Col._ParentObject.getShortName()+" where \""+Col.getName()+"\" IS NULL";
+           ScalarRP RP = new ScalarRP();
+           Con.ExecuteSelect(Col._ParentObject.getShortName(), Q, RP);
+           if (RP.getResult() > 0)
+            {
+               if (DefaultValue == null)
+                throw new Exception("Cannot alter column '"+Col.getFullName()+"' to not null without a default value. Add a default value in the model, or manually migrate your database.");
+               Q = "UPDATE "+Col._ParentObject.getShortName()+" set \""+Col.getName()+"\" = "+ValueHelper.printValue(Col, DefaultValue)+" where \""+Col.getName()+"\" IS NULL";
+               Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q);
+            }
          }
         
         String Q = "ALTER TABLE "+Col._ParentObject.getShortName()+" ALTER COLUMN \""+Col.getName()+"\" "+(Col._Nullable == false ? "SET" : "DROP")+" NOT NULL";
