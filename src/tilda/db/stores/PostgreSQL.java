@@ -25,7 +25,6 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
-import tilda.db.processors.RecordProcessor;
 import tilda.db.processors.ScalarRP;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
@@ -43,7 +42,7 @@ import tilda.utils.TextUtil;
 public class PostgreSQL implements DBType
   {
     static final Logger LOG = LogManager.getLogger(PostgreSQL.class.getName());
-    
+
     @Override
     public boolean isErrNoData(String SQLState, int ErrorCode)
       {
@@ -64,19 +63,15 @@ public class PostgreSQL implements DBType
         return "PostgreSQL";
       }
 
-    protected static final String[] _LOCK_CONN_ERROR_SUBSTR = { "deadlocked on lock"
-        , "lock request time out"
-        , "lock inconsistency found"
-        , "connection reset"
-        , "connection is closed"
-        };
+    protected static final String[] _LOCK_CONN_ERROR_SUBSTR = { "deadlocked on lock", "lock request time out", "lock inconsistency found", "connection reset", "connection is closed"
+    };
 
     @Override
     public boolean isLockOrConnectionError(SQLException E)
       {
         return TextUtil.indexOf(E.getMessage().toLowerCase(), _LOCK_CONN_ERROR_SUBSTR);
       }
-    
+
     @Override
     public boolean needsSavepoint()
       {
@@ -99,19 +94,19 @@ public class PostgreSQL implements DBType
     public String getSelectLimitClause(int Start, int Size)
       {
         if (Start <= 0 && Size <= 0)
-         return "";
-        
+          return "";
+
         StringBuilder Str = new StringBuilder();
         if (Size <= 0)
-         Str.append(" LIMIT ALL");
+          Str.append(" LIMIT ALL");
         else
-         Str.append(" LIMIT ").append(Size);
+          Str.append(" LIMIT ").append(Size);
         if (Start > 0)
-         Str.append(" OFFSET "+Start);
+          Str.append(" OFFSET " + Start);
 
         return Str.toString();
       }
-    
+
     @Override
     public String getAggregateStr(AggregateType AT)
       {
@@ -133,8 +128,8 @@ public class PostgreSQL implements DBType
               throw new Error("Cannot convert AggregateType " + AT + " to a database aggregate function name.");
           }
       }
-    
-    
+
+
     @Override
     public boolean FullIdentifierOnUpdate()
       {
@@ -148,7 +143,8 @@ public class PostgreSQL implements DBType
       }
 
     @Override
-    public boolean createSchema(Connection Con, Schema S) throws Exception
+    public boolean createSchema(Connection Con, Schema S)
+    throws Exception
       {
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
@@ -157,7 +153,8 @@ public class PostgreSQL implements DBType
       }
 
     @Override
-    public boolean createTable(Connection Con, Object Obj) throws Exception
+    public boolean createTable(Connection Con, Object Obj)
+    throws Exception
       {
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
@@ -166,11 +163,12 @@ public class PostgreSQL implements DBType
       }
 
     @Override
-    public boolean createView(Connection Con, View V, boolean Drop) throws Exception
+    public boolean createView(Connection Con, View V, boolean Drop)
+    throws Exception
       {
         if (Drop == true)
           {
-            Con.ExecuteUpdate(V.getShortName(), "DROP VIEW IF EXISTS "+V.getShortName()+" CASCADE");
+            Con.ExecuteUpdate(V.getShortName(), "DROP VIEW IF EXISTS " + V.getShortName() + " CASCADE");
           }
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
@@ -179,37 +177,39 @@ public class PostgreSQL implements DBType
       }
 
     @Override
-    public boolean alterTableAddColumn(Connection Con, Column Col, String DefaultValue) throws Exception
+    public boolean alterTableAddColumn(Connection Con, Column Col, String DefaultValue)
+    throws Exception
       {
         if (Col._Nullable == false && DefaultValue == null)
-         throw new Exception("Cannot add new 'not null' column '"+Col.getFullName()+"' to a table without a default value. Add a default value in the model, or manually migrate your database.");
-        String Q ="ALTER TABLE "+Col._ParentObject.getShortName()+" ADD COLUMN \""+Col.getName()+"\" "+getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection());
+          throw new Exception("Cannot add new 'not null' column '" + Col.getFullName() + "' to a table without a default value. Add a default value in the model, or manually migrate your database.");
+        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ADD COLUMN \"" + Col.getName() + "\" " + getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection());
         if (Col._Nullable == false)
           {
-            Q+=" not null DEFAULT "+ValueHelper.printValue(Col, DefaultValue);
+            Q += " not null DEFAULT " + ValueHelper.printValue(Col, DefaultValue);
           }
-           
+
         return Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q) >= 0;
       }
 
     @Override
-    public boolean alterTableAlterColumnNull(Connection Con, Column Col, String DefaultValue) throws Exception
+    public boolean alterTableAlterColumnNull(Connection Con, Column Col, String DefaultValue)
+    throws Exception
       {
         if (Col._Nullable == false)
-         {
-           String Q = "SELECT count(*) from "+Col._ParentObject.getShortName()+" where \""+Col.getName()+"\" IS NULL";
-           ScalarRP RP = new ScalarRP();
-           Con.ExecuteSelect(Col._ParentObject.getShortName(), Q, RP);
-           if (RP.getResult() > 0)
-            {
-               if (DefaultValue == null)
-                throw new Exception("Cannot alter column '"+Col.getFullName()+"' to not null without a default value. Add a default value in the model, or manually migrate your database.");
-               Q = "UPDATE "+Col._ParentObject.getShortName()+" set \""+Col.getName()+"\" = "+ValueHelper.printValue(Col, DefaultValue)+" where \""+Col.getName()+"\" IS NULL";
-               Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q);
-            }
-         }
-        
-        String Q = "ALTER TABLE "+Col._ParentObject.getShortName()+" ALTER COLUMN \""+Col.getName()+"\" "+(Col._Nullable == false ? "SET" : "DROP")+" NOT NULL";
+          {
+            String Q = "SELECT count(*) from " + Col._ParentObject.getShortName() + " where \"" + Col.getName() + "\" IS NULL";
+            ScalarRP RP = new ScalarRP();
+            Con.ExecuteSelect(Col._ParentObject.getShortName(), Q, RP);
+            if (RP.getResult() > 0)
+              {
+                if (DefaultValue == null)
+                  throw new Exception("Cannot alter column '" + Col.getFullName() + "' to not null without a default value. Add a default value in the model, or manually migrate your database.");
+                Q = "UPDATE " + Col._ParentObject.getShortName() + " set \"" + Col.getName() + "\" = " + ValueHelper.printValue(Col, DefaultValue) + " where \"" + Col.getName() + "\" IS NULL";
+                Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q);
+              }
+          }
+
+        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" " + (Col._Nullable == false ? "SET" : "DROP") + " NOT NULL";
         return Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q) >= 0;
       }
 
@@ -218,7 +218,7 @@ public class PostgreSQL implements DBType
       {
         return 4096;
       }
-    
+
     public String getColumnType(ColumnType T, Integer S, ColumnMode M, boolean Collection)
       {
         if (T == ColumnType.STRING && M != ColumnMode.CALCULATED)
@@ -228,20 +228,22 @@ public class PostgreSQL implements DBType
 
 
     @Override
-    public boolean alterTableAlterColumnStringSize(Connection Con, Column Col, int DBSize) throws Exception
+    public boolean alterTableAlterColumnStringSize(Connection Con, Column Col, int DBSize)
+    throws Exception
       {
         // Is it shrinking?
-        if (  Col._Size < getCLOBThreshhold() && DBSize < getCLOBThreshhold() && Col._Size < DBSize
-           || Col._Size < getCLOBThreshhold() && DBSize >= getCLOBThreshhold() )
+        if (Col._Size < getCLOBThreshhold() && DBSize < getCLOBThreshhold() && Col._Size < DBSize
+        || Col._Size < getCLOBThreshhold() && DBSize >= getCLOBThreshhold())
           {
-            String Q = "SELECT max(length(\""+Col.getName()+"\")) from "+Col._ParentObject.getShortName();
+            String Q = "SELECT max(length(\"" + Col.getName() + "\")) from " + Col._ParentObject.getShortName();
             ScalarRP RP = new ScalarRP();
             Con.ExecuteSelect(Col._ParentObject.getShortName(), Q, RP);
             if (RP.getResult() > Col._Size)
-             throw new Exception("Cannot alter String column '"+Col.getFullName()+"' from size "+DBSize+" down to "+Col._Size+" because there are values with sizes up to "+RP.getResult()+" that would be truncated. You need to manually migrate your database.");
+              throw new Exception("Cannot alter String column '" + Col.getFullName() + "' from size " + DBSize + " down to " + Col._Size + " because there are values with sizes up to " + RP.getResult()
+              + " that would be truncated. You need to manually migrate your database.");
           }
-        
-        String Q ="ALTER TABLE "+Col._ParentObject.getShortName()+" ALTER COLUMN \""+Col.getName()+"\" TYPE "+getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection());
+
+        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" TYPE " + getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection());
         return Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q) >= 0;
       }
 
@@ -254,22 +256,22 @@ public class PostgreSQL implements DBType
           {
             if (Col._Type == ColumnType.INTEGER || Col._Type == ColumnType.LONG || Col._Type == ColumnType.FLOAT || Col._Type == ColumnType.DOUBLE)
               {
-                String Q ="ALTER TABLE "+Col._ParentObject.getShortName()+" ALTER COLUMN \""+Col.getName()
-                         +"\" TYPE "+getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection())
-                         +" USING (trim(\""+Col.getName()+"\")::"+getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection())+");";
+                String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
+                + "\" TYPE " + getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection())
+                + " USING (trim(\"" + Col.getName() + "\")::" + getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection()) + ");";
                 return Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q) >= 0;
               }
             else if (Col._Type == ColumnType.DATETIME)
               {
-                String Q ="ALTER TABLE "+Col._ParentObject.getShortName()+" ALTER COLUMN \""+Col.getName()
-                         +"\" TYPE "+getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection())
-                         +" USING (trim(\""+Col.getName()+"\")::"+getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection())+");";
+                String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
+                + "\" TYPE " + getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection())
+                + " USING (trim(\"" + Col.getName() + "\")::" + getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection()) + ");";
                 if (Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q) < 0)
-                 return false;
-                
-                Col = Col._ParentObject.getColumn(Col.getName()+"TZ");
-                Q ="UPDATE "+Col._ParentObject.getShortName()+" SET \""+Col.getName()+"\" = 'UTC' WHERE \""+Col.getName()+"\" IS NULL";
-                
+                  return false;
+
+                Col = Col._ParentObject.getColumn(Col.getName() + "TZ");
+                Q = "UPDATE " + Col._ParentObject.getShortName() + " SET \"" + Col.getName() + "\" = 'UTC' WHERE \"" + Col.getName() + "\" IS NULL";
+
                 return Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q) >= 0;
               }
           }
