@@ -439,7 +439,7 @@ public class TildaFactory implements CodeGenTildaFactory
             for (int i = 0; i < q._ColumnObjs.size(); ++i)
               {
                 // Column c = q._ColumnObjs.get(i);
-                String v = q._VarNames.get(i);
+                String v = q._VarNames.get(i).replace('.', '_');
                 if (First == true)
                   First = false;
                 else
@@ -469,7 +469,7 @@ public class TildaFactory implements CodeGenTildaFactory
         for (int i = 0; i < SWC._ColumnObjs.size(); ++i)
           {
             Column c = SWC._ColumnObjs.get(i);
-            String v = SWC._VarNames.get(i);
+            String v = SWC._VarNames.get(i).replace('.', '_');
             Out.print(", " + JavaJDBCType.getFieldType(c) + " " + v);
           }
         Out.println(", int Start, int Size) throws Exception");
@@ -484,7 +484,7 @@ public class TildaFactory implements CodeGenTildaFactory
             for (int i = 0; i < SWC._ColumnObjs.size(); ++i)
               {
                 // Column c = q._ColumnObjs.get(i);
-                String v = SWC._VarNames.get(i);
+                String v = SWC._VarNames.get(i).replace('.', '_');
                 if (First == true)
                   First = false;
                 else

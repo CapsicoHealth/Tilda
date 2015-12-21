@@ -20,6 +20,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.enums.AggregateType;
+import tilda.enums.ColumnType;
 import tilda.enums.JoinType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
@@ -60,7 +61,6 @@ public class ViewColumn
 
     public transient View     _ParentView;
     public transient Column   _SameAsObj;
-    public transient boolean  _Aliased = true;
     public transient JoinType _Join;
     public transient AggregateType _Aggregate;    
     public transient boolean  _FailedValidation = false;
@@ -97,7 +97,6 @@ public class ViewColumn
         
         if (TextUtil.isNullOrEmpty(_Name) == true)
           {
-            _Aliased = false;
             _Name = _SameAsObj._Name;
           }
         
@@ -106,8 +105,12 @@ public class ViewColumn
             return PS.AddError("View Column '" + getFullName() + "' defined an invalid 'joinType' '" + _JoinStr + "'.");
         
         if (_AggregateStr != null)
-          if ((_Aggregate = AggregateType.parse(_AggregateStr)) == null)
-            return PS.AddError("View Column '" + getFullName() + "' defined an invalid 'joinType' '" + _AggregateStr + "'.");
+          {
+            if ((_Aggregate = AggregateType.parse(_AggregateStr)) == null)
+             return PS.AddError("View Column '" + getFullName() + "' defined an invalid 'aggregate' '" + _AggregateStr + "'.");
+            if (_SameAsObj._Type == ColumnType.DATETIME)
+             return PS.AddError("View Column '" + getFullName() + "' defined an aggregate on DATETIME column '" + _SameAsObj._Name + "' which is not supported as timezone information would not be retrievable.");
+          }
         
         return Errs == PS.getErrorCount();
       }

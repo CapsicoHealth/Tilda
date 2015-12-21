@@ -73,6 +73,12 @@ public class GroupBy
             _GroupByObjs.add(C);
           }
         
+        if (_Count == true)
+          {
+//            ViewColumn VC = new ViewColumn();
+//            VC._
+          }
+        
 
         return Errs == PS.getErrorCount();
       }

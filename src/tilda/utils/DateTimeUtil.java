@@ -328,7 +328,7 @@ public class DateTimeUtil
 
     private static int secondsSinceMidnight(ZonedDateTime ZDT)
       {
-        LOG.debug("hour: "+ZDT.getHour()+"; minute: "+ZDT.getMinute()+"; second: "+ZDT.getSecond()+";");
+//        LOG.debug("hour: "+ZDT.getHour()+"; minute: "+ZDT.getMinute()+"; second: "+ZDT.getSecond()+";");
         return ZDT.getHour()*60*60+ZDT.getMinute()*60+ZDT.getSecond();
       }
 

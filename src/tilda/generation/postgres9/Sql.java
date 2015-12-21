@@ -186,8 +186,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
               Out.print(getFullColumnVar(C._SameAsObj));
               if (C._Aggregate != null)
                 Out.print(")");
-              if (C._Aliased == true)
-                Out.print(" as \"" + C.getName() + "\"");
+              Out.print(" as \"" + C.getName() + "\"");
             }
         Out.println();
         Set<String> Names = new HashSet<String>();

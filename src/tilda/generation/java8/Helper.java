@@ -472,7 +472,7 @@ public class Helper
                       for (int i = 0; i < I._SubQuery._ColumnObjs.size(); ++i)
                         {
                           Column C = I._SubQuery._ColumnObjs.get(i);
-                          String V = I._SubQuery._VarNames.get(i);
+                          String V = I._SubQuery._VarNames.get(i).replace('.', '_');
                           // String Mask = getRuntimeMask(C);
                           String Pad = O._PadderColumnNames.getPad(C.getName());
                           Out.print(Lead + "     ");
@@ -514,7 +514,7 @@ public class Helper
                   for (int i = 0; i < SWC._ColumnObjs.size(); ++i)
                     {
                       Column C = SWC._ColumnObjs.get(i);
-                      String V = SWC._VarNames.get(i);
+                      String V = SWC._VarNames.get(i).replace('.', '_');
                       // String Mask = getRuntimeMask(C);
                       String Pad = O._PadderColumnNames.getPad(C.getName());
                       Out.print(Lead + "     ");
@@ -564,7 +564,7 @@ public class Helper
         for (int i = 0; i < ColumnObjs.size(); ++i)
           {
             Column c = ColumnObjs.get(i);
-            String v = VarNames.get(i);
+            String v = VarNames.get(i).replace('.', '_');
             if (First == true)
               First = false;
             else
@@ -575,14 +575,14 @@ public class Helper
         Out.println("         {");
         for (int i = 0; i < ColumnObjs.size(); ++i)
           {
-            String v = VarNames.get(i);
+            String v = VarNames.get(i).replace('.', '_');
             Out.println("           _" + v + " = " + v + ";");
           }
         Out.println("         }");
         for (int i = 0; i < ColumnObjs.size(); ++i)
           {
             Column c = ColumnObjs.get(i);
-            String v = VarNames.get(i);
+            String v = VarNames.get(i).replace('.', '_');
             Out.println("        protected final " + JavaJDBCType.getFieldType(c) + " _" + v + ";");
           }
         Out.println("     }");
