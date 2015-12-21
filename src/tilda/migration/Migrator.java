@@ -54,12 +54,10 @@ public class Migrator
         CodeGenSql Sql = C.getSQlCodeGen();
         ParserSession PS = new ParserSession(S, Sql);
         ResultSet RS = null;
-        Level LogLevel = LogUtil.setLogLevel(Level.INFO);
         try
           {
             if (Parser.loadDependencies(PS, S) == true)
               {
-                LogUtil.setLogLevel(LogLevel);
                 DatabaseMetaData meta = C.getMetaData();
 
                 RS = meta.getSchemas();
@@ -194,7 +192,6 @@ public class Migrator
         finally
           {
             RS.close();
-            LogUtil.setLogLevel(LogLevel);
           }
       }
 

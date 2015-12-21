@@ -31,8 +31,10 @@ import org.apache.logging.log4j.core.config.LoggerConfig;
 public class LogUtil
   {
     protected static final Logger LOG = LogManager.getLogger(LogUtil.class.getName());
+    
+    protected static Level _originalLogLevel = null;
 
-    public static Level setLogLevel(Level NewLevel)
+    public static void setLogLevel(Level NewLevel)
      {
        LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
        Configuration config = ctx.getConfiguration();
@@ -43,6 +45,15 @@ public class LogUtil
            loggerConfig.setLevel(NewLevel);
            ctx.updateLoggers();  // This causes all Loggers to refetch information from their LoggerConfig.
          }
-       return OldLevel;
+       if (_originalLogLevel == null)
+         _originalLogLevel = OldLevel;
      }
+    public static void resetLogLevel()
+      {
+        if (_originalLogLevel != null)
+          {
+            setLogLevel(_originalLogLevel);
+            _originalLogLevel = null;
+          }
+      }
   }
