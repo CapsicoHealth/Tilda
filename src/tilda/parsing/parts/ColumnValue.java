@@ -84,11 +84,16 @@ public class ColumnValue
         if (TextUtil.isNullOrEmpty(_Value) == true)
           _Value = _Name;
 
+        if (TextUtil.isNullOrEmpty(_Description) == true)
+         {
+           if (TextUtil.isNullOrEmpty(_Label) == false)
+             _Description = _Label;
+           else
+             PS.AddError("Column '" + _ParentColumn.getFullName() + "' defines a Value without a 'description' or a 'label'.");
+         }
+
         if (TextUtil.isNullOrEmpty(_Label) == true)
           _Label = _Name;
-
-        if (TextUtil.isNullOrEmpty(_Description) == true)
-          PS.AddError("Column '" + _ParentColumn.getFullName() + "' defines a Value without a 'description'.");
 
         // if (_Raw == false)
         ValueHelper.CheckColumnValue(PS, _ParentColumn, _Name, _Value, _Default);
