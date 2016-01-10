@@ -202,7 +202,18 @@ public class TildaData implements CodeGenTildaData
                     }
                   else
                     Out.print("                                             , ");
-                  Out.println("{ " + TextUtil.EscapeDoubleQuoteWithSlash(V._Value) + C._PadderValueValues.getPad(V._Value) + ", " + TextUtil.EscapeDoubleQuoteWithSlash(V._Label) + ", " + TextUtil.EscapeDoubleQuoteWithSlash(V._Description) + " }");
+                  Out.print("{ " + TextUtil.EscapeDoubleQuoteWithSlash(V._Value) + C._PadderValueValues.getPad(V._Value) + ", " + TextUtil.EscapeDoubleQuoteWithSlash(V._Label) + ", " + TextUtil.EscapeDoubleQuoteWithSlash(V._Description));
+                  Out.print(", \"");
+                  if (V._Groupings != null && V._Groupings.length != 0)
+                    {
+                      First = true;
+                      for (String g : V._Groupings)
+                        {
+                          if (First == true) First = false; else Out.print("``");
+                          Out.print(g.toUpperCase());
+                        }
+                    }
+                  Out.println("\" }");
                 }
             Out.println("                                  };");
           }

@@ -34,6 +34,7 @@ import tilda.parsing.parts.PrimaryKey;
 import tilda.parsing.parts.SubWhereClause;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.SystemValues;
+import tilda.utils.TextUtil;
 
 public class Docs implements CodeGenDocs
   {
@@ -228,7 +229,7 @@ public class Docs implements CodeGenDocs
     private void docFieldValues(PrintWriter Out, Column C)
       {
         Out.println("<TABLE border=\"0px\" cellpadding=\"2px\" cellspacing=\"0px\">"
-            + "   <TR align=\"left\"><TH>&nbsp;</TH><TH align=\"right\">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Description</TH></TR>"
+            + "   <TR align=\"left\"><TH>&nbsp;</TH><TH align=\"right\">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>"
             );
         int i = 0;
         for (ColumnValue V : C._Values)
@@ -241,6 +242,7 @@ public class Docs implements CodeGenDocs
                     + "<TD>" + V._Value + "&nbsp;&nbsp;</TD>"
                     + "<TD>" + V._Label + "&nbsp;&nbsp;</TD>"
                     + "<TD>" + V._Default + "&nbsp;&nbsp;</TD>"
+                    + "<TD>" + TextUtil.Print(V._Groupings) + "&nbsp;&nbsp;</TD>"
                     // + "<TD>" + V._Raw + "</TD>"
                     + "<TD>" + V._Description + "</TD>"
                     +"</TR>"
@@ -326,6 +328,7 @@ public class Docs implements CodeGenDocs
                 + "  <TR><TD align=\"right\"><B>Value</B></TD><TD>" + V._Value + "</TD></TR>" + SystemValues.NEWLINE
                 + "  <TR><TD align=\"right\"><B>Default</B></TD><TD>" + V._Default + "</TD></TR>" + SystemValues.NEWLINE
                 + "  <TR><TD align=\"right\"><B>Label</B></TD><TD>" + V._Label + "</TD></TR>" + SystemValues.NEWLINE
+                + "  <TR><TD align=\"right\"><B>Groupings</B></TD><TD>" + TextUtil.Print(V._Groupings) + "</TD></TR>" + SystemValues.NEWLINE
                 + "  <TR valign=\"top\"><TD align=\"right\"><B>Description</B></TD><TD>" + V._Description + "</TD></TR>" + SystemValues.NEWLINE
                 + "</TABLE>" + SystemValues.NEWLINE
                 + Helper.getMultiLineCommentEnd()
