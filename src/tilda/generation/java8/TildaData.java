@@ -1143,8 +1143,8 @@ public class TildaData implements CodeGenTildaData
         Out.println("      __Nulls |= DTField._Mask;");
         Out.println("     boolean DTNull = (__Nulls & DTField._Mask) != 0L;");
         Out.println("     boolean TZNull = (__Nulls & TZField._Mask) != 0L;");
-        Out.println("     if (DTNull != TZNull)");
-        Out.println("      throw new Exception(\"The field \"+DTFieldName+\" (null=\" + DTNull + \") is inconsistent with its associated field '\"+DTFieldName+\"TZ' (null=\" + TZNull + \"). They both should be null or not null.\");");
+        Out.println("     if (DTNull == false && TZNull == true)");
+        Out.println("      throw new Exception(\"The field \"+DTFieldName+\" is not null while its associated timezone field '\"+DTFieldName+\"TZ' is null. A TZ is mandatory for not null timestamps.\");");
         Out.println("     return ZDT;");
         Out.println("   }");
         Out.println();
