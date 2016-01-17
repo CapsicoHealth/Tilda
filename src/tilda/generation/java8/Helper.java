@@ -17,7 +17,9 @@
 package tilda.generation.java8;
 
 import java.io.PrintWriter;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
@@ -561,10 +563,13 @@ public class Helper
         Out.println("     {");
         Out.print("       protected " + MethodName + "Params(");
         First = true;
+        Set<String> VarNamesSet = new HashSet<String>();
         for (int i = 0; i < ColumnObjs.size(); ++i)
           {
             Column c = ColumnObjs.get(i);
             String v = VarNames.get(i).replace('.', '_');
+            if (VarNamesSet.add(v) == false)
+              continue;
             if (First == true)
               First = false;
             else
@@ -573,16 +578,22 @@ public class Helper
           }
         Out.println(")");
         Out.println("         {");
+        VarNamesSet.clear();
         for (int i = 0; i < ColumnObjs.size(); ++i)
           {
             String v = VarNames.get(i).replace('.', '_');
+            if (VarNamesSet.add(v) == false)
+              continue;
             Out.println("           _" + v + " = " + v + ";");
           }
         Out.println("         }");
+        VarNamesSet.clear();
         for (int i = 0; i < ColumnObjs.size(); ++i)
           {
             Column c = ColumnObjs.get(i);
             String v = VarNames.get(i).replace('.', '_');
+            if (VarNamesSet.add(v) == false)
+              continue;
             Out.println("        protected final " + JavaJDBCType.getFieldType(c) + " _" + v + ";");
           }
         Out.println("     }");

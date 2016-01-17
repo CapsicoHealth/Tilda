@@ -72,7 +72,7 @@ public class Query
         StringBuilder NewClause = new StringBuilder();
         int i = 0;
         
-        Set<String> VarNames = new HashSet<String>();
+//        Set<String> VarNames = new HashSet<String>();
 //        LOG.debug("    input clause: "+_Clause+";");
         Matcher M = _P1.matcher(_Clause);
         while (M.find() == true)
@@ -117,11 +117,12 @@ public class Query
                  var = col;
                 else
                  var = col+TextUtil.CapitalizeFirstCharacter(var);
-                if (VarNames.add(var) == false)
-                  {
-                    PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' with a duplicate variable name '"+var+"'.");
-                    continue;
-                  }
+//                if (VarNames.add(var) == false)
+//                 var = "*"+var;
+//                  {
+//                    PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' with a duplicate variable name '"+var+"'.");
+//                    continue;
+//                  }
 //                LOG.debug("       --> var: "+var+";");
                 _ColumnObjs.add(C);
                 _VarNames.add(var);

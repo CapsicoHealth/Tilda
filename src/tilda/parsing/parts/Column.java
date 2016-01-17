@@ -390,4 +390,14 @@ public class Column extends TypeDef
       {
         return _Validation == ValidationStatus.SUCCESS;
       }
+    public Object getSingleColFK()
+      {
+        for (ForeignKey FK : _ParentObject._ForeignKeys)
+         if (FK!=null)
+          {
+            if (FK._SrcColumnObjs.size() == 1 && FK._SrcColumnObjs.get(0)._Name.equals(_Name))
+             return FK._DestObjectObj;
+          }
+        return null;
+      }
   }

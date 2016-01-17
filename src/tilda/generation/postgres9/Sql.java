@@ -18,8 +18,10 @@ package tilda.generation.postgres9;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
@@ -62,6 +64,18 @@ public class Sql extends PostgreSQL implements CodeGenSql
     public String getFullColumnVar(Column C)
       {
         return C._ParentObject.getSchema()._Name + "." + C._ParentObject.getBaseName() + ".\"" + C.getName() + "\"";
+      }
+    
+    @Override
+    public String getFullTableVar(Object O, int i)
+      {
+        return O.getSchema()._Name + "_" + O.getBaseName() + i;
+      }
+
+    @Override
+    public String getFullColumnVar(Column C, int i)
+      {
+        return C._ParentObject.getSchema()._Name + "_" + C._ParentObject.getBaseName() + i + ".\"" + C.getName() + "\"";
       }
 
     @Override
@@ -171,19 +185,45 @@ public class Sql extends PostgreSQL implements CodeGenSql
     @Override
     public void genDDL(PrintWriter Out, View V)
       {
+        if (V._Name.equals("TRANSITIONVIEW") == true)
+          {
+            int xxx = 0;
+            ++xxx;
+          }
+        Object ObjectMain = V._ViewColumns.get(0)._SameAsObj._ParentObject;
         Out.println("create or replace view " + V._ParentSchema._Name + "." + V._Name + " -- " + V._Description);
         Out.print("  as select ");
         boolean First = true;
+        Map<String, Integer> M = new HashMap<String, Integer>();
         for (ViewColumn C : V._ViewColumns)
           if (C != null && C._SameAsObj._Mode != ColumnMode.CALCULATED && C._JoinOnly == false)
             {
+              if (ObjectMain._Name.equals(C._SameAsObj._ParentObject._Name) == true)
+                {
+                  Object FKObj = C._SameAsObj.getSingleColFK();
+                  if (FKObj != null)
+                   {
+                     Integer I = M.get(FKObj._Name);
+                     I = new Integer(I==null ? 1 : I.intValue()+1);
+                     M.put(FKObj._Name, I);
+                   }
+                }
+              
               if (First == true)
                 First = false;
               else
                 Out.print(", ");
               if (C._Aggregate != null)
                 Out.print(getAggregateStr(C._Aggregate) + "(");
-              Out.print(getFullColumnVar(C._SameAsObj));
+              Integer I = M.get(C._SameAsObj._ParentObject._Name);
+              if (I != null && I.intValue() > 1)
+                {
+                  Out.print(getFullColumnVar(C._SameAsObj, I.intValue()));
+                }
+              else
+                {
+                  Out.print(getFullColumnVar(C._SameAsObj));
+                }
               if (C._Aggregate != null)
                 Out.print(")");
               Out.print(" as \"" + C.getName() + "\"");
@@ -191,7 +231,6 @@ public class Sql extends PostgreSQL implements CodeGenSql
         Out.println();
         Set<String> Names = new HashSet<String>();
         List<Object> Objects = new ArrayList<Object>();
-        Object ObjectMain = V._ViewColumns.get(0)._SameAsObj._ParentObject;
         Out.println("     from " + ObjectMain.getShortName());
         Names.add(ObjectMain.getFullName());
         Objects.add(ObjectMain);
@@ -204,17 +243,31 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   ViewJoin VJ = V.getViewjoin(T.getBaseName());
                   if (VJ != null)
                     {
-                      Out.print("     " + (C._Join == null ? "left" : C._Join) + " join " + VJ._ObjectObj.getShortName() + " on " + VJ._On);
+                      Out.print("     " + (C._Join == null ? "left" : C._Join) + " join " + VJ._ObjectObj.getShortName());
+                      Out.print(" on " + VJ._On);
+                      Integer I = M.get(VJ._ObjectObj._Name);
+                      if (I != null)
+                       for (int i = 2; i <= I.intValue(); ++i)
+                        {
+                          Out.println();
+                          Out.print("     " + (C._Join == null ? "left" : C._Join) + " join " + VJ._ObjectObj.getShortName());
+                          Out.print(" as "+getFullTableVar(C._SameAsObj._ParentObject, I.intValue()));
+                          Out.print(" on " + VJ._On);
+                        }
                     }
                   else
                     {
                       Object FoundFK = null;
                       for (Object Obj : Objects)
-                        if (CheckFK(Out, Obj, T, C) == true)
+                        if (CheckFK(Out, Obj, T, C, 0) == true)
                           {
                             if (FoundFK != null)
                               throw new Error("Object " + T.getFullName() + " has an FK to both " + FoundFK.getFullName() + " and " + Obj.getFullName() + ", which makes creating a view ambiguous.");
                             FoundFK = Obj;
+                            Integer I = M.get(C._SameAsObj._ParentObject._Name);
+                            if (I != null)
+                             for (int i = 2; i <= I.intValue(); ++i)
+                              CheckFK(Out, Obj, T, C, i);
                           }
                       if (FoundFK == null)
                         throw new Error("Cannot find a FK relationship between " + T.getFullName() + " and " + ObjectMain.getFullName() + ".");
@@ -247,16 +300,24 @@ public class Sql extends PostgreSQL implements CodeGenSql
         Out.println("    ;");
       }
 
-    private boolean CheckFK(PrintWriter Out, Object Obj1, Object Obj2, ViewColumn C)
+    private boolean CheckFK(PrintWriter Out, Object Obj1, Object Obj2, ViewColumn C, int JoinIndex)
       {
         boolean Found = false;
-//        LOG.debug("Checking FKs to " + Obj1.getBaseName());
+        if (Obj2._Name.equals("STATE") == true)
+          {
+            int xxx = 0;
+            ++xxx;
+          }
+        LOG.debug("Checking FKs to " + Obj1.getBaseName());
         for (ForeignKey FK : Obj2._ForeignKeys)
           {
-//            LOG.debug("    . Checking FK " + FK._ParentObject.getBaseName() + " to " + FK._DestObjectObj.getBaseName());
+            LOG.debug("    . Checking FK " + FK._ParentObject.getBaseName() + " to " + FK._DestObjectObj.getBaseName());
             if (FK._DestObjectObj == Obj1)
               {
-                Out.print("     " + (C._Join == null ? "left" : C._Join) + " join " + Obj2.getShortName() + " on ");
+                Out.print("     " + (C._Join == null ? "left" : C._Join) + " join " + Obj2.getShortName());
+                if (JoinIndex > 1)
+                 Out.print(" as "+getFullTableVar(Obj2, JoinIndex));
+                Out.print(" on ");
                 for (int i = 0; i < FK._SrcColumnObjs.size(); ++i)
                   {
                     if (i != 0)
@@ -265,19 +326,22 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   }
                 Out.println();
                 Found = true;
-//                LOG.debug("    --> FOUND");
+                LOG.debug("    --> FOUND");
                 break;
               }
           }
         if (Found == false)
           {
-//            LOG.debug("Checking FKs to " + Obj2.getBaseName());
+            LOG.debug("Checking FKs to " + Obj2.getBaseName());
             for (ForeignKey FK : Obj1._ForeignKeys)
               {
-//                LOG.debug("    . Checking FK "+FK._ParentObject.getBaseName()+" to "+FK._DestObjectObj.getBaseName());
+                LOG.debug("    . Checking FK "+FK._ParentObject.getBaseName()+" to "+FK._DestObjectObj.getBaseName());
                 if (FK._DestObjectObj == Obj2)
                   {
-                    Out.print("     " + (C._Join == null ? "inner" : C._Join) + " join " + Obj2.getShortName() + " on ");
+                    Out.print("     " + (C._Join == null ? "inner" : C._Join) + " join " + Obj2.getShortName());
+                    if (JoinIndex > 1)
+                      Out.print(" as "+getFullTableVar(Obj2, JoinIndex));
+                    Out.print(" on ");
                     for (int i = 0; i < FK._SrcColumnObjs.size(); ++i)
                       {
                         if (i != 0)
@@ -286,7 +350,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                       }
                     Out.println();
                     Found = true;
-//                    LOG.debug("    --> FOUND");
+                    LOG.debug("    --> FOUND");
                     break;
                   }
               }

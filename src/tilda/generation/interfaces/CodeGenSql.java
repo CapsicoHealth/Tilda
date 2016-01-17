@@ -31,6 +31,8 @@ public interface CodeGenSql extends DBType, CodeGenBase
     
     public String getFullTableVar(Object O);
     public String getFullColumnVar(Column C);
+    public String getFullColumnVar(Column C, int i);
+    public String getFullTableVar(Object O, int i);
     public String getShortColumnVar(Column C);
     
     public String getColumnType(Column C);

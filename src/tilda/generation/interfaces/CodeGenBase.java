@@ -56,5 +56,4 @@ public interface CodeGenBase
    */
   public void genClassEnd(PrintWriter Out, GeneratorSession G)
     throws Exception;
-
 }

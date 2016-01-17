@@ -17,7 +17,9 @@
 package tilda.generation.java8;
 
 import java.io.PrintWriter;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -413,10 +415,13 @@ public class TildaFactory implements CodeGenTildaFactory
         Query q = I._SubQuery == null ? null : I._SubQuery.getQuery(G.getSql());
         if (q != null)
           {
+            Set<String> VarNameSet = new HashSet<String>();
             for (int i = 0; i < q._ColumnObjs.size(); ++i)
               {
                 Column c = q._ColumnObjs.get(i);
                 String v = q._VarNames.get(i);
+                if (VarNameSet.add(v) == false)
+                 continue;
                 Out.print(", " + JavaJDBCType.getFieldType(c) + " " + v);
               }
           }
@@ -436,10 +441,13 @@ public class TildaFactory implements CodeGenTildaFactory
           {
             Out.print("       " + MethodName + "Params P = new " + MethodName + "Params(");
             boolean First = true;
+            Set<String> VarNameSet = new HashSet<String>();
             for (int i = 0; i < q._ColumnObjs.size(); ++i)
               {
                 // Column c = q._ColumnObjs.get(i);
                 String v = q._VarNames.get(i).replace('.', '_');
+                if (VarNameSet.add(v) == false)
+                 continue;
                 if (First == true)
                   First = false;
                 else
@@ -466,10 +474,13 @@ public class TildaFactory implements CodeGenTildaFactory
         String MethodName = "LookupWhere" + SWC._Name;
         Out.print("   static public ListResults<" + Helper.getFullAppDataClassName(SWC._ParentObject) + "> " + MethodName
             + "(Connection C");
+        Set<String> VarNameSet = new HashSet<String>();
         for (int i = 0; i < SWC._ColumnObjs.size(); ++i)
           {
             Column c = SWC._ColumnObjs.get(i);
             String v = SWC._VarNames.get(i).replace('.', '_');
+            if (VarNameSet.add(v) == false)
+              continue;
             Out.print(", " + JavaJDBCType.getFieldType(c) + " " + v);
           }
         Out.println(", int Start, int Size) throws Exception");
@@ -481,10 +492,13 @@ public class TildaFactory implements CodeGenTildaFactory
           {
             Out.print("       " + MethodName + "Params P = new " + MethodName + "Params(");
             boolean First = true;
+            VarNameSet.clear();
             for (int i = 0; i < SWC._ColumnObjs.size(); ++i)
               {
                 // Column c = q._ColumnObjs.get(i);
                 String v = SWC._VarNames.get(i).replace('.', '_');
+                if (VarNameSet.add(v) == false)
+                  continue;
                 if (First == true)
                   First = false;
                 else
