@@ -185,11 +185,6 @@ public class Sql extends PostgreSQL implements CodeGenSql
     @Override
     public void genDDL(PrintWriter Out, View V)
       {
-        if (V._Name.equals("TRANSITIONVIEW") == true)
-          {
-            int xxx = 0;
-            ++xxx;
-          }
         Object ObjectMain = V._ViewColumns.get(0)._SameAsObj._ParentObject;
         Out.println("create or replace view " + V._ParentSchema._Name + "." + V._Name + " -- " + V._Description);
         Out.print("  as select ");
@@ -303,15 +298,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
     private boolean CheckFK(PrintWriter Out, Object Obj1, Object Obj2, ViewColumn C, int JoinIndex)
       {
         boolean Found = false;
-        if (Obj2._Name.equals("STATE") == true)
-          {
-            int xxx = 0;
-            ++xxx;
-          }
-        LOG.debug("Checking FKs to " + Obj1.getBaseName());
+//        LOG.debug("Checking FKs to " + Obj1.getBaseName());
         for (ForeignKey FK : Obj2._ForeignKeys)
           {
-            LOG.debug("    . Checking FK " + FK._ParentObject.getBaseName() + " to " + FK._DestObjectObj.getBaseName());
+//            LOG.debug("    . Checking FK " + FK._ParentObject.getBaseName() + " to " + FK._DestObjectObj.getBaseName());
             if (FK._DestObjectObj == Obj1)
               {
                 Out.print("     " + (C._Join == null ? "left" : C._Join) + " join " + Obj2.getShortName());
@@ -326,16 +316,16 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   }
                 Out.println();
                 Found = true;
-                LOG.debug("    --> FOUND");
+//                LOG.debug("    --> FOUND");
                 break;
               }
           }
         if (Found == false)
           {
-            LOG.debug("Checking FKs to " + Obj2.getBaseName());
+//            LOG.debug("Checking FKs to " + Obj2.getBaseName());
             for (ForeignKey FK : Obj1._ForeignKeys)
               {
-                LOG.debug("    . Checking FK "+FK._ParentObject.getBaseName()+" to "+FK._DestObjectObj.getBaseName());
+//                LOG.debug("    . Checking FK "+FK._ParentObject.getBaseName()+" to "+FK._DestObjectObj.getBaseName());
                 if (FK._DestObjectObj == Obj2)
                   {
                     Out.print("     " + (C._Join == null ? "inner" : C._Join) + " join " + Obj2.getShortName());
@@ -350,7 +340,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                       }
                     Out.println();
                     Found = true;
-                    LOG.debug("    --> FOUND");
+//                    LOG.debug("    --> FOUND");
                     break;
                   }
               }

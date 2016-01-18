@@ -197,7 +197,9 @@ public class View extends Base
           if (C != null && C._FrameworkGenerated == false && C._JoinOnly == false)
             {
               if (_OCC == false || C.getName().equals("created") == false && C.getName().equals("lastUpdated") == false && C.getName().equals("deleted") == false)
-               O._Columns.add(new ViewColumnWrapper(C._SameAsObj, C));
+                {
+                   O._Columns.add(new ViewColumnWrapper(C._SameAsObj, C));
+                }
             }
         _ParentSchema._Objects.add(O);
         O.Validate(PS, ParentSchema);
