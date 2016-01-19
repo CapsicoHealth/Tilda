@@ -23,6 +23,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+
 import tilda.db.JDBCHelper;
 import tilda.interfaces.JSONable;
 
@@ -100,6 +101,25 @@ public class JSONPrinter
           }
       }
 
+    protected static class ElementRaw implements ElementDef
+      {
+        public ElementRaw(String Name, String JsonRawValue)
+          {
+            _Name = Name;
+            _Val = JsonRawValue;
+          }
+  
+        protected final String _Name;
+        protected final String _Val;
+  
+        public void Print(Writer Out, boolean FirstElement, String Header)
+        throws Exception
+          {
+            JSONUtil.Print(Out, _Name, FirstElement);
+            Out.write(_Val);
+          }
+      }
+    
     protected static class ElementBoolean implements ElementDef
       {
         public ElementBoolean(String Name, boolean Val)
@@ -187,6 +207,13 @@ public class JSONPrinter
         _Elements.add(new ElementDouble(Name, Val));
         return this;
       }
+    
+    public JSONPrinter addElementRaw(String Name, String JsonRawValue)
+      {
+        _Elements.add(new ElementRaw(Name, JsonRawValue));
+        return this;
+      }
+    
 
     public void Print(Writer Out)
     throws Exception

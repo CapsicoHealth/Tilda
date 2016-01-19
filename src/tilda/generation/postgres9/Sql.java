@@ -75,7 +75,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
     @Override
     public String getFullColumnVar(Column C, int i)
       {
-        return C._ParentObject.getSchema()._Name + "_" + C._ParentObject.getBaseName() + i + ".\"" + C.getName() + "\"";
+        return C._ParentObject.getSchema()._Name + (i>=2?"_":".") + C._ParentObject.getBaseName() + (i>=2?i:"") + ".\"" + C.getName() + "\"";
       }
 
     @Override
@@ -254,7 +254,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                     {
                       Object FoundFK = null;
                       for (Object Obj : Objects)
-                        if (CheckFK(Out, Obj, T, C, 0) == true)
+                        if (CheckFK(Out, Obj, T, C, 1) == true)
                           {
                             if (FoundFK != null)
                               throw new Error("Object " + T.getFullName() + " has an FK to both " + FoundFK.getFullName() + " and " + Obj.getFullName() + ", which makes creating a view ambiguous.");
@@ -299,25 +299,30 @@ public class Sql extends PostgreSQL implements CodeGenSql
       {
         boolean Found = false;
 //        LOG.debug("Checking FKs to " + Obj1.getBaseName());
+        int count = 1;
         for (ForeignKey FK : Obj2._ForeignKeys)
           {
 //            LOG.debug("    . Checking FK " + FK._ParentObject.getBaseName() + " to " + FK._DestObjectObj.getBaseName());
             if (FK._DestObjectObj == Obj1)
               {
-                Out.print("     " + (C._Join == null ? "left" : C._Join) + " join " + Obj2.getShortName());
-                if (JoinIndex > 1)
-                 Out.print(" as "+getFullTableVar(Obj2, JoinIndex));
-                Out.print(" on ");
-                for (int i = 0; i < FK._SrcColumnObjs.size(); ++i)
+                if (count == JoinIndex)
                   {
-                    if (i != 0)
-                      Out.print(" AND ");
-                    Out.print(getFullColumnVar(FK._SrcColumnObjs.get(i)) + "=" + getFullColumnVar(Obj1._PrimaryKey._ColumnObjs.get(i)));
+                    Out.print("     " + (C._Join == null ? "left" : C._Join) + " join " + Obj2.getShortName());
+                    if (JoinIndex >= 2)
+                     Out.print(" as "+getFullTableVar(Obj2, JoinIndex));
+                    Out.print(" on ");
+                    for (int i = 0; i < FK._SrcColumnObjs.size(); ++i)
+                      {
+                        if (i != 0)
+                          Out.print(" AND ");
+                        Out.print(getFullColumnVar(FK._SrcColumnObjs.get(i)) + "=" + getFullColumnVar(Obj1._PrimaryKey._ColumnObjs.get(i), JoinIndex));
+                      }
+                    Out.println();
+                    Found = true;
+    //                LOG.debug("    --> FOUND");
+                    break;
                   }
-                Out.println();
-                Found = true;
-//                LOG.debug("    --> FOUND");
-                break;
+                ++count;
               }
           }
         if (Found == false)
@@ -328,20 +333,24 @@ public class Sql extends PostgreSQL implements CodeGenSql
 //                LOG.debug("    . Checking FK "+FK._ParentObject.getBaseName()+" to "+FK._DestObjectObj.getBaseName());
                 if (FK._DestObjectObj == Obj2)
                   {
-                    Out.print("     " + (C._Join == null ? "inner" : C._Join) + " join " + Obj2.getShortName());
-                    if (JoinIndex > 1)
-                      Out.print(" as "+getFullTableVar(Obj2, JoinIndex));
-                    Out.print(" on ");
-                    for (int i = 0; i < FK._SrcColumnObjs.size(); ++i)
+                    if (count == JoinIndex)
                       {
-                        if (i != 0)
-                          Out.print(" AND ");
-                        Out.print(getFullColumnVar(FK._SrcColumnObjs.get(i)) + "=" + getFullColumnVar(Obj2._PrimaryKey._ColumnObjs.get(i)));
+                        Out.print("     " + (C._Join == null ? "inner" : C._Join) + " join " + Obj2.getShortName());
+                        if (JoinIndex >= 2)
+                          Out.print(" as "+getFullTableVar(Obj2, JoinIndex));
+                        Out.print(" on ");
+                        for (int i = 0; i < FK._SrcColumnObjs.size(); ++i)
+                          {
+                            if (i != 0)
+                              Out.print(" AND ");
+                            Out.print(getFullColumnVar(FK._SrcColumnObjs.get(i)) + "=" + getFullColumnVar(Obj2._PrimaryKey._ColumnObjs.get(i), JoinIndex));
+                          }
+                        Out.println();
+                        Found = true;
+    //                    LOG.debug("    --> FOUND");
+                        break;
                       }
-                    Out.println();
-                    Found = true;
-//                    LOG.debug("    --> FOUND");
-                    break;
+                    ++count;
                   }
               }
           }
