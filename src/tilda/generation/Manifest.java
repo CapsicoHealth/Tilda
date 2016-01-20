@@ -42,9 +42,9 @@ public class Manifest
             Man.read(In);
             In.close();
             String Tildas = TextUtil.Print(Man.getMainAttributes().getValue("Tilda"), "");
-            if (TextUtil.FindElement(PS._Main._ResourceNameShort, Tildas, File.pathSeparatorChar) == -1)
+            if (TextUtil.FindElement(PS._Main._ResourceNameShort, Tildas, ';') == -1)
              {
-               Tildas=Tildas.trim()+PS._Main._ResourceNameShort+File.pathSeparatorChar+" ";
+               Tildas=Tildas.trim()+PS._Main._ResourceNameShort+"; ";
                Man.getMainAttributes().putValue("Tilda", Tildas);
                FileOutputStream Out = new FileOutputStream(ManifestFile);
                Man.write(Out);

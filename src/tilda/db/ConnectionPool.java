@@ -189,7 +189,7 @@ public class ConnectionPool
                 if (TextUtil.isNullOrEmpty(Tildas) == false)
                   {
                     LOG.debug("Found Tilda(s) " + Tildas + " in " + url.toString());
-                    String[] parts = Tildas.split(File.pathSeparator);
+                    String[] parts = Tildas.split(";");
                     if (parts != null)
                       for (String p : parts)
                         {
