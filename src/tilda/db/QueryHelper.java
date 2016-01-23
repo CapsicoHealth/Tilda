@@ -1638,6 +1638,17 @@ public abstract class QueryHelper
         OpVal(Op.LIKE, V);
         return this;
       }
+    
+    
+    public QueryHelper like(Type_StringCollection Col, String V)
+    throws Exception
+      {
+        _QueryStr.append(" CAPSICO_ArrayLike(").append(Col.toString(_ST)).append(", ");
+        TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V);
+        _QueryStr.append(")=1");
+        return this;
+      }
+    
 
     public QueryHelper like(Type_StringPrimitive[] Cols, String V)
     throws Exception

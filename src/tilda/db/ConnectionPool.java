@@ -222,6 +222,10 @@ public class ConnectionPool
             _SchemaPackage.put(S._Name, S._Package);
             C.commit();
           }
+        if (C.addHelperFunctions() == false)
+          throw new Exception("Cannot upgrade schema by adding the Tilda helper functions.");
+        else 
+          C.commit();
       }
 
     private static void ReorderTildaListWithDependencies(List<Schema> L)

@@ -45,6 +45,8 @@ public interface DBType
     public boolean createView(Connection Con, View V, boolean Drop) throws Exception;
     public boolean alterTableAddColumn(Connection Con, Column Col, String DefaultValue) throws Exception;
     public boolean alterTableAlterColumnNull(Connection Con, Column Col, String DefaultValue) throws Exception;
+    public boolean addHelperFunctions(Connection Con) throws Exception;    
+
 
     public static DBType DB2       = new IBMDB2    ();
     public static DBType SQLServer = new MSSQL     ();

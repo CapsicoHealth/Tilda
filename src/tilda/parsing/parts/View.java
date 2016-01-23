@@ -24,6 +24,8 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.gson.annotations.SerializedName;
+
 import tilda.enums.ColumnMapperMode;
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
@@ -31,8 +33,6 @@ import tilda.enums.ObjectLifecycle;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.SameAsHelper;
 import tilda.utils.TextUtil;
-
-import com.google.gson.annotations.SerializedName;
 
 public class View extends Base
   {
@@ -57,6 +57,14 @@ public class View extends Base
           if (C != null && C._Name != null && C._Name.equalsIgnoreCase(name) == true)
             return C._SameAsObj;
         return null;
+      }
+    @Override
+    public String[] getColumnNames()
+      {
+        String[] Cols = new String[_ViewColumns.size()];
+        for (int i = 0; i < _ViewColumns.size(); ++i)
+         Cols[i] = _ViewColumns.get(i)._Name;
+        return Cols;
       }
 
     @Override

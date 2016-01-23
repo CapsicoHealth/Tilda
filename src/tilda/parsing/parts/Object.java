@@ -18,6 +18,7 @@ package tilda.parsing.parts;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -63,6 +64,15 @@ public class Object extends Base
             return C;
         return null;
       }
+    @Override
+    public String[] getColumnNames()
+      {
+        String[] Cols = new String[_Columns.size()];
+        for (int i = 0; i < _Columns.size(); ++i)
+         Cols[i] = _Columns.get(i).getName();
+        return Cols;
+      }
+    
     @Override
     public ObjectLifecycle getLifecycle()
       {

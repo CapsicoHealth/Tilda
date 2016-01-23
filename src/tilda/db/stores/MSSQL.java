@@ -180,4 +180,10 @@ public class MSSQL implements DBType
         return false;
       }
     
+    @Override
+    public boolean addHelperFunctions(Connection Con) throws Exception
+     {
+       return false;
+     }    
+    
   }

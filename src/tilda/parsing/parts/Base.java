@@ -18,6 +18,7 @@ package tilda.parsing.parts;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -54,6 +55,7 @@ public abstract class Base
     public transient boolean              _Validated = false;
 
     public abstract Column getColumn(String name);
+    public abstract String[] getColumnNames();
     public abstract ObjectLifecycle getLifecycle();
     public abstract boolean isOCC();
     public abstract String getWhat();

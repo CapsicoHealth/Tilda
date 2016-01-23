@@ -417,6 +417,11 @@ public final class Connection
       {
         return _DB.alterTableAlterColumnType(this, FromType, Col, defaultZI);
       }
+
+    public boolean addHelperFunctions() throws Exception
+      {
+        return _DB.addHelperFunctions(this);
+      }
     
   }
 

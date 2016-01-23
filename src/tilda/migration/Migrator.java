@@ -22,7 +22,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -38,7 +37,6 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
-import tilda.utils.LogUtil;
 
 public class Migrator
   {
@@ -172,11 +170,9 @@ public class Migrator
                       LOG.info("The application's data model defines the view '" + V.getShortName() + "' which needs to be re-created...");
                     if (C.createView(V, Drop) == false)
                       throw new Exception("Cannot upgrade schema by adding the new view '" + V.getShortName() + "'.");
-                    didSomething = true;
                   }
                 if (didSomething == true)
                   C.commit();
-
               }
             if (PS.getErrorCount() > 0)
               {
