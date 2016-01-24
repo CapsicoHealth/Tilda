@@ -416,13 +416,11 @@ public class TildaFactory implements CodeGenTildaFactory
         if (q != null)
           {
             Set<String> VarNameSet = new HashSet<String>();
-            for (int i = 0; i < q._ColumnObjs.size(); ++i)
+            for (Query.Attribute A : q._Attributes)
               {
-                Column c = q._ColumnObjs.get(i);
-                String v = q._VarNames.get(i);
-                if (VarNameSet.add(v) == false)
+                if (VarNameSet.add(A._VarName) == false)
                  continue;
-                Out.print(", " + JavaJDBCType.getFieldType(c) + " " + v);
+                Out.print(", " + JavaJDBCType.getFieldType(A._Col) + " " + A._VarName);
               }
           }
         Out.println(", int Start, int Size) throws Exception");
@@ -437,15 +435,14 @@ public class TildaFactory implements CodeGenTildaFactory
               Out.println("       Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(" + C.getName() + Pad + ");");
             }
         Out.println();
-        if (q != null && q._ColumnObjs.isEmpty() == false)
+        if (q != null && q._Attributes.isEmpty() == false)
           {
             Out.print("       " + MethodName + "Params P = new " + MethodName + "Params(");
             boolean First = true;
             Set<String> VarNameSet = new HashSet<String>();
-            for (int i = 0; i < q._ColumnObjs.size(); ++i)
+            for (Query.Attribute A : q._Attributes)
               {
-                // Column c = q._ColumnObjs.get(i);
-                String v = q._VarNames.get(i).replace('.', '_');
+                String v = A._VarName.replace('.', '_');
                 if (VarNameSet.add(v) == false)
                  continue;
                 if (First == true)
@@ -457,11 +454,11 @@ public class TildaFactory implements CodeGenTildaFactory
             Out.println(");");
           }
         Out.println();
-        Out.println("       return ReadMany(C, " + LookupId + ", Obj, " + (q != null && q._ColumnObjs.isEmpty() == false ? "P" : "null") + ", Start, Size);");
+        Out.println("       return ReadMany(C, " + LookupId + ", Obj, " + (q != null && q._Attributes.isEmpty() == false ? "P" : "null") + ", Start, Size);");
         Out.println("     }");
         Out.println();
-        if (q != null && q._ColumnObjs.isEmpty() == false)
-          Helper.MakeParamStaticClass(Out, q._ColumnObjs, q._VarNames, MethodName);
+        if (q != null && q._Attributes.isEmpty() == false)
+          Helper.MakeParamStaticClass(Out, q._Attributes, MethodName);
       }
 
 
@@ -475,28 +472,26 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.print("   static public ListResults<" + Helper.getFullAppDataClassName(SWC._ParentObject) + "> " + MethodName
             + "(Connection C");
         Set<String> VarNameSet = new HashSet<String>();
-        for (int i = 0; i < SWC._ColumnObjs.size(); ++i)
+        for (Query.Attribute A : SWC._Attributes)
           {
-            Column c = SWC._ColumnObjs.get(i);
-            String v = SWC._VarNames.get(i).replace('.', '_');
+            String v = A._VarName.replace('.', '_');
             if (VarNameSet.add(v) == false)
               continue;
-            Out.print(", " + JavaJDBCType.getFieldType(c) + " " + v);
+            Out.print(", " + JavaJDBCType.getFieldType(A._Col) + " " + v);
           }
         Out.println(", int Start, int Size) throws Exception");
         Out.println("     {");
         Out.println("       " + Helper.getFullBaseClassName(SWC._ParentObject) + " Obj = new " + Helper.getFullAppDataClassName(SWC._ParentObject) + "();");
         Out.println("       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);");
         Out.println();
-        if (SWC._ColumnObjs.isEmpty() == false)
+        if (SWC._Attributes.isEmpty() == false)
           {
             Out.print("       " + MethodName + "Params P = new " + MethodName + "Params(");
             boolean First = true;
             VarNameSet.clear();
-            for (int i = 0; i < SWC._ColumnObjs.size(); ++i)
+            for (Query.Attribute A : SWC._Attributes)
               {
-                // Column c = q._ColumnObjs.get(i);
-                String v = SWC._VarNames.get(i).replace('.', '_');
+                String v = A._VarName.replace('.', '_');
                 if (VarNameSet.add(v) == false)
                   continue;
                 if (First == true)
@@ -508,11 +503,11 @@ public class TildaFactory implements CodeGenTildaFactory
             Out.println(");");
           }
         Out.println();
-        Out.println("       return ReadMany(C, " + LookupId + ", Obj, " + (SWC._ColumnObjs.isEmpty() == false ? "P" : "null") + ", Start, Size);");
+        Out.println("       return ReadMany(C, " + LookupId + ", Obj, " + (SWC._Attributes.isEmpty() == false ? "P" : "null") + ", Start, Size);");
         Out.println("     }");
         Out.println();
-        if (SWC._ColumnObjs.isEmpty() == false)
-          Helper.MakeParamStaticClass(Out, SWC._ColumnObjs, SWC._VarNames, MethodName);
+        if (SWC._Attributes.isEmpty() == false)
+          Helper.MakeParamStaticClass(Out, SWC._Attributes, MethodName);
       }
 
 
@@ -525,27 +520,27 @@ public class TildaFactory implements CodeGenTildaFactory
         String MethodName = "LookupBy" + SWC._Name;
         Out.print("   static public " + Helper.getFullAppDataClassName(SWC._ParentObject) + " " + MethodName + "(");
         boolean First = true;
-        for (Column C : SWC._ColumnObjs)
-          if (C != null)
+        for (Query.Attribute A : SWC._Attributes)
+          if (A != null && A._Col != null)
             {
               if (First == true)
                 First = false;
               else
                 Out.print(", ");
-              Out.print(JavaJDBCType.getFieldType(C) + " " + C.getName());
+              Out.print(JavaJDBCType.getFieldType(A._Col) + " " + A._Col.getName());
             }
         Out.println(") throws Exception");
         Out.println("     {");
         Out.println("       " + Helper.getFullBaseClassName(SWC._ParentObject) + " Obj = new " + Helper.getFullAppDataClassName(SWC._ParentObject) + "();");
         Out.println("       Obj.initForLookup(" + LookupId + ");");
         Out.println();
-        for (Column C : SWC._ColumnObjs)
-          if (C != null)
+        for (Query.Attribute A : SWC._Attributes)
+          if (A != null && A._Col != null)
             {
-              String Pad = C._ParentObject.getColumnPad(C.getName());
-              Out.print("       Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(" + C.getName() + Pad + "); ");
-              if (C._PrimaryKey == true && SWC._ParentObject.getLifecycle() != ObjectLifecycle.READONLY)
-               Out.print("Obj.__Saved_" + C.getName() + Pad + " = Obj._" + C.getName() + Pad + ";");
+              String Pad = A._Col._ParentObject.getColumnPad(A._Col.getName());
+              Out.print("       Obj.set" + TextUtil.CapitalizeFirstCharacter(A._Col.getName()) + Pad + "(" + A._Col.getName() + Pad + "); ");
+              if (A._Col._PrimaryKey == true && SWC._ParentObject.getLifecycle() != ObjectLifecycle.READONLY)
+               Out.print("Obj.__Saved_" + A._Col.getName() + Pad + " = Obj._" + A._Col.getName() + Pad + ";");
               Out.println();
             }
         Out.println();

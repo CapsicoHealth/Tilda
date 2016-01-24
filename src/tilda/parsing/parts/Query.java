@@ -41,8 +41,20 @@ public class Query
     @SerializedName("clause") public String   _Clause;
     /*@formatter:on*/
 
-    public transient List<Column> _ColumnObjs = new ArrayList<Column>();
-    public transient List<String> _VarNames   = new ArrayList<String>();
+    public static class Attribute
+     {
+       public Attribute(Column Col, String VarName, boolean Multi)
+        {
+          _Col     = Col    ;
+          _VarName = VarName;
+          _Multi   = Multi  ;
+        }
+       public final Column  _Col    ;
+       public final String  _VarName;
+       public final boolean _Multi  ;
+     }
+    
+    public transient List<Attribute> _Attributes = new ArrayList<Attribute>();
 
     public Query()
       {
@@ -86,6 +98,7 @@ public class Query
      }
 
     private static final Pattern _ParamPattern = Pattern.compile("\\?\\(([a-z_A-Z]\\w*)?\\)");
+    private static final Pattern _ArrayPattern = Pattern.compile("\\?\\[([a-z_A-Z]\\w*)?\\]");
     private static final Pattern _ComplexColRegex = Pattern.compile("\\b([a-zA-Z]\\w+(\\.[a-zA-Z]\\w+)+)\\b");
 
     public boolean Validate(ParserSession PS, Base ParentObject, String OwnerObjName)
@@ -101,11 +114,15 @@ public class Query
 
 //        LOG.debug("Start clause: "+_Clause+";");
 
-        Matcher M = _ParamPattern.matcher(_Clause);
         List<Match> Matches = new ArrayList<Match>();
+        Matcher M = _ParamPattern.matcher(_Clause);
         while (M.find() == true)
          Match.add(Matches, M.start(), M.end(), M.group(1), 'P');
         
+        M = _ArrayPattern.matcher(_Clause);
+        while (M.find() == true)
+         Match.add(Matches, M.start(), M.end(), M.group(1), 'A');
+
         M = _ComplexColRegex.matcher(_Clause);
         while (M.find() == true)
           {
@@ -143,7 +160,7 @@ public class Query
           {
             Match m = Matches.get(i);
             NewClause.append(_Clause, clauseStrIndex, m._start);
-            if (m._type == 'P')
+            if (m._type == 'P' || m._type == 'A')
               {
                 if (lastColumnMatch == null)
                  {
@@ -162,8 +179,7 @@ public class Query
                  var = lastColumnMatch.getName();
                 else
                  var = lastColumnMatch.getName()+TextUtil.CapitalizeFirstCharacter(var);
-                _ColumnObjs.add(lastColumnMatch);
-                _VarNames.add(var);
+                _Attributes.add(new Attribute(lastColumnMatch, var, m._type == 'A'));
               }
             else if (m._type == 'C')
               {

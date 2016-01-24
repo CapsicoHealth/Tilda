@@ -181,7 +181,7 @@ public class View extends Base
                 
                 _SubQuery.Validate(PS, this, "View " + getFullName() + "'s "+(TextUtil.isNullOrEmpty(_SubWhere)==false?"subWhere":"subQuery"), false);
                 
-                if (_SubQuery._ColumnObjs.isEmpty() == false)
+                if (_SubQuery._Attributes.isEmpty() == false)
                  PS.AddError("View '" + getFullName() + "' is defining a subWhere with parameters: that is not allowed for views.");
               }
           }

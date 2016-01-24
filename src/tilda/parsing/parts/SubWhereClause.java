@@ -44,12 +44,11 @@ public class SubWhereClause
     @SerializedName("orderBy"    ) public String[] _OrderBy= { };
     /*@formatter:on*/
 
-    public transient List<Column>    _ColumnObjs    = new ArrayList<Column>();
-    public transient List<String>    _VarNames      = new ArrayList<String>();
-    public transient List<Object>    _FromObj       = new ArrayList<Object>();
-    public transient List<Column>    _OrderByObjs   = new ArrayList<Column>();
-    public transient List<OrderType> _OrderByOrders = new ArrayList<OrderType>();
-    public transient boolean         _Unique;
+    public transient List<Query.Attribute> _Attributes    = new ArrayList<Query.Attribute>();
+    public transient List<Object>          _FromObj       = new ArrayList<Object>();
+    public transient List<Column>          _OrderByObjs   = new ArrayList<Column>();
+    public transient List<OrderType>       _OrderByOrders = new ArrayList<OrderType>();
+    public transient boolean               _Unique;
     
 
     public transient Base          _ParentObject;
@@ -88,42 +87,38 @@ public class SubWhereClause
             q.Validate(PS, _ParentObject, What);
           }
 
-        _ColumnObjs = _Wheres[0]._ColumnObjs;
-        _VarNames = _Wheres[0]._VarNames;
+        _Attributes = _Wheres[0]._Attributes;
         for (Query q : _Wheres)
           {
-            if (_ColumnObjs.size() != q._ColumnObjs.size()
-                || _VarNames.size() != q._VarNames.size())
+            if (_Attributes.size() != q._Attributes.size())
               {
                 PS.AddError(What + " is defining SubWhereClauses without the exact same parameter list.");
                 continue;
               }
 
-            for (int i = 0; i < _ColumnObjs.size(); ++i)
+            for (int i = 0; i < _Attributes.size(); ++i)
               {
-                Column C1 = q._ColumnObjs.get(i);
-                Column C2 = _ColumnObjs.get(i);
-                if (C1.hasBeenValidatedSuccessfully() == false)
+                Query.Attribute A1 = q._Attributes.get(i);
+                Query.Attribute A2 = _Attributes.get(i);
+                if (A1._Col.hasBeenValidatedSuccessfully() == false)
                   {
-                    PS.AddError(What + " is defining SubWhereClauses with column in position " + i + " " + C1.getFullName() + " which has failed validation previously and cannot be processed any more.");
+                    PS.AddError(What + " is defining SubWhereClauses with column in position " + i + " " + A1._Col.getFullName() + " which has failed validation previously and cannot be processed any more.");
                     continue;
                   }
-                if (C2.hasBeenValidatedSuccessfully() == false)
+                if (A2._Col.hasBeenValidatedSuccessfully() == false)
                   {
-                    PS.AddError(What + " is defining SubWhereClauses with column in position " + i + " " + C2.getFullName() + " which has failed validation previously and cannot be processed any more.");
+                    PS.AddError(What + " is defining SubWhereClauses with column in position " + i + " " + A2._Col.getFullName() + " which has failed validation previously and cannot be processed any more.");
                     continue;
                   }
-                if (C1 != C2)
+                if (A1._Col != A2._Col)
                   {
-                    PS.AddError(What + " is defining SubWhereClauses with incompatible columns in position " + i + ": " + C1.getFullName() + ", " + C2.getFullName() + ".");
+                    PS.AddError(What + " is defining SubWhereClauses with incompatible columns in position " + i + ": " + A1._Col.getFullName() + ", " + A2._Col.getFullName() + ".");
                     continue;
                   }
 
-                String V1 = q._VarNames.get(i);
-                String V2 = _VarNames.get(i);
-                if (V1.equals(V2) == false)
+                if (A1._VarName.equals(A2._VarName) == false)
                   {
-                    PS.AddError(What + " is defining SubWhereClauses with incompatible variable name in position " + i + ": " + V1 + ", " + V2 + ".");
+                    PS.AddError(What + " is defining SubWhereClauses with incompatible variable name in position " + i + ": " + A1._VarName + ", " + A2._VarName + ".");
                     continue;
                   }
               }

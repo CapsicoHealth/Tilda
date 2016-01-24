@@ -376,7 +376,7 @@ public class Helper
               if (UniqueConstraints == true)
                 {
                   Out.println(Lead + "   case " + LookupId + ":");
-                  if (SWC._ColumnObjs.isEmpty() == false)
+                  if (SWC._Attributes.isEmpty() == false)
                     Out.println(Lead + "      S.append(" + TextUtil.EscapeDoubleQuoteWithSlash(" where (" + PrintWhereClause(G, null, SWC) + ")") + ");");
                   Out.println(Lead + "      break;");
                 }
@@ -467,14 +467,14 @@ public class Helper
                   Out.println(Lead + "   case " + LookupId + ": {");
                   for (Column C : I._ColumnObjs)
                     PrintColumnPreparedStatementSetter(Out, O, Lead, C, Static);
-                  if (I._SubQuery != null && I._SubQuery._ColumnObjs.isEmpty() == false)
+                  if (I._SubQuery != null && I._SubQuery._Attributes.isEmpty() == false)
                     {
                       String MethodName = "LookupWhere" + I._Name;
                       Out.println(Lead + "     " + MethodName + "Params P = (" + MethodName + "Params) ExtraParams;");
-                      for (int i = 0; i < I._SubQuery._ColumnObjs.size(); ++i)
+                      for (Query.Attribute A : I._SubQuery._Attributes)
                         {
-                          Column C = I._SubQuery._ColumnObjs.get(i);
-                          String V = I._SubQuery._VarNames.get(i).replace('.', '_');
+                          Column C = A._Col;
+                          String V = A._VarName.replace('.', '_');
                           // String Mask = getRuntimeMask(C);
                           String Pad = O._PadderColumnNames.getPad(C.getName());
                           Out.print(Lead + "     ");
@@ -498,8 +498,8 @@ public class Helper
               if (UniqueConstraints == true)
                 {
                   Out.println(Lead + "   case " + LookupId + ":");
-                  for (Column C : SWC._ColumnObjs)
-                    PrintColumnPreparedStatementSetter(Out, O, Lead, C, Static);
+                  for (Query.Attribute A : SWC._Attributes)
+                    PrintColumnPreparedStatementSetter(Out, O, Lead, A._Col, Static);
                   Out.println(Lead + "     break;");
                 }
             }
@@ -511,12 +511,12 @@ public class Helper
                 {
                   Out.println(Lead + "   case " + LookupId + ": {");
                   String MethodName = "LookupWhere" + SWC._Name;
-                  if (SWC._ColumnObjs.isEmpty() == false)
+                  if (SWC._Attributes.isEmpty() == false)
                     Out.println(Lead + "     " + MethodName + "Params P = (" + MethodName + "Params) ExtraParams;");
-                  for (int i = 0; i < SWC._ColumnObjs.size(); ++i)
+                  for (Query.Attribute A : SWC._Attributes)
                     {
-                      Column C = SWC._ColumnObjs.get(i);
-                      String V = SWC._VarNames.get(i).replace('.', '_');
+                      Column C = A._Col;
+                      String V = A._VarName.replace('.', '_');
                       // String Mask = getRuntimeMask(C);
                       String Pad = O._PadderColumnNames.getPad(C.getName());
                       Out.print(Lead + "     ");
@@ -556,7 +556,7 @@ public class Helper
           }
       }
 
-    public static void MakeParamStaticClass(PrintWriter Out, List<Column> ColumnObjs, List<String> VarNames, String MethodName)
+    public static void MakeParamStaticClass(PrintWriter Out, List<Query.Attribute> Attributes, String MethodName)
       {
         boolean First;
         Out.println("    private static class " + MethodName + "Params");
@@ -564,37 +564,35 @@ public class Helper
         Out.print("       protected " + MethodName + "Params(");
         First = true;
         Set<String> VarNamesSet = new HashSet<String>();
-        for (int i = 0; i < ColumnObjs.size(); ++i)
+        for (Query.Attribute A : Attributes)
           {
-            Column c = ColumnObjs.get(i);
-            String v = VarNames.get(i).replace('.', '_');
+            String v = A._VarName.replace('.', '_');
             if (VarNamesSet.add(v) == false)
               continue;
             if (First == true)
               First = false;
             else
               Out.print(", ");
-            Out.print(JavaJDBCType.getFieldType(c) + " " + v);
+            Out.print(JavaJDBCType.getFieldType(A._Col) + " " + v);
           }
         Out.println(")");
         Out.println("         {");
         VarNamesSet.clear();
-        for (int i = 0; i < ColumnObjs.size(); ++i)
+        for (Query.Attribute A : Attributes)
           {
-            String v = VarNames.get(i).replace('.', '_');
+            String v = A._VarName.replace('.', '_');
             if (VarNamesSet.add(v) == false)
               continue;
             Out.println("           _" + v + " = " + v + ";");
           }
         Out.println("         }");
         VarNamesSet.clear();
-        for (int i = 0; i < ColumnObjs.size(); ++i)
+        for (Query.Attribute A : Attributes)
           {
-            Column c = ColumnObjs.get(i);
-            String v = VarNames.get(i).replace('.', '_');
+            String v = A._VarName.replace('.', '_');
             if (VarNamesSet.add(v) == false)
               continue;
-            Out.println("        protected final " + JavaJDBCType.getFieldType(c) + " _" + v + ";");
+            Out.println("        protected final " + JavaJDBCType.getFieldType(A._Col) + " _" + v + ";");
           }
         Out.println("     }");
       }
