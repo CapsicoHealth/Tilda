@@ -1643,7 +1643,7 @@ public abstract class QueryHelper
     public QueryHelper like(Type_StringCollection Col, String V)
     throws Exception
       {
-        _QueryStr.append(" CAPSICO_ArrayLike(").append(Col.toString(_ST)).append(", ");
+        _QueryStr.append(" TILDA.ArrayLike(").append(Col.toString(_ST)).append(", ");
         TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V);
         _QueryStr.append(")=1");
         return this;
