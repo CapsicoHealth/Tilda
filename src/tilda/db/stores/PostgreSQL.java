@@ -300,7 +300,6 @@ public class PostgreSQL implements DBType
           .append("LANGUAGE PLPGSQL;\n")
           .append("\n")
           .append("\n")
-          .append("DROP FUNCTION tilda.arraylike(text[],text[]);\n")
           .append("CREATE OR REPLACE FUNCTION TILDA.ArrayLike(vals text[], v text[]) RETURNS integer AS $$\n")
           .append("DECLARE\n")
           .append("  str1 text;\n")
