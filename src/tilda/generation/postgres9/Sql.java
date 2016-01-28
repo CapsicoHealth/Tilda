@@ -91,10 +91,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
       }
 
     @Override
-    public String getColumnTypeRaw(Column C)
+    public String getColumnTypeRaw(Column C, boolean MultiOverride)
       {
         if (C._Type == ColumnType.STRING && C._Mode != ColumnMode.CALCULATED)
-          return C.isCollection() == true ? "text" : C._Size < 15 ? PostgresType.CHAR._SQLType : C._Size < 4096 ? PostgresType.STRING._SQLType : "text";
+          return C.isCollection() == true || MultiOverride == true ? "text" : C._Size < 15 ? PostgresType.CHAR._SQLType : C._Size < 4096 ? PostgresType.STRING._SQLType : "text";
         return PostgresType.get(C._Type)._SQLType;
       }
 

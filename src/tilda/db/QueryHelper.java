@@ -1645,10 +1645,23 @@ public abstract class QueryHelper
       {
         _QueryStr.append(" TILDA.ArrayLike(").append(Col.toString(_ST)).append(", ");
         TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V);
-        _QueryStr.append(")=1");
+        _QueryStr.append(")");
         return this;
       }
     
+    public QueryHelper like(Type_StringCollection Col, String[] V)
+    throws Exception
+      {
+        _QueryStr.append(" TILDA.ArrayLike(").append(Col.toString(_ST)).append(", ARRAY[");
+        boolean First = true;
+        for (String v : V)
+          {
+            if (First == true) First = false; else _QueryStr.append(", ");
+            TextUtil.EscapeSingleQuoteForSQL(_QueryStr, v);
+          }
+        _QueryStr.append("])");
+        return this;
+      }
 
     public QueryHelper like(Type_StringPrimitive[] Cols, String V)
     throws Exception
@@ -1672,13 +1685,6 @@ public abstract class QueryHelper
         return this;
       }
 
-
-    @Deprecated
-    public QueryHelper like(Type_StringPrimitive Col, String[] Vals)
-    throws Exception
-      {
-        return like(Col, Vals, true);
-      }
 
     public QueryHelper like(Type_StringPrimitive Col, String[] Vals, boolean Or)
     throws Exception

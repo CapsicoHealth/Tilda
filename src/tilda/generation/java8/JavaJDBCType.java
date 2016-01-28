@@ -73,6 +73,10 @@ public enum JavaJDBCType
         return JavaJDBCType.get(C._Type)._JavaClassType;
       }
 
+    public static String getFieldTypeParam(Column C, boolean Multi)
+      {
+        return  JavaJDBCType.get(C._Type)._JavaType + (Multi==true?"[]":"");
+      }
     public static String getFieldType(Column C)
       {
         switch (C._TypeCollection)

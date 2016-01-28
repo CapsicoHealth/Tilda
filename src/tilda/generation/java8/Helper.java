@@ -424,7 +424,7 @@ public class Helper
         return Str.toString();
       }
 
-    public static void SwitchLookupIdPreparedStatement(PrintWriter Out, Object O, String Lead, boolean UniqueConstraints, boolean Static)
+    public static void SwitchLookupIdPreparedStatement(PrintWriter Out, GeneratorSession G, Object O, String Lead, boolean UniqueConstraints, boolean Static)
       {
         String LookupIdStr = (UniqueConstraints == true ? "__" : "") + "LookupId";
         Out.println(Lead + "switch (" + LookupIdStr + ")");
@@ -471,6 +471,7 @@ public class Helper
                     {
                       String MethodName = "LookupWhere" + I._Name;
                       Out.println(Lead + "     " + MethodName + "Params P = (" + MethodName + "Params) ExtraParams;");
+                      Out.println(Lead + "     LOG.debug(\"  \" + P.toString());");
                       for (Query.Attribute A : I._SubQuery._Attributes)
                         {
                           Column C = A._Col;
@@ -512,7 +513,10 @@ public class Helper
                   Out.println(Lead + "   case " + LookupId + ": {");
                   String MethodName = "LookupWhere" + SWC._Name;
                   if (SWC._Attributes.isEmpty() == false)
-                    Out.println(Lead + "     " + MethodName + "Params P = (" + MethodName + "Params) ExtraParams;");
+                   {
+                     Out.println(Lead + "     " + MethodName + "Params P = (" + MethodName + "Params) ExtraParams;");
+                     Out.println(Lead + "     LOG.debug(\"  \" + P.toString());");
+                   }
                   for (Query.Attribute A : SWC._Attributes)
                     {
                       Column C = A._Col;
@@ -520,12 +524,16 @@ public class Helper
                       // String Mask = getRuntimeMask(C);
                       String Pad = O._PadderColumnNames.getPad(C.getName());
                       Out.print(Lead + "     ");
-                      if (C._Type.isPrimitive() == false)
+                      if (C._Type.isPrimitive() == false || A._Multi == true)
                         Out.print("if (P._" + V + "==null) PS.setNull(++i, java.sql.Types." + JavaJDBCType.get(C._Type)._JDBCSQLType + "); else ");
                       if (C._Type == ColumnType.DATETIME)
                         Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(P._" + V + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
-                      else
+                      else if (A._Multi == false)
                         Out.println("PS.set" + JavaJDBCType.get(C._Type)._JDBCType + "(++i, " + (C._Type == ColumnType.CHAR ? "\"\"+" : "") + "P._" + V + Pad + ");");
+                      else
+                        Out.println(" { java.sql.Array A = C.createArrayOf(\""+G.getSql().getColumnTypeRaw(C, true)+"\", (P._" + V + Pad + ")); AllocatedArrays.add(A); PS.setArray(++i, A); }");
+                        
+//                        Out.prinstln("PS.set" + JavaJDBCType.get(C._Type)._JDBCType + "(++i, " + (C._Type == ColumnType.CHAR ? "\"\"+" : "") + "P._" + V + Pad + ");");
                     }
                   Out.println(Lead + "     break;");
                   Out.println(Lead + "   }");
@@ -573,7 +581,7 @@ public class Helper
               First = false;
             else
               Out.print(", ");
-            Out.print(JavaJDBCType.getFieldType(A._Col) + " " + v);
+            Out.print(JavaJDBCType.getFieldTypeParam(A._Col, A._Multi) + " " + v);
           }
         Out.println(")");
         Out.println("         {");
@@ -592,8 +600,24 @@ public class Helper
             String v = A._VarName.replace('.', '_');
             if (VarNamesSet.add(v) == false)
               continue;
-            Out.println("        protected final " + JavaJDBCType.getFieldType(A._Col) + " _" + v + ";");
+            Out.println("        protected final " + JavaJDBCType.getFieldTypeParam(A._Col, A._Multi) + " _" + v + ";");
           }
+        Out.println("       public String toString()");
+        Out.println("        {");
+        Out.println("          long T0 = System.nanoTime();");
+        Out.println("          String Str = \"\"");
+        VarNamesSet.clear();
+        for (Query.Attribute A : Attributes)
+          {
+            String v = A._VarName.replace('.', '_');
+            if (VarNamesSet.add(v) == false)
+              continue;
+            Out.println("                  + \""+v+": \" + _" + v+" + \";\"");
+          }
+        Out.println("                 ; ");
+        Out.println("          PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);");
+        Out.println("          return Str;");
+        Out.println("        }");
         Out.println("     }");
       }
 

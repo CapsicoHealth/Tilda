@@ -875,7 +875,7 @@ public class TildaData implements CodeGenTildaData
                     if (C.isCollection() == false)
                       Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(_" + C.getName() + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
                     else
-                      Out.println("{ java.sql.Array A = C.createArrayOf(\"" + G.getSql().getColumnTypeRaw(C) + "\", _" + C.getName() + "); AllocatedArrays.add(A); PS.setArray(++i, A); }");
+                      Out.println("{ java.sql.Array A = C.createArrayOf(\"" + G.getSql().getColumnTypeRaw(C, false) + "\", _" + C.getName() + "); AllocatedArrays.add(A); PS.setArray(++i, A); }");
                     break;
                   case BINARY:
                   case BITFIELD:
@@ -890,7 +890,7 @@ public class TildaData implements CodeGenTildaData
                     if (C.isCollection() == false)
                       Out.println("PS.set" + JavaJDBCType.get(C._Type)._JDBCType + "(++i, " + (C._Type == ColumnType.CHAR ? "\"\"+" : "") + "_" + C.getName() + ");");
                     else
-                      Out.println("{ java.sql.Array A = C.createArrayOf(\"" + G.getSql().getColumnTypeRaw(C) + "\", " + (C._Type == ColumnType.STRING ? "" : Helper.DeSerializeArray(G)) + "(_" + C.getName()
+                      Out.println("{ java.sql.Array A = C.createArrayOf(\"" + G.getSql().getColumnTypeRaw(C, false) + "\", " + (C._Type == ColumnType.STRING ? "" : Helper.DeSerializeArray(G)) + "(_" + C.getName()
                           + ")); AllocatedArrays.add(A); PS.setArray(++i, A); }");
                     break;
                   default:
@@ -899,7 +899,7 @@ public class TildaData implements CodeGenTildaData
               Out.println("                } ");
             }
         Out.println();
-        Helper.SwitchLookupIdPreparedStatement(Out, O, "          ", true, false);
+        Helper.SwitchLookupIdPreparedStatement(Out, G, O, "          ", true, false);
         Out.println();
         if (G.getSql().needsSavepoint() == true)
           {
@@ -1008,7 +1008,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("        {");
         Out.println("          PS = C.prepareStatement(Q);");
         Out.println("          int i = 0;");
-        Helper.SwitchLookupIdPreparedStatement(Out, O, "          ", true, false);
+        Helper.SwitchLookupIdPreparedStatement(Out, G, O, "          ", true, false);
         Out.println();
         Out.println("          RS = PS.executeQuery();");
         Out.println("          if (RS.next() == false)");

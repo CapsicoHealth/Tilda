@@ -206,7 +206,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("        {");
         Out.println("          PS = C.prepareStatement(Q);");
         Out.println("          int i = 0;");
-        Helper.SwitchLookupIdPreparedStatement(Out, O, "          ", false, true);
+        Helper.SwitchLookupIdPreparedStatement(Out, G, O, "          ", false, true);
         Out.println();
         Out.println("          count = JDBCHelper.Process(PS.executeQuery(), RPL, Start, "+G.getSql().supportsSelectOffset()+", Size, "+G.getSql().supportsSelectOffset()+");");
         Out.println("        }");
@@ -420,7 +420,7 @@ public class TildaFactory implements CodeGenTildaFactory
               {
                 if (VarNameSet.add(A._VarName) == false)
                  continue;
-                Out.print(", " + JavaJDBCType.getFieldType(A._Col) + " " + A._VarName);
+                Out.print(", " + JavaJDBCType.getFieldTypeParam(A._Col, A._Multi) + " " + A._VarName);
               }
           }
         Out.println(", int Start, int Size) throws Exception");
@@ -477,7 +477,7 @@ public class TildaFactory implements CodeGenTildaFactory
             String v = A._VarName.replace('.', '_');
             if (VarNameSet.add(v) == false)
               continue;
-            Out.print(", " + JavaJDBCType.getFieldType(A._Col) + " " + v);
+            Out.print(", " + JavaJDBCType.getFieldTypeParam(A._Col, A._Multi) + " " + v);
           }
         Out.println(", int Start, int Size) throws Exception");
         Out.println("     {");
@@ -527,7 +527,7 @@ public class TildaFactory implements CodeGenTildaFactory
                 First = false;
               else
                 Out.print(", ");
-              Out.print(JavaJDBCType.getFieldType(A._Col) + " " + A._Col.getName());
+              Out.print(JavaJDBCType.getFieldTypeParam(A._Col, A._Multi) + " " + A._Col.getName());
             }
         Out.println(") throws Exception");
         Out.println("     {");
