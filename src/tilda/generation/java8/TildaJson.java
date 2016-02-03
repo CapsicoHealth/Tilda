@@ -174,17 +174,14 @@ public class TildaJson implements CodeGenTildaJson
             for (Index I : O._Indices)
               if (I != null && I._Unique == true)
                 {
-                  if (I._Name.equals("ResourceVersion") == true)
-                    {
-                      int xxx = 0;
-                      ++xxx;
-                    }
 //                  if (FirstGoodIndex == null)
 //                    FirstGoodIndex = I;
                   boolean GoodIndex = true;
                   for (Column C : I._ColumnObjs)
                     {
-                      if (C != null && (C._ParentObject.isAutoGenForeignKey(C.getName()) == true || C._ParentObject.isAutoGenPrimaryKey(C) == true))
+//                      if (C != null && (C._ParentObject.isAutoGenPrimaryKey(C) == true || C._ParentObject.isAutoGenForeignKey(C.getName()) == true))
+                      if (C != null && C._ParentObject.isAutoGenPrimaryKey(C) == true)
+//                      if (C != null && C._ParentObject.isAutoGenForeignKey(C.getName()) == true)
                         {
                           GoodIndex = false;
                           break;
