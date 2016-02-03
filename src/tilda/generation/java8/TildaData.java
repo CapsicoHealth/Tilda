@@ -143,7 +143,7 @@ public class TildaData implements CodeGenTildaData
     public void genField(PrintWriter Out, GeneratorSession G, Column C)
       throws Exception
       {
-        String Visibility = Helper.getVisibility(C, true);
+        // String Visibility = Helper.getVisibility(C, true);
 
         Out.print("   " + JavaJDBCType.getFieldType(C) + " _" + C.getName());
         if (C.isCollection() == false)

@@ -18,20 +18,19 @@ package tilda.parsing.parts;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.gson.annotations.SerializedName;
+
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
 import tilda.parsing.ParserSession;
-
-import com.google.gson.annotations.SerializedName;
 
 public class Object extends Base
   {
@@ -331,12 +330,16 @@ public class Object extends Base
     public boolean isAutoGenForeignKey(String Name)
       {
         for (ForeignKey FK : _ForeignKeys)
-         for (Column C : FK._SrcColumnObjs)
-           if (C.getName().equals(Name) == true)
+         {
+          if (FK == null)
+           continue;
+          for (Column C : FK._SrcColumnObjs)
+           if (C != null && C.getName().equals(Name) == true)
             {
               if (FK._DestObjectObj._PrimaryKey._Autogen == true)
-               return true;
+                return true;
             }
+         }
         return false;
       }
   }
