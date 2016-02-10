@@ -29,6 +29,7 @@ public class TextUtilTest
 
     public static void main(String[] args)
       {
+        Test1();
         Test5();
       }
 
