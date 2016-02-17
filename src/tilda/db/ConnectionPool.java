@@ -194,6 +194,7 @@ public class ConnectionPool
                         {
                           if (TextUtil.isNullOrEmpty(p) == true)
                            continue;
+                          p = p.trim();
                           In = FileUtil.getResourceAsStream(p);
                           if (In == null)
                             throw new Exception("Tilda schema definition '" + p + "' could not be found in the classpath.");
