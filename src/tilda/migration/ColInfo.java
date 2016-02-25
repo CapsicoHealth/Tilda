@@ -44,7 +44,20 @@ public class ColInfo
         switch (_Type)
           {
             /*@formatter:off*/
-            case java.sql.Types.ARRAY        : _TypeSql = "ARRAY"        ; _TildaType = null; break;
+            case java.sql.Types.ARRAY        : _TypeSql = "ARRAY"        ;
+               LOG.debug("ARRAY COLUMN  -->  _Name: "+_Name+"; _TypeSql: "+_TypeSql+"; _TypeName: "+_TypeName+";");
+               switch (_TypeName)
+                {
+                  case "_int4"  : _TildaType = ColumnType.INTEGER; break;
+                  case "_int8"  : _TildaType = ColumnType.LONG; break;
+                  case "_float4": _TildaType = ColumnType.FLOAT; break;
+                  case "_float8": _TildaType = ColumnType.DOUBLE; break;
+                  case "_bpchar": _TildaType = ColumnType.CHAR; break;
+                  case "_text"  : _TildaType = ColumnType.STRING; break;
+                  case "_bool"  : _TildaType = ColumnType.BOOLEAN; break;
+                  default: throw new Exception("Cannot map SQL TypeName "+_TypeName+" for array column.");
+                }
+               break;
             case java.sql.Types.BIGINT       : _TypeSql = "BIGINT"       ; _TildaType = ColumnType.LONG; break;
             case java.sql.Types.BINARY       : _TypeSql = "BINARY"       ; _TildaType = ColumnType.BINARY; break;
             case java.sql.Types.BIT          : _TypeSql = "BIT"          ; _TildaType = ColumnType.BOOLEAN; break;
