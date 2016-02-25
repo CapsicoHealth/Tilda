@@ -137,10 +137,12 @@ public class PostgreSQL implements DBType
         return true;
       }
 
+    protected static CodeGenSql _SQL = new tilda.generation.postgres9.Sql();
+    
     @Override
     public CodeGenSql getSQlCodeGen()
       {
-        return new tilda.generation.postgres9.Sql();
+        return _SQL;
       }
 
     @Override
@@ -361,7 +363,7 @@ public class PostgreSQL implements DBType
     public Array createArrayOf(Connection Con, ColumnType Type, java.lang.Object[] A)
     throws SQLException
       {
-        return Con.createArrayOf(PostgresType.get(Type)._SQLType, A);
+        return Con.createArrayOf(_SQL.getColumnTypeRaw(Type, -1, true), A);
       }
 
   }

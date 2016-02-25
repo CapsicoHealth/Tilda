@@ -97,6 +97,15 @@ public class Sql extends PostgreSQL implements CodeGenSql
           return C.isCollection() == true || MultiOverride == true ? "text" : C._Size < 15 ? PostgresType.CHAR._SQLType : C._Size < 4096 ? PostgresType.STRING._SQLType : "text";
         return PostgresType.get(C._Type)._SQLType;
       }
+    
+    @Override
+    public String getColumnTypeRaw(ColumnType Type, int Size, boolean isArray)
+      {
+        if (Type == ColumnType.STRING)
+          return isArray == true ? "text" : Size < 15 ? PostgresType.CHAR._SQLType : Size < 4096 ? PostgresType.STRING._SQLType : "text";
+        return PostgresType.get(Type)._SQLType;
+      }
+    
 
     @Override
     public boolean stringNeedsTrim(Column C)

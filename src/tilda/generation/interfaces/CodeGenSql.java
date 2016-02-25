@@ -20,6 +20,7 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import tilda.db.stores.DBType;
+import tilda.enums.ColumnType;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
@@ -37,6 +38,7 @@ public interface CodeGenSql extends DBType, CodeGenBase
     
     public String getColumnType(Column C);
     public String getColumnTypeRaw(Column C, boolean MultiOverride);
+    public String getColumnTypeRaw(ColumnType Type, int Size, boolean isArray);
     public boolean stringNeedsTrim(Column C);
     
     boolean supportsArrays();
