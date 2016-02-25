@@ -301,17 +301,33 @@ public final class Connection
       {
         return _C.createArrayOf(TypeName, A);
       }
+    public Array createArrayOf(ColumnType Type, java.lang.Object[] A)
+    throws SQLException
+      {
+        return _DB.createArrayOf(this, Type, A);
+      }
+    
 
+    public Array createArrayOf(ColumnType Type, Set<?> A)
+    throws SQLException
+      {
+        return createArrayOf(Type, A.toArray());
+      }
     public Array createArrayOf(String TypeName, Set<?> A)
     throws SQLException
       {
-        return _C.createArrayOf(TypeName, A.toArray());
+        return createArrayOf(TypeName, A.toArray());
       }
 
+    public Array createArrayOf(ColumnType Type, List<?> A)
+    throws SQLException
+      {
+        return createArrayOf(Type, A.toArray());
+      }
     public Array createArrayOf(String TypeName, List<?> A)
     throws SQLException
       {
-        return _C.createArrayOf(TypeName, A.toArray());
+        return createArrayOf(TypeName, A.toArray());
       }
 
     Deque<Savepoint> _SavePoints = new ArrayDeque<Savepoint>();

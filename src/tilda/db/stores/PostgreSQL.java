@@ -18,6 +18,7 @@ package tilda.db.stores;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.sql.Array;
 import java.sql.SQLException;
 
 import org.apache.logging.log4j.LogManager;
@@ -354,5 +355,13 @@ public class PostgreSQL implements DBType
        
        return Con.ExecuteUpdate("TILDA", Str.toString()) >= 0;
      }
+
+
+    @Override
+    public Array createArrayOf(Connection Con, ColumnType Type, java.lang.Object[] A)
+    throws SQLException
+      {
+        return Con.createArrayOf(PostgresType.get(Type)._SQLType, A);
+      }
 
   }

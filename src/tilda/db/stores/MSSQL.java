@@ -16,6 +16,7 @@
 
 package tilda.db.stores;
 
+import java.sql.Array;
 import java.sql.SQLException;
 
 import org.apache.logging.log4j.LogManager;
@@ -177,13 +178,19 @@ public class MSSQL implements DBType
     @Override
     public boolean alterTableAlterColumnType(Connection Con, ColumnType fromType, Column Col, ZoneInfo_Data defaultZI)
       {
-        return false;
+        throw new UnsupportedOperationException();
       }
     
     @Override
     public boolean addHelperFunctions(Connection Con) throws Exception
      {
-       return false;
+       throw new UnsupportedOperationException();
      }    
     
+    @Override
+    public Array createArrayOf(Connection Con, ColumnType Type, java.lang.Object[] A)
+    throws SQLException
+      {
+        throw new UnsupportedOperationException();
+      }
   }

@@ -16,6 +16,7 @@
 
 package tilda.db.stores;
 
+import java.sql.Array;
 import java.sql.SQLException;
 
 import tilda.data.ZoneInfo_Data;
@@ -61,4 +62,5 @@ public interface DBType
     public boolean alterTableAlterColumnStringSize(Connection Con, Column Col, int DBSize) throws Exception;
 
     public boolean alterTableAlterColumnType(Connection Con, ColumnType fromType, Column Col, ZoneInfo_Data defaultZI) throws Exception;
+    public Array createArrayOf(Connection C, ColumnType Type, java.lang.Object[] A) throws SQLException;
   }
