@@ -177,6 +177,7 @@ public class TILDA__TESTING_Factory
              }
              case 2: {
                LookupWhereAllByName2Params P = (LookupWhereAllByName2Params) ExtraParams;
+               LOG.debug("  " + P.toString());
                if (P._desc2Lower==null) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, P._desc2Lower      );
                PS.setFloat    (++i, P._a5Upper         );
                if (P._name==null) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, P._name       );
@@ -185,6 +186,7 @@ public class TILDA__TESTING_Factory
              }
              case 3: {
                LookupWhereAllByName3Params P = (LookupWhereAllByName3Params) ExtraParams;
+               LOG.debug("  " + P.toString());
                if (P._name==null) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, P._name       );
                if (P._created==null) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else PS.setTimestamp(++i, new java.sql.Timestamp(P._created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                break;
@@ -354,6 +356,18 @@ public class TILDA__TESTING_Factory
         protected final float _a5Upper;
         protected final String _name;
         protected final ZonedDateTime _created;
+       public String toString()
+        {
+          long T0 = System.nanoTime();
+          String Str = ""
+                  + "desc2Lower: " + _desc2Lower + ";"
+                  + "a5Upper: " + _a5Upper + ";"
+                  + "name: " + _name + ";"
+                  + "created: " + _created + ";"
+                 ; 
+          PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
+          return Str;
+        }
      }
 
    static public ListResults<tilda.data.Testing_Data> LookupWhereAllByName3(Connection C, String name, ZonedDateTime created, int Start, int Size) throws Exception
@@ -376,6 +390,16 @@ public class TILDA__TESTING_Factory
          }
         protected final String _name;
         protected final ZonedDateTime _created;
+       public String toString()
+        {
+          long T0 = System.nanoTime();
+          String Str = ""
+                  + "name: " + _name + ";"
+                  + "created: " + _created + ";"
+                 ; 
+          PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
+          return Str;
+        }
      }
 
 

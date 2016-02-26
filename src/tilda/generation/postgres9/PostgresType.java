@@ -21,29 +21,31 @@ import tilda.enums.ColumnType;
 public enum PostgresType
   {
     /*@formatter:off*/
-    STRING  ("varchar"         , ColumnType.STRING  ),
-    CHAR    ("character"       , ColumnType.CHAR    ),
-    INTEGER ("integer"         , ColumnType.INTEGER ),
-    LONG    ("bigint"          , ColumnType.LONG    ),
-    FLOAT   ("real"            , ColumnType.FLOAT   ),
-    DOUBLE  ("double precision", ColumnType.DOUBLE  ),
-    BOOLEAN ("boolean"         , ColumnType.BOOLEAN ),
-    DATETIME("timestamptz"     , ColumnType.DATETIME),
-    BINARY  ("BYTEA"           , ColumnType.BINARY  ),
-    BITFIELD("INTEGER"         , ColumnType.BITFIELD);
+    STRING  ("varchar"         , "varchar", ColumnType.STRING  ),
+    CHAR    ("character"       , "bpchar" , ColumnType.CHAR    ),
+    INTEGER ("integer"         , "int4"   , ColumnType.INTEGER ),
+    LONG    ("bigint"          , "int8"   , ColumnType.LONG    ),
+    FLOAT   ("real"            , "float4" , ColumnType.FLOAT   ),
+    DOUBLE  ("double precision", "float8" , ColumnType.DOUBLE  ),
+    BOOLEAN ("boolean"         , "bool"   , ColumnType.BOOLEAN ),
+    DATETIME("timestamptz"     , null     , ColumnType.DATETIME),
+    BINARY  ("BYTEA"           , null     , ColumnType.BINARY  ),
+    BITFIELD("INTEGER"         , "int4"   , ColumnType.BITFIELD);
     /*@formatter:on*/
 
     static {
       ColumnType.validate(PostgresType.values());
     }
     
-    private PostgresType(String SQLType, ColumnType T)
+    private PostgresType(String SQLType, String SQLArrayType, ColumnType T)
       {
         _SQLType = SQLType;
+        _SQLArrayType = SQLArrayType;
         _T = T;
       }
 
     public String     _SQLType;
+    public String     _SQLArrayType;
     public ColumnType _T;
 
     public static PostgresType get(ColumnType T)

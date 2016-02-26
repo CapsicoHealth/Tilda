@@ -84,6 +84,39 @@ public class DBTest
         L.add(10l);
         L.add(100l);
         Testing_Data D = Testing_Factory.Create(L, "Blah");
+        
+        List<Character> Lc = new ArrayList<Character>();
+        Lc.add('A');
+        Lc.add('B');
+        D.setA2b(Lc);
+        
+        List<Boolean> Lb = new ArrayList<Boolean>();
+        Lb.add(true);
+        Lb.add(true);
+        Lb.add(false);
+        D.setA3b(Lb);
+        
+        List<Double> Ld = new ArrayList<Double>();
+        Ld.add(2.3);
+        Ld.add(6.3);
+        D.setA4b(Ld);
+        
+        List<Float> Lf = new ArrayList<Float>();
+        Lf.add(2.3f);
+        Lf.add(6.3f);
+        D.setA5b(Lf);
+
+        List<Long> Ll = new ArrayList<Long>();
+        Ll.add(1111111111111l);
+        Ll.add(5555555555555l);
+        D.setA6b(Ll);
+        
+        List<Integer> Li = new ArrayList<Integer>();
+        Li.add(33333);
+        Li.add(77777);
+        D.setA7b(Li);
+        
+        
         if (D.Write(C) == false)
          throw new Exception("Bad stuff!");
         C.commit();

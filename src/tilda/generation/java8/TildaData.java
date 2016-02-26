@@ -868,6 +868,12 @@ public class TildaData implements CodeGenTildaData
               Out.println("               if ((" + Mask + Pad + " & __Changes) != 0L) ");
               Out.println("                { ");
               Out.print  ("                  if ((" + Mask + Pad + " & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types." + JavaJDBCType.get(C._Type)._JDBCSQLType + ");");
+//              if (C.isCollection() == true && C._Type == ColumnType.FLOAT)
+//                {
+//                  int xxx = 0;
+//                  ++xxx;
+//                  LOG.debug("SQL Raw type: "+G.getSql().getColumnTypeRaw(C, false));
+//                }
               switch (C._Type)
                 {
                   case DATETIME:

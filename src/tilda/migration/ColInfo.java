@@ -45,7 +45,6 @@ public class ColInfo
           {
             /*@formatter:off*/
             case java.sql.Types.ARRAY        : _TypeSql = "ARRAY"        ;
-               LOG.debug("ARRAY COLUMN  -->  _Name: "+_Name+"; _TypeSql: "+_TypeSql+"; _TypeName: "+_TypeName+";");
                switch (_TypeName)
                 {
                   case "_int4"  : _TildaType = ColumnType.INTEGER; break;

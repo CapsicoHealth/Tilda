@@ -95,7 +95,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
       {
         if (C._Type == ColumnType.STRING && C._Mode != ColumnMode.CALCULATED)
           return C.isCollection() == true || MultiOverride == true ? "text" : C._Size < 15 ? PostgresType.CHAR._SQLType : C._Size < 4096 ? PostgresType.STRING._SQLType : "text";
-        return PostgresType.get(C._Type)._SQLType;
+        return C.isCollection() == true ? PostgresType.get(C._Type)._SQLArrayType : PostgresType.get(C._Type)._SQLType;
       }
     
     @Override
@@ -103,7 +103,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
       {
         if (Type == ColumnType.STRING)
           return isArray == true ? "text" : Size < 15 ? PostgresType.CHAR._SQLType : Size < 4096 ? PostgresType.STRING._SQLType : "text";
-        return PostgresType.get(Type)._SQLType;
+        return isArray == true ? PostgresType.get(Type)._SQLArrayType : PostgresType.get(Type)._SQLType;
       }
     
 
