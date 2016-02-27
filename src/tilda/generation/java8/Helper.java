@@ -321,7 +321,7 @@ public class Helper
           {
             Out.println(Lead + "   case -7:");
             Out.println(Lead + "      String clause = ((SelectQuery)ExtraParams).getWhereClause();");
-            Out.println(Lead + "      if (TextUtil.isNullOrEmpty(clause) == false) S.append(\" where \").append(clause);");
+            Out.println(Lead + "      if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);");
             Out.println(Lead + "      break;");
           }
         int LookupId = -1;

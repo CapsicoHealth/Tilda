@@ -116,7 +116,7 @@ public class TILDA__TRANSPERF_Factory
         {
           case -7:
              String clause = ((SelectQuery)ExtraParams).getWhereClause();
-             if (TextUtil.isNullOrEmpty(clause) == false) S.append(" where ").append(clause);
+             if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
              break;
           case 1:
              S.append(" where (TILDA.TRANSPERF.\"schemaName\"=?)");

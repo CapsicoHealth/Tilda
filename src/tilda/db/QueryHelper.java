@@ -58,7 +58,7 @@ public abstract class QueryHelper
               _QueryStr.append("select ");
             else
               {
-                _Section = S.WHERE;
+                _Section = S.FROM;
                 _WherePos = 0;
               }
           }
@@ -89,6 +89,7 @@ public abstract class QueryHelper
     protected Connection          _C;
     protected StringBuilder       _QueryStr    = new StringBuilder();
     protected S                   _Section     = null;
+    protected boolean             _Where       = false;
     protected int                 _WherePos    = -1;
     protected int                 _Cardinality = 0;
     List<ColumnDefinition>        _Columns = new ArrayList<ColumnDefinition>();
@@ -192,6 +193,7 @@ public abstract class QueryHelper
             _WherePos = _QueryStr.length();
           }
         _Section = S.WHERE;
+        _Where = true;
         return this;
       }
 
@@ -205,7 +207,7 @@ public abstract class QueryHelper
     public final QueryHelper and()
     throws Exception
       {
-        if (_Section != S.WHERE)
+        if (_Section != S.WHERE && _Section != S.FROM)
           throw new Exception("Invalid query syntax: Calling and() after a " + _Section + ": "+_QueryStr.toString());
         if (_QueryStr.length() != _WherePos)
           _QueryStr.append(" and ");
@@ -216,7 +218,7 @@ public abstract class QueryHelper
     public final QueryHelper or()
     throws Exception
       {
-        if (_Section != S.WHERE)
+        if (_Section != S.WHERE && _Section != S.FROM)
           throw new Exception("Invalid query syntax: Calling and() after a " + _Section + ": "+_QueryStr.toString());
         if (_QueryStr.length() != _WherePos)
           _QueryStr.append(" or ");
@@ -227,7 +229,7 @@ public abstract class QueryHelper
     public final QueryHelper openPar()
     throws Exception
       {
-        if (_Section != S.WHERE)
+        if (_Section != S.WHERE && _Section != S.FROM)
           throw new Exception("Invalid query syntax: Calling openPar() after a " + _Section + ": "+_QueryStr.toString());
         _QueryStr.append(" (");
         _Section = S.WHERE;
@@ -278,7 +280,7 @@ public abstract class QueryHelper
     protected final void OpVal(Op O, String V)
     throws Exception
       {
-        if (   _ST == StatementType.SELECT && _Section == S.WHERE
+        if (   _ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM)
             || _ST == StatementType.DELETE && (_Section == S.WHERE || _Section == S.FROM)
             || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET)
            )
@@ -310,7 +312,7 @@ public abstract class QueryHelper
     protected final void OpVal(Op O, boolean V)
     throws Exception
       {
-        if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+        if (_ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM) || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
             _QueryStr.append(O._Str).append(V);
           }
@@ -321,7 +323,7 @@ public abstract class QueryHelper
     protected final void OpVal(Op O, double V)
     throws Exception
       {
-        if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+        if (_ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM) || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
             _QueryStr.append(O._Str).append(V);
           }
@@ -332,7 +334,7 @@ public abstract class QueryHelper
     protected final void OpVal(Op O, float V)
     throws Exception
       {
-        if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+        if (_ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM) || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
             _QueryStr.append(O._Str).append(V);
           }
@@ -343,7 +345,7 @@ public abstract class QueryHelper
     protected final void OpVal(Op O, int V)
     throws Exception
       {
-        if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+        if (_ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM) || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
             _QueryStr.append(O._Str).append(V);
           }
@@ -354,7 +356,7 @@ public abstract class QueryHelper
     protected final void OpVal(Op O, long V)
     throws Exception
       {
-        if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET) || _ST == StatementType.DELETE && _Section == S.WHERE)
+        if (_ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM) || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET) || _ST == StatementType.DELETE && _Section == S.WHERE)
           {
             _QueryStr.append(O._Str).append(V);
           }
@@ -365,7 +367,7 @@ public abstract class QueryHelper
     protected final void OpVal(Op O, char V)
     throws Exception
       {
-        if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+        if (_ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM) || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
             _QueryStr.append(O._Str).append('\'').append(V).append('\'');
           }
@@ -376,7 +378,7 @@ public abstract class QueryHelper
     protected final void OpVal(Op O, ZonedDateTime V)
     throws Exception
       {
-        if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+        if (_ST == StatementType.SELECT && (_Section == S.WHERE || _Section == S.FROM) || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
             if (DateTimeUtil.isNowPlaceholder(V) == true)
               _QueryStr.append(O._Str).append(_C.getCurrentTimestampStr());
@@ -408,7 +410,12 @@ public abstract class QueryHelper
     throws Exception
       {
         if (_ST == StatementType.SELECT && _C == null)
-          return _QueryStr.toString();
+         {
+           String Str = _QueryStr.toString();
+           if (_Where == false)
+            Str = " where "+Str;
+           return Str;
+         }
         throw new Exception("Error: Calling getWhereClause() on non 'where clause' QueryHelper object (constructed as a SELECT with a null Connection): "+_QueryStr.toString());
       }
 

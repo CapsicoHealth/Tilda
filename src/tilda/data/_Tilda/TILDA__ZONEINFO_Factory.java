@@ -112,7 +112,7 @@ public class TILDA__ZONEINFO_Factory
         {
           case -7:
              String clause = ((SelectQuery)ExtraParams).getWhereClause();
-             if (TextUtil.isNullOrEmpty(clause) == false) S.append(" where ").append(clause);
+             if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
              break;
           case 3:
              S.append(" order by TILDA.ZONEINFO.\"id\" ASC");
