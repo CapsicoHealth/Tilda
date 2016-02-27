@@ -23,6 +23,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Calendar;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -133,6 +134,18 @@ public class DateTimeUtil
         return ZDT.format(DateTimeFormatter.ISO_ZONED_DATE_TIME);
       }
 
+    public static String printDateTime(List<ZonedDateTime> L)
+      {
+        StringBuilder Str = new StringBuilder();
+        boolean First = true; 
+        for (ZonedDateTime d : L)
+          {
+            if (First == true) First = false; else Str.append(", ");
+            Str.append(DateTimeUtil.printDateTime(d));
+          }
+        return Str.toString();
+      }
+    
 
     public static String printDateTimeForSQL(ZonedDateTime ZDT)
       {
