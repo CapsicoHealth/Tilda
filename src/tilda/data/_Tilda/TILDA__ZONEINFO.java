@@ -81,7 +81,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Feb 26 2016, 22:38:33PST
+ @generated Feb 28 2016, 01:27:19PST
 */
 @SuppressWarnings({ "unchecked", "unused" })
 public abstract class TILDA__ZONEINFO implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
