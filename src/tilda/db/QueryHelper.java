@@ -391,7 +391,7 @@ public abstract class QueryHelper
               _QueryStr.append(O._Str).append(_C.getCurrentTimestampStr());
             else if (V == null)
               {
-                if (_Section == S.WHERE)
+                if (_Section == S.WHERE || _Section == S.FROM)
                   {
                     if (O == Op.EQUALS)
                       _QueryStr.append(" IS NULL ");
