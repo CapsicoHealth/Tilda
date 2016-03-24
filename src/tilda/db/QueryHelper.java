@@ -134,6 +134,13 @@ public abstract class QueryHelper
         return selectColumnBase(Col.toString(_ST));
       }
 
+    public final QueryHelper selectDistinctColumn(ColumnDefinition Col)
+    throws Exception
+      {
+        _Columns.add(Col);
+        return selectColumnBase("distinct("+Col.toString(_ST)+")");
+      }
+
     public final QueryHelper selectCountStar()
     throws Exception
       {
@@ -609,6 +616,21 @@ public abstract class QueryHelper
           }
         throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": "+_QueryStr.toString());
       }
+    
+    public QueryHelper in(Type_StringCollection Col, String[] v)
+    throws Exception
+      {
+        _QueryStr.append(" TILDA.In(").append(Col.toString(_ST)).append(", ARRAY[");
+        for (int i = 0; i < v.length; ++i)
+         {
+           if (i != 0)
+             _QueryStr.append(", ");
+           TextUtil.EscapeSingleQuoteForSQL(_QueryStr, v[i]);
+         }
+        _QueryStr.append("])");
+        return this;
+      }
+    
 
     public QueryHelper in(Type_StringPrimitive Col, Collection<String> v)
     throws Exception
@@ -1661,7 +1683,7 @@ public abstract class QueryHelper
     public QueryHelper like(Type_StringCollection Col, String V)
     throws Exception
       {
-        _QueryStr.append(" TILDA.ArrayLike(").append(Col.toString(_ST)).append(", ");
+        _QueryStr.append(" TILDA.like(").append(Col.toString(_ST)).append(", ");
         TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V);
         _QueryStr.append(")");
         return this;
@@ -1670,7 +1692,7 @@ public abstract class QueryHelper
     public QueryHelper like(Type_StringCollection Col, String[] V)
     throws Exception
       {
-        _QueryStr.append(" TILDA.ArrayLike(").append(Col.toString(_ST)).append(", ARRAY[");
+        _QueryStr.append(" TILDA.like(").append(Col.toString(_ST)).append(", ARRAY[");
         boolean First = true;
         for (String v : V)
           {
@@ -1886,7 +1908,7 @@ public abstract class QueryHelper
       {
         ZonedDateTime Today = DateTimeUtil.getTodayTimestamp(true);
         ZonedDateTime D1 = Today.minusYears(ageRange[1]);
-        ZonedDateTime D2 = Today.minusYears(ageRange[0]);
+        ZonedDateTime D2 = Today.minusYears(ageRange[0]-1).minusNanos(1);
         _QueryStr.append(Col.toString(_ST))
                  .append(" BETWEEN ").append("'").append(DateTimeUtil.printDateTimeForSQL(D1)).append("'")
                  .append(" AND ").append("'").append(DateTimeUtil.printDateTimeForSQL(D2)).append("'");

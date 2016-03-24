@@ -19,6 +19,7 @@ package tilda.utils;
 import java.io.IOException;
 import java.io.Writer;
 import java.time.ZonedDateTime;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -425,6 +426,28 @@ public class JSONUtil
       }
 
     public static void Print(Writer Out, String Name, boolean FirstElement, String[] a)
+    throws IOException
+      {
+        Print(Out, Name, FirstElement);
+        if (a == null)
+          {
+            Out.write("null");
+            return;
+          }
+        Out.write("[");
+        boolean First = true;
+        for (String i : a)
+          {
+            if (First == true)
+              First = false;
+            else
+              Out.write(",");
+            PrintString(Out, i);
+          }
+        Out.write("]");
+      }
+
+    public static void Print(Writer Out, String Name, boolean FirstElement, Collection<String> a)
     throws IOException
       {
         Print(Out, Name, FirstElement);

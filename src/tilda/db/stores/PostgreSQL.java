@@ -284,7 +284,7 @@ public class PostgreSQL implements DBType
     protected static void PrintFunctionIn(StringBuilder Str, String Type)
      {
        Str.append("DROP FUNCTION IF EXISTS TILDA.In("+Type+"[], "+Type+"[]);\n")
-          .append("CREATE OR REPLACE FUNCTION TILDA.In(v text[], vals text[]) RETURNS boolean AS $$\n")
+          .append("CREATE OR REPLACE FUNCTION TILDA.In(v "+Type+"[], vals "+Type+"[]) RETURNS boolean AS $$\n")
           .append("BEGIN\n")
           .append("  IF v is not null AND vals is not null THEN\n")
           .append("   RETURN v && vals;\n")
@@ -301,8 +301,8 @@ public class PostgreSQL implements DBType
     public boolean addHelperFunctions(Connection Con) throws Exception
      {
        StringBuilder Str = new StringBuilder();
-       Str.append("DROP FUNCTION IF EXISTS TILDA.ArrayLike(text[], text);\n")
-          .append("CREATE OR REPLACE FUNCTION TILDA.ArrayLike(v text[], val text) RETURNS boolean AS $$\n")
+       Str.append("DROP FUNCTION IF EXISTS TILDA.like(text[], text);\n")
+          .append("CREATE OR REPLACE FUNCTION TILDA.like(v text[], val text) RETURNS boolean AS $$\n")
           .append("DECLARE\n")
           .append("  str text;\n")
           .append("BEGIN\n")
@@ -318,8 +318,8 @@ public class PostgreSQL implements DBType
           .append("LANGUAGE PLPGSQL;\n")
           .append("\n")
           .append("\n")
-          .append("DROP FUNCTION IF EXISTS TILDA.ArrayLike(text[], text[]);\n")
-          .append("CREATE OR REPLACE FUNCTION TILDA.ArrayLike(v text[], vals text[]) RETURNS boolean AS $$\n")
+          .append("DROP FUNCTION IF EXISTS TILDA.like(text[], text[]);\n")
+          .append("CREATE OR REPLACE FUNCTION TILDA.like(v text[], vals text[]) RETURNS boolean AS $$\n")
           .append("DECLARE\n")
           .append("  str1 text;\n")
           .append("  str2 text;\n")
