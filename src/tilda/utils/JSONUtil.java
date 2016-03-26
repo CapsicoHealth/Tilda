@@ -30,7 +30,6 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.Gson;
 
 import tilda.db.JDBCHelper;
-import tilda.db.ListResults;
 import tilda.interfaces.JSONable;
 
 public class JSONUtil
