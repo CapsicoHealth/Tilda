@@ -525,7 +525,7 @@ public class JSONUtil
           }
       }
 
-    public static void response(Writer Out, String JsonExportName, ListResults<? extends JSONable> L)
+    public static void response(Writer Out, String JsonExportName, List<? extends JSONable> L)
     throws Exception
       {
         Out.write("{\"code\":");
@@ -560,33 +560,31 @@ public class JSONUtil
         if (L == null)
           {
             Out.write(" null ");
+            return;
           }
-        else if (L.isEmpty() == true)
+        if (L.isEmpty() == true)
           {
             Out.write(" [ ] ");
+            return;
           }
-        else
+        Out.write(" [\n");
+        boolean First = true;
+        for (JSONable Obj : L)
           {
-            Out.write(" [\n");
-            boolean First = true;
-            for (JSONable Obj : L)
-              {
-                if (L == null)
-                  continue;
-                Out.write(Header);
-                if (First == true)
-                  {
-                    Out.write("     ");
-                    First = false;
-                  }
-                else
-                  Out.write("    ,");
-                Obj.toJSON(Out, JsonExportName, true);
-              }
+            if (Obj == null)
+              continue;
             Out.write(Header);
-            Out.write("  ]\n");
+            if (First == true)
+              {
+                Out.write(Header+"   ");
+                First = false;
+              }
+            else
+              Out.write(Header+"  ,");
+            Obj.toJSON(Out, JsonExportName, true);
+            Out.write("\n");
           }
-
+        Out.write(Header+"  ]\n");
       }
 
     public static void Print(Writer Out, String elementName, String JsonExportName, boolean firstElement, JSONable Obj, String Header)
