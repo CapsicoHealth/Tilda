@@ -298,7 +298,7 @@ public abstract class QueryHelper
                   {
                     if (O == Op.EQUALS)
                       _QueryStr.append(" IS NULL ");
-                    else if (O != Op.NOT_EQUALS)
+                    else if (O == Op.NOT_EQUALS)
                       _QueryStr.append(" IS NOT NULL ");
                     else
                       throw new Exception("Invalid query syntax: cannot use the operator " + O + " with a NULL value: "+_QueryStr.toString());
@@ -402,7 +402,7 @@ public abstract class QueryHelper
                   {
                     if (O == Op.EQUALS)
                       _QueryStr.append(" IS NULL ");
-                    else if (O != Op.NOT_EQUALS)
+                    else if (O == Op.NOT_EQUALS)
                       _QueryStr.append(" IS NOT NULL ");
                     else
                       throw new Exception("Invalid query syntax: cannot use the operator " + O + " with a NULL value: "+_QueryStr.toString());
