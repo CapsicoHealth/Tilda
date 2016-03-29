@@ -597,74 +597,63 @@ public abstract class QueryHelper
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // IN
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public QueryHelper in(Type_StringPrimitive Col, String[] v)
+    public QueryHelper in(Type_StringPrimitive Col, String[] V)
     throws Exception
       {
-        _QueryStr.append(Col.toString(_ST));
+        _QueryStr.append(Col.toString(_ST)).append(" in (");
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
-            _QueryStr.append(" in (");
-            if (v != null)
-              for (int i = 0; i < v.length; ++i)
-                {
-                  if (i != 0)
-                    _QueryStr.append(", ");
-                  TextUtil.EscapeSingleQuoteForSQL(_QueryStr, v[i]);
-                }
+            TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V, true);
+            _QueryStr.append(")");
+            return this;
+          }
+        throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": "+_QueryStr.toString());
+      }
+    public QueryHelper in(Type_StringPrimitive Col, Collection<String> V)
+    throws Exception
+      {
+        _QueryStr.append(Col.toString(_ST)).append(" in (");
+        if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+          {
+            TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V, true);
             _QueryStr.append(")");
             return this;
           }
         throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": "+_QueryStr.toString());
       }
     
-    public QueryHelper in(Type_StringCollection Col, String[] v)
+    public QueryHelper in(Type_StringCollection Col, String[] V)
     throws Exception
       {
         _QueryStr.append(" TILDA.In(").append(Col.toString(_ST)).append(", ARRAY[");
-        for (int i = 0; i < v.length; ++i)
-         {
-           if (i != 0)
-             _QueryStr.append(", ");
-           TextUtil.EscapeSingleQuoteForSQL(_QueryStr, v[i]);
-         }
-        _QueryStr.append("])");
-        return this;
-      }
-    
-
-    public QueryHelper in(Type_StringPrimitive Col, Collection<String> v)
-    throws Exception
-      {
-        _QueryStr.append(Col.toString(_ST));
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
-            _QueryStr.append(" in (");
-            if (v != null)
-              {
-                Iterator<String> I = v.iterator();
-                boolean first = true;
-                while (I.hasNext() == true)
-                  {
-                    if (first == true)
-                      first = false;
-                    else
-                      _QueryStr.append(", ");
-                    TextUtil.EscapeSingleQuoteForSQL(_QueryStr, I.next());
-                  }
-              }
-            _QueryStr.append(")");
+            TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V, true);
+            _QueryStr.append("])");
             return this;
           }
         throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": "+_QueryStr.toString());
       }
+    public QueryHelper in(Type_StringCollection Col, Collection<String> V)
+    throws Exception
+      {
+        _QueryStr.append(" TILDA.In(").append(Col.toString(_ST)).append(", ARRAY[");
+        if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
+          {
+            TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V, true);
+            _QueryStr.append("])");
+            return this;
+          }
+        throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": "+_QueryStr.toString());
+      }
+    
 
     public QueryHelper in(Type_CharPrimitive Col, char[] v)
     throws Exception
       {
-        _QueryStr.append(Col.toString(_ST));
+        _QueryStr.append(Col.toString(_ST)).append(" in (");
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
-            _QueryStr.append(" in (");
             if (v != null)
               for (int i = 0; i < v.length; ++i)
                 {
@@ -681,10 +670,9 @@ public abstract class QueryHelper
     public QueryHelper in(Type_IntegerPrimitive Col, int[] v)
     throws Exception
       {
-        _QueryStr.append(Col.toString(_ST));
+        _QueryStr.append(Col.toString(_ST)).append(" in (");
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
-            _QueryStr.append(" in (");
             if (v != null)
               for (int i = 0; i < v.length; ++i)
                 {
@@ -701,10 +689,9 @@ public abstract class QueryHelper
     public QueryHelper in(Type_LongPrimitive Col, long[] v)
     throws Exception
       {
-        _QueryStr.append(Col.toString(_ST));
+        _QueryStr.append(Col.toString(_ST)).append(" in (");
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
-            _QueryStr.append(" in (");
             if (v != null)
               for (int i = 0; i < v.length; ++i)
                 {
@@ -721,10 +708,9 @@ public abstract class QueryHelper
     public QueryHelper in(Type_FloatPrimitive Col, float[] v)
     throws Exception
       {
-        _QueryStr.append(Col.toString(_ST));
+        _QueryStr.append(Col.toString(_ST)).append(" in (");
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
-            _QueryStr.append(" in (");
             if (v != null)
               for (int i = 0; i < v.length; ++i)
                 {
@@ -741,10 +727,9 @@ public abstract class QueryHelper
     public QueryHelper in(Type_DoublePrimitive Col, double[] v)
     throws Exception
       {
-        _QueryStr.append(Col.toString(_ST));
+        _QueryStr.append(Col.toString(_ST)).append(" in (");
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
-            _QueryStr.append(" in (");
             if (v != null)
               for (int i = 0; i < v.length; ++i)
                 {
@@ -761,10 +746,9 @@ public abstract class QueryHelper
     public QueryHelper in(Type_DatetimePrimitive Col, ZonedDateTime[] v)
     throws Exception
       {
-        _QueryStr.append(Col.toString(_ST));
+        _QueryStr.append(Col.toString(_ST)).append(" in (");
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
-            _QueryStr.append(" in (");
             if (v != null)
               for (int i = 0; i < v.length; ++i)
                 {
@@ -786,10 +770,9 @@ public abstract class QueryHelper
     public QueryHelper in(Type_DatetimePrimitive Col, Collection<ZonedDateTime> v)
     throws Exception
       {
-        _QueryStr.append(Col.toString(_ST));
+        _QueryStr.append(Col.toString(_ST)).append(" in (");
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
-            _QueryStr.append(" in (");
             if (v != null)
               {
                 Iterator<ZonedDateTime> I = v.iterator();
@@ -818,12 +801,12 @@ public abstract class QueryHelper
     public QueryHelper in(ColumnDefinition Col, SelectQuery Q)
     throws Exception
       {
-        _QueryStr.append(Col.toString(_ST));
+        _QueryStr.append(Col.toString(_ST)).append(" in (");
         if (Q._Cardinality != 1)
           throw new Exception("Invalid query syntax: Calling the operator 'in' with a subquery that has a column cardinality " + Q._Cardinality + ": "+_QueryStr.toString());
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
-            _QueryStr.append(" in (").append(Q._QueryStr).append(")");
+            _QueryStr.append(Q._QueryStr).append(")");
             return this;
           }
         throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": "+_QueryStr.toString());
