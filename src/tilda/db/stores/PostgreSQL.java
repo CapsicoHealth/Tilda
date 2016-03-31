@@ -343,7 +343,33 @@ public class PostgreSQL implements DBType
        PrintFunctionIn(Str, "text");
        PrintFunctionIn(Str, "integer");
        PrintFunctionIn(Str, "bigint");
-       
+
+       Str.append("DROP FUNCTION IF EXISTS TILDA.getKeyBatch(text, integer);\n")
+          .append("CREATE OR REPLACE FUNCTION TILDA.getKeyBatch(t text, c integer) RETURNS TABLE (min_key_inclusive bigint, max_key_exclusive bigint) AS $$\n")
+          .append("DECLARE\n")
+          .append("  val bigint;\n")
+          .append("BEGIN\n")
+          .append("  UPDATE TILDA.KEY set \"max\"=\"max\"+c where \"name\"=t;\n")
+          .append("  SELECT \"max\" into val from TILDA.KEY where \"name\"=t;\n")
+          .append("  return query select val-c as min_key_inclusive, val as max_key_exclusive;\n")
+          .append("END; $$\n")
+          .append("LANGUAGE PLPGSQL;\n")
+          .append("\n")
+          .append("\n")
+          .append("DROP FUNCTION IF EXISTS TILDA.getKeyBatchAsMaxExclusive(text, integer);\n")
+          .append("CREATE OR REPLACE FUNCTION TILDA.getKeyBatchAsMaxExclusive(t text, c integer) RETURNS bigint AS $$\n")
+          .append("DECLARE\n")
+          .append("  val bigint;\n")
+          .append("BEGIN\n")
+          .append("  UPDATE TILDA.KEY set \"max\"=\"max\"+c where \"name\"=t;\n")
+          .append("  SELECT \"max\" into val from TILDA.KEY where \"name\"=t;\n")
+          .append("  return val;\n")
+          .append("END; $$\n")
+          .append("LANGUAGE PLPGSQL;\n")
+          .append("\n")
+          .append("\n")
+          ;
+
        return Con.ExecuteUpdate("TILDA", Str.toString()) >= 0;
      }
 
