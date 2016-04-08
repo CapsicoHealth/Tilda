@@ -47,6 +47,7 @@ import tilda.enums.TransactionType;
 import tilda.migration.Migrator;
 import tilda.parsing.parts.Schema;
 import tilda.performance.PerfTracker;
+import tilda.utils.ClassStaticInit;
 import tilda.utils.FileUtil;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
@@ -57,8 +58,8 @@ public class ConnectionPool
     private static class ConnDefs
       {
         /*@formatter:off*/
-       @SerializedName("connections") public Conn  []  _Conns       = new Conn[0];
-       @SerializedName("email"      ) public EmailConfig  _EmailConfig;
+       @SerializedName("connections"  ) public Conn  []  _Conns       = new Conn[0];
+       @SerializedName("email"        ) public EmailConfig  _EmailConfig;
        /*@formatter:on*/
 
         public boolean validate()
@@ -91,7 +92,7 @@ public class ConnectionPool
             return OK;
           }
       }
-
+    
     private static class EmailConfig
       {
         /*@formatter:off*/
@@ -113,6 +114,14 @@ public class ConnectionPool
       @SerializedName("max"    ) public int    _Max     = 30;
       /*@formatter:on*/
       }
+    
+    private static class Bootstrappers
+      {
+        /*@formatter:off*/
+        @SerializedName("classNames") public String[]  _classNames = { };
+        /*@formatter:on*/
+      }
+    
 
     static final Logger                           LOG               = LogManager.getLogger(ConnectionPool.class.getName());
 
@@ -124,24 +133,39 @@ public class ConnectionPool
       {
         SystemValues.autoInit();
       }
-
+    
     static
       {
         Reader R = null;
         Connection C = null;
         try
           {
+            LOG.info("Initializing Tilda: loading configuration file '/tilda.bootstrappers.config.json'.");
+            InputStream In = FileUtil.getResourceAsStream("tilda.bootstrappers.config.json");
+            if (In != null)
+              {
+                R = new BufferedReader(new InputStreamReader(In));
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                Bootstrappers Bs = gson.fromJson(R, Bootstrappers.class);
+                if (Bs._classNames != null)
+                 for (String className : Bs._classNames)
+                  ClassStaticInit.initClass(className);
+                R.close();
+                R = null;
+              }
+            
             LOG.info("Initializing Tilda: loading configuration file '/tilda.config.json'.");
-
-            InputStream In = FileUtil.getResourceAsStream("tilda.config.json");
+            In = FileUtil.getResourceAsStream("tilda.config.json");
             if (In == null)
               throw new Exception("Cannot find Tilda configuration file '/tilda.config.json'.");
             R = new BufferedReader(new InputStreamReader(In));
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             ConnDefs Defs = gson.fromJson(R, ConnDefs.class);
             if (Defs.validate() == true)
-              for (Conn Co : Defs._Conns)
-                init(Co._Id, Co._Driver, Co._DB, Co._User, Co._Pswd, Co._Initial, Co._Max);
+             {
+                for (Conn Co : Defs._Conns)
+                  init(Co._Id, Co._Driver, Co._DB, Co._User, Co._Pswd, Co._Initial, Co._Max);
+             }
 
             C = get("MAIN");
             LoadTildaResources(C);
