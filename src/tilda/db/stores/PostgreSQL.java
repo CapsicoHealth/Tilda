@@ -33,6 +33,7 @@ import tilda.enums.ColumnType;
 import tilda.generation.Generator;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.generation.postgres9.PostgresType;
+import tilda.migration.ColInfo;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
@@ -193,6 +194,16 @@ public class PostgreSQL implements DBType
 
         return Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q) >= 0;
       }
+    
+    @Override
+    public boolean alterTableDropColumn(Connection Con, Object Obj, ColInfo CI)
+    throws Exception
+      {
+        String Q = "ALTER TABLE " + Obj.getShortName() + " DROP COLUMN \"" + CI._Name + "\"";
+
+        return Con.ExecuteUpdate(Obj.getShortName(), Q) >= 0;
+      }
+    
 
     @Override
     public boolean alterTableAlterColumnNull(Connection Con, Column Col, String DefaultValue)

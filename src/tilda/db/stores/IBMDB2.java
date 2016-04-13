@@ -28,6 +28,7 @@ import tilda.enums.AggregateType;
 import tilda.enums.ColumnType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.generation.postgres9.PostgresType;
+import tilda.migration.ColInfo;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
@@ -129,6 +130,14 @@ public class IBMDB2 implements DBType
       {
         throw new UnsupportedOperationException();
       }
+    
+    @Override
+    public boolean alterTableDropColumn(Connection Con, Object Obj, ColInfo CI)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+    
 
     @Override
     public CodeGenSql getSQlCodeGen()

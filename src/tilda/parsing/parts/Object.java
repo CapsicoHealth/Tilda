@@ -38,16 +38,18 @@ public class Object extends Base
     static final Logger              LOG                = LogManager.getLogger(Object.class.getName());
 
     /*@formatter:off*/
-    @SerializedName("occ"        ) public boolean              _OCC        = true ;
-    @SerializedName("lc"         ) public String               _LCStr      = ObjectLifecycle.NORMAL.toString();
+    @SerializedName("occ"           ) public boolean              _OCC        = true ;
+    @SerializedName("lc"            ) public String               _LCStr      = ObjectLifecycle.NORMAL.toString();
 
-    @SerializedName("columns"    ) public List<Column>         _Columns    = new ArrayList<Column        >();
+    @SerializedName("columns"       ) public List<Column>         _Columns    = new ArrayList<Column        >();
 
-    @SerializedName("primary"    ) public PrimaryKey           _PrimaryKey = null;
-    @SerializedName("foreign"    ) public List<ForeignKey>     _ForeignKeys= new ArrayList<ForeignKey>();
-    @SerializedName("indices"    ) public List<Index>          _Indices    = new ArrayList<Index         >();
-    @SerializedName("http"       ) public HttpMapping[]        _Http       = { };
-    @SerializedName("history"    ) public String     []        _History    = { };
+    @SerializedName("primary"       ) public PrimaryKey           _PrimaryKey = null;
+    @SerializedName("foreign"       ) public List<ForeignKey>     _ForeignKeys= new ArrayList<ForeignKey>();
+    @SerializedName("indices"       ) public List<Index>          _Indices    = new ArrayList<Index         >();
+    @SerializedName("http"          ) public HttpMapping[]        _Http       = { };
+    @SerializedName("history"       ) public String     []        _History    = { };
+    @SerializedName("dropOldColumns") public String     []        _DropOldColumns = { };
+    
     /*@formatter:on*/
 
     public transient boolean              _HasUniqueIndex;
@@ -161,6 +163,12 @@ public class Object extends Base
                       }
                   }
               }
+          }
+        for (int i = 0; i < _DropOldColumns.length; ++i)
+          {
+            String n = _DropOldColumns[i];
+            if (getColumn(n) != null)
+             PS.AddError("Object '" + getFullName() + "' is defining a drop column '" + n + "' which is also already defined as a real column. DropOldColumns is used to automate cleaning of old columns that should no longer be part of a table definition.");
           }
 
         _HasUniqueIndex = false;

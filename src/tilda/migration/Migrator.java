@@ -158,6 +158,16 @@ public class Migrator
                         if (didSomething == true)
                          C.commit();
                       }
+                    for (String c : Obj._DropOldColumns)
+                      {
+                        ColInfo CI = DBColumns.get(c.toLowerCase());
+                        if (CI != null)
+                          {
+                            if (C.alterTableDropColumn(Obj, CI) == false)
+                             throw new Exception("The application's data model has asked to drop column '" + Obj.getFullName() + "."+c+"' which could not be accomplished.");
+                            C.commit();
+                          }
+                      }
                   }
 
                 for (View V : S._Views)
