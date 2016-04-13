@@ -129,8 +129,13 @@ public class Object extends Base
             for (int i = 0; i < _Columns.size(); ++i)
               {
                 Column C = _Columns.get(i);
+                // It's possible in JSON to have dangling commas, which GSON will read fine as a NULL object. So we need to protect against that.
                 if (C == null)
-                  continue;
+                 {
+                   _Columns.remove(i);
+                   --i;
+                   continue;
+                 }
                 if (i >= 64)
                   PS.AddError("Object '" + getFullName() + "' has declared more than 64 columns!");
                 else

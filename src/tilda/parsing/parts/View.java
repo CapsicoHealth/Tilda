@@ -115,6 +115,13 @@ public class View extends Base
         for (int i = 0; i < _ViewColumns.size(); ++i)
          {
            ViewColumn C = _ViewColumns.get(i);
+           // It's possible in JSON to have dangling commas, which GSON will read fine as a NULL object. So we need to protect against that.
+           if (C == null)
+            {
+              _ViewColumns.remove(i);
+              --i;
+              continue;
+            }
            C.Validate(PS, this);
            if (ColumnNames.add(C.getName().toUpperCase()) == false)
              PS.AddError("Column '" + C.getFullName() + "' is defined more than once in View '" + getFullName() + "'.");

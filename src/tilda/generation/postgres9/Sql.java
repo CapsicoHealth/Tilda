@@ -194,7 +194,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
     @Override
     public void genDDL(PrintWriter Out, View V)
       {
-        Object ObjectMain = V._ViewColumns.get(0)._SameAsObj._ParentObject;
+        Object ObjectMain = V._ViewColumns.get(0)._SameAsObj._ParentObject;         
         Out.println("create or replace view " + V._ParentSchema._Name + "." + V._Name + " -- " + V._Description);
         Out.print("  as select ");
         boolean First = true;

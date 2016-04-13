@@ -85,7 +85,6 @@ public class Migrator
                       DBTables.add(Name.toLowerCase());
                   }
                 RS.close();
-                boolean didSomething = false;
                 for (Object Obj : S._Objects)
                   {
                     if (Obj._FST == FrameworkSourcedType.VIEW)
@@ -95,12 +94,11 @@ public class Migrator
                         LOG.info("The application's data model defines the table '" + Obj.getShortName() + "' which cannot be found in the database. Trying to create it...");
                         if (C.createTable(Obj) == false)
                           throw new Exception("Cannot upgrade schema by adding the new table '" + Obj.getShortName() + "'.");
-                        didSomething = true;
+                        C.commit();
                       }
                     Map<String, ColInfo> DBColumns = ColInfo.getTableDefinition(C, S._Name.toLowerCase(), Obj._Name.toLowerCase());
                     if (DBColumns.isEmpty() == true)
                       throw new Exception("Cannot retrieve columns for table '" + Obj.getShortName() + "'.");
-                    didSomething = false;
                     for (Column Col : Obj._Columns)
                       {
                         if (Col == null)
@@ -108,6 +106,7 @@ public class Migrator
                         if (Col._Mode == ColumnMode.CALCULATED)
                           continue;
                         ColInfo CI = DBColumns.get(Col.getName().toLowerCase());
+                        boolean didSomething = false;
                         if (CI == null)
                           {
                             LOG.info("The application's data model defines the column '" + Col.getShortName() + "' which cannot be found in the database. Trying to create it...");
@@ -153,14 +152,14 @@ public class Migrator
                               {
                                 if (C.alterTableAlterColumnType(CI._TildaType, Col, ZoneInfo_Factory.getEnumerationById("UTC")) == false)
                                  throw new Exception("The application's data model defines the column '" + Col.getShortName() + "' as a '"+Col._Type+"' which cannot be changed from '"+CI._Type+"/"+CI._TypeSql+"/"+CI._TildaType+"') currently in the database. The database needs to be migrated manually.");
+                                didSomething = true;
                               }
                           }
+                        if (didSomething == true)
+                         C.commit();
                       }
                   }
-                if (didSomething == true)
-                  C.commit();
 
-                didSomething = false;
                 for (View V : S._Views)
                   {
                     boolean Drop = DBViews.contains(V._Name.toLowerCase());
@@ -170,9 +169,8 @@ public class Migrator
                       LOG.info("The application's data model defines the view '" + V.getShortName() + "' which needs to be re-created...");
                     if (C.createView(V, Drop) == false)
                       throw new Exception("Cannot upgrade schema by adding the new view '" + V.getShortName() + "'.");
+                    C.commit();
                   }
-                if (didSomething == true)
-                  C.commit();
               }
             if (PS.getErrorCount() > 0)
               {
