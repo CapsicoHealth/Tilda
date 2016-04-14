@@ -290,9 +290,10 @@ public class TildaData implements CodeGenTildaData
     @Override
     public void genMethodIs(PrintWriter Out, GeneratorSession G, ColumnValue V)
       {
+        String ValueNameVar = "_"+ V._ParentColumn.getName() + TextUtil.CapitalizeFirstCharacter(V._Name);
         Out.println("   public final boolean is" + TextUtil.CapitalizeFirstCharacter(V._ParentColumn.getName()) + TextUtil.CapitalizeFirstCharacter(V._Name) + "()");
         if (V._ParentColumn.isCollection() == true)
-         Out.println("      { return  _" + V._ParentColumn.getName() +" != null && _" + V._ParentColumn.getName()+".contains(_" + V._ParentColumn.getName() + V._Name + ") == true; }");
+         Out.println("      { return  _" + V._ParentColumn.getName() +" != null && _" + V._ParentColumn.getName()+".contains(" + ValueNameVar + ") == true; }");
         else switch (V._ParentColumn._Type)
           {
             case BOOLEAN:
@@ -301,7 +302,7 @@ public class TildaData implements CodeGenTildaData
             case FLOAT:
             case INTEGER:
             case LONG:
-               Out.println("      { return _" + V._ParentColumn.getName() + " == _" + V._ParentColumn.getName() + V._Name + "; }");
+               Out.println("      { return _" + V._ParentColumn.getName() + " == " + ValueNameVar + "; }");
               break;
             case DATETIME:
               if (V._Value.equalsIgnoreCase("NOW") == true)
@@ -309,10 +310,10 @@ public class TildaData implements CodeGenTildaData
               else if (V._Value.equalsIgnoreCase("UNDEFINED") == true)
                 Out.println("      { return DateTimeUtil.isUndefinedPlaceHolder(_" + V._ParentColumn.getName() + "); }");
               else
-                Out.println("      { return _" + V._ParentColumn.getName() + " != null && _" + V._ParentColumn.getName() + ".equals(_" + V._ParentColumn.getName() + V._Name + "); }");
+                Out.println("      { return _" + V._ParentColumn.getName() + " != null && _" + V._ParentColumn.getName() + ".equals(" + ValueNameVar + "); }");
               break;
             case STRING:
-              Out.println("      { return _" + V._ParentColumn.getName() + " != null && _" + V._ParentColumn.getName() + ".equals(_" + V._ParentColumn.getName() + V._Name + "); }");
+              Out.println("      { return _" + V._ParentColumn.getName() + " != null && _" + V._ParentColumn.getName() + ".equals(" + ValueNameVar + "); }");
               break;
             case BINARY:
             case BITFIELD:
@@ -585,6 +586,7 @@ public class TildaData implements CodeGenTildaData
     @Override
     public void genMethodSetAs(PrintWriter Out, GeneratorSession G, ColumnValue V)
       {
+        String ValueNameVar = "_"+ V._ParentColumn.getName() + TextUtil.CapitalizeFirstCharacter(V._Name);
         Out.println("   public void set" + TextUtil.CapitalizeFirstCharacter(V._ParentColumn.getName()) + TextUtil.CapitalizeFirstCharacter(V._Name) + "() throws Exception");
         switch (V._ParentColumn._Type)
           {
@@ -596,9 +598,9 @@ public class TildaData implements CodeGenTildaData
             case LONG:
             case STRING:
               if (V._ParentColumn.isCollection() == false)
-               Out.println("      { set" + TextUtil.CapitalizeFirstCharacter(V._ParentColumn.getName()) + "(_" + V._ParentColumn.getName() + V._Name + "); }");
+               Out.println("      { set" + TextUtil.CapitalizeFirstCharacter(V._ParentColumn.getName()) + "(" + ValueNameVar + "); }");
               else
-               Out.println("      { addTo" + TextUtil.CapitalizeFirstCharacter(V._ParentColumn.getName()) + "(_" + V._ParentColumn.getName() + V._Name + "); }");
+               Out.println("      { addTo" + TextUtil.CapitalizeFirstCharacter(V._ParentColumn.getName()) + "(" + ValueNameVar + "); }");
               break;
             case DATETIME:
             case BINARY:
