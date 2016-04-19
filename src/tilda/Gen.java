@@ -67,6 +67,7 @@ public class Gen
                       }
                     Generator.generate(PS._Main, G);
                     Manifest.update(PS);
+//                    GraphvizUtil.docs(PS._Main);
                     LOG.info("Generated Tilda code for schema '" + PS._Main.getFullName() + "'.");
                   }
               }
