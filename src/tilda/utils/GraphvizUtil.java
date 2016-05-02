@@ -1,5 +1,9 @@
 package tilda.utils;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -29,6 +33,10 @@ import org.apache.logging.log4j.Logger;
 
 import com.sun.media.sound.FFT;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 class Hello<T> {
   public static <T> ArrayList<List<T>> chunks(ArrayList<T> bigList,int n){
 	  ArrayList<List<T>> chunks = new ArrayList<List<T>>();
@@ -50,6 +58,7 @@ class Hello<T> {
   List<View> views;
   List<Enumeration> enumerations;
   List<Mapper> mappers;
+  List<Object> _objects;
   String schemaName;
   Schema schema;
   public Hello(Schema schema){
@@ -59,6 +68,8 @@ class Hello<T> {
       this.views = schema._Views;
       this.enumerations = schema._Enumerations;
       this.schemaName = schema._Name;
+      this._objects = new ArrayList<Object>();
+      this._objects.addAll(objects);
 
   }
   private void makeUniq(){
@@ -198,29 +209,31 @@ class Hello<T> {
   public String toString(){
 	  // makeUniq();
 	  StringBuilder sb = new StringBuilder();
-      sb.append("digraph Nodes {");
-      sb.append("\r\n");
-      sb.append("fontname = \"Bitstream Vera Sans\"");
-      sb.append("\r\n");
-      sb.append("fontsize = 8");
-      sb.append("\r\n");
-      sb.append("nodesep=3.0 // node seperation");
-      sb.append("\r\n");
-      sb.append("node [");
-      sb.append("\r\n");
-      sb.append("fontname = \"Bitstream Vera Sans\"");
-      sb.append("\r\n");
-      sb.append("fontsize = 8");
-      sb.append("\r\n");
-      sb.append("shape = \"record\"");
-      sb.append("\r\n");
-      sb.append("]");
-      sb.append("\r\n");
-      sb.append("edge [");
-      sb.append("\r\n");
-      sb.append("arrowtail = \"empty\"");
-      sb.append("\r\n");
-      sb.append("]");
+	  sb.append("digraph Nodes {"+
+		"\r\n"+
+		"fontname = \"Bitstream Vera Sans\""+
+		"\r\n"+
+		"fontsize = 8"+
+		"\r\n"+
+		"graph [splines=ortho, nodesep=0.8]"+
+		"\r\n"+
+		"node ["+
+		"\r\n"+
+		"fontname = \"Bitstream Vera Sans\""+
+		"\r\n"+
+		"fontsize = 8"+
+		"\r\n"+
+		"shape = \"record\""+
+		"\r\n"+
+		"]"+
+		"\r\n"+
+		"edge ["+
+		"\r\n"+
+		"arrowtail = \"empty\""+
+		"\r\n"+
+		"]"
+	  );
+
       sb.append("\r\n");
       TreeSet<String> arr = new TreeSet<String>();
 
@@ -238,7 +251,7 @@ class Hello<T> {
 			  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"blue\"]");
 			  sb.append("\r\n");
 		  } else if(obj._FST == FrameworkSourcedType.VIEW){
-				sb.append(""+_Name+"[shape=parallelogram, label=\""+_Name+"\", color=\"green\"]");
+				sb.append(""+_Name+"[label=\""+_Name+"\", color=\"green\"]");
 				sb.append("\r\n");		  
 		  }
 	  }
@@ -369,10 +382,32 @@ public class GraphvizUtil{
       File output = new File("output_"+schema._Name+".dot");
       PrintWriter printer = null;
 	  Hello hello = new Hello(schema);
+      JSONParser parser = new JSONParser();
+
       try{
+          LOG.info("Generating dot file for "+hello.schemaName);
     	  printer = new PrintWriter(output);
     	  printer.write(hello.toString());
     	  printer.flush();
+          LOG.info("Generating dot file for "+hello.schemaName+ " done.");
+          LOG.info("Generating schema png file for "+hello.schemaName);
+    	  BufferedReader streamReader = new BufferedReader(new InputStreamReader(FileUtil.getResourceAsStream("tilda.config.json"), "UTF-8")); 
+    	  StringBuilder responseStrBuilder = new StringBuilder();
+
+    	  String inputStr;
+    	  while ((inputStr = streamReader.readLine()) != null)
+    	      responseStrBuilder.append(inputStr);
+
+          java.lang.Object obj = parser.parse(responseStrBuilder.toString());
+          JSONObject jsonObject = (JSONObject) obj;
+          String dotBinaryPath = (String)jsonObject.get("dotBinary");
+          if(dotBinaryPath == null){
+        	  // assume dot file is in path
+        	  dotBinaryPath = "dot";
+          }
+          Process p = Runtime.getRuntime().exec(dotBinaryPath+" -Tpng "+output.getAbsolutePath()+" -o "+"output_"+schema._Name+".png");
+          LOG.info("Generating schema png file for "+hello.schemaName+" done.");
+          LOG.info("Generating schema png file name "+"output_"+schema._Name+".png");
       } catch(Exception e){
     	  System.err.println(e.getMessage());
     	  e.printStackTrace();
