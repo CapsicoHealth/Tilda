@@ -36,14 +36,15 @@ public class Schema
     protected static final Logger  LOG                = LogManager.getLogger(Schema.class.getName());
 
     /*@formatter:off*/
-    @SerializedName("package"     ) public String            _Package;
-    @SerializedName("dependencies") public String[]          _Dependencies;
-    @SerializedName("interfaces"  ) public List<Interface  > _Interfaces  = new ArrayList<Interface  >();
-    @SerializedName("enumerations") public List<Enumeration> _Enumerations= new ArrayList<Enumeration>();
-    @SerializedName("mappers"     ) public List<Mapper     > _Mappers     = new ArrayList<Mapper     >();
-    @SerializedName("objects"     ) public List<Object     > _Objects     = new ArrayList<Object     >();
-    @SerializedName("views"       ) public List<View       > _Views       = new ArrayList<View       >();
-    @SerializedName("importers"   ) public List<Importer   > _Importers   = new ArrayList<Importer   >();
+    @SerializedName("package"      ) public String            _Package;
+    @SerializedName("documentation") public Documentation     _Documentation = new Documentation();
+    @SerializedName("dependencies" ) public String[]          _Dependencies;
+    @SerializedName("interfaces"   ) public List<Interface  > _Interfaces  = new ArrayList<Interface  >();
+    @SerializedName("enumerations" ) public List<Enumeration> _Enumerations= new ArrayList<Enumeration>();
+    @SerializedName("mappers"      ) public List<Mapper     > _Mappers     = new ArrayList<Mapper     >();
+    @SerializedName("objects"      ) public List<Object     > _Objects     = new ArrayList<Object     >();
+    @SerializedName("views"        ) public List<View       > _Views       = new ArrayList<View       >();
+    @SerializedName("importers"    ) public List<Importer   > _Importers   = new ArrayList<Importer   >();
     /*@formatter:on*/
 
     transient public String        _Name;
@@ -158,5 +159,11 @@ public class Schema
         
         return Errs == PS.getErrorCount();
       }
+    public Documentation getDocumentation(){
+    	if(_Documentation == null){
+    		_Documentation = new Documentation();
+    	}
+    	return _Documentation;
+    }
 
   }

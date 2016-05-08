@@ -1,26 +1,23 @@
 package tilda.utils;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import tilda.enums.FrameworkSourcedType;
 import tilda.parsing.parts.Column;
+import tilda.parsing.parts.Documentation;
 import tilda.parsing.parts.Enumeration;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Mapper;
@@ -28,14 +25,6 @@ import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.ViewColumn;
-
-import org.apache.logging.log4j.Logger;
-
-import com.sun.media.sound.FFT;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 class Hello<T> {
   public static <T> ArrayList<List<T>> chunks(ArrayList<T> bigList,int n){
@@ -59,6 +48,8 @@ class Hello<T> {
   List<Enumeration> enumerations;
   List<Mapper> mappers;
   List<Object> _objects;
+  
+  List<StringBuilder> simpleParts = new ArrayList<StringBuilder>();
   String schemaName;
   Schema schema;
   public Hello(Schema schema){
@@ -205,9 +196,146 @@ class Hello<T> {
 	    }
 		sortedSet.clear();
   }
+  
+  public List<StringBuilder> toSimpleString(){
+	  List<String> temp = new ArrayList<String>();
+	  StringBuilder _sbObject = new StringBuilder();
+	  StringBuilder _sbView = new StringBuilder();
+	  StringBuilder _sbEnumeration = new StringBuilder();
+	  StringBuilder _sbMapper = new StringBuilder();
+	  simpleParts.clear();
+	  simpleParts.add(_sbMapper);
+	  simpleParts.add(_sbView);
+	  simpleParts.add(_sbEnumeration);
+	  simpleParts.add(_sbObject);
+	  _sbObject.append("digraph Nodes {"+
+		"\r\n"+
+		"fontname = \"Bitstream Vera Sans\""+
+		"\r\n"+
+		"fontsize = 8"+
+		"\r\n"+
+		"graph [splines=ortho, nodesep=0.8]"+
+		"\r\n"+
+		"node ["+
+		"\r\n"+
+		"fontname = \"Bitstream Vera Sans\""+
+		"\r\n"+
+		"fontsize = 8"+
+		"\r\n"+
+		"shape = \"record\""+
+		"\r\n"+
+		"]"+
+		"\r\n"+
+		"edge ["+
+		"\r\n"+
+		"arrowtail = \"empty\""+
+		"\r\n"+
+		"]"
+	  );
 
-  public String toString(){
-	  // makeUniq();
+	  _sbObject.append("\r\n");
+      
+	  _sbView.append(_sbObject.toString());
+	  _sbMapper.append(_sbObject.toString());
+	  _sbEnumeration.append(_sbObject.toString());
+
+	  for(Mapper mapper : mappers){
+		  LinkedHashSet<String> listS = getMapperObjectNames(mapper);
+		  for(String s : listS){
+			  Object tObject = new Object();
+			  tObject._Name = s.toUpperCase();
+			  String _Name = tObject._Name.toUpperCase();
+			  if(!temp.contains(_Name)){
+				  temp.add(_Name);
+				  _sbMapper.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\"]");
+				  _sbMapper.append("\r\n");
+			  }
+			  _sbMapper.append(mapper._Name.toUpperCase()+" -> "+s.toUpperCase()+"[color=\"blue\"]");
+			  _sbMapper.append("\r\n");
+		  }
+	  }
+	  temp.clear();
+	  // Object -> Object	  
+	  for(Object object : objects){
+		  for(ForeignKey fKey : object._ForeignKeys){
+			  String fKeyS = fKey._DestObjectObj._Name;
+			  if(fKeyS.equalsIgnoreCase("zoneinfo"))
+				  continue;
+			  Object tObject = new Object();
+			  tObject._Name = fKeyS.toUpperCase();
+			  String _Name = tObject._Name.toUpperCase();
+			  if(!temp.contains(_Name)){
+				  temp.add(_Name);
+				  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\"]");
+				  _sbObject.append("\r\n");
+			  }
+			  _sbObject.append(object._Name.toUpperCase()+" -> "+fKeyS.toUpperCase()+"[color=\"red\"]");
+			  _sbObject.append("\r\n");
+		  }
+	  }
+	  // Object --> Mapper
+	  // Object to Enum
+	  temp.clear();
+	  for(Object object : objects){
+		  if(object._FST != FrameworkSourcedType.NONE){
+			  continue;
+		  }
+		  LinkedHashSet<String> listS = getObjectMappers(object);
+		  for(String s : listS){
+			  Mapper tMapper = new Mapper();
+			  tMapper._Name = s.toUpperCase();
+			  String _Name = tMapper._Name.toUpperCase();
+			  if(!temp.contains(_Name)){
+				  temp.add(_Name);
+				  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"blue\"]");
+				  _sbObject.append("\r\n");
+			  }
+			  _sbObject.append(object._Name.toUpperCase()+" -> "+s.toUpperCase());
+			  _sbObject.append("\r\n");
+		  }
+		  listS.clear();
+		  listS = getObjectEnums(object);
+		  for(String s : listS){
+			  Enumeration tEnum = new Enumeration();
+			  tEnum._Name = s.toUpperCase();
+			  String _Name = tEnum._Name.toUpperCase();
+			  if(!temp.contains(_Name)){
+				  temp.add(_Name);
+				  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"cyan\"]");
+				  _sbObject.append("\r\n");
+			  }
+			  _sbObject.append(object._Name.toUpperCase()+" -> "+s.toUpperCase()+"[color=\"cyan\"]");
+			  _sbObject.append("\r\n");
+		  }
+	  }
+	  temp.clear();
+	  // View -> Object
+	  for(View view : views){
+		  LinkedHashSet<String> listS = getViewObjects(view);
+		  for(String s : listS){
+			  Object tObject = new Object();
+			  tObject._Name = s.toUpperCase();
+			  String _Name = tObject._Name.toUpperCase();
+			  if(!temp.contains(_Name)){
+				  temp.add(_Name);
+				  _sbView.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\"]");
+				  _sbView.append("\r\n");
+			  }
+
+			  _sbView.append(view._Name+" -> "+s.toUpperCase()+"[color=\"green\"]");
+			  _sbView.append("\r\n");
+		  }
+	  }
+	  
+	  _sbObject.append("}");
+	  _sbView.append("}");
+	  _sbEnumeration.append("}");
+	  _sbMapper.append("}");
+
+	  return simpleParts;
+  }
+  
+  public String toComplexString(){
 	  StringBuilder sb = new StringBuilder();
 	  sb.append("digraph Nodes {"+
 		"\r\n"+
@@ -235,7 +363,6 @@ class Hello<T> {
 	  );
 
       sb.append("\r\n");
-      TreeSet<String> arr = new TreeSet<String>();
 
 	  for(Object obj : objects){
 		  String _Name = obj._Name.toUpperCase();
@@ -345,52 +472,36 @@ class Hello<T> {
 
       sb.append("}");
 	  return sb.toString();
+
+  }
+
+  public String toString(){
+	  // return this.schema.getDocumentation()._Graph.equalsIgnoreCase("complex") ? toComplexString() : toSimpleString();
+	  return toComplexString();
   }
   
-//  public void mapMapperRelation(){
-//	  Set<Object> tCollection = new HashSet<Object>();
-//	  for(Mapper mapper : mappers){
-//		  for(String s : getMapperObjectNames(mapper)){
-//			  for(Object object : objects){
-//				  Object tObject = null;
-//				  if(object._Name.equalsIgnoreCase(s)){
-//					  tObject = object;
-//					  break;
-//				  } else {
-//					  for(Object t : tCollection){
-//						  if(t._Name.equalsIgnoreCase(object._Name)){
-//							  tObject = t;
-//							  break;
-//						  }
-//					  }
-//					  if(tObject == null){
-//						  tObject = new Object();
-//						  tObject._Name = object._Name;
-//					  }
-//				  }
-//				  mapperObject.put(tObject, mapper);
-//			  }
-//		  }
-//	  }
-//	  objects.addAll(tCollection);
-//  }
-}
-public class GraphvizUtil{
-  protected static final Logger LOG = LogManager.getLogger(GraphvizUtil.class.getName());
-
-  public static void docs(Schema schema) {
-      File output = new File("output_"+schema._Name+".dot");
-      PrintWriter printer = null;
-	  Hello hello = new Hello(schema);
+  public void writeSimpleSchema(){
+	  List<StringBuilder> s = toSimpleString();
+	  int counter = 0;
+	  for(StringBuilder sb : s){
+		  writeAndGen(sb.toString(), "output_"+schema._Name+"_"+counter+".dot", "output_"+schema._Name+"_"+counter+".png");
+		  counter++;
+	  }
+  }
+  
+  private void writeAndGen(String sb, String dotFName, String genFName){
       JSONParser parser = new JSONParser();
+      // File output = new File("output_"+schema._Name+".dot");
+      File output = new File(dotFName);
+      PrintWriter printer = null;
 
       try{
-          LOG.info("Generating dot file for "+hello.schemaName);
+          LOG.info("Generating dot file for "+this.schemaName);
     	  printer = new PrintWriter(output);
-    	  printer.write(hello.toString());
+    	  printer.write(sb);
     	  printer.flush();
-          LOG.info("Generating dot file for "+hello.schemaName+ " done.");
-          LOG.info("Generating schema png file for "+hello.schemaName);
+          LOG.info("Generating dot file for "+this.schemaName+ " done.");
+          LOG.info("Generating schema png file for "+this.schemaName);
     	  BufferedReader streamReader = new BufferedReader(new InputStreamReader(FileUtil.getResourceAsStream("tilda.config.json"), "UTF-8")); 
     	  StringBuilder responseStrBuilder = new StringBuilder();
 
@@ -405,9 +516,9 @@ public class GraphvizUtil{
         	  // assume dot file is in path
         	  dotBinaryPath = "dot";
           }
-          Process p = Runtime.getRuntime().exec(dotBinaryPath+" -Tpng "+output.getAbsolutePath()+" -o "+"output_"+schema._Name+".png");
-          LOG.info("Generating schema png file for "+hello.schemaName+" done.");
-          LOG.info("Generating schema png file name "+"output_"+schema._Name+".png");
+          Process p = Runtime.getRuntime().exec(dotBinaryPath+" -Tpng "+output.getAbsolutePath()+" -o "+genFName);
+          LOG.info("Generating schema png file for "+this.schemaName+" done.");
+          LOG.info("Generating schema png file name "+genFName);
       } catch(Exception e){
     	  System.err.println(e.getMessage());
     	  e.printStackTrace();
@@ -416,5 +527,27 @@ public class GraphvizUtil{
     		  printer.close();		
       }
 
+  }
+  
+  public void writeComplexSchema(){
+	  writeAndGen(toString(), "output_"+schema._Name+".dot", "output_"+schema._Name+".png");
+  }
+  
+  public void writeSchema(){
+	  Documentation d = this.schema.getDocumentation();
+	  if(d._Graph.equalsIgnoreCase("complex"))
+	    writeComplexSchema();
+	  else
+		writeSimpleSchema();
+  }
+  
+
+}
+public class GraphvizUtil{
+  protected static final Logger LOG = LogManager.getLogger(GraphvizUtil.class.getName());
+
+  public static void docs(Schema schema) {
+	  Hello hello = new Hello(schema);
+	  hello.writeSchema();
   }
 }
