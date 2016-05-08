@@ -27,6 +27,7 @@ import tilda.generation.Manifest;
 import tilda.parsing.ParserSession;
 import tilda.parsing.Parser;
 import tilda.parsing.parts.Schema;
+import tilda.utils.GraphvizUtil;
 import tilda.utils.SystemValues;
 
 public class Gen
@@ -67,7 +68,7 @@ public class Gen
                       }
                     Generator.generate(PS._Main, G);
                     Manifest.update(PS);
-//                    GraphvizUtil.docs(PS._Main);
+                    GraphvizUtil.docs(PS._Main);
                     LOG.info("Generated Tilda code for schema '" + PS._Main.getFullName() + "'.");
                   }
               }
