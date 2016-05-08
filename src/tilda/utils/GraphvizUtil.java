@@ -214,7 +214,9 @@ class Hello<T> {
 		"\r\n"+
 		"fontsize = 8"+
 		"\r\n"+
-		"graph [splines=ortho, nodesep=0.8]"+
+		"graph [splines=ortho, nodesep=0.5]"+
+		"\r\n"+
+		"rankdir=LR"+
 		"\r\n"+
 		"node ["+
 		"\r\n"+
@@ -269,6 +271,13 @@ class Hello<T> {
 				  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\"]");
 				  _sbObject.append("\r\n");
 			  }
+			  _Name = object._Name.toUpperCase();
+			  if(!temp.contains(_Name)){
+				  temp.add(_Name);
+				  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\"]");
+				  _sbObject.append("\r\n");
+			  }
+
 			  _sbObject.append(object._Name.toUpperCase()+" -> "+fKeyS.toUpperCase()+"[color=\"red\"]");
 			  _sbObject.append("\r\n");
 		  }
