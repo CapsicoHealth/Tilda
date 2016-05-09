@@ -547,16 +547,23 @@ class Hello<T> {
           String dotBinaryPath = (String)jsonObject.get("dotBinary");
           if(dotBinaryPath == null){
         	  // assume dot file is in path
-        	  dotBinaryPath = "dot";
+        	  showDotPathError();
+          } else{
+              File f = new File(dotBinaryPath);
+              if(f.exists() && !f.isDirectory()){
+	              streamReader.close();
+	              Process p = Runtime.getRuntime().exec(dotBinaryPath+" -Tsvg "+output.getAbsolutePath()+" -o "+genFName);
+	              p.waitFor(); // waits indefinitely for process to complete.
+	              p.exitValue();
+	        	  genHTML(genFName);
+	            
+	              LOG.info("Generating schema svg file for "+this.schemaName+" done.");
+	              LOG.info("Generating schema svg file name "+genFName);
+              } else {
+            	  showDotPathError();
+              }
           }
-          streamReader.close();
-          Process p = Runtime.getRuntime().exec(dotBinaryPath+" -Tsvg "+output.getAbsolutePath()+" -o "+genFName);
-          p.waitFor(); // waits indefinitely for process to complete.
-          p.exitValue();
-    	  genHTML(genFName);
-        
-          LOG.info("Generating schema svg file for "+this.schemaName+" done.");
-          LOG.info("Generating schema svg file name "+genFName);
+
       } catch(Exception e){
     	  System.err.println(e.getMessage());
     	  e.printStackTrace();
@@ -565,6 +572,11 @@ class Hello<T> {
     		  printer.close();		
       }
 
+  }
+  
+  private void showDotPathError(){
+	  LOG.error("Unable to file 'dot' binary");
+	  LOG.error("Download 'dot' binary from http://www.graphviz.org/Download.php and set dotBinary in tilda config json");	  
   }
   
   private void genHTML(String fName){
