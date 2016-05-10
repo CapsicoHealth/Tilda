@@ -1,6 +1,7 @@
 package tilda.utils;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.lang.reflect.Field;
@@ -8,12 +9,28 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.TreeSet;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import tilda.enums.FrameworkSourcedType;
 import tilda.parsing.parts.Column;
@@ -37,7 +54,8 @@ class Hello<T> {
 	return chunks;
   }
   protected static final Logger LOG = LogManager.getLogger("Hello");
-
+  DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+  DocumentBuilder builder;
   HashMap<Object, Mapper> mapperObject = new HashMap<Object, Mapper>();
   HashMap<Object, java.lang.Object> objectMapper = new HashMap<Object, java.lang.Object>();
 
@@ -61,6 +79,12 @@ class Hello<T> {
       this.schemaName = schema._Name;
       this._objects = new ArrayList<Object>();
       this._objects.addAll(objects);
+	  try {
+			this.builder = factory.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
   }
   private void makeUniq(){
@@ -249,7 +273,7 @@ class Hello<T> {
 			  String _Name = tObject._Name.toUpperCase();
 			  if(!temp.contains(_Name)){
 				  temp.add(_Name);
-				  _sbMapper.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\"]");
+				  _sbMapper.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\""+_Name+"\"]");
 				  _sbMapper.append("\r\n");
 			  }
 			  _sbMapper.append(mapper._Name.toUpperCase()+" -> "+s.toUpperCase()+"[color=\"blue\"]");
@@ -268,13 +292,13 @@ class Hello<T> {
 			  String _Name = tObject._Name.toUpperCase();
 			  if(!temp.contains(_Name)){
 				  temp.add(_Name);
-				  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\"]");
+				  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\""+_Name+"\"]");
 				  _sbObject.append("\r\n");
 			  }
 			  _Name = object._Name.toUpperCase();
 			  if(!temp.contains(_Name)){
 				  temp.add(_Name);
-				  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\"]");
+				  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\""+_Name+"\"]");
 				  _sbObject.append("\r\n");
 			  }
 
@@ -296,7 +320,7 @@ class Hello<T> {
 			  String _Name = tMapper._Name.toUpperCase();
 			  if(!temp.contains(_Name)){
 				  temp.add(_Name);
-				  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"blue\"]");
+				  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"blue\", id=\""+_Name+"\"]");
 				  _sbObject.append("\r\n");
 			  }
 			  _sbObject.append(object._Name.toUpperCase()+" -> "+s.toUpperCase());
@@ -310,7 +334,7 @@ class Hello<T> {
 			  String _Name = tEnum._Name.toUpperCase();
 			  if(!temp.contains(_Name)){
 				  temp.add(_Name);
-				  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"cyan\"]");
+				  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"cyan\", id=\""+_Name+"\"]");
 				  _sbObject.append("\r\n");
 			  }
 			  _sbObject.append(object._Name.toUpperCase()+" -> "+s.toUpperCase()+"[color=\"cyan\"]");
@@ -327,7 +351,7 @@ class Hello<T> {
 			  String _Name = tObject._Name.toUpperCase();
 			  if(!temp.contains(_Name)){
 				  temp.add(_Name);
-				  _sbView.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\"]");
+				  _sbView.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\""+_Name+"\"]");
 				  _sbView.append("\r\n");
 			  }
 
@@ -340,7 +364,7 @@ class Hello<T> {
 	  _sbView.append("}");
 	  _sbEnumeration.append("}");
 	  _sbMapper.append("}");
-
+	  temp.clear();
 	  return simpleParts;
   }
   
@@ -376,18 +400,18 @@ class Hello<T> {
 	  for(Object obj : objects){
 		  String _Name = obj._Name.toUpperCase();
 		  if(obj._FST ==  FrameworkSourcedType.NONE){
-			  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\"]");
+			  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\""+_Name+"\"]");
 			  sb.append("\r\n");
 		  }
 		  else if(obj._FST ==  FrameworkSourcedType.ENUMERATION){
-			  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"cyan\"]");
+			  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"cyan\", id=\""+_Name+"\"]");
 			  sb.append("\r\n");
 		  }
 		  else if(obj._FST == FrameworkSourcedType.MAPPER){
-			  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"blue\"]");
+			  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"blue\", id=\""+_Name+"\"]");
 			  sb.append("\r\n");
 		  } else if(obj._FST == FrameworkSourcedType.VIEW){
-				sb.append(""+_Name+"[label=\""+_Name+"\", color=\"green\"]");
+				sb.append(""+_Name+"[label=\""+_Name+"\", color=\"green\", id=\""+_Name+"\"]");
 				sb.append("\r\n");		  
 		  }
 	  }
@@ -400,14 +424,14 @@ class Hello<T> {
 			  if(!containsObject(objects, tObject)){
 				  objects.add(tObject);
 				  String _Name = tObject._Name.toUpperCase();
-				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\"]");
+				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\""+_Name+"\"]");
 				  sb.append("\r\n");
 			  }
 		      sb.append(mapper._Name.toUpperCase()+" -> "+s.toUpperCase()+"[color=\"blue\"]");
 			  sb.append("\r\n");
 		  }
 	  }
-	  // Object -> Object	  
+	  // Object -> Object
 	  for(Object object : objects){
 		  for(ForeignKey fKey : object._ForeignKeys){
 			  String fKeyS = fKey._DestObjectObj._Name;
@@ -418,7 +442,7 @@ class Hello<T> {
 			  if(!containsObject(objects, tObject)){
 				  // objects.add(tObject); TODO add object to objects collection
 				  String _Name = tObject._Name.toUpperCase();
-				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\"]");
+				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\""+_Name+"\"]");
 				  sb.append("\r\n");
 			  }
 			  sb.append(object._Name.toUpperCase()+" -> "+fKeyS.toUpperCase()+"[color=\"red\"]");
@@ -439,7 +463,7 @@ class Hello<T> {
 			  if(!containsObject(objects, tMapper)){
 				  mappers.add(tMapper);
 				  String _Name = tMapper._Name.toUpperCase();
-				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"blue\"]");
+				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"blue\", id=\""+_Name+"\"]");
 				  sb.append("\r\n");
 			  }
 			  sb.append(object._Name.toUpperCase()+" -> "+s.toUpperCase());
@@ -453,7 +477,7 @@ class Hello<T> {
 			  if(!containsObject(objects, tEnum)){
 				  enumerations.add(tEnum);
 				  String _Name = tEnum._Name.toUpperCase();
-				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"cyan\"]");
+				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"cyan\", id=\""+_Name+"\"]");
 				  sb.append("\r\n");
 			  }
 			  sb.append(object._Name.toUpperCase()+" -> "+s.toUpperCase()+"[color=\"cyan\"]");
@@ -470,7 +494,7 @@ class Hello<T> {
 			  if(!containsObject(objects, tObject)){
 				  objects.add(tObject);
 				  String _Name = tObject._Name.toUpperCase();
-				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\"]");
+				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\""+_Name+"\"]");
 				  sb.append("\r\n");
 			  }
 			  sb.append(view._Name+" -> "+s.toUpperCase()+"[color=\"green\"]");
@@ -493,7 +517,7 @@ class Hello<T> {
 	  List<StringBuilder> s = toSimpleString();
 	  int counter = 0;
 	  for(StringBuilder sb : s){
-		  writeAndGen(sb.toString(), "output_"+schema._Name+"_"+counter+".dot", "output_"+schema._Name+"_"+counter+".png");
+		  writeAndGen(sb.toString(), "output_"+schema._Name+"_"+counter+".dot", "output_"+schema._Name+"_"+counter+".svg");
 		  counter++;
 	  }
   }
@@ -510,7 +534,7 @@ class Hello<T> {
     	  printer.write(sb);
     	  printer.flush();
           LOG.info("Generating dot file for "+this.schemaName+ " done.");
-          LOG.info("Generating schema png file for "+this.schemaName);
+          LOG.info("Generating schema svg file for "+this.schemaName);
     	  BufferedReader streamReader = new BufferedReader(new InputStreamReader(FileUtil.getResourceAsStream("tilda.config.json"), "UTF-8")); 
     	  StringBuilder responseStrBuilder = new StringBuilder();
 
@@ -523,11 +547,23 @@ class Hello<T> {
           String dotBinaryPath = (String)jsonObject.get("dotBinary");
           if(dotBinaryPath == null){
         	  // assume dot file is in path
-        	  dotBinaryPath = "dot";
+        	  showDotPathError();
+          } else{
+              File f = new File(dotBinaryPath);
+              if(f.exists() && !f.isDirectory()){
+	              streamReader.close();
+	              Process p = Runtime.getRuntime().exec(dotBinaryPath+" -Tsvg "+output.getAbsolutePath()+" -o "+genFName);
+	              p.waitFor(); // waits indefinitely for process to complete.
+	              p.exitValue();
+	        	  genHTML(genFName);
+	            
+	              LOG.info("Generating schema svg file for "+this.schemaName+" done.");
+	              LOG.info("Generating schema svg file name "+genFName);
+              } else {
+            	  showDotPathError();
+              }
           }
-          Process p = Runtime.getRuntime().exec(dotBinaryPath+" -Tpng "+output.getAbsolutePath()+" -o "+genFName);
-          LOG.info("Generating schema png file for "+this.schemaName+" done.");
-          LOG.info("Generating schema png file name "+genFName);
+
       } catch(Exception e){
     	  System.err.println(e.getMessage());
     	  e.printStackTrace();
@@ -538,8 +574,61 @@ class Hello<T> {
 
   }
   
+  private void showDotPathError(){
+	  LOG.error("Unable to file 'dot' binary");
+	  LOG.error("Download 'dot' binary from http://www.graphviz.org/Download.php and set dotBinary in tilda config json");	  
+  }
+  
+  private void genHTML(String fName){
+    try {
+		Document doc = builder.parse(new File(fName));
+        NodeList nList = doc.getElementsByTagName("svg");
+        Node scriptNode = doc.createElement("script");
+//        Node cdata = doc.createCDATASection("function showAlert(ele){alert(ele.closest('g').id);");
+        Node cdata = doc.createCDATASection("document.addEventListener('click', function(evt) {"
+        		+ "var target = evt.target;"
+        		+ "\r\n"
+        		+ "if(target.tagName != 'g'){"
+        		+ "\r\n"
+        		+ "target = target.closest('g')"
+        		+ "\r\n"
+        		+ "}"
+        		+ "\r\n"
+        		+ "var tagName = target.tagName;"
+        		+ "\r\n"
+        		+ "if(tagName == 'g' && target.className.baseVal == 'node'){"
+        		+ "\r\n"
+        		+ "alert(target.id);"
+        		+ "\r\n"
+        		+ "}"
+        		+ "\r\n"
+        		+ "}, false);");
+        Node n = nList.item(0);
+        scriptNode.appendChild(cdata);
+        n.appendChild(scriptNode);
+//        NodeList nL2 = doc.getElementsByTagName("g");
+//        for(int i=0; i < nL2.getLength(); i++){
+//        	Node n2 = nL2.item(i);
+//        	Element ele = (Element)n2;
+//        	if(ele.getAttribute("class").contains("node"))
+//        		ele.setAttribute("onclick", "showAlert(this)");
+//        }
+        Transformer transformer = TransformerFactory.newInstance().newTransformer();
+        Result output = new StreamResult(new File(fName));
+        Source input = new DOMSource(doc);
+        transformer.transform(input, output);
+
+	} catch (SAXException | IOException | TransformerConfigurationException | TransformerFactoryConfigurationError e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (TransformerException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+  }
+  
   public void writeComplexSchema(){
-	  writeAndGen(toString(), "output_"+schema._Name+".dot", "output_"+schema._Name+".png");
+	  writeAndGen(toString(), "output_"+schema._Name+".dot", "output_"+schema._Name+".svg");
   }
   
   public void writeSchema(){
