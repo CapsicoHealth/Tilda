@@ -1,4 +1,4 @@
-package tilda.utils;
+package tilda.generation;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -42,6 +42,7 @@ import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.ViewColumn;
+import tilda.utils.FileUtil;
 
 class Hello<T> {
   public static <T> ArrayList<List<T>> chunks(ArrayList<T> bigList,int n){
@@ -575,8 +576,14 @@ class Hello<T> {
   }
   
   private void showDotPathError(){
-	  LOG.error("Unable to file 'dot' binary");
-	  LOG.error("Download 'dot' binary from http://www.graphviz.org/Download.php and set dotBinary in tilda config json");	  
+      LOG.warn("Unable to file 'dot' binary");
+      LOG.warn("Documentation for Tilda schemas won't include any ER Diagram");
+      LOG.warn("To set up the dependent GraphViz library, polease follow the following steps:");
+	  LOG.warn("    - Go to http://www.graphviz.org/Download.php");	  
+      LOG.warn("    - Accept the license");      
+      LOG.warn("    - Download the package appropriate for your platform (i.e., Mac, Windows, Linux) the license");      
+      LOG.warn("    - Configure your tilda.config.json and add the following element");      
+      LOG.warn("         .  \"dotBinary\": \"C:\\Program Files (x86)\\GraphViz\\bin\\dot.exe\"");      
   }
   
   private void genHTML(String fName){
