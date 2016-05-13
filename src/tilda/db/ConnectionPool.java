@@ -186,8 +186,8 @@ public class ConnectionPool
               }
             catch (IOException | SQLException E)
               {
-                LOG.error("Cannot initialize Tilda", E);
-                System.exit(-11);
+                LOG.error("Cannot initialize Tilda\n", E);
+                System.exit(-1);
               }
           }
       }
