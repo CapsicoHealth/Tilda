@@ -43,6 +43,20 @@ import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.ViewColumn;
 import tilda.utils.FileUtil;
+final class OsUtils
+{
+   private static String OS = null;
+   public static String getOsName()
+   {
+      if(OS == null) { OS = System.getProperty("os.name"); }
+      return OS;
+   }
+   public static boolean isWindows()
+   {
+      return getOsName().startsWith("Windows");
+   }
+
+}
 
 class Hello<T> {
   public static <T> ArrayList<List<T>> chunks(ArrayList<T> bigList,int n){
@@ -516,9 +530,31 @@ class Hello<T> {
   
   public void writeSimpleSchema(){
 	  List<StringBuilder> s = toSimpleString();
+
 	  int counter = 0;
 	  for(StringBuilder sb : s){
-		  writeAndGen(sb.toString(), "output_"+schema._Name+"_"+counter+".dot", "output_"+schema._Name+"_"+counter+".svg");
+		  StringBuilder origin = new StringBuilder();
+		  StringBuilder destination = new StringBuilder();
+		  if(OsUtils.isWindows()){
+			  origin.append("src\\");
+			  origin.append(schema._Package.replace(".", "\\"));
+			  origin.append("\\");
+			  origin.append(schema._Name);
+			  origin.append("_");
+			  origin.append(counter);
+		  }else{
+			  origin.append("src/");
+			  origin.append(schema._Package.replace(".", "/"));
+			  origin.append("/");
+			  origin.append(schema._Name);
+			  origin.append("_");
+			  origin.append(counter);
+		  }
+		  destination.append(origin.toString());
+		  destination.append(".svg");
+		  origin.append(".dot");
+
+		  writeAndGen(sb.toString(), origin.toString(), destination.toString());
 		  counter++;
 	  }
   }
@@ -560,6 +596,9 @@ class Hello<T> {
 	            
 	              LOG.info("Generating schema svg file for "+this.schemaName+" done.");
 	              LOG.info("Generating schema svg file name "+genFName);
+	              LOG.info("Deleting "+dotFName);
+	              output.delete();
+	              LOG.info("Deleting "+dotFName+" done.");
               } else {
             	  showDotPathError();
               }
@@ -635,9 +674,26 @@ class Hello<T> {
   }
   
   public void writeComplexSchema(){
-	  writeAndGen(toString(), "output_"+schema._Name+".dot", "output_"+schema._Name+".svg");
+	  StringBuilder origin = new StringBuilder();
+	  StringBuilder destination = new StringBuilder();
+	  if(OsUtils.isWindows()){
+		  origin.append("src\\");
+		  origin.append(schema._Package.replace(".", "\\"));
+		  origin.append("\\");
+		  origin.append(schema._Name);
+	  }else{
+		  origin.append("src/");
+		  origin.append(schema._Package.replace(".", "/"));
+		  origin.append("/");
+		  origin.append(schema._Name);
+	  }
+	  destination.append(origin.toString());
+	  destination.append(".svg");
+	  origin.append(".dot");
+	  writeAndGen(toString(), origin.toString(), destination.toString());
   }
   
+ 
   public void writeSchema(){
 	  Documentation d = this.schema.getDocumentation();
 	  if(d._Graph.equalsIgnoreCase("complex"))
