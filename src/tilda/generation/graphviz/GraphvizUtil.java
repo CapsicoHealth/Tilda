@@ -43,20 +43,7 @@ import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.ViewColumn;
 import tilda.utils.FileUtil;
-final class OsUtils
-{
-   private static String OS = null;
-   public static String getOsName()
-   {
-      if(OS == null) { OS = System.getProperty("os.name"); }
-      return OS;
-   }
-   public static boolean isWindows()
-   {
-      return getOsName().startsWith("Windows");
-   }
 
-}
 
 class Hello<T> {
   public static <T> ArrayList<List<T>> chunks(ArrayList<T> bigList,int n){
@@ -253,7 +240,7 @@ class Hello<T> {
 		"\r\n"+
 		"fontsize = 8"+
 		"\r\n"+
-		"graph [splines=ortho, nodesep=0.5]"+
+		"graph [splines=ortho, nodesep=0.8, overlap=scale]"+
 		"\r\n"+
 		"rankdir=LR"+
 		"\r\n"+
@@ -391,7 +378,11 @@ class Hello<T> {
 		"\r\n"+
 		"fontsize = 8"+
 		"\r\n"+
-		"graph [splines=ortho, nodesep=0.8]"+
+		"graph [splines=ortho, nodesep=1.0]"+
+		"\r\n"+
+		"rankdir=LR"+
+		"\r\n"+
+		"ranksep=2"+
 		"\r\n"+
 		"node ["+
 		"\r\n"+
