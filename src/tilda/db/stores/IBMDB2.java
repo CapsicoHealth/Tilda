@@ -27,7 +27,6 @@ import tilda.db.Connection;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnType;
 import tilda.generation.interfaces.CodeGenSql;
-import tilda.generation.postgres9.PostgresType;
 import tilda.migration.ColInfo;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
