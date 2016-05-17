@@ -19,11 +19,10 @@ package tilda.generation.java8;
 import java.io.PrintWriter;
 import java.util.List;
 
+import tilda.enums.ColumnType;
 import tilda.generation.Generator;
 import tilda.generation.GeneratorSession;
 import tilda.generation.interfaces.CodeGenDocs;
-import tilda.enums.ColumnMode;
-import tilda.enums.ColumnType;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
 import tilda.parsing.parts.ForeignKey;
@@ -139,94 +138,18 @@ public class Docs implements CodeGenDocs
     public void DataClassDocs(PrintWriter Out, GeneratorSession G, Object O)
       throws Exception
       {
-        Out.println(
-            Helper.getMultiLineDocCommentStart() + SystemValues.NEWLINE
-                + "This is the " + Helper.getCodeGenLanguage() + "/" + G.getSql().getName() + " Tilda data class <B>Data_" + O._Name + "</B> mapped to the table <B>" + O.getShortName() + "</B>."
-            );
-
-        Out.println("<UL>");
-        switch (O._LC)
-          {
-            case NORMAL:
-              Out.println("<LI>The Object has normal <B>read/write</B> capabilities.</LI>");
-              break;
-            case READONLY:
-              Out.println("<LI>The Object is <B>ReadOnly</B>.</LI>");
-              break;
-            case WORM:
-              Out.println("<LI>The Object is <B>WORM</B> (Write Once Read Many).</LI>");
-              break;
-            default:
-              throw new Exception("Unknown Object lifecycle value '" + O._LC + "' when generating class docs");
-          }
-
-        if (O._OCC == true)
-          Out.println("<LI>The Object is OCC-enabled. Default created/lastUpdated/deleted columns will be automatically generated.</LI>");
-        else
-          Out.println("<LI>That Object is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>");
-
-        Out.println("</UL>");
-
-        Out.println(
-            "<B>Description</B>: "
-                + O._Description
-                + "<BR>"
-                + SystemValues.NEWLINE
-                + "<BR>"
-                + SystemValues.NEWLINE
-                + "It contains the following columns:<BR>"
-                + SystemValues.NEWLINE
-                + " <TABLE border=\"0px\" cellpadding=\"3px\" cellspacing=\"0px\">"
-                + SystemValues.NEWLINE
-                + "   <TR align=\"left\"><TH>&nbsp;</TH><TH align=\"right\">Name&nbsp;&nbsp;</TH><TH>Type&nbsp;&nbsp;</TH><TH>Column&nbsp;&nbsp;</TH><TH>Type&nbsp;&nbsp;</TH><TH>Nullable&nbsp;&nbsp;</TH><TH>Mode&nbsp;&nbsp;</TH><TH>Invariant&nbsp;&nbsp;</TH><TH>Protect&nbsp;&nbsp;</TH><TH>Description</TH></TR>"
-            );
-
-        int i = 0;
-        for (Column C : O._Columns)
-          {
-            if (C == null)
-              continue;
-            Out.println(
-                "  <TR valign=\"top\" bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#EEEEEE") + "\">"
-                    + "<TD>" + i + "&nbsp;&nbsp;</TD>"
-                    + "<TD align=\"right\"><B>" + C.getName() + "</B>&nbsp;&nbsp;</TD>"
-                    + "<TD>" + JavaJDBCType.getFieldType(C) + (C.isList()==true?" List<>" : C.isSet() == true ? " Set<>" : "") + "&nbsp;&nbsp;</TD>"
-                    + "<TD><B>" + C.getShortName() + "</B>&nbsp;&nbsp;</TD>"
-                    + "<TD>" + G.getSql().getColumnType(C) + "&nbsp;&nbsp;</TD>"
-                    + "<TD>" + (C._Nullable == true ? "-" : false) + "&nbsp;&nbsp;</TD>"
-                    + "<TD>" + (C._Mode == ColumnMode.NORMAL ? "-" : C._Mode) + "&nbsp;&nbsp;</TD>"
-                    + "<TD>" + (C._Invariant == false ? "-" : true) + "&nbsp;&nbsp;</TD>"
-                    + "<TD>" + (C._Protect == null ? "-" : C._Protect) + "&nbsp;&nbsp;</TD>"
-                    + "<TD>" + C._Description + "</TD>"
-                    + "</TR>"
-                );
-            if (C._MapperDef != null)
-              {
-                Out.println("  <TR bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#EEEEEE") + "\"><TD></TD><TD></TD><TD colspan=\"10\" align=\"center\">");
-                Out.println("This column is automatically generated against the Mapper "+C._SameAsObj.getFullName()+".");
-                Out.println("</TD></TR>");
-              }
-            if (C._Values != null)
-              {
-                Out.println("  <TR bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#EEEEEE") + "\"><TD></TD><TD></TD><TD colspan=\"10\" align=\"center\">");
-                docFieldValues(Out, C);
-                Out.println("</TD></TR>");
-              }
-            ++i;
-          }
-        Out.println("</TABLE>");
-
-        Out.println(
-            SystemValues.NEWLINE
-                + " @author   Tilda code gen for " + Helper.getCodeGenLanguage() + "/" + G.getSql().getName() + SystemValues.NEWLINE
-                + " @version  Tilda 1.0" + SystemValues.NEWLINE
-                + " @generated " + DateTimeUtil.printDateTimeFriendly(SystemValues.STARTUP_DATE, true, true) + SystemValues.NEWLINE
-                + Helper.getMultiLineCommentEnd()
-            );
+        Out.println(Helper.getMultiLineDocCommentStart());
+        tilda.generation.html.Docs.DataClassDocs(Out, G, O);
+        Out.println(SystemValues.NEWLINE
+                   +" @author   Tilda code gen for " + Helper.getCodeGenLanguage() + "/" + G.getSql().getName() + SystemValues.NEWLINE
+                   +" @version  Tilda 1.0" + SystemValues.NEWLINE
+                   +" @generated " + DateTimeUtil.printDateTimeFriendly(SystemValues.STARTUP_DATE, true, true) + SystemValues.NEWLINE
+                   + Helper.getMultiLineCommentEnd()
+                   );
       }
 
 
-    private void docFieldValues(PrintWriter Out, Column C)
+    private static void docFieldValues(PrintWriter Out, Column C)
       {
         Out.println("<TABLE border=\"0px\" cellpadding=\"2px\" cellspacing=\"0px\">"
             + "   <TR align=\"left\"><TH>&nbsp;</TH><TH align=\"right\">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>"
@@ -251,10 +174,10 @@ public class Docs implements CodeGenDocs
           }
         Out.println("</TABLE>");
       }
-
-    protected static final String[][] _MACROS = { { "%%ZONEDDATETIME_SETTER%%", "(as XXXXX__BAD__XXXXX per {@link java.time.ZonedDateTime#of(int, int, int, int, int, int, int)})"
-                                              }
-                                              };
+    
+    
+    protected static final String[][] _MACROS = { { "%%ZONEDDATETIME_SETTER%%", "(as XXXXX__BAD__XXXXX per {@link java.time.ZonedDateTime#of(int, int, int, int, int, int, int)})" }
+                                                };
 
     protected static String resolveMacros(String DocsName)
       {
