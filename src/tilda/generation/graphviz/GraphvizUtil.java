@@ -1,13 +1,10 @@
 package tilda.generation.graphviz;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -18,24 +15,11 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerFactoryConfigurationError;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 import tilda.enums.FrameworkSourcedType;
 import tilda.generation.GeneratorSession;
@@ -260,7 +244,7 @@ class Hello<T> {
 					  _sbMapper.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\""+_Name+"\"]");
 				  }
 				  else{
-					  _sbMapper.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\"other_"+_Name+"\"]");
+					  _sbMapper.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"#ADD8E6\", id=\"other_"+_Name+"\"]");
 				  }
 						  
 				  _sbMapper.append("\r\n");
@@ -272,7 +256,7 @@ class Hello<T> {
 					  _sbMapper.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"blue\", id=\""+_Name+"\"]");
 				  }
 				  else{
-					  _sbMapper.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"blue\", id=\"other_"+_Name+"\"]");
+					  _sbMapper.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"#ADD8E6\", id=\"other_"+_Name+"\"]");
 				  }
 
 				  _sbMapper.append("\r\n");
@@ -297,7 +281,7 @@ class Hello<T> {
 					  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\""+_Name+"\"]");
 				  }
 				  else{
-					  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\"other_"+_Name+"\"]");
+					  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"#ADD8E6\", id=\"other_"+_Name+"\"]");
 				  }
 				  _sbObject.append("\r\n");
 			  }
@@ -309,7 +293,7 @@ class Hello<T> {
 					  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\""+_Name+"\"]");
 				  }
 				  else{
-					  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\"other_"+_Name+"\"]");
+					  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"#ADD8E6\", id=\"other_"+_Name+"\"]");
 				  }
 				  _sbObject.append("\r\n");
 			  }
@@ -336,7 +320,7 @@ class Hello<T> {
 					  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"blue\", id=\""+_Name+"\"]");
 				  }
 				  else{
-					  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"blue\", id=\"other_"+_Name+"\"]");
+					  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"#ADD8E6\", id=\"other_"+_Name+"\"]");
 				  }
 
 				  _sbObject.append("\r\n");
@@ -356,7 +340,7 @@ class Hello<T> {
 					  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"cyan\", id=\""+_Name+"\"]");
 				  }
 				  else{
-					  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"cyan\", id=\"other_"+_Name+"\"]");
+					  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"#ADD8E6\", id=\"other_"+_Name+"\"]");
 				  }
 
 				  _sbObject.append("\r\n");
@@ -386,7 +370,7 @@ class Hello<T> {
 					  _sbView.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\""+_Name+"\"]");
 				  }
 				  else{
-					  _sbView.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\"other_"+_Name+"\"]");
+					  _sbView.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"#ADD8E6\", id=\"other_"+_Name+"\"]");
 				  }
 
 				  _sbView.append("\r\n");
@@ -465,7 +449,7 @@ class Hello<T> {
 			  if(!containsObject(objects, tObject)){
 				  objects.add(tObject);
 				  String _Name = tObject._Name.toUpperCase();
-				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\"other_"+_Name+"\"]");
+				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"#ADD8E6\", id=\"other_"+_Name+"\"]");
 				  sb.append("\r\n");
 			  }
 		      sb.append(mapper._Name.toUpperCase()+" -> "+s.toUpperCase()+"[color=\"blue\"]");
@@ -483,7 +467,7 @@ class Hello<T> {
 			  if(!containsObject(objects, tObject)){
 				  // objects.add(tObject); TODO add object to objects collection
 				  String _Name = tObject._Name.toUpperCase();
-				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\"other_"+_Name+"\"]");
+				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"#ADD8E6\", id=\"other_"+_Name+"\"]");
 				  sb.append("\r\n");
 			  }
 			  sb.append(object._Name.toUpperCase()+" -> "+fKeyS.toUpperCase()+"[color=\"red\"]");
@@ -504,7 +488,7 @@ class Hello<T> {
 			  if(!containsObject(objects, tMapper)){
 				  mappers.add(tMapper);
 				  String _Name = tMapper._Name.toUpperCase();
-				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"blue\", id=\"other_"+_Name+"\"]");
+				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"#ADD8E6\", id=\"other_"+_Name+"\"]");
 				  sb.append("\r\n");
 			  }
 			  sb.append(object._Name.toUpperCase()+" -> "+s.toUpperCase());
@@ -518,7 +502,7 @@ class Hello<T> {
 			  if(!containsObject(objects, tEnum)){
 				  enumerations.add(tEnum);
 				  String _Name = tEnum._Name.toUpperCase();
-				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"cyan\", id=\"other_"+_Name+"\"]");
+				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"#ADD8E6\", id=\"other_"+_Name+"\"]");
 				  sb.append("\r\n");
 			  }
 			  sb.append(object._Name.toUpperCase()+" -> "+s.toUpperCase()+"[color=\"cyan\"]");
@@ -535,7 +519,7 @@ class Hello<T> {
 			  if(!containsObject(objects, tObject)){
 				  objects.add(tObject);
 				  String _Name = tObject._Name.toUpperCase();
-				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\"other_"+_Name+"\"]");
+				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"#ADD8E6\", id=\"other_"+_Name+"\"]");
 				  sb.append("\r\n");
 			  }
 			  sb.append(view._Name+" -> "+s.toUpperCase()+"[color=\"green\"]");
