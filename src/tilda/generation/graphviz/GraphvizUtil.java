@@ -1,9 +1,14 @@
 package tilda.generation.graphviz;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +38,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import tilda.enums.FrameworkSourcedType;
+import tilda.generation.GeneratorSession;
+import tilda.generation.html.Docs;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Documentation;
 import tilda.parsing.parts.Enumeration;
@@ -72,6 +79,9 @@ class Hello<T> {
   List<StringBuilder> simpleParts = new ArrayList<StringBuilder>();
   String schemaName;
   Schema schema;
+  
+  GeneratorSession G;
+
   public Hello(Schema schema){
 	  this.schema = schema;
       this.objects = schema._Objects;
@@ -87,15 +97,15 @@ class Hello<T> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		try {
+			G = new GeneratorSession("Java", 8, -1, "Postgres", 9, -1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
   }
-  private void makeUniq(){
-	  removeDuplicates(objects);
-	  removeDuplicates(views);
-	  removeDuplicates(mappers);
-	  removeDuplicates(enumerations);
-  }
-  
+
   private LinkedHashSet<String> getViewObjects(View view){
      LinkedHashSet<String> lhs = new LinkedHashSet<String>();
 	 for(ViewColumn viewColumn : view._ViewColumns){
@@ -192,36 +202,7 @@ class Hello<T> {
 	  
 	  return flag;
   }
-  
-  private <T> void removeDuplicates(List<T> list){
-		List<T> sortedSet = new ArrayList<T>();
-		sortedSet.addAll(list);
 
-	    list.clear();
-	    for(T obj : sortedSet){
-	        Field field;
-	        boolean hasDup = false;
-			try {
-			   field = obj.getClass().getField("_Name");
-			   for(T obj2 : list ){
-				    String objName = (String)field.get(obj);
-				    String obj2Name = (String)field.get(obj2);
-				    hasDup = objName.equalsIgnoreCase(obj2Name);
-				    if(hasDup)
-				    	break;
-			   }
-			   if(!hasDup){
-				   list.add(obj);
-			   }
-	
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-	    }
-		sortedSet.clear();
-  }
   
   public List<StringBuilder> toSimpleString(){
 	  List<String> temp = new ArrayList<String>();
@@ -275,7 +256,25 @@ class Hello<T> {
 			  String _Name = tObject._Name.toUpperCase();
 			  if(!temp.contains(_Name)){
 				  temp.add(_Name);
-				  _sbMapper.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\""+_Name+"\"]");
+				  if(containsObject(objects, tObject)){
+					  _sbMapper.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\""+_Name+"\"]");
+				  }
+				  else{
+					  _sbMapper.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\"other_"+_Name+"\"]");
+				  }
+						  
+				  _sbMapper.append("\r\n");
+			  }
+			  if(!temp.contains(mapper._Name)){
+				  temp.add(mapper._Name);
+				  _Name = mapper._Name.toUpperCase();
+				  if(containsObject(mappers, mapper)){
+					  _sbMapper.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"blue\", id=\""+_Name+"\"]");
+				  }
+				  else{
+					  _sbMapper.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"blue\", id=\"other_"+_Name+"\"]");
+				  }
+
 				  _sbMapper.append("\r\n");
 			  }
 			  _sbMapper.append(mapper._Name.toUpperCase()+" -> "+s.toUpperCase()+"[color=\"blue\"]");
@@ -294,13 +293,24 @@ class Hello<T> {
 			  String _Name = tObject._Name.toUpperCase();
 			  if(!temp.contains(_Name)){
 				  temp.add(_Name);
-				  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\""+_Name+"\"]");
+				  if(containsObject(objects, tObject)){
+					  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\""+_Name+"\"]");
+				  }
+				  else{
+					  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\"other_"+_Name+"\"]");
+				  }
 				  _sbObject.append("\r\n");
 			  }
 			  _Name = object._Name.toUpperCase();
 			  if(!temp.contains(_Name)){
 				  temp.add(_Name);
-				  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\""+_Name+"\"]");
+				  tObject._Name = _Name;
+				  if(containsObject(objects, tObject)){
+					  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\""+_Name+"\"]");
+				  }
+				  else{
+					  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\"other_"+_Name+"\"]");
+				  }
 				  _sbObject.append("\r\n");
 			  }
 
@@ -322,7 +332,13 @@ class Hello<T> {
 			  String _Name = tMapper._Name.toUpperCase();
 			  if(!temp.contains(_Name)){
 				  temp.add(_Name);
-				  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"blue\", id=\""+_Name+"\"]");
+				  if(containsObject(mappers, tMapper)){
+					  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"blue\", id=\""+_Name+"\"]");
+				  }
+				  else{
+					  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"blue\", id=\"other_"+_Name+"\"]");
+				  }
+
 				  _sbObject.append("\r\n");
 			  }
 			  _sbObject.append(object._Name.toUpperCase()+" -> "+s.toUpperCase());
@@ -336,7 +352,13 @@ class Hello<T> {
 			  String _Name = tEnum._Name.toUpperCase();
 			  if(!temp.contains(_Name)){
 				  temp.add(_Name);
-				  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"cyan\", id=\""+_Name+"\"]");
+				  if(containsObject(enumerations, tEnum)){
+					  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"cyan\", id=\""+_Name+"\"]");
+				  }
+				  else{
+					  _sbObject.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"cyan\", id=\"other_"+_Name+"\"]");
+				  }
+
 				  _sbObject.append("\r\n");
 			  }
 			  _sbObject.append(object._Name.toUpperCase()+" -> "+s.toUpperCase()+"[color=\"cyan\"]");
@@ -347,16 +369,28 @@ class Hello<T> {
 	  // View -> Object
 	  for(View view : views){
 		  LinkedHashSet<String> listS = getViewObjects(view);
+		  if(!temp.contains(view._Name)){
+			  temp.add(view._Name);
+			  String _Name = view._Name.toUpperCase();
+			  _sbView.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"green\", id=\""+_Name+"\"]");
+			  _sbView.append("\r\n");
+		  }
+
 		  for(String s : listS){
 			  Object tObject = new Object();
 			  tObject._Name = s.toUpperCase();
 			  String _Name = tObject._Name.toUpperCase();
 			  if(!temp.contains(_Name)){
 				  temp.add(_Name);
-				  _sbView.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\""+_Name+"\"]");
+				  if(containsObject(objects, tObject)){
+					  _sbView.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\""+_Name+"\"]");
+				  }
+				  else{
+					  _sbView.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\"other_"+_Name+"\"]");
+				  }
+
 				  _sbView.append("\r\n");
 			  }
-
 			  _sbView.append(view._Name+" -> "+s.toUpperCase()+"[color=\"green\"]");
 			  _sbView.append("\r\n");
 		  }
@@ -372,6 +406,7 @@ class Hello<T> {
   
   public String toComplexString(){
 	  StringBuilder sb = new StringBuilder();
+	  
 	  sb.append("digraph Nodes {"+
 		"\r\n"+
 		"fontname = \"Bitstream Vera Sans\""+
@@ -430,7 +465,7 @@ class Hello<T> {
 			  if(!containsObject(objects, tObject)){
 				  objects.add(tObject);
 				  String _Name = tObject._Name.toUpperCase();
-				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\""+_Name+"\"]");
+				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\"other_"+_Name+"\"]");
 				  sb.append("\r\n");
 			  }
 		      sb.append(mapper._Name.toUpperCase()+" -> "+s.toUpperCase()+"[color=\"blue\"]");
@@ -448,7 +483,7 @@ class Hello<T> {
 			  if(!containsObject(objects, tObject)){
 				  // objects.add(tObject); TODO add object to objects collection
 				  String _Name = tObject._Name.toUpperCase();
-				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\""+_Name+"\"]");
+				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\"other_"+_Name+"\"]");
 				  sb.append("\r\n");
 			  }
 			  sb.append(object._Name.toUpperCase()+" -> "+fKeyS.toUpperCase()+"[color=\"red\"]");
@@ -469,7 +504,7 @@ class Hello<T> {
 			  if(!containsObject(objects, tMapper)){
 				  mappers.add(tMapper);
 				  String _Name = tMapper._Name.toUpperCase();
-				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"blue\", id=\""+_Name+"\"]");
+				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"blue\", id=\"other_"+_Name+"\"]");
 				  sb.append("\r\n");
 			  }
 			  sb.append(object._Name.toUpperCase()+" -> "+s.toUpperCase());
@@ -483,7 +518,7 @@ class Hello<T> {
 			  if(!containsObject(objects, tEnum)){
 				  enumerations.add(tEnum);
 				  String _Name = tEnum._Name.toUpperCase();
-				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"cyan\", id=\""+_Name+"\"]");
+				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"cyan\", id=\"other_"+_Name+"\"]");
 				  sb.append("\r\n");
 			  }
 			  sb.append(object._Name.toUpperCase()+" -> "+s.toUpperCase()+"[color=\"cyan\"]");
@@ -500,7 +535,7 @@ class Hello<T> {
 			  if(!containsObject(objects, tObject)){
 				  objects.add(tObject);
 				  String _Name = tObject._Name.toUpperCase();
-				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\""+_Name+"\"]");
+				  sb.append(""+_Name+"[label=\"{"+_Name+"}\", color=\"red\", id=\"other_"+_Name+"\"]");
 				  sb.append("\r\n");
 			  }
 			  sb.append(view._Name+" -> "+s.toUpperCase()+"[color=\"green\"]");
@@ -583,8 +618,7 @@ class Hello<T> {
 	              Process p = Runtime.getRuntime().exec(dotBinaryPath+" -Tsvg "+output.getAbsolutePath()+" -o "+genFName);
 	              p.waitFor(); // waits indefinitely for process to complete.
 	              p.exitValue();
-	        	  genHTML(genFName);
-	            
+              	  // getSVG(genFName);
 	              LOG.info("Generating schema svg file for "+this.schemaName+" done.");
 	              LOG.info("Generating schema svg file name "+genFName);
 	              LOG.info("Deleting "+dotFName);
@@ -616,53 +650,54 @@ class Hello<T> {
       LOG.warn("         .  \"dotBinary\": \"C:\\Program Files (x86)\\GraphViz\\bin\\dot.exe\"");      
   }
   
-  private void genHTML(String fName){
-    try {
-		Document doc = builder.parse(new File(fName));
-        NodeList nList = doc.getElementsByTagName("svg");
-        Node scriptNode = doc.createElement("script");
-//        Node cdata = doc.createCDATASection("function showAlert(ele){alert(ele.closest('g').id);");
-        Node cdata = doc.createCDATASection("document.addEventListener('click', function(evt) {"
-        		+ "var target = evt.target;"
-        		+ "\r\n"
-        		+ "if(target.tagName != 'g'){"
-        		+ "\r\n"
-        		+ "target = target.closest('g')"
-        		+ "\r\n"
-        		+ "}"
-        		+ "\r\n"
-        		+ "var tagName = target.tagName;"
-        		+ "\r\n"
-        		+ "if(tagName == 'g' && target.className.baseVal == 'node'){"
-        		+ "\r\n"
-        		+ "alert(target.id);"
-        		+ "\r\n"
-        		+ "}"
-        		+ "\r\n"
-        		+ "}, false);");
-        Node n = nList.item(0);
-        scriptNode.appendChild(cdata);
-        n.appendChild(scriptNode);
-//        NodeList nL2 = doc.getElementsByTagName("g");
-//        for(int i=0; i < nL2.getLength(); i++){
-//        	Node n2 = nL2.item(i);
-//        	Element ele = (Element)n2;
-//        	if(ele.getAttribute("class").contains("node"))
-//        		ele.setAttribute("onclick", "showAlert(this)");
-//        }
-        Transformer transformer = TransformerFactory.newInstance().newTransformer();
-        Result output = new StreamResult(new File(fName));
-        Source input = new DOMSource(doc);
-        transformer.transform(input, output);
-
-	} catch (SAXException | IOException | TransformerConfigurationException | TransformerFactoryConfigurationError e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (TransformerException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-  }
+//  private void getSVG(String fName){
+//    try {
+//		Document doc = builder.parse(new File(fName));
+//        NodeList nList = doc.getElementsByTagName("svg");
+//        Node scriptNode = doc.createElement("script");
+////        Node cdata = doc.createCDATASection("function showAlert(ele){alert(ele.closest('g').id);");
+//        Node cdata = doc.createCDATASection("document.addEventListener('click', function(evt) {"
+//        		+ "var target = evt.target;"
+//        		+ "\r\n"
+//        		+ "if(target.tagName != 'g'){"
+//        		+ "\r\n"
+//        		+ "target = target.closest('g')"
+//        		+ "\r\n"
+//        		+ "}"
+//        		+ "\r\n"
+//        		+ "var tagName = target.tagName;"
+//        		+ "\r\n"
+//        		+ "if(tagName == 'g' && target.className.baseVal == 'node'){"
+//        		+ "\r\n"
+//        		+ "location.href = \"#\""
+//        		+ "\r\n"
+//        		+ "window.location.href = \"#\"+target.id+\"_DIV\";"
+//        		+ "\r\n"
+//        		+ "}"
+//        		+ "\r\n"
+//        		+ "}, false);");
+//        Node n = nList.item(0);
+//        scriptNode.appendChild(cdata);
+//        n.appendChild(scriptNode);
+////        NodeList nL2 = doc.getElementsByTagName("g");
+////        for(int i=0; i < nL2.getLength(); i++){
+////        	Node n2 = nL2.item(i);
+////        	Element ele = (Element)n2;
+////        	if(ele.getAttribute("class").contains("node"))
+////        		ele.setAttribute("onclick", "showAlert(this)");
+////        }
+//        Transformer transformer = TransformerFactory.newInstance().newTransformer();
+//        Result output = new StreamResult(new File(fName));
+//        Source input = new DOMSource(doc);
+//        transformer.transform(input, output);
+//	} catch (SAXException | IOException | TransformerConfigurationException | TransformerFactoryConfigurationError e) {
+//		// TODO Auto-generated catch block
+//		e.printStackTrace();
+//	} catch (TransformerException e) {
+//		// TODO Auto-generated catch block
+//		e.printStackTrace();
+//	}
+//  }
   
   public void writeComplexSchema(){
 	  StringBuilder origin = new StringBuilder();
@@ -691,9 +726,126 @@ class Hello<T> {
 	    writeComplexSchema();
 	  else
 		writeSimpleSchema();
+	  try{
+	  	writeHTML();
+	  } catch(Exception e){
+		 e.printStackTrace();
+	  }
   }
   
+  private void writeHTML() throws Exception{
+	  Documentation d = this.schema.getDocumentation();
+	  StringWriter stringWriter = new StringWriter();
+	  PrintWriter writer = new PrintWriter(stringWriter);
+	  StringBuilder origin = new StringBuilder();
+	  if(OsUtils.isWindows()){
+		  origin.append("src\\");
+		  origin.append(schema._Package.replace(".", "\\"));
+		  origin.append("\\");
+		  origin.append(schema._Name);
+	  }else{
+		  origin.append("src/");
+		  origin.append(schema._Package.replace(".", "/"));
+		  origin.append("/");
+		  origin.append(schema._Name);
+	  }
 
+	  writer.println("<HTML>");
+	  writer.println("<HEAD>");
+	  writer.println("<SCRIPT>");
+	  writer.println("document.addEventListener('click', function(evt) {"
+			  + "\r\n"
+			  + "var target = evt.target;"
+			  + "\r\n"
+			  + "  if(target.tagName != 'g'){"
+			  + "\r\n"
+			  + "   target = target.closest('g')"
+			  + "\r\n"
+			  + " }"
+			  + "\r\n"
+			  + "var tagName = target.tagName;"
+			  + "\r\n"
+			  + "\r\n"
+			  + "if(tagName == 'g' && target.className.baseVal == 'node' && !target.id.startsWith('other_')){"
+			  + "\r\n"
+			  +	"    location.href = \"#\";"
+			  + "\r\n"
+			  +	"    window.location.href = \"#\"+target.id+\"_DIV\";"
+			  + "\r\n"
+			  +	"  }"
+			  + "\r\n"
+			  +	" }, false);"
+			  + "\r\n"
+	  		  + "");
+	  writer.println("</SCRIPT>");
+	  writer.println("</HEAD>");
+	  writer.println("<BODY>");
+	  if(d._Graph.equalsIgnoreCase("simple")){
+		  int []a = {0, 1, 2, 3};
+		  for(int i : a){
+			  BufferedReader br = new BufferedReader(new FileReader(origin.toString()+"_"+i+".svg"));
+			  try {
+			      StringBuilder sb = new StringBuilder();
+			      String line = br.readLine();
+
+			      while (line != null) {
+			          sb.append(line);
+			          sb.append(System.lineSeparator());
+			          line = br.readLine();
+			      }
+			      writer.write(sb.toString());
+			  } finally {
+			      br.close();
+			  }
+
+		  }
+	  }
+	  else{
+		  BufferedReader br = new BufferedReader(new FileReader(origin.toString()+".svg"));
+		  try {
+		      StringBuilder sb = new StringBuilder();
+		      String line = br.readLine();
+
+		      while (line != null) {
+		          sb.append(line);
+		          sb.append(System.lineSeparator());
+		          line = br.readLine();
+		      }
+		      writer.write(sb.toString());
+		  } finally {
+		      br.close();
+		  }
+
+	  }
+		  
+
+	  if(G == null){
+		  LOG.error("Generator session cannot be intialized");
+		  return;
+	  }
+	  for(Object b : schema._Objects){
+		try {
+			Docs.DataClassDocs(writer, G, b);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	  }
+	  writer.println("</BODY>");
+	  writer.println("</HTML>");
+	  origin.append(".html");
+	  PrintWriter printer;
+	  try {
+		 printer = new PrintWriter(origin.toString());
+		 printer.write(stringWriter.toString());
+		 printer.flush();
+	  } catch (FileNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	  }
+
+  }
+  
 }
 public class GraphvizUtil{
   protected static final Logger LOG = LogManager.getLogger(GraphvizUtil.class.getName());
