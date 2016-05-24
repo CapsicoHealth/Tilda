@@ -603,20 +603,6 @@ public class GraphvizUtil
         return toComplexString();
       }
 
-    public void writeSimpleSchema()
-      {
-        List<StringBuilder> s = toSimpleString();
-
-        int counter = 0;
-        for (StringBuilder sb : s)
-          {
-            String origin = getBaseResFileName(this.schema, "_"+counter+".dot");
-            String destination = getBaseResFileName(this.schema, "_"+counter+".svg");
-
-            writeAndGen(sb.toString(), origin, destination);
-            counter++;
-          }
-      }
 
     private void writeAndGen(String sb, String dotFName, String genFName)
       {
@@ -752,11 +738,26 @@ public class GraphvizUtil
 
     public void writeComplexSchema()
       {
+        List<StringBuilder> s = toSimpleString();
+
+        int counter = 0;
+        for (StringBuilder sb : s)
+          {
+            String origin = getBaseResFileName(this.schema, "_"+counter+".dot");
+            String destination = getBaseResFileName(this.schema, "_"+counter+".svg");
+
+            writeAndGen(sb.toString(), origin, destination);
+            counter++;
+          }
+      }
+
+    public void writeSimpleSchema()
+      {
         String origin = getBaseResFileName(this.schema, ".dot");
         String destination = getBaseResFileName(this.schema, ".svg");
         writeAndGen(toString(), origin, destination);
       }
-
+    
 
     public void writeSchema()
       {
@@ -813,14 +814,6 @@ public class GraphvizUtil
         writer.println("<BODY>");
         if (d._Graph.equalsIgnoreCase("complex"))
           {
-            String SvgFileName = getBaseResFileName(schema, ".svg");
-            FileUtil.copyFileContentsIntoAnotherFile(SvgFileName, writer);
-            LOG.info("Deleting " + SvgFileName);
-            new File(SvgFileName).delete();
-            LOG.info("   --> Deleted " + SvgFileName + ".");
-          }
-        else
-          {
             for (int i = 0; i < 4; ++i)
               {
                 String SvgFileName = getBaseResFileName(schema, "_" + i + ".svg");
@@ -829,6 +822,14 @@ public class GraphvizUtil
                 new File(SvgFileName).delete();
                 LOG.info("   --> Deleted " + SvgFileName + ".");
               }
+          }
+        else
+          {
+            String SvgFileName = getBaseResFileName(schema, ".svg");
+            FileUtil.copyFileContentsIntoAnotherFile(SvgFileName, writer);
+            LOG.info("Deleting " + SvgFileName);
+            new File(SvgFileName).delete();
+            LOG.info("   --> Deleted " + SvgFileName + ".");
           }
 
 
@@ -841,6 +842,7 @@ public class GraphvizUtil
           {
             try
               {
+                writer.println("<BR><BR><BR><BR><HR>");
                 Docs.DataClassDocs(writer, G, b);
               }
             catch (Exception e)
