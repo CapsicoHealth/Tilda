@@ -23,7 +23,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.generation.Generator;
 import tilda.generation.GeneratorSession;
-import tilda.generation.GraphvizUtil;
+import tilda.generation.graphviz.GraphvizUtil;
 import tilda.generation.Manifest;
 import tilda.parsing.ParserSession;
 import tilda.parsing.Parser;
