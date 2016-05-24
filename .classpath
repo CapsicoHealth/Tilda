@@ -47,6 +47,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="src-antlr4"/>
 	<classpathentry kind="src" path="ut"/>
 	<classpathentry exported="true" kind="lib" path="lib/opennlp-tools-1.6.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/opennlp-uima-1.6.0.jar"/>
@@ -66,17 +67,22 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/log4j-api-2.4.1.jar">
+	<classpathentry exported="true" kind="lib" path="lib/log4j-api-2.5.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/log4j-core-2.4.1.jar">
+	<classpathentry exported="true" kind="lib" path="lib/log4j-core-2.5.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/log4j-web-2.4.1.jar">
+	<classpathentry exported="true" kind="lib" path="lib/log4j-web-2.5.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/antlr-4.5.3-complete.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>

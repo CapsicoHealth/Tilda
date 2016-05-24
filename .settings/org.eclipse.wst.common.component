@@ -2,5 +2,6 @@
     <wb-module deploy-name="Tilda">
         <wb-resource deploy-path="/" source-path="/src"/>
         <wb-resource deploy-path="/" source-path="/ut"/>
+        <wb-resource deploy-path="/" source-path="/src-antlr4"/>
     </wb-module>
 </project-modules>
