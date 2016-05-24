@@ -18,21 +18,31 @@ package tilda.grammar;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Hello
+public class TildaSQL
   {
-    protected static final Logger LOG = LogManager.getLogger(Hello.class.getName());
+    protected static final Logger LOG = LogManager.getLogger(TildaSQL.class.getName());
 
     public static void main(String[] args)
     throws Exception
       {
-        String Expression = "12*(5-6)";
+        String Expression = "     toto.daysPostEpisode <= 7"
+                           +" AND (    ( principalDischargeICD9 LIKE '410.%' AND  principalDischargeICD9 NOT LIKE '410._2' )"
+                           +"       OR ( secondaryDischargeICD9 LIKE '410.%' AND  secondaryDischargeICD9 NOT LIKE '410._2' )"  
+                           +"     )"
+                           +" AND tawa(secondaryDischargeICD9, 12) = 1"  
+                           +" AND lower(secondaryDischargeICD9) == 'abc'"  
+                           ;
         ANTLRInputStream in = new ANTLRInputStream(Expression);
-        HelloLexer lexer = new HelloLexer(in);
+        TildaSQLLexer lexer = new TildaSQLLexer(in);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
-        HelloParser parser = new HelloParser(tokens);
-        LOG.debug(Expression + " = " + parser.eval().value);
+        TildaSQLParser parser = new TildaSQLParser(tokens);
+        ParseTree tree = parser.where();
+        LOG.debug(TildaSQLTreePrinter.print(tree, parser));
+        
+//        TestRig.main(new String[] { "TildaSQL", "prog", "-gui" } );
       }
-  }
+ }

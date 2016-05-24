@@ -747,7 +747,7 @@ public class GraphvizUtil
 
     public static String getBaseResFileName(Schema S, String Extension)
       {
-        return S._ProjectRoot + File.separator + S._Package.replace(".", File.separator) + File.separator + "_Tilda" + File.separator + "TILDA__Docs."+S._Name + Extension;
+        return S._ProjectRoot + File.separator + S._Package.replace(".", File.separator) + File.separator + "_Tilda" + File.separator + "TILDA___Docs."+S._Name + Extension;
       }
 
     public void writeComplexSchema()

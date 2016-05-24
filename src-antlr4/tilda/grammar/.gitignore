@@ -6,3 +6,11 @@
 /HelloListener.java
 /HelloParser.java
 /HelloVisitor.java
+/TildaSQL.tokens
+/TildaSQLBaseListener.java
+/TildaSQLBaseVisitor.java
+/TildaSQLLexer.java
+/TildaSQLLexer.tokens
+/TildaSQLListener.java
+/TildaSQLParser.java
+/TildaSQLVisitor.java
