@@ -16,8 +16,12 @@
 
 package tilda.utils;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.Arrays;
 
 import tilda.utils.comparators.FileNameComparator;
@@ -76,5 +80,23 @@ public class FileUtil
           if (TextUtil.StarEqual(f.getName(), s) == true)
            return true;
         return false;
+      }
+    
+    public static void copyFileContentsIntoAnotherFile(String inputFileName, PrintWriter Out) throws IOException
+      {
+        BufferedReader br = new BufferedReader(new FileReader(inputFileName));
+        try
+          {
+            String line = br.readLine();
+            while (line != null)
+              {
+                Out.println(line);
+                line = br.readLine();
+              }
+          }
+        finally
+          {
+            br.close();
+          }
       }
   }

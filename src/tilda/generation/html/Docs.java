@@ -33,6 +33,7 @@ public class Docs
     public static void DataClassDocs(PrintWriter Out, GeneratorSession G, Object O)
       throws Exception
       {
+    	Out.println("<DIV id='"+O._Name+"_DIV'>");
         Out.println("<H1>"+O._Name+"</H1>"+SystemValues.NEWLINE
                    +"The generated " + Helper.getCodeGenLanguage() + "/" + G.getSql().getName() + " Tilda data class <B>Data_" + O._Name + "</B> is mapped to the table <B>" + O.getShortName() + "</B>."+ SystemValues.NEWLINE
                    +"<UL>"+ SystemValues.NEWLINE
@@ -101,6 +102,7 @@ public class Docs
             ++i;
           }
         Out.println("</TABLE>");
+        Out.println("</DIV>");
       }
 
 

@@ -23,10 +23,10 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.generation.Generator;
 import tilda.generation.GeneratorSession;
-import tilda.generation.GraphvizUtil;
 import tilda.generation.Manifest;
-import tilda.parsing.ParserSession;
+import tilda.generation.graphviz.GraphvizUtil;
 import tilda.parsing.Parser;
+import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Schema;
 import tilda.utils.SystemValues;
 
@@ -68,7 +68,7 @@ public class Gen
                       }
                     Generator.generate(PS._Main, G);
                     Manifest.update(PS);
-                    GraphvizUtil.docs(PS._Main);
+                    new GraphvizUtil(PS._Main, G).writeSchema();
                     LOG.info("Generated Tilda code for schema '" + PS._Main.getFullName() + "'.");
                   }
               }
