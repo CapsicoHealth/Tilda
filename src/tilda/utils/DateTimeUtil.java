@@ -37,7 +37,7 @@ public class DateTimeUtil
     protected static final Logger     LOG                 = LogManager.getLogger(JDBCHelper.class.getName());
 
     protected static final ZoneId     _UTC                = ZoneId.of("Etc/UTC");
-
+    
     public static final ZonedDateTime NOW_PLACEHOLDER_ZDT = NewUTC(999, 12, 31, 23, 59, 0, 0);
 
     public static boolean isNowPlaceholder(ZonedDateTime ZDT)
@@ -77,6 +77,11 @@ public class DateTimeUtil
         return ZonedDateTime.of(Year, Month, Day, Hour, Minutes, Seconds, Milliseconds * 1000000, Z._ZoneId);
       }
 
+    public static String getCurrentZoneOffset()
+      {
+        return ZonedDateTime.now().getOffset().getId();
+      }
+    
     public static ZonedDateTime NowUTC()
       {
         return ZonedDateTime.now(_UTC);
@@ -157,10 +162,24 @@ public class DateTimeUtil
         return ZDT == null ? null : ZDT.format(DateTimeFormatter.ISO_ZONED_DATE_TIME);
       }
 
+    /**
+     * Will parse an ISO string, even if partially done. It will auto-complete as per {@link #parseWithoutZone(String)}. 
+     *  <UL><LI>yyyy-dd-mm -> yyy-mm-ddT00:00:00+04:00 (for EDT timezone)</LI>
+     *      <LI>yyyy-dd-mmThh:mm -> yyy-mm-ddThh:mm:00+04:00</LI>
+     *      <LI>yyyy-dd-mmThh:mm -> yyy-mm-ddThh:mm:00+04:00</LI>
+     *      <LI>yyyy-dd-mmThh:mm:ss -> yyy-mm-ddThh:mm:ss+04:00</LI>
+     *      <LI>yyyy-dd-mmThh:mm:ss+hh:mm -> yyy-mm-ddThh:mm:ss+hh:mm</LI>
+     *  </UL>
+     * @param DateTimeStr
+     * @return a ZonedDateTime object, or null if an error occurred (doesn't throw but will log exception if one occurred)
+     */
     public static ZonedDateTime parsefromJSON(String DateTimeStr)
       {
         if (TextUtil.isNullOrEmpty(DateTimeStr) == true)
           return null;
+        if (DateTimeStr.length() != 25)
+         return parseWithoutZone(DateTimeStr);
+        
         try
           {
             return ZonedDateTime.parse(DateTimeStr, DateTimeFormatter.ISO_ZONED_DATE_TIME);
@@ -171,7 +190,52 @@ public class DateTimeUtil
           }
         return null;
       }
+    
+    private static Pattern _ISO_NOZONE_DATETIME = Pattern.compile("(\\d{4}).(\\d{2}).(\\d{2}).(\\d{2}).(\\d{2}).(\\d{2})");
+    
+    /**
+     * Takes a zone-less timestamp and returns a ZonedDateTime based on the system zone.
+     * It will auto-complete with 0's if hours, minutes and/or seconds are missing and use 
+     * the appropriate offset as per the system ZoneId. 
+     *  <UL><LI>yyyy-dd-mm -> yyy-mm-dd 00:00:00</LI>
+     *      <LI>yyyy-dd-mm hh:mm -> yyy-mm-dd hh:mm:00</LI>
+     *      <LI>yyyy-dd-mm hh:mm:ss -> yyy-mm-dd hh:mm:ss</LI>
+     *  </UL>
+     * @param DateTimeStr
+     * @return a ZonedDateTime object, or null if an error occurred (doesn't throw but will log exception if one occurred)
+     */
+    public static ZonedDateTime parseWithoutZone(String DateTimeStr)
+     {
+        if (TextUtil.isNullOrEmpty(DateTimeStr) == true)
+         return null;
+        
+        if (DateTimeStr.length() == 10)
+         DateTimeStr += " 00:00:00";
+        else if (DateTimeStr.length() == 16)
+         DateTimeStr += ":00";
 
+        Matcher M = _ISO_NOZONE_DATETIME.matcher(DateTimeStr);
+        if (M.matches() == false)
+         return null;
+
+        int year    = Integer.parseInt(M.group(1));
+        int month   = Integer.parseInt(M.group(2));
+        int day     = Integer.parseInt(M.group(3));
+        int hours   = Integer.parseInt(M.group(4));
+        int minutes = Integer.parseInt(M.group(5));
+        int seconds = Integer.parseInt(M.group(6));
+        
+        try
+         {
+           return New(year, month, day, hours, minutes, seconds, 0, ZoneId.systemDefault());
+         }
+        catch (Exception E)
+         {
+           LOG.catching(E);
+         }
+        return null;
+     }
+    
 
     private static final DateTimeFormatter GeneralFormater        = DateTimeFormatter.ofPattern("MMM d yyyy");
     private static final DateTimeFormatter GeneralFormaterTime    = DateTimeFormatter.ofPattern("MMM d yyyy, HH:mmz");
