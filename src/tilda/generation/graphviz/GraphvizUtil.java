@@ -209,15 +209,17 @@ public class GraphvizUtil
         simpleParts.clear();
         simpleParts.add(_sbMapper);
         simpleParts.add(_sbView);
-        simpleParts.add(_sbEnumeration);
+        if(enumerations.size() > 0){
+        	simpleParts.add(_sbEnumeration);
+        }
         simpleParts.add(_sbObject);
-        _sbObject.append("digraph Nodes {" +
+        String template = "digraph Nodes {" +
         "\r\n" +
         "fontname = \"Bitstream Vera Sans\"" +
         "\r\n" +
-        "fontsize = 8" +
+        "fontsize = 12" +
         "\r\n" +
-        "graph [splines=ortho, nodesep=0.8, overlap=scale]" +
+        "graph [splines=ortho, overlap=false, label=\"%%TYPE%%\", fontsize=18]" +
         "\r\n" +
         "rankdir=LR" +
         "\r\n" +
@@ -235,13 +237,13 @@ public class GraphvizUtil
         "\r\n" +
         "arrowtail = \"empty\"" +
         "\r\n" +
-        "]");
-
-        _sbObject.append("\r\n");
-
-        _sbView.append(_sbObject.toString());
-        _sbMapper.append(_sbObject.toString());
-        _sbEnumeration.append(_sbObject.toString());
+        "]"
+        + "\r\n";
+        
+        _sbObject.append(template.replaceAll("%%TYPE%%", "Object"));
+        _sbView.append(template.replaceAll("%%TYPE%%", "Views"));
+        _sbMapper.append(template.replaceAll("%%TYPE%%", "Mappers"));
+        _sbEnumeration.append(template.replaceAll("%%TYPE%%", "Enumerations"));
 
         for (Mapper mapper : mappers)
           {
@@ -441,7 +443,7 @@ public class GraphvizUtil
         "\r\n" +
         "fontsize = 8" +
         "\r\n" +
-        "graph [splines=ortho, nodesep=1.0]" +
+        "graph [splines=ortho, overlap=scale]" +
         "\r\n" +
         "rankdir=LR" +
         "\r\n" +
@@ -664,7 +666,7 @@ public class GraphvizUtil
             if (printer != null)
               printer.close();
             LOG.info("Deleting " + dotFName);
-            output.delete();
+//            output.delete();
             LOG.info("   --> Deleted " + dotFName + ".");
           }
 
@@ -681,55 +683,6 @@ public class GraphvizUtil
         LOG.warn("    - Configure your tilda.config.json and add the following element");
         LOG.warn("         .  \"dotBinary\": \"C:\\Program Files (x86)\\GraphViz\\bin\\dot.exe\"");
       }
-
-    // private void getSVG(String fName){
-    // try {
-    // Document doc = builder.parse(new File(fName));
-    // NodeList nList = doc.getElementsByTagName("svg");
-    // Node scriptNode = doc.createElement("script");
-    //// Node cdata = doc.createCDATASection("function showAlert(ele){alert(ele.closest('g').id);");
-    // Node cdata = doc.createCDATASection("document.addEventListener('click', function(evt) {"
-    // + "var target = evt.target;"
-    // + "\r\n"
-    // + "if(target.tagName != 'g'){"
-    // + "\r\n"
-    // + "target = target.closest('g')"
-    // + "\r\n"
-    // + "}"
-    // + "\r\n"
-    // + "var tagName = target.tagName;"
-    // + "\r\n"
-    // + "if(tagName == 'g' && target.className.baseVal == 'node'){"
-    // + "\r\n"
-    // + "location.href = \"#\""
-    // + "\r\n"
-    // + "window.location.href = \"#\"+target.id+\"_DIV\";"
-    // + "\r\n"
-    // + "}"
-    // + "\r\n"
-    // + "}, false);");
-    // Node n = nList.item(0);
-    // scriptNode.appendChild(cdata);
-    // n.appendChild(scriptNode);
-    //// NodeList nL2 = doc.getElementsByTagName("g");
-    //// for(int i=0; i < nL2.getLength(); i++){
-    //// Node n2 = nL2.item(i);
-    //// Element ele = (Element)n2;
-    //// if(ele.getAttribute("class").contains("node"))
-    //// ele.setAttribute("onclick", "showAlert(this)");
-    //// }
-    // Transformer transformer = TransformerFactory.newInstance().newTransformer();
-    // Result output = new StreamResult(new File(fName));
-    // Source input = new DOMSource(doc);
-    // transformer.transform(input, output);
-    // } catch (SAXException | IOException | TransformerConfigurationException | TransformerFactoryConfigurationError e) {
-    // // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // } catch (TransformerException e) {
-    // // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // }
-    // }
 
     public static String getBaseResFileName(Schema S, String Extension)
       {
@@ -784,6 +737,12 @@ public class GraphvizUtil
         PrintWriter writer = new PrintWriter(getBaseResFileName(schema, ".html"));
         writer.println("<HTML>");
         writer.println("<HEAD>");
+        writer.println("<STYLE>");
+        writer.println(".svgs > svg {");
+        writer.println("  padding-right: 60px;");
+        writer.println("  padding-left: 60px;");
+      	writer.println("}");
+        writer.println("</STYLE>");
         writer.println("<SCRIPT>");
         writer.println("document.addEventListener('click', function(evt) {"
         + "\r\n"
@@ -812,15 +771,19 @@ public class GraphvizUtil
         writer.println("</SCRIPT>");
         writer.println("</HEAD>");
         writer.println("<BODY>");
+    	writer.println("<DIV class='svgs'>");
+
         if (d._Graph.equalsIgnoreCase("complex"))
           {
             for (int i = 0; i < 4; ++i)
               {
                 String SvgFileName = getBaseResFileName(schema, "_" + i + ".svg");
-                FileUtil.copyFileContentsIntoAnotherFile(SvgFileName, writer);
-                LOG.info("Deleting " + SvgFileName);
-                new File(SvgFileName).delete();
-                LOG.info("   --> Deleted " + SvgFileName + ".");
+                if(new File(SvgFileName).exists()){
+	                FileUtil.copyFileContentsIntoAnotherFile(SvgFileName, writer);
+	                LOG.info("Deleting " + SvgFileName);
+	                new File(SvgFileName).delete();
+	                LOG.info("   --> Deleted " + SvgFileName + ".");
+                }
               }
           }
         else
@@ -832,6 +795,7 @@ public class GraphvizUtil
             LOG.info("   --> Deleted " + SvgFileName + ".");
           }
 
+    	writer.println("</DIV>");
 
         if (G == null)
           {
@@ -851,6 +815,17 @@ public class GraphvizUtil
                 LOG.warn("FYI: this can be ignored for now:\n", e);
               }
           }
+        writer.println("<SCRIPT>");
+        writer.println("(function(){");
+        writer.println("  var a = document.getElementsByTagName(\"svg\");");
+        writer.println("  for(i=0;i<a.length;++i){");
+        writer.println("    var p = a[i];");
+        writer.println("    if(p.height.baseVal.valueInSpecifiedUnits <=50 ){");
+		writer.println("      p.parentElement.removeChild(p);");
+        writer.println("    }");
+      	writer.println("  }");
+      	writer.println(" })()");
+      	writer.println("</SCRIPT>");
         writer.println("</BODY>");
         writer.println("</HTML>");
         writer.close();
