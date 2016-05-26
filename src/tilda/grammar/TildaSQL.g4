@@ -24,6 +24,34 @@ where
  ;
 
 
+expr
+ : value
+// | unary_operator expr
+ | expr bin_operator expr
+ | function 
+ | sub_expr
+ | column ( K_ISNULL | K_NOTNULL | K_NOT K_NULL )
+ | column K_NOT? K_BETWEEN expr K_AND expr
+ ;
+ 
+ 
+value
+ : numeric_literal
+ | timestamp_literal
+ | string_literal
+ | K_NULL
+ | K_CURRENT_TIME
+ | K_CURRENT_DATE
+ | K_CURRENT_TIMESTAMP
+ | bind_parameter
+ | column
+ ;
+
+sub_expr
+ : '(' expr ')'
+ ;
+
+
 /*
     We support the following binary operators, in order from highest to lowest precedence:
     ||
@@ -34,29 +62,6 @@ where
     AND
     OR
 */
-expr
- : numeric_literal
- | timestamp_literal
- | string_literal
- | K_NULL
- | K_CURRENT_TIME
- | K_CURRENT_DATE
- | K_CURRENT_TIMESTAMP
- | BIND_PARAMETER
- | column
- | unary_operator expr
- | expr bin_operator expr
- | function
- | sub_expr
- | expr ( K_ISNULL | K_NOTNULL | K_NOT K_NULL )
- | expr K_NOT? K_BETWEEN expr K_AND expr
- | K_CASE expr? ( K_WHEN expr K_THEN expr )+ ( K_ELSE expr )? K_END
- ;
- 
-sub_expr
- : '(' expr ')'
- ;
- 
 bin_operator
  : '||'
  | ( '*' | '/' | '%' )
@@ -88,12 +93,9 @@ unary_operator
 keyword
  : K_AND
  | K_BETWEEN
- | K_CASE
  | K_CURRENT_DATE
  | K_CURRENT_TIME
  | K_CURRENT_TIMESTAMP
- | K_ELSE
- | K_END
  | K_IN
  | K_IS 
  | K_ISNULL
@@ -104,9 +106,6 @@ keyword
  | K_ON
  | K_OR
  | K_REGEXP
- | K_REPLACE
- | K_THEN
- | K_WHEN
  ;
 
 // TODO check all names below
@@ -154,12 +153,9 @@ NOT_EQ2 : '<>';
 
 K_AND : A N D;
 K_BETWEEN : B E T W E E N;
-K_CASE : C A S E;
 K_CURRENT_DATE : C U R R E N T '_' D A T E;
 K_CURRENT_TIME : C U R R E N T '_' T I M E;
 K_CURRENT_TIMESTAMP : C U R R E N T '_' T I M E S T A M P;
-K_ELSE : E L S E;
-K_END : E N D;
 K_IN : I N;
 K_IS : I S;
 K_ISNULL : I S N U L L;
@@ -170,15 +166,9 @@ K_NULL : N U L L;
 K_ON : O N;
 K_OR : O R;
 K_REGEXP : R E G E X P;
-K_REPLACE : R E P L A C E;
-K_THEN : T H E N;
-K_WHEN : W H E N;
 
 IDENTIFIER
- : '"' (~'"' | '""')* '"'
- | '`' (~'`' | '``')* '`'
- | '[' ~']'* ']'
- | [a-zA-Z_] [a-zA-Z_0-9]* // TODO check: needs more chars in set
+ : [a-zA-Z_] [a-zA-Z_0-9]* 
  ;
 
 
@@ -186,53 +176,65 @@ numeric_literal
  : NUMERIC_LITERAL 
  ;
 
-
-string_literal
- : '\'' ( ~'\'' | '\'\'' )* '\''
- ;
-
-
 NUMERIC_LITERAL
  : DIGIT+ ( '.' DIGIT* )? ( E [-+]? DIGIT+ )?
  | '.' DIGIT+ ( E [-+]? DIGIT+ )?
  ;
 
- 
-BIND_PARAMETER
- : '?' ('(' IDENTIFIER ')' )?
+string_literal
+ : '\'' ( ~'\'' | '\'\'' )* '\''
  ;
  
+bind_parameter
+ : BIND_PARAMETER
+ ;
 
-timestamp_literal // ISO: '2011-12-03T10:15:30+01:00'.  
- : YEAR_LITERAL '-' MONTH_LITERAL '-' DAY_LITERAL 'T' HOUR_LITERAL_24 ':' MINUTE_LITERAL ':' SECOND_LITERAL ('+'|'-') HOUR_LITERAL_12 ':' MINUTE_LITERAL
+BIND_PARAMETER
+ : '?{' IDENTIFIER '}'
  ;
+ 
+timestamp_literal  
+ : TIMESTAMP_LITERAL
+ ;
+
+TIMESTAMP_LITERAL // ISO: '2011-12-03T10:15:30+01:00'.
+ : '\'' YEAR_LITERAL '-' MONTH_LITERAL '-' DAY_LITERAL ('T' HOUR_LITERAL_24 ':' MINUTE_LITERAL (':' SECOND_LITERAL ([+-] HOUR_LITERAL_12 ':' MINUTE_LITERAL)?)?)? '\''
+ ;
+
  
 YEAR_LITERAL // 1800-2199
- : ('1'[8-9])|('2'[0-1]) DIGIT DIGIT
+// : ([0-9])|('2'[0-1]) DIGIT DIGIT
+ : DIGIT DIGIT DIGIT DIGIT
  ;
  
 MONTH_LITERAL
- : ('0'[1-9])|('1'[0-2])
+// : ('0'[1-9])|('1'[0-2])
+ : DIGIT DIGIT
  ;
  
 DAY_LITERAL
- : ('0'[1-9])|([1-2][0-9])|('3'[0-1]) 
+// : ('0'[1-9])|([1-2][0-9])|('3'[0-1]) 
+ : DIGIT DIGIT
  ;
  
 HOUR_LITERAL_24
- : ([0-1][0-9]) | ('2'[0-3])
+// : ([0-1][0-9]) | ('2'[0-3])
+ : DIGIT DIGIT
  ;
  
 MINUTE_LITERAL
- : ([0-5][0-9])
+// : ([0-5][0-9])
+ : DIGIT DIGIT
  ;
  
 SECOND_LITERAL
- : ([0-5][0-9])
+// : ([0-5][0-9])
+ : DIGIT DIGIT
  ;
  
 HOUR_LITERAL_12
- : ('0'[0-9])|('1'[0-2])
+// : ('0'[0-9])|('1'[0-2])
+ : DIGIT DIGIT
  ;
  
 

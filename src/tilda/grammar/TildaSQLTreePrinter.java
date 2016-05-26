@@ -16,6 +16,7 @@
 
 package tilda.grammar;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -32,6 +33,7 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.utils.DateTimeUtil;
 import tilda.utils.PaddingUtil;
 import tilda.utils.SystemValues;
 
@@ -39,6 +41,15 @@ public class TildaSQLTreePrinter extends TildaSQLBaseListener
   {
     protected static final Logger  LOG   = LogManager.getLogger(TildaSQLTreePrinter.class.getName());
 
+    protected List<String> _Errors = new ArrayList<String>();
+    
+    protected void addError(String err, ParserRuleContext ctx)
+     {
+       err += " (line "+ctx.getStart().getLine()+":"+ctx.getStart().getCharPositionInLine()+")";
+       _Errors.add(err);
+       LOG.error(err);
+     }
+    
     private final List<String>     _RuleNames;
     private final StringBuilder    _Str  = new StringBuilder();
     Map<RuleContext, List<String>> _Path = new HashMap<RuleContext, List<String>>();
@@ -60,7 +71,19 @@ public class TildaSQLTreePrinter extends TildaSQLBaseListener
         _Path.get(node.getParent()).add(node.getText());
       }
 
-    
+    @Override 
+    public void enterTimestamp_literal(tilda.grammar.TildaSQLParser.Timestamp_literalContext ctx)
+     {
+       String val = ctx.getText();
+       val = val.substring(1, val.length()-1);
+       ZonedDateTime ZDT = DateTimeUtil.parsefromJSON(val);
+       if (ZDT == null)
+        addError("Invalid timestamp "+val, ctx);
+       else
+        LOG.debug("Timestamp parsed: "+val+" -> "+DateTimeUtil.printDateTimeForJSON(ZDT));
+     }
+
+
     @Override
     public void enterEveryRule(ParserRuleContext ctx)
       {
@@ -79,7 +102,6 @@ public class TildaSQLTreePrinter extends TildaSQLBaseListener
       {
         List<String> ruleStack = _Path.remove(ctx);
         StringBuilder sb = new StringBuilder();
-        boolean inner = ruleStack.size() >= 2;
         for (int i = 0; i < ruleStack.size(); ++i)
           {
             sb.append(PaddingUtil.getPad(_Path.size()*3)).append(ruleStack.get(i)).append(SystemValues.NEWLINE);
