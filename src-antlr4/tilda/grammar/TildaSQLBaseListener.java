@@ -112,13 +112,13 @@ public class TildaSQLBaseListener implements TildaSQLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterArythExprAddExpr(TildaSQLParser.ArythExprAddExprContext ctx) { }
+	@Override public void enterArythExpr(TildaSQLParser.ArythExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitArythExprAddExpr(TildaSQLParser.ArythExprAddExprContext ctx) { }
+	@Override public void exitArythExpr(TildaSQLParser.ArythExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -143,18 +143,6 @@ public class TildaSQLBaseListener implements TildaSQLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitArythExprVal(TildaSQLParser.ArythExprValContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterArythExprMultExpr(TildaSQLParser.ArythExprMultExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitArythExprMultExpr(TildaSQLParser.ArythExprMultExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -244,73 +232,97 @@ public class TildaSQLBaseListener implements TildaSQLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterValueLiteralNumeric(TildaSQLParser.ValueLiteralNumericContext ctx) { }
+	@Override public void enterValueNumericLiteral(TildaSQLParser.ValueNumericLiteralContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitValueLiteralNumeric(TildaSQLParser.ValueLiteralNumericContext ctx) { }
+	@Override public void exitValueNumericLiteral(TildaSQLParser.ValueNumericLiteralContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterValueLiteralTimestamp(TildaSQLParser.ValueLiteralTimestampContext ctx) { }
+	@Override public void enterValueTimestampLiteral(TildaSQLParser.ValueTimestampLiteralContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitValueLiteralTimestamp(TildaSQLParser.ValueLiteralTimestampContext ctx) { }
+	@Override public void exitValueTimestampLiteral(TildaSQLParser.ValueTimestampLiteralContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterValueLiteralString(TildaSQLParser.ValueLiteralStringContext ctx) { }
+	@Override public void enterValueStringLiteral(TildaSQLParser.ValueStringLiteralContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitValueLiteralString(TildaSQLParser.ValueLiteralStringContext ctx) { }
+	@Override public void exitValueStringLiteral(TildaSQLParser.ValueStringLiteralContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterValueLiteralNull(TildaSQLParser.ValueLiteralNullContext ctx) { }
+	@Override public void enterValueBindParam(TildaSQLParser.ValueBindParamContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitValueLiteralNull(TildaSQLParser.ValueLiteralNullContext ctx) { }
+	@Override public void exitValueBindParam(TildaSQLParser.ValueBindParamContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterValueBind(TildaSQLParser.ValueBindContext ctx) { }
+	@Override public void enterNumeric_literal(TildaSQLParser.Numeric_literalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitValueBind(TildaSQLParser.ValueBindContext ctx) { }
+	@Override public void exitNumeric_literal(TildaSQLParser.Numeric_literalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterValueColumn(TildaSQLParser.ValueColumnContext ctx) { }
+	@Override public void enterTimestamp_literal(TildaSQLParser.Timestamp_literalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitValueColumn(TildaSQLParser.ValueColumnContext ctx) { }
+	@Override public void exitTimestamp_literal(TildaSQLParser.Timestamp_literalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterString_literal(TildaSQLParser.String_literalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitString_literal(TildaSQLParser.String_literalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBind_parameter(TildaSQLParser.Bind_parameterContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBind_parameter(TildaSQLParser.Bind_parameterContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

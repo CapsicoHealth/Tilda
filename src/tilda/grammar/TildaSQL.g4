@@ -52,16 +52,16 @@ bool_expr_sub
  ; 
 
 bin_expr
- : column bin_op aryth_expr
+ : column bin_op (column | aryth_expr)
  ;
 
 bin_op: K_LT | K_LTE | K_GT | K_GTE | K_EQ | K_NEQ | (K_NOT)? K_LIKE;
 
 aryth_expr
- : l_expr=aryth_expr op=aryth_op_mul r_expr=aryth_expr      # ArythExprAddExpr
- | l_expr=aryth_expr op=aryth_op_add r_expr=aryth_expr      # ArythExprMultExpr
- | val=value                                                # ArythExprVal
- | s_expr=aryth_expr_sub                                    # ArythExprSub
+ : aryth_expr aryth_op_mul aryth_expr      # ArythExpr
+ | aryth_expr aryth_op_add aryth_expr      # ArythExpr
+ | value                                   # ArythExprVal
+ | aryth_expr_sub                          # ArythExprSub
  ;
  
 aryth_expr_sub
@@ -89,30 +89,52 @@ between_op
  ;
 
 value
- : num=NUMERIC_LITERAL                  #ValueLiteralNumeric
- | tim=TIMESTAMP_LITERAL                #ValueLiteralTimestamp
- | str=STRING_LITERAL                   #ValueLiteralString
- | nul=K_NULL                           #ValueLiteralNull
- | bnd=BIND_PARAMETER                   #ValueBind
- | col=column   #ValueColumn
+ : numeric_literal     # ValueNumericLiteral
+ | timestamp_literal   # ValueTimestampLiteral
+ | string_literal      # ValueStringLiteral
+ | bind_parameter      # ValueBindParam
  ; 
 
-NUMERIC_LITERAL
- : DIGIT+ ( '.' DIGIT* )? ( E [-+]? DIGIT+ )?
- | '.' DIGIT+ ( E [-+]? DIGIT+ )?
+numeric_literal
+ : NUMERIC_LITERAL
  ;
- 
-TIMESTAMP_LITERAL // ISO: '2011-12-03T10:15:30+01:00'.
- : '\'' YEAR_LITERAL '-' MONTH_LITERAL '-' DAY_LITERAL ('T' HOUR_LITERAL_24 ':' MINUTE_LITERAL (':' SECOND_LITERAL ([+-] HOUR_LITERAL_12 ':' MINUTE_LITERAL)?)?)? '\''
- | CURRENT_TIMESTAMP
- | TIMESTAMP_RELATIVE
- ;
- 
-CURRENT_TIMESTAMP : C U R R E N T '_' T I M E S T A M P;
-TIMESTAMP_RELATIVE : T I M E S T A M P '_' (Y E S T E R D A Y | T O D A Y | T O M O R R O W) ('_' L A S T)?;
 
+NUMERIC_LITERAL
+ : DIGIT+ ( '.' DIGIT* )?
+ ;
+
+
+timestamp_literal // ISO: '2011-12-03T10:15:30+01:00'.
+ : TIMESTAMP_LITERAL
+ | CURRENT_TIMESTAMP
+ | TIMESTAMP_YESTERDAY
+ | TIMESTAMP_YESTERDAY_LAST
+ | TIMESTAMP_TODAY
+ | TIMESTAMP_TODAY_LAST
+ | TIMESTAMP_TOMORROW
+ | TIMESTAMP_TOMORROW_LAST
+ ;
+
+TIMESTAMP_LITERAL        : '\'' YEAR_LITERAL '-' MONTH_LITERAL '-' DAY_LITERAL ('T' HOUR_LITERAL_24 ':' MINUTE_LITERAL (':' SECOND_LITERAL (PLUS_MINUS HOUR_LITERAL_12 ':' MINUTE_LITERAL)?)?)? '\'' ;
+CURRENT_TIMESTAMP        : C U R R E N T '_' T I M E S T A M P;
+TIMESTAMP_YESTERDAY      : T I M E S T A M P '_' Y E S T E R D A Y;
+TIMESTAMP_YESTERDAY_LAST : T I M E S T A M P '_' Y E S T E R D A Y '_' L A S T;
+TIMESTAMP_TODAY          : T I M E S T A M P '_' T O D A Y;
+TIMESTAMP_TODAY_LAST     : T I M E S T A M P '_' T O D A Y '_' L A S T;
+TIMESTAMP_TOMORROW       : T I M E S T A M P '_' T O M O R R O W;
+TIMESTAMP_TOMORROW_LAST  : T I M E S T A M P '_' T O M O R R O W '_' L A S T;
+
+
+string_literal
+ : STRING_LITERAL
+ ;
+ 
 STRING_LITERAL
  : '\'' ( ~'\'' | '\'\'' )* '\''
+ ;
+ 
+bind_parameter
+ : BIND_PARAMETER
  ;
  
 BIND_PARAMETER
@@ -153,6 +175,11 @@ IDENTIFIER
  ;
 
  
+PLUS_MINUS
+ : '+'
+ | '-'
+ ;
+ 
 YEAR_LITERAL // 1800-2199
 // : ([0-9])|('2'[0-1]) DIGIT DIGIT
  : DIGIT DIGIT DIGIT DIGIT
@@ -188,6 +215,7 @@ HOUR_LITERAL_12
  : DIGIT DIGIT
  ;
  
+QUOTE : '\'';
 
 SPACES
  : [ \u000B\t\r\n] -> channel(HIDDEN)

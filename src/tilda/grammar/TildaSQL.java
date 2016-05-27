@@ -35,6 +35,8 @@ public class TildaSQL
     public static void main(String[] args)
     throws Exception
       {
+        SystemValues.autoInit();
+        
         String[] Expressions = {"toto = 'dodo'"
 //                               ,"toto = CURRENT_TIME"
 //                               ,"toto <= TIMESTAMP_TOMORROW_LAST"
@@ -45,7 +47,7 @@ public class TildaSQL
 //                               ,"toto=1 AND tata=2 AND titi=3"
 //                               ,"toto=1 AND (tata=2 OR tata=3 OR tata=4 OR tata=5) AND (titi=1 OR titi <>10)"
 //                               ,"(1+2)*5-4/2 >= 3*(1+toto)/tata"
-                               ,"@toto.acadabra >= 3*(1+?{var1})/?{var2} and gogo.barilla > gogo.panzani and (gogo.date > CURRENT_TIMESTAMP OR gogo.deleted > '2016-01-01')"
+                               ,"@toto.acadabra >= 3*(1+?{var1})/?{var2} && gogo.barilla > gaga.panzani and (gigi.date > CURRENT_TIMESTAMP OR gugu.deleted > '2016-01-01' OR titi >= TIMESTAMP_TODAY)"
 //                               ,"     (toto.daysPostEpisode+1)*2 <= 7-toto.xyz "+SystemValues.NEWLINE
 //                                 +" AND (    ( principalDischargeICD9 LIKE '410.%' AND  principalDischargeICD9 NOT LIKE '410._2' )"+SystemValues.NEWLINE
 //                                 +"       OR ( secondaryDischargeICD9 LIKE '410.%' AND  secondaryDischargeICD9 NOT LIKE '410._2' )"+SystemValues.NEWLINE
