@@ -25,56 +25,103 @@ where
 
 
 expr
- : value
-// | unary_operator expr
- | expr bin_operator expr
- | function 
- | sub_expr
- | column ( K_ISNULL | K_NOTNULL | K_NOT K_NULL )
- | column K_NOT? K_BETWEEN expr K_AND expr
+ : bool_expr
+ | bin_expr
+ | isnull_expr
+ | between_expr
+ | expr_sub
  ;
  
- 
-value
- : numeric_literal
- | timestamp_literal
- | string_literal
- | K_NULL
- | K_CURRENT_TIME
- | K_CURRENT_DATE
- | K_CURRENT_TIMESTAMP
- | bind_parameter
- | column
- ;
-
-sub_expr
+expr_sub
  : '(' expr ')'
  ;
-
-
-/*
-    We support the following binary operators, in order from highest to lowest precedence:
-    ||
-    *    /    %
-    +    -
-    <    <=   >    >=
-    =    ==   !=   <>   IS   IS NOT   IN   LIKE   GLOB   MATCH   REGEXP
-    AND
-    OR
-*/
-bin_operator
- : '||'
- | ( '*' | '/' | '%' )
- | ( '+' | '-/' )
- | ( '<' | '<=' | '>' | '>=' )
- | ( '=' | '==' | '!=' | '<>' | K_IS | K_IS K_NOT | K_IN | K_LIKE | K_REGEXP )
- | K_AND
- | K_OR
- | K_NOT? ( K_LIKE | K_REGEXP )
+ 
+bool_expr
+ : l_expr=bool_expr op=bool_op r_expr=bool_expr     
+ | s_expr=bin_expr                                                                
+ | bool_expr_sub                                                                  
  ;
 
+bool_op
+ : K_AND K_NOT?
+ | K_OR K_NOT?
+ ;
+ 
+bool_expr_sub
+ : '(' bool_expr ')'
+ ; 
+
+bin_expr
+ : column bin_op aryth_expr
+ ;
+
+bin_op: K_LT | K_LTE | K_GT | K_GTE | K_EQ | K_NEQ | (K_NOT)? K_LIKE;
+
+aryth_expr
+ : l_expr=aryth_expr op=aryth_op_mul r_expr=aryth_expr      # ArythExprAddExpr
+ | l_expr=aryth_expr op=aryth_op_add r_expr=aryth_expr      # ArythExprMultExpr
+ | val=value                                                # ArythExprVal
+ | s_expr=aryth_expr_sub                                    # ArythExprSub
+ ;
+ 
+aryth_expr_sub
+ : '(' s_expr=aryth_expr ')'
+ ;
+
+aryth_op_add: '+' | '-';
+aryth_op_mul: '*' | '/';
+ 
+
+isnull_expr
+ : col=column op=isnull_op
+ ;
+
+isnull_op
+ : K_IS K_NOT? K_NULL
+ ;
+
+between_expr
+ : col=column op=between_op val1=value K_AND val2=value
+ ;
+
+between_op
+ : K_NOT? K_BETWEEN
+ ;
+
+value
+ : num=NUMERIC_LITERAL                  #ValueLiteralNumeric
+ | tim=TIMESTAMP_LITERAL                #ValueLiteralTimestamp
+ | str=STRING_LITERAL                   #ValueLiteralString
+ | nul=K_NULL                           #ValueLiteralNull
+ | bnd=BIND_PARAMETER                   #ValueBind
+ | col=column   #ValueColumn
+ ; 
+
+NUMERIC_LITERAL
+ : DIGIT+ ( '.' DIGIT* )? ( E [-+]? DIGIT+ )?
+ | '.' DIGIT+ ( E [-+]? DIGIT+ )?
+ ;
+ 
+TIMESTAMP_LITERAL // ISO: '2011-12-03T10:15:30+01:00'.
+ : '\'' YEAR_LITERAL '-' MONTH_LITERAL '-' DAY_LITERAL ('T' HOUR_LITERAL_24 ':' MINUTE_LITERAL (':' SECOND_LITERAL ([+-] HOUR_LITERAL_12 ':' MINUTE_LITERAL)?)?)? '\''
+ | CURRENT_TIMESTAMP
+ | TIMESTAMP_RELATIVE
+ ;
+ 
+CURRENT_TIMESTAMP : C U R R E N T '_' T I M E S T A M P;
+TIMESTAMP_RELATIVE : T I M E S T A M P '_' (Y E S T E R D A Y | T O D A Y | T O M O R R O W) ('_' L A S T)?;
+
+STRING_LITERAL
+ : '\'' ( ~'\'' | '\'\'' )* '\''
+ ;
+ 
+BIND_PARAMETER
+ : '?{' IDENTIFIER '}'
+ ;
+
+
 function
- : IDENTIFIER '(' ( expr ( ',' expr )* )? ')'
+ : IDENTIFIER '(' ( aryth_expr ( ',' aryth_expr )* )? ')'
  ;
 
 column
@@ -82,123 +129,27 @@ column
  ;
 
 
-unary_operator
- : '-'
- | '+'
- | '~'
- | K_NOT
- ;
 
-
-keyword
- : K_AND
- | K_BETWEEN
- | K_CURRENT_DATE
- | K_CURRENT_TIME
- | K_CURRENT_TIMESTAMP
- | K_IN
- | K_IS 
- | K_ISNULL
- | K_LIKE
- | K_NOT
- | K_NOTNULL
- | K_NULL
- | K_ON
- | K_OR
- | K_REGEXP
- ;
-
-// TODO check all names below
-
-name
- : any_name
- ;
-
-function_name
- : any_name
- ;
-
-any_name
- : IDENTIFIER 
- | keyword
- | string_literal
- | '(' any_name ')'
- ;
-
-SCOL : ';';
-DOT : '.';
-OPEN_PAR : '(';
-CLOSE_PAR : ')';
-COMMA : ',';
-ASSIGN : '=';
-STAR : '*';
-PLUS : '+';
-MINUS : '-';
-TILDE : '~';
-PIPE2 : '||';
-DIV : '/';
-MOD : '%';
-LT2 : '<<';
-GT2 : '>>';
-AMP : '&';
-PIPE : '|';
-LT : '<';
-LT_EQ : '<=';
-GT : '>';
-GT_EQ : '>=';
-EQ : '==';
-NOT_EQ1 : '!=';
-NOT_EQ2 : '<>';
-
-
-K_AND : A N D;
+K_AND : A N D  | '&' '&';
 K_BETWEEN : B E T W E E N;
-K_CURRENT_DATE : C U R R E N T '_' D A T E;
-K_CURRENT_TIME : C U R R E N T '_' T I M E;
-K_CURRENT_TIMESTAMP : C U R R E N T '_' T I M E S T A M P;
 K_IN : I N;
 K_IS : I S;
-K_ISNULL : I S N U L L;
 K_LIKE : L I K E;
 K_NOT : N O T;
-K_NOTNULL : N O T N U L L;
 K_NULL : N U L L;
 K_ON : O N;
-K_OR : O R;
+K_OR : O R | '|' '|';
 K_REGEXP : R E G E X P;
+K_LT: '<';
+K_LTE: '<' '=';
+K_GT: '>';
+K_GTE: '>' '=';
+K_EQ: '=';
+K_NEQ: '<' '>' | '!' '=';
+
 
 IDENTIFIER
  : [a-zA-Z_] [a-zA-Z_0-9]* 
- ;
-
-
-numeric_literal
- : NUMERIC_LITERAL 
- ;
-
-NUMERIC_LITERAL
- : DIGIT+ ( '.' DIGIT* )? ( E [-+]? DIGIT+ )?
- | '.' DIGIT+ ( E [-+]? DIGIT+ )?
- ;
-
-string_literal
- : '\'' ( ~'\'' | '\'\'' )* '\''
- ;
- 
-bind_parameter
- : BIND_PARAMETER
- ;
-
-BIND_PARAMETER
- : '?{' IDENTIFIER '}'
- ;
- 
-timestamp_literal  
- : TIMESTAMP_LITERAL
- ;
-
-TIMESTAMP_LITERAL // ISO: '2011-12-03T10:15:30+01:00'.
- : '\'' YEAR_LITERAL '-' MONTH_LITERAL '-' DAY_LITERAL ('T' HOUR_LITERAL_24 ':' MINUTE_LITERAL (':' SECOND_LITERAL ([+-] HOUR_LITERAL_12 ':' MINUTE_LITERAL)?)?)? '\''
  ;
 
  

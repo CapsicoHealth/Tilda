@@ -97,11 +97,6 @@ public class HelloParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitEval(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitEval(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final EvalContext eval() throws RecognitionException {
@@ -147,11 +142,6 @@ public class HelloParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitAdditionExp(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitAdditionExp(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -233,11 +223,6 @@ public class HelloParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitMultiplyExp(this);
 		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitMultiplyExp(this);
-			else return visitor.visitChildren(this);
-		}
 	}
 
 	public final MultiplyExpContext multiplyExp() throws RecognitionException {
@@ -315,11 +300,6 @@ public class HelloParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitAtomExp(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitAtomExp(this);
-			else return visitor.visitChildren(this);
 		}
 	}
 
