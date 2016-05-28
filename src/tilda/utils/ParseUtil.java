@@ -486,6 +486,49 @@ public class ParseUtil
         return parseDouble(Name, Mandatory, Values == null ? null : Values.split(Separator), Errors);
       }
     
+
+    /************************************************************************************************************************
+     * NUMBERS
+     ************************************************************************************************************************/
+    
+    /**
+     * Attempts to parse the String passed in as an Integer, Long, Float or Double. 
+     * @param val
+     * @return Either an Integer, Long, Float or Double object representing the parsed value of the passed in String, or Null if the value couldn't be parsed.
+     */
+    public static Object parseNumber(String val)
+     {
+        try
+          {
+            return new Integer(Integer.parseInt(val));
+          }
+        catch (NumberFormatException E)
+          {
+          }
+        try
+          {
+            return new Long(Long.parseLong(val));
+          }
+        catch (NumberFormatException E)
+          {
+          }
+        try
+          {
+            return new Float(Float.parseFloat(val));
+          }
+        catch (NumberFormatException E)
+          {
+          }
+        try
+          {
+            return new Double(Double.parseDouble(val));
+          }
+        catch (NumberFormatException E)
+          {
+          }
+        LOG.debug("Couldn't parse '"+val+"' as either an int, long, float or double");
+        return null;
+     }
     
     
 

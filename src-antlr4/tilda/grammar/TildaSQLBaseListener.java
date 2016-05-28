@@ -100,6 +100,30 @@ public class TildaSQLBaseListener implements TildaSQLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterBin_expr_lhs(TildaSQLParser.Bin_expr_lhsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBin_expr_lhs(TildaSQLParser.Bin_expr_lhsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterValue_list(TildaSQLParser.Value_listContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitValue_list(TildaSQLParser.Value_listContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterBin_op(TildaSQLParser.Bin_opContext ctx) { }
 	/**
 	 * {@inheritDoc}

@@ -52,7 +52,16 @@ bool_expr_sub
  ; 
 
 bin_expr
- : column bin_op (column | aryth_expr)
+ : bin_expr_lhs bin_op (column | aryth_expr)
+ | bin_expr_lhs K_IN  value_list
+ ;
+
+bin_expr_lhs
+ : column (('+' | '||') column)*
+ ;
+
+value_list
+ : '(' value (',' value)* ')'
  ;
 
 bin_op: K_LT | K_LTE | K_GT | K_GTE | K_EQ | K_NEQ | (K_NOT)? K_LIKE;
@@ -73,7 +82,7 @@ aryth_op_mul: '*' | '/';
  
 
 isnull_expr
- : col=column op=isnull_op
+ : column isnull_op
  ;
 
 isnull_op
@@ -166,7 +175,7 @@ K_LT: '<';
 K_LTE: '<' '=';
 K_GT: '>';
 K_GTE: '>' '=';
-K_EQ: '=';
+K_EQ: '=' '='?;
 K_NEQ: '<' '>' | '!' '=';
 
 
