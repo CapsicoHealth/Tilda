@@ -45,7 +45,6 @@ public class TildaSQLTreePrinter extends TildaSQLBaseListener
     protected StringBuilder                  _ParseTreeStr = new StringBuilder();
     protected Parser                         _Parser;
     protected Map<RuleContext, List<String>> _Path         = new HashMap<RuleContext, List<String>>();
-    protected List<String>                   _Errors       = new ArrayList<String>();
 
     protected static boolean isTerminalNode(ParseTree node)
       {

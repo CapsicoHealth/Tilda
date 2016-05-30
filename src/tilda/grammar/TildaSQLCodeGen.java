@@ -18,6 +18,7 @@ package tilda.grammar;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 
@@ -41,6 +42,7 @@ import tilda.grammar.TildaSQLParser.ValueNumericLiteralContext;
 import tilda.grammar.TildaSQLParser.ValueStringLiteralContext;
 import tilda.grammar.TildaSQLParser.ValueTimestampLiteralContext;
 import tilda.grammar.TildaSQLParser.Value_listContext;
+import tilda.types.ColumnDefinition;
 import tilda.utils.Counter;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.ParseUtil;
@@ -55,8 +57,15 @@ public class TildaSQLCodeGen extends TildaSQLBaseListener
         _Parser = parser;
       }
 
-    protected StringBuilder _CodeGen = new StringBuilder("Q");
+    public void setColumnEnvironment(List<ColumnDefinition> Columns)
+      {
+        _Columns = Columns;
+      }
+
+
     protected Parser        _Parser;
+    List<ColumnDefinition>  _Columns = new ArrayList<ColumnDefinition>();
+    protected StringBuilder _CodeGen = new StringBuilder("Q");
     protected List<String>  _Errors  = new ArrayList<String>();
 
     protected void addError(String err, ParserRuleContext ctx)
@@ -64,6 +73,11 @@ public class TildaSQLCodeGen extends TildaSQLBaseListener
         err += " (line " + ctx.getStart().getLine() + ":" + ctx.getStart().getCharPositionInLine() + ")";
         _Errors.add(err);
         LOG.error(err);
+      }
+
+    public Iterator<String> getErrors()
+      {
+        return _Errors.isEmpty() == true ? null : _Errors.iterator();
       }
 
     @Override
@@ -224,6 +238,19 @@ public class TildaSQLCodeGen extends TildaSQLBaseListener
         super.exitValue_list(ctx);
       }
 
+    @Override
+    public void enterColumn(ColumnContext ctx)
+      {
+        if (_Columns.isEmpty() == false)
+          {
+            String colName = ctx.getText();
+            for (ColumnDefinition col : _Columns)
+              if (col.getName().equals(colName) == true)
+                return;
+            addError("Unknown column name '" + colName + "'.", ctx);
+          }
+        super.enterColumn(ctx);
+      }
 
     @Override
     public void enterArythExpr(ArythExprContext ctx)
@@ -247,6 +274,8 @@ public class TildaSQLCodeGen extends TildaSQLBaseListener
     @Override
     public void enterAryth_op_mul(Aryth_op_mulContext ctx)
       {
+        if (ctx.K_DIV() != null)
+         handleArgumentType(ColumnType.FLOAT, ctx);
         _CodeGen.append(ctx.getText());
         super.enterAryth_op_mul(ctx);
       }
@@ -255,6 +284,7 @@ public class TildaSQLCodeGen extends TildaSQLBaseListener
     @Override
     public void enterAryth_expr_sub(Aryth_expr_subContext ctx)
       {
+        _ArgumentTypes.push(new ColumnTypeWrapper());
         _CodeGen.append("(");
         super.enterAryth_expr_sub(ctx);
       }
@@ -262,6 +292,22 @@ public class TildaSQLCodeGen extends TildaSQLBaseListener
     @Override
     public void exitAryth_expr_sub(Aryth_expr_subContext ctx)
       {
+        ColumnTypeWrapper Type = _ArgumentTypes.isEmpty() == true ? null : _ArgumentTypes.pop();
+        if (Type == null)
+          {
+            addError("Closing a sub expression without having a Type manager active!!!!", ctx);
+          }
+        else if (Type._Type == null)
+          {
+            addError("Closing a sub expression without having a Type gathered!!!!", ctx);
+          }
+        else
+          {
+            ColumnTypeWrapper Type2 = _ArgumentTypes.isEmpty() == true ? null : _ArgumentTypes.peek();
+            if (Type2 != null && Type2.addType(Type._Type, ctx.getText()) == false)
+              addError(Type2.getLastError(), ctx);
+          }
+
         _CodeGen.append(")");
         super.enterAryth_expr_sub(ctx);
       }

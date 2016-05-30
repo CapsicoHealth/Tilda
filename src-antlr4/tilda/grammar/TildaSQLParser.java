@@ -17,15 +17,15 @@ public class TildaSQLParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
-		NUMERIC_LITERAL=10, TIMESTAMP_LITERAL=11, CURRENT_TIMESTAMP=12, TIMESTAMP_YESTERDAY=13, 
-		TIMESTAMP_YESTERDAY_LAST=14, TIMESTAMP_TODAY=15, TIMESTAMP_TODAY_LAST=16, 
-		TIMESTAMP_TOMORROW=17, TIMESTAMP_TOMORROW_LAST=18, STRING_LITERAL=19, 
-		BIND_PARAMETER=20, K_AND=21, K_BETWEEN=22, K_IN=23, K_IS=24, K_LIKE=25, 
-		K_NOT=26, K_NULL=27, K_ON=28, K_OR=29, K_REGEXP=30, K_LT=31, K_LTE=32, 
-		K_GT=33, K_GTE=34, K_EQ=35, K_NEQ=36, IDENTIFIER=37, PLUS_MINUS=38, YEAR_LITERAL=39, 
-		MONTH_LITERAL=40, DAY_LITERAL=41, HOUR_LITERAL_24=42, MINUTE_LITERAL=43, 
-		SECOND_LITERAL=44, HOUR_LITERAL_12=45, QUOTE=46, SPACES=47, UNEXPECTED_CHAR=48;
+		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, NUMERIC_LITERAL=9, 
+		TIMESTAMP_LITERAL=10, CURRENT_TIMESTAMP=11, TIMESTAMP_YESTERDAY=12, TIMESTAMP_YESTERDAY_LAST=13, 
+		TIMESTAMP_TODAY=14, TIMESTAMP_TODAY_LAST=15, TIMESTAMP_TOMORROW=16, TIMESTAMP_TOMORROW_LAST=17, 
+		STRING_LITERAL=18, BIND_PARAMETER=19, K_AND=20, K_BETWEEN=21, K_IN=22, 
+		K_IS=23, K_LIKE=24, K_NOT=25, K_NULL=26, K_ON=27, K_OR=28, K_REGEXP=29, 
+		K_LT=30, K_LTE=31, K_GT=32, K_GTE=33, K_EQ=34, K_NEQ=35, K_DIV=36, IDENTIFIER=37, 
+		PLUS_MINUS=38, YEAR_LITERAL=39, MONTH_LITERAL=40, DAY_LITERAL=41, HOUR_LITERAL_24=42, 
+		MINUTE_LITERAL=43, SECOND_LITERAL=44, HOUR_LITERAL_12=45, QUOTE=46, SPACES=47, 
+		UNEXPECTED_CHAR=48;
 	public static final int
 		RULE_where = 0, RULE_expr = 1, RULE_expr_sub = 2, RULE_bool_expr = 3, 
 		RULE_bool_op = 4, RULE_bool_expr_sub = 5, RULE_bin_expr = 6, RULE_bin_expr_lhs = 7, 
@@ -43,21 +43,20 @@ public class TildaSQLParser extends Parser {
 	};
 
 	private static final String[] _LITERAL_NAMES = {
-		null, "'('", "')'", "'+'", "'||'", "','", "'-'", "'*'", "'/'", "'.'", 
+		null, "'('", "')'", "'+'", "'||'", "','", "'-'", "'*'", "'.'", null, null, 
 		null, null, null, null, null, null, null, null, null, null, null, null, 
-		null, null, null, null, null, null, null, null, null, "'<'", null, "'>'", 
-		null, null, null, null, null, null, null, null, null, null, null, null, 
-		"'''"
+		null, null, null, null, null, null, null, "'<'", null, "'>'", null, null, 
+		null, "'/'", null, null, null, null, null, null, null, null, null, "'''"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
-		null, null, null, null, null, null, null, null, null, null, "NUMERIC_LITERAL", 
+		null, null, null, null, null, null, null, null, null, "NUMERIC_LITERAL", 
 		"TIMESTAMP_LITERAL", "CURRENT_TIMESTAMP", "TIMESTAMP_YESTERDAY", "TIMESTAMP_YESTERDAY_LAST", 
 		"TIMESTAMP_TODAY", "TIMESTAMP_TODAY_LAST", "TIMESTAMP_TOMORROW", "TIMESTAMP_TOMORROW_LAST", 
 		"STRING_LITERAL", "BIND_PARAMETER", "K_AND", "K_BETWEEN", "K_IN", "K_IS", 
 		"K_LIKE", "K_NOT", "K_NULL", "K_ON", "K_OR", "K_REGEXP", "K_LT", "K_LTE", 
-		"K_GT", "K_GTE", "K_EQ", "K_NEQ", "IDENTIFIER", "PLUS_MINUS", "YEAR_LITERAL", 
-		"MONTH_LITERAL", "DAY_LITERAL", "HOUR_LITERAL_24", "MINUTE_LITERAL", "SECOND_LITERAL", 
-		"HOUR_LITERAL_12", "QUOTE", "SPACES", "UNEXPECTED_CHAR"
+		"K_GT", "K_GTE", "K_EQ", "K_NEQ", "K_DIV", "IDENTIFIER", "PLUS_MINUS", 
+		"YEAR_LITERAL", "MONTH_LITERAL", "DAY_LITERAL", "HOUR_LITERAL_24", "MINUTE_LITERAL", 
+		"SECOND_LITERAL", "HOUR_LITERAL_12", "QUOTE", "SPACES", "UNEXPECTED_CHAR"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -1084,6 +1083,7 @@ public class TildaSQLParser extends Parser {
 	}
 
 	public static class Aryth_op_mulContext extends ParserRuleContext {
+		public TerminalNode K_DIV() { return getToken(TildaSQLParser.K_DIV, 0); }
 		public Aryth_op_mulContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1107,7 +1107,7 @@ public class TildaSQLParser extends Parser {
 			{
 			setState(159);
 			_la = _input.LA(1);
-			if ( !(_la==T__6 || _la==T__7) ) {
+			if ( !(_la==T__6 || _la==K_DIV) ) {
 			_errHandler.recoverInline(this);
 			} else {
 				consume();
@@ -1724,7 +1724,7 @@ public class TildaSQLParser extends Parser {
 				setState(209);
 				match(IDENTIFIER);
 				setState(210);
-				match(T__8);
+				match(T__7);
 				}
 				break;
 			}
@@ -1787,8 +1787,8 @@ public class TildaSQLParser extends Parser {
 		"\3\30\3\30\3\31\3\31\3\31\3\31\3\31\7\31\u00cb\n\31\f\31\16\31\u00ce\13"+
 		"\31\5\31\u00d0\n\31\3\31\3\31\3\32\3\32\5\32\u00d6\n\32\3\32\3\32\3\32"+
 		"\2\4\b\26\33\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62\2\6"+
-		"\3\2\5\6\4\2\5\5\b\b\3\2\t\n\3\2\r\24\u00df\2\64\3\2\2\2\4<\3\2\2\2\6"+
-		">\3\2\2\2\bE\3\2\2\2\nX\3\2\2\2\fZ\3\2\2\2\16h\3\2\2\2\20j\3\2\2\2\22"+
+		"\3\2\5\6\4\2\5\5\b\b\4\2\t\t&&\3\2\f\23\u00df\2\64\3\2\2\2\4<\3\2\2\2"+
+		"\6>\3\2\2\2\bE\3\2\2\2\nX\3\2\2\2\fZ\3\2\2\2\16h\3\2\2\2\20j\3\2\2\2\22"+
 		"r\3\2\2\2\24\u0087\3\2\2\2\26\u008c\3\2\2\2\30\u009b\3\2\2\2\32\u009f"+
 		"\3\2\2\2\34\u00a1\3\2\2\2\36\u00a3\3\2\2\2 \u00a6\3\2\2\2\"\u00ac\3\2"+
 		"\2\2$\u00b3\3\2\2\2&\u00bb\3\2\2\2(\u00bd\3\2\2\2*\u00bf\3\2\2\2,\u00c1"+
@@ -1798,17 +1798,17 @@ public class TildaSQLParser extends Parser {
 		"\3\2\2\2>?\7\3\2\2?@\5\4\3\2@A\7\4\2\2A\7\3\2\2\2BC\b\5\1\2CF\5\16\b\2"+
 		"DF\5\f\7\2EB\3\2\2\2ED\3\2\2\2FM\3\2\2\2GH\f\5\2\2HI\5\n\6\2IJ\5\b\5\6"+
 		"JL\3\2\2\2KG\3\2\2\2LO\3\2\2\2MK\3\2\2\2MN\3\2\2\2N\t\3\2\2\2OM\3\2\2"+
-		"\2PR\7\27\2\2QS\7\34\2\2RQ\3\2\2\2RS\3\2\2\2SY\3\2\2\2TV\7\37\2\2UW\7"+
-		"\34\2\2VU\3\2\2\2VW\3\2\2\2WY\3\2\2\2XP\3\2\2\2XT\3\2\2\2Y\13\3\2\2\2"+
+		"\2PR\7\26\2\2QS\7\33\2\2RQ\3\2\2\2RS\3\2\2\2SY\3\2\2\2TV\7\36\2\2UW\7"+
+		"\33\2\2VU\3\2\2\2VW\3\2\2\2WY\3\2\2\2XP\3\2\2\2XT\3\2\2\2Y\13\3\2\2\2"+
 		"Z[\7\3\2\2[\\\5\b\5\2\\]\7\4\2\2]\r\3\2\2\2^_\5\20\t\2_b\5\24\13\2`c\5"+
-		"\62\32\2ac\5\26\f\2b`\3\2\2\2ba\3\2\2\2ci\3\2\2\2de\5\20\t\2ef\7\31\2"+
+		"\62\32\2ac\5\26\f\2b`\3\2\2\2ba\3\2\2\2ci\3\2\2\2de\5\20\t\2ef\7\30\2"+
 		"\2fg\5\22\n\2gi\3\2\2\2h^\3\2\2\2hd\3\2\2\2i\17\3\2\2\2jo\5\62\32\2kl"+
 		"\t\2\2\2ln\5\62\32\2mk\3\2\2\2nq\3\2\2\2om\3\2\2\2op\3\2\2\2p\21\3\2\2"+
 		"\2qo\3\2\2\2rs\7\3\2\2sx\5&\24\2tu\7\7\2\2uw\5&\24\2vt\3\2\2\2wz\3\2\2"+
 		"\2xv\3\2\2\2xy\3\2\2\2y{\3\2\2\2zx\3\2\2\2{|\7\4\2\2|\23\3\2\2\2}\u0088"+
-		"\7!\2\2~\u0088\7\"\2\2\177\u0088\7#\2\2\u0080\u0088\7$\2\2\u0081\u0088"+
-		"\7%\2\2\u0082\u0088\7&\2\2\u0083\u0085\7\34\2\2\u0084\u0083\3\2\2\2\u0084"+
-		"\u0085\3\2\2\2\u0085\u0086\3\2\2\2\u0086\u0088\7\33\2\2\u0087}\3\2\2\2"+
+		"\7 \2\2~\u0088\7!\2\2\177\u0088\7\"\2\2\u0080\u0088\7#\2\2\u0081\u0088"+
+		"\7$\2\2\u0082\u0088\7%\2\2\u0083\u0085\7\33\2\2\u0084\u0083\3\2\2\2\u0084"+
+		"\u0085\3\2\2\2\u0085\u0086\3\2\2\2\u0086\u0088\7\32\2\2\u0087}\3\2\2\2"+
 		"\u0087~\3\2\2\2\u0087\177\3\2\2\2\u0087\u0080\3\2\2\2\u0087\u0081\3\2"+
 		"\2\2\u0087\u0082\3\2\2\2\u0087\u0084\3\2\2\2\u0088\25\3\2\2\2\u0089\u008a"+
 		"\b\f\1\2\u008a\u008d\5&\24\2\u008b\u008d\5\30\r\2\u008c\u0089\3\2\2\2"+
@@ -1819,22 +1819,22 @@ public class TildaSQLParser extends Parser {
 		"\2\2\u0098\u0099\3\2\2\2\u0099\27\3\2\2\2\u009a\u0098\3\2\2\2\u009b\u009c"+
 		"\7\3\2\2\u009c\u009d\5\26\f\2\u009d\u009e\7\4\2\2\u009e\31\3\2\2\2\u009f"+
 		"\u00a0\t\3\2\2\u00a0\33\3\2\2\2\u00a1\u00a2\t\4\2\2\u00a2\35\3\2\2\2\u00a3"+
-		"\u00a4\5\62\32\2\u00a4\u00a5\5 \21\2\u00a5\37\3\2\2\2\u00a6\u00a8\7\32"+
-		"\2\2\u00a7\u00a9\7\34\2\2\u00a8\u00a7\3\2\2\2\u00a8\u00a9\3\2\2\2\u00a9"+
-		"\u00aa\3\2\2\2\u00aa\u00ab\7\35\2\2\u00ab!\3\2\2\2\u00ac\u00ad\5\62\32"+
-		"\2\u00ad\u00ae\5$\23\2\u00ae\u00af\5&\24\2\u00af\u00b0\7\27\2\2\u00b0"+
-		"\u00b1\5&\24\2\u00b1#\3\2\2\2\u00b2\u00b4\7\34\2\2\u00b3\u00b2\3\2\2\2"+
-		"\u00b3\u00b4\3\2\2\2\u00b4\u00b5\3\2\2\2\u00b5\u00b6\7\30\2\2\u00b6%\3"+
+		"\u00a4\5\62\32\2\u00a4\u00a5\5 \21\2\u00a5\37\3\2\2\2\u00a6\u00a8\7\31"+
+		"\2\2\u00a7\u00a9\7\33\2\2\u00a8\u00a7\3\2\2\2\u00a8\u00a9\3\2\2\2\u00a9"+
+		"\u00aa\3\2\2\2\u00aa\u00ab\7\34\2\2\u00ab!\3\2\2\2\u00ac\u00ad\5\62\32"+
+		"\2\u00ad\u00ae\5$\23\2\u00ae\u00af\5&\24\2\u00af\u00b0\7\26\2\2\u00b0"+
+		"\u00b1\5&\24\2\u00b1#\3\2\2\2\u00b2\u00b4\7\33\2\2\u00b3\u00b2\3\2\2\2"+
+		"\u00b3\u00b4\3\2\2\2\u00b4\u00b5\3\2\2\2\u00b5\u00b6\7\27\2\2\u00b6%\3"+
 		"\2\2\2\u00b7\u00bc\5(\25\2\u00b8\u00bc\5*\26\2\u00b9\u00bc\5,\27\2\u00ba"+
 		"\u00bc\5.\30\2\u00bb\u00b7\3\2\2\2\u00bb\u00b8\3\2\2\2\u00bb\u00b9\3\2"+
-		"\2\2\u00bb\u00ba\3\2\2\2\u00bc\'\3\2\2\2\u00bd\u00be\7\f\2\2\u00be)\3"+
-		"\2\2\2\u00bf\u00c0\t\5\2\2\u00c0+\3\2\2\2\u00c1\u00c2\7\25\2\2\u00c2-"+
-		"\3\2\2\2\u00c3\u00c4\7\26\2\2\u00c4/\3\2\2\2\u00c5\u00c6\7\'\2\2\u00c6"+
+		"\2\2\u00bb\u00ba\3\2\2\2\u00bc\'\3\2\2\2\u00bd\u00be\7\13\2\2\u00be)\3"+
+		"\2\2\2\u00bf\u00c0\t\5\2\2\u00c0+\3\2\2\2\u00c1\u00c2\7\24\2\2\u00c2-"+
+		"\3\2\2\2\u00c3\u00c4\7\25\2\2\u00c4/\3\2\2\2\u00c5\u00c6\7\'\2\2\u00c6"+
 		"\u00cf\7\3\2\2\u00c7\u00cc\5\26\f\2\u00c8\u00c9\7\7\2\2\u00c9\u00cb\5"+
 		"\26\f\2\u00ca\u00c8\3\2\2\2\u00cb\u00ce\3\2\2\2\u00cc\u00ca\3\2\2\2\u00cc"+
 		"\u00cd\3\2\2\2\u00cd\u00d0\3\2\2\2\u00ce\u00cc\3\2\2\2\u00cf\u00c7\3\2"+
 		"\2\2\u00cf\u00d0\3\2\2\2\u00d0\u00d1\3\2\2\2\u00d1\u00d2\7\4\2\2\u00d2"+
-		"\61\3\2\2\2\u00d3\u00d4\7\'\2\2\u00d4\u00d6\7\13\2\2\u00d5\u00d3\3\2\2"+
+		"\61\3\2\2\2\u00d3\u00d4\7\'\2\2\u00d4\u00d6\7\n\2\2\u00d5\u00d3\3\2\2"+
 		"\2\u00d5\u00d6\3\2\2\2\u00d6\u00d7\3\2\2\2\u00d7\u00d8\7\'\2\2\u00d8\63"+
 		"\3\2\2\2\27<EMRVXbhox\u0084\u0087\u008c\u0096\u0098\u00a8\u00b3\u00bb"+
 		"\u00cc\u00cf\u00d5";
