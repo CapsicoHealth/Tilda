@@ -32,6 +32,136 @@ import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.ViewColumn;
 import tilda.utils.FileUtil;
+class ViewColor {
+	static String textColor = "black";
+	static String textStyle = "normal";
+	static String bgColor = "#A9D18E";// rgb(169,209,142)
+	static String borderColor = "#00B050";// rgb(0,176,80)
+	static String penWidth = "1";
+	static String toAttr(){
+		return "style=\"filled, dashed\",penwidth=\""+penWidth
+				+ "\",color=\""+borderColor+"\",fillcolor=\""+bgColor
+						+ "\",fontcolor=\""+textColor+"\",fontname=\""+textStyle+"\"";
+	}
+}
+
+// ORGANIZATION[style="filled",penwidth="1", color="blue", fillcolor="black", label="{ORGANIZATION}", fontcolor="white", id="other_ORGANIZATION"]
+
+class ObjectInColor {
+	// Text: white bold
+	// Background: 46/117/182
+	// Border: 65/113/156 2px solid
+	static String textColor = "white";
+	static String textStyle = "bold";
+
+	static String bgColor = "#2E75B6";// rgb(46,117,182)
+	static String borderColor = "#41719C";
+	static String penWidth = "2";
+	static String toAttr(){
+		return "style=\"filled\",penwidth=\""+penWidth
+				+ "\",color=\""+borderColor+"\",fillcolor=\""+bgColor
+						+ "\",fontcolor=\""+textColor+"\",fontname=\""+textStyle+"\"";
+	}
+
+}
+
+
+
+class ObjectOutColor {
+	// Text: white normal
+	// Background: 166/201/232
+	// Border: none
+	static String textColor = "white";
+	static String textStyle = "normal";
+	static String bgColor = "#A6C9E8";// rgb(166,201,232)
+	static String borderColor = "white";
+	static String penWidth = "0";
+	static String toAttr(){
+		return "style=\"filled\",penwidth=\""+penWidth
+				+ "\",color=\""+borderColor+"\",fillcolor=\""+bgColor
+						+ "\",fontcolor=\""+textColor+"\",fontname=\""+textStyle+"\"";
+	}
+
+}
+
+
+class MapperColor {
+	// Text: black
+	// Background: 248/203/173
+	// Border: 244/177/131 2px solid
+	static String textColor = "black";
+	static String textStyle = "normal";
+	static String bgColor = "#F8CBAD"; // rgb(248,203,173)
+	static String borderColor = "#F4B183"; //rgb(244,177,131)
+	static String penWidth = "2";
+	static String toAttr(){
+		return "style=\"filled\",penwidth=\""+penWidth
+				+ "\",color=\""+borderColor+"\",fillcolor=\""+bgColor
+						+ "\",fontcolor=\""+textColor+"\",fontname=\""+textStyle+"\"";
+	}
+}
+
+
+class EnumerationColor {
+	// Text: black
+	// Background: 251/229/214
+	// Border: 248/203/173 1px solid
+	static String textColor = "black";
+	static String textStyle = "normal";
+	static String bgColor = "#FBE5D6"; //rgb(251,229,214)
+	static String borderColor = "#F8CBAD"; // rgb(248,203,173)
+	static String penWidth = "1";
+
+	static String toAttr(){
+		return "style=\"filled\",penwidth=\""+penWidth
+				+ "\",color=\""+borderColor+"\",fillcolor=\""+bgColor
+						+ "\",fontcolor=\""+textColor+"\",fontname=\""+textStyle+"\"";
+	}
+
+}
+
+class FkInObjSchema {
+	static String lineColor = "#41719C"; // rgb(65,113,156)
+	static String penWidth = "1";
+	static String lineStyle = "filled";
+	static String toArr(){
+		return "style=\"filled\",penwidth=\""+penWidth+"\",color=\""+lineColor+"\"";
+	}
+}
+
+class FkOutObjSchema {
+	static String lineColor = "#05719C";// rgb(5,113,156)
+	static String penWidth = "1";
+	static String lineStyle = "dashed";
+
+	static String toArr(){
+		return "style=\"filled\",penwidth=\""+penWidth+"\",color=\""+lineColor+"\"";
+	}
+}
+
+
+class FkInViewSchema {
+	static String lineColor = "#00B050";//rgb(0,176,80)
+	static String penWidth = "1";
+	static String lineStyle = "filled";
+
+	static String toArr(){
+		return "style=\"filled\",penwidth=\""+penWidth+"\",color=\""+lineColor+"\"";
+	}
+
+}
+
+class FkOutViewSchema {
+	static String lineColor = "#00B050"; // rgb(0,176,80)
+	static String penWidth = "1";
+	static String lineStyle = "dashed";
+
+	static String toArr(){
+		return "style=\"filled\",penwidth=\""+penWidth+"\",color=\""+lineColor+"\"";
+	}
+
+}
+
 
 
 public class GraphvizUtil
@@ -55,7 +185,6 @@ public class GraphvizUtil
     Schema                            schema;
 
     GeneratorSession                  G;
-
     public GraphvizUtil(Schema schema, GeneratorSession G)
       {
         this.schema = schema;
@@ -258,11 +387,11 @@ public class GraphvizUtil
                     temp.add(_Name);
                     if (containsObject(objects, tObject))
                       {
-                        _sbMapper.append("" + _Name + "[label=\"{" + _Name + "}\", color=\"red\", id=\"" + _Name + "\"]");
+                        _sbMapper.append("" + _Name + "["+ObjectInColor.toAttr()+"label=\"{" + _Name + "}\", id=\"" + _Name + "\"]");
                       }
                     else
                       {
-                        _sbMapper.append("" + _Name + "[label=\"{" + _Name + "}\", color=\"#ADD8E6\", id=\"other_" + _Name + "\"]");
+                        _sbMapper.append("" + _Name + "["+ObjectOutColor.toAttr()+"label=\"{" + _Name + "}\", id=\"other_" + _Name + "\"]");
                       }
 
                     _sbMapper.append("\r\n");
@@ -273,11 +402,11 @@ public class GraphvizUtil
                     _Name = mapper._Name.toUpperCase();
                     if (containsObject(mappers, mapper))
                       {
-                        _sbMapper.append("" + _Name + "[label=\"{" + _Name + "}\", color=\"blue\", id=\"" + _Name + "\"]");
+                        _sbMapper.append("" + _Name + "["+MapperColor.toAttr()+"label=\"{" + _Name + "}\", id=\"" + _Name + "\"]");
                       }
                     else
                       {
-                        _sbMapper.append("" + _Name + "[label=\"{" + _Name + "}\", color=\"#ADD8E6\", id=\"other_" + _Name + "\"]");
+                        _sbMapper.append("" + _Name + "["+MapperColor.toAttr()+"label=\"{" + _Name + "}\", id=\"other_" + _Name + "\"]");
                       }
 
                     _sbMapper.append("\r\n");
@@ -303,11 +432,11 @@ public class GraphvizUtil
                     temp.add(_Name);
                     if (containsObject(objects, tObject))
                       {
-                        _sbObject.append("" + _Name + "[label=\"{" + _Name + "}\", color=\"red\", id=\"" + _Name + "\"]");
+                        _sbObject.append("" + _Name + "["+ObjectInColor.toAttr()+"label=\"{" + _Name + "}\", id=\"" + _Name + "\"]");
                       }
                     else
                       {
-                        _sbObject.append("" + _Name + "[label=\"{" + _Name + "}\", color=\"#ADD8E6\", id=\"other_" + _Name + "\"]");
+                        _sbObject.append("" + _Name + "["+ObjectOutColor.toAttr()+"label=\"{" + _Name + "}\", id=\"other_" + _Name + "\"]");
                       }
                     _sbObject.append("\r\n");
                   }
@@ -318,16 +447,20 @@ public class GraphvizUtil
                     tObject._Name = _Name;
                     if (containsObject(objects, tObject))
                       {
-                        _sbObject.append("" + _Name + "[label=\"{" + _Name + "}\", color=\"red\", id=\"" + _Name + "\"]");
+                        _sbObject.append("" + _Name + "["+ObjectInColor.toAttr()+"label=\"{" + _Name + "}\", id=\"" + _Name + "\"]");
+                        _sbObject.append("\r\n");
+                        _sbObject.append(object._Name.toUpperCase() + " -> " + fKeyS.toUpperCase() + "["+FkInObjSchema.toArr()+"]");
+
                       }
                     else
                       {
-                        _sbObject.append("" + _Name + "[label=\"{" + _Name + "}\", color=\"#ADD8E6\", id=\"other_" + _Name + "\"]");
+                        _sbObject.append("" + _Name + "["+ObjectOutColor.toAttr()+"label=\"{" + _Name + "}\", id=\"other_" + _Name + "\"]");
+                        _sbObject.append("\r\n");
+                        _sbObject.append(object._Name.toUpperCase() + " -> " + fKeyS.toUpperCase() + "["+FkOutObjSchema.toArr()+"]");
+
                       }
-                    _sbObject.append("\r\n");
                   }
 
-                _sbObject.append(object._Name.toUpperCase() + " -> " + fKeyS.toUpperCase() + "[color=\"red\"]");
                 _sbObject.append("\r\n");
               }
           }
@@ -351,11 +484,11 @@ public class GraphvizUtil
                     temp.add(_Name);
                     if (containsObject(mappers, tMapper))
                       {
-                        _sbObject.append("" + _Name + "[label=\"{" + _Name + "}\", color=\"blue\", id=\"" + _Name + "\"]");
+                        _sbObject.append("" + _Name + "["+MapperColor.toAttr()+"label=\"{" + _Name + "}\", id=\"" + _Name + "\"]");
                       }
                     else
                       {
-                        _sbObject.append("" + _Name + "[label=\"{" + _Name + "}\", color=\"#ADD8E6\", id=\"other_" + _Name + "\"]");
+                        _sbObject.append("" + _Name + "["+MapperColor.toAttr()+"label=\"{" + _Name + "}\", id=\"other_" + _Name + "\"]");
                       }
 
                     _sbObject.append("\r\n");
@@ -375,11 +508,11 @@ public class GraphvizUtil
                     temp.add(_Name);
                     if (containsObject(enumerations, tEnum))
                       {
-                        _sbObject.append("" + _Name + "[label=\"{" + _Name + "}\", color=\"cyan\", id=\"" + _Name + "\"]");
+                        _sbObject.append("" + _Name + "["+EnumerationColor.toAttr()+"label=\"{" + _Name + "}\", id=\"" + _Name + "\"]");
                       }
                     else
                       {
-                        _sbObject.append("" + _Name + "[label=\"{" + _Name + "}\", color=\"#ADD8E6\", id=\"other_" + _Name + "\"]");
+                        _sbObject.append("" + _Name + "["+EnumerationColor.toAttr()+"label=\"{" + _Name + "}\", id=\"other_" + _Name + "\"]");
                       }
 
                     _sbObject.append("\r\n");
@@ -397,7 +530,7 @@ public class GraphvizUtil
               {
                 temp.add(view._Name);
                 String _Name = view._Name.toUpperCase();
-                _sbView.append("" + _Name + "[label=\"{" + _Name + "}\", color=\"green\", id=\"" + _Name + "\"]");
+                _sbView.append("" + _Name + "["+ViewColor.toAttr()+",label=\"{" + _Name + "}\", id=\"" + _Name + "\"]");
                 _sbView.append("\r\n");
               }
 
@@ -411,16 +544,19 @@ public class GraphvizUtil
                     temp.add(_Name);
                     if (containsObject(objects, tObject))
                       {
-                        _sbView.append("" + _Name + "[label=\"{" + _Name + "}\", color=\"red\", id=\"" + _Name + "\"]");
+                        _sbView.append("" + _Name + "["+ObjectInColor.toAttr()+"label=\"{" + _Name + "}\", id=\"" + _Name + "\"]");
+                        _sbView.append("\r\n");
+                        _sbView.append(view._Name + " -> " + s.toUpperCase() + "["+FkInViewSchema.toArr()+"]");
                       }
                     else
                       {
-                        _sbView.append("" + _Name + "[label=\"{" + _Name + "}\", color=\"#ADD8E6\", id=\"other_" + _Name + "\"]");
+                        _sbView.append("" + _Name + "["+ObjectOutColor.toAttr()+"label=\"{" + _Name + "}\", id=\"other_" + _Name + "\"]");
+                        _sbView.append("\r\n");
+                        _sbView.append(view._Name + " -> " + s.toUpperCase() + "["+FkOutViewSchema.toArr()+"]");
                       }
 
-                    _sbView.append("\r\n");
                   }
-                _sbView.append(view._Name + " -> " + s.toUpperCase() + "[color=\"green\"]");
+
                 _sbView.append("\r\n");
               }
           }
@@ -472,22 +608,22 @@ public class GraphvizUtil
             String _Name = obj._Name.toUpperCase();
             if (obj._FST == FrameworkSourcedType.NONE)
               {
-                sb.append("" + _Name + "[label=\"{" + _Name + "}\", color=\"red\", id=\"" + _Name + "\"]");
+                sb.append("" + _Name + "["+ObjectInColor.toAttr()+"label=\"{" + _Name + "}\", id=\"" + _Name + "\"]");
                 sb.append("\r\n");
               }
             else if (obj._FST == FrameworkSourcedType.ENUMERATION)
               {
-                sb.append("" + _Name + "[label=\"{" + _Name + "}\", color=\"cyan\", id=\"" + _Name + "\"]");
+                sb.append("" + _Name + "["+EnumerationColor.toAttr()+"label=\"{" + _Name + "}\", id=\"" + _Name + "\"]");
                 sb.append("\r\n");
               }
             else if (obj._FST == FrameworkSourcedType.MAPPER)
               {
-                sb.append("" + _Name + "[label=\"{" + _Name + "}\", color=\"blue\", id=\"" + _Name + "\"]");
+                sb.append("" + _Name + "["+MapperColor.toAttr()+"label=\"{" + _Name + "}\", id=\"" + _Name + "\"]");
                 sb.append("\r\n");
               }
             else if (obj._FST == FrameworkSourcedType.VIEW)
               {
-                sb.append("" + _Name + "[label=\"" + _Name + "\", color=\"green\", id=\"" + _Name + "\"]");
+                sb.append("" + _Name + "["+ViewColor.toAttr()+"label=\"" + _Name + "\", id=\"" + _Name + "\"]");
                 sb.append("\r\n");
               }
           }
@@ -503,7 +639,7 @@ public class GraphvizUtil
                   {
                     objects.add(tObject);
                     String _Name = tObject._Name.toUpperCase();
-                    sb.append("" + _Name + "[label=\"{" + _Name + "}\", color=\"#ADD8E6\", id=\"other_" + _Name + "\"]");
+                    sb.append("" + _Name + "["+ObjectOutColor.toAttr()+"label=\"{" + _Name + "}\", id=\"other_" + _Name + "\"]");
                     sb.append("\r\n");
                   }
                 sb.append(mapper._Name.toUpperCase() + " -> " + s.toUpperCase() + "[color=\"blue\"]");
@@ -524,7 +660,7 @@ public class GraphvizUtil
                   {
                     // objects.add(tObject); TODO add object to objects collection
                     String _Name = tObject._Name.toUpperCase();
-                    sb.append("" + _Name + "[label=\"{" + _Name + "}\", color=\"#ADD8E6\", id=\"other_" + _Name + "\"]");
+                    sb.append("" + _Name + "["+ObjectOutColor.toAttr()+"label=\"{" + _Name + "}\", id=\"other_" + _Name + "\"]");
                     sb.append("\r\n");
                   }
                 sb.append(object._Name.toUpperCase() + " -> " + fKeyS.toUpperCase() + "[color=\"red\"]");
@@ -549,7 +685,7 @@ public class GraphvizUtil
                   {
                     mappers.add(tMapper);
                     String _Name = tMapper._Name.toUpperCase();
-                    sb.append("" + _Name + "[label=\"{" + _Name + "}\", color=\"#ADD8E6\", id=\"other_" + _Name + "\"]");
+                    sb.append("" + _Name + "["+MapperColor.toAttr()+"label=\"{" + _Name + "}\",id=\"other_" + _Name + "\"]");
                     sb.append("\r\n");
                   }
                 sb.append(object._Name.toUpperCase() + " -> " + s.toUpperCase());
@@ -565,7 +701,7 @@ public class GraphvizUtil
                   {
                     enumerations.add(tEnum);
                     String _Name = tEnum._Name.toUpperCase();
-                    sb.append("" + _Name + "[label=\"{" + _Name + "}\", color=\"#ADD8E6\", id=\"other_" + _Name + "\"]");
+                    sb.append("" + _Name + "["+EnumerationColor.toAttr()+"label=\"{" + _Name + "}\", id=\"other_" + _Name + "\"]");
                     sb.append("\r\n");
                   }
                 sb.append(object._Name.toUpperCase() + " -> " + s.toUpperCase() + "[color=\"cyan\"]");
@@ -585,7 +721,7 @@ public class GraphvizUtil
                   {
                     objects.add(tObject);
                     String _Name = tObject._Name.toUpperCase();
-                    sb.append("" + _Name + "[label=\"{" + _Name + "}\", color=\"#ADD8E6\", id=\"other_" + _Name + "\"]");
+                    sb.append("" + _Name + "["+ObjectOutColor.toAttr()+"label=\"{" + _Name + "}\", id=\"other_" + _Name + "\"]");
                     sb.append("\r\n");
                   }
                 sb.append(view._Name + " -> " + s.toUpperCase() + "[color=\"green\"]");
@@ -666,7 +802,7 @@ public class GraphvizUtil
             if (printer != null)
               printer.close();
             LOG.info("Deleting " + dotFName);
-//            output.delete();
+            output.delete();
             LOG.info("   --> Deleted " + dotFName + ".");
           }
 
