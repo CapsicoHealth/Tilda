@@ -125,7 +125,7 @@ class FkInObjSchema {
 	static String penWidth = "1";
 	static String lineStyle = "filled";
 	static String toArr(){
-		return "style=\"filled\",penwidth=\""+penWidth+"\",color=\""+lineColor+"\"";
+		return "style=\""+lineStyle+"\",penwidth=\""+penWidth+"\",color=\""+lineColor+"\"";
 	}
 }
 
@@ -135,7 +135,7 @@ class FkOutObjSchema {
 	static String lineStyle = "dashed";
 
 	static String toArr(){
-		return "style=\"filled\",penwidth=\""+penWidth+"\",color=\""+lineColor+"\"";
+		return "style=\""+lineStyle+"\",penwidth=\""+penWidth+"\",color=\""+lineColor+"\"";
 	}
 }
 
@@ -146,7 +146,7 @@ class FkInViewSchema {
 	static String lineStyle = "filled";
 
 	static String toArr(){
-		return "style=\"filled\",penwidth=\""+penWidth+"\",color=\""+lineColor+"\"";
+		return "style=\""+lineStyle+"\",penwidth=\""+penWidth+"\",color=\""+lineColor+"\"";
 	}
 
 }
@@ -157,7 +157,7 @@ class FkOutViewSchema {
 	static String lineStyle = "dashed";
 
 	static String toArr(){
-		return "style=\"filled\",penwidth=\""+penWidth+"\",color=\""+lineColor+"\"";
+		return "style=\""+lineStyle+"\",penwidth=\""+penWidth+"\",color=\""+lineColor+"\"";
 	}
 
 }
@@ -449,14 +449,23 @@ public class GraphvizUtil
                       {
                         _sbObject.append("" + _Name + "["+ObjectInColor.toAttr()+"label=\"{" + _Name + "}\", id=\"" + _Name + "\"]");
                         _sbObject.append("\r\n");
-                        _sbObject.append(object._Name.toUpperCase() + " -> " + fKeyS.toUpperCase() + "["+FkInObjSchema.toArr()+"]");
-
+                        Object t3 = new Object();
+                        t3._Name = fKeyS.toUpperCase();
+                        if (containsObject(objects, t3))
+                        	_sbObject.append(object._Name.toUpperCase() + " -> " + fKeyS.toUpperCase() + "["+FkInObjSchema.toArr()+"]");
+                        else
+                        	_sbObject.append(object._Name.toUpperCase() + " -> " + fKeyS.toUpperCase() + "["+FkOutObjSchema.toArr()+"]");
                       }
                     else
                       {
                         _sbObject.append("" + _Name + "["+ObjectOutColor.toAttr()+"label=\"{" + _Name + "}\", id=\"other_" + _Name + "\"]");
                         _sbObject.append("\r\n");
-                        _sbObject.append(object._Name.toUpperCase() + " -> " + fKeyS.toUpperCase() + "["+FkOutObjSchema.toArr()+"]");
+                        Object t3 = new Object();
+                        t3._Name = fKeyS.toUpperCase();
+                        if (containsObject(objects, t3))
+                        	_sbObject.append(object._Name.toUpperCase() + " -> " + fKeyS.toUpperCase() + "["+FkInObjSchema.toArr()+"]");
+                        else
+                        	_sbObject.append(object._Name.toUpperCase() + " -> " + fKeyS.toUpperCase() + "["+FkOutObjSchema.toArr()+"]");
 
                       }
                   }
@@ -802,7 +811,7 @@ public class GraphvizUtil
             if (printer != null)
               printer.close();
             LOG.info("Deleting " + dotFName);
-            output.delete();
+            // output.delete();
             LOG.info("   --> Deleted " + dotFName + ".");
           }
 
