@@ -177,7 +177,7 @@ public class DateTimeUtil
       {
         if (TextUtil.isNullOrEmpty(DateTimeStr) == true)
           return null;
-        if (DateTimeStr.length() != 25)
+        if (DateTimeStr.length() < 25)
          return parseWithoutZone(DateTimeStr);
         
         try
