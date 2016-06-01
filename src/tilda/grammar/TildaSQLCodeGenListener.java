@@ -47,12 +47,12 @@ import tilda.utils.Counter;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.ParseUtil;
 
-public class TildaSQLCodeGen extends TildaSQLBaseListener
+public class TildaSQLCodeGenListener extends TildaSQLBaseListener
   {
-    protected static final Logger LOG = LogManager.getLogger(TildaSQLCodeGen.class.getName());
+    protected static final Logger LOG = LogManager.getLogger(TildaSQLCodeGenListener.class.getName());
 
 
-    public TildaSQLCodeGen(Parser parser)
+    public TildaSQLCodeGenListener(Parser parser)
       {
         _Parser = parser;
       }
@@ -246,7 +246,10 @@ public class TildaSQLCodeGen extends TildaSQLBaseListener
             String colName = ctx.getText();
             for (ColumnDefinition col : _Columns)
               if (col.getName().equals(colName) == true)
-                return;
+                {
+                  handleArgumentType(col._Type, ctx);
+                  return;
+                }
             addError("Unknown column name '" + colName + "'.", ctx);
           }
         super.enterColumn(ctx);
@@ -255,18 +258,38 @@ public class TildaSQLCodeGen extends TildaSQLBaseListener
     @Override
     public void enterArythExpr(ArythExprContext ctx)
       {
+        _ArgumentTypes.push(new ColumnTypeWrapper());
         super.enterArythExpr(ctx);
       }
 
     @Override
     public void exitArythExpr(ArythExprContext ctx)
       {
+        ColumnTypeWrapper Type = _ArgumentTypes.isEmpty() == true ? null : _ArgumentTypes.pop();
+        if (Type == null)
+          {
+            addError("Closing an expression without having a Type manager active!!!!", ctx);
+          }
+        else if (Type._Type == null)
+          {
+            addError("Closing a sub expression without having a Type gathered!!!!", ctx);
+          }
+        else
+          {
+            ColumnTypeWrapper Type2 = _ArgumentTypes.isEmpty() == true ? null : _ArgumentTypes.peek();
+            if (Type2 != null && Type2.addType(Type._Type, ctx.getText()) == false)
+              addError(Type2.getLastError(), ctx);
+          }
+
         super.exitArythExpr(ctx);
       }
 
     @Override
     public void enterAryth_op_add(Aryth_op_addContext ctx)
       {
+        ColumnType ExistingExpressionType = _ArgumentTypes.isEmpty() == true ? null : _ArgumentTypes.peek()._Type;
+        if (ExistingExpressionType == ColumnType.STRING && ctx.K_MINUS() != null)
+          addError("Operator " + ctx.getText() + " is not compatible in an expression currently of type STRING.", ctx);
         _CodeGen.append(ctx.getText());
         super.enterAryth_op_add(ctx);
       }
@@ -274,12 +297,15 @@ public class TildaSQLCodeGen extends TildaSQLBaseListener
     @Override
     public void enterAryth_op_mul(Aryth_op_mulContext ctx)
       {
-        if (ctx.K_DIV() != null)
-         handleArgumentType(ColumnType.FLOAT, ctx);
+        ColumnType ExistingExpressionType = _ArgumentTypes.isEmpty() == true ? null : _ArgumentTypes.peek()._Type;
+        // LOG.debug("Operator: '"+ctx.getText()+"', Parent: '"+ctx.getParent().getText()+"', _ArgumentTypes.peek._Type: "+ExistingExpressionType);
+        if (ExistingExpressionType == ColumnType.STRING)
+          addError("Operator " + ctx.getText() + " is not compatible in an expression currently of type STRING.", ctx);
+        else if (ctx.K_DIV() != null)
+          handleArgumentType(ColumnType.FLOAT, ctx);
         _CodeGen.append(ctx.getText());
         super.enterAryth_op_mul(ctx);
       }
-
 
     @Override
     public void enterAryth_expr_sub(Aryth_expr_subContext ctx)

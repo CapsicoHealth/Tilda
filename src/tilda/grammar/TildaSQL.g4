@@ -77,7 +77,7 @@ aryth_expr_sub
  : '(' s_expr=aryth_expr ')'
  ;
 
-aryth_op_add: '+' | '-';
+aryth_op_add: '+' | K_MINUS;
 aryth_op_mul: '*' | K_DIV;
  
 
@@ -178,6 +178,7 @@ K_GTE: '>' '=';
 K_EQ: '=' '='?;
 K_NEQ: '<' '>' | '!' '=';
 K_DIV: '/';
+K_MINUS: '-';
 
 
 IDENTIFIER
