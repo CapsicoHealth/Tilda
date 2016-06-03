@@ -28,6 +28,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.types.ColumnDefinition;
+import tilda.types.Type_CharPrimitiveNull;
 import tilda.types.Type_DatetimePrimitiveNull;
 import tilda.types.Type_FloatPrimitiveNull;
 import tilda.types.Type_IntegerPrimitive;
@@ -60,7 +61,7 @@ public class TildaSQL
             , new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_THRU_DTTZ", 8)
             , new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_THRU_DT", 9)
             , new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "PRVDR_CLASS", 10)
-            , new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_TYPE", 11)
+            , new Type_CharPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_TYPE", 11)
             , new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "PRIMARY_ICD9_DGNS_CD", 12)
             , new Type_StringCollectionNull("CMS.CLAIMSBENEFICIARYVIEW", "SECONDARY_ICD9_DGNS_CD", 13)
             , new Type_StringPrimitiveNull ("CMS.CLAIMSBENEFICIARYVIEW", "PRIMARY_ICD9_PRCDR_CD"  , 14)
@@ -93,6 +94,7 @@ public class TildaSQL
             // ,"toto.acadabra >= 3*(1+?{var1})/?{var2} && gogo.barilla > gaga.panzani and (gigi.date > CURRENT_TIMESTAMP OR gugu.deleted > '2016-01-01' OR titi >=
             // TIMESTAMP_TODAY)"
             , "@    CLM_TYPE = 'I' " + SystemValues.NEWLINE
+            + " AND PRVDR_CLASS = 'Abc' " + SystemValues.NEWLINE
             + " AND (    ( PRIMARY_ICD9_DGNS_CD   LIKE '410.%' AND  PRIMARY_ICD9_DGNS_CD   NOT LIKE '410._2' )" + SystemValues.NEWLINE
             + "       OR ( SECONDARY_ICD9_DGNS_CD LIKE '410.%' AND  SECONDARY_ICD9_DGNS_CD NOT LIKE '410._2' )" + SystemValues.NEWLINE
             + "       OR PRIMARY_ICD9_DGNS_CD+PRIMARY_ICD9_PRCDR_CD in ('428.5', '428.54', '1')" + SystemValues.NEWLINE
@@ -104,7 +106,7 @@ public class TildaSQL
             + "       OR BENE_BIRTH_DT = '2001-06-11T22:00:30'" + SystemValues.NEWLINE
             + "       OR BENE_BIRTH_DT = '2001-03-11T22:00:30+00:00'" + SystemValues.NEWLINE
             + "     )" + SystemValues.NEWLINE
-            + " AND (    CLM_PMT_AMT > 2*(5+?{var1}+1)" + SystemValues.NEWLINE
+            + " AND (    CLM_PMT_AMT > 2*((5+(?{var1}+1)))" + SystemValues.NEWLINE
             + "     )" + SystemValues.NEWLINE
         };
 
@@ -139,10 +141,10 @@ public class TildaSQL
                 // LOG.debug("expr: " + Expr);
                 // LOG.debug(w1._ParseTreeStr.toString());
 
-                TildaSQLCodeGenListener w2 = new TildaSQLCodeGenListener(parser);
+                TildaSQLListenerCodeGen w2 = new TildaSQLListenerCodeGen();
                 w2.setColumnEnvironment(Cols);
                 ParseTreeWalker.DEFAULT.walk(w2, tree);
-                Iterator<String> I = w2.getErrors();
+                Iterator<String> I = w2.getErrors().getErrors();
                 // LOG.debug("expr: " + Expr);
                 if (I != null)
                   {

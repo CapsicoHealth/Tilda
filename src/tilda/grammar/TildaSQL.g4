@@ -52,7 +52,7 @@ bool_expr_sub
  ; 
 
 bin_expr
- : bin_expr_lhs bin_op (column | aryth_expr)
+ : bin_expr_lhs bin_op (column | arithmetic_expr_base)
  | bin_expr_lhs K_IN  value_list
  ;
 
@@ -66,19 +66,23 @@ value_list
 
 bin_op: K_LT | K_LTE | K_GT | K_GTE | K_EQ | K_NEQ | (K_NOT)? K_LIKE;
 
-aryth_expr
- : aryth_expr aryth_op_mul aryth_expr      # ArythExpr
- | aryth_expr aryth_op_add aryth_expr      # ArythExpr
- | value                                   # ArythExprVal
- | aryth_expr_sub                          # ArythExprSub
- ;
- 
-aryth_expr_sub
- : '(' s_expr=aryth_expr ')'
+arithmetic_expr_base
+ : arithmetic_expr
  ;
 
-aryth_op_add: '+' | K_MINUS;
-aryth_op_mul: '*' | K_DIV;
+arithmetic_expr
+ : arithmetic_expr arithmetic_op_mul arithmetic_expr      # ArithmeticExpr
+ | arithmetic_expr arithmetic_op_add arithmetic_expr      # ArithmeticExpr
+ | value                                                  # ArithmeticExprVal
+ | arithmetic_expr_sub                                    # ArithmeticExprSub
+ ;
+ 
+arithmetic_expr_sub
+ : '(' s_expr=arithmetic_expr ')'
+ ;
+
+arithmetic_op_add: '+' | K_MINUS;
+arithmetic_op_mul: '*' | K_DIV;
  
 
 isnull_expr
@@ -152,7 +156,7 @@ BIND_PARAMETER
 
 
 function
- : IDENTIFIER '(' ( aryth_expr ( ',' aryth_expr )* )? ')'
+ : IDENTIFIER '(' ( arithmetic_expr_base ( ',' arithmetic_expr_base )* )? ')'
  ;
 
 column

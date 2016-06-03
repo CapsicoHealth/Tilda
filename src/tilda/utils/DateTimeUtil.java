@@ -177,8 +177,11 @@ public class DateTimeUtil
       {
         if (TextUtil.isNullOrEmpty(DateTimeStr) == true)
           return null;
+        ZonedDateTime ZDT = null;
         if (DateTimeStr.length() < 25)
-         return parseWithoutZone(DateTimeStr);
+         ZDT = parseWithoutZone(DateTimeStr);
+        if (ZDT != null)
+         return ZDT;
         
         try
           {

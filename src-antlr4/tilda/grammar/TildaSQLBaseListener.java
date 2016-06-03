@@ -136,73 +136,85 @@ public class TildaSQLBaseListener implements TildaSQLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterArythExpr(TildaSQLParser.ArythExprContext ctx) { }
+	@Override public void enterArithmetic_expr_base(TildaSQLParser.Arithmetic_expr_baseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitArythExpr(TildaSQLParser.ArythExprContext ctx) { }
+	@Override public void exitArithmetic_expr_base(TildaSQLParser.Arithmetic_expr_baseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterArythExprSub(TildaSQLParser.ArythExprSubContext ctx) { }
+	@Override public void enterArithmeticExpr(TildaSQLParser.ArithmeticExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitArythExprSub(TildaSQLParser.ArythExprSubContext ctx) { }
+	@Override public void exitArithmeticExpr(TildaSQLParser.ArithmeticExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterArythExprVal(TildaSQLParser.ArythExprValContext ctx) { }
+	@Override public void enterArithmeticExprSub(TildaSQLParser.ArithmeticExprSubContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitArythExprVal(TildaSQLParser.ArythExprValContext ctx) { }
+	@Override public void exitArithmeticExprSub(TildaSQLParser.ArithmeticExprSubContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAryth_expr_sub(TildaSQLParser.Aryth_expr_subContext ctx) { }
+	@Override public void enterArithmeticExprVal(TildaSQLParser.ArithmeticExprValContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAryth_expr_sub(TildaSQLParser.Aryth_expr_subContext ctx) { }
+	@Override public void exitArithmeticExprVal(TildaSQLParser.ArithmeticExprValContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAryth_op_add(TildaSQLParser.Aryth_op_addContext ctx) { }
+	@Override public void enterArithmetic_expr_sub(TildaSQLParser.Arithmetic_expr_subContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAryth_op_add(TildaSQLParser.Aryth_op_addContext ctx) { }
+	@Override public void exitArithmetic_expr_sub(TildaSQLParser.Arithmetic_expr_subContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAryth_op_mul(TildaSQLParser.Aryth_op_mulContext ctx) { }
+	@Override public void enterArithmetic_op_add(TildaSQLParser.Arithmetic_op_addContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAryth_op_mul(TildaSQLParser.Aryth_op_mulContext ctx) { }
+	@Override public void exitArithmetic_op_add(TildaSQLParser.Arithmetic_op_addContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterArithmetic_op_mul(TildaSQLParser.Arithmetic_op_mulContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitArithmetic_op_mul(TildaSQLParser.Arithmetic_op_mulContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
