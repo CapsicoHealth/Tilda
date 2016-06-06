@@ -18,6 +18,7 @@ package tilda.grammar;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
@@ -25,7 +26,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.enums.ColumnType;
-import tilda.generation.java8.JavaJDBCType;
 import tilda.grammar.TildaSQLParser.ArithmeticExprContext;
 import tilda.grammar.TildaSQLParser.Arithmetic_expr_baseContext;
 import tilda.grammar.TildaSQLParser.Arithmetic_expr_subContext;
@@ -45,12 +45,11 @@ import tilda.utils.Counter;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.ParseUtil;
 
-public class TildaSQLListenerCodeGen extends TildaSQLBaseListener
+public class TildaSQLListenerValidator extends TildaSQLBaseListener
   {
-    protected static final Logger LOG = LogManager.getLogger(TildaSQLListenerCodeGen.class.getName());
+    protected static final Logger LOG = LogManager.getLogger(TildaSQLListenerValidator.class.getName());
 
-
-    public TildaSQLListenerCodeGen()
+    public TildaSQLListenerValidator()
       {
       }
 
@@ -59,10 +58,14 @@ public class TildaSQLListenerCodeGen extends TildaSQLBaseListener
         _TypeManager.setColumnEnvironment(Columns);
       }
 
+    public void setCodeGen(CodeGen CG)
+      {
+        _CG = CG;
+      }
 
-    protected StringBuilder _CodeGen     = new StringBuilder("Q");
-    private TypeManager     _TypeManager = new TypeManager();
-    private ErrorList       _Errors      = new ErrorList();
+    protected TypeManager _TypeManager = new TypeManager();
+    protected ErrorList   _Errors      = new ErrorList();
+    protected CodeGen     _CG;
 
     public ErrorList getErrors()
       {
@@ -72,108 +75,78 @@ public class TildaSQLListenerCodeGen extends TildaSQLBaseListener
     @Override
     public void enterBool_op(Bool_opContext ctx)
       {
+        super.enterBool_op(ctx);
+        if (_CG == null)
+          return;
+
         if (ctx.K_AND() != null)
-          _CodeGen.append(ctx.K_NOT() == null ? ".and()" : ".andNot()");
+          _CG.boolOperatorAND(ctx.K_NOT() != null);
         else if (ctx.K_OR() != null)
-          _CodeGen.append(ctx.K_NOT() == null ? ".or()" : ".orNot()");
+          _CG.boolOperatorOR(ctx.K_NOT() != null);
         else
           _Errors.addError("Unknown boolean operator " + ctx.getText(), ctx);
-
-        super.enterBool_op(ctx);
       }
 
     @Override
     public void enterBool_expr_sub(Bool_expr_subContext ctx)
       {
-        _CodeGen.append(".openPar()");
         super.enterBool_expr_sub(ctx);
+        if (_CG != null)
+          _CG.boolOpenPar();
       }
 
     @Override
     public void exitBool_expr_sub(Bool_expr_subContext ctx)
       {
-        _CodeGen.append(".closePar()");
         super.exitBool_expr_sub(ctx);
+        if (_CG != null)
+          _CG.boolClosePar();
       }
 
 
-    protected final static String TYPE_MARKER = "####XXXXX####";
 
     @Override
     public void enterBin_expr(Bin_exprContext ctx)
       {
-        String LHS;
         _TypeManager.openScope();
-        if (ctx.bin_expr_lhs().column().size() == 1)
+        List<ColumnDefinition> Columns = new ArrayList<ColumnDefinition>();
+        for (ColumnContext colCtx : ctx.bin_expr_lhs().column())
           {
-            LHS = "COLS." + ctx.bin_expr_lhs().column(0).getText();
-            _TypeManager.handleColumn(ctx.bin_expr_lhs().column(0));
-          }
-        else
-          {
-            StringBuilder Str = new StringBuilder();
-            for (ColumnContext colCtx : ctx.bin_expr_lhs().column())
-              {
-                if (Str.length() == 0)
-                  Str.append("new COLS[] {");
-                else
-                  Str.append(", ");
-                Str.append("COLS.").append(colCtx.getText());
-                _TypeManager.handleColumn(colCtx);
-              }
-            Str.append("}");
-            LHS = Str.toString();
+            ColumnDefinition CD = _TypeManager.handleColumn(colCtx);
+            if (CD != null)
+              Columns.add(CD);
           }
 
         if (ctx.bin_op() != null)
           {
-            if (ctx.bin_op().K_NOT() != null) // not like
-              {
-                _CodeGen.append(".notLike(").append(LHS).append(", ");
-              }
-            else if (ctx.bin_op().K_LIKE() != null) // like
-              {
-                _CodeGen.append(".like(").append(LHS).append(", ");
-              }
+            if (ctx.bin_op().K_LIKE() != null)  // like
+              _CG.binLike(Columns, ctx.bin_op().K_NOT() != null);
             else if (ctx.bin_op().K_EQ() != null) // equal
-              {
-                _CodeGen.append(".equal(").append(LHS).append(", ");
-              }
+              _CG.binEqual(Columns, false);
             else if (ctx.bin_op().K_NEQ() != null) // not equal
-              {
-                _CodeGen.append(".notEqual(").append(LHS).append(", ");
-              }
+              _CG.binEqual(Columns, true);
             else if (ctx.bin_op().K_LT() != null) // less than
-              {
-                _CodeGen.append(".lt(").append(LHS).append(", ");
-              }
+              _CG.binLessThan(Columns);
             else if (ctx.bin_op().K_LTE() != null) // less than or equal
-              {
-                _CodeGen.append(".lte(").append(LHS).append(", ");
-              }
+              _CG.binLessThanOrEqual(Columns);
             else if (ctx.bin_op().K_GT() != null) // greater than
-              {
-                _CodeGen.append(".gt(").append(LHS).append(", ");
-              }
+              _CG.binGreaterThan(Columns);
             else if (ctx.bin_op().K_GTE() != null) // greater than or equal
-              {
-                _CodeGen.append(".gte(").append(LHS).append(", ");
-              }
+              _CG.binGreaterThanOrEqual(Columns);
             else
               _Errors.addError("Unknown binary operator " + ctx.bin_op().getText(), ctx);
           }
         else if (ctx.K_IN() != null) // greater than or equal
-          {
-            _CodeGen.append(".in(").append(LHS).append(", ");
-          }
+          _CG.binIn(Columns, ctx.K_NOT() != null);
         else
           _Errors.addError("Unparsable binary expression " + ctx.getText(), ctx);
 
         if (ctx.column() != null)
           {
             _TypeManager.openScope();
-            _TypeManager.handleColumn(ctx.column());
-            _CodeGen.append("COLS.").append(ctx.column().getText());
+            ColumnDefinition CD = _TypeManager.handleColumn(ctx.column());
+            if (CD != null)
+             _CG.col(CD);
           }
 
         super.enterBin_expr(ctx);
@@ -182,19 +155,19 @@ public class TildaSQLListenerCodeGen extends TildaSQLBaseListener
     @Override
     public void exitBin_expr(Bin_exprContext ctx)
       {
-        _CodeGen.append(")");
+        _CG.binClose();
         _TypeManager.rolloverArgumentType(ctx, "binary expression", true);
         super.exitBin_expr(ctx);
       }
 
-    protected Deque<Counter>           _ArgumentLists = new ArrayDeque<Counter>();
+    protected Deque<Counter> _ArgumentLists = new ArrayDeque<Counter>();
 
     @Override
     public void enterValue_list(Value_listContext ctx)
       {
         _ArgumentLists.push(new Counter());
         _TypeManager.openScope();
-        _CodeGen.append("new ").append(TYPE_MARKER).append("[] {");
+        _CG.valueListOpen();
         super.enterValue_list(ctx);
       }
 
@@ -212,18 +185,11 @@ public class TildaSQLListenerCodeGen extends TildaSQLBaseListener
               }
             else
               {
-                int i = _CodeGen.indexOf(TYPE_MARKER);
-                if (i == -1)
-                  {
-                    _Errors.addError("Closing a value list without having a Type marker in the codeGen string!!!!", ctx);
-                  }
-                else
-                  {
-                    _CodeGen.replace(i, i + TYPE_MARKER.length(), JavaJDBCType.get(Type._Type)._JavaType);
-                  }
+                String Err = _CG.valueListClose(Type._Type);
+                if (Err != null)
+                 _Errors.addError(Err, ctx);
               }
           }
-        _CodeGen.append("}");
         super.exitValue_list(ctx);
       }
 
@@ -265,11 +231,11 @@ public class TildaSQLListenerCodeGen extends TildaSQLBaseListener
     @Override
     public void enterArithmetic_op_add(Arithmetic_op_addContext ctx)
       {
-        
+
         ColumnType ExistingExpressionType = _TypeManager.peek();
         if (ExistingExpressionType == ColumnType.STRING && ctx.K_MINUS() != null)
           _Errors.addError("Operator " + ctx.getText() + " is not compatible in an expression currently of type STRING.", ctx);
-        _CodeGen.append(ctx.getText());
+        _CG.arithmeticPlus(ctx.K_MINUS()!=null);
         super.enterArithmetic_op_add(ctx);
       }
 
@@ -281,7 +247,7 @@ public class TildaSQLListenerCodeGen extends TildaSQLBaseListener
           _Errors.addError("Operator " + ctx.getText() + " is not compatible in an expression currently of type STRING.", ctx);
         else if (ctx.K_DIV() != null)
           _TypeManager.handleType(ColumnType.FLOAT, ctx);
-        _CodeGen.append(ctx.getText());
+        _CG.arithmeticMultiply(ctx.K_DIV()!=null);
         super.enterArithmetic_op_mul(ctx);
       }
 
@@ -289,7 +255,7 @@ public class TildaSQLListenerCodeGen extends TildaSQLBaseListener
     public void enterArithmetic_expr_sub(Arithmetic_expr_subContext ctx)
       {
         _TypeManager.openScope();
-        _CodeGen.append("(");
+        _CG.arithmeticOpenPar();
         super.enterArithmetic_expr_sub(ctx);
       }
 
@@ -297,7 +263,7 @@ public class TildaSQLListenerCodeGen extends TildaSQLBaseListener
     public void exitArithmetic_expr_sub(Arithmetic_expr_subContext ctx)
       {
         _TypeManager.rolloverArgumentType(ctx, "sub arithmetic expression", false);
-        _CodeGen.append(")");
+        _CG.arithmeticClosePar();
         super.enterArithmetic_expr_sub(ctx);
       }
 
@@ -307,14 +273,14 @@ public class TildaSQLListenerCodeGen extends TildaSQLBaseListener
         if (_ArgumentLists.isEmpty() == true)
           return;
         if (_ArgumentLists.peek().increment() != 1)
-          _CodeGen.append(", ");
+         _CG.valueListSeparator();
       }
 
     @Override
     public void enterValueNumericLiteral(ValueNumericLiteralContext ctx)
       {
         handleArgumentList();
-        _CodeGen.append(ctx.getText());
+        _CG.valueLiteralNumeric(ctx.getText());
 
         Object Number = ParseUtil.parseNumber(ctx.getText());
         if (Number == null)
@@ -338,8 +304,13 @@ public class TildaSQLListenerCodeGen extends TildaSQLBaseListener
     public void enterValueStringLiteral(ValueStringLiteralContext ctx)
       {
         handleArgumentList();
-        _TypeManager.handleType(ctx.getText().length() == 3 ? ColumnType.CHAR : ColumnType.STRING, ctx); // a value of 'X' if 3-char long, but is a CHAR type-wise.
-        _CodeGen.append(ctx.getText());
+        String Str = ctx.getText();
+        Str = Str.substring(1, Str.length()-1);
+        _TypeManager.handleType(Str.length() == 1 ? ColumnType.CHAR : ColumnType.STRING, ctx); // a value of 'X' if 3-char long, but is a CHAR type-wise.
+        if (_TypeManager.peek() == ColumnType.CHAR)
+         _CG.valueLiteralChar(Str.charAt(0));
+        else
+         _CG.valueLiteralString(Str);
         super.enterValueStringLiteral(ctx);
       }
 
@@ -347,42 +318,30 @@ public class TildaSQLListenerCodeGen extends TildaSQLBaseListener
     public void enterValueBindParam(ValueBindParamContext ctx)
       {
         handleArgumentList();
-        _CodeGen.append(ctx.getText().replaceAll("\\?\\{([^\\}]+)\\}", "$1"));
+        _CG.valueParameter(ctx.getText().replaceAll("\\?\\{([^\\}]+)\\}", "$1"));
         super.enterValueBindParam(ctx);
       }
 
     @Override
     public void enterValueTimestampLiteral(ValueTimestampLiteralContext ctx)
       {
-        String ts = null;
+        handleArgumentList();
         if (ctx.timestamp_literal().CURRENT_TIMESTAMP() != null)
-          ts = "DateTimeUtil.NOW_PLACEHOLDER_ZDT";
+         _CG.valueTimestampCurrent();
         else if (ctx.timestamp_literal().TIMESTAMP_YESTERDAY() != null)
-          ts = "DateTimeUtil.getYesterdayTimestamp(true)";
-        else if (ctx.timestamp_literal().TIMESTAMP_YESTERDAY_LAST() != null)
-          ts = "DateTimeUtil.getYesterdayTimestamp(false)";
+         _CG.valueTimestampYesterday(ctx.timestamp_literal().LAST()==null);
         else if (ctx.timestamp_literal().TIMESTAMP_TODAY() != null)
-          ts = "DateTimeUtil.getTodayTimestamp(true)";
-        else if (ctx.timestamp_literal().TIMESTAMP_TODAY_LAST() != null)
-          ts = "DateTimeUtil.getTodayTimestamp(false)";
+         _CG.valueTimestampToday(ctx.timestamp_literal().LAST()==null);
         else if (ctx.timestamp_literal().TIMESTAMP_TOMORROW() != null)
-          ts = "DateTimeUtil.getTomorrowTimestamp(true)";
-        else if (ctx.timestamp_literal().TIMESTAMP_TOMORROW_LAST() != null)
-          ts = "DateTimeUtil.getTomorrowTimestamp(false)";
+         _CG.valueTimestampTomorrow(ctx.timestamp_literal().LAST()==null);
         else
           {
-            ts = ctx.getText().substring(1, ctx.getText().length() - 1);
-            ZonedDateTime ZDT = DateTimeUtil.parsefromJSON(ts);
+            ZonedDateTime ZDT = DateTimeUtil.parsefromJSON(ctx.getText().substring(1, ctx.getText().length() - 1));
             if (ZDT == null)
               _Errors.addError("Invalid timestamp " + ctx.getText(), ctx);
-            else
-              ts = "DateTimeUtil.parsefromJSON(\"" + DateTimeUtil.printDateTimeForJSON(ZDT) + "\")";
+            _CG.valueLiteralTimestamp(ZDT);
           }
-
-        handleArgumentList();
         _TypeManager.handleType(ColumnType.DATETIME, ctx);
-        _CodeGen.append(ts != null ? ts : "INVALID_TIMESTAMP_LITERAL");
-
         super.enterValueTimestampLiteral(ctx);
       }
   }

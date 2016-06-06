@@ -56,7 +56,7 @@ public class TypeManager
         _ArgumentTypes.push(new TypeWrapper());
       }
 
-    public void handleColumn(ColumnContext column)
+    public ColumnDefinition handleColumn(ColumnContext column)
       {
         if (_Columns.isEmpty() == false)
           {
@@ -65,10 +65,11 @@ public class TypeManager
               if (col.getName().equals(colName) == true)
                 {
                   handleType(col._Type, column);
-                  return;
+                  return col;
                 }
             _Errors.addError("Unknown column name '" + colName + "'.", column);
           }
+        return null;
       }
 
     public void handleType(ColumnType Type, ParserRuleContext ctx)

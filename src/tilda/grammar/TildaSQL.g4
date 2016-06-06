@@ -53,7 +53,7 @@ bool_expr_sub
 
 bin_expr
  : bin_expr_lhs bin_op (column | arithmetic_expr_base)
- | bin_expr_lhs K_IN  value_list
+ | bin_expr_lhs (K_NOT)? K_IN  value_list
  ;
 
 bin_expr_lhs
@@ -120,22 +120,17 @@ NUMERIC_LITERAL
 timestamp_literal // ISO: '2011-12-03T10:15:30+01:00'.
  : TIMESTAMP_LITERAL
  | CURRENT_TIMESTAMP
- | TIMESTAMP_YESTERDAY
- | TIMESTAMP_YESTERDAY_LAST
- | TIMESTAMP_TODAY
- | TIMESTAMP_TODAY_LAST
- | TIMESTAMP_TOMORROW
- | TIMESTAMP_TOMORROW_LAST
+ | TIMESTAMP_YESTERDAY LAST?
+ | TIMESTAMP_TODAY LAST?
+ | TIMESTAMP_TOMORROW LAST?
  ;
 
 TIMESTAMP_LITERAL        : '\'' YEAR_LITERAL '-' MONTH_LITERAL '-' DAY_LITERAL ('T' HOUR_LITERAL_24 ':' MINUTE_LITERAL (':' SECOND_LITERAL (PLUS_MINUS HOUR_LITERAL_12 ':' MINUTE_LITERAL)?)?)? '\'' ;
 CURRENT_TIMESTAMP        : C U R R E N T '_' T I M E S T A M P;
 TIMESTAMP_YESTERDAY      : T I M E S T A M P '_' Y E S T E R D A Y;
-TIMESTAMP_YESTERDAY_LAST : T I M E S T A M P '_' Y E S T E R D A Y '_' L A S T;
 TIMESTAMP_TODAY          : T I M E S T A M P '_' T O D A Y;
-TIMESTAMP_TODAY_LAST     : T I M E S T A M P '_' T O D A Y '_' L A S T;
 TIMESTAMP_TOMORROW       : T I M E S T A M P '_' T O M O R R O W;
-TIMESTAMP_TOMORROW_LAST  : T I M E S T A M P '_' T O M O R R O W '_' L A S T;
+LAST: L A S T;
 
 
 string_literal

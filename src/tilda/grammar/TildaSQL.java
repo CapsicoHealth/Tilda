@@ -99,6 +99,7 @@ public class TildaSQL
             + "       OR ( SECONDARY_ICD9_DGNS_CD LIKE '410.%' AND  SECONDARY_ICD9_DGNS_CD NOT LIKE '410._2' )" + SystemValues.NEWLINE
             + "       OR PRIMARY_ICD9_DGNS_CD+PRIMARY_ICD9_PRCDR_CD in ('428.5', '428.54', '1')" + SystemValues.NEWLINE
             + "     )" + SystemValues.NEWLINE
+            + " AND PRIMARY_ICD9_PRCDR_CD not in ('234.23', '11.22')" + SystemValues.NEWLINE
             // +" AND tawa(secondaryDischargeICD9, 12) = 1"+SystemValues.NEWLINE
             // +" AND lower(secondaryDischargeICD9) == 'abc'"+SystemValues.NEWLINE
             + "  AND (   BENE_BIRTH_DT = '2001-03-11'" + SystemValues.NEWLINE
@@ -141,8 +142,10 @@ public class TildaSQL
                 // LOG.debug("expr: " + Expr);
                 // LOG.debug(w1._ParseTreeStr.toString());
 
-                TildaSQLListenerCodeGen w2 = new TildaSQLListenerCodeGen();
+                TildaSQLListenerValidator w2 = new TildaSQLListenerValidator();
+                CodeGenTildaJavaExpression CG = new CodeGenTildaJavaExpression();
                 w2.setColumnEnvironment(Cols);
+                w2.setCodeGen(CG);
                 ParseTreeWalker.DEFAULT.walk(w2, tree);
                 Iterator<String> I = w2.getErrors().getErrors();
                 // LOG.debug("expr: " + Expr);
@@ -152,7 +155,7 @@ public class TildaSQL
                     while (I.hasNext() == true)
                       LOG.error("        " + I.next());
                   }
-                LOG.debug(w2._CodeGen.toString());
+                LOG.debug(CG._CodeGen.toString());
               }
 
             LOG.debug("Took: " + DurationUtil.PrintDuration(System.nanoTime() - T0));
