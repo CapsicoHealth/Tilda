@@ -95,6 +95,7 @@ public class TildaSQL
             // TIMESTAMP_TODAY)"
             , "@    CLM_TYPE = 'I' " + SystemValues.NEWLINE
             + " AND PRVDR_CLASS = 'Abc' " + SystemValues.NEWLINE
+            + " AND PRVDR_CLASS = CLM_TYPE " + SystemValues.NEWLINE
             + " AND (    ( PRIMARY_ICD9_DGNS_CD   LIKE '410.%' AND  PRIMARY_ICD9_DGNS_CD   NOT LIKE '410._2' )" + SystemValues.NEWLINE
             + "       OR ( SECONDARY_ICD9_DGNS_CD LIKE '410.%' AND  SECONDARY_ICD9_DGNS_CD NOT LIKE '410._2' )" + SystemValues.NEWLINE
             + "       OR PRIMARY_ICD9_DGNS_CD+PRIMARY_ICD9_PRCDR_CD in ('428.5', '428.54', '1')" + SystemValues.NEWLINE
