@@ -122,17 +122,17 @@ public class TildaSQLListenerValidator extends TildaSQLBaseListener
             if (ctx.bin_op().K_LIKE() != null)  // like
               _CG.binLike(Columns, ctx.bin_op().K_NOT() != null);
             else if (ctx.bin_op().K_EQ() != null) // equal
-              _CG.binEqual(Columns, false);
+              _CG.binEqual(Columns, _TypeManager.peek(), false);
             else if (ctx.bin_op().K_NEQ() != null) // not equal
-              _CG.binEqual(Columns, true);
+              _CG.binEqual(Columns, _TypeManager.peek(), true);
             else if (ctx.bin_op().K_LT() != null) // less than
-              _CG.binLessThan(Columns);
+              _CG.binLessThan(Columns, _TypeManager.peek());
             else if (ctx.bin_op().K_LTE() != null) // less than or equal
-              _CG.binLessThanOrEqual(Columns);
+              _CG.binLessThanOrEqual(Columns, _TypeManager.peek());
             else if (ctx.bin_op().K_GT() != null) // greater than
-              _CG.binGreaterThan(Columns);
+              _CG.binGreaterThan(Columns, _TypeManager.peek());
             else if (ctx.bin_op().K_GTE() != null) // greater than or equal
-              _CG.binGreaterThanOrEqual(Columns);
+              _CG.binGreaterThanOrEqual(Columns, _TypeManager.peek());
             else
               _Errors.addError("Unknown binary operator " + ctx.bin_op().getText(), ctx);
           }
@@ -155,7 +155,10 @@ public class TildaSQLListenerValidator extends TildaSQLBaseListener
     @Override
     public void exitBin_expr(Bin_exprContext ctx)
       {
-        _CG.binClose();
+        String Err = _CG.binClose();
+        if (Err != null)
+         _Errors.addError(Err, ctx);
+        
         _TypeManager.rolloverArgumentType(ctx, "binary expression", true);
         super.exitBin_expr(ctx);
       }

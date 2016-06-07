@@ -32,13 +32,13 @@ public interface CodeGen
     public void boolClosePar();
      
     public void binLike              (List<ColumnDefinition> Columns, boolean not);
-    public void binEqual             (List<ColumnDefinition> Columns, boolean not);
-    public void binLessThan          (List<ColumnDefinition> Columns);
-    public void binLessThanOrEqual   (List<ColumnDefinition> Columns);
-    public void binGreaterThan       (List<ColumnDefinition> Columns);
-    public void binGreaterThanOrEqual(List<ColumnDefinition> Columns);
+    public void binEqual             (List<ColumnDefinition> Columns, ColumnType Type, boolean not);
+    public void binLessThan          (List<ColumnDefinition> Columns, ColumnType Type);
+    public void binLessThanOrEqual   (List<ColumnDefinition> Columns, ColumnType Type);
+    public void binGreaterThan       (List<ColumnDefinition> Columns, ColumnType Type);
+    public void binGreaterThanOrEqual(List<ColumnDefinition> Columns, ColumnType Type);
     public void binIn                (List<ColumnDefinition> Columns, boolean not);
-    public void binClose             ();
+    public String binClose           ();
 
     public void col                  (ColumnDefinition Column);
 

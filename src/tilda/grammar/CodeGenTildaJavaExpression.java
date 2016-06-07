@@ -91,7 +91,7 @@ public class CodeGenTildaJavaExpression implements CodeGen
       }
 
     @Override
-    public void binEqual(List<ColumnDefinition> Columns, boolean not)
+    public void binEqual(List<ColumnDefinition> Columns, ColumnType Type, boolean not)
       {
         _CodeGen.append(not == true ? ".notEqual(" : ".equal(");
         makeColumnList(_CodeGen, Columns);
@@ -99,7 +99,7 @@ public class CodeGenTildaJavaExpression implements CodeGen
       }
 
     @Override
-    public void binLessThan(List<ColumnDefinition> Columns)
+    public void binLessThan(List<ColumnDefinition> Columns, ColumnType Type)
       {
         _CodeGen.append(".lt(");
         makeColumnList(_CodeGen, Columns);
@@ -107,7 +107,7 @@ public class CodeGenTildaJavaExpression implements CodeGen
       }
 
     @Override
-    public void binLessThanOrEqual(List<ColumnDefinition> Columns)
+    public void binLessThanOrEqual(List<ColumnDefinition> Columns, ColumnType Type)
       {
         _CodeGen.append(".lte(");
         makeColumnList(_CodeGen, Columns);
@@ -115,7 +115,7 @@ public class CodeGenTildaJavaExpression implements CodeGen
       }
 
     @Override
-    public void binGreaterThan(List<ColumnDefinition> Columns)
+    public void binGreaterThan(List<ColumnDefinition> Columns, ColumnType Type)
       {
         _CodeGen.append(".gt(");
         makeColumnList(_CodeGen, Columns);
@@ -123,7 +123,7 @@ public class CodeGenTildaJavaExpression implements CodeGen
       }
 
     @Override
-    public void binGreaterThanOrEqual(List<ColumnDefinition> Columns)
+    public void binGreaterThanOrEqual(List<ColumnDefinition> Columns, ColumnType Type)
       {
         _CodeGen.append(".gte(");
         makeColumnList(_CodeGen, Columns);
@@ -145,9 +145,10 @@ public class CodeGenTildaJavaExpression implements CodeGen
       }
 
     @Override
-    public void binClose()
+    public String binClose()
       {
         _CodeGen.append(")");
+        return null;
       }
 
 
