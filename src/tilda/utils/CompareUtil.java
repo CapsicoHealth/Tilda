@@ -16,12 +16,33 @@
 
 package tilda.utils;
 
+import java.time.ZonedDateTime;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class CompareUtil
   {
     protected static final Logger LOG = LogManager.getLogger(CompareUtil.class.getName());
+
+    public static boolean equals(String Str1, String Str2)
+      {
+        return Str1 == null ? Str2==null
+             : Str2 == null ? Str1==null
+             : Str1.equals(Str2);
+      }
+
+    public static boolean equals(String Str1, char c)
+      {
+        return Str1!=null && Str1.length() == 1 && Str1.charAt(0) == c;
+      }
+
+    public static boolean equals(ZonedDateTime ZDT1, ZonedDateTime ZDT2)
+      {
+        return ZDT1 == null ? ZDT2==null
+             : ZDT2 == null ? ZDT1==null
+             : ZDT1.equals(ZDT2);
+      }
 
 
   }
