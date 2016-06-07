@@ -341,6 +341,7 @@ public class GraphvizUtil
         if(enumerations.size() > 0){
         	simpleParts.add(_sbEnumeration);
         }
+        
         simpleParts.add(_sbObject);
         String template = "digraph Nodes {" +
         "\r\n" +
@@ -583,33 +584,32 @@ public class GraphvizUtil
         StringBuilder sb = new StringBuilder();
 
         sb.append("digraph Nodes {" +
-        "\r\n" +
-        "fontname = \"Bitstream Vera Sans\"" +
-        "\r\n" +
-        "fontsize = 8" +
-        "\r\n" +
-        "graph [splines=ortho, overlap=scale]" +
-        "\r\n" +
-        "rankdir=LR" +
-        "\r\n" +
-        "ranksep=2" +
-        "\r\n" +
-        "node [" +
-        "\r\n" +
-        "fontname = \"Bitstream Vera Sans\"" +
-        "\r\n" +
-        "fontsize = 8" +
-        "\r\n" +
-        "shape = \"record\"" +
-        "\r\n" +
-        "]" +
-        "\r\n" +
-        "edge [" +
-        "\r\n" +
-        "arrowtail = \"empty\"" +
-        "\r\n" +
-        "]");
-
+            "\r\n" +
+            "fontname = \"Bitstream Vera Sans\"" +
+            "\r\n" +
+            "fontsize = 12" +
+            "\r\n" +
+            "graph [splines=ortho, overlap=false, fontsize=18]" +
+            "\r\n" +
+            "rankdir=LR" +
+            "\r\n" +
+            "node [" +
+            "\r\n" +
+            "fontname = \"Bitstream Vera Sans\"" +
+            "\r\n" +
+            "fontsize = 8" +
+            "\r\n" +
+            "shape = \"record\"" +
+            "\r\n" +
+            "]" +
+            "\r\n" +
+            "edge [" +
+            "\r\n" +
+            "arrowtail = \"empty\"" +
+            "\r\n" +
+            "]"
+            + "\r\n"
+        );
         sb.append("\r\n");
 
         for (Object obj : objects)
@@ -671,8 +671,11 @@ public class GraphvizUtil
                     String _Name = tObject._Name.toUpperCase();
                     sb.append("" + _Name + "["+ObjectOutColor.toAttr()+"label=\"{" + _Name + "}\", id=\"other_" + _Name + "\"]");
                     sb.append("\r\n");
+                    sb.append(object._Name.toUpperCase() + " -> " + fKeyS.toUpperCase() + "["+FkOutObjSchema.toArr()+"]");
                   }
-                sb.append(object._Name.toUpperCase() + " -> " + fKeyS.toUpperCase() + "[color=\"red\"]");
+                else{
+                	sb.append(object._Name.toUpperCase() + " -> " + fKeyS.toUpperCase() + "["+FkInObjSchema.toArr()+"]");
+                }
                 sb.append("\r\n");
               }
           }
@@ -732,8 +735,11 @@ public class GraphvizUtil
                     String _Name = tObject._Name.toUpperCase();
                     sb.append("" + _Name + "["+ObjectOutColor.toAttr()+"label=\"{" + _Name + "}\", id=\"other_" + _Name + "\"]");
                     sb.append("\r\n");
+                    sb.append(view._Name + " -> " + s.toUpperCase() + "["+FkOutViewSchema.toArr()+"]");
                   }
-                sb.append(view._Name + " -> " + s.toUpperCase() + "[color=\"green\"]");
+                else{
+                	sb.append(view._Name + " -> " + s.toUpperCase() + "["+FkInViewSchema.toArr()+"]");
+                }
                 sb.append("\r\n");
               }
           }
