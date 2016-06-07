@@ -17,8 +17,6 @@
 grammar TildaSQL;
 
 
-
-
 where
  : expr EOF
  ;
