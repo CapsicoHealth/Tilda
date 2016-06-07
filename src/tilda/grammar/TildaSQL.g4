@@ -157,23 +157,21 @@ column
  ;
 
 
-
-K_AND : A N D  | '&' '&';
+K_AND : A N D;
 K_BETWEEN : B E T W E E N;
 K_IN : I N;
 K_IS : I S;
 K_LIKE : L I K E;
 K_NOT : N O T;
 K_NULL : N U L L;
-K_ON : O N;
-K_OR : O R | '|' '|';
+K_OR : O R;
 K_REGEXP : R E G E X P;
 K_LT: '<';
-K_LTE: '<' '=';
+K_LTE: '<=';
 K_GT: '>';
-K_GTE: '>' '=';
+K_GTE: '>=';
 K_EQ: '=' '='?;
-K_NEQ: '<' '>' | '!' '=';
+K_NEQ: '<>' | '!=';
 K_DIV: '/';
 K_MINUS: '-';
 
@@ -222,8 +220,6 @@ HOUR_LITERAL_12
 // : ('0'[0-9])|('1'[0-2])
  : DIGIT DIGIT
  ;
- 
-QUOTE : '\'';
 
 SPACES
  : [ \u000B\t\r\n] -> channel(HIDDEN)

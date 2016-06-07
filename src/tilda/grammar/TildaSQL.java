@@ -93,24 +93,24 @@ public class TildaSQL
             // +"OR papa.secondaryDischargeICD9 == '2001-03-11T22:00:70+00:00'"+SystemValues.NEWLINE
             // ,"toto.acadabra >= 3*(1+?{var1})/?{var2} && gogo.barilla > gaga.panzani and (gigi.date > CURRENT_TIMESTAMP OR gugu.deleted > '2016-01-01' OR titi >=
             // TIMESTAMP_TODAY)"
-            , "@    CLM_TYPE = 'I' " + SystemValues.NEWLINE
-            + " && PRVDR_CLASS = 'Abc' " + SystemValues.NEWLINE
+            , "@    CLM_TYPE >= 'I' " + SystemValues.NEWLINE
+            + " AND PRVDR_CLASS = 'Abc' " + SystemValues.NEWLINE
             + " AND PRVDR_CLASS = CLM_TYPE " + SystemValues.NEWLINE
             + " AND (    ( PRIMARY_ICD9_DGNS_CD   LIKE '410.%' AND  PRIMARY_ICD9_DGNS_CD   NOT LIKE '410._2' )" + SystemValues.NEWLINE
-            + "       || ( SECONDARY_ICD9_DGNS_CD LIKE '410.%' AND  SECONDARY_ICD9_DGNS_CD NOT LIKE '410._2' )" + SystemValues.NEWLINE
-            + "       || PRIMARY_ICD9_DGNS_CD+PRIMARY_ICD9_PRCDR_CD in ('428.5', '428.54', '1')" + SystemValues.NEWLINE
+            + "       OR ( SECONDARY_ICD9_DGNS_CD LIKE '410.%' AND  SECONDARY_ICD9_DGNS_CD NOT LIKE '410._2' )" + SystemValues.NEWLINE
+            + "       OR PRIMARY_ICD9_DGNS_CD+PRIMARY_ICD9_PRCDR_CD in ('428.5', '428.54', '1')" + SystemValues.NEWLINE
             + "     )" + SystemValues.NEWLINE
             + " AND PRIMARY_ICD9_PRCDR_CD not in ('234.23', '11.22')" + SystemValues.NEWLINE
             // +" AND tawa(secondaryDischargeICD9, 12) = 1"+SystemValues.NEWLINE
             // +" AND lower(secondaryDischargeICD9) == 'abc'"+SystemValues.NEWLINE
             + "  AND (   BENE_BIRTH_DT = '2001-03-11'" + SystemValues.NEWLINE
-            + "       || BENE_BIRTH_DT = '2001-03-11T22:00'" + SystemValues.NEWLINE
-            + "       || BENE_BIRTH_DT = '2001-06-11T22:00:30'" + SystemValues.NEWLINE
+            + "       OR BENE_BIRTH_DT = '2001-03-11T22:00'" + SystemValues.NEWLINE
+            + "       OR BENE_BIRTH_DT = '2001-06-11T22:00:30'" + SystemValues.NEWLINE
             + "       OR BENE_BIRTH_DT = '2001-03-11T22:00:30+00:00'" + SystemValues.NEWLINE
             + "       OR BENE_BIRTH_DT = CURRENT_TIMESTAMP" + SystemValues.NEWLINE
             + "       OR BENE_BIRTH_DT = TIMESTAMP_TODAY LAST" + SystemValues.NEWLINE
             + "     )" + SystemValues.NEWLINE
-            + " AND (    CLM_PMT_AMT > 2*((5+(?{var1}+1)))" + SystemValues.NEWLINE
+            + " AND (    CLM_PMT_AMT >= 2*((5+(?{var1}+1)))" + SystemValues.NEWLINE
             + "     )" + SystemValues.NEWLINE
         };
 
@@ -146,7 +146,7 @@ public class TildaSQL
                 // LOG.debug(w1._ParseTreeStr.toString());
 
                 TildaSQLListenerValidator w2 = new TildaSQLListenerValidator();
-                CodeGenTildaJavaExpression CG = new CodeGenTildaJavaExpression();
+                CodeGenJavaExpression CG = new CodeGenJavaExpression();
                 w2.setColumnEnvironment(Cols);
                 w2.setCodeGen(CG);
                 ParseTreeWalker.DEFAULT.walk(w2, tree);
