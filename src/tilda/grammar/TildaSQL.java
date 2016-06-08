@@ -16,6 +16,7 @@
 
 package tilda.grammar;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -33,6 +34,8 @@ import tilda.types.Type_StringCollectionNull;
 import tilda.types.Type_StringPrimitive;
 import tilda.types.Type_StringPrimitiveNull;
 import tilda.utils.CollectionUtil;
+import tilda.utils.CompareUtil;
+import tilda.utils.DateTimeUtil;
 import tilda.utils.DurationUtil;
 import tilda.utils.SystemValues;
 
@@ -40,25 +43,66 @@ public class TildaSQL
   {
     protected static final Logger LOG = LogManager.getLogger(TildaSQL.class.getName());
 
+    public static class TestObject
+      {
+        public char getCLM_TYPE()
+          {
+            return 'I';
+          }
+
+        public String getPRVDR_CLASS()
+          {
+            return "Abc";
+          }
+
+        public String getPRIMARY_ICD9_DGNS_CD()
+          {
+            return "410.11";
+          }
+
+        public List<String> getSECONDARY_ICD9_DGNS_CD()
+          {
+            return null;
+          }
+
+        public String getPRIMARY_ICD9_PRCDR_CD()
+          {
+            return null;
+          }
+
+        public ZonedDateTime getBENE_BIRTH_DT()
+          {
+            return DateTimeUtil.parsefromJSON("2001-03-11");
+          }
+
+        public float getCLM_PMT_AMT()
+          {
+            return 20;
+          }
+      }
+
+    protected static List<ColumnDefinition> _COLS = CollectionUtil.toList(new ColumnDefinition[] {
+        new Type_StringPrimitive("CMS.CLAIMSBENEFICIARYVIEW", "DESYNPUF_ID", 0), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_ADMSN_DTTZ", 1),
+        new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_ADMSN_DT", 2), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_FROM_DTTZ", 3),
+        new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_FROM_DT", 4), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "NCH_BENE_DSCHRG_DTTZ", 5),
+        new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "NCH_BENE_DSCHRG_DT", 6), new Type_FloatPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_PMT_AMT", 7),
+        new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_THRU_DTTZ", 8), new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_THRU_DT", 9),
+        new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "PRVDR_CLASS", 10), new Type_CharPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_TYPE", 11),
+        new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "PRIMARY_ICD9_DGNS_CD", 12), new Type_StringCollectionNull("CMS.CLAIMSBENEFICIARYVIEW", "SECONDARY_ICD9_DGNS_CD", 13),
+        new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "PRIMARY_ICD9_PRCDR_CD", 14), new Type_StringCollectionNull("CMS.CLAIMSBENEFICIARYVIEW", "SECONDARY_ICD9_PRCDR_CD", 15),
+        new Type_IntegerPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_UTLZTN_DAY_CNT", 16), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "BENE_DEATH_DTTZ", 17),
+        new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "BENE_DEATH_DT", 18), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "BENE_BIRTH_DTTZ", 19),
+        new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "BENE_BIRTH_DT", 20), new Type_IntegerPrimitive("CMS.CLAIMSBENEFICIARYVIEW", "BENE_SEX_IDENT_CD", 21),
+        new Type_IntegerPrimitive("CMS.CLAIMSBENEFICIARYVIEW", "SP_STATE_CODE", 22)
+    });
+
+
+
     public static void main(String[] args)
     throws Exception
       {
         SystemValues.autoInit();
 
-        List<ColumnDefinition> Cols = CollectionUtil.toList(new ColumnDefinition[] {
-            new Type_StringPrimitive("CMS.CLAIMSBENEFICIARYVIEW", "DESYNPUF_ID", 0), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_ADMSN_DTTZ", 1),
-            new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_ADMSN_DT", 2), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_FROM_DTTZ", 3),
-            new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_FROM_DT", 4), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "NCH_BENE_DSCHRG_DTTZ", 5),
-            new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "NCH_BENE_DSCHRG_DT", 6), new Type_FloatPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_PMT_AMT", 7),
-            new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_THRU_DTTZ", 8), new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_THRU_DT", 9),
-            new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "PRVDR_CLASS", 10), new Type_CharPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_TYPE", 11),
-            new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "PRIMARY_ICD9_DGNS_CD", 12), new Type_StringCollectionNull("CMS.CLAIMSBENEFICIARYVIEW", "SECONDARY_ICD9_DGNS_CD", 13),
-            new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "PRIMARY_ICD9_PRCDR_CD", 14), new Type_StringCollectionNull("CMS.CLAIMSBENEFICIARYVIEW", "SECONDARY_ICD9_PRCDR_CD", 15),
-            new Type_IntegerPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_UTLZTN_DAY_CNT", 16), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "BENE_DEATH_DTTZ", 17),
-            new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "BENE_DEATH_DT", 18), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "BENE_BIRTH_DTTZ", 19),
-            new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "BENE_BIRTH_DT", 20), new Type_IntegerPrimitive("CMS.CLAIMSBENEFICIARYVIEW", "BENE_SEX_IDENT_CD", 21),
-            new Type_IntegerPrimitive("CMS.CLAIMSBENEFICIARYVIEW", "SP_STATE_CODE", 22)
-        });
 
         String[] Expressions = { "toto = 'dodo'"
             // ,"toto = CURRENT_TIME"
@@ -78,12 +122,11 @@ public class TildaSQL
             // +"OR papa.secondaryDischargeICD9 == '2001-03-11T22:00:70+00:00'"+SystemValues.NEWLINE
             // ,"toto.acadabra >= 3*(1+?{var1})/?{var2} && gogo.barilla > gaga.panzani and (gigi.date > CURRENT_TIMESTAMP OR gugu.deleted > '2016-01-01' OR titi >=
             // TIMESTAMP_TODAY)"
-            , "@    CLM_TYPE >= 'I' " + SystemValues.NEWLINE
+            , "@    CLM_TYPE == 'I' " + SystemValues.NEWLINE
             + " AND PRVDR_CLASS = 'Abc' " + SystemValues.NEWLINE
-            + " AND PRVDR_CLASS = CLM_TYPE " + SystemValues.NEWLINE
             + " AND (    ( PRIMARY_ICD9_DGNS_CD   LIKE '410.%' AND  PRIMARY_ICD9_DGNS_CD   NOT LIKE '410._2' )" + SystemValues.NEWLINE
             + "       OR ( SECONDARY_ICD9_DGNS_CD LIKE '410.%' AND  SECONDARY_ICD9_DGNS_CD NOT LIKE '410._2' )" + SystemValues.NEWLINE
-            + "       OR PRIMARY_ICD9_DGNS_CD+PRIMARY_ICD9_PRCDR_CD in ('428.5', '428.54', '1')" + SystemValues.NEWLINE
+            //+ "       OR PRIMARY_ICD9_DGNS_CD+PRIMARY_ICD9_PRCDR_CD in ('428.5', '428.54', '1')" + SystemValues.NEWLINE
             + "     )" + SystemValues.NEWLINE
             + " AND PRIMARY_ICD9_PRCDR_CD not in ('234.23', '11.22')" + SystemValues.NEWLINE
             // +" AND tawa(secondaryDischargeICD9, 12) = 1"+SystemValues.NEWLINE
@@ -113,7 +156,6 @@ public class TildaSQL
             LOG.debug("    --> " + Expr);
             long T0 = System.nanoTime();
             TildaSQLValidator Validator = new TildaSQLValidator(Expr);
-
             if (Validator.getParserSyntaxErrors() == 0)
               LOG.debug("SUCCESS Parsing");
             else
@@ -130,8 +172,9 @@ public class TildaSQL
 
                 CodeGenJavaExpression CG = new CodeGenJavaExpression("Rule1");
                 Validator.setCodeGen(CG);
-                Validator.setColumnEnvironment(Cols);
+                Validator.setColumnEnvironment(_COLS);
                 Validator.validate();
+                LOG.debug(CG._CodeGen.toString());
                 Iterator<ErrorList.Error> I = Validator.getValidationErrors().getErrors();
                 if (I != null)
                   {
@@ -139,11 +182,9 @@ public class TildaSQL
                     while (I.hasNext() == true)
                       LOG.error("        " + I.next());
                   }
-                LOG.debug(CG._CodeGen.toString());
-
-
+                CompiledWhereClause CWC = WhereClauseClassGenerator.gen("tilda._gen.cwc", CG.getName(), TestObject.class, CG._CodeGen.toString());
+                LOG.debug("  Run: "+CWC.run(new TestObject(), 2));
               }
-
             LOG.debug("Took: " + DurationUtil.PrintDuration(System.nanoTime() - T0));
           }
 
@@ -160,47 +201,58 @@ public class TildaSQL
           }
 
       }
+    
+    
+public static class Rule1 implements tilda.grammar.CompiledWhereClause
+ { 
+   public boolean run(Object ObjBase, int var1)
+    { 
+      tilda.grammar.TildaSQL.TestObject obj = (tilda.grammar.TildaSQL.TestObject) ObjBase;
+      return    obj.getCLM_TYPE() == 'I'
+             && CompareUtil.equals(obj.getPRVDR_CLASS(), "Abc") == true 
+             && (   ( CompareUtil.like(obj.getPRIMARY_ICD9_DGNS_CD  (), "410.%") == true &&  CompareUtil.like(obj.getPRIMARY_ICD9_DGNS_CD  (), "410._2") == false)
+                 || ( CompareUtil.like(obj.getSECONDARY_ICD9_DGNS_CD(), "410.%") == true &&  CompareUtil.like(obj.getSECONDARY_ICD9_DGNS_CD(), "410._2") == false)
+                ) 
+             &&  CompareUtil.in(obj.getPRIMARY_ICD9_PRCDR_CD(), new String[] {"234.23", "11.22"}) == false 
+             && (   CompareUtil.equals(obj.getBENE_BIRTH_DT(), DateTimeUtil.parsefromJSON("2001-03-11T00:00:00-05:00[America/New_York]")) == true 
+                 || CompareUtil.equals(obj.getBENE_BIRTH_DT(), DateTimeUtil.parsefromJSON("2001-03-11T22:00:00-05:00[America/New_York]")) == true 
+                 || CompareUtil.equals(obj.getBENE_BIRTH_DT(), DateTimeUtil.parsefromJSON("2001-06-11T22:00:30-04:00[America/New_York]")) == true 
+                 || CompareUtil.equals(obj.getBENE_BIRTH_DT(), DateTimeUtil.parsefromJSON("2001-03-11T22:00:30Z")) == true
+                 || CompareUtil.equals(obj.getBENE_BIRTH_DT(), DateTimeUtil.NOW_PLACEHOLDER_ZDT) == true 
+                 || (   CompareUtil.compare(obj.getBENE_BIRTH_DT(), DateTimeUtil.getTodayTimestamp(true)) >= 0 
+                     && CompareUtil.compare(obj.getBENE_BIRTH_DT(), DateTimeUtil.getTomorrowTimestamp(false)) < 0
+                    )
+                ) 
+             && (obj.getCLM_PMT_AMT() > 2*((5+(var1+1))))
+             ;
+    } 
+ } 
+    
 
 
     public static void toto()
       {
-        List<ColumnDefinition> Cols = CollectionUtil.toList(new ColumnDefinition[] {
-            new Type_StringPrimitive("CMS.CLAIMSBENEFICIARYVIEW", "DESYNPUF_ID", 0), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_ADMSN_DTTZ", 1),
-            new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_ADMSN_DT", 2), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_FROM_DTTZ", 3),
-            new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_FROM_DT", 4), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "NCH_BENE_DSCHRG_DTTZ", 5),
-            new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "NCH_BENE_DSCHRG_DT", 6), new Type_FloatPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_PMT_AMT", 7),
-            new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_THRU_DTTZ", 8), new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_THRU_DT", 9),
-            new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "PRVDR_CLASS", 10), new Type_CharPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_TYPE", 11),
-            new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "PRIMARY_ICD9_DGNS_CD", 12), new Type_StringCollectionNull("CMS.CLAIMSBENEFICIARYVIEW", "SECONDARY_ICD9_DGNS_CD", 13),
-            new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "PRIMARY_ICD9_PRCDR_CD", 14), new Type_StringCollectionNull("CMS.CLAIMSBENEFICIARYVIEW", "SECONDARY_ICD9_PRCDR_CD", 15),
-            new Type_IntegerPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_UTLZTN_DAY_CNT", 16), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "BENE_DEATH_DTTZ", 17),
-            new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "BENE_DEATH_DT", 18), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "BENE_BIRTH_DTTZ", 19),
-            new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "BENE_BIRTH_DT", 20), new Type_IntegerPrimitive("CMS.CLAIMSBENEFICIARYVIEW", "BENE_SEX_IDENT_CD", 21),
-            new Type_IntegerPrimitive("CMS.CLAIMSBENEFICIARYVIEW", "SP_STATE_CODE", 22)
-        });
-
         String Expr = "     CLM_TYPE >= 'I' " + SystemValues.NEWLINE
-                    + " AND PRVDR_CLASS = 'Abc' " + SystemValues.NEWLINE
-                    + " AND PRVDR_CLASS = CLM_TYPE " + SystemValues.NEWLINE
-                    + " AND (    ( PRIMARY_ICD9_DGNS_CD   LIKE '410.%' AND  PRIMARY_ICD9_DGNS_CD   NOT LIKE '410._2' )" + SystemValues.NEWLINE
-                    + "       OR ( SECONDARY_ICD9_DGNS_CD LIKE '410.%' AND  SECONDARY_ICD9_DGNS_CD NOT LIKE '410._2' )" + SystemValues.NEWLINE
-                    + "       OR PRIMARY_ICD9_DGNS_CD+PRIMARY_ICD9_PRCDR_CD in ('428.5', '428.54', '1')" + SystemValues.NEWLINE
-                    + "     )" + SystemValues.NEWLINE
-                    + " AND PRIMARY_ICD9_PRCDR_CD not in ('234.23', '11.22')" + SystemValues.NEWLINE
-                    + "  AND (   BENE_BIRTH_DT = '2001-03-11'" + SystemValues.NEWLINE
-                    + "       OR BENE_BIRTH_DT = '2001-03-11T22:00'" + SystemValues.NEWLINE
-                    + "       OR BENE_BIRTH_DT = '2001-03-11T22:00:30+00:00'" + SystemValues.NEWLINE
-                    + "       OR BENE_BIRTH_DT = CURRENT_TIMESTAMP" + SystemValues.NEWLINE
-                    + "       OR (    BENE_BIRTH_DT >= TIMESTAMP_TODAY" + SystemValues.NEWLINE
-                    + "           AND BENE_BIRTH_DT < TIMESTAMP_TOMORROW LAST" + SystemValues.NEWLINE
-                    + "          )" + SystemValues.NEWLINE
-                    + "     )" + SystemValues.NEWLINE
-                    + " AND (    CLM_PMT_AMT >= 2*((5+(?{var1}+1)))" + SystemValues.NEWLINE
-                    + "     )" + SystemValues.NEWLINE
-                    ;
-        
+        + " AND PRVDR_CLASS = 'Abc' " + SystemValues.NEWLINE
+        + " AND PRVDR_CLASS = CLM_TYPE " + SystemValues.NEWLINE
+        + " AND (    ( PRIMARY_ICD9_DGNS_CD   LIKE '410.%' AND  PRIMARY_ICD9_DGNS_CD   NOT LIKE '410._2' )" + SystemValues.NEWLINE
+        + "       OR ( SECONDARY_ICD9_DGNS_CD LIKE '410.%' AND  SECONDARY_ICD9_DGNS_CD NOT LIKE '410._2' )" + SystemValues.NEWLINE
+        + "       OR PRIMARY_ICD9_DGNS_CD+PRIMARY_ICD9_PRCDR_CD in ('428.5', '428.54', '1')" + SystemValues.NEWLINE
+        + "     )" + SystemValues.NEWLINE
+        + " AND PRIMARY_ICD9_PRCDR_CD not in ('234.23', '11.22')" + SystemValues.NEWLINE
+        + "  AND (   BENE_BIRTH_DT = '2001-03-11'" + SystemValues.NEWLINE
+        + "       OR BENE_BIRTH_DT = '2001-03-11T22:00'" + SystemValues.NEWLINE
+        + "       OR BENE_BIRTH_DT = '2001-03-11T22:00:30+00:00'" + SystemValues.NEWLINE
+        + "       OR BENE_BIRTH_DT = CURRENT_TIMESTAMP" + SystemValues.NEWLINE
+        + "       OR (    BENE_BIRTH_DT >= TIMESTAMP_TODAY" + SystemValues.NEWLINE
+        + "           AND BENE_BIRTH_DT < TIMESTAMP_TOMORROW LAST" + SystemValues.NEWLINE
+        + "          )" + SystemValues.NEWLINE
+        + "     )" + SystemValues.NEWLINE
+        + " AND (    CLM_PMT_AMT >= 2*((5+(?{var1}+1)))" + SystemValues.NEWLINE
+        + "     )" + SystemValues.NEWLINE;
+
         TildaSQLValidator Validator = new TildaSQLValidator(Expr);
-        Validator.setColumnEnvironment(Cols);
+        Validator.setColumnEnvironment(_COLS);
 
         if (Validator.getParserSyntaxErrors() != 0)
           LOG.error("    --> " + Validator.getParserSyntaxErrors() + " ERROR(S).");

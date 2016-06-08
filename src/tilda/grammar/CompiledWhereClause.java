@@ -18,7 +18,5 @@ package tilda.grammar;
 
 public interface CompiledWhereClause
   {
-    /*@formatter:off*/
     public boolean run(Object Obj, int var1);
-    /*@formatter:on*/
   }
