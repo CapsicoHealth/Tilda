@@ -90,7 +90,7 @@ public class TildaSQLValidator extends TildaSQLBaseListener
       {
         ParseTreeWalker.DEFAULT.walk(this, _Tree);
       }
-    
+
     public ErrorList getValidationErrors()
       {
         return _Errors;
@@ -100,13 +100,17 @@ public class TildaSQLValidator extends TildaSQLBaseListener
     public void enterBool_op(Bool_opContext ctx)
       {
         super.enterBool_op(ctx);
-        if (_CG == null)
-          return;
 
         if (ctx.K_AND() != null)
-          _CG.boolOperatorAND(ctx.K_NOT() != null);
+          {
+            if (_CG != null)
+              _CG.boolOperatorAND(ctx.K_NOT() != null);
+          }
         else if (ctx.K_OR() != null)
-          _CG.boolOperatorOR(ctx.K_NOT() != null);
+          {
+            if (_CG != null)
+              _CG.boolOperatorOR(ctx.K_NOT() != null);
+          }
         else
           _Errors.addError("Unknown boolean operator " + ctx.getText(), ctx);
       }
@@ -144,24 +148,49 @@ public class TildaSQLValidator extends TildaSQLBaseListener
         if (ctx.bin_op() != null)
           {
             if (ctx.bin_op().K_LIKE() != null) // like
-              _CG.binLike(Columns, ctx.bin_op().K_NOT() != null);
+              {
+                if (_CG != null)
+                  _CG.binLike(Columns, ctx.bin_op().K_NOT() != null);
+              }
             else if (ctx.bin_op().K_EQ() != null) // equal
-              _CG.binEqual(Columns, _TypeManager.peek(), false);
+              {
+                if (_CG != null)
+
+                  _CG.binEqual(Columns, _TypeManager.peek(), false);
+              }
             else if (ctx.bin_op().K_NEQ() != null) // not equal
-              _CG.binEqual(Columns, _TypeManager.peek(), true);
+              {
+                if (_CG != null)
+                  _CG.binEqual(Columns, _TypeManager.peek(), true);
+              }
             else if (ctx.bin_op().K_LT() != null) // less than
-              _CG.binLessThan(Columns, _TypeManager.peek());
+              {
+                if (_CG != null)
+                  _CG.binLessThan(Columns, _TypeManager.peek());
+              }
             else if (ctx.bin_op().K_LTE() != null) // less than or equal
-              _CG.binLessThanOrEqual(Columns, _TypeManager.peek());
+              {
+                if (_CG != null)
+                  _CG.binLessThanOrEqual(Columns, _TypeManager.peek());
+              }
             else if (ctx.bin_op().K_GT() != null) // greater than
-              _CG.binGreaterThan(Columns, _TypeManager.peek());
+              {
+                if (_CG != null)
+                  _CG.binGreaterThan(Columns, _TypeManager.peek());
+              }
             else if (ctx.bin_op().K_GTE() != null) // greater than or equal
-              _CG.binGreaterThanOrEqual(Columns, _TypeManager.peek());
+              {
+                if (_CG != null)
+                  _CG.binGreaterThanOrEqual(Columns, _TypeManager.peek());
+              }
             else
               _Errors.addError("Unknown binary operator " + ctx.bin_op().getText(), ctx);
           }
         else if (ctx.K_IN() != null) // greater than or equal
-          _CG.binIn(Columns, ctx.K_NOT() != null);
+          {
+            if (_CG != null)
+              _CG.binIn(Columns, ctx.K_NOT() != null);
+          }
         else
           _Errors.addError("Unparsable binary expression " + ctx.getText(), ctx);
 
@@ -169,7 +198,7 @@ public class TildaSQLValidator extends TildaSQLBaseListener
           {
             _TypeManager.openScope();
             ColumnDefinition CD = _TypeManager.handleColumn(ctx.column());
-            if (CD != null)
+            if (CD != null && _CG != null)
               _CG.col(CD);
           }
 
@@ -179,9 +208,12 @@ public class TildaSQLValidator extends TildaSQLBaseListener
     @Override
     public void exitBin_expr(Bin_exprContext ctx)
       {
-        String Err = _CG.binClose();
-        if (Err != null)
-          _Errors.addError(Err, ctx);
+        if (_CG != null)
+          {
+            String Err = _CG.binClose();
+            if (Err != null)
+              _Errors.addError(Err, ctx);
+          }
 
         _TypeManager.rolloverArgumentType(ctx, "binary expression", true);
         super.exitBin_expr(ctx);
@@ -194,7 +226,8 @@ public class TildaSQLValidator extends TildaSQLBaseListener
       {
         _ArgumentLists.push(new Counter());
         _TypeManager.openScope();
-        _CG.valueListOpen();
+        if (_CG != null)
+          _CG.valueListOpen();
         super.enterValue_list(ctx);
       }
 
@@ -210,7 +243,7 @@ public class TildaSQLValidator extends TildaSQLBaseListener
               {
                 _Errors.addErrors(_TypeManager.getErrors());
               }
-            else
+            else if (_CG != null)
               {
                 String Err = _CG.valueListClose(Type._Type);
                 if (Err != null)
@@ -262,7 +295,8 @@ public class TildaSQLValidator extends TildaSQLBaseListener
         ColumnType ExistingExpressionType = _TypeManager.peek();
         if (ExistingExpressionType == ColumnType.STRING && ctx.K_MINUS() != null)
           _Errors.addError("Operator " + ctx.getText() + " is not compatible in an expression currently of type STRING.", ctx);
-        _CG.arithmeticPlus(ctx.K_MINUS() != null);
+        if (_CG != null)
+          _CG.arithmeticPlus(ctx.K_MINUS() != null);
         super.enterArithmetic_op_add(ctx);
       }
 
@@ -274,7 +308,8 @@ public class TildaSQLValidator extends TildaSQLBaseListener
           _Errors.addError("Operator " + ctx.getText() + " is not compatible in an expression currently of type STRING.", ctx);
         else if (ctx.K_DIV() != null)
           _TypeManager.handleType(ColumnType.FLOAT, ctx);
-        _CG.arithmeticMultiply(ctx.K_DIV() != null);
+        if (_CG != null)
+          _CG.arithmeticMultiply(ctx.K_DIV() != null);
         super.enterArithmetic_op_mul(ctx);
       }
 
@@ -282,7 +317,8 @@ public class TildaSQLValidator extends TildaSQLBaseListener
     public void enterArithmetic_expr_sub(Arithmetic_expr_subContext ctx)
       {
         _TypeManager.openScope();
-        _CG.arithmeticOpenPar();
+        if (_CG != null)
+          _CG.arithmeticOpenPar();
         super.enterArithmetic_expr_sub(ctx);
       }
 
@@ -290,7 +326,8 @@ public class TildaSQLValidator extends TildaSQLBaseListener
     public void exitArithmetic_expr_sub(Arithmetic_expr_subContext ctx)
       {
         _TypeManager.rolloverArgumentType(ctx, "sub arithmetic expression", false);
-        _CG.arithmeticClosePar();
+        if (_CG != null)
+          _CG.arithmeticClosePar();
         super.enterArithmetic_expr_sub(ctx);
       }
 
@@ -299,7 +336,7 @@ public class TildaSQLValidator extends TildaSQLBaseListener
       {
         if (_ArgumentLists.isEmpty() == true)
           return;
-        if (_ArgumentLists.peek().increment() != 1)
+        if (_ArgumentLists.peek().increment() != 1 && _CG != null)
           _CG.valueListSeparator();
       }
 
@@ -307,7 +344,8 @@ public class TildaSQLValidator extends TildaSQLBaseListener
     public void enterValueNumericLiteral(ValueNumericLiteralContext ctx)
       {
         handleArgumentList();
-        _CG.valueLiteralNumeric(ctx.getText());
+        if (_CG != null)
+          _CG.valueLiteralNumeric(ctx.getText());
 
         Object Number = ParseUtil.parseNumber(ctx.getText());
         if (Number == null)
@@ -335,9 +373,15 @@ public class TildaSQLValidator extends TildaSQLBaseListener
         Str = Str.substring(1, Str.length() - 1);
         _TypeManager.handleType(Str.length() == 1 ? ColumnType.CHAR : ColumnType.STRING, ctx); // a value of 'X' if 3-char long, but is a CHAR type-wise.
         if (_TypeManager.peek() == ColumnType.CHAR)
-          _CG.valueLiteralChar(Str.charAt(0));
+          {
+            if (_CG != null)
+              _CG.valueLiteralChar(Str.charAt(0));
+          }
         else
-          _CG.valueLiteralString(Str);
+          {
+            if (_CG != null)
+              _CG.valueLiteralString(Str);
+          }
         super.enterValueStringLiteral(ctx);
       }
 
@@ -345,7 +389,8 @@ public class TildaSQLValidator extends TildaSQLBaseListener
     public void enterValueBindParam(ValueBindParamContext ctx)
       {
         handleArgumentList();
-        _CG.valueParameter(ctx.getText().replaceAll("\\?\\{([^\\}]+)\\}", "$1"));
+        if (_CG != null)
+          _CG.valueParameter(ctx.getText().replaceAll("\\?\\{([^\\}]+)\\}", "$1"));
         super.enterValueBindParam(ctx);
       }
 
@@ -354,19 +399,32 @@ public class TildaSQLValidator extends TildaSQLBaseListener
       {
         handleArgumentList();
         if (ctx.timestamp_literal().CURRENT_TIMESTAMP() != null)
-          _CG.valueTimestampCurrent();
+          {
+            if (_CG != null)
+              _CG.valueTimestampCurrent();
+          }
         else if (ctx.timestamp_literal().TIMESTAMP_YESTERDAY() != null)
-          _CG.valueTimestampYesterday(ctx.timestamp_literal().LAST() == null);
+          {
+            if (_CG != null)
+              _CG.valueTimestampYesterday(ctx.timestamp_literal().LAST() == null);
+          }
         else if (ctx.timestamp_literal().TIMESTAMP_TODAY() != null)
-          _CG.valueTimestampToday(ctx.timestamp_literal().LAST() == null);
+          {
+            if (_CG != null)
+              _CG.valueTimestampToday(ctx.timestamp_literal().LAST() == null);
+          }
         else if (ctx.timestamp_literal().TIMESTAMP_TOMORROW() != null)
-          _CG.valueTimestampTomorrow(ctx.timestamp_literal().LAST() == null);
+          {
+            if (_CG != null)
+              _CG.valueTimestampTomorrow(ctx.timestamp_literal().LAST() == null);
+          }
         else
           {
             ZonedDateTime ZDT = DateTimeUtil.parsefromJSON(ctx.getText().substring(1, ctx.getText().length() - 1));
             if (ZDT == null)
               _Errors.addError("Invalid timestamp " + ctx.getText(), ctx);
-            _CG.valueLiteralTimestamp(ZDT);
+            if (_CG != null)
+              _CG.valueLiteralTimestamp(ZDT);
           }
         _TypeManager.handleType(ColumnType.DATETIME, ctx);
         super.enterValueTimestampLiteral(ctx);
@@ -375,7 +433,8 @@ public class TildaSQLValidator extends TildaSQLBaseListener
     @Override
     public void exitWhere(WhereContext ctx)
       {
-        _CG.end();
+        if (_CG != null)
+          _CG.end();
         super.exitWhere(ctx);
       }
   }
