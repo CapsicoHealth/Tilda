@@ -16,6 +16,8 @@
 
 package tilda.grammar;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -24,34 +26,65 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.utils.JSONUtil;
+
 public class ErrorList
   {
-    protected static final Logger LOG     = LogManager.getLogger(ErrorList.class.getName());
+    protected static final Logger LOG = LogManager.getLogger(ErrorList.class.getName());
 
-    protected List<String>        _Errors = new ArrayList<String>();
-
-    public void addError(String err, ParserRuleContext ctx)
+    public static class Error
       {
-        err += " (line " + ctx.getStart().getLine() + ":" + ctx.getStart().getCharPositionInLine() + ")";
-        _Errors.add(err);
-        LOG.error(err);
+        public Error(String Msg, ParserRuleContext ctx)
+          {
+            _Msg = Msg;
+            _Line = ctx.getStart().getLine();
+            _Column = ctx.getStart().getCharPositionInLine();
+          }
+
+        public final String _Msg;
+        public final int    _Line;
+        public final int    _Column;
+
+        public String toString()
+          {
+            return _Msg + " (line " + _Line + ":" + _Column + ")";
+          }
+        
+        public void toJSON(Writer Out) throws IOException
+          {
+            Out.append("{");
+            JSONUtil.Print(Out, "m", true , _Msg);
+            JSONUtil.Print(Out, "l", false, _Line);
+            JSONUtil.Print(Out, "c", false, _Column);
+            Out.append("}");
+          }
+        
       }
 
-    public Iterator<String> getErrors()
+    protected List<Error> _Errors = new ArrayList<Error>();
+
+    public void addError(String Msg, ParserRuleContext ctx)
+      {
+        Error err = new Error(Msg, ctx);
+        _Errors.add(err);
+        LOG.error(err.toString());
+      }
+
+    public Iterator<Error> getErrors()
       {
         return _Errors.isEmpty() == true ? null : _Errors.iterator();
       }
 
-    public void addErrors(Iterator<String> I)
+    public void addErrors(Iterator<Error> I)
       {
         if (I != null)
           while (I.hasNext() == true)
             _Errors.add(I.next());
       }
-    
+
     public void addErrors(ErrorList Errors)
       {
         addErrors(Errors.getErrors());
       }
-    
+
   }
