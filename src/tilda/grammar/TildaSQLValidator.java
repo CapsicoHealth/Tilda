@@ -22,6 +22,10 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -46,12 +50,30 @@ import tilda.utils.Counter;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.ParseUtil;
 
-public class TildaSQLListenerValidator extends TildaSQLBaseListener
+public class TildaSQLValidator extends TildaSQLBaseListener
   {
-    protected static final Logger LOG = LogManager.getLogger(TildaSQLListenerValidator.class.getName());
+    protected static final Logger LOG = LogManager.getLogger(TildaSQLValidator.class.getName());
 
-    public TildaSQLListenerValidator()
+    public TildaSQLValidator(String Expr)
       {
+        ANTLRInputStream in = new ANTLRInputStream(Expr);
+        TildaSQLLexer lexer = new TildaSQLLexer(in);
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        TildaSQLParser parser = new TildaSQLParser(tokens);
+        _Tree = parser.where();
+        _SyntaxErrors = parser.getNumberOfSyntaxErrors();
+      }
+
+    protected ParseTree   _Tree;
+    protected int         _SyntaxErrors;
+
+    protected TypeManager _TypeManager = new TypeManager();
+    protected ErrorList   _Errors      = new ErrorList();
+    protected CodeGen     _CG;
+
+    public int getParserSyntaxErrors()
+      {
+        return _SyntaxErrors;
       }
 
     public void setColumnEnvironment(List<ColumnDefinition> Columns)
@@ -64,11 +86,12 @@ public class TildaSQLListenerValidator extends TildaSQLBaseListener
         _CG = CG;
       }
 
-    protected TypeManager _TypeManager = new TypeManager();
-    protected ErrorList   _Errors      = new ErrorList();
-    protected CodeGen     _CG;
-
-    public ErrorList getErrors()
+    public void validate()
+      {
+        ParseTreeWalker.DEFAULT.walk(this, _Tree);
+      }
+    
+    public ErrorList getValidationErrors()
       {
         return _Errors;
       }

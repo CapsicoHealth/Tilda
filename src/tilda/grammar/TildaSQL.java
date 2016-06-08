@@ -127,18 +127,14 @@ public class TildaSQL
             LOG.debug("Parsing expression " + i + ".");
             LOG.debug("    --> " + Expr);
             long T0 = System.nanoTime();
-            ANTLRInputStream in = new ANTLRInputStream(Expr);
-            TildaSQLLexer lexer = new TildaSQLLexer(in);
-            CommonTokenStream tokens = new CommonTokenStream(lexer);
-            TildaSQLParser parser = new TildaSQLParser(tokens);
-            ParseTree tree = parser.where();
+            TildaSQLValidator Validator = new TildaSQLValidator(Expr);
 
-            if (parser.getNumberOfSyntaxErrors() == 0)
+            if (Validator.getParserSyntaxErrors() == 0)
               LOG.debug("SUCCESS Parsing");
             else
               {
-                Failures.add("Expression " + i + " failed with " + parser.getNumberOfSyntaxErrors() + " errors.");
-                LOG.error("    --> " + parser.getNumberOfSyntaxErrors() + " ERROR(S).");
+                Failures.add("Expression " + i + " failed with " + Validator.getParserSyntaxErrors() + " errors.");
+                LOG.error("    --> " + Validator.getParserSyntaxErrors() + " ERROR(S).");
               }
             if (display == true)
               {
@@ -147,13 +143,11 @@ public class TildaSQL
                 // LOG.debug("expr: " + Expr);
                 // LOG.debug(w1._ParseTreeStr.toString());
 
-                TildaSQLListenerValidator w2 = new TildaSQLListenerValidator();
                 CodeGenJavaExpression CG = new CodeGenJavaExpression("Rule1");
-                w2.setColumnEnvironment(Cols);
-                w2.setCodeGen(CG);
-                ParseTreeWalker.DEFAULT.walk(w2, tree);
-                Iterator<String> I = w2.getErrors().getErrors();
-                // LOG.debug("expr: " + Expr);
+                Validator.setCodeGen(CG);
+                Validator.setColumnEnvironment(Cols);
+                Validator.validate();
+                Iterator<String> I = Validator.getValidationErrors().getErrors();
                 if (I != null)
                   {
                     LOG.error("Some Validation errors occurred");
