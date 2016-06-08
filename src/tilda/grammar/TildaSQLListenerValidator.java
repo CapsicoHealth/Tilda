@@ -40,6 +40,7 @@ import tilda.grammar.TildaSQLParser.ValueNumericLiteralContext;
 import tilda.grammar.TildaSQLParser.ValueStringLiteralContext;
 import tilda.grammar.TildaSQLParser.ValueTimestampLiteralContext;
 import tilda.grammar.TildaSQLParser.Value_listContext;
+import tilda.grammar.TildaSQLParser.WhereContext;
 import tilda.types.ColumnDefinition;
 import tilda.utils.Counter;
 import tilda.utils.DateTimeUtil;
@@ -119,7 +120,7 @@ public class TildaSQLListenerValidator extends TildaSQLBaseListener
 
         if (ctx.bin_op() != null)
           {
-            if (ctx.bin_op().K_LIKE() != null)  // like
+            if (ctx.bin_op().K_LIKE() != null) // like
               _CG.binLike(Columns, ctx.bin_op().K_NOT() != null);
             else if (ctx.bin_op().K_EQ() != null) // equal
               _CG.binEqual(Columns, _TypeManager.peek(), false);
@@ -146,7 +147,7 @@ public class TildaSQLListenerValidator extends TildaSQLBaseListener
             _TypeManager.openScope();
             ColumnDefinition CD = _TypeManager.handleColumn(ctx.column());
             if (CD != null)
-             _CG.col(CD);
+              _CG.col(CD);
           }
 
         super.enterBin_expr(ctx);
@@ -157,8 +158,8 @@ public class TildaSQLListenerValidator extends TildaSQLBaseListener
       {
         String Err = _CG.binClose();
         if (Err != null)
-         _Errors.addError(Err, ctx);
-        
+          _Errors.addError(Err, ctx);
+
         _TypeManager.rolloverArgumentType(ctx, "binary expression", true);
         super.exitBin_expr(ctx);
       }
@@ -190,7 +191,7 @@ public class TildaSQLListenerValidator extends TildaSQLBaseListener
               {
                 String Err = _CG.valueListClose(Type._Type);
                 if (Err != null)
-                 _Errors.addError(Err, ctx);
+                  _Errors.addError(Err, ctx);
               }
           }
         super.exitValue_list(ctx);
@@ -238,7 +239,7 @@ public class TildaSQLListenerValidator extends TildaSQLBaseListener
         ColumnType ExistingExpressionType = _TypeManager.peek();
         if (ExistingExpressionType == ColumnType.STRING && ctx.K_MINUS() != null)
           _Errors.addError("Operator " + ctx.getText() + " is not compatible in an expression currently of type STRING.", ctx);
-        _CG.arithmeticPlus(ctx.K_MINUS()!=null);
+        _CG.arithmeticPlus(ctx.K_MINUS() != null);
         super.enterArithmetic_op_add(ctx);
       }
 
@@ -250,7 +251,7 @@ public class TildaSQLListenerValidator extends TildaSQLBaseListener
           _Errors.addError("Operator " + ctx.getText() + " is not compatible in an expression currently of type STRING.", ctx);
         else if (ctx.K_DIV() != null)
           _TypeManager.handleType(ColumnType.FLOAT, ctx);
-        _CG.arithmeticMultiply(ctx.K_DIV()!=null);
+        _CG.arithmeticMultiply(ctx.K_DIV() != null);
         super.enterArithmetic_op_mul(ctx);
       }
 
@@ -276,7 +277,7 @@ public class TildaSQLListenerValidator extends TildaSQLBaseListener
         if (_ArgumentLists.isEmpty() == true)
           return;
         if (_ArgumentLists.peek().increment() != 1)
-         _CG.valueListSeparator();
+          _CG.valueListSeparator();
       }
 
     @Override
@@ -308,12 +309,12 @@ public class TildaSQLListenerValidator extends TildaSQLBaseListener
       {
         handleArgumentList();
         String Str = ctx.getText();
-        Str = Str.substring(1, Str.length()-1);
+        Str = Str.substring(1, Str.length() - 1);
         _TypeManager.handleType(Str.length() == 1 ? ColumnType.CHAR : ColumnType.STRING, ctx); // a value of 'X' if 3-char long, but is a CHAR type-wise.
         if (_TypeManager.peek() == ColumnType.CHAR)
-         _CG.valueLiteralChar(Str.charAt(0));
+          _CG.valueLiteralChar(Str.charAt(0));
         else
-         _CG.valueLiteralString(Str);
+          _CG.valueLiteralString(Str);
         super.enterValueStringLiteral(ctx);
       }
 
@@ -330,13 +331,13 @@ public class TildaSQLListenerValidator extends TildaSQLBaseListener
       {
         handleArgumentList();
         if (ctx.timestamp_literal().CURRENT_TIMESTAMP() != null)
-         _CG.valueTimestampCurrent();
+          _CG.valueTimestampCurrent();
         else if (ctx.timestamp_literal().TIMESTAMP_YESTERDAY() != null)
-         _CG.valueTimestampYesterday(ctx.timestamp_literal().LAST()==null);
+          _CG.valueTimestampYesterday(ctx.timestamp_literal().LAST() == null);
         else if (ctx.timestamp_literal().TIMESTAMP_TODAY() != null)
-         _CG.valueTimestampToday(ctx.timestamp_literal().LAST()==null);
+          _CG.valueTimestampToday(ctx.timestamp_literal().LAST() == null);
         else if (ctx.timestamp_literal().TIMESTAMP_TOMORROW() != null)
-         _CG.valueTimestampTomorrow(ctx.timestamp_literal().LAST()==null);
+          _CG.valueTimestampTomorrow(ctx.timestamp_literal().LAST() == null);
         else
           {
             ZonedDateTime ZDT = DateTimeUtil.parsefromJSON(ctx.getText().substring(1, ctx.getText().length() - 1));
@@ -346,5 +347,12 @@ public class TildaSQLListenerValidator extends TildaSQLBaseListener
           }
         _TypeManager.handleType(ColumnType.DATETIME, ctx);
         super.enterValueTimestampLiteral(ctx);
+      }
+
+    @Override
+    public void exitWhere(WhereContext ctx)
+      {
+        _CG.end();
+        super.exitWhere(ctx);
       }
   }

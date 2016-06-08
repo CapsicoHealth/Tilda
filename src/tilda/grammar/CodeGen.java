@@ -60,6 +60,7 @@ public interface CodeGen
     public void   arithmeticPlus     (boolean minus);
     public void   arithmeticMultiply (boolean division);
 
+    public void   end();
 
     /*@formatter:on*/
   }

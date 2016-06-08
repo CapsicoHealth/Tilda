@@ -108,7 +108,9 @@ public class TildaSQL
             + "       OR BENE_BIRTH_DT = '2001-06-11T22:00:30'" + SystemValues.NEWLINE
             + "       OR BENE_BIRTH_DT = '2001-03-11T22:00:30+00:00'" + SystemValues.NEWLINE
             + "       OR BENE_BIRTH_DT = CURRENT_TIMESTAMP" + SystemValues.NEWLINE
-            + "       OR BENE_BIRTH_DT = TIMESTAMP_TODAY LAST" + SystemValues.NEWLINE
+            + "       OR (    BENE_BIRTH_DT >= TIMESTAMP_TODAY" + SystemValues.NEWLINE
+            + "           AND BENE_BIRTH_DT < TIMESTAMP_TOMORROW LAST" + SystemValues.NEWLINE
+            + "          )" + SystemValues.NEWLINE
             + "     )" + SystemValues.NEWLINE
             + " AND (    CLM_PMT_AMT >= 2*((5+(?{var1}+1)))" + SystemValues.NEWLINE
             + "     )" + SystemValues.NEWLINE
@@ -146,7 +148,7 @@ public class TildaSQL
                 // LOG.debug(w1._ParseTreeStr.toString());
 
                 TildaSQLListenerValidator w2 = new TildaSQLListenerValidator();
-                CodeGenJavaExpression CG = new CodeGenJavaExpression();
+                CodeGenJavaExpression CG = new CodeGenJavaExpression("Rule1");
                 w2.setColumnEnvironment(Cols);
                 w2.setCodeGen(CG);
                 ParseTreeWalker.DEFAULT.walk(w2, tree);
@@ -159,6 +161,8 @@ public class TildaSQL
                       LOG.error("        " + I.next());
                   }
                 LOG.debug(CG._CodeGen.toString());
+                
+                
               }
 
             LOG.debug("Took: " + DurationUtil.PrintDuration(System.nanoTime() - T0));

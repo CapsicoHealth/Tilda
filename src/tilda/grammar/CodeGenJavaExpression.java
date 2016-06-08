@@ -33,9 +33,16 @@ import tilda.utils.TextUtil;
 
 public class CodeGenJavaExpression implements CodeGen
   {
-    protected static final Logger LOG      = LogManager.getLogger(CodeGenJavaExpression.class.getName());
+    protected static final Logger LOG = LogManager.getLogger(CodeGenJavaExpression.class.getName());
 
-    protected StringBuilder       _CodeGen = new StringBuilder();
+    public CodeGenJavaExpression(String Name)
+      {
+        _Name = Name;
+        _CodeGen.append("boolean ").append(Name).append(" = ");
+      }
+
+    protected String        _Name;
+    protected StringBuilder _CodeGen = new StringBuilder();
 
     @Override
     public void boolOperatorAND(boolean not)
@@ -90,7 +97,7 @@ public class CodeGenJavaExpression implements CodeGen
     @Override
     public void binLike(List<ColumnDefinition> Columns, boolean not)
       {
-        _CodeGen.append(" CompareUtils.like(");
+        _CodeGen.append(" CompareUtil.like(");
         binOperatorLHS(_CodeGen, Columns);
         _CodeGen.append(", ");
         _BinCloseSequences.push(") == " + !not);
@@ -106,7 +113,7 @@ public class CodeGenJavaExpression implements CodeGen
           }
         else
           {
-            _CodeGen.append(" CompareUtils.equals(");
+            _CodeGen.append(" CompareUtil.equals(");
             binOperatorLHS(_CodeGen, Columns);
             _CodeGen.append(", ");
             _BinCloseSequences.push(") == " + !not);
@@ -123,7 +130,7 @@ public class CodeGenJavaExpression implements CodeGen
           }
         else
           {
-            _CodeGen.append(" CompareUtils.compare(");
+            _CodeGen.append(" CompareUtil.compare(");
             binOperatorLHS(_CodeGen, Columns);
             _CodeGen.append(", ");
             _BinCloseSequences.push(") < 0");
@@ -140,7 +147,7 @@ public class CodeGenJavaExpression implements CodeGen
           }
         else
           {
-            _CodeGen.append(" CompareUtils.compare(");
+            _CodeGen.append(" CompareUtil.compare(");
             binOperatorLHS(_CodeGen, Columns);
             _CodeGen.append(", ");
             _BinCloseSequences.push(") <= 0");
@@ -157,7 +164,7 @@ public class CodeGenJavaExpression implements CodeGen
           }
         else
           {
-            _CodeGen.append(" CompareUtils.compare(");
+            _CodeGen.append(" CompareUtil.compare(");
             binOperatorLHS(_CodeGen, Columns);
             _CodeGen.append(", ");
             _BinCloseSequences.push(") > 0");
@@ -174,7 +181,7 @@ public class CodeGenJavaExpression implements CodeGen
           }
         else
           {
-            _CodeGen.append(" CompareUtils.compare(");
+            _CodeGen.append(" CompareUtil.compare(");
             binOperatorLHS(_CodeGen, Columns);
             _CodeGen.append(", ");
             _BinCloseSequences.push(") >= 0");
@@ -184,7 +191,7 @@ public class CodeGenJavaExpression implements CodeGen
     @Override
     public void binIn(List<ColumnDefinition> Columns, boolean not)
       {
-        _CodeGen.append(" CompareUtils.in(");
+        _CodeGen.append(" CompareUtil.in(");
         binOperatorLHS(_CodeGen, Columns);
         _CodeGen.append(", ");
         _BinCloseSequences.push(") == " + !not);
@@ -316,6 +323,12 @@ public class CodeGenJavaExpression implements CodeGen
         _CodeGen.append(division == true ? "/" : "*");
       }
 
+    @Override
+    public void end()
+      {
+        _CodeGen.append(";");
+      }
+
 
     /*@formatter:off*/
     protected static class TestObject
@@ -337,10 +350,10 @@ public class CodeGenJavaExpression implements CodeGen
                   &&  CompareUtil.equals(obj.getPRVDR_CLASS(), "Abc") == true 
                   &&  CompareUtil.equals(obj.getPRVDR_CLASS(), obj.getCLM_TYPE()) == true 
                   && (   (   CompareUtil.like(obj.getPRIMARY_ICD9_DGNS_CD(), "410.%") == true 
-                          && CompareUtil.like(obj.getPRIMARY_ICD9_DGNS_CD(), "410._2") == false
+                          && CompareUtil.like(obj.getPRIMARY_ICD9_DGNS_CD(), "410._2") == false 
                          ) 
-                      || (   CompareUtil.like(obj.getSECONDARY_ICD9_DGNS_CD(), "410.%") == true 
-                          && CompareUtil.like(obj.getSECONDARY_ICD9_DGNS_CD(), "410._2") == false
+                      || (   CompareUtil.like(obj.getSECONDARY_ICD9_DGNS_CD(), "410.%") == true  
+                          && CompareUtil.like(obj.getSECONDARY_ICD9_DGNS_CD(), "410._2") == false 
                          ) 
                       || CompareUtil.in(obj.getPRIMARY_ICD9_DGNS_CD()+obj.getPRIMARY_ICD9_PRCDR_CD(), new String[] {"428.5", "428.54", "1"}) == true
                      ) 
@@ -354,6 +367,9 @@ public class CodeGenJavaExpression implements CodeGen
                      ) 
                   && (obj.getCLM_PMT_AMT() > 2*((5+(var1+1))))
                   ;
+
+      boolean Rule1 = obj.getCLM_TYPE() > 'I' &&  CompareUtil.equals(obj.getPRVDR_CLASS(), "Abc") == true &&  CompareUtil.equals(obj.getPRVDR_CLASS(), obj.getCLM_TYPE()) == true && (( CompareUtil.like(obj.getPRIMARY_ICD9_DGNS_CD(), "410.%") == true &&  CompareUtil.like(obj.getPRIMARY_ICD9_DGNS_CD(), "410._2") == false) || ( CompareUtil.like(obj.getSECONDARY_ICD9_DGNS_CD(), "410.%") == true &&  CompareUtil.like(obj.getSECONDARY_ICD9_DGNS_CD(), "410._2") == false) ||  CompareUtil.in(obj.getPRIMARY_ICD9_DGNS_CD()+obj.getPRIMARY_ICD9_PRCDR_CD(), new String[] {"428.5", "428.54", "1"}) == true) &&  CompareUtil.in(obj.getPRIMARY_ICD9_PRCDR_CD(), new String[] {"234.23", "11.22"}) == false && ( CompareUtil.equals(obj.getBENE_BIRTH_DT(), DateTimeUtil.parsefromJSON("2001-03-11T00:00:00-05:00[America/New_York]")) == true ||  CompareUtil.equals(obj.getBENE_BIRTH_DT(), DateTimeUtil.parsefromJSON("2001-03-11T22:00:00-05:00[America/New_York]")) == true ||  CompareUtil.equals(obj.getBENE_BIRTH_DT(), DateTimeUtil.parsefromJSON("2001-06-11T22:00:30-04:00[America/New_York]")) == true ||  CompareUtil.equals(obj.getBENE_BIRTH_DT(), DateTimeUtil.parsefromJSON("2001-03-11T22:00:30Z")) == true ||  CompareUtil.equals(obj.getBENE_BIRTH_DT(), DateTimeUtil.NOW_PLACEHOLDER_ZDT) == true || ( CompareUtil.compare(obj.getBENE_BIRTH_DT(), DateTimeUtil.getTodayTimestamp(true)) >= 0 &&  CompareUtil.compare(obj.getBENE_BIRTH_DT(), DateTimeUtil.getTomorrowTimestamp(false)) < 0)) && (obj.getCLM_PMT_AMT() > 2*((5+(var1+1))));
+      
       /*@formatter:on*/
       }
 

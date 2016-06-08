@@ -20,10 +20,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import tilda.enums.ColumnType;
 
 class TypeWrapper
   {
+    protected static final Logger LOG = LogManager.getLogger(TypeWrapper.class.getName());
+
     public TypeWrapper()
       {
       }
@@ -50,18 +55,19 @@ class TypeWrapper
     public boolean addType(ColumnType Type, String Token)
       {
         if (_Errors == null)
-         _Errors = new ArrayList<String>();
+          _Errors = new ArrayList<String>();
 
         if (Type == null)
-         {
-           _Type = null;
-           return addError("Unknown Type 'NULL' opased in for Token '"+Token+"'.");
-         }
+          {
+            _Type = null;
+            return addError("Unknown Type 'NULL' opased in for Token '" + Token + "'.");
+          }
         else if (_Type == null)
           {
             if (_Errors.isEmpty() == true)
-             _Type = Type;
-            else return false;
+              _Type = Type;
+            else
+              return false;
           }
         else
           switch (Type)
@@ -112,50 +118,50 @@ class TypeWrapper
     public boolean compareType(ColumnType Type, String Token)
       {
         if (_Errors == null)
-         _Errors = new ArrayList<String>();
+          _Errors = new ArrayList<String>();
 
         if (Type == null)
-         {
-           _Type = null;
-           return addError("Unknown Type 'NULL' opased in for Token '"+Token+"'.");
-         }
+          {
+            _Type = null;
+            return addError("Unknown Type 'NULL' opased in for Token '" + Token + "'.");
+          }
         else if (_Type == null)
           {
             if (_Errors.isEmpty() == true)
-             _Type = Type;
+              _Type = Type;
             else
               return false;
           }
         else
           switch (Type)
             {
-            case BOOLEAN:
-            case DATETIME:
-            case DOUBLE:
-            case STRING:
+              case BOOLEAN:
+              case DATETIME:
+              case DOUBLE:
+              case STRING:
                 if (_Type != Type)
-                  return addError("The two sides of the expression are of incompatible types '"+_Type+"' (lhs)  and '"+Type+"' (rhs).");
+                  return addError("The two sides of the expression are of incompatible types '" + _Type + "' (lhs)  and '" + Type + "' (rhs).");
                 break;
-            case FLOAT:
+              case FLOAT:
                 if (_Type != ColumnType.FLOAT && _Type != ColumnType.DOUBLE)
-                  return addError("The two sides of the expression are of incompatible types '"+_Type+"' (lhs)  and '"+Type+"' (rhs).");
-              break;
-            case LONG:
+                  return addError("The two sides of the expression are of incompatible types '" + _Type + "' (lhs)  and '" + Type + "' (rhs).");
+                break;
+              case LONG:
                 if (_Type != ColumnType.FLOAT && _Type != ColumnType.DOUBLE && _Type != ColumnType.LONG)
-                  return addError("The two sides of the expression are of incompatible types '"+_Type+"' (lhs)  and '"+Type+"' (rhs).");
-              break;
-            case INTEGER:
+                  return addError("The two sides of the expression are of incompatible types '" + _Type + "' (lhs)  and '" + Type + "' (rhs).");
+                break;
+              case INTEGER:
                 if (_Type != ColumnType.FLOAT && _Type != ColumnType.DOUBLE && _Type != ColumnType.LONG && _Type != ColumnType.INTEGER)
-                  return addError("The two sides of the expression are of incompatible types '"+_Type+"' (lhs)  and '"+Type+"' (rhs).");
-              break;
-            case CHAR:
+                  return addError("The two sides of the expression are of incompatible types '" + _Type + "' (lhs)  and '" + Type + "' (rhs).");
+                break;
+              case CHAR:
                 if (_Type != ColumnType.STRING && _Type != ColumnType.CHAR)
-                  return addError("The two sides of the expression are of incompatible types '"+_Type+"' (lhs)  and '"+Type+"' (rhs).");
-              break;
-            default:
-              break;
+                  return addError("The two sides of the expression are of incompatible types '" + _Type + "' (lhs)  and '" + Type + "' (rhs).");
+                break;
+              default:
+                break;
             }
         return true;
-        }
+      }
 
   }

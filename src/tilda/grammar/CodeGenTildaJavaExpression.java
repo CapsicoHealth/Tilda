@@ -177,13 +177,13 @@ public class CodeGenTildaJavaExpression implements CodeGen
       {
         TextUtil.EscapeDoubleQuoteWithSlash(_CodeGen, Str);
       }
-    
+
     @Override
     public void valueLiteralChar(char c)
       {
         _CodeGen.append("'").append(c).append("'");
       }
-    
+
 
     @Override
     public void valueParameter(String Str)
@@ -195,7 +195,7 @@ public class CodeGenTildaJavaExpression implements CodeGen
     public void valueLiteralTimestamp(ZonedDateTime ZDT)
       {
         if (ZDT == null)
-         _CodeGen.append("INVALID_TIMESTAMP_LITERAL");
+          _CodeGen.append("INVALID_TIMESTAMP_LITERAL");
         else
           _CodeGen.append("DateTimeUtil.parsefromJSON(\"" + DateTimeUtil.printDateTimeForJSON(ZDT) + "\")");
       }
@@ -260,6 +260,11 @@ public class CodeGenTildaJavaExpression implements CodeGen
     public void arithmeticMultiply(boolean division)
       {
         _CodeGen.append(division == true ? "/" : "*");
+      }
+
+    @Override
+    public void end()
+      {
       }
 
   }
