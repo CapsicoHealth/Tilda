@@ -126,7 +126,7 @@ public class TildaSQL
             + " AND PRVDR_CLASS = 'Abc' " + SystemValues.NEWLINE
             + " AND (    ( PRIMARY_ICD9_DGNS_CD   LIKE '410.%' AND  PRIMARY_ICD9_DGNS_CD   NOT LIKE '410._2' )" + SystemValues.NEWLINE
             + "       OR ( SECONDARY_ICD9_DGNS_CD LIKE '410.%' AND  SECONDARY_ICD9_DGNS_CD NOT LIKE '410._2' )" + SystemValues.NEWLINE
-            //+ "       OR PRIMARY_ICD9_DGNS_CD+PRIMARY_ICD9_PRCDR_CD in ('428.5', '428.54', '1')" + SystemValues.NEWLINE
+            // + " OR PRIMARY_ICD9_DGNS_CD+PRIMARY_ICD9_PRCDR_CD in ('428.5', '428.54', '1')" + SystemValues.NEWLINE
             + "     )" + SystemValues.NEWLINE
             + " AND PRIMARY_ICD9_PRCDR_CD not in ('234.23', '11.22')" + SystemValues.NEWLINE
             // +" AND tawa(secondaryDischargeICD9, 12) = 1"+SystemValues.NEWLINE
@@ -140,7 +140,7 @@ public class TildaSQL
             + "           AND BENE_BIRTH_DT < TIMESTAMP_TOMORROW LAST" + SystemValues.NEWLINE
             + "          )" + SystemValues.NEWLINE
             + "     )" + SystemValues.NEWLINE
-            + " AND (    CLM_PMT_AMT >= 2*((5+(?{var1}+1)))" + SystemValues.NEWLINE
+            + " AND (    CLM_PMT_AMT >= 2*(6+?{var1})" + SystemValues.NEWLINE
             + "     )" + SystemValues.NEWLINE
         };
 
@@ -155,6 +155,7 @@ public class TildaSQL
             LOG.debug("Parsing expression " + i + ".");
             LOG.debug("    --> " + Expr);
             long T0 = System.nanoTime();
+            long TCompile = 0;
             TildaSQLValidator Validator = new TildaSQLValidator(Expr);
             if (Validator.getParserSyntaxErrors() == 0)
               LOG.debug("SUCCESS Parsing");
@@ -182,10 +183,20 @@ public class TildaSQL
                     while (I.hasNext() == true)
                       LOG.error("        " + I.next());
                   }
+                long T1 = System.nanoTime();
                 CompiledWhereClause CWC = WhereClauseClassGenerator.gen("tilda._gen.cwc", CG.getName(), TestObject.class, CG._CodeGen.toString());
-                LOG.debug("  Run: "+CWC.run(new TestObject(), 2));
+                TCompile += System.nanoTime() - T1;
+                int MaxCount = 100000;
+                for (int j = 0; j < MaxCount; ++j)
+                  {
+                    boolean x = CWC.run(new TestObject(), j);
+//                    LOG.debug("  Run "+(j+1)+": " + x);
+                  }
+                T0 = System.nanoTime() - T0;
+                LOG.debug("Total   time: " + DurationUtil.PrintDuration(T0) + " at "+ DurationUtil.PrintPerformancePerMinute(T0, MaxCount)+" rules/mn");
+                LOG.debug("Compile time: " + DurationUtil.PrintDuration(TCompile) + " at "+ DurationUtil.PrintPerformancePerMinute(TCompile, MaxCount)+" rules/mn");
+                LOG.debug("Other   time: " + DurationUtil.PrintDuration(T0-TCompile) + " at "+ DurationUtil.PrintPerformancePerMinute(T0-TCompile, MaxCount)+" rules/mn");
               }
-            LOG.debug("Took: " + DurationUtil.PrintDuration(System.nanoTime() - T0));
           }
 
         LOG.debug("\n\n\n========================================================================================================");
@@ -201,33 +212,30 @@ public class TildaSQL
           }
 
       }
-    
-    
-public static class Rule1 implements tilda.grammar.CompiledWhereClause
- { 
-   public boolean run(Object ObjBase, int var1)
-    { 
-      tilda.grammar.TildaSQL.TestObject obj = (tilda.grammar.TildaSQL.TestObject) ObjBase;
-      return    obj.getCLM_TYPE() == 'I'
-             && CompareUtil.equals(obj.getPRVDR_CLASS(), "Abc") == true 
-             && (   ( CompareUtil.like(obj.getPRIMARY_ICD9_DGNS_CD  (), "410.%") == true &&  CompareUtil.like(obj.getPRIMARY_ICD9_DGNS_CD  (), "410._2") == false)
-                 || ( CompareUtil.like(obj.getSECONDARY_ICD9_DGNS_CD(), "410.%") == true &&  CompareUtil.like(obj.getSECONDARY_ICD9_DGNS_CD(), "410._2") == false)
-                ) 
-             &&  CompareUtil.in(obj.getPRIMARY_ICD9_PRCDR_CD(), new String[] {"234.23", "11.22"}) == false 
-             && (   CompareUtil.equals(obj.getBENE_BIRTH_DT(), DateTimeUtil.parsefromJSON("2001-03-11T00:00:00-05:00[America/New_York]")) == true 
-                 || CompareUtil.equals(obj.getBENE_BIRTH_DT(), DateTimeUtil.parsefromJSON("2001-03-11T22:00:00-05:00[America/New_York]")) == true 
-                 || CompareUtil.equals(obj.getBENE_BIRTH_DT(), DateTimeUtil.parsefromJSON("2001-06-11T22:00:30-04:00[America/New_York]")) == true 
-                 || CompareUtil.equals(obj.getBENE_BIRTH_DT(), DateTimeUtil.parsefromJSON("2001-03-11T22:00:30Z")) == true
-                 || CompareUtil.equals(obj.getBENE_BIRTH_DT(), DateTimeUtil.NOW_PLACEHOLDER_ZDT) == true 
-                 || (   CompareUtil.compare(obj.getBENE_BIRTH_DT(), DateTimeUtil.getTodayTimestamp(true)) >= 0 
-                     && CompareUtil.compare(obj.getBENE_BIRTH_DT(), DateTimeUtil.getTomorrowTimestamp(false)) < 0
-                    )
-                ) 
-             && (obj.getCLM_PMT_AMT() > 2*((5+(var1+1))))
-             ;
-    } 
- } 
-    
+
+
+    public static class Rule1 implements tilda.grammar.CompiledWhereClause
+      {
+        public boolean run(Object ObjBase, int var1)
+          {
+            tilda.grammar.TildaSQL.TestObject obj = (tilda.grammar.TildaSQL.TestObject) ObjBase;
+            return obj.getCLM_TYPE() == 'I'
+            && CompareUtil.equals(obj.getPRVDR_CLASS(), "Abc") == true
+            && ((CompareUtil.like(obj.getPRIMARY_ICD9_DGNS_CD(), "410.%") == true && CompareUtil.like(obj.getPRIMARY_ICD9_DGNS_CD(), "410._2") == false)
+            || (CompareUtil.like(obj.getSECONDARY_ICD9_DGNS_CD(), "410.%") == true && CompareUtil.like(obj.getSECONDARY_ICD9_DGNS_CD(), "410._2") == false))
+            && CompareUtil.in(obj.getPRIMARY_ICD9_PRCDR_CD(), new String[] { "234.23", "11.22"
+            }) == false
+            && (CompareUtil.equals(obj.getBENE_BIRTH_DT(), DateTimeUtil.parsefromJSON("2001-03-11T00:00:00-05:00[America/New_York]")) == true
+            || CompareUtil.equals(obj.getBENE_BIRTH_DT(), DateTimeUtil.parsefromJSON("2001-03-11T22:00:00-05:00[America/New_York]")) == true
+            || CompareUtil.equals(obj.getBENE_BIRTH_DT(), DateTimeUtil.parsefromJSON("2001-06-11T22:00:30-04:00[America/New_York]")) == true
+            || CompareUtil.equals(obj.getBENE_BIRTH_DT(), DateTimeUtil.parsefromJSON("2001-03-11T22:00:30Z")) == true
+            || CompareUtil.equals(obj.getBENE_BIRTH_DT(), DateTimeUtil.NOW_PLACEHOLDER_ZDT) == true
+            || (CompareUtil.compare(obj.getBENE_BIRTH_DT(), DateTimeUtil.getTodayTimestamp(true)) >= 0
+            && CompareUtil.compare(obj.getBENE_BIRTH_DT(), DateTimeUtil.getTomorrowTimestamp(false)) < 0))
+            && (obj.getCLM_PMT_AMT() > 2 * ((5 + (var1 + 1))));
+          }
+      }
+
 
 
     public static void toto()

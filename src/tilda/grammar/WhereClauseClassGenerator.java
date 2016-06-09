@@ -42,7 +42,7 @@ public class WhereClauseClassGenerator
                       + "      return " + boolExpression + ";" + SystemValues.NEWLINE
                       + "    } " + SystemValues.NEWLINE
                       + " } " + SystemValues.NEWLINE;
-        LOG.debug(Source);
+//        LOG.debug(Source);
         Class<?> X = InMemoryJavaCompiler.compile(PackageName+"."+ClassName, Source);
         if (X == null)
           return null;
