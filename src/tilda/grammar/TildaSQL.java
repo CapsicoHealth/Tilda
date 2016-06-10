@@ -103,6 +103,7 @@ public class TildaSQL
       {
         SystemValues.autoInit();
 
+//        toto();
 
         String[] Expressions = { "toto = 'dodo'"
             // ,"toto = CURRENT_TIME"
@@ -157,60 +158,52 @@ public class TildaSQL
             long T0 = System.nanoTime();
             long TCompile = 0;
             TildaSQLValidator Validator = new TildaSQLValidator(Expr);
-            if (Validator.getParserSyntaxErrors() == 0)
-              LOG.debug("SUCCESS Parsing");
-            else
+            if (Validator.getParserSyntaxErrors() != 0)
               {
                 Failures.add("Expression " + i + " failed with " + Validator.getParserSyntaxErrors() + " errors.");
                 LOG.error("    --> " + Validator.getParserSyntaxErrors() + " ERROR(S).");
               }
-            if (display == true)
+            else
               {
-                // TildaSQLTreePrinter w1 = new TildaSQLTreePrinter(parser);
-                // ParseTreeWalker.DEFAULT.walk(w1, tree);
-                // LOG.debug("expr: " + Expr);
-                // LOG.debug(w1._ParseTreeStr.toString());
+                LOG.debug("SUCCESS Parsing");
+                if (display == true)
+                  {
+                    // TildaSQLTreePrinter w1 = new TildaSQLTreePrinter(parser);
+                    // ParseTreeWalker.DEFAULT.walk(w1, tree);
+                    // LOG.debug("expr: " + Expr);
+                    // LOG.debug(w1._ParseTreeStr.toString());
 
-                CodeGenJavaExpression CG = new CodeGenJavaExpression("Rule1");
-                Validator.setCodeGen(CG);
-                Validator.setColumnEnvironment(_COLS);
-                Validator.validate();
-                LOG.debug(CG._CodeGen.toString());
-                Iterator<ErrorList.Error> I = Validator.getValidationErrors().getErrors();
-                if (I != null)
-                  {
-                    LOG.error("Some Validation errors occurred");
-                    while (I.hasNext() == true)
-                      LOG.error("        " + I.next());
+                    CodeGenJavaExpression CG = new CodeGenJavaExpression("Rule1");
+                    Validator.setCodeGen(CG);
+                    Validator.setColumnEnvironment(_COLS);
+                    Validator.validate();
+                    LOG.debug(CG._CodeGen.toString());
+                    Iterator<ErrorList.Error> I = Validator.getValidationErrors().getErrors();
+                    if (I != null)
+                      {
+                        LOG.error("Some Validation errors occurred");
+                        while (I.hasNext() == true)
+                          LOG.error("        " + I.next());
+                      }
+                    else
+                      {
+                        long T1 = System.nanoTime();
+                        CompiledWhereClause CWC = WhereClauseClassGenerator.gen("tilda._gen.cwc", CG.getName(), TestObject.class, CG._CodeGen.toString());
+                        TCompile += System.nanoTime() - T1;
+                        int MaxCount = 100000;
+                        for (int j = 0; j < MaxCount; ++j)
+                          {
+                            boolean x = CWC.run(new TestObject(), j);
+                            // LOG.debug(" Run "+(j+1)+": " + x);
+                          }
+                        T0 = System.nanoTime() - T0;
+                        LOG.debug("Total   time: " + DurationUtil.PrintDuration(T0) + " at " + DurationUtil.PrintPerformancePerMinute(T0, MaxCount) + " rules/mn");
+                        LOG.debug("Compile time: " + DurationUtil.PrintDuration(TCompile) + " at " + DurationUtil.PrintPerformancePerMinute(TCompile, MaxCount) + " rules/mn");
+                        LOG.debug("Other   time: " + DurationUtil.PrintDuration(T0 - TCompile) + " at " + DurationUtil.PrintPerformancePerMinute(T0 - TCompile, MaxCount) + " rules/mn");
+                      }
                   }
-                long T1 = System.nanoTime();
-                CompiledWhereClause CWC = WhereClauseClassGenerator.gen("tilda._gen.cwc", CG.getName(), TestObject.class, CG._CodeGen.toString());
-                TCompile += System.nanoTime() - T1;
-                int MaxCount = 100000;
-                for (int j = 0; j < MaxCount; ++j)
-                  {
-                    boolean x = CWC.run(new TestObject(), j);
-//                    LOG.debug("  Run "+(j+1)+": " + x);
-                  }
-                T0 = System.nanoTime() - T0;
-                LOG.debug("Total   time: " + DurationUtil.PrintDuration(T0) + " at "+ DurationUtil.PrintPerformancePerMinute(T0, MaxCount)+" rules/mn");
-                LOG.debug("Compile time: " + DurationUtil.PrintDuration(TCompile) + " at "+ DurationUtil.PrintPerformancePerMinute(TCompile, MaxCount)+" rules/mn");
-                LOG.debug("Other   time: " + DurationUtil.PrintDuration(T0-TCompile) + " at "+ DurationUtil.PrintPerformancePerMinute(T0-TCompile, MaxCount)+" rules/mn");
               }
           }
-
-        LOG.debug("\n\n\n========================================================================================================");
-        if (Failures.isEmpty() == false)
-          {
-            LOG.error("One or more expressions failed:");
-            for (String str : Failures)
-              LOG.error("    " + str);
-          }
-        else
-          {
-            LOG.debug("Success.");
-          }
-
       }
 
 
@@ -256,7 +249,7 @@ public class TildaSQL
         + "           AND BENE_BIRTH_DT < TIMESTAMP_TOMORROW LAST" + SystemValues.NEWLINE
         + "          )" + SystemValues.NEWLINE
         + "     )" + SystemValues.NEWLINE
-        + " AND (    CLM_PMT_AMT >= 2*((5+(?{var1}+1)))" + SystemValues.NEWLINE
+        + " AND (    CLM_PMT_AMTr >= 2*((5+(?{var1}+1)))" + SystemValues.NEWLINE
         + "     )" + SystemValues.NEWLINE;
 
         TildaSQLValidator Validator = new TildaSQLValidator(Expr);

@@ -44,11 +44,13 @@ public class TypeManager
 
     protected List<ColumnDefinition> _Columns       = new ArrayList<ColumnDefinition>();
     protected Deque<TypeWrapper>     _ArgumentTypes = new ArrayDeque<TypeWrapper>();
-    protected ErrorList              _Errors        = new ErrorList();
+    protected String                 _LastError     = null;
 
-    public ErrorList getErrors()
+    public String getLastError()
       {
-        return _Errors;
+        String err = _LastError;
+        _LastError = null;
+        return err;
       }
 
     public void openScope()
@@ -56,7 +58,7 @@ public class TypeManager
         _ArgumentTypes.push(new TypeWrapper());
       }
 
-    public ColumnDefinition handleColumn(ColumnContext column)
+    public ColumnDefinition handleColumnX(ColumnContext column)
       {
         if (_Columns.isEmpty() == false)
           {
@@ -64,71 +66,83 @@ public class TypeManager
             for (ColumnDefinition col : _Columns)
               if (col.getName().equals(colName) == true)
                 {
-                  handleType(col._Type, column);
+                  if (handleType(col._Type, column) == false)
+                   return null;
                   return col;
                 }
-            _Errors.addError("Unknown column name '" + colName + "'.", column);
+            _LastError = "Unknown column name '" + colName + "'.";
           }
         return null;
       }
 
-    public void handleType(ColumnType Type, ParserRuleContext ctx)
+    public boolean handleType(ColumnType Type, ParserRuleContext ctx)
       {
         TypeWrapper w = _ArgumentTypes.isEmpty() == true ? null : _ArgumentTypes.peek();
         if (w != null)
           {
             if (w.addType(Type, ctx.getText()) == false)
-              _Errors.addError(w.getLastError(), ctx);
+              {
+                _LastError = w.getLastError();
+                return false;
+              }
           }
+        return true;
       }
 
-    public void rolloverArgumentType(ParserRuleContext ctx, String ExpresionType, boolean merge)
+    public boolean rolloverArgumentType(ParserRuleContext ctx, String ExpresionType, boolean merge)
       {
         TypeWrapper w = _ArgumentTypes.isEmpty() == true ? null : _ArgumentTypes.pop();
         if (w == null)
           {
-            _Errors.addError("Closing a " + ExpresionType + " without having a Type manager active!!!!", ctx);
+            _LastError = "Closing a " + ExpresionType + " without having a Type manager active!!!!";
+            return false;
           }
         else if (w._Type == null)
           {
-            _Errors.addError("Closing a " + ExpresionType + " without having a Type gathered!!!!", ctx);
+            _LastError = "Closing a " + ExpresionType + " without having a Type gathered!!!!";
+            return false;
           }
         else if (merge == false)
           {
-            handleType(w._Type, ctx);
+            return handleType(w._Type, ctx);
           }
         else
           {
             TypeWrapper w2 = _ArgumentTypes.isEmpty() == true ? null : _ArgumentTypes.pop();
             if (w2 == null)
               {
-                _Errors.addError("Merging a " + ExpresionType + " without having a LHS Type manager active!!!!", ctx);
+                _LastError = "Merging a " + ExpresionType + " without having a LHS Type manager active!!!!";
+                return false;
               }
             else if (w2._Type == null)
               {
-                _Errors.addError("Merging a " + ExpresionType + " without having a LHS Type gathered!!!!", ctx);
+                _LastError = "Merging a " + ExpresionType + " without having a LHS Type gathered!!!!";
+                return false;
               }
             else
               {
                 if (w2.compareType(w._Type, ctx.getText()) == false)
-                  _Errors.addError(w2.getLastError(), ctx);
+                  {
+                    _LastError = w2.getLastError();
+                    return false;
+                  }
               }
-
           }
+        return true;
       }
 
 
-    public TypeWrapper closeScope(String ScopeType, ParserRuleContext ctx, boolean pop)
+    public TypeWrapper closeScopeX(String ScopeType, ParserRuleContext ctx, boolean pop)
       {
         TypeWrapper Type = _ArgumentTypes.isEmpty() == true ? null : (pop == true ? _ArgumentTypes.pop() : _ArgumentTypes.peek());
         if (Type == null)
           {
-            _Errors.addError("Closing a " + ScopeType + " without having a Type manager active!!!!", ctx);
+            _LastError = "Closing a " + ScopeType + " without having a Type manager active!!!!";
             return null;
           }
         else if (Type.getLastError() != null)
           {
-            _Errors.addError("Closing a " + ScopeType + " without a known type.", ctx);
+            _LastError = "Closing a " + ScopeType + " without a known type.";
             return null;
           }
         return Type;

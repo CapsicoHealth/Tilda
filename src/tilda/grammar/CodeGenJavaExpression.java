@@ -110,7 +110,7 @@ public class CodeGenJavaExpression implements CodeGen
     @Override
     public void binEqual(List<ColumnDefinition> Columns, ColumnType Type, boolean not)
       {
-        if (Type._Primitive == true)
+        if (Type == null || Type._Primitive == true)
           {
             binOperator(_CodeGen, not == true ? " != " : " == ", Columns);
             _BinCloseSequences.push("");
@@ -127,7 +127,7 @@ public class CodeGenJavaExpression implements CodeGen
     @Override
     public void binLessThan(List<ColumnDefinition> Columns, ColumnType Type)
       {
-        if (Type._Primitive == true)
+        if (Type == null || Type._Primitive == true)
           {
             binOperator(_CodeGen, " < ", Columns);
             _BinCloseSequences.push("");
@@ -144,7 +144,7 @@ public class CodeGenJavaExpression implements CodeGen
     @Override
     public void binLessThanOrEqual(List<ColumnDefinition> Columns, ColumnType Type)
       {
-        if (Type._Primitive == true)
+        if (Type == null || Type._Primitive == true)
           {
             binOperator(_CodeGen, " <= ", Columns);
             _BinCloseSequences.push("");
@@ -161,7 +161,7 @@ public class CodeGenJavaExpression implements CodeGen
     @Override
     public void binGreaterThan(List<ColumnDefinition> Columns, ColumnType Type)
       {
-        if (Type._Primitive == true)
+        if (Type == null || Type._Primitive == true)
           {
             binOperator(_CodeGen, " > ", Columns);
             _BinCloseSequences.push("");
@@ -178,7 +178,7 @@ public class CodeGenJavaExpression implements CodeGen
     @Override
     public void binGreaterThanOrEqual(List<ColumnDefinition> Columns, ColumnType Type)
       {
-        if (Type._Primitive == true)
+        if (Type == null || Type._Primitive == true)
           {
             binOperator(_CodeGen, " > ", Columns);
             _BinCloseSequences.push("");
