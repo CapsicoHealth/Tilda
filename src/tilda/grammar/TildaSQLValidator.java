@@ -69,7 +69,7 @@ public class TildaSQLValidator extends TildaSQLBaseListener
 
     protected TypeManager _TypeManager = new TypeManager();
     protected ErrorList   _Errors      = new ErrorList();
-    protected CodeGen     _CG;
+    protected WhereClauseCodeGen     _CG;
 
     public int getParserSyntaxErrors()
       {
@@ -81,7 +81,7 @@ public class TildaSQLValidator extends TildaSQLBaseListener
         _TypeManager.setColumnEnvironment(Columns);
       }
 
-    public void setCodeGen(CodeGen CG)
+    public void setCodeGen(WhereClauseCodeGen CG)
       {
         _CG = CG;
       }

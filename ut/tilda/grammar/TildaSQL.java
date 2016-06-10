@@ -103,7 +103,7 @@ public class TildaSQL
       {
         SystemValues.autoInit();
 
-//        toto();
+        // toto();
 
         String[] Expressions = { "toto = 'dodo'"
             // ,"toto = CURRENT_TIME"
@@ -145,7 +145,6 @@ public class TildaSQL
             + "     )" + SystemValues.NEWLINE
         };
 
-        List<String> Failures = new ArrayList<String>();
         for (int i = 0; i < Expressions.length; ++i)
           {
             String Expr = Expressions[i];
@@ -160,8 +159,7 @@ public class TildaSQL
             TildaSQLValidator Validator = new TildaSQLValidator(Expr);
             if (Validator.getParserSyntaxErrors() != 0)
               {
-                Failures.add("Expression " + i + " failed with " + Validator.getParserSyntaxErrors() + " errors.");
-                LOG.error("    --> " + Validator.getParserSyntaxErrors() + " ERROR(S).");
+                LOG.error("    --> Expression " + i + " failed with " + Validator.getParserSyntaxErrors() + " errors.");
               }
             else
               {
@@ -173,7 +171,7 @@ public class TildaSQL
                     // LOG.debug("expr: " + Expr);
                     // LOG.debug(w1._ParseTreeStr.toString());
 
-                    CodeGenJavaExpression CG = new CodeGenJavaExpression("Rule1");
+                    WhereClauseCodeGenJava CG = new WhereClauseCodeGenJava("Rule1");
                     Validator.setCodeGen(CG);
                     Validator.setColumnEnvironment(_COLS);
                     Validator.validate();
@@ -187,48 +185,49 @@ public class TildaSQL
                       }
                     else
                       {
-                        long T1 = System.nanoTime();
-                        CompiledWhereClause CWC = WhereClauseClassGenerator.gen("tilda._gen.cwc", CG.getName(), TestObject.class, CG._CodeGen.toString());
-                        TCompile += System.nanoTime() - T1;
-                        int MaxCount = 100000;
-                        for (int j = 0; j < MaxCount; ++j)
+                        TildaCompositionValidator Validator2 = new TildaCompositionValidator("wc1 and wc2", CollectionUtil.toList(new String[] { "wc1", "wc2"}));
+                        if (Validator2.getParserSyntaxErrors() != 0)
                           {
-                            boolean x = CWC.run(new TestObject(), j);
-                            // LOG.debug(" Run "+(j+1)+": " + x);
+                            LOG.error("    --> Composition expression failed with " + Validator2.getParserSyntaxErrors() + " errors.");
                           }
-                        T0 = System.nanoTime() - T0;
-                        LOG.debug("Total   time: " + DurationUtil.PrintDuration(T0) + " at " + DurationUtil.PrintPerformancePerMinute(T0, MaxCount) + " rules/mn");
-                        LOG.debug("Compile time: " + DurationUtil.PrintDuration(TCompile) + " at " + DurationUtil.PrintPerformancePerMinute(TCompile, MaxCount) + " rules/mn");
-                        LOG.debug("Other   time: " + DurationUtil.PrintDuration(T0 - TCompile) + " at " + DurationUtil.PrintPerformancePerMinute(T0 - TCompile, MaxCount) + " rules/mn");
+                        else
+                          {
+                            WhereClauseCompositionCodeGenJava CG2 = new WhereClauseCompositionCodeGenJava();
+                            Validator2.setCodeGen(CG2);
+                            Validator2.validate();
+                            LOG.debug(CG2._CodeGen.toString());
+                            I = Validator.getValidationErrors().getErrors();
+                            if (I != null)
+                              {
+                                LOG.error("Some Validation errors occurred");
+                                while (I.hasNext() == true)
+                                  LOG.error("        " + I.next());
+                              }
+                            else
+                              {
+                                WhereClauseCompositionClassGenerator WCCG = new WhereClauseCompositionClassGenerator(CG2._CodeGen.toString());
+                                WCCG.addWhereClauseDef("wc1", CG._CodeGen.toString());
+                                WCCG.addWhereClauseDef("wc2", CG._CodeGen.toString());
+                                long T1 = System.nanoTime();
+                                CompiledWhereClause CWC = WCCG.gen("tilda._gen.cwc", CG.getName(), TestObject.class);
+                                TCompile += System.nanoTime() - T1;
+                                int MaxCount = 100000;
+                                for (int j = 0; j < MaxCount; ++j)
+                                  {
+                                    boolean x = CWC.run(new TestObject(), j);
+                                    // LOG.debug(" Run "+(j+1)+": " + x);
+                                  }
+                                T0 = System.nanoTime() - T0;
+                                LOG.debug("Total   time: " + DurationUtil.PrintDuration(T0) + " at " + DurationUtil.PrintPerformancePerMinute(T0, MaxCount) + " rules/mn");
+                                LOG.debug("Compile time: " + DurationUtil.PrintDuration(TCompile) + " at " + DurationUtil.PrintPerformancePerMinute(TCompile, MaxCount) + " rules/mn");
+                                LOG.debug("Other   time: " + DurationUtil.PrintDuration(T0 - TCompile) + " at " + DurationUtil.PrintPerformancePerMinute(T0 - TCompile, MaxCount) + " rules/mn");
+                              }
+                          }
                       }
                   }
               }
           }
       }
-
-
-    public static class Rule1 implements tilda.grammar.CompiledWhereClause
-      {
-        public boolean run(Object ObjBase, int var1)
-          {
-            tilda.grammar.TildaSQL.TestObject obj = (tilda.grammar.TildaSQL.TestObject) ObjBase;
-            return obj.getCLM_TYPE() == 'I'
-            && CompareUtil.equals(obj.getPRVDR_CLASS(), "Abc") == true
-            && ((CompareUtil.like(obj.getPRIMARY_ICD9_DGNS_CD(), "410.%") == true && CompareUtil.like(obj.getPRIMARY_ICD9_DGNS_CD(), "410._2") == false)
-            || (CompareUtil.like(obj.getSECONDARY_ICD9_DGNS_CD(), "410.%") == true && CompareUtil.like(obj.getSECONDARY_ICD9_DGNS_CD(), "410._2") == false))
-            && CompareUtil.in(obj.getPRIMARY_ICD9_PRCDR_CD(), new String[] { "234.23", "11.22"
-            }) == false
-            && (CompareUtil.equals(obj.getBENE_BIRTH_DT(), DateTimeUtil.parsefromJSON("2001-03-11T00:00:00-05:00[America/New_York]")) == true
-            || CompareUtil.equals(obj.getBENE_BIRTH_DT(), DateTimeUtil.parsefromJSON("2001-03-11T22:00:00-05:00[America/New_York]")) == true
-            || CompareUtil.equals(obj.getBENE_BIRTH_DT(), DateTimeUtil.parsefromJSON("2001-06-11T22:00:30-04:00[America/New_York]")) == true
-            || CompareUtil.equals(obj.getBENE_BIRTH_DT(), DateTimeUtil.parsefromJSON("2001-03-11T22:00:30Z")) == true
-            || CompareUtil.equals(obj.getBENE_BIRTH_DT(), DateTimeUtil.NOW_PLACEHOLDER_ZDT) == true
-            || (CompareUtil.compare(obj.getBENE_BIRTH_DT(), DateTimeUtil.getTodayTimestamp(true)) >= 0
-            && CompareUtil.compare(obj.getBENE_BIRTH_DT(), DateTimeUtil.getTomorrowTimestamp(false)) < 0))
-            && (obj.getCLM_PMT_AMT() > 2 * ((5 + (var1 + 1))));
-          }
-      }
-
 
 
     public static void toto()

@@ -17,6 +17,8 @@
 package tilda.grammar;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -28,114 +30,174 @@ import tilda.types.ColumnDefinition;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.TextUtil;
 
-public class CodeGenTildaJavaExpression implements CodeGen
+public class WhereClauseCodeGenJava implements WhereClauseCodeGen
   {
-    protected static final Logger LOG      = LogManager.getLogger(CodeGenTildaJavaExpression.class.getName());
+    protected static final Logger LOG = LogManager.getLogger(WhereClauseCodeGenJava.class.getName());
 
-    protected StringBuilder       _CodeGen = new StringBuilder("Q");
+    public WhereClauseCodeGenJava(String Name)
+      {
+        _Name = Name;
+      }
+
+    protected String        _Name;
+    protected StringBuilder _CodeGen = new StringBuilder();
+
+    public String getName()
+      {
+        return _Name;
+      }
 
     @Override
     public void boolOperatorAND(boolean not)
       {
-        _CodeGen.append(not == true ? ".andNot()" : ".and()");
+        _CodeGen.append(not == true ? " && ! " : " && ");
       }
 
     @Override
     public void boolOperatorOR(boolean not)
       {
-        _CodeGen.append(not == true ? ".orNot()" : ".or()");
+        _CodeGen.append(not == true ? " || ! " : " || ");
       }
 
     @Override
     public void boolOpenPar()
       {
-        _CodeGen.append(".openPar()");
+        _CodeGen.append("(");
       }
 
     @Override
     public void boolClosePar()
       {
-        _CodeGen.append(".closePar()");
+        _CodeGen.append(")");
       }
 
     protected static void makeColumn(StringBuilder Str, ColumnDefinition Col)
       {
-        Str.append("COLS.").append(Col.getName());
+        Str.append("obj.get").append(Col.getName()).append("()");
       }
 
-    protected static void makeColumnList(StringBuilder Str, List<ColumnDefinition> Cols)
+    protected static void binOperatorLHS(StringBuilder Str, List<ColumnDefinition> Columns)
       {
-        if (Cols.size() == 1)
+        boolean First = true;
+        for (ColumnDefinition Col : Columns)
           {
-            makeColumn(Str, Cols.get(0));
-            return;
-          }
-
-        for (ColumnDefinition c : Cols)
-          {
-            if (Str.length() == 0)
-              Str.append("new ColumnDefinition[] {");
+            if (First == true)
+              First = false;
             else
-              Str.append(", ");
-            makeColumn(Str, c);
+              Str.append("+");
+            makeColumn(Str, Col);
           }
-        Str.append("}");
       }
+
+    protected static void binOperator(StringBuilder Str, String Op, List<ColumnDefinition> Columns)
+      {
+        binOperatorLHS(Str, Columns);
+        Str.append(Op);
+      }
+
+    protected Deque<String> _BinCloseSequences = new ArrayDeque<String>();
 
     @Override
     public void binLike(List<ColumnDefinition> Columns, boolean not)
       {
-        _CodeGen.append(not == true ? ".notLike(" : ".like(");
-        makeColumnList(_CodeGen, Columns);
+        _CodeGen.append(" CompareUtil.like(");
+        binOperatorLHS(_CodeGen, Columns);
         _CodeGen.append(", ");
+        _BinCloseSequences.push(") == " + !not);
       }
 
     @Override
     public void binEqual(List<ColumnDefinition> Columns, ColumnType Type, boolean not)
       {
-        _CodeGen.append(not == true ? ".notEqual(" : ".equal(");
-        makeColumnList(_CodeGen, Columns);
-        _CodeGen.append(", ");
+        if (Type == null || Type._Primitive == true)
+          {
+            binOperator(_CodeGen, not == true ? " != " : " == ", Columns);
+            _BinCloseSequences.push("");
+          }
+        else
+          {
+            _CodeGen.append(" CompareUtil.equals(");
+            binOperatorLHS(_CodeGen, Columns);
+            _CodeGen.append(", ");
+            _BinCloseSequences.push(") == " + !not);
+          }
       }
 
     @Override
     public void binLessThan(List<ColumnDefinition> Columns, ColumnType Type)
       {
-        _CodeGen.append(".lt(");
-        makeColumnList(_CodeGen, Columns);
-        _CodeGen.append(", ");
+        if (Type == null || Type._Primitive == true)
+          {
+            binOperator(_CodeGen, " < ", Columns);
+            _BinCloseSequences.push("");
+          }
+        else
+          {
+            _CodeGen.append(" CompareUtil.compare(");
+            binOperatorLHS(_CodeGen, Columns);
+            _CodeGen.append(", ");
+            _BinCloseSequences.push(") < 0");
+          }
       }
 
     @Override
     public void binLessThanOrEqual(List<ColumnDefinition> Columns, ColumnType Type)
       {
-        _CodeGen.append(".lte(");
-        makeColumnList(_CodeGen, Columns);
-        _CodeGen.append(", ");
+        if (Type == null || Type._Primitive == true)
+          {
+            binOperator(_CodeGen, " <= ", Columns);
+            _BinCloseSequences.push("");
+          }
+        else
+          {
+            _CodeGen.append(" CompareUtil.compare(");
+            binOperatorLHS(_CodeGen, Columns);
+            _CodeGen.append(", ");
+            _BinCloseSequences.push(") <= 0");
+          }
       }
 
     @Override
     public void binGreaterThan(List<ColumnDefinition> Columns, ColumnType Type)
       {
-        _CodeGen.append(".gt(");
-        makeColumnList(_CodeGen, Columns);
-        _CodeGen.append(", ");
+        if (Type == null || Type._Primitive == true)
+          {
+            binOperator(_CodeGen, " > ", Columns);
+            _BinCloseSequences.push("");
+          }
+        else
+          {
+            _CodeGen.append(" CompareUtil.compare(");
+            binOperatorLHS(_CodeGen, Columns);
+            _CodeGen.append(", ");
+            _BinCloseSequences.push(") > 0");
+          }
       }
 
     @Override
     public void binGreaterThanOrEqual(List<ColumnDefinition> Columns, ColumnType Type)
       {
-        _CodeGen.append(".gte(");
-        makeColumnList(_CodeGen, Columns);
-        _CodeGen.append(", ");
+        if (Type == null || Type._Primitive == true)
+          {
+            binOperator(_CodeGen, " > ", Columns);
+            _BinCloseSequences.push("");
+          }
+        else
+          {
+            _CodeGen.append(" CompareUtil.compare(");
+            binOperatorLHS(_CodeGen, Columns);
+            _CodeGen.append(", ");
+            _BinCloseSequences.push(") >= 0");
+          }
       }
 
     @Override
     public void binIn(List<ColumnDefinition> Columns, boolean not)
       {
-        _CodeGen.append(not == true ? ".notIn(" : ".in(");
-        makeColumnList(_CodeGen, Columns);
+        _CodeGen.append(" CompareUtil.in(");
+        binOperatorLHS(_CodeGen, Columns);
         _CodeGen.append(", ");
+        _BinCloseSequences.push(") == " + !not);
       }
 
     @Override
@@ -147,7 +209,9 @@ public class CodeGenTildaJavaExpression implements CodeGen
     @Override
     public String binClose()
       {
-        _CodeGen.append(")");
+        if (_BinCloseSequences.isEmpty() == true)
+          return "Closing a bin expression without a closing sequence in the stack.";
+        _CodeGen.append(_BinCloseSequences.pop());
         return null;
       }
 
