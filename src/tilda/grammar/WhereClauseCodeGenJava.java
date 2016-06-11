@@ -34,18 +34,11 @@ public class WhereClauseCodeGenJava implements WhereClauseCodeGen
   {
     protected static final Logger LOG = LogManager.getLogger(WhereClauseCodeGenJava.class.getName());
 
-    public WhereClauseCodeGenJava(String Name)
+    public WhereClauseCodeGenJava()
       {
-        _Name = Name;
       }
 
-    protected String        _Name;
     protected StringBuilder _CodeGen = new StringBuilder();
-
-    public String getName()
-      {
-        return _Name;
-      }
 
     @Override
     public void boolOperatorAND(boolean not)
