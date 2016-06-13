@@ -38,16 +38,18 @@ public class ErrorList
           {
             _Msg = Msg;
             _Line = ctx.getStart().getLine();
-            _Column = ctx.getStart().getCharPositionInLine();
+            _ColumnFrom = ctx.getStart().getCharPositionInLine();
+            _ColumnTo = ctx.getStop().getCharPositionInLine();
           }
 
         public final String _Msg;
         public final int    _Line;
-        public final int    _Column;
+        public final int    _ColumnFrom;
+        public final int    _ColumnTo;
 
         public String toString()
           {
-            return _Msg + " (line " + _Line + ":" + _Column + ")";
+            return _Msg + " (line " + _Line + ":" + _ColumnFrom + "-"+_ColumnTo+")";
           }
         
         public void toJSON(Writer Out) throws IOException
@@ -55,7 +57,8 @@ public class ErrorList
             Out.append("{");
             JSONUtil.Print(Out, "m", true , _Msg);
             JSONUtil.Print(Out, "l", false, _Line);
-            JSONUtil.Print(Out, "c", false, _Column);
+            JSONUtil.Print(Out, "c1", false, _ColumnFrom);
+            JSONUtil.Print(Out, "c2", false, _ColumnTo);
             Out.append("}");
           }
         
