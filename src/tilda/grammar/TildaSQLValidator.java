@@ -69,7 +69,7 @@ public class TildaSQLValidator extends TildaSQLBaseListener
 
     protected TypeManager _TypeManager = new TypeManager();
     protected ErrorList   _Errors      = new ErrorList();
-    protected CodeGen     _CG;
+    protected WhereClauseCodeGen     _CG;
 
     public int getParserSyntaxErrors()
       {
@@ -81,7 +81,7 @@ public class TildaSQLValidator extends TildaSQLBaseListener
         _TypeManager.setColumnEnvironment(Columns);
       }
 
-    public void setCodeGen(CodeGen CG)
+    public void setCodeGen(WhereClauseCodeGen CG)
       {
         _CG = CG;
       }
@@ -140,9 +140,11 @@ public class TildaSQLValidator extends TildaSQLBaseListener
         List<ColumnDefinition> Columns = new ArrayList<ColumnDefinition>();
         for (ColumnContext colCtx : ctx.bin_expr_lhs().column())
           {
-            ColumnDefinition CD = _TypeManager.handleColumn(colCtx);
+            ColumnDefinition CD = _TypeManager.handleColumnX(colCtx);
             if (CD != null)
               Columns.add(CD);
+            else
+              _Errors.addError(_TypeManager.getLastError(), ctx);
           }
 
         if (ctx.bin_op() != null)
@@ -197,9 +199,14 @@ public class TildaSQLValidator extends TildaSQLBaseListener
         if (ctx.column() != null)
           {
             _TypeManager.openScope();
-            ColumnDefinition CD = _TypeManager.handleColumn(ctx.column());
-            if (CD != null && _CG != null)
+            ColumnDefinition CD = _TypeManager.handleColumnX(ctx.column());
+            if (CD != null)
+              {
+                if (_CG != null)
               _CG.col(CD);
+              }
+            else
+              _Errors.addError(_TypeManager.getLastError(), ctx);
           }
 
         super.enterBin_expr(ctx);
@@ -215,7 +222,9 @@ public class TildaSQLValidator extends TildaSQLBaseListener
               _Errors.addError(Err, ctx);
           }
 
-        _TypeManager.rolloverArgumentType(ctx, "binary expression", true);
+        if (_TypeManager.rolloverArgumentType(ctx, "binary expression", true) == false)
+         _Errors.addError(_TypeManager.getLastError(), ctx);
+
         super.exitBin_expr(ctx);
       }
 
@@ -238,10 +247,10 @@ public class TildaSQLValidator extends TildaSQLBaseListener
           _Errors.addError("Value list is empty", ctx);
         else
           {
-            TypeWrapper Type = _TypeManager.closeScope("value list", ctx, false);
+            TypeWrapper Type = _TypeManager.closeScopeX("value list", ctx, false);
             if (Type == null)
               {
-                _Errors.addErrors(_TypeManager.getErrors());
+                _Errors.addError(_TypeManager.getLastError(), ctx);
               }
             else if (_CG != null)
               {
@@ -256,7 +265,7 @@ public class TildaSQLValidator extends TildaSQLBaseListener
     @Override
     public void enterColumn(ColumnContext ctx)
       {
-        _TypeManager.handleColumn(ctx);
+//        _TypeManager.handleColumn(ctx);
         super.enterColumn(ctx);
       }
 
@@ -284,7 +293,9 @@ public class TildaSQLValidator extends TildaSQLBaseListener
     @Override
     public void exitArithmeticExpr(ArithmeticExprContext ctx)
       {
-        _TypeManager.rolloverArgumentType(ctx, "Arithmetic expression", false);
+        if (_TypeManager.rolloverArgumentType(ctx, "Arithmetic expression", false) == false)
+         _Errors.addError(_TypeManager.getLastError(), ctx);
+          
         super.exitArithmeticExpr(ctx);
       }
 
@@ -307,7 +318,10 @@ public class TildaSQLValidator extends TildaSQLBaseListener
         if (ExistingExpressionType == ColumnType.STRING)
           _Errors.addError("Operator " + ctx.getText() + " is not compatible in an expression currently of type STRING.", ctx);
         else if (ctx.K_DIV() != null)
-          _TypeManager.handleType(ColumnType.FLOAT, ctx);
+          {
+            if (_TypeManager.handleType(ColumnType.FLOAT, ctx) == false)
+             _Errors.addError(_TypeManager.getLastError(), ctx);
+          }
         if (_CG != null)
           _CG.arithmeticMultiply(ctx.K_DIV() != null);
         super.enterArithmetic_op_mul(ctx);
@@ -325,7 +339,8 @@ public class TildaSQLValidator extends TildaSQLBaseListener
     @Override
     public void exitArithmetic_expr_sub(Arithmetic_expr_subContext ctx)
       {
-        _TypeManager.rolloverArgumentType(ctx, "sub arithmetic expression", false);
+        if (_TypeManager.rolloverArgumentType(ctx, "sub arithmetic expression", false) == false)
+         _Errors.addError(_TypeManager.getLastError(), ctx);
         if (_CG != null)
           _CG.arithmeticClosePar();
         super.enterArithmetic_expr_sub(ctx);
@@ -359,8 +374,9 @@ public class TildaSQLValidator extends TildaSQLBaseListener
             : null;
             if (Type == null)
               _Errors.addError("Invalid number '" + ctx.getText() + "' was was parsed incorrectly as " + Number.getClass().getName(), ctx);
-            else
-              _TypeManager.handleType(Type, ctx);
+            else if (_TypeManager.handleType(Type, ctx) == false)
+              _Errors.addError(_TypeManager.getLastError(), ctx);
+              
           }
         super.enterValueNumericLiteral(ctx);
       }
@@ -371,7 +387,9 @@ public class TildaSQLValidator extends TildaSQLBaseListener
         handleArgumentList();
         String Str = ctx.getText();
         Str = Str.substring(1, Str.length() - 1);
-        _TypeManager.handleType(Str.length() == 1 ? ColumnType.CHAR : ColumnType.STRING, ctx); // a value of 'X' if 3-char long, but is a CHAR type-wise.
+        if (_TypeManager.handleType(Str.length() == 1 ? ColumnType.CHAR : ColumnType.STRING, ctx) == false) // a value of 'X' if 3-char long, but is a CHAR type-wise.
+         _Errors.addError(_TypeManager.getLastError(), ctx);
+
         if (_TypeManager.peek() == ColumnType.CHAR)
           {
             if (_CG != null)
@@ -426,7 +444,8 @@ public class TildaSQLValidator extends TildaSQLBaseListener
             if (_CG != null)
               _CG.valueLiteralTimestamp(ZDT);
           }
-        _TypeManager.handleType(ColumnType.DATETIME, ctx);
+        if (_TypeManager.handleType(ColumnType.DATETIME, ctx) == false)
+         _Errors.addError(_TypeManager.getLastError(), ctx);
         super.enterValueTimestampLiteral(ctx);
       }
 

@@ -28,9 +28,9 @@ import tilda.types.ColumnDefinition;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.TextUtil;
 
-public class CodeGenTildaJavaExpression implements CodeGen
+public class WhereClauseCodeGenTildaQL implements WhereClauseCodeGen
   {
-    protected static final Logger LOG      = LogManager.getLogger(CodeGenTildaJavaExpression.class.getName());
+    protected static final Logger LOG      = LogManager.getLogger(WhereClauseCodeGenTildaQL.class.getName());
 
     protected StringBuilder       _CodeGen = new StringBuilder("Q");
 

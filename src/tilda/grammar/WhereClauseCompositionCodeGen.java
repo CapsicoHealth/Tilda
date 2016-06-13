@@ -16,13 +16,18 @@
 
 package tilda.grammar;
 
-public enum TimestampLiteral
+public interface WhereClauseCompositionCodeGen
   {
-     CURRENT
-    ,YESTERDAY_FIRST
-    ,YESTERDAY_LAST
-    ,TODAY_FIRST
-    ,TODAY_LAST
-    ,TOMORROW_FIRST
-    ,TOMORROW_LAST
+    /*@formatter:off*/
+    public void boolOperatorAND(boolean not);
+    public void boolOperatorOR (boolean not);
+     
+    public void boolOpenPar ();
+    public void boolClosePar();
+    
+    public void parameter(String Str);
+     
+    public void   end();
+
+    /*@formatter:on*/
   }

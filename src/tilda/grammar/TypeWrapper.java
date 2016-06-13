@@ -16,10 +16,6 @@
 
 package tilda.grammar;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,38 +29,27 @@ class TypeWrapper
       {
       }
 
-    protected ColumnType   _Type;
-    protected List<String> _Errors = null;
-
-    protected boolean addError(String Str)
-      {
-        _Errors.add(Str);
-        return false;
-      }
+    protected ColumnType _Type;
+    protected String     _LastError = null;
 
     public String getLastError()
       {
-        return _Errors == null ? "No typing information was gathered" : _Errors.isEmpty() == true ? null : _Errors.get(_Errors.size() - 1);
-      }
-
-    public Iterator<String> getErrors()
-      {
-        return _Errors.iterator();
+        String err = _LastError;
+        _LastError = null;
+        return err;
       }
 
     public boolean addType(ColumnType Type, String Token)
       {
-        if (_Errors == null)
-          _Errors = new ArrayList<String>();
-
         if (Type == null)
           {
             _Type = null;
-            return addError("Unknown Type 'NULL' opased in for Token '" + Token + "'.");
+            _LastError = "Unknown Type 'NULL' opased in for Token '" + Token + "'.";
+            return false;
           }
         else if (_Type == null)
           {
-            if (_Errors.isEmpty() == true)
+            if (_LastError == null)
               _Type = Type;
             else
               return false;
@@ -75,59 +60,82 @@ class TypeWrapper
               case BOOLEAN:
               case DATETIME:
                 if (_Type != Type)
-                  return addError("The expression is currently of type " + _Type + " and cannot be cast to " + Type + " with token '" + Token + "'.");
+                  {
+                    _LastError = "The expression is currently of type " + _Type + " and cannot be cast to " + Type + " with token '" + Token + "'.";
+                    return false;
+                  }
                 break;
               case CHAR:
                 if (_Type != ColumnType.CHAR && _Type != ColumnType.STRING)
-                  return addError("The expression is currently of type " + _Type + " and cannot be cast to " + Type + " with token '" + Token + "'.");
+                  {
+                    _LastError = "The expression is currently of type " + _Type + " and cannot be cast to " + Type + " with token '" + Token + "'.";
+                    return false;
+                  }
                 break;
               case DOUBLE:
                 if (_Type != ColumnType.INTEGER && _Type != ColumnType.LONG && _Type != ColumnType.FLOAT && _Type != ColumnType.DOUBLE)
-                  return addError("The expression is currently of type " + _Type + " and cannot be cast to " + Type + " with token '" + Token + "'.");
+                  {
+                    _LastError = "The expression is currently of type " + _Type + " and cannot be cast to " + Type + " with token '" + Token + "'.";
+                    return false;
+                  }
                 _Type = ColumnType.DOUBLE;
                 break;
               case FLOAT:
                 if (_Type != ColumnType.INTEGER && _Type != ColumnType.LONG && _Type != ColumnType.FLOAT && _Type != ColumnType.DOUBLE)
-                  return addError("The expression is currently of type " + _Type + " and cannot be cast to " + Type + " with token '" + Token + "'.");
+                  {
+                    _LastError = "The expression is currently of type " + _Type + " and cannot be cast to " + Type + " with token '" + Token + "'.";
+                    return false;
+                  }
                 if (_Type != ColumnType.DOUBLE && _Type != ColumnType.FLOAT) // Upgrading type except for Float/Double.
                   _Type = ColumnType.FLOAT;
                 break;
               case LONG:
                 if (_Type != ColumnType.INTEGER && _Type != ColumnType.LONG && _Type != ColumnType.FLOAT && _Type != ColumnType.DOUBLE)
-                  return addError("The expression is currently of type " + _Type + " and cannot be cast to " + Type + " with token '" + Token + "'.");
+                  {
+                    _LastError = "The expression is currently of type " + _Type + " and cannot be cast to " + Type + " with token '" + Token + "'.";
+                    return false;
+                  }
                 if (_Type == ColumnType.INTEGER) // Upgrading from INTEGER to LONG
                   _Type = ColumnType.LONG;
                 break;
               case INTEGER:
                 if (_Type != ColumnType.INTEGER && _Type != ColumnType.LONG && _Type != ColumnType.FLOAT && _Type != ColumnType.DOUBLE)
-                  return addError("The expression is currently of type " + _Type + " and cannot be cast to " + Type + " with token '" + Token + "'.");
+                  {
+                    _LastError = "The expression is currently of type " + _Type + " and cannot be cast to " + Type + " with token '" + Token + "'.";
+                    return false;
+                  }
                 // No upgrading wince INTEGER is the lowest of the number types.
                 break;
               case STRING:
                 if (_Type != ColumnType.CHAR && _Type != ColumnType.STRING)
-                  return addError("The expression is currently of type " + _Type + " and cannot be cast to " + Type + " with token '" + Token + "'.");
+                  {
+                    _LastError = "The expression is currently of type " + _Type + " and cannot be cast to " + Type + " with token '" + Token + "'.";
+                    return false;
+                  }
                 if (_Type == ColumnType.CHAR) // Upgrading from CHAR to STRING
                   _Type = ColumnType.STRING;
                 break;
               default:
-                return addError("Type " + Type + " for token '" + Token + "' cannot be handled");
+                {
+                  _LastError = "Type " + Type + " for token '" + Token + "' cannot be handled";
+                  return false;
+                }
             }
         return true;
       }
 
     public boolean compareType(ColumnType Type, String Token)
       {
-        if (_Errors == null)
-          _Errors = new ArrayList<String>();
-
         if (Type == null)
           {
             _Type = null;
-            return addError("Unknown Type 'NULL' opased in for Token '" + Token + "'.");
+            _LastError = "Unknown Type 'NULL' opased in for Token '" + Token + "'.";
+            return false;
+
           }
         else if (_Type == null)
           {
-            if (_Errors.isEmpty() == true)
+            if (_LastError == null)
               _Type = Type;
             else
               return false;
@@ -140,23 +148,38 @@ class TypeWrapper
               case DOUBLE:
               case STRING:
                 if (_Type != Type)
-                  return addError("The two sides of the expression are of incompatible types '" + _Type + "' (lhs)  and '" + Type + "' (rhs).");
+                  {
+                    _LastError = "The two sides of the expression are of incompatible types '" + _Type + "' (lhs)  and '" + Type + "' (rhs).";
+                    return false;
+                  }
                 break;
               case FLOAT:
                 if (_Type != ColumnType.FLOAT && _Type != ColumnType.DOUBLE)
-                  return addError("The two sides of the expression are of incompatible types '" + _Type + "' (lhs)  and '" + Type + "' (rhs).");
+                  {
+                    _LastError = "The two sides of the expression are of incompatible types '" + _Type + "' (lhs)  and '" + Type + "' (rhs).";
+                    return false;
+                  }
                 break;
               case LONG:
                 if (_Type != ColumnType.FLOAT && _Type != ColumnType.DOUBLE && _Type != ColumnType.LONG)
-                  return addError("The two sides of the expression are of incompatible types '" + _Type + "' (lhs)  and '" + Type + "' (rhs).");
+                  {
+                    _LastError = "The two sides of the expression are of incompatible types '" + _Type + "' (lhs)  and '" + Type + "' (rhs).";
+                    return false;
+                  }
                 break;
               case INTEGER:
                 if (_Type != ColumnType.FLOAT && _Type != ColumnType.DOUBLE && _Type != ColumnType.LONG && _Type != ColumnType.INTEGER)
-                  return addError("The two sides of the expression are of incompatible types '" + _Type + "' (lhs)  and '" + Type + "' (rhs).");
+                  {
+                    _LastError = "The two sides of the expression are of incompatible types '" + _Type + "' (lhs)  and '" + Type + "' (rhs).";
+                    return false;
+                  }
                 break;
               case CHAR:
                 if (_Type != ColumnType.STRING && _Type != ColumnType.CHAR)
-                  return addError("The two sides of the expression are of incompatible types '" + _Type + "' (lhs)  and '" + Type + "' (rhs).");
+                  {
+                    _LastError = "The two sides of the expression are of incompatible types '" + _Type + "' (lhs)  and '" + Type + "' (rhs).";
+                    return false;
+                  }
                 break;
               default:
                 break;

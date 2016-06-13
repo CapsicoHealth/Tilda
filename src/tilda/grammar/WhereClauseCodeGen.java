@@ -22,7 +22,7 @@ import java.util.List;
 import tilda.enums.ColumnType;
 import tilda.types.ColumnDefinition;
 
-public interface CodeGen
+public interface WhereClauseCodeGen
   {
     /*@formatter:off*/
     public void boolOperatorAND(boolean not);
