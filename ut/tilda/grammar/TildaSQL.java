@@ -78,21 +78,31 @@ public class TildaSQL
             return 2500;
           }
       }
-
+    
+    
+   /*@formatter:off*/
     protected static List<ColumnDefinition> _COLS = CollectionUtil.toList(new ColumnDefinition[] {
-        new Type_StringPrimitive("CMS.CLAIMSBENEFICIARYVIEW", "DESYNPUF_ID", 0), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_ADMSN_DTTZ", 1),
-        new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_ADMSN_DT", 2), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_FROM_DTTZ", 3),
-        new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_FROM_DT", 4), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "NCH_BENE_DSCHRG_DTTZ", 5),
-        new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "NCH_BENE_DSCHRG_DT", 6), new Type_FloatPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_PMT_AMT", 7),
-        new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_THRU_DTTZ", 8), new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_THRU_DT", 9),
-        new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "PRVDR_CLASS", 10), new Type_CharPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_TYPE", 11),
-        new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "PRIMARY_ICD9_DGNS_CD", 12), new Type_StringCollectionNull("CMS.CLAIMSBENEFICIARYVIEW", "SECONDARY_ICD9_DGNS_CD", 13),
-        new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "PRIMARY_ICD9_PRCDR_CD", 14), new Type_StringCollectionNull("CMS.CLAIMSBENEFICIARYVIEW", "SECONDARY_ICD9_PRCDR_CD", 15),
-        new Type_IntegerPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_UTLZTN_DAY_CNT", 16), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "BENE_DEATH_DTTZ", 17),
-        new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "BENE_DEATH_DT", 18), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "BENE_BIRTH_DTTZ", 19),
-        new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "BENE_BIRTH_DT", 20), new Type_IntegerPrimitive("CMS.CLAIMSBENEFICIARYVIEW", "BENE_SEX_IDENT_CD", 21),
-        new Type_IntegerPrimitive("CMS.CLAIMSBENEFICIARYVIEW", "SP_STATE_CODE", 22)
+           ColumnDefinition.Create("DESYNPUF_ID"       , "String"  , false, false)
+          ,ColumnDefinition.Create("CLM_ADMSN_DT"      , "Datetime", false, true)
+          ,ColumnDefinition.Create("CLM_FROM_DT"       , "Datetime", false, true)
+          ,ColumnDefinition.Create("NCH_BENE_DSCHRG_DT", "Datetime", false, true)
+          ,ColumnDefinition.Create("CLM_THRU_DT"       , "Datetime", false, true)
+
+        ,new Type_FloatPrimitiveNull   ("CMS.CLAIMSBENEFICIARYVIEW", "CLM_PMT_AMT"            , 7),
+        new Type_StringPrimitiveNull  ("CMS.CLAIMSBENEFICIARYVIEW", "PRVDR_CLASS"            , 10), 
+        new Type_CharPrimitiveNull    ("CMS.CLAIMSBENEFICIARYVIEW", "CLM_TYPE"               , 11),
+        new Type_StringPrimitiveNull  ("CMS.CLAIMSBENEFICIARYVIEW", "PRIMARY_ICD9_DGNS_CD"   , 12), 
+        new Type_StringCollectionNull ("CMS.CLAIMSBENEFICIARYVIEW", "SECONDARY_ICD9_DGNS_CD" , 13),
+        new Type_StringPrimitiveNull  ("CMS.CLAIMSBENEFICIARYVIEW", "PRIMARY_ICD9_PRCDR_CD"  , 14), 
+        new Type_StringCollectionNull ("CMS.CLAIMSBENEFICIARYVIEW", "SECONDARY_ICD9_PRCDR_CD", 15),
+        new Type_IntegerPrimitiveNull ("CMS.CLAIMSBENEFICIARYVIEW", "CLM_UTLZTN_DAY_CNT"     , 16), 
+        new Type_StringPrimitiveNull  ("CMS.CLAIMSBENEFICIARYVIEW", "BENE_DEATH_DTTZ"        , 17),
+        new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "BENE_DEATH_DT"          , 18), 
+        new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "BENE_BIRTH_DT"          , 20), 
+        new Type_IntegerPrimitive     ("CMS.CLAIMSBENEFICIARYVIEW", "BENE_SEX_IDENT_CD"      , 21),
+        new Type_IntegerPrimitive     ("CMS.CLAIMSBENEFICIARYVIEW", "SP_STATE_CODE"          , 22)
     });
+   /*@formatter:on*/
 
 
 
@@ -156,7 +166,7 @@ public class TildaSQL
             + "           AND BENE_BIRTH_DT < TIMESTAMP_TOMORROW LAST" + SystemValues.NEWLINE
             + "          )" + SystemValues.NEWLINE
             + "     )" + SystemValues.NEWLINE
-            + " AND (    CLM_PMT_AMT >= 2*(6+?{var1})" + SystemValues.NEWLINE
+            + " AND (    CLM_PMT_AMT >= 2*BENE_SEX_IDENT_CD+?{var1}" + SystemValues.NEWLINE
             + "     )" + SystemValues.NEWLINE
         };
 
@@ -301,7 +311,7 @@ public class TildaSQL
 
         String Expr3 = "    ( PRIMARY_ICD9_DGNS_CD   LIKE '428.%' AND  PRIMARY_ICD9_DGNS_CD   NOT LIKE '428._2' )" + SystemValues.NEWLINE
         + " OR ( SECONDARY_ICD9_DGNS_CD LIKE '428.%' AND  SECONDARY_ICD9_DGNS_CD NOT LIKE '428._2' )" + SystemValues.NEWLINE;
-
+        
         long T0 = System.nanoTime();
         WhereClauseCompositionClassGenerator WCC_CG = new WhereClauseCompositionClassGenerator("WhereClauseSet1", TestObject.class);
         WCC_CG.addWhereClauseDef("wc1", Expr1, _COLS);

@@ -17,7 +17,6 @@
 package tilda.grammar;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
@@ -42,7 +41,7 @@ public class TypeManager
         _Columns = Columns;
       }
 
-    protected List<ColumnDefinition> _Columns       = new ArrayList<ColumnDefinition>();
+    protected List<ColumnDefinition> _Columns       ;
     protected Deque<TypeWrapper>     _ArgumentTypes = new ArrayDeque<TypeWrapper>();
     protected String                 _LastError     = null;
 
@@ -60,7 +59,7 @@ public class TypeManager
 
     public ColumnDefinition handleColumnX(ColumnContext column)
       {
-        if (_Columns.isEmpty() == false)
+        if (_Columns != null && _Columns.isEmpty() == false)
           {
             String colName = column.getText();
             for (ColumnDefinition col : _Columns)
