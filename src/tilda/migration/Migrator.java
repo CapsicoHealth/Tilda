@@ -27,6 +27,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Factory;
 import tilda.db.Connection;
+import tilda.db.MasterFactory;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
@@ -87,6 +88,7 @@ public class Migrator
                 RS.close();
                 for (Object Obj : S._Objects)
                   {
+                    MasterFactory.register(S._Package, Obj);
                     if (Obj._FST == FrameworkSourcedType.VIEW)
                       continue;
                     if (DBTables.contains(Obj._Name.toLowerCase()) == false)
