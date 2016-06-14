@@ -43,19 +43,26 @@ public class TildaSQLServlet extends HttpServlet {
 	 * 
 	 */
 	protected static List<ColumnDefinition> _COLS = CollectionUtil.toList(new ColumnDefinition[] {
-	        new Type_StringPrimitive("CMS.CLAIMSBENEFICIARYVIEW", "DESYNPUF_ID", 0), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_ADMSN_DTTZ", 1),
-	        new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_ADMSN_DT", 2), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_FROM_DTTZ", 3),
-	        new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_FROM_DT", 4), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "NCH_BENE_DSCHRG_DTTZ", 5),
-	        new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "NCH_BENE_DSCHRG_DT", 6), new Type_FloatPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_PMT_AMT", 7),
-	        new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_THRU_DTTZ", 8), new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_THRU_DT", 9),
-	        new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "PRVDR_CLASS", 10), new Type_CharPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_TYPE", 11),
-	        new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "PRIMARY_ICD9_DGNS_CD", 12), new Type_StringCollectionNull("CMS.CLAIMSBENEFICIARYVIEW", "SECONDARY_ICD9_DGNS_CD", 13),
-	        new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "PRIMARY_ICD9_PRCDR_CD", 14), new Type_StringCollectionNull("CMS.CLAIMSBENEFICIARYVIEW", "SECONDARY_ICD9_PRCDR_CD", 15),
-	        new Type_IntegerPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_UTLZTN_DAY_CNT", 16), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "BENE_DEATH_DTTZ", 17),
-	        new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "BENE_DEATH_DT", 18), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "BENE_BIRTH_DTTZ", 19),
-	        new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "BENE_BIRTH_DT", 20), new Type_IntegerPrimitive("CMS.CLAIMSBENEFICIARYVIEW", "BENE_SEX_IDENT_CD", 21),
-	        new Type_IntegerPrimitive("CMS.CLAIMSBENEFICIARYVIEW", "SP_STATE_CODE", 22)
-	    });
+	            ColumnDefinition.Create("DESYNPUF_ID"            , "String"  , false, false)
+	           ,ColumnDefinition.Create("CLM_ADMSN_DT"           , "Datetime", false, true)
+	           ,ColumnDefinition.Create("CLM_FROM_DT"            , "Datetime", false, true)
+	           ,ColumnDefinition.Create("NCH_BENE_DSCHRG_DTTZ"   , "Datetime", false, true)
+	           ,ColumnDefinition.Create("CLM_THRU_DT"            , "Datetime", false, true)
+	           ,ColumnDefinition.Create("CLM_PMT_AMT"            , "Float"   , false, true)
+	           ,ColumnDefinition.Create("PRVDR_CLASS"            , "String"  , false, true)
+	           ,ColumnDefinition.Create("CLM_TYPE"               , "Char"    , false, true)
+	           ,ColumnDefinition.Create("PRIMARY_ICD9_DGNS_CD"   , "String"  , false, true)
+	           ,ColumnDefinition.Create("SECONDARY_ICD9_DGNS_CD" , "String"  , false, true)
+	           ,ColumnDefinition.Create("PRIMARY_ICD9_PRCDR_CD"  , "String"  , false, true)
+	           ,ColumnDefinition.Create("SECONDARY_ICD9_PRCDR_CD", "String"  , false, true)
+	           ,ColumnDefinition.Create("CLM_UTLZTN_DAY_CNT"     , "Integer" , false, true)
+	           ,ColumnDefinition.Create("BENE_DEATH_DTTZ"        , "String"  , false, true)
+	           ,ColumnDefinition.Create("BENE_DEATH_DT"          , "Datetime", false, true)
+	           ,ColumnDefinition.Create("BENE_BIRTH_DT"          , "Datetime", false, true)
+	           ,ColumnDefinition.Create("BENE_SEX_IDENT_CD"      , "Integer" , false, true)
+	           ,ColumnDefinition.Create("SP_STATE_CODE"          , "Integer" , false, true)
+	     });
+
 	private static final long serialVersionUID = 1181688239603166570L;
 	protected static final Logger LOG = LogManager.getLogger(TildaSQL.class.getName());
 	  TildaSQLValidator _Validator;
@@ -71,21 +78,22 @@ public class TildaSQLServlet extends HttpServlet {
 		  String Expr = request.getParameter("expr");
 		  _Validator = new TildaSQLValidator(Expr);
 		  _Validator.setColumnEnvironment(_COLS);
-		  if(_Validator.getParserSyntaxErrors() == 0){
+
+		  if(_Validator.getParserSyntaxErrors() == 0){ // check for syntax error
 			  _Validator.validate();
-			  if(isExprValid(_Validator)){
-				  json.add("response", TildaSQLServlet.jsonArrayFromErrors(_Validator));
+			  Iterator<ErrorList.Error> errors = _Validator.getValidationErrors().getErrors();
+			  boolean isValid = (errors != null && errors.hasNext()) ? false : true;
+			  if(!isValid){
+				  json.add("response", TildaSQLServlet.jsonArrayFromErrors(errors));
 				  response.setStatus(HttpStatus.BadRequest._Code);
-				  _PrintWriter.println(json.toString());
 			  }
 			  else{
 				  response.setStatus(HttpStatus.OK._Code);
 			  }
-		  } else{
-			  // TODO refactor.
+		  } else {
 			  JsonObject j1 = new JsonObject();
-			  j1.addProperty("message", "Invalid SQL Query");
-			  j1.addProperty("fromLine", 0);
+			  j1.addProperty("message", "SYNTAX Error..");
+			  j1.addProperty("fromLine", 0);// For code mirror line starts from zero(0) not from one(1)
 			  j1.addProperty("toLine", 0);
 			  j1.addProperty("fromColumn", 1);
 			  j1.addProperty("toColumn", Expr.length());
@@ -94,32 +102,22 @@ public class TildaSQLServlet extends HttpServlet {
 			  jsonArray.add(j1);
 			  json.add("response", jsonArray);
 			  response.setStatus(HttpStatus.BadRequest._Code);
-			  _PrintWriter.println(json.toString());
 		  }
+
+
 		  response.setContentType("application/json");
+		  _PrintWriter.println(json.toString());
 	  }
 	  
-	  
-	  private static boolean isExprValid(TildaSQLValidator _Validator){
-		  int synTaxErrCnt = _Validator.getParserSyntaxErrors();
-		  Iterator<ErrorList.Error> errors = getLintErrors(_Validator);
-		  return synTaxErrCnt == 0 ? (errors != null && !errors.hasNext()) ? true : false : true;
-	  }
-	  
-	  private static Iterator<ErrorList.Error> getLintErrors(TildaSQLValidator _Validator){
-		  ErrorList errors = _Validator.getValidationErrors();
-		  return errors.getErrors();
-	  }
-	  
-	  private static JsonArray jsonArrayFromErrors(TildaSQLValidator _Validator){
+	  	  
+	  private static JsonArray jsonArrayFromErrors(Iterator<ErrorList.Error> errorList){
 		  JsonArray jsonArray = new JsonArray();
-		  Iterator<ErrorList.Error> errorList = getLintErrors(_Validator);
 		  while(errorList !=null && errorList.hasNext()){
 			  ErrorList.Error error = errorList.next();
 			  JsonObject j1 = new JsonObject();
 			  j1.addProperty("message", error._Msg);
-			  j1.addProperty("fromLine", error._Line);
-			  j1.addProperty("toLine", error._Line);
+			  j1.addProperty("fromLine", error._Line-1);
+			  j1.addProperty("toLine", error._Line-1);
 			  j1.addProperty("fromColumn", error._ColumnFrom);
 			  j1.addProperty("toColumn", error._ColumnTo);
 			  j1.addProperty("severity", "error");
