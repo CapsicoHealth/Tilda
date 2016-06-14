@@ -2,44 +2,81 @@ package tilda.grammar.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.ZonedDateTime;
+import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.List;
+
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import tilda.grammar.ErrorList;
 import tilda.grammar.TildaSQL;
 import tilda.grammar.TildaSQLValidator;
+import tilda.types.ColumnDefinition;
+import tilda.types.Type_CharPrimitiveNull;
+import tilda.types.Type_DatetimePrimitiveNull;
+import tilda.types.Type_FloatPrimitiveNull;
+import tilda.types.Type_IntegerPrimitive;
+import tilda.types.Type_IntegerPrimitiveNull;
+import tilda.types.Type_StringCollectionNull;
+import tilda.types.Type_StringPrimitive;
+import tilda.types.Type_StringPrimitiveNull;
+import tilda.utils.AnsiUtil;
+import tilda.utils.CollectionUtil;
+import tilda.utils.DateTimeUtil;
 import tilda.utils.HttpStatus;
+import tilda.utils.SystemValues;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
 @WebServlet(value="/svc/TildaSQLValidator/lint")
 public class TildaSQLServlet extends HttpServlet {
 	  /**
 	 * 
 	 */
+	protected static List<ColumnDefinition> _COLS = CollectionUtil.toList(new ColumnDefinition[] {
+	        new Type_StringPrimitive("CMS.CLAIMSBENEFICIARYVIEW", "DESYNPUF_ID", 0), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_ADMSN_DTTZ", 1),
+	        new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_ADMSN_DT", 2), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_FROM_DTTZ", 3),
+	        new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_FROM_DT", 4), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "NCH_BENE_DSCHRG_DTTZ", 5),
+	        new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "NCH_BENE_DSCHRG_DT", 6), new Type_FloatPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_PMT_AMT", 7),
+	        new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_THRU_DTTZ", 8), new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_THRU_DT", 9),
+	        new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "PRVDR_CLASS", 10), new Type_CharPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_TYPE", 11),
+	        new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "PRIMARY_ICD9_DGNS_CD", 12), new Type_StringCollectionNull("CMS.CLAIMSBENEFICIARYVIEW", "SECONDARY_ICD9_DGNS_CD", 13),
+	        new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "PRIMARY_ICD9_PRCDR_CD", 14), new Type_StringCollectionNull("CMS.CLAIMSBENEFICIARYVIEW", "SECONDARY_ICD9_PRCDR_CD", 15),
+	        new Type_IntegerPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "CLM_UTLZTN_DAY_CNT", 16), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "BENE_DEATH_DTTZ", 17),
+	        new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "BENE_DEATH_DT", 18), new Type_StringPrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "BENE_BIRTH_DTTZ", 19),
+	        new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "BENE_BIRTH_DT", 20), new Type_IntegerPrimitive("CMS.CLAIMSBENEFICIARYVIEW", "BENE_SEX_IDENT_CD", 21),
+	        new Type_IntegerPrimitive("CMS.CLAIMSBENEFICIARYVIEW", "SP_STATE_CODE", 22)
+	    });
 	private static final long serialVersionUID = 1181688239603166570L;
 	protected static final Logger LOG = LogManager.getLogger(TildaSQL.class.getName());
 	  TildaSQLValidator _Validator;
 	  JsonObject json = new JsonObject();
 	  public void init() throws ServletException{}
-	  
 	  public void doGet(HttpServletRequest request,
 	                    HttpServletResponse response)
 	            throws ServletException, IOException
 	  {
+		  LogRequestHeader(20, request);
+
 		  PrintWriter _PrintWriter = response.getWriter();
 		  String Expr = request.getParameter("expr");
 		  _Validator = new TildaSQLValidator(Expr);
+		  _Validator.setColumnEnvironment(_COLS);
 		  if(_Validator.getParserSyntaxErrors() == 0){
 			  _Validator.validate();
 			  if(isExprValid(_Validator)){
 				  json.add("response", TildaSQLServlet.jsonArrayFromErrors(_Validator));
 				  response.setStatus(HttpStatus.BadRequest._Code);
+				  _PrintWriter.println(json.toString());
 			  }
 			  else{
 				  response.setStatus(HttpStatus.OK._Code);
@@ -47,7 +84,7 @@ public class TildaSQLServlet extends HttpServlet {
 		  } else{
 			  // TODO refactor.
 			  JsonObject j1 = new JsonObject();
-			  j1.addProperty("message", "Invalid");
+			  j1.addProperty("message", "Invalid SQL Query");
 			  j1.addProperty("fromLine", 0);
 			  j1.addProperty("toLine", 0);
 			  j1.addProperty("fromColumn", 1);
@@ -57,15 +94,16 @@ public class TildaSQLServlet extends HttpServlet {
 			  jsonArray.add(j1);
 			  json.add("response", jsonArray);
 			  response.setStatus(HttpStatus.BadRequest._Code);
+			  _PrintWriter.println(json.toString());
 		  }
 		  response.setContentType("application/json");
-		  _PrintWriter.println(json.toString());
 	  }
 	  
 	  
 	  private static boolean isExprValid(TildaSQLValidator _Validator){
 		  int synTaxErrCnt = _Validator.getParserSyntaxErrors();
-		  return synTaxErrCnt == 0 ? getLintErrors(_Validator).hasNext() ? false : true : true;
+		  Iterator<ErrorList.Error> errors = getLintErrors(_Validator);
+		  return synTaxErrCnt == 0 ? (errors != null && !errors.hasNext()) ? true : false : true;
 	  }
 	  
 	  private static Iterator<ErrorList.Error> getLintErrors(TildaSQLValidator _Validator){
@@ -76,14 +114,14 @@ public class TildaSQLServlet extends HttpServlet {
 	  private static JsonArray jsonArrayFromErrors(TildaSQLValidator _Validator){
 		  JsonArray jsonArray = new JsonArray();
 		  Iterator<ErrorList.Error> errorList = getLintErrors(_Validator);
-		  while(errorList.hasNext()){
+		  while(errorList !=null && errorList.hasNext()){
 			  ErrorList.Error error = errorList.next();
 			  JsonObject j1 = new JsonObject();
 			  j1.addProperty("message", error._Msg);
 			  j1.addProperty("fromLine", error._Line);
 			  j1.addProperty("toLine", error._Line);
-			  j1.addProperty("fromColumn", error._Column);
-			  j1.addProperty("toColumn", error._Column+3);
+			  j1.addProperty("fromColumn", error._ColumnFrom);
+			  j1.addProperty("toColumn", error._ColumnTo);
 			  j1.addProperty("severity", "error");
 			  jsonArray.add(j1);
 		  }
@@ -92,4 +130,42 @@ public class TildaSQLServlet extends HttpServlet {
 	  }
 	  public void destroy(){}
 	  
+	  private void LogRequestHeader(final long TransactionID, HttpServletRequest Request)
+      {
+        LOG.info(SystemValues.NEWLINEx2);
+        LOG.info("********************************************************************************************************************************************");
+        LOG.info("** " + AnsiUtil.NEGATIVE + "R E Q U E S T   #" + TransactionID + AnsiUtil.NEGATIVE_OFF + " - " + DateTimeUtil.printDateTime(ZonedDateTime.now()));
+        LOG.info("**    RequestURL     : " + Request.getRequestURL()+"?"+Request.getQueryString());
+        LOG.info("**    RemoteAddr     : " + Request.getRemoteAddr() + ":" + Request.getRemotePort());
+        LOG.info("**    PathInfo/Trans : " + Request.getPathInfo() + " | " + Request.getPathTranslated());
+        LOG.info("**    Servlet/CtxPath: " + Request.getServletPath() + " | " + Request.getContextPath());
+          {
+            LOG.info("**    Headers:");
+            Enumeration<String> HeaderNames = Request.getHeaderNames();
+            while (HeaderNames.hasMoreElements())
+              {
+                String Name = HeaderNames.nextElement();
+                Enumeration<String> Headers = Request.getHeaders(Name);
+                while (Headers.hasMoreElements())
+                  LOG.info("**       " + Name + ": " + Headers.nextElement());
+              }
+          }
+          {
+            LOG.info("**    Parameters:");
+            Enumeration<String> ParamNames = Request.getParameterNames();
+            while (ParamNames.hasMoreElements() == true)
+              {
+                String p = (String) ParamNames.nextElement();
+                String pLowerCase = p.toLowerCase();
+                String[] Vals = Request.getParameterValues(p);
+                for (String v : Vals)
+                  {
+                    if (pLowerCase.indexOf("password") != -1 || pLowerCase.indexOf("pswd") != -1)
+                      v = "****";
+                    LOG.info("**       " + p + "= " + v);
+                  }
+              }
+          }
+        LOG.info("********************************************************************************************************************************************");
+      }	  
 }
