@@ -1,5 +1,5 @@
 /* ===========================================================================
- * Copyright (C) 2015 CapsicoHealth Inc.
+ * Copyright (C) 2016 CapsicoHealth Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,15 @@
 
 package tilda.db;
 
-import tilda.db.processors.RecordProcessor;
+import java.util.Iterator;
+import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import tilda.db.MasterFactory.ObjectMetaData;
+import tilda.grammar.ErrorList;
+import tilda.grammar.TildaSQLValidator;
 
 /**
  * <B>LDH-NOTE</B>
@@ -32,15 +40,41 @@ import tilda.db.processors.RecordProcessor;
  */
 public class SelectQueryParsedAndValidated extends SelectQuery
   {
-    public SelectQueryParsedAndValidated(String TableName, String WhereClause)
+    protected static final Logger LOG = LogManager.getLogger(SelectQueryParsedAndValidated.class.getName());
+
+    public SelectQueryParsedAndValidated(ObjectMetaData OMD, String WhereClause)
       throws Exception
       {
-        super(null, TableName);
-      }
+        super(null, OMD._ObjectName);
 
-    public int execute(RecordProcessor RP, int Start, int Size)
+        TildaSQLValidator Validator = new TildaSQLValidator(WhereClause);
+        Validator.setColumnEnvironment(OMD._Cols);
+
+        if (Validator.getParserSyntaxErrors() != 0)
+          throw new Exception("WhereClause expression had " + Validator.getParserSyntaxErrors() + " syntax error(s).");
+
+        Validator.validate();
+        Iterator<ErrorList.Error> I = Validator.getValidationErrors().getErrors();
+        if (I != null)
+          {
+            LOG.error("WhereClause expression had validation errors:");
+            int i = 0;
+            while (I.hasNext() == true)
+              {
+                LOG.error("        " + I.next());
+                ++i;
+              }
+            throw new Exception("WhereClause expression had "+i+" validation error(s).");
+          }
+        _OMD = OMD;
+        this._QueryStr.append(WhereClause);
+      }
+    
+    protected final ObjectMetaData _OMD;
+
+    public List<?> execute(Connection C, int Start, int Size)
     throws Exception
       {
-        return _C.ExecuteSelect(_TableName, _QueryStr.toString() + _C.getSelectLimitClause(Start, Size + 1), RP, Start, _C.supportsSelectOffset(), Size, _C.supportsSelectLimit());
+        return (List<?>) _OMD._RunSelectMethod.invoke(null, C, this, Start, Size);
       }
   }

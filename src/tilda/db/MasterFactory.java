@@ -1,5 +1,5 @@
 /* ===========================================================================
- * Copyright (C) 2015 CapsicoHealth Inc.
+ * Copyright (C) 2016 CapsicoHealth Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -29,8 +28,6 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.enums.ColumnMode;
 import tilda.generation.java8.Helper;
-import tilda.grammar.ErrorList;
-import tilda.grammar.TildaSQLValidator;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.types.ColumnDefinition;
@@ -47,22 +44,29 @@ public class MasterFactory
   {
     protected static final Logger LOG = LogManager.getLogger(MasterFactory.class.getName());
 
-    protected static class ObjectMetaData
+    static class ObjectMetaData
       {
         protected ObjectMetaData(String PackageName, Object Obj) throws Exception
           {
-            String FactoryClassName = Helper.getFullBaseClassName(Obj) + "_Factory$COLS";
+            String FactoryClassName = Helper.getFullBaseClassName(Obj) + "_Factory";
             _FactoryClass = Class.forName(FactoryClassName);
+            
+            _ObjectName = Obj.getShortName();
+
+            String ColsClassName = Helper.getFullBaseClassName(Obj) + "_Factory$COLS";
+            Class<?> _ColsClass = Class.forName(ColsClassName);
+
             for (Column C : Obj._Columns)
               if (C != null && C._FrameworkManaged == false && C._Mode != ColumnMode.CALCULATED)
                 {
-                  Field F = _FactoryClass.getDeclaredField(C.getName().toUpperCase());
+                  Field F = _ColsClass.getDeclaredField(C.getName().toUpperCase());
                   ColumnDefinition CD = (ColumnDefinition) F.get(null);
                   _Cols.add(CD);
                 }
 
-            _RunSelectMethod = null; //_FactoryClass.getMethod("runSelect", Connection.class, SelectQuery.class, Integer.TYPE, Integer.TYPE);
+            _RunSelectMethod = _FactoryClass.getMethod("runSelect", Connection.class, SelectQuery.class, Integer.TYPE, Integer.TYPE);
           }
+        public final String   _ObjectName;
         public final Class<?> _FactoryClass;
         public final Method   _RunSelectMethod;
         public final List<ColumnDefinition> _Cols = new ArrayList<ColumnDefinition>();
@@ -81,7 +85,7 @@ public class MasterFactory
         _M.put(Key, OMD);
       }
 
-    public static List<?> Lookup(Connection C, String ObjectName, String WhereClause, int Start, int Count)
+    public static List<?> LookupWhere(Connection C, String ObjectName, String WhereClause, int Start, int Size) throws Exception
       {
         ObjectMetaData OMD = _M.get(ObjectName);
         if (OMD == null)
@@ -89,24 +93,7 @@ public class MasterFactory
            LOG.error("Unknown Tilda object "+ObjectName);
            return null;
          }
-        
-        TildaSQLValidator Validator = new TildaSQLValidator(WhereClause);
-        Validator.setColumnEnvironment(OMD._Cols);
-
-        if (Validator.getParserSyntaxErrors() != 0)
-          {
-            LOG.error("WhereClause expression had " + Validator.getParserSyntaxErrors() + " syntax error(s).");
-            return null;
-          }
-        Validator.validate();
-        Iterator<ErrorList.Error> I = Validator.getValidationErrors().getErrors();
-        if (I != null)
-          {
-            LOG.error("WhereClause expression had validation errors:");
-            while (I.hasNext() == true)
-              LOG.error("        " + I.next());
-            return null;
-          }
-       return null; 
+        SelectQueryParsedAndValidated SQPV = new SelectQueryParsedAndValidated(OMD, WhereClause);
+        return SQPV.execute(C, Start, Size);
       }
   }

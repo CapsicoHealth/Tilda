@@ -140,7 +140,7 @@ public class TildaSQLValidator extends TildaSQLBaseListener
         List<ColumnDefinition> Columns = new ArrayList<ColumnDefinition>();
         for (ColumnContext colCtx : ctx.bin_expr_lhs().column())
           {
-            ColumnDefinition CD = _TypeManager.handleColumnX(colCtx);
+            ColumnDefinition CD = _TypeManager.handleColumn(colCtx);
             if (CD != null)
               Columns.add(CD);
             else
@@ -199,7 +199,7 @@ public class TildaSQLValidator extends TildaSQLBaseListener
         if (ctx.column() != null)
           {
             _TypeManager.openScope();
-            ColumnDefinition CD = _TypeManager.handleColumnX(ctx.column());
+            ColumnDefinition CD = _TypeManager.handleColumn(ctx.column());
             if (CD != null)
               {
                 if (_CG != null)

@@ -57,13 +57,13 @@ public class TypeManager
         _ArgumentTypes.push(new TypeWrapper());
       }
 
-    public ColumnDefinition handleColumnX(ColumnContext column)
+    public ColumnDefinition handleColumn(ColumnContext column)
       {
         if (_Columns != null && _Columns.isEmpty() == false)
           {
             String colName = column.getText();
             for (ColumnDefinition col : _Columns)
-              if (col.getName().equals(colName) == true)
+              if (col.getName().equalsIgnoreCase(colName) == true)
                 {
                   if (handleType(col._Type, column) == false)
                    return null;
