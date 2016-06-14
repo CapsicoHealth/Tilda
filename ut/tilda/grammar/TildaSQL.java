@@ -30,7 +30,6 @@ import tilda.types.Type_FloatPrimitiveNull;
 import tilda.types.Type_IntegerPrimitive;
 import tilda.types.Type_IntegerPrimitiveNull;
 import tilda.types.Type_StringCollectionNull;
-import tilda.types.Type_StringPrimitive;
 import tilda.types.Type_StringPrimitiveNull;
 import tilda.utils.CollectionUtil;
 import tilda.utils.DateTimeUtil;
