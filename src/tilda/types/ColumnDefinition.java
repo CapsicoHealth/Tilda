@@ -23,7 +23,6 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.enums.ColumnType;
 import tilda.enums.StatementType;
-import tilda.generation.java8.JavaJDBCType;
 
 public class ColumnDefinition
   {
@@ -73,7 +72,7 @@ public class ColumnDefinition
 
     public static ColumnDefinition Create(String Name, ColumnType Type, boolean Collection, boolean Nullable, String Description)
       {
-        String ClassName = "tilda.types.Type_" + JavaJDBCType.get(Type)._JavaClassType + (Collection == true ? "Collection" : "Primitive") + (Nullable == true ? "Null" : "");
+        String ClassName = "tilda.types.Type_" + Type._SimpleName + (Collection == true ? "Collection" : "Primitive") + (Nullable == true ? "Null" : "");
         try
           {
             Class<?> C = Class.forName(ClassName);

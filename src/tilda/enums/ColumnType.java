@@ -17,6 +17,7 @@
 package tilda.enums;
 
 import tilda.utils.PaddingTracker;
+import tilda.utils.TextUtil;
 
 public enum ColumnType
   {
@@ -38,11 +39,13 @@ public enum ColumnType
       {
         _ArrayCompatible = ArrayCompatible;
         _Primitive = Primitive;
+        _SimpleName = TextUtil.CapitalizeFirstCharacter(name().toLowerCase());
       }
 
     public static  PaddingTracker  _PadderTypeNames = new PaddingTracker();
-    public boolean _ArrayCompatible;
-    public boolean _Primitive;
+    public final boolean _ArrayCompatible;
+    public final boolean _Primitive;
+    public final String  _SimpleName;
     
     static
       {
