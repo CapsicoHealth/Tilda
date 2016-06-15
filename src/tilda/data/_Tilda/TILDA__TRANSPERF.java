@@ -91,12 +91,15 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jun 15 2016, 11:36:11EDT
+ @generated Jun 15 2016, 12:30:20EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TRANSPERF implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
    protected static final Logger LOG = LogManager.getLogger(TILDA__TRANSPERF.class.getName());
+
+   public static final Class<TILDA__TRANSPERF_Factory> FACTORY_CLASS= TILDA__TRANSPERF_Factory.class;
+   public static final String TABLENAME = TextUtil.Print("TILDA.TRANSPERF", "");
 
    protected TILDA__TRANSPERF() { }
 

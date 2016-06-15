@@ -85,12 +85,15 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jun 15 2016, 11:36:11EDT
+ @generated Jun 15 2016, 12:30:20EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__KEY implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
    protected static final Logger LOG = LogManager.getLogger(TILDA__KEY.class.getName());
+
+   public static final Class<TILDA__KEY_Factory> FACTORY_CLASS= TILDA__KEY_Factory.class;
+   public static final String TABLENAME = TextUtil.Print("TILDA.KEY", "");
 
    protected TILDA__KEY() { }
 

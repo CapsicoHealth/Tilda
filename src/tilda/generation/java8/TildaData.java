@@ -114,6 +114,9 @@ public class TildaData implements CodeGenTildaData
         Out.println(" {");
         Out.println("   protected static final Logger LOG = LogManager.getLogger(" + O._BaseClassName + ".class.getName());");
         Out.println();
+        Out.println("   public static final Class<" + O._BaseClassName + "_Factory> FACTORY_CLASS= " + O._BaseClassName + "_Factory.class;");
+        Out.println("   public static final String TABLENAME = TextUtil.Print(" + TextUtil.EscapeDoubleQuoteWithSlash(O.getShortName()) + ", \"\");");
+        Out.println();
         Out.println("   protected " + O._BaseClassName + "() { }");
         Out.println();
         Out.println("   private InitMode __Init   = null;");

@@ -23,7 +23,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.data.Key_Data;
-import tilda.data.Key_Factory;
+import tilda.db.processors.ObjectProcessor;
 
 public class DynamicQueryTest
   {
@@ -36,7 +36,10 @@ public class DynamicQueryTest
         try
           {
             C = ConnectionPool.get("MAIN");
+            LOG.info("===== TEST 1 ===============================================================================");
             Test1(C);
+            LOG.info("===== TEST 2 ===============================================================================");
+            Test2(C);
           }
         catch (Exception E)
           {
@@ -59,8 +62,29 @@ public class DynamicQueryTest
     private static void Test1(Connection C)
     throws Exception
       {
-        List<Key_Data> L = (List<Key_Data>) MasterFactory.LookupWhere(C, Key_Factory.TABLENAME, "NAME like 'PATIENTS.%' AND MAX <> 1", 0, -1);
+        List<Key_Data> L = (List<Key_Data>) MasterFactory.LookupWhere(C, Key_Data.class, "NAME like 'PATIENTS.%' AND MAX <> 1", 0, -1);
         for (Key_Data D : L)
-         LOG.debug(D.toString());
+          LOG.debug(D.toString());
       }
+
+    private static class ObjProc implements ObjectProcessor<Key_Data>
+      {
+
+      @Override
+      public boolean Process(int Index, Key_Data Obj)
+      throws Exception
+        {
+          LOG.debug(Obj.toString());
+          return true;
+        }
+
+      }
+
+    private static void Test2(Connection C)
+    throws Exception
+      {
+        ObjProc OP = new ObjProc();
+        MasterFactory.LookupWhere(C, Key_Data.class, OP, "NAME like 'PATIENTS.%' AND MAX <> 1", 0, -1);
+      }
+
   }

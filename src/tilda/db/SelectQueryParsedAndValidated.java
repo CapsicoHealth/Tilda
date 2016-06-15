@@ -23,6 +23,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.db.MasterFactory.ObjectMetaData;
+import tilda.db.processors.ObjectProcessor;
 import tilda.grammar.ErrorList;
 import tilda.grammar.TildaSQLValidator;
 
@@ -72,9 +73,17 @@ public class SelectQueryParsedAndValidated extends SelectQuery
     
     protected final ObjectMetaData _OMD;
 
-    public List<?> execute(Connection C, int Start, int Size)
+    @SuppressWarnings("unchecked")
+    public <T> List<T> execute(Connection C, int Start, int Size)
     throws Exception
       {
-        return (List<?>) _OMD._RunSelectMethod.invoke(null, C, this, Start, Size);
+        return (List<T>) _OMD._RunSelectMethodList.invoke(null, C, this, Start, Size);
       }
+
+    public <T> void execute(Connection C, ObjectProcessor<T> OP, int Start, int Size)
+    throws Exception
+      {
+        _OMD._RunSelectMethodOP.invoke(null, C, this, OP, Start, Size);
+      }
+    
   }

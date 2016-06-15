@@ -26,6 +26,7 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.db.processors.ObjectProcessor;
 import tilda.enums.ColumnMode;
 import tilda.generation.java8.Helper;
 import tilda.parsing.parts.Column;
@@ -64,11 +65,13 @@ public class MasterFactory
                   _Cols.add(CD);
                 }
 
-            _RunSelectMethod = _FactoryClass.getMethod("runSelect", Connection.class, SelectQuery.class, Integer.TYPE, Integer.TYPE);
+            _RunSelectMethodList = _FactoryClass.getMethod("runSelect", Connection.class, SelectQuery.class, Integer.TYPE, Integer.TYPE);
+            _RunSelectMethodOP   = _FactoryClass.getMethod("runSelect", Connection.class, SelectQuery.class, ObjectProcessor.class, Integer.TYPE, Integer.TYPE);
           }
         public final String   _ObjectName;
         public final Class<?> _FactoryClass;
-        public final Method   _RunSelectMethod;
+        public final Method   _RunSelectMethodList;
+        public final Method   _RunSelectMethodOP;
         public final List<ColumnDefinition> _Cols = new ArrayList<ColumnDefinition>();
       }
 
@@ -85,8 +88,9 @@ public class MasterFactory
         _M.put(Key, OMD);
       }
 
-    public static List<?> LookupWhere(Connection C, String ObjectName, String WhereClause, int Start, int Size) throws Exception
+    public static <T> List<T> LookupWhere(Connection C, Class<T> DataClass, String WhereClause, int Start, int Size) throws Exception
       {
+        String ObjectName = (String) DataClass.getField("TABLENAME").get(null);
         ObjectMetaData OMD = _M.get(ObjectName);
         if (OMD == null)
          {
@@ -96,4 +100,18 @@ public class MasterFactory
         SelectQueryParsedAndValidated SQPV = new SelectQueryParsedAndValidated(OMD, WhereClause);
         return SQPV.execute(C, Start, Size);
       }
+    
+    public static <T> void LookupWhere(Connection C, Class<T> DataClass, ObjectProcessor<T> OP, String WhereClause, int Start, int Size) throws Exception
+      {
+        String ObjectName = (String) DataClass.getField("TABLENAME").get(null);
+        ObjectMetaData OMD = _M.get(ObjectName);
+        if (OMD == null)
+         {
+           LOG.error("Unknown Tilda object "+ObjectName);
+           return;
+         }
+        SelectQueryParsedAndValidated SQPV = new SelectQueryParsedAndValidated(OMD, WhereClause);
+        SQPV.execute(C, OP, Start, Size);
+      }
+    
   }

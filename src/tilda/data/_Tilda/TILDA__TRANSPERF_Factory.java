@@ -53,6 +53,7 @@ public class TILDA__TRANSPERF_Factory
 
    protected TILDA__TRANSPERF_Factory() { }
 
+   public static final Class<TILDA__TRANSPERF> DATA_CLASS= TILDA__TRANSPERF.class;
    public static final String TABLENAME = TextUtil.Print("TILDA.TRANSPERF", "");
 
    protected static abstract class COLS {
@@ -85,49 +86,36 @@ public class TILDA__TRANSPERF_Factory
             }
          }
      }
-   private static class RecordProcessorList implements tilda.db.processors.RecordProcessor
+   private static class RecordProcessorInternal implements tilda.db.processors.RecordProcessor
      {
-       public RecordProcessorList(Connection C, int Start)
+       public RecordProcessorInternal(Connection C, int Start)
          {
+           _C = C;
            _L = new ArrayListResults<tilda.data.TransPerf_Data>(Start);
-           _C = C;
          }
-       protected ArrayListResults<tilda.data.TransPerf_Data> _L = null;
-       protected Connection _C = null;
-       public void    Start  () { }
-       public void    End    (boolean HasMore, int Max) { _L.wrapup(HasMore, Max); }
-       public boolean Process(int Index, java.sql.ResultSet RS) throws Exception
-        {
-          tilda.data.TransPerf_Data Obj = new tilda.data.TransPerf_Data();
-          boolean OK = ((tilda.data._Tilda.TILDA__TRANSPERF)Obj).Init(_C, RS);
-          if (OK == true)
-            _L.add(Obj);
-          return OK;
-        }
-     }
-   private static class RecordProcessorObject implements tilda.db.processors.RecordProcessor
-     {
-       public RecordProcessorObject(Connection C, int Start, ObjectProcessor OP)
+       public RecordProcessorInternal(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.TransPerf_Data> OP)
          {
-           _OP = OP;
            _C = C;
+           _OP = OP;
          }
-       protected ObjectProcessor _OP;
        protected Connection _C = null;
+       protected tilda.db.processors.ObjectProcessor<tilda.data.TransPerf_Data> _OP;
+       protected ArrayListResults<tilda.data.TransPerf_Data> _L = null;
        public void    Start  () { }
-       public void    End    (boolean HasMore, int Max) { }
+       public void    End    (boolean HasMore, int Max) { if (_OP == null) _L.wrapup(HasMore, Max); }
        public boolean Process(int Index, java.sql.ResultSet RS) throws Exception
         {
           tilda.data.TransPerf_Data Obj = new tilda.data.TransPerf_Data();
           boolean OK = ((tilda.data._Tilda.TILDA__TRANSPERF)Obj).Init(_C, RS);
           if (OK == true)
-           _OP.Process(Index, Obj);
+           {
+             if (_OP == null)
+              _L.add(Obj);
+             else
+              _OP.Process(Index, Obj);
+           }
           return OK;
         }
-     }
-   public interface ObjectProcessor
-     {
-       public boolean Process(int Index, tilda.data.TransPerf_Data Obj) throws Exception;
      }
 
    private static final void ReadMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__TRANSPERF Obj, Object ExtraParams, int Start, int Size) throws Exception
@@ -282,12 +270,12 @@ public class TILDA__TRANSPERF_Factory
        Obj.setSchemaName   (schemaName   );
 
 
-       RecordProcessorList RPL = new RecordProcessorList(C, Start);
-       ReadMany(C, 1, RPL, Obj, null, Start, Size);
-       return RPL._L;
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
+       ReadMany(C, 1, RPI, Obj, null, Start, Size);
+       return RPI._L;
      }
 
-   static public void LookupWhereAllBySchemaName(Connection C, ObjectProcessor OP, String schemaName, int Start, int Size) throws Exception
+   static public void LookupWhereAllBySchemaName(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.TransPerf_Data> OP, String schemaName, int Start, int Size) throws Exception
      {
        tilda.data._Tilda.TILDA__TRANSPERF Obj = new tilda.data.TransPerf_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -295,8 +283,8 @@ public class TILDA__TRANSPERF_Factory
        Obj.setSchemaName   (schemaName   );
 
 
-       RecordProcessorObject RPL = new RecordProcessorObject(C, Start, OP);
-       ReadMany(C, 1, RPL, Obj, null, Start, Size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
+       ReadMany(C, 1, RPI, Obj, null, Start, Size);
      }
 
 
@@ -309,12 +297,12 @@ public class TILDA__TRANSPERF_Factory
        Obj.setObjectName   (objectName   );
 
 
-       RecordProcessorList RPL = new RecordProcessorList(C, Start);
-       ReadMany(C, 2, RPL, Obj, null, Start, Size);
-       return RPL._L;
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
+       ReadMany(C, 2, RPI, Obj, null, Start, Size);
+       return RPI._L;
      }
 
-   static public void LookupWhereAllByObjectName(Connection C, ObjectProcessor OP, String schemaName, String objectName, int Start, int Size) throws Exception
+   static public void LookupWhereAllByObjectName(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.TransPerf_Data> OP, String schemaName, String objectName, int Start, int Size) throws Exception
      {
        tilda.data._Tilda.TILDA__TRANSPERF Obj = new tilda.data.TransPerf_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
@@ -323,8 +311,8 @@ public class TILDA__TRANSPERF_Factory
        Obj.setObjectName   (objectName   );
 
 
-       RecordProcessorObject RPL = new RecordProcessorObject(C, Start, OP);
-       ReadMany(C, 2, RPL, Obj, null, Start, Size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
+       ReadMany(C, 2, RPI, Obj, null, Start, Size);
      }
 
 
@@ -334,9 +322,14 @@ public class TILDA__TRANSPERF_Factory
    public static SelectQuery newWhereQuery (            ) throws Exception { return new SelectQuery(null, TILDA__TRANSPERF_Factory.TABLENAME); }
    public static ListResults<tilda.data.TransPerf_Data> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception
      {
-       RecordProcessorList RPL = new RecordProcessorList(C, Start);
-       ReadMany(C, -7, RPL, null, Q, Start, Size);
-       return RPL._L;
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
+       ReadMany(C, -7, RPI, null, Q, Start, Size);
+       return RPI._L;
+     }
+   public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.TransPerf_Data> OP, int Start, int Size) throws Exception
+     {
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
+       ReadMany(C, -7, RPI, null, Q, Start, Size);
      }
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, TILDA__TRANSPERF_Factory.TABLENAME); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, TILDA__TRANSPERF_Factory.TABLENAME); }
