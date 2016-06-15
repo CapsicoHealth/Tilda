@@ -8,7 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,50 +16,41 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+import tilda.enums.ColumnType;
 import tilda.grammar.ErrorList;
 import tilda.grammar.TildaSQL;
 import tilda.grammar.TildaSQLValidator;
 import tilda.types.ColumnDefinition;
-import tilda.types.Type_CharPrimitiveNull;
-import tilda.types.Type_DatetimePrimitiveNull;
-import tilda.types.Type_FloatPrimitiveNull;
-import tilda.types.Type_IntegerPrimitive;
-import tilda.types.Type_IntegerPrimitiveNull;
-import tilda.types.Type_StringCollectionNull;
-import tilda.types.Type_StringPrimitive;
-import tilda.types.Type_StringPrimitiveNull;
 import tilda.utils.AnsiUtil;
 import tilda.utils.CollectionUtil;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.HttpStatus;
 import tilda.utils.SystemValues;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 @WebServlet(value="/svc/TildaSQLValidator/lint")
 public class TildaSQLServlet extends HttpServlet {
 	  /**
 	 * 
 	 */
 	protected static List<ColumnDefinition> _COLS = CollectionUtil.toList(new ColumnDefinition[] {
-	            ColumnDefinition.Create("DESYNPUF_ID"            , "String"  , false, false)
-	           ,ColumnDefinition.Create("CLM_ADMSN_DT"           , "Datetime", false, true)
-	           ,ColumnDefinition.Create("CLM_FROM_DT"            , "Datetime", false, true)
-	           ,ColumnDefinition.Create("NCH_BENE_DSCHRG_DTTZ"   , "Datetime", false, true)
-	           ,ColumnDefinition.Create("CLM_THRU_DT"            , "Datetime", false, true)
-	           ,ColumnDefinition.Create("CLM_PMT_AMT"            , "Float"   , false, true)
-	           ,ColumnDefinition.Create("PRVDR_CLASS"            , "String"  , false, true)
-	           ,ColumnDefinition.Create("CLM_TYPE"               , "Char"    , false, true)
-	           ,ColumnDefinition.Create("PRIMARY_ICD9_DGNS_CD"   , "String"  , false, true)
-	           ,ColumnDefinition.Create("SECONDARY_ICD9_DGNS_CD" , "String"  , false, true)
-	           ,ColumnDefinition.Create("PRIMARY_ICD9_PRCDR_CD"  , "String"  , false, true)
-	           ,ColumnDefinition.Create("SECONDARY_ICD9_PRCDR_CD", "String"  , false, true)
-	           ,ColumnDefinition.Create("CLM_UTLZTN_DAY_CNT"     , "Integer" , false, true)
-	           ,ColumnDefinition.Create("BENE_DEATH_DTTZ"        , "String"  , false, true)
-	           ,ColumnDefinition.Create("BENE_DEATH_DT"          , "Datetime", false, true)
-	           ,ColumnDefinition.Create("BENE_BIRTH_DT"          , "Datetime", false, true)
-	           ,ColumnDefinition.Create("BENE_SEX_IDENT_CD"      , "Integer" , false, true)
-	           ,ColumnDefinition.Create("SP_STATE_CODE"          , "Integer" , false, true)
+	            ColumnDefinition.Create("DESYNPUF_ID"            , ColumnType.STRING  , false, false, "")
+	           ,ColumnDefinition.Create("CLM_ADMSN_DT"           , ColumnType.DATETIME, false, true, "")
+	           ,ColumnDefinition.Create("CLM_FROM_DT"            , ColumnType.DATETIME, false, true, "")
+	           ,ColumnDefinition.Create("CLM_THRU_DT"            , ColumnType.DATETIME, false, true, "")
+	           ,ColumnDefinition.Create("CLM_PMT_AMT"            , ColumnType.FLOAT   , false, true, "")
+	           ,ColumnDefinition.Create("PRVDR_CLASS"            , ColumnType.STRING  , false, true, "")
+	           ,ColumnDefinition.Create("CLM_TYPE"               , ColumnType.CHAR    , false, true, "")
+	           ,ColumnDefinition.Create("PRIMARY_ICD9_DGNS_CD"   , ColumnType.STRING  , false, true, "")
+	           ,ColumnDefinition.Create("SECONDARY_ICD9_DGNS_CD" , ColumnType.STRING  , false, true, "")
+	           ,ColumnDefinition.Create("PRIMARY_ICD9_PRCDR_CD"  , ColumnType.STRING  , false, true, "")
+	           ,ColumnDefinition.Create("SECONDARY_ICD9_PRCDR_CD", ColumnType.STRING  , false, true, "")
+	           ,ColumnDefinition.Create("CLM_UTLZTN_DAY_CNT"     , ColumnType.INTEGER , false, true, "")
+	           ,ColumnDefinition.Create("BENE_DEATH_DT"          , ColumnType.DATETIME, false, true, "")
+	           ,ColumnDefinition.Create("BENE_BIRTH_DT"          , ColumnType.DATETIME, false, true, "")
+	           ,ColumnDefinition.Create("BENE_SEX_IDENT_CD"      , ColumnType.INTEGER , false, true, "")
+	           ,ColumnDefinition.Create("SP_STATE_CODE"          , ColumnType.INTEGER , false, true, "")
 	     });
 
 	private static final long serialVersionUID = 1181688239603166570L;

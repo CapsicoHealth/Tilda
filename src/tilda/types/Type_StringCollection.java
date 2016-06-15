@@ -20,9 +20,9 @@ import tilda.enums.ColumnType;
 
 public class Type_StringCollection extends ColumnDefinition
   {
-    public Type_StringCollection(String TableName, String ColumnName, long Count)
+    public Type_StringCollection(String TableName, String ColumnName, long Count, String Description)
       {
-        super(TableName, ColumnName, Count, ColumnType.STRING, true);
+        super(TableName, ColumnName, Count, ColumnType.STRING, true, Description);
       }
     
   }

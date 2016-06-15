@@ -19,9 +19,9 @@ package tilda.types;
 
 public class Type_BooleanPrimitiveNull extends Type_BooleanPrimitive implements Nullable
   {
-    public Type_BooleanPrimitiveNull(String TableName, String ColumnName, long Count)
+    public Type_BooleanPrimitiveNull(String TableName, String ColumnName, long Count, String Description)
       {
-        super(TableName, ColumnName, Count);
+        super(TableName, ColumnName, Count, Description);
       }
     
   }

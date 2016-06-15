@@ -57,27 +57,27 @@ public class TILDA__OBJECTPERF_Factory
    public static final String TABLENAME = TextUtil.Print("TILDA.OBJECTPERF", "");
 
    protected static abstract class COLS {
-     public static Type_StringPrimitive         SCHEMANAME   = new Type_StringPrimitive        ("TILDA.OBJECTPERF", "schemaName"   , 0);
-     public static Type_StringPrimitive         OBJECTNAME   = new Type_StringPrimitive        ("TILDA.OBJECTPERF", "objectName"   , 1);
-     public static Type_StringPrimitive         STARTPERIODTZ= new Type_StringPrimitive        ("TILDA.OBJECTPERF", "startPeriodTZ", 2);
-     public static Type_DatetimePrimitive       STARTPERIOD  = new Type_DatetimePrimitive      ("TILDA.OBJECTPERF", "startPeriod"  , 3);
-     public static Type_StringPrimitive         ENDPERIODTZ  = new Type_StringPrimitive        ("TILDA.OBJECTPERF", "endPeriodTZ"  , 4);
-     public static Type_DatetimePrimitive       ENDPERIOD    = new Type_DatetimePrimitive      ("TILDA.OBJECTPERF", "endPeriod"    , 5);
-     public static Type_LongPrimitive           SELECTNANO   = new Type_LongPrimitive          ("TILDA.OBJECTPERF", "selectNano"   , 6);
-     public static Type_LongPrimitive           SELECTCOUNT  = new Type_LongPrimitive          ("TILDA.OBJECTPERF", "selectCount"  , 7);
-     public static Type_LongPrimitive           SELECTRECORDS= new Type_LongPrimitive          ("TILDA.OBJECTPERF", "selectRecords", 8);
-     public static Type_LongPrimitive           INSERTNANO   = new Type_LongPrimitive          ("TILDA.OBJECTPERF", "insertNano"   , 9);
-     public static Type_LongPrimitive           INSERTCOUNT  = new Type_LongPrimitive          ("TILDA.OBJECTPERF", "insertCount"  , 10);
-     public static Type_LongPrimitive           INSERTRECORDS= new Type_LongPrimitive          ("TILDA.OBJECTPERF", "insertRecords", 11);
-     public static Type_LongPrimitive           UPDATENANO   = new Type_LongPrimitive          ("TILDA.OBJECTPERF", "updateNano"   , 12);
-     public static Type_LongPrimitive           UPDATECOUNT  = new Type_LongPrimitive          ("TILDA.OBJECTPERF", "updateCount"  , 13);
-     public static Type_LongPrimitive           UPDATERECORDS= new Type_LongPrimitive          ("TILDA.OBJECTPERF", "updateRecords", 14);
-     public static Type_LongPrimitive           DELETENANO   = new Type_LongPrimitive          ("TILDA.OBJECTPERF", "deleteNano"   , 15);
-     public static Type_LongPrimitive           DELETECOUNT  = new Type_LongPrimitive          ("TILDA.OBJECTPERF", "deleteCount"  , 16);
-     public static Type_LongPrimitive           DELETERECORDS= new Type_LongPrimitive          ("TILDA.OBJECTPERF", "deleteRecords", 17);
-     public static Type_DatetimePrimitive       CREATED      = new Type_DatetimePrimitive      ("TILDA.OBJECTPERF", "created"      , 18);
-     public static Type_DatetimePrimitive       LASTUPDATED  = new Type_DatetimePrimitive      ("TILDA.OBJECTPERF", "lastUpdated"  , 19);
-     public static Type_DatetimePrimitiveNull   DELETED      = new Type_DatetimePrimitiveNull  ("TILDA.OBJECTPERF", "deleted"      , 20);
+     public static Type_StringPrimitive         SCHEMANAME   = new Type_StringPrimitive        ("TILDA.OBJECTPERF", "schemaName"   , 0, "The name of the schema tracked");
+     public static Type_StringPrimitive         OBJECTNAME   = new Type_StringPrimitive        ("TILDA.OBJECTPERF", "objectName"   , 1, "The name of the table/object tracked");
+     public static Type_StringPrimitive         STARTPERIODTZ= new Type_StringPrimitive        ("TILDA.OBJECTPERF", "startPeriodTZ", 2, "Generated helper column to hold the time zone ID for 'startPeriod'.");
+     public static Type_DatetimePrimitive       STARTPERIOD  = new Type_DatetimePrimitive      ("TILDA.OBJECTPERF", "startPeriod"  , 3, "The timestamp for when the record was created.");
+     public static Type_StringPrimitive         ENDPERIODTZ  = new Type_StringPrimitive        ("TILDA.OBJECTPERF", "endPeriodTZ"  , 4, "Generated helper column to hold the time zone ID for 'endPeriod'.");
+     public static Type_DatetimePrimitive       ENDPERIOD    = new Type_DatetimePrimitive      ("TILDA.OBJECTPERF", "endPeriod"    , 5, "The timestamp for when the record was created.");
+     public static Type_LongPrimitive           SELECTNANO   = new Type_LongPrimitive          ("TILDA.OBJECTPERF", "selectNano"   , 6, "Blah...");
+     public static Type_LongPrimitive           SELECTCOUNT  = new Type_LongPrimitive          ("TILDA.OBJECTPERF", "selectCount"  , 7, "Blah...");
+     public static Type_LongPrimitive           SELECTRECORDS= new Type_LongPrimitive          ("TILDA.OBJECTPERF", "selectRecords", 8, "Blah...");
+     public static Type_LongPrimitive           INSERTNANO   = new Type_LongPrimitive          ("TILDA.OBJECTPERF", "insertNano"   , 9, "Blah...");
+     public static Type_LongPrimitive           INSERTCOUNT  = new Type_LongPrimitive          ("TILDA.OBJECTPERF", "insertCount"  , 10, "Blah...");
+     public static Type_LongPrimitive           INSERTRECORDS= new Type_LongPrimitive          ("TILDA.OBJECTPERF", "insertRecords", 11, "Blah...");
+     public static Type_LongPrimitive           UPDATENANO   = new Type_LongPrimitive          ("TILDA.OBJECTPERF", "updateNano"   , 12, "Blah...");
+     public static Type_LongPrimitive           UPDATECOUNT  = new Type_LongPrimitive          ("TILDA.OBJECTPERF", "updateCount"  , 13, "Blah...");
+     public static Type_LongPrimitive           UPDATERECORDS= new Type_LongPrimitive          ("TILDA.OBJECTPERF", "updateRecords", 14, "Blah...");
+     public static Type_LongPrimitive           DELETENANO   = new Type_LongPrimitive          ("TILDA.OBJECTPERF", "deleteNano"   , 15, "Blah...");
+     public static Type_LongPrimitive           DELETECOUNT  = new Type_LongPrimitive          ("TILDA.OBJECTPERF", "deleteCount"  , 16, "Blah...");
+     public static Type_LongPrimitive           DELETERECORDS= new Type_LongPrimitive          ("TILDA.OBJECTPERF", "deleteRecords", 17, "Blah...");
+     public static Type_DatetimePrimitive       CREATED      = new Type_DatetimePrimitive      ("TILDA.OBJECTPERF", "created"      , 18, "The timestamp for when the record was created.");
+     public static Type_DatetimePrimitive       LASTUPDATED  = new Type_DatetimePrimitive      ("TILDA.OBJECTPERF", "lastUpdated"  , 19, "The timestamp for when the record was last updated.");
+     public static Type_DatetimePrimitiveNull   DELETED      = new Type_DatetimePrimitiveNull  ("TILDA.OBJECTPERF", "deleted"      , 20, "The timestamp for when the record was deleted.");
 ;
    }
 

@@ -20,9 +20,9 @@ import tilda.enums.ColumnType;
 
 public class Type_BooleanPrimitive extends ColumnDefinition
   {
-    public Type_BooleanPrimitive(String TableName, String ColumnName, long Count)
+    public Type_BooleanPrimitive(String TableName, String ColumnName, long Count, String Description)
       {
-        super(TableName, ColumnName, Count, ColumnType.BOOLEAN, false);
+        super(TableName, ColumnName, Count, ColumnType.BOOLEAN, false, Description);
       }
     
   }
