@@ -35,6 +35,8 @@ public class CollectionUtilTest
         Test3ListToArray();
         Test3SetToArray();
         Test3ArrayToListAndSet();
+        Test1();
+        Test2();
       }
 
     private static void Test1()
@@ -68,6 +70,8 @@ public class CollectionUtilTest
         String[] A = new String[] { "abc1", "abc2", "abc3"
         };
         List<String> L = CollectionUtil.toList(A);
+        if (L != null)
+         LOG.debug(L);
       }
 
 

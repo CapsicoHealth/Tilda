@@ -53,9 +53,9 @@ public class DBTest
         try
           {
             C = ConnectionPool.get("MAIN");
-            // Test1(C);
-            // Test2(C);
-            // Test3(C);
+            //Test1(C);
+            Test2(C);
+            Test3(C);
             Test4(C);
           }
         catch (Exception E)
