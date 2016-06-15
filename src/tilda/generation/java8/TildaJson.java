@@ -72,7 +72,7 @@ public class TildaJson implements CodeGenTildaJson
     public void genClassStart(PrintWriter Out, GeneratorSession G, Object O)
       throws Exception
       {
-        Out.println("@SuppressWarnings({ \"unchecked\", \"unused\", \"rawtypes\" })");
+        Out.println("@SuppressWarnings({ \"unused\" })");
         Out.println("public class " + O._BaseClassName + "_Json");
         Out.println(" {");
         Out.println("   static final Logger             LOG                = LogManager.getLogger(" + O._BaseClassName + "_Json.class.getName());");

@@ -100,7 +100,7 @@ public class TildaData implements CodeGenTildaData
     public void genClassStart(PrintWriter Out, GeneratorSession G, Object O)
       throws Exception
       {
-        Out.println("@SuppressWarnings({ \"unchecked\", \"unused\" })");
+        Out.println("@SuppressWarnings({ \"unused\" })");
         Out.print("public abstract class " + O._BaseClassName + " implements");
         if (O._LC == ObjectLifecycle.READONLY)
           Out.print(" tilda.interfaces.ReaderObject");

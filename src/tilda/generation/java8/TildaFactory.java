@@ -85,7 +85,6 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("import tilda.db.SelectQuery;");
         Out.println("import tilda.db.UpdateQuery;");
         Out.println("import tilda.db.DeleteQuery;");
-        Out.println("import tilda.db.processors.RecordProcessor;");
         Out.println("import tilda.enums.ColumnType;");
         Out.println("import tilda.enums.StatementType;");
         Out.println("import tilda.enums.TransactionType;");
@@ -107,7 +106,7 @@ public class TildaFactory implements CodeGenTildaFactory
     public void genClassStart(PrintWriter Out, GeneratorSession G, Object O)
       throws Exception
       {
-        Out.println("@SuppressWarnings({ \"unchecked\", \"unused\" })");
+        Out.println("@SuppressWarnings({ \"unused\" })");
         Out.println("public class " + O._BaseClassName + "_Factory");
         Out.println(" {");
         Out.println("   protected static final Logger LOG = LogManager.getLogger(" + O._BaseClassName + "_Factory.class.getName());");
@@ -151,7 +150,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("            }");
         Out.println("         }");
         Out.println("     }");
-        Out.println("   private static class RecordProcessorList implements RecordProcessor");
+        Out.println("   private static class RecordProcessorList implements tilda.db.processors.RecordProcessor");
         Out.println("     {");
         Out.println("       public RecordProcessorList(Connection C, int Start)");
         Out.println("         {");
@@ -167,12 +166,36 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("          " + Helper.getFullAppDataClassName(O) + " Obj = new " + Helper.getFullAppDataClassName(O) + "();");
         Out.println("          boolean OK = ((" + Helper.getFullBaseClassName(O) + ")Obj).Init(_C, RS);");
         Out.println("          if (OK == true)");
-        Out.println("           _L.add(Obj);");
+        Out.println("            _L.add(Obj);");
         Out.println("          return OK;");
         Out.println("        }");
         Out.println("     }");
+        Out.println("   private static class RecordProcessorObject implements tilda.db.processors.RecordProcessor");
+        Out.println("     {");
+        Out.println("       public RecordProcessorObject(Connection C, int Start, ObjectProcessor OP)");
+        Out.println("         {");
+        Out.println("           _OP = OP;");
+        Out.println("           _C = C;");
+        Out.println("         }");
+        Out.println("       protected ObjectProcessor _OP;");
+        Out.println("       protected Connection _C = null;");
+        Out.println("       public void    Start  () { }");
+        Out.println("       public void    End    (boolean HasMore, int Max) { }");
+        Out.println("       public boolean Process(int Index, java.sql.ResultSet RS) throws Exception");
+        Out.println("        {");
+        Out.println("          " + Helper.getFullAppDataClassName(O) + " Obj = new " + Helper.getFullAppDataClassName(O) + "();");
+        Out.println("          boolean OK = ((" + Helper.getFullBaseClassName(O) + ")Obj).Init(_C, RS);");
+        Out.println("          if (OK == true)");
+        Out.println("           _OP.Process(Index, Obj);");
+        Out.println("          return OK;");
+        Out.println("        }");
+        Out.println("     }");
+        Out.println("   public interface ObjectProcessor");
+        Out.println("     {");
+        Out.println("       public boolean Process(int Index, "+Helper.getFullAppDataClassName(O)+" Obj) throws Exception;");
+        Out.println("     }");
         Out.println();
-        Out.println("   private static final ListResults<" + Helper.getFullAppDataClassName(O) + "> ReadMany(Connection C, int LookupId, " + Helper.getFullBaseClassName(O)
+        Out.println("   private static final void ReadMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, " + Helper.getFullBaseClassName(O)
             + " Obj, Object ExtraParams, int Start, int Size) throws Exception");
         Out.println("     {");
 
@@ -201,18 +224,16 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("       java.sql.ResultSet RS=null;");
         Out.println("       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();");
         Out.println("       int count = 0;");
-        Out.println("       RecordProcessorList RPL = new RecordProcessorList(C, Start);");
         Out.println("       try");
         Out.println("        {");
         Out.println("          PS = C.prepareStatement(Q);");
         Out.println("          int i = 0;");
         Helper.SwitchLookupIdPreparedStatement(Out, G, O, "          ", false, true);
         Out.println();
-        Out.println("          count = JDBCHelper.Process(PS.executeQuery(), RPL, Start, "+G.getSql().supportsSelectOffset()+", Size, "+G.getSql().supportsSelectOffset()+");");
+        Out.println("          count = JDBCHelper.Process(PS.executeQuery(), RP, Start, "+G.getSql().supportsSelectOffset()+", Size, "+G.getSql().supportsSelectOffset()+");");
         Out.println("        }");
         Helper.CatchFinallyBlock(Out, O, "selected", "StatementType.SELECT", false, true);
         Out.println();
-        Out.println("      return RPL._L;");
         Out.println("    }");
       }
 
@@ -401,18 +422,12 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("     }");
       }
 
-    @Override
-    public void genMethodLookupWhereIndex(PrintWriter Out, GeneratorSession G, Index I, int LookupId)
-      {
-        if (I._Unique == true)
-          throw new Error("ERROR: called genMethodLookupWhereIndex with a Unique Index");
-
-        String MethodName = "LookupWhere" + I._Name;
-        Out.print("   static public ListResults<" + Helper.getFullAppDataClassName(I._ParentObject) + "> " + MethodName + "(Connection C");
+    
+    private static void genMethodLookupWhereIndexSignature(PrintWriter Out, GeneratorSession G, Index I, Query q)
+     {
         for (Column C : I._ColumnObjs)
           if (C != null)
             Out.print(", " + JavaJDBCType.getFieldType(C) + " " + C.getName());
-        Query q = I._SubQuery == null ? null : I._SubQuery.getQuery(G.getSql());
         if (q != null)
           {
             Set<String> VarNameSet = new HashSet<String>();
@@ -424,7 +439,11 @@ public class TildaFactory implements CodeGenTildaFactory
               }
           }
         Out.println(", int Start, int Size) throws Exception");
-        Out.println("     {");
+      
+     }
+    
+    private static void genMethodLookupWhereIndexPreamble(PrintWriter Out, Index I, Query q, String MethodName)
+      {
         Out.println("       " + Helper.getFullBaseClassName(I._ParentObject) + " Obj = new " + Helper.getFullAppDataClassName(I._ParentObject) + "();");
         Out.println("       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);");
         Out.println();
@@ -453,13 +472,41 @@ public class TildaFactory implements CodeGenTildaFactory
               }
             Out.println(");");
           }
+      }
+    
+    @Override
+    public void genMethodLookupWhereIndex(PrintWriter Out, GeneratorSession G, Index I, int LookupId)
+      {
+        if (I._Unique == true)
+          throw new Error("ERROR: called genMethodLookupWhereIndex with a Unique Index");
+
+        Query q = I._SubQuery == null ? null : I._SubQuery.getQuery(G.getSql());
+
+        String MethodName = "LookupWhere" + I._Name;
+        Out.print("   static public ListResults<" + Helper.getFullAppDataClassName(I._ParentObject) + "> " + MethodName + "(Connection C");
+        genMethodLookupWhereIndexSignature(Out, G, I, q);
+        Out.println("     {");
+        genMethodLookupWhereIndexPreamble(Out, I, q, MethodName);
         Out.println();
-        Out.println("       return ReadMany(C, " + LookupId + ", Obj, " + (q != null && q._Attributes.isEmpty() == false ? "P" : "null") + ", Start, Size);");
+        Out.println("       RecordProcessorList RPL = new RecordProcessorList(C, Start);");
+        Out.println("       ReadMany(C, " + LookupId + ", RPL, Obj, " + (q != null && q._Attributes.isEmpty() == false ? "P" : "null") + ", Start, Size);");
+        Out.println("       return RPL._L;");
         Out.println("     }");
         Out.println();
+        Out.print("   static public void " + MethodName + "(Connection C, ObjectProcessor OP");
+        genMethodLookupWhereIndexSignature(Out, G, I, q);
+        Out.println("     {");
+        genMethodLookupWhereIndexPreamble(Out, I, q, MethodName);
+        Out.println();
+        Out.println("       RecordProcessorObject RPL = new RecordProcessorObject(C, Start, OP);");
+        Out.println("       ReadMany(C, " + LookupId + ", RPL, Obj, " + (q != null && q._Attributes.isEmpty() == false ? "P" : "null") + ", Start, Size);");
+        Out.println("     }");
+        Out.println();
+
         if (q != null && q._Attributes.isEmpty() == false)
           Helper.MakeParamStaticClass(Out, q._Attributes, MethodName);
       }
+
 
 
     @Override
@@ -503,7 +550,9 @@ public class TildaFactory implements CodeGenTildaFactory
             Out.println(");");
           }
         Out.println();
-        Out.println("       return ReadMany(C, " + LookupId + ", Obj, " + (SWC._Attributes.isEmpty() == false ? "P" : "null") + ", Start, Size);");
+        Out.println("       RecordProcessorList RPL = new RecordProcessorList(C, Start);");
+        Out.println("       ReadMany(C, " + LookupId + ", RPL, Obj, " + (SWC._Attributes.isEmpty() == false ? "P" : "null") + ", Start, Size);");
+        Out.println("       return RPL._L;");
         Out.println("     }");
         Out.println();
         if (SWC._Attributes.isEmpty() == false)
@@ -562,7 +611,9 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("   public static SelectQuery newWhereQuery (            ) throws Exception { return new SelectQuery(null, " + O.getBaseClassName() + "_Factory.TABLENAME); }");
         Out.println("   public static ListResults<" + Helper.getFullAppDataClassName(O) + "> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception");
         Out.println("     {");
-        Out.println("       return ReadMany(C, -7, null, Q, Start, Size);");
+        Out.println("       RecordProcessorList RPL = new RecordProcessorList(C, Start);");
+        Out.println("       ReadMany(C, -7, RPL, null, Q, Start, Size);");
+        Out.println("       return RPL._L;");
         Out.println("     }");
         if (O._LC == ObjectLifecycle.NORMAL)
           {

@@ -11,7 +11,6 @@ import tilda.performance.*;
 import tilda.utils.*;
 
 
-@SuppressWarnings({ "unchecked", "unused", "rawtypes" })
 public final class TILDA__1_0
  {
    protected static final Logger LOG = LogManager.getLogger(TILDA__1_0.class.getName());

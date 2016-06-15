@@ -59,7 +59,7 @@ public class DynamicQueryTest
     private static void Test1(Connection C)
     throws Exception
       {
-        List<Key_Data> L = (List<Key_Data>) MasterFactory.LookupWhere(C, Key_Factory.TABLENAME, "NAME like 'PATIENTS.%' and MAX != 1", 0, -1);
+        List<Key_Data> L = (List<Key_Data>) MasterFactory.LookupWhere(C, Key_Factory.TABLENAME, "NAME like 'PATIENTS.%' AND MAX <> 1", 0, -1);
         for (Key_Data D : L)
          LOG.debug(D.toString());
       }

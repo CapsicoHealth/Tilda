@@ -27,7 +27,6 @@ import tilda.db.QueryDetails;
 import tilda.db.SelectQuery;
 import tilda.db.UpdateQuery;
 import tilda.db.DeleteQuery;
-import tilda.db.processors.RecordProcessor;
 import tilda.enums.ColumnType;
 import tilda.enums.StatementType;
 import tilda.enums.TransactionType;
@@ -47,7 +46,7 @@ import tilda.utils.TextUtil;
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@SuppressWarnings({ "unchecked", "unused" })
+@SuppressWarnings({ "unused" })
 public class TILDA__KEY_Factory
  {
    protected static final Logger LOG = LogManager.getLogger(TILDA__KEY_Factory.class.getName());
@@ -80,7 +79,7 @@ public class TILDA__KEY_Factory
             }
          }
      }
-   private static class RecordProcessorList implements RecordProcessor
+   private static class RecordProcessorList implements tilda.db.processors.RecordProcessor
      {
        public RecordProcessorList(Connection C, int Start)
          {
@@ -96,12 +95,36 @@ public class TILDA__KEY_Factory
           tilda.data.Key_Data Obj = new tilda.data.Key_Data();
           boolean OK = ((tilda.data._Tilda.TILDA__KEY)Obj).Init(_C, RS);
           if (OK == true)
-           _L.add(Obj);
+            _L.add(Obj);
           return OK;
         }
      }
+   private static class RecordProcessorObject implements tilda.db.processors.RecordProcessor
+     {
+       public RecordProcessorObject(Connection C, int Start, ObjectProcessor OP)
+         {
+           _OP = OP;
+           _C = C;
+         }
+       protected ObjectProcessor _OP;
+       protected Connection _C = null;
+       public void    Start  () { }
+       public void    End    (boolean HasMore, int Max) { }
+       public boolean Process(int Index, java.sql.ResultSet RS) throws Exception
+        {
+          tilda.data.Key_Data Obj = new tilda.data.Key_Data();
+          boolean OK = ((tilda.data._Tilda.TILDA__KEY)Obj).Init(_C, RS);
+          if (OK == true)
+           _OP.Process(Index, Obj);
+          return OK;
+        }
+     }
+   public interface ObjectProcessor
+     {
+       public boolean Process(int Index, tilda.data.Key_Data Obj) throws Exception;
+     }
 
-   private static final ListResults<tilda.data.Key_Data> ReadMany(Connection C, int LookupId, tilda.data._Tilda.TILDA__KEY Obj, Object ExtraParams, int Start, int Size) throws Exception
+   private static final void ReadMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__KEY Obj, Object ExtraParams, int Start, int Size) throws Exception
      {
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
@@ -130,7 +153,6 @@ public class TILDA__KEY_Factory
        java.sql.ResultSet RS=null;
        List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
        int count = 0;
-       RecordProcessorList RPL = new RecordProcessorList(C, Start);
        try
         {
           PS = C.prepareStatement(Q);
@@ -146,7 +168,7 @@ public class TILDA__KEY_Factory
              default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot prepare statement.");
            }
 
-          count = JDBCHelper.Process(PS.executeQuery(), RPL, Start, true, Size, true);
+          count = JDBCHelper.Process(PS.executeQuery(), RP, Start, true, Size, true);
         }
        catch (java.sql.SQLException E)
         {
@@ -159,7 +181,6 @@ public class TILDA__KEY_Factory
           AllocatedArrays = null;
         }
 
-      return RPL._L;
     }
 
 
@@ -242,7 +263,20 @@ public class TILDA__KEY_Factory
 
 
 
-       return ReadMany(C, 2, Obj, null, Start, Size);
+       RecordProcessorList RPL = new RecordProcessorList(C, Start);
+       ReadMany(C, 2, RPL, Obj, null, Start, Size);
+       return RPL._L;
+     }
+
+   static public void LookupWhereAllByName(Connection C, ObjectProcessor OP, int Start, int Size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__KEY Obj = new tilda.data.Key_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+
+       RecordProcessorObject RPL = new RecordProcessorObject(C, Start, OP);
+       ReadMany(C, 2, RPL, Obj, null, Start, Size);
      }
 
 
@@ -250,7 +284,9 @@ public class TILDA__KEY_Factory
    public static SelectQuery newWhereQuery (            ) throws Exception { return new SelectQuery(null, TILDA__KEY_Factory.TABLENAME); }
    public static ListResults<tilda.data.Key_Data> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception
      {
-       return ReadMany(C, -7, null, Q, Start, Size);
+       RecordProcessorList RPL = new RecordProcessorList(C, Start);
+       ReadMany(C, -7, RPL, null, Q, Start, Size);
+       return RPL._L;
      }
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, TILDA__KEY_Factory.TABLENAME); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, TILDA__KEY_Factory.TABLENAME); }
