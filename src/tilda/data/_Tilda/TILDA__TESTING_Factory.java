@@ -27,7 +27,6 @@ import tilda.db.QueryDetails;
 import tilda.db.SelectQuery;
 import tilda.db.UpdateQuery;
 import tilda.db.DeleteQuery;
-import tilda.db.processors.RecordProcessor;
 import tilda.enums.ColumnType;
 import tilda.enums.StatementType;
 import tilda.enums.TransactionType;
@@ -47,13 +46,14 @@ import tilda.utils.TextUtil;
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@SuppressWarnings({ "unchecked", "unused" })
+@SuppressWarnings({ "unused" })
 public class TILDA__TESTING_Factory
  {
    protected static final Logger LOG = LogManager.getLogger(TILDA__TESTING_Factory.class.getName());
 
    protected TILDA__TESTING_Factory() { }
 
+   public static final Class<TILDA__TESTING> DATA_CLASS= TILDA__TESTING.class;
    public static final String TABLENAME = TextUtil.Print("TILDA.TESTING", "");
 
    protected static abstract class COLS {
@@ -105,28 +105,39 @@ public class TILDA__TESTING_Factory
             }
          }
      }
-   private static class RecordProcessorList implements RecordProcessor
+   private static class RecordProcessorInternal implements tilda.db.processors.RecordProcessor
      {
-       public RecordProcessorList(Connection C, int Start)
+       public RecordProcessorInternal(Connection C, int Start)
          {
-           _L = new ArrayListResults<tilda.data.Testing_Data>(Start);
            _C = C;
+           _L = new ArrayListResults<tilda.data.Testing_Data>(Start);
          }
-       protected ArrayListResults<tilda.data.Testing_Data> _L = null;
+       public RecordProcessorInternal(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Testing_Data> OP)
+         {
+           _C = C;
+           _OP = OP;
+         }
        protected Connection _C = null;
+       protected tilda.db.processors.ObjectProcessor<tilda.data.Testing_Data> _OP;
+       protected ArrayListResults<tilda.data.Testing_Data> _L = null;
        public void    Start  () { }
-       public void    End    (boolean HasMore, int Max) { _L.wrapup(HasMore, Max); }
+       public void    End    (boolean HasMore, int Max) { if (_OP == null) _L.wrapup(HasMore, Max); }
        public boolean Process(int Index, java.sql.ResultSet RS) throws Exception
         {
           tilda.data.Testing_Data Obj = new tilda.data.Testing_Data();
           boolean OK = ((tilda.data._Tilda.TILDA__TESTING)Obj).Init(_C, RS);
           if (OK == true)
-           _L.add(Obj);
+           {
+             if (_OP == null)
+              _L.add(Obj);
+             else
+              _OP.Process(Index, Obj);
+           }
           return OK;
         }
      }
 
-   private static final ListResults<tilda.data.Testing_Data> ReadMany(Connection C, int LookupId, tilda.data._Tilda.TILDA__TESTING Obj, Object ExtraParams, int Start, int Size) throws Exception
+   private static final void ReadMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__TESTING Obj, Object ExtraParams, int Start, int Size) throws Exception
      {
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
@@ -163,7 +174,6 @@ public class TILDA__TESTING_Factory
        java.sql.ResultSet RS=null;
        List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
        int count = 0;
-       RecordProcessorList RPL = new RecordProcessorList(C, Start);
        try
         {
           PS = C.prepareStatement(Q);
@@ -195,7 +205,7 @@ public class TILDA__TESTING_Factory
              default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot prepare statement.");
            }
 
-          count = JDBCHelper.Process(PS.executeQuery(), RPL, Start, true, Size, true);
+          count = JDBCHelper.Process(PS.executeQuery(), RP, Start, true, Size, true);
         }
        catch (java.sql.SQLException E)
         {
@@ -208,7 +218,6 @@ public class TILDA__TESTING_Factory
           AllocatedArrays = null;
         }
 
-      return RPL._L;
     }
 
 
@@ -328,7 +337,20 @@ public class TILDA__TESTING_Factory
 
 
 
-       return ReadMany(C, 1, Obj, null, Start, Size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
+       ReadMany(C, 1, RPI, Obj, null, Start, Size);
+       return RPI._L;
+     }
+
+   static public void LookupWhereAllByName(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Testing_Data> OP, int Start, int Size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__TESTING Obj = new tilda.data.Testing_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
+       ReadMany(C, 1, RPI, Obj, null, Start, Size);
      }
 
 
@@ -340,7 +362,21 @@ public class TILDA__TESTING_Factory
 
        LookupWhereAllByName2Params P = new LookupWhereAllByName2Params(desc2Lower, a5Upper, name, created);
 
-       return ReadMany(C, 2, Obj, P, Start, Size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
+       ReadMany(C, 2, RPI, Obj, P, Start, Size);
+       return RPI._L;
+     }
+
+   static public void LookupWhereAllByName2(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Testing_Data> OP, String desc2Lower, float a5Upper, String name, ZonedDateTime created, int Start, int Size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__TESTING Obj = new tilda.data.Testing_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+       LookupWhereAllByName2Params P = new LookupWhereAllByName2Params(desc2Lower, a5Upper, name, created);
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
+       ReadMany(C, 2, RPI, Obj, P, Start, Size);
      }
 
     private static class LookupWhereAllByName2Params
@@ -378,7 +414,21 @@ public class TILDA__TESTING_Factory
 
        LookupWhereAllByName3Params P = new LookupWhereAllByName3Params(name, created);
 
-       return ReadMany(C, 3, Obj, P, Start, Size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
+       ReadMany(C, 3, RPI, Obj, P, Start, Size);
+       return RPI._L;
+     }
+
+   static public void LookupWhereAllByName3(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Testing_Data> OP, String name, ZonedDateTime created, int Start, int Size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__TESTING Obj = new tilda.data.Testing_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+       LookupWhereAllByName3Params P = new LookupWhereAllByName3Params(name, created);
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
+       ReadMany(C, 3, RPI, Obj, P, Start, Size);
      }
 
     private static class LookupWhereAllByName3Params
@@ -407,7 +457,14 @@ public class TILDA__TESTING_Factory
    public static SelectQuery newWhereQuery (            ) throws Exception { return new SelectQuery(null, TILDA__TESTING_Factory.TABLENAME); }
    public static ListResults<tilda.data.Testing_Data> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception
      {
-       return ReadMany(C, -7, null, Q, Start, Size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
+       ReadMany(C, -7, RPI, null, Q, Start, Size);
+       return RPI._L;
+     }
+   public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.Testing_Data> OP, int Start, int Size) throws Exception
+     {
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
+       ReadMany(C, -7, RPI, null, Q, Start, Size);
      }
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, TILDA__TESTING_Factory.TABLENAME); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, TILDA__TESTING_Factory.TABLENAME); }

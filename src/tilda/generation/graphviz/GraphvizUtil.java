@@ -817,7 +817,8 @@ public class GraphvizUtil
             if (printer != null)
               printer.close();
             LOG.info("Deleting " + dotFName);
-            // output.delete();
+            if (output != null)
+             output.delete();
             LOG.info("   --> Deleted " + dotFName + ".");
           }
 

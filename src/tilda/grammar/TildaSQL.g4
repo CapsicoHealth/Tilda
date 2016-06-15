@@ -17,8 +17,6 @@
 grammar TildaSQL;
 
 
-
-
 where
  : expr EOF
  ;
@@ -52,8 +50,8 @@ bool_expr_sub
  ; 
 
 bin_expr
- : bin_expr_lhs bin_op (column | aryth_expr)
- | bin_expr_lhs K_IN  value_list
+ : bin_expr_lhs bin_op (column | arithmetic_expr_base)
+ | bin_expr_lhs (K_NOT)? K_IN  value_list
  ;
 
 bin_expr_lhs
@@ -66,19 +64,23 @@ value_list
 
 bin_op: K_LT | K_LTE | K_GT | K_GTE | K_EQ | K_NEQ | (K_NOT)? K_LIKE;
 
-aryth_expr
- : aryth_expr aryth_op_mul aryth_expr      # ArythExpr
- | aryth_expr aryth_op_add aryth_expr      # ArythExpr
- | value                                   # ArythExprVal
- | aryth_expr_sub                          # ArythExprSub
- ;
- 
-aryth_expr_sub
- : '(' s_expr=aryth_expr ')'
+arithmetic_expr_base
+ : arithmetic_expr
  ;
 
-aryth_op_add: '+' | K_MINUS;
-aryth_op_mul: '*' | K_DIV;
+arithmetic_expr
+ : arithmetic_expr arithmetic_op_mul arithmetic_expr      # ArithmeticExpr
+ | arithmetic_expr arithmetic_op_add arithmetic_expr      # ArithmeticExpr
+ | value                                                  # ArithmeticExprVal
+ | arithmetic_expr_sub                                    # ArithmeticExprSub
+ ;
+ 
+arithmetic_expr_sub
+ : '(' s_expr=arithmetic_expr ')'
+ ;
+
+arithmetic_op_add: '+' | K_MINUS;
+arithmetic_op_mul: '*' | K_DIV;
  
 
 isnull_expr
@@ -116,22 +118,17 @@ NUMERIC_LITERAL
 timestamp_literal // ISO: '2011-12-03T10:15:30+01:00'.
  : TIMESTAMP_LITERAL
  | CURRENT_TIMESTAMP
- | TIMESTAMP_YESTERDAY
- | TIMESTAMP_YESTERDAY_LAST
- | TIMESTAMP_TODAY
- | TIMESTAMP_TODAY_LAST
- | TIMESTAMP_TOMORROW
- | TIMESTAMP_TOMORROW_LAST
+ | TIMESTAMP_YESTERDAY LAST?
+ | TIMESTAMP_TODAY LAST?
+ | TIMESTAMP_TOMORROW LAST?
  ;
 
 TIMESTAMP_LITERAL        : '\'' YEAR_LITERAL '-' MONTH_LITERAL '-' DAY_LITERAL ('T' HOUR_LITERAL_24 ':' MINUTE_LITERAL (':' SECOND_LITERAL (PLUS_MINUS HOUR_LITERAL_12 ':' MINUTE_LITERAL)?)?)? '\'' ;
 CURRENT_TIMESTAMP        : C U R R E N T '_' T I M E S T A M P;
 TIMESTAMP_YESTERDAY      : T I M E S T A M P '_' Y E S T E R D A Y;
-TIMESTAMP_YESTERDAY_LAST : T I M E S T A M P '_' Y E S T E R D A Y '_' L A S T;
 TIMESTAMP_TODAY          : T I M E S T A M P '_' T O D A Y;
-TIMESTAMP_TODAY_LAST     : T I M E S T A M P '_' T O D A Y '_' L A S T;
 TIMESTAMP_TOMORROW       : T I M E S T A M P '_' T O M O R R O W;
-TIMESTAMP_TOMORROW_LAST  : T I M E S T A M P '_' T O M O R R O W '_' L A S T;
+LAST: L A S T;
 
 
 string_literal
@@ -152,7 +149,7 @@ BIND_PARAMETER
 
 
 function
- : IDENTIFIER '(' ( aryth_expr ( ',' aryth_expr )* )? ')'
+ : IDENTIFIER '(' ( arithmetic_expr_base ( ',' arithmetic_expr_base )* )? ')'
  ;
 
 column
@@ -160,23 +157,21 @@ column
  ;
 
 
-
-K_AND : A N D  | '&' '&';
+K_AND : A N D;
 K_BETWEEN : B E T W E E N;
 K_IN : I N;
 K_IS : I S;
 K_LIKE : L I K E;
 K_NOT : N O T;
 K_NULL : N U L L;
-K_ON : O N;
-K_OR : O R | '|' '|';
+K_OR : O R;
 K_REGEXP : R E G E X P;
 K_LT: '<';
-K_LTE: '<' '=';
+K_LTE: '<=';
 K_GT: '>';
-K_GTE: '>' '=';
+K_GTE: '>=';
 K_EQ: '=' '='?;
-K_NEQ: '<' '>' | '!' '=';
+K_NEQ: '<>' | '!=';
 K_DIV: '/';
 K_MINUS: '-';
 
@@ -225,8 +220,6 @@ HOUR_LITERAL_12
 // : ('0'[0-9])|('1'[0-2])
  : DIGIT DIGIT
  ;
- 
-QUOTE : '\'';
 
 SPACES
  : [ \u000B\t\r\n] -> channel(HIDDEN)

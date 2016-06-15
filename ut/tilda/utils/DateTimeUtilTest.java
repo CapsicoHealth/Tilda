@@ -43,9 +43,9 @@ public class DateTimeUtilTest
         try
           {
 //            Test1();
-//            Test2();
-//            Test3();
-//            Test4();
+            Test2();
+            Test3();
+            Test4();
             Test5();
           }
         catch (Exception e)
@@ -54,43 +54,43 @@ public class DateTimeUtilTest
           }
       }
 
-    /*
-     * private static void Test1()
-     * throws Exception
-     * {
-     * Calendar Cal = Calendar.getInstance();
-     * String CalStr = DateTimeUtil.PrintSQLTimestamp(Cal);
-     * System.out.println("Right now as SQL    : " + CalStr);
-     * long T0 = System.nanoTime();
-     * for (int i = 0; i < 1000000; ++i)
-     * {
-     * DateTimeUtil.PrintSQLTimestamp(Cal);
-     * }
-     * System.out.println("CalendarUtil.PrintSQLTimestamp: " + DurationUtil.PrintDuration(System.nanoTime() - T0));
-     * 
-     * Cal = DateTimeUtil.parseDefault(CalStr);
-     * System.out.println("Roundtrip conversion: " + DateTimeUtil.PrintSQLTimestamp(Cal));
-     * 
-     * String CalStr2 = DateTimeUtil.toHTTPDate(Cal);
-     * System.out.println("Right now as HTTP   : " + CalStr2);
-     * 
-     * DateFormat F = new SimpleDateFormat("MMM d yyyy, HH:mm:ss:SSSZ");
-     * System.out.println("Right with formatter: " + F.format(Cal.getTime()));
-     * T0 = System.nanoTime();
-     * for (int i = 0; i < 1000000; ++i)
-     * {
-     * F.format(Cal.getTime());
-     * }
-     * System.out.println("SimpleDateFormat: " + DurationUtil.PrintDuration(System.nanoTime() - T0));
-     * 
-     * Cal.setTimeZone(TimeZone.getTimeZone("IST"));
-     * CalStr = DateTimeUtil.PrintSQLTimestamp(Cal);
-     * System.out.println("Right now IST as SQL    : " + CalStr);
-     * }
-     */
+/*
+    private static void Test1()
+    throws Exception
+      {
+        Calendar Cal = Calendar.getInstance();
+        String CalStr = DateTimeUtil.PrintSQLTimestamp(Cal);
+        System.out.println("Right now as SQL    : " + CalStr);
+        long T0 = System.nanoTime();
+        for (int i = 0; i < 1000000; ++i)
+          {
+            DateTimeUtil.PrintSQLTimestamp(Cal);
+          }
+        System.out.println("CalendarUtil.PrintSQLTimestamp: " + DurationUtil.PrintDuration(System.nanoTime() - T0));
+
+        Cal = DateTimeUtil.parseDefault(CalStr);
+        System.out.println("Roundtrip conversion: " + DateTimeUtil.PrintSQLTimestamp(Cal));
+
+        String CalStr2 = DateTimeUtil.toHTTPDate(Cal);
+        System.out.println("Right now as HTTP   : " + CalStr2);
+
+        DateFormat F = new SimpleDateFormat("MMM d yyyy, HH:mm:ss:SSSZ");
+        System.out.println("Right with formatter: " + F.format(Cal.getTime()));
+        T0 = System.nanoTime();
+        for (int i = 0; i < 1000000; ++i)
+          {
+            F.format(Cal.getTime());
+          }
+        System.out.println("SimpleDateFormat: " + DurationUtil.PrintDuration(System.nanoTime() - T0));
+
+        Cal.setTimeZone(TimeZone.getTimeZone("IST"));
+        CalStr = DateTimeUtil.PrintSQLTimestamp(Cal);
+        System.out.println("Right now IST as SQL    : " + CalStr);
+      }
+*/
 
     private static void Test2()
-      throws Exception
+    throws Exception
       {
         LOG.info("ZoneId.SHORT_IDs: " + ZoneId.SHORT_IDS.size());
         for (Map.Entry<String, String> z : ZoneId.SHORT_IDS.entrySet())
@@ -176,67 +176,67 @@ public class DateTimeUtilTest
       }
 
     protected static final String format(OffsetDateTime ODT)
-     {
-       int offsetSeconds = ODT.getOffset().getTotalSeconds();
-       char PlusMinus = ' ';
-       if (offsetSeconds < 0)
-         {
-           PlusMinus = '-';
-           offsetSeconds = -offsetSeconds;
-         }
-       else
-         {
-           PlusMinus = '+';
-         }
+      {
+        int offsetSeconds = ODT.getOffset().getTotalSeconds();
+        char PlusMinus = ' ';
+        if (offsetSeconds < 0)
+          {
+            PlusMinus = '-';
+            offsetSeconds = -offsetSeconds;
+          }
+        else
+          {
+            PlusMinus = '+';
+          }
 
-       int offsetHours   = offsetSeconds/3600;
-       int offsetMinutes = offsetSeconds/60-offsetHours*60;
-       
-       return ODT.getYear()+"-"
-             +NumberFormatUtil.LeadingZero1(ODT.getMonthValue())
-             +"-"
-             +NumberFormatUtil.LeadingZero1(ODT.getDayOfMonth())
-             +"T"
-             +NumberFormatUtil.LeadingZero1(ODT.getHour())
-             +":"
-             +NumberFormatUtil.LeadingZero1(ODT.getMinute())
-             +":"
-             +NumberFormatUtil.LeadingZero1(ODT.getSecond())
-             +"."
-             +NumberFormatUtil.LeadingZero2(ODT.getNano()/1000000)
-             +PlusMinus
-             +NumberFormatUtil.LeadingZero1(offsetHours)
-             +":"
-             +NumberFormatUtil.LeadingZero1(offsetMinutes);
-     }
-    
+        int offsetHours = offsetSeconds / 3600;
+        int offsetMinutes = offsetSeconds / 60 - offsetHours * 60;
+
+        return ODT.getYear() + "-"
+        + NumberFormatUtil.LeadingZero1(ODT.getMonthValue())
+        + "-"
+        + NumberFormatUtil.LeadingZero1(ODT.getDayOfMonth())
+        + "T"
+        + NumberFormatUtil.LeadingZero1(ODT.getHour())
+        + ":"
+        + NumberFormatUtil.LeadingZero1(ODT.getMinute())
+        + ":"
+        + NumberFormatUtil.LeadingZero1(ODT.getSecond())
+        + "."
+        + NumberFormatUtil.LeadingZero2(ODT.getNano() / 1000000)
+        + PlusMinus
+        + NumberFormatUtil.LeadingZero1(offsetHours)
+        + ":"
+        + NumberFormatUtil.LeadingZero1(offsetMinutes);
+      }
+
     private static void Test3()
-      throws Exception
+    throws Exception
       {
         ZonedDateTime ZDT1 = ZonedDateTime.now(ZoneId.of("US/Eastern"));
         ZonedDateTime ZDT2 = ZonedDateTime.now(ZoneId.of("US/Pacific"));
         ZonedDateTime ZDT3 = ZonedDateTime.now(ZoneId.of("Asia/Kolkata"));
 
         LOG.debug("Eastern times:");
-        LOG.debug("      ZonedDateTime  / OFFSET: "+ZDT1.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
-        LOG.debug("      ZonedDateTime  / ZONED : "+ZDT1.format(DateTimeFormatter.ISO_ZONED_DATE_TIME));
-        LOG.debug("      OffsetDateTime / OFFSET: "+ZDT1.toOffsetDateTime().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
-        LOG.debug("      OffsetDateTime / ZONED : "+ZDT1.toOffsetDateTime().format(DateTimeFormatter.ISO_ZONED_DATE_TIME));
-        LOG.debug("      OffsetDateTime / CUSTOM: "+format(ZDT1.toOffsetDateTime()));
-        
+        LOG.debug("      ZonedDateTime  / OFFSET: " + ZDT1.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+        LOG.debug("      ZonedDateTime  / ZONED : " + ZDT1.format(DateTimeFormatter.ISO_ZONED_DATE_TIME));
+        LOG.debug("      OffsetDateTime / OFFSET: " + ZDT1.toOffsetDateTime().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+        LOG.debug("      OffsetDateTime / ZONED : " + ZDT1.toOffsetDateTime().format(DateTimeFormatter.ISO_ZONED_DATE_TIME));
+        LOG.debug("      OffsetDateTime / CUSTOM: " + format(ZDT1.toOffsetDateTime()));
+
         LOG.debug("Pacific times:");
-        LOG.debug("      ZonedDateTime  / OFFSET: "+ZDT2.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
-        LOG.debug("      ZonedDateTime  / ZONED : "+ZDT2.format(DateTimeFormatter.ISO_ZONED_DATE_TIME));
-        LOG.debug("      OffsetDateTime / OFFSET: "+ZDT2.toOffsetDateTime().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
-        LOG.debug("      OffsetDateTime / ZONED : "+ZDT2.toOffsetDateTime().format(DateTimeFormatter.ISO_ZONED_DATE_TIME));
-        LOG.debug("      OffsetDateTime / CUSTOM: "+format(ZDT2.toOffsetDateTime()));
-        
+        LOG.debug("      ZonedDateTime  / OFFSET: " + ZDT2.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+        LOG.debug("      ZonedDateTime  / ZONED : " + ZDT2.format(DateTimeFormatter.ISO_ZONED_DATE_TIME));
+        LOG.debug("      OffsetDateTime / OFFSET: " + ZDT2.toOffsetDateTime().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+        LOG.debug("      OffsetDateTime / ZONED : " + ZDT2.toOffsetDateTime().format(DateTimeFormatter.ISO_ZONED_DATE_TIME));
+        LOG.debug("      OffsetDateTime / CUSTOM: " + format(ZDT2.toOffsetDateTime()));
+
         LOG.debug("India times:");
-        LOG.debug("      ZonedDateTime  / OFFSET: "+ZDT3.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
-        LOG.debug("      ZonedDateTime  / ZONED : "+ZDT3.format(DateTimeFormatter.ISO_ZONED_DATE_TIME));
-        LOG.debug("      OffsetDateTime / OFFSET: "+ZDT3.toOffsetDateTime().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
-        LOG.debug("      OffsetDateTime / ZONED : "+ZDT3.toOffsetDateTime().format(DateTimeFormatter.ISO_ZONED_DATE_TIME));
-        LOG.debug("      OffsetDateTime / CUSTOM: "+format(ZDT3.toOffsetDateTime()));
+        LOG.debug("      ZonedDateTime  / OFFSET: " + ZDT3.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+        LOG.debug("      ZonedDateTime  / ZONED : " + ZDT3.format(DateTimeFormatter.ISO_ZONED_DATE_TIME));
+        LOG.debug("      OffsetDateTime / OFFSET: " + ZDT3.toOffsetDateTime().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+        LOG.debug("      OffsetDateTime / ZONED : " + ZDT3.toOffsetDateTime().format(DateTimeFormatter.ISO_ZONED_DATE_TIME));
+        LOG.debug("      OffsetDateTime / CUSTOM: " + format(ZDT3.toOffsetDateTime()));
 
         final int count = 1000000;
         OffsetDateTime ODT1 = ZDT1.toOffsetDateTime();
@@ -244,84 +244,89 @@ public class DateTimeUtilTest
         for (int i = 0; i < count; ++i)
           {
             String s = ODT1.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+            if (s == null)
+             s = "Error";
           }
-        long T1 = System.nanoTime()-T0;
-        LOG.info("DateTimeFormatter did "+DurationUtil.PrintPerformancePerSecond(T1, count)+" iterations/s.");
-        
+        long T1 = System.nanoTime() - T0;
+        LOG.info("DateTimeFormatter did " + DurationUtil.PrintPerformancePerSecond(T1, count) + " iterations/s.");
+
         T0 = System.nanoTime();
         for (int i = 0; i < count; ++i)
           {
             String s = format(ODT1);
+            if (s == null)
+              s = "Error";
           }
-        long T2 = System.nanoTime()-T0;
-        LOG.info("Custom format did "+DurationUtil.PrintPerformancePerSecond(T2, count)+" iterations/s.");
-        
+        long T2 = System.nanoTime() - T0;
+        LOG.info("Custom format did " + DurationUtil.PrintPerformancePerSecond(T2, count) + " iterations/s.");
+
         if (T2 > T1)
           LOG.info("Beat the JDK implementation :)");
         else
           LOG.info("DID NOT beat the JDK implementation! :(");
-          
+
       }
-    
-    public static void Test4() throws Exception
-     {
-       Connection C = ConnectionPool.get("MAIN");
-       Calendar UTC_CALENDAR = Calendar.getInstance(java.util.TimeZone.getTimeZone(DateTimeZone.ZULU._ZoneId.getId()));       
-       
-       String Q = "insert into TILDA.ZONEINFO (\"id\", \"value\", \"label\", \"created\", \"lastUpdated\") values (?, ?, ?, ?, statement_timestamp())";
-       PreparedStatement PS = C.prepareStatement(Q);
-       PS.setString(1, "toto");
-       PS.setString(2, "tata");
-       PS.setString(3, "etc/zulu");
-       ZoneId Z = DateTimeZone.USPacific._ZoneId;
-       LOG.debug("Zone: "+Z.getId());
-       ZonedDateTime ZDT = DateTimeUtil.New(2000, 1, 1, 1, 0, 0, 0, Z);
-       LOG.debug("ZDT: "+DateTimeUtil.printDateTimeForSQL(ZDT));
-       PS.setTimestamp(4, new java.sql.Timestamp(ZDT.toInstant().toEpochMilli()), UTC_CALENDAR);
-       LOG.debug(Q);
-       int count = PS.executeUpdate();
-       if (count == 0)
-         throw new Exception("The insert failed");
-       
-       Q = "select \"created\", \"lastUpdated\" from TILDA.ZONEINFO where \"id\"='toto'";
-       LOG.debug(Q);
-       PS = C.prepareStatement(Q);
-       ResultSet RS = PS.executeQuery();
-       if (RS.next() == false)
-         {
-           LOG.debug("   No record was read.");
-         }
-       else
-         {
-           java.sql.Timestamp T = RS.getTimestamp(1, UTC_CALENDAR);
-           ZonedDateTime ZDTDB = DateTimeUtil.toZonedDateTime(T, Z.getId());
-           LOG.debug("ZDTDB: "+DateTimeUtil.printDateTimeForSQL(ZDTDB));
-           
-           if (ZDTDB.equals(ZDT) == false)
-             throw new Exception("The timestamps are not equal!!!");
-           
-           T = RS.getTimestamp(2, UTC_CALENDAR);
-           ZonedDateTime CTSDB = DateTimeUtil.toZonedDateTime(T, Z.getId());
-           LOG.debug("current timestamp DB: "+DateTimeUtil.printDateTimeForSQL(CTSDB));
-           
-         }
-       
-       C.rollback();
-     }
-    
+
+    public static void Test4()
+    throws Exception
+      {
+        Connection C = ConnectionPool.get("MAIN");
+        Calendar UTC_CALENDAR = Calendar.getInstance(java.util.TimeZone.getTimeZone(DateTimeZone.ZULU._ZoneId.getId()));
+
+        String Q = "insert into TILDA.ZONEINFO (\"id\", \"value\", \"label\", \"created\", \"lastUpdated\") values (?, ?, ?, ?, statement_timestamp())";
+        PreparedStatement PS = C.prepareStatement(Q);
+        PS.setString(1, "toto");
+        PS.setString(2, "tata");
+        PS.setString(3, "etc/zulu");
+        ZoneId Z = DateTimeZone.USPacific._ZoneId;
+        LOG.debug("Zone: " + Z.getId());
+        ZonedDateTime ZDT = DateTimeUtil.New(2000, 1, 1, 1, 0, 0, 0, Z);
+        LOG.debug("ZDT: " + DateTimeUtil.printDateTimeForSQL(ZDT));
+        PS.setTimestamp(4, new java.sql.Timestamp(ZDT.toInstant().toEpochMilli()), UTC_CALENDAR);
+        LOG.debug(Q);
+        int count = PS.executeUpdate();
+        if (count == 0)
+          throw new Exception("The insert failed");
+
+        Q = "select \"created\", \"lastUpdated\" from TILDA.ZONEINFO where \"id\"='toto'";
+        LOG.debug(Q);
+        PS = C.prepareStatement(Q);
+        ResultSet RS = PS.executeQuery();
+        if (RS.next() == false)
+          {
+            LOG.debug("   No record was read.");
+          }
+        else
+          {
+            java.sql.Timestamp T = RS.getTimestamp(1, UTC_CALENDAR);
+            ZonedDateTime ZDTDB = DateTimeUtil.toZonedDateTime(T, Z.getId());
+            LOG.debug("ZDTDB: " + DateTimeUtil.printDateTimeForSQL(ZDTDB));
+
+            if (ZDTDB.equals(ZDT) == false)
+              throw new Exception("The timestamps are not equal!!!");
+
+            T = RS.getTimestamp(2, UTC_CALENDAR);
+            ZonedDateTime CTSDB = DateTimeUtil.toZonedDateTime(T, Z.getId());
+            LOG.debug("current timestamp DB: " + DateTimeUtil.printDateTimeForSQL(CTSDB));
+
+          }
+
+        C.rollback();
+      }
+
     public static void Test5()
       {
         ZonedDateTime ZDT1 = DateTimeUtil.getYesterdayTimestamp(true).plusHours(10);
         ZonedDateTime ZDT2 = DateTimeUtil.getTomorrowTimestamp(true).plusHours(9);
         LOG.debug(DateTimeUtil.printDateTime(ZDT1));
         LOG.debug(DateTimeUtil.printDateTime(ZDT2));
-        LOG.debug("Days between: "+DateTimeUtil.computeDays(ZDT1, ZDT2));
+        LOG.debug("Days between: " + DateTimeUtil.computeDays(ZDT1, ZDT2));
 
         ZDT1 = DateTimeUtil.getYesterdayTimestamp(true).plusHours(10);
         ZDT2 = DateTimeUtil.getTomorrowTimestamp(true).plusHours(11);
         LOG.debug(DateTimeUtil.printDateTime(ZDT1));
         LOG.debug(DateTimeUtil.printDateTime(ZDT2));
-        LOG.debug("Days between: "+DateTimeUtil.computeDays(ZDT1, ZDT2));
+        LOG.debug("Days between: " + DateTimeUtil.computeDays(ZDT1, ZDT2));
 
       }
   }

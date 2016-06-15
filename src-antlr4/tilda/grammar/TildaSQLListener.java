@@ -108,71 +108,81 @@ public interface TildaSQLListener extends ParseTreeListener {
 	 */
 	void exitBin_op(TildaSQLParser.Bin_opContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code ArythExpr}
-	 * labeled alternative in {@link TildaSQLParser#aryth_expr}.
+	 * Enter a parse tree produced by {@link TildaSQLParser#arithmetic_expr_base}.
 	 * @param ctx the parse tree
 	 */
-	void enterArythExpr(TildaSQLParser.ArythExprContext ctx);
+	void enterArithmetic_expr_base(TildaSQLParser.Arithmetic_expr_baseContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code ArythExpr}
-	 * labeled alternative in {@link TildaSQLParser#aryth_expr}.
+	 * Exit a parse tree produced by {@link TildaSQLParser#arithmetic_expr_base}.
 	 * @param ctx the parse tree
 	 */
-	void exitArythExpr(TildaSQLParser.ArythExprContext ctx);
+	void exitArithmetic_expr_base(TildaSQLParser.Arithmetic_expr_baseContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code ArythExprSub}
-	 * labeled alternative in {@link TildaSQLParser#aryth_expr}.
+	 * Enter a parse tree produced by the {@code ArithmeticExpr}
+	 * labeled alternative in {@link TildaSQLParser#arithmetic_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterArythExprSub(TildaSQLParser.ArythExprSubContext ctx);
+	void enterArithmeticExpr(TildaSQLParser.ArithmeticExprContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code ArythExprSub}
-	 * labeled alternative in {@link TildaSQLParser#aryth_expr}.
+	 * Exit a parse tree produced by the {@code ArithmeticExpr}
+	 * labeled alternative in {@link TildaSQLParser#arithmetic_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitArythExprSub(TildaSQLParser.ArythExprSubContext ctx);
+	void exitArithmeticExpr(TildaSQLParser.ArithmeticExprContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code ArythExprVal}
-	 * labeled alternative in {@link TildaSQLParser#aryth_expr}.
+	 * Enter a parse tree produced by the {@code ArithmeticExprSub}
+	 * labeled alternative in {@link TildaSQLParser#arithmetic_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterArythExprVal(TildaSQLParser.ArythExprValContext ctx);
+	void enterArithmeticExprSub(TildaSQLParser.ArithmeticExprSubContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code ArythExprVal}
-	 * labeled alternative in {@link TildaSQLParser#aryth_expr}.
+	 * Exit a parse tree produced by the {@code ArithmeticExprSub}
+	 * labeled alternative in {@link TildaSQLParser#arithmetic_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitArythExprVal(TildaSQLParser.ArythExprValContext ctx);
+	void exitArithmeticExprSub(TildaSQLParser.ArithmeticExprSubContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TildaSQLParser#aryth_expr_sub}.
+	 * Enter a parse tree produced by the {@code ArithmeticExprVal}
+	 * labeled alternative in {@link TildaSQLParser#arithmetic_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterAryth_expr_sub(TildaSQLParser.Aryth_expr_subContext ctx);
+	void enterArithmeticExprVal(TildaSQLParser.ArithmeticExprValContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link TildaSQLParser#aryth_expr_sub}.
+	 * Exit a parse tree produced by the {@code ArithmeticExprVal}
+	 * labeled alternative in {@link TildaSQLParser#arithmetic_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitAryth_expr_sub(TildaSQLParser.Aryth_expr_subContext ctx);
+	void exitArithmeticExprVal(TildaSQLParser.ArithmeticExprValContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TildaSQLParser#aryth_op_add}.
+	 * Enter a parse tree produced by {@link TildaSQLParser#arithmetic_expr_sub}.
 	 * @param ctx the parse tree
 	 */
-	void enterAryth_op_add(TildaSQLParser.Aryth_op_addContext ctx);
+	void enterArithmetic_expr_sub(TildaSQLParser.Arithmetic_expr_subContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link TildaSQLParser#aryth_op_add}.
+	 * Exit a parse tree produced by {@link TildaSQLParser#arithmetic_expr_sub}.
 	 * @param ctx the parse tree
 	 */
-	void exitAryth_op_add(TildaSQLParser.Aryth_op_addContext ctx);
+	void exitArithmetic_expr_sub(TildaSQLParser.Arithmetic_expr_subContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TildaSQLParser#aryth_op_mul}.
+	 * Enter a parse tree produced by {@link TildaSQLParser#arithmetic_op_add}.
 	 * @param ctx the parse tree
 	 */
-	void enterAryth_op_mul(TildaSQLParser.Aryth_op_mulContext ctx);
+	void enterArithmetic_op_add(TildaSQLParser.Arithmetic_op_addContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link TildaSQLParser#aryth_op_mul}.
+	 * Exit a parse tree produced by {@link TildaSQLParser#arithmetic_op_add}.
 	 * @param ctx the parse tree
 	 */
-	void exitAryth_op_mul(TildaSQLParser.Aryth_op_mulContext ctx);
+	void exitArithmetic_op_add(TildaSQLParser.Arithmetic_op_addContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TildaSQLParser#arithmetic_op_mul}.
+	 * @param ctx the parse tree
+	 */
+	void enterArithmetic_op_mul(TildaSQLParser.Arithmetic_op_mulContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TildaSQLParser#arithmetic_op_mul}.
+	 * @param ctx the parse tree
+	 */
+	void exitArithmetic_op_mul(TildaSQLParser.Arithmetic_op_mulContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TildaSQLParser#isnull_expr}.
 	 * @param ctx the parse tree

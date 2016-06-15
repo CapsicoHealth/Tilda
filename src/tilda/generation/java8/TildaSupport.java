@@ -59,7 +59,6 @@ public class TildaSupport implements CodeGenTildaSupport
     public void genClassStart(PrintWriter Out, GeneratorSession G, Object O)
       throws Exception
       {
-        Out.println("@SuppressWarnings({ \"unchecked\", \"unused\", \"rawtypes\" })");
         Out.println("public final class TILDA__" + Generator.TILDA_VERSION_VAROK);
         Out.println(" {");
         Out.println("   protected static final Logger LOG = LogManager.getLogger(TILDA__" + Generator.TILDA_VERSION_VAROK + ".class.getName());");

@@ -27,7 +27,6 @@ import tilda.db.QueryDetails;
 import tilda.db.SelectQuery;
 import tilda.db.UpdateQuery;
 import tilda.db.DeleteQuery;
-import tilda.db.processors.RecordProcessor;
 import tilda.enums.ColumnType;
 import tilda.enums.StatementType;
 import tilda.enums.TransactionType;
@@ -47,13 +46,14 @@ import tilda.utils.TextUtil;
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@SuppressWarnings({ "unchecked", "unused" })
+@SuppressWarnings({ "unused" })
 public class TILDA__ZONEINFO_Factory
  {
    protected static final Logger LOG = LogManager.getLogger(TILDA__ZONEINFO_Factory.class.getName());
 
    protected TILDA__ZONEINFO_Factory() { }
 
+   public static final Class<TILDA__ZONEINFO> DATA_CLASS= TILDA__ZONEINFO.class;
    public static final String TABLENAME = TextUtil.Print("TILDA.ZONEINFO", "");
 
    protected static abstract class COLS {
@@ -82,28 +82,39 @@ public class TILDA__ZONEINFO_Factory
             }
          }
      }
-   private static class RecordProcessorList implements RecordProcessor
+   private static class RecordProcessorInternal implements tilda.db.processors.RecordProcessor
      {
-       public RecordProcessorList(Connection C, int Start)
+       public RecordProcessorInternal(Connection C, int Start)
          {
-           _L = new ArrayListResults<tilda.data.ZoneInfo_Data>(Start);
            _C = C;
+           _L = new ArrayListResults<tilda.data.ZoneInfo_Data>(Start);
          }
-       protected ArrayListResults<tilda.data.ZoneInfo_Data> _L = null;
+       public RecordProcessorInternal(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.ZoneInfo_Data> OP)
+         {
+           _C = C;
+           _OP = OP;
+         }
        protected Connection _C = null;
+       protected tilda.db.processors.ObjectProcessor<tilda.data.ZoneInfo_Data> _OP;
+       protected ArrayListResults<tilda.data.ZoneInfo_Data> _L = null;
        public void    Start  () { }
-       public void    End    (boolean HasMore, int Max) { _L.wrapup(HasMore, Max); }
+       public void    End    (boolean HasMore, int Max) { if (_OP == null) _L.wrapup(HasMore, Max); }
        public boolean Process(int Index, java.sql.ResultSet RS) throws Exception
         {
           tilda.data.ZoneInfo_Data Obj = new tilda.data.ZoneInfo_Data();
           boolean OK = ((tilda.data._Tilda.TILDA__ZONEINFO)Obj).Init(_C, RS);
           if (OK == true)
-           _L.add(Obj);
+           {
+             if (_OP == null)
+              _L.add(Obj);
+             else
+              _OP.Process(Index, Obj);
+           }
           return OK;
         }
      }
 
-   private static final ListResults<tilda.data.ZoneInfo_Data> ReadMany(Connection C, int LookupId, tilda.data._Tilda.TILDA__ZONEINFO Obj, Object ExtraParams, int Start, int Size) throws Exception
+   private static final void ReadMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__ZONEINFO Obj, Object ExtraParams, int Start, int Size) throws Exception
      {
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
@@ -131,7 +142,6 @@ public class TILDA__ZONEINFO_Factory
        java.sql.ResultSet RS=null;
        List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
        int count = 0;
-       RecordProcessorList RPL = new RecordProcessorList(C, Start);
        try
         {
           PS = C.prepareStatement(Q);
@@ -147,7 +157,7 @@ public class TILDA__ZONEINFO_Factory
              default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot prepare statement.");
            }
 
-          count = JDBCHelper.Process(PS.executeQuery(), RPL, Start, true, Size, true);
+          count = JDBCHelper.Process(PS.executeQuery(), RP, Start, true, Size, true);
         }
        catch (java.sql.SQLException E)
         {
@@ -160,7 +170,6 @@ public class TILDA__ZONEINFO_Factory
           AllocatedArrays = null;
         }
 
-      return RPL._L;
     }
 
 
@@ -248,7 +257,20 @@ public class TILDA__ZONEINFO_Factory
 
 
 
-       return ReadMany(C, 3, Obj, null, Start, Size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
+       ReadMany(C, 3, RPI, Obj, null, Start, Size);
+       return RPI._L;
+     }
+
+   static public void LookupWhereAll(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.ZoneInfo_Data> OP, int Start, int Size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__ZONEINFO Obj = new tilda.data.ZoneInfo_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
+       ReadMany(C, 3, RPI, Obj, null, Start, Size);
      }
 
 
@@ -257,7 +279,14 @@ public class TILDA__ZONEINFO_Factory
    public static SelectQuery newWhereQuery (            ) throws Exception { return new SelectQuery(null, TILDA__ZONEINFO_Factory.TABLENAME); }
    public static ListResults<tilda.data.ZoneInfo_Data> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception
      {
-       return ReadMany(C, -7, null, Q, Start, Size);
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
+       ReadMany(C, -7, RPI, null, Q, Start, Size);
+       return RPI._L;
+     }
+   public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.ZoneInfo_Data> OP, int Start, int Size) throws Exception
+     {
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
+       ReadMany(C, -7, RPI, null, Q, Start, Size);
      }
    public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, TILDA__ZONEINFO_Factory.TABLENAME); }
    public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, TILDA__ZONEINFO_Factory.TABLENAME); }

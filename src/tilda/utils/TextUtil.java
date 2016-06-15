@@ -1485,7 +1485,7 @@ public class TextUtil
     
     public static final String PrintVariableStr(String Value)
      {
-       return "("+ (Value == null ? 0 : Value.length())+"): "+(Value == null || Value.length() < 100 ? Value : Value.substring(0, 100)+"...");      
+       return "["+ (Value == null ? 0 : Value.length())+"] "+(Value == null || Value.length() < 100 ? Value : Value.substring(0, 100)+"...");      
      }
 
   }

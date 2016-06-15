@@ -17,7 +17,7 @@ import tilda.utils.*;
 
 import com.google.gson.annotations.SerializedName;
 
-@SuppressWarnings({ "unchecked", "unused", "rawtypes" })
+@SuppressWarnings({ "unused" })
 public class TILDA__OBJECTPERF_Json
  {
    static final Logger             LOG                = LogManager.getLogger(TILDA__OBJECTPERF_Json.class.getName());
