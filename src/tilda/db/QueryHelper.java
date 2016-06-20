@@ -144,7 +144,7 @@ public abstract class QueryHelper
     public final QueryHelper selectCountStar()
     throws Exception
       {
-        _Columns.add(new ColumnDefinition(_TableName, "count", 0, ColumnType.LONG, false));
+        _Columns.add(new ColumnDefinition(_TableName, "count", 0, ColumnType.LONG, false, ""));
         return selectColumnBase("count(*)");
       }
     

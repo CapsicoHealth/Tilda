@@ -19,9 +19,9 @@ package tilda.types;
 
 public class Type_BitfieldPrimitiveNull extends Type_BitfieldPrimitive implements Nullable
   {
-    public Type_BitfieldPrimitiveNull(String TableName, String ColumnName, long Count)
+    public Type_BitfieldPrimitiveNull(String TableName, String ColumnName, long Count, String Description)
       {
-        super(TableName, ColumnName, Count);
+        super(TableName, ColumnName, Count, Description);
       }
     
   }

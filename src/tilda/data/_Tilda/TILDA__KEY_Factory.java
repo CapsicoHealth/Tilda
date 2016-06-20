@@ -57,13 +57,13 @@ public class TILDA__KEY_Factory
    public static final String TABLENAME = TextUtil.Print("TILDA.KEY", "");
 
    protected static abstract class COLS {
-     public static Type_LongPrimitive           REFNUM     = new Type_LongPrimitive          ("TILDA.KEY", "refnum"     , 0);
-     public static Type_StringPrimitive         NAME       = new Type_StringPrimitive        ("TILDA.KEY", "name"       , 1);
-     public static Type_LongPrimitive           MAX        = new Type_LongPrimitive          ("TILDA.KEY", "max"        , 2);
-     public static Type_IntegerPrimitive        COUNT      = new Type_IntegerPrimitive       ("TILDA.KEY", "count"      , 3);
-     public static Type_DatetimePrimitive       CREATED    = new Type_DatetimePrimitive      ("TILDA.KEY", "created"    , 4);
-     public static Type_DatetimePrimitive       LASTUPDATED= new Type_DatetimePrimitive      ("TILDA.KEY", "lastUpdated", 5);
-     public static Type_DatetimePrimitiveNull   DELETED    = new Type_DatetimePrimitiveNull  ("TILDA.KEY", "deleted"    , 6);
+     public static Type_LongPrimitive           REFNUM     = new Type_LongPrimitive          ("TILDA.KEY", "refnum"     , 0, "The primary key for this record");
+     public static Type_StringPrimitive         NAME       = new Type_StringPrimitive        ("TILDA.KEY", "name"       , 1, "The name of the table/object tracked");
+     public static Type_LongPrimitive           MAX        = new Type_LongPrimitive          ("TILDA.KEY", "max"        , 2, "The pre-allocated max RefNum for this table/object.");
+     public static Type_IntegerPrimitive        COUNT      = new Type_IntegerPrimitive       ("TILDA.KEY", "count"      , 3, "The size of the pre-allocation required by this table/object.");
+     public static Type_DatetimePrimitive       CREATED    = new Type_DatetimePrimitive      ("TILDA.KEY", "created"    , 4, "The timestamp for when the record was created.");
+     public static Type_DatetimePrimitive       LASTUPDATED= new Type_DatetimePrimitive      ("TILDA.KEY", "lastUpdated", 5, "The timestamp for when the record was last updated.");
+     public static Type_DatetimePrimitiveNull   DELETED    = new Type_DatetimePrimitiveNull  ("TILDA.KEY", "deleted"    , 6, "The timestamp for when the record was deleted.");
 ;
    }
 

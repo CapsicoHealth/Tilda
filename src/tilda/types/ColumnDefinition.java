@@ -28,7 +28,7 @@ public class ColumnDefinition
   {
     protected static final Logger LOG = LogManager.getLogger(ColumnDefinition.class.getName());
 
-    public ColumnDefinition(String TableName, String ColumnName, long Count, ColumnType Type, boolean Collection)
+    public ColumnDefinition(String TableName, String ColumnName, long Count, ColumnType Type, boolean Collection, String Description)
       {
         _TableName = TableName;
         _ColumnName = ColumnName;
@@ -39,12 +39,14 @@ public class ColumnDefinition
         _Type = Type;
         _Collection = Collection;
         _Mask = 1L << Count;
+        _Description = Description;
       }
 
     final String            _TableName;
     final String            _Full;
     final String            _Short;
     final String            _ColumnName;
+    final String            _Description;
 
     public final String     _Insert;
     public final String     _Update;
@@ -68,14 +70,14 @@ public class ColumnDefinition
         return _ColumnName;
       }
 
-    public static ColumnDefinition Create(String Name, String BaseType, boolean Collection, boolean Nullable)
+    public static ColumnDefinition Create(String Name, ColumnType Type, boolean Collection, boolean Nullable, String Description)
       {
-        String ClassName = "tilda.types.Type_" + BaseType + (Collection == true ? "Collection" : "Primitive") + (Nullable == true ? "Null" : "");
+        String ClassName = "tilda.types.Type_" + Type._SimpleName + (Collection == true ? "Collection" : "Primitive") + (Nullable == true ? "Null" : "");
         try
           {
             Class<?> C = Class.forName(ClassName);
-            Constructor<?> cons = C.getConstructor(String.class, String.class, Long.TYPE );
-            return (ColumnDefinition) cons.newInstance("?", Name, 0);
+            Constructor<?> cons = C.getConstructor(String.class, String.class, Long.TYPE, String.class );
+            return (ColumnDefinition) cons.newInstance("?", Name, 0, Description);
           }
         catch (Exception E)
           {

@@ -57,19 +57,19 @@ public class TILDA__TRANSPERF_Factory
    public static final String TABLENAME = TextUtil.Print("TILDA.TRANSPERF", "");
 
    protected static abstract class COLS {
-     public static Type_StringPrimitive         SCHEMANAME   = new Type_StringPrimitive        ("TILDA.TRANSPERF", "schemaName"   , 0);
-     public static Type_StringPrimitive         OBJECTNAME   = new Type_StringPrimitive        ("TILDA.TRANSPERF", "objectName"   , 1);
-     public static Type_StringPrimitive         STARTPERIODTZ= new Type_StringPrimitive        ("TILDA.TRANSPERF", "startPeriodTZ", 2);
-     public static Type_DatetimePrimitive       STARTPERIOD  = new Type_DatetimePrimitive      ("TILDA.TRANSPERF", "startPeriod"  , 3);
-     public static Type_StringPrimitive         ENDPERIODTZ  = new Type_StringPrimitive        ("TILDA.TRANSPERF", "endPeriodTZ"  , 4);
-     public static Type_DatetimePrimitive       ENDPERIOD    = new Type_DatetimePrimitive      ("TILDA.TRANSPERF", "endPeriod"    , 5);
-     public static Type_LongPrimitive           COMMITNANO   = new Type_LongPrimitive          ("TILDA.TRANSPERF", "commitNano"   , 6);
-     public static Type_LongPrimitive           COMMITCOUNT  = new Type_LongPrimitive          ("TILDA.TRANSPERF", "commitCount"  , 7);
-     public static Type_LongPrimitive           ROLLBACKNANO = new Type_LongPrimitive          ("TILDA.TRANSPERF", "rollbackNano" , 8);
-     public static Type_LongPrimitive           ROLLBACKCOUNT= new Type_LongPrimitive          ("TILDA.TRANSPERF", "rollbackCount", 9);
-     public static Type_DatetimePrimitive       CREATED      = new Type_DatetimePrimitive      ("TILDA.TRANSPERF", "created"      , 10);
-     public static Type_DatetimePrimitive       LASTUPDATED  = new Type_DatetimePrimitive      ("TILDA.TRANSPERF", "lastUpdated"  , 11);
-     public static Type_DatetimePrimitiveNull   DELETED      = new Type_DatetimePrimitiveNull  ("TILDA.TRANSPERF", "deleted"      , 12);
+     public static Type_StringPrimitive         SCHEMANAME   = new Type_StringPrimitive        ("TILDA.TRANSPERF", "schemaName"   , 0, "The name of the schema tracked");
+     public static Type_StringPrimitive         OBJECTNAME   = new Type_StringPrimitive        ("TILDA.TRANSPERF", "objectName"   , 1, "The name of the table/object tracked");
+     public static Type_StringPrimitive         STARTPERIODTZ= new Type_StringPrimitive        ("TILDA.TRANSPERF", "startPeriodTZ", 2, "Generated helper column to hold the time zone ID for 'startPeriod'.");
+     public static Type_DatetimePrimitive       STARTPERIOD  = new Type_DatetimePrimitive      ("TILDA.TRANSPERF", "startPeriod"  , 3, "The timestamp for when the record was created.");
+     public static Type_StringPrimitive         ENDPERIODTZ  = new Type_StringPrimitive        ("TILDA.TRANSPERF", "endPeriodTZ"  , 4, "Generated helper column to hold the time zone ID for 'endPeriod'.");
+     public static Type_DatetimePrimitive       ENDPERIOD    = new Type_DatetimePrimitive      ("TILDA.TRANSPERF", "endPeriod"    , 5, "The timestamp for when the record was created.");
+     public static Type_LongPrimitive           COMMITNANO   = new Type_LongPrimitive          ("TILDA.TRANSPERF", "commitNano"   , 6, "Blah...");
+     public static Type_LongPrimitive           COMMITCOUNT  = new Type_LongPrimitive          ("TILDA.TRANSPERF", "commitCount"  , 7, "Blah...");
+     public static Type_LongPrimitive           ROLLBACKNANO = new Type_LongPrimitive          ("TILDA.TRANSPERF", "rollbackNano" , 8, "Blah...");
+     public static Type_LongPrimitive           ROLLBACKCOUNT= new Type_LongPrimitive          ("TILDA.TRANSPERF", "rollbackCount", 9, "Blah...");
+     public static Type_DatetimePrimitive       CREATED      = new Type_DatetimePrimitive      ("TILDA.TRANSPERF", "created"      , 10, "The timestamp for when the record was created.");
+     public static Type_DatetimePrimitive       LASTUPDATED  = new Type_DatetimePrimitive      ("TILDA.TRANSPERF", "lastUpdated"  , 11, "The timestamp for when the record was last updated.");
+     public static Type_DatetimePrimitiveNull   DELETED      = new Type_DatetimePrimitiveNull  ("TILDA.TRANSPERF", "deleted"      , 12, "The timestamp for when the record was deleted.");
 ;
    }
 

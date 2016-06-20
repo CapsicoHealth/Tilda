@@ -57,14 +57,14 @@ public class TILDA__ZONEINFO_Factory
    public static final String TABLENAME = TextUtil.Print("TILDA.ZONEINFO", "");
 
    protected static abstract class COLS {
-     public static Type_StringPrimitive         ID           = new Type_StringPrimitive        ("TILDA.ZONEINFO", "id"           , 0);
-     public static Type_StringPrimitive         VALUE        = new Type_StringPrimitive        ("TILDA.ZONEINFO", "value"        , 1);
-     public static Type_StringPrimitive         LABEL        = new Type_StringPrimitive        ("TILDA.ZONEINFO", "label"        , 2);
-     public static Type_StringPrimitiveNull     DEACTIVATEDTZ= new Type_StringPrimitiveNull    ("TILDA.ZONEINFO", "deactivatedTZ", 3);
-     public static Type_DatetimePrimitiveNull   DEACTIVATED  = new Type_DatetimePrimitiveNull  ("TILDA.ZONEINFO", "deactivated"  , 4);
-     public static Type_DatetimePrimitive       CREATED      = new Type_DatetimePrimitive      ("TILDA.ZONEINFO", "created"      , 5);
-     public static Type_DatetimePrimitive       LASTUPDATED  = new Type_DatetimePrimitive      ("TILDA.ZONEINFO", "lastUpdated"  , 6);
-     public static Type_DatetimePrimitiveNull   DELETED      = new Type_DatetimePrimitiveNull  ("TILDA.ZONEINFO", "deleted"      , 7);
+     public static Type_StringPrimitive         ID           = new Type_StringPrimitive        ("TILDA.ZONEINFO", "id"           , 0, "The id for this enumeration.");
+     public static Type_StringPrimitive         VALUE        = new Type_StringPrimitive        ("TILDA.ZONEINFO", "value"        , 1, "The value for this enumeration.");
+     public static Type_StringPrimitive         LABEL        = new Type_StringPrimitive        ("TILDA.ZONEINFO", "label"        , 2, "The label for this enumeration.");
+     public static Type_StringPrimitiveNull     DEACTIVATEDTZ= new Type_StringPrimitiveNull    ("TILDA.ZONEINFO", "deactivatedTZ", 3, "Generated helper column to hold the time zone ID for 'deactivated'.");
+     public static Type_DatetimePrimitiveNull   DEACTIVATED  = new Type_DatetimePrimitiveNull  ("TILDA.ZONEINFO", "deactivated"  , 4, "The label for this enumeration.");
+     public static Type_DatetimePrimitive       CREATED      = new Type_DatetimePrimitive      ("TILDA.ZONEINFO", "created"      , 5, "The timestamp for when the record was created.");
+     public static Type_DatetimePrimitive       LASTUPDATED  = new Type_DatetimePrimitive      ("TILDA.ZONEINFO", "lastUpdated"  , 6, "The timestamp for when the record was last updated.");
+     public static Type_DatetimePrimitiveNull   DELETED      = new Type_DatetimePrimitiveNull  ("TILDA.ZONEINFO", "deleted"      , 7, "The timestamp for when the record was deleted.");
 ;
    }
 

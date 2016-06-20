@@ -20,9 +20,9 @@ import tilda.enums.ColumnType;
 
 public class Type_FloatCollectionNotNull extends ColumnDefinition
   {
-    public Type_FloatCollectionNotNull(String TableName, String ColumnName, long Count)
+    public Type_FloatCollectionNotNull(String TableName, String ColumnName, long Count, String Description)
       {
-        super(TableName, ColumnName, Count, ColumnType.FLOAT, true);
+        super(TableName, ColumnName, Count, ColumnType.FLOAT, true, Description);
       }
     
   }

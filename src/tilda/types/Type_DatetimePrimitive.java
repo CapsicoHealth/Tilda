@@ -20,9 +20,9 @@ import tilda.enums.ColumnType;
 
 public class Type_DatetimePrimitive extends ColumnDefinition
   {
-    public Type_DatetimePrimitive(String TableName, String ColumnName, long Count)
+    public Type_DatetimePrimitive(String TableName, String ColumnName, long Count, String Description)
       {
-        super(TableName, ColumnName, Count, ColumnType.DATETIME, false);
+        super(TableName, ColumnName, Count, ColumnType.DATETIME, false, Description);
       }
     
   }
