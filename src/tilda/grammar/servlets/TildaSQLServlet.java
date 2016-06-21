@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import java.time.ZonedDateTime;
 import java.util.Enumeration;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,14 +18,11 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import tilda.enums.ColumnType;
 import tilda.grammar.ColDefs;
 import tilda.grammar.ErrorList;
 import tilda.grammar.TildaSQL;
 import tilda.grammar.TildaSQLValidator;
-import tilda.types.ColumnDefinition;
 import tilda.utils.AnsiUtil;
-import tilda.utils.CollectionUtil;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.HttpStatus;
 import tilda.utils.SystemValues;
