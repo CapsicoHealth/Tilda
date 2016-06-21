@@ -420,6 +420,15 @@ public class CollectionUtil
         NewA[A.length] = Str;
         return NewA;
       }
+    
+    public static <T> List<T> append(List<T> L, T[] A)
+      {
+        if (A == null || L == null)
+         return L;
+        for (T t : A)
+         L.add(t);
+        return L;
+      }
 
     public static int[] toIntArray(String[] v)
     throws Exception
