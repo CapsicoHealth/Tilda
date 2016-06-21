@@ -317,7 +317,7 @@ public class TildaSQL
         WCC_CG.addWhereClauseDef("wc1", Expr1, _COLS);
         WCC_CG.addWhereClauseDef("wc2", Expr2, _COLS);
         WCC_CG.addWhereClauseDef("wc3", Expr3, _COLS);
-        WCC_CG.setCompositionExpression("wc1");
+        WCC_CG.setCompositionExpression("wc1 and wc2 and wc3");
         LOG.debug("Parsing time: " + DurationUtil.PrintDuration(System.nanoTime() - T0) + ".");
 
         T0 = System.nanoTime();
