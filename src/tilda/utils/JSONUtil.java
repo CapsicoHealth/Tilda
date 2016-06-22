@@ -103,6 +103,13 @@ public class JSONUtil
           }
       }
 
+    public static void PrintSubJson(Writer Out, String Name, boolean FirstElement, String v)
+    throws IOException
+      {
+        Print(Out, Name, FirstElement);
+        Out.write(TextUtil.isNullOrEmpty(v) == true ? "null" : v);
+      }
+
     public static void Print(Writer Out, String Name, boolean FirstElement, String v)
     throws IOException
       {

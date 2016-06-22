@@ -91,9 +91,10 @@ public class TildaJson implements CodeGenTildaJson
             if (C._Type == ColumnType.DATETIME)
               {
                 Out.println("   @SerializedName(\"" + C.getName() + "\"" + Pad + ") public " + (C.isList() == true ? "List<String>" : C.isSet() == true ? "Set<String>" : "String") + "  Str_" + C.getName() + Pad + ";");
-                Out.println("   transient          " + PaddingUtil.getPad(C.getName().length()) + Pad + " public " + (C.isCollection() == true ? JavaJDBCType.getFieldType(C) : JavaJDBCType.getFieldTypeBaseClass(C)) + "  _"
-                    + C.getName() + Pad + ";");
+                Out.println("   transient          " + PaddingUtil.getPad(C.getName().length()) + Pad + " public " + (C.isCollection() == true ? JavaJDBCType.getFieldType(C) : JavaJDBCType.getFieldTypeBaseClass(C)) + "  _" + C.getName() + Pad + ";");
               }
+            else if (C._Type == ColumnType.JSON)
+              Out.println("   @SerializedName(\"" + C.getName() + "\"" + Pad + ") public com.google.gson.JsonElement _" + C.getName() + Pad + ";");
             else
               Out.println("   @SerializedName(\"" + C.getName() + "\"" + Pad + ") public " + (C.isCollection() == true ? JavaJDBCType.getFieldType(C) : JavaJDBCType.getFieldTypeBaseClass(C)) + "  _" + C.getName() + Pad + ";");
           }
@@ -162,7 +163,7 @@ public class TildaJson implements CodeGenTildaJson
           if (C != null && C.isJSONColumn() == true && CreateColumns.contains(C) == false)
             {
               String Pad = O._PadderColumnNames.getPad(C.getName());
-              Out.println("      if (_" + C.getName() + Pad + "!= null) Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + ");");
+              Out.println("      if (_" + C.getName() + Pad + "!= null) Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + (C._Type == ColumnType.JSON ? ".toString()":"")+ ");");
             }
         Out.println();
         Out.println("      if (Obj.Write(C) == false)");
@@ -242,7 +243,7 @@ public class TildaJson implements CodeGenTildaJson
                   if (C._Invariant == false)
                     {
                       String Pad = O._PadderColumnNames.getPad(C.getName());
-                      Out.println("         if (_" + C.getName() + Pad + "!= null) Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + ");");
+                      Out.println("         if (_" + C.getName() + Pad + "!= null) Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + (C._Type == ColumnType.JSON ? ".toString()":"")+");");
                       ++count;
                     }
                   else if (C._PrimaryKey == false)

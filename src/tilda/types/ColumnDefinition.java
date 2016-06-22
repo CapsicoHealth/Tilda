@@ -35,7 +35,7 @@ public class ColumnDefinition
         _Short = "\"" + ColumnName + "\"";
         _Full = TableName + "." + _Short;
         _Insert = ", " + _Short;
-        _Update = ", " + _Short + "=?";
+        _Update = ", " + _Short + (Type==ColumnType.JSON ? "=cast(? as jsonb)" : "=?"); // LDH-NOTE: BOOOOO!!!!! HARD-CODED... Won't work on other DBs.. need to clean up!
         _Type = Type;
         _Collection = Collection;
         _Mask = 1L << Count;

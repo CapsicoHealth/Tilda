@@ -25,6 +25,7 @@ public enum JavaJDBCType
 
     /*@formatter:off*/
     STRING  ("String"       , "String       " , "String   ", "CHAR   "                , ColumnType.STRING  ),
+    JSON    ("String"       , "String       " , "String   ", "CHAR   "                , ColumnType.JSON    ),
     CHAR    ("char"         , "Character    " , "String   ", "CHAR   "                , ColumnType.CHAR    ),
     INTEGER ("int"          , "Integer      " , "Int      ", "INTEGER"                , ColumnType.INTEGER ),
     LONG    ("long"         , "Long         " , "Long     ", "BIGINT "                , ColumnType.LONG    ),

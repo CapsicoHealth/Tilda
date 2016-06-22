@@ -638,7 +638,9 @@ public class Helper
                 Out.println(")");
               }
           }
-        if (C.isCollection() == false)
+        if (C._Type == ColumnType.JSON)
+          Out.println("        JSONUtil.PrintSubJson(Out, \"" + C.getName() + "\", " + First + ", Obj.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "());");
+        else if (C.isCollection() == false)
           Out.println("        JSONUtil.Print(Out, \"" + C.getName() + "\", " + First + ", Obj.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "());");
         else
           Out.println("        JSONUtil.Print(Out, \"" + C.getName() + "\", " + First + ", Obj._" + C.getName() + ".toArray(new " + JavaJDBCType.getFieldTypeBaseClass(C) + "[Obj._" + C.getName() + ".size()]));");

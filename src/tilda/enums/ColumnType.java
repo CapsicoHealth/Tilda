@@ -24,6 +24,7 @@ public enum ColumnType
 
     /*@formatter:off*/
     STRING  (true , false),
+    JSON    (false, false),
     CHAR    (true , true ),
     INTEGER (true , true ),
     LONG    (true , true ),

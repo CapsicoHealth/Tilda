@@ -26,6 +26,15 @@ public class ColInfo
 //          }
         
         _Name = RS.getString("COLUMN_NAME").toLowerCase();
+//        if (_Name.equalsIgnoreCase("clinicalRules") == true)
+//          {
+//            for (int xxx = 1; xxx <= RS.getMetaData().getColumnCount(); ++xxx)
+//              {
+//                LOG.debug("Column "+xxx+": "+RS.getMetaData().getColumnName(xxx));
+//                Object O = RS.getObject(xxx);
+//                LOG.debug("     --> "+(O==null?"NULL":O.toString()));
+//              }
+//          }
         _Nullable = RS.getInt("NULLABLE");
         _Size = RS.getInt("COLUMN_SIZE");
         _TypeName = RS.getString("TYPE_NAME");
@@ -80,7 +89,18 @@ public class ColInfo
             case java.sql.Types.NULL         : _TypeSql = "NULL"         ; _TildaType = null; break;
             case java.sql.Types.NUMERIC      : _TypeSql = "NUMERIC"      ; _TildaType = ColumnType.DOUBLE; break;
             case java.sql.Types.NVARCHAR     : _TypeSql = "NVARCHAR"     ; _TildaType = ColumnType.STRING; break;
-            case java.sql.Types.OTHER        : _TypeSql = "OTHER"        ; _TildaType = null; break;
+            case java.sql.Types.OTHER        :
+              if (_TypeName != null && _TypeName.equalsIgnoreCase("jsonb") == true)
+                {
+                  _TypeSql = "JSONB";
+                  _TildaType = ColumnType.JSON;
+                }
+              else
+                {
+                  _TypeSql = "OTHER";
+                  _TildaType = null;
+                }
+              break;
             case java.sql.Types.REAL         : _TypeSql = "REAL"         ; _TildaType = ColumnType.FLOAT; break;
             case java.sql.Types.REF          : _TypeSql = "REF"          ; _TildaType = null; break;
             case java.sql.Types.ROWID        : _TypeSql = "ROWID"        ; _TildaType = null; break;

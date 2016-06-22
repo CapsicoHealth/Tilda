@@ -167,6 +167,7 @@ public class TildaData implements CodeGenTildaData
              break;
            case DATETIME:
            case STRING:
+           case JSON:
              break;
            default:
              break;
@@ -254,6 +255,7 @@ public class TildaData implements CodeGenTildaData
                           Out.print("DateTimeUtil.toCalendarNoThrow(" + TextUtil.EscapeDoubleQuoteWithSlash(V._Value) + ")");
                         break;
                       case STRING:
+                      case JSON:
                         Out.print(TextUtil.EscapeDoubleQuoteWithSlash(V._Value));
                         break;
                       case BINARY:
@@ -316,6 +318,7 @@ public class TildaData implements CodeGenTildaData
                 Out.println("      { return _" + V._ParentColumn.getName() + " != null && _" + V._ParentColumn.getName() + ".equals(" + ValueNameVar + "); }");
               break;
             case STRING:
+            case JSON:
               Out.println("      { return _" + V._ParentColumn.getName() + " != null && _" + V._ParentColumn.getName() + ".equals(" + ValueNameVar + "); }");
               break;
             case BINARY:
@@ -470,6 +473,7 @@ public class TildaData implements CodeGenTildaData
               break;
             case DATETIME:
             case STRING:
+            case JSON:
               Out.println("       if (v == null)");
               if (C._Nullable == true)
                 {
@@ -608,6 +612,7 @@ public class TildaData implements CodeGenTildaData
             case DATETIME:
             case BINARY:
             case BITFIELD:
+            case JSON:
               throw new Error("An invalid type '" + V._ParentColumn._Type + "' was assigned column values for code gen.");
             default:
               throw new Error("Unhandled case in switch for type '" + V._ParentColumn._Type + "'.");
@@ -686,6 +691,7 @@ public class TildaData implements CodeGenTildaData
                 break;
               case DATETIME:
               case STRING:
+              case JSON:
               case BINARY:
                 Out.println("       _" + C.getName() + "=null;");
                 break;
@@ -772,6 +778,9 @@ public class TildaData implements CodeGenTildaData
                         Out.print("          else { S.append(" + Helper.getRuntimeInsertStr(C) + "); V.append(" + Helper.getTimestampDefaultComma(C, C._DefaultCreateValue) + "); }");
                       }
                     break;
+                  case JSON:
+                    Out.println(" V.append(\",cast(? as "+G.getSql().getColumnTypeRaw(C, false)+")\");  }");
+                    break;
                   case BINARY:
                   case BITFIELD:
                   case BOOLEAN:
@@ -824,6 +833,12 @@ public class TildaData implements CodeGenTildaData
                         Out.println("           }");
                       }
                     break;
+                  case JSON:
+//                    String MethodName = TextUtil.CapitalizeFirstCharacter(C.getName()) + TextUtil.CapitalizeFirstCharacter(C._DefaultUpdateValue._Name);
+//                    Out.println("          if ((" + Mask + Pad + " & __Changes) == 0L) set" + MethodName + "();");
+//                    Out.println("          S.append(" + Helper.getRuntimeUpdateStr(C) + ");");
+//                    Out.println(" V.append(\",cast(? as "+G.getSql().getColumnTypeRaw(C, false)+")\");  }");
+//                    break;
                   case BINARY:
                   case BITFIELD:
                   case BOOLEAN:
@@ -897,6 +912,7 @@ public class TildaData implements CodeGenTildaData
                   case LONG:
                   case CHAR:
                   case STRING:
+                  case JSON:
                     Out.print(" else ");
                     if (C.isCollection() == false)
                       Out.println("PS.set" + JavaJDBCType.get(C._Type)._JDBCType + "(++i, " + (C._Type == ColumnType.CHAR ? "\"\"+" : "") + "_" + C.getName() + ");");
@@ -1062,6 +1078,7 @@ public class TildaData implements CodeGenTildaData
                   case BOOLEAN:
                   case CHAR:
                   case STRING:
+                  case JSON:
                     if (C.isCollection() == true)
                      Out.print("A = RS.getArray(++i); _" + C.getName() + Pad + " = A==null?null:CollectionUtil.to"+(C.isList()==true?"List":"Set ")+"(("+ JavaJDBCType.getFieldTypeBaseClass(C)+"[])A.getArray()); if (A != null) A.free();");
                     else if (C._Type == ColumnType.CHAR)
