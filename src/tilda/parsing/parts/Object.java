@@ -164,6 +164,7 @@ public class Object extends Base
                   }
               }
           }
+
         for (int i = 0; i < _DropOldColumns.length; ++i)
           {
             String n = _DropOldColumns[i];

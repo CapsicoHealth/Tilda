@@ -22,6 +22,7 @@ public enum PostgresType
   {
     /*@formatter:off*/
     STRING  ("varchar"         , "varchar", ColumnType.STRING  ),
+    JSON    ("jsonb"           , null     , ColumnType.JSON    ),
     CHAR    ("character"       , "bpchar" , ColumnType.CHAR    ),
     INTEGER ("integer"         , "int4"   , ColumnType.INTEGER ),
     LONG    ("bigint"          , "int8"   , ColumnType.LONG    ),

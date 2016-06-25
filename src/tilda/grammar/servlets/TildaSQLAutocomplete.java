@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.ZonedDateTime;
 import java.util.Enumeration;
-import java.util.Iterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,24 +14,27 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-
 import tilda.grammar.ColDefs;
-import tilda.grammar.ErrorList;
 import tilda.grammar.TildaSQL;
 import tilda.grammar.TildaSQLValidator;
+import tilda.types.ColumnDefinition;
 import tilda.utils.AnsiUtil;
 import tilda.utils.DateTimeUtil;
-import tilda.utils.HttpStatus;
 import tilda.utils.SystemValues;
-@WebServlet(value="/svc/TildaSQLValidator/lint")
-public class TildaSQLServlet extends HttpServlet {
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+@WebServlet(value="/svc/TildaSQLValidator/autocomplete")
+public class TildaSQLAutocomplete extends HttpServlet {
 	  /**
 	 * 
 	 */
+	private static final long serialVersionUID = -7106320250739764659L;
+	/**
+	 * 
+	 */
 
-	private static final long serialVersionUID = 1181688239603166570L;
+
 	protected static final Logger LOG = LogManager.getLogger(TildaSQL.class.getName());
 	  TildaSQLValidator _Validator;
 	  JsonObject json = new JsonObject();
@@ -41,59 +43,15 @@ public class TildaSQLServlet extends HttpServlet {
 	                    HttpServletResponse response)
 	            throws ServletException, IOException
 	  {
-		  LogRequestHeader(20, request);
-
+		  LogRequestHeader(21, request);
 		  PrintWriter _PrintWriter = response.getWriter();
-		  String Expr = request.getParameter("expr");
-		  _Validator = new TildaSQLValidator(Expr);
-		  _Validator.setColumnEnvironment(ColDefs._COLS);
-
-		  if(_Validator.getParserSyntaxErrors() == 0){ // check for syntax error
-			  _Validator.validate();
-			  Iterator<ErrorList.Error> errors = _Validator.getValidationErrors().getErrors();
-			  boolean isValid = (errors != null && errors.hasNext()) ? false : true;
-			  if(!isValid){
-				  json.add("response", TildaSQLServlet.jsonArrayFromErrors(errors));
-				  response.setStatus(HttpStatus.BadRequest._Code);
-			  }
-			  else{
-				  response.setStatus(HttpStatus.OK._Code);
-			  }
-		  } else {
-			  JsonObject j1 = new JsonObject();
-			  j1.addProperty("message", "SYNTAX Error..");
-			  j1.addProperty("fromLine", 0);// For code mirror line starts from zero(0) not from one(1)
-			  j1.addProperty("toLine", 0);
-			  j1.addProperty("fromColumn", 1);
-			  j1.addProperty("toColumn", Expr.length());
-			  j1.addProperty("severity", "error");
-			  JsonArray jsonArray = new JsonArray();
-			  jsonArray.add(j1);
-			  json.add("response", jsonArray);
-			  response.setStatus(HttpStatus.BadRequest._Code);
+		  // Generate tabledef.
+		  for(ColumnDefinition colDef : ColDefs._COLS){
+			  // tableName: { columnName: "" }
+			  json.add(colDef.getName(), new JsonObject());
 		  }
-
-
 		  response.setContentType("application/json");
 		  _PrintWriter.println(json.toString());
-	  }
-	  
-	  	  
-	  private static JsonArray jsonArrayFromErrors(Iterator<ErrorList.Error> errorList){
-		  JsonArray jsonArray = new JsonArray();
-		  while(errorList !=null && errorList.hasNext()){
-			  ErrorList.Error error = errorList.next();
-			  JsonObject j1 = new JsonObject();
-			  j1.addProperty("message", error._Msg);
-			  j1.addProperty("fromLine", error._Line-1);
-			  j1.addProperty("toLine", error._Line-1);
-			  j1.addProperty("fromColumn", error._ColumnFrom);
-			  j1.addProperty("toColumn", error._ColumnTo);
-			  j1.addProperty("severity", "error");
-			  jsonArray.add(j1);
-		  }
-		  return jsonArray;
-
 	  }
 	  public void destroy(){}
 	  
