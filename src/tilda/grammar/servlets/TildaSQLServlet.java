@@ -15,9 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-
 import tilda.grammar.ColDefs;
 import tilda.grammar.ErrorList;
 import tilda.grammar.TildaSQL;
@@ -26,6 +23,9 @@ import tilda.utils.AnsiUtil;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.HttpStatus;
 import tilda.utils.SystemValues;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 @WebServlet(value="/svc/TildaSQLValidator/lint")
 public class TildaSQLServlet extends HttpServlet {
 	  /**
