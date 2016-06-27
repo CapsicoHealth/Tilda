@@ -826,14 +826,13 @@ public class GraphvizUtil
 
     private void showDotPathError()
       {
-        LOG.warn("Unable to file 'dot' binary");
-        LOG.warn("Documentation for Tilda schemas won't include any ER Diagram");
-        LOG.warn("To set up the dependent GraphViz library, polease follow the following steps:");
-        LOG.warn("    - Go to http://www.graphviz.org/Download.php");
-        LOG.warn("    - Accept the license");
-        LOG.warn("    - Download the package appropriate for your platform (i.e., Mac, Windows, Linux) the license");
-        LOG.warn("    - Configure your tilda.config.json and add the following element");
-        LOG.warn("         .  \"dotBinary\": \"C:\\Program Files (x86)\\GraphViz\\bin\\dot.exe\"");
+        LOG.warn("Unable to find the GraphViz 'dot' binary: the documentation for Tilda schemas won't include any ER Diagram");
+        LOG.warn("To set up the dependent GraphViz library, please follow the following steps:");
+        LOG.warn("  - Go to http://www.graphviz.org/Download.php");
+        LOG.warn("  - Accept the license");
+        LOG.warn("  - Download the package appropriate for your platform (i.e., Mac, Windows, Linux) the license");
+        LOG.warn("  - Configure your tilda.config.json and add the following element");
+        LOG.warn("      .  \"dotBinary\": \"C:\\Program Files (x86)\\GraphViz\\bin\\dot.exe\"");
       }
 
     public static String getBaseResFileName(Schema S, String Extension)
@@ -941,10 +940,14 @@ public class GraphvizUtil
         else
           {
             String SvgFileName = getBaseResFileName(schema, ".svg");
-            FileUtil.copyFileContentsIntoAnotherFile(SvgFileName, writer);
-            LOG.info("Deleting " + SvgFileName);
-            new File(SvgFileName).delete();
-            LOG.info("   --> Deleted " + SvgFileName + ".");
+            File F = new File(SvgFileName);
+            if (F.exists() == true)
+              {
+                FileUtil.copyFileContentsIntoAnotherFile(SvgFileName, writer);
+                LOG.info("Deleting " + SvgFileName);
+                new File(SvgFileName).delete();
+                LOG.info("   --> Deleted " + SvgFileName + ".");
+              }
           }
 
     	writer.println("</DIV>");
