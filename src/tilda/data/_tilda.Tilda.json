@@ -105,7 +105,7 @@
         { "name": "a2b"          , "type": "CHAR[,]"    ,                                                       "description": "The blah"},
         { "name": "a2c"          , "type": "CHAR{,}"    ,                                                       "description": "The blah"},
         { "name": "a3"           , "type": "BOOLEAN"    ,                                                       "description": "The blah"},
-        { "name": "a3b"          , "type": "BITFIELD"   ,                                                       "description": "The blah"},
+        { "name": "a3b"          , "type": "BOOLEAN[,]" ,                                                       "description": "The blah"},
         { "name": "a4"           , "type": "DOUBLE"     ,                                                       "description": "The blah"},
         { "name": "a4b"          , "type": "DOUBLE[,]"  ,                                                       "description": "The blah"},
         { "name": "a5"           , "type": "FLOAT"      ,                                                       "description": "The blah"},

@@ -155,7 +155,7 @@ public class Migrator
                               }
                             if (    Col.isCollection() == false 
                                 && (   Col._Type == ColumnType.BITFIELD && CI._TildaType != ColumnType.INTEGER 
-                                    || Col._Type == ColumnType.JSON     && CI._TildaType != ColumnType.STRING
+                                    || Col._Type == ColumnType.JSON     && CI._TildaType != ColumnType.STRING && CI._TildaType != ColumnType.JSON
                                     || Col._Type != ColumnType.BITFIELD && Col._Type != ColumnType.JSON && Col._Type != CI._TildaType))
                               {
                                 if (C.alterTableAlterColumnType(CI._TildaType, Col, ZoneInfo_Factory.getEnumerationById("UTC")) == false)
