@@ -17,8 +17,6 @@ public final class TILDA__1_0
 
    protected static final String _COMMAQUESTION            =TextUtil.Identity(",?");
    protected static final String _EQUALQUESTION            =TextUtil.Identity("=?");
-   protected static final String _COMMACURRENTTIMESTAMP    =TextUtil.Identity(", statement_timestamp()");
-   protected static final String _EQUALCURRENTTIMESTAMP    =TextUtil.Identity("= statement_timestamp()");
 
    protected static boolean HandleCatch(Connection C, java.sql.SQLException E, String OperationDebugStr) throws java.sql.SQLException
      {

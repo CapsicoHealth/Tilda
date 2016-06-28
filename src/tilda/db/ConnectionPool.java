@@ -248,8 +248,7 @@ public class ConnectionPool
           }
         if (C.addHelperFunctions() == false)
           throw new Exception("Cannot upgrade schema by adding the Tilda helper functions.");
-        else 
-          C.commit();
+        C.commit();
       }
 
     private static void ReorderTildaListWithDependencies(List<Schema> L)

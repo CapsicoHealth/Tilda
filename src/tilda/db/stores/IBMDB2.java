@@ -33,6 +33,7 @@ import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 import tilda.utils.TextUtil;
+import tilda.utils.pairs.StringStringPair;
 
 public class IBMDB2 implements DBType
   {
@@ -202,5 +203,18 @@ public class IBMDB2 implements DBType
     throws SQLException
       {
         throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public StringStringPair getTypeMapping(int type, String name, int size, String typeName)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public boolean supportsArrays()
+      {
+        return false;
       }
   }

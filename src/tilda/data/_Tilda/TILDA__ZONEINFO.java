@@ -86,7 +86,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jun 15 2016, 15:04:30EDT
+ @generated Jun 27 2016, 23:57:28EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__ZONEINFO implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -1479,19 +1479,19 @@ This is the hasChanged for:<BR>
           if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask & __Changes) != 0L) { S.append(TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Insert); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
           if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask   & __Changes) != 0L) { S.append(TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Insert  );
-             V.append((TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_deactivated) == true ? tilda.data._Tilda.TILDA__1_0._COMMACURRENTTIMESTAMP : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+             V.append((TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_deactivated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
 
           if ((TILDA__ZONEINFO_Factory.COLS.CREATED._Mask       & __Changes) != 0L) { S.append(TILDA__ZONEINFO_Factory.COLS.CREATED._Insert      );
-             V.append((TILDA__ZONEINFO_Factory.COLS.CREATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true ? tilda.data._Tilda.TILDA__1_0._COMMACURRENTTIMESTAMP : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+             V.append((TILDA__ZONEINFO_Factory.COLS.CREATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          else { S.append(TILDA__ZONEINFO_Factory.COLS.CREATED._Insert); V.append(tilda.data._Tilda.TILDA__1_0._COMMACURRENTTIMESTAMP); }
+          else { S.append(TILDA__ZONEINFO_Factory.COLS.CREATED._Insert); V.append(C.getCommaCurrentTimestamp()); }
           if ((TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask   & __Changes) != 0L) { S.append(TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Insert  );
-             V.append((TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? tilda.data._Tilda.TILDA__1_0._COMMACURRENTTIMESTAMP : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+             V.append((TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          else { S.append(TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Insert); V.append(tilda.data._Tilda.TILDA__1_0._COMMACURRENTTIMESTAMP); }
+          else { S.append(TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Insert); V.append(C.getCommaCurrentTimestamp()); }
           if ((TILDA__ZONEINFO_Factory.COLS.DELETED._Mask       & __Changes) != 0L) { S.append(TILDA__ZONEINFO_Factory.COLS.DELETED._Insert      );
-             V.append((TILDA__ZONEINFO_Factory.COLS.DELETED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true ? tilda.data._Tilda.TILDA__1_0._COMMACURRENTTIMESTAMP : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+             V.append((TILDA__ZONEINFO_Factory.COLS.DELETED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
 
           S.setCharAt(27, '(');
@@ -1511,7 +1511,7 @@ This is the hasChanged for:<BR>
           if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask & __Changes) != 0L)
            {
              if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_deactivated) == true)
-              S.append(TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Insert).append(tilda.data._Tilda.TILDA__1_0._EQUALCURRENTTIMESTAMP);
+              S.append(TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Insert).append(C.getEqualCurrentTimestamp());
              else
               S.append(TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Update);
            }
@@ -1519,7 +1519,7 @@ This is the hasChanged for:<BR>
           if ((TILDA__ZONEINFO_Factory.COLS.CREATED._Mask & __Changes) != 0L)
            {
              if ((TILDA__ZONEINFO_Factory.COLS.CREATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true)
-              S.append(TILDA__ZONEINFO_Factory.COLS.CREATED._Insert).append(tilda.data._Tilda.TILDA__1_0._EQUALCURRENTTIMESTAMP);
+              S.append(TILDA__ZONEINFO_Factory.COLS.CREATED._Insert).append(C.getEqualCurrentTimestamp());
              else
               S.append(TILDA__ZONEINFO_Factory.COLS.CREATED._Update);
            }
@@ -1527,20 +1527,20 @@ This is the hasChanged for:<BR>
           if ((TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask & __Changes) != 0L)
            {
              if ((TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true)
-              S.append(TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Insert).append(tilda.data._Tilda.TILDA__1_0._EQUALCURRENTTIMESTAMP);
+              S.append(TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Insert).append(C.getEqualCurrentTimestamp());
              else
               S.append(TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Update);
            }
           else 
            {
-             S.append(TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Insert).append(tilda.data._Tilda.TILDA__1_0._EQUALCURRENTTIMESTAMP);
+             S.append(TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Insert).append(C.getEqualCurrentTimestamp());
              setLastUpdatedNow();
            }
 
           if ((TILDA__ZONEINFO_Factory.COLS.DELETED._Mask & __Changes) != 0L)
            {
              if ((TILDA__ZONEINFO_Factory.COLS.DELETED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true)
-              S.append(TILDA__ZONEINFO_Factory.COLS.DELETED._Insert).append(tilda.data._Tilda.TILDA__1_0._EQUALCURRENTTIMESTAMP);
+              S.append(TILDA__ZONEINFO_Factory.COLS.DELETED._Insert).append(C.getEqualCurrentTimestamp());
              else
               S.append(TILDA__ZONEINFO_Factory.COLS.DELETED._Update);
            }

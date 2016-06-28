@@ -217,7 +217,7 @@ public class Helper
       throws Error
       {
         if (V._Value.equalsIgnoreCase("NOW") == true)
-          return getSupportClassFullName(C._ParentObject.getSchema()) + "._COMMACURRENTTIMESTAMP";
+          return "C.getCommaCurrentTimestamp()";
         else if (V._Value.equalsIgnoreCase("UNDEFINED") == true)
           return getSupportClassFullName(C._ParentObject.getSchema()) + "._COMMAQUESTION";
 
@@ -229,7 +229,7 @@ public class Helper
       throws Error
       {
         if (V._Value.equalsIgnoreCase("NOW") == true)
-          return getSupportClassFullName(C._ParentObject.getSchema()) + "._EQUALCURRENTTIMESTAMP";
+          return "C.getEqualCurrentTimestamp()";
         else if (V._Value.equalsIgnoreCase("UNDEFINED") == true)
           return getSupportClassFullName(C._ParentObject.getSchema()) + "._EQUALQUESTION";
 

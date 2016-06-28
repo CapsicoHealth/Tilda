@@ -10,111 +10,23 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.db.Connection;
 import tilda.enums.ColumnType;
+import tilda.utils.pairs.StringStringPair;
 
 public class ColInfo
   {
     protected static final Logger LOG                 = LogManager.getLogger(ColInfo.class.getName());
     
-    protected ColInfo(ResultSet RS)
+    protected ColInfo(Connection C, ResultSet RS)
       throws Exception
       {
-//        ResultSetMetaData RSMD = RS.getMetaData();
-//        int ColumnCount = RSMD.getColumnCount();
-//        for (int i = 1; i <= ColumnCount; ++i)
-//          {
-//            LOG.debug("Name: "+RSMD.getColumnName(i)+" Type: "+RSMD.getColumnType(i)+"; TypeName "+RSMD.getColumnTypeName(i));
-//          }
-        
         _Name = RS.getString("COLUMN_NAME").toLowerCase();
-//        if (_Name.equalsIgnoreCase("clinicalRules") == true)
-//          {
-//            for (int xxx = 1; xxx <= RS.getMetaData().getColumnCount(); ++xxx)
-//              {
-//                LOG.debug("Column "+xxx+": "+RS.getMetaData().getColumnName(xxx));
-//                Object O = RS.getObject(xxx);
-//                LOG.debug("     --> "+(O==null?"NULL":O.toString()));
-//              }
-//          }
         _Nullable = RS.getInt("NULLABLE");
         _Size = RS.getInt("COLUMN_SIZE");
         _TypeName = RS.getString("TYPE_NAME");
         _Type = RS.getInt("DATA_TYPE");
-
-//        LOG.debug("");
-//        LOG.debug("COLUMN_NAME: "+RS.getString("COLUMN_NAME"));
-//        LOG.debug("NULLABLE: "+RS.getString("NULLABLE"));
-//        LOG.debug("COLUMN_SIZE: "+RS.getString("COLUMN_SIZE"));
-//        LOG.debug("TYPE_NAME: "+RS.getString("TYPE_NAME"));
-//        LOG.debug("DATA_TYPE: "+RS.getString("DATA_TYPE"));
-//        LOG.debug("COLUMN_DEF: "+RS.getString("COLUMN_DEF"));
-//        LOG.debug("SQL_DATA_TYPE: "+RS.getString("SQL_DATA_TYPE"));
-//        LOG.debug("SQL_DATETIME_SUB: "+RS.getString("SQL_DATETIME_SUB"));
-        
-        switch (_Type)
-          {
-            /*@formatter:off*/
-            case java.sql.Types.ARRAY        : _TypeSql = "ARRAY"        ;
-               switch (_TypeName)
-                {
-                  case "_int4"  : _TildaType = ColumnType.INTEGER; break;
-                  case "_int8"  : _TildaType = ColumnType.LONG; break;
-                  case "_float4": _TildaType = ColumnType.FLOAT; break;
-                  case "_float8": _TildaType = ColumnType.DOUBLE; break;
-                  case "_bpchar": _TildaType = ColumnType.CHAR; break;
-                  case "_text"  : _TildaType = ColumnType.STRING; break;
-                  case "_bool"  : _TildaType = ColumnType.BOOLEAN; break;
-                  default: throw new Exception("Cannot map SQL TypeName "+_TypeName+" for array column.");
-                }
-               break;
-            case java.sql.Types.BIGINT       : _TypeSql = "BIGINT"       ; _TildaType = ColumnType.LONG; break;
-            case java.sql.Types.BINARY       : _TypeSql = "BINARY"       ; _TildaType = ColumnType.BINARY; break;
-            case java.sql.Types.BIT          : _TypeSql = "BIT"          ; _TildaType = ColumnType.BOOLEAN; break;
-            case java.sql.Types.BLOB         : _TypeSql = "BLOB"         ; _TildaType = ColumnType.BINARY; break;
-            case java.sql.Types.BOOLEAN      : _TypeSql = "BOOLEAN"      ; _TildaType = ColumnType.BOOLEAN; break;
-            case java.sql.Types.CHAR         : _TypeSql = "CHAR"         ; _TildaType = _Size==1 ? ColumnType.CHAR : ColumnType.STRING; break;
-            case java.sql.Types.CLOB         : _TypeSql = "CLOB"         ; _TildaType = ColumnType.STRING; break;
-            case java.sql.Types.DATALINK     : _TypeSql = "DATALINK"     ; _TildaType = null; break;
-            case java.sql.Types.DATE         : _TypeSql = "DATE"         ; _TildaType = null; break;
-            case java.sql.Types.DECIMAL      : _TypeSql = "DECIMAL"      ; _TildaType = ColumnType.DOUBLE; break;
-            case java.sql.Types.DISTINCT     : _TypeSql = "DISTINCT"     ; _TildaType = null; break;
-            case java.sql.Types.DOUBLE       : _TypeSql = "DOUBLE"       ; _TildaType = ColumnType.DOUBLE; break;
-            case java.sql.Types.FLOAT        : _TypeSql = "FLOAT"        ; _TildaType = ColumnType.FLOAT; break;
-            case java.sql.Types.INTEGER      : _TypeSql = "INTEGER"      ; _TildaType = ColumnType.INTEGER; break;
-            case java.sql.Types.JAVA_OBJECT  : _TypeSql = "JAVA_OBJECT"  ; _TildaType = null; break;
-            case java.sql.Types.LONGNVARCHAR : _TypeSql = "LONGNVARCHAR" ; _TildaType = ColumnType.STRING; break;
-            case java.sql.Types.LONGVARBINARY: _TypeSql = "LONGVARBINARY"; _TildaType = ColumnType.BINARY; break;
-            case java.sql.Types.LONGVARCHAR  : _TypeSql = "LONGVARCHAR"  ; _TildaType = ColumnType.STRING; break;
-            case java.sql.Types.NCHAR        : _TypeSql = "NCHAR"        ; _TildaType = _Size==1 ? ColumnType.CHAR : ColumnType.STRING; break;
-            case java.sql.Types.NCLOB        : _TypeSql = "NCLOB"        ; _TildaType = ColumnType.STRING; break;
-            case java.sql.Types.NULL         : _TypeSql = "NULL"         ; _TildaType = null; break;
-            case java.sql.Types.NUMERIC      : _TypeSql = "NUMERIC"      ; _TildaType = ColumnType.DOUBLE; break;
-            case java.sql.Types.NVARCHAR     : _TypeSql = "NVARCHAR"     ; _TildaType = ColumnType.STRING; break;
-            case java.sql.Types.OTHER        :
-              if (_TypeName != null && _TypeName.equalsIgnoreCase("jsonb") == true)
-                {
-                  _TypeSql = "JSONB";
-                  _TildaType = ColumnType.JSON;
-                }
-              else
-                {
-                  _TypeSql = "OTHER";
-                  _TildaType = null;
-                }
-              break;
-            case java.sql.Types.REAL         : _TypeSql = "REAL"         ; _TildaType = ColumnType.FLOAT; break;
-            case java.sql.Types.REF          : _TypeSql = "REF"          ; _TildaType = null; break;
-            case java.sql.Types.ROWID        : _TypeSql = "ROWID"        ; _TildaType = null; break;
-            case java.sql.Types.SMALLINT     : _TypeSql = "SMALLINT"     ; _TildaType = null; break;
-            case java.sql.Types.SQLXML       : _TypeSql = "SQLXML"       ; _TildaType = null; break;
-            case java.sql.Types.STRUCT       : _TypeSql = "STRUCT"       ; _TildaType = null; break;
-            case java.sql.Types.TIME         : _TypeSql = "TIME"         ; _TildaType = null; break;
-            case java.sql.Types.TIMESTAMP    : _TypeSql = "TIMESTAMP"    ; _TildaType = ColumnType.DATETIME; break;
-            case java.sql.Types.TINYINT      : _TypeSql = "TINYINT"      ; _TildaType = null; break;
-            case java.sql.Types.VARBINARY    : _TypeSql = "VARBINARY"    ; _TildaType = ColumnType.BINARY; break;
-            case java.sql.Types.VARCHAR      : _TypeSql = "VARCHAR"      ; _TildaType = ColumnType.STRING; break;
-            default: throw new Exception("Cannot map SQL Type "+_Type+".");
-            /*@formatter:on*/
-          }
+        StringStringPair SSP = C.getTypeMapping(_Type, _Name, _Size, _TypeName);
+        _TypeSql = SSP._N;
+        _TildaType = ColumnType.parse(SSP._V);
       }
 
     public final String _Name;
@@ -143,7 +55,7 @@ public class ColInfo
        ResultSet RS = meta.getColumns(null, SchemaName.toLowerCase(), TableName.toLowerCase(), null);
        while (RS.next() != false)
         {
-          ColInfo CI = new ColInfo(RS);
+          ColInfo CI = new ColInfo(C, RS);
           M.put(CI._Name, CI);
         }
        return M;

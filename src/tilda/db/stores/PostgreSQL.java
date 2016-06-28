@@ -40,6 +40,7 @@ import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.utils.TextUtil;
+import tilda.utils.pairs.StringStringPair;
 
 public class PostgreSQL implements DBType
   {
@@ -51,6 +52,10 @@ public class PostgreSQL implements DBType
         return SQLState.equals("23505");
       }
 
+    /*
+        Out.println("   protected static final String _COMMACURRENTTIMESTAMP    =TextUtil.Identity(\"" + G.getSql().getCommaCurentTimestamp() + "\");");
+        Out.println("   protected static final String _EQUALCURRENTTIMESTAMP    =TextUtil.Identity(\"" + G.getSql().getEqualCurentTimestamp() + "\");");
+ */
 
     @Override
     public String getCurrentTimestampStr()
@@ -91,6 +96,13 @@ public class PostgreSQL implements DBType
       {
         return true;
       }
+    
+    @Override
+    public boolean supportsArrays()
+      {
+        return true;
+      }
+    
 
     @Override
     public String getSelectLimitClause(int Start, int Size)
@@ -390,6 +402,80 @@ public class PostgreSQL implements DBType
     throws SQLException
       {
         return Con.createArrayOf(_SQL.getColumnTypeRaw(Type, -1, true), A);
+      }
+
+    @Override
+    public StringStringPair getTypeMapping(int Type, String Name, int Size, String TypeName)
+    throws Exception
+      {
+        ColumnType TildaType = null;
+        String TypeSql = null;
+        switch (Type)
+          {
+            /*@formatter:off*/
+            case java.sql.Types.ARRAY        : TypeSql = "ARRAY"        ;
+               switch (TypeName)
+                {
+                  case "_int4"  : TildaType = ColumnType.INTEGER; break;
+                  case "_int8"  : TildaType = ColumnType.LONG; break;
+                  case "_float4": TildaType = ColumnType.FLOAT; break;
+                  case "_float8": TildaType = ColumnType.DOUBLE; break;
+                  case "_bpchar": TildaType = ColumnType.CHAR; break;
+                  case "_text"  : TildaType = ColumnType.STRING; break;
+                  case "_bool"  : TildaType = ColumnType.BOOLEAN; break;
+                  default: throw new Exception("Cannot map SQL TypeName "+TypeName+" for array column.");
+                }
+               break;
+            case java.sql.Types.BIGINT       : TypeSql = "BIGINT"       ; TildaType = ColumnType.LONG; break;
+            case java.sql.Types.BINARY       : TypeSql = "BINARY"       ; TildaType = ColumnType.BINARY; break;
+            case java.sql.Types.BIT          : TypeSql = "BIT"          ; TildaType = ColumnType.BOOLEAN; break;
+            case java.sql.Types.BLOB         : TypeSql = "BLOB"         ; TildaType = ColumnType.BINARY; break;
+            case java.sql.Types.BOOLEAN      : TypeSql = "BOOLEAN"      ; TildaType = ColumnType.BOOLEAN; break;
+            case java.sql.Types.CHAR         : TypeSql = "CHAR"         ; TildaType = Size==1 ? ColumnType.CHAR : ColumnType.STRING; break;
+            case java.sql.Types.CLOB         : TypeSql = "CLOB"         ; TildaType = ColumnType.STRING; break;
+            case java.sql.Types.DATALINK     : TypeSql = "DATALINK"     ; TildaType = null; break;
+            case java.sql.Types.DATE         : TypeSql = "DATE"         ; TildaType = null; break;
+            case java.sql.Types.DECIMAL      : TypeSql = "DECIMAL"      ; TildaType = ColumnType.DOUBLE; break;
+            case java.sql.Types.DISTINCT     : TypeSql = "DISTINCT"     ; TildaType = null; break;
+            case java.sql.Types.DOUBLE       : TypeSql = "DOUBLE"       ; TildaType = ColumnType.DOUBLE; break;
+            case java.sql.Types.FLOAT        : TypeSql = "FLOAT"        ; TildaType = ColumnType.FLOAT; break;
+            case java.sql.Types.INTEGER      : TypeSql = "INTEGER"      ; TildaType = ColumnType.INTEGER; break;
+            case java.sql.Types.JAVA_OBJECT  : TypeSql = "JAVA_OBJECT"  ; TildaType = null; break;
+            case java.sql.Types.LONGNVARCHAR : TypeSql = "LONGNVARCHAR" ; TildaType = ColumnType.STRING; break;
+            case java.sql.Types.LONGVARBINARY: TypeSql = "LONGVARBINARY"; TildaType = ColumnType.BINARY; break;
+            case java.sql.Types.LONGVARCHAR  : TypeSql = "LONGVARCHAR"  ; TildaType = ColumnType.STRING; break;
+            case java.sql.Types.NCHAR        : TypeSql = "NCHAR"        ; TildaType = Size==1 ? ColumnType.CHAR : ColumnType.STRING; break;
+            case java.sql.Types.NCLOB        : TypeSql = "NCLOB"        ; TildaType = ColumnType.STRING; break;
+            case java.sql.Types.NULL         : TypeSql = "NULL"         ; TildaType = null; break;
+            case java.sql.Types.NUMERIC      : TypeSql = "NUMERIC"      ; TildaType = ColumnType.DOUBLE; break;
+            case java.sql.Types.NVARCHAR     : TypeSql = "NVARCHAR"     ; TildaType = ColumnType.STRING; break;
+            case java.sql.Types.OTHER        :
+              if (TypeName != null && TypeName.equalsIgnoreCase("jsonb") == true)
+                {
+                  TypeSql = "JSONB";
+                  TildaType = ColumnType.JSON;
+                }
+              else
+                {
+                  TypeSql = "OTHER";
+                  TildaType = null;
+                }
+              break;
+            case java.sql.Types.REAL         : TypeSql = "REAL"         ; TildaType = ColumnType.FLOAT; break;
+            case java.sql.Types.REF          : TypeSql = "REF"          ; TildaType = null; break;
+            case java.sql.Types.ROWID        : TypeSql = "ROWID"        ; TildaType = null; break;
+            case java.sql.Types.SMALLINT     : TypeSql = "SMALLINT"     ; TildaType = null; break;
+            case java.sql.Types.SQLXML       : TypeSql = "SQLXML"       ; TildaType = null; break;
+            case java.sql.Types.STRUCT       : TypeSql = "STRUCT"       ; TildaType = null; break;
+            case java.sql.Types.TIME         : TypeSql = "TIME"         ; TildaType = null; break;
+            case java.sql.Types.TIMESTAMP    : TypeSql = "TIMESTAMP"    ; TildaType = ColumnType.DATETIME; break;
+            case java.sql.Types.TINYINT      : TypeSql = "TINYINT"      ; TildaType = null; break;
+            case java.sql.Types.VARBINARY    : TypeSql = "VARBINARY"    ; TildaType = ColumnType.BINARY; break;
+            case java.sql.Types.VARCHAR      : TypeSql = "VARCHAR"      ; TildaType = ColumnType.STRING; break;
+            default: throw new Exception("Cannot map SQL Type "+Type+" for column "+Name+"("+TypeName+").");
+            /*@formatter:on*/
+          }
+        return new StringStringPair(TypeSql, TildaType.name());
       }
 
   }

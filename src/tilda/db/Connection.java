@@ -45,6 +45,7 @@ import tilda.parsing.parts.View;
 import tilda.performance.PerfTracker;
 import tilda.utils.AnsiUtil;
 import tilda.utils.SystemValues;
+import tilda.utils.pairs.StringStringPair;
 
 
 public final class Connection
@@ -286,6 +287,7 @@ public final class Connection
         return JDBCHelper.ExecuteSelect(_C, TableName, Query, RP, Start, Offsetted, Size, Limited, CountAll);
       }
 
+    
     public int ExecuteUpdate(String TableName, String Query)
     throws Exception
       {
@@ -296,6 +298,13 @@ public final class Connection
         // }
         return JDBCHelper.ExecuteUpdate(_C, TableName, Query);
       }
+    
+    public void ExecuteDDL(String TableName, String Query)
+    throws Exception
+      {
+        JDBCHelper.ExecuteDDL(_C, TableName, Query);
+      }
+    
 
     public Array createArrayOf(String TypeName, java.lang.Object[] A)
     throws SQLException
@@ -336,6 +345,8 @@ public final class Connection
     public void setSavepoint()
     throws SQLException
       {
+        if (_DB.needsSavepoint() == false)
+         return;
         long T0 = System.nanoTime();
         _SavePoints.add(_C.setSavepoint());
         PerfTracker.add(TransactionType.SAVEPOINT_SET, System.nanoTime() - T0);
@@ -444,6 +455,27 @@ public final class Connection
     public boolean addHelperFunctions() throws Exception
       {
         return _DB.addHelperFunctions(this);
+      }
+
+    public StringStringPair getTypeMapping(int Type, String Name, int Size, String TypeName)
+    throws Exception
+      {
+        return _DB.getTypeMapping(Type, Name, Size, TypeName);
+      }
+
+    public boolean supportsArrays()
+      {
+        return _DB.supportsArrays();
+      }
+
+    public java.lang.Object getEqualCurrentTimestamp()
+      {
+        return "="+_DB.getCurrentTimestampStr();
+      }
+
+    public java.lang.Object getCommaCurrentTimestamp()
+      {
+        return ", "+_DB.getCurrentTimestampStr();
       }
   }
 

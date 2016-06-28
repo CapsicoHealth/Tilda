@@ -145,6 +145,28 @@ public class JDBCHelper
             JDBCHelper.CloseStatement(S);
           }
       }
+    
+    public static void ExecuteDDL(Connection C, String TableName, String Query)
+    throws Exception
+      {
+        LOG.debug("TILDA(" + AnsiUtil.NEGATIVE + TableName + AnsiUtil.NEGATIVE_OFF + "): " + Query);
+        Statement S = null;
+        try
+          {
+            long T0 = System.nanoTime();
+            QueryDetails.setLastQuery(TableName, Query);
+            S = C.createStatement();
+            if (S.execute(Query) == false)
+             while (S.getMoreResults() == true || S.getUpdateCount() != -1)
+               S.getResultSet();
+            PerfTracker.add(TableName, StatementType.UPDATE, System.nanoTime() - T0, 1);
+          }
+        finally
+          {
+            JDBCHelper.CloseStatement(S);
+          }
+      }
+    
 
     public static int ExecuteInsert(Connection C, String TableName, String Query)
     throws Exception

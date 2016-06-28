@@ -68,8 +68,6 @@ public class TildaSupport implements CodeGenTildaSupport
       {
         Out.println("   protected static final String _COMMAQUESTION            =TextUtil.Identity(\",?\");");
         Out.println("   protected static final String _EQUALQUESTION            =TextUtil.Identity(\"=?\");");
-        Out.println("   protected static final String _COMMACURRENTTIMESTAMP    =TextUtil.Identity(\"" + G.getSql().getCommaCurentTimestamp() + "\");");
-        Out.println("   protected static final String _EQUALCURRENTTIMESTAMP    =TextUtil.Identity(\"" + G.getSql().getEqualCurentTimestamp() + "\");");
         Out.println();
         Out.println("   protected static boolean HandleCatch(Connection C, java.sql.SQLException E, String OperationDebugStr) throws java.sql.SQLException");
         Out.println("     {");

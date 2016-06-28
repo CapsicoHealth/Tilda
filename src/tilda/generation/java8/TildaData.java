@@ -771,7 +771,7 @@ public class TildaData implements CodeGenTildaData
                 {
                   case DATETIME:
                     Out.println();
-                    Out.println("             V.append((" + Mask + " & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == true ? "+Helper.getSupportClassFullName(O._ParentSchema)+"._COMMACURRENTTIMESTAMP : "+Helper.getSupportClassFullName(O._ParentSchema)+"._COMMAQUESTION);");
+                    Out.println("             V.append((" + Mask + " & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == true ? C.getCommaCurrentTimestamp() : "+Helper.getSupportClassFullName(O._ParentSchema)+"._COMMAQUESTION);");
                     Out.println("           }");
                     if (C._DefaultCreateValue != null)
                       {
@@ -820,7 +820,7 @@ public class TildaData implements CodeGenTildaData
                     Out.println("          if ((" + Mask + " & __Changes) != 0L)");
                     Out.println("           {");
                     Out.println("             if ((" + Mask + " & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == true)");
-                    Out.println("              S.append(" + Helper.getRuntimeInsertStr(C) + ").append("+Helper.getSupportClassFullName(O._ParentSchema)+"._EQUALCURRENTTIMESTAMP);");
+                    Out.println("              S.append(" + Helper.getRuntimeInsertStr(C) + ").append(C.getEqualCurrentTimestamp());");
                     Out.println("             else");
                     Out.println("              S.append(" + Helper.getRuntimeUpdateStr(C) + ");");
                     Out.println("           }");

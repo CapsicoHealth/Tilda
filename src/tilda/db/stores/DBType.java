@@ -29,6 +29,7 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
+import tilda.utils.pairs.StringStringPair;
 
 public interface DBType
   {
@@ -37,6 +38,7 @@ public interface DBType
     public String  getCurrentTimestampStr();
     public boolean isLockOrConnectionError(SQLException t);
     public boolean needsSavepoint();
+    public boolean supportsArrays();
     public boolean supportsSelectLimit();
     public boolean supportsSelectOffset();
     public String  getSelectLimitClause(int Start, int Size);
@@ -65,4 +67,5 @@ public interface DBType
 
     public boolean alterTableAlterColumnType(Connection Con, ColumnType fromType, Column Col, ZoneInfo_Data defaultZI) throws Exception;
     public Array createArrayOf(Connection C, ColumnType Type, java.lang.Object[] A) throws SQLException;
+    public StringStringPair getTypeMapping(int type, String name, int size, String typeName) throws Exception;
   }
