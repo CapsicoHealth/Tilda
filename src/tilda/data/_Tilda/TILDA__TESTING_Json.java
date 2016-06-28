@@ -40,7 +40,7 @@ public class TILDA__TESTING_Json
    @SerializedName("a2b"        ) public List<Character    >  _a2b        ;
    @SerializedName("a2c"        ) public Set <Character    >  _a2c        ;
    @SerializedName("a3"         ) public Boolean        _a3         ;
-   @SerializedName("a3b"        ) public Integer        _a3b        ;
+   @SerializedName("a3b"        ) public List<Boolean      >  _a3b        ;
    @SerializedName("a4"         ) public Double         _a4         ;
    @SerializedName("a4b"        ) public List<Double       >  _a4b        ;
    @SerializedName("a5"         ) public Float          _a5         ;
@@ -209,8 +209,8 @@ public class TILDA__TESTING_Json
       if (Obj.isNullA3() == false)
         JSONUtil.Print(Out, "a3", false, Obj.getA3());
 
-      if (Obj.isNullA3b() == false)
-        JSONUtil.Print(Out, "a3b", false, Obj.getA3b());
+      if (Obj.isNullA3b() == false && Obj.getA3b() != null)
+        JSONUtil.Print(Out, "a3b", false, Obj._a3b.toArray(new Boolean      [Obj._a3b.size()]));
 
       if (Obj.isNullA4() == false)
         JSONUtil.Print(Out, "a4", false, Obj.getA4());

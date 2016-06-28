@@ -73,7 +73,7 @@ public class TILDA__TESTING_Factory
      public static Type_CharCollectionNull     A2B        = new Type_CharCollectionNull    ("TILDA.TESTING", "a2b"        , 13, "The blah");
      public static Type_CharCollectionNull     A2C        = new Type_CharCollectionNull    ("TILDA.TESTING", "a2c"        , 14, "The blah");
      public static Type_BooleanPrimitiveNull    A3         = new Type_BooleanPrimitiveNull   ("TILDA.TESTING", "a3"         , 15, "The blah");
-     public static Type_BitfieldPrimitiveNull   A3B        = new Type_BitfieldPrimitiveNull  ("TILDA.TESTING", "a3b"        , 16, "The blah");
+     public static Type_BooleanCollectionNull  A3B        = new Type_BooleanCollectionNull ("TILDA.TESTING", "a3b"        , 16, "The blah");
      public static Type_DoublePrimitiveNull     A4         = new Type_DoublePrimitiveNull    ("TILDA.TESTING", "a4"         , 17, "The blah");
      public static Type_DoubleCollectionNull   A4B        = new Type_DoubleCollectionNull  ("TILDA.TESTING", "a4b"        , 18, "The blah");
      public static Type_FloatPrimitiveNull      A5         = new Type_FloatPrimitiveNull     ("TILDA.TESTING", "a5"         , 19, "The blah");
@@ -272,7 +272,7 @@ public class TILDA__TESTING_Factory
        List<Character    >  _a2b         = CollectionUtil.toList(ParseUtil.parseCharacter    ("a2b"        , false, Values.get("a2b"        ), ",", Errors));
        Set <Character    >  _a2c         = CollectionUtil.toSet (ParseUtil.parseCharacter    ("a2c"        , false, Values.get("a2c"        ), ",", Errors));
        Boolean              _a3          =                       ParseUtil.parseBoolean      ("a3"         , false, Values.get("a3"         ), Errors );
-       Integer              _a3b         =                       ParseUtil.parseInteger      ("a3b"        , false, Values.get("a3b"        ), Errors );
+       List<Boolean      >  _a3b         = CollectionUtil.toList(ParseUtil.parseBoolean      ("a3b"        , false, Values.get("a3b"        ), ",", Errors));
        Double               _a4          =                       ParseUtil.parseDouble       ("a4"         , false, Values.get("a4"         ), Errors );
        List<Double       >  _a4b         = CollectionUtil.toList(ParseUtil.parseDouble       ("a4b"        , false, Values.get("a4b"        ), ",", Errors));
        Float                _a5          =                       ParseUtil.parseFloat        ("a5"         , false, Values.get("a5"         ), Errors );

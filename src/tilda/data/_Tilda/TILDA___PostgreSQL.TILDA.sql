@@ -107,7 +107,7 @@ create table if not exists TILDA.TESTING -- blah blah
   , "a2b"          character[]                    -- The blah
   , "a2c"          character[]                    -- The blah
   , "a3"           boolean                        -- The blah
-  , "a3b"          INTEGER                        -- The blah
+  , "a3b"          boolean[]                      -- The blah
   , "a4"           double precision               -- The blah
   , "a4b"          double precision[]             -- The blah
   , "a5"           real                           -- The blah
