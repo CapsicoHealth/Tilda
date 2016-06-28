@@ -42,6 +42,14 @@ public class ErrorList
             _ColumnTo = ctx.getStop().getCharPositionInLine();
           }
 
+        public Error(String Msg, int Line, int ColumnFrom, int ColumnTo)
+          {
+            _Msg = Msg;
+            _Line = Line;
+            _ColumnFrom = ColumnFrom;
+            _ColumnTo = ColumnTo;
+          }
+
         public final String _Msg;
         public final int    _Line;
         public final int    _ColumnFrom;
@@ -49,19 +57,20 @@ public class ErrorList
 
         public String toString()
           {
-            return _Msg + " (line " + _Line + ":" + _ColumnFrom + "-"+_ColumnTo+")";
+            return _Msg + " (line " + _Line + ":" + _ColumnFrom + "-" + _ColumnTo + ")";
           }
-        
-        public void toJSON(Writer Out) throws IOException
+
+        public void toJSON(Writer Out)
+        throws IOException
           {
             Out.append("{");
-            JSONUtil.Print(Out, "m", true , _Msg);
+            JSONUtil.Print(Out, "m", true, _Msg);
             JSONUtil.Print(Out, "l", false, _Line);
             JSONUtil.Print(Out, "c1", false, _ColumnFrom);
             JSONUtil.Print(Out, "c2", false, _ColumnTo);
             Out.append("}");
           }
-        
+
       }
 
     protected List<Error> _Errors = new ArrayList<Error>();
@@ -72,6 +81,14 @@ public class ErrorList
         _Errors.add(err);
         LOG.error(err.toString());
       }
+
+    public void addError(String Msg, int Line, int ColumnFrom, int ColumnTo)
+      {
+        Error err = new Error(Msg, Line, ColumnFrom, ColumnTo);
+        _Errors.add(err);
+        LOG.error(err.toString());
+      }
+
 
     public Iterator<Error> getErrors()
       {
@@ -89,5 +106,27 @@ public class ErrorList
       {
         addErrors(Errors.getErrors());
       }
+
+    public void toJSON(Writer Out)
+    throws IOException
+      {
+        Out.append("[");
+        boolean First = true;
+        for (Error err : _Errors)
+          {
+            if (First == true)
+              First = false;
+            else
+              Out.append(", ");
+            err.toJSON(Out);
+          }
+        Out.append("]");
+      }
+
+    public boolean isEmpty()
+      {
+        return _Errors.isEmpty();
+      }
+
 
   }
