@@ -306,4 +306,17 @@ public class MSSQL implements DBType
           }
         return new StringStringPair(TypeSql, TildaType.name());
       }
+    
+    @Override
+    public void getFullColumnVar(StringBuilder Str, String SchemaName, String TableName, String ColumnName)
+      {
+        Str.append("[").append(SchemaName).append("].[").append(TableName).append("].[").append(ColumnName).append("]");
+      }
+
+    @Override
+    public void getFullTableVar(StringBuilder Str, String SchemaName, String TableName)
+      {
+        Str.append("[").append(SchemaName).append("].[").append(TableName).append("]");
+      }
+    
   }

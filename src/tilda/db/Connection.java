@@ -477,6 +477,16 @@ public final class Connection
       {
         return ", "+_DB.getCurrentTimestampStr();
       }
+
+    public void getFullColumnVar(StringBuilder Str, String SchemaName, String TableName, String ColumnName)
+      {
+        _DB.getFullColumnVar(Str, SchemaName, TableName, ColumnName);
+      }
+
+    public void getFullTableVar(StringBuilder Str, String SchemaName, String TableName)
+      {
+        _DB.getFullTableVar(Str, SchemaName, TableName);
+      }
   }
 
 

@@ -116,7 +116,15 @@ public class TILDA__KEY_Factory
      {
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
-       S.append("select TILDA.KEY.\"refnum\", TILDA.KEY.\"name\", TILDA.KEY.\"max\", TILDA.KEY.\"count\", TILDA.KEY.\"created\", TILDA.KEY.\"lastUpdated\", TILDA.KEY.\"deleted\" from TILDA.KEY");
+       S.append("select ");
+       S.append(" "); C.getFullColumnVar(S, "TILDA", "KEY", "refnum");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "KEY", "name");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "KEY", "max");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "KEY", "count");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "KEY", "created");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "KEY", "lastUpdated");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "KEY", "deleted");
+       S.append(" from "); C.getFullTableVar(S, "TILDA", "KEY");
        switch (LookupId)
         {
           case -7:

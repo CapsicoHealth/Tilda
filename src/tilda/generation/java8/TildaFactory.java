@@ -189,14 +189,7 @@ public class TildaFactory implements CodeGenTildaFactory
 
         Out.println("       long T0 = System.nanoTime();");
         Out.println("       StringBuilder S = new StringBuilder(1024);");
-        StringBuilder Str = new StringBuilder();
-        Str.append("selec");
-        for (Column C : O._Columns)
-          if (C != null && C._Mode != ColumnMode.CALCULATED)
-            Str.append(", ").append(G.getSql().getFullColumnVar(C));
-        Str.setCharAt("selec".length(), 't');
-        Str.append(" from ").append(G.getSql().getFullTableVar(O));
-        Out.println("       S.append(" + TextUtil.EscapeDoubleQuoteWithSlash(Str.toString()) + ");");
+        Helper.SelectFrom(Out, O);
         Helper.SwitchLookupIdWhereClauses(Out, G, O, "       ", false);
         Out.println();
         Out.println("       ");

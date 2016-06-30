@@ -86,7 +86,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jun 28 2016, 00:37:12EDT
+ @generated Jun 29 2016, 22:09:45EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__ZONEINFO implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -1701,7 +1701,16 @@ This is the hasChanged for:<BR>
           return true;
         }
        StringBuilder S = new StringBuilder(1024);
-       S.append("select TILDA.ZONEINFO.\"id\", TILDA.ZONEINFO.\"value\", TILDA.ZONEINFO.\"label\", TILDA.ZONEINFO.\"deactivatedTZ\", TILDA.ZONEINFO.\"deactivated\", TILDA.ZONEINFO.\"created\", TILDA.ZONEINFO.\"lastUpdated\", TILDA.ZONEINFO.\"deleted\" from TILDA.ZONEINFO");
+       S.append("select ");
+       S.append(" "); C.getFullColumnVar(S, "TILDA", "ZONEINFO", "id");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "ZONEINFO", "value");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "ZONEINFO", "label");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "ZONEINFO", "deactivatedTZ");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "ZONEINFO", "deactivated");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "ZONEINFO", "created");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "ZONEINFO", "lastUpdated");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "ZONEINFO", "deleted");
+       S.append(" from "); C.getFullTableVar(S, "TILDA", "ZONEINFO");
        switch (__LookupId)
         {
           case 0:

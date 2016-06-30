@@ -1010,14 +1010,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("          return true;");
         Out.println("        }");
         Out.println("       StringBuilder S = new StringBuilder(1024);");
-        StringBuilder Str = new StringBuilder();
-        Str.append("selec");
-        for (Column C : O._Columns)
-          if (C != null && C._Mode != ColumnMode.CALCULATED)
-            Str.append(", ").append(G.getSql().getFullColumnVar(C));
-        Str.setCharAt("selec".length(), 't');
-        Str.append(" from ").append(G.getSql().getFullTableVar(O));
-        Out.println("       S.append(" + TextUtil.EscapeDoubleQuoteWithSlash(Str.toString()) + ");");
+        Helper.SelectFrom(Out, O);
         Helper.SwitchLookupIdWhereClauses(Out, G, O, "       ", true);
         Out.println();
         Out.println("       String Q = S.toString();");
@@ -1112,7 +1105,7 @@ public class TildaData implements CodeGenTildaData
                    }
                   String ClassName = Helper.getFullAppFactoryClassName(C._Mapper._DestObjectObj);
                   String VarName = C.isCollection() == true ? "v" : "_"+C.getName();
-                  Str.setLength(0);
+                  StringBuilder Str = new StringBuilder();
                   for (int c = 0; c < C._Mapper._SrcColumnObjs.size()-1; ++c)
                     {
                       Column col = C._Mapper._SrcColumnObjs.get(c);
@@ -1178,7 +1171,7 @@ public class TildaData implements CodeGenTildaData
         Out.println();
         Out.println("   protected abstract boolean AfterRead(Connection C) throws Exception;");
       }
-    
+
     @Override
     public void genMethodToString(PrintWriter Out, GeneratorSession G, Object O)
       {

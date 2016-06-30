@@ -68,4 +68,6 @@ public interface DBType
     public boolean alterTableAlterColumnType(Connection Con, ColumnType fromType, Column Col, ZoneInfo_Data defaultZI) throws Exception;
     public Array createArrayOf(Connection C, ColumnType Type, java.lang.Object[] A) throws SQLException;
     public StringStringPair getTypeMapping(int type, String name, int size, String typeName) throws Exception;
+    public void getFullColumnVar(StringBuilder Str, String SchemaName, String TableName, String ColumnName);
+    public void getFullTableVar(StringBuilder Str, String SchemaName, String TableName);
   }

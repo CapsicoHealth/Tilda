@@ -122,7 +122,21 @@ public class TILDA__TRANSPERF_Factory
      {
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
-       S.append("select TILDA.TRANSPERF.\"schemaName\", TILDA.TRANSPERF.\"objectName\", TILDA.TRANSPERF.\"startPeriodTZ\", TILDA.TRANSPERF.\"startPeriod\", TILDA.TRANSPERF.\"endPeriodTZ\", TILDA.TRANSPERF.\"endPeriod\", TILDA.TRANSPERF.\"commitNano\", TILDA.TRANSPERF.\"commitCount\", TILDA.TRANSPERF.\"rollbackNano\", TILDA.TRANSPERF.\"rollbackCount\", TILDA.TRANSPERF.\"created\", TILDA.TRANSPERF.\"lastUpdated\", TILDA.TRANSPERF.\"deleted\" from TILDA.TRANSPERF");
+       S.append("select ");
+       S.append(" "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "schemaName");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "objectName");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "startPeriodTZ");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "startPeriod");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "endPeriodTZ");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "endPeriod");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "commitNano");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "commitCount");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "rollbackNano");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "rollbackCount");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "created");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "lastUpdated");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "deleted");
+       S.append(" from "); C.getFullTableVar(S, "TILDA", "TRANSPERF");
        switch (LookupId)
         {
           case -7:

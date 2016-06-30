@@ -110,7 +110,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jun 28 2016, 00:37:12EDT
+ @generated Jun 29 2016, 22:09:45EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTING implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject, tilda.interfaces.JSONable
@@ -5732,7 +5732,40 @@ This is the hasChanged for:<BR>
           return true;
         }
        StringBuilder S = new StringBuilder(1024);
-       S.append("select TILDA.TESTING.\"refnum\", TILDA.TESTING.\"refnum2\", TILDA.TESTING.\"name\", TILDA.TESTING.\"description\", TILDA.TESTING.\"desc2\", TILDA.TESTING.\"desc3\", TILDA.TESTING.\"desc4\", TILDA.TESTING.\"desc5\", TILDA.TESTING.\"desc6\", TILDA.TESTING.\"tops\", TILDA.TESTING.\"tops2\", TILDA.TESTING.\"a1\", TILDA.TESTING.\"a2\", TILDA.TESTING.\"a2b\", TILDA.TESTING.\"a2c\", TILDA.TESTING.\"a3\", TILDA.TESTING.\"a3b\", TILDA.TESTING.\"a4\", TILDA.TESTING.\"a4b\", TILDA.TESTING.\"a5\", TILDA.TESTING.\"a5b\", TILDA.TESTING.\"a6\", TILDA.TESTING.\"a6b\", TILDA.TESTING.\"a6c\", TILDA.TESTING.\"a7\", TILDA.TESTING.\"a7b\", TILDA.TESTING.\"a8\", TILDA.TESTING.\"a9TZ\", TILDA.TESTING.\"a9\", TILDA.TESTING.\"created\", TILDA.TESTING.\"lastUpdated\", TILDA.TESTING.\"deleted\" from TILDA.TESTING");
+       S.append("select ");
+       S.append(" "); C.getFullColumnVar(S, "TILDA", "TESTING", "refnum");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "refnum2");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "name");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "description");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "desc2");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "desc3");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "desc4");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "desc5");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "desc6");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "tops");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "tops2");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "a1");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "a2");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "a2b");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "a2c");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "a3");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "a3b");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "a4");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "a4b");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "a5");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "a5b");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "a6");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "a6b");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "a6c");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "a7");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "a7b");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "a8");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "a9TZ");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "a9");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "created");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "lastUpdated");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "deleted");
+       S.append(" from "); C.getFullTableVar(S, "TILDA", "TESTING");
        switch (__LookupId)
         {
           case 0:

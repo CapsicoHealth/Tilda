@@ -648,4 +648,25 @@ public class Helper
         return false;
       }
 
+    public static void SelectFrom(PrintWriter Out, Object O)
+      {
+        Out.println("       S.append(\"select \");");
+        boolean First = true;
+        for (Column C : O._Columns)
+          if (C != null && C._Mode != ColumnMode.CALCULATED)
+            {
+              if (First == true)
+                {
+                  Out.print("       S.append(\" \");");
+                  First = false;
+                }
+              else
+                {
+                  Out.print("       S.append(\", \");");
+                }
+              Out.println(" C.getFullColumnVar(S, "+TextUtil.EscapeDoubleQuoteWithSlash(C._ParentObject._ParentSchema._Name)+", "+TextUtil.EscapeDoubleQuoteWithSlash(C._ParentObject._Name)+", "+TextUtil.EscapeDoubleQuoteWithSlash(C.getName())+");");              
+            }
+        Out.println("       S.append(\" from \"); C.getFullTableVar(S, "+TextUtil.EscapeDoubleQuoteWithSlash(O._ParentSchema._Name)+", "+TextUtil.EscapeDoubleQuoteWithSlash(O._Name)+");");
+      }
+
   }

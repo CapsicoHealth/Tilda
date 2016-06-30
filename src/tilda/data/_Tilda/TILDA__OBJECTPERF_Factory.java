@@ -130,7 +130,29 @@ public class TILDA__OBJECTPERF_Factory
      {
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
-       S.append("select TILDA.OBJECTPERF.\"schemaName\", TILDA.OBJECTPERF.\"objectName\", TILDA.OBJECTPERF.\"startPeriodTZ\", TILDA.OBJECTPERF.\"startPeriod\", TILDA.OBJECTPERF.\"endPeriodTZ\", TILDA.OBJECTPERF.\"endPeriod\", TILDA.OBJECTPERF.\"selectNano\", TILDA.OBJECTPERF.\"selectCount\", TILDA.OBJECTPERF.\"selectRecords\", TILDA.OBJECTPERF.\"insertNano\", TILDA.OBJECTPERF.\"insertCount\", TILDA.OBJECTPERF.\"insertRecords\", TILDA.OBJECTPERF.\"updateNano\", TILDA.OBJECTPERF.\"updateCount\", TILDA.OBJECTPERF.\"updateRecords\", TILDA.OBJECTPERF.\"deleteNano\", TILDA.OBJECTPERF.\"deleteCount\", TILDA.OBJECTPERF.\"deleteRecords\", TILDA.OBJECTPERF.\"created\", TILDA.OBJECTPERF.\"lastUpdated\", TILDA.OBJECTPERF.\"deleted\" from TILDA.OBJECTPERF");
+       S.append("select ");
+       S.append(" "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "schemaName");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "objectName");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "startPeriodTZ");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "startPeriod");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "endPeriodTZ");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "endPeriod");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "selectNano");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "selectCount");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "selectRecords");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "insertNano");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "insertCount");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "insertRecords");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "updateNano");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "updateCount");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "updateRecords");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "deleteNano");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "deleteCount");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "deleteRecords");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "created");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "lastUpdated");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "deleted");
+       S.append(" from "); C.getFullTableVar(S, "TILDA", "OBJECTPERF");
        switch (LookupId)
         {
           case -7:

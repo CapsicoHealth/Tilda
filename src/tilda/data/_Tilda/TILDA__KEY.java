@@ -85,7 +85,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jun 28 2016, 00:37:12EDT
+ @generated Jun 29 2016, 22:09:45EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__KEY implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -1381,7 +1381,15 @@ This is the hasChanged for:<BR>
           return true;
         }
        StringBuilder S = new StringBuilder(1024);
-       S.append("select TILDA.KEY.\"refnum\", TILDA.KEY.\"name\", TILDA.KEY.\"max\", TILDA.KEY.\"count\", TILDA.KEY.\"created\", TILDA.KEY.\"lastUpdated\", TILDA.KEY.\"deleted\" from TILDA.KEY");
+       S.append("select ");
+       S.append(" "); C.getFullColumnVar(S, "TILDA", "KEY", "refnum");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "KEY", "name");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "KEY", "max");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "KEY", "count");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "KEY", "created");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "KEY", "lastUpdated");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "KEY", "deleted");
+       S.append(" from "); C.getFullTableVar(S, "TILDA", "KEY");
        switch (__LookupId)
         {
           case 0:
