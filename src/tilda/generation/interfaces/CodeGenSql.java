@@ -47,8 +47,8 @@ public interface CodeGenSql extends DBType, CodeGenBase
     public String getEqualCurentTimestamp();
     public String getCommaCurentTimestamp();
 
-    public void genDDL(PrintWriter Out, Object O);
-    public void genDDL(PrintWriter Out, View   V);
+    public void genDDL(PrintWriter Out, Object O) throws Exception;
+    public void genDDL(PrintWriter Out, View   V) throws Exception;
     public void genIndex(PrintWriter Out, Index I);
     public void genKeysManagement(PrintWriter Out, Object O);
   }

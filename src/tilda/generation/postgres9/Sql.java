@@ -55,18 +55,6 @@ public class Sql extends PostgreSQL implements CodeGenSql
       }
 
     @Override
-    public String getFullTableVar(Object O)
-      {
-        return O._ParentSchema._Name + "." + O._Name;
-      }
-
-    @Override
-    public String getFullColumnVar(Column C)
-      {
-        return C._ParentObject.getSchema()._Name + "." + C._ParentObject.getBaseName() + ".\"" + C.getName() + "\"";
-      }
-    
-    @Override
     public String getFullTableVar(Object O, int i)
       {
         return O.getSchema()._Name + "_" + O.getBaseName() + i;
@@ -129,17 +117,35 @@ public class Sql extends PostgreSQL implements CodeGenSql
         return true;
       }
 
-
+    @Override
     public String getEqualCurentTimestamp()
       {
         return "= statement_timestamp()";
       }
 
+    @Override
     public String getCommaCurentTimestamp()
       {
         return ", statement_timestamp()";
       }
+    
+    @Override
+    public String getFullTableVar(Object O)
+      {
+        StringBuilder Str = new StringBuilder();
+        super.getFullTableVar(Str, O._ParentSchema._Name, O._Name);
+        return Str.toString();
+      }
 
+    @Override
+    public String getFullColumnVar(Column C)
+      {
+        StringBuilder Str = new StringBuilder();
+        super.getFullColumnVar(Str, C._ParentObject.getSchema()._Name, C._ParentObject.getBaseName(), C.getName());
+        return Str.toString();
+      }
+    
+    
     @Override
     public void genFileStart(PrintWriter Out, Schema S)
       throws Exception
@@ -195,6 +201,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
     @Override
     public void genDDL(PrintWriter Out, View V)
+    throws Exception
       {
         Object ObjectMain = V._ViewColumns.get(0)._SameAsObj._ParentObject;         
         Out.println("create or replace view " + V._ParentSchema._Name + "." + V._Name + " -- " + V._Description);
@@ -250,7 +257,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   if (VJ != null)
                     {
                       Out.print("     " + (C._Join == null ? "left" : C._Join) + " join " + VJ._ObjectObj.getShortName());
-                      Out.print(" on " + VJ._On);
+                      Query Q = VJ.getQuery(this);
+                      if (Q == null)
+                       throw new Exception("Cannot generate the view because an 'on' clause matching the active database '"+getName()+"' is not available.");
+                      Out.print(" on " + Q._Clause);
                       Integer I = M.get(VJ._ObjectObj._Name);
                       if (I != null)
                        for (int i = 2; i <= I.intValue(); ++i)
@@ -258,7 +268,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                           Out.println();
                           Out.print("     " + (C._Join == null ? "left" : C._Join) + " join " + VJ._ObjectObj.getShortName());
                           Out.print(" as "+getFullTableVar(C._SameAsObj._ParentObject, I.intValue()));
-                          Out.print(" on " + VJ._On);
+                          Out.print(" on " + Q._Clause);
                         }
                     }
                   else

@@ -160,19 +160,7 @@ public class SubWhereClause
 
     public Query getQuery(DBType Db)
       {
-        if (_Wheres == null)
-          return null;
-
-        Query Default = null;
-        for (Query q : _Wheres)
-          {
-            if (q._DB.equalsIgnoreCase(Db.getName()) == true)
-              return q;
-            else if (q._DB.equals("*") == true)
-              Default = q;
-          }
-
-        return Default;
+        return Query.getQuery(_Wheres, Db);
       }
 
   }

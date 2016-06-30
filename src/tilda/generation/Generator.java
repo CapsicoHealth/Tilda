@@ -124,6 +124,7 @@ public class Generator
 
 
     public static void getFullTableDDL(CodeGenSql CG, PrintWriter Out, Object O)
+    throws Exception
       {
         CG.genDDL(Out, O);
         for (Index I : O._Indices)
@@ -134,6 +135,7 @@ public class Generator
       }
 
     public static void getFullViewDDL(CodeGenSql CG, PrintWriter Out, View V)
+    throws Exception
       {
         CG.genDDL(Out, V);
       }

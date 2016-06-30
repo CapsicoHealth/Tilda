@@ -47,27 +47,22 @@ public class PostgreSQL implements DBType
     static final Logger LOG = LogManager.getLogger(PostgreSQL.class.getName());
 
     @Override
+    public String getName()
+      {
+        return "PostgreSQL";
+      }
+
+
+    @Override
     public boolean isErrNoData(String SQLState, int ErrorCode)
       {
         return SQLState.equals("23505");
       }
 
-    /*
-        Out.println("   protected static final String _COMMACURRENTTIMESTAMP    =TextUtil.Identity(\"" + G.getSql().getCommaCurentTimestamp() + "\");");
-        Out.println("   protected static final String _EQUALCURRENTTIMESTAMP    =TextUtil.Identity(\"" + G.getSql().getEqualCurentTimestamp() + "\");");
- */
-
     @Override
     public String getCurrentTimestampStr()
       {
         return "statement_timestamp()";
-      }
-
-
-    @Override
-    public String getName()
-      {
-        return "PostgreSQL";
       }
 
     protected static final String[] _LOCK_CONN_ERROR_SUBSTR = { "deadlocked on lock", "lock request time out", "lock inconsistency found", "connection reset", "connection is closed"

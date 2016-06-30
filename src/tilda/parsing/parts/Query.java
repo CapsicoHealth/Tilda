@@ -35,76 +35,79 @@ import tilda.utils.TextUtil;
 public class Query
   {
     protected static final Logger LOG = LogManager.getLogger(Query.class.getName());
-    
+
     /*@formatter:off*/
     @SerializedName("db"    ) public String   _DB    ;
     @SerializedName("clause") public String   _Clause;
     /*@formatter:on*/
 
     public static class Attribute
-     {
-       public Attribute(Column Col, String VarName, boolean Multi)
-        {
-          _Col     = Col    ;
-          _VarName = VarName;
-          _Multi   = Multi  ;
-        }
-       public final Column  _Col    ;
-       public final String  _VarName;
-       public final boolean _Multi  ;
-     }
-    
+      {
+        public Attribute(Column Col, String VarName, boolean Multi)
+          {
+            _Col = Col;
+            _VarName = VarName;
+            _Multi = Multi;
+          }
+
+        public final Column  _Col;
+        public final String  _VarName;
+        public final boolean _Multi;
+      }
+
     public transient List<Attribute> _Attributes = new ArrayList<Attribute>();
 
     public Query()
       {
       }
+
     public Query(String _SubWhere)
       {
         _Clause = _SubWhere;
       }
-    
-    
-    protected static class Match
-     {
-       public Match(int start, int end, String name, char type)
-        {
-          _start = start;
-          _end   = end  ;
-          _name  = name ;
-          _type  = type ;
-        }
-       public final int     _start;
-       public final int     _end  ;
-       public final String  _name ;
-       public final char    _type ;
-       
-       public static void add(List<Match> L, int start, int end, String name, char type)
-        {
-          int i = 0;
-          Match M = new Match(start, end, name, type);
-          while (i < L.size())
-            {
-              Match m = L.get(i);
-              if (m._start > M._start)
-                {
-                  L.add(i, M);
-                  return;
-                }
-              ++i;
-            }
-          L.add(M);
-        }
-     }
 
-    private static final Pattern _ParamPattern = Pattern.compile("\\?\\(([a-z_A-Z]\\w*)?\\)");
-    private static final Pattern _ArrayPattern = Pattern.compile("\\?\\[([a-z_A-Z]\\w*)?\\]");
+
+    protected static class Match
+      {
+        public Match(int start, int end, String name, char type)
+          {
+            _start = start;
+            _end = end;
+            _name = name;
+            _type = type;
+          }
+
+        public final int    _start;
+        public final int    _end;
+        public final String _name;
+        public final char   _type;
+
+        public static void add(List<Match> L, int start, int end, String name, char type)
+          {
+            int i = 0;
+            Match M = new Match(start, end, name, type);
+            while (i < L.size())
+              {
+                Match m = L.get(i);
+                if (m._start > M._start)
+                  {
+                    L.add(i, M);
+                    return;
+                  }
+                ++i;
+              }
+            L.add(M);
+          }
+      }
+
+    private static final Pattern _ParamPattern    = Pattern.compile("\\?\\(([a-z_A-Z]\\w*)?\\)");
+    private static final Pattern _ArrayPattern    = Pattern.compile("\\?\\[([a-z_A-Z]\\w*)?\\]");
     private static final Pattern _ComplexColRegex = Pattern.compile("\\b([a-zA-Z]\\w+(\\.[a-zA-Z]\\w+)+)\\b");
 
     public boolean Validate(ParserSession PS, Base ParentObject, String OwnerObjName)
       {
         int Errs = PS.getErrorCount();
-        
+
         // Does it have a name?
         if (TextUtil.isNullOrEmpty(_Clause) == true)
           return PS.AddError(OwnerObjName + " is defining an subWhereclause without a query value.");
@@ -112,46 +115,49 @@ public class Query
         if (TextUtil.CrudeStringValidation(_Clause, '\'', '\'') == false)
           PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which has an unterminated string sequence.");
 
-//        LOG.debug("Start clause: "+_Clause+";");
+        // LOG.debug("Start clause: "+_Clause+";");
 
         List<Match> Matches = new ArrayList<Match>();
         Matcher M = _ParamPattern.matcher(_Clause);
         while (M.find() == true)
-         Match.add(Matches, M.start(), M.end(), M.group(1), 'P');
-        
+          Match.add(Matches, M.start(), M.end(), M.group(1), 'P');
+
         M = _ArrayPattern.matcher(_Clause);
         while (M.find() == true)
-         Match.add(Matches, M.start(), M.end(), M.group(1), 'A');
+          Match.add(Matches, M.start(), M.end(), M.group(1), 'A');
 
         M = _ComplexColRegex.matcher(_Clause);
         while (M.find() == true)
           {
             if (_Clause.substring(0, M.start()).toLowerCase().matches(".*\\s*from\\s*") == false && _Clause.substring(M.end()).matches("\\s*\\(.*") == false)
-             Match.add(Matches, M.start(), M.end(), M.group(1), 'C');
+              Match.add(Matches, M.start(), M.end(), M.group(1), 'C');
           }
-        
+
         StringBuilder ColsRegex = new StringBuilder("\\b(");
         boolean First = true;
         String[] ColumnNames = ParentObject.getColumnNames();
         for (String colName : ColumnNames)
           {
-            if (First == true) First = false; else ColsRegex.append("|");
+            if (First == true)
+              First = false;
+            else
+              ColsRegex.append("|");
             ColsRegex.append(colName);
           }
         ColsRegex.append(")\\b");
-//        LOG.debug(ColsRegex);
+        // LOG.debug(ColsRegex);
         M = Pattern.compile(ColsRegex.toString()).matcher(_Clause);
         while (M.find() == true)
-         {
-           int i = M.start();
-           if (i == 0 || _Clause.charAt(i-1) != '.')
-            Match.add(Matches, M.start(), M.end(), M.group(1), 'C');
-         }
-        
-//        for (Match m : Matches)
-//          {
-//            LOG.debug("    "+m._type+": "+m._name+" ("+m._start+"-"+m._end+")");
-//          }
+          {
+            int i = M.start();
+            if (i == 0 || _Clause.charAt(i - 1) != '.')
+              Match.add(Matches, M.start(), M.end(), M.group(1), 'C');
+          }
+
+        // for (Match m : Matches)
+        // {
+        // LOG.debug(" "+m._type+": "+m._name+" ("+m._start+"-"+m._end+")");
+        // }
 
         StringBuilder NewClause = new StringBuilder();
         int clauseStrIndex = 0;
@@ -163,22 +169,22 @@ public class Query
             if (m._type == 'P' || m._type == 'A')
               {
                 if (lastColumnMatch == null)
-                 {
-                   PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which has a parameter marker '?("+m._name+")' without any previously stated column.");
-                   break;
-                 }
+                  {
+                    PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which has a parameter marker '?(" + m._name + ")' without any previously stated column.");
+                    break;
+                  }
                 NewClause.append("?");
                 String var = m._name;
                 if (TextUtil.FindElement(ColumnNames, var, false, 0) != -1)
                   {
-                    PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which has a parameter marker '?("+m._name+")' which is already taken as a column name.");
+                    PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which has a parameter marker '?(" + m._name + ")' which is already taken as a column name.");
                     break;
                   }
-                  
+
                 if (TextUtil.isNullOrEmpty(var) == true)
-                 var = lastColumnMatch.getName();
+                  var = lastColumnMatch.getName();
                 else
-                 var = lastColumnMatch.getName()+TextUtil.CapitalizeFirstCharacter(var);
+                  var = lastColumnMatch.getName() + TextUtil.CapitalizeFirstCharacter(var);
                 _Attributes.add(new Attribute(lastColumnMatch, var, m._type == 'A'));
               }
             else if (m._type == 'C')
@@ -187,7 +193,7 @@ public class Query
                 Column C = PS.getColumn(R._P, R._S, R._O, R._C);
                 if (C == null)
                   {
-                    PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which refers to an unknown column '"+m._name+"'.");
+                    PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which refers to an unknown column '" + m._name + "'.");
                     continue;
                   }
                 if (C.hasBeenValidatedSuccessfully() == false)
@@ -195,14 +201,14 @@ public class Query
                     PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which refers to column '" + C.getShortName() + "' which has failed validation previously and cannot be processed any more.");
                     continue;
                   }
-//                if (C.isCollection() == true)
-//                  {
-//                    PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which refers to an array column, which is not supported.");
-//                    continue;
-//                  }
+                // if (C.isCollection() == true)
+                // {
+                // PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which refers to an array column, which is not supported.");
+                // continue;
+                // }
                 if (C._Type == ColumnType.BINARY || C._Type == ColumnType.BITFIELD)
                   {
-                    PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which refers to a "+C._Type+" column which is not a supported type.");
+                    PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which refers to a " + C._Type + " column which is not a supported type.");
                     continue;
                   }
                 lastColumnMatch = C;
@@ -214,7 +220,7 @@ public class Query
         _Clause = NewClause.toString();
 
         if (TextUtil.isNullOrEmpty(_DB) == true)
-         _DB = "*";
+          _DB = "*";
 
         if (_DB.equals("*") == false)
           {
@@ -228,9 +234,34 @@ public class Query
             if (Found == false)
               PS.AddError(OwnerObjName + " is defining a subWhereclause with a DB value '" + _DB + "' which cannot be matched to an active DBType.");
           }
-        
-//        LOG.debug("Final clause: "+_Clause+";");
+
+        // LOG.debug("Final clause: "+_Clause+";");
 
         return Errs == PS.getErrorCount();
+      }
+
+    public static Query getQuery(Query[] Querries, DBType Db)
+      {
+        if (Querries == null)
+          return null;
+
+        Query Default = null;
+        for (Query q : Querries)
+          {
+            if (q._DB.equalsIgnoreCase(Db.getName()) == true)
+              return q;
+            else if (q._DB.equals("*") == true)
+              Default = q;
+          }
+
+        if (Default == null)
+          {
+            StringBuilder Str = new StringBuilder();
+            for (Query q : Querries)
+              Str.append(Str.length() == 0 ? "" : ", ").append(q._DB);
+            LOG.error("Cannot find a query for DB '"+Db.getName()+"'. Only choices available were "+Str.toString()+".");
+          }
+        
+        return Default;
       }
   }

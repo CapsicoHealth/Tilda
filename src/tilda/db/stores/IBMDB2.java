@@ -41,6 +41,13 @@ public class IBMDB2 implements DBType
     static final Logger LOG = LogManager.getLogger(IBMDB2.class.getName());
     
     @Override
+    public String getName()
+      {
+        return "IBMDB2";
+      }
+    
+    
+    @Override
     public boolean isErrNoData(String SQLState, int ErrorCode)
       {
         return SQLState.equals("23505");
@@ -50,12 +57,6 @@ public class IBMDB2 implements DBType
     public String getCurrentTimestampStr()
       {
         return "CURRENT TIMESTAMP";
-      }
-
-    @Override
-    public String getName()
-      {
-        return "DB2";
       }
 
     protected static final String[] _LOCK_CONN_ERROR_SUBSTR = { "deadlocked on lock"

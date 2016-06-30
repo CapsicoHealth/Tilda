@@ -84,6 +84,11 @@ public final class Connection
       {
         return _Url;
       }
+    
+    public final String getDBTypeName()
+    {
+      return _DB.getName();
+    }
 
     /**
      * Wrapper to {@link java.sql.Connection#commit()} with extra logging and performance tracking

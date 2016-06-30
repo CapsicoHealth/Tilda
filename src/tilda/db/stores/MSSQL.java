@@ -43,6 +43,12 @@ public class MSSQL implements DBType
     static final Logger LOG = LogManager.getLogger(MSSQL.class.getName());
     
     @Override
+    public String getName()
+      {
+        return "MSSQL";
+      }
+
+    @Override
     public boolean isErrNoData(String SQLState, int ErrorCode)
       {
         return SQLState.equals("23000") || ErrorCode == 2601;
@@ -53,13 +59,6 @@ public class MSSQL implements DBType
     public String getCurrentTimestampStr()
       {
         return "current_timestamp";
-      }
-
-
-    @Override
-    public String getName()
-      {
-        return "SQLServer";
       }
 
     protected static final String[] _LOCK_CONN_ERROR_SUBSTR = { "deadlocked on lock"
