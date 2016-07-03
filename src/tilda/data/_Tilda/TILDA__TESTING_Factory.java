@@ -54,41 +54,44 @@ public class TILDA__TESTING_Factory
    protected TILDA__TESTING_Factory() { }
 
    public static final Class<TILDA__TESTING> DATA_CLASS= TILDA__TESTING.class;
-   public static final String TABLENAME = TextUtil.Print("TILDA.TESTING", "");
+   public static final String SCHEMA_LABEL = TextUtil.Print("TILDA", "");
+   public static final String TABLENAME_LABEL = TextUtil.Print("TESTING", "");
+   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.TESTING", "");
+   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "TESTING"); }
 
    protected static abstract class COLS {
-     public static Type_LongPrimitive           REFNUM     = new Type_LongPrimitive          ("TILDA.TESTING", "refnum"     , 0, "The primary key for this record");
-     public static Type_LongCollection         REFNUM2    = new Type_LongCollection        ("TILDA.TESTING", "refnum2"    , 1, "The person's primary key");
-     public static Type_StringPrimitive         NAME       = new Type_StringPrimitive        ("TILDA.TESTING", "name"       , 2, "Medical system unique enterprise id");
-     public static Type_StringPrimitiveNull     DESCRIPTION= new Type_StringPrimitiveNull    ("TILDA.TESTING", "description", 3, "The title for a person, i.e., Mr, Miss, Mrs...");
-     public static Type_StringPrimitiveNull     DESC2      = new Type_StringPrimitiveNull    ("TILDA.TESTING", "desc2"      , 4, "The title for a person, i.e., Mr, Miss, Mrs...");
-     public static Type_StringPrimitiveNull     DESC3      = new Type_StringPrimitiveNull    ("TILDA.TESTING", "desc3"      , 5, "The title for a person, i.e., Mr, Miss, Mrs...");
-     public static Type_StringPrimitiveNull     DESC4      = new Type_StringPrimitiveNull    ("TILDA.TESTING", "desc4"      , 6, "The title for a person, i.e., Mr, Miss, Mrs...");
-     public static Type_StringPrimitiveNull     DESC5      = new Type_StringPrimitiveNull    ("TILDA.TESTING", "desc5"      , 7, "The title for a person, i.e., Mr, Miss, Mrs...");
-     public static Type_StringPrimitiveNull     DESC6      = new Type_StringPrimitiveNull    ("TILDA.TESTING", "desc6"      , 8, "The title for a person, i.e., Mr, Miss, Mrs...");
-     public static Type_StringCollectionNull   TOPS       = new Type_StringCollectionNull  ("TILDA.TESTING", "tops"       , 9, "The blah");
-     public static Type_StringCollectionNull   TOPS2      = new Type_StringCollectionNull  ("TILDA.TESTING", "tops2"      , 10, "The blah");
-     public static Type_BitfieldPrimitiveNull   A1         = new Type_BitfieldPrimitiveNull  ("TILDA.TESTING", "a1"         , 11, "The blah");
-     public static Type_CharPrimitiveNull       A2         = new Type_CharPrimitiveNull      ("TILDA.TESTING", "a2"         , 12, "The blah");
-     public static Type_CharCollectionNull     A2B        = new Type_CharCollectionNull    ("TILDA.TESTING", "a2b"        , 13, "The blah");
-     public static Type_CharCollectionNull     A2C        = new Type_CharCollectionNull    ("TILDA.TESTING", "a2c"        , 14, "The blah");
-     public static Type_BooleanPrimitiveNull    A3         = new Type_BooleanPrimitiveNull   ("TILDA.TESTING", "a3"         , 15, "The blah");
-     public static Type_BooleanCollectionNull  A3B        = new Type_BooleanCollectionNull ("TILDA.TESTING", "a3b"        , 16, "The blah");
-     public static Type_DoublePrimitiveNull     A4         = new Type_DoublePrimitiveNull    ("TILDA.TESTING", "a4"         , 17, "The blah");
-     public static Type_DoubleCollectionNull   A4B        = new Type_DoubleCollectionNull  ("TILDA.TESTING", "a4b"        , 18, "The blah");
-     public static Type_FloatPrimitiveNull      A5         = new Type_FloatPrimitiveNull     ("TILDA.TESTING", "a5"         , 19, "The blah");
-     public static Type_FloatCollectionNull    A5B        = new Type_FloatCollectionNull   ("TILDA.TESTING", "a5b"        , 20, "The blah");
-     public static Type_LongPrimitiveNull       A6         = new Type_LongPrimitiveNull      ("TILDA.TESTING", "a6"         , 21, "The blah");
-     public static Type_LongCollectionNull     A6B        = new Type_LongCollectionNull    ("TILDA.TESTING", "a6b"        , 22, "The blah");
-     public static Type_LongCollectionNull     A6C        = new Type_LongCollectionNull    ("TILDA.TESTING", "a6c"        , 23, "The blah");
-     public static Type_IntegerPrimitiveNull    A7         = new Type_IntegerPrimitiveNull   ("TILDA.TESTING", "a7"         , 24, "The blah");
-     public static Type_IntegerCollectionNull  A7B        = new Type_IntegerCollectionNull ("TILDA.TESTING", "a7b"        , 25, "The blah");
-     public static Type_BinaryPrimitiveNull     A8         = new Type_BinaryPrimitiveNull    ("TILDA.TESTING", "a8"         , 26, "The blah");
-     public static Type_StringPrimitiveNull     A9TZ       = new Type_StringPrimitiveNull    ("TILDA.TESTING", "a9TZ"       , 27, "Generated helper column to hold the time zone ID for 'a9'.");
-     public static Type_DatetimePrimitiveNull   A9         = new Type_DatetimePrimitiveNull  ("TILDA.TESTING", "a9"         , 28, "The blah");
-     public static Type_DatetimePrimitive       CREATED    = new Type_DatetimePrimitive      ("TILDA.TESTING", "created"    , 29, "The timestamp for when the record was created.");
-     public static Type_DatetimePrimitive       LASTUPDATED= new Type_DatetimePrimitive      ("TILDA.TESTING", "lastUpdated", 30, "The timestamp for when the record was last updated.");
-     public static Type_DatetimePrimitiveNull   DELETED    = new Type_DatetimePrimitiveNull  ("TILDA.TESTING", "deleted"    , 31, "The timestamp for when the record was deleted.");
+     public static Type_LongPrimitive           REFNUM     = new Type_LongPrimitive          (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"     , 0, "The primary key for this record");
+     public static Type_LongCollection         REFNUM2    = new Type_LongCollection        (SCHEMA_LABEL, TABLENAME_LABEL, "refnum2"    , 1, "The person's primary key");
+     public static Type_StringPrimitive         NAME       = new Type_StringPrimitive        (SCHEMA_LABEL, TABLENAME_LABEL, "name"       , 2, "Medical system unique enterprise id");
+     public static Type_StringPrimitiveNull     DESCRIPTION= new Type_StringPrimitiveNull    (SCHEMA_LABEL, TABLENAME_LABEL, "description", 3, "The title for a person, i.e., Mr, Miss, Mrs...");
+     public static Type_StringPrimitiveNull     DESC2      = new Type_StringPrimitiveNull    (SCHEMA_LABEL, TABLENAME_LABEL, "desc2"      , 4, "The title for a person, i.e., Mr, Miss, Mrs...");
+     public static Type_StringPrimitiveNull     DESC3      = new Type_StringPrimitiveNull    (SCHEMA_LABEL, TABLENAME_LABEL, "desc3"      , 5, "The title for a person, i.e., Mr, Miss, Mrs...");
+     public static Type_StringPrimitiveNull     DESC4      = new Type_StringPrimitiveNull    (SCHEMA_LABEL, TABLENAME_LABEL, "desc4"      , 6, "The title for a person, i.e., Mr, Miss, Mrs...");
+     public static Type_StringPrimitiveNull     DESC5      = new Type_StringPrimitiveNull    (SCHEMA_LABEL, TABLENAME_LABEL, "desc5"      , 7, "The title for a person, i.e., Mr, Miss, Mrs...");
+     public static Type_StringPrimitiveNull     DESC6      = new Type_StringPrimitiveNull    (SCHEMA_LABEL, TABLENAME_LABEL, "desc6"      , 8, "The title for a person, i.e., Mr, Miss, Mrs...");
+     public static Type_StringCollectionNull   TOPS       = new Type_StringCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "tops"       , 9, "The blah");
+     public static Type_StringCollectionNull   TOPS2      = new Type_StringCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "tops2"      , 10, "The blah");
+     public static Type_BitfieldPrimitiveNull   A1         = new Type_BitfieldPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a1"         , 11, "The blah");
+     public static Type_CharPrimitiveNull       A2         = new Type_CharPrimitiveNull      (SCHEMA_LABEL, TABLENAME_LABEL, "a2"         , 12, "The blah");
+     public static Type_CharCollectionNull     A2B        = new Type_CharCollectionNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a2b"        , 13, "The blah");
+     public static Type_CharCollectionNull     A2C        = new Type_CharCollectionNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a2c"        , 14, "The blah");
+     public static Type_BooleanPrimitiveNull    A3         = new Type_BooleanPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a3"         , 15, "The blah");
+     public static Type_BooleanCollectionNull  A3B        = new Type_BooleanCollectionNull (SCHEMA_LABEL, TABLENAME_LABEL, "a3b"        , 16, "The blah");
+     public static Type_DoublePrimitiveNull     A4         = new Type_DoublePrimitiveNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a4"         , 17, "The blah");
+     public static Type_DoubleCollectionNull   A4B        = new Type_DoubleCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a4b"        , 18, "The blah");
+     public static Type_FloatPrimitiveNull      A5         = new Type_FloatPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a5"         , 19, "The blah");
+     public static Type_FloatCollectionNull    A5B        = new Type_FloatCollectionNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a5b"        , 20, "The blah");
+     public static Type_LongPrimitiveNull       A6         = new Type_LongPrimitiveNull      (SCHEMA_LABEL, TABLENAME_LABEL, "a6"         , 21, "The blah");
+     public static Type_LongCollectionNull     A6B        = new Type_LongCollectionNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a6b"        , 22, "The blah");
+     public static Type_LongCollectionNull     A6C        = new Type_LongCollectionNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a6c"        , 23, "The blah");
+     public static Type_IntegerPrimitiveNull    A7         = new Type_IntegerPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a7"         , 24, "The blah");
+     public static Type_IntegerCollectionNull  A7B        = new Type_IntegerCollectionNull (SCHEMA_LABEL, TABLENAME_LABEL, "a7b"        , 25, "The blah");
+     public static Type_BinaryPrimitiveNull     A8         = new Type_BinaryPrimitiveNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a8"         , 26, "The blah");
+     public static Type_StringPrimitiveNull     A9TZ       = new Type_StringPrimitiveNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a9TZ"       , 27, "Generated helper column to hold the time zone ID for 'a9'.");
+     public static Type_DatetimePrimitiveNull   A9         = new Type_DatetimePrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a9"         , 28, "The blah");
+     public static Type_DatetimePrimitive       CREATED    = new Type_DatetimePrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 29, "The timestamp for when the record was created.");
+     public static Type_DatetimePrimitive       LASTUPDATED= new Type_DatetimePrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 30, "The timestamp for when the record was last updated.");
+     public static Type_DatetimePrimitiveNull   DELETED    = new Type_DatetimePrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 31, "The timestamp for when the record was deleted.");
 ;
    }
 
@@ -182,16 +185,16 @@ public class TILDA__TESTING_Factory
              if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
              break;
           case 1:
-             S.append(" order by TILDA.TESTING.\"name\" ASC");
+             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "TESTING", "name"); S.append(" ASC");
              break;
           case 2:
              S.append(", TILDA.OBJECTPERF"); // Additional From's from the subwhereclause.
-             S.append(" where (TILDA.TESTING.\"deleted\" is null and TILDA.TESTING.\"desc2\" >= ? and TILDA.TESTING.\"a5\" < ? or TILDA.TESTING.\"name\" = ? and TILDA.TESTING.\"created\" > ?)");
-             S.append(" order by TILDA.TESTING.\"name\" ASC");
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "TESTING", "deleted"); S.append(" is null and "); C.getFullColumnVar(S, "TILDA", "TESTING", "desc2"); S.append(" >= ").append("?").append(" and "); C.getFullColumnVar(S, "TILDA", "TESTING", "a5"); S.append(" < ").append("?").append(" or "); C.getFullColumnVar(S, "TILDA", "TESTING", "name"); S.append(" = ").append("?").append(" and "); C.getFullColumnVar(S, "TILDA", "TESTING", "created"); S.append(" > ").append("?").append(")");
+             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "TESTING", "name"); S.append(" ASC");
              break;
           case 3:
-             S.append(" where (TILDA.TESTING.\"deleted\" is null and TILDA.TESTING.\"name\" = ? and TILDA.TESTING.\"created\" > ?)");
-             S.append(" order by TILDA.TESTING.\"name\" ASC");
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "TESTING", "deleted"); S.append(" is null and "); C.getFullColumnVar(S, "TILDA", "TESTING", "name"); S.append(" = ").append("?").append(" and "); C.getFullColumnVar(S, "TILDA", "TESTING", "created"); S.append(" > ").append("?").append(")");
+             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "TESTING", "name"); S.append(" ASC");
              break;
           case -666: break;
           default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
@@ -201,8 +204,8 @@ public class TILDA__TESTING_Factory
        String Q = S.toString() + C.getSelectLimitClause(Start, Size+1);
        S.setLength(0);
        S = null;
-       QueryDetails.setLastQuery(TABLENAME, Q);
-       LOG.debug("TILDA([7mTILDA.TESTING[27m): "+Q.replaceAll(TABLENAME+"\\.",""));
+       QueryDetails.setLastQuery(SCHEMA_TABLENAME_LABEL, Q);
+       LOG.debug("TILDA([7mTILDA.TESTING[27m): "+Q);
        java.sql.PreparedStatement PS=null;
        java.sql.ResultSet RS=null;
        List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
@@ -246,7 +249,7 @@ public class TILDA__TESTING_Factory
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__TESTING_Factory.TABLENAME, StatementType.SELECT, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__TESTING_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }
@@ -486,8 +489,8 @@ public class TILDA__TESTING_Factory
      }
 
 
-   public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C   , TILDA__TESTING_Factory.TABLENAME); }
-   public static SelectQuery newWhereQuery (            ) throws Exception { return new SelectQuery(null, TILDA__TESTING_Factory.TABLENAME); }
+   public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }
+   public static SelectQuery newWhereQuery (Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, false); }
    public static ListResults<tilda.data.Testing_Data> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
@@ -499,7 +502,7 @@ public class TILDA__TESTING_Factory
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
        ReadMany(C, -7, RPI, null, Q, Start, Size);
      }
-   public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, TILDA__TESTING_Factory.TABLENAME); }
-   public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, TILDA__TESTING_Factory.TABLENAME); }
+   public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
+   public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
 
  }

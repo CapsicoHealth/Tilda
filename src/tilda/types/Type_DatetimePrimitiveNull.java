@@ -19,9 +19,9 @@ package tilda.types;
 
 public class Type_DatetimePrimitiveNull extends Type_DatetimePrimitive implements Nullable
   {
-    public Type_DatetimePrimitiveNull(String TableName, String ColumnName, long Count, String Description)
+    public Type_DatetimePrimitiveNull(String SchemaName, String TableName, String ColumnName, long Count, String Description)
       {
-        super(TableName, ColumnName, Count, Description);
+        super(SchemaName, TableName, ColumnName, Count, Description);
       }
     
   }

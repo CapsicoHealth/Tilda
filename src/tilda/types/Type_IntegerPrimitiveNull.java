@@ -19,9 +19,9 @@ package tilda.types;
 
 public class Type_IntegerPrimitiveNull extends Type_IntegerPrimitive implements Nullable
   {
-    public Type_IntegerPrimitiveNull(String TableName, String ColumnName, long Count, String Description)
+    public Type_IntegerPrimitiveNull(String SchemaName, String TableName, String ColumnName, long Count, String Description)
       {
-        super(TableName, ColumnName, Count, Description);
+        super(SchemaName, TableName, ColumnName, Count, Description);
       }
     
   }

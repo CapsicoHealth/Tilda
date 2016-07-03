@@ -99,7 +99,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jun 30 2016, 19:33:08EDT
+ @generated Jul 3 2016, 03:21:28EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__OBJECTPERF implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -2568,7 +2568,7 @@ This is the hasChanged for:<BR>
        if (__Changes == 0L)
         {
           LOG.debug("The tilda.data.TILDA.OBJECTPERF has not changed: no writing will occur.");
-          QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.TABLENAME, "");
+          QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
           return true;
         }
 
@@ -2577,52 +2577,53 @@ This is the hasChanged for:<BR>
        if (BeforeWrite(C) == false)
         {
           LOG.debug("The tilda.data.TILDA.OBJECTPERF object's BeforeWrite() failed.");
-          QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.TABLENAME, "");
+          QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
           return false;
         }
 
        if (__Init == InitMode.CREATE)
         {
           StringBuilder V = new StringBuilder(1024);
-          S.append("insert into TILDA.OBJECTPERF ");
-          if ((TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask    & __Changes) != 0L) { S.append(TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Insert   ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask    & __Changes) != 0L) { S.append(TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Insert   ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask & __Changes) != 0L) { S.append(TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Insert); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          S.append("insert into "); C.getFullTableVar(S, "TILDA", "OBJECTPERF");
+          int Pos = S.length();
+          if ((TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask    & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask    & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
-          if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask   & __Changes) != 0L) { S.append(TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Insert  );
+          if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask   & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD.getFullColumnVarForInsert(C, S);
              V.append((TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_startPeriod) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask   & __Changes) != 0L) { S.append(TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Insert  ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask   & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
-          if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask     & __Changes) != 0L) { S.append(TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Insert    );
+          if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask     & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD.getFullColumnVarForInsert(C, S);
              V.append((TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_endPeriod) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask    & __Changes) != 0L) { S.append(TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Insert   ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask   & __Changes) != 0L) { S.append(TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Insert  ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask & __Changes) != 0L) { S.append(TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Insert); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask    & __Changes) != 0L) { S.append(TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Insert   ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask   & __Changes) != 0L) { S.append(TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Insert  ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask & __Changes) != 0L) { S.append(TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Insert); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask    & __Changes) != 0L) { S.append(TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Insert   ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask   & __Changes) != 0L) { S.append(TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Insert  ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask & __Changes) != 0L) { S.append(TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Insert); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask    & __Changes) != 0L) { S.append(TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Insert   ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask   & __Changes) != 0L) { S.append(TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Insert  ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask & __Changes) != 0L) { S.append(TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Insert); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask    & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.SELECTNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask   & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask    & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.INSERTNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask   & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask    & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.UPDATENANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask   & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask    & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.DELETENANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask   & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
-          if ((TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask       & __Changes) != 0L) { S.append(TILDA__OBJECTPERF_Factory.COLS.CREATED._Insert      );
+          if ((TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask       & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
              V.append((TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          else { S.append(TILDA__OBJECTPERF_Factory.COLS.CREATED._Insert); V.append(C.getCommaCurrentTimestamp()); }
-          if ((TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask   & __Changes) != 0L) { S.append(TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Insert  );
+          else { TILDA__OBJECTPERF_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
+          if ((TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask   & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
              V.append((TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          else { S.append(TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Insert); V.append(C.getCommaCurrentTimestamp()); }
-          if ((TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask       & __Changes) != 0L) { S.append(TILDA__OBJECTPERF_Factory.COLS.DELETED._Insert      );
+          else { TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
+          if ((TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask       & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
              V.append((TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
 
-          S.setCharAt(29, '(');
+          S.setCharAt(Pos, '(');
           V.setCharAt(0, '(');
           S.append(") values ").append(V).append(')');
           V.setLength(0);
@@ -2630,85 +2631,86 @@ This is the hasChanged for:<BR>
         }
        else // InitMode can be anything else
         {
-          S.append("update TILDA.OBJECTPERF set");
-          if ((TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask    & __Changes) != 0L) S.append(TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Update   );
-          if ((TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask    & __Changes) != 0L) S.append(TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Update   );
-          if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask & __Changes) != 0L) S.append(TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Update);
+          S.append("update "); C.getFullTableVar(S, "TILDA", "OBJECTPERF"); S.append(" set");
+          int Pos = S.length();
+          if ((TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask    & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask    & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ.getFullColumnVarForUpdate(C, S);
 
           if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask & __Changes) != 0L)
            {
              if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_startPeriod) == true)
-              S.append(TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Insert).append(C.getEqualCurrentTimestamp());
+              { TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
-              S.append(TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Update);
+              TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD.getFullColumnVarForUpdate(C, S);
            }
-          if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask   & __Changes) != 0L) S.append(TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Update  );
+          if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask   & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ.getFullColumnVarForUpdate(C, S);
 
           if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask & __Changes) != 0L)
            {
              if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_endPeriod) == true)
-              S.append(TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Insert).append(C.getEqualCurrentTimestamp());
+              { TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
-              S.append(TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Update);
+              TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD.getFullColumnVarForUpdate(C, S);
            }
-          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask    & __Changes) != 0L) S.append(TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Update   );
-          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask   & __Changes) != 0L) S.append(TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Update  );
-          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask & __Changes) != 0L) S.append(TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Update);
-          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask    & __Changes) != 0L) S.append(TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Update   );
-          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask   & __Changes) != 0L) S.append(TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Update  );
-          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask & __Changes) != 0L) S.append(TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Update);
-          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask    & __Changes) != 0L) S.append(TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Update   );
-          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask   & __Changes) != 0L) S.append(TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Update  );
-          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask & __Changes) != 0L) S.append(TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Update);
-          if ((TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask    & __Changes) != 0L) S.append(TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Update   );
-          if ((TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask   & __Changes) != 0L) S.append(TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Update  );
-          if ((TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask & __Changes) != 0L) S.append(TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Update);
+          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask    & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.SELECTNANO.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask   & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask    & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.INSERTNANO.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask   & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask    & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.UPDATENANO.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask   & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask    & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.DELETENANO.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask   & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS.getFullColumnVarForUpdate(C, S);
 
           if ((TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask & __Changes) != 0L)
            {
              if ((TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true)
-              S.append(TILDA__OBJECTPERF_Factory.COLS.CREATED._Insert).append(C.getEqualCurrentTimestamp());
+              { TILDA__OBJECTPERF_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
-              S.append(TILDA__OBJECTPERF_Factory.COLS.CREATED._Update);
+              TILDA__OBJECTPERF_Factory.COLS.CREATED.getFullColumnVarForUpdate(C, S);
            }
 
           if ((TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask & __Changes) != 0L)
            {
              if ((TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true)
-              S.append(TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Insert).append(C.getEqualCurrentTimestamp());
+              { TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
-              S.append(TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Update);
+              TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED.getFullColumnVarForUpdate(C, S);
            }
           else 
            {
-             S.append(TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Insert).append(C.getEqualCurrentTimestamp());
+             TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp());
              setLastUpdatedNow();
            }
 
           if ((TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask & __Changes) != 0L)
            {
              if ((TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true)
-              S.append(TILDA__OBJECTPERF_Factory.COLS.DELETED._Insert).append(C.getEqualCurrentTimestamp());
+              { TILDA__OBJECTPERF_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
-              S.append(TILDA__OBJECTPERF_Factory.COLS.DELETED._Update);
+              TILDA__OBJECTPERF_Factory.COLS.DELETED.getFullColumnVarForUpdate(C, S);
            }
 
           switch (__LookupId)
            {
              case 0:
-                S.append(" where (TILDA.OBJECTPERF.\"schemaName\"=? AND TILDA.OBJECTPERF.\"objectName\"=? AND TILDA.OBJECTPERF.\"startPeriod\"=?)");
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "objectName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "startPeriod"); S.append("=?)");
                 break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
            }
-          S.setCharAt(27, ' ');
+          S.setCharAt(Pos, ' ');
         }
 
        String Q = S.toString();
        S.setLength(0);
        S = null;
-       QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.TABLENAME, Q);
-       LOG.debug("TILDA([7mTILDA.OBJECTPERF[27m): "+Q.replaceAll(TILDA__OBJECTPERF_Factory.TABLENAME+"\\.",""));
+       QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, Q);
+       LOG.debug("TILDA([7mTILDA.OBJECTPERF[27m): "+Q);
        LOG.debug("   "+toString());
        java.sql.PreparedStatement PS = null;
        int count = 0;
@@ -2826,7 +2828,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__OBJECTPERF_Factory.TABLENAME, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }
@@ -2883,7 +2885,7 @@ This is the hasChanged for:<BR>
        if (__Init == InitMode.READ == true && Force == false && __Changes == 0L)
         {
           LOG.debug("This TILDA.OBJECTPERF object has already been read.");
-          QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.TABLENAME, "");
+          QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
           return true;
         }
        StringBuilder S = new StringBuilder(1024);
@@ -2913,7 +2915,7 @@ This is the hasChanged for:<BR>
        switch (__LookupId)
         {
           case 0:
-             S.append(" where (TILDA.OBJECTPERF.\"schemaName\"=? AND TILDA.OBJECTPERF.\"objectName\"=? AND TILDA.OBJECTPERF.\"startPeriod\"=?)");
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "objectName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "startPeriod"); S.append("=?)");
              break;
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
@@ -2922,8 +2924,8 @@ This is the hasChanged for:<BR>
        String Q = S.toString();
        S.setLength(0);
        S = null;
-       QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.TABLENAME, Q);
-       LOG.debug("TILDA([7mTILDA.OBJECTPERF[27m): "+Q.replaceAll(TILDA__OBJECTPERF_Factory.TABLENAME+"\\.",""));
+       QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, Q);
+       LOG.debug("TILDA([7mTILDA.OBJECTPERF[27m): "+Q);
        LOG.debug("   "+toString());
        java.sql.PreparedStatement PS=null;
        java.sql.ResultSet RS=null;
@@ -2960,7 +2962,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__OBJECTPERF_Factory.TABLENAME, StatementType.SELECT, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }

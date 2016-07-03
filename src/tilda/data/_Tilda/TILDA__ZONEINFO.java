@@ -86,7 +86,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jun 30 2016, 19:33:08EDT
+ @generated Jul 3 2016, 03:21:28EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__ZONEINFO implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -1456,7 +1456,7 @@ This is the hasChanged for:<BR>
        if (__Changes == 0L)
         {
           LOG.debug("The tilda.data.TILDA.ZONEINFO has not changed: no writing will occur.");
-          QueryDetails.setLastQuery(TILDA__ZONEINFO_Factory.TABLENAME, "");
+          QueryDetails.setLastQuery(TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, "");
           return true;
         }
 
@@ -1465,36 +1465,37 @@ This is the hasChanged for:<BR>
        if (BeforeWrite(C) == false)
         {
           LOG.debug("The tilda.data.TILDA.ZONEINFO object's BeforeWrite() failed.");
-          QueryDetails.setLastQuery(TILDA__ZONEINFO_Factory.TABLENAME, "");
+          QueryDetails.setLastQuery(TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, "");
           return false;
         }
 
        if (__Init == InitMode.CREATE)
         {
           StringBuilder V = new StringBuilder(1024);
-          S.append("insert into TILDA.ZONEINFO ");
-          if ((TILDA__ZONEINFO_Factory.COLS.ID._Mask            & __Changes) != 0L) { S.append(TILDA__ZONEINFO_Factory.COLS.ID._Insert           ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__ZONEINFO_Factory.COLS.VALUE._Mask         & __Changes) != 0L) { S.append(TILDA__ZONEINFO_Factory.COLS.VALUE._Insert        ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__ZONEINFO_Factory.COLS.LABEL._Mask         & __Changes) != 0L) { S.append(TILDA__ZONEINFO_Factory.COLS.LABEL._Insert        ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask & __Changes) != 0L) { S.append(TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Insert); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          S.append("insert into "); C.getFullTableVar(S, "TILDA", "ZONEINFO");
+          int Pos = S.length();
+          if ((TILDA__ZONEINFO_Factory.COLS.ID._Mask            & __Changes) != 0L) { TILDA__ZONEINFO_Factory.COLS.ID.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__ZONEINFO_Factory.COLS.VALUE._Mask         & __Changes) != 0L) { TILDA__ZONEINFO_Factory.COLS.VALUE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__ZONEINFO_Factory.COLS.LABEL._Mask         & __Changes) != 0L) { TILDA__ZONEINFO_Factory.COLS.LABEL.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask & __Changes) != 0L) { TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
-          if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask   & __Changes) != 0L) { S.append(TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Insert  );
+          if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask   & __Changes) != 0L) { TILDA__ZONEINFO_Factory.COLS.DEACTIVATED.getFullColumnVarForInsert(C, S);
              V.append((TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_deactivated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
 
-          if ((TILDA__ZONEINFO_Factory.COLS.CREATED._Mask       & __Changes) != 0L) { S.append(TILDA__ZONEINFO_Factory.COLS.CREATED._Insert      );
+          if ((TILDA__ZONEINFO_Factory.COLS.CREATED._Mask       & __Changes) != 0L) { TILDA__ZONEINFO_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
              V.append((TILDA__ZONEINFO_Factory.COLS.CREATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          else { S.append(TILDA__ZONEINFO_Factory.COLS.CREATED._Insert); V.append(C.getCommaCurrentTimestamp()); }
-          if ((TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask   & __Changes) != 0L) { S.append(TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Insert  );
+          else { TILDA__ZONEINFO_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
+          if ((TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask   & __Changes) != 0L) { TILDA__ZONEINFO_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
              V.append((TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          else { S.append(TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Insert); V.append(C.getCommaCurrentTimestamp()); }
-          if ((TILDA__ZONEINFO_Factory.COLS.DELETED._Mask       & __Changes) != 0L) { S.append(TILDA__ZONEINFO_Factory.COLS.DELETED._Insert      );
+          else { TILDA__ZONEINFO_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
+          if ((TILDA__ZONEINFO_Factory.COLS.DELETED._Mask       & __Changes) != 0L) { TILDA__ZONEINFO_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
              V.append((TILDA__ZONEINFO_Factory.COLS.DELETED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
 
-          S.setCharAt(27, '(');
+          S.setCharAt(Pos, '(');
           V.setCharAt(0, '(');
           S.append(") values ").append(V).append(')');
           V.setLength(0);
@@ -1502,71 +1503,72 @@ This is the hasChanged for:<BR>
         }
        else // InitMode can be anything else
         {
-          S.append("update TILDA.ZONEINFO set");
-          if ((TILDA__ZONEINFO_Factory.COLS.ID._Mask            & __Changes) != 0L) S.append(TILDA__ZONEINFO_Factory.COLS.ID._Update           );
-          if ((TILDA__ZONEINFO_Factory.COLS.VALUE._Mask         & __Changes) != 0L) S.append(TILDA__ZONEINFO_Factory.COLS.VALUE._Update        );
-          if ((TILDA__ZONEINFO_Factory.COLS.LABEL._Mask         & __Changes) != 0L) S.append(TILDA__ZONEINFO_Factory.COLS.LABEL._Update        );
-          if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask & __Changes) != 0L) S.append(TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Update);
+          S.append("update "); C.getFullTableVar(S, "TILDA", "ZONEINFO"); S.append(" set");
+          int Pos = S.length();
+          if ((TILDA__ZONEINFO_Factory.COLS.ID._Mask            & __Changes) != 0L) TILDA__ZONEINFO_Factory.COLS.ID.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__ZONEINFO_Factory.COLS.VALUE._Mask         & __Changes) != 0L) TILDA__ZONEINFO_Factory.COLS.VALUE.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__ZONEINFO_Factory.COLS.LABEL._Mask         & __Changes) != 0L) TILDA__ZONEINFO_Factory.COLS.LABEL.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask & __Changes) != 0L) TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ.getFullColumnVarForUpdate(C, S);
 
           if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask & __Changes) != 0L)
            {
              if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_deactivated) == true)
-              S.append(TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Insert).append(C.getEqualCurrentTimestamp());
+              { TILDA__ZONEINFO_Factory.COLS.DEACTIVATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
-              S.append(TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Update);
+              TILDA__ZONEINFO_Factory.COLS.DEACTIVATED.getFullColumnVarForUpdate(C, S);
            }
 
           if ((TILDA__ZONEINFO_Factory.COLS.CREATED._Mask & __Changes) != 0L)
            {
              if ((TILDA__ZONEINFO_Factory.COLS.CREATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true)
-              S.append(TILDA__ZONEINFO_Factory.COLS.CREATED._Insert).append(C.getEqualCurrentTimestamp());
+              { TILDA__ZONEINFO_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
-              S.append(TILDA__ZONEINFO_Factory.COLS.CREATED._Update);
+              TILDA__ZONEINFO_Factory.COLS.CREATED.getFullColumnVarForUpdate(C, S);
            }
 
           if ((TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask & __Changes) != 0L)
            {
              if ((TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true)
-              S.append(TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Insert).append(C.getEqualCurrentTimestamp());
+              { TILDA__ZONEINFO_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
-              S.append(TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Update);
+              TILDA__ZONEINFO_Factory.COLS.LASTUPDATED.getFullColumnVarForUpdate(C, S);
            }
           else 
            {
-             S.append(TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Insert).append(C.getEqualCurrentTimestamp());
+             TILDA__ZONEINFO_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp());
              setLastUpdatedNow();
            }
 
           if ((TILDA__ZONEINFO_Factory.COLS.DELETED._Mask & __Changes) != 0L)
            {
              if ((TILDA__ZONEINFO_Factory.COLS.DELETED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true)
-              S.append(TILDA__ZONEINFO_Factory.COLS.DELETED._Insert).append(C.getEqualCurrentTimestamp());
+              { TILDA__ZONEINFO_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
-              S.append(TILDA__ZONEINFO_Factory.COLS.DELETED._Update);
+              TILDA__ZONEINFO_Factory.COLS.DELETED.getFullColumnVarForUpdate(C, S);
            }
 
           switch (__LookupId)
            {
              case 0:
-                S.append(" where (TILDA.ZONEINFO.\"id\"=?)");
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "ZONEINFO", "id"); S.append("=?)");
                 break;
              case 1:
-                S.append(" where (TILDA.ZONEINFO.\"id\"=?)");
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "ZONEINFO", "id"); S.append("=?)");
                 break;
              case 2:
-                S.append(" where (TILDA.ZONEINFO.\"value\"=?)");
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "ZONEINFO", "value"); S.append("=?)");
                 break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
            }
-          S.setCharAt(25, ' ');
+          S.setCharAt(Pos, ' ');
         }
 
        String Q = S.toString();
        S.setLength(0);
        S = null;
-       QueryDetails.setLastQuery(TILDA__ZONEINFO_Factory.TABLENAME, Q);
-       LOG.debug("TILDA([7mTILDA.ZONEINFO[27m): "+Q.replaceAll(TILDA__ZONEINFO_Factory.TABLENAME+"\\.",""));
+       QueryDetails.setLastQuery(TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, Q);
+       LOG.debug("TILDA([7mTILDA.ZONEINFO[27m): "+Q);
        LOG.debug("   "+toString());
        java.sql.PreparedStatement PS = null;
        int count = 0;
@@ -1636,7 +1638,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__ZONEINFO_Factory.TABLENAME, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }
@@ -1697,7 +1699,7 @@ This is the hasChanged for:<BR>
        if (__Init == InitMode.READ == true && Force == false && __Changes == 0L)
         {
           LOG.debug("This TILDA.ZONEINFO object has already been read.");
-          QueryDetails.setLastQuery(TILDA__ZONEINFO_Factory.TABLENAME, "");
+          QueryDetails.setLastQuery(TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, "");
           return true;
         }
        StringBuilder S = new StringBuilder(1024);
@@ -1714,13 +1716,13 @@ This is the hasChanged for:<BR>
        switch (__LookupId)
         {
           case 0:
-             S.append(" where (TILDA.ZONEINFO.\"id\"=?)");
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "ZONEINFO", "id"); S.append("=?)");
              break;
           case 1:
-             S.append(" where (TILDA.ZONEINFO.\"id\"=?)");
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "ZONEINFO", "id"); S.append("=?)");
              break;
           case 2:
-             S.append(" where (TILDA.ZONEINFO.\"value\"=?)");
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "ZONEINFO", "value"); S.append("=?)");
              break;
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
@@ -1729,8 +1731,8 @@ This is the hasChanged for:<BR>
        String Q = S.toString();
        S.setLength(0);
        S = null;
-       QueryDetails.setLastQuery(TILDA__ZONEINFO_Factory.TABLENAME, Q);
-       LOG.debug("TILDA([7mTILDA.ZONEINFO[27m): "+Q.replaceAll(TILDA__ZONEINFO_Factory.TABLENAME+"\\.",""));
+       QueryDetails.setLastQuery(TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, Q);
+       LOG.debug("TILDA([7mTILDA.ZONEINFO[27m): "+Q);
        LOG.debug("   "+toString());
        java.sql.PreparedStatement PS=null;
        java.sql.ResultSet RS=null;
@@ -1771,7 +1773,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__ZONEINFO_Factory.TABLENAME, StatementType.SELECT, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }

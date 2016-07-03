@@ -114,7 +114,10 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("   protected " + O._BaseClassName + "_Factory() { }");
         Out.println();
         Out.println("   public static final Class<" + O._BaseClassName + "> DATA_CLASS= " + O._BaseClassName + ".class;");
-        Out.println("   public static final String TABLENAME = TextUtil.Print(" + TextUtil.EscapeDoubleQuoteWithSlash(O.getShortName()) + ", \"\");");
+        Out.println("   public static final String SCHEMA_LABEL = TextUtil.Print(" + TextUtil.EscapeDoubleQuoteWithSlash(O._ParentSchema.getShortName()) + ", \"\");");
+        Out.println("   public static final String TABLENAME_LABEL = TextUtil.Print(" + TextUtil.EscapeDoubleQuoteWithSlash(O.getBaseName()) + ", \"\");");
+        Out.println("   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print(" + TextUtil.EscapeDoubleQuoteWithSlash(O.getShortName()) + ", \"\");");
+        Out.println("   public static void getFullTableNameVar(Connection C, StringBuilder S) { "+Helper.getFullTableVarAtRuntime(O)+"; }");
         Out.println();
         Out.println("   protected static abstract class COLS {");
         int Counter = -1;
@@ -131,7 +134,7 @@ public class TildaFactory implements CodeGenTildaFactory
 //              String ColVarShort = TextUtil.EscapeDoubleQuoteWithSlash(G.getSql().getShortColumnVar(C), "", false);
 //              String ColVarOthers = TextUtil.EscapeDoubleQuoteWithSlash(G.getSql().getShortColumnVar(C), "", false);
               String ColumnTypeClassName = "Type_"+TextUtil.NormalCapitalization(C._Type.name())+(C.isCollection()?"Collection":"Primitive")+(C._Nullable==true?"Null":"");
-              Out.println("     public static "+ColumnTypeClassName+TypePad+" " + C.getName().toUpperCase() + ColumnPad + "= new "+ColumnTypeClassName+TypePad+"(\"" + C._ParentObject.getShortName() + "\", \"" + C.getName() + "\"" + ColumnPad + ", " + (++Counter) +", "+TextUtil.EscapeDoubleQuoteWithSlash(C._Description)+");");
+              Out.println("     public static "+ColumnTypeClassName+TypePad+" " + C.getName().toUpperCase() + ColumnPad + "= new "+ColumnTypeClassName+TypePad+"(SCHEMA_LABEL, TABLENAME_LABEL, \"" + C.getName() + "\"" + ColumnPad + ", " + (++Counter) +", "+TextUtil.EscapeDoubleQuoteWithSlash(C._Description)+");");
             }
         Out.println(";");
         Out.println("   }");
@@ -199,8 +202,8 @@ public class TildaFactory implements CodeGenTildaFactory
          Out.println("       String Q = S.toString();");
         Out.println("       S.setLength(0);");
         Out.println("       S = null;");
-        Out.println("       QueryDetails.setLastQuery(TABLENAME, Q);");
-        Out.println("       LOG.debug(\"TILDA(" + AnsiUtil.NEGATIVE + O.getShortName() + AnsiUtil.NEGATIVE_OFF + "): \"+Q.replaceAll(TABLENAME+\"\\\\.\",\"\"));");
+        Out.println("       QueryDetails.setLastQuery(SCHEMA_TABLENAME_LABEL, Q);");
+        Out.println("       LOG.debug(\"TILDA(" + AnsiUtil.NEGATIVE + O.getShortName() + AnsiUtil.NEGATIVE_OFF + "): \"+Q);");
         Out.println("       java.sql.PreparedStatement PS=null;");
         Out.println("       java.sql.ResultSet RS=null;");
         Out.println("       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();");
@@ -588,8 +591,8 @@ public class TildaFactory implements CodeGenTildaFactory
     @Override
     public void genQueryHelper(PrintWriter Out, GeneratorSession G, Object O)
       {
-        Out.println("   public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C   , " + O.getBaseClassName() + "_Factory.TABLENAME); }");
-        Out.println("   public static SelectQuery newWhereQuery (            ) throws Exception { return new SelectQuery(null, " + O.getBaseClassName() + "_Factory.TABLENAME); }");
+        Out.println("   public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }");
+        Out.println("   public static SelectQuery newWhereQuery (Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, false); }");
         Out.println("   public static ListResults<" + Helper.getFullAppDataClassName(O) + "> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception");
         Out.println("     {");
         Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);");
@@ -603,8 +606,8 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("     }");
         if (O._LC == ObjectLifecycle.NORMAL)
           {
-            Out.println("   public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, " + O.getBaseClassName() + "_Factory.TABLENAME); }");
-            Out.println("   public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, " + O.getBaseClassName() + "_Factory.TABLENAME); }");
+            Out.println("   public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }");
+            Out.println("   public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }");
           }
         Out.println();
       }

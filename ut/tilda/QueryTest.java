@@ -57,13 +57,18 @@ public class QueryTest extends Key_Factory
               {
                 SelectQuery Q = newSelectQuery(C);
                 Q.set(COLS.MAX, COLS.COUNT)
-                    .from(Testing_Factory.TABLENAME)
-                    .from(Key_Factory.TABLENAME)
+                    .from(Testing_Factory.SCHEMA_LABEL, Testing_Factory.TABLENAME_LABEL)
+                    .from(Key_Factory.SCHEMA_LABEL, Key_Factory.TABLENAME_LABEL)
                     .where().equals(COLS.REFNUM, K.getRefnum()).and().equals(COLS.NAME, "TOTO");
                 Q.execute(new StringListRP(), 0, -1);
               }
 
-            C.ExecuteUpdate(TABLENAME, "update " + TABLENAME + " set " + COLS.MAX + "=" + COLS.MAX + "+" + COLS.COUNT + " where " + COLS.REFNUM + "=" + K.getRefnum());
+            StringBuilder Q = new StringBuilder();
+            Q.append("update "); Key_Factory.getFullTableNameVar(C, Q); 
+            Q.append(" set ").append(COLS.MAX).append("=").append(COLS.MAX).append("+").append(COLS.COUNT)
+             .append(" where ").append(COLS.REFNUM).append("=").append(K.getRefnum())
+             ;            
+            C.ExecuteUpdate(Key_Factory.SCHEMA_TABLENAME_LABEL, Q.toString());
 
             C.rollback();
           }

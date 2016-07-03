@@ -29,12 +29,8 @@ import tilda.grammar.TildaSQLValidator;
 
 /**
  * <B>LDH-NOTE</B>
- * This class helps build queries more safely, but it's not a compile-time tool. Therefore, there is no point
- * in trying to catch syntax errors as the database will do that plenty fine.<BR>
- * It's tempting to add extra features to catch mismatched parentheses, checking there is no duplicate
- * table names in the From clause. The only thing that was interesting is that using operators in the SET part
- * of a select or update causes weird things. For example, select a=3 evaluates as a boolean expression which
- * i find weird, so i check for it. Other than that, nothing except major issues like
+ * This class allwos to pass in a full string-based where-clause that will be validated
+ * against the TildaSQL parser
  * 
  * @author ldh
  *
@@ -46,7 +42,7 @@ public class SelectQueryParsedAndValidated extends SelectQuery
     public SelectQueryParsedAndValidated(ObjectMetaData OMD, String WhereClause)
       throws Exception
       {
-        super(null, OMD._ObjectName);
+        super(null, null, OMD._ObjectName, false);
 
         TildaSQLValidator Validator = new TildaSQLValidator(WhereClause);
         Validator.setColumnEnvironment(OMD._Cols);

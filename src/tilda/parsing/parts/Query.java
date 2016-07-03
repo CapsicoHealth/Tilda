@@ -28,6 +28,7 @@ import com.google.gson.annotations.SerializedName;
 
 import tilda.db.stores.DBType;
 import tilda.enums.ColumnType;
+import tilda.generation.java8.Helper;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.utils.TextUtil;
@@ -56,6 +57,7 @@ public class Query
       }
 
     public transient List<Attribute> _Attributes = new ArrayList<Attribute>();
+    public transient String _ClauseDynamic;
 
     public Query()
       {
@@ -159,13 +161,25 @@ public class Query
         // LOG.debug(" "+m._type+": "+m._name+" ("+m._start+"-"+m._end+")");
         // }
 
-        StringBuilder NewClause = new StringBuilder();
+        StringBuilder NewClauseStatic  = new StringBuilder();
+        StringBuilder NewClauseDynamic = new StringBuilder();
+        boolean DEBUG_IT = _Clause.indexOf("from organizations.provider") != -1;
         int clauseStrIndex = 0;
         Column lastColumnMatch = null;
         for (int i = 0; i < Matches.size(); ++i)
           {
             Match m = Matches.get(i);
-            NewClause.append(_Clause, clauseStrIndex, m._start);
+            if (clauseStrIndex <  m._start)
+             {
+               NewClauseStatic .append(_Clause, clauseStrIndex, m._start);
+               String Sub = TextUtil.EscapeDoubleQuoteWithSlash(_Clause.substring(clauseStrIndex, m._start));
+               if (clauseStrIndex == 0)
+                NewClauseDynamic.append(Sub.substring(1, Sub.length()-1));
+               else
+                NewClauseDynamic.append(Sub);
+               if (DEBUG_IT == true)
+                LOG.debug(NewClauseDynamic.toString());
+             }
             if (m._type == 'P' || m._type == 'A')
               {
                 if (lastColumnMatch == null)
@@ -173,7 +187,10 @@ public class Query
                     PS.AddError(OwnerObjName + " is defining a subWhereclause '" + _Clause + "' which has a parameter marker '?(" + m._name + ")' without any previously stated column.");
                     break;
                   }
-                NewClause.append("?");
+                NewClauseStatic.append("?");
+                NewClauseDynamic.append(").append(\"?\").append(");
+                if (DEBUG_IT == true)
+                 LOG.debug(NewClauseDynamic.toString());
                 String var = m._name;
                 if (TextUtil.FindElement(ColumnNames, var, false, 0) != -1)
                   {
@@ -212,12 +229,32 @@ public class Query
                     continue;
                   }
                 lastColumnMatch = C;
-                NewClause.append(PS._CGSql.getFullColumnVar(C));
+                NewClauseStatic.append(PS._CGSql.getFullColumnVar(C));
+                NewClauseDynamic.append(clauseStrIndex==0?"\"); " : "); ").append(Helper.getFullColVarAtRuntime(C)).append("; S.append(");
+                if (DEBUG_IT == true)
+                 LOG.debug(NewClauseDynamic.toString());
               }
             clauseStrIndex = m._end;
           }
-        NewClause.append(_Clause, clauseStrIndex, _Clause.length());
-        _Clause = NewClause.toString();
+        if (clauseStrIndex < _Clause.length())
+          {
+            NewClauseStatic .append(_Clause, clauseStrIndex, _Clause.length());
+            String Sub = TextUtil.EscapeDoubleQuoteWithSlash(_Clause.substring(clauseStrIndex, _Clause.length()));
+            NewClauseDynamic.append(Sub.substring(clauseStrIndex == 0 ? 1 : 0, Sub.length()-1));
+          }
+        
+        _Clause = NewClauseStatic.toString();
+        _ClauseDynamic = NewClauseDynamic.toString();
+        if (DEBUG_IT == true)
+         LOG.debug(_ClauseDynamic.toString());
+        
+        if (_ClauseDynamic.endsWith(".append(") == true)
+          {
+            _ClauseDynamic+="\"";
+          }
+
+        if (DEBUG_IT == true)
+         LOG.debug(_ClauseDynamic.toString());
 
         if (TextUtil.isNullOrEmpty(_DB) == true)
           _DB = "*";
@@ -234,8 +271,6 @@ public class Query
             if (Found == false)
               PS.AddError(OwnerObjName + " is defining a subWhereclause with a DB value '" + _DB + "' which cannot be matched to an active DBType.");
           }
-
-        // LOG.debug("Final clause: "+_Clause+";");
 
         return Errs == PS.getErrorCount();
       }

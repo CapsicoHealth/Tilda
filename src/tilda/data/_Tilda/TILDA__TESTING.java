@@ -110,7 +110,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jun 30 2016, 19:33:08EDT
+ @generated Jul 3 2016, 03:21:28EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTING implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject, tilda.interfaces.JSONable
@@ -5361,7 +5361,7 @@ This is the hasChanged for:<BR>
        if (__Changes == 0L)
         {
           LOG.debug("The tilda.data.TILDA.TESTING has not changed: no writing will occur.");
-          QueryDetails.setLastQuery(TILDA__TESTING_Factory.TABLENAME, "");
+          QueryDetails.setLastQuery(TILDA__TESTING_Factory.SCHEMA_TABLENAME_LABEL, "");
           return true;
         }
 
@@ -5370,60 +5370,61 @@ This is the hasChanged for:<BR>
        if (BeforeWrite(C) == false)
         {
           LOG.debug("The tilda.data.TILDA.TESTING object's BeforeWrite() failed.");
-          QueryDetails.setLastQuery(TILDA__TESTING_Factory.TABLENAME, "");
+          QueryDetails.setLastQuery(TILDA__TESTING_Factory.SCHEMA_TABLENAME_LABEL, "");
           return false;
         }
 
        if (__Init == InitMode.CREATE)
         {
           StringBuilder V = new StringBuilder(1024);
-          S.append("insert into TILDA.TESTING ");
-          if ((TILDA__TESTING_Factory.COLS.REFNUM._Mask      & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.REFNUM._Insert     ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.REFNUM2._Mask     & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.REFNUM2._Insert    ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.NAME._Mask        & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.NAME._Insert       ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.DESCRIPTION._Insert); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.DESC2._Mask       & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.DESC2._Insert      ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.DESC3._Mask       & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.DESC3._Insert      ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.DESC4._Mask       & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.DESC4._Insert      ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.DESC5._Mask       & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.DESC5._Insert      ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.DESC6._Mask       & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.DESC6._Insert      ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.TOPS._Mask        & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.TOPS._Insert       ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.TOPS2._Mask       & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.TOPS2._Insert      ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A1._Mask          & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.A1._Insert         ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A2._Mask          & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.A2._Insert         ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A2B._Mask         & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.A2B._Insert        ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A2C._Mask         & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.A2C._Insert        ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A3._Mask          & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.A3._Insert         ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A3B._Mask         & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.A3B._Insert        ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A4._Mask          & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.A4._Insert         ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A4B._Mask         & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.A4B._Insert        ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A5._Mask          & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.A5._Insert         ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A5B._Mask         & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.A5B._Insert        ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A6._Mask          & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.A6._Insert         ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A6B._Mask         & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.A6B._Insert        ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A6C._Mask         & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.A6C._Insert        ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A7._Mask          & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.A7._Insert         ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A7B._Mask         & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.A7B._Insert        ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A8._Mask          & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.A8._Insert         ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A9TZ._Mask        & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.A9TZ._Insert       ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          S.append("insert into "); C.getFullTableVar(S, "TILDA", "TESTING");
+          int Pos = S.length();
+          if ((TILDA__TESTING_Factory.COLS.REFNUM._Mask      & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.REFNUM2._Mask     & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.REFNUM2.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.NAME._Mask        & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.NAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.DESCRIPTION.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.DESC2._Mask       & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.DESC2.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.DESC3._Mask       & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.DESC3.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.DESC4._Mask       & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.DESC4.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.DESC5._Mask       & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.DESC5.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.DESC6._Mask       & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.DESC6.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.TOPS._Mask        & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.TOPS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.TOPS2._Mask       & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.TOPS2.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A1._Mask          & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A1.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A2._Mask          & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A2.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A2B._Mask         & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A2B.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A2C._Mask         & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A2C.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A3._Mask          & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A3.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A3B._Mask         & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A3B.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A4._Mask          & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A4.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A4B._Mask         & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A4B.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A5._Mask          & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A5.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A5B._Mask         & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A5B.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A6._Mask          & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A6.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A6B._Mask         & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A6B.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A6C._Mask         & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A6C.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A7._Mask          & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A7.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A7B._Mask         & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A7B.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A8._Mask          & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A8.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A9TZ._Mask        & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A9TZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
-          if ((TILDA__TESTING_Factory.COLS.A9._Mask          & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.A9._Insert         );
+          if ((TILDA__TESTING_Factory.COLS.A9._Mask          & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A9.getFullColumnVarForInsert(C, S);
              V.append((TILDA__TESTING_Factory.COLS.A9._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_a9) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
 
-          if ((TILDA__TESTING_Factory.COLS.CREATED._Mask     & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.CREATED._Insert    );
+          if ((TILDA__TESTING_Factory.COLS.CREATED._Mask     & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
              V.append((TILDA__TESTING_Factory.COLS.CREATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          else { S.append(TILDA__TESTING_Factory.COLS.CREATED._Insert); V.append(C.getCommaCurrentTimestamp()); }
-          if ((TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.LASTUPDATED._Insert);
+          else { TILDA__TESTING_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
+          if ((TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
              V.append((TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          else { S.append(TILDA__TESTING_Factory.COLS.LASTUPDATED._Insert); V.append(C.getCommaCurrentTimestamp()); }
-          if ((TILDA__TESTING_Factory.COLS.DELETED._Mask     & __Changes) != 0L) { S.append(TILDA__TESTING_Factory.COLS.DELETED._Insert    );
+          else { TILDA__TESTING_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
+          if ((TILDA__TESTING_Factory.COLS.DELETED._Mask     & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
              V.append((TILDA__TESTING_Factory.COLS.DELETED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
 
-          S.setCharAt(26, '(');
+          S.setCharAt(Pos, '(');
           V.setCharAt(0, '(');
           S.append(") values ").append(V).append(')');
           V.setLength(0);
@@ -5431,89 +5432,90 @@ This is the hasChanged for:<BR>
         }
        else // InitMode can be anything else
         {
-          S.append("update TILDA.TESTING set");
-          if ((TILDA__TESTING_Factory.COLS.REFNUM._Mask      & __Changes) != 0L) S.append(TILDA__TESTING_Factory.COLS.REFNUM._Update     );
-          if ((TILDA__TESTING_Factory.COLS.REFNUM2._Mask     & __Changes) != 0L) S.append(TILDA__TESTING_Factory.COLS.REFNUM2._Update    );
-          if ((TILDA__TESTING_Factory.COLS.NAME._Mask        & __Changes) != 0L) S.append(TILDA__TESTING_Factory.COLS.NAME._Update       );
-          if ((TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask & __Changes) != 0L) S.append(TILDA__TESTING_Factory.COLS.DESCRIPTION._Update);
-          if ((TILDA__TESTING_Factory.COLS.DESC2._Mask       & __Changes) != 0L) S.append(TILDA__TESTING_Factory.COLS.DESC2._Update      );
-          if ((TILDA__TESTING_Factory.COLS.DESC3._Mask       & __Changes) != 0L) S.append(TILDA__TESTING_Factory.COLS.DESC3._Update      );
-          if ((TILDA__TESTING_Factory.COLS.DESC4._Mask       & __Changes) != 0L) S.append(TILDA__TESTING_Factory.COLS.DESC4._Update      );
-          if ((TILDA__TESTING_Factory.COLS.DESC5._Mask       & __Changes) != 0L) S.append(TILDA__TESTING_Factory.COLS.DESC5._Update      );
-          if ((TILDA__TESTING_Factory.COLS.DESC6._Mask       & __Changes) != 0L) S.append(TILDA__TESTING_Factory.COLS.DESC6._Update      );
-          if ((TILDA__TESTING_Factory.COLS.TOPS._Mask        & __Changes) != 0L) S.append(TILDA__TESTING_Factory.COLS.TOPS._Update       );
-          if ((TILDA__TESTING_Factory.COLS.TOPS2._Mask       & __Changes) != 0L) S.append(TILDA__TESTING_Factory.COLS.TOPS2._Update      );
-          if ((TILDA__TESTING_Factory.COLS.A1._Mask          & __Changes) != 0L) S.append(TILDA__TESTING_Factory.COLS.A1._Update         );
-          if ((TILDA__TESTING_Factory.COLS.A2._Mask          & __Changes) != 0L) S.append(TILDA__TESTING_Factory.COLS.A2._Update         );
-          if ((TILDA__TESTING_Factory.COLS.A2B._Mask         & __Changes) != 0L) S.append(TILDA__TESTING_Factory.COLS.A2B._Update        );
-          if ((TILDA__TESTING_Factory.COLS.A2C._Mask         & __Changes) != 0L) S.append(TILDA__TESTING_Factory.COLS.A2C._Update        );
-          if ((TILDA__TESTING_Factory.COLS.A3._Mask          & __Changes) != 0L) S.append(TILDA__TESTING_Factory.COLS.A3._Update         );
-          if ((TILDA__TESTING_Factory.COLS.A3B._Mask         & __Changes) != 0L) S.append(TILDA__TESTING_Factory.COLS.A3B._Update        );
-          if ((TILDA__TESTING_Factory.COLS.A4._Mask          & __Changes) != 0L) S.append(TILDA__TESTING_Factory.COLS.A4._Update         );
-          if ((TILDA__TESTING_Factory.COLS.A4B._Mask         & __Changes) != 0L) S.append(TILDA__TESTING_Factory.COLS.A4B._Update        );
-          if ((TILDA__TESTING_Factory.COLS.A5._Mask          & __Changes) != 0L) S.append(TILDA__TESTING_Factory.COLS.A5._Update         );
-          if ((TILDA__TESTING_Factory.COLS.A5B._Mask         & __Changes) != 0L) S.append(TILDA__TESTING_Factory.COLS.A5B._Update        );
-          if ((TILDA__TESTING_Factory.COLS.A6._Mask          & __Changes) != 0L) S.append(TILDA__TESTING_Factory.COLS.A6._Update         );
-          if ((TILDA__TESTING_Factory.COLS.A6B._Mask         & __Changes) != 0L) S.append(TILDA__TESTING_Factory.COLS.A6B._Update        );
-          if ((TILDA__TESTING_Factory.COLS.A6C._Mask         & __Changes) != 0L) S.append(TILDA__TESTING_Factory.COLS.A6C._Update        );
-          if ((TILDA__TESTING_Factory.COLS.A7._Mask          & __Changes) != 0L) S.append(TILDA__TESTING_Factory.COLS.A7._Update         );
-          if ((TILDA__TESTING_Factory.COLS.A7B._Mask         & __Changes) != 0L) S.append(TILDA__TESTING_Factory.COLS.A7B._Update        );
-          if ((TILDA__TESTING_Factory.COLS.A8._Mask          & __Changes) != 0L) S.append(TILDA__TESTING_Factory.COLS.A8._Update         );
-          if ((TILDA__TESTING_Factory.COLS.A9TZ._Mask        & __Changes) != 0L) S.append(TILDA__TESTING_Factory.COLS.A9TZ._Update       );
+          S.append("update "); C.getFullTableVar(S, "TILDA", "TESTING"); S.append(" set");
+          int Pos = S.length();
+          if ((TILDA__TESTING_Factory.COLS.REFNUM._Mask      & __Changes) != 0L) TILDA__TESTING_Factory.COLS.REFNUM.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.REFNUM2._Mask     & __Changes) != 0L) TILDA__TESTING_Factory.COLS.REFNUM2.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.NAME._Mask        & __Changes) != 0L) TILDA__TESTING_Factory.COLS.NAME.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask & __Changes) != 0L) TILDA__TESTING_Factory.COLS.DESCRIPTION.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.DESC2._Mask       & __Changes) != 0L) TILDA__TESTING_Factory.COLS.DESC2.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.DESC3._Mask       & __Changes) != 0L) TILDA__TESTING_Factory.COLS.DESC3.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.DESC4._Mask       & __Changes) != 0L) TILDA__TESTING_Factory.COLS.DESC4.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.DESC5._Mask       & __Changes) != 0L) TILDA__TESTING_Factory.COLS.DESC5.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.DESC6._Mask       & __Changes) != 0L) TILDA__TESTING_Factory.COLS.DESC6.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.TOPS._Mask        & __Changes) != 0L) TILDA__TESTING_Factory.COLS.TOPS.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.TOPS2._Mask       & __Changes) != 0L) TILDA__TESTING_Factory.COLS.TOPS2.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A1._Mask          & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A1.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A2._Mask          & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A2.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A2B._Mask         & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A2B.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A2C._Mask         & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A2C.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A3._Mask          & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A3.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A3B._Mask         & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A3B.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A4._Mask          & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A4.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A4B._Mask         & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A4B.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A5._Mask          & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A5.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A5B._Mask         & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A5B.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A6._Mask          & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A6.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A6B._Mask         & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A6B.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A6C._Mask         & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A6C.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A7._Mask          & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A7.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A7B._Mask         & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A7B.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A8._Mask          & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A8.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A9TZ._Mask        & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A9TZ.getFullColumnVarForUpdate(C, S);
 
           if ((TILDA__TESTING_Factory.COLS.A9._Mask & __Changes) != 0L)
            {
              if ((TILDA__TESTING_Factory.COLS.A9._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_a9) == true)
-              S.append(TILDA__TESTING_Factory.COLS.A9._Insert).append(C.getEqualCurrentTimestamp());
+              { TILDA__TESTING_Factory.COLS.A9.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
-              S.append(TILDA__TESTING_Factory.COLS.A9._Update);
+              TILDA__TESTING_Factory.COLS.A9.getFullColumnVarForUpdate(C, S);
            }
 
           if ((TILDA__TESTING_Factory.COLS.CREATED._Mask & __Changes) != 0L)
            {
              if ((TILDA__TESTING_Factory.COLS.CREATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true)
-              S.append(TILDA__TESTING_Factory.COLS.CREATED._Insert).append(C.getEqualCurrentTimestamp());
+              { TILDA__TESTING_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
-              S.append(TILDA__TESTING_Factory.COLS.CREATED._Update);
+              TILDA__TESTING_Factory.COLS.CREATED.getFullColumnVarForUpdate(C, S);
            }
 
           if ((TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask & __Changes) != 0L)
            {
              if ((TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true)
-              S.append(TILDA__TESTING_Factory.COLS.LASTUPDATED._Insert).append(C.getEqualCurrentTimestamp());
+              { TILDA__TESTING_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
-              S.append(TILDA__TESTING_Factory.COLS.LASTUPDATED._Update);
+              TILDA__TESTING_Factory.COLS.LASTUPDATED.getFullColumnVarForUpdate(C, S);
            }
           else 
            {
-             S.append(TILDA__TESTING_Factory.COLS.LASTUPDATED._Insert).append(C.getEqualCurrentTimestamp());
+             TILDA__TESTING_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp());
              setLastUpdatedNow();
            }
 
           if ((TILDA__TESTING_Factory.COLS.DELETED._Mask & __Changes) != 0L)
            {
              if ((TILDA__TESTING_Factory.COLS.DELETED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true)
-              S.append(TILDA__TESTING_Factory.COLS.DELETED._Insert).append(C.getEqualCurrentTimestamp());
+              { TILDA__TESTING_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
-              S.append(TILDA__TESTING_Factory.COLS.DELETED._Update);
+              TILDA__TESTING_Factory.COLS.DELETED.getFullColumnVarForUpdate(C, S);
            }
 
           switch (__LookupId)
            {
              case 0:
-                S.append(" where (TILDA.TESTING.\"refnum\"=?)");
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "TESTING", "refnum"); S.append("=?)");
                 break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
            }
-          S.setCharAt(24, ' ');
+          S.setCharAt(Pos, ' ');
         }
 
        String Q = S.toString();
        S.setLength(0);
        S = null;
-       QueryDetails.setLastQuery(TILDA__TESTING_Factory.TABLENAME, Q);
-       LOG.debug("TILDA([7mTILDA.TESTING[27m): "+Q.replaceAll(TILDA__TESTING_Factory.TABLENAME+"\\.",""));
+       QueryDetails.setLastQuery(TILDA__TESTING_Factory.SCHEMA_TABLENAME_LABEL, Q);
+       LOG.debug("TILDA([7mTILDA.TESTING[27m): "+Q);
        LOG.debug("   "+toString());
        java.sql.PreparedStatement PS = null;
        int count = 0;
@@ -5673,7 +5675,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__TESTING_Factory.TABLENAME, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__TESTING_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }
@@ -5728,7 +5730,7 @@ This is the hasChanged for:<BR>
        if (__Init == InitMode.READ == true && Force == false && __Changes == 0L)
         {
           LOG.debug("This TILDA.TESTING object has already been read.");
-          QueryDetails.setLastQuery(TILDA__TESTING_Factory.TABLENAME, "");
+          QueryDetails.setLastQuery(TILDA__TESTING_Factory.SCHEMA_TABLENAME_LABEL, "");
           return true;
         }
        StringBuilder S = new StringBuilder(1024);
@@ -5769,7 +5771,7 @@ This is the hasChanged for:<BR>
        switch (__LookupId)
         {
           case 0:
-             S.append(" where (TILDA.TESTING.\"refnum\"=?)");
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "TESTING", "refnum"); S.append("=?)");
              break;
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
@@ -5778,8 +5780,8 @@ This is the hasChanged for:<BR>
        String Q = S.toString();
        S.setLength(0);
        S = null;
-       QueryDetails.setLastQuery(TILDA__TESTING_Factory.TABLENAME, Q);
-       LOG.debug("TILDA([7mTILDA.TESTING[27m): "+Q.replaceAll(TILDA__TESTING_Factory.TABLENAME+"\\.",""));
+       QueryDetails.setLastQuery(TILDA__TESTING_Factory.SCHEMA_TABLENAME_LABEL, Q);
+       LOG.debug("TILDA([7mTILDA.TESTING[27m): "+Q);
        LOG.debug("   "+toString());
        java.sql.PreparedStatement PS=null;
        java.sql.ResultSet RS=null;
@@ -5814,7 +5816,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__TESTING_Factory.TABLENAME, StatementType.SELECT, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__TESTING_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }

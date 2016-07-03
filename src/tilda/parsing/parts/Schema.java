@@ -77,11 +77,19 @@ public class Schema
         throw new Exception("Cannot parse out the Tilda schema name out of the resource/file name '" + ResourceName + "'.");
       }
 
+    /**
+     * 
+     * @return the FULL name of the schema (including the package name).
+     */
     public String getFullName()
       {
         return _Package + "." + _Name;
       }
 
+    /**
+     * 
+     * @return simply the name of the schema.
+     */
     public String getShortName()
       {
         return _Name;

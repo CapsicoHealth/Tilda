@@ -21,49 +21,56 @@ import java.lang.reflect.Constructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.db.Connection;
 import tilda.enums.ColumnType;
-import tilda.enums.StatementType;
 
 public class ColumnDefinition
   {
     protected static final Logger LOG = LogManager.getLogger(ColumnDefinition.class.getName());
 
-    public ColumnDefinition(String TableName, String ColumnName, long Count, ColumnType Type, boolean Collection, String Description)
+    public ColumnDefinition(String SchemaName, String TableName, String ColumnName, long Count, ColumnType Type, boolean Collection, String Description)
       {
+        _SchemaName = SchemaName;
         _TableName = TableName;
         _ColumnName = ColumnName;
-        _Short = "\"" + ColumnName + "\"";
-        _Full = TableName + "." + _Short;
-        _Insert = ", " + _Short;
-        _Update = ", " + _Short + (Type==ColumnType.JSON ? "=cast(? as jsonb)" : "=?"); // LDH-NOTE: BOOOOO!!!!! HARD-CODED... Won't work on other DBs.. need to clean up!
         _Type = Type;
         _Collection = Collection;
         _Mask = 1L << Count;
         _Description = Description;
       }
 
+    final String            _SchemaName;
     final String            _TableName;
-    final String            _Full;
-    final String            _Short;
     final String            _ColumnName;
     final String            _Description;
-
-    public final String     _Insert;
-    public final String     _Update;
 
     public final ColumnType _Type;
     public final boolean    _Collection;
     public final long       _Mask;
 
-    public final String toString()
+    public void getFullColumnVarForSelect(Connection C, StringBuilder Str)
       {
-        return _Short;
+        C.getFullColumnVar(Str, null, _TableName, _ColumnName);
+      }
+    public void getShortColumnVarForSelect(Connection C, StringBuilder Str)
+      {
+        C.getFullColumnVar(Str, null, null, _ColumnName);
+      }
+    
+
+    public void getFullColumnVarForInsert(Connection C, StringBuilder Str)
+      {
+        Str.append(",");
+        C.getFullColumnVar(Str, null, null, _ColumnName);
       }
 
-    public final String toString(StatementType ST)
+    public void getFullColumnVarForUpdate(Connection C, StringBuilder Str)
       {
-        return ST == StatementType.SELECT ? _Full : _Short;
+        Str.append(",");
+        C.getFullColumnVar(Str, null, null, _ColumnName);
+        Str.append(_Type == ColumnType.JSON ? "=cast(? as jsonb)" : "=?"); // LDH-NOTE: BOOOOO!!!!! HARD-CODED... Won't work on other DBs.. need to clean up!
       }
+
 
     public String getName()
       {
@@ -76,8 +83,8 @@ public class ColumnDefinition
         try
           {
             Class<?> C = Class.forName(ClassName);
-            Constructor<?> cons = C.getConstructor(String.class, String.class, Long.TYPE, String.class );
-            return (ColumnDefinition) cons.newInstance("?", Name, 0, Description);
+            Constructor<?> cons = C.getConstructor(String.class, String.class, String.class, Long.TYPE, String.class);
+            return (ColumnDefinition) cons.newInstance(null, null, Name, 0, Description);
           }
         catch (Exception E)
           {

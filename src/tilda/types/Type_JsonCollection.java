@@ -20,9 +20,9 @@ import tilda.enums.ColumnType;
 
 public class Type_JsonCollection extends ColumnDefinition
   {
-    public Type_JsonCollection(String TableName, String ColumnName, long Count, String Description)
+    public Type_JsonCollection(String SchemaName, String TableName, String ColumnName, long Count, String Description)
       {
-        super(TableName, ColumnName, Count, ColumnType.JSON, true, Description);
+        super(SchemaName, TableName, ColumnName, Count, ColumnType.JSON, true, Description);
       }
     
   }

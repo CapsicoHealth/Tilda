@@ -59,16 +59,28 @@ public abstract class Base
     public abstract boolean isOCC();
     public abstract String getWhat();
 
+    /**
+     * 
+     * @return the FULL name of the schema (including the package name) + '.' + the name of the object.
+     */
     public String getFullName()
       {
         return _ParentSchema.getFullName() + "." + _Name;
       }
 
+    /**
+     * 
+     * @return simply the name of the schema + '.' + the name of the object.
+     */
     public String getShortName()
       {
         return _ParentSchema.getShortName() + "." + _Name;
       }
     
+    /**
+     * 
+     * @return simple the name of the object.
+     */
     public String getBaseName()
       {
         return _Name;

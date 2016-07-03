@@ -105,17 +105,17 @@ public class Helper
 
     public static String getRuntimeSelectStr(Column C)
       {
-        return C._ParentObject.getBaseClassName() + "_Factory.COLS." + C.getName().toUpperCase() + "._Full";
+        return C._ParentObject.getBaseClassName() + "_Factory.COLS." + C.getName().toUpperCase() + ".getFullColumnVarForSelect(C, S)";
       }
 
     public static String getRuntimeInsertStr(Column C)
       {
-        return C._ParentObject.getBaseClassName() + "_Factory.COLS." + C.getName().toUpperCase() + "._Insert";
+        return C._ParentObject.getBaseClassName() + "_Factory.COLS." + C.getName().toUpperCase() + ".getFullColumnVarForInsert(C, S)";
       }
 
     public static String getRuntimeUpdateStr(Column C)
       {
-        return C._ParentObject.getBaseClassName() + "_Factory.COLS." + C.getName().toUpperCase() + "._Update";
+        return C._ParentObject.getBaseClassName() + "_Factory.COLS." + C.getName().toUpperCase() + ".getFullColumnVarForUpdate(C, S)";
       }
 
     public static String getVisibility(Column C, boolean PackageForPrivate)
@@ -159,7 +159,7 @@ public class Helper
         Out.println("        }");
         Out.println("       finally");
         Out.println("        {");
-        Out.println("          " + getSupportClassFullName(O._ParentSchema) + ".HandleFinally(PS, T0, " + O.getBaseClassName() + "_Factory.TABLENAME, " + StatementTypeStr + ", count, AllocatedArrays);");
+        Out.println("          " + getSupportClassFullName(O._ParentSchema) + ".HandleFinally(PS, T0, " + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, " + StatementTypeStr + ", count, AllocatedArrays);");
         Out.println("          PS = null;");
         Out.println("          AllocatedArrays = null;");
         Out.println("        }");
@@ -275,12 +275,25 @@ public class Helper
                 if (First == true)
                   First = false;
                 else
-                  Str.append(", ");
-                Str.append(G.getSql().getFullColumnVar(C)).append(" ").append(O.toString());
+                  Str.append("S.append(\", ");
+                Str.append("\"); ");
+                Str.append(Helper.getFullColVarAtRuntime(C));
+                Str.append("; S.append(\" ").append(O.toString()).append("\");");
               }
           }
         return Str.toString();
       }
+    
+    public static String getFullColVarAtRuntime(Column C)
+     {
+       return "C.getFullColumnVar(S, "+TextUtil.EscapeDoubleQuoteWithSlash(C._ParentObject._ParentSchema._Name)+", "+TextUtil.EscapeDoubleQuoteWithSlash(C._ParentObject._Name)+", "+TextUtil.EscapeDoubleQuoteWithSlash(C.getName())+")";
+     }
+    
+    public static String getFullTableVarAtRuntime(Object O)
+     {
+       return "C.getFullTableVar(S, "+TextUtil.EscapeDoubleQuoteWithSlash(O._ParentSchema._Name)+", "+TextUtil.EscapeDoubleQuoteWithSlash(O._Name)+")";
+     }
+    
 
     public static String PrintWhereClause(GeneratorSession G, List<Column> Columns, SubWhereClause SubWhere)
       {
@@ -294,7 +307,9 @@ public class Helper
                   First = false;
                 else
                   Str.append(" AND ");
-                Str.append(G.getSql().getFullColumnVar(C) + "=?");
+                Str.append("\"); ");
+                Str.append(getFullColVarAtRuntime(C));
+                Str.append("; S.append(\"=?");
               }
         if (SubWhere != null)
           {
@@ -304,7 +319,7 @@ public class Helper
                 boolean alone = Str.length() == 0;
                 if (alone == false)
                   Str.append(" AND (");
-                Str.append(q._Clause);
+                Str.append(q._ClauseDynamic);
                 if (alone == false)
                   Str.append(")");
               }
@@ -331,7 +346,7 @@ public class Helper
             if (UniqueConstraints == true)
               {
                 Out.println(Lead + "   case " + LookupId + ":");
-                Out.println(Lead + "      S.append(" + TextUtil.EscapeDoubleQuoteWithSlash(" where (" + PrintWhereClause(G, O._PrimaryKey._ColumnObjs, null) + ")") + ");");
+                Out.println(Lead + "      S.append(\" where (" + PrintWhereClause(G, O._PrimaryKey._ColumnObjs, null) + ")\");");
                 Out.println(Lead + "      break;");
               }
           }
@@ -342,7 +357,7 @@ public class Helper
               if (UniqueConstraints == true)
                 {
                   Out.println(Lead + "   case " + LookupId + ":");
-                  Out.println(Lead + "      S.append(" + TextUtil.EscapeDoubleQuoteWithSlash(" where (" + PrintWhereClause(G, I._ColumnObjs, I._SubQuery) + ")") + ");");
+                  Out.println(Lead + "      S.append(\" where (" + PrintWhereClause(G, I._ColumnObjs, I._SubQuery) + ")\");");
                   Out.println(Lead + "      break;");
                 }
             }
@@ -357,14 +372,14 @@ public class Helper
                     Out.println(Lead + "      S.append(" + TextUtil.EscapeDoubleQuoteWithSlash(", " + PrintObjectList(I._SubQuery._FromObj)) + "); // Additional From's from the subwhereclause.");
                   String WhereClause = PrintWhereClause(G, I._ColumnObjs, I._SubQuery);
                   if (TextUtil.isNullOrEmpty(WhereClause) == false)
-                    Out.println(Lead + "      S.append(" + TextUtil.EscapeDoubleQuoteWithSlash(" where (" + WhereClause + ")") + ");");
+                    Out.println(Lead + "      S.append(\" where (" + WhereClause + ")\");");
                   // Out.println(Lead + "      if (TextUtil.isNullOrEmpty(PartialWhereclause) == false)");
                   // if (TextUtil.isNullOrEmpty(WhereClause) == false)
                   // Out.println(Lead + "       S.append(\" AND (\").append(PartialWhereclause).append(\")\");");
                   // else
                   // Out.println(Lead + "       S.append(\" where \").append(PartialWhereclause);");
                   if (I._OrderByObjs.isEmpty() == false)
-                    Out.println(Lead + "      S.append(" + TextUtil.EscapeDoubleQuoteWithSlash(" order by " + PrintOrderByClause(G, I._OrderByObjs, I._OrderByOrders)) + ");");
+                    Out.println(Lead + "      S.append(\"" + " order by " + PrintOrderByClause(G, I._OrderByObjs, I._OrderByOrders));
                   Out.println(Lead + "      break;");
                 }
             }
@@ -377,7 +392,7 @@ public class Helper
                 {
                   Out.println(Lead + "   case " + LookupId + ":");
                   if (SWC._Attributes.isEmpty() == false)
-                    Out.println(Lead + "      S.append(" + TextUtil.EscapeDoubleQuoteWithSlash(" where (" + PrintWhereClause(G, null, SWC) + ")") + ");");
+                    Out.println(Lead + "      S.append(\" where (" + PrintWhereClause(G, null, SWC) + ")\");");
                   Out.println(Lead + "      break;");
                 }
             }
@@ -392,9 +407,9 @@ public class Helper
                     Out.println(Lead + "      S.append(" + TextUtil.EscapeDoubleQuoteWithSlash(", " + PrintObjectList(SWC._FromObj)) + "); // Additional From's from the subwhereclause.");
                   String WhereClause = PrintWhereClause(G, null, SWC);
                   if (TextUtil.isNullOrEmpty(WhereClause) == false)
-                    Out.println(Lead + "      S.append(" + TextUtil.EscapeDoubleQuoteWithSlash(" where (" + WhereClause + ")") + ");");
+                    Out.println(Lead + "      S.append(\" where (" + WhereClause + ")\");");
                   if (SWC._OrderByObjs.isEmpty() == false)
-                    Out.println(Lead + "      S.append(" + TextUtil.EscapeDoubleQuoteWithSlash(" order by " + PrintOrderByClause(G, SWC._OrderByObjs, SWC._OrderByOrders)) + ");");
+                    Out.println(Lead + "      S.append(\" order by " + PrintOrderByClause(G, SWC._OrderByObjs, SWC._OrderByOrders));
                   Out.println(Lead + "      break;");
                 }
             }
@@ -664,7 +679,7 @@ public class Helper
                 {
                   Out.print("       S.append(\", \");");
                 }
-              Out.println(" C.getFullColumnVar(S, "+TextUtil.EscapeDoubleQuoteWithSlash(C._ParentObject._ParentSchema._Name)+", "+TextUtil.EscapeDoubleQuoteWithSlash(C._ParentObject._Name)+", "+TextUtil.EscapeDoubleQuoteWithSlash(C.getName())+");");              
+              Out.println(" "+getFullColVarAtRuntime(C)+";");
             }
         Out.println("       S.append(\" from \"); C.getFullTableVar(S, "+TextUtil.EscapeDoubleQuoteWithSlash(O._ParentSchema._Name)+", "+TextUtil.EscapeDoubleQuoteWithSlash(O._Name)+");");
       }

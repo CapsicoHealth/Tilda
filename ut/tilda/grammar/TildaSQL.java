@@ -88,19 +88,19 @@ public class TildaSQL
           ,ColumnDefinition.Create("NCH_BENE_DSCHRG_DT", ColumnType.DATETIME, false, true , "Claim discharge date")
           ,ColumnDefinition.Create("CLM_THRU_DT"       , ColumnType.DATETIME, false, true , "Claim end date")
 
-       ,new Type_FloatPrimitiveNull   ("CMS.CLAIMSBENEFICIARYVIEW", "CLM_PMT_AMT"            , 7, ""),
-        new Type_StringPrimitiveNull  ("CMS.CLAIMSBENEFICIARYVIEW", "PRVDR_CLASS"            , 10, ""), 
-        new Type_CharPrimitiveNull    ("CMS.CLAIMSBENEFICIARYVIEW", "CLM_TYPE"               , 11, ""),
-        new Type_StringPrimitiveNull  ("CMS.CLAIMSBENEFICIARYVIEW", "PRIMARY_ICD9_DGNS_CD"   , 12, ""), 
-        new Type_StringCollectionNull ("CMS.CLAIMSBENEFICIARYVIEW", "SECONDARY_ICD9_DGNS_CD" , 13, ""),
-        new Type_StringPrimitiveNull  ("CMS.CLAIMSBENEFICIARYVIEW", "PRIMARY_ICD9_PRCDR_CD"  , 14, ""), 
-        new Type_StringCollectionNull ("CMS.CLAIMSBENEFICIARYVIEW", "SECONDARY_ICD9_PRCDR_CD", 15, ""),
-        new Type_IntegerPrimitiveNull ("CMS.CLAIMSBENEFICIARYVIEW", "CLM_UTLZTN_DAY_CNT"     , 16, ""), 
-        new Type_StringPrimitiveNull  ("CMS.CLAIMSBENEFICIARYVIEW", "BENE_DEATH_DTTZ"        , 17, ""),
-        new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "BENE_DEATH_DT"          , 18, ""), 
-        new Type_DatetimePrimitiveNull("CMS.CLAIMSBENEFICIARYVIEW", "BENE_BIRTH_DT"          , 20, ""), 
-        new Type_IntegerPrimitive     ("CMS.CLAIMSBENEFICIARYVIEW", "BENE_SEX_IDENT_CD"      , 21, ""),
-        new Type_IntegerPrimitive     ("CMS.CLAIMSBENEFICIARYVIEW", "SP_STATE_CODE"          , 22, "")
+       ,new Type_FloatPrimitiveNull   ("CMS", "CLAIMSBENEFICIARYVIEW", "CLM_PMT_AMT"            , 7, ""),
+        new Type_StringPrimitiveNull  ("CMS", "CLAIMSBENEFICIARYVIEW", "PRVDR_CLASS"            , 10, ""), 
+        new Type_CharPrimitiveNull    ("CMS", "CLAIMSBENEFICIARYVIEW", "CLM_TYPE"               , 11, ""),
+        new Type_StringPrimitiveNull  ("CMS", "CLAIMSBENEFICIARYVIEW", "PRIMARY_ICD9_DGNS_CD"   , 12, ""), 
+        new Type_StringCollectionNull ("CMS", "CLAIMSBENEFICIARYVIEW", "SECONDARY_ICD9_DGNS_CD" , 13, ""),
+        new Type_StringPrimitiveNull  ("CMS", "CLAIMSBENEFICIARYVIEW", "PRIMARY_ICD9_PRCDR_CD"  , 14, ""), 
+        new Type_StringCollectionNull ("CMS", "CLAIMSBENEFICIARYVIEW", "SECONDARY_ICD9_PRCDR_CD", 15, ""),
+        new Type_IntegerPrimitiveNull ("CMS", "CLAIMSBENEFICIARYVIEW", "CLM_UTLZTN_DAY_CNT"     , 16, ""), 
+        new Type_StringPrimitiveNull  ("CMS", "CLAIMSBENEFICIARYVIEW", "BENE_DEATH_DTTZ"        , 17, ""),
+        new Type_DatetimePrimitiveNull("CMS", "CLAIMSBENEFICIARYVIEW", "BENE_DEATH_DT"          , 18, ""), 
+        new Type_DatetimePrimitiveNull("CMS", "CLAIMSBENEFICIARYVIEW", "BENE_BIRTH_DT"          , 20, ""), 
+        new Type_IntegerPrimitive     ("CMS", "CLAIMSBENEFICIARYVIEW", "BENE_SEX_IDENT_CD"      , 21, ""),
+        new Type_IntegerPrimitive     ("CMS", "CLAIMSBENEFICIARYVIEW", "SP_STATE_CODE"          , 22, "")
     });
    /*@formatter:on*/
 

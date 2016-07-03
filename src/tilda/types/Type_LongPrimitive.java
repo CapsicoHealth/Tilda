@@ -20,9 +20,9 @@ import tilda.enums.ColumnType;
 
 public class Type_LongPrimitive extends ColumnDefinition
   {
-    public Type_LongPrimitive(String TableName, String ColumnName, long Count, String Description)
+    public Type_LongPrimitive(String SchemaName, String TableName, String ColumnName, long Count, String Description)
       {
-        super(TableName, ColumnName, Count, ColumnType.LONG, false, Description);
+        super(SchemaName, TableName, ColumnName, Count, ColumnType.LONG, false, Description);
       }
     
   }

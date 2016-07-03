@@ -54,16 +54,19 @@ public class TILDA__KEY_Factory
    protected TILDA__KEY_Factory() { }
 
    public static final Class<TILDA__KEY> DATA_CLASS= TILDA__KEY.class;
-   public static final String TABLENAME = TextUtil.Print("TILDA.KEY", "");
+   public static final String SCHEMA_LABEL = TextUtil.Print("TILDA", "");
+   public static final String TABLENAME_LABEL = TextUtil.Print("KEY", "");
+   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.KEY", "");
+   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "KEY"); }
 
    protected static abstract class COLS {
-     public static Type_LongPrimitive           REFNUM     = new Type_LongPrimitive          ("TILDA.KEY", "refnum"     , 0, "The primary key for this record");
-     public static Type_StringPrimitive         NAME       = new Type_StringPrimitive        ("TILDA.KEY", "name"       , 1, "The name of the table/object tracked");
-     public static Type_LongPrimitive           MAX        = new Type_LongPrimitive          ("TILDA.KEY", "max"        , 2, "The pre-allocated max RefNum for this table/object.");
-     public static Type_IntegerPrimitive        COUNT      = new Type_IntegerPrimitive       ("TILDA.KEY", "count"      , 3, "The size of the pre-allocation required by this table/object.");
-     public static Type_DatetimePrimitive       CREATED    = new Type_DatetimePrimitive      ("TILDA.KEY", "created"    , 4, "The timestamp for when the record was created.");
-     public static Type_DatetimePrimitive       LASTUPDATED= new Type_DatetimePrimitive      ("TILDA.KEY", "lastUpdated", 5, "The timestamp for when the record was last updated.");
-     public static Type_DatetimePrimitiveNull   DELETED    = new Type_DatetimePrimitiveNull  ("TILDA.KEY", "deleted"    , 6, "The timestamp for when the record was deleted.");
+     public static Type_LongPrimitive           REFNUM     = new Type_LongPrimitive          (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"     , 0, "The primary key for this record");
+     public static Type_StringPrimitive         NAME       = new Type_StringPrimitive        (SCHEMA_LABEL, TABLENAME_LABEL, "name"       , 1, "The name of the table/object tracked");
+     public static Type_LongPrimitive           MAX        = new Type_LongPrimitive          (SCHEMA_LABEL, TABLENAME_LABEL, "max"        , 2, "The pre-allocated max RefNum for this table/object.");
+     public static Type_IntegerPrimitive        COUNT      = new Type_IntegerPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "count"      , 3, "The size of the pre-allocation required by this table/object.");
+     public static Type_DatetimePrimitive       CREATED    = new Type_DatetimePrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 4, "The timestamp for when the record was created.");
+     public static Type_DatetimePrimitive       LASTUPDATED= new Type_DatetimePrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 5, "The timestamp for when the record was last updated.");
+     public static Type_DatetimePrimitiveNull   DELETED    = new Type_DatetimePrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 6, "The timestamp for when the record was deleted.");
 ;
    }
 
@@ -132,8 +135,8 @@ public class TILDA__KEY_Factory
              if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
              break;
           case 2:
-             S.append(" where (TILDA.KEY.\"deleted\" is null)");
-             S.append(" order by TILDA.KEY.\"name\" ASC");
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "KEY", "deleted"); S.append(" is null)");
+             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "KEY", "name"); S.append(" ASC");
              break;
           case -666: break;
           default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
@@ -143,8 +146,8 @@ public class TILDA__KEY_Factory
        String Q = S.toString() + C.getSelectLimitClause(Start, Size+1);
        S.setLength(0);
        S = null;
-       QueryDetails.setLastQuery(TABLENAME, Q);
-       LOG.debug("TILDA([7mTILDA.KEY[27m): "+Q.replaceAll(TABLENAME+"\\.",""));
+       QueryDetails.setLastQuery(SCHEMA_TABLENAME_LABEL, Q);
+       LOG.debug("TILDA([7mTILDA.KEY[27m): "+Q);
        java.sql.PreparedStatement PS=null;
        java.sql.ResultSet RS=null;
        List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
@@ -172,7 +175,7 @@ public class TILDA__KEY_Factory
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__KEY_Factory.TABLENAME, StatementType.SELECT, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__KEY_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }
@@ -276,8 +279,8 @@ public class TILDA__KEY_Factory
      }
 
 
-   public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C   , TILDA__KEY_Factory.TABLENAME); }
-   public static SelectQuery newWhereQuery (            ) throws Exception { return new SelectQuery(null, TILDA__KEY_Factory.TABLENAME); }
+   public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }
+   public static SelectQuery newWhereQuery (Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, false); }
    public static ListResults<tilda.data.Key_Data> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
@@ -289,7 +292,7 @@ public class TILDA__KEY_Factory
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
        ReadMany(C, -7, RPI, null, Q, Start, Size);
      }
-   public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, TILDA__KEY_Factory.TABLENAME); }
-   public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, TILDA__KEY_Factory.TABLENAME); }
+   public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
+   public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
 
  }

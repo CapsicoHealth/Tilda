@@ -182,10 +182,10 @@ public class DBTest
         ZonedDateTime ZDTEnd = ZDTStart.plusHours(1);
         LOG.debug("Start (App): " + DateTimeUtil.printDateTime(ZDTStart));
         LOG.debug("End   (App): " + DateTimeUtil.printDateTime(ZDTEnd));
-        TransPerf_Data TP = TransPerf_Factory.Create("TILDA", TransPerf_Factory.TABLENAME, ZDTStart, ZDTEnd, 10, 10, 10, 10);
+        TransPerf_Data TP = TransPerf_Factory.Create(TransPerf_Factory.SCHEMA_LABEL, TransPerf_Factory.TABLENAME_LABEL, ZDTStart, ZDTEnd, 10, 10, 10, 10);
         if (TP.Write(C) == false)
           throw new Exception("Cannot write TransPerf_Data Object");
-        TP = TransPerf_Factory.LookupByPrimaryKey("TILDA", TransPerf_Factory.TABLENAME, ZDTStart);
+        TP = TransPerf_Factory.LookupByPrimaryKey(TransPerf_Factory.SCHEMA_LABEL, TransPerf_Factory.TABLENAME_LABEL, ZDTStart);
         if (TP.Read(C) == false)
           throw new Exception("Cannot write TransPerf_Data Object");
         LOG.debug("Start (DB): " + DateTimeUtil.printDateTime(TP.getStartPeriod()));
@@ -197,10 +197,10 @@ public class DBTest
         ZDTEnd = ZDTStart.plusHours(1);
         LOG.debug("Start (App): " + DateTimeUtil.printDateTime(ZDTStart));
         LOG.debug("End   (App): " + DateTimeUtil.printDateTime(ZDTEnd));
-        TP = TransPerf_Factory.Create("TILDA", ObjectPerf_Factory.TABLENAME, ZDTStart, ZDTEnd, 10, 10, 10, 10);
+        TP = TransPerf_Factory.Create(ObjectPerf_Factory.SCHEMA_LABEL, ObjectPerf_Factory.TABLENAME_LABEL, ZDTStart, ZDTEnd, 10, 10, 10, 10);
         if (TP.Write(C) == false)
           throw new Exception("Cannot write TransPerf_Data Object");
-        TP = TransPerf_Factory.LookupByPrimaryKey("TILDA", ObjectPerf_Factory.TABLENAME, ZDTStart);
+        TP = TransPerf_Factory.LookupByPrimaryKey(ObjectPerf_Factory.SCHEMA_LABEL, ObjectPerf_Factory.TABLENAME_LABEL, ZDTStart);
         if (TP.Read(C) == false)
           throw new Exception("Cannot write TransPerf_Data Object");
         LOG.debug("Start (DB): " + DateTimeUtil.printDateTime(TP.getStartPeriod()));

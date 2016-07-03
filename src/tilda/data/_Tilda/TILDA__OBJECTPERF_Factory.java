@@ -54,30 +54,33 @@ public class TILDA__OBJECTPERF_Factory
    protected TILDA__OBJECTPERF_Factory() { }
 
    public static final Class<TILDA__OBJECTPERF> DATA_CLASS= TILDA__OBJECTPERF.class;
-   public static final String TABLENAME = TextUtil.Print("TILDA.OBJECTPERF", "");
+   public static final String SCHEMA_LABEL = TextUtil.Print("TILDA", "");
+   public static final String TABLENAME_LABEL = TextUtil.Print("OBJECTPERF", "");
+   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.OBJECTPERF", "");
+   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "OBJECTPERF"); }
 
    protected static abstract class COLS {
-     public static Type_StringPrimitive         SCHEMANAME   = new Type_StringPrimitive        ("TILDA.OBJECTPERF", "schemaName"   , 0, "The name of the schema tracked");
-     public static Type_StringPrimitive         OBJECTNAME   = new Type_StringPrimitive        ("TILDA.OBJECTPERF", "objectName"   , 1, "The name of the table/object tracked");
-     public static Type_StringPrimitive         STARTPERIODTZ= new Type_StringPrimitive        ("TILDA.OBJECTPERF", "startPeriodTZ", 2, "Generated helper column to hold the time zone ID for 'startPeriod'.");
-     public static Type_DatetimePrimitive       STARTPERIOD  = new Type_DatetimePrimitive      ("TILDA.OBJECTPERF", "startPeriod"  , 3, "The timestamp for when the record was created.");
-     public static Type_StringPrimitive         ENDPERIODTZ  = new Type_StringPrimitive        ("TILDA.OBJECTPERF", "endPeriodTZ"  , 4, "Generated helper column to hold the time zone ID for 'endPeriod'.");
-     public static Type_DatetimePrimitive       ENDPERIOD    = new Type_DatetimePrimitive      ("TILDA.OBJECTPERF", "endPeriod"    , 5, "The timestamp for when the record was created.");
-     public static Type_LongPrimitive           SELECTNANO   = new Type_LongPrimitive          ("TILDA.OBJECTPERF", "selectNano"   , 6, "Blah...");
-     public static Type_LongPrimitive           SELECTCOUNT  = new Type_LongPrimitive          ("TILDA.OBJECTPERF", "selectCount"  , 7, "Blah...");
-     public static Type_LongPrimitive           SELECTRECORDS= new Type_LongPrimitive          ("TILDA.OBJECTPERF", "selectRecords", 8, "Blah...");
-     public static Type_LongPrimitive           INSERTNANO   = new Type_LongPrimitive          ("TILDA.OBJECTPERF", "insertNano"   , 9, "Blah...");
-     public static Type_LongPrimitive           INSERTCOUNT  = new Type_LongPrimitive          ("TILDA.OBJECTPERF", "insertCount"  , 10, "Blah...");
-     public static Type_LongPrimitive           INSERTRECORDS= new Type_LongPrimitive          ("TILDA.OBJECTPERF", "insertRecords", 11, "Blah...");
-     public static Type_LongPrimitive           UPDATENANO   = new Type_LongPrimitive          ("TILDA.OBJECTPERF", "updateNano"   , 12, "Blah...");
-     public static Type_LongPrimitive           UPDATECOUNT  = new Type_LongPrimitive          ("TILDA.OBJECTPERF", "updateCount"  , 13, "Blah...");
-     public static Type_LongPrimitive           UPDATERECORDS= new Type_LongPrimitive          ("TILDA.OBJECTPERF", "updateRecords", 14, "Blah...");
-     public static Type_LongPrimitive           DELETENANO   = new Type_LongPrimitive          ("TILDA.OBJECTPERF", "deleteNano"   , 15, "Blah...");
-     public static Type_LongPrimitive           DELETECOUNT  = new Type_LongPrimitive          ("TILDA.OBJECTPERF", "deleteCount"  , 16, "Blah...");
-     public static Type_LongPrimitive           DELETERECORDS= new Type_LongPrimitive          ("TILDA.OBJECTPERF", "deleteRecords", 17, "Blah...");
-     public static Type_DatetimePrimitive       CREATED      = new Type_DatetimePrimitive      ("TILDA.OBJECTPERF", "created"      , 18, "The timestamp for when the record was created.");
-     public static Type_DatetimePrimitive       LASTUPDATED  = new Type_DatetimePrimitive      ("TILDA.OBJECTPERF", "lastUpdated"  , 19, "The timestamp for when the record was last updated.");
-     public static Type_DatetimePrimitiveNull   DELETED      = new Type_DatetimePrimitiveNull  ("TILDA.OBJECTPERF", "deleted"      , 20, "The timestamp for when the record was deleted.");
+     public static Type_StringPrimitive         SCHEMANAME   = new Type_StringPrimitive        (SCHEMA_LABEL, TABLENAME_LABEL, "schemaName"   , 0, "The name of the schema tracked");
+     public static Type_StringPrimitive         OBJECTNAME   = new Type_StringPrimitive        (SCHEMA_LABEL, TABLENAME_LABEL, "objectName"   , 1, "The name of the table/object tracked");
+     public static Type_StringPrimitive         STARTPERIODTZ= new Type_StringPrimitive        (SCHEMA_LABEL, TABLENAME_LABEL, "startPeriodTZ", 2, "Generated helper column to hold the time zone ID for 'startPeriod'.");
+     public static Type_DatetimePrimitive       STARTPERIOD  = new Type_DatetimePrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "startPeriod"  , 3, "The timestamp for when the record was created.");
+     public static Type_StringPrimitive         ENDPERIODTZ  = new Type_StringPrimitive        (SCHEMA_LABEL, TABLENAME_LABEL, "endPeriodTZ"  , 4, "Generated helper column to hold the time zone ID for 'endPeriod'.");
+     public static Type_DatetimePrimitive       ENDPERIOD    = new Type_DatetimePrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "endPeriod"    , 5, "The timestamp for when the record was created.");
+     public static Type_LongPrimitive           SELECTNANO   = new Type_LongPrimitive          (SCHEMA_LABEL, TABLENAME_LABEL, "selectNano"   , 6, "Blah...");
+     public static Type_LongPrimitive           SELECTCOUNT  = new Type_LongPrimitive          (SCHEMA_LABEL, TABLENAME_LABEL, "selectCount"  , 7, "Blah...");
+     public static Type_LongPrimitive           SELECTRECORDS= new Type_LongPrimitive          (SCHEMA_LABEL, TABLENAME_LABEL, "selectRecords", 8, "Blah...");
+     public static Type_LongPrimitive           INSERTNANO   = new Type_LongPrimitive          (SCHEMA_LABEL, TABLENAME_LABEL, "insertNano"   , 9, "Blah...");
+     public static Type_LongPrimitive           INSERTCOUNT  = new Type_LongPrimitive          (SCHEMA_LABEL, TABLENAME_LABEL, "insertCount"  , 10, "Blah...");
+     public static Type_LongPrimitive           INSERTRECORDS= new Type_LongPrimitive          (SCHEMA_LABEL, TABLENAME_LABEL, "insertRecords", 11, "Blah...");
+     public static Type_LongPrimitive           UPDATENANO   = new Type_LongPrimitive          (SCHEMA_LABEL, TABLENAME_LABEL, "updateNano"   , 12, "Blah...");
+     public static Type_LongPrimitive           UPDATECOUNT  = new Type_LongPrimitive          (SCHEMA_LABEL, TABLENAME_LABEL, "updateCount"  , 13, "Blah...");
+     public static Type_LongPrimitive           UPDATERECORDS= new Type_LongPrimitive          (SCHEMA_LABEL, TABLENAME_LABEL, "updateRecords", 14, "Blah...");
+     public static Type_LongPrimitive           DELETENANO   = new Type_LongPrimitive          (SCHEMA_LABEL, TABLENAME_LABEL, "deleteNano"   , 15, "Blah...");
+     public static Type_LongPrimitive           DELETECOUNT  = new Type_LongPrimitive          (SCHEMA_LABEL, TABLENAME_LABEL, "deleteCount"  , 16, "Blah...");
+     public static Type_LongPrimitive           DELETERECORDS= new Type_LongPrimitive          (SCHEMA_LABEL, TABLENAME_LABEL, "deleteRecords", 17, "Blah...");
+     public static Type_DatetimePrimitive       CREATED      = new Type_DatetimePrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 18, "The timestamp for when the record was created.");
+     public static Type_DatetimePrimitive       LASTUPDATED  = new Type_DatetimePrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 19, "The timestamp for when the record was last updated.");
+     public static Type_DatetimePrimitiveNull   DELETED      = new Type_DatetimePrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 20, "The timestamp for when the record was deleted.");
 ;
    }
 
@@ -160,12 +163,12 @@ public class TILDA__OBJECTPERF_Factory
              if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
              break;
           case 1:
-             S.append(" where (TILDA.OBJECTPERF.\"schemaName\"=?)");
-             S.append(" order by TILDA.OBJECTPERF.\"objectName\" ASC, TILDA.OBJECTPERF.\"startPeriod\" DESC");
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "schemaName"); S.append("=?)");
+             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "objectName"); S.append(" ASC");S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "startPeriod"); S.append(" DESC");
              break;
           case 2:
-             S.append(" where (TILDA.OBJECTPERF.\"schemaName\"=? AND TILDA.OBJECTPERF.\"objectName\"=?)");
-             S.append(" order by TILDA.OBJECTPERF.\"startPeriod\" DESC");
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "objectName"); S.append("=?)");
+             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "startPeriod"); S.append(" DESC");
              break;
           case -666: break;
           default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
@@ -175,8 +178,8 @@ public class TILDA__OBJECTPERF_Factory
        String Q = S.toString() + C.getSelectLimitClause(Start, Size+1);
        S.setLength(0);
        S = null;
-       QueryDetails.setLastQuery(TABLENAME, Q);
-       LOG.debug("TILDA([7mTILDA.OBJECTPERF[27m): "+Q.replaceAll(TABLENAME+"\\.",""));
+       QueryDetails.setLastQuery(SCHEMA_TABLENAME_LABEL, Q);
+       LOG.debug("TILDA([7mTILDA.OBJECTPERF[27m): "+Q);
        java.sql.PreparedStatement PS=null;
        java.sql.ResultSet RS=null;
        List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
@@ -210,7 +213,7 @@ public class TILDA__OBJECTPERF_Factory
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__OBJECTPERF_Factory.TABLENAME, StatementType.SELECT, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }
@@ -372,8 +375,8 @@ public class TILDA__OBJECTPERF_Factory
 
 
 
-   public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C   , TILDA__OBJECTPERF_Factory.TABLENAME); }
-   public static SelectQuery newWhereQuery (            ) throws Exception { return new SelectQuery(null, TILDA__OBJECTPERF_Factory.TABLENAME); }
+   public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }
+   public static SelectQuery newWhereQuery (Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, false); }
    public static ListResults<tilda.data.ObjectPerf_Data> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
@@ -385,7 +388,7 @@ public class TILDA__OBJECTPERF_Factory
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
        ReadMany(C, -7, RPI, null, Q, Start, Size);
      }
-   public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, TILDA__OBJECTPERF_Factory.TABLENAME); }
-   public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, TILDA__OBJECTPERF_Factory.TABLENAME); }
+   public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
+   public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
 
  }

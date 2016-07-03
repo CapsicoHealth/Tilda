@@ -741,7 +741,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("       if (__Changes == 0L)");
         Out.println("        {");
         Out.println("          LOG.debug(\"The " + O.getFullName() + " has not changed: no writing will occur.\");");
-        Out.println("          QueryDetails.setLastQuery("+O.getBaseClassName()+"_Factory.TABLENAME, \"\");");
+        Out.println("          QueryDetails.setLastQuery("+O.getBaseClassName()+"_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
         Out.println("          return true;");
         Out.println("        }");
         Out.println();
@@ -750,15 +750,15 @@ public class TildaData implements CodeGenTildaData
         Out.println("       if (BeforeWrite(C) == false)");
         Out.println("        {");
         Out.println("          LOG.debug(\"The " + O.getFullName() + " object's BeforeWrite() failed.\");");
-        Out.println("          QueryDetails.setLastQuery("+O.getBaseClassName()+"_Factory.TABLENAME, \"\");");
+        Out.println("          QueryDetails.setLastQuery("+O.getBaseClassName()+"_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
         Out.println("          return false;");
         Out.println("        }");
         Out.println();
         Out.println("       if (__Init == InitMode.CREATE)");
         Out.println("        {");
         Out.println("          StringBuilder V = new StringBuilder(1024);");
-        String StatementHeader = "insert into " + G.getSql().getFullTableVar(O) + " ";
-        Out.println("          S.append(\"" + StatementHeader + "\");");
+        Out.println("          S.append(\"insert into \"); "+Helper.getFullTableVarAtRuntime(O)+";");
+        Out.println("          int Pos = S.length();");
         for (Column C : O._Columns)
           if (C != null && C._Mode != ColumnMode.CALCULATED)
             {
@@ -766,7 +766,7 @@ public class TildaData implements CodeGenTildaData
               String Pad = O._PadderColumnNames.getPad(C.getName());
               if (C._Type == ColumnType.DATETIME)
                 Out.println();
-              Out.print("          if ((" + Mask + Pad + " & __Changes) != 0L) { S.append(" + Helper.getRuntimeInsertStr(C) + Pad + ");");
+              Out.print("          if ((" + Mask + Pad + " & __Changes) != 0L) { " + Helper.getRuntimeInsertStr(C) + ";");
               switch (C._Type)
                 {
                   case DATETIME:
@@ -775,7 +775,7 @@ public class TildaData implements CodeGenTildaData
                     Out.println("           }");
                     if (C._DefaultCreateValue != null)
                       {
-                        Out.print("          else { S.append(" + Helper.getRuntimeInsertStr(C) + "); V.append(" + Helper.getTimestampDefaultComma(C, C._DefaultCreateValue) + "); }");
+                        Out.print("          else { " + Helper.getRuntimeInsertStr(C) + "; V.append(" + Helper.getTimestampDefaultComma(C, C._DefaultCreateValue) + "); }");
                       }
                     break;
                   case JSON:
@@ -797,7 +797,7 @@ public class TildaData implements CodeGenTildaData
                 }
             }
         Out.println();
-        Out.println("          S.setCharAt(" + StatementHeader.length() + ", '(');");
+        Out.println("          S.setCharAt(Pos, '(');");
         Out.println("          V.setCharAt(0, '(');");
         Out.println("          S.append(\") values \").append(V).append(')');");
         Out.println("          V.setLength(0);");
@@ -805,8 +805,8 @@ public class TildaData implements CodeGenTildaData
         Out.println("        }");
         Out.println("       else // InitMode can be anything else");
         Out.println("        {");
-        StatementHeader = "update " + G.getSql().getFullTableVar(O) + " set";
-        Out.println("          S.append(\"" + StatementHeader + "\");");
+        Out.println("          S.append(\"update \"); "+Helper.getFullTableVarAtRuntime(O)+"; S.append(\" set\");");
+        Out.println("          int Pos = S.length();");
         for (Column C : O._Columns)
           if (C != null && C._Mode != ColumnMode.CALCULATED)
             {
@@ -820,15 +820,15 @@ public class TildaData implements CodeGenTildaData
                     Out.println("          if ((" + Mask + " & __Changes) != 0L)");
                     Out.println("           {");
                     Out.println("             if ((" + Mask + " & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == true)");
-                    Out.println("              S.append(" + Helper.getRuntimeInsertStr(C) + ").append(C.getEqualCurrentTimestamp());");
+                    Out.println("              { " + Helper.getRuntimeInsertStr(C) + "; S.append(C.getEqualCurrentTimestamp()); }");
                     Out.println("             else");
-                    Out.println("              S.append(" + Helper.getRuntimeUpdateStr(C) + ");");
+                    Out.println("              " + Helper.getRuntimeUpdateStr(C) + ";");
                     Out.println("           }");
                     if (C._DefaultUpdateValue != null)
                       {
                         Out.println("          else ");
                         Out.println("           {");
-                        Out.println("             S.append(" + Helper.getRuntimeInsertStr(C) + ").append(" + Helper.getTimestampDefaultEqual(C, C._DefaultUpdateValue) + ");");
+                        Out.println("             " + Helper.getRuntimeInsertStr(C) + "; S.append(" + Helper.getTimestampDefaultEqual(C, C._DefaultUpdateValue) + ");");
                         Out.println("             " + Helper.getTimestampDefaultSetter(C, C._DefaultUpdateValue));
                         Out.println("           }");
                       }
@@ -849,12 +849,12 @@ public class TildaData implements CodeGenTildaData
                   case LONG:
                   case STRING:
                     if (C._DefaultUpdateValue == null)
-                      Out.println("          if ((" + Mask + Pad + " & __Changes) != 0L) S.append(" + Helper.getRuntimeUpdateStr(C) + Pad + ");");
+                      Out.println("          if ((" + Mask + Pad + " & __Changes) != 0L) " + Helper.getRuntimeUpdateStr(C) + ";");
                     else
                       {
                         String MethodName = TextUtil.CapitalizeFirstCharacter(C.getName()) + TextUtil.CapitalizeFirstCharacter(C._DefaultUpdateValue._Name);
                         Out.println("          if ((" + Mask + Pad + " & __Changes) == 0L) set" + MethodName + "();");
-                        Out.println("          S.append(" + Helper.getRuntimeUpdateStr(C) + ");");
+                        Out.println("          " + Helper.getRuntimeUpdateStr(C) + ";");
                       }
 
                     break;
@@ -864,14 +864,14 @@ public class TildaData implements CodeGenTildaData
             }
         Out.println();
         Helper.SwitchLookupIdWhereClauses(Out, G, O, "          ", true);
-        Out.println("          S.setCharAt(" + StatementHeader.length() + ", ' ');");
+        Out.println("          S.setCharAt(Pos, ' ');");
         Out.println("        }");
         Out.println();
         Out.println("       String Q = S.toString();");
         Out.println("       S.setLength(0);");
         Out.println("       S = null;");
-        Out.println("       QueryDetails.setLastQuery("+O.getBaseClassName()+"_Factory.TABLENAME, Q);");
-        Out.println("       LOG.debug(\"TILDA(" + AnsiUtil.NEGATIVE + O.getShortName() + AnsiUtil.NEGATIVE_OFF + "): \"+Q.replaceAll("+O.getBaseClassName()+"_Factory.TABLENAME+\"\\\\.\",\"\"));");
+        Out.println("       QueryDetails.setLastQuery("+O.getBaseClassName()+"_Factory.SCHEMA_TABLENAME_LABEL, Q);");
+        Out.println("       LOG.debug(\"TILDA(" + AnsiUtil.NEGATIVE + O.getShortName() + AnsiUtil.NEGATIVE_OFF + "): \"+Q);");
         Out.println("       LOG.debug(\"   \"+toString());");
         Out.println("       java.sql.PreparedStatement PS = null;");
         Out.println("       int count = 0;");
@@ -1006,7 +1006,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("       if (__Init == InitMode.READ == true && Force == false && __Changes == 0L)");
         Out.println("        {");
         Out.println("          LOG.debug(\"This " + O.getShortName() + " object has already been read.\");");
-        Out.println("          QueryDetails.setLastQuery("+O.getBaseClassName()+"_Factory.TABLENAME, \"\");");
+        Out.println("          QueryDetails.setLastQuery("+O.getBaseClassName()+"_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
         Out.println("          return true;");
         Out.println("        }");
         Out.println("       StringBuilder S = new StringBuilder(1024);");
@@ -1016,8 +1016,8 @@ public class TildaData implements CodeGenTildaData
         Out.println("       String Q = S.toString();");
         Out.println("       S.setLength(0);");
         Out.println("       S = null;");
-        Out.println("       QueryDetails.setLastQuery("+O.getBaseClassName()+"_Factory.TABLENAME, Q);");
-        Out.println("       LOG.debug(\"TILDA(" + AnsiUtil.NEGATIVE + O.getShortName() + AnsiUtil.NEGATIVE_OFF + "): \"+Q.replaceAll("+O.getBaseClassName()+"_Factory.TABLENAME+\"\\\\.\",\"\"));");
+        Out.println("       QueryDetails.setLastQuery("+O.getBaseClassName()+"_Factory.SCHEMA_TABLENAME_LABEL, Q);");
+        Out.println("       LOG.debug(\"TILDA(" + AnsiUtil.NEGATIVE + O.getShortName() + AnsiUtil.NEGATIVE_OFF + "): \"+Q);");
         Out.println("       LOG.debug(\"   \"+toString());");
         Out.println("       java.sql.PreparedStatement PS=null;");
         Out.println("       java.sql.ResultSet RS=null;");

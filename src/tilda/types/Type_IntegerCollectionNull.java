@@ -19,9 +19,9 @@ package tilda.types;
 
 public class Type_IntegerCollectionNull extends Type_IntegerCollection implements Nullable
   {
-    public Type_IntegerCollectionNull(String TableName, String ColumnName, long Count, String Description)
+    public Type_IntegerCollectionNull(String SchemaName, String TableName, String ColumnName, long Count, String Description)
       {
-        super(TableName, ColumnName, Count, Description);
+        super(SchemaName, TableName, ColumnName, Count, Description);
       }
     
   }

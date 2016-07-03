@@ -54,17 +54,20 @@ public class TILDA__ZONEINFO_Factory
    protected TILDA__ZONEINFO_Factory() { }
 
    public static final Class<TILDA__ZONEINFO> DATA_CLASS= TILDA__ZONEINFO.class;
-   public static final String TABLENAME = TextUtil.Print("TILDA.ZONEINFO", "");
+   public static final String SCHEMA_LABEL = TextUtil.Print("TILDA", "");
+   public static final String TABLENAME_LABEL = TextUtil.Print("ZONEINFO", "");
+   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.ZONEINFO", "");
+   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "ZONEINFO"); }
 
    protected static abstract class COLS {
-     public static Type_StringPrimitive         ID           = new Type_StringPrimitive        ("TILDA.ZONEINFO", "id"           , 0, "The id for this enumeration.");
-     public static Type_StringPrimitive         VALUE        = new Type_StringPrimitive        ("TILDA.ZONEINFO", "value"        , 1, "The value for this enumeration.");
-     public static Type_StringPrimitive         LABEL        = new Type_StringPrimitive        ("TILDA.ZONEINFO", "label"        , 2, "The label for this enumeration.");
-     public static Type_StringPrimitiveNull     DEACTIVATEDTZ= new Type_StringPrimitiveNull    ("TILDA.ZONEINFO", "deactivatedTZ", 3, "Generated helper column to hold the time zone ID for 'deactivated'.");
-     public static Type_DatetimePrimitiveNull   DEACTIVATED  = new Type_DatetimePrimitiveNull  ("TILDA.ZONEINFO", "deactivated"  , 4, "The label for this enumeration.");
-     public static Type_DatetimePrimitive       CREATED      = new Type_DatetimePrimitive      ("TILDA.ZONEINFO", "created"      , 5, "The timestamp for when the record was created.");
-     public static Type_DatetimePrimitive       LASTUPDATED  = new Type_DatetimePrimitive      ("TILDA.ZONEINFO", "lastUpdated"  , 6, "The timestamp for when the record was last updated.");
-     public static Type_DatetimePrimitiveNull   DELETED      = new Type_DatetimePrimitiveNull  ("TILDA.ZONEINFO", "deleted"      , 7, "The timestamp for when the record was deleted.");
+     public static Type_StringPrimitive         ID           = new Type_StringPrimitive        (SCHEMA_LABEL, TABLENAME_LABEL, "id"           , 0, "The id for this enumeration.");
+     public static Type_StringPrimitive         VALUE        = new Type_StringPrimitive        (SCHEMA_LABEL, TABLENAME_LABEL, "value"        , 1, "The value for this enumeration.");
+     public static Type_StringPrimitive         LABEL        = new Type_StringPrimitive        (SCHEMA_LABEL, TABLENAME_LABEL, "label"        , 2, "The label for this enumeration.");
+     public static Type_StringPrimitiveNull     DEACTIVATEDTZ= new Type_StringPrimitiveNull    (SCHEMA_LABEL, TABLENAME_LABEL, "deactivatedTZ", 3, "Generated helper column to hold the time zone ID for 'deactivated'.");
+     public static Type_DatetimePrimitiveNull   DEACTIVATED  = new Type_DatetimePrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "deactivated"  , 4, "The label for this enumeration.");
+     public static Type_DatetimePrimitive       CREATED      = new Type_DatetimePrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 5, "The timestamp for when the record was created.");
+     public static Type_DatetimePrimitive       LASTUPDATED  = new Type_DatetimePrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 6, "The timestamp for when the record was last updated.");
+     public static Type_DatetimePrimitiveNull   DELETED      = new Type_DatetimePrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 7, "The timestamp for when the record was deleted.");
 ;
    }
 
@@ -135,7 +138,7 @@ public class TILDA__ZONEINFO_Factory
              if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
              break;
           case 3:
-             S.append(" order by TILDA.ZONEINFO.\"id\" ASC");
+             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "ZONEINFO", "id"); S.append(" ASC");
              break;
           case -666: break;
           default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
@@ -145,8 +148,8 @@ public class TILDA__ZONEINFO_Factory
        String Q = S.toString() + C.getSelectLimitClause(Start, Size+1);
        S.setLength(0);
        S = null;
-       QueryDetails.setLastQuery(TABLENAME, Q);
-       LOG.debug("TILDA([7mTILDA.ZONEINFO[27m): "+Q.replaceAll(TABLENAME+"\\.",""));
+       QueryDetails.setLastQuery(SCHEMA_TABLENAME_LABEL, Q);
+       LOG.debug("TILDA([7mTILDA.ZONEINFO[27m): "+Q);
        java.sql.PreparedStatement PS=null;
        java.sql.ResultSet RS=null;
        List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
@@ -174,7 +177,7 @@ public class TILDA__ZONEINFO_Factory
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__ZONEINFO_Factory.TABLENAME, StatementType.SELECT, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }
@@ -284,8 +287,8 @@ public class TILDA__ZONEINFO_Factory
 
 
 
-   public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C   , TILDA__ZONEINFO_Factory.TABLENAME); }
-   public static SelectQuery newWhereQuery (            ) throws Exception { return new SelectQuery(null, TILDA__ZONEINFO_Factory.TABLENAME); }
+   public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }
+   public static SelectQuery newWhereQuery (Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, false); }
    public static ListResults<tilda.data.ZoneInfo_Data> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
@@ -297,8 +300,8 @@ public class TILDA__ZONEINFO_Factory
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
        ReadMany(C, -7, RPI, null, Q, Start, Size);
      }
-   public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, TILDA__ZONEINFO_Factory.TABLENAME); }
-   public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, TILDA__ZONEINFO_Factory.TABLENAME); }
+   public static UpdateQuery newUpdateQuery(Connection C) throws Exception { return new UpdateQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
+   public static DeleteQuery newDeleteQuery(Connection C) throws Exception { return new DeleteQuery(C, SCHEMA_LABEL, TABLENAME_LABEL); }
 
    protected static Map<String, tilda.data.ZoneInfo_Data> __ENUMERATIONS_BY_ID    = new HashMap<String, tilda.data.ZoneInfo_Data>();
    protected static Map<String, tilda.data.ZoneInfo_Data> __ENUMERATIONS_BY_VALUE = new HashMap<String, tilda.data.ZoneInfo_Data>();

@@ -20,9 +20,9 @@ import tilda.enums.ColumnType;
 
 public class Type_BitfieldCollection extends ColumnDefinition
   {
-    public Type_BitfieldCollection(String TableName, String ColumnName, long Count, String Description)
+    public Type_BitfieldCollection(String SchemaName, String TableName, String ColumnName, long Count, String Description)
       {
-        super(TableName, ColumnName, Count, ColumnType.BITFIELD, true, Description);
+        super(SchemaName, TableName, ColumnName, Count, ColumnType.BITFIELD, true, Description);
       }
     
   }

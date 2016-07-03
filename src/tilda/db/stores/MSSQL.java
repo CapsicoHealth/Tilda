@@ -309,7 +309,11 @@ public class MSSQL implements DBType
     @Override
     public void getFullColumnVar(StringBuilder Str, String SchemaName, String TableName, String ColumnName)
       {
-        Str.append("[").append(SchemaName).append("].[").append(TableName).append("].[").append(ColumnName).append("]");
+        if (TextUtil.isNullOrEmpty(SchemaName) == false)
+         Str.append("[").append(SchemaName).append("].");
+        if (TextUtil.isNullOrEmpty(TableName) == false)
+         Str.append("[").append(TableName).append("].");
+        Str.append("[").append(ColumnName).append("]");
       }
 
     @Override

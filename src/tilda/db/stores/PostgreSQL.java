@@ -476,7 +476,11 @@ public class PostgreSQL implements DBType
     @Override
     public void getFullColumnVar(StringBuilder Str, String SchemaName, String TableName, String ColumnName)
       {
-        Str.append(SchemaName).append(".").append(TableName).append(".\"").append(ColumnName).append("\"");
+        if (TextUtil.isNullOrEmpty(SchemaName) == false)
+         Str.append(SchemaName).append(".");
+        if (TextUtil.isNullOrEmpty(TableName) == false)
+         Str.append(TableName).append(".");
+        Str.append("\"").append(ColumnName).append("\"");
       }
 
     @Override

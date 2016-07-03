@@ -19,9 +19,9 @@ package tilda.types;
 
 public class Type_JsonPrimitiveNull extends Type_JsonPrimitive implements Nullable
   {
-    public Type_JsonPrimitiveNull(String TableName, String ColumnName, long Count, String Description)
+    public Type_JsonPrimitiveNull(String SchemaName, String TableName, String ColumnName, long Count, String Description)
       {
-        super(TableName, ColumnName, Count, Description);
+        super(SchemaName, TableName, ColumnName, Count, Description);
       }
     
   }

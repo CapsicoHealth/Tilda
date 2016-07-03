@@ -16,9 +16,9 @@
 
 package tilda.types;
 
-import tilda.enums.StatementType;
+import tilda.db.Connection;
 
 public interface Nullable
   {
-    public String toString(StatementType ST);
+    public void getFullColumnVarForSelect(Connection C, StringBuilder Str);
   }

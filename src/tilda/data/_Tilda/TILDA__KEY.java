@@ -85,7 +85,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jun 30 2016, 19:33:08EDT
+ @generated Jul 3 2016, 03:21:28EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__KEY implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -1161,7 +1161,7 @@ This is the hasChanged for:<BR>
        if (__Changes == 0L)
         {
           LOG.debug("The tilda.data.TILDA.KEY has not changed: no writing will occur.");
-          QueryDetails.setLastQuery(TILDA__KEY_Factory.TABLENAME, "");
+          QueryDetails.setLastQuery(TILDA__KEY_Factory.SCHEMA_TABLENAME_LABEL, "");
           return true;
         }
 
@@ -1170,32 +1170,33 @@ This is the hasChanged for:<BR>
        if (BeforeWrite(C) == false)
         {
           LOG.debug("The tilda.data.TILDA.KEY object's BeforeWrite() failed.");
-          QueryDetails.setLastQuery(TILDA__KEY_Factory.TABLENAME, "");
+          QueryDetails.setLastQuery(TILDA__KEY_Factory.SCHEMA_TABLENAME_LABEL, "");
           return false;
         }
 
        if (__Init == InitMode.CREATE)
         {
           StringBuilder V = new StringBuilder(1024);
-          S.append("insert into TILDA.KEY ");
-          if ((TILDA__KEY_Factory.COLS.REFNUM._Mask      & __Changes) != 0L) { S.append(TILDA__KEY_Factory.COLS.REFNUM._Insert     ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__KEY_Factory.COLS.NAME._Mask        & __Changes) != 0L) { S.append(TILDA__KEY_Factory.COLS.NAME._Insert       ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__KEY_Factory.COLS.MAX._Mask         & __Changes) != 0L) { S.append(TILDA__KEY_Factory.COLS.MAX._Insert        ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__KEY_Factory.COLS.COUNT._Mask       & __Changes) != 0L) { S.append(TILDA__KEY_Factory.COLS.COUNT._Insert      ); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          S.append("insert into "); C.getFullTableVar(S, "TILDA", "KEY");
+          int Pos = S.length();
+          if ((TILDA__KEY_Factory.COLS.REFNUM._Mask      & __Changes) != 0L) { TILDA__KEY_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__KEY_Factory.COLS.NAME._Mask        & __Changes) != 0L) { TILDA__KEY_Factory.COLS.NAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__KEY_Factory.COLS.MAX._Mask         & __Changes) != 0L) { TILDA__KEY_Factory.COLS.MAX.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__KEY_Factory.COLS.COUNT._Mask       & __Changes) != 0L) { TILDA__KEY_Factory.COLS.COUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
-          if ((TILDA__KEY_Factory.COLS.CREATED._Mask     & __Changes) != 0L) { S.append(TILDA__KEY_Factory.COLS.CREATED._Insert    );
+          if ((TILDA__KEY_Factory.COLS.CREATED._Mask     & __Changes) != 0L) { TILDA__KEY_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
              V.append((TILDA__KEY_Factory.COLS.CREATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          else { S.append(TILDA__KEY_Factory.COLS.CREATED._Insert); V.append(C.getCommaCurrentTimestamp()); }
-          if ((TILDA__KEY_Factory.COLS.LASTUPDATED._Mask & __Changes) != 0L) { S.append(TILDA__KEY_Factory.COLS.LASTUPDATED._Insert);
+          else { TILDA__KEY_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
+          if ((TILDA__KEY_Factory.COLS.LASTUPDATED._Mask & __Changes) != 0L) { TILDA__KEY_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
              V.append((TILDA__KEY_Factory.COLS.LASTUPDATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          else { S.append(TILDA__KEY_Factory.COLS.LASTUPDATED._Insert); V.append(C.getCommaCurrentTimestamp()); }
-          if ((TILDA__KEY_Factory.COLS.DELETED._Mask     & __Changes) != 0L) { S.append(TILDA__KEY_Factory.COLS.DELETED._Insert    );
+          else { TILDA__KEY_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
+          if ((TILDA__KEY_Factory.COLS.DELETED._Mask     & __Changes) != 0L) { TILDA__KEY_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
              V.append((TILDA__KEY_Factory.COLS.DELETED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
 
-          S.setCharAt(22, '(');
+          S.setCharAt(Pos, '(');
           V.setCharAt(0, '(');
           S.append(") values ").append(V).append(')');
           V.setLength(0);
@@ -1203,60 +1204,61 @@ This is the hasChanged for:<BR>
         }
        else // InitMode can be anything else
         {
-          S.append("update TILDA.KEY set");
-          if ((TILDA__KEY_Factory.COLS.REFNUM._Mask      & __Changes) != 0L) S.append(TILDA__KEY_Factory.COLS.REFNUM._Update     );
-          if ((TILDA__KEY_Factory.COLS.NAME._Mask        & __Changes) != 0L) S.append(TILDA__KEY_Factory.COLS.NAME._Update       );
-          if ((TILDA__KEY_Factory.COLS.MAX._Mask         & __Changes) != 0L) S.append(TILDA__KEY_Factory.COLS.MAX._Update        );
-          if ((TILDA__KEY_Factory.COLS.COUNT._Mask       & __Changes) != 0L) S.append(TILDA__KEY_Factory.COLS.COUNT._Update      );
+          S.append("update "); C.getFullTableVar(S, "TILDA", "KEY"); S.append(" set");
+          int Pos = S.length();
+          if ((TILDA__KEY_Factory.COLS.REFNUM._Mask      & __Changes) != 0L) TILDA__KEY_Factory.COLS.REFNUM.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__KEY_Factory.COLS.NAME._Mask        & __Changes) != 0L) TILDA__KEY_Factory.COLS.NAME.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__KEY_Factory.COLS.MAX._Mask         & __Changes) != 0L) TILDA__KEY_Factory.COLS.MAX.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__KEY_Factory.COLS.COUNT._Mask       & __Changes) != 0L) TILDA__KEY_Factory.COLS.COUNT.getFullColumnVarForUpdate(C, S);
 
           if ((TILDA__KEY_Factory.COLS.CREATED._Mask & __Changes) != 0L)
            {
              if ((TILDA__KEY_Factory.COLS.CREATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true)
-              S.append(TILDA__KEY_Factory.COLS.CREATED._Insert).append(C.getEqualCurrentTimestamp());
+              { TILDA__KEY_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
-              S.append(TILDA__KEY_Factory.COLS.CREATED._Update);
+              TILDA__KEY_Factory.COLS.CREATED.getFullColumnVarForUpdate(C, S);
            }
 
           if ((TILDA__KEY_Factory.COLS.LASTUPDATED._Mask & __Changes) != 0L)
            {
              if ((TILDA__KEY_Factory.COLS.LASTUPDATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true)
-              S.append(TILDA__KEY_Factory.COLS.LASTUPDATED._Insert).append(C.getEqualCurrentTimestamp());
+              { TILDA__KEY_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
-              S.append(TILDA__KEY_Factory.COLS.LASTUPDATED._Update);
+              TILDA__KEY_Factory.COLS.LASTUPDATED.getFullColumnVarForUpdate(C, S);
            }
           else 
            {
-             S.append(TILDA__KEY_Factory.COLS.LASTUPDATED._Insert).append(C.getEqualCurrentTimestamp());
+             TILDA__KEY_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp());
              setLastUpdatedNow();
            }
 
           if ((TILDA__KEY_Factory.COLS.DELETED._Mask & __Changes) != 0L)
            {
              if ((TILDA__KEY_Factory.COLS.DELETED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true)
-              S.append(TILDA__KEY_Factory.COLS.DELETED._Insert).append(C.getEqualCurrentTimestamp());
+              { TILDA__KEY_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
-              S.append(TILDA__KEY_Factory.COLS.DELETED._Update);
+              TILDA__KEY_Factory.COLS.DELETED.getFullColumnVarForUpdate(C, S);
            }
 
           switch (__LookupId)
            {
              case 0:
-                S.append(" where (TILDA.KEY.\"refnum\"=?)");
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "KEY", "refnum"); S.append("=?)");
                 break;
              case 1:
-                S.append(" where (TILDA.KEY.\"name\"=?)");
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "KEY", "name"); S.append("=?)");
                 break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
            }
-          S.setCharAt(20, ' ');
+          S.setCharAt(Pos, ' ');
         }
 
        String Q = S.toString();
        S.setLength(0);
        S = null;
-       QueryDetails.setLastQuery(TILDA__KEY_Factory.TABLENAME, Q);
-       LOG.debug("TILDA([7mTILDA.KEY[27m): "+Q.replaceAll(TILDA__KEY_Factory.TABLENAME+"\\.",""));
+       QueryDetails.setLastQuery(TILDA__KEY_Factory.SCHEMA_TABLENAME_LABEL, Q);
+       LOG.debug("TILDA([7mTILDA.KEY[27m): "+Q);
        LOG.debug("   "+toString());
        java.sql.PreparedStatement PS = null;
        int count = 0;
@@ -1319,7 +1321,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__KEY_Factory.TABLENAME, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__KEY_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }
@@ -1377,7 +1379,7 @@ This is the hasChanged for:<BR>
        if (__Init == InitMode.READ == true && Force == false && __Changes == 0L)
         {
           LOG.debug("This TILDA.KEY object has already been read.");
-          QueryDetails.setLastQuery(TILDA__KEY_Factory.TABLENAME, "");
+          QueryDetails.setLastQuery(TILDA__KEY_Factory.SCHEMA_TABLENAME_LABEL, "");
           return true;
         }
        StringBuilder S = new StringBuilder(1024);
@@ -1393,10 +1395,10 @@ This is the hasChanged for:<BR>
        switch (__LookupId)
         {
           case 0:
-             S.append(" where (TILDA.KEY.\"refnum\"=?)");
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "KEY", "refnum"); S.append("=?)");
              break;
           case 1:
-             S.append(" where (TILDA.KEY.\"name\"=?)");
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "KEY", "name"); S.append("=?)");
              break;
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
@@ -1405,8 +1407,8 @@ This is the hasChanged for:<BR>
        String Q = S.toString();
        S.setLength(0);
        S = null;
-       QueryDetails.setLastQuery(TILDA__KEY_Factory.TABLENAME, Q);
-       LOG.debug("TILDA([7mTILDA.KEY[27m): "+Q.replaceAll(TILDA__KEY_Factory.TABLENAME+"\\.",""));
+       QueryDetails.setLastQuery(TILDA__KEY_Factory.SCHEMA_TABLENAME_LABEL, Q);
+       LOG.debug("TILDA([7mTILDA.KEY[27m): "+Q);
        LOG.debug("   "+toString());
        java.sql.PreparedStatement PS=null;
        java.sql.ResultSet RS=null;
@@ -1444,7 +1446,7 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__KEY_Factory.TABLENAME, StatementType.SELECT, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__KEY_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
           PS = null;
           AllocatedArrays = null;
         }

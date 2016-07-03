@@ -32,10 +32,10 @@ import tilda.enums.StatementType;
  */
 public class UpdateQuery extends QueryHelper
   {
-    public UpdateQuery(Connection C, String TableName)
+    public UpdateQuery(Connection C, String SchemaName, String TableName)
       throws Exception
       {
-        super(C, StatementType.UPDATE, TableName);
+        super(C, StatementType.UPDATE, SchemaName, TableName, true);
       }
 
     public int execute()
