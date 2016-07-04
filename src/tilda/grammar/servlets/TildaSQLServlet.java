@@ -41,7 +41,7 @@ public class TildaSQLServlet extends HttpServlet
       {
       }
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException
       {
         LogRequestHeader(20, request);
@@ -85,7 +85,6 @@ public class TildaSQLServlet extends HttpServlet
 
 
         response.setContentType("application/json");
-        _PrintWriter.println(json.toString());
       }
 
 
