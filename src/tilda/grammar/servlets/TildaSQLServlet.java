@@ -78,7 +78,7 @@ public class TildaSQLServlet extends HttpServlet
         else
           {
             ErrorList errors = new ErrorList();
-            errors.addError("SYNTAX Error...", 0, 1, Expr.length());
+            errors.addError("SYNTAX Error...", 1, 1, Expr.length());
             errors.toJSON(_PrintWriter);
             response.setStatus(HttpStatus.BadRequest._Code);
           }
