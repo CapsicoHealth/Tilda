@@ -1922,7 +1922,7 @@ public abstract class QueryHelper
         return this;
       }
 
-    public QueryHelper orderBy(ColumnDefinition Col, boolean Asc)
+    protected void orderByBase(ColumnDefinition Col, boolean Asc)
     throws Exception
       {
         if (_Section != S.WHERE && _Section != S.GROUPBY && _Section != S.ORDERBY || _ST != StatementType.SELECT)
@@ -1931,17 +1931,23 @@ public abstract class QueryHelper
           _QueryStr.append(", ");
         else
           _QueryStr.append(" order by ");
+        _Section = S.ORDERBY;
+      }
+    
+    public QueryHelper orderBy(ColumnDefinition Col, boolean Asc)
+    throws Exception
+      {
+        orderByBase(Col, Asc);
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         _QueryStr.append(Asc==true?" ASC":" DESC");
-        _Section = S.ORDERBY;
         return this;
       }
     
     public QueryHelper orderBy(ColumnDefinition Col, boolean Asc, boolean NullsLast)
     throws Exception
       {
-        orderBy(Col, Asc);
-        _QueryStr.append(" NULLS ").append(NullsLast == true ? "LAST" : "FIRST");
+        orderByBase(Col, Asc);
+        _C.setOrderByWithNullsOrdering(_QueryStr, Col, Asc, NullsLast);
         return this;
       }
     

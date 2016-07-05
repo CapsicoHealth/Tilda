@@ -33,6 +33,7 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
+import tilda.types.ColumnDefinition;
 import tilda.utils.pairs.StringStringPair;
 
 public interface DBType
@@ -78,4 +79,5 @@ public interface DBType
     public void          setJson (              PreparedStatement PS, int i, String jsonValue) throws Exception;
     public String        getJson (              ResultSet         RS, int i) throws Exception;
     public String        getJsonParametrizedQueryPlaceHolder();
+    public void          setOrderByWithNullsOrdering(Connection C, StringBuilder Str, ColumnDefinition Col, boolean Asc, boolean NullsLast);
   }

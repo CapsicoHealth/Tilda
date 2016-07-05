@@ -537,4 +537,13 @@ public class PostgreSQL implements DBType
         return "cast(? as jsonb)";
       }
 
+
+    @Override
+    public void setOrderByWithNullsOrdering(Connection C, StringBuilder Str, ColumnDefinition Col, boolean Asc, boolean NullsLast)
+      {
+        Col.getFullColumnVarForSelect(C, Str);
+        Str.append(Asc==true?" ASC":" DESC");
+        Str.append(" NULLS ").append(NullsLast == true ? "LAST" : "FIRST");        
+      }
+
   }

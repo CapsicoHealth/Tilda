@@ -41,6 +41,7 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
+import tilda.types.ColumnDefinition;
 import tilda.utils.CollectionUtil;
 import tilda.utils.ParseUtil;
 import tilda.utils.TextUtil;
@@ -377,4 +378,16 @@ public class MSSQL implements DBType
       {
         return "?";
       }
+
+    @Override
+    public void setOrderByWithNullsOrdering(Connection C, StringBuilder Str, ColumnDefinition Col, boolean Asc, boolean NullsLast)
+      {
+
+        Str.append("(CASE WHEN ");
+        Col.getFullColumnVarForSelect(C, Str);
+        Str.append(NullsLast ? " IS NULL THEN 1 ELSE 0 END) ASC, " : " IS NULL THEN 0 ELSE 1 END) ASC, ");
+        Col.getFullColumnVarForSelect(C, Str);
+        Str.append(Asc==true?" ASC":" DESC");
+      }
+
   }
