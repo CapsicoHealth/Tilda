@@ -382,7 +382,6 @@ public class MSSQL implements DBType
     @Override
     public void setOrderByWithNullsOrdering(Connection C, StringBuilder Str, ColumnDefinition Col, boolean Asc, boolean NullsLast)
       {
-
         Str.append("(CASE WHEN ");
         Col.getFullColumnVarForSelect(C, Str);
         Str.append(NullsLast ? " IS NULL THEN 1 ELSE 0 END) ASC, " : " IS NULL THEN 0 ELSE 1 END) ASC, ");
