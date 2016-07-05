@@ -779,7 +779,7 @@ public class TildaData implements CodeGenTildaData
                       }
                     break;
                   case JSON:
-                    Out.println(" V.append(\",cast(? as "+G.getSql().getColumnTypeRaw(C, false)+")\");  }");
+                    Out.println(" V.append(\",\").append(C.getJsonParametrizedQueryPlaceHolder()); }");
                     break;
                   case BINARY:
                   case BITFIELD:

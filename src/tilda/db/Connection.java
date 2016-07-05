@@ -275,31 +275,31 @@ public final class Connection
       }
 
 
-    public int ExecuteSelect(String TableName, String Query, RecordProcessor RP)
+    public int ExecuteSelect(String SchemaName, String TableName, String Query, RecordProcessor RP)
     throws Exception
       {
-        return JDBCHelper.ExecuteSelect(_C, TableName, Query, RP);
+        return JDBCHelper.ExecuteSelect(_C, SchemaName, TableName, Query, RP);
       }
 
     /**
      * Executes a query with a record processor, starting at Start (0 is beginning), and for Size records.
      */
-    public int ExecuteSelect(String TableName, String Query, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited)
+    public int ExecuteSelect(String SchemaName, String TableName, String Query, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited)
     throws Exception
       {
-        return ExecuteSelect(TableName, Query, RP, Start, Offsetted, Size, Limited, false);
+        return ExecuteSelect(SchemaName, TableName, Query, RP, Start, Offsetted, Size, Limited, false);
       }
     /**
      * Executes a query with a record processor, starting at Start (0 is beginning), and for Size records.
      */
-    public int ExecuteSelect(String TableName, String Query, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited, boolean CountAll)
+    public int ExecuteSelect(String SchemaName, String TableName, String Query, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited, boolean CountAll)
     throws Exception
       {
-        return JDBCHelper.ExecuteSelect(_C, TableName, Query, RP, Start, Offsetted, Size, Limited, CountAll);
+        return JDBCHelper.ExecuteSelect(_C, SchemaName, TableName, Query, RP, Start, Offsetted, Size, Limited, CountAll);
       }
 
     
-    public int ExecuteUpdate(String TableName, String Query)
+    public int ExecuteUpdate(String SchemaName, String TableName, String Query)
     throws Exception
       {
         // if (_DB.FullIdentifierOnUpdate() == true)
@@ -307,13 +307,13 @@ public final class Connection
         // LOG.debug("TILDA("+AnsiUtil.NEGATIVE + TableName + AnsiUtil.NEGATIVE_OFF+") Original query: " + Query);
         // Query = TextUtil.SearchReplace(Query, TableName+".", "");
         // }
-        return JDBCHelper.ExecuteUpdate(_C, TableName, Query);
+        return JDBCHelper.ExecuteUpdate(_C, SchemaName, TableName, Query);
       }
     
-    public void ExecuteDDL(String TableName, String Query)
+    public void ExecuteDDL(String SchemaName, String TableName, String Query)
     throws Exception
       {
-        JDBCHelper.ExecuteDDL(_C, TableName, Query);
+        JDBCHelper.ExecuteDDL(_C, SchemaName, TableName, Query);
       }
 
     public Array createArrayOf(String TypeName, java.lang.Object[] A)
@@ -511,6 +511,11 @@ public final class Connection
     public Collection<?> getArray(ResultSet RS, int i, ColumnType Type, boolean isSet) throws Exception
       {
         return _DB.getArray(RS, i, Type, isSet);
+      }
+
+    public String getJsonParametrizedQueryPlaceHolder()
+      {
+        return _DB.getJsonParametrizedQueryPlaceHolder();
       }
   }
 

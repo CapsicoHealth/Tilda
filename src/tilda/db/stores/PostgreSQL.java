@@ -167,7 +167,7 @@ public class PostgreSQL implements DBType
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
         getSQlCodeGen().genFileStart(Out, S);
-        return Con.ExecuteUpdate(S.getShortName(), Str.toString()) >= 0;
+        return Con.ExecuteUpdate(S.getShortName(), null, Str.toString()) >= 0;
       }
 
     @Override
@@ -177,7 +177,8 @@ public class PostgreSQL implements DBType
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
         Generator.getFullTableDDL(getSQlCodeGen(), Out, Obj);
-        return Con.ExecuteUpdate(Obj.getShortName(), Str.toString()) >= 0;
+        Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Str.toString());
+        return true;
       }
 
     @Override
@@ -186,12 +187,12 @@ public class PostgreSQL implements DBType
       {
         if (Drop == true)
           {
-            Con.ExecuteUpdate(V.getShortName(), "DROP VIEW IF EXISTS " + V.getShortName() + " CASCADE");
+            Con.ExecuteUpdate(V._ParentSchema._Name, V.getBaseName(), "DROP VIEW IF EXISTS " + V.getShortName() + " CASCADE");
           }
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
         Generator.getFullViewDDL(getSQlCodeGen(), Out, V);
-        return Con.ExecuteUpdate(V.getShortName(), Str.toString()) >= 0;
+        return Con.ExecuteUpdate(V._ParentSchema._Name, V.getBaseName(), Str.toString()) >= 0;
       }
 
     @Override
@@ -206,7 +207,7 @@ public class PostgreSQL implements DBType
             Q += " not null DEFAULT " + ValueHelper.printValue(Col, DefaultValue);
           }
 
-        return Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q) >= 0;
+        return Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) >= 0;
       }
 
     @Override
@@ -215,7 +216,7 @@ public class PostgreSQL implements DBType
       {
         String Q = "ALTER TABLE " + Obj.getShortName() + " DROP COLUMN \"" + CI._Name + "\"";
 
-        return Con.ExecuteUpdate(Obj.getShortName(), Q) >= 0;
+        return Con.ExecuteUpdate(Obj._ParentSchema._Name, Obj.getBaseName(), Q) >= 0;
       }
 
 
@@ -227,18 +228,18 @@ public class PostgreSQL implements DBType
           {
             String Q = "SELECT count(*) from " + Col._ParentObject.getShortName() + " where \"" + Col.getName() + "\" IS NULL";
             ScalarRP RP = new ScalarRP();
-            Con.ExecuteSelect(Col._ParentObject.getShortName(), Q, RP);
+            Con.ExecuteSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
             if (RP.getResult() > 0)
               {
                 if (DefaultValue == null)
                   throw new Exception("Cannot alter column '" + Col.getFullName() + "' to not null without a default value. Add a default value in the model, or manually migrate your database.");
                 Q = "UPDATE " + Col._ParentObject.getShortName() + " set \"" + Col.getName() + "\" = " + ValueHelper.printValue(Col, DefaultValue) + " where \"" + Col.getName() + "\" IS NULL";
-                Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q);
+                Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
               }
           }
 
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" " + (Col._Nullable == false ? "SET" : "DROP") + " NOT NULL";
-        return Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q) >= 0;
+        return Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) >= 0;
       }
 
     @Override
@@ -265,14 +266,14 @@ public class PostgreSQL implements DBType
           {
             String Q = "SELECT max(length(\"" + Col.getName() + "\")) from " + Col._ParentObject.getShortName();
             ScalarRP RP = new ScalarRP();
-            Con.ExecuteSelect(Col._ParentObject.getShortName(), Q, RP);
+            Con.ExecuteSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
             if (RP.getResult() > Col._Size)
               throw new Exception("Cannot alter String column '" + Col.getFullName() + "' from size " + DBSize + " down to " + Col._Size + " because there are values with sizes up to " + RP.getResult()
               + " that would be truncated. You need to manually migrate your database.");
           }
 
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" TYPE " + getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection());
-        return Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q) >= 0;
+        return Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) >= 0;
       }
 
 
@@ -287,20 +288,20 @@ public class PostgreSQL implements DBType
                 String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
                 + "\" TYPE " + getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection())
                 + " USING (trim(\"" + Col.getName() + "\")::" + getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection()) + ");";
-                return Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q) >= 0;
+                return Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) >= 0;
               }
             else if (Col._Type == ColumnType.DATETIME)
               {
                 String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
                 + "\" TYPE " + getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection())
                 + " USING (trim(\"" + Col.getName() + "\")::" + getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection()) + ");";
-                if (Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q) < 0)
+                if (Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) < 0)
                   return false;
 
                 Col = Col._ParentObject.getColumn(Col.getName() + "TZ");
                 Q = "UPDATE " + Col._ParentObject.getShortName() + " SET \"" + Col.getName() + "\" = 'UTC' WHERE \"" + Col.getName() + "\" IS NULL";
 
-                return Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q) >= 0;
+                return Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) >= 0;
               }
           }
         return false;
@@ -393,7 +394,7 @@ public class PostgreSQL implements DBType
         .append("\n")
         .append("\n");
 
-        return Con.ExecuteUpdate("TILDA", Str.toString()) >= 0;
+        return Con.ExecuteUpdate("TILDA", "FUNCTIONS", Str.toString()) >= 0;
       }
 
 
@@ -509,6 +510,31 @@ public class PostgreSQL implements DBType
                                           : CollectionUtil.toList(A.getArray());
         A.free();
         return val;
+      }
+
+
+    @Override
+    public void setJson(PreparedStatement PS, int i, String jsonValue)
+    throws Exception
+      {
+        // TODO Auto-generated method stub
+        
+      }
+
+
+    @Override
+    public String getJson(ResultSet RS, int i)
+    throws Exception
+      {
+        // TODO Auto-generated method stub
+        return null;
+      }
+
+
+    @Override
+    public String getJsonParametrizedQueryPlaceHolder()
+      {
+        return "cast(? as jsonb)";
       }
 
   }

@@ -43,8 +43,7 @@ public class TILDA__KEY_Json
        throw new Exception("Incoming value for 'tilda.data.TILDA.KEY.count' was null or empty. It's not nullable in the model.\n"+toString());
 
       tilda.data.Key_Data Obj = tilda.data.Key_Factory.Create(_refnum, _name, _max, _count);
-
-
+      Update(Obj);
       if (Obj.Write(C) == false)
        {
          Obj = tilda.data.Key_Factory.LookupByName(_name);
@@ -58,6 +57,14 @@ public class TILDA__KEY_Json
        }
       return Obj;
    }
+
+   public void Update(tilda.data.Key_Data Obj) throws Exception
+    {
+      if (_refnum     != null) Obj.setRefnum     (_refnum     );
+      if (_name       != null) Obj.setName       (_name       );
+      if (_max        != null) Obj.setMax        (_max        );
+      if (_count      != null) Obj.setCount      (_count      );
+    }
 
    public String toString()
     {

@@ -87,27 +87,28 @@ public class JDBCHelper
         return count;
       }
 
-    public static int ExecuteSelect(Connection C, String TableName, String Query, RecordProcessor RP)
+    public static int ExecuteSelect(Connection C, String SchemaName, String TableName, String Query, RecordProcessor RP)
     throws Exception
       {
-        return ExecuteSelect(C, TableName, Query, RP, 0, false, -1, false, false);
+        return ExecuteSelect(C, SchemaName, TableName, Query, RP, 0, false, -1, false, false);
       }
 
     /**
      * Executes a query with a record processor, starting at Start (0 is beginning), and for Size records.
      */
-    public static int ExecuteSelect(Connection C, String TableName, String Query, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited)
+    public static int ExecuteSelect(Connection C, String SchemaName, String TableName, String Query, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited)
     throws Exception
       {
-        return ExecuteSelect(C, TableName, Query, RP, Start, Offsetted, Size, Limited, false);
+        return ExecuteSelect(C, SchemaName, TableName, Query, RP, Start, Offsetted, Size, Limited, false);
       }
 
     /**
      * Executes a query with a record processor, starting at Start (0 is beginning), and for Size records.
      */
-    public static int ExecuteSelect(Connection C, String TableName, String Query, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited, boolean CountAll)
+    public static int ExecuteSelect(Connection C, String SchemaName, String TableName, String Query, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited, boolean CountAll)
     throws Exception
       {
+        TableName = SchemaName+"."+TableName;
         LOG.debug("TILDA(" + AnsiUtil.NEGATIVE + TableName + AnsiUtil.NEGATIVE_OFF + "): " + Query);
         Statement S = null;
         try
@@ -126,9 +127,10 @@ public class JDBCHelper
           }
       }
 
-    public static int ExecuteUpdate(Connection C, String TableName, String Query)
+    public static int ExecuteUpdate(Connection C, String SchemaName, String TableName, String Query)
     throws Exception
       {
+        TableName = SchemaName+"."+TableName;
         LOG.debug("TILDA(" + AnsiUtil.NEGATIVE + TableName + AnsiUtil.NEGATIVE_OFF + "): " + Query);
         Statement S = null;
         try
@@ -146,9 +148,10 @@ public class JDBCHelper
           }
       }
     
-    public static void ExecuteDDL(Connection C, String TableName, String Query)
+    public static void ExecuteDDL(Connection C, String SchemaName, String TableName, String Query)
     throws Exception
       {
+        TableName = SchemaName+"."+TableName;
         LOG.debug("TILDA(" + AnsiUtil.NEGATIVE + TableName + AnsiUtil.NEGATIVE_OFF + "): " + Query);
         Statement S = null;
         try
@@ -168,9 +171,10 @@ public class JDBCHelper
       }
     
 
-    public static int ExecuteInsert(Connection C, String TableName, String Query)
+    public static int ExecuteInsert(Connection C, String SchemaName, String TableName, String Query)
     throws Exception
       {
+        TableName = SchemaName+"."+TableName;
         LOG.debug("TILDA(" + AnsiUtil.NEGATIVE + TableName + AnsiUtil.NEGATIVE_OFF + "): " + Query);
         Statement S = null;
         try

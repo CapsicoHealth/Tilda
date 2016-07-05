@@ -87,8 +87,7 @@ public class TILDA__OBJECTPERF_Json
        throw new Exception("Incoming value for 'tilda.data.TILDA.OBJECTPERF.deleteRecords' was null or empty. It's not nullable in the model.\n"+toString());
 
       tilda.data.ObjectPerf_Data Obj = tilda.data.ObjectPerf_Factory.Create(_schemaName, _objectName, _startPeriod, _endPeriod, _selectNano, _selectCount, _selectRecords, _insertNano, _insertCount, _insertRecords, _updateNano, _updateCount, _updateRecords, _deleteNano, _deleteCount, _deleteRecords);
-
-
+      Update(Obj);
       if (Obj.Write(C) == false)
        {
          Obj = tilda.data.ObjectPerf_Factory.LookupByPrimaryKey(_schemaName, _objectName, _startPeriod);
@@ -113,6 +112,26 @@ public class TILDA__OBJECTPERF_Json
        }
       return Obj;
    }
+
+   public void Update(tilda.data.ObjectPerf_Data Obj) throws Exception
+    {
+      if (_schemaName   != null) Obj.setSchemaName   (_schemaName   );
+      if (_objectName   != null) Obj.setObjectName   (_objectName   );
+      if (_startPeriod  != null) Obj.setStartPeriod  (_startPeriod  );
+      if (_endPeriod    != null) Obj.setEndPeriod    (_endPeriod    );
+      if (_selectNano   != null) Obj.setSelectNano   (_selectNano   );
+      if (_selectCount  != null) Obj.setSelectCount  (_selectCount  );
+      if (_selectRecords!= null) Obj.setSelectRecords(_selectRecords);
+      if (_insertNano   != null) Obj.setInsertNano   (_insertNano   );
+      if (_insertCount  != null) Obj.setInsertCount  (_insertCount  );
+      if (_insertRecords!= null) Obj.setInsertRecords(_insertRecords);
+      if (_updateNano   != null) Obj.setUpdateNano   (_updateNano   );
+      if (_updateCount  != null) Obj.setUpdateCount  (_updateCount  );
+      if (_updateRecords!= null) Obj.setUpdateRecords(_updateRecords);
+      if (_deleteNano   != null) Obj.setDeleteNano   (_deleteNano   );
+      if (_deleteCount  != null) Obj.setDeleteCount  (_deleteCount  );
+      if (_deleteRecords!= null) Obj.setDeleteRecords(_deleteRecords);
+    }
 
    public String toString()
     {

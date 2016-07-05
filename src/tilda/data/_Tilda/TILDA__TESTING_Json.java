@@ -69,7 +69,18 @@ public class TILDA__TESTING_Json
        }
 
       tilda.data.Testing_Data Obj = tilda.data.Testing_Factory.Create(_refnum2, _name);
+      Update(Obj);
+      if (Obj.Write(C) == false)
+       {
+         throw new Exception("Cannot create the tilda.data.TILDA.TESTING object.\n"+toString());
+       }
+      return Obj;
+   }
 
+   public void Update(tilda.data.Testing_Data Obj) throws Exception
+    {
+      if (_refnum2    != null) Obj.setRefnum2    (_refnum2    );
+      if (_name       != null) Obj.setName       (_name       );
       if (_description!= null) Obj.setDescription(_description);
       if (_desc2      != null) Obj.setDesc2      (_desc2      );
       if (_desc3      != null) Obj.setDesc3      (_desc3      );
@@ -95,13 +106,7 @@ public class TILDA__TESTING_Json
       if (_a7b        != null) Obj.setA7b        (_a7b        );
       if (_a8         != null) Obj.setA8         (_a8         );
       if (_a9         != null) Obj.setA9         (_a9         );
-
-      if (Obj.Write(C) == false)
-       {
-         throw new Exception("Cannot create the tilda.data.TILDA.TESTING object.\n"+toString());
-       }
-      return Obj;
-   }
+    }
 
    public String toString()
     {

@@ -163,7 +163,6 @@ public class Query
 
         StringBuilder NewClauseStatic  = new StringBuilder();
         StringBuilder NewClauseDynamic = new StringBuilder();
-        boolean DEBUG_IT = _Clause.indexOf("from organizations.provider") != -1;
         int clauseStrIndex = 0;
         Column lastColumnMatch = null;
         for (int i = 0; i < Matches.size(); ++i)
@@ -177,8 +176,6 @@ public class Query
                 NewClauseDynamic.append(Sub.substring(1, Sub.length()-1));
                else
                 NewClauseDynamic.append(Sub);
-               if (DEBUG_IT == true)
-                LOG.debug(NewClauseDynamic.toString());
              }
             if (m._type == 'P' || m._type == 'A')
               {
@@ -189,8 +186,6 @@ public class Query
                   }
                 NewClauseStatic.append("?");
                 NewClauseDynamic.append(").append(\"?\").append(");
-                if (DEBUG_IT == true)
-                 LOG.debug(NewClauseDynamic.toString());
                 String var = m._name;
                 if (TextUtil.FindElement(ColumnNames, var, false, 0) != -1)
                   {
@@ -231,8 +226,6 @@ public class Query
                 lastColumnMatch = C;
                 NewClauseStatic.append(PS._CGSql.getFullColumnVar(C));
                 NewClauseDynamic.append(clauseStrIndex==0?"\"); " : "); ").append(Helper.getFullColVarAtRuntime(C)).append("; S.append(");
-                if (DEBUG_IT == true)
-                 LOG.debug(NewClauseDynamic.toString());
               }
             clauseStrIndex = m._end;
           }
@@ -245,16 +238,11 @@ public class Query
         
         _Clause = NewClauseStatic.toString();
         _ClauseDynamic = NewClauseDynamic.toString();
-        if (DEBUG_IT == true)
-         LOG.debug(_ClauseDynamic.toString());
         
         if (_ClauseDynamic.endsWith(".append(") == true)
           {
             _ClauseDynamic+="\"";
           }
-
-        if (DEBUG_IT == true)
-         LOG.debug(_ClauseDynamic.toString());
 
         if (TextUtil.isNullOrEmpty(_DB) == true)
           _DB = "*";

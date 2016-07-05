@@ -246,4 +246,29 @@ public class IBMDB2 implements DBType
       }
 
 
+    @Override
+    public void setJson(PreparedStatement PS, int i, String jsonValue)
+    throws Exception
+      {
+        // TODO Auto-generated method stub
+        
+      }
+
+
+    @Override
+    public String getJson(ResultSet RS, int i)
+    throws Exception
+      {
+        // TODO Auto-generated method stub
+        return null;
+      }
+
+
+    @Override
+    public String getJsonParametrizedQueryPlaceHolder()
+      {
+        throw new UnsupportedOperationException();
+      }
+
+
   }

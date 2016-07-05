@@ -151,7 +151,7 @@ public class MSSQL implements DBType
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
         getSQlCodeGen().genFileStart(Out, S);
-        Con.ExecuteDDL(S.getShortName(), Str.toString());
+        Con.ExecuteDDL(S.getShortName(), null, Str.toString());
         return true;
       }
 
@@ -162,7 +162,7 @@ public class MSSQL implements DBType
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
         Generator.getFullTableDDL(getSQlCodeGen(), Out, Obj);
-        Con.ExecuteDDL(Obj.getShortName(), Str.toString());
+        Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getShortName(), Str.toString());
         return true;
       }
 
@@ -172,12 +172,12 @@ public class MSSQL implements DBType
       {
         if (Drop == true)
           {
-            Con.ExecuteUpdate(V.getShortName(), "DROP VIEW [" + V._ParentSchema._Name + "].[" + V._Name + "]");
+            Con.ExecuteUpdate(V._ParentSchema._Name, V.getShortName(), "DROP VIEW [" + V._ParentSchema._Name + "].[" + V._Name + "]");
           }
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
         Generator.getFullViewDDL(getSQlCodeGen(), Out, V);
-        Con.ExecuteDDL(V.getShortName(), Str.toString());
+        Con.ExecuteDDL(V._ParentSchema._Name, V.getShortName(), Str.toString());
         return true;
       }
 
@@ -354,5 +354,27 @@ public class MSSQL implements DBType
         
         // Convert String[] to proper type and collection.
         return Type.parse(isSet, parts);
+      }
+
+    @Override
+    public void setJson(PreparedStatement PS, int i, String jsonValue)
+    throws Exception
+      {
+        // TODO Auto-generated method stub
+        
+      }
+
+    @Override
+    public String getJson(ResultSet RS, int i)
+    throws Exception
+      {
+        // TODO Auto-generated method stub
+        return null;
+      }
+
+    @Override
+    public String getJsonParametrizedQueryPlaceHolder()
+      {
+        return "?";
       }
   }

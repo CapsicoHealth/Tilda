@@ -42,6 +42,6 @@ public class SelectQuery extends QueryHelper
     public int execute(RecordProcessor RP, int Start, int Size)
       throws Exception
       {
-        return _C.ExecuteSelect(_TableName, _QueryStr.toString()+_C.getSelectLimitClause(Start, Size+1), RP, Start, _C.supportsSelectOffset(), Size, _C.supportsSelectLimit());
+        return _C.ExecuteSelect(_SchemaName, _TableName, _QueryStr.toString()+_C.getSelectLimitClause(Start, Size+1), RP, Start, _C.supportsSelectOffset(), Size, _C.supportsSelectLimit());
       }
   }

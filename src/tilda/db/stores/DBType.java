@@ -75,4 +75,7 @@ public interface DBType
     public void getFullTableVar(StringBuilder Str, String SchemaName, String TableName);
     public void          setArray(Connection C, PreparedStatement PS, int i, ColumnType Type, List<Array> allocatedArrays, Collection<?> val) throws Exception;
     public Collection<?> getArray(              ResultSet         RS, int i, ColumnType Type, boolean isSet) throws Exception;
+    public void          setJson (              PreparedStatement PS, int i, String jsonValue) throws Exception;
+    public String        getJson (              ResultSet         RS, int i) throws Exception;
+    public String        getJsonParametrizedQueryPlaceHolder();
   }
