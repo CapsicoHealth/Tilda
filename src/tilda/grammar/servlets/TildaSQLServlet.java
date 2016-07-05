@@ -41,7 +41,7 @@ public class TildaSQLServlet extends HttpServlet
       {
       }
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException
       {
         LogRequestHeader(20, request);
@@ -78,14 +78,13 @@ public class TildaSQLServlet extends HttpServlet
         else
           {
             ErrorList errors = new ErrorList();
-            errors.addError("SYNTAX Error...", 0, 1, Expr.length());
+            errors.addError("SYNTAX Error...", 1, 1, Expr.length());
             errors.toJSON(_PrintWriter);
             response.setStatus(HttpStatus.BadRequest._Code);
           }
 
 
         response.setContentType("application/json");
-        _PrintWriter.println(json.toString());
       }
 
 
