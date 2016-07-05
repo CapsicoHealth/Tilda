@@ -16,8 +16,16 @@
 
 package tilda.enums;
 
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import tilda.utils.CollectionUtil;
 import tilda.utils.PaddingTracker;
+import tilda.utils.ParseUtil;
 import tilda.utils.TextUtil;
+import tilda.utils.pairs.StringStringPair;
 
 public enum ColumnType
   {
@@ -90,5 +98,70 @@ public enum ColumnType
      {
        return _PadderTypeNames.getPad(name());
      }
+
+    public Collection<?> parse(boolean isSet, String[] parts)
+    throws Exception
+      {
+        List<StringStringPair> Errors = new ArrayList<StringStringPair>();
+        switch (this)
+          {
+            case BOOLEAN:
+              {
+                boolean[] val = ParseUtil.parseBoolean("SQLBooleanArray", true, parts, Errors);
+                if (Errors.isEmpty() == false)
+                  throw new Exception(Errors.get(0)._V);
+                return isSet == true ? CollectionUtil.toSet(val) : CollectionUtil.toList(val);
+              }
+            case CHAR:
+              {
+                char[] val = ParseUtil.parseCharacter("SQLCharArray", true, parts, Errors);
+                if (Errors.isEmpty() == false)
+                  throw new Exception(Errors.get(0)._V);
+                return isSet == true ? CollectionUtil.toSet(val) : CollectionUtil.toList(val);
+              }
+            case DATETIME:
+              {
+                ZonedDateTime[] val = ParseUtil.parseZonedDateTime("SQLZonedDateTimeArray", true, parts, Errors);
+                if (Errors.isEmpty() == false)
+                  throw new Exception(Errors.get(0)._V);
+                return isSet == true ? CollectionUtil.toSet(val) : CollectionUtil.toList(val);
+              }
+            case DOUBLE:
+              {
+                double[] val = ParseUtil.parseDouble("SQLDoubleArray", true, parts, Errors);
+                if (Errors.isEmpty() == false)
+                  throw new Exception(Errors.get(0)._V);
+                return isSet == true ? CollectionUtil.toSet(val) : CollectionUtil.toList(val);
+              }
+            case FLOAT:
+              {
+                float[] val = ParseUtil.parseFloat("SQLFloatArray", true, parts, Errors);
+                if (Errors.isEmpty() == false)
+                  throw new Exception(Errors.get(0)._V);
+                return isSet == true ? CollectionUtil.toSet(val) : CollectionUtil.toList(val);
+              }
+            case INTEGER:
+              {
+                int[] val = ParseUtil.parseInteger("SQLIntegerArray", true, parts, Errors);
+                if (Errors.isEmpty() == false)
+                  throw new Exception(Errors.get(0)._V);
+                return isSet == true ? CollectionUtil.toSet(val) : CollectionUtil.toList(val);
+              }
+            case LONG:
+              {
+                long[] val = ParseUtil.parseLong("SQLLongArray", true, parts, Errors);
+                if (Errors.isEmpty() == false)
+                  throw new Exception(Errors.get(0)._V);
+                return isSet == true ? CollectionUtil.toSet(val) : CollectionUtil.toList(val);
+              }
+            case JSON:
+            case STRING:
+              return isSet == true ? CollectionUtil.toSet(parts) : CollectionUtil.toList(parts);
+            case BINARY:
+            case BITFIELD:
+            default:
+              throw new Exception("Cannot handle getArray() with a column type '" + this.name() + "'.");
+          }
+      }
     
   }

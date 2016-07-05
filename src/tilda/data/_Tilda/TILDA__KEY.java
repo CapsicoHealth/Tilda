@@ -85,7 +85,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 3 2016, 03:21:28EDT
+ @generated Jul 4 2016, 12:17:19EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__KEY implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -1452,10 +1452,10 @@ This is the hasChanged for:<BR>
         }
     }
 
+   @SuppressWarnings("unchecked")
    boolean Init(Connection C, java.sql.ResultSet RS) throws Exception
     {
       int i = 0;
-      java.sql.Array A;
       tilda.data.ZoneInfo_Data ZI;
       boolean DateTimeFieldNull;
       boolean ZoneFieldNull;

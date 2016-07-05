@@ -219,9 +219,9 @@ public class TILDA__ZONEINFO_Factory
      {
        int IncomingErrors = Errors.size();
 
-       String               _id            =                       ParseUtil.parseString       ("id"           , true , Values.get("id"           ), Errors );
-       String               _value         =                       ParseUtil.parseString       ("value"        , true , Values.get("value"        ), Errors );
-       String               _label         =                       ParseUtil.parseString       ("label"        , true , Values.get("label"        ), Errors );
+       String        _id            =                       ParseUtil.parseString("id"           , true , Values.get("id"           ), Errors );
+       String        _value         =                       ParseUtil.parseString("value"        , true , Values.get("value"        ), Errors );
+       String        _label         =                       ParseUtil.parseString("label"        , true , Values.get("label"        ), Errors );
 
        if (IncomingErrors != Errors.size())
         return null;

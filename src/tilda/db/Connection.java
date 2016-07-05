@@ -19,10 +19,12 @@ package tilda.db;
 import java.sql.Array;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.sql.Statement;
 import java.util.ArrayDeque;
+import java.util.Collection;
 import java.util.Deque;
 import java.util.List;
 import java.util.Set;
@@ -43,7 +45,11 @@ import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 import tilda.performance.PerfTracker;
+import tilda.types.ColumnDefinition;
+import tilda.types.Type_LongCollection;
+import tilda.types.Type_StringCollectionNull;
 import tilda.utils.AnsiUtil;
+import tilda.utils.CollectionUtil;
 import tilda.utils.SystemValues;
 import tilda.utils.pairs.StringStringPair;
 
@@ -309,20 +315,19 @@ public final class Connection
       {
         JDBCHelper.ExecuteDDL(_C, TableName, Query);
       }
-    
 
     public Array createArrayOf(String TypeName, java.lang.Object[] A)
     throws SQLException
       {
         return _C.createArrayOf(TypeName, A);
       }
+    
+/*
     public Array createArrayOf(ColumnType Type, java.lang.Object[] A)
     throws SQLException
       {
         return _DB.createArrayOf(this, Type, A);
       }
-    
-
     public Array createArrayOf(ColumnType Type, Set<?> A)
     throws SQLException
       {
@@ -344,7 +349,7 @@ public final class Connection
       {
         return createArrayOf(TypeName, A.toArray());
       }
-
+*/
     Deque<Savepoint> _SavePoints = new ArrayDeque<Savepoint>();
 
     public void setSavepoint()
@@ -491,6 +496,21 @@ public final class Connection
     public void getFullTableVar(StringBuilder Str, String SchemaName, String TableName)
       {
         _DB.getFullTableVar(Str, SchemaName, TableName);
+      }
+
+    public void setArray(PreparedStatement PS, int i, ColumnType Type, List<java.sql.Array> allocatedArrays, String[] val) throws Exception
+      {
+        _DB.setArray(this, PS, i, Type, allocatedArrays, CollectionUtil.toList(val));
+      }
+    
+    public void setArray(PreparedStatement PS, int i, ColumnType Type, List<java.sql.Array> allocatedArrays, Collection<?> val) throws Exception
+      {
+        _DB.setArray(this, PS, i, Type, allocatedArrays, val);
+      }
+
+    public Collection<?> getArray(ResultSet RS, int i, ColumnType Type, boolean isSet) throws Exception
+      {
+        return _DB.getArray(RS, i, Type, isSet);
       }
   }
 

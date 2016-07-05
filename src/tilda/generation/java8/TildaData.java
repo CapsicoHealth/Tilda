@@ -900,8 +900,9 @@ public class TildaData implements CodeGenTildaData
                     Out.print(" else if (DateTimeUtil.isNowPlaceholder(_"+C.getName()+") == false) ");
                     if (C.isCollection() == false)
                       Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(_" + C.getName() + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
-                    else
-                      Out.println("{ java.sql.Array A = C.createArrayOf(\"" + G.getSql().getColumnTypeRaw(C, false) + "\", _" + C.getName() + "); AllocatedArrays.add(A); PS.setArray(++i, A); }");
+                    else 
+                      Out.println("C.setArray(PS, ++i, "+O._BaseClassName+"_Factory.COLS."+C.getName().toUpperCase()+"._Type, AllocatedArrays, _" + C.getName() + ");");
+//                      Out.println("{ java.sql.Array A = C.createArrayOf(\"" + G.getSql().getColumnTypeRaw(C, false) + "\", _" + C.getName() + "); AllocatedArrays.add(A); PS.setArray(++i, A); }");
                     break;
                   case BINARY:
                   case BITFIELD:
@@ -917,8 +918,9 @@ public class TildaData implements CodeGenTildaData
                     if (C.isCollection() == false)
                       Out.println("PS.set" + JavaJDBCType.get(C._Type)._JDBCType + "(++i, " + (C._Type == ColumnType.CHAR ? "\"\"+" : "") + "_" + C.getName() + ");");
                     else
-                      Out.println("{ java.sql.Array A = C.createArrayOf(\"" + G.getSql().getColumnTypeRaw(C, false) + "\", " + (C._Type == ColumnType.STRING ? "" : Helper.DeSerializeArray(G)) + "(_" + C.getName()
-                          + ")); AllocatedArrays.add(A); PS.setArray(++i, A); }");
+                      Out.println("C.setArray(PS, ++i, "+O._BaseClassName+"_Factory.COLS."+C.getName().toUpperCase()+"._Type, AllocatedArrays, _" + C.getName() + ");");
+//                      Out.println("{ java.sql.Array A = C.createArrayOf(\"" + G.getSql().getColumnTypeRaw(C, false) + "\", " + (C._Type == ColumnType.STRING ? "" : Helper.DeSerializeArray(G)) + "(_" + C.getName()
+//                          + ")); AllocatedArrays.add(A); PS.setArray(++i, A); }");
                     break;
                   default:
                     throw new Error("ERROR! Cannot match ColumnType " + C._Type + " when generating a Write method");
@@ -1042,10 +1044,11 @@ public class TildaData implements CodeGenTildaData
         Helper.CatchFinallyBlock(Out, O, "selected", "StatementType.SELECT", false, false);
         Out.println("    }");
         Out.println();
+        Out.println("   @SuppressWarnings(\"unchecked\")");
         Out.println("   boolean Init(Connection C, java.sql.ResultSet RS) throws Exception");
         Out.println("    {");
         Out.println("      int i = 0;");
-        Out.println("      java.sql.Array A;");
+//        Out.println("      java.sql.Array A;");
         Out.println("      tilda.data.ZoneInfo_Data ZI;");
         Out.println("      boolean DateTimeFieldNull;");
         Out.println("      boolean ZoneFieldNull;");
@@ -1073,7 +1076,8 @@ public class TildaData implements CodeGenTildaData
                   case STRING:
                   case JSON:
                     if (C.isCollection() == true)
-                     Out.print("A = RS.getArray(++i); _" + C.getName() + Pad + " = A==null?null:CollectionUtil.to"+(C.isList()==true?"List":"Set ")+"(("+ JavaJDBCType.getFieldTypeBaseClass(C)+"[])A.getArray()); if (A != null) A.free();");
+                     Out.print("_" + C.getName() +" = ("+(C.isSet()==true?"Set<":"List<")+JavaJDBCType.get(C._Type)._JavaClassType+">) C.getArray(RS, ++i, "+O._BaseClassName+"_Factory.COLS."+C.getName().toUpperCase()+"._Type, "+C.isSet()+");");
+//                     Out.print("A = RS.getArray(++i); _" + C.getName() + Pad + " = A==null?null:CollectionUtil.to"+(C.isList()==true?"List":"Set ")+"(("+ JavaJDBCType.getFieldTypeBaseClass(C)+"[])A.getArray()); if (A != null) A.free();");
                     else if (C._Type == ColumnType.CHAR)
                       Out.print("_" + C.getName() + Pad + " = ParseUtil.parseCharacter    (RS.get" + JavaJDBCType.get(C._Type)._JDBCType + "(++i)); ");
                     else

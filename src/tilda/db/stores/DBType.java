@@ -17,7 +17,11 @@
 package tilda.db.stores;
 
 import java.sql.Array;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collection;
+import java.util.List;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
@@ -66,8 +70,9 @@ public interface DBType
     public boolean alterTableAlterColumnStringSize(Connection Con, Column Col, int DBSize) throws Exception;
 
     public boolean alterTableAlterColumnType(Connection Con, ColumnType fromType, Column Col, ZoneInfo_Data defaultZI) throws Exception;
-    public Array createArrayOf(Connection C, ColumnType Type, java.lang.Object[] A) throws SQLException;
     public StringStringPair getTypeMapping(int type, String name, int size, String typeName) throws Exception;
     public void getFullColumnVar(StringBuilder Str, String SchemaName, String TableName, String ColumnName);
     public void getFullTableVar(StringBuilder Str, String SchemaName, String TableName);
+    public void          setArray(Connection C, PreparedStatement PS, int i, ColumnType Type, List<Array> allocatedArrays, Collection<?> val) throws Exception;
+    public Collection<?> getArray(              ResultSet         RS, int i, ColumnType Type, boolean isSet) throws Exception;
   }

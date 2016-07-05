@@ -111,12 +111,15 @@ public class TextUtil
       {
         EscapeSingleQuoteForSQL(X, S, "'", "'");
       }
+    
 
     public static final void EscapeSingleQuoteForSQL(StringBuilder X, String[] S, boolean First)
       {
         if (S != null)
           for (String s : S)
             {
+              if (s==null)
+               continue;
               if (First == true)
                 First = false;
               else
@@ -125,16 +128,18 @@ public class TextUtil
             }
       }
 
-    public static final void EscapeSingleQuoteForSQL(StringBuilder X, Collection<String> Strs, boolean First)
+    public static final <T> void EscapeSingleQuoteForSQL(StringBuilder X, Collection<T> Strs, boolean First)
       {
         if (Strs != null)
-          for (String s : Strs)
+          for (T s : Strs)
             {
+              if (s==null)
+               continue;
               if (First == true)
                 First = false;
               else
                 X.append(", ");
-              EscapeSingleQuoteForSQL(X, s);
+              EscapeSingleQuoteForSQL(X, s.toString());
             }
       }
 

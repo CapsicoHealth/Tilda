@@ -16,6 +16,8 @@
 
 package tilda.generation.java8;
 
+import java.time.ZonedDateTime;
+
 import tilda.enums.ColumnType;
 import tilda.parsing.parts.Column;
 
@@ -24,33 +26,35 @@ public enum JavaJDBCType
   {
 
     /*@formatter:off*/
-    STRING  ("String"       , "String       " , "String   ", "CHAR   "                , ColumnType.STRING  ),
-    JSON    ("String"       , "String       " , "String   ", "CHAR   "                , ColumnType.JSON    ),
-    CHAR    ("char"         , "Character    " , "String   ", "CHAR   "                , ColumnType.CHAR    ),
-    INTEGER ("int"          , "Integer      " , "Int      ", "INTEGER"                , ColumnType.INTEGER ),
-    LONG    ("long"         , "Long         " , "Long     ", "BIGINT "                , ColumnType.LONG    ),
-    FLOAT   ("float"        , "Float        " , "Float    ", "FLOAT  "                , ColumnType.FLOAT   ),
-    DOUBLE  ("double"       , "Double       " , "Double   ", "DOUBLE "                , ColumnType.DOUBLE  ),
-    BOOLEAN ("boolean"      , "Boolean      " , "Boolean  ", "BOOLEAN"                , ColumnType.BOOLEAN ),
-    DATETIME("ZonedDateTime", "ZonedDateTime" , "Timestamp", "TIMESTAMP_WITH_TIMEZONE", ColumnType.DATETIME),
-    BINARY  ("byte[]"       , "byte[]       " , "Bytes    ", "BINARY "                , ColumnType.BINARY  ),
-    BITFIELD("int"          , "Integer      " , "Int      ", "BIGINT "                , ColumnType.BITFIELD);
+    STRING  ("String"       , String.class       , "String   ", "CHAR   "                , ColumnType.STRING  ),
+    JSON    ("String"       , String.class       , "String   ", "CHAR   "                , ColumnType.JSON    ),
+    CHAR    ("char"         , Character.class    , "String   ", "CHAR   "                , ColumnType.CHAR    ),
+    INTEGER ("int"          , Integer.class      , "Int      ", "INTEGER"                , ColumnType.INTEGER ),
+    LONG    ("long"         , Long.class         , "Long     ", "BIGINT "                , ColumnType.LONG    ),
+    FLOAT   ("float"        , Float.class        , "Float    ", "FLOAT  "                , ColumnType.FLOAT   ),
+    DOUBLE  ("double"       , Double.class       , "Double   ", "DOUBLE "                , ColumnType.DOUBLE  ),
+    BOOLEAN ("boolean"      , Boolean.class      , "Boolean  ", "BOOLEAN"                , ColumnType.BOOLEAN ),
+    DATETIME("ZonedDateTime", ZonedDateTime.class, "Timestamp", "TIMESTAMP_WITH_TIMEZONE", ColumnType.DATETIME),
+    BINARY  ("byte[]"       , byte[].class       , "Bytes    ", "BINARY "                , ColumnType.BINARY  ),
+    BITFIELD("int"          , Integer.class      , "Int      ", "BIGINT "                , ColumnType.BITFIELD);
     /*@formatter:on*/
 
     static {
       ColumnType.validate(JavaJDBCType.values());
     }
     
-    private JavaJDBCType(String JavaType, String JavaClassType, String JDBCType, String JDBCSQLType, ColumnType T)
+    private JavaJDBCType(String JavaType, Class<?> JavaClassClass, String JDBCType, String JDBCSQLType, ColumnType T)
       {
         _JavaType = JavaType;
-        _JavaClassType = JavaClassType;
+        _JavaClassClass = JavaClassClass;
+        _JavaClassType = JavaClassClass.getSimpleName();
         _JDBCType = JDBCType;
         _JDBCSQLType = JDBCSQLType;
         _T = T;
       }
 
     public String     _JavaType;
+    public Class<?>   _JavaClassClass;
     public String     _JavaClassType;
     public String     _JDBCType;
     public String     _JDBCSQLType;
@@ -71,8 +75,17 @@ public enum JavaJDBCType
     
     public static String getFieldTypeBaseClass(Column C)
       {
-        return JavaJDBCType.get(C._Type)._JavaClassType;
+        return getFieldTypeBaseClass(C._Type);
       }
+    public static String getFieldTypeBaseClass(ColumnType T)
+      {
+        return JavaJDBCType.get(T)._JavaClassType;
+      }
+    public static Class<?> getFieldTypeBaseClassClass(ColumnType T)
+      {
+        return JavaJDBCType.get(T)._JavaClassClass;
+      }
+    
 
     public static String getFieldTypeParam(Column C, boolean Multi)
       {

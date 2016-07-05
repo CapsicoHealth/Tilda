@@ -18,17 +18,18 @@ package tilda.utils;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.db.JDBCHelper;
+import tilda.enums.ColumnType;
 import tilda.utils.pairs.StringStringPair;
 
 public class ParseUtil
   {
-    protected static final Logger LOG = LogManager.getLogger(JDBCHelper.class.getName());
+    protected static final Logger LOG = LogManager.getLogger(ParseUtil.class.getName());
 
     
     
@@ -767,5 +768,4 @@ public class ParseUtil
       {
         return parseZonedDateTime(Name, Mandatory, Values == null ? null : Values.split(Separator), Errors);
       }
-    
   }

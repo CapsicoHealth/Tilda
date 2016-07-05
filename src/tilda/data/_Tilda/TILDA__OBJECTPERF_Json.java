@@ -25,24 +25,24 @@ public class TILDA__OBJECTPERF_Json
    protected TILDA__OBJECTPERF_Json() { }
 
    /*@formatter:off*/
-   @SerializedName("schemaName"   ) public String         _schemaName   ;
-   @SerializedName("objectName"   ) public String         _objectName   ;
+   @SerializedName("schemaName"   ) public String  _schemaName   ;
+   @SerializedName("objectName"   ) public String  _objectName   ;
    @SerializedName("startPeriod"  ) public String  Str_startPeriod  ;
    transient                        public ZonedDateTime  _startPeriod  ;
    @SerializedName("endPeriod"    ) public String  Str_endPeriod    ;
    transient                        public ZonedDateTime  _endPeriod    ;
-   @SerializedName("selectNano"   ) public Long           _selectNano   ;
-   @SerializedName("selectCount"  ) public Long           _selectCount  ;
-   @SerializedName("selectRecords") public Long           _selectRecords;
-   @SerializedName("insertNano"   ) public Long           _insertNano   ;
-   @SerializedName("insertCount"  ) public Long           _insertCount  ;
-   @SerializedName("insertRecords") public Long           _insertRecords;
-   @SerializedName("updateNano"   ) public Long           _updateNano   ;
-   @SerializedName("updateCount"  ) public Long           _updateCount  ;
-   @SerializedName("updateRecords") public Long           _updateRecords;
-   @SerializedName("deleteNano"   ) public Long           _deleteNano   ;
-   @SerializedName("deleteCount"  ) public Long           _deleteCount  ;
-   @SerializedName("deleteRecords") public Long           _deleteRecords;
+   @SerializedName("selectNano"   ) public Long  _selectNano   ;
+   @SerializedName("selectCount"  ) public Long  _selectCount  ;
+   @SerializedName("selectRecords") public Long  _selectRecords;
+   @SerializedName("insertNano"   ) public Long  _insertNano   ;
+   @SerializedName("insertCount"  ) public Long  _insertCount  ;
+   @SerializedName("insertRecords") public Long  _insertRecords;
+   @SerializedName("updateNano"   ) public Long  _updateNano   ;
+   @SerializedName("updateCount"  ) public Long  _updateCount  ;
+   @SerializedName("updateRecords") public Long  _updateRecords;
+   @SerializedName("deleteNano"   ) public Long  _deleteNano   ;
+   @SerializedName("deleteCount"  ) public Long  _deleteCount  ;
+   @SerializedName("deleteRecords") public Long  _deleteRecords;
    /*@formatter:on*/
 
    public tilda.data.ObjectPerf_Data Write(Connection C) throws Exception

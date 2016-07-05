@@ -25,9 +25,9 @@ public class TILDA__ZONEINFO_Json
    protected TILDA__ZONEINFO_Json() { }
 
    /*@formatter:off*/
-   @SerializedName("id"           ) public String         _id           ;
-   @SerializedName("value"        ) public String         _value        ;
-   @SerializedName("label"        ) public String         _label        ;
+   @SerializedName("id"           ) public String  _id           ;
+   @SerializedName("value"        ) public String  _value        ;
+   @SerializedName("label"        ) public String  _label        ;
    /*@formatter:on*/
 
    public tilda.data.ZoneInfo_Data Write(Connection C) throws Exception

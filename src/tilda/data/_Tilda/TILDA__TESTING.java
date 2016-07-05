@@ -64,7 +64,7 @@ It contains the following columns:<BR>
    <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Column</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
 
   <TR valign="top" bgcolor="#EEEEEE"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>refnum</B>&nbsp;&nbsp;</TD><TD>long&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.refnum</B>&nbsp;&nbsp;</TD><TD>bigint&nbsp;&nbsp;</TD><TD>false&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>true&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The primary key for this record</TD></TR>
-  <TR valign="top" bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>refnum2</B>&nbsp;&nbsp;</TD><TD>List<Long         > List<>&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.refnum2</B>&nbsp;&nbsp;</TD><TD>bigint[]&nbsp;&nbsp;</TD><TD>false&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>true&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The person's primary key</TD></TR>
+  <TR valign="top" bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>refnum2</B>&nbsp;&nbsp;</TD><TD>List<Long> List<>&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.refnum2</B>&nbsp;&nbsp;</TD><TD>bigint[]&nbsp;&nbsp;</TD><TD>false&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>true&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The person's primary key</TD></TR>
   <TR valign="top" bgcolor="#EEEEEE"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>name</B>&nbsp;&nbsp;</TD><TD>String&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.name</B>&nbsp;&nbsp;</TD><TD>character(10)&nbsp;&nbsp;</TD><TD>false&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>Medical system unique enterprise id</TD></TR>
   <TR valign="top" bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>description</B>&nbsp;&nbsp;</TD><TD>String&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.description</B>&nbsp;&nbsp;</TD><TD>varchar(250)&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR valign="top" bgcolor="#EEEEEE"><TD>5&nbsp;&nbsp;</TD><TD align="right"><B>desc2</B>&nbsp;&nbsp;</TD><TD>String&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.desc2</B>&nbsp;&nbsp;</TD><TD>varchar(3000)&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
@@ -72,23 +72,23 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#EEEEEE"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>desc4</B>&nbsp;&nbsp;</TD><TD>String&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.desc4</B>&nbsp;&nbsp;</TD><TD>text&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR valign="top" bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>desc5</B>&nbsp;&nbsp;</TD><TD>String&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.desc5</B>&nbsp;&nbsp;</TD><TD>text&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR valign="top" bgcolor="#EEEEEE"><TD>9&nbsp;&nbsp;</TD><TD align="right"><B>desc6</B>&nbsp;&nbsp;</TD><TD>String&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.desc6</B>&nbsp;&nbsp;</TD><TD>text&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
-  <TR valign="top" bgcolor="#FFFFFF"><TD>10&nbsp;&nbsp;</TD><TD align="right"><B>tops</B>&nbsp;&nbsp;</TD><TD>List<String       > List<>&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.tops</B>&nbsp;&nbsp;</TD><TD>text[]&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The blah</TD></TR>
-  <TR valign="top" bgcolor="#EEEEEE"><TD>11&nbsp;&nbsp;</TD><TD align="right"><B>tops2</B>&nbsp;&nbsp;</TD><TD>Set <String       > Set<>&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.tops2</B>&nbsp;&nbsp;</TD><TD>text[]&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The blah</TD></TR>
+  <TR valign="top" bgcolor="#FFFFFF"><TD>10&nbsp;&nbsp;</TD><TD align="right"><B>tops</B>&nbsp;&nbsp;</TD><TD>List<String> List<>&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.tops</B>&nbsp;&nbsp;</TD><TD>text[]&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The blah</TD></TR>
+  <TR valign="top" bgcolor="#EEEEEE"><TD>11&nbsp;&nbsp;</TD><TD align="right"><B>tops2</B>&nbsp;&nbsp;</TD><TD>Set <String> Set<>&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.tops2</B>&nbsp;&nbsp;</TD><TD>text[]&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The blah</TD></TR>
   <TR valign="top" bgcolor="#FFFFFF"><TD>12&nbsp;&nbsp;</TD><TD align="right"><B>a1</B>&nbsp;&nbsp;</TD><TD>int&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.a1</B>&nbsp;&nbsp;</TD><TD>INTEGER&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The blah</TD></TR>
   <TR valign="top" bgcolor="#EEEEEE"><TD>13&nbsp;&nbsp;</TD><TD align="right"><B>a2</B>&nbsp;&nbsp;</TD><TD>char&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.a2</B>&nbsp;&nbsp;</TD><TD>character&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The blah</TD></TR>
-  <TR valign="top" bgcolor="#FFFFFF"><TD>14&nbsp;&nbsp;</TD><TD align="right"><B>a2b</B>&nbsp;&nbsp;</TD><TD>List<Character    > List<>&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.a2b</B>&nbsp;&nbsp;</TD><TD>character[]&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The blah</TD></TR>
-  <TR valign="top" bgcolor="#EEEEEE"><TD>15&nbsp;&nbsp;</TD><TD align="right"><B>a2c</B>&nbsp;&nbsp;</TD><TD>Set <Character    > Set<>&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.a2c</B>&nbsp;&nbsp;</TD><TD>character[]&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The blah</TD></TR>
+  <TR valign="top" bgcolor="#FFFFFF"><TD>14&nbsp;&nbsp;</TD><TD align="right"><B>a2b</B>&nbsp;&nbsp;</TD><TD>List<Character> List<>&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.a2b</B>&nbsp;&nbsp;</TD><TD>character[]&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The blah</TD></TR>
+  <TR valign="top" bgcolor="#EEEEEE"><TD>15&nbsp;&nbsp;</TD><TD align="right"><B>a2c</B>&nbsp;&nbsp;</TD><TD>Set <Character> Set<>&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.a2c</B>&nbsp;&nbsp;</TD><TD>character[]&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The blah</TD></TR>
   <TR valign="top" bgcolor="#FFFFFF"><TD>16&nbsp;&nbsp;</TD><TD align="right"><B>a3</B>&nbsp;&nbsp;</TD><TD>boolean&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.a3</B>&nbsp;&nbsp;</TD><TD>boolean&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The blah</TD></TR>
-  <TR valign="top" bgcolor="#EEEEEE"><TD>17&nbsp;&nbsp;</TD><TD align="right"><B>a3b</B>&nbsp;&nbsp;</TD><TD>List<Boolean      > List<>&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.a3b</B>&nbsp;&nbsp;</TD><TD>boolean[]&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The blah</TD></TR>
+  <TR valign="top" bgcolor="#EEEEEE"><TD>17&nbsp;&nbsp;</TD><TD align="right"><B>a3b</B>&nbsp;&nbsp;</TD><TD>List<Boolean> List<>&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.a3b</B>&nbsp;&nbsp;</TD><TD>boolean[]&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The blah</TD></TR>
   <TR valign="top" bgcolor="#FFFFFF"><TD>18&nbsp;&nbsp;</TD><TD align="right"><B>a4</B>&nbsp;&nbsp;</TD><TD>double&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.a4</B>&nbsp;&nbsp;</TD><TD>double precision&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The blah</TD></TR>
-  <TR valign="top" bgcolor="#EEEEEE"><TD>19&nbsp;&nbsp;</TD><TD align="right"><B>a4b</B>&nbsp;&nbsp;</TD><TD>List<Double       > List<>&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.a4b</B>&nbsp;&nbsp;</TD><TD>double precision[]&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The blah</TD></TR>
+  <TR valign="top" bgcolor="#EEEEEE"><TD>19&nbsp;&nbsp;</TD><TD align="right"><B>a4b</B>&nbsp;&nbsp;</TD><TD>List<Double> List<>&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.a4b</B>&nbsp;&nbsp;</TD><TD>double precision[]&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The blah</TD></TR>
   <TR valign="top" bgcolor="#FFFFFF"><TD>20&nbsp;&nbsp;</TD><TD align="right"><B>a5</B>&nbsp;&nbsp;</TD><TD>float&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.a5</B>&nbsp;&nbsp;</TD><TD>real&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The blah</TD></TR>
-  <TR valign="top" bgcolor="#EEEEEE"><TD>21&nbsp;&nbsp;</TD><TD align="right"><B>a5b</B>&nbsp;&nbsp;</TD><TD>List<Float        > List<>&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.a5b</B>&nbsp;&nbsp;</TD><TD>real[]&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The blah</TD></TR>
+  <TR valign="top" bgcolor="#EEEEEE"><TD>21&nbsp;&nbsp;</TD><TD align="right"><B>a5b</B>&nbsp;&nbsp;</TD><TD>List<Float> List<>&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.a5b</B>&nbsp;&nbsp;</TD><TD>real[]&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The blah</TD></TR>
   <TR valign="top" bgcolor="#FFFFFF"><TD>22&nbsp;&nbsp;</TD><TD align="right"><B>a6</B>&nbsp;&nbsp;</TD><TD>long&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.a6</B>&nbsp;&nbsp;</TD><TD>bigint&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The blah</TD></TR>
-  <TR valign="top" bgcolor="#EEEEEE"><TD>23&nbsp;&nbsp;</TD><TD align="right"><B>a6b</B>&nbsp;&nbsp;</TD><TD>List<Long         > List<>&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.a6b</B>&nbsp;&nbsp;</TD><TD>bigint[]&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The blah</TD></TR>
-  <TR valign="top" bgcolor="#FFFFFF"><TD>24&nbsp;&nbsp;</TD><TD align="right"><B>a6c</B>&nbsp;&nbsp;</TD><TD>Set <Long         > Set<>&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.a6c</B>&nbsp;&nbsp;</TD><TD>bigint[]&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The blah</TD></TR>
+  <TR valign="top" bgcolor="#EEEEEE"><TD>23&nbsp;&nbsp;</TD><TD align="right"><B>a6b</B>&nbsp;&nbsp;</TD><TD>List<Long> List<>&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.a6b</B>&nbsp;&nbsp;</TD><TD>bigint[]&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The blah</TD></TR>
+  <TR valign="top" bgcolor="#FFFFFF"><TD>24&nbsp;&nbsp;</TD><TD align="right"><B>a6c</B>&nbsp;&nbsp;</TD><TD>Set <Long> Set<>&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.a6c</B>&nbsp;&nbsp;</TD><TD>bigint[]&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The blah</TD></TR>
   <TR valign="top" bgcolor="#EEEEEE"><TD>25&nbsp;&nbsp;</TD><TD align="right"><B>a7</B>&nbsp;&nbsp;</TD><TD>int&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.a7</B>&nbsp;&nbsp;</TD><TD>integer&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The blah</TD></TR>
-  <TR valign="top" bgcolor="#FFFFFF"><TD>26&nbsp;&nbsp;</TD><TD align="right"><B>a7b</B>&nbsp;&nbsp;</TD><TD>List<Integer      > List<>&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.a7b</B>&nbsp;&nbsp;</TD><TD>integer[]&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The blah</TD></TR>
+  <TR valign="top" bgcolor="#FFFFFF"><TD>26&nbsp;&nbsp;</TD><TD align="right"><B>a7b</B>&nbsp;&nbsp;</TD><TD>List<Integer> List<>&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.a7b</B>&nbsp;&nbsp;</TD><TD>integer[]&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The blah</TD></TR>
   <TR valign="top" bgcolor="#EEEEEE"><TD>27&nbsp;&nbsp;</TD><TD align="right"><B>a8</B>&nbsp;&nbsp;</TD><TD>byte[]&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.a8</B>&nbsp;&nbsp;</TD><TD>BYTEA&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The blah</TD></TR>
   <TR valign="top" bgcolor="#FFFFFF"><TD>28&nbsp;&nbsp;</TD><TD align="right"><B>a9TZ</B>&nbsp;&nbsp;</TD><TD>String&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.a9TZ</B>&nbsp;&nbsp;</TD><TD>character(5)&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>AUTO&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>Generated helper column to hold the time zone ID for 'a9'.</TD></TR>
   <TR valign="top" bgcolor="#EEEEEE"><TD>29&nbsp;&nbsp;</TD><TD align="right"><B>a9</B>&nbsp;&nbsp;</TD><TD>ZonedDateTime&nbsp;&nbsp;</TD><TD><B>TILDA.TESTING.a9</B>&nbsp;&nbsp;</TD><TD>timestamptz&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>-&nbsp;&nbsp;</TD><TD>The blah</TD></TR>
@@ -110,7 +110,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 3 2016, 03:21:28EDT
+ @generated Jul 4 2016, 12:17:19EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTING implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject, tilda.interfaces.JSONable
@@ -234,7 +234,7 @@ This is the setter for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.refnum2 of type List<Long         ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.refnum2 of type List<Long></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.refnum2 of type bigint[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -244,7 +244,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   List<Long         > _refnum2= new ArrayList<Long         >();
+   List<Long> _refnum2= new ArrayList<Long>();
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -253,7 +253,7 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.refnum2 of type List<Long         ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.refnum2 of type List<Long></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.refnum2 of type bigint[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -263,7 +263,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final Iterator<Long         > getRefnum2()
+   public final Iterator<Long> getRefnum2()
       { return _refnum2==null? null : _refnum2.iterator(); }
    public final boolean hasRefnum2(long v)
       { return _refnum2==null? false : _refnum2.contains(v); }
@@ -275,7 +275,7 @@ This is the getter for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.refnum2 of type List<Long         ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.refnum2 of type List<Long></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.refnum2 of type bigint[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -285,7 +285,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   protected void setRefnum2(List<Long         > v) throws Exception
+   protected void setRefnum2(List<Long> v) throws Exception
      {
        long T0 = System.nanoTime();
        if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
@@ -297,7 +297,7 @@ This is the setter for:<BR>
           __Changes |= TILDA__TESTING_Factory.COLS.REFNUM2._Mask;
           __Nulls   &= ~TILDA__TESTING_Factory.COLS.REFNUM2._Mask;
           if (_refnum2 == null)
-           _refnum2 = new ArrayList<Long         >();
+           _refnum2 = new ArrayList<Long>();
           else
            _refnum2.clear();
           for (long i : v)
@@ -311,7 +311,7 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (_refnum2 == null)
-        _refnum2 = new ArrayList<Long         >();
+        _refnum2 = new ArrayList<Long>();
        if (_refnum2.get(pos).equals(v) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
@@ -322,7 +322,7 @@ This is the setter for:<BR>
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
-   protected void removeFromRefnum2(Long          v) throws Exception
+   protected void removeFromRefnum2(Long v) throws Exception
      {
        if (_refnum2.remove(v) == true)
           __Changes |= TILDA__TESTING_Factory.COLS.REFNUM2._Mask;
@@ -342,7 +342,7 @@ This is the setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.refnum2 of type List<Long         ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.refnum2 of type List<Long></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.refnum2 of type bigint[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -1394,7 +1394,7 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.tops of type List<String       ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.tops of type List<String></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.tops of type text[]</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>null</TD></TR>
@@ -1405,7 +1405,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   List<String       > _tops;
+   List<String> _tops;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1414,7 +1414,7 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.tops of type List<String       ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.tops of type List<String></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.tops of type text[]</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>null</TD></TR>
@@ -1425,7 +1425,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final Iterator<String       > getTops()
+   public final Iterator<String> getTops()
       { return _tops==null? null : _tops.iterator(); }
    public final boolean hasTops(String v)
       { return _tops==null? false : _tops.contains(v); }
@@ -1437,7 +1437,7 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.tops of type List<String       ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.tops of type List<String></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.tops of type text[]</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>null</TD></TR>
@@ -1458,7 +1458,7 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.tops of type List<String       ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.tops of type List<String></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.tops of type text[]</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>null</TD></TR>
@@ -1469,7 +1469,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setTops(List<String       > v) throws Exception
+   public void setTops(List<String> v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
@@ -1479,7 +1479,7 @@ This is the setter for:<BR>
           __Changes |= TILDA__TESTING_Factory.COLS.TOPS._Mask;
           __Nulls   &= ~TILDA__TESTING_Factory.COLS.TOPS._Mask;
           if (_tops == null)
-           _tops = new ArrayList<String       >();
+           _tops = new ArrayList<String>();
           else
            _tops.clear();
           for (String i : v)
@@ -1493,7 +1493,7 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (_tops == null)
-        _tops = new ArrayList<String       >();
+        _tops = new ArrayList<String>();
        if (v == null)
         {
           setNullTops();
@@ -1506,7 +1506,7 @@ This is the setter for:<BR>
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
-   public void removeFromTops(String        v) throws Exception
+   public void removeFromTops(String v) throws Exception
      {
        if (_tops.remove(v) == true)
           __Changes |= TILDA__TESTING_Factory.COLS.TOPS._Mask;
@@ -1526,7 +1526,7 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.tops of type List<String       ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.tops of type List<String></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.tops of type text[]</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>null</TD></TR>
@@ -1555,7 +1555,7 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.tops of type List<String       ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.tops of type List<String></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.tops of type text[]</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>null</TD></TR>
@@ -1582,7 +1582,7 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.tops2 of type Set <String       ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.tops2 of type Set <String></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.tops2 of type text[]</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>null</TD></TR>
@@ -1593,7 +1593,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   Set <String       > _tops2;
+   Set <String> _tops2;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1602,7 +1602,7 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.tops2 of type Set <String       ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.tops2 of type Set <String></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.tops2 of type text[]</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>null</TD></TR>
@@ -1613,7 +1613,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final Iterator<String       > getTops2()
+   public final Iterator<String> getTops2()
       { return _tops2==null? null : _tops2.iterator(); }
    public final boolean hasTops2(String v)
       { return _tops2==null? false : _tops2.contains(v); }
@@ -1625,7 +1625,7 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.tops2 of type Set <String       ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.tops2 of type Set <String></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.tops2 of type text[]</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>null</TD></TR>
@@ -1646,7 +1646,7 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.tops2 of type Set <String       ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.tops2 of type Set <String></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.tops2 of type text[]</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>null</TD></TR>
@@ -1657,7 +1657,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setTops2(Set <String       > v) throws Exception
+   public void setTops2(Set <String> v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
@@ -1667,7 +1667,7 @@ This is the setter for:<BR>
           __Changes |= TILDA__TESTING_Factory.COLS.TOPS2._Mask;
           __Nulls   &= ~TILDA__TESTING_Factory.COLS.TOPS2._Mask;
           if (_tops2 == null)
-           _tops2 = new TreeSet<String       >();
+           _tops2 = new TreeSet<String>();
           else
            _tops2.clear();
           for (String i : v)
@@ -1681,7 +1681,7 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (_tops2 == null)
-        _tops2 = new TreeSet<String       >();
+        _tops2 = new TreeSet<String>();
        if (v == null)
         {
           setNullTops2();
@@ -1694,7 +1694,7 @@ This is the setter for:<BR>
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
-   public void removeFromTops2(String        v) throws Exception
+   public void removeFromTops2(String v) throws Exception
      {
        if (_tops2.remove(v) == true)
           __Changes |= TILDA__TESTING_Factory.COLS.TOPS2._Mask;
@@ -1707,7 +1707,7 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.tops2 of type Set <String       ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.tops2 of type Set <String></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.tops2 of type text[]</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>null</TD></TR>
@@ -1736,7 +1736,7 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.tops2 of type Set <String       ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.tops2 of type Set <String></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.tops2 of type text[]</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>null</TD></TR>
@@ -2047,7 +2047,7 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a2b of type List<Character    ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a2b of type List<Character></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a2b of type character[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -2057,7 +2057,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   List<Character    > _a2b;
+   List<Character> _a2b;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2066,7 +2066,7 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a2b of type List<Character    ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a2b of type List<Character></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a2b of type character[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -2076,7 +2076,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final Iterator<Character    > getA2b()
+   public final Iterator<Character> getA2b()
       { return _a2b==null? null : _a2b.iterator(); }
    public final boolean hasA2b(char v)
       { return _a2b==null? false : _a2b.contains(v); }
@@ -2088,7 +2088,7 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a2b of type List<Character    ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a2b of type List<Character></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a2b of type character[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -2108,7 +2108,7 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a2b of type List<Character    ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a2b of type List<Character></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a2b of type character[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -2118,7 +2118,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setA2b(List<Character    > v) throws Exception
+   public void setA2b(List<Character> v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
@@ -2128,7 +2128,7 @@ This is the setter for:<BR>
           __Changes |= TILDA__TESTING_Factory.COLS.A2B._Mask;
           __Nulls   &= ~TILDA__TESTING_Factory.COLS.A2B._Mask;
           if (_a2b == null)
-           _a2b = new ArrayList<Character    >();
+           _a2b = new ArrayList<Character>();
           else
            _a2b.clear();
           for (char i : v)
@@ -2142,7 +2142,7 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (_a2b == null)
-        _a2b = new ArrayList<Character    >();
+        _a2b = new ArrayList<Character>();
        if (_a2b.get(pos).equals(v) == false)
         {
           __Changes |= TILDA__TESTING_Factory.COLS.A2B._Mask;
@@ -2151,7 +2151,7 @@ This is the setter for:<BR>
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
-   public void removeFromA2b(Character     v) throws Exception
+   public void removeFromA2b(Character v) throws Exception
      {
        if (_a2b.remove(v) == true)
           __Changes |= TILDA__TESTING_Factory.COLS.A2B._Mask;
@@ -2171,7 +2171,7 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a2b of type List<Character    ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a2b of type List<Character></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a2b of type character[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -2199,7 +2199,7 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a2b of type List<Character    ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a2b of type List<Character></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a2b of type character[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -2225,7 +2225,7 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a2c of type Set <Character    ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a2c of type Set <Character></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a2c of type character[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -2235,7 +2235,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   Set <Character    > _a2c;
+   Set <Character> _a2c;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2244,7 +2244,7 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a2c of type Set <Character    ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a2c of type Set <Character></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a2c of type character[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -2254,7 +2254,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final Iterator<Character    > getA2c()
+   public final Iterator<Character> getA2c()
       { return _a2c==null? null : _a2c.iterator(); }
    public final boolean hasA2c(char v)
       { return _a2c==null? false : _a2c.contains(v); }
@@ -2266,7 +2266,7 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a2c of type Set <Character    ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a2c of type Set <Character></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a2c of type character[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -2286,7 +2286,7 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a2c of type Set <Character    ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a2c of type Set <Character></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a2c of type character[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -2296,7 +2296,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setA2c(Set <Character    > v) throws Exception
+   public void setA2c(Set <Character> v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
@@ -2306,7 +2306,7 @@ This is the setter for:<BR>
           __Changes |= TILDA__TESTING_Factory.COLS.A2C._Mask;
           __Nulls   &= ~TILDA__TESTING_Factory.COLS.A2C._Mask;
           if (_a2c == null)
-           _a2c = new TreeSet<Character    >();
+           _a2c = new TreeSet<Character>();
           else
            _a2c.clear();
           for (char i : v)
@@ -2320,7 +2320,7 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (_a2c == null)
-        _a2c = new TreeSet<Character    >();
+        _a2c = new TreeSet<Character>();
        if (_a2c.contains(v) == false)
         {
           __Changes |= TILDA__TESTING_Factory.COLS.A2C._Mask;
@@ -2329,7 +2329,7 @@ This is the setter for:<BR>
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
-   public void removeFromA2c(Character     v) throws Exception
+   public void removeFromA2c(Character v) throws Exception
      {
        if (_a2c.remove(v) == true)
           __Changes |= TILDA__TESTING_Factory.COLS.A2C._Mask;
@@ -2342,7 +2342,7 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a2c of type Set <Character    ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a2c of type Set <Character></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a2c of type character[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -2370,7 +2370,7 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a2c of type Set <Character    ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a2c of type Set <Character></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a2c of type character[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -2538,7 +2538,7 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a3b of type List<Boolean      ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a3b of type List<Boolean></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a3b of type boolean[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -2548,7 +2548,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   List<Boolean      > _a3b;
+   List<Boolean> _a3b;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2557,7 +2557,7 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a3b of type List<Boolean      ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a3b of type List<Boolean></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a3b of type boolean[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -2567,7 +2567,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final Iterator<Boolean      > getA3b()
+   public final Iterator<Boolean> getA3b()
       { return _a3b==null? null : _a3b.iterator(); }
    public final boolean hasA3b(boolean v)
       { return _a3b==null? false : _a3b.contains(v); }
@@ -2579,7 +2579,7 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a3b of type List<Boolean      ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a3b of type List<Boolean></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a3b of type boolean[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -2599,7 +2599,7 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a3b of type List<Boolean      ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a3b of type List<Boolean></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a3b of type boolean[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -2609,7 +2609,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setA3b(List<Boolean      > v) throws Exception
+   public void setA3b(List<Boolean> v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
@@ -2619,7 +2619,7 @@ This is the setter for:<BR>
           __Changes |= TILDA__TESTING_Factory.COLS.A3B._Mask;
           __Nulls   &= ~TILDA__TESTING_Factory.COLS.A3B._Mask;
           if (_a3b == null)
-           _a3b = new ArrayList<Boolean      >();
+           _a3b = new ArrayList<Boolean>();
           else
            _a3b.clear();
           for (boolean i : v)
@@ -2633,7 +2633,7 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (_a3b == null)
-        _a3b = new ArrayList<Boolean      >();
+        _a3b = new ArrayList<Boolean>();
        if (_a3b.get(pos).equals(v) == false)
         {
           __Changes |= TILDA__TESTING_Factory.COLS.A3B._Mask;
@@ -2642,7 +2642,7 @@ This is the setter for:<BR>
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
-   public void removeFromA3b(Boolean       v) throws Exception
+   public void removeFromA3b(Boolean v) throws Exception
      {
        if (_a3b.remove(v) == true)
           __Changes |= TILDA__TESTING_Factory.COLS.A3B._Mask;
@@ -2662,7 +2662,7 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a3b of type List<Boolean      ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a3b of type List<Boolean></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a3b of type boolean[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -2690,7 +2690,7 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a3b of type List<Boolean      ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a3b of type List<Boolean></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a3b of type boolean[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -2858,7 +2858,7 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a4b of type List<Double       ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a4b of type List<Double></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a4b of type double precision[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -2868,7 +2868,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   List<Double       > _a4b;
+   List<Double> _a4b;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2877,7 +2877,7 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a4b of type List<Double       ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a4b of type List<Double></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a4b of type double precision[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -2887,7 +2887,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final Iterator<Double       > getA4b()
+   public final Iterator<Double> getA4b()
       { return _a4b==null? null : _a4b.iterator(); }
    public final boolean hasA4b(double v)
       { return _a4b==null? false : _a4b.contains(v); }
@@ -2899,7 +2899,7 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a4b of type List<Double       ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a4b of type List<Double></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a4b of type double precision[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -2919,7 +2919,7 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a4b of type List<Double       ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a4b of type List<Double></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a4b of type double precision[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -2929,7 +2929,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setA4b(List<Double       > v) throws Exception
+   public void setA4b(List<Double> v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
@@ -2939,7 +2939,7 @@ This is the setter for:<BR>
           __Changes |= TILDA__TESTING_Factory.COLS.A4B._Mask;
           __Nulls   &= ~TILDA__TESTING_Factory.COLS.A4B._Mask;
           if (_a4b == null)
-           _a4b = new ArrayList<Double       >();
+           _a4b = new ArrayList<Double>();
           else
            _a4b.clear();
           for (double i : v)
@@ -2953,7 +2953,7 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (_a4b == null)
-        _a4b = new ArrayList<Double       >();
+        _a4b = new ArrayList<Double>();
        if (_a4b.get(pos).equals(v) == false)
         {
           __Changes |= TILDA__TESTING_Factory.COLS.A4B._Mask;
@@ -2962,7 +2962,7 @@ This is the setter for:<BR>
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
-   public void removeFromA4b(Double        v) throws Exception
+   public void removeFromA4b(Double v) throws Exception
      {
        if (_a4b.remove(v) == true)
           __Changes |= TILDA__TESTING_Factory.COLS.A4B._Mask;
@@ -2982,7 +2982,7 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a4b of type List<Double       ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a4b of type List<Double></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a4b of type double precision[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -3010,7 +3010,7 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a4b of type List<Double       ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a4b of type List<Double></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a4b of type double precision[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -3178,7 +3178,7 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a5b of type List<Float        ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a5b of type List<Float></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a5b of type real[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -3188,7 +3188,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   List<Float        > _a5b;
+   List<Float> _a5b;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3197,7 +3197,7 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a5b of type List<Float        ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a5b of type List<Float></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a5b of type real[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -3207,7 +3207,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final Iterator<Float        > getA5b()
+   public final Iterator<Float> getA5b()
       { return _a5b==null? null : _a5b.iterator(); }
    public final boolean hasA5b(float v)
       { return _a5b==null? false : _a5b.contains(v); }
@@ -3219,7 +3219,7 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a5b of type List<Float        ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a5b of type List<Float></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a5b of type real[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -3239,7 +3239,7 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a5b of type List<Float        ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a5b of type List<Float></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a5b of type real[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -3249,7 +3249,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setA5b(List<Float        > v) throws Exception
+   public void setA5b(List<Float> v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
@@ -3259,7 +3259,7 @@ This is the setter for:<BR>
           __Changes |= TILDA__TESTING_Factory.COLS.A5B._Mask;
           __Nulls   &= ~TILDA__TESTING_Factory.COLS.A5B._Mask;
           if (_a5b == null)
-           _a5b = new ArrayList<Float        >();
+           _a5b = new ArrayList<Float>();
           else
            _a5b.clear();
           for (float i : v)
@@ -3273,7 +3273,7 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (_a5b == null)
-        _a5b = new ArrayList<Float        >();
+        _a5b = new ArrayList<Float>();
        if (_a5b.get(pos).equals(v) == false)
         {
           __Changes |= TILDA__TESTING_Factory.COLS.A5B._Mask;
@@ -3282,7 +3282,7 @@ This is the setter for:<BR>
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
-   public void removeFromA5b(Float         v) throws Exception
+   public void removeFromA5b(Float v) throws Exception
      {
        if (_a5b.remove(v) == true)
           __Changes |= TILDA__TESTING_Factory.COLS.A5B._Mask;
@@ -3302,7 +3302,7 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a5b of type List<Float        ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a5b of type List<Float></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a5b of type real[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -3330,7 +3330,7 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a5b of type List<Float        ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a5b of type List<Float></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a5b of type real[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -3498,7 +3498,7 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a6b of type List<Long         ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a6b of type List<Long></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a6b of type bigint[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -3508,7 +3508,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   List<Long         > _a6b;
+   List<Long> _a6b;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3517,7 +3517,7 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a6b of type List<Long         ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a6b of type List<Long></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a6b of type bigint[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -3527,7 +3527,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final Iterator<Long         > getA6b()
+   public final Iterator<Long> getA6b()
       { return _a6b==null? null : _a6b.iterator(); }
    public final boolean hasA6b(long v)
       { return _a6b==null? false : _a6b.contains(v); }
@@ -3539,7 +3539,7 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a6b of type List<Long         ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a6b of type List<Long></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a6b of type bigint[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -3559,7 +3559,7 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a6b of type List<Long         ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a6b of type List<Long></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a6b of type bigint[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -3569,7 +3569,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setA6b(List<Long         > v) throws Exception
+   public void setA6b(List<Long> v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
@@ -3579,7 +3579,7 @@ This is the setter for:<BR>
           __Changes |= TILDA__TESTING_Factory.COLS.A6B._Mask;
           __Nulls   &= ~TILDA__TESTING_Factory.COLS.A6B._Mask;
           if (_a6b == null)
-           _a6b = new ArrayList<Long         >();
+           _a6b = new ArrayList<Long>();
           else
            _a6b.clear();
           for (long i : v)
@@ -3593,7 +3593,7 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (_a6b == null)
-        _a6b = new ArrayList<Long         >();
+        _a6b = new ArrayList<Long>();
        if (_a6b.get(pos).equals(v) == false)
         {
           __Changes |= TILDA__TESTING_Factory.COLS.A6B._Mask;
@@ -3602,7 +3602,7 @@ This is the setter for:<BR>
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
-   public void removeFromA6b(Long          v) throws Exception
+   public void removeFromA6b(Long v) throws Exception
      {
        if (_a6b.remove(v) == true)
           __Changes |= TILDA__TESTING_Factory.COLS.A6B._Mask;
@@ -3622,7 +3622,7 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a6b of type List<Long         ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a6b of type List<Long></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a6b of type bigint[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -3650,7 +3650,7 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a6b of type List<Long         ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a6b of type List<Long></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a6b of type bigint[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -3676,7 +3676,7 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a6c of type Set <Long         ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a6c of type Set <Long></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a6c of type bigint[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -3686,7 +3686,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   Set <Long         > _a6c;
+   Set <Long> _a6c;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3695,7 +3695,7 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a6c of type Set <Long         ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a6c of type Set <Long></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a6c of type bigint[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -3705,7 +3705,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final Iterator<Long         > getA6c()
+   public final Iterator<Long> getA6c()
       { return _a6c==null? null : _a6c.iterator(); }
    public final boolean hasA6c(long v)
       { return _a6c==null? false : _a6c.contains(v); }
@@ -3717,7 +3717,7 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a6c of type Set <Long         ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a6c of type Set <Long></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a6c of type bigint[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -3737,7 +3737,7 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a6c of type Set <Long         ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a6c of type Set <Long></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a6c of type bigint[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -3747,7 +3747,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setA6c(Set <Long         > v) throws Exception
+   public void setA6c(Set <Long> v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
@@ -3757,7 +3757,7 @@ This is the setter for:<BR>
           __Changes |= TILDA__TESTING_Factory.COLS.A6C._Mask;
           __Nulls   &= ~TILDA__TESTING_Factory.COLS.A6C._Mask;
           if (_a6c == null)
-           _a6c = new TreeSet<Long         >();
+           _a6c = new TreeSet<Long>();
           else
            _a6c.clear();
           for (long i : v)
@@ -3771,7 +3771,7 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (_a6c == null)
-        _a6c = new TreeSet<Long         >();
+        _a6c = new TreeSet<Long>();
        if (_a6c.contains(v) == false)
         {
           __Changes |= TILDA__TESTING_Factory.COLS.A6C._Mask;
@@ -3780,7 +3780,7 @@ This is the setter for:<BR>
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
-   public void removeFromA6c(Long          v) throws Exception
+   public void removeFromA6c(Long v) throws Exception
      {
        if (_a6c.remove(v) == true)
           __Changes |= TILDA__TESTING_Factory.COLS.A6C._Mask;
@@ -3793,7 +3793,7 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a6c of type Set <Long         ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a6c of type Set <Long></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a6c of type bigint[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -3821,7 +3821,7 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a6c of type Set <Long         ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a6c of type Set <Long></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a6c of type bigint[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -3989,7 +3989,7 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a7b of type List<Integer      ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a7b of type List<Integer></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a7b of type integer[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -3999,7 +3999,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   List<Integer      > _a7b;
+   List<Integer> _a7b;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4008,7 +4008,7 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a7b of type List<Integer      ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a7b of type List<Integer></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a7b of type integer[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -4018,7 +4018,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final Iterator<Integer      > getA7b()
+   public final Iterator<Integer> getA7b()
       { return _a7b==null? null : _a7b.iterator(); }
    public final boolean hasA7b(int v)
       { return _a7b==null? false : _a7b.contains(v); }
@@ -4030,7 +4030,7 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a7b of type List<Integer      ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a7b of type List<Integer></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a7b of type integer[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -4050,7 +4050,7 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a7b of type List<Integer      ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a7b of type List<Integer></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a7b of type integer[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -4060,7 +4060,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setA7b(List<Integer      > v) throws Exception
+   public void setA7b(List<Integer> v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
@@ -4070,7 +4070,7 @@ This is the setter for:<BR>
           __Changes |= TILDA__TESTING_Factory.COLS.A7B._Mask;
           __Nulls   &= ~TILDA__TESTING_Factory.COLS.A7B._Mask;
           if (_a7b == null)
-           _a7b = new ArrayList<Integer      >();
+           _a7b = new ArrayList<Integer>();
           else
            _a7b.clear();
           for (int i : v)
@@ -4084,7 +4084,7 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (_a7b == null)
-        _a7b = new ArrayList<Integer      >();
+        _a7b = new ArrayList<Integer>();
        if (_a7b.get(pos).equals(v) == false)
         {
           __Changes |= TILDA__TESTING_Factory.COLS.A7B._Mask;
@@ -4093,7 +4093,7 @@ This is the setter for:<BR>
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
-   public void removeFromA7b(Integer       v) throws Exception
+   public void removeFromA7b(Integer v) throws Exception
      {
        if (_a7b.remove(v) == true)
           __Changes |= TILDA__TESTING_Factory.COLS.A7B._Mask;
@@ -4113,7 +4113,7 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a7b of type List<Integer      ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a7b of type List<Integer></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a7b of type integer[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -4141,7 +4141,7 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a7b of type List<Integer      ></TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TESTING.a7b of type List<Integer></TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TESTING.a7b of type integer[]</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -5530,7 +5530,7 @@ This is the hasChanged for:<BR>
                 } 
                if ((TILDA__TESTING_Factory.COLS.REFNUM2._Mask     & __Changes) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.REFNUM2._Mask     & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else { java.sql.Array A = C.createArrayOf("int8", CollectionUtil.toObjectArray(_refnum2)); AllocatedArrays.add(A); PS.setArray(++i, A); }
+                  if ((TILDA__TESTING_Factory.COLS.REFNUM2._Mask     & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.REFNUM2._Type, AllocatedArrays, _refnum2);
                 } 
                if ((TILDA__TESTING_Factory.COLS.NAME._Mask        & __Changes) != 0L) 
                 { 
@@ -5562,11 +5562,11 @@ This is the hasChanged for:<BR>
                 } 
                if ((TILDA__TESTING_Factory.COLS.TOPS._Mask        & __Changes) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.TOPS._Mask        & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else { java.sql.Array A = C.createArrayOf("text", (_tops)); AllocatedArrays.add(A); PS.setArray(++i, A); }
+                  if ((TILDA__TESTING_Factory.COLS.TOPS._Mask        & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.TOPS._Type, AllocatedArrays, _tops);
                 } 
                if ((TILDA__TESTING_Factory.COLS.TOPS2._Mask       & __Changes) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.TOPS2._Mask       & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else { java.sql.Array A = C.createArrayOf("text", (_tops2)); AllocatedArrays.add(A); PS.setArray(++i, A); }
+                  if ((TILDA__TESTING_Factory.COLS.TOPS2._Mask       & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.TOPS2._Type, AllocatedArrays, _tops2);
                 } 
                if ((TILDA__TESTING_Factory.COLS.A1._Mask          & __Changes) != 0L) 
                 { 
@@ -5578,11 +5578,11 @@ This is the hasChanged for:<BR>
                 } 
                if ((TILDA__TESTING_Factory.COLS.A2B._Mask         & __Changes) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A2B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else { java.sql.Array A = C.createArrayOf("bpchar", CollectionUtil.toObjectArray(_a2b)); AllocatedArrays.add(A); PS.setArray(++i, A); }
+                  if ((TILDA__TESTING_Factory.COLS.A2B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A2B._Type, AllocatedArrays, _a2b);
                 } 
                if ((TILDA__TESTING_Factory.COLS.A2C._Mask         & __Changes) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A2C._Mask         & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else { java.sql.Array A = C.createArrayOf("bpchar", CollectionUtil.toObjectArray(_a2c)); AllocatedArrays.add(A); PS.setArray(++i, A); }
+                  if ((TILDA__TESTING_Factory.COLS.A2C._Mask         & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A2C._Type, AllocatedArrays, _a2c);
                 } 
                if ((TILDA__TESTING_Factory.COLS.A3._Mask          & __Changes) != 0L) 
                 { 
@@ -5590,7 +5590,7 @@ This is the hasChanged for:<BR>
                 } 
                if ((TILDA__TESTING_Factory.COLS.A3B._Mask         & __Changes) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A3B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.BOOLEAN); else { java.sql.Array A = C.createArrayOf("bool", CollectionUtil.toObjectArray(_a3b)); AllocatedArrays.add(A); PS.setArray(++i, A); }
+                  if ((TILDA__TESTING_Factory.COLS.A3B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.BOOLEAN); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A3B._Type, AllocatedArrays, _a3b);
                 } 
                if ((TILDA__TESTING_Factory.COLS.A4._Mask          & __Changes) != 0L) 
                 { 
@@ -5598,7 +5598,7 @@ This is the hasChanged for:<BR>
                 } 
                if ((TILDA__TESTING_Factory.COLS.A4B._Mask         & __Changes) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A4B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.DOUBLE ); else { java.sql.Array A = C.createArrayOf("float8", CollectionUtil.toObjectArray(_a4b)); AllocatedArrays.add(A); PS.setArray(++i, A); }
+                  if ((TILDA__TESTING_Factory.COLS.A4B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.DOUBLE ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A4B._Type, AllocatedArrays, _a4b);
                 } 
                if ((TILDA__TESTING_Factory.COLS.A5._Mask          & __Changes) != 0L) 
                 { 
@@ -5606,7 +5606,7 @@ This is the hasChanged for:<BR>
                 } 
                if ((TILDA__TESTING_Factory.COLS.A5B._Mask         & __Changes) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A5B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.FLOAT  ); else { java.sql.Array A = C.createArrayOf("float4", CollectionUtil.toObjectArray(_a5b)); AllocatedArrays.add(A); PS.setArray(++i, A); }
+                  if ((TILDA__TESTING_Factory.COLS.A5B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.FLOAT  ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A5B._Type, AllocatedArrays, _a5b);
                 } 
                if ((TILDA__TESTING_Factory.COLS.A6._Mask          & __Changes) != 0L) 
                 { 
@@ -5614,11 +5614,11 @@ This is the hasChanged for:<BR>
                 } 
                if ((TILDA__TESTING_Factory.COLS.A6B._Mask         & __Changes) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A6B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else { java.sql.Array A = C.createArrayOf("int8", CollectionUtil.toObjectArray(_a6b)); AllocatedArrays.add(A); PS.setArray(++i, A); }
+                  if ((TILDA__TESTING_Factory.COLS.A6B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A6B._Type, AllocatedArrays, _a6b);
                 } 
                if ((TILDA__TESTING_Factory.COLS.A6C._Mask         & __Changes) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A6C._Mask         & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else { java.sql.Array A = C.createArrayOf("int8", CollectionUtil.toObjectArray(_a6c)); AllocatedArrays.add(A); PS.setArray(++i, A); }
+                  if ((TILDA__TESTING_Factory.COLS.A6C._Mask         & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A6C._Type, AllocatedArrays, _a6c);
                 } 
                if ((TILDA__TESTING_Factory.COLS.A7._Mask          & __Changes) != 0L) 
                 { 
@@ -5626,7 +5626,7 @@ This is the hasChanged for:<BR>
                 } 
                if ((TILDA__TESTING_Factory.COLS.A7B._Mask         & __Changes) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A7B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.INTEGER); else { java.sql.Array A = C.createArrayOf("int4", CollectionUtil.toObjectArray(_a7b)); AllocatedArrays.add(A); PS.setArray(++i, A); }
+                  if ((TILDA__TESTING_Factory.COLS.A7B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.INTEGER); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A7B._Type, AllocatedArrays, _a7b);
                 } 
                if ((TILDA__TESTING_Factory.COLS.A8._Mask          & __Changes) != 0L) 
                 { 
@@ -5822,16 +5822,16 @@ This is the hasChanged for:<BR>
         }
     }
 
+   @SuppressWarnings("unchecked")
    boolean Init(Connection C, java.sql.ResultSet RS) throws Exception
     {
       int i = 0;
-      java.sql.Array A;
       tilda.data.ZoneInfo_Data ZI;
       boolean DateTimeFieldNull;
       boolean ZoneFieldNull;
      __Init = InitMode.LOOKUP;
       __Saved_refnum      = _refnum      =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.REFNUM._Mask     ;
-                            A = RS.getArray(++i); _refnum2     = A==null?null:CollectionUtil.toList((Long         [])A.getArray()); if (A != null) A.free(); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.REFNUM2._Mask    ;
+                            _refnum2 = (List<Long>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.REFNUM2._Type, false); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.REFNUM2._Mask    ;
                             _name        =                              RS.getString   (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.NAME._Mask       ; else _name        = _name       .trim();
                             _description =                              RS.getString   (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask;
                             _desc2       =                              RS.getString   (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.DESC2._Mask      ;
@@ -5839,23 +5839,23 @@ This is the hasChanged for:<BR>
                             _desc4       =                              RS.getString   (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.DESC4._Mask      ;
                             _desc5       =                              RS.getString   (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.DESC5._Mask      ;
                             _desc6       =                              RS.getString   (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.DESC6._Mask      ;
-                            A = RS.getArray(++i); _tops        = A==null?null:CollectionUtil.toList((String       [])A.getArray()); if (A != null) A.free(); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.TOPS._Mask       ;
-                            A = RS.getArray(++i); _tops2       = A==null?null:CollectionUtil.toSet ((String       [])A.getArray()); if (A != null) A.free(); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.TOPS2._Mask      ;
+                            _tops = (List<String>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.TOPS._Type, false); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.TOPS._Mask       ;
+                            _tops2 = (Set<String>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.TOPS2._Type, true); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.TOPS2._Mask      ;
                             _a1          =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A1._Mask         ;
                             _a2          = ParseUtil.parseCharacter    (RS.getString   (++i));  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A2._Mask         ;
-                            A = RS.getArray(++i); _a2b         = A==null?null:CollectionUtil.toList((Character    [])A.getArray()); if (A != null) A.free(); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A2B._Mask        ;
-                            A = RS.getArray(++i); _a2c         = A==null?null:CollectionUtil.toSet ((Character    [])A.getArray()); if (A != null) A.free(); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A2C._Mask        ;
+                            _a2b = (List<Character>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A2B._Type, false); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A2B._Mask        ;
+                            _a2c = (Set<Character>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A2C._Type, true); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A2C._Mask        ;
                             _a3          =                              RS.getBoolean  (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A3._Mask         ;
-                            A = RS.getArray(++i); _a3b         = A==null?null:CollectionUtil.toList((Boolean      [])A.getArray()); if (A != null) A.free(); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A3B._Mask        ;
+                            _a3b = (List<Boolean>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A3B._Type, false); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A3B._Mask        ;
                             _a4          =                              RS.getDouble   (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A4._Mask         ;
-                            A = RS.getArray(++i); _a4b         = A==null?null:CollectionUtil.toList((Double       [])A.getArray()); if (A != null) A.free(); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A4B._Mask        ;
+                            _a4b = (List<Double>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A4B._Type, false); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A4B._Mask        ;
                             _a5          =                              RS.getFloat    (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A5._Mask         ;
-                            A = RS.getArray(++i); _a5b         = A==null?null:CollectionUtil.toList((Float        [])A.getArray()); if (A != null) A.free(); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A5B._Mask        ;
+                            _a5b = (List<Float>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A5B._Type, false); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A5B._Mask        ;
                             _a6          =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A6._Mask         ;
-                            A = RS.getArray(++i); _a6b         = A==null?null:CollectionUtil.toList((Long         [])A.getArray()); if (A != null) A.free(); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A6B._Mask        ;
-                            A = RS.getArray(++i); _a6c         = A==null?null:CollectionUtil.toSet ((Long         [])A.getArray()); if (A != null) A.free(); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A6C._Mask        ;
+                            _a6b = (List<Long>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A6B._Type, false); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A6B._Mask        ;
+                            _a6c = (Set<Long>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A6C._Type, true); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A6C._Mask        ;
                             _a7          =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A7._Mask         ;
-                            A = RS.getArray(++i); _a7b         = A==null?null:CollectionUtil.toList((Integer      [])A.getArray()); if (A != null) A.free(); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A7B._Mask        ;
+                            _a7b = (List<Integer>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A7B._Type, false); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A7B._Mask        ;
                             _a8          =                              RS.getBytes    (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A8._Mask         ;
                             _a9TZ        =                              RS.getString   (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A9TZ._Mask       ; else _a9TZ        = _a9TZ       .trim();
                             _a9          = ProcessZDT(_a9TZ         , "tilda.data.TILDA.TESTING.a9"         , RS, ++i, TILDA__TESTING_Factory.COLS.A9         , TILDA__TESTING_Factory.COLS.A9TZ         );

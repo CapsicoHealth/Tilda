@@ -25,10 +25,10 @@ public class TILDA__KEY_Json
    protected TILDA__KEY_Json() { }
 
    /*@formatter:off*/
-   @SerializedName("refnum"     ) public Long           _refnum     ;
-   @SerializedName("name"       ) public String         _name       ;
-   @SerializedName("max"        ) public Long           _max        ;
-   @SerializedName("count"      ) public Integer        _count      ;
+   @SerializedName("refnum"     ) public Long  _refnum     ;
+   @SerializedName("name"       ) public String  _name       ;
+   @SerializedName("max"        ) public Long  _max        ;
+   @SerializedName("count"      ) public Integer  _count      ;
    /*@formatter:on*/
 
    public tilda.data.Key_Data Write(Connection C) throws Exception

@@ -17,7 +17,11 @@
 package tilda.db.stores;
 
 import java.sql.Array;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collection;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,6 +36,7 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
+import tilda.types.ColumnDefinition;
 import tilda.utils.TextUtil;
 import tilda.utils.pairs.StringStringPair;
 
@@ -200,13 +205,6 @@ public class IBMDB2 implements DBType
      }    
     
     @Override
-    public Array createArrayOf(Connection Con, ColumnType Type, java.lang.Object[] A)
-    throws SQLException
-      {
-        throw new UnsupportedOperationException();
-      }
-
-    @Override
     public StringStringPair getTypeMapping(int type, String name, int size, String typeName)
     throws Exception
       {
@@ -230,4 +228,22 @@ public class IBMDB2 implements DBType
       {
         Str.append("\"").append(SchemaName).append("\".\"").append(TableName).append("\"");
       }
+
+
+    @Override
+    public void setArray(Connection C, PreparedStatement PS, int i, ColumnType Type, List<Array> allocatedArrays, Collection<?> val)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+
+    @Override
+    public Collection<?> getArray(ResultSet RS, int i, ColumnType Type, boolean isSet)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+
   }

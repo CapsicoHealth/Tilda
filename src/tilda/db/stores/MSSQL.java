@@ -19,7 +19,13 @@ package tilda.db.stores;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.Array;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -35,13 +41,15 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
+import tilda.utils.CollectionUtil;
+import tilda.utils.ParseUtil;
 import tilda.utils.TextUtil;
 import tilda.utils.pairs.StringStringPair;
 
 public class MSSQL implements DBType
   {
     static final Logger LOG = LogManager.getLogger(MSSQL.class.getName());
-    
+
     @Override
     public String getName()
       {
@@ -61,25 +69,21 @@ public class MSSQL implements DBType
         return "current_timestamp";
       }
 
-    protected static final String[] _LOCK_CONN_ERROR_SUBSTR = { "deadlocked on lock"
-        , "lock request time out"
-        , "lock inconsistency found"
-        , "connection reset"
-        , "connection is closed"
-        };
+    protected static final String[] _LOCK_CONN_ERROR_SUBSTR = { "deadlocked on lock", "lock request time out", "lock inconsistency found", "connection reset", "connection is closed"
+    };
 
     @Override
     public boolean isLockOrConnectionError(SQLException E)
       {
         return TextUtil.indexOf(E.getMessage().toLowerCase(), _LOCK_CONN_ERROR_SUBSTR);
       }
-    
+
     @Override
     public boolean needsSavepoint()
       {
         return false;
       }
-    
+
     @Override
     public boolean supportsSelectLimit()
       {
@@ -91,7 +95,7 @@ public class MSSQL implements DBType
       {
         return false;
       }
-    
+
     @Override
     public boolean supportsArrays()
       {
@@ -133,7 +137,7 @@ public class MSSQL implements DBType
       }
 
     protected static CodeGenSql _SQL = new tilda.generation.SQLServer2014.Sql();
-    
+
     @Override
     public CodeGenSql getSQlCodeGen()
       {
@@ -142,7 +146,7 @@ public class MSSQL implements DBType
 
     @Override
     public boolean createSchema(Connection Con, Schema S)
-      throws Exception
+    throws Exception
       {
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
@@ -153,7 +157,7 @@ public class MSSQL implements DBType
 
     @Override
     public boolean createTable(Connection Con, Object Obj)
-      throws Exception
+    throws Exception
       {
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
@@ -161,10 +165,10 @@ public class MSSQL implements DBType
         Con.ExecuteDDL(Obj.getShortName(), Str.toString());
         return true;
       }
-    
+
     @Override
     public boolean createView(Connection Con, View V, boolean Drop)
-      throws Exception
+    throws Exception
       {
         if (Drop == true)
           {
@@ -176,9 +180,10 @@ public class MSSQL implements DBType
         Con.ExecuteDDL(V.getShortName(), Str.toString());
         return true;
       }
-    
+
     @Override
-    public boolean alterTableAddColumn(Connection Con, Column Col, String DefaultValue) throws Exception
+    public boolean alterTableAddColumn(Connection Con, Column Col, String DefaultValue)
+    throws Exception
       {
         throw new UnsupportedOperationException();
       }
@@ -189,45 +194,39 @@ public class MSSQL implements DBType
       {
         throw new UnsupportedOperationException();
       }
-    
-    
+
+
     @Override
     public boolean alterTableAlterColumnNull(Connection Con, Column Col, String DefaultValue)
-      throws Exception
+    throws Exception
       {
         throw new UnsupportedOperationException();
       }
-    
+
     @Override
     public int getCLOBThreshhold()
       {
         return 4096;
       }
-    
+
     @Override
     public boolean alterTableAlterColumnStringSize(Connection Con, Column Col, int DBSize)
     throws Exception
       {
         throw new UnsupportedOperationException();
       }
-    
+
     @Override
     public boolean alterTableAlterColumnType(Connection Con, ColumnType fromType, Column Col, ZoneInfo_Data defaultZI)
       {
         return false;
       }
-    
+
     @Override
-    public boolean addHelperFunctions(Connection Con) throws Exception
-     {
-       return true;
-     }    
-    
-    @Override
-    public Array createArrayOf(Connection Con, ColumnType Type, java.lang.Object[] A)
-    throws SQLException
+    public boolean addHelperFunctions(Connection Con)
+    throws Exception
       {
-        throw new UnsupportedOperationException();
+        return true;
       }
 
 
@@ -305,14 +304,14 @@ public class MSSQL implements DBType
           }
         return new StringStringPair(TypeSql, TildaType.name());
       }
-    
+
     @Override
     public void getFullColumnVar(StringBuilder Str, String SchemaName, String TableName, String ColumnName)
       {
         if (TextUtil.isNullOrEmpty(SchemaName) == false)
-         Str.append("[").append(SchemaName).append("].");
+          Str.append("[").append(SchemaName).append("].");
         if (TextUtil.isNullOrEmpty(TableName) == false)
-         Str.append("[").append(TableName).append("].");
+          Str.append("[").append(TableName).append("].");
         Str.append("[").append(ColumnName).append("]");
       }
 
@@ -321,5 +320,39 @@ public class MSSQL implements DBType
       {
         Str.append("[").append(SchemaName).append("].[").append(TableName).append("]");
       }
-    
+
+    @Override
+    public void setArray(Connection C, PreparedStatement PS, int i, ColumnType Type, List<Array> allocatedArrays, Collection<?> val)
+    throws Exception
+      {
+        StringBuilder Str = new StringBuilder();
+        TextUtil.EscapeSingleQuoteForSQL(Str, val, true);
+        PS.setString(i, Str.toString());
+      }
+
+    @Override
+    public Collection<?> getArray(ResultSet RS, int i, ColumnType Type, boolean isSet)
+    throws Exception
+      {
+        String Str = RS.getString(i);
+        if (Str == null)
+          return null;
+
+        String[] parts = Str.split("\\s*',\\s*'\\s*");
+        if (parts == null || parts.length == 0)
+          return null;
+
+        // Remove the leading and trailing " in the entire string sequence.
+        if (TextUtil.isNullOrEmpty(parts[0]) == false)
+          {
+            parts[0] = parts[0].substring(1);
+          }
+        if (TextUtil.isNullOrEmpty(parts[parts.length-1]) == false)
+          {
+            parts[parts.length-1] = parts[parts.length-1].substring(0, parts[parts.length-1].length() - 1);
+          }
+        
+        // Convert String[] to proper type and collection.
+        return Type.parse(isSet, parts);
+      }
   }

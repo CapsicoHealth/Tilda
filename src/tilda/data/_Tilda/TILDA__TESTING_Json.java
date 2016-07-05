@@ -25,32 +25,32 @@ public class TILDA__TESTING_Json
    protected TILDA__TESTING_Json() { }
 
    /*@formatter:off*/
-   @SerializedName("refnum2"    ) public List<Long         >  _refnum2    ;
-   @SerializedName("name"       ) public String         _name       ;
-   @SerializedName("description") public String         _description;
-   @SerializedName("desc2"      ) public String         _desc2      ;
-   @SerializedName("desc3"      ) public String         _desc3      ;
-   @SerializedName("desc4"      ) public String         _desc4      ;
-   @SerializedName("desc5"      ) public String         _desc5      ;
-   @SerializedName("desc6"      ) public String         _desc6      ;
-   @SerializedName("tops"       ) public List<String       >  _tops       ;
-   @SerializedName("tops2"      ) public Set <String       >  _tops2      ;
-   @SerializedName("a1"         ) public Integer        _a1         ;
-   @SerializedName("a2"         ) public Character      _a2         ;
-   @SerializedName("a2b"        ) public List<Character    >  _a2b        ;
-   @SerializedName("a2c"        ) public Set <Character    >  _a2c        ;
-   @SerializedName("a3"         ) public Boolean        _a3         ;
-   @SerializedName("a3b"        ) public List<Boolean      >  _a3b        ;
-   @SerializedName("a4"         ) public Double         _a4         ;
-   @SerializedName("a4b"        ) public List<Double       >  _a4b        ;
-   @SerializedName("a5"         ) public Float          _a5         ;
-   @SerializedName("a5b"        ) public List<Float        >  _a5b        ;
-   @SerializedName("a6"         ) public Long           _a6         ;
-   @SerializedName("a6b"        ) public List<Long         >  _a6b        ;
-   @SerializedName("a6c"        ) public Set <Long         >  _a6c        ;
-   @SerializedName("a7"         ) public Integer        _a7         ;
-   @SerializedName("a7b"        ) public List<Integer      >  _a7b        ;
-   @SerializedName("a8"         ) public byte[]         _a8         ;
+   @SerializedName("refnum2"    ) public List<Long>  _refnum2    ;
+   @SerializedName("name"       ) public String  _name       ;
+   @SerializedName("description") public String  _description;
+   @SerializedName("desc2"      ) public String  _desc2      ;
+   @SerializedName("desc3"      ) public String  _desc3      ;
+   @SerializedName("desc4"      ) public String  _desc4      ;
+   @SerializedName("desc5"      ) public String  _desc5      ;
+   @SerializedName("desc6"      ) public String  _desc6      ;
+   @SerializedName("tops"       ) public List<String>  _tops       ;
+   @SerializedName("tops2"      ) public Set <String>  _tops2      ;
+   @SerializedName("a1"         ) public Integer  _a1         ;
+   @SerializedName("a2"         ) public Character  _a2         ;
+   @SerializedName("a2b"        ) public List<Character>  _a2b        ;
+   @SerializedName("a2c"        ) public Set <Character>  _a2c        ;
+   @SerializedName("a3"         ) public Boolean  _a3         ;
+   @SerializedName("a3b"        ) public List<Boolean>  _a3b        ;
+   @SerializedName("a4"         ) public Double  _a4         ;
+   @SerializedName("a4b"        ) public List<Double>  _a4b        ;
+   @SerializedName("a5"         ) public Float  _a5         ;
+   @SerializedName("a5b"        ) public List<Float>  _a5b        ;
+   @SerializedName("a6"         ) public Long  _a6         ;
+   @SerializedName("a6b"        ) public List<Long>  _a6b        ;
+   @SerializedName("a6c"        ) public Set <Long>  _a6c        ;
+   @SerializedName("a7"         ) public Integer  _a7         ;
+   @SerializedName("a7b"        ) public List<Integer>  _a7b        ;
+   @SerializedName("a8"         ) public byte[]  _a8         ;
    @SerializedName("a9"         ) public String  Str_a9         ;
    transient                      public ZonedDateTime  _a9         ;
    /*@formatter:on*/
@@ -166,7 +166,7 @@ public class TILDA__TESTING_Json
 
         JSONUtil.Print(Out, "refnum", true, Obj.getRefnum());
 
-        JSONUtil.Print(Out, "refnum2", false, Obj._refnum2.toArray(new Long         [Obj._refnum2.size()]));
+        JSONUtil.Print(Out, "refnum2", false, Obj._refnum2.toArray(new Long[Obj._refnum2.size()]));
 
         JSONUtil.Print(Out, "name", false, Obj.getName());
 
@@ -189,10 +189,10 @@ public class TILDA__TESTING_Json
         JSONUtil.Print(Out, "desc6", false, Obj.getDesc6());
 
       if (Obj.isNullTops() == false && Obj.getTops() != null)
-        JSONUtil.Print(Out, "tops", false, Obj._tops.toArray(new String       [Obj._tops.size()]));
+        JSONUtil.Print(Out, "tops", false, Obj._tops.toArray(new String[Obj._tops.size()]));
 
       if (Obj.isNullTops2() == false && Obj.getTops2() != null)
-        JSONUtil.Print(Out, "tops2", false, Obj._tops2.toArray(new String       [Obj._tops2.size()]));
+        JSONUtil.Print(Out, "tops2", false, Obj._tops2.toArray(new String[Obj._tops2.size()]));
 
       if (Obj.isNullA1() == false)
         JSONUtil.Print(Out, "a1", false, Obj.getA1());
@@ -201,43 +201,43 @@ public class TILDA__TESTING_Json
         JSONUtil.Print(Out, "a2", false, Obj.getA2());
 
       if (Obj.isNullA2b() == false && Obj.getA2b() != null)
-        JSONUtil.Print(Out, "a2b", false, Obj._a2b.toArray(new Character    [Obj._a2b.size()]));
+        JSONUtil.Print(Out, "a2b", false, Obj._a2b.toArray(new Character[Obj._a2b.size()]));
 
       if (Obj.isNullA2c() == false && Obj.getA2c() != null)
-        JSONUtil.Print(Out, "a2c", false, Obj._a2c.toArray(new Character    [Obj._a2c.size()]));
+        JSONUtil.Print(Out, "a2c", false, Obj._a2c.toArray(new Character[Obj._a2c.size()]));
 
       if (Obj.isNullA3() == false)
         JSONUtil.Print(Out, "a3", false, Obj.getA3());
 
       if (Obj.isNullA3b() == false && Obj.getA3b() != null)
-        JSONUtil.Print(Out, "a3b", false, Obj._a3b.toArray(new Boolean      [Obj._a3b.size()]));
+        JSONUtil.Print(Out, "a3b", false, Obj._a3b.toArray(new Boolean[Obj._a3b.size()]));
 
       if (Obj.isNullA4() == false)
         JSONUtil.Print(Out, "a4", false, Obj.getA4());
 
       if (Obj.isNullA4b() == false && Obj.getA4b() != null)
-        JSONUtil.Print(Out, "a4b", false, Obj._a4b.toArray(new Double       [Obj._a4b.size()]));
+        JSONUtil.Print(Out, "a4b", false, Obj._a4b.toArray(new Double[Obj._a4b.size()]));
 
       if (Obj.isNullA5() == false)
         JSONUtil.Print(Out, "a5", false, Obj.getA5());
 
       if (Obj.isNullA5b() == false && Obj.getA5b() != null)
-        JSONUtil.Print(Out, "a5b", false, Obj._a5b.toArray(new Float        [Obj._a5b.size()]));
+        JSONUtil.Print(Out, "a5b", false, Obj._a5b.toArray(new Float[Obj._a5b.size()]));
 
       if (Obj.isNullA6() == false)
         JSONUtil.Print(Out, "a6", false, Obj.getA6());
 
       if (Obj.isNullA6b() == false && Obj.getA6b() != null)
-        JSONUtil.Print(Out, "a6b", false, Obj._a6b.toArray(new Long         [Obj._a6b.size()]));
+        JSONUtil.Print(Out, "a6b", false, Obj._a6b.toArray(new Long[Obj._a6b.size()]));
 
       if (Obj.isNullA6c() == false && Obj.getA6c() != null)
-        JSONUtil.Print(Out, "a6c", false, Obj._a6c.toArray(new Long         [Obj._a6c.size()]));
+        JSONUtil.Print(Out, "a6c", false, Obj._a6c.toArray(new Long[Obj._a6c.size()]));
 
       if (Obj.isNullA7() == false)
         JSONUtil.Print(Out, "a7", false, Obj.getA7());
 
       if (Obj.isNullA7b() == false && Obj.getA7b() != null)
-        JSONUtil.Print(Out, "a7b", false, Obj._a7b.toArray(new Integer      [Obj._a7b.size()]));
+        JSONUtil.Print(Out, "a7b", false, Obj._a7b.toArray(new Integer[Obj._a7b.size()]));
 
       if (Obj.isNullA9() == false && Obj.getA9() != null)
         JSONUtil.Print(Out, "a9", false, Obj.getA9());
@@ -281,7 +281,7 @@ public class TILDA__TESTING_Json
 
         JSONUtil.Print(Out, "refnum", true, Obj.getRefnum());
 
-        JSONUtil.Print(Out, "refnum2", false, Obj._refnum2.toArray(new Long         [Obj._refnum2.size()]));
+        JSONUtil.Print(Out, "refnum2", false, Obj._refnum2.toArray(new Long[Obj._refnum2.size()]));
 
         JSONUtil.Print(Out, "name", false, Obj.getName());
 

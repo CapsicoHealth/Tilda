@@ -263,6 +263,26 @@ public class CollectionUtil
             L.add(t);
         return L;
       }
+    
+    public static List<Byte> toList(byte[] A)
+      {
+        List<Byte> L = new ArrayList<Byte>();
+        if (A != null)
+          for (byte t : A)
+            L.add(t);
+        return L;
+      }
+    
+    public static List<Short> toList(short[] A)
+      {
+        List<Short> L = new ArrayList<Short>();
+        if (A != null)
+          for (short t : A)
+            L.add(t);
+        return L;
+      }
+    
+    
 
     public static List<Boolean> toList(boolean[] A)
       {
@@ -281,6 +301,27 @@ public class CollectionUtil
             L.add(I.next());
         return L;
       }
+    
+    public static List<?> toList(Object A) throws Exception
+      {
+        if (A == null)
+         return null;
+        Class<?> C = A.getClass();
+        if (C.isArray() == false)
+         throw new Exception("Parameter A is not an array");
+        
+        if (C == int    [].class) return toList((int    [])A);
+        if (C == long   [].class) return toList((long   [])A);
+        if (C == float  [].class) return toList((float  [])A);
+        if (C == double [].class) return toList((double [])A);
+        if (C == boolean[].class) return toList((boolean[])A);
+        if (C == char   [].class) return toList((char   [])A);
+        if (C == byte   [].class) return toList((byte   [])A);
+        if (C == short  [].class) return toList((short  [])A);
+        
+        return toList((Object[])A);
+      }
+    
 
 
     public static <T> Set<T> toSet(T[] A)
@@ -350,7 +391,26 @@ public class CollectionUtil
             L.add(t);
         return L;
       }
+    
+    public static Set<Byte> toSet(byte[] A)
+      {
+        Set<Byte> L = new HashSet<Byte>();
+        if (A != null)
+          for (byte t : A)
+            L.add(t);
+        return L;
+      }
+    
+    public static Set<Short> toSet(short[] A)
+      {
+        Set<Short> L = new HashSet<Short>();
+        if (A != null)
+          for (short t : A)
+            L.add(t);
+        return L;
+      }
 
+    
     public static <T> Set<T> toSet(Iterator<T> I)
       {
         Set<T> L = new HashSet<T>();
@@ -359,6 +419,27 @@ public class CollectionUtil
             L.add(I.next());
         return L;
       }
+    
+    public static Set<?> toSet(Object A) throws Exception
+      {
+        if (A == null)
+         return null;
+        Class<?> C = A.getClass();
+        if (C.isArray() == false)
+         throw new Exception("Parameter A is not an array");
+        
+        if (C == int    [].class) return toSet((int    [])A);
+        if (C == long   [].class) return toSet((long   [])A);
+        if (C == float  [].class) return toSet((float  [])A);
+        if (C == double [].class) return toSet((double [])A);
+        if (C == boolean[].class) return toSet((boolean[])A);
+        if (C == char   [].class) return toSet((char   [])A);
+        if (C == byte   [].class) return toSet((byte   [])A);
+        if (C == short  [].class) return toSet((short  [])A);
+        
+        return toSet((Object[])A);
+      }
+    
 
 
     /**

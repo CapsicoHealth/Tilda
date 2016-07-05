@@ -546,7 +546,8 @@ public class Helper
                       else if (A._Multi == false)
                         Out.println("PS.set" + JavaJDBCType.get(C._Type)._JDBCType + "(++i, " + (C._Type == ColumnType.CHAR ? "\"\"+" : "") + "P._" + V + Pad + ");");
                       else
-                        Out.println(" { java.sql.Array A = C.createArrayOf(\""+G.getSql().getColumnTypeRaw(C, true)+"\", (P._" + V + Pad + ")); AllocatedArrays.add(A); PS.setArray(++i, A); }");
+                        Out.println("C.setArray(PS, ++i, "+O._BaseClassName+"_Factory.COLS."+C.getName().toUpperCase()+"._Type, AllocatedArrays, P._" + V + ");");
+                        //Out.println(" { java.sql.Array A = C.createArrayOf(\""+G.getSql().getColumnTypeRaw(C, true)+"\", (P._" + V + Pad + ")); AllocatedArrays.add(A); PS.setArray(++i, A); }");
                         
 //                        Out.prinstln("PS.set" + JavaJDBCType.get(C._Type)._JDBCType + "(++i, " + (C._Type == ColumnType.CHAR ? "\"\"+" : "") + "P._" + V + Pad + ");");
                     }

@@ -25,16 +25,16 @@ public class TILDA__TRANSPERF_Json
    protected TILDA__TRANSPERF_Json() { }
 
    /*@formatter:off*/
-   @SerializedName("schemaName"   ) public String         _schemaName   ;
-   @SerializedName("objectName"   ) public String         _objectName   ;
+   @SerializedName("schemaName"   ) public String  _schemaName   ;
+   @SerializedName("objectName"   ) public String  _objectName   ;
    @SerializedName("startPeriod"  ) public String  Str_startPeriod  ;
    transient                        public ZonedDateTime  _startPeriod  ;
    @SerializedName("endPeriod"    ) public String  Str_endPeriod    ;
    transient                        public ZonedDateTime  _endPeriod    ;
-   @SerializedName("commitNano"   ) public Long           _commitNano   ;
-   @SerializedName("commitCount"  ) public Long           _commitCount  ;
-   @SerializedName("rollbackNano" ) public Long           _rollbackNano ;
-   @SerializedName("rollbackCount") public Long           _rollbackCount;
+   @SerializedName("commitNano"   ) public Long  _commitNano   ;
+   @SerializedName("commitCount"  ) public Long  _commitCount  ;
+   @SerializedName("rollbackNano" ) public Long  _rollbackNano ;
+   @SerializedName("rollbackCount") public Long  _rollbackCount;
    /*@formatter:on*/
 
    public tilda.data.TransPerf_Data Write(Connection C) throws Exception

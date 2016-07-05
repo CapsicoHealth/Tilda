@@ -267,7 +267,7 @@ public class TILDA__TESTING_Factory
  @param refnum2     The person's primary key
  @param name        (max size 10) Medical system unique enterprise id
 */
-   static public tilda.data.Testing_Data Create(List<Long         > refnum2, String name) throws Exception
+   static public tilda.data.Testing_Data Create(List<Long> refnum2, String name) throws Exception
      {
        tilda.data._Tilda.TILDA__TESTING Obj = new tilda.data.Testing_Data();
        Obj.initForCreate();
@@ -292,32 +292,32 @@ public class TILDA__TESTING_Factory
      {
        int IncomingErrors = Errors.size();
 
-       Long                 _refnum      =                       ParseUtil.parseLong         ("refnum"     , true , Values.get("refnum"     ), Errors );
-       List<Long         >  _refnum2     = CollectionUtil.toList(ParseUtil.parseLong         ("refnum2"    , true , Values.get("refnum2"    ), "``", Errors));
-       String               _name        =                       ParseUtil.parseString       ("name"       , true , Values.get("name"       ), Errors );
-       String               _description =                       ParseUtil.parseString       ("description", false, Values.get("description"), Errors );
-       String               _desc2       =                       ParseUtil.parseString       ("desc2"      , false, Values.get("desc2"      ), Errors );
-       String               _desc3       =                       ParseUtil.parseString       ("desc3"      , false, Values.get("desc3"      ), Errors );
-       String               _desc4       =                       ParseUtil.parseString       ("desc4"      , false, Values.get("desc4"      ), Errors );
-       String               _desc5       =                       ParseUtil.parseString       ("desc5"      , false, Values.get("desc5"      ), Errors );
-       String               _desc6       =                       ParseUtil.parseString       ("desc6"      , false, Values.get("desc6"      ), Errors );
-       List<String       >  _tops        = CollectionUtil.toList(ParseUtil.parseString       ("tops"       , false, Values.get("tops"       ), ",", Errors));
-       Set <String       >  _tops2       = CollectionUtil.toSet (ParseUtil.parseString       ("tops2"      , false, Values.get("tops2"      ), ",", Errors));
-       Integer              _a1          =                       ParseUtil.parseInteger      ("a1"         , false, Values.get("a1"         ), Errors );
-       Character            _a2          =                       ParseUtil.parseCharacter    ("a2"         , false, Values.get("a2"         ), Errors );
-       List<Character    >  _a2b         = CollectionUtil.toList(ParseUtil.parseCharacter    ("a2b"        , false, Values.get("a2b"        ), ",", Errors));
-       Set <Character    >  _a2c         = CollectionUtil.toSet (ParseUtil.parseCharacter    ("a2c"        , false, Values.get("a2c"        ), ",", Errors));
-       Boolean              _a3          =                       ParseUtil.parseBoolean      ("a3"         , false, Values.get("a3"         ), Errors );
-       List<Boolean      >  _a3b         = CollectionUtil.toList(ParseUtil.parseBoolean      ("a3b"        , false, Values.get("a3b"        ), ",", Errors));
-       Double               _a4          =                       ParseUtil.parseDouble       ("a4"         , false, Values.get("a4"         ), Errors );
-       List<Double       >  _a4b         = CollectionUtil.toList(ParseUtil.parseDouble       ("a4b"        , false, Values.get("a4b"        ), ",", Errors));
-       Float                _a5          =                       ParseUtil.parseFloat        ("a5"         , false, Values.get("a5"         ), Errors );
-       List<Float        >  _a5b         = CollectionUtil.toList(ParseUtil.parseFloat        ("a5b"        , false, Values.get("a5b"        ), ",", Errors));
-       Long                 _a6          =                       ParseUtil.parseLong         ("a6"         , false, Values.get("a6"         ), Errors );
-       List<Long         >  _a6b         = CollectionUtil.toList(ParseUtil.parseLong         ("a6b"        , false, Values.get("a6b"        ), ",", Errors));
-       Set <Long         >  _a6c         = CollectionUtil.toSet (ParseUtil.parseLong         ("a6c"        , false, Values.get("a6c"        ), ",", Errors));
-       Integer              _a7          =                       ParseUtil.parseInteger      ("a7"         , false, Values.get("a7"         ), Errors );
-       List<Integer      >  _a7b         = CollectionUtil.toList(ParseUtil.parseInteger      ("a7b"        , false, Values.get("a7b"        ), ",", Errors));
+       Long        _refnum      =                       ParseUtil.parseLong("refnum"     , true , Values.get("refnum"     ), Errors );
+       List<Long>  _refnum2     = CollectionUtil.toList(ParseUtil.parseLong("refnum2"    , true , Values.get("refnum2"    ), "``", Errors));
+       String        _name        =                       ParseUtil.parseString("name"       , true , Values.get("name"       ), Errors );
+       String        _description =                       ParseUtil.parseString("description", false, Values.get("description"), Errors );
+       String        _desc2       =                       ParseUtil.parseString("desc2"      , false, Values.get("desc2"      ), Errors );
+       String        _desc3       =                       ParseUtil.parseString("desc3"      , false, Values.get("desc3"      ), Errors );
+       String        _desc4       =                       ParseUtil.parseString("desc4"      , false, Values.get("desc4"      ), Errors );
+       String        _desc5       =                       ParseUtil.parseString("desc5"      , false, Values.get("desc5"      ), Errors );
+       String        _desc6       =                       ParseUtil.parseString("desc6"      , false, Values.get("desc6"      ), Errors );
+       List<String>  _tops        = CollectionUtil.toList(ParseUtil.parseString("tops"       , false, Values.get("tops"       ), ",", Errors));
+       Set <String>  _tops2       = CollectionUtil.toSet (ParseUtil.parseString("tops2"      , false, Values.get("tops2"      ), ",", Errors));
+       Integer        _a1          =                       ParseUtil.parseInteger("a1"         , false, Values.get("a1"         ), Errors );
+       Character        _a2          =                       ParseUtil.parseCharacter("a2"         , false, Values.get("a2"         ), Errors );
+       List<Character>  _a2b         = CollectionUtil.toList(ParseUtil.parseCharacter("a2b"        , false, Values.get("a2b"        ), ",", Errors));
+       Set <Character>  _a2c         = CollectionUtil.toSet (ParseUtil.parseCharacter("a2c"        , false, Values.get("a2c"        ), ",", Errors));
+       Boolean        _a3          =                       ParseUtil.parseBoolean("a3"         , false, Values.get("a3"         ), Errors );
+       List<Boolean>  _a3b         = CollectionUtil.toList(ParseUtil.parseBoolean("a3b"        , false, Values.get("a3b"        ), ",", Errors));
+       Double        _a4          =                       ParseUtil.parseDouble("a4"         , false, Values.get("a4"         ), Errors );
+       List<Double>  _a4b         = CollectionUtil.toList(ParseUtil.parseDouble("a4b"        , false, Values.get("a4b"        ), ",", Errors));
+       Float        _a5          =                       ParseUtil.parseFloat("a5"         , false, Values.get("a5"         ), Errors );
+       List<Float>  _a5b         = CollectionUtil.toList(ParseUtil.parseFloat("a5b"        , false, Values.get("a5b"        ), ",", Errors));
+       Long        _a6          =                       ParseUtil.parseLong("a6"         , false, Values.get("a6"         ), Errors );
+       List<Long>  _a6b         = CollectionUtil.toList(ParseUtil.parseLong("a6b"        , false, Values.get("a6b"        ), ",", Errors));
+       Set <Long>  _a6c         = CollectionUtil.toSet (ParseUtil.parseLong("a6c"        , false, Values.get("a6c"        ), ",", Errors));
+       Integer        _a7          =                       ParseUtil.parseInteger("a7"         , false, Values.get("a7"         ), Errors );
+       List<Integer>  _a7b         = CollectionUtil.toList(ParseUtil.parseInteger("a7b"        , false, Values.get("a7b"        ), ",", Errors));
        if (Values.get("a8") != null)
         Errors.add(new StringStringPair("a8", "Parameter is of a binary type and cannot be passed as a string value."));
        ZonedDateTime        _a9          =                       ParseUtil.parseZonedDateTime("a9"         , false, Values.get("a9"         ), Errors );

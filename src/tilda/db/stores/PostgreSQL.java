@@ -19,7 +19,11 @@ package tilda.db.stores;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.Array;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collection;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,6 +36,7 @@ import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.generation.Generator;
 import tilda.generation.interfaces.CodeGenSql;
+import tilda.generation.java8.JavaJDBCType;
 import tilda.generation.postgres9.PostgresType;
 import tilda.migration.ColInfo;
 import tilda.parsing.parts.Column;
@@ -39,6 +44,8 @@ import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.helpers.ValueHelper;
+import tilda.types.ColumnDefinition;
+import tilda.utils.CollectionUtil;
 import tilda.utils.TextUtil;
 import tilda.utils.pairs.StringStringPair;
 
@@ -91,13 +98,13 @@ public class PostgreSQL implements DBType
       {
         return true;
       }
-    
+
     @Override
     public boolean supportsArrays()
       {
         return true;
       }
-    
+
 
     @Override
     public String getSelectLimitClause(int Start, int Size)
@@ -145,8 +152,8 @@ public class PostgreSQL implements DBType
         return true;
       }
 
-    protected static CodeGenSql _SQL = new tilda.generation.postgres9.Sql();
-    
+    protected static tilda.generation.postgres9.Sql _SQL = new tilda.generation.postgres9.Sql();
+
     @Override
     public CodeGenSql getSQlCodeGen()
       {
@@ -201,7 +208,7 @@ public class PostgreSQL implements DBType
 
         return Con.ExecuteUpdate(Col._ParentObject.getShortName(), Q) >= 0;
       }
-    
+
     @Override
     public boolean alterTableDropColumn(Connection Con, Object Obj, ColInfo CI)
     throws Exception
@@ -210,7 +217,7 @@ public class PostgreSQL implements DBType
 
         return Con.ExecuteUpdate(Obj.getShortName(), Q) >= 0;
       }
-    
+
 
     @Override
     public boolean alterTableAlterColumnNull(Connection Con, Column Col, String DefaultValue)
@@ -298,106 +305,97 @@ public class PostgreSQL implements DBType
           }
         return false;
       }
-    
+
     protected static void PrintFunctionIn(StringBuilder Str, String Type)
-     {
-       Str.append("DROP FUNCTION IF EXISTS TILDA.In("+Type+"[], "+Type+"[]);\n")
-          .append("CREATE OR REPLACE FUNCTION TILDA.In(v "+Type+"[], vals "+Type+"[]) RETURNS boolean AS $$\n")
-          .append("BEGIN\n")
-          .append("  IF v is not null AND vals is not null THEN\n")
-          .append("   RETURN v && vals;\n")
-          .append("  END IF;\n")
-          .append("  RETURN false;\n")
-          .append("END; $$\n") 
-          .append("LANGUAGE PLPGSQL;\n")
-          .append("\n")
-          .append("\n")
-          ;
-     }
-    
-    @Override
-    public boolean addHelperFunctions(Connection Con) throws Exception
-     {
-       StringBuilder Str = new StringBuilder();
-       Str.append("DROP FUNCTION IF EXISTS TILDA.like(text[], text);\n")
-          .append("CREATE OR REPLACE FUNCTION TILDA.like(v text[], val text) RETURNS boolean AS $$\n")
-          .append("DECLARE\n")
-          .append("  str text;\n")
-          .append("BEGIN\n")
-          .append("  IF v is not null AND val is not null THEN\n")
-          .append("    FOREACH str IN ARRAY v LOOP\n")
-          .append("      IF str LIKE val THEN\n")
-          .append("        RETURN true;\n")
-          .append("      END IF;\n")
-          .append("    END LOOP;\n")
-          .append("  END IF;\n")
-          .append("  RETURN false;\n")
-          .append("END; $$\n") 
-          .append("LANGUAGE PLPGSQL;\n")
-          .append("\n")
-          .append("\n")
-          .append("DROP FUNCTION IF EXISTS TILDA.like(text[], text[]);\n")
-          .append("CREATE OR REPLACE FUNCTION TILDA.like(v text[], vals text[]) RETURNS boolean AS $$\n")
-          .append("DECLARE\n")
-          .append("  str1 text;\n")
-          .append("  str2 text;\n")
-          .append("  i integer := 1;\n")
-          .append("BEGIN\n")
-          .append("  IF v is not null AND vals is not null THEN\n")
-          .append("    FOREACH str1 IN ARRAY v LOOP\n")
-          .append("      FOREACH str2 IN ARRAY vals LOOP\n")
-          .append("        IF str1 LIKE str2 THEN\n")
-          .append("          RETURN true;\n")
-          .append("        END IF;\n")
-          .append("      END LOOP;\n")
-          .append("    END LOOP;\n")
-          .append("  END IF;\n")
-          .append("  RETURN false;\n")
-          .append("END; $$\n") 
-          .append("LANGUAGE PLPGSQL;\n")
-          .append("\n")
-          .append("\n")
-          ;
-       PrintFunctionIn(Str, "text");
-       PrintFunctionIn(Str, "integer");
-       PrintFunctionIn(Str, "bigint");
-
-       Str.append("DROP FUNCTION IF EXISTS TILDA.getKeyBatch(text, integer);\n")
-          .append("CREATE OR REPLACE FUNCTION TILDA.getKeyBatch(t text, c integer) RETURNS TABLE (min_key_inclusive bigint, max_key_exclusive bigint) AS $$\n")
-          .append("DECLARE\n")
-          .append("  val bigint;\n")
-          .append("BEGIN\n")
-          .append("  UPDATE TILDA.KEY set \"max\"=\"max\"+c where \"name\"=t;\n")
-          .append("  SELECT \"max\" into val from TILDA.KEY where \"name\"=t;\n")
-          .append("  return query select val-c as min_key_inclusive, val as max_key_exclusive;\n")
-          .append("END; $$\n")
-          .append("LANGUAGE PLPGSQL;\n")
-          .append("\n")
-          .append("\n")
-          .append("DROP FUNCTION IF EXISTS TILDA.getKeyBatchAsMaxExclusive(text, integer);\n")
-          .append("CREATE OR REPLACE FUNCTION TILDA.getKeyBatchAsMaxExclusive(t text, c integer) RETURNS bigint AS $$\n")
-          .append("DECLARE\n")
-          .append("  val bigint;\n")
-          .append("BEGIN\n")
-          .append("  UPDATE TILDA.KEY set \"max\"=\"max\"+c where \"name\"=t;\n")
-          .append("  SELECT \"max\" into val from TILDA.KEY where \"name\"=t;\n")
-          .append("  return val;\n")
-          .append("END; $$\n")
-          .append("LANGUAGE PLPGSQL;\n")
-          .append("\n")
-          .append("\n")
-          ;
-
-       return Con.ExecuteUpdate("TILDA", Str.toString()) >= 0;
-     }
-
-
-    @Override
-    public Array createArrayOf(Connection Con, ColumnType Type, java.lang.Object[] A)
-    throws SQLException
       {
-        return Con.createArrayOf(_SQL.getColumnTypeRaw(Type, -1, true), A);
+        Str.append("DROP FUNCTION IF EXISTS TILDA.In(" + Type + "[], " + Type + "[]);\n")
+        .append("CREATE OR REPLACE FUNCTION TILDA.In(v " + Type + "[], vals " + Type + "[]) RETURNS boolean AS $$\n")
+        .append("BEGIN\n")
+        .append("  IF v is not null AND vals is not null THEN\n")
+        .append("   RETURN v && vals;\n")
+        .append("  END IF;\n")
+        .append("  RETURN false;\n")
+        .append("END; $$\n")
+        .append("LANGUAGE PLPGSQL;\n")
+        .append("\n")
+        .append("\n");
       }
+
+    @Override
+    public boolean addHelperFunctions(Connection Con)
+    throws Exception
+      {
+        StringBuilder Str = new StringBuilder();
+        Str.append("DROP FUNCTION IF EXISTS TILDA.like(text[], text);\n")
+        .append("CREATE OR REPLACE FUNCTION TILDA.like(v text[], val text) RETURNS boolean AS $$\n")
+        .append("DECLARE\n")
+        .append("  str text;\n")
+        .append("BEGIN\n")
+        .append("  IF v is not null AND val is not null THEN\n")
+        .append("    FOREACH str IN ARRAY v LOOP\n")
+        .append("      IF str LIKE val THEN\n")
+        .append("        RETURN true;\n")
+        .append("      END IF;\n")
+        .append("    END LOOP;\n")
+        .append("  END IF;\n")
+        .append("  RETURN false;\n")
+        .append("END; $$\n")
+        .append("LANGUAGE PLPGSQL;\n")
+        .append("\n")
+        .append("\n")
+        .append("DROP FUNCTION IF EXISTS TILDA.like(text[], text[]);\n")
+        .append("CREATE OR REPLACE FUNCTION TILDA.like(v text[], vals text[]) RETURNS boolean AS $$\n")
+        .append("DECLARE\n")
+        .append("  str1 text;\n")
+        .append("  str2 text;\n")
+        .append("  i integer := 1;\n")
+        .append("BEGIN\n")
+        .append("  IF v is not null AND vals is not null THEN\n")
+        .append("    FOREACH str1 IN ARRAY v LOOP\n")
+        .append("      FOREACH str2 IN ARRAY vals LOOP\n")
+        .append("        IF str1 LIKE str2 THEN\n")
+        .append("          RETURN true;\n")
+        .append("        END IF;\n")
+        .append("      END LOOP;\n")
+        .append("    END LOOP;\n")
+        .append("  END IF;\n")
+        .append("  RETURN false;\n")
+        .append("END; $$\n")
+        .append("LANGUAGE PLPGSQL;\n")
+        .append("\n")
+        .append("\n");
+        PrintFunctionIn(Str, "text");
+        PrintFunctionIn(Str, "integer");
+        PrintFunctionIn(Str, "bigint");
+
+        Str.append("DROP FUNCTION IF EXISTS TILDA.getKeyBatch(text, integer);\n")
+        .append("CREATE OR REPLACE FUNCTION TILDA.getKeyBatch(t text, c integer) RETURNS TABLE (min_key_inclusive bigint, max_key_exclusive bigint) AS $$\n")
+        .append("DECLARE\n")
+        .append("  val bigint;\n")
+        .append("BEGIN\n")
+        .append("  UPDATE TILDA.KEY set \"max\"=\"max\"+c where \"name\"=t;\n")
+        .append("  SELECT \"max\" into val from TILDA.KEY where \"name\"=t;\n")
+        .append("  return query select val-c as min_key_inclusive, val as max_key_exclusive;\n")
+        .append("END; $$\n")
+        .append("LANGUAGE PLPGSQL;\n")
+        .append("\n")
+        .append("\n")
+        .append("DROP FUNCTION IF EXISTS TILDA.getKeyBatchAsMaxExclusive(text, integer);\n")
+        .append("CREATE OR REPLACE FUNCTION TILDA.getKeyBatchAsMaxExclusive(t text, c integer) RETURNS bigint AS $$\n")
+        .append("DECLARE\n")
+        .append("  val bigint;\n")
+        .append("BEGIN\n")
+        .append("  UPDATE TILDA.KEY set \"max\"=\"max\"+c where \"name\"=t;\n")
+        .append("  SELECT \"max\" into val from TILDA.KEY where \"name\"=t;\n")
+        .append("  return val;\n")
+        .append("END; $$\n")
+        .append("LANGUAGE PLPGSQL;\n")
+        .append("\n")
+        .append("\n");
+
+        return Con.ExecuteUpdate("TILDA", Str.toString()) >= 0;
+      }
+
 
     @Override
     public StringStringPair getTypeMapping(int Type, String Name, int Size, String TypeName)
@@ -477,9 +475,9 @@ public class PostgreSQL implements DBType
     public void getFullColumnVar(StringBuilder Str, String SchemaName, String TableName, String ColumnName)
       {
         if (TextUtil.isNullOrEmpty(SchemaName) == false)
-         Str.append(SchemaName).append(".");
+          Str.append(SchemaName).append(".");
         if (TextUtil.isNullOrEmpty(TableName) == false)
-         Str.append(TableName).append(".");
+          Str.append(TableName).append(".");
         Str.append("\"").append(ColumnName).append("\"");
       }
 
@@ -487,6 +485,30 @@ public class PostgreSQL implements DBType
     public void getFullTableVar(StringBuilder Str, String SchemaName, String TableName)
       {
         Str.append(SchemaName).append(".").append(TableName);
+      }
+
+
+    @Override
+    public void setArray(Connection C, PreparedStatement PS, int i, ColumnType Type, List<Array> allocatedArrays, Collection<?> val)
+    throws Exception
+      {
+        java.sql.Array A = C.createArrayOf(_SQL.getColumnTypeRaw(Type, -1, true), val.toArray());
+        allocatedArrays.add(A);
+        PS.setArray(i, A);
+      }
+
+
+    @Override
+    public Collection<?> getArray(ResultSet RS, int i, ColumnType Type, boolean isSet)
+    throws Exception
+      {
+        Array A = RS.getArray(i);
+        if (A == null)
+          return null;
+        Collection<?> val = isSet == true ? CollectionUtil.toSet(A.getArray())
+                                          : CollectionUtil.toList(A.getArray());
+        A.free();
+        return val;
       }
 
   }

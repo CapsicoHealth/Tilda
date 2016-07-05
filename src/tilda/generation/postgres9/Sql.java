@@ -81,20 +81,24 @@ public class Sql extends PostgreSQL implements CodeGenSql
     @Override
     public String getColumnTypeRaw(Column C, boolean MultiOverride)
       {
-        if (C._Type == ColumnType.STRING && C._Mode != ColumnMode.CALCULATED)
-          return C.isCollection() == true || MultiOverride == true ? "text" : C._Size < 15 ? PostgresType.CHAR._SQLType : C._Size < 4096 ? PostgresType.STRING._SQLType : "text";
-        if (C._Type == ColumnType.JSON)
-         return "jsonb";
-        return C.isCollection() == true ? PostgresType.get(C._Type)._SQLArrayType : PostgresType.get(C._Type)._SQLType;
+        return getColumnTypeRaw(C._Type, C._Size==null?0:C._Size, C._Mode==ColumnMode.CALCULATED, C.isCollection(), MultiOverride);
+      }
+    @Override
+    public String getColumnTypeRaw(ColumnType Type, int Size, boolean isCollection)
+      {
+        return getColumnTypeRaw(Type, Size, false, isCollection, false);
       }
     
-    @Override
-    public String getColumnTypeRaw(ColumnType Type, int Size, boolean isArray)
+    public String getColumnTypeRaw(ColumnType Type, int Size, boolean Calculated, boolean isCollection, boolean MultiOverride)
       {
-        if (Type == ColumnType.STRING)
-          return isArray == true ? "text" : Size < 15 ? PostgresType.CHAR._SQLType : Size < 4096 ? PostgresType.STRING._SQLType : "text";
-        return isArray == true ? PostgresType.get(Type)._SQLArrayType : PostgresType.get(Type)._SQLType;
+        if (Type == ColumnType.STRING && Calculated == false)
+          return isCollection == true || MultiOverride == true ? "text" : Size < 15 ? PostgresType.CHAR._SQLType : Size < 4096 ? PostgresType.STRING._SQLType : "text";
+        if (Type == ColumnType.JSON)
+         return "jsonb";
+        return isCollection == true ? PostgresType.get(Type)._SQLArrayType : PostgresType.get(Type)._SQLType;
       }
+    
+    
     
 
     @Override
