@@ -389,4 +389,13 @@ public class MSSQL implements DBType
         Str.append(Asc==true?" ASC":" DESC");
       }
 
+    @Override
+    public void truncateTable(Connection C, String schemaName, String tableName) throws Exception
+      {
+        StringBuilder Str = new StringBuilder();
+        Str.append("TRUNCATE TABLE ");
+        getFullTableVar(Str, schemaName, tableName);
+        C.ExecuteUpdate(schemaName, tableName, Str.toString());
+      }
+    
   }

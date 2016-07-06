@@ -80,4 +80,5 @@ public interface DBType
     public String        getJson (              ResultSet         RS, int i) throws Exception;
     public String        getJsonParametrizedQueryPlaceHolder();
     public void          setOrderByWithNullsOrdering(Connection C, StringBuilder Str, ColumnDefinition Col, boolean Asc, boolean NullsLast);
+    public void truncateTable(Connection C, String schemaName, String tableName) throws Exception;
   }

@@ -47,6 +47,7 @@ import tilda.enums.TransactionType;
 import tilda.migration.Migrator;
 import tilda.parsing.parts.Schema;
 import tilda.performance.PerfTracker;
+import tilda.utils.AnsiUtil;
 import tilda.utils.ClassStaticInit;
 import tilda.utils.FileUtil;
 import tilda.utils.SystemValues;
@@ -60,6 +61,7 @@ public class ConnectionPool
         /*@formatter:off*/
        @SerializedName("connections"  ) public Conn  []  _Conns       = new Conn[0];
        @SerializedName("email"        ) public EmailConfig  _EmailConfig;
+       @SerializedName("migrate"      ) public boolean _Migrate = false;
        /*@formatter:on*/
 
         public boolean validate()
@@ -168,7 +170,7 @@ public class ConnectionPool
              }
 
             C = get("MAIN");
-            LoadTildaResources(C);
+            LoadTildaResources(C, Defs._Migrate);
           }
         catch (Throwable T)
           {
@@ -192,7 +194,7 @@ public class ConnectionPool
           }
       }
 
-    private static void LoadTildaResources(Connection C)
+    private static void LoadTildaResources(Connection C, boolean Migrate)
     throws Exception
       {
         Reader R = null;
@@ -237,17 +239,40 @@ public class ConnectionPool
 //        LOG.debug("All Tildas in order of dependencies:");
 //        for (Schema S : TildaList)
 //         LOG.debug("   "+S._ResourceNameShort);
+        if (Migrate == false)
+         Migrator.logMigrationWarning();
+        int warnings = 0;
         for (Schema S : TildaList)
           {
-            Migrator.migrate(C, S);
+            int w = Migrator.migrate(C, S, Migrate);
+            if (w != 0 && Migrate == false)
+              {
+                warnings+=w;
+                LOG.warn("There were "+w+" warning(s) issued because schema discrepencies were found but not fixed.");
+                Migrator.logMigrationWarning();
+                continue;
+              }
             LOG.debug("Initializing Schema objects");
             Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
             M.invoke(null, C);
             _SchemaPackage.put(S._Name, S._Package);
             C.commit();
           }
-        if (C.addHelperFunctions() == false)
-          throw new Exception("Cannot upgrade schema by adding the Tilda helper functions.");
+        LOG.debug("");
+        LOG.debug("Creating/updating Tilda helper stored procedures.");
+        if (Migrate == false)
+         Migrator.logMigrationWarning();
+        else if (C.addHelperFunctions() == false)
+         throw new Exception("Cannot upgrade schema by adding the Tilda helper functions.");
+        
+        if (warnings != 0 && Migrate == false)
+         {
+           LOG.warn("");
+           LOG.warn("");
+           LOG.warn("There were a total of "+warnings+" warning(s) issued because schema discrepencies were found but not fixed.");
+           Migrator.logMigrationWarning();
+         }
+
         C.commit();
       }
 

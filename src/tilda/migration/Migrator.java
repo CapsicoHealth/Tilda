@@ -38,6 +38,7 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
+import tilda.utils.AnsiUtil;
 
 public class Migrator
   {
@@ -46,13 +47,21 @@ public class Migrator
     public static final String    TILDA_VERSION       = "1.0";
     public static final String    TILDA_VERSION_VAROK = "1_0";
 
-    public static String migrate(Connection C, Schema S)
+    public static void logMigrationWarning()
+      {
+        LOG.warn("     " + AnsiUtil.NEGATIVE + "Migration was not activated in the tilda.config file: THE APPLICATION MAY NOT FUNCTION PROPERLY" + AnsiUtil.NEGATIVE_OFF + "!");
+      }
+
+    public static int migrate(Connection C, Schema S, boolean Migrate)
     throws Exception
       {
-        StringBuilder Str = new StringBuilder();
+        LOG.debug("");
+        LOG.debug("");
+        LOG.debug("Evaluating differences between the application data model and the existing data schema in the database");
         CodeGenSql Sql = C.getSQlCodeGen();
         ParserSession PS = new ParserSession(S, Sql);
         ResultSet RS = null;
+        int warnings = 0;
         try
           {
             if (Parser.loadDependencies(PS, S) == true)
@@ -68,7 +77,12 @@ public class Migrator
                 if (DBSchemas.contains(S._Name.toLowerCase()) == false)
                   {
                     LOG.info("The application's data model defines the schema '" + S.getShortName() + "' which cannot be found in the database. Trying to create it...");
-                    if (C.createSchema(S) == false)
+                    if (Migrate == false)
+                      {
+                        logMigrationWarning();
+                        return ++warnings;
+                      }
+                    else if (C.createSchema(S) == false)
                       throw new Exception("Cannot upgrade database by adding the new schema '" + S.getShortName() + "'.");
                     C.commit();
                   }
@@ -94,7 +108,13 @@ public class Migrator
                     if (DBTables.contains(Obj._Name.toLowerCase()) == false)
                       {
                         LOG.info("The application's data model defines the table '" + Obj.getShortName() + "' which cannot be found in the database. Trying to create it...");
-                        if (C.createTable(Obj) == false)
+                        if (Migrate == false)
+                          {
+                            logMigrationWarning();
+                            ++warnings;
+                            continue;
+                          }
+                        else if (C.createTable(Obj) == false)
                           throw new Exception("Cannot upgrade schema by adding the new table '" + Obj.getShortName() + "'.");
                         C.commit();
                       }
@@ -104,7 +124,7 @@ public class Migrator
                     for (Column Col : Obj._Columns)
                       {
                         if (Col == null)
-                         continue;
+                          continue;
                         if (Col._Mode == ColumnMode.CALCULATED)
                           continue;
                         ColInfo CI = DBColumns.get(Col.getName().toLowerCase());
@@ -112,7 +132,13 @@ public class Migrator
                         if (CI == null)
                           {
                             LOG.info("The application's data model defines the column '" + Col.getShortName() + "' which cannot be found in the database. Trying to create it...");
-                            if (C.alterTableAddColumn(Col, Col._DefaultCreateValue == null ? null : Col._DefaultCreateValue._Value) == false)
+                            if (Migrate == false)
+                              {
+                                logMigrationWarning();
+                                ++warnings;
+                                continue;
+                              }
+                            else if (C.alterTableAddColumn(Col, Col._DefaultCreateValue == null ? null : Col._DefaultCreateValue._Value) == false)
                               throw new Exception("Cannot upgrade table '" + Obj.getShortName() + "' by adding the new required column '" + Col.getShortName() + "'.");
                             didSomething = true;
                           }
@@ -121,20 +147,32 @@ public class Migrator
                             if (CI._Nullable == 1 && Col._Nullable == false)
                               {
                                 LOG.info("The application's data model defines the column '" + Col.getShortName() + "' as not nullable, but it's nullable in the DB. Trying to alter it...");
-                                if (C.alterTableAlterColumnNull(Col, Col._DefaultCreateValue == null ? null : Col._DefaultCreateValue._Value) == false)
+                                if (Migrate == false)
+                                  {
+                                    logMigrationWarning();
+                                    ++warnings;
+                                    continue;
+                                  }
+                                else if (C.alterTableAlterColumnNull(Col, Col._DefaultCreateValue == null ? null : Col._DefaultCreateValue._Value) == false)
                                   throw new Exception("Cannot upgrade table '" + Obj.getShortName() + "' by updating the column '" + Col.getShortName() + "' from nullable to not nullable.");
                                 didSomething = true;
                               }
                             else if (CI._Nullable == 0 && Col._Nullable == true)
                               {
                                 LOG.info("The application's data model defines the column '" + Col.getShortName() + "' as nullable, but it's not nullable in the DB. Trying to alter it...");
-                                if (C.alterTableAlterColumnNull(Col, null) == false)
+                                if (Migrate == false)
+                                  {
+                                    logMigrationWarning();
+                                    ++warnings;
+                                    continue;
+                                  }
+                                else if (C.alterTableAlterColumnNull(Col, null) == false)
                                   throw new Exception("Cannot upgrade table '" + Obj.getShortName() + "' by updating the column '" + Col.getShortName() + "' from not nullable to nullable.");
                                 didSomething = true;
                               }
 
                             if (C.supportsArrays() == true)
-                             {
+                              {
                                 if (CI.isArray() == false && Col.isCollection() == true)
                                   {
                                     throw new Exception("The application's data model defines the column '" + Col.getShortName() + "' as an array, but it's not an array in the DB. The database needs to be migrated manually.");
@@ -143,36 +181,55 @@ public class Migrator
                                   {
                                     throw new Exception("The application's data model defines the column '" + Col.getShortName() + "' as an base type, but it's an array in the DB. The database needs to be migrated manually.");
                                   }
-                             }
+                              }
 
-                            if (    Col._Type == ColumnType.STRING && Col.isCollection() == false
-                                && (CI._Size < C.getCLOBThreshhold() && CI._Size != Col._Size || CI._Size >= C.getCLOBThreshhold() && Col._Size < C.getCLOBThreshhold()))
+                            if (Col._Type == ColumnType.STRING && Col.isCollection() == false && (CI._Size < C.getCLOBThreshhold() && CI._Size != Col._Size || CI._Size >= C.getCLOBThreshhold() && Col._Size < C.getCLOBThreshhold()))
                               {
-                                if (C.alterTableAlterColumnStringSize(Col, CI._Size) == false)
-                                  throw new Exception("The application's data model defines the column '" + Col.getShortName() + "' as a String of size " + Col._Size + ", but it's " + CI._Size
-                                  + " in the DB and failed migration. The database needs to be migrated manually.");
+                                LOG.info("The application's data model has changed the size of the column '" + Col.getShortName() + "' to " + Col._Size + ". Trying to alter it...");
+                                if (Migrate == false)
+                                  {
+                                    logMigrationWarning();
+                                    ++warnings;
+                                    continue;
+                                  }
+                                else if (C.alterTableAlterColumnStringSize(Col, CI._Size) == false)
+                                  throw new Exception("The application's data model defines the column '" + Col.getShortName() + "' as a String of size " + Col._Size + ", but it's " + CI._Size + " in the DB and failed migration. The database needs to be migrated manually.");
                                 didSomething = true;
                               }
-                            if (    Col.isCollection() == false 
-                                && (   Col._Type == ColumnType.BITFIELD && CI._TildaType != ColumnType.INTEGER 
-                                    || Col._Type == ColumnType.JSON     && CI._TildaType != ColumnType.STRING && CI._TildaType != ColumnType.JSON
-                                    || Col._Type != ColumnType.BITFIELD && Col._Type != ColumnType.JSON && Col._Type != CI._TildaType))
+                            if (Col.isCollection() == false
+                            && (Col._Type == ColumnType.BITFIELD && CI._TildaType != ColumnType.INTEGER
+                            || Col._Type == ColumnType.JSON && CI._TildaType != ColumnType.STRING && CI._TildaType != ColumnType.JSON
+                            || Col._Type != ColumnType.BITFIELD && Col._Type != ColumnType.JSON && Col._Type != CI._TildaType))
                               {
-                                if (C.alterTableAlterColumnType(CI._TildaType, Col, ZoneInfo_Factory.getEnumerationById("UTC")) == false)
-                                 throw new Exception("The application's data model defines the column '" + Col.getShortName() + "' as '"+Col._Type+"' which cannot be changed from '"+CI._Type+"/"+CI._TypeSql+"/"+CI._TildaType+"' currently in the database. The database needs to be migrated manually.");
+                                LOG.info("The application's data model has changed the type of the column '" + Col.getShortName() + "' to " + Col._Type + ". Trying to alter it...");
+                                if (Migrate == false)
+                                  {
+                                    logMigrationWarning();
+                                    ++warnings;
+                                    continue;
+                                  }
+                                else if (C.alterTableAlterColumnType(CI._TildaType, Col, ZoneInfo_Factory.getEnumerationById("UTC")) == false)
+                                  throw new Exception("The application's data model defines the column '" + Col.getShortName() + "' as '" + Col._Type + "' which cannot be changed from '" + CI._Type + "/" + CI._TypeSql + "/" + CI._TildaType + "' currently in the database. The database needs to be migrated manually.");
                                 didSomething = true;
                               }
                           }
                         if (didSomething == true)
-                         C.commit();
+                          C.commit();
                       }
                     for (String c : Obj._DropOldColumns)
                       {
                         ColInfo CI = DBColumns.get(c.toLowerCase());
                         if (CI != null)
                           {
-                            if (C.alterTableDropColumn(Obj, CI) == false)
-                             throw new Exception("The application's data model has asked to drop column '" + Obj.getFullName() + "."+c+"' which could not be accomplished.");
+                            LOG.info("The application's data model has excplicitely asked to drop the column '" + c + ". Trying to alter the table...");
+                            if (Migrate == false)
+                              {
+                                logMigrationWarning();
+                                ++warnings;
+                                continue;
+                              }
+                            else if (C.alterTableDropColumn(Obj, CI) == false)
+                              throw new Exception("The application's data model has asked to drop column '" + Obj.getFullName() + "." + c + "' which could not be accomplished.");
                             C.commit();
                           }
                       }
@@ -182,7 +239,16 @@ public class Migrator
                   {
                     boolean Drop = DBViews.contains(V._Name.toLowerCase());
                     if (Drop == false)
-                     LOG.info("The application's data model defines the view '" + V.getShortName() + "' which cannot be found in the database. Trying to create it...");
+                      {
+                        LOG.info("The application's data model defines the view '" + V.getShortName() + "' which cannot be found in the database. Trying to create it...");
+                        if (Migrate == false)
+                          {
+                            logMigrationWarning();
+                            ++warnings;
+                            continue;
+                          }
+
+                      }
                     else
                       LOG.info("The application's data model defines the view '" + V.getShortName() + "' which needs to be re-created...");
                     if (C.createView(V, Drop) == false)
@@ -199,7 +265,7 @@ public class Migrator
                   LOG.error("    " + (++i) + " - " + Err);
                 throw new Exception("Cannot validate the application model against the database");
               }
-            return Str.length() == 0 ? null : Str.toString();
+            return warnings;
           }
         finally
           {

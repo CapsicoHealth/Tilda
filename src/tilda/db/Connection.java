@@ -27,7 +27,6 @@ import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Deque;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -46,8 +45,6 @@ import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 import tilda.performance.PerfTracker;
 import tilda.types.ColumnDefinition;
-import tilda.types.Type_LongCollection;
-import tilda.types.Type_StringCollectionNull;
 import tilda.utils.AnsiUtil;
 import tilda.utils.CollectionUtil;
 import tilda.utils.SystemValues;
@@ -493,6 +490,11 @@ public final class Connection
     public void setOrderByWithNullsOrdering(StringBuilder Str, ColumnDefinition Col, boolean Asc, boolean NullsLast)
       {
         _DB.setOrderByWithNullsOrdering(this, Str, Col, Asc, NullsLast);
+      }
+
+    public void truncateTable(String SchemaName, String TableName) throws Exception
+      {
+        _DB.truncateTable(this, SchemaName, TableName);
       }
   }
 

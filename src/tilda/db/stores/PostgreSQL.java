@@ -546,4 +546,14 @@ public class PostgreSQL implements DBType
         Str.append(" NULLS ").append(NullsLast == true ? "LAST" : "FIRST");        
       }
 
+
+    @Override
+    public void truncateTable(Connection C, String schemaName, String tableName) throws Exception
+      {
+        StringBuilder Str = new StringBuilder();
+        Str.append("TRUNCATE ");
+        getFullTableVar(Str, schemaName, tableName);
+        C.ExecuteUpdate(schemaName, tableName, Str.toString());
+      }
+
   }
