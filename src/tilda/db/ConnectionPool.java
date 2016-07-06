@@ -47,7 +47,6 @@ import tilda.enums.TransactionType;
 import tilda.migration.Migrator;
 import tilda.parsing.parts.Schema;
 import tilda.performance.PerfTracker;
-import tilda.utils.AnsiUtil;
 import tilda.utils.ClassStaticInit;
 import tilda.utils.FileUtil;
 import tilda.utils.SystemValues;
@@ -59,9 +58,9 @@ public class ConnectionPool
     private static class ConnDefs
       {
         /*@formatter:off*/
-       @SerializedName("connections"  ) public Conn  []  _Conns       = new Conn[0];
-       @SerializedName("email"        ) public EmailConfig  _EmailConfig;
-       @SerializedName("migrate"      ) public boolean _Migrate = false;
+       @SerializedName("connections"   ) public Conn  []  _Conns       = new Conn[0];
+       @SerializedName("email"         ) public EmailConfig  _EmailConfig;
+       @SerializedName("auto-migration") public boolean _AutoMigrate = false;
        /*@formatter:on*/
 
         public boolean validate()
@@ -170,7 +169,7 @@ public class ConnectionPool
              }
 
             C = get("MAIN");
-            LoadTildaResources(C, Defs._Migrate);
+            LoadTildaResources(C, Defs._AutoMigrate);
           }
         catch (Throwable T)
           {
