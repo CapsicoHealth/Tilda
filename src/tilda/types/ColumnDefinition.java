@@ -52,11 +52,12 @@ public class ColumnDefinition
       {
         C.getFullColumnVar(Str, null, _TableName, _ColumnName);
       }
+
     public void getShortColumnVarForSelect(Connection C, StringBuilder Str)
       {
         C.getFullColumnVar(Str, null, null, _ColumnName);
       }
-    
+
 
     public void getFullColumnVarForInsert(Connection C, StringBuilder Str)
       {
@@ -77,19 +78,29 @@ public class ColumnDefinition
         return _ColumnName;
       }
 
-    public static ColumnDefinition Create(String Name, ColumnType Type, boolean Collection, boolean Nullable, String Description)
+    public static ColumnDefinition Create(String ColumnName, ColumnType Type, boolean Collection, boolean Nullable, String Description)
+      {
+        return Create(null, null, ColumnName, Type, Collection, Nullable, Description);
+      }
+    public static ColumnDefinition Create(String TableName, String ColumnName, ColumnType Type, boolean Collection, boolean Nullable, String Description)
+      {
+        return Create(null, TableName, ColumnName, Type, Collection, Nullable, Description);
+      }
+    public static ColumnDefinition Create(String SchemaName, String TableName, String ColumnName, ColumnType Type, boolean Collection, boolean Nullable, String Description)
       {
         String ClassName = "tilda.types.Type_" + Type._SimpleName + (Collection == true ? "Collection" : "Primitive") + (Nullable == true ? "Null" : "");
         try
           {
             Class<?> C = Class.forName(ClassName);
             Constructor<?> cons = C.getConstructor(String.class, String.class, String.class, Long.TYPE, String.class);
-            return (ColumnDefinition) cons.newInstance(null, null, Name, 0, Description);
+            return (ColumnDefinition) cons.newInstance(SchemaName, TableName, ColumnName, 0, Description);
           }
         catch (Exception E)
           {
             LOG.error("Cannot instanciate type '" + ClassName + " as a ColumnDefinition descendant with a proper constructor'\n", E);
             return null;
           }
+
       }
+    
   }
