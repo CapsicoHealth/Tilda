@@ -271,4 +271,21 @@ public class IBMDB2 implements DBType
       }
 
 
+    @Override
+    public void setOrderByWithNullsOrdering(Connection C, StringBuilder Str, ColumnDefinition Col, boolean Asc, boolean NullsLast)
+      {
+        throw new UnsupportedOperationException();
+        
+      }
+
+
+    @Override
+    public void truncateTable(Connection C, String schemaName, String tableName)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+        
+      }
+
+
   }
