@@ -1922,7 +1922,7 @@ public abstract class QueryHelper
         return this;
       }
 
-    protected void orderByBase(ColumnDefinition Col, boolean Asc)
+    protected void orderByBase()
     throws Exception
       {
         if (_Section != S.WHERE && _Section != S.GROUPBY && _Section != S.ORDERBY || _ST != StatementType.SELECT)
@@ -1937,16 +1937,25 @@ public abstract class QueryHelper
     public QueryHelper orderBy(ColumnDefinition Col, boolean Asc)
     throws Exception
       {
-        orderByBase(Col, Asc);
+        orderByBase();
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         _QueryStr.append(Asc==true?" ASC":" DESC");
         return this;
       }
     
+    public QueryHelper orderByCountStar(boolean Asc)
+    throws Exception
+      {
+        orderByBase();
+        _QueryStr.append("count(*)").append(Asc==true?" ASC":" DESC");
+        return this;
+      }
+    
+    
     public QueryHelper orderBy(ColumnDefinition Col, boolean Asc, boolean NullsLast)
     throws Exception
       {
-        orderByBase(Col, Asc);
+        orderByBase();
         _C.setOrderByWithNullsOrdering(_QueryStr, Col, Asc, NullsLast);
         return this;
       }
