@@ -17,7 +17,6 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.JsonObject;
 
 import tilda.grammar.ErrorList;
-import tilda.grammar.TildaSQL;
 import tilda.grammar.TildaSQLValidator;
 import tilda.utils.AnsiUtil;
 import tilda.utils.DateTimeUtil;
@@ -32,7 +31,7 @@ public class TildaSQLServlet extends HttpServlet
     */
 
     private static final long     serialVersionUID = 1181688239603166570L;
-    protected static final Logger LOG              = LogManager.getLogger(TildaSQL.class.getName());
+    protected static final Logger LOG              = LogManager.getLogger(TildaSQLServlet.class.getName());
     TildaSQLValidator             _Validator;
     JsonObject                    json             = new JsonObject();
 
