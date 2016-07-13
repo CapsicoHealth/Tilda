@@ -17,8 +17,10 @@
 package tilda.utils;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -36,26 +38,27 @@ public class FileUtil
     public static interface FileProcessor
       {
         public void startFolder(File D)
-          throws Exception;
+        throws Exception;
 
         public void processFile(File F)
-          throws Exception;
+        throws Exception;
 
         public void endFolder(File D)
-          throws Exception;
+        throws Exception;
       }
 
     public static void Iterate(File StartingFolder, FileProcessor FP, String[] Excludes)
-        throws Exception
-        {
-          Iterate(StartingFolder, FP, Excludes, 0);
-        }
+    throws Exception
+      {
+        Iterate(StartingFolder, FP, Excludes, 0);
+      }
+
     public static void Iterate(File StartingFolder, FileProcessor FP, String[] Excludes, int Level)
-      throws Exception
+    throws Exception
       {
         File[] Files = StartingFolder.listFiles();
         Arrays.sort(Files, new FileNameComparator());
-        System.out.println(PaddingUtil.getPad(Level*2)+StartingFolder.getCanonicalPath());
+        System.out.println(PaddingUtil.getPad(Level * 2) + StartingFolder.getCanonicalPath());
         FP.startFolder(StartingFolder);
         if (Files != null)
           {
@@ -67,7 +70,7 @@ public class FileUtil
             for (File F : Files)
               {
                 if (isExcluded(F, Excludes) == false && F.isDirectory() == true)
-                  Iterate(F, FP, Excludes, Level+1);
+                  Iterate(F, FP, Excludes, Level + 1);
               }
           }
         FP.endFolder(StartingFolder);
@@ -76,13 +79,14 @@ public class FileUtil
     public static boolean isExcluded(File f, String[] Excludes)
       {
         if (Excludes != null)
-         for (String s : Excludes)
-          if (TextUtil.StarEqual(f.getName(), s) == true)
-           return true;
+          for (String s : Excludes)
+            if (TextUtil.StarEqual(f.getName(), s) == true)
+              return true;
         return false;
       }
-    
-    public static void copyFileContentsIntoAnotherFile(String inputFileName, PrintWriter Out) throws IOException
+
+    public static void copyFileContentsIntoAnotherFile(String inputFileName, PrintWriter Out)
+    throws IOException
       {
         BufferedReader br = new BufferedReader(new FileReader(inputFileName));
         try
@@ -99,4 +103,17 @@ public class FileUtil
             br.close();
           }
       }
+
+    public static PrintWriter getBufferedPrintWriter(String SourceFilePath, boolean append)
+    throws IOException
+      {
+        if (append == false) // new file, let's check that the parent folder path exists. 
+          {
+            new File(SourceFilePath).getParentFile().mkdirs();
+          }
+        FileWriter FW = new FileWriter(SourceFilePath, append);
+        PrintWriter Out = new PrintWriter(new BufferedWriter(FW));
+        return Out;
+      }
+
   }

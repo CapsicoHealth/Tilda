@@ -55,6 +55,10 @@ import tilda.utils.TextUtil;
 
 public class ConnectionPool
   {
+    private ConnectionPool()
+      {
+      }
+
     private static class ConnDefs
       {
         /*@formatter:off*/
@@ -93,7 +97,7 @@ public class ConnectionPool
             return OK;
           }
       }
-    
+
     private static class EmailConfig
       {
         /*@formatter:off*/
@@ -115,14 +119,14 @@ public class ConnectionPool
       @SerializedName("max"    ) public int    _Max     = 30;
       /*@formatter:on*/
       }
-    
+
     private static class Bootstrappers
       {
         /*@formatter:off*/
         @SerializedName("classNames") public String[]  _classNames = { };
         /*@formatter:on*/
       }
-    
+
 
     static final Logger                           LOG               = LogManager.getLogger(ConnectionPool.class.getName());
 
@@ -134,7 +138,7 @@ public class ConnectionPool
       {
         SystemValues.autoInit();
       }
-    
+
     static
       {
         Reader R = null;
@@ -149,12 +153,12 @@ public class ConnectionPool
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
                 Bootstrappers Bs = gson.fromJson(R, Bootstrappers.class);
                 if (Bs._classNames != null)
-                 for (String className : Bs._classNames)
-                  ClassStaticInit.initClass(className);
+                  for (String className : Bs._classNames)
+                    ClassStaticInit.initClass(className);
                 R.close();
                 R = null;
               }
-            
+
             LOG.info("Initializing Tilda: loading configuration file '/tilda.config.json'.");
             In = FileUtil.getResourceAsStream("tilda.config.json");
             if (In == null)
@@ -163,10 +167,10 @@ public class ConnectionPool
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             ConnDefs Defs = gson.fromJson(R, ConnDefs.class);
             if (Defs.validate() == true)
-             {
+              {
                 for (Conn Co : Defs._Conns)
                   init(Co._Id, Co._Driver, Co._DB, Co._User, Co._Pswd, Co._Initial, Co._Max);
-             }
+              }
 
             C = get("MAIN");
             LoadTildaResources(C, Defs._AutoMigrate);
@@ -218,7 +222,7 @@ public class ConnectionPool
                       for (String p : parts)
                         {
                           if (TextUtil.isNullOrEmpty(p) == true)
-                           continue;
+                            continue;
                           p = p.trim();
                           In = FileUtil.getResourceAsStream(p);
                           if (In == null)
@@ -235,19 +239,19 @@ public class ConnectionPool
               }
           }
         ReorderTildaListWithDependencies(TildaList);
-//        LOG.debug("All Tildas in order of dependencies:");
-//        for (Schema S : TildaList)
-//         LOG.debug("   "+S._ResourceNameShort);
+        // LOG.debug("All Tildas in order of dependencies:");
+        // for (Schema S : TildaList)
+        // LOG.debug(" "+S._ResourceNameShort);
         if (Migrate == false)
-         Migrator.logMigrationWarning();
+          Migrator.logMigrationWarning();
         int warnings = 0;
         for (Schema S : TildaList)
           {
             int w = Migrator.migrate(C, S, Migrate);
             if (w != 0 && Migrate == false)
               {
-                warnings+=w;
-                LOG.warn("There were "+w+" warning(s) issued because schema discrepencies were found but not fixed.");
+                warnings += w;
+                LOG.warn("There were " + w + " warning(s) issued because schema discrepencies were found but not fixed.");
                 Migrator.logMigrationWarning();
                 continue;
               }
@@ -260,17 +264,17 @@ public class ConnectionPool
         LOG.debug("");
         LOG.debug("Creating/updating Tilda helper stored procedures.");
         if (Migrate == false)
-         Migrator.logMigrationWarning();
+          Migrator.logMigrationWarning();
         else if (C.addHelperFunctions() == false)
-         throw new Exception("Cannot upgrade schema by adding the Tilda helper functions.");
-        
+          throw new Exception("Cannot upgrade schema by adding the Tilda helper functions.");
+
         if (warnings != 0 && Migrate == false)
-         {
-           LOG.warn("");
-           LOG.warn("");
-           LOG.warn("There were a total of "+warnings+" warning(s) issued because schema discrepencies were found but not fixed.");
-           Migrator.logMigrationWarning();
-         }
+          {
+            LOG.warn("");
+            LOG.warn("");
+            LOG.warn("There were a total of " + warnings + " warning(s) issued because schema discrepencies were found but not fixed.");
+            Migrator.logMigrationWarning();
+          }
 
         C.commit();
       }
@@ -281,28 +285,28 @@ public class ConnectionPool
           {
             Schema Si = L.get(i);
             int minIndex = 0;
-//            LOG.debug("Checking dependencies for "+Si._ResourceNameShort);
+            // LOG.debug("Checking dependencies for "+Si._ResourceNameShort);
             if (Si._Dependencies != null)
-             for (String Dep : Si._Dependencies)
-              {
-//                LOG.debug("   Checking dependency "+Dep);
-                for (int j = 0; j < i; ++j)
-                 {
-                   Schema Sj = L.get(j);
-//                   LOG.debug("      Comparing "+Dep+" Vs. "+Sj._ResourceNameShort);
-                   if (Sj._ResourceNameShort.equals(Dep) == true && minIndex < j+1)
+              for (String Dep : Si._Dependencies)
+                {
+                  // LOG.debug(" Checking dependency "+Dep);
+                  for (int j = 0; j < i; ++j)
                     {
-                      minIndex = j+1;
-//                      LOG.debug("         Found dependency. Setting minIndex="+minIndex);
+                      Schema Sj = L.get(j);
+                      // LOG.debug(" Comparing "+Dep+" Vs. "+Sj._ResourceNameShort);
+                      if (Sj._ResourceNameShort.equals(Dep) == true && minIndex < j + 1)
+                        {
+                          minIndex = j + 1;
+                          // LOG.debug(" Found dependency. Setting minIndex="+minIndex);
+                        }
                     }
-                 }
-              }
+                }
             if (L.get(0)._ResourceNameShort.equals("tilda/data/_tilda.Tilda.json") == true && minIndex == 0)
-             minIndex = 1;
-//            LOG.debug("   minIndex="+minIndex);
+              minIndex = 1;
+            // LOG.debug(" minIndex="+minIndex);
             Schema S = L.remove(i);
             L.add(minIndex, S);
-            
+
           }
       }
 
