@@ -880,12 +880,6 @@ public class TextUtil
       }
 
 
-    /** Truncates the string and adds "..." if it is bigger than MaxLen */
-    public static final String toMaxLength(String Str, int MaxLen)
-      {
-        return Str.length() <= MaxLen ? Str : Str.substring(0, MaxLen - 3) + "...";
-      }
-
     public static final void EscapeXML(PrintWriter Out, String Str)
       {
         for (int i = 0; i < Str.length(); ++i)
@@ -1488,14 +1482,20 @@ public class TextUtil
         return count%2 == 0;
       }
     
+    /** Truncates the string and adds "..." if it is bigger than MaxLen */
+    public static final String toMaxLength(String Str, int MaxLen)
+      {
+        return Str == null || Str.length() <= MaxLen ? Str : Str.substring(0, MaxLen - 3) + "...";
+      }
+
     public static final String PrintVariableStr(String Value)
      {
        return PrintVariableStr(Value, 100);      
      }
     
-    public static final String PrintVariableStr(String Value, int Length)
+    public static final String PrintVariableStr(String Value, int MaxLen)
      {
-       return "["+ (Value == null ? 0 : Value.length())+"] "+(Value == null || Value.length() < Length ? Value : Value.substring(0, Length)+"...");      
+       return "["+ (Value == null ? 0 : Value.length())+"] "+toMaxLength(Value, MaxLen);      
      }
     
 

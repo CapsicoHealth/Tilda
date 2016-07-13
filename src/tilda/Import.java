@@ -78,6 +78,7 @@ public class Import
             StringBuilder Str = new StringBuilder();
             PerfTracker.print(Str);
             // LDH-NOTE: there is a bug in the Log4j code with a limit on buffer size if out to a file!
+//            LOG.info(Str.toString());
             LOG.info(TextUtil.toMaxLength(Str.toString(), 20000));
           }
         catch (Throwable T)
