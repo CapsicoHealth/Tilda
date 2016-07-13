@@ -26,6 +26,8 @@ import tilda.types.*;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnType;
 import tilda.enums.StatementType;
+import tilda.grammar.ErrorList;
+import tilda.grammar.TildaSQLValidator;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.TextUtil;
 
@@ -243,6 +245,35 @@ public abstract class QueryHelper
         _QueryStr.append(subWhere.toString());
         return this;
       }
+
+    /**
+     * Validates the subWhereClause against the TildaSQL parser and if it passes, adds it to the
+     * current query object, in parenthesis as to be cohesive with the rest of the query.
+     * @param subWhereClause
+     * @return
+     * @throws Exception
+     */
+    public QueryHelper subWhere(String subWhereClause) throws Exception
+      {
+        TildaSQLValidator Validator = new TildaSQLValidator(subWhereClause);
+        if (Validator.getParserSyntaxErrors() != 0)
+          throw new Exception("SubWhereClause '"+subWhereClause+"' had " + Validator.getParserSyntaxErrors() + " syntax error(s).");
+        Validator.validate();
+        Iterator<ErrorList.Error> I = Validator.getValidationErrors().getErrors();
+        if (I != null)
+          {
+            StringBuilder Str = new StringBuilder();
+            int i = 0;
+            while (I.hasNext() == true)
+              {
+                Str.append("        ").append(I.next()).append("\n");
+                ++i;
+              }
+            throw new Exception("SubWhereClause '"+subWhereClause+"' had "+i+" validation error(s):\n"+Str.toString());
+          }
+        this._QueryStr.append("(").append(subWhereClause).append(")");
+        return this;
+      }    
     
     public final QueryHelper and()
     throws Exception
