@@ -1,0 +1,23 @@
+{
+  "manifest_version": 2,
+
+  "name": "Tilda Chrome extension",
+  "description": "Chrome extension to parse tilda json schema",
+  "version": "1.0",
+  "app": {
+    "background": {
+      "scripts": ["js/main.js"]
+    }
+  },
+  "permissions": [
+    {"fileSystem": ["write", "retainEntries", "directory"]},
+    "storage"
+  ],
+  "file_handlers": {
+    "text": {
+      "types": [
+          "text/*"
+      ]
+    }
+  }
+}
