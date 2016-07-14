@@ -154,9 +154,6 @@ public class TildaSQLParser extends Parser {
 		public Bin_exprContext bin_expr() {
 			return getRuleContext(Bin_exprContext.class,0);
 		}
-		public Isnull_exprContext isnull_expr() {
-			return getRuleContext(Isnull_exprContext.class,0);
-		}
 		public Between_exprContext between_expr() {
 			return getRuleContext(Between_exprContext.class,0);
 		}
@@ -181,7 +178,7 @@ public class TildaSQLParser extends Parser {
 		ExprContext _localctx = new ExprContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_expr);
 		try {
-			setState(60);
+			setState(59);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,0,_ctx) ) {
 			case 1:
@@ -202,20 +199,13 @@ public class TildaSQLParser extends Parser {
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(57);
-				isnull_expr();
+				between_expr();
 				}
 				break;
 			case 4:
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(58);
-				between_expr();
-				}
-				break;
-			case 5:
-				enterOuterAlt(_localctx, 5);
-				{
-				setState(59);
 				expr_sub();
 				}
 				break;
@@ -256,11 +246,11 @@ public class TildaSQLParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(62);
+			setState(61);
 			match(T__0);
-			setState(63);
+			setState(62);
 			expr();
-			setState(64);
+			setState(63);
 			match(T__1);
 			}
 		}
@@ -282,6 +272,9 @@ public class TildaSQLParser extends Parser {
 		public Bool_exprContext r_expr;
 		public Bin_exprContext bin_expr() {
 			return getRuleContext(Bin_exprContext.class,0);
+		}
+		public Isnull_exprContext isnull_expr() {
+			return getRuleContext(Isnull_exprContext.class,0);
 		}
 		public Bool_expr_subContext bool_expr_sub() {
 			return getRuleContext(Bool_expr_subContext.class,0);
@@ -325,21 +318,26 @@ public class TildaSQLParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(69);
-			switch (_input.LA(1)) {
-			case IDENTIFIER:
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
+			case 1:
 				{
-				setState(67);
+				setState(66);
 				((Bool_exprContext)_localctx).s_expr = bin_expr();
 				}
 				break;
-			case T__0:
+			case 2:
+				{
+				setState(67);
+				isnull_expr();
+				}
+				break;
+			case 3:
 				{
 				setState(68);
 				bool_expr_sub();
 				}
 				break;
-			default:
-				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
 			setState(77);
@@ -356,11 +354,11 @@ public class TildaSQLParser extends Parser {
 					_localctx.l_expr = _prevctx;
 					pushNewRecursionContext(_localctx, _startState, RULE_bool_expr);
 					setState(71);
-					if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
+					if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
 					setState(72);
 					((Bool_exprContext)_localctx).op = bool_op();
 					setState(73);
-					((Bool_exprContext)_localctx).r_expr = bool_expr(4);
+					((Bool_exprContext)_localctx).r_expr = bool_expr(5);
 					}
 					} 
 				}
@@ -1852,7 +1850,7 @@ public class TildaSQLParser extends Parser {
 	private boolean bool_expr_sempred(Bool_exprContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
-			return precpred(_ctx, 3);
+			return precpred(_ctx, 4);
 		}
 		return true;
 	}
@@ -1871,8 +1869,8 @@ public class TildaSQLParser extends Parser {
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
-		"\4\32\t\32\4\33\t\33\3\2\3\2\3\2\3\3\3\3\3\3\3\3\3\3\5\3?\n\3\3\4\3\4"+
-		"\3\4\3\4\3\5\3\5\3\5\5\5H\n\5\3\5\3\5\3\5\3\5\7\5N\n\5\f\5\16\5Q\13\5"+
+		"\4\32\t\32\4\33\t\33\3\2\3\2\3\2\3\3\3\3\3\3\3\3\5\3>\n\3\3\4\3\4\3\4"+
+		"\3\4\3\5\3\5\3\5\3\5\5\5H\n\5\3\5\3\5\3\5\3\5\7\5N\n\5\f\5\16\5Q\13\5"+
 		"\3\6\3\6\5\6U\n\6\3\6\3\6\5\6Y\n\6\5\6[\n\6\3\7\3\7\3\7\3\7\3\b\3\b\3"+
 		"\b\3\b\5\be\n\b\3\b\3\b\5\bi\n\b\3\b\3\b\3\b\5\bn\n\b\3\t\3\t\3\t\7\t"+
 		"s\n\t\f\t\16\tv\13\t\3\n\3\n\3\n\3\n\7\n|\n\n\f\n\16\n\177\13\n\3\n\3"+
@@ -1886,16 +1884,16 @@ public class TildaSQLParser extends Parser {
 		"\3\31\3\32\3\32\3\32\3\32\3\32\7\32\u00e0\n\32\f\32\16\32\u00e3\13\32"+
 		"\5\32\u00e5\n\32\3\32\3\32\3\33\3\33\5\33\u00eb\n\33\3\33\3\33\3\33\2"+
 		"\4\b\30\34\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62\64\2"+
-		"\5\3\2\5\6\4\2\5\5##\4\2\b\b\"\"\u00fb\2\66\3\2\2\2\4>\3\2\2\2\6@\3\2"+
+		"\5\3\2\5\6\4\2\5\5##\4\2\b\b\"\"\u00fb\2\66\3\2\2\2\4=\3\2\2\2\6?\3\2"+
 		"\2\2\bG\3\2\2\2\nZ\3\2\2\2\f\\\3\2\2\2\16m\3\2\2\2\20o\3\2\2\2\22w\3\2"+
 		"\2\2\24\u008c\3\2\2\2\26\u008e\3\2\2\2\30\u0093\3\2\2\2\32\u00a2\3\2\2"+
 		"\2\34\u00a6\3\2\2\2\36\u00a8\3\2\2\2 \u00aa\3\2\2\2\"\u00ad\3\2\2\2$\u00b3"+
 		"\3\2\2\2&\u00ba\3\2\2\2(\u00c2\3\2\2\2*\u00c4\3\2\2\2,\u00d4\3\2\2\2."+
 		"\u00d6\3\2\2\2\60\u00d8\3\2\2\2\62\u00da\3\2\2\2\64\u00ea\3\2\2\2\66\67"+
-		"\5\4\3\2\678\7\2\2\38\3\3\2\2\29?\5\b\5\2:?\5\16\b\2;?\5 \21\2<?\5$\23"+
-		"\2=?\5\6\4\2>9\3\2\2\2>:\3\2\2\2>;\3\2\2\2><\3\2\2\2>=\3\2\2\2?\5\3\2"+
-		"\2\2@A\7\3\2\2AB\5\4\3\2BC\7\4\2\2C\7\3\2\2\2DE\b\5\1\2EH\5\16\b\2FH\5"+
-		"\f\7\2GD\3\2\2\2GF\3\2\2\2HO\3\2\2\2IJ\f\5\2\2JK\5\n\6\2KL\5\b\5\6LN\3"+
+		"\5\4\3\2\678\7\2\2\38\3\3\2\2\29>\5\b\5\2:>\5\16\b\2;>\5$\23\2<>\5\6\4"+
+		"\2=9\3\2\2\2=:\3\2\2\2=;\3\2\2\2=<\3\2\2\2>\5\3\2\2\2?@\7\3\2\2@A\5\4"+
+		"\3\2AB\7\4\2\2B\7\3\2\2\2CD\b\5\1\2DH\5\16\b\2EH\5 \21\2FH\5\f\7\2GC\3"+
+		"\2\2\2GE\3\2\2\2GF\3\2\2\2HO\3\2\2\2IJ\f\6\2\2JK\5\n\6\2KL\5\b\5\7LN\3"+
 		"\2\2\2MI\3\2\2\2NQ\3\2\2\2OM\3\2\2\2OP\3\2\2\2P\t\3\2\2\2QO\3\2\2\2RT"+
 		"\7\23\2\2SU\7\30\2\2TS\3\2\2\2TU\3\2\2\2U[\3\2\2\2VX\7\32\2\2WY\7\30\2"+
 		"\2XW\3\2\2\2XY\3\2\2\2Y[\3\2\2\2ZR\3\2\2\2ZV\3\2\2\2[\13\3\2\2\2\\]\7"+
@@ -1942,7 +1940,7 @@ public class TildaSQLParser extends Parser {
 		"\2\2\u00e2\u00e5\3\2\2\2\u00e3\u00e1\3\2\2\2\u00e4\u00dc\3\2\2\2\u00e4"+
 		"\u00e5\3\2\2\2\u00e5\u00e6\3\2\2\2\u00e6\u00e7\7\4\2\2\u00e7\63\3\2\2"+
 		"\2\u00e8\u00e9\7$\2\2\u00e9\u00eb\7\t\2\2\u00ea\u00e8\3\2\2\2\u00ea\u00eb"+
-		"\3\2\2\2\u00eb\u00ec\3\2\2\2\u00ec\u00ed\7$\2\2\u00ed\65\3\2\2\2\34>G"+
+		"\3\2\2\2\u00eb\u00ec\3\2\2\2\u00ec\u00ed\7$\2\2\u00ed\65\3\2\2\2\34=G"+
 		"OTXZdhmt}\u0089\u008c\u0093\u009d\u009f\u00af\u00ba\u00c2\u00ca\u00ce"+
 		"\u00d2\u00d4\u00e1\u00e4\u00ea";
 	public static final ATN _ATN =

@@ -38,6 +38,7 @@ public interface WhereClauseCodeGen
     public void binGreaterThan       (List<ColumnDefinition> Columns, ColumnType Type);
     public void binGreaterThanOrEqual(List<ColumnDefinition> Columns, ColumnType Type);
     public void binIn                (List<ColumnDefinition> Columns, boolean not);
+    public void isNull               (ColumnDefinition Column, boolean not);
     public String binClose           ();
 
     public void col                  (ColumnDefinition Column);

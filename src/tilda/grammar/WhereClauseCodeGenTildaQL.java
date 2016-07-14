@@ -267,4 +267,12 @@ public class WhereClauseCodeGenTildaQL implements WhereClauseCodeGen
       {
       }
 
+    @Override
+    public void isNull(ColumnDefinition Col, boolean not)
+      {
+        _CodeGen.append(not == true ? ".isNotNull(" : ".isNull(");
+        makeColumn(_CodeGen, Col);
+        _CodeGen.append(")");
+      }
+
   }

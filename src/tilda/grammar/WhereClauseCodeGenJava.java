@@ -91,6 +91,14 @@ public class WhereClauseCodeGenJava implements WhereClauseCodeGen
     protected Deque<String> _BinCloseSequences = new ArrayDeque<String>();
 
     @Override
+    public void isNull(ColumnDefinition Col, boolean not)
+      {
+        _CodeGen.append(" ");
+        makeColumn(_CodeGen, Col);
+        _CodeGen.append(not==true ? " != null" : " == null");
+      }
+    
+    @Override
     public void binLike(List<ColumnDefinition> Columns, boolean not)
       {
         _CodeGen.append(" CompareUtil.like(");
@@ -323,5 +331,6 @@ public class WhereClauseCodeGenJava implements WhereClauseCodeGen
     public void end()
       {
       }
+    
 
   }

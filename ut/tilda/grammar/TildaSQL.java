@@ -78,8 +78,8 @@ public class TildaSQL
             return 2500;
           }
       }
-    
-    
+
+
    /*@formatter:off*/
     protected static List<ColumnDefinition> _COLS = CollectionUtil.toList(new ColumnDefinition[] {
            ColumnDefinition.Create("DESYNPUF_ID"       , ColumnType.STRING  , false, false, "De-identified patient id")
@@ -130,7 +130,8 @@ public class TildaSQL
 
     private static void toto1()
       {
-        String[] Expressions = { "toto = 'dodo'"
+        String[] Expressions = {
+            "@CLM_TYPE IS NULL and PRVDR_CLASS is not null and PRIMARY_ICD9_DGNS_CD is not null", "toto = 'dodo'"
             // ,"toto = CURRENT_TIME"
             // ,"toto <= TIMESTAMP_TOMORROW_LAST"
             // ,"toto = tata"
@@ -191,45 +192,76 @@ public class TildaSQL
               continue;
 
             // Expression validation and Java code gen
-            WhereClauseCodeGenJava WC_CG = new WhereClauseCodeGenJava();
-            Validator.setCodeGen(WC_CG);
-            Validator.setColumnEnvironment(_COLS);
-            Validator.validate();
-            Iterator<ErrorList.Error> I = Validator.getValidationErrors().getErrors();
-            if (I != null)
               {
-                LOG.error("Some errors occurred validating the base expression");
-                while (I.hasNext() == true)
-                  LOG.error("        " + I.next());
-                continue;
+                WhereClauseCodeGenJava WC_CG = new WhereClauseCodeGenJava();
+                Validator.setCodeGen(WC_CG);
+                Validator.setColumnEnvironment(_COLS);
+                Validator.validate();
+                Iterator<ErrorList.Error> I = Validator.getValidationErrors().getErrors();
+                if (I != null)
+                  {
+                    LOG.error("Some errors occurred validating the base expression");
+                    while (I.hasNext() == true)
+                      LOG.error("        " + I.next());
+                    continue;
+                  }
+                LOG.debug("SUCCESS validating base expression");
+                LOG.debug("   --> " + WC_CG._CodeGen.toString());
               }
-            LOG.debug("SUCCESS validating base expression");
-            LOG.debug("   --> " + WC_CG._CodeGen.toString());
 
-            // Meta expression parsing
-            TildaCompositionValidator Validator2 = new TildaCompositionValidator("wc1 or wc2", CollectionUtil.toList(new String[] { "wc1", "wc2"
-            }));
-            if (Validator2.getParserSyntaxErrors() != 0)
               {
-                LOG.error("    --> Composition expression failed with " + Validator2.getParserSyntaxErrors() + " errors.");
-                continue;
+                WhereClauseCodeGenTildaQL WC_CG = new WhereClauseCodeGenTildaQL();
+                Validator.setCodeGen(WC_CG);
+                Validator.setColumnEnvironment(_COLS);
+                Validator.validate();
+                Iterator<ErrorList.Error> I = Validator.getValidationErrors().getErrors();
+                if (I != null)
+                  {
+                    LOG.error("Some errors occurred validating the base expression");
+                    while (I.hasNext() == true)
+                      LOG.error("        " + I.next());
+                    continue;
+                  }
+                LOG.debug("SUCCESS validating base expression");
+                LOG.debug("   --> " + WC_CG._CodeGen.toString());
               }
+          }
+
+         TestComposition();
+      }
+
+
+    private static void TestComposition()
+      {
+        // Meta expression parsing
+        TildaCompositionValidator Validator2 = new TildaCompositionValidator("wc1 or wc2", CollectionUtil.toList(new String[] { "wc1", "wc2"
+        }));
+        if (Validator2.getParserSyntaxErrors() != 0)
+          {
+            LOG.error("    --> Composition expression failed with " + Validator2.getParserSyntaxErrors() + " errors.");
+          }
+        else
+          {
             LOG.debug("SUCCESS parsing composition expression");
 
             // Meta expression validation and Java code gen
-            WhereClauseCompositionCodeGenJava WCC_CG = new WhereClauseCompositionCodeGenJava();
-            Validator2.setCodeGen(WCC_CG);
-            Validator2.validate();
-            I = Validator.getValidationErrors().getErrors();
-            if (I != null)
               {
-                LOG.error("Some Validation errors occurred");
-                while (I.hasNext() == true)
-                  LOG.error("        " + I.next());
-                continue;
+                WhereClauseCompositionCodeGenJava WCC_CG = new WhereClauseCompositionCodeGenJava();
+                Validator2.setCodeGen(WCC_CG);
+                Validator2.validate();
+                Iterator<ErrorList.Error> I = Validator2.getValidationErrors().getErrors();
+                if (I != null)
+                  {
+                    LOG.error("Some Validation errors occurred");
+                    while (I.hasNext() == true)
+                      LOG.error("        " + I.next());
+                  }
+                else
+                  {
+                    LOG.debug("SUCCESS validating composition expression");
+                    LOG.debug("   --> " + WCC_CG._CodeGen.toString());
+                  }
               }
-            LOG.debug("SUCCESS validating composition expression");
-            LOG.debug("   --> " + WCC_CG._CodeGen.toString());
           }
       }
 
@@ -297,6 +329,8 @@ public class TildaSQL
         + "           AND BENE_BIRTH_DT < TIMESTAMP_TOMORROW LAST" + SystemValues.NEWLINE
         + "          )" + SystemValues.NEWLINE
         + "     )" + SystemValues.NEWLINE
+        + " AND (    CLM_PMT_AMT >= 2*(5+(?{var1}*2))" + SystemValues.NEWLINE
+        + "     )" + SystemValues.NEWLINE
         ;
 
         String Expr2 = "     CLM_TYPE == 'I' " + SystemValues.NEWLINE
@@ -311,7 +345,7 @@ public class TildaSQL
 
         String Expr3 = "    ( PRIMARY_ICD9_DGNS_CD   LIKE '428.%' AND  PRIMARY_ICD9_DGNS_CD   NOT LIKE '428._2' )" + SystemValues.NEWLINE
         + " OR ( SECONDARY_ICD9_DGNS_CD LIKE '428.%' AND  SECONDARY_ICD9_DGNS_CD NOT LIKE '428._2' )" + SystemValues.NEWLINE;
-        
+
         long T0 = System.nanoTime();
         WhereClauseCompositionClassGenerator WCC_CG = new WhereClauseCompositionClassGenerator("WhereClauseSet1", TestObject.class);
         WCC_CG.addWhereClauseDef("wc1", Expr1, _COLS);
@@ -333,8 +367,8 @@ public class TildaSQL
               LOG.debug("Run " + (j + 1) + ": " + x);
           }
         long RunTime = System.nanoTime() - T0;
-        LOG.debug("Run TRUE time: " + DurationUtil.PrintDuration(RunTime) + " at " + DurationUtil.PrintPerformancePerMinute(RunTime, MaxCount) + " rules/mn");
-        
+        LOG.debug("Run TRUE time: " + DurationUtil.PrintDuration(RunTime) + " at " + DurationUtil.PrintPerformancePerMinute(RunTime, MaxCount) + " ruleSets/mn");
+
 
         T0 = System.nanoTime();
         for (int j = 0; j < MaxCount; ++j)
@@ -344,8 +378,8 @@ public class TildaSQL
               LOG.debug("Run " + (j + 1) + ": " + x);
           }
         RunTime = System.nanoTime() - T0;
-        LOG.debug("Run FALSE time: " + DurationUtil.PrintDuration(RunTime) + " at " + DurationUtil.PrintPerformancePerMinute(RunTime, MaxCount) + " rules/mn");
-        
+        LOG.debug("Run FALSE time: " + DurationUtil.PrintDuration(RunTime) + " at " + DurationUtil.PrintPerformancePerMinute(RunTime, MaxCount) + " ruleSets/mn");
+
       }
 
 

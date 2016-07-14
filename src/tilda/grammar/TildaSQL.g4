@@ -25,7 +25,6 @@ where
 expr
  : bool_expr
  | bin_expr
- | isnull_expr
  | between_expr
  | expr_sub
  ;
@@ -37,6 +36,7 @@ expr_sub
 bool_expr
  : l_expr=bool_expr op=bool_op r_expr=bool_expr     
  | s_expr=bin_expr                                                                
+ | isnull_expr
  | bool_expr_sub                                                                  
  ;
 

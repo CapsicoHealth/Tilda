@@ -39,6 +39,7 @@ import tilda.grammar.TildaSQLParser.Bin_exprContext;
 import tilda.grammar.TildaSQLParser.Bool_expr_subContext;
 import tilda.grammar.TildaSQLParser.Bool_opContext;
 import tilda.grammar.TildaSQLParser.ColumnContext;
+import tilda.grammar.TildaSQLParser.Isnull_exprContext;
 import tilda.grammar.TildaSQLParser.ValueBindParamContext;
 import tilda.grammar.TildaSQLParser.ValueNumericLiteralContext;
 import tilda.grammar.TildaSQLParser.ValueStringLiteralContext;
@@ -456,4 +457,15 @@ public class TildaSQLValidator extends TildaSQLBaseListener
           _CG.end();
         super.exitWhere(ctx);
       }
+    
+    @Override
+    public void enterIsnull_expr(Isnull_exprContext ctx)
+    {
+      ColumnDefinition CD = _TypeManager.handleColumn(ctx.column());
+      if (CD == null)
+       _Errors.addError(_TypeManager.getLastError(), ctx);
+      else
+        _CG.isNull(CD, ctx.isnull_op().K_NOT() != null);
+      super.enterIsnull_expr(ctx);
+    }
   }
