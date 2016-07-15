@@ -23,6 +23,9 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.db.Connection;
+import tilda.db.ConnectionPool;
+import tilda.db.SelectQuery;
 import tilda.enums.ColumnType;
 import tilda.types.ColumnDefinition;
 import tilda.types.Type_CharPrimitiveNull;
@@ -110,6 +113,11 @@ public class TildaSQL
     throws Exception
       {
         SystemValues.autoInit();
+
+        LOG.debug("");
+        LOG.debug("");
+        LOG.debug("=== TEST 5 =============================================================================================================");
+        toto5();
 
         LOG.debug("");
         LOG.debug("");
@@ -227,7 +235,7 @@ public class TildaSQL
               }
           }
 
-         TestComposition();
+        TestComposition();
       }
 
 
@@ -330,8 +338,7 @@ public class TildaSQL
         + "          )" + SystemValues.NEWLINE
         + "     )" + SystemValues.NEWLINE
         + " AND (    CLM_PMT_AMT >= 2*(5+(?{var1}*2))" + SystemValues.NEWLINE
-        + "     )" + SystemValues.NEWLINE
-        ;
+        + "     )" + SystemValues.NEWLINE;
 
         String Expr2 = "     CLM_TYPE == 'I' " + SystemValues.NEWLINE
         + " AND PRVDR_CLASS = 'Abc' " + SystemValues.NEWLINE
@@ -390,6 +397,40 @@ public class TildaSQL
         // ParseTreeWalker.DEFAULT.walk(w1, tree);
         // LOG.debug("expr: " + Expr);
         // LOG.debug(w1._ParseTreeStr.toString());
+      }
+
+
+    public static void toto5()
+    throws Exception
+      {
+        Connection C = ConnectionPool.get("MAIN");
+
+        try
+          {
+            SelectQuery SQ = new SelectQuery(C, "TILDA", "KEY", true);
+            SQ.selectCountStar()
+            .from("TILDA", "KEY")
+            .where().subWhere("deleted = 1 and authorid <> '2015-03-24' and authorname = true and toto = 'asdfv' and titi > TIMESTAMP_YESTERDAY_FIRST");
+            LOG.debug(SQ.toString());
+          }
+        catch (Exception E)
+          {
+            LOG.catching(E);
+          }
+
+        try
+          {
+            SelectQuery SQ = new SelectQuery(C, "TILDA", "KEY", true);
+            SQ.selectCountStar()
+            .from("TILDA", "KEY")
+            .where().subWhere("deleted IS NULL and authorid is not null and authorname is not null");
+            LOG.debug(SQ.toString());
+          }
+        catch (Exception E)
+          {
+            LOG.catching(E);
+          }
+        System.exit(1);
       }
 
   }

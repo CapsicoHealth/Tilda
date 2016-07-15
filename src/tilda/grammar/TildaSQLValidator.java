@@ -248,7 +248,7 @@ public class TildaSQLValidator extends TildaSQLBaseListener
           _Errors.addError("Value list is empty", ctx);
         else
           {
-            TypeWrapper Type = _TypeManager.closeScopeX("value list", ctx, false);
+            TypeWrapper Type = _TypeManager.closeScope("value list", ctx, false);
             if (Type == null)
               {
                 _Errors.addError(_TypeManager.getLastError(), ctx);
@@ -464,7 +464,7 @@ public class TildaSQLValidator extends TildaSQLBaseListener
       ColumnDefinition CD = _TypeManager.handleColumn(ctx.column());
       if (CD == null)
        _Errors.addError(_TypeManager.getLastError(), ctx);
-      else
+      else if (_CG != null)
         _CG.isNull(CD, ctx.isnull_op().K_NOT() != null);
       super.enterIsnull_expr(ctx);
     }

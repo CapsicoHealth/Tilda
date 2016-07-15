@@ -34,7 +34,7 @@ public class ErrorList
 
     public static class Error
       {
-        public Error(String Msg, ParserRuleContext ctx)
+        protected Error(String Msg, ParserRuleContext ctx)
           {
             _Msg = Msg;
             _Line = ctx.getStart().getLine();
@@ -42,7 +42,7 @@ public class ErrorList
             _ColumnTo = ctx.getStop().getCharPositionInLine();
           }
 
-        public Error(String Msg, int Line, int ColumnFrom, int ColumnTo)
+        protected Error(String Msg, int Line, int ColumnFrom, int ColumnTo)
           {
             _Msg = Msg;
             _Line = Line;
