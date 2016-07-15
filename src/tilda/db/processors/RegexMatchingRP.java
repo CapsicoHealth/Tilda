@@ -24,9 +24,9 @@ import java.util.regex.Pattern;
 
 public class RegexMatchingRP implements RecordProcessor
   {
-    public static class RegExDef
+    public static class RegexDef
       {
-        public RegExDef(String Regex)
+        public RegexDef(String Regex)
           {
             _Regex = Regex;
             _P = Pattern.compile(Regex, Pattern.CASE_INSENSITIVE);
@@ -37,12 +37,12 @@ public class RegexMatchingRP implements RecordProcessor
         public    long          _Count = 0;
       }
 
-    public RegexMatchingRP(List<RegExDef> Regexes)
+    public RegexMatchingRP(List<RegexDef> Regexes)
       {
         _Regexes = Regexes;
       }
 
-    protected List<RegExDef> _Regexes;
+    protected List<RegexDef> _Regexes;
     protected int            _Unmatched = 0;
 
     public void Start()
@@ -59,7 +59,7 @@ public class RegexMatchingRP implements RecordProcessor
             ++_Unmatched;
             return true;
           }
-        for (RegExDef R : _Regexes)
+        for (RegexDef R : _Regexes)
           {
             Matcher M = R._P.matcher(s);
             if (M.matches() == true)
