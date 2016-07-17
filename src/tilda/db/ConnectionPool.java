@@ -354,13 +354,31 @@ public class ConnectionPool
     public static Connection get(String Id)
     throws Exception
       {
+        LOG.info("-------- Getting a connection --------------------------------------------------------------------------------------------");
         BasicDataSource BDS = _DataSourcesById.get(Id);
         if (BDS == null)
           throw new Exception("Cannot find a connection pool for " + Id);
-        long T0 = System.nanoTime();
-        java.sql.Connection C = BDS.getConnection();
+        java.sql.Connection C = null;
+        for (int i = 1; i < 100; ++i)
+          {
+            try
+              {
+                long T0 = System.nanoTime();
+                C = BDS.getConnection();
+                PerfTracker.add(TransactionType.CONNECTION_GET, System.nanoTime() - T0);
+                break;
+              }
+            catch (SQLException E)
+              {
+                LOG.error("   - Attempt #"+i+" failed to obtain a connection: "+E.getMessage());
+                if (i == 1)
+                 LOG.error("     (Sleeping for 30 seconds, and will re-try again, for a max of 100 times)");
+                Thread.sleep(1000*30);
+              }
+          }
+        if (C == null)
+         throw new Exception("Failed obtaining a connection after numerous tries.");
         Connection Conn = new Connection(C, Id);
-        PerfTracker.add(TransactionType.CONNECTION_GET, System.nanoTime() - T0);
         LOG.info("-------- O B T A I N E D   C O N N E C T I O N --------- " + Conn._PoolId + " ---- (" + BDS.getNumActive() + "/" + BDS.getNumIdle() + "/" + BDS.getMaxTotal() + ")   ----------");
         return Conn;
       }

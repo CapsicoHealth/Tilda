@@ -22,8 +22,6 @@ import java.sql.Array;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -33,17 +31,18 @@ import org.apache.logging.log4j.Logger;
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
 import tilda.enums.AggregateType;
+import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.generation.Generator;
+import tilda.generation.SQLServer2014.SQLServerType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.migration.ColInfo;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
+import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.types.ColumnDefinition;
-import tilda.utils.CollectionUtil;
-import tilda.utils.ParseUtil;
 import tilda.utils.TextUtil;
 import tilda.utils.pairs.StringStringPair;
 
@@ -182,11 +181,29 @@ public class MSSQL implements DBType
         return true;
       }
 
+    public String getColumnType(ColumnType T, Integer S, ColumnMode M, boolean Collection)
+      {
+        if (Collection == true)
+         return "nvarchar(max)";
+        if (T == ColumnType.STRING && M != ColumnMode.CALCULATED)
+          return S < 15 ? SQLServerType.CHAR._SQLType + "(" + S + ")" : S < getCLOBThreshhold() ? SQLServerType.STRING._SQLType + "(" + S + ")" : "nvarchar(max)";
+        return SQLServerType.get(T)._SQLType;
+      }
+
     @Override
     public boolean alterTableAddColumn(Connection Con, Column Col, String DefaultValue)
     throws Exception
       {
-        throw new UnsupportedOperationException();
+        if (Col._Nullable == false && DefaultValue == null)
+          throw new Exception("Cannot add new 'not null' column '" + Col.getFullName() + "' to a table without a default value. Add a default value in the model, or manually migrate your database.");
+        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ADD \"" + Col.getName() + "\" " + getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection());
+        if (Col._Nullable == false)
+          {
+            Q += " not null DEFAULT " + ValueHelper.printValue(Col, DefaultValue);
+          }
+
+        Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
+        return true;
       }
 
     @Override
