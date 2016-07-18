@@ -184,7 +184,7 @@ public class MSSQL implements DBType
     public String getColumnType(ColumnType T, Integer S, ColumnMode M, boolean Collection)
       {
         if (Collection == true)
-         return "nvarchar(max)";
+          return "nvarchar(max)";
         if (T == ColumnType.STRING && M != ColumnMode.CALCULATED)
           return S < 15 ? SQLServerType.CHAR._SQLType + "(" + S + ")" : S < getCLOBThreshhold() ? SQLServerType.STRING._SQLType + "(" + S + ")" : "nvarchar(max)";
         return SQLServerType.get(T)._SQLType;
@@ -365,11 +365,11 @@ public class MSSQL implements DBType
           {
             parts[0] = parts[0].substring(1);
           }
-        if (TextUtil.isNullOrEmpty(parts[parts.length-1]) == false)
+        if (TextUtil.isNullOrEmpty(parts[parts.length - 1]) == false)
           {
-            parts[parts.length-1] = parts[parts.length-1].substring(0, parts[parts.length-1].length() - 1);
+            parts[parts.length - 1] = parts[parts.length - 1].substring(0, parts[parts.length - 1].length() - 1);
           }
-        
+
         // Convert String[] to proper type and collection.
         return Type.parse(isSet, parts);
       }
@@ -379,7 +379,7 @@ public class MSSQL implements DBType
     throws Exception
       {
         // TODO Auto-generated method stub
-        
+
       }
 
     @Override
@@ -403,16 +403,17 @@ public class MSSQL implements DBType
         Col.getFullColumnVarForSelect(C, Str);
         Str.append(NullsLast ? " IS NULL THEN 1 ELSE 0 END) ASC, " : " IS NULL THEN 0 ELSE 1 END) ASC, ");
         Col.getFullColumnVarForSelect(C, Str);
-        Str.append(Asc==true?" ASC":" DESC");
+        Str.append(Asc == true ? " ASC" : " DESC");
       }
 
     @Override
-    public void truncateTable(Connection C, String schemaName, String tableName) throws Exception
+    public void truncateTable(Connection C, String schemaName, String tableName)
+    throws Exception
       {
         StringBuilder Str = new StringBuilder();
         Str.append("TRUNCATE TABLE ");
         getFullTableVar(Str, schemaName, tableName);
         C.ExecuteUpdate(schemaName, tableName, Str.toString());
       }
-    
+
   }
