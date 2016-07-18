@@ -69,7 +69,8 @@ public class MSSQL implements DBType
         return "current_timestamp";
       }
 
-    protected static final String[] _LOCK_CONN_ERROR_SUBSTR = { "deadlocked on lock", "lock request time out", "lock inconsistency found", "connection reset", "connection is closed"
+    protected static final String[] _LOCK_CONN_ERROR_SUBSTR = { 
+        "deadlocked on lock", "lock request time out", "lock inconsistency found", "connection reset", "connection is closed", "connection has been closed"
     };
 
     @Override
