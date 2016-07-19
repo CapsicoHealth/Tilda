@@ -3,7 +3,8 @@ define(['text!../templates/tilda_schema/_new.html', "../core/parser"], function(
   var _ = require('lodash');
   var TildaSchemaView = Backbone.View.extend({
     events: {
-      'change input[type=file][name="schema-file"]': 'handleFileInput'
+      'change input[type=file][name="schema-file"]': 'handleFileInput',
+      'click .saveSchema': 'saveSchema'
     },
     render: function(){
       var that = this;
@@ -16,7 +17,12 @@ define(['text!../templates/tilda_schema/_new.html', "../core/parser"], function(
       p.id = "abc";
       this.$el.append($(p));
       var file = $(event.target)[0].files[0]; // only one file at a time.
-      new _Parser(file, "abc");
+      this.schemaParser = new _Parser(file, "abc");
+    },
+    saveSchema: function(event){
+      if(this.schemaParser){
+        this.schemaParser.saveSchema();
+      }
     }
   })
   return TildaSchemaView;
