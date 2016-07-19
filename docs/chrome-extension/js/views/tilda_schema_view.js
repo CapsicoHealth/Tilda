@@ -4,7 +4,8 @@ define(['text!../templates/tilda_schema/_new.html', "../core/parser"], function(
   var TildaSchemaView = Backbone.View.extend({
     events: {
       'change input[type=file][name="schema-file"]': 'handleFileInput',
-      'click .saveSchema': 'saveSchema'
+      'click .saveSchema': 'saveSchema',
+      'click .reset': 'resetView'
     },
     render: function(){
       var that = this;
@@ -22,6 +23,11 @@ define(['text!../templates/tilda_schema/_new.html', "../core/parser"], function(
     saveSchema: function(event){
       if(this.schemaParser){
         this.schemaParser.saveSchema();
+      }
+    },
+    resetView: function(event){
+      if(this.schemaParser){
+        this.schemaParser.resetAll();
       }
     }
   })

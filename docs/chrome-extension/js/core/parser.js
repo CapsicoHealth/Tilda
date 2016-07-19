@@ -1,4 +1,83 @@
 define(["jointjs", "./parser_element"], function(joint, ParserElement){
+  function offsetToLocalPoint(paper, x, y) {
+    var svgPoint = paper.svg.createSVGPoint();
+    svgPoint.x = x;
+    svgPoint.y = y;
+
+    var pointTransformed = svgPoint.matrixTransform(paper.viewport.getCTM().inverse());
+    return pointTransformed;
+  }
+  var CustomElementView = joint.dia.ElementView.extend({
+    events: {
+      'dblclick': 'dblclick'
+    },
+    dblclick: function(evt, x, y){
+      var neighbors = this.paper.model.getNeighbors(this.model);
+      neighbors.push(this.model)
+      var connectedLinks = this.paper.model.getConnectedLinks(this.model, {deep: true});
+      var elements = this.paper.model.getElements();
+      var links = this.paper.model.getLinks();
+      var paper = this.paper
+      _.each(elements, function(ele, i){
+        if(_.indexOf(neighbors, ele) == -1){
+          paper.findViewByModel(ele).$el.css("opacity", 0.2);
+        }
+      })
+      _.each(links, function(ele, i){
+        if(_.indexOf(connectedLinks, ele) == -1){
+          var $el = paper.findViewByModel(ele).$el
+          $el.css("opacity", 0.2);
+          $el.find(".connection").attr("stroke-width", 1);
+        }
+      })
+
+      _.each(neighbors, function(ele, i){
+        paper.findViewByModel(ele).$el.css("opacity", 1);
+      })
+      _.each(connectedLinks, function(ele, i){
+          var $el = paper.findViewByModel(ele).$el
+          $el.css("opacity", 1);
+          $el.find(".connection").attr("stroke-width", 4);
+      })
+
+    }
+  })
+
+  var CustomLinkView = joint.dia.LinkView.extend({
+    events: {
+      'dblclick': 'dblclick'
+    },
+    dblclick: function(evt, x, y){
+      var neighbors = [];
+      neighbors.push(this.model.getSourceElement());
+      neighbors.push(this.model.getTargetElement());
+      var connectedLinks = [this.model];
+      var elements = this.paper.model.getElements();
+      var links = this.paper.model.getLinks();
+      var paper = this.paper
+      _.each(elements, function(ele, i){
+        if(_.indexOf(neighbors, ele) == -1){
+          paper.findViewByModel(ele).$el.css("opacity", 0.2);
+        }
+      })
+      _.each(links, function(ele, i){
+        if(_.indexOf(connectedLinks, ele) == -1){
+          var $el = paper.findViewByModel(ele).$el
+          $el.css("opacity", 0.2);
+          $el.find(".connection").attr("stroke-width", 1);
+        }
+      })
+
+      _.each(neighbors, function(ele, i){
+        paper.findViewByModel(ele).$el.css("opacity", 1);
+      })
+      _.each(connectedLinks, function(ele, i){
+          var $el = paper.findViewByModel(ele).$el
+          $el.css("opacity", 1);
+          $el.find(".connection").attr("stroke-width", 4);
+      })
+    }
+  })
   var ObjectCollection = Backbone.Collection.extend({
     where: function(attrs, first, options){
       options = options || {};
@@ -28,49 +107,61 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
     var currentPos = { x: -150, y: 30 }
     this.parse = function(){
       var that = this;
-      var pushElement = function(collection, schemaObj, _type){
+      var pushElement = function(collection, schemaObj, _type, _inSchema){
         var t = new ParserElement();
-        t.set({data: schemaObj, name: schemaObj.name, _type: _type, inSchema: true});
+        t.set({data: schemaObj, name: schemaObj.name, _type: _type, inSchema: _inSchema});
         collection.add(t);
       }
       _.each(this.schema.enumerations, function(enumeration, i){
-        pushElement(that.objects, enumeration, "Enumeration")
+        pushElement(that.objects, enumeration, "Enumeration", true)
       })
 
       _.each(this.schema.views, function(view, i){
-        pushElement(that.objects, view, "View")
+        pushElement(that.objects, view, "View", true)
       })
 
       _.each(this.schema.objects, function(object, i){
-        pushElement(that.objects, object, "Object")
+        pushElement(that.objects, object, "Object", true)
       })
 
       _.each(this.schema.mappers, function (mapper, i){
-        pushElement(that.objects, mapper, "Mapper")
+        pushElement(that.objects, mapper, "Mapper", true)
       })
       if(this.schema.jointjs != null){
         var outSchemaObj = this.schema.jointjs;
         _.each(outSchemaObj.enumerations, function(enumeration, i){
-          pushElement(that.objects, enumeration, "Enumeration")
+          pushElement(that.objects, enumeration, "Enumeration", false)
         })
 
         _.each(outSchemaObj.views, function(view, i){
-          pushElement(that.objects, view, "View")
+          pushElement(that.objects, view, "View", false)
         })
 
         _.each(outSchemaObj.objects, function(object, i){
-          pushElement(that.objects, object, "Object")
+          pushElement(that.objects, object, "Object", false)
         })
 
         _.each(outSchemaObj.mappers, function (mapper, i){
-          pushElement(that.objects, mapper, "Mapper")
+          pushElement(that.objects, mapper, "Mapper", false)
         })
       }
 
 
     }
-
-    this.render = function(){
+    this.resetAll = function(){
+      var elements = this.paper.model.getElements();
+      var links = this.paper.model.getLinks();
+      var paper = this.paper;
+      _.each(elements, function(ele, i){
+        paper.findViewByModel(ele).$el.css("opacity", 1);
+      })
+      _.each(links, function(ele, i){
+        var $el = paper.findViewByModel(ele).$el;
+        $el.css("opacity", 1);
+        $el.find(".connection").attr("stroke-width", 1);
+      })
+    }
+    this.render = function(what){
       var that = this;
       var elementChangeHandler = function(event){
         var eventObject = that.objects.findWhere({graphId: event.get("id")});
@@ -102,7 +193,7 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
               size: { width: object.get("name").length*12, height: 30 },
               attrs: { 
                 id: object.get("name"), 
-                rect: { fill: 'rgb(169,209,142)', stroke: "rgb(0,176,80)", "stoke-width": 1, "stroke-dasharray": "3,3" },
+                rect: { fill: 'rgb(169,209,142)', stroke: "rgb(0,176,80)", "stroke-width": 1, "stroke-dasharray": "3,3" },
                 text: { text: object.get("name"), fill: 'black'} 
               } 
             }
@@ -128,7 +219,7 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
                 size: { width: object.get("name").length*12, height: 30 },
                 attrs: { 
                   id: object.get("name"), 
-                  rect: { fill: 'rgb(46,117,182)', stroke: "rgb(65,113,156)", "stoke-width": 2 },
+                  rect: { fill: 'rgb(46,117,182)', stroke: "rgb(65,113,156)", "stroke-width": 2 },
                   text: { text: object.get("name"), fill: 'white'} 
                 } 
               })
@@ -138,7 +229,7 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
                 size: { width: object.get("name").length*12, height: 30 },
                 attrs: { 
                   id: object.get("name"), 
-                  rect: { fill: 'rgb(166,201,232)', stroke: "white", "stoke-width": 0  },
+                  rect: { fill: 'rgb(166,201,232)', stroke: "white", "stroke-width": 0  },
                   text: { text: object.get("name"), fill: 'white'} 
                 } 
               })
@@ -160,7 +251,7 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
               size: { width: object.get("name").length*12, height: 30 },
               attrs: { 
                 id: object.get("name"), 
-                rect: { fill: 'rgb(251,229,214)', stroke: "rgb(248,203,173)", "stoke-width": 1  },
+                rect: { fill: 'rgb(251,229,214)', stroke: "rgb(248,203,173)", "stroke-width": 1  },
                 text: { text: object.get("name"), fill: 'black'} 
               } 
             }
@@ -183,7 +274,7 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
               size: { width: object.get("name").length*12, height: 30 },
               attrs: { 
                 id: object.get("name"), 
-                rect: { fill: 'rgb(248,203,173)', stroke: "rgb(244,177,131)", "stoke-width": 2  },
+                rect: { fill: 'rgb(248,203,173)', stroke: "rgb(244,177,131)", "stroke-width": 2  },
                 text: { text: object.get("name"), fill: 'black'} 
               } 
             }
@@ -333,8 +424,11 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
         height: (window.screen.availHeight-80),
         model: graph,
         gridSize: 10,
-        restrictTranslate: true
+        restrictTranslate: true,
+        elementView: CustomElementView,
+        linkView: CustomLinkView
       });
+      this.paper = paper;
 
 
       var dragStartPosition = null;
@@ -360,7 +454,7 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
         var offsetX = (e.offsetX || e.clientX - $(this).offset().left);
 
         var offsetY = (e.offsetY || e.clientY - $(this).offset().top);
-        var p = offsetToLocalPoint(offsetX, offsetY);
+        var p = offsetToLocalPoint(paper, offsetX, offsetY);
         var newScale = V(paper.viewport).scale().sx + delta;
         // console.log(' delta' + delta + ' ' + 'offsetX' + offsetX + 'offsety--' + offsetY + 'p' + p.x + 'newScale' + newScale)
         if (newScale > 0.4 && newScale < 2) {
@@ -369,16 +463,6 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
         }
       });
 
-
-
-      function offsetToLocalPoint(x, y) {
-        var svgPoint = paper.svg.createSVGPoint();
-        svgPoint.x = x;
-        svgPoint.y = y;
-
-        var pointTransformed = svgPoint.matrixTransform(paper.viewport.getCTM().inverse());
-        return pointTransformed;
-      }
       var that = this;
 
       _.each(this.objects, function(object, i){
@@ -387,6 +471,7 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
           renderObject[object.get("_type")](graph, object);
         }
       })
+
       _.each(this.objects, function(object, i){
         var object = that.objects.at(i);
         if(renderObjectRelations[object.get("_type")] != null){
