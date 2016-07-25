@@ -104,6 +104,7 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
   var p = function(_file, eleId){
     this.objects = new ObjectCollection();
     this.eleId = eleId;
+    this.paper = null;
     var currentPos = { x: -150, y: 30 }
     this.parse = function(){
       var that = this;
@@ -145,8 +146,6 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
           pushElement(that.objects, mapper, "Mapper", false)
         })
       }
-
-
     }
     this.resetAll = function(){
       var elements = this.paper.model.getElements();
@@ -163,33 +162,26 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
     }
     this.render = function(what){
       var that = this;
+
       var elementChangeHandler = function(event){
         var eventObject = that.objects.findWhere({graphId: event.get("id")});
+        var key = that.schema.package.toLowerCase()+"#"+eventObject.get("name").toLowerCase();
         var position = eventObject.get("data").position;
         if(eventObject.get("data").position == null){
           eventObject.get("data").position = {};
           var position = eventObject.get("data").position;
         }
-        position[event.get("id")] = event.toJSON();
-      }
-      var renderObjectsFromJSON = function(graph, object){
-        var jsonArray = _.values(object.get("data").position);
-        _.each(jsonArray, function(objectAttr){
-          var t = new joint.shapes.basic.Rect(objectAttr)
-          t.on('change:position', _.debounce(elementChangeHandler, 500, { 'maxWait' : 1000 }));
-          graph.addCell(t);
-          object.set({graphId: t.id})
-        })
+        // Store preferences.
+        var syncSet = {};
+        // console.log("key -> "+key+"\nObject -> "+JSON.stringify(event.toJSON()));
+        syncSet[key] = event.toJSON();
+        chrome.storage.sync.set(syncSet);
       }
       var renderObject = {
-        "View": function(graph, object){
-          gotoNextPosition(currentPos);
-          if(object.get("data").position != null){
-            renderObjectsFromJSON(graph, object);
-          }
-          else{
-            var objectAttr = {
-              position: currentPos,
+        "View": function(graph, object, position, objectAttr){
+          if(objectAttr == null){
+            objectAttr = {
+              position: position,
               size: { width: object.get("name").length*12, height: 30 },
               attrs: { 
                 id: object.get("name"), 
@@ -197,57 +189,49 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
                 text: { text: object.get("name"), fill: 'black'} 
               } 
             }
-            var t = new joint.shapes.basic.Rect(objectAttr);
-            t.on('change:position', _.debounce(elementChangeHandler, 500, { 'maxWait' : 1000 }));
-            // t.translate((position+1)*110, (position+1)*30);
-            object.set({graphId: t.id})
-            graph.addCell(t);
           }
+          // console.log("objectAttr --> "+objectAttr+"\n");
+          var t = new joint.shapes.basic.Rect(objectAttr);
+          t.on('change:position', _.debounce(elementChangeHandler, 500, { 'maxWait' : 1000 }));
+          // t.translate((position+1)*110, (position+1)*30);
+          object.set({graphId: t.id})
+          graph.addCell(t);
         },
-        "Object": function(graph, object){
-          var objectAttr = {}
-          gotoNextPosition(currentPos);
-          if(object.get("data").position != null){
-            renderObjectsFromJSON(graph, object);
-          }
-          else{
-
+        "Object": function(graph, object, position, objectAttr){
+          if(objectAttr == null){
             if(object.get("inSchema")){
               // , "stroke-dasharray": "3,3"  },
-              objectAttr = _.merge({
-                position: currentPos,
+              objectAttr = {
+                position: position,
                 size: { width: object.get("name").length*12, height: 30 },
                 attrs: { 
                   id: object.get("name"), 
                   rect: { fill: 'rgb(46,117,182)', stroke: "rgb(65,113,156)", "stroke-width": 2 },
                   text: { text: object.get("name"), fill: 'white'} 
                 } 
-              })
+              }
             } else {
-              objectAttr = _.merge({
-                position: currentPos,
+              objectAttr = {
+                position: position,
                 size: { width: object.get("name").length*12, height: 30 },
                 attrs: { 
                   id: object.get("name"), 
                   rect: { fill: 'rgb(166,201,232)', stroke: "white", "stroke-width": 0  },
                   text: { text: object.get("name"), fill: 'white'} 
                 } 
-              })
-            }
-            var t = new joint.shapes.basic.Rect(objectAttr);
-            t.on('change:position', _.debounce(elementChangeHandler, 500, { 'maxWait' : 1000 }));
-            object.set({graphId: t.id})
-            graph.addCell(t);
+              }
+            }            
           }
+          // console.log("objectAttr --> "+objectAttr+"\n");
+          var t = new joint.shapes.basic.Rect(objectAttr);
+          t.on('change:position', _.debounce(elementChangeHandler, 500, { 'maxWait' : 1000 }));
+          object.set({graphId: t.id})
+          graph.addCell(t);
         },
-        "Enumeration": function(graph, object){
-          gotoNextPosition(currentPos);
-          if(object.get("data").position != null){
-            renderObjectsFromJSON(graph, object);
-          }
-          else{
-            var objectAttr = {
-              position: currentPos,
+        "Enumeration": function(graph, object, position, objectAttr){
+          if(objectAttr == null){
+            objectAttr = {
+              position: position,
               size: { width: object.get("name").length*12, height: 30 },
               attrs: { 
                 id: object.get("name"), 
@@ -255,21 +239,16 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
                 text: { text: object.get("name"), fill: 'black'} 
               } 
             }
-            var t = new joint.shapes.basic.Rect(objectAttr);
-            t.on('change:position', _.debounce(elementChangeHandler, 500, { 'maxWait' : 1000 }));
-
-            object.set({graphId: t.id})
-            graph.addCell(t);
           }
+          // console.log("objectAttr --> "+objectAttr+"\n");
+          var t = new joint.shapes.basic.Rect(objectAttr);
+          t.on('change:position', _.debounce(elementChangeHandler, 500, { 'maxWait' : 1000 }));
+          object.set({graphId: t.id})
+          graph.addCell(t);
         },
-        "Mapper": function(graph, object){
-          gotoNextPosition(currentPos);
-          if(object.get("data").position != null){
-            renderObjectsFromJSON(graph, object);
-          }
-          else{
-
-            var objectAttr = {
+        "Mapper": function(graph, object, position, objectAttr){
+          if(objectAttr == null){
+            objectAttr = {
               position: currentPos,
               size: { width: object.get("name").length*12, height: 30 },
               attrs: { 
@@ -277,13 +256,14 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
                 rect: { fill: 'rgb(248,203,173)', stroke: "rgb(244,177,131)", "stroke-width": 2  },
                 text: { text: object.get("name"), fill: 'black'} 
               } 
-            }
-            var t = new joint.shapes.basic.Rect(objectAttr);
-            t.on('change:position', _.debounce(elementChangeHandler, 500, { 'maxWait' : 1000 }));
-
-            object.set({graphId: t.id})
-            graph.addCell(t);
+            }           
           }
+          var t = new joint.shapes.basic.Rect(objectAttr);
+          t.on('change:position', _.debounce(elementChangeHandler, 
+            500, { 'maxWait' : 1000 })
+          );
+          object.set({graphId: t.id})
+          graph.addCell(t);
         }
       };
       var renderLink = function(graph, source, target){
@@ -345,6 +325,7 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
         } else{
           currentPos.x = currentPos.x+300;
         }
+        return currentPos;
       }
 
       var renderObjectRelations = {
@@ -465,24 +446,32 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
 
       var that = this;
 
+      var renderObjectRels = function(){
+        _.each(that.objects, function(object, i){
+          var object = that.objects.at(i);
+          if(renderObjectRelations[object.get("_type")] != null){
+            renderObjectRelations[object.get("_type")](graph, object, that.objects);
+          }
+        })
+      }
       _.each(this.objects, function(object, i){
         var object = that.objects.at(i);
+        var key = that.schema.package.toLowerCase()+"#"+object.get("name").toLowerCase();
         if (renderObject[object.get("_type")] != null){
-          renderObject[object.get("_type")](graph, object);
-        }
-      })
-
-      _.each(this.objects, function(object, i){
-        var object = that.objects.at(i);
-        if(renderObjectRelations[object.get("_type")] != null){
-          renderObjectRelations[object.get("_type")](graph, object, that.objects);
+          chrome.storage.sync.get(key, function(objectAttr){
+            var position = gotoNextPosition(currentPos);
+            // console.log("key -> "+key+"\nObject -> "+JSON.stringify(objectAttr[key]))
+            renderObject[object.get("_type")](graph, object, position, objectAttr[key]);
+            if(i == that.objects.length-1){
+              // Hack todo research
+              renderObjectRels();
+            }
+          })
         }
       })
     }
 
-
     this.saveSchema = function(event){
-      // TODO
       var that = this;
       this.schema.enumerations = _.map(that.objects.where({_type: "Enumeration", inSchema: true }), function(e) {return e.get("data"); });
       this.schema.objects      = _.map(that.objects.where({_type: "Object", inSchema: true}), function(e) {return e.get("data"); });
@@ -500,11 +489,8 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
         acceptsAllTypes: true
       }, function(fileEntry){
         fileEntry.createWriter(function(fileWriter) {
-
           var truncated = false;
-
           var blob = new Blob([jsonString], {type: "text/plain"});
-
           fileWriter.onwriteend = function(e) {
             if (!truncated) {
               truncated = true;
@@ -515,13 +501,10 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
             }
             console.log('Export to '+fileDisplayPath+' completed');
           };
-
           fileWriter.onerror = function(e) {
             console.error('Export failed: '+e.toString());
           };
-
           fileWriter.write(blob);
-
         });
       });
     }
@@ -533,11 +516,11 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
       reader.onload = function(event) {
         try{
           that.schema = JSON.parse(event.target.result);
+          var key = that.schema.package.toLowerCase();
           that.parse();
           that.render();
-
         } catch(e){
-          console.log("Error occured -> "+e.message);
+          console.error("Error occured -> "+e.message);
           console.error(e.stack);
         }
       };
