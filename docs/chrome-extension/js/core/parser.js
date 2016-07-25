@@ -128,24 +128,6 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
       _.each(this.schema.mappers, function (mapper, i){
         pushElement(that.objects, mapper, "Mapper", true)
       })
-      if(this.schema.jointjs != null){
-        var outSchemaObj = this.schema.jointjs;
-        _.each(outSchemaObj.enumerations, function(enumeration, i){
-          pushElement(that.objects, enumeration, "Enumeration", false)
-        })
-
-        _.each(outSchemaObj.views, function(view, i){
-          pushElement(that.objects, view, "View", false)
-        })
-
-        _.each(outSchemaObj.objects, function(object, i){
-          pushElement(that.objects, object, "Object", false)
-        })
-
-        _.each(outSchemaObj.mappers, function (mapper, i){
-          pushElement(that.objects, mapper, "Mapper", false)
-        })
-      }
     }
     this.resetAll = function(){
       var elements = this.paper.model.getElements();
@@ -345,9 +327,9 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
               if(target == null){
                 target = new ParserElement({data: {name: relation }, name: relation, _type: "Object", inSchema: false });
                 superset.add(target);
-                renderObject[target.get("_type")](graph, target);
+                renderObject[target.get("_type")](graph, target, gotoNextPosition(currentPos));
               } else if(target.get("graphId") == null){// which means object is on in graph
-                renderObject[target.get("_type")](graph, target);
+                renderObject[target.get("_type")](graph, target, gotoNextPosition(currentPos));
               }
               renderLink(graph, object, target)
             })
@@ -366,9 +348,9 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
             if(target == null){
               target = new ParserElement({data: {name: relation }, name: relation, _type: "Object", inSchema: false });
               superset.add(target);
-              renderObject[target.get("_type")](graph, target);
+              renderObject[target.get("_type")](graph, target, gotoNextPosition(currentPos));
             } else if(target.get("graphId") == null){// which means object is on in graph
-              renderObject[target.get("_type")](graph, target);
+              renderObject[target.get("_type")](graph, target, gotoNextPosition(currentPos));
             }
             renderLink(graph, object, target)
           })
@@ -387,9 +369,9 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
             if(target == null){
               target = new ParserElement({data: {name: relation }, name: relation, _type: "Object", inSchema: false });
               superset.add(target);
-              renderObject[target.get("_type")](graph, target);
+              renderObject[target.get("_type")](graph, target, gotoNextPosition(currentPos));
             } else if(target.get("graphId") == null){// which means object is on in graph
-              renderObject[target.get("_type")](graph, target);
+              renderObject[target.get("_type")](graph, target, gotoNextPosition(currentPos));
             }
 
             renderLink(graph, object, target)
@@ -402,7 +384,7 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
       var paper = new joint.dia.Paper({
         el: $("#"+this.eleId),
         width: window.screen.availWidth,
-        height: (window.screen.availHeight-80),
+        height: (window.screen.availHeight),
         model: graph,
         gridSize: 10,
         restrictTranslate: true,
@@ -460,7 +442,7 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
         if (renderObject[object.get("_type")] != null){
           chrome.storage.sync.get(key, function(objectAttr){
             var position = gotoNextPosition(currentPos);
-            // console.log("key -> "+key+"\nObject -> "+JSON.stringify(objectAttr[key]))
+            // console.log("Object --> "+JSON.stringify(objectAttr)+"\n");
             renderObject[object.get("_type")](graph, object, position, objectAttr[key]);
             if(i == that.objects.length-1){
               // Hack todo research
@@ -469,44 +451,6 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
           })
         }
       })
-    }
-
-    this.saveSchema = function(event){
-      var that = this;
-      this.schema.enumerations = _.map(that.objects.where({_type: "Enumeration", inSchema: true }), function(e) {return e.get("data"); });
-      this.schema.objects      = _.map(that.objects.where({_type: "Object", inSchema: true}), function(e) {return e.get("data"); });
-      this.schema.views        = _.map(that.objects.where({_type: "View", inSchema: true}), function(e) {return e.get("data"); });
-      this.schema.mappers      = _.map(that.objects.where({_type: "Mapper", inSchema: true}), function(e) {return e.get("data"); });
-      this.schema.jointjs = {}
-      this.schema.jointjs.enumerations = _.map(that.objects.where({_type: "Enumeration", inSchema: false }), function(e) {return e.get("data"); });
-      this.schema.jointjs.objects = _.map(that.objects.where({_type: "Object", inSchema: false }), function(e) {return e.get("data"); });
-      this.schema.jointjs.views = _.map(that.objects.where({_type: "View", inSchema: false }), function(e) {return e.get("data"); });
-      this.schema.jointjs.mappers = _.map(that.objects.where({_type: "Mapper", inSchema: false }), function(e) {return e.get("data"); });
-      var jsonString = JSON.stringify(this.schema,null,4);
-
-      chrome.fileSystem.chooseEntry( {
-        type: 'saveFile',
-        acceptsAllTypes: true
-      }, function(fileEntry){
-        fileEntry.createWriter(function(fileWriter) {
-          var truncated = false;
-          var blob = new Blob([jsonString], {type: "text/plain"});
-          fileWriter.onwriteend = function(e) {
-            if (!truncated) {
-              truncated = true;
-              // You need to explicitly set the file size to truncate
-              // any content that might have been there before
-              this.truncate(blob.size);
-              return;
-            }
-            console.log('Export to '+fileDisplayPath+' completed');
-          };
-          fileWriter.onerror = function(e) {
-            console.error('Export failed: '+e.toString());
-          };
-          fileWriter.write(blob);
-        });
-      });
     }
 
     // start parsing
