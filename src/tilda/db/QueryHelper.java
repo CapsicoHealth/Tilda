@@ -1864,8 +1864,9 @@ public abstract class QueryHelper
     public QueryHelper any(Type_StringCollection Col, String v)
       {
         TextUtil.EscapeSingleQuoteForSQL(_QueryStr, v);
-        _QueryStr.append(" any ");
+        _QueryStr.append(" = any(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(")");
         return this;
       }
 
@@ -1911,8 +1912,9 @@ public abstract class QueryHelper
     public QueryHelper any(Type_IntegerCollection Col, int v)
       {
         _QueryStr.append(v);
-        _QueryStr.append(" any ");
+        _QueryStr.append(" = any(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(")");
         return this;
       }
 
@@ -1938,8 +1940,9 @@ public abstract class QueryHelper
     public QueryHelper any(Type_CharCollection Col, char v)
       {
         _QueryStr.append("'").append(v).append("'");
-        _QueryStr.append(" any ");
+        _QueryStr.append(" = any(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(")");
         return this;
       }
 
