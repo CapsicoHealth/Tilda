@@ -119,7 +119,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print(" + TextUtil.EscapeDoubleQuoteWithSlash(O.getShortName()) + ", \"\");");
         Out.println("   public static void getFullTableNameVar(Connection C, StringBuilder S) { "+Helper.getFullTableVarAtRuntime(O)+"; }");
         Out.println();
-        Out.println("   protected static abstract class COLS {");
+        Out.println("   public static abstract class COLS {");
         int Counter = -1;
         for (Column C : O._Columns)
           if (C != null && C._Mode != ColumnMode.CALCULATED)
@@ -129,7 +129,7 @@ public class TildaFactory implements CodeGenTildaFactory
               if (C._Nullable == false)
                TypePad+="    ";
               if (C.isCollection() == false)
-                TypePad+="  ";
+                TypePad+=" ";
 //              String ColVarFull = TextUtil.EscapeDoubleQuoteWithSlash(G.getSql().getFullColumnVar(C), "", false);
 //              String ColVarShort = TextUtil.EscapeDoubleQuoteWithSlash(G.getSql().getShortColumnVar(C), "", false);
 //              String ColVarOthers = TextUtil.EscapeDoubleQuoteWithSlash(G.getSql().getShortColumnVar(C), "", false);

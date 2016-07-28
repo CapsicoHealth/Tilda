@@ -167,6 +167,18 @@ public abstract class QueryHelper
         return selectColumnBase("count(*)");
       }
     
+    public final QueryHelper selectCountDistinct(ColumnDefinition Col)
+    throws Exception
+      {
+        _Columns.add(Col);
+        StringBuilder Str = new StringBuilder();
+        Str.append("count(distinct(");
+        Col.getFullColumnVarForSelect(_C, Str);
+        Str.append("))");
+        return selectColumnBase(Str.toString());
+      }
+    
+    
     public final QueryHelper selectColumn(ColumnDefinition Col, AggregateType Agg, String Alias)
     throws Exception
       {
@@ -512,12 +524,20 @@ public abstract class QueryHelper
         return this;
       }
 
+    public QueryHelper from()
+    throws Exception
+      {
+        fromTable(_SchemaName, _TableName);
+        return this;
+      }
+    
     public QueryHelper from(String SchemaName, String TableName)
     throws Exception
       {
         fromTable(SchemaName, TableName);
         return this;
       }
+    
 
     public QueryHelper from(SelectQuery Q)
     throws Exception
