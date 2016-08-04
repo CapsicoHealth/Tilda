@@ -11,7 +11,8 @@
   },
   "permissions": [
     {"fileSystem": ["write", "retainEntries", "directory"]},
-    "storage"
+    "storage",
+    "unlimitedStorage"
   ],
   "file_handlers": {
     "text": {

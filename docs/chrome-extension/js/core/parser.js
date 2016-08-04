@@ -1,237 +1,111 @@
-define(["jointjs", "./parser_element"], function(joint, ParserElement){
-  var ObjectCollection = Backbone.Collection.extend({
-    where: function(attrs, first, options){
-      options = options || {};
+define(["jointjs", "./parser_element",
+ "./custom_element_view", "./helpers", 
+ "./relation_renderer", "./custom_object_collection"],
+function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
 
-      if (_.isEmpty(attrs)) return first ? void 0 : [];
+  function offsetToLocalPoint(paper, x, y) {
+    var svgPoint = paper.svg.createSVGPoint();
+    svgPoint.x = x;
+    svgPoint.y = y;
 
-      return this[first ? 'find' : 'filter'](function(model) {
-        for (var key in attrs) {
-          if (options.caseInsensitive) {
-            if (attrs[key].toLowerCase() !== model.get(key).toLowerCase()) return false;
-          } else {
-            if (attrs[key] !== model.get(key)) return false;
-          }
-        }
-
-        return true;
-      });
-    },
-
-    findWhere: function(attrs, options) {
-      return this.where(attrs, true, options);
-    }
-  })
-  var p = function(_file, eleId){
-    this.objects = new ObjectCollection();
+    var pointTransformed = svgPoint.matrixTransform(paper.viewport.getCTM().inverse());
+    return pointTransformed;
+  }
+  var CustomLinkView = CEV.CustomLinkView;
+  var CustomElementView = CEV.CustomElementView;
+  var renderObject = Helpers.renderObject;
+  var renderObjectRelations = LinkRenderer;
+  var p = function(schema, eleId, opts){
+    this.schema = schema
+    this.opts = opts;
     this.eleId = eleId;
+    this.pKey = this.schema.package.toLowerCase()+"#"+this.opts.viewOnly;
+    this.objects = new ObjectCollection();
+    this.paper = null;
+
     var currentPos = { x: -150, y: 30 }
     this.parse = function(){
       var that = this;
-      var pushElement = function(collection, schemaObj, _type){
+      var pushElement = function(collection, schemaObj, _type, _inSchema){
         var t = new ParserElement();
-        t.set({data: schemaObj, name: schemaObj.name, _type: _type, inSchema: true});
+        t.set({data: schemaObj, name: schemaObj.name,
+         _type: _type, inSchema: _inSchema, package: that.schema.package, pKey: that.pKey});
         collection.add(t);
       }
-      _.each(this.schema.enumerations, function(enumeration, i){
-        pushElement(that.objects, enumeration, "Enumeration")
-      })
-
-      _.each(this.schema.views, function(view, i){
-        pushElement(that.objects, view, "View")
-      })
-
       _.each(this.schema.objects, function(object, i){
-        pushElement(that.objects, object, "Object")
+        pushElement(that.objects, object, "Object", true)
       })
-
-      _.each(this.schema.mappers, function (mapper, i){
-        pushElement(that.objects, mapper, "Mapper")
-      })
-    }
-    var renderObject = {
-      "View": function(graph, collection, position){
-        var object = collection.at(position);
-        gotoNextPosition(currentPos);
-        var objectAttr = {
-          position: currentPos,
-          size: { width: object.get("name").length*12+10, height: 30 },
-          attrs: { 
-            id: object.get("name"), 
-            rect: { fill: 'rgb(169,209,142)', stroke: "rgb(0,176,80)", "stoke-width": 1, "stroke-dasharray": "3,3" },
-            text: { text: object.get("name"), fill: 'black'} 
-          } 
-        }
-        var t = new joint.shapes.basic.Rect(objectAttr);
-        // t.translate((position+1)*110, (position+1)*30);
-        object.set({graphId: t.id})
-        graph.addCell(t);
-      },
-      "Object": function(graph, collection, position){
-        var object = collection.at(position);
-        var objectAttr = {}
-        gotoNextPosition(currentPos);
-        if(object.get("inSchema")){
-          // , "stroke-dasharray": "3,3"  },
-          objectAttr = _.merge({
-            position: currentPos,
-            size: { width: object.get("name").length*12+10, height: 30 },
-            attrs: { 
-              id: object.get("name"), 
-              rect: { fill: 'rgb(46,117,182)', stroke: "rgb(65,113,156)", "stoke-width": 2 },
-              text: { text: object.get("name"), fill: 'white'} 
-            } 
-          })
-        } else {
-          objectAttr = _.merge({
-            position: currentPos,
-            size: { width: object.get("name").length*12+10, height: 30 },
-            attrs: { 
-              id: object.get("name"), 
-              rect: { fill: 'rgb(166,201,232)', stroke: "white", "stoke-width": 0  },
-              text: { text: object.get("name"), fill: 'white'} 
-            } 
-          })
-        }
-        var t = new joint.shapes.basic.Rect(objectAttr);
-        object.set({graphId: t.id})
-        graph.addCell(t);
-      },
-      "Enumeration": function(graph, collection, position){
-        var object = collection.at(position);
-        gotoNextPosition(currentPos);
-        var objectAttr = {
-          position: currentPos,
-          size: { width: object.get("name").length*12+10, height: 30 },
-          attrs: { 
-            id: object.get("name"), 
-            rect: { fill: 'rgb(251,229,214)', stroke: "rgb(248,203,173)", "stoke-width": 1  },
-            text: { text: object.get("name"), fill: 'black'} 
-          } 
-        }
-        var t = new joint.shapes.basic.Rect(objectAttr);
-        object.set({graphId: t.id})
-        graph.addCell(t);
-      },
-      "Mapper": function(graph, collection, position){
-        var object = collection.at(position);
-        gotoNextPosition(currentPos);
-        var objectAttr = {
-          position: currentPos,
-          size: { width: object.get("name").length*12+10, height: 30 },
-          attrs: { 
-            id: object.get("name"), 
-            rect: { fill: 'rgb(248,203,173)', stroke: "rgb(244,177,131)", "stoke-width": 2  },
-            text: { text: object.get("name"), fill: 'black'} 
-          } 
-        }
-        var t = new joint.shapes.basic.Rect(objectAttr);
-        object.set({graphId: t.id})
-        graph.addCell(t);
-      }
-    };
-    var renderLink = function(graph, source, target){
-      var attrs = {
-        '.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' }
-      }
-      if(source.get('_type') == "Object"){
-        if(target.get("inSchema")){
-          attrs = _.merge(attrs, {
-            '.connection': { stroke: 'rgb(65,113,156)', 'stroke-width': 1 }
-          })
-        } else {
-          attrs = _.merge(attrs, {
-            '.connection': { stroke: 'rgb(5,113,156)', 'stroke-width': 1, 'stroke-dasharray': '5 2' }
-          })
-        }
-      } else if(source.get('_type') == "View"){
-        if(target.get("inSchema")){
-          attrs = _.merge(attrs, {
-            '.connection': { stroke: 'rgb(0,176,80)', 'stroke-width': 1 }
-          })
-        } else {
-          attrs = _.merge(attrs, {
-            '.connection': { stroke: 'rgb(0,176,80)', 'stroke-width': 1, 'stroke-dasharray': '5 2' }
-          })
-        }
-      }
-      var link = new joint.dia.Link({
-        source: { id: source.get("graphId") },
-        target: { id: target.get("graphId") },
-        attrs: attrs
-      });
-      graph.addCell(link);
-    }
-    var gotoNextPosition = function(currentPos){
-      if(currentPos.x+300 > window.screen.availWidth){
-        currentPos.x = 150;
-        currentPos.y = currentPos.y+300;
-      } else{
-        currentPos.x = currentPos.x+300;
-      }
-    }
-
-    var renderObjectRelations = {
-      // This method will add outSchema object
-      "Object": function(graph, collection, index){
-        var object = collection.at(index);
-        if(object.get("data").foreign != null){
-          // var rels = _.map(object.get("data").foreign, function(ele, i){ return ele.destObject });
-          var rels = [];
-          _.each(object.get("data").columns, function(ele, i){
-            if(ele.sameas != null && ele.sameas.split(".").length > 1 ){
-              rels.push(ele.sameas.split(".").reverse()[1]);
-            }
-          })
-          rels = _.uniq(rels);
-          _.each(rels, function(relation, i){
-            var target = collection.findWhere({name: relation}, {caseInsensitive: true})
-            if(target == null){
-              target = new ParserElement({data: {name: relation }, name: relation, _type: "Object", inSchema: false });
-              collection.add(target);
-              var i = collection.size();
-              renderObject[target.get("_type")](graph, collection, collection.indexOf(target));
-            }
-            renderLink(graph, object, target)
-          })
-        }
-      },
-      "View": function(graph, collection, index){
-        var rels = [];
-        var object = collection.at(index)
-        _.each(object.get("data").columns, function(ele, i){
-          if(ele.sameas != null && ele.sameas.split(".").length > 1 ){
-            rels.push(ele.sameas.split(".").reverse()[1]);
-          }
+      if(this.opts.viewOnly){
+        _.each(this.schema.views, function(view, i){
+          pushElement(that.objects, view, "View", true)
         })
-        rels = _.uniq(rels);
-        _.each(rels, function(relation, i){
-          var target = that.objects.findWhere({name: relation}, {caseInsensitive: true})
-          if(target == null){
-            target = new ParserElement({data: {name: relation }, name: relation, _type: "Object", inSchema: false });
-            that.objects.add(target);
-            var i = collection.size();
-            renderObject[target.get("_type")](graph, collection, collection.indexOf(target));
-          }
-          renderLink(graph, object, target)
+      }
+      else{
+        _.each(this.schema.enumerations, function(enumeration, i){
+          pushElement(that.objects, enumeration, "Enumeration", true)
         })
 
-      },
-      "Mapper": function(graph, collection, index){
+        _.each(this.schema.mappers, function (mapper, i){
+          pushElement(that.objects, mapper, "Mapper", true)
+        })
 
       }
     }
+    this.resetAll = function(){
+      var elements = this.paper.model.getElements();
+      var links = this.paper.model.getLinks();
+      var paper = this.paper;
+      _.each(elements, function(ele, i){
+        paper.findViewByModel(ele).$el.css("opacity", 1);
+      })
+      _.each(links, function(ele, i){
+        var $el = paper.findViewByModel(ele).$el;
+        $el.css("opacity", 1);
+        $el.find(".connection").attr("stroke-width", 1);
+      })
+    }
+    this.render = function(what){
+      var that = this;
 
-    this.render = function(){
+      var elementChangeHandler = function(event){
+        var eventObject = that.objects.findWhere({graphId: event.get("id")});
+        var key = that.schema.package.toLowerCase()+"#"+eventObject.get("name").toLowerCase();
+        var position = eventObject.get("data").position;
+        if(eventObject.get("data").position == null){
+          eventObject.get("data").position = {};
+          var position = eventObject.get("data").position;
+        }
+        // Store preferences.
+        var syncSet = {};
+        // console.log("key -> "+key+"\nObject -> "+JSON.stringify(event.toJSON()));
+        syncSet[key] = event.toJSON();
+        chrome.storage.local.set(syncSet);
+      }
+
+      var gotoNextPosition = function(currentPos){
+        if(currentPos.x+300 > window.screen.availWidth){
+          currentPos.x = 150;
+          currentPos.y = currentPos.y+300;
+        } else{
+          currentPos.x = currentPos.x+300;
+        }
+        return currentPos;
+      }
+
       var graph = new joint.dia.Graph;
       var paper = new joint.dia.Paper({
         el: $("#"+this.eleId),
         width: window.screen.availWidth,
-        height: window.screen.availHeight-80,
+        height: (window.screen.availHeight),
         model: graph,
-        gridSize: 1,
-        restrictTranslate: true
+        gridSize: 10,
+        restrictTranslate: true,
+        elementView: CustomElementView,
+        linkView: CustomLinkView
       });
+      this.paper = paper;
+
+
       var dragStartPosition = null;
       paper.on('blank:pointerdown',function(event, x, y) {
         dragStartPosition = { x: x, y: y};
@@ -255,7 +129,7 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
         var offsetX = (e.offsetX || e.clientX - $(this).offset().left);
 
         var offsetY = (e.offsetY || e.clientY - $(this).offset().top);
-        var p = offsetToLocalPoint(offsetX, offsetY);
+        var p = offsetToLocalPoint(paper, offsetX, offsetY);
         var newScale = V(paper.viewport).scale().sx + delta;
         // console.log(' delta' + delta + ' ' + 'offsetX' + offsetX + 'offsety--' + offsetY + 'p' + p.x + 'newScale' + newScale)
         if (newScale > 0.4 && newScale < 2) {
@@ -264,44 +138,43 @@ define(["jointjs", "./parser_element"], function(joint, ParserElement){
         }
       });
 
-
-
-      function offsetToLocalPoint(x, y) {
-        var svgPoint = paper.svg.createSVGPoint();
-        svgPoint.x = x;
-        svgPoint.y = y;
-
-        var pointTransformed = svgPoint.matrixTransform(paper.viewport.getCTM().inverse());
-        return pointTransformed;
-      }
       var that = this;
+      var elementChangeHandler = function(event){
+        var eventObject = that.objects.findWhere({graphId: event.get("id")});
+        var key = eventObject.get("pKey")+"#"+eventObject.get("name").toLowerCase();
+        var position = eventObject.get("data").position;
+        if(eventObject.get("data").position == null){
+          eventObject.get("data").position = {};
+          var position = eventObject.get("data").position;
+        }
+        // Store preferences.
+        var syncSet = {};
+        syncSet[key] = event.toJSON();
+        chrome.storage.local.set(syncSet);
+      }
+      var renderObjectRels = function(){
+        _.each(that.objects, function(object, i){
+          var object = that.objects.at(i);
+          if(renderObjectRelations[object.get("_type")] != null){
+            renderObjectRelations[object.get("_type")](graph, object, that.objects, gotoNextPosition(currentPos));
+          }
+        })
+      }
       _.each(this.objects, function(object, i){
         var object = that.objects.at(i);
-        if(renderObject[object.get("_type")] != null){
-          renderObject[object.get("_type")](graph, that.objects, i);
+        var key = object.get("pKey")+"#"+object.get("name").toLowerCase();
+        if (renderObject[object.get("_type")] != null){
+          var position = gotoNextPosition(currentPos);
+          var objectAttr = window.tildaCache[key];
+          var t = renderObject[object.get("_type")](graph, object, position, objectAttr);
+          object.set("graphId", t.get("id"));
+          t.on('change:position', _.debounce(elementChangeHandler, 500, { 'maxWait' : 1000 }));
         }
       })
-      _.each(this.objects, function(object, i){
-        var object = that.objects.at(i)
-        if(renderObjectRelations[object.get("_type")] != null){
-          renderObjectRelations[object.get("_type")](graph, that.objects, i);
-        }
-      })
+      renderObjectRels();
     }
-    // start parsing
-    var reader = new FileReader();
-    var that = this;
-    reader.onload = function(event) {
-      try{
-        that.schema = JSON.parse(event.target.result);
-        that.parse();
-        that.render();
-      } catch(e){
-        console.log("Error occured -> "+e.message);
-        console.error(e.stack);
-      }
-    };
-    reader.readAsText(_file);
+    this.parse();
+    this.render();
   }
 
   return p;
