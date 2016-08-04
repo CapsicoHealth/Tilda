@@ -55,6 +55,55 @@ define(['text!../templates/tilda_schema/_new.html', "../core/parser"], function(
     },
     saveSchema: function(event){
       // TODO write to a file.
+      var objSVG = this.schemaParser_object.paper.$el.find("svg")[0]
+      var objSVGDATA = 'data:image/svg+xml;base64,'+window.btoa(new XMLSerializer().serializeToString(document.getElementById(objSVG.id)))
+      var viewSVG = this.schemaParser_view.paper.$el.find("svg")[0]
+      var viewSVGDATA = 'data:image/svg+xml;base64,'+window.btoa(new XMLSerializer().serializeToString(document.getElementById(viewSVG.id)))
+      var canvas = this.$el.find("canvas#result")[0];
+      var context = canvas.getContext('2d');
+      var objImage = new Image();
+      var viewImage = new Image();
+
+      objImage.onload = function() {
+        viewImage.src = viewSVGDATA
+      };
+      viewImage.onload = function() {
+        drawCanvas()
+      };
+      var drawCanvas = function(){
+        context.canvas.width = objImage.width;
+        context.canvas.height = objImage.height+viewImage.height+10;
+        context.globalAlpha = 1.0;
+        context.drawImage(objImage, 0, 0, objImage.width, objImage.height);
+        context.drawImage(viewImage, 0, objImage.height+10, viewImage.width, viewImage.height);
+        //
+        var contentToWrite = context.canvas.toDataURL();
+        chrome.fileSystem.chooseEntry( {
+          type: 'saveFile',
+          acceptsAllTypes: true
+        }, function(fileEntry){
+          fileEntry.createWriter(function(fileWriter) {
+            var truncated = false;
+            var blob = new Blob([contentToWrite], {type: "image/png"});
+            fileWriter.onwriteend = function(e) {
+              if (!truncated) {
+                truncated = true;
+                // You need to explicitly set the file size to truncate
+                // any content that might have been there before
+                this.truncate(blob.size);
+                return;
+              }
+              console.log('Export to '+fileDisplayPath+' completed');
+            };
+            fileWriter.onerror = function(e) {
+              console.error('Export failed: '+e.toString());
+            };
+            fileWriter.write(blob);
+          });
+        });
+
+      }
+      objImage.src = objSVGDATA;
     },
     resetView: function(event){
       if(this.schemaParser_object){
