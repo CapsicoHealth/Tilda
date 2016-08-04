@@ -48,6 +48,16 @@ public class ColumnDefinition
     public final boolean    _Collection;
     public final long       _Mask;
 
+    public String getSchemaName()
+      {
+        return _SchemaName;
+      }
+
+    public String getTableName()
+      {
+        return _TableName;
+      }
+
     public void getFullColumnVarForSelect(Connection C, StringBuilder Str)
       {
         C.getFullColumnVar(Str, null, _TableName, _ColumnName);
@@ -82,10 +92,12 @@ public class ColumnDefinition
       {
         return Create(null, null, ColumnName, Type, Collection, Nullable, Description);
       }
+
     public static ColumnDefinition Create(String TableName, String ColumnName, ColumnType Type, boolean Collection, boolean Nullable, String Description)
       {
         return Create(null, TableName, ColumnName, Type, Collection, Nullable, Description);
       }
+
     public static ColumnDefinition Create(String SchemaName, String TableName, String ColumnName, ColumnType Type, boolean Collection, boolean Nullable, String Description)
       {
         String ClassName = "tilda.types.Type_" + Type._SimpleName + (Collection == true ? "Collection" : "Primitive") + (Nullable == true ? "Null" : "");
@@ -102,5 +114,5 @@ public class ColumnDefinition
           }
 
       }
-    
+
   }
