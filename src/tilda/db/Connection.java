@@ -67,7 +67,7 @@ public final class Connection
         : null;
         if (_DB == null)
           throw new Exception("Can't find the DBType based on URL " + _Url);
-        _PoolId = _C.toString();
+        _PoolId = _C.toString() +", "+getDatabaseProductName()+" V"+getDatabaseProductVersion();
       }
 
     public Connection(java.sql.Connection C, String PoolId)
@@ -86,6 +86,16 @@ public final class Connection
     public final String getURL()
       {
         return _Url;
+      }
+    
+    public final String getDatabaseProductName() throws SQLException
+      {
+        return _C.getMetaData().getDatabaseProductName();
+      }
+    
+    public final String getDatabaseProductVersion() throws SQLException
+      {
+        return _C.getMetaData().getDatabaseProductVersion();
       }
     
     public final String getDBTypeName()
@@ -131,7 +141,7 @@ public final class Connection
       {
         try
           {
-            LOG.info("---------- " + AnsiUtil.NEGATIVE + "R O L L B A C K" + AnsiUtil.NEGATIVE_OFF + " ------------------------------- " + _PoolId + " ------------------------------");
+            LOG.info("---------- " + AnsiUtil.NEGATIVE + "R O L L B A C K" + AnsiUtil.NEGATIVE_OFF + " ------------------------------- " + _PoolId + " ----------");
             long T0 = System.nanoTime();
             _C.rollback();
             _SavePoints.clear();
