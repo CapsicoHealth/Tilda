@@ -62,6 +62,7 @@ public abstract class QueryHelper
         _ST = ST;
         _FullSelect = fullSelect;
         _Section = S.START;
+        _Froms.add(_SchemaName+"."+_TableName);
 
         if (_ST == StatementType.SELECT)
           {
@@ -203,8 +204,6 @@ public abstract class QueryHelper
       {
          _QueryStr.append(" from ");
          _C.getFullTableVar(_QueryStr, _SchemaName, _TableName);
-         if (_Froms.add(_SchemaName+"."+_TableName) == false)
-          throw new Exception("Table "+_SchemaName+"."+_TableName+" was already specified in a FROM clause");
       }
 
     protected final QueryHelper fromTable(String SchemaName, String TableName)
