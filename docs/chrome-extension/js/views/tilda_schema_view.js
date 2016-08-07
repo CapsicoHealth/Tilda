@@ -56,35 +56,34 @@ define(['text!../templates/tilda_schema/_new.html', "../core/parser"], function(
     saveSchema: function(event){
       // TODO write to a file.
       var objSVG = this.schemaParser_object.paper.$el.find("svg")[0]
-      var objSVGDATA = 'data:image/svg+xml;base64,'+window.btoa(new XMLSerializer().serializeToString(document.getElementById(objSVG.id)))
-      var viewSVG = this.schemaParser_view.paper.$el.find("svg")[0]
-      var viewSVGDATA = 'data:image/svg+xml;base64,'+window.btoa(new XMLSerializer().serializeToString(document.getElementById(viewSVG.id)))
-      var canvas = this.$el.find("canvas#result")[0];
-      var context = canvas.getContext('2d');
-      var objImage = new Image();
-      var viewImage = new Image();
 
-      objImage.onload = function() {
-        viewImage.src = viewSVGDATA
-      };
-      viewImage.onload = function() {
-        drawCanvas()
-      };
-      var drawCanvas = function(){
-        context.canvas.width = objImage.width;
-        context.canvas.height = objImage.height+viewImage.height+10;
-        context.globalAlpha = 1.0;
-        context.drawImage(objImage, 0, 0, objImage.width, objImage.height);
-        context.drawImage(viewImage, 0, objImage.height+10, viewImage.width, viewImage.height);
-        //
-        var contentToWrite = context.canvas.toDataURL();
+      var viewSVG = this.schemaParser_view.paper.$el.find("svg")[0];
+      var that = this;
+      $.get('css/joint.css', function(css){
         chrome.fileSystem.chooseEntry( {
           type: 'saveFile',
           acceptsAllTypes: true
         }, function(fileEntry){
           fileEntry.createWriter(function(fileWriter) {
             var truncated = false;
-            var blob = new Blob([contentToWrite], {type: "image/png"});
+            var script = "\n\
+              <script>\n\
+                window.onload = function(){\n\
+                  debugger;\n\
+                  var svgs = document.getElementsByTagName('svg');\n\
+                  for(i=0;i<svgs.length;i++){\n\
+                    var svg = svgs[i];\n\
+                    var bbox = svg.getBBox();\n\
+                    svg.setAttribute('viewBox', [bbox.x, bbox.y, bbox.width, bbox.height]);\n\
+                    svg.width.baseVal.valueAsString = bbox.width;\n\
+                    svg.height.baseVal.valueAsString = bbox.height;\n\
+                  }\n\
+                }\n\
+              </script>";
+            var blob = new Blob(["<style>"+css+"</style>", "<div class='container'>"
+              +objSVG.parentElement.innerHTML,"</div>", "<br/>"
+              ,"<div class='container'>", viewSVG.parentElement.innerHTML,"</div>"
+              , script], {type: "image/svg"});
             fileWriter.onwriteend = function(e) {
               if (!truncated) {
                 truncated = true;
@@ -100,10 +99,10 @@ define(['text!../templates/tilda_schema/_new.html', "../core/parser"], function(
             };
             fileWriter.write(blob);
           });
-        });
+        });        
+      })
 
-      }
-      objImage.src = objSVGDATA;
+
     },
     resetView: function(event){
       if(this.schemaParser_object){
