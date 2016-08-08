@@ -28,6 +28,7 @@ define(['text!../templates/tilda_schema/_new.html', "../core/parser"], function(
       if(file == null){
         return true;
       }
+      $('input:radio[name="showObj"]:first').prop("checked", true); // hack TODO find better way
       $("#view_c").html("");
       $("#obj_c").html("");
       $("#obj_c").show();
