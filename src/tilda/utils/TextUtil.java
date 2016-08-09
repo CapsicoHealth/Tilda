@@ -55,9 +55,9 @@ public class TextUtil
         for (String Str : Strings)
           {
             if (First == true)
-             First = false;
+              First = false;
             else
-             Out.print(",");
+              Out.print(",");
             if (Quotable != null)
               Out.print(Quotable);
             Out.print(Str);
@@ -111,15 +111,15 @@ public class TextUtil
       {
         EscapeSingleQuoteForSQL(X, S, "'", "'");
       }
-    
+
 
     public static final void EscapeSingleQuoteForSQL(StringBuilder X, String[] S, boolean First)
       {
         if (S != null)
           for (String s : S)
             {
-              if (s==null)
-               continue;
+              if (s == null)
+                continue;
               if (First == true)
                 First = false;
               else
@@ -128,13 +128,29 @@ public class TextUtil
             }
       }
 
+    public static void EscapeSingleQuoteForSQL(StringBuilder X, char[] S, boolean First)
+      {
+        if (S != null)
+          for (char s : S)
+            {
+              if (First == true)
+                First = false;
+              else
+                X.append(", ");
+              if (s=='\'')
+               X.append("''''");
+              else
+               X.append("'").append(s).append("'");
+            }
+      }
+
     public static final <T> void EscapeSingleQuoteForSQL(StringBuilder X, Collection<T> Strs, boolean First)
       {
         if (Strs != null)
           for (T s : Strs)
             {
-              if (s==null)
-               continue;
+              if (s == null)
+                continue;
               if (First == true)
                 First = false;
               else
@@ -194,7 +210,7 @@ public class TextUtil
       {
         EscapeSomethingWithSlash(X, '"', S, Before, End, false);
       }
-    
+
     public static final String EscapeDoubleQuoteForCSV(String S)
       {
         StringBuilder X = new StringBuilder();
@@ -242,7 +258,7 @@ public class TextUtil
       {
         EscapeSomethingWithSomething(X, Something, Double ? "\\\\\\" : "\\", S, Before, End);
       }
-    
+
     private static final void EscapeSomethingWithSomething(StringBuilder X, char Something1, String Something2, String S, String Before, String End)
       {
         if (Before != null)
@@ -273,7 +289,7 @@ public class TextUtil
             X.append(End);
           }
       }
-    
+
 
     public static final String EscapeHTMLQuotes(String S)
       {
@@ -374,7 +390,7 @@ public class TextUtil
       }
 
     public static final Writer SearchReplace(Writer Out, String Str, String Search, String Replace)
-      throws IOException
+    throws IOException
       {
         if (Str == null)
           return Out;
@@ -440,7 +456,7 @@ public class TextUtil
           }
         return Index;
       }
-    
+
     public static int FindElement(String[] A, String Val, boolean IgnoreCase, int Start)
       {
         for (int i = Start; i < A.length; ++i)
@@ -453,7 +469,7 @@ public class TextUtil
           }
         return -1;
       }
-    
+
     public static int FindElement(String[][] A, String Val, int pos, boolean IgnoreCase, int Start)
       {
         for (int i = Start; i < A.length; ++i)
@@ -466,7 +482,7 @@ public class TextUtil
           }
         return -1;
       }
-    
+
 
     public static String GetElement(int Index, String Vals, char Separator)
       {
@@ -585,6 +601,7 @@ public class TextUtil
       {
         return Val == null ? Default : Val;
       }
+
     public static String NoNullOrEmptyPrint(String Val, String Default)
       {
         return isNullOrEmpty(Val) == true ? Default : Val;
@@ -727,11 +744,11 @@ public class TextUtil
 
 
     protected static final String[][] WEBSPECIALCHARS = { { "eacute", "e"
-                                                      }, { "aacute", "a"
-                                                      }, { "egrave", "e"
-                                                      }, { "agrave", "a"
-                                                      }
-                                                      };
+        }, { "aacute", "a"
+        }, { "egrave", "e"
+        }, { "agrave", "a"
+        }
+    };
 
     public static String ConvertWebSpecialCharacters(String Str)
       {
@@ -795,12 +812,12 @@ public class TextUtil
       }
 
     public static String Print(String[][] A, int pos)
-    {
-      StringBuilder s = new StringBuilder();
-      Print(A, pos, s);
-      return s.toString();
-    }
-    
+      {
+        StringBuilder s = new StringBuilder();
+        Print(A, pos, s);
+        return s.toString();
+      }
+
     public static void Print(String[][] StrArray, int pos, StringBuilder s)
       {
         if (StrArray == null)
@@ -822,6 +839,7 @@ public class TextUtil
         Print(I, s);
         return s.toString();
       }
+
     public static final void Print(Iterator<?> I, StringBuilder s)
       {
         if (I == null)
@@ -834,13 +852,13 @@ public class TextUtil
               First = false;
             else
               s.append(", ");
-            if (O==null)
-             s.append("null");
+            if (O == null)
+              s.append("null");
             else
-             s.append(O.getClass()==ZonedDateTime.class ? DateTimeUtil.printDateTimeCompact((ZonedDateTime)O, true, true) : O.toString());
+              s.append(O.getClass() == ZonedDateTime.class ? DateTimeUtil.printDateTimeCompact((ZonedDateTime) O, true, true) : O.toString());
           }
       }
-    
+
     public static final void PrintWithQuotes(String[] StrArray, StringBuilder s)
       {
         if (StrArray == null)
@@ -942,7 +960,7 @@ public class TextUtil
     protected static final Pattern RTF_CELL_PATTERN = Pattern.compile("\\\\cell\\W|\\}\\{\\\\");
 
     public static final String RTF2TXT(String Str)
-      throws IOException, BadLocationException
+    throws IOException, BadLocationException
       {
         if (Str != null && Str.startsWith("{\\rtf1") == true)
           {
@@ -994,7 +1012,7 @@ public class TextUtil
       }
 
     public static final String StreamToString(InputStream In)
-      throws IOException
+    throws IOException
       {
         StringBuilder Str = new StringBuilder();
         byte[] buf = new byte[4096];
@@ -1135,17 +1153,17 @@ public class TextUtil
               return -1;
           }
       }
-    
+
     public static final boolean indexOf(String Str, String[] A)
       {
         if (Str == null || A == null)
-         return false;
+          return false;
         for (String s : A)
           if (Str.indexOf(s) != -1)
-           return true;
+            return true;
         return false;
       }
-    
+
 
     public static final boolean Equals(String S1, String S2)
       {
@@ -1268,7 +1286,7 @@ public class TextUtil
 
     public static final String StandardizeFullName(String Title, String Last, String First, String Middle)
       {
-        Title = isNullOrEmpty(Title) ? "" : Title+" ";
+        Title = isNullOrEmpty(Title) ? "" : Title + " ";
         Last = isNullOrEmpty(Last) ? "" : Last.trim().toUpperCase();
         First = isNullOrEmpty(First) ? "" : CapitalizeEachWord(First.trim());
         Middle = isNullOrEmpty(Middle) ? "" : " " + Character.toUpperCase(Middle.trim().charAt(0)) + ".";
@@ -1310,8 +1328,8 @@ public class TextUtil
         if (isNullOrEmpty(Str) == true)
           return null;
         if (Str.length() == 1)
-         return ""+Character.toUpperCase(Str.charAt(0));
-        return Character.toUpperCase(Str.charAt(0))+Str.substring(1);
+          return "" + Character.toUpperCase(Str.charAt(0));
+        return Character.toUpperCase(Str.charAt(0)) + Str.substring(1);
       }
 
     public static final String NormalCapitalization(String Str)
@@ -1319,11 +1337,11 @@ public class TextUtil
         if (isNullOrEmpty(Str) == true)
           return null;
         if (Str.length() == 1)
-         return ""+Character.toUpperCase(Str.charAt(0));
-        return Character.toUpperCase(Str.charAt(0))+Str.substring(1).toLowerCase();
+          return "" + Character.toUpperCase(Str.charAt(0));
+        return Character.toUpperCase(Str.charAt(0)) + Str.substring(1).toLowerCase();
       }
-    
-    
+
+
     public static final void ListPrint(StringBuilder Str, String Sep, String Val)
       {
         if (isNullOrEmpty(Val) == false)
@@ -1472,16 +1490,16 @@ public class TextUtil
 
     public static final boolean CrudeStringValidation(String Str, char Delimiter, char Escape)
       {
-        Pattern P = Pattern.compile("^\\"+Escape+"\\"+Delimiter);
+        Pattern P = Pattern.compile("^\\" + Escape + "\\" + Delimiter);
         Matcher m = P.matcher(Str);
         int count = 0;
         while (m.matches() == true)
-         {
-           ++count;
-         }
-        return count%2 == 0;
+          {
+            ++count;
+          }
+        return count % 2 == 0;
       }
-    
+
     /** Truncates the string and adds "..." if it is bigger than MaxLen */
     public static final String toMaxLength(String Str, int MaxLen)
       {
@@ -1489,14 +1507,13 @@ public class TextUtil
       }
 
     public static final String PrintVariableStr(String Value)
-     {
-       return PrintVariableStr(Value, 100);      
-     }
-    
+      {
+        return PrintVariableStr(Value, 100);
+      }
+
     public static final String PrintVariableStr(String Value, int MaxLen)
-     {
-       return "["+ (Value == null ? 0 : Value.length())+"] "+toMaxLength(Value, MaxLen);      
-     }
-    
+      {
+        return "[" + (Value == null ? 0 : Value.length()) + "] " + toMaxLength(Value, MaxLen);
+      }
 
   }

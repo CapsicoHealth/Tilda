@@ -24,7 +24,6 @@ import org.apache.logging.log4j.Logger;
 import tilda.generation.Generator;
 import tilda.generation.GeneratorSession;
 import tilda.generation.Manifest;
-import tilda.generation.graphviz.GraphvizUtil;
 import tilda.generation.html.DocGen;
 import tilda.parsing.Parser;
 import tilda.parsing.ParserSession;

@@ -5,5 +5,5 @@ import com.google.gson.annotations.SerializedName;
 public class Documentation
   {
     @SerializedName("graph") public String _Graph = "simple";
-
+    @SerializedName("description") public String[] _Description = null;
   }

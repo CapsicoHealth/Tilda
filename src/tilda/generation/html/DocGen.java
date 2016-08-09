@@ -57,6 +57,10 @@ public class DocGen {
         File f = new File(base64FileName);
         writer.println("<HTML>");
         writer.println("<BODY>");
+        writer.println("<H1>Schema "+schema._Name+"</H1>");
+        if (schema._Documentation != null && schema._Documentation._Description != null)
+          for (String str : schema._Documentation._Description)
+           writer.println(str);
         if(f.exists()){
             FileUtil.copyFileContentsIntoAnotherFile(base64FileName, writer);
         }
@@ -65,7 +69,7 @@ public class DocGen {
         {
           try
             {
-              writer.println("<BR><BR><BR><BR><HR>");
+              writer.println("<BR><BR><BR><HR>");
               Docs.DataClassDocs(writer, G, b);
             }
           catch (Exception e)
