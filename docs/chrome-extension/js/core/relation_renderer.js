@@ -4,7 +4,8 @@ define(["jointjs", "lodash", "jquery",
   var renderObject = Helpers.renderObject;
 
   var renderLink = function(graph, source, target, superset){
-    var key = source.get("pKey")+"#"+source.get("name").toLowerCase()+"#"+target.get("name").toLowerCase();
+    var key = source.get("pKey")+"#"+source.get("name")+"#"+target.get("name");
+    key = key.toLowerCase();    
     var linkAttrs = window.tildaCache[key];
     if(linkAttrs == null){
       linkAttrs = {
@@ -47,17 +48,25 @@ define(["jointjs", "lodash", "jquery",
         }
       }
       linkAttrs["attrs"] = attrs
+    } else {
+      linkAttrs = _.merge(linkAttrs, {
+        source: { id: source.get("graphId") },
+        target: { id: target.get("graphId") }
+      })
     }
-
+    var vertices = linkAttrs.vertices;
     var link = new joint.dia.Link(linkAttrs);
-
     var eventHandler = function(event){
-      var key = event.get("attrs").key;
+      var key = event.get("attrs").key.toLowerCase();
       var syncSet = {}
-      syncSet[key] = event.attributes
+      var attributes = event.attributes;
+      syncSet[key] = _.merge(attributes, { vertices: this.get('vertices') })
       chrome.storage.local.set(syncSet);
     }
-    link.on("change", _.debounce(eventHandler, 500, { 'maxWait' : 1000 }));
+    if(vertices){
+      link.set('vertices', vertices);
+    }
+    link.on("change:vertices", _.debounce(eventHandler, 500, { 'maxWait' : 1000 }));
     graph.addCell(link);
   }
 

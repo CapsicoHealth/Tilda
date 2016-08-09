@@ -37,20 +37,28 @@ public class DocGen {
         this.G = G;
       }
     public static String getBaseResFileName(Schema S, String Extension)
-      {
-        return S._ProjectRoot + File.separator + S._Package.replace(".", File.separator) + File.separator + "_Tilda" + File.separator + "TILDA___Docs."+S._Name + Extension;
-      }
+    {
+      return S._ProjectRoot + File.separator + S._Package.replace(".", File.separator) + File.separator + "_Tilda" + File.separator + "TILDA___Docs."+S._Name + Extension;
+    }
+    
+    public static String getSchemaChromeAppGenHTML(Schema S, String Extension)
+    {
+        return S._ProjectRoot + File.separator + S._Package.replace(".", File.separator) + File.separator + "TILDA___Docs."+S._Name + Extension;
+    }
+    
+    public static String getSVGCSSPath(Schema S){
+    	return S._ProjectRoot + File.separator + ".." + File.separator + "";
+    }
+    
     private void writeHTML()    throws Exception
       {
-        String base64FileName =  getBaseResFileName(schema, ".base64");
+        String base64FileName =  getSchemaChromeAppGenHTML(schema, ".html");
         PrintWriter writer = new PrintWriter(getBaseResFileName(schema, ".html"));
         File f = new File(base64FileName);
         writer.println("<HTML>");
         writer.println("<BODY>");
         if(f.exists()){
-            writer.println("<IMG src='");
             FileUtil.copyFileContentsIntoAnotherFile(base64FileName, writer);
-            writer.println("'/>");        	
         }
 
         for (Object b : schema._Objects)
