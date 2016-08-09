@@ -62,7 +62,7 @@ public abstract class QueryHelper
         _ST = ST;
         _FullSelect = fullSelect;
         _Section = S.START;
-        _Froms.add(_SchemaName+"."+_TableName);
+        _Froms.add(_SchemaName + "." + _TableName);
 
         if (_ST == StatementType.SELECT)
           {
@@ -200,10 +200,11 @@ public abstract class QueryHelper
         return selectColumnBase(_C.getAggregateStr(Agg) + "(T" + TableId + ".\"" + ColumnName + "\") as \"" + AliasName + "\"");
       }
 
-    protected final void fromBase() throws Exception
+    protected final void fromBase()
+    throws Exception
       {
-         _QueryStr.append(" from ");
-         _C.getFullTableVar(_QueryStr, _SchemaName, _TableName);
+        _QueryStr.append(" from ");
+        _C.getFullTableVar(_QueryStr, _SchemaName, _TableName);
       }
 
     protected final QueryHelper fromTable(String SchemaName, String TableName)
@@ -219,8 +220,8 @@ public abstract class QueryHelper
           {
             _QueryStr.append(_Section == S.FROM || _TableName != null ? ", " : "");
             _C.getFullTableVar(_QueryStr, SchemaName, TableName);
-            if (_Froms.add(SchemaName+"."+TableName) == false)
-             throw new Exception("Table "+_SchemaName+"."+_TableName+" was already specified in a FROM clause");
+            if (_Froms.add(SchemaName + "." + TableName) == false)
+              throw new Exception("Table " + _SchemaName + "." + _TableName + " was already specified in a FROM clause");
           }
         _Section = S.FROM;
         return this;
@@ -258,8 +259,8 @@ public abstract class QueryHelper
         _Section = S.WHERE;
         _Where = true;
         for (ColumnDefinition Col : _Columns)
-          if (_Froms.contains(Col.getSchemaName()+"."+Col.getTableName()) == false)
-           throw new Exception("Query has selected column "+Col.getName()+" in table "+Col.getSchemaName()+"."+Col.getTableName()+" which hasn't beenm explicitely named in a from() clause.");
+          if (_Froms.contains(Col.getSchemaName() + "." + Col.getTableName()) == false)
+            throw new Exception("Query has selected column " + Col.getName() + " in table " + Col.getSchemaName() + "." + Col.getTableName() + " which hasn't beenm explicitely named in a from() clause.");
         return this;
       }
 
@@ -326,6 +327,17 @@ public abstract class QueryHelper
         return this;
       }
 
+    public final QueryHelper not()
+    throws Exception
+      {
+        if (_Section != S.WHERE && _Section != S.FROM)
+          throw new Exception("Invalid query syntax: Calling and() after a " + _Section + ": " + _QueryStr.toString());
+        _QueryStr.append(" not ");
+        _Section = S.WHERE;
+        return this;
+      }
+
+
     public final QueryHelper openPar()
     throws Exception
       {
@@ -353,8 +365,8 @@ public abstract class QueryHelper
         if (_Section != S.SET && _Section != S.WHERE)
           throw new Exception("Invalid query syntax: Calling equals() after a " + _Section + ": " + _QueryStr.toString());
         _QueryStr.append(O._Str);
-        if (_Froms.contains(Col.getSchemaName()+"."+Col.getTableName()) == false)
-         throw new Exception("Query has in its where clause column "+Col.getName()+" in table "+Col.getSchemaName()+"."+Col.getTableName()+" which hasn't beenm explicitely named in a from() clause.");
+        if (_Froms.contains(Col.getSchemaName() + "." + Col.getTableName()) == false)
+          throw new Exception("Query has in its where clause column " + Col.getName() + " in table " + Col.getSchemaName() + "." + Col.getTableName() + " which hasn't beenm explicitely named in a from() clause.");
         if (_ST == StatementType.SELECT)
           Col.getFullColumnVarForSelect(_C, _QueryStr);
         else
@@ -363,7 +375,7 @@ public abstract class QueryHelper
 
     public static enum Op
       {
-      EQUALS(" = "), LT(" < "), LTE(" <= "), GT(" > "), GTE(" >= "), NOT_EQUALS(" <> "), PLUS(" + "), MINUS(" - "), MULTIPLY(" * "), DIVIDE(" / "), LIKE(" like ");
+      EQUALS(" = "), LT(" < "), LTE(" <= "), GT(" > "), GTE(" >= "), NOT_EQUALS(" <> "), PLUS(" + "), MINUS(" - "), MULTIPLY(" * "), DIVIDE(" / "), LIKE(" like "), NOT_LIKE(" not like ");
 
         Op(String Str)
           {
@@ -535,25 +547,26 @@ public abstract class QueryHelper
         fromTable(_SchemaName, _TableName);
         return this;
       }
-    
+
     public QueryHelper from(String SchemaName, String TableName)
     throws Exception
       {
         fromTable(SchemaName, TableName);
         return this;
       }
-    
-    public QueryHelper tableSample(float Percentage, boolean Repeatable) throws Exception
-    {
+
+    public QueryHelper tableSample(float Percentage, boolean Repeatable)
+    throws Exception
+      {
         if (_Section != S.FROM)
-         throw new Exception("Error: calling fableSample() outside of a from() clause.");
-      
+          throw new Exception("Error: calling fableSample() outside of a from() clause.");
+
         _QueryStr.append(" TABLESAMPLE SYSTEM (").append(Percentage).append(")");
         if (Repeatable == true)
-         _QueryStr.append(" REPEATABLE (2017)"); // 2017 is a prime number i picked just because it's next year :)
-        
+          _QueryStr.append(" REPEATABLE (2017)"); // 2017 is a prime number i picked just because it's next year :)
+
         return this;
-    }
+      }
 
 
     public QueryHelper from(SelectQuery Q)
@@ -708,7 +721,15 @@ public abstract class QueryHelper
     public QueryHelper in(Type_StringPrimitive Col, String[] V)
     throws Exception
       {
+        return in(Col, V, false);
+      }
+
+    public QueryHelper in(Type_StringPrimitive Col, String[] V, boolean not)
+    throws Exception
+      {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
+        if (not == true)
+          _QueryStr.append(" not ");
         _QueryStr.append(" in (");
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
@@ -722,7 +743,15 @@ public abstract class QueryHelper
     public QueryHelper in(Type_StringPrimitive Col, Collection<String> V)
     throws Exception
       {
+        return in(Col, V, false);
+      }
+
+    public QueryHelper in(Type_StringPrimitive Col, Collection<String> V, boolean not)
+    throws Exception
+      {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
+        if (not == true)
+          _QueryStr.append(" not ");
         _QueryStr.append(" in (");
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
@@ -736,6 +765,14 @@ public abstract class QueryHelper
     public QueryHelper in(Type_StringCollection Col, String[] V)
     throws Exception
       {
+        return in(Col, V, false);
+      }
+
+    public QueryHelper in(Type_StringCollection Col, String[] V, boolean not)
+    throws Exception
+      {
+        if (not == true)
+          _QueryStr.append(" not ");
         _QueryStr.append(" TILDA.In(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         _QueryStr.append(", ARRAY[");
@@ -751,6 +788,14 @@ public abstract class QueryHelper
     public QueryHelper in(Type_StringCollection Col, Collection<String> V)
     throws Exception
       {
+        return in(Col, V, false);
+      }
+
+    public QueryHelper in(Type_StringCollection Col, Collection<String> V, boolean not)
+    throws Exception
+      {
+        if (not == true)
+          _QueryStr.append(" not ");
         _QueryStr.append(" TILDA.In(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         _QueryStr.append(", ARRAY[");
@@ -764,19 +809,27 @@ public abstract class QueryHelper
       }
 
 
-    public QueryHelper in(Type_CharPrimitive Col, char[] v)
+    public QueryHelper in(Type_CharPrimitive Col, char[] V)
+    throws Exception
+      {
+        return in(Col, V, false);
+      }
+
+    public QueryHelper in(Type_CharPrimitive Col, char[] V, boolean not)
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
+        if (not == true)
+          _QueryStr.append(" not ");
         _QueryStr.append(" in (");
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
-            if (v != null)
-              for (int i = 0; i < v.length; ++i)
+            if (V != null)
+              for (int i = 0; i < V.length; ++i)
                 {
                   if (i != 0)
                     _QueryStr.append(", ");
-                  TextUtil.EscapeSingleQuoteForSQL(_QueryStr, "" + v[i]);
+                  TextUtil.EscapeSingleQuoteForSQL(_QueryStr, "" + V[i]);
                 }
             _QueryStr.append(")");
             return this;
@@ -784,19 +837,27 @@ public abstract class QueryHelper
         throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
       }
 
-    public QueryHelper in(Type_IntegerPrimitive Col, int[] v)
+    public QueryHelper in(Type_IntegerPrimitive Col, int[] V)
+    throws Exception
+      {
+        return in(Col, V, false);
+      }
+
+    public QueryHelper in(Type_IntegerPrimitive Col, int[] V, boolean not)
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
+        if (not == true)
+          _QueryStr.append(" not ");
         _QueryStr.append(" in (");
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
-            if (v != null)
-              for (int i = 0; i < v.length; ++i)
+            if (V != null)
+              for (int i = 0; i < V.length; ++i)
                 {
                   if (i != 0)
                     _QueryStr.append(", ");
-                  _QueryStr.append(v[i]);
+                  _QueryStr.append(V[i]);
                 }
             _QueryStr.append(")");
             return this;
@@ -804,19 +865,27 @@ public abstract class QueryHelper
         throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
       }
 
-    public QueryHelper in(Type_LongPrimitive Col, long[] v)
+    public QueryHelper in(Type_LongPrimitive Col, long[] V)
+    throws Exception
+      {
+        return in(Col, V, false);
+      }
+
+    public QueryHelper in(Type_LongPrimitive Col, long[] V, boolean not)
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
+        if (not == true)
+          _QueryStr.append(" not ");
         _QueryStr.append(" in (");
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
-            if (v != null)
-              for (int i = 0; i < v.length; ++i)
+            if (V != null)
+              for (int i = 0; i < V.length; ++i)
                 {
                   if (i != 0)
                     _QueryStr.append(", ");
-                  _QueryStr.append(v[i]);
+                  _QueryStr.append(V[i]);
                 }
             _QueryStr.append(")");
             return this;
@@ -824,19 +893,27 @@ public abstract class QueryHelper
         throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
       }
 
-    public QueryHelper in(Type_FloatPrimitive Col, float[] v)
+    public QueryHelper in(Type_FloatPrimitive Col, float[] V)
+    throws Exception
+      {
+        return in(Col, V, false);
+      }
+
+    public QueryHelper in(Type_FloatPrimitive Col, float[] V, boolean not)
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
+        if (not == true)
+          _QueryStr.append(" not ");
         _QueryStr.append(" in (");
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
-            if (v != null)
-              for (int i = 0; i < v.length; ++i)
+            if (V != null)
+              for (int i = 0; i < V.length; ++i)
                 {
                   if (i != 0)
                     _QueryStr.append(", ");
-                  _QueryStr.append(v[i]);
+                  _QueryStr.append(V[i]);
                 }
             _QueryStr.append(")");
             return this;
@@ -844,19 +921,27 @@ public abstract class QueryHelper
         throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
       }
 
-    public QueryHelper in(Type_DoublePrimitive Col, double[] v)
+    public QueryHelper in(Type_DoublePrimitive Col, double[] V)
+    throws Exception
+      {
+        return in(Col, V, false);
+      }
+
+    public QueryHelper in(Type_DoublePrimitive Col, double[] V, boolean not)
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
+        if (not == true)
+          _QueryStr.append(" not ");
         _QueryStr.append(" in (");
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
-            if (v != null)
-              for (int i = 0; i < v.length; ++i)
+            if (V != null)
+              for (int i = 0; i < V.length; ++i)
                 {
                   if (i != 0)
                     _QueryStr.append(", ");
-                  _QueryStr.append(v[i]);
+                  _QueryStr.append(V[i]);
                 }
             _QueryStr.append(")");
             return this;
@@ -864,24 +949,32 @@ public abstract class QueryHelper
         throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
       }
 
-    public QueryHelper in(Type_DatetimePrimitive Col, ZonedDateTime[] v)
+    public QueryHelper in(Type_DatetimePrimitive Col, ZonedDateTime[] V)
+    throws Exception
+      {
+        return in(Col, V, false);
+      }
+
+    public QueryHelper in(Type_DatetimePrimitive Col, ZonedDateTime[] V, boolean not)
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
+        if (not == true)
+          _QueryStr.append(" not ");
         _QueryStr.append(" in (");
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
-            if (v != null)
-              for (int i = 0; i < v.length; ++i)
+            if (V != null)
+              for (int i = 0; i < V.length; ++i)
                 {
                   if (i != 0)
                     _QueryStr.append(", ");
-                  if (DateTimeUtil.isNowPlaceholder(v[i]) == true)
+                  if (DateTimeUtil.isNowPlaceholder(V[i]) == true)
                     _QueryStr.append(_C.getCurrentTimestampStr());
-                  else if (v[i] == null)
+                  else if (V[i] == null)
                     _QueryStr.append("NULL");
                   else
-                    _QueryStr.append("'").append(DateTimeUtil.printDateTimeForSQL(v[i])).append("'");
+                    _QueryStr.append("'").append(DateTimeUtil.printDateTimeForSQL(V[i])).append("'");
                 }
             _QueryStr.append(")");
             return this;
@@ -889,16 +982,24 @@ public abstract class QueryHelper
         throw new Exception("Invalid query syntax: Calling an operator() after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
       }
 
-    public QueryHelper in(Type_DatetimePrimitive Col, Collection<ZonedDateTime> v)
+    public QueryHelper in(Type_DatetimePrimitive Col, Collection<ZonedDateTime> V)
+    throws Exception
+      {
+        return in(Col, V, false);
+      }
+
+    public QueryHelper in(Type_DatetimePrimitive Col, Collection<ZonedDateTime> V, boolean not)
     throws Exception
       {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
+        if (not == true)
+          _QueryStr.append(" not ");
         _QueryStr.append(" in (");
         if (_ST == StatementType.SELECT && _Section == S.WHERE || _ST == StatementType.UPDATE && (_Section == S.WHERE || _Section == S.SET))
           {
-            if (v != null)
+            if (V != null)
               {
-                Iterator<ZonedDateTime> I = v.iterator();
+                Iterator<ZonedDateTime> I = V.iterator();
                 boolean first = true;
                 while (I.hasNext() == true)
                   {
@@ -924,7 +1025,15 @@ public abstract class QueryHelper
     public QueryHelper in(ColumnDefinition Col, SelectQuery Q)
     throws Exception
       {
+        return in(Col, Q, false);
+      }
+
+    public QueryHelper in(ColumnDefinition Col, SelectQuery Q, boolean not)
+    throws Exception
+      {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
+        if (not == true)
+          _QueryStr.append(" not ");
         _QueryStr.append(" in (");
         if (Q._Cardinality != 1)
           throw new Exception("Invalid query syntax: Calling the operator 'in' with a subquery that has a column cardinality " + Q._Cardinality + ": " + _QueryStr.toString());
@@ -1781,8 +1890,13 @@ public abstract class QueryHelper
     public QueryHelper like(Type_StringPrimitive Col, String V)
     throws Exception
       {
+        return like(Col, V, false);
+      }
+    public QueryHelper like(Type_StringPrimitive Col, String V, boolean not)
+    throws Exception
+      {
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(Op.LIKE, V);
+        OpVal(not==true?Op.NOT_LIKE:Op.LIKE, V);
         return this;
       }
 
@@ -1790,6 +1904,13 @@ public abstract class QueryHelper
     public QueryHelper like(Type_StringCollection Col, String V)
     throws Exception
       {
+        return like(Col, V, false);
+      }
+    public QueryHelper like(Type_StringCollection Col, String V, boolean not)
+    throws Exception
+      {
+        if (not == true)
+          _QueryStr.append(" not ");
         _QueryStr.append(" TILDA.like(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         _QueryStr.append(", ");
@@ -1801,6 +1922,13 @@ public abstract class QueryHelper
     public QueryHelper like(Type_StringCollection Col, String[] V)
     throws Exception
       {
+        return like(Col, V, false);
+      }
+    public QueryHelper like(Type_StringCollection Col, String[] V, boolean not)
+    throws Exception
+      {
+        if (not == true)
+          _QueryStr.append(" not ");
         _QueryStr.append(" TILDA.like(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         _QueryStr.append(", ARRAY[");
@@ -1820,6 +1948,11 @@ public abstract class QueryHelper
     public QueryHelper like(Type_StringPrimitive[] Cols, String V)
     throws Exception
       {
+        return like(Cols, V, false);
+      }
+    public QueryHelper like(Type_StringPrimitive[] Cols, String V, boolean not)
+    throws Exception
+      {
         boolean First = true;
         for (Type_StringPrimitive c : Cols)
           {
@@ -1835,22 +1968,22 @@ public abstract class QueryHelper
         if (First == false)
           _QueryStr.append(")");
 
-        OpVal(Op.LIKE, V);
+        OpVal(not==true?Op.NOT_LIKE:Op.LIKE, V);
         return this;
       }
 
 
-    public QueryHelper like(Type_StringPrimitive Col, String[] Vals, boolean Or)
+    public QueryHelper like(Type_StringPrimitive Col, String[] V, boolean or)
     throws Exception
       {
-        if (Vals == null)
+        if (V == null)
           return this;
         boolean First = true;
-        for (String v : Vals)
+        for (String v : V)
           {
             if (First == true)
               First = false;
-            else if (Or == true)
+            else if (or == true)
               or();
             else
               and();
@@ -1859,17 +1992,17 @@ public abstract class QueryHelper
         return this;
       }
 
-    public QueryHelper like(Type_StringPrimitive[] Cols, String[] Vals, boolean Or)
+    public QueryHelper like(Type_StringPrimitive[] Cols, String[] V, boolean or)
     throws Exception
       {
-        if (Vals == null)
+        if (V == null)
           return this;
         boolean First = true;
-        for (String v : Vals)
+        for (String v : V)
           {
             if (First == true)
               First = false;
-            else if (Or == true)
+            else if (or == true)
               or();
             else
               and();
