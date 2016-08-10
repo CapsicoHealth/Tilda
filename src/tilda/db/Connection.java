@@ -395,6 +395,12 @@ public final class Connection
         return _DB.createTable(this, Obj);
       }
 
+    public boolean createKeysEntry(Object Obj)
+    throws Exception
+      {
+        return _DB.createKeysEntry(this, Obj);
+      }
+
     public boolean createView(View V, boolean Drop)
     throws Exception
       {

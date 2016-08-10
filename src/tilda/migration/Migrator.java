@@ -27,6 +27,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Factory;
 import tilda.db.Connection;
+import tilda.db.KeysManager;
 import tilda.db.MasterFactory;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
@@ -100,6 +101,7 @@ public class Migrator
                       DBTables.add(Name.toLowerCase());
                   }
                 RS.close();
+                boolean newKeys = false;
                 for (Object Obj : S._Objects)
                   {
                     MasterFactory.register(S._Package, Obj);
@@ -116,7 +118,23 @@ public class Migrator
                           }
                         else if (C.createTable(Obj) == false)
                           throw new Exception("Cannot upgrade schema by adding the new table '" + Obj.getShortName() + "'.");
+                        newKeys = true;
                         C.commit();
+                      }
+                    else if (Obj._PrimaryKey != null && Obj._PrimaryKey._Autogen == true && KeysManager.hasKey(Obj.getShortName()) == false)
+                      {
+                        LOG.info("The application's data model defines the table '" + Obj.getShortName() + "' with an auto-gen primary key but no entry in the TILDA.KEY table to track it can be found. Trying to create it...");
+                        if (Migrate == false)
+                          {
+                            logMigrationWarning();
+                            ++warnings;
+                          }
+                        else
+                          {
+                            if (C.createKeysEntry(Obj) == false)
+                             throw new Exception("Cannot upgrade the schema by adding a new entry for '"+Obj.getShortName()+"' in the TILDA.KEY table.");
+                            newKeys = true;
+                          }
                       }
                     Map<String, ColInfo> DBColumns = ColInfo.getTableDefinition(C, S._Name.toLowerCase(), Obj._Name.toLowerCase());
                     if (DBColumns.isEmpty() == true)

@@ -162,11 +162,22 @@ public class MSSQL implements DBType
       {
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
-        Generator.getFullTableDDL(getSQlCodeGen(), Out, Obj);
+        Generator.getTableDDL(getSQlCodeGen(), Out, Obj, true, true);
         Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getShortName(), Str.toString());
         return true;
       }
 
+    @Override
+    public boolean createKeysEntry(Connection Con, Object Obj)
+    throws Exception
+      {
+        StringWriter Str = new StringWriter();
+        PrintWriter Out = new PrintWriter(Str);
+        Generator.getTableDDL(getSQlCodeGen(), Out, Obj, false, true);
+        Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getShortName(), Str.toString());
+        return true;
+      }
+    
     @Override
     public boolean createView(Connection Con, View V, boolean Drop)
     throws Exception

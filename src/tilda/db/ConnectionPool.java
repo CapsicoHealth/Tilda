@@ -277,6 +277,7 @@ public class ConnectionPool
           }
 
         C.commit();
+        KeysManager.reloadAll();
       }
 
     private static void ReorderTildaListWithDependencies(List<Schema> L)

@@ -36,7 +36,6 @@ import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.generation.Generator;
 import tilda.generation.interfaces.CodeGenSql;
-import tilda.generation.java8.JavaJDBCType;
 import tilda.generation.postgres9.PostgresType;
 import tilda.migration.ColInfo;
 import tilda.parsing.parts.Column;
@@ -176,7 +175,18 @@ public class PostgreSQL implements DBType
       {
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
-        Generator.getFullTableDDL(getSQlCodeGen(), Out, Obj);
+        Generator.getTableDDL(getSQlCodeGen(), Out, Obj, true, true);
+        Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Str.toString());
+        return true;
+      }
+
+    @Override
+    public boolean createKeysEntry(Connection Con, Object Obj)
+    throws Exception
+      {
+        StringWriter Str = new StringWriter();
+        PrintWriter Out = new PrintWriter(Str);
+        Generator.getTableDDL(getSQlCodeGen(), Out, Obj, false, true);
         Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Str.toString());
         return true;
       }
@@ -507,7 +517,7 @@ public class PostgreSQL implements DBType
         if (A == null)
           return null;
         Collection<?> val = isSet == true ? CollectionUtil.toSet(A.getArray())
-                                          : CollectionUtil.toList(A.getArray());
+        : CollectionUtil.toList(A.getArray());
         A.free();
         return val;
       }
@@ -518,7 +528,7 @@ public class PostgreSQL implements DBType
     throws Exception
       {
         // TODO Auto-generated method stub
-        
+
       }
 
 
@@ -542,13 +552,14 @@ public class PostgreSQL implements DBType
     public void setOrderByWithNullsOrdering(Connection C, StringBuilder Str, ColumnDefinition Col, boolean Asc, boolean NullsLast)
       {
         Col.getFullColumnVarForSelect(C, Str);
-        Str.append(Asc==true?" ASC":" DESC");
-        Str.append(" NULLS ").append(NullsLast == true ? "LAST" : "FIRST");        
+        Str.append(Asc == true ? " ASC" : " DESC");
+        Str.append(" NULLS ").append(NullsLast == true ? "LAST" : "FIRST");
       }
 
 
     @Override
-    public void truncateTable(Connection C, String schemaName, String tableName) throws Exception
+    public void truncateTable(Connection C, String schemaName, String tableName)
+    throws Exception
       {
         StringBuilder Str = new StringBuilder();
         Str.append("TRUNCATE ");

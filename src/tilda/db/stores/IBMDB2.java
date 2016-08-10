@@ -159,6 +159,13 @@ public class IBMDB2 implements DBType
       }
 
     @Override
+    public boolean createKeysEntry(Connection Con, Object Obj)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+    
+    @Override
     public boolean createView(Connection Con, View V, boolean Drop)
     throws Exception
       {
@@ -286,6 +293,8 @@ public class IBMDB2 implements DBType
         throw new UnsupportedOperationException();
         
       }
+
+
 
 
   }

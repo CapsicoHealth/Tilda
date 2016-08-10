@@ -30,33 +30,51 @@ import tilda.parsing.Parser;
 
 public class KeysManager
   {
-    protected static final Logger     LOG = LogManager.getLogger(Parser.class.getName());
+    protected static final Logger          LOG = LogManager.getLogger(Parser.class.getName());
 
     protected static Map<String, Key_Data> _M  = null;
 
-    public static long getKey(String ObjectName) throws Exception
+    public static long getKey(String ObjectName)
+    throws Exception
       {
-        Init();
-        
+        Init(false);
         Key_Data k = _M.get(ObjectName);
         if (k == null)
-         throw new Exception("Requested a key for unknown object '"+ObjectName+"'.");
-        
+          throw new Exception("Requested a key for unknown object '" + ObjectName + "'.");
+
         return k.nextKey();
+      }
+
+    public static boolean hasKey(String ObjectName)
+    throws Exception
+      {
+        Init(false);
+        return _M.get(ObjectName) != null;
+      }
+
+    public static void reloadAll()
+    throws Exception
+      {
+        Init(true);
       }
 
     protected static final String _SEM = "KEYS";
 
-    protected static void Init() throws SQLException
+    protected static void Init(boolean reinit)
+    throws SQLException
       {
-        if (_M == null || _M.isEmpty() == true)
+        if (_M == null || _M.isEmpty() == true || reinit == true)
           synchronized (_SEM)
             {
-              if (_M == null || _M.isEmpty() == true)
+              if (_M == null || _M.isEmpty() == true || reinit == true)
                 {
                   Connection C = null;
                   try
                     {
+                      if (_M == null || _M.isEmpty() == true)
+                        LOG.info("Loading the tilda key definitions.");
+                      else
+                        LOG.info("Reloading the tilda key definitions.");
                       _M = new HashMap<String, Key_Data>();
                       C = ConnectionPool.get(_SEM);
                       ListResults<Key_Data> L = Key_Factory.LookupWhereAllByName(C, 0, -1);

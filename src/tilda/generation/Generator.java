@@ -58,7 +58,7 @@ public class Generator
 
 
     public static boolean generate(Schema S, GeneratorSession G)
-      throws Exception
+    throws Exception
       {
         LOG.info("Generating Tilda code for Schema '" + S.getFullName() + "'.");
 
@@ -87,7 +87,7 @@ public class Generator
 
 
     protected static void genTildaSql(GeneratorSession G, File GenFolder, Schema S)
-      throws Exception
+    throws Exception
       {
         CodeGenSql CG = G.getSql();
         CodeGenSqlDocs DG = G.getSqlDocs();
@@ -95,7 +95,7 @@ public class Generator
         File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(S._Objects.get(0)));
         PrintWriter Out = new PrintWriter(f);
         LOG.debug("  Generating the SQL file.");
-//        LOG.debug("       -> " + f.getCanonicalPath());
+        // LOG.debug(" -> " + f.getCanonicalPath());
         DG.FileDocs(Out, G);
         Out.println();
         CG.genFileStart(Out, S);
@@ -106,7 +106,7 @@ public class Generator
               Out.println();
               Out.println();
               DG.ObjectDocs(Out, G, O);
-              getFullTableDDL(CG, Out, O);
+              getTableDDL(CG, Out, O, true, true);
             }
         Out.println();
         for (View V : S._Views)
@@ -123,15 +123,21 @@ public class Generator
       }
 
 
-    public static void getFullTableDDL(CodeGenSql CG, PrintWriter Out, Object O)
+    public static void getTableDDL(CodeGenSql CG, PrintWriter Out, Object O, boolean mainDDL, boolean keysDDL)
     throws Exception
       {
-        CG.genDDL(Out, O);
-        for (Index I : O._Indices)
-          if (I != null)
-            CG.genIndex(Out, I);
-        if (O._PrimaryKey != null && O._PrimaryKey._Autogen == true)
-          CG.genKeysManagement(Out, O);
+        if (mainDDL == true)
+          {
+            CG.genDDL(Out, O);
+            for (Index I : O._Indices)
+              if (I != null)
+                CG.genIndex(Out, I);
+          }
+        if (keysDDL == true)
+          {
+            if (O._PrimaryKey != null && O._PrimaryKey._Autogen == true)
+              CG.genKeysManagement(Out, O);
+          }
       }
 
     public static void getFullViewDDL(CodeGenSql CG, PrintWriter Out, View V)
@@ -142,14 +148,14 @@ public class Generator
 
 
     protected static void genTildaSupport(GeneratorSession G, File GenFolder, Schema S)
-      throws Exception
+    throws Exception
       {
         CodeGenTildaSupport CG = G.getGenTildaSupport();
         CodeGenDocs DG = G.getGenDocs();
         File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(null));
         PrintWriter Out = new PrintWriter(f);
         LOG.debug("  Generating base generic Tilda support class.");
-//        LOG.debug("       -> " + f.getCanonicalPath());
+        // LOG.debug(" -> " + f.getCanonicalPath());
         CG.genFileStart(Out, S);
         Out.println();
         DG.SupportClassDocs(Out, G);
@@ -165,7 +171,7 @@ public class Generator
       }
 
     protected static void genTildaData(GeneratorSession G, File GenFolder, Object O)
-      throws Exception
+    throws Exception
       {
         CodeGenTildaData CG = G.getGenTildaData();
         CodeGenDocs DG = G.getGenDocs();
@@ -173,7 +179,7 @@ public class Generator
         File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(O));
         PrintWriter Out = new PrintWriter(f);
         LOG.debug("  Generating Tilda class for Object '" + O.getFullName() + "'.");
-//        LOG.debug("       -> " + f.getCanonicalPath());
+        // LOG.debug(" -> " + f.getCanonicalPath());
 
         DG.DataFileDocs(Out, G);
         Out.println();
@@ -329,18 +335,18 @@ public class Generator
         CG.genMethodToString(Out, G, O);
 
         if (O._Json.isEmpty() == false)
-         {
-           Out.println();
-           DG.docMethodToJSON(Out, G, O);
-           CG.genMethodToJSON(Out, G, O);
-         }
+          {
+            Out.println();
+            DG.docMethodToJSON(Out, G, O);
+            CG.genMethodToJSON(Out, G, O);
+          }
 
         CG.genClassEnd(Out, G);
         Out.close();
       }
 
     protected static void genTildaFactory(GeneratorSession G, File GenFolder, Object O)
-      throws Exception
+    throws Exception
       {
         CodeGenTildaFactory CG = G.getGenTildaFactory();
         CodeGenDocs DG = G.getGenDocs();
@@ -348,7 +354,7 @@ public class Generator
         File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(O));
         PrintWriter Out = new PrintWriter(f);
         LOG.debug("  Generating Tilda class for Object '" + O.getFullName() + "'.");
-//        LOG.debug("       -> " + f.getCanonicalPath());
+        // LOG.debug(" -> " + f.getCanonicalPath());
 
         DG.FactoryFileDocs(Out, G);
         Out.println();
@@ -442,7 +448,7 @@ public class Generator
       }
 
     protected static void genTildaJson(GeneratorSession G, File GenFolder, Object O)
-      throws Exception
+    throws Exception
       {
         CodeGenTildaJson CG = G.getGenTildaJson();
         CodeGenDocs DG = G.getGenDocs();
@@ -450,7 +456,7 @@ public class Generator
         File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(O));
         PrintWriter Out = new PrintWriter(f);
         LOG.debug("  Generating Tilda JSON class for Object '" + O.getFullName() + "'.");
-//        LOG.debug("       -> " + f.getCanonicalPath());
+        // LOG.debug(" -> " + f.getCanonicalPath());
         DG.JsonFileDocs(Out, G, O);
         Out.println();
         CG.genFileStart(Out, O._ParentSchema);
@@ -483,7 +489,7 @@ public class Generator
 
 
     protected static File genAppData(GeneratorSession G, File GenFolder, Object O)
-      throws Exception
+    throws Exception
       {
         CodeGenAppData CG = G.getGenAppData();
         CodeGenDocs DG = G.getGenDocs();
@@ -492,7 +498,7 @@ public class Generator
           {
             PrintWriter Out = new PrintWriter(f);
             LOG.debug("  Generating template App Data class for Object '" + O.getFullName() + "'.");
-//            LOG.debug("       -> " + f.getCanonicalPath());
+            // LOG.debug(" -> " + f.getCanonicalPath());
             DG.AppFileDocs(Out, G);
             Out.println();
             CG.genFileStart(Out, O._ParentSchema);
@@ -511,7 +517,7 @@ public class Generator
       }
 
     protected static File genAppFactory(GeneratorSession G, File GenFolder, Object O)
-      throws Exception
+    throws Exception
       {
         CodeGenAppFactory CG = G.getGenAppFactory();
         CodeGenDocs DG = G.getGenDocs();
@@ -520,7 +526,7 @@ public class Generator
           {
             PrintWriter Out = new PrintWriter(f);
             LOG.debug("  Generating template App Factory class for Object '" + O.getFullName() + "'.");
-//            LOG.debug("       -> " + f.getCanonicalPath());
+            // LOG.debug(" -> " + f.getCanonicalPath());
             DG.AppFileDocs(Out, G);
             Out.println();
             CG.genFileStart(Out, O._ParentSchema);
@@ -539,7 +545,7 @@ public class Generator
       }
 
     protected static File genAppJson(GeneratorSession G, File GenFolder, Object O)
-      throws Exception
+    throws Exception
       {
         CodeGenAppJson CG = G.getGenAppJson();
         CodeGenDocs DG = G.getGenDocs();
@@ -548,7 +554,7 @@ public class Generator
           {
             PrintWriter Out = new PrintWriter(f);
             LOG.debug("  Generating template App Json class for Object '" + O.getFullName() + "'.");
-//            LOG.debug("       -> " + f.getCanonicalPath());
+            // LOG.debug(" -> " + f.getCanonicalPath());
             DG.AppFileDocs(Out, G);
             Out.println();
             CG.genFileStart(Out, O._ParentSchema);
