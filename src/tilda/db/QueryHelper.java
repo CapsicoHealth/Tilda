@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Set;
 
 import tilda.types.*;
+import tilda.db.QueryHelper.CaseClause;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnType;
 import tilda.enums.StatementType;
@@ -201,6 +202,69 @@ public abstract class QueryHelper
         return selectColumnBase(_C.getAggregateStr(Agg) + "(T" + TableId + ".\"" + ColumnName + "\") as \"" + AliasName + "\"");
       }
 
+    protected static class CaseWhen
+      {
+        protected CaseWhen(SelectQuery whereClause, String value)
+          {
+            _WhereClause = whereClause;
+            _Value = value;
+          }
+
+        protected final SelectQuery _WhereClause;
+        protected final String      _Value;
+      }
+
+    public static class CaseClause
+      {
+        public CaseClause()
+          {
+          }
+
+        protected ColumnDefinition _Col;
+        protected List<CaseWhen>   _Cases = new ArrayList<CaseWhen>();
+
+        public void when(SelectQuery whereClause, String value)
+        throws Exception
+          {
+            for (CaseWhen c : _Cases)
+              if (c._Value.equals(value) == true)
+                throw new Exception("Invalid query syntax: creating a case clause with a duplicate value '" + value + "'.");
+            if (whereClause._FullSelect == true)
+              throw new Exception("Invalid query syntax: creating a case clause with a full select query. Only a sub where clause query is valid.");
+
+            _Cases.add(new CaseWhen(whereClause, value));
+          }
+      }
+
+    public QueryHelper selectCase(CaseClause clause, String elseValue, String aliasName)
+    throws Exception
+      {
+        if (_Section != S.START || _ST != StatementType.SELECT)
+          throw new Exception("Invalid query syntax: adding a case clause after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+        if (clause._Cases.isEmpty() == true)
+          throw new Exception("Invalid query syntax: adding a case clause without any when sub-clauses.");
+        if (TextUtil.isNullOrEmpty(aliasName) == true)
+          throw new Exception("Invalid query syntax: adding a case clause without an alias name.");
+        if (TextUtil.isNullOrEmpty(elseValue) == true)
+          throw new Exception("Invalid query syntax: adding a case clause without an else value.");
+
+        StringBuilder Str = new StringBuilder();
+        Str.append("case ");
+        for (CaseWhen c : clause._Cases)
+          {
+            Str.append(" when ").append(c._WhereClause.toString()).append(" then ");
+            TextUtil.EscapeSingleQuoteForSQL(Str, c._Value);
+          }
+        Str.append(" else ");
+        TextUtil.EscapeSingleQuoteForSQL(Str, elseValue);
+        Str.append(" end as \"").append(aliasName).append("\"");
+
+        clause._Col = new ColumnDefinition(_SchemaName, _TableName, aliasName, 0, ColumnType.STRING, false, "");
+        _Columns.add(clause._Col);
+
+        return selectColumnBase(Str.toString());
+      }
+
     protected final QueryHelper fromTable(String SchemaName, String TableName)
     throws Exception
       {
@@ -251,10 +315,27 @@ public abstract class QueryHelper
 
 
     public QueryHelper subWhere(SelectQuery subWhere)
+    throws Exception
       {
+        if (subWhere._FullSelect == true)
+          throw new Exception("Invalid query syntax: adding a sub where-clause with a full select query.");
         _QueryStr.append(subWhere.toString());
         return this;
       }
+
+    public QueryHelper subWhere(CaseClause clause) throws Exception
+      {
+        boolean First = true;
+        for (CaseWhen when : clause._Cases)
+          {
+            if (First == true) First = false; else or();
+            openPar();
+            _QueryStr.append(when._WhereClause.toString());
+            closePar();
+          }
+        return this;
+      }
+
 
     /**
      * Validates the subWhereClause against the TildaSQL parser and if it passes, adds it to the
@@ -2146,6 +2227,20 @@ public abstract class QueryHelper
         return this;
       }
 
+    public QueryHelper groupBy(CaseClause clause)
+    throws Exception
+      {
+        if (_Section != S.WHERE && _Section != S.GROUPBY || _ST != StatementType.SELECT)
+          throw new Exception("Invalid query syntax: GroupBy after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+        if (_Section == S.GROUPBY)
+          _QueryStr.append(", ");
+        else
+          _QueryStr.append(" group by ");
+        _QueryStr.append("\"").append(clause._Col.getName()).append("\"");
+        _Section = S.GROUPBY;
+        return this;
+      }
+
     protected void orderByBase()
     throws Exception
       {
@@ -2243,4 +2338,5 @@ public abstract class QueryHelper
       {
         return _QueryStr.toString();
       }
+
   }

@@ -36,6 +36,7 @@ public class StringLongListRP implements RecordProcessor
         String s = RS.getString(1);
         long   l = RS.getLong  (2);
         _Res.add(new StringLongPair(s, l));
+        _TotalSum+=l;
         return true;
       }
 
@@ -45,9 +46,15 @@ public class StringLongListRP implements RecordProcessor
       }
 
     protected List<StringLongPair> _Res = new ArrayList<StringLongPair>();
+    protected long _TotalSum = 0;
 
     public List<StringLongPair> getResult()
       {
         return _Res;
       }
+    public long getTotalSum()
+      {
+        return _TotalSum;
+      }
+    
   }

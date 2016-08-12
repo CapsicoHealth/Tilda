@@ -575,4 +575,9 @@ public class CollectionUtil
           }
         return result;
       }
+
+    public static String[] toStringArray(List<String> L)
+      {
+        return L.toArray(new String[L.size()]);
+      }
   }
