@@ -2026,7 +2026,39 @@ public abstract class QueryHelper
         _QueryStr.append("])");
         return this;
       }
+    
+    public QueryHelper like(Type_StringCollection Col, Collection<String> V)
+    throws Exception
+      {
+        return like(Col, V, false);
+      }
 
+    public QueryHelper like(Type_StringCollection Col, Collection<String> V, boolean not)
+    throws Exception
+      {
+        if (V == null || V.isEmpty() == true)
+          throw new Exception("Invalid query syntax: Calling the operator 'like' with a null or empty array/list.");
+        if (isWhereClause() == false)
+          throw new Exception("Invalid query syntax: Calling the operator 'like' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+
+        if (not == true)
+          _QueryStr.append(" not ");
+        _QueryStr.append(" TILDA.like(");
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(", ARRAY[");
+        boolean First = true;
+        for (String v : V)
+          {
+            if (First == true)
+              First = false;
+            else
+              _QueryStr.append(", ");
+            TextUtil.EscapeSingleQuoteForSQL(_QueryStr, v);
+          }
+        _QueryStr.append("])");
+        return this;
+      }
+    
     public QueryHelper like(Type_StringPrimitive[] Cols, String V)
     throws Exception
       {
