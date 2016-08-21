@@ -72,7 +72,7 @@ public class TypeManager
             _LastError = "Unknown column name '" + colName + "'.";
             return null;
           }
-        return ColumnDefinition.Create(column.getText(), ColumnType.STRING, false, true, "Default STRING variable");
+        return ColumnDefinition.Create(null, null, column.getText(), ColumnType.STRING, false, true, "Default STRING variable");
       }
 
     public boolean handleType(ColumnType Type, ParserRuleContext ctx)

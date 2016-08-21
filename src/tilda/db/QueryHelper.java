@@ -24,13 +24,24 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import tilda.types.*;
-import tilda.db.QueryHelper.CaseClause;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnType;
 import tilda.enums.StatementType;
 import tilda.grammar.ErrorList;
 import tilda.grammar.TildaSQLValidator;
+import tilda.types.ColumnDefinition;
+import tilda.types.Nullable;
+import tilda.types.Type_BooleanPrimitive;
+import tilda.types.Type_CharCollection;
+import tilda.types.Type_CharPrimitive;
+import tilda.types.Type_DatetimePrimitive;
+import tilda.types.Type_DoublePrimitive;
+import tilda.types.Type_FloatPrimitive;
+import tilda.types.Type_IntegerCollection;
+import tilda.types.Type_IntegerPrimitive;
+import tilda.types.Type_LongPrimitive;
+import tilda.types.Type_StringCollection;
+import tilda.types.Type_StringPrimitive;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.TextUtil;
 

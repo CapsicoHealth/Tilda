@@ -85,11 +85,11 @@ public class TildaSQL
 
    /*@formatter:off*/
     protected static List<ColumnDefinition> _COLS = CollectionUtil.toList(new ColumnDefinition[] {
-           ColumnDefinition.Create("DESYNPUF_ID"       , ColumnType.STRING  , false, false, "De-identified patient id")
-          ,ColumnDefinition.Create("CLM_ADMSN_DT"      , ColumnType.DATETIME, false, true , "Claim admission date")
-          ,ColumnDefinition.Create("CLM_FROM_DT"       , ColumnType.DATETIME, false, true , "Claim start date")
-          ,ColumnDefinition.Create("NCH_BENE_DSCHRG_DT", ColumnType.DATETIME, false, true , "Claim discharge date")
-          ,ColumnDefinition.Create("CLM_THRU_DT"       , ColumnType.DATETIME, false, true , "Claim end date")
+           ColumnDefinition.Create(null, null, "DESYNPUF_ID"       , ColumnType.STRING  , false, false, "De-identified patient id")
+          ,ColumnDefinition.Create(null, null, "CLM_ADMSN_DT"      , ColumnType.DATETIME, false, true , "Claim admission date")
+          ,ColumnDefinition.Create(null, null, "CLM_FROM_DT"       , ColumnType.DATETIME, false, true , "Claim start date")
+          ,ColumnDefinition.Create(null, null, "NCH_BENE_DSCHRG_DT", ColumnType.DATETIME, false, true , "Claim discharge date")
+          ,ColumnDefinition.Create(null, null, "CLM_THRU_DT"       , ColumnType.DATETIME, false, true , "Claim end date")
 
        ,new Type_FloatPrimitiveNull   ("CMS", "CLAIMSBENEFICIARYVIEW", "CLM_PMT_AMT"            , 7, ""),
         new Type_StringPrimitiveNull  ("CMS", "CLAIMSBENEFICIARYVIEW", "PRVDR_CLASS"            , 10, ""), 

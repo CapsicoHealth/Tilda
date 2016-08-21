@@ -88,15 +88,15 @@ public class ColumnDefinition
         return _ColumnName;
       }
 
-    public static ColumnDefinition Create(String ColumnName, ColumnType Type, boolean Collection, boolean Nullable, String Description)
-      {
-        return Create(null, null, ColumnName, Type, Collection, Nullable, Description);
-      }
+//    public static ColumnDefinition Create(String ColumnName, ColumnType Type, boolean Collection, boolean Nullable, String Description)
+//      {
+//        return Create(null, null, ColumnName, Type, Collection, Nullable, Description);
+//      }
 
-    public static ColumnDefinition Create(String TableName, String ColumnName, ColumnType Type, boolean Collection, boolean Nullable, String Description)
-      {
-        return Create(null, TableName, ColumnName, Type, Collection, Nullable, Description);
-      }
+//    public static ColumnDefinition Create(String TableName, String ColumnName, ColumnType Type, boolean Collection, boolean Nullable, String Description)
+//      {
+//        return Create(null, TableName, ColumnName, Type, Collection, Nullable, Description);
+//      }
 
     public static ColumnDefinition Create(String SchemaName, String TableName, String ColumnName, ColumnType Type, boolean Collection, boolean Nullable, String Description)
       {
