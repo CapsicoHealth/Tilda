@@ -142,7 +142,7 @@ define(['text!../templates/tilda_schema/_new.html', "../core/parser"], function(
 
       var viewSVG = this.schemaParser_view.paper.$el.find("svg")[0];
       var that = this;
-      var fileName = "_tilda."+this.packageInfo.schema.name+".html";
+      var fileName = "_tilda."+this.packageInfo.schema.name.toUpperCase()+".html";
       var docText = _.map(that.schemaParser_object.schema.documentation.description, function(line){
         return "<h4>"+line+"</h4>\n"
       }).join("\n")
@@ -152,6 +152,17 @@ define(['text!../templates/tilda_schema/_new.html', "../core/parser"], function(
             var truncated = false;
             var script = "\n\
               <script>\n\
+                var bindElementClickEvent = function(){\n\
+                  var eventHandler = function(event){\n\
+                    var name = this.querySelector('tspan').innerHTML;\n\
+                    console.log(name);\n\
+                    window.location.href = '#'+name.toUpperCase()+'_DIV';\n\
+                  }\n\
+                  elements = document.getElementsByClassName('element')\n\
+                  for (var i = 0; i < elements.length; i++) {\n\
+                      elements[i].addEventListener('click', eventHandler, false);\n\
+                  }\n\
+                }\n\
                 window.onload = function(){\n\
                   var svgs = document.getElementsByTagName('svg');\n\
                   for(i=0;i<svgs.length;i++){\n\
@@ -161,6 +172,7 @@ define(['text!../templates/tilda_schema/_new.html', "../core/parser"], function(
                     svg.width.baseVal.valueAsString = bbox.width;\n\
                     svg.height.baseVal.valueAsString = bbox.height;\n\
                   }\n\
+                  bindElementClickEvent();\n\
                 }\n\
               </script>";
             var blob = new Blob(["<style>"+css+"</style>", 
