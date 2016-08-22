@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.generation.GeneratorSession;
+import tilda.generation.graphviz.GraphvizUtil;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.utils.FileUtil;
@@ -43,7 +44,7 @@ public class DocGen {
     
     public static String getSchemaChromeAppGenHTML(Schema S, String Extension)
     {
-        return S._ProjectRoot + File.separator + S._Package.replace(".", File.separator) + File.separator + "TILDA___Docs."+S._Name + Extension;
+        return S._ProjectRoot + File.separator + S._Package.replace(".", File.separator) + File.separator + "_tilda."+S._Name + Extension;
     }
     
     public static String getSVGCSSPath(Schema S){
@@ -80,13 +81,20 @@ public class DocGen {
       }
     public void writeSchema()
     {
-      try
-        {
-          writeHTML();
+        File file = new File(getSchemaChromeAppGenHTML(schema, ".html"));
+        if(!file.exists()){
+        	new GraphvizUtil(this.schema, G).writeSchema();
         }
-      catch (Exception e)
-        {
-          e.printStackTrace();
+        else {
+            try
+	            {
+	              writeHTML();
+	            }
+			catch (Exception e)
+			   {
+			     e.printStackTrace();
+			   }
+        	
         }
     }
 

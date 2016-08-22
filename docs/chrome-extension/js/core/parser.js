@@ -78,8 +78,7 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
         // Store preferences.
         var syncSet = {};
         // console.log("key -> "+key+"\nObject -> "+JSON.stringify(event.toJSON()));
-        syncSet[key] = event.toJSON();
-        chrome.storage.local.set(syncSet);
+        window.tildaCache[key] = event.toJSON();
       }
 
       var gotoNextPosition = function(currentPos){
@@ -148,30 +147,36 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
           var position = eventObject.get("data").position;
         }
         // Store preferences.
-        var syncSet = {};
-        syncSet[key] = event.toJSON();
-        chrome.storage.local.set(syncSet);
+        window.tildaCache[key] = event.toJSON();
       }
-      var renderObjectRels = function(){
-        _.each(that.objects, function(object, i){
-          var object = that.objects.at(i);
-          if(renderObjectRelations[object.get("_type")] != null){
-            renderObjectRelations[object.get("_type")](graph, object, that.objects, gotoNextPosition(currentPos));
-          }
-        })
+      var objects = this.objects
+      if(this.opts.viewOnly){
+        objects = new ObjectCollection(objects.where({_type: "View"}));
       }
-      _.each(this.objects, function(object, i){
-        var object = that.objects.at(i);
+
+      _.each(objects, function(object, i){
+        var object = objects.at(i);
         var key = object.get("pKey")+"#"+object.get("name").toLowerCase();
-        if (renderObject[object.get("_type")] != null){
+        var objFn = renderObject[object.get("_type")]
+        if ( objFn != null){
           var position = gotoNextPosition(currentPos);
           var objectAttr = window.tildaCache[key];
-          var t = renderObject[object.get("_type")](graph, object, position, objectAttr);
+          var t = objFn(graph, object, position, objectAttr);
           object.set("graphId", t.get("id"));
+          object.set("rendered", true);
           t.on('change:position', _.debounce(elementChangeHandler, 500, { 'maxWait' : 1000 }));
         }
       })
-      renderObjectRels();
+
+      _.each(objects, function(object, i){
+        var object = objects.at(i);
+        var key = that.opts.viewOnly ? "only"+object.get("_type") : object.get("_type")
+        var objFn = renderObjectRelations[key]
+        if(objFn != null){
+          objFn(graph, object, that.objects, gotoNextPosition(currentPos));
+        }
+      })
+
     }
     this.parse();
     this.render();
