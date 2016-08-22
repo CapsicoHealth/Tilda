@@ -60,8 +60,7 @@ define(["jointjs", "lodash", "jquery",
       var key = event.get("attrs").key.toLowerCase();
       var syncSet = {}
       var attributes = event.attributes;
-      syncSet[key] = _.merge(attributes, { vertices: this.get('vertices') })
-      chrome.storage.local.set(syncSet);
+      window.tildaCache[key] = _.merge(attributes, { vertices: this.get('vertices') })
     }
     if(vertices){
       link.set('vertices', vertices);
@@ -80,8 +79,7 @@ define(["jointjs", "lodash", "jquery",
     }
     // Store preferences.
     var syncSet = {};
-    syncSet[key] = event.toJSON();
-    chrome.storage.local.set(syncSet);
+    window.tildaCache[key] = event.toJSON();
   }
 
   var renderObjectRelations = {
@@ -143,6 +141,37 @@ define(["jointjs", "lodash", "jquery",
         renderLink(graph, object, target, superset)
       })
 
+    },
+    "onlyView": function(graph, object, superset, position){
+      var rels = [];
+      _.each(object.get("data").columns, function(ele, i){
+        if(ele.sameas != null && ele.sameas.split(".").length > 1 ){
+          rels.push(ele.sameas.split(".").reverse()[1]);
+        }
+      })
+      rels = _.uniq(rels);
+      _.each(rels, function(relation, i){
+        var package = superset.at(0).get("package")
+        var pKey = superset.at(0).get("pKey");
+        var key = pKey+"#"+relation.toLowerCase();
+        var target = superset.findWhere({name: relation}, {caseInsensitive: true})
+        if(target == null){
+          target = new ParserElement({data: {name: relation }, name: relation,
+             _type: "Object", inSchema: false, package: package, pKey: pKey });
+          superset.add(target);
+        }
+        if(target.get("rendered") != true){
+          var objectAttr = window.tildaCache[key];
+          var t = renderObject[target.get("_type")](graph, target, position, objectAttr);
+          target.set({graphId: t.get("id")});
+          t.on('change:position', _.debounce(function(event){
+            elementChangeHandler(superset, event);
+          }, 500, { 'maxWait' : 1000 }));
+          target.set("rendered", true);
+        }
+        renderLink(graph, object, target, superset)
+
+      })
     },
     "Mapper": function(graph, object, superset, position){
       var rels = [];
