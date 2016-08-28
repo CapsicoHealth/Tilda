@@ -44,7 +44,6 @@ public class JsonValidation
 
     public boolean Validate(ParserSession PS, Column C)
       {
-/*
         List<ColumnDefinition> ColDefs = new ArrayList<ColumnDefinition>();
         for (JsonField f : C._JsonSchema._Fields)
           {
@@ -56,10 +55,12 @@ public class JsonValidation
         for (String s : _Rule)
           Str.append(s).append(" ");
 
+/*
         WhereClauseCodeGenJavaOnJson WC_CG = new WhereClauseCodeGenJavaOnJson();
         TildaSQLValidator Validator = new TildaSQLValidator(Str.toString());
         Validator.setColumnEnvironment(ColDefs);
         Validator.setCodeGen(WC_CG);
+        Validator.validate();
 
         if (Validator.getParserSyntaxErrors() != 0)
           {

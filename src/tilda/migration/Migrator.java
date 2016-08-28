@@ -101,6 +101,38 @@ public class Migrator
                       DBTables.add(Name.toLowerCase());
                   }
                 RS.close();
+
+                // Some DBs, such as Postgres, don't allow to alter a column that's reused as part of a view. So in order to
+                // prepare, we can drop all views.
+                if (Migrate == true)
+                  {
+                    boolean DbAction = false;
+                    for (View V : S._Views)
+                      {
+                        if (DBViews.contains(V._Name.toLowerCase()) == true)
+                          {
+                            if (C.dropView(V) == false)
+                              throw new Exception("Cannot upgrade schema by dropping the old view '" + V.getShortName() + "'.");
+                            DbAction = true;
+                          }
+                      }
+                    if (DbAction == true)
+                      C.commit();
+                  }
+                else
+                  {
+                    for (View V : S._Views)
+                      {
+                        if (DBViews.contains(V._Name.toLowerCase()) == false)
+                          {
+                            LOG.info("The application's data model defines the view '" + V.getShortName() + "' which cannot be found in the database. Trying to create it...");
+                            logMigrationWarning();
+                            ++warnings;
+                          }
+                      }
+                  }
+
+
                 boolean newKeys = false;
                 for (Object Obj : S._Objects)
                   {
@@ -132,7 +164,7 @@ public class Migrator
                         else
                           {
                             if (C.createKeysEntry(Obj) == false)
-                             throw new Exception("Cannot upgrade the schema by adding a new entry for '"+Obj.getShortName()+"' in the TILDA.KEY table.");
+                              throw new Exception("Cannot upgrade the schema by adding a new entry for '" + Obj.getShortName() + "' in the TILDA.KEY table.");
                             newKeys = true;
                           }
                       }
@@ -253,24 +285,13 @@ public class Migrator
                       }
                   }
 
-                for (View V : S._Views)
+                if (Migrate == true)
                   {
-                    boolean Drop = DBViews.contains(V._Name.toLowerCase());
-                    if (Drop == false)
+                    for (View V : S._Views)
                       {
-                        LOG.info("The application's data model defines the view '" + V.getShortName() + "' which cannot be found in the database. Trying to create it...");
-                        if (Migrate == false)
-                          {
-                            logMigrationWarning();
-                            ++warnings;
-                            continue;
-                          }
-
+                        if (C.createView(V) == false)
+                          throw new Exception("Cannot upgrade schema by adding the new view '" + V.getShortName() + "'.");
                       }
-                    else
-                      LOG.info("The application's data model defines the view '" + V.getShortName() + "' which needs to be re-created...");
-                    if (C.createView(V, Drop) == false)
-                      throw new Exception("Cannot upgrade schema by adding the new view '" + V.getShortName() + "'.");
                     C.commit();
                   }
               }

@@ -401,10 +401,16 @@ public final class Connection
         return _DB.createKeysEntry(this, Obj);
       }
 
-    public boolean createView(View V, boolean Drop)
+    public boolean dropView(View V)
     throws Exception
       {
-        return _DB.createView(this, V, Drop);
+        return _DB.dropView(this, V);
+      }
+
+    public boolean createView(View V)
+    throws Exception
+      {
+        return _DB.createView(this, V);
       }
 
     public boolean createSchema(Schema S)

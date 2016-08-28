@@ -166,7 +166,14 @@ public class IBMDB2 implements DBType
       }
     
     @Override
-    public boolean createView(Connection Con, View V, boolean Drop)
+    public boolean dropView(Connection Con, View V)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public boolean createView(Connection Con, View V)
     throws Exception
       {
         throw new UnsupportedOperationException();

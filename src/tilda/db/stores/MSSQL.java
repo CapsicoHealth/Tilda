@@ -179,13 +179,17 @@ public class MSSQL implements DBType
       }
     
     @Override
-    public boolean createView(Connection Con, View V, boolean Drop)
+    public boolean dropView(Connection Con, View V)
     throws Exception
       {
-        if (Drop == true)
-          {
-            Con.ExecuteUpdate(V._ParentSchema._Name, V.getShortName(), "DROP VIEW [" + V._ParentSchema._Name + "].[" + V._Name + "]");
-          }
+        Con.ExecuteDDL(V._ParentSchema._Name, V.getShortName(), "DROP VIEW [" + V._ParentSchema._Name + "].[" + V._Name + "]");
+        return true;
+      }
+
+    @Override
+    public boolean createView(Connection Con, View V)
+    throws Exception
+      {
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
         Generator.getFullViewDDL(getSQlCodeGen(), Out, V);

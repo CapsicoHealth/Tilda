@@ -192,13 +192,17 @@ public class PostgreSQL implements DBType
       }
 
     @Override
-    public boolean createView(Connection Con, View V, boolean Drop)
+    public boolean dropView(Connection Con, View V)
     throws Exception
       {
-        if (Drop == true)
-          {
-            Con.ExecuteUpdate(V._ParentSchema._Name, V.getBaseName(), "DROP VIEW IF EXISTS " + V.getShortName() + " CASCADE");
-          }
+        Con.ExecuteDDL(V._ParentSchema._Name, V.getBaseName(), "DROP VIEW IF EXISTS " + V.getShortName() + " CASCADE");
+        return true;
+      }
+
+    @Override
+    public boolean createView(Connection Con, View V)
+    throws Exception
+      {
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
         Generator.getFullViewDDL(getSQlCodeGen(), Out, V);

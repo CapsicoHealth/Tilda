@@ -43,6 +43,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 
+import tilda.Migrate;
 import tilda.enums.TransactionType;
 import tilda.migration.Migrator;
 import tilda.parsing.parts.Schema;
@@ -62,9 +63,8 @@ public class ConnectionPool
     private static class ConnDefs
       {
         /*@formatter:off*/
-       @SerializedName("connections"   ) public Conn  []  _Conns       = new Conn[0];
-       @SerializedName("email"         ) public EmailConfig  _EmailConfig;
-       @SerializedName("auto-migration") public boolean _AutoMigrate = false;
+       @SerializedName("connections"   ) public Conn[]      _Conns       = new Conn[0];
+       @SerializedName("email"         ) public EmailConfig _EmailConfig;
        /*@formatter:on*/
 
         public boolean validate()
@@ -173,7 +173,7 @@ public class ConnectionPool
               }
 
             C = get("MAIN");
-            LoadTildaResources(C, Defs._AutoMigrate);
+            LoadTildaResources(C, Migrate.isMigrationActive());
           }
         catch (Throwable T)
           {

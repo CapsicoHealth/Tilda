@@ -52,7 +52,8 @@ public interface DBType
     public boolean createSchema(Connection Con, Schema S) throws Exception;
     public boolean createTable(Connection Con, Object Obj) throws Exception;
     public boolean createKeysEntry(Connection Con, Object Obj) throws Exception;
-    public boolean createView(Connection Con, View V, boolean Drop) throws Exception;
+    public boolean dropView(Connection Con, View V) throws Exception;
+    public boolean createView(Connection Con, View V) throws Exception;
     public boolean alterTableAddColumn(Connection Con, Column Col, String DefaultValue) throws Exception;
     public boolean alterTableDropColumn(Connection Con, Object Obj, ColInfo CI) throws Exception;
     public boolean alterTableAlterColumnNull(Connection Con, Column Col, String DefaultValue) throws Exception;
