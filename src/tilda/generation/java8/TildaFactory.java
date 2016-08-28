@@ -40,6 +40,7 @@ import tilda.parsing.parts.Query;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.SubWhereClause;
 import tilda.utils.AnsiUtil;
+import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
 
 public class TildaFactory implements CodeGenTildaFactory
@@ -302,7 +303,7 @@ public class TildaFactory implements CodeGenTildaFactory
                                    +", Values.get("+TextUtil.EscapeDoubleQuoteWithSlash(C.getName())+Pad+")"
                        );
               if (C.isCollection() == true)
-               Out.print(", "+TextUtil.EscapeDoubleQuoteWithSlash(C._TypeSep));
+               Out.print(", "+TextUtil.EscapeDoubleQuoteWithSlash(SystemValues.DEFAULT_SEPARATOR1_BACKQUOTES));
               Out.println(", Errors"
                         +(C.isCollection()==true ? ")" : " ")
                         +");");

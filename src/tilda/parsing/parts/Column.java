@@ -53,6 +53,7 @@ public class Column extends TypeDef
     @SerializedName("mapper"     ) public ColumnMapper   _Mapper     ;
     @SerializedName("enum"       ) public ColumnEnum     _Enum       ;
     @SerializedName("values"     ) public ColumnValue[]  _Values     ;
+    @SerializedName("jsonSchema" ) public JsonSchema     _JsonSchema ;
     /*@formatter:on*/
     
     public transient boolean        _FrameworkManaged = false;
@@ -177,6 +178,11 @@ public class Column extends TypeDef
          _Mapper.Validate(PS, this);
         else if (_Enum != null)
          _Enum.Validate(PS, this);
+        
+        if (_JsonSchema != null && _Type != ColumnType.JSON)
+         PS.AddError("Column '" + getFullName() + "' is defining a jsonSchema, but is not of type JSON.");
+        if (_JsonSchema != null)
+         _JsonSchema.Validate(PS, this);
       }
 
 
@@ -237,20 +243,20 @@ public class Column extends TypeDef
           PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining a size '"+_Size+"' which doesn't match the destination column's size '"+_SameAsObj._Size+"'. Note that redefining a size for a sameas column is superfluous in the first place.");
         else if (_Mapper != null && _Mapper._Multi != MultiType.NONE)
           {
-            _TypeStr+= _Mapper._Multi == MultiType.LIST ? "[``]"
-                     : _Mapper._Multi == MultiType.SET  ? "{``}"
+            _TypeStr+= _Mapper._Multi == MultiType.LIST ? "[]"
+                     : _Mapper._Multi == MultiType.SET  ? "{}"
                      : null;
           }
         else if (_Enum != null && _Enum._Multi != MultiType.NONE)
           {
-            _TypeStr+= _Enum._Multi == MultiType.LIST ? "[``]"
-                     : _Enum._Multi == MultiType.SET  ? "{``}"
+            _TypeStr+= _Enum._Multi == MultiType.LIST ? "[]"
+                     : _Enum._Multi == MultiType.SET  ? "{}"
                      : null;
           }
         else if (_MapperDef != null && _MapperDef._Multi != MultiType.NONE)
           {
-            _TypeStr+= _MapperDef._Multi == MultiType.LIST ? "[``]"
-                     : _MapperDef._Multi == MultiType.SET  ? "{``}"
+            _TypeStr+= _MapperDef._Multi == MultiType.LIST ? "[]"
+                     : _MapperDef._Multi == MultiType.SET  ? "{}"
                      : null;
           }
         else

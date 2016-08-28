@@ -34,6 +34,11 @@ public class WhereClauseCodeGenTildaQL implements WhereClauseCodeGen
 
     protected StringBuilder       _CodeGen = new StringBuilder("Q");
 
+    public String getCodeStr()
+      {
+        return _CodeGen.toString();
+      }
+
     @Override
     public void boolOperatorAND(boolean not)
       {

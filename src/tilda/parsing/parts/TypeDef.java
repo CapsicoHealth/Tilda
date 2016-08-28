@@ -31,6 +31,7 @@ import tilda.enums.ValidationStatus;
 import tilda.parsing.ParserSession;
 import tilda.utils.ParseUtil;
 import tilda.utils.SystemValues;
+import tilda.utils.TextUtil;
 
 public class TypeDef
   {
@@ -42,7 +43,6 @@ public class TypeDef
     /*@formatter:on*/
 
     public transient ColumnType        _Type;
-    public transient String            _TypeSep;
     public transient MultiType         _TypeCollection = MultiType.NONE;
 
     private transient ValidationStatus _Validation     = ValidationStatus.NONE;
@@ -58,8 +58,6 @@ public class TypeDef
         _Size = Size;
       }
 
-    protected static final Pattern _PList = Pattern.compile(".*\\[(\\W+)\\]");
-    protected static final Pattern _PSet  = Pattern.compile(".*\\{(\\W+)\\}");
 
     public boolean Validate(ParserSession PS, String What, boolean AllowArrays, boolean StringSizeOptional)
       {
@@ -78,23 +76,17 @@ public class TypeDef
             PS.AddError(What + " didn't define a 'type'. It is mandatory.");
             return;
           }
-        Matcher M = Column._PList.matcher(_TypeStr);
+        
         String BaseType = _TypeStr;
-        if (M.matches() == true)
+        if (_TypeStr.endsWith("[]") == true)
           {
             _TypeCollection = MultiType.LIST;
-            _TypeSep = M.group(1);
-            BaseType = BaseType.substring(0, M.start(1) - 1);
+            BaseType = _TypeStr.substring(0, _TypeStr.length()-2);
           }
-        else
+        else if (_TypeStr.endsWith("{}") == true)
           {
-            M = Column._PSet.matcher(_TypeStr);
-            if (M.matches() == true)
-              {
-                _TypeCollection = MultiType.SET;
-                _TypeSep = M.group(1);
-                BaseType = BaseType.substring(0, M.start(1) - 1);
-              }
+            _TypeCollection = MultiType.SET;
+            BaseType = _TypeStr.substring(0, _TypeStr.length()-2);
           }
         
         if ((_Type = ColumnType.parse(BaseType)) == null)

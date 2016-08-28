@@ -62,6 +62,8 @@ public interface WhereClauseCodeGen
     public void   arithmeticMultiply (boolean division);
 
     public void   end();
+    
+    public String getCodeStr();
 
     /*@formatter:on*/
   }

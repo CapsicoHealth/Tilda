@@ -40,6 +40,11 @@ public class WhereClauseCodeGenJava implements WhereClauseCodeGen
 
     protected StringBuilder _CodeGen = new StringBuilder();
 
+    public String getCodeStr()
+      {
+        return _CodeGen.toString();
+      }
+
     @Override
     public void boolOperatorAND(boolean not)
       {
@@ -64,12 +69,12 @@ public class WhereClauseCodeGenJava implements WhereClauseCodeGen
         _CodeGen.append(")");
       }
 
-    protected static void makeColumn(StringBuilder Str, ColumnDefinition Col)
+    protected void makeColumn(StringBuilder Str, ColumnDefinition Col)
       {
         Str.append("obj.get").append(Col.getName()).append("()");
       }
 
-    protected static void binOperatorLHS(StringBuilder Str, List<ColumnDefinition> Columns)
+    protected void binOperatorLHS(StringBuilder Str, List<ColumnDefinition> Columns)
       {
         boolean First = true;
         for (ColumnDefinition Col : Columns)
@@ -82,7 +87,7 @@ public class WhereClauseCodeGenJava implements WhereClauseCodeGen
           }
       }
 
-    protected static void binOperator(StringBuilder Str, String Op, List<ColumnDefinition> Columns)
+    protected void binOperator(StringBuilder Str, String Op, List<ColumnDefinition> Columns)
       {
         binOperatorLHS(Str, Columns);
         Str.append(Op);
@@ -95,9 +100,9 @@ public class WhereClauseCodeGenJava implements WhereClauseCodeGen
       {
         _CodeGen.append(" ");
         makeColumn(_CodeGen, Col);
-        _CodeGen.append(not==true ? " != null" : " == null");
+        _CodeGen.append(not == true ? " != null" : " == null");
       }
-    
+
     @Override
     public void binLike(List<ColumnDefinition> Columns, boolean not)
       {
@@ -331,6 +336,6 @@ public class WhereClauseCodeGenJava implements WhereClauseCodeGen
     public void end()
       {
       }
-    
+
 
   }

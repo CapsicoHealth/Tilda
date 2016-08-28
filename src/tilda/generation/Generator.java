@@ -27,6 +27,7 @@ import org.apache.logging.log4j.Logger;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
+import tilda.enums.MultiType;
 import tilda.enums.ObjectLifecycle;
 import tilda.generation.interfaces.CodeGenAppData;
 import tilda.generation.interfaces.CodeGenAppFactory;
@@ -272,7 +273,7 @@ public class Generator
 
                       if (C._PrimaryKey == false) // only non pk columns can be changed.
                         {
-                          if (C._Type == ColumnType.DATETIME && C._TypeSep == null)
+                          if (C._Type == ColumnType.DATETIME && C._TypeCollection == MultiType.NONE)
                             {
                               Out.println();
                               DG.docField(Out, G, C, "NOW setter");
