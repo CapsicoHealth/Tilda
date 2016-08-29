@@ -42,6 +42,11 @@ public class NumberFormatUtil
         return F1c.format(Number);
       }
 
+    public static final String PrintPercentWith1Dec(long Total, long Sub)
+      {
+        return F1a.format(100.0d * ((Sub * 1.0d) / (Total * 1.0d)));
+      }
+
     public static final String PrintPercentWith2Dec(long Total, long Sub)
       {
         return F1b.format(100.0d * ((Sub * 1.0d) / (Total * 1.0d)));
