@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.MultiType;
@@ -31,6 +34,9 @@ import tilda.types.ColumnDefinition;
 
 public class JsonValidation
   {
+
+    protected static final Logger LOG = LogManager.getLogger(JsonValidation.class.getName());
+
     public JsonValidation()
       {
       }
@@ -39,7 +45,7 @@ public class JsonValidation
     @SerializedName("rule" ) public String[] _Rule;
     @SerializedName("descr") public String   _Descr;
     /*@formatter:on*/
-    
+
     public transient String _JavaCodeGenStr = null;
 
     public boolean Validate(ParserSession PS, Column C)
@@ -53,20 +59,18 @@ public class JsonValidation
 
         StringBuilder Str = new StringBuilder();
         for (String s : _Rule)
-          Str.append(s).append(" ");
+          Str.append(s).append("\n");
 
-/*
         WhereClauseCodeGenJavaOnJson WC_CG = new WhereClauseCodeGenJavaOnJson();
         TildaSQLValidator Validator = new TildaSQLValidator(Str.toString());
-        Validator.setColumnEnvironment(ColDefs);
-        Validator.setCodeGen(WC_CG);
-        Validator.validate();
-
         if (Validator.getParserSyntaxErrors() != 0)
           {
             PS.AddError("Column '" + C.getFullName() + " defined a jsonSchema with an invalid validation rule.");
+            LOG.error("\n" + Str.toString());
             return false;
           }
+        Validator.setColumnEnvironment(ColDefs);
+        Validator.setCodeGen(WC_CG);
         Validator.validate();
         Iterator<ErrorList.Error> I = Validator.getValidationErrors().getErrors();
         if (I != null)
@@ -78,11 +82,13 @@ public class JsonValidation
                 Err = true;
               }
             if (Err == true)
-             return false;
+              return false;
           }
-        
+
         _JavaCodeGenStr = WC_CG.getCodeStr();
-*/
+        
+        LOG.debug("Generated Java rule check:\n"+_JavaCodeGenStr);
+
         return true;
       }
   }

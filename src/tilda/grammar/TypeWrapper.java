@@ -187,4 +187,13 @@ class TypeWrapper
         return true;
       }
 
+    public boolean replaceType(ColumnType Type, String Token)
+      {
+        if (_LastError != null)
+          return false;
+
+        _Type = Type;
+        return true;
+      }
+
   }

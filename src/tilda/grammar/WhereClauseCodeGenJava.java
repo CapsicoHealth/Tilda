@@ -207,6 +207,23 @@ public class WhereClauseCodeGenJava implements WhereClauseCodeGen
       }
 
     @Override
+    public String funcLen(List<ColumnDefinition> Columns)
+      {
+        if (Columns.size() == 1 && Columns.get(0)._Collection == true)
+          {
+            makeColumn(_CodeGen, Columns.get(0));
+            _CodeGen.append(".size()");
+          }
+        else
+          {
+            _CodeGen.append("(");
+            binOperatorLHS(_CodeGen, Columns);
+            _CodeGen.append(").length()");
+          }
+        return null;
+      }
+
+    @Override
     public void col(ColumnDefinition Column)
       {
         makeColumn(_CodeGen, Column);
@@ -336,6 +353,4 @@ public class WhereClauseCodeGenJava implements WhereClauseCodeGen
     public void end()
       {
       }
-
-
   }

@@ -88,6 +88,16 @@ public interface TildaSQLListener extends ParseTreeListener {
 	 */
 	void exitBin_expr_lhs(TildaSQLParser.Bin_expr_lhsContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link TildaSQLParser#func_expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunc_expr(TildaSQLParser.Func_exprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TildaSQLParser#func_expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunc_expr(TildaSQLParser.Func_exprContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TildaSQLParser#value_list}.
 	 * @param ctx the parse tree
 	 */
@@ -97,6 +107,16 @@ public interface TildaSQLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitValue_list(TildaSQLParser.Value_listContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TildaSQLParser#bin_like}.
+	 * @param ctx the parse tree
+	 */
+	void enterBin_like(TildaSQLParser.Bin_likeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TildaSQLParser#bin_like}.
+	 * @param ctx the parse tree
+	 */
+	void exitBin_like(TildaSQLParser.Bin_likeContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TildaSQLParser#bin_op}.
 	 * @param ctx the parse tree

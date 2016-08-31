@@ -18,7 +18,6 @@ package tilda.parsing.parts;
 
 import com.google.gson.annotations.SerializedName;
 
-import opennlp.uima.normalizer.NumberUtil;
 import tilda.parsing.ParserSession;
 import tilda.utils.ParseUtil;
 import tilda.utils.SystemValues;

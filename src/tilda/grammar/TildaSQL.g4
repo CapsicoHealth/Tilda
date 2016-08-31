@@ -50,19 +50,24 @@ bool_expr_sub
  ; 
 
 bin_expr
- : bin_expr_lhs bin_op (column | arithmetic_expr_base)
+ : (bin_expr_lhs | func_expr '(' bin_expr_lhs ')') (bin_op|bin_like) (column | arithmetic_expr_base)
  | bin_expr_lhs (K_NOT)? K_IN  value_list
  ;
 
 bin_expr_lhs
  : column (('+' | '||') column)*
  ;
+ 
+func_expr
+ : K_LEN
+ ;
 
 value_list
  : '(' value (',' value)* ')'
  ;
 
-bin_op: K_LT | K_LTE | K_GT | K_GTE | K_EQ | K_NEQ | (K_NOT)? K_LIKE;
+bin_like: (K_NOT)? K_LIKE;
+bin_op: K_LT | K_LTE | K_GT | K_GTE | K_EQ | K_NEQ;
 
 arithmetic_expr_base
  : arithmetic_expr
@@ -88,7 +93,7 @@ isnull_expr
  ;
 
 isnull_op
- : K_IS K_NOT? K_NULL
+ : K_IS K_NOT? K_NULL (K_OR K_EMPTY)?
  ;
 
 between_expr
@@ -164,6 +169,7 @@ K_IS : I S;
 K_LIKE : L I K E;
 K_NOT : N O T;
 K_NULL : N U L L;
+K_EMPTY : E M P T Y;
 K_OR : O R;
 K_REGEXP : R E G E X P;
 K_LT: '<';
@@ -174,6 +180,7 @@ K_EQ: '=' '='?;
 K_NEQ: '<>' | '!=';
 K_DIV: '/';
 K_MINUS: '-';
+K_LEN: L E N;
 
 
 IDENTIFIER

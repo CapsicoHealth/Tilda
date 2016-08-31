@@ -65,12 +65,12 @@ public class TildaSQLValidator extends TildaSQLBaseListener
         _SyntaxErrors = parser.getNumberOfSyntaxErrors();
       }
 
-    protected ParseTree   _Tree;
-    protected int         _SyntaxErrors;
+    protected ParseTree          _Tree;
+    protected int                _SyntaxErrors;
 
-    protected TypeManager _TypeManager = new TypeManager();
-    protected ErrorList   _Errors      = new ErrorList();
-    protected WhereClauseCodeGen     _CG;
+    protected TypeManager        _TypeManager = new TypeManager();
+    protected ErrorList          _Errors      = new ErrorList();
+    protected WhereClauseCodeGen _CG;
 
     public int getParserSyntaxErrors()
       {
@@ -148,14 +148,25 @@ public class TildaSQLValidator extends TildaSQLBaseListener
               _Errors.addError(_TypeManager.getLastError(), ctx);
           }
 
-        if (ctx.bin_op() != null)
+        if (ctx.func_expr() != null)
           {
-            if (ctx.bin_op().K_LIKE() != null) // like
+            if (ctx.func_expr().K_LEN() != null)
               {
-                if (_CG != null)
-                  _CG.binLike(Columns, ctx.bin_op().K_NOT() != null);
+                doFuncLen(ctx, Columns);
               }
-            else if (ctx.bin_op().K_EQ() != null) // equal
+            else
+              _Errors.addError("Unknown function " + ctx.func_expr().getText(), ctx);
+            Columns.clear();
+          }
+
+        if (ctx.bin_like() != null) // like
+          {
+            if (_CG != null)
+              _CG.binLike(Columns, ctx.bin_like().K_NOT() != null);
+          }
+        else if (ctx.bin_op() != null)
+          {
+            if (ctx.bin_op().K_EQ() != null) // equal
               {
                 if (_CG != null)
 
@@ -204,13 +215,51 @@ public class TildaSQLValidator extends TildaSQLBaseListener
             if (CD != null)
               {
                 if (_CG != null)
-              _CG.col(CD);
+                  _CG.col(CD);
               }
             else
               _Errors.addError(_TypeManager.getLastError(), ctx);
           }
 
         super.enterBin_expr(ctx);
+      }
+
+    private void doFuncLen(Bin_exprContext ctx, List<ColumnDefinition> Columns)
+      {
+        boolean err = false;
+
+        if (Columns.size() == 1)
+          {
+            ColumnDefinition Col = Columns.get(0);
+            if (Col._Type != ColumnType.STRING && Col._Type._ArrayCompatible != true)
+              {
+                err = true;
+                _Errors.addError("Function 'Len' must take a single Collection column or a list of Strings: parameter '" + Col.getName() + "' is a " + Col._Type.toString() + ".", ctx);
+              }
+          }
+        else
+          for (ColumnDefinition Col : Columns)
+            {
+              if (Col._Type != ColumnType.STRING)
+                {
+                  err = true;
+                  _Errors.addError("Function 'Len' must take a single Collection column or a list of Strings: parameter '" + Col.getName() + "' is a " + Col._Type.name() + ".", ctx);
+                  break;
+                }
+              else if (Col._Collection == true)
+                {
+                  err = true;
+                  _Errors.addError("Function 'Len' must take a single Collection column or a list of Strings: parameter '" + Col.getName() + "' is a Collection.", ctx);
+                  break;
+                }
+            }
+
+        if (err == false)
+          {
+            if (_TypeManager.replaceType(ColumnType.INTEGER, ctx.getText()) == true)
+              if (_CG != null)
+                _CG.funcLen(Columns);
+          }
       }
 
     @Override
@@ -224,7 +273,7 @@ public class TildaSQLValidator extends TildaSQLBaseListener
           }
 
         if (_TypeManager.rolloverArgumentType(ctx, "binary expression", true) == false)
-         _Errors.addError(_TypeManager.getLastError(), ctx);
+          _Errors.addError(_TypeManager.getLastError(), ctx);
 
         super.exitBin_expr(ctx);
       }
@@ -266,7 +315,7 @@ public class TildaSQLValidator extends TildaSQLBaseListener
     @Override
     public void enterColumn(ColumnContext ctx)
       {
-//        _TypeManager.handleColumn(ctx);
+        // _TypeManager.handleColumn(ctx);
         super.enterColumn(ctx);
       }
 
@@ -295,8 +344,8 @@ public class TildaSQLValidator extends TildaSQLBaseListener
     public void exitArithmeticExpr(ArithmeticExprContext ctx)
       {
         if (_TypeManager.rolloverArgumentType(ctx, "Arithmetic expression", false) == false)
-         _Errors.addError(_TypeManager.getLastError(), ctx);
-          
+          _Errors.addError(_TypeManager.getLastError(), ctx);
+
         super.exitArithmeticExpr(ctx);
       }
 
@@ -321,7 +370,7 @@ public class TildaSQLValidator extends TildaSQLBaseListener
         else if (ctx.K_DIV() != null)
           {
             if (_TypeManager.handleType(ColumnType.FLOAT, ctx) == false)
-             _Errors.addError(_TypeManager.getLastError(), ctx);
+              _Errors.addError(_TypeManager.getLastError(), ctx);
           }
         if (_CG != null)
           _CG.arithmeticMultiply(ctx.K_DIV() != null);
@@ -341,7 +390,7 @@ public class TildaSQLValidator extends TildaSQLBaseListener
     public void exitArithmetic_expr_sub(Arithmetic_expr_subContext ctx)
       {
         if (_TypeManager.rolloverArgumentType(ctx, "sub arithmetic expression", false) == false)
-         _Errors.addError(_TypeManager.getLastError(), ctx);
+          _Errors.addError(_TypeManager.getLastError(), ctx);
         if (_CG != null)
           _CG.arithmeticClosePar();
         super.enterArithmetic_expr_sub(ctx);
@@ -377,7 +426,7 @@ public class TildaSQLValidator extends TildaSQLBaseListener
               _Errors.addError("Invalid number '" + ctx.getText() + "' was was parsed incorrectly as " + Number.getClass().getName(), ctx);
             else if (_TypeManager.handleType(Type, ctx) == false)
               _Errors.addError(_TypeManager.getLastError(), ctx);
-              
+
           }
         super.enterValueNumericLiteral(ctx);
       }
@@ -389,7 +438,7 @@ public class TildaSQLValidator extends TildaSQLBaseListener
         String Str = ctx.getText();
         Str = Str.substring(1, Str.length() - 1);
         if (_TypeManager.handleType(Str.length() == 1 ? ColumnType.CHAR : ColumnType.STRING, ctx) == false) // a value of 'X' if 3-char long, but is a CHAR type-wise.
-         _Errors.addError(_TypeManager.getLastError(), ctx);
+          _Errors.addError(_TypeManager.getLastError(), ctx);
 
         if (_TypeManager.peek() == ColumnType.CHAR)
           {
@@ -446,7 +495,7 @@ public class TildaSQLValidator extends TildaSQLBaseListener
               _CG.valueLiteralTimestamp(ZDT);
           }
         if (_TypeManager.handleType(ColumnType.DATETIME, ctx) == false)
-         _Errors.addError(_TypeManager.getLastError(), ctx);
+          _Errors.addError(_TypeManager.getLastError(), ctx);
         super.enterValueTimestampLiteral(ctx);
       }
 
@@ -457,15 +506,15 @@ public class TildaSQLValidator extends TildaSQLBaseListener
           _CG.end();
         super.exitWhere(ctx);
       }
-    
+
     @Override
     public void enterIsnull_expr(Isnull_exprContext ctx)
-    {
-      ColumnDefinition CD = _TypeManager.handleColumn(ctx.column());
-      if (CD == null)
-       _Errors.addError(_TypeManager.getLastError(), ctx);
-      else if (_CG != null)
-        _CG.isNull(CD, ctx.isnull_op().K_NOT() != null);
-      super.enterIsnull_expr(ctx);
-    }
+      {
+        ColumnDefinition CD = _TypeManager.handleColumn(ctx.column());
+        if (CD == null)
+          _Errors.addError(_TypeManager.getLastError(), ctx);
+        else if (_CG != null)
+          _CG.isNull(CD, ctx.isnull_op().K_NOT() != null);
+        super.enterIsnull_expr(ctx);
+      }
   }

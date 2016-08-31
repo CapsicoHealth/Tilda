@@ -159,4 +159,14 @@ public class TypeManager
       {
         return _ArgumentTypes.isEmpty() == true ? null : _ArgumentTypes.peek()._Type;
       }
+
+    public boolean replaceType(ColumnType Type, String Token)
+      {
+        if (_ArgumentTypes.isEmpty() == true)
+          {
+            _LastError = "Replacing a type with '"+Type.toString()+"' from token '"+Token+"' without having a Type manager active!!!!";
+            return false;
+          }
+        return _ArgumentTypes.peek().replaceType(Type, Token);
+      }
   }

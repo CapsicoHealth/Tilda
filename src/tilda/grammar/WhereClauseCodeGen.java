@@ -25,6 +25,7 @@ import tilda.types.ColumnDefinition;
 public interface WhereClauseCodeGen
   {
     /*@formatter:off*/
+
     public void boolOperatorAND(boolean not);
     public void boolOperatorOR (boolean not);
      
@@ -40,6 +41,8 @@ public interface WhereClauseCodeGen
     public void binIn                (List<ColumnDefinition> Columns, boolean not);
     public void isNull               (ColumnDefinition Column, boolean not);
     public String binClose           ();
+    
+    public String funcLen(List<ColumnDefinition> Columns);
 
     public void col                  (ColumnDefinition Column);
 

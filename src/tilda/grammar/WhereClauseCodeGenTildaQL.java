@@ -148,6 +148,31 @@ public class WhereClauseCodeGenTildaQL implements WhereClauseCodeGen
       {
         makeColumn(_CodeGen, Column);
       }
+    
+    public String funcLen(List<ColumnDefinition> Columns)
+      {
+        if (Columns.size() == 1 && Columns.get(0)._Collection == true)
+          {
+            _CodeGen.append(".len(");
+            makeColumn(_CodeGen, Columns.get(0));
+            _CodeGen.append(")");
+          }
+        else
+          {
+            for (ColumnDefinition Col : Columns)
+              {
+                if (Col._Type != ColumnType.STRING)
+                  return "Function 'Len' must take a single Collection column or a list of Strings: parameter '" + Col.getName() + "' is a " + Col._Type.name() + ".";
+                else if (Col._Collection == true)
+                  return "Function 'Len' must take a single Collection column or a list of Strings: parameter '" + Col.getName() + "' is a Collection.";
+              }
+            _CodeGen.append(".len(");
+            makeColumnList(_CodeGen, Columns);
+            _CodeGen.append(")");
+          }
+        return null;
+      }
+    
 
     @Override
     public String binClose()
