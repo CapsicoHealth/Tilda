@@ -1,4 +1,5 @@
 define(['text!../templates/tilda_schema/_new.html', "../core/parser"], function(_NewView, _Parser){
+
   var Backbone = require('backbone');
   var _ = require('lodash');
   var promiseError = function(error, reject){
@@ -6,6 +7,7 @@ define(['text!../templates/tilda_schema/_new.html', "../core/parser"], function(
     console.error(error.stack);
     reject(error)
   }
+  var SCHEMA_REGEX = /\_tilda\.([A-Z][A-Za-z_0-9]+)\.json/i;
   var TildaSchemaView = Backbone.View.extend({
     schemaName: null,
     currentEntry: null,
@@ -29,7 +31,7 @@ define(['text!../templates/tilda_schema/_new.html', "../core/parser"], function(
       that.$el.html(_NewView);
       return this;
     },
-    schemaFrom: function(fileName, entry){
+    schemaFrom: function(fileEntry){
       var p = new Promise(function (resolve, reject) {
         var readFile = function(_file){
           var reader = new FileReader();
@@ -45,17 +47,13 @@ define(['text!../templates/tilda_schema/_new.html', "../core/parser"], function(
           };
           reader.readAsText(_file);
         }
-        entry.getFile(fileName, {create: false}, function(fileEntry){
-          fileEntry.file(function(file){
-            readFile(file);
-          })
-        }, function(error){
-          promiseError(error, reject)
+        fileEntry.file(function(file){
+          readFile(file);
         })
       })
       return p;
     },
-    initCache: function(fileName, entry){
+    initCache: function(fileEntry){
       var p = new Promise(function (resolve, reject) {
         var readFile = function(_file){
           var reader = new FileReader();
@@ -69,37 +67,8 @@ define(['text!../templates/tilda_schema/_new.html', "../core/parser"], function(
           };
           reader.readAsText(_file);
         }
-        entry.getFile(fileName, {create: false}, function(fileEntry){
-          fileEntry.file(function(file){
-            readFile(file);
-          })
-        }, function(error){
-          resolve({});
-          // promiseError(error, reject)
-        })
-      })
-      return p;
-    },
-    initPackageInfo: function(entry){
-      var p = new Promise(function (resolve, reject) {
-        var readFile = function(_file){
-          var reader = new FileReader();
-          reader.onload = function(event) {
-            try{
-              var packageInfo = JSON.parse(event.target.result) || {};
-              resolve(packageInfo)
-            } catch(e){
-              reject(e);
-            }
-          };
-          reader.readAsText(_file);
-        }
-        entry.getFile("_tilda.packageInfo.json", {create: false}, function(fileEntry){
-          fileEntry.file(function(file){
-            readFile(file);
-          })
-        }, function(error){
-          promiseError(error, reject)
+        fileEntry.file(function(file){
+          readFile(file);
         })
       })
       return p;
@@ -110,25 +79,56 @@ define(['text!../templates/tilda_schema/_new.html', "../core/parser"], function(
         console.log(error.message);
         console.log(error.stack);
       }
-      var init = function(entry){
-        var p = that.initPackageInfo(entry)
-        p.then(function(pkgInfo){
-          var cacheName = "_tilda."+pkgInfo.schema.name+".graphInfo.json";
-          that.packageInfo = pkgInfo;
-          that.initCache(cacheName, entry).then(function(cache){
-            window.tildaCache = cache;
-            var schemaFname = "_tilda."+pkgInfo.schema.name+".json";
-            that.schemaFrom(schemaFname, entry).then(function(schema){
-              that.schemaParser_object = new _Parser(_.clone(schema), "obj_c", {viewOnly: false});
-              that.schemaParser_view = new _Parser(_.clone(schema), "view_c", {viewOnly: true});
-            }).catch(error);
+      var init = function(objectEntries){
+        var pkgInfo = objectEntries.packageInfo;
+        that.packageInfo = pkgInfo;
+        that.initCache(objectEntries.cacheEntry).then(function(cache){
+          window.tildaCache = cache;
+          var schemaFname = "_tilda."+pkgInfo.schema.name+".json";
+          that.$el.find(".fName").html("<h4>loaded <i>"+schemaFname+"</i></h4>")
+          that.schemaFrom(objectEntries.schemaEntry).then(function(schema){
+            that.schemaParser_object = new _Parser(_.clone(schema), "obj_c", {viewOnly: false});
+            that.schemaParser_view = new _Parser(_.clone(schema), "view_c", {viewOnly: true});
           }).catch(error);
-        })
-        p.catch(error);
+        }).catch(error);
       }
-      chrome.fileSystem.chooseEntry({ type: 'openDirectory'},  function(entry, fileEntries) {
+      chrome.fileSystem.chooseEntry({ type: 'openDirectory'},  function(entry) {
         that.currentEntry = entry;
-        init(entry);
+        var reader = entry.createReader();
+        var errorCallback = function(e) {
+          console.error(e);
+        }
+
+        var dirReader = entry.createReader();
+        var entries = []
+        // Call the reader.readEntries() until no more results are returned.
+        var readEntries = function() {
+          var objects = {};
+          dirReader.readEntries (function(results) {
+            for(i=0; i<results.length; i++){
+              var fName = results[i].name;
+              var match = SCHEMA_REGEX.exec(fName);
+              if(match){
+                objects.packageInfo = {
+                  "schema": {
+                    "name": match[1],
+                    "path": fName
+                  }
+                };
+                objects.schemaEntry = results[i];
+              }
+              if(fName == "_tilda.Patients.graphInfo.json"){
+                objects.cacheEntry = results[i]
+              }
+              if(objects.cacheEntry != null && objects.schemaEntry != null){
+                break;
+              }
+            }
+            init(objects)
+          }, function(error){console.error(error.message);});
+        };
+
+        readEntries(); // Start reading directory contents.
       });
       return 0;
     },
@@ -143,9 +143,9 @@ define(['text!../templates/tilda_schema/_new.html', "../core/parser"], function(
       var viewSVG = this.schemaParser_view.paper.$el.find("svg")[0];
       var that = this;
       var fileName = "_tilda."+this.packageInfo.schema.name.toUpperCase()+".html";
-      var docText = _.map(that.schemaParser_object.schema.documentation.description, function(line){
-        return "<h4>"+line+"</h4>\n"
-      }).join("\n")
+      // var docText = _.map(that.schemaParser_object.schema.documentation.description, function(line){
+      //   return "<h4>"+line+"</h4>\n"
+      // }).join("\n")
       $.get('css/viewonly_joint.css', function(css){
         entry.getFile(fileName, {create: true}, function(fileEntry){
           fileEntry.createWriter(function(fileWriter) {
@@ -176,9 +176,7 @@ define(['text!../templates/tilda_schema/_new.html', "../core/parser"], function(
                 }\n\
               </script>";
             var blob = new Blob(["<style>"+css+"</style>", 
-                "\n<h1> Schema ", that.packageInfo.schema.name, "</h1>\n",
-                "<p>", docText,"</p>\n",
-                "<div><h1>Views Graph</h1></div>\n",
+                "<div><h1>Tables Graph</h1></div>\n",
                 "<div class='container'>\n",
                 objSVG.parentElement.innerHTML,
                 "\n</div>\n", 
