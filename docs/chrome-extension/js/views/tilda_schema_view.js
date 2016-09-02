@@ -67,9 +67,14 @@ define(['text!../templates/tilda_schema/_new.html', "../core/parser"], function(
           };
           reader.readAsText(_file);
         }
-        fileEntry.file(function(file){
-          readFile(file);
-        })
+        if(fileEntry == null){
+          // fileEntry might not be there.
+          resolve({})
+        } else {
+          fileEntry.file(function(file){
+            readFile(file);
+          })
+        }
       })
       return p;
     },
@@ -87,6 +92,8 @@ define(['text!../templates/tilda_schema/_new.html', "../core/parser"], function(
           var schemaFname = "_tilda."+pkgInfo.schema.name+".json";
           that.$el.find(".fName").html("<h4>loaded <i>"+schemaFname+"</i></h4>")
           that.schemaFrom(objectEntries.schemaEntry).then(function(schema){
+            that.$el.find("#obj_c").html("");
+            that.$el.find("#view_c").html("");
             that.schemaParser_object = new _Parser(_.clone(schema), "obj_c", {viewOnly: false});
             that.schemaParser_view = new _Parser(_.clone(schema), "view_c", {viewOnly: true});
           }).catch(error);
@@ -116,11 +123,14 @@ define(['text!../templates/tilda_schema/_new.html', "../core/parser"], function(
                   }
                 };
                 objects.schemaEntry = results[i];
+                break;
               }
-              if(fName == "_tilda.Patients.graphInfo.json"){
-                objects.cacheEntry = results[i]
-              }
-              if(objects.cacheEntry != null && objects.schemaEntry != null){
+            }
+           for(i=0; i<results.length; i++){
+              var fName = results[i].name;
+              var name = objects.schemaEntry.name.split(".")[1];
+              if(fName == "_tilda."+name+".graphInfo.json"){
+                objects.cacheEntry = results[i];
                 break;
               }
             }
