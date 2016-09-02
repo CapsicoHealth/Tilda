@@ -39,10 +39,27 @@ public interface WhereClauseCodeGen
     public void binGreaterThan       (List<ColumnDefinition> Columns, ColumnType Type);
     public void binGreaterThanOrEqual(List<ColumnDefinition> Columns, ColumnType Type);
     public void binIn                (List<ColumnDefinition> Columns, boolean not);
-    public void isNull               (ColumnDefinition Column, boolean not);
     public String binClose           ();
-    
-    public String funcLen(List<ColumnDefinition> Columns);
+
+    /**
+     * Must be called with a nullable column (where a null test makes sense). If orEmpty is true 
+     * then the column MUST be a collection or a String.<BR>
+     * <B style="color:red; font-size: 125%;">Implementers of this interface are <U>NOT</U> expected to do this validation!</B>
+     * 
+     * @param Column  A Column definition
+     * @param not     Whether this is a "is null" or "is not null"
+     * @param orEmpty Whether a check for 'emptiness' should be performed as well, which means a 
+     *                length of 0 for collections, and val.trim().length() == 0 for Strings.
+     */
+    public void isNull(ColumnDefinition Column, boolean not, boolean orEmpty);
+
+    /**
+     * Must be called with a single 'collection' Column, or a list of Columns where ALL are single Strings
+     * and will be concatenated together and checked for length.<BR>
+     * <B style="color:red; font-size: 125%;">Implementers of this interface are <U>NOT</U> expected to do this validation!</B>
+     * @param Columns a list of column definitions
+     */
+    public void funcLen(List<ColumnDefinition> Columns);
 
     public void col                  (ColumnDefinition Column);
 

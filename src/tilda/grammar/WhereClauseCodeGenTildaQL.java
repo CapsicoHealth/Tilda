@@ -149,7 +149,7 @@ public class WhereClauseCodeGenTildaQL implements WhereClauseCodeGen
         makeColumn(_CodeGen, Column);
       }
     
-    public String funcLen(List<ColumnDefinition> Columns)
+    public void funcLen(List<ColumnDefinition> Columns)
       {
         if (Columns.size() == 1 && Columns.get(0)._Collection == true)
           {
@@ -157,20 +157,12 @@ public class WhereClauseCodeGenTildaQL implements WhereClauseCodeGen
             makeColumn(_CodeGen, Columns.get(0));
             _CodeGen.append(")");
           }
-        else
+        else // must be a list of Strings.
           {
-            for (ColumnDefinition Col : Columns)
-              {
-                if (Col._Type != ColumnType.STRING)
-                  return "Function 'Len' must take a single Collection column or a list of Strings: parameter '" + Col.getName() + "' is a " + Col._Type.name() + ".";
-                else if (Col._Collection == true)
-                  return "Function 'Len' must take a single Collection column or a list of Strings: parameter '" + Col.getName() + "' is a Collection.";
-              }
             _CodeGen.append(".len(");
             makeColumnList(_CodeGen, Columns);
             _CodeGen.append(")");
           }
-        return null;
       }
     
 
@@ -298,9 +290,13 @@ public class WhereClauseCodeGenTildaQL implements WhereClauseCodeGen
       }
 
     @Override
-    public void isNull(ColumnDefinition Col, boolean not)
+    public void isNull(ColumnDefinition Col, boolean not, boolean orEmpty)
       {
-        _CodeGen.append(not == true ? ".isNotNull(" : ".isNull(");
+        /*@formatter:off*/
+        _CodeGen.append(not==true ? (orEmpty==true ? ".isNotNullOrEmpty(" : ".isNotNull(")
+                                  : (orEmpty==true ? ".isNullOrEmpty("    : ".isNull("   )
+                       );
+        /*@formatter:on*/
         makeColumn(_CodeGen, Col);
         _CodeGen.append(")");
       }

@@ -47,7 +47,7 @@ public class ColumnDefinition
     public final ColumnType _Type;
     public final boolean    _Collection;
     public final long       _Mask;
-
+    
     public String getSchemaName()
       {
         return _SchemaName;
@@ -87,6 +87,11 @@ public class ColumnDefinition
       {
         return _ColumnName;
       }
+    
+    public boolean isNullable()
+     {
+       return this instanceof Nullable;
+     }
 
 //    public static ColumnDefinition Create(String ColumnName, ColumnType Type, boolean Collection, boolean Nullable, String Description)
 //      {

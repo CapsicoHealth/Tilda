@@ -96,11 +96,31 @@ public class WhereClauseCodeGenJava implements WhereClauseCodeGen
     protected Deque<String> _BinCloseSequences = new ArrayDeque<String>();
 
     @Override
-    public void isNull(ColumnDefinition Col, boolean not)
+    public void isNull(ColumnDefinition Col, boolean not, boolean orEmpty)
       {
-        _CodeGen.append(" ");
-        makeColumn(_CodeGen, Col);
-        _CodeGen.append(not == true ? " != null" : " == null");
+        if (orEmpty == false)
+          {
+            _CodeGen.append(" ");
+            makeColumn(_CodeGen, Col);
+            _CodeGen.append(not == true ? " != null" : " == null");
+          }
+        else if (orEmpty == true)
+          {
+            if (Col._Collection == true)
+              {
+                _CodeGen.append(not == true ? " " : " (");
+                makeColumn(_CodeGen, Col);
+                _CodeGen.append(not == true ? " != null && " : " == null || ");
+                makeColumn(_CodeGen, Col);
+                _CodeGen.append(not == true ? ".isEmpty() == false" : ".isEmpty() == true)");
+              }
+            else //  must be a string
+              {
+                _CodeGen.append(" TextUtil.isNullOrEmpty(");
+                makeColumn(_CodeGen, Col);
+                _CodeGen.append(not == true ? ") == false" : ") == true");
+              }
+          }
       }
 
     @Override
@@ -207,7 +227,7 @@ public class WhereClauseCodeGenJava implements WhereClauseCodeGen
       }
 
     @Override
-    public String funcLen(List<ColumnDefinition> Columns)
+    public void funcLen(List<ColumnDefinition> Columns)
       {
         if (Columns.size() == 1 && Columns.get(0)._Collection == true)
           {
@@ -220,7 +240,6 @@ public class WhereClauseCodeGenJava implements WhereClauseCodeGen
             binOperatorLHS(_CodeGen, Columns);
             _CodeGen.append(").length()");
           }
-        return null;
       }
 
     @Override

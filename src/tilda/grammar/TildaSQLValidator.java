@@ -231,7 +231,7 @@ public class TildaSQLValidator extends TildaSQLBaseListener
         if (Columns.size() == 1)
           {
             ColumnDefinition Col = Columns.get(0);
-            if (Col._Type != ColumnType.STRING && Col._Type._ArrayCompatible != true)
+            if (Col._Type != ColumnType.STRING && Col._Collection != true)
               {
                 err = true;
                 _Errors.addError("Function 'Len' must take a single Collection column or a list of Strings: parameter '" + Col.getName() + "' is a " + Col._Type.toString() + ".", ctx);
@@ -511,10 +511,24 @@ public class TildaSQLValidator extends TildaSQLBaseListener
     public void enterIsnull_expr(Isnull_exprContext ctx)
       {
         ColumnDefinition CD = _TypeManager.handleColumn(ctx.column());
+        boolean Err = false;
         if (CD == null)
-          _Errors.addError(_TypeManager.getLastError(), ctx);
-        else if (_CG != null)
-          _CG.isNull(CD, ctx.isnull_op().K_NOT() != null);
+          {
+            _Errors.addError(_TypeManager.getLastError(), ctx);
+            Err = true;
+          }
+        else if (ctx.isnull_op().K_EMPTY() != null)
+          {
+            if (CD._Type != ColumnType.STRING && CD._Collection != true)
+              {
+                Err = true;
+                _Errors.addError("Operator 'null or empty' must take a Collection column or a Strings: parameter '" + CD.getName() + "' is a " + CD._Type.toString() + ".", ctx);
+              }
+          }
+
+        if (Err == false && _CG != null)
+          _CG.isNull(CD, ctx.isnull_op().K_NOT() != null, ctx.isnull_op().K_EMPTY() != null);
+
         super.enterIsnull_expr(ctx);
       }
   }

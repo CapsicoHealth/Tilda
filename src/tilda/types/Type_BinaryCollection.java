@@ -24,5 +24,4 @@ public class Type_BinaryCollection extends ColumnDefinition
       {
         super(SchemaName, TableName, ColumnName, Count, ColumnType.BINARY, true, Description);
       }
-    
   }

@@ -110,13 +110,14 @@ public class ConnectionPool
     private static class Conn
       {
       /*@formatter:off*/
-      @SerializedName("id"     ) public String _Id      = null;
-      @SerializedName("driver" ) public String _Driver  = null;
-      @SerializedName("db"     ) public String _DB      = null;
-      @SerializedName("user"   ) public String _User    = null;
-      @SerializedName("pswd"   ) public String _Pswd    = null;
-      @SerializedName("initial") public int    _Initial =  3;
-      @SerializedName("max"    ) public int    _Max     = 30;
+      @SerializedName("id"     ) public String   _Id      = null;
+      @SerializedName("driver" ) public String   _Driver  = null;
+      @SerializedName("db"     ) public String   _DB      = null;
+      @SerializedName("user"   ) public String   _User    = null;
+      @SerializedName("pswd"   ) public String   _Pswd    = null;
+      @SerializedName("initial") public int      _Initial =  3;
+      @SerializedName("max"    ) public int      _Max     = 30;
+      @SerializedName("schemas") public String[] _Schemas = new String[]{};
       /*@formatter:on*/
       }
 
@@ -173,7 +174,8 @@ public class ConnectionPool
               }
 
             C = get("MAIN");
-            LoadTildaResources(C, Migrate.isMigrationActive());
+            if (isTildaEnabled() == true)
+             LoadTildaResources(C, Migrate.isMigrationActive());
           }
         catch (Throwable T)
           {
@@ -242,8 +244,6 @@ public class ConnectionPool
         // LOG.debug("All Tildas in order of dependencies:");
         // for (Schema S : TildaList)
         // LOG.debug(" "+S._ResourceNameShort);
-        if (Migrate == false)
-          Migrator.logMigrationWarning();
         int warnings = 0;
         for (Schema S : TildaList)
           {
@@ -264,21 +264,30 @@ public class ConnectionPool
         LOG.debug("");
         LOG.debug("Creating/updating Tilda helper stored procedures.");
         if (Migrate == false)
-          Migrator.logMigrationWarning();
+          {
+//            ++warnings;
+          }
         else if (C.addHelperFunctions() == false)
           throw new Exception("Cannot upgrade schema by adding the Tilda helper functions.");
 
         if (warnings != 0 && Migrate == false)
           {
-            LOG.warn("");
-            LOG.warn("");
-            LOG.warn("There were a total of " + warnings + " warning(s) issued because schema discrepencies were found but not fixed.");
+            LOG.error("");
+            LOG.error("");
+            LOG.error("*************************************************************************************************************************************");
+            LOG.warn ("There were a total of " + warnings + " warning(s) and/or error(s) issued because schema discrepencies were found but not fixed.");
             Migrator.logMigrationWarning();
+            LOG.error("*************************************************************************************************************************************");
           }
 
         C.commit();
         if (Migrate == true)
          KeysManager.reloadAll();
+      }
+
+    private static boolean isTildaEnabled()
+      {
+        return _DataSourcesById.get("MAIN") != null && _DataSourcesById.get("KEYS") != null;
       }
 
     private static void ReorderTildaListWithDependencies(List<Schema> L)
@@ -356,7 +365,7 @@ public class ConnectionPool
     public static Connection get(String Id)
     throws Exception
       {
-        LOG.info("-------- Getting a connection --------------------------------------------------------------------------------------------");
+        LOG.info("---------- G E T T I N G   C O N N E C T I O N ----------- " + Id + " ----");
         BasicDataSource BDS = _DataSourcesById.get(Id);
         if (BDS == null)
           throw new Exception("Cannot find a connection pool for " + Id);
@@ -381,7 +390,7 @@ public class ConnectionPool
         if (C == null)
          throw new Exception("Failed obtaining a connection after numerous tries.");
         Connection Conn = new Connection(C, Id);
-        LOG.info("-------- O B T A I N E D   C O N N E C T I O N --------- " + Conn._PoolId + " ---- (" + BDS.getNumActive() + "/" + BDS.getNumIdle() + "/" + BDS.getMaxTotal() + ")   ----------");
+        LOG.info("---------- O B T A I N E D   C O N N E C T I O N --------- " + Conn._PoolId + " ---- (" + BDS.getNumActive() + "/" + BDS.getNumIdle() + "/" + BDS.getMaxTotal() + ")   ----------");
         return Conn;
       }
 
