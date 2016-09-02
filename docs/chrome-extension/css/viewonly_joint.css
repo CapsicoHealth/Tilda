@@ -4,7 +4,7 @@
    user-select: none;
 }
 [magnet=true]:not(.element) {
-   cursor: crosshair;
+   cursor: pointer;
 }
 [magnet=true]:not(.element):hover {
    opacity: .7;
@@ -12,7 +12,7 @@
 
 .element {
    /* Give the user a hint that he can drag&drop the element. */
-   cursor: move;
+   cursor: pointer;
 }
 
 .element * {
@@ -51,7 +51,7 @@
 /* <g> element wrapping .marker-vertex-group. */
 .marker-vertices {
    opacity: 0;
-   cursor: move;
+   cursor: pointer;
 }
 .marker-arrowheads {
    display: none;      /* setting `display: none` on .marker-arrowheads effectivelly switches of links reconnecting */
@@ -163,7 +163,7 @@
     stroke-linecap: round;
     stroke-linejoin: round;
     opacity: 0;
-    cursor: move;
+    cursor: pointer;
 }
 
 .link.joint-theme-default .connection {
@@ -220,7 +220,7 @@
     stroke-linecap: round;
     stroke-linejoin: round;
     opacity: 0;
-    cursor: move;
+    cursor: pointer;
 }
 .link.joint-theme-material .connection-wrap:hover {
     opacity: .4;
@@ -276,7 +276,7 @@
     stroke-linecap: round;
     stroke-linejoin: round;
     opacity: 0;
-    cursor: move;
+    cursor: pointer;
 }
 .link.joint-theme-modern .connection-wrap:hover {
     opacity: .4;

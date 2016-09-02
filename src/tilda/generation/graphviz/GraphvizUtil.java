@@ -981,6 +981,7 @@ public class GraphvizUtil
       	writer.println("  }");
       	writer.println(" })()");
       	writer.println("</SCRIPT>");
+        writer.println("<a href='#' style='cursor: pointer; z-index: 1000; position:fixed; right:0px; bottom:0; margin:0px; padding:0px;'>Goto top</a>");
         writer.println("</BODY>");
         writer.println("</HTML>");
         writer.close();
