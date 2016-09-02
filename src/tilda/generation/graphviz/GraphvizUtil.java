@@ -970,6 +970,7 @@ public class GraphvizUtil
                 LOG.warn("FYI: this can be ignored for now:\n", e);
               }
           }
+        writer.println("<BR><BR><BR><BR><HR><HR>End.<BR><BR><BR>");
         writer.println("<SCRIPT>");
         writer.println("(function(){");
         writer.println("  var a = document.getElementsByTagName(\"svg\");");
@@ -981,7 +982,6 @@ public class GraphvizUtil
       	writer.println("  }");
       	writer.println(" })()");
       	writer.println("</SCRIPT>");
-        writer.println("<a href='#' style='cursor: pointer; z-index: 1000; position:fixed; right:0px; bottom:0; margin:0px; padding:0px;'>Goto top</a>");
         writer.println("</BODY>");
         writer.println("</HTML>");
         writer.close();

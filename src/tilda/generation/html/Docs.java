@@ -34,7 +34,7 @@ public class Docs
       throws Exception
       {
     	Out.println("<DIV id='"+O._Name+"_DIV'>");
-        Out.println("<H1>"+O._Name+"</H1>"+SystemValues.NEWLINE
+        Out.println("<H1>"+O._Name+"&nbsp;&nbsp;&nbsp;&nbsp;<SUP style=\"font-size: 60%;\"><A href=\"#\">top</A></SUP></H1>"+SystemValues.NEWLINE
                    +"The generated " + Helper.getCodeGenLanguage() + "/" + G.getSql().getName() + " Tilda data class <B>Data_" + O._Name + "</B> is mapped to the table <B>" + O.getShortName() + "</B>."+ SystemValues.NEWLINE
                    +"<UL>"+ SystemValues.NEWLINE
                    );
