@@ -412,4 +412,10 @@ public class Docs implements CodeGenDocs
         
       }
 
+    @Override
+    public void docMethodJSONSchema(PrintWriter out, GeneratorSession g, Column col)
+      {
+        // TODO Auto-generated method stub
+      }
+
   }

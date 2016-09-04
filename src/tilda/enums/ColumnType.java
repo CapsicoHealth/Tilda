@@ -32,7 +32,7 @@ public enum ColumnType
 
     /*@formatter:off*/
     STRING  (true , false),
-    JSON    (false, false),
+    JSON    (true , false),
     CHAR    (true , true ),
     INTEGER (true , true ),
     LONG    (true , true ),

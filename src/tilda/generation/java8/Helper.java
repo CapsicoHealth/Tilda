@@ -156,12 +156,20 @@ public class Helper
           Out.println("          " + getSupportClassFullName(O._ParentSchema) + ".HandleCatch(C, E, " + TextUtil.EscapeDoubleQuoteWithSlash(OperationDebugStr) + ");");
         else
           Out.println("          return " + getSupportClassFullName(O._ParentSchema) + ".HandleCatch(C, E, " + TextUtil.EscapeDoubleQuoteWithSlash(OperationDebugStr) + ");");
+        boolean Collection = false;
+        for (Column C : O._Columns)
+         if (C!= null && C.isCollection() == true)
+           {
+             Collection = true;
+             break;
+           }
         Out.println("        }");
         Out.println("       finally");
         Out.println("        {");
-        Out.println("          " + getSupportClassFullName(O._ParentSchema) + ".HandleFinally(PS, T0, " + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, " + StatementTypeStr + ", count, AllocatedArrays);");
+        Out.println("          " + getSupportClassFullName(O._ParentSchema) + ".HandleFinally(PS, T0, " + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, " + StatementTypeStr + ", count, "+(Collection == true?"AllocatedArrays":"null")+");");
         Out.println("          PS = null;");
-        Out.println("          AllocatedArrays = null;");
+        if (Collection == true)
+          Out.println("          AllocatedArrays = null;");
         Out.println("        }");
       }
 
@@ -547,9 +555,6 @@ public class Helper
                         Out.println("PS.set" + JavaJDBCType.get(C._Type)._JDBCType + "(++i, " + (C._Type == ColumnType.CHAR ? "\"\"+" : "") + "P._" + V + Pad + ");");
                       else
                         Out.println("C.setArray(PS, ++i, "+O._BaseClassName+"_Factory.COLS."+C.getName().toUpperCase()+"._Type, AllocatedArrays, P._" + V + ");");
-                        //Out.println(" { java.sql.Array A = C.createArrayOf(\""+G.getSql().getColumnTypeRaw(C, true)+"\", (P._" + V + Pad + ")); AllocatedArrays.add(A); PS.setArray(++i, A); }");
-                        
-//                        Out.prinstln("PS.set" + JavaJDBCType.get(C._Type)._JDBCType + "(++i, " + (C._Type == ColumnType.CHAR ? "\"\"+" : "") + "P._" + V + Pad + ");");
                     }
                   Out.println(Lead + "     break;");
                   Out.println(Lead + "   }");
@@ -631,7 +636,7 @@ public class Helper
             Out.println("                  + \""+v+": \" + _" + v+" + \";\"");
           }
         Out.println("                 ; ");
-        Out.println("          PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);");
+        Out.println("          tilda.performance.PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);");
         Out.println("          return Str;");
         Out.println("        }");
         Out.println("     }");
@@ -655,7 +660,7 @@ public class Helper
               }
           }
         if (C._Type == ColumnType.JSON)
-          Out.println("        JSONUtil.PrintSubJson(Out, \"" + C.getName() + "\", " + First + ", Obj.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "());");
+          Out.println("        JSONUtil.PrintSubJson(Out, \"" + C.getName() + "\", " + First + ", Obj._" + C.getName() + ");");
         else if (C.isCollection() == false)
           Out.println("        JSONUtil.Print(Out, \"" + C.getName() + "\", " + First + ", Obj.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "());");
         else

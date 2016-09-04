@@ -16,9 +16,6 @@
 
 package tilda.parsing.parts;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -31,7 +28,6 @@ import tilda.enums.ValidationStatus;
 import tilda.parsing.ParserSession;
 import tilda.utils.ParseUtil;
 import tilda.utils.SystemValues;
-import tilda.utils.TextUtil;
 
 public class TypeDef
   {

@@ -100,5 +100,7 @@ public interface CodeGenDocs
     public void docMethodLookupParent(PrintWriter Out, GeneratorSession G, ForeignKey FK);
 
     public void docMethodToJSON(PrintWriter Out, GeneratorSession G, Object O);
+
+    public void docMethodJSONSchema(PrintWriter out, GeneratorSession g, Column col);
     
   }

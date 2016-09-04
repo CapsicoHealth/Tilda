@@ -31,6 +31,6 @@ public class WhereClauseCodeGenJavaOnJson extends WhereClauseCodeGenJava
 
     protected void makeColumn(StringBuilder Str, ColumnDefinition Col)
       {
-        Str.append("obj._").append(Col.getName());
+        Str.append("_").append(Col.getName());
       }
   }

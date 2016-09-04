@@ -28,7 +28,6 @@ import tilda.generation.interfaces.CodeGenAppData;
 import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
-import tilda.parsing.parts.Schema;
 import tilda.utils.TextUtil;
 
 public class AppData implements CodeGenAppData
@@ -42,10 +41,10 @@ public class AppData implements CodeGenAppData
       }
 
     @Override
-    public void genFileStart(PrintWriter Out, Schema S)
+    public void genFileStart(PrintWriter Out, Object O)
       throws Exception
       {
-        Out.println("package " + S._Package + ";");
+        Out.println("package " + O._ParentSchema._Package + ";");
         Out.println();
         Out.println("import org.apache.logging.log4j.LogManager;");
         Out.println("import org.apache.logging.log4j.Logger;");

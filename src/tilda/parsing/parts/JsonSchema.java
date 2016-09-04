@@ -19,8 +19,6 @@ package tilda.parsing.parts;
 import com.google.gson.annotations.SerializedName;
 
 import tilda.parsing.ParserSession;
-import tilda.utils.ParseUtil;
-import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
 
 public class JsonSchema
@@ -31,13 +29,10 @@ public class JsonSchema
 
     /*@formatter:off*/
     @SerializedName("typeName"   ) public String         _TypeName   ;
+    @SerializedName("descr"      ) public String         _Descr      ;
     @SerializedName("fields"     ) public JsonField[]    _Fields     ;
-    @SerializedName("cardinality") public String         _Cardinality;
     @SerializedName("validation" ) public JsonValidation _Validation ;
     /*@formatter:on*/
-
-    public transient int  _Min = 0;
-    public transient int  _Max = 0;
 
     public boolean Validate(ParserSession PS, Column C)
       {
@@ -58,43 +53,6 @@ public class JsonSchema
         for (JsonField f : _Fields)
           if (f != null && f.Validate(PS, C) == false)
             Success = false;
-
-        if (TextUtil.isNullOrEmpty(_Cardinality) == true)
-          {
-            PS.AddError("Column '" + C.getFullName() + "' defined a jsonSchema without a cardinality.");
-            Success = false;
-          }
-        else if (_Cardinality.equals("*") == true)
-          {
-            _Min = 0;
-            _Max = Integer.MAX_VALUE;
-          }
-        else if (_Cardinality.equals("+") == true)
-          {
-            _Min = 1;
-            _Max = Integer.MAX_VALUE;
-          }
-        else if (_Cardinality.matches("\\d+\\.\\.\\d+") == true)
-          {
-            String[] parts = _Cardinality.split("\\.\\.");
-            _Min = ParseUtil.parseInteger(parts[0], SystemValues.EVIL_VALUE);
-            _Max = ParseUtil.parseInteger(parts[2], SystemValues.EVIL_VALUE);
-            if (_Min == SystemValues.EVIL_VALUE || _Max == SystemValues.EVIL_VALUE)
-              {
-                PS.AddError("Column '" + C.getFullName() + "' defined a jsonSchema with an invalid cardinality format. Values accepted are '*', '+', 'x..y' where x and y are integers.");
-                Success = false;
-              }
-            else if (_Min > _Max)
-              {
-                PS.AddError("Column '" + C.getFullName() + "' defined a jsonSchema with an invalid cardinality format. The min value " + _Min + " is greater than the max value '" + _Max + "'.");
-                Success = false;
-              }
-          }
-        else
-          {
-            PS.AddError("Column '" + C.getFullName() + "' defined a jsonSchema with an invalid cardinality format. Values accepted are '*', '+', 'x..y' where x and y are integers, and x <= y.");
-            Success = false;
-          }
 
         if (Success == true)
           {

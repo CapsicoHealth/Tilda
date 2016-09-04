@@ -29,16 +29,25 @@ import tilda.parsing.parts.Schema;
  */
 public interface CodeGenTildaSupport extends CodeGenBase
   {
+
+    /**
+     * 
+     * @param Out
+     * @throws Exception
+     */
+    public void genFileStart(PrintWriter Out, Schema S)
+    throws Exception;
+
     /**
      * 
      * @param out
      * @param g
      */
     public void genSupportCode(PrintWriter Out, GeneratorSession G, Schema S)
-        throws Exception;
+    throws Exception;
 
     public void genInitMethod(PrintWriter Out, GeneratorSession G, Schema S)
-        throws Exception;
-      
-    
+    throws Exception;
+
+
   }

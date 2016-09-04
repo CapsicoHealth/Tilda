@@ -33,12 +33,20 @@ public interface CodeGenTildaFactory extends CodeGenBase
     /**
      * 
      * @param Out
+     * @throws Exception
+     */
+    public void genFileStart(PrintWriter Out, Object O)
+    throws Exception;
+
+    /**
+     * 
+     * @param Out
      * @param O
      * @param CreateColumns
      * @throws Exception
      */
     public void genMethodCreate(PrintWriter Out, GeneratorSession G, Object O, List<Column> CreateColumns, List<Column> DefaultColumns)
-      throws Exception;
+    throws Exception;
 
     /**
      * 
@@ -98,8 +106,8 @@ public interface CodeGenTildaFactory extends CodeGenBase
      * @param O
      */
     public void genQueryHelper(PrintWriter Out, GeneratorSession G, Object O);
-    
-    
+
+
     /**
      * 
      * @param Out

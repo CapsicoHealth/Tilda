@@ -31,6 +31,7 @@ import tilda.grammar.TildaSQLValidator;
 import tilda.grammar.WhereClauseCodeGenJavaOnJson;
 import tilda.parsing.ParserSession;
 import tilda.types.ColumnDefinition;
+import tilda.utils.TextUtil;
 
 public class JsonValidation
   {
@@ -50,6 +51,17 @@ public class JsonValidation
 
     public boolean Validate(ParserSession PS, Column C)
       {
+        if (_Rule == null || _Rule.length == 0)
+          {
+            PS.AddError("Column '" + C.getFullName() + " defined a jsonSchema with a validation rule without any rule.");
+            return false;
+          }
+        if (TextUtil.isNullOrEmpty(_Descr) == true)
+          {
+            PS.AddError("Column '" + C.getFullName() + " defined a jsonSchema with a validation rule without any description.");
+            return false;
+          }
+
         List<ColumnDefinition> ColDefs = new ArrayList<ColumnDefinition>();
         for (JsonField f : C._JsonSchema._Fields)
           {
@@ -86,8 +98,8 @@ public class JsonValidation
           }
 
         _JavaCodeGenStr = WC_CG.getCodeStr();
-        
-        LOG.debug("Generated Java rule check:\n"+_JavaCodeGenStr);
+
+        LOG.debug("Generated Java rule check:\n" + _JavaCodeGenStr);
 
         return true;
       }

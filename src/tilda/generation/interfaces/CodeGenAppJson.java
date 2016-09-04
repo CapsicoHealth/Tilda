@@ -16,8 +16,18 @@
 
 package tilda.generation.interfaces;
 
+import java.io.PrintWriter;
+
+import tilda.parsing.parts.Object;
 
 public interface CodeGenAppJson extends CodeGenBase
   {
+    /**
+     * 
+     * @param Out
+     * @throws Exception
+     */
+    public void genFileStart(PrintWriter Out, Object O)
+    throws Exception;
 
   }

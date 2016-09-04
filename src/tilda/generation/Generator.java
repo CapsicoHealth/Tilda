@@ -184,7 +184,7 @@ public class Generator
 
         DG.DataFileDocs(Out, G);
         Out.println();
-        CG.genFileStart(Out, O._ParentSchema);
+        CG.genFileStart(Out, O);
         Out.println();
         DG.MustNotBeModified(Out, G);
         Out.println();
@@ -359,7 +359,7 @@ public class Generator
 
         DG.FactoryFileDocs(Out, G);
         Out.println();
-        CG.genFileStart(Out, O._ParentSchema);
+        CG.genFileStart(Out, O);
         Out.println();
         DG.MustNotBeModified(Out, G);
         Out.println();
@@ -460,7 +460,7 @@ public class Generator
         // LOG.debug(" -> " + f.getCanonicalPath());
         DG.JsonFileDocs(Out, G, O);
         Out.println();
-        CG.genFileStart(Out, O._ParentSchema);
+        CG.genFileStart(Out, O);
         Out.println();
         DG.JsonClassDocs(Out, G, O);
         CG.genClassStart(Out, G, O);
@@ -484,6 +484,14 @@ public class Generator
               CG.genMethodToJSON(Out, G, J);
             }
         Out.println();
+        for (Column Col : O._Columns)
+          {
+            if (Col != null && Col._JsonSchema != null)
+              {
+                DG.docMethodJSONSchema(Out, G, Col);
+                CG.genMethodJSONSchema(Out, G, Col);
+              }
+          }
         CG.genClassEnd(Out, G);
         Out.close();
       }
@@ -502,7 +510,7 @@ public class Generator
             // LOG.debug(" -> " + f.getCanonicalPath());
             DG.AppFileDocs(Out, G);
             Out.println();
-            CG.genFileStart(Out, O._ParentSchema);
+            CG.genFileStart(Out, O);
             Out.println();
             DG.AppClassDocs(Out, G, O);
             CG.genClassStart(Out, G, O);
@@ -530,7 +538,7 @@ public class Generator
             // LOG.debug(" -> " + f.getCanonicalPath());
             DG.AppFileDocs(Out, G);
             Out.println();
-            CG.genFileStart(Out, O._ParentSchema);
+            CG.genFileStart(Out, O);
             Out.println();
             DG.AppClassDocs(Out, G, O);
             CG.genClassStart(Out, G, O);
@@ -558,7 +566,7 @@ public class Generator
             // LOG.debug(" -> " + f.getCanonicalPath());
             DG.AppFileDocs(Out, G);
             Out.println();
-            CG.genFileStart(Out, O._ParentSchema);
+            CG.genFileStart(Out, O);
             Out.println();
             DG.AppClassDocs(Out, G, O);
             CG.genClassStart(Out, G, O);

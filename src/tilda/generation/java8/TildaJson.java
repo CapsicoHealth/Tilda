@@ -24,6 +24,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
+import tilda.enums.ObjectLifecycle;
 import tilda.generation.GeneratorSession;
 import tilda.generation.interfaces.CodeGenTildaJson;
 import tilda.parsing.parts.Base;
@@ -31,7 +32,6 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.JsonMapping;
 import tilda.parsing.parts.Object;
-import tilda.parsing.parts.Schema;
 import tilda.utils.PaddingUtil;
 import tilda.utils.TextUtil;
 
@@ -46,33 +46,52 @@ public class TildaJson implements CodeGenTildaJson
       }
 
     @Override
-    public void genFileStart(PrintWriter Out, Schema S)
+    public void genFileStart(PrintWriter Out, Object O)
     throws Exception
       {
-        Out.println("package " + S._Package + "." + Helper.TILDA_GEN_PACKAGE + ";");
+        Out.println("package " + O._ParentSchema._Package + "." + Helper.TILDA_GEN_PACKAGE + ";");
         Out.println();
-        Out.println("import java.io.IOException;");
-        Out.println("import java.io.Writer;");
-        Out.println("import java.time.ZonedDateTime;");
+        Out.println("import java.io.*;");
+        boolean needTime = false;
+        if (O._LC != ObjectLifecycle.READONLY)
+         for (Column C : O._Columns)
+          if (C != null && C._Type == ColumnType.DATETIME && Object.isOCCColumn(C) == false)
+            {
+              needTime = true;
+              break;
+            }
+        for (JsonMapping JM : O._Json)
+          if (JM != null && JM._Sync == true)
+            {
+              needTime = true;
+              break;
+            }
+        if (needTime == true)
+         Out.println("import java.time.*;");
+          
         Out.println("import java.util.*;");
         Out.println();
         Out.println("import org.apache.logging.log4j.LogManager;");
         Out.println("import org.apache.logging.log4j.Logger;");
         Out.println();
-        Out.println("import tilda.db.*;");
-        Out.println("import tilda.enums.SyncStatus;");
-        Out.println("import tilda.enums.TransactionType;");
+        if (O._LC != ObjectLifecycle.READONLY)
+         Out.println("import tilda.db.*;");
+        Out.println("import tilda.enums.*;");
         Out.println("import tilda.performance.*;");
         Out.println("import tilda.utils.*;");
+        if (O._LC != ObjectLifecycle.READONLY)
+          {
+            Out.println();
+            Out.println("import com.google.gson.annotations.SerializedName;");
+          }
         Out.println();
-        Out.println("import com.google.gson.annotations.SerializedName;");
       }
 
     @Override
     public void genClassStart(PrintWriter Out, GeneratorSession G, Object O)
     throws Exception
       {
-        Out.println("@SuppressWarnings({ \"unused\" })");
+        // Out.println("@SuppressWarnings({ \"unused\" })");
         Out.println("public class " + O._BaseClassName + "_Json");
         Out.println(" {");
         Out.println("   static final Logger             LOG                = LogManager.getLogger(" + O._BaseClassName + "_Json.class.getName());");
@@ -95,7 +114,12 @@ public class TildaJson implements CodeGenTildaJson
                 + C.getName() + Pad + ";");
               }
             else if (C._Type == ColumnType.JSON)
-              Out.println("   @SerializedName(\"" + C.getName() + "\"" + Pad + ") public com.google.gson.JsonElement _" + C.getName() + Pad + ";");
+              {
+                if (C.isCollection() == true)
+                  Out.println("   @SerializedName(\"" + C.getName() + "\"" + Pad + ") public List<" + C._ParentObject._BaseClassName + "." + C._JsonSchema._TypeName + "> _" + C.getName() + Pad + ";");
+                else
+                  Out.println("   @SerializedName(\"" + C.getName() + "\"" + Pad + ") public " + C._ParentObject._BaseClassName + "." + C._JsonSchema._TypeName + " _" + C.getName() + Pad + ";");
+              }
             else
               Out
               .println("   @SerializedName(\"" + C.getName() + "\"" + Pad + ") public " + (C.isCollection() == true ? JavaJDBCType.getFieldType(C) : JavaJDBCType.getFieldTypeBaseClass(C)) + "  _" + C.getName() + Pad + ";");
@@ -141,6 +165,21 @@ public class TildaJson implements CodeGenTildaJson
                     Out.println("       }");
                   }
               }
+//            else if (C._Type == ColumnType.JSON)
+//              {
+//                if (C._Nullable == true)
+//                  {
+//                    Out.println("      if (TextUtil.isNullOrEmpty(Str_" + C.getName() + Pad + ") == false)");
+//                    Out.println("       {");
+//                  }
+//                String ExtraPad = C._Nullable == true ? "   " : "";
+//                Out.println(ExtraPad + "      _" + C.getName() + Pad + " = DateTimeUtil.parsefromJSON(Str_" + C.getName() + Pad + ");");
+//                
+//                if (C._Nullable == true)
+//                  {
+//                    Out.println("       }");
+//                  }
+//              }
             if (O._FST == FrameworkSourcedType.MAPPER && C.getName().equals("group") == true)
               {
                 Out.println("      if (TextUtil.FindElement(" + Helper.getFullAppDataClassName(O) + "._" + C.getName() + "_Values, _" + C.getName() + ", 0, true, 0) == -1)");
@@ -171,14 +210,10 @@ public class TildaJson implements CodeGenTildaJson
             for (Index I : O._Indices)
               if (I != null && I._Unique == true)
                 {
-                  // if (FirstGoodIndex == null)
-                  // FirstGoodIndex = I;
                   boolean GoodIndex = true;
                   for (Column C : I._ColumnObjs)
                     {
-                      // if (C != null && (C._ParentObject.isAutoGenPrimaryKey(C) == true || C._ParentObject.isAutoGenForeignKey(C.getName()) == true))
                       if (C != null && C._ParentObject.isAutoGenPrimaryKey(C) == true)
-                      // if (C != null && C._ParentObject.isAutoGenForeignKey(C.getName()) == true)
                         {
                           GoodIndex = false;
                           break;
@@ -239,8 +274,7 @@ public class TildaJson implements CodeGenTildaJson
                   if (C._Invariant == false)
                     {
                       String Pad = O._PadderColumnNames.getPad(C.getName());
-                      Out.println(
-                      "         if (_" + C.getName() + Pad + "!= null) Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + (C._Type == ColumnType.JSON ? ".toString()" : "") + ");");
+                      Out.println("         if (_" + C.getName() + Pad + "!= null) Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + ");");
                       ++count;
                     }
                   else if (C._PrimaryKey == false)
@@ -275,7 +309,7 @@ public class TildaJson implements CodeGenTildaJson
           if (C != null && C.isJSONColumn() == true)
             {
               String Pad = O._PadderColumnNames.getPad(C.getName());
-              Out.println("      if (_" + C.getName() + Pad + "!= null) Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + (C._Type == ColumnType.JSON ? ".toString()" : "") + ");");
+              Out.println("      if (_" + C.getName() + Pad + "!= null) Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + ");");
             }
         Out.println("    }");
       }
@@ -422,5 +456,12 @@ public class TildaJson implements CodeGenTildaJson
     throws Exception
       {
         Out.println(" }");
+      }
+
+    @Override
+    public void genMethodJSONSchema(PrintWriter out, GeneratorSession g, Column col)
+      {
+        // TODO Auto-generated method stub
+
       }
   }

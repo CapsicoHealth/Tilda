@@ -20,6 +20,7 @@ import java.time.ZonedDateTime;
 
 import tilda.enums.ColumnType;
 import tilda.parsing.parts.Column;
+import tilda.parsing.parts.JsonField;
 
 
 public enum JavaJDBCType
@@ -102,7 +103,22 @@ public enum JavaJDBCType
             case SET:
               return "Set <" + JavaJDBCType.get(C._Type)._JavaClassType + ">";
             default:
-              throw new Error("Unhandled case in switch for type '" + C._TypeCollection + "'.");
+              throw new Error("Unhandled case in switch for ield type '" + C._TypeCollection + "'.");
           }
       }
+    
+    public static String getJsonFieldType(JsonField F)
+      {
+        switch (F._TypeCollection)
+          {
+            case LIST:
+            case SET:
+              return JavaJDBCType.get(F._Type)._JavaClassType + "[]";
+            case NONE:
+              return JavaJDBCType.get(F._Type)._JavaType;
+            default:
+              throw new Error("Unhandled case in switch for json field type '" + F._TypeCollection + "'.");
+          }
+      }
+    
   }

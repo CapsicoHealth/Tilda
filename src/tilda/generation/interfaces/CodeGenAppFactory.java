@@ -28,11 +28,19 @@ public interface CodeGenAppFactory extends CodeGenBase
     /**
      * 
      * @param Out
+     * @throws Exception
+     */
+    public void genFileStart(PrintWriter Out, Object O)
+    throws Exception;
+
+    /**
+     * 
+     * @param Out
      * @param G
      * @param O
      * @throws Exception
      */
     public void genClassCustomizations(PrintWriter Out, GeneratorSession G, Object O)
-      throws Exception;
+    throws Exception;
 
   }

@@ -176,8 +176,7 @@ public class JSONTest
       {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         Test T = gson.fromJson(TestJSON, Test.class);
-//        System.out.println(T.columns.toString());
-
+        System.out.println(T.columns.toString());
       }
     
   }

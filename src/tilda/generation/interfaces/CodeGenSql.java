@@ -24,31 +24,55 @@ import tilda.enums.ColumnType;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
+import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 
 
 public interface CodeGenSql extends DBType, CodeGenBase
   {
-    
+
+    /**
+     * 
+     * @param Out
+     * @throws Exception
+     */
+    public void genFileStart(PrintWriter Out, Schema S)
+    throws Exception;
+
+
     public String getFullTableVar(Object O);
+
     public String getFullColumnVar(Column C);
+
     public String getFullColumnVar(Column C, int i);
+
     public String getFullTableVar(Object O, int i);
+
     public String getShortColumnVar(Column C);
-    
+
     public String getColumnType(Column C);
+
     public String getColumnTypeRaw(Column C, boolean MultiOverride);
+
     public String getColumnTypeRaw(ColumnType Type, int Size, boolean isArray);
+
     public boolean stringNeedsTrim(Column C);
-    
+
     boolean supportsArrays();
-    
+
     public String getBaseSelectStatement(List<Column> Columns);
+
     public String getEqualCurentTimestamp();
+
     public String getCommaCurentTimestamp();
 
-    public void genDDL(PrintWriter Out, Object O) throws Exception;
-    public void genDDL(PrintWriter Out, View   V) throws Exception;
+    public void genDDL(PrintWriter Out, Object O)
+    throws Exception;
+
+    public void genDDL(PrintWriter Out, View V)
+    throws Exception;
+
     public void genIndex(PrintWriter Out, Index I);
+
     public void genKeysManagement(PrintWriter Out, Object O);
   }

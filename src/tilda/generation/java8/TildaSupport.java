@@ -92,11 +92,15 @@ public class TildaSupport implements CodeGenTildaSupport
         Out.println();
         Out.println("   protected static void HandleFinally(java.sql.PreparedStatement PS, long T0, String TableName, StatementType ST, int count, List<java.sql.Array> AllocatedArrays) throws java.sql.SQLException");
         Out.println("     {");
-        Out.println("       if (PS != null) PS.close(); ");
+        Out.println("       if (PS != null)");
+        Out.println("        PS.close();");
         Out.println("       PerfTracker.add(TableName, ST, System.nanoTime()-T0, count);");
-        Out.println("       for (java.sql.Array A : AllocatedArrays)");
-        Out.println("        A.free();");
-        Out.println("       AllocatedArrays.clear();");
+        Out.println("       if (AllocatedArrays != null)");
+        Out.println("        {");
+        Out.println("          for (java.sql.Array A : AllocatedArrays)");
+        Out.println("           A.free();");
+        Out.println("          AllocatedArrays.clear();");
+        Out.println("        }");
         Out.println("     }");
       }
 

@@ -132,8 +132,6 @@ public class Migrator
                       }
                   }
 
-
-                boolean newKeys = false;
                 for (Object Obj : S._Objects)
                   {
                     MasterFactory.register(S._Package, Obj);
@@ -150,7 +148,6 @@ public class Migrator
                           }
                         else if (C.createTable(Obj) == false)
                           throw new Exception("Cannot upgrade schema by adding the new table '" + Obj.getShortName() + "'.");
-                        newKeys = true;
                         C.commit();
                       }
                     else if (Obj._PrimaryKey != null && Obj._PrimaryKey._Autogen == true && KeysManager.hasKey(Obj.getShortName()) == false)
@@ -165,7 +162,6 @@ public class Migrator
                           {
                             if (C.createKeysEntry(Obj) == false)
                               throw new Exception("Cannot upgrade the schema by adding a new entry for '" + Obj.getShortName() + "' in the TILDA.KEY table.");
-                            newKeys = true;
                           }
                       }
                     Map<String, ColInfo> DBColumns = ColInfo.getTableDefinition(C, S._Name.toLowerCase(), Obj._Name.toLowerCase());
@@ -223,11 +219,11 @@ public class Migrator
 
                             if (C.supportsArrays() == true)
                               {
-                                if (CI.isArray() == false && Col.isCollection() == true)
+                                if (CI.isArray() == false && Col.isCollection() == true && Col._Type != ColumnType.JSON)
                                   {
                                     throw new Exception("The application's data model defines the column '" + Col.getShortName() + "' as an array, but it's not an array in the DB. The database needs to be migrated manually.");
                                   }
-                                else if (CI.isArray() == true && Col.isCollection() == false)
+                                else if (CI.isArray() == true && (Col.isCollection() == false || Col._Type == ColumnType.JSON))
                                   {
                                     throw new Exception("The application's data model defines the column '" + Col.getShortName() + "' as an base type, but it's an array in the DB. The database needs to be migrated manually.");
                                   }

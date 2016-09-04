@@ -18,7 +18,6 @@ package tilda.generation.interfaces;
 
 import java.io.PrintWriter;
 
-
 import java.util.List;
 
 import tilda.generation.GeneratorSession;
@@ -31,10 +30,20 @@ public interface CodeGenTildaJson extends CodeGenBase
     /**
      * 
      * @param Out
+     * @throws Exception
+     */
+    public void genFileStart(PrintWriter Out, Object O)
+    throws Exception;
+
+
+    /**
+     * 
+     * @param Out
      * @param G
      * @param O
      */
-    public void genJsonSerializableField(PrintWriter Out, GeneratorSession G, List<Column> JsonColumns) throws Exception;
+    public void genJsonSerializableField(PrintWriter Out, GeneratorSession G, List<Column> JsonColumns)
+    throws Exception;
 
 
     /**
@@ -44,7 +53,8 @@ public interface CodeGenTildaJson extends CodeGenBase
      * @param O
      * @throws Exception
      */
-    public void genMethodWrite(PrintWriter Out, GeneratorSession G, Object O, List<Column> CreateColumns, List<Column> JsonColumns) throws Exception;
+    public void genMethodWrite(PrintWriter Out, GeneratorSession G, Object O, List<Column> CreateColumns, List<Column> JsonColumns)
+    throws Exception;
 
     /**
      * 
@@ -53,14 +63,25 @@ public interface CodeGenTildaJson extends CodeGenBase
      * @param O
      * @throws Exception
      */
-    public void genMethodToString(PrintWriter Out, GeneratorSession G, Object O) throws Exception;
-    
+    public void genMethodToString(PrintWriter Out, GeneratorSession G, Object O)
+    throws Exception;
+
     /**
      * 
      * @param Out
      * @param G
      * @param J
      */
-    void genMethodToJSON(PrintWriter Out, GeneratorSession G, JsonMapping J) throws Exception;
+    void genMethodToJSON(PrintWriter Out, GeneratorSession G, JsonMapping J)
+    throws Exception;
+
+
+    /**
+     * 
+     * @param out
+     * @param g
+     * @param col
+     */
+    public void genMethodJSONSchema(PrintWriter out, GeneratorSession g, Column col);
 
   }

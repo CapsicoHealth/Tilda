@@ -21,7 +21,6 @@ import java.io.PrintWriter;
 import tilda.generation.GeneratorSession;
 import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Object;
-import tilda.parsing.parts.Schema;
 
 public interface CodeGenBase
 {
@@ -30,14 +29,6 @@ public interface CodeGenBase
    * @return
    */
   public String getFileName(Base O);
-
-  /**
-   * 
-   * @param Out
-   * @throws Exception
-   */
-  public void genFileStart(PrintWriter Out, Schema S)
-    throws Exception;
 
   /**
    * 

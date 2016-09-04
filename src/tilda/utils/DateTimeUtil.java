@@ -398,6 +398,8 @@ public class DateTimeUtil
      */
     public static int computeDays(ZonedDateTime Start, ZonedDateTime End)
       {
+        if (Start == null || End == null)
+         return -1;
         int days = (int) ChronoUnit.DAYS.between(Start, End);
         if (secondsSinceMidnight(Start) > secondsSinceMidnight(End))
          ++days;

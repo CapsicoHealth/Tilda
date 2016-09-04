@@ -112,7 +112,7 @@ public class WhereClauseCodeGenJava implements WhereClauseCodeGen
                 makeColumn(_CodeGen, Col);
                 _CodeGen.append(not == true ? " != null && " : " == null || ");
                 makeColumn(_CodeGen, Col);
-                _CodeGen.append(not == true ? ".isEmpty() == false" : ".isEmpty() == true)");
+                _CodeGen.append(not == true ? ".length > 0" : ".length == 0)");
               }
             else //  must be a string
               {
@@ -232,7 +232,7 @@ public class WhereClauseCodeGenJava implements WhereClauseCodeGen
         if (Columns.size() == 1 && Columns.get(0)._Collection == true)
           {
             makeColumn(_CodeGen, Columns.get(0));
-            _CodeGen.append(".size()");
+            _CodeGen.append(".length");
           }
         else
           {

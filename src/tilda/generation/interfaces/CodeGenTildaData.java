@@ -35,11 +35,19 @@ public interface CodeGenTildaData extends CodeGenBase
     /**
      * 
      * @param Out
+     * @throws Exception
+     */
+    public void genFileStart(PrintWriter Out, Object O)
+    throws Exception;
+
+    /**
+     * 
+     * @param Out
      * @param C
      * @throws Exception
      */
     public void genField(PrintWriter Out, GeneratorSession G, Column C)
-      throws Exception;
+    throws Exception;
 
     /**
      * 
@@ -56,7 +64,7 @@ public interface CodeGenTildaData extends CodeGenBase
      * @throws Exception
      */
     public void genMethodGet(PrintWriter Out, GeneratorSession G, Column C)
-      throws Exception;
+    throws Exception;
 
     /**
      * 
@@ -73,7 +81,7 @@ public interface CodeGenTildaData extends CodeGenBase
      * @throws Exception
      */
     public void genMethodSet(PrintWriter Out, GeneratorSession G, Column C)
-      throws Exception;
+    throws Exception;
 
     /**
      * 
@@ -114,7 +122,7 @@ public interface CodeGenTildaData extends CodeGenBase
      * @throws Exception
      */
     public void genMethodSetNull(PrintWriter Out, GeneratorSession G, Column C)
-      throws Exception;
+    throws Exception;
 
     /**
      * 
@@ -123,7 +131,7 @@ public interface CodeGenTildaData extends CodeGenBase
      * @throws Exception
      */
     public void genMethodHasChanged(PrintWriter Out, GeneratorSession G, Column C)
-      throws Exception;
+    throws Exception;
 
     /**
      * 
@@ -132,7 +140,7 @@ public interface CodeGenTildaData extends CodeGenBase
      * @throws Exception
      */
     public void genMethodIsNull(PrintWriter Out, GeneratorSession G, Column C)
-      throws Exception;
+    throws Exception;
 
 
     /**
@@ -143,7 +151,7 @@ public interface CodeGenTildaData extends CodeGenBase
      * @throws Exception
      */
     public void genMethodTouch(PrintWriter Out, GeneratorSession G, Column C)
-      throws Exception;
+    throws Exception;
 
     /**
      * 
@@ -152,7 +160,7 @@ public interface CodeGenTildaData extends CodeGenBase
      * @throws Exception
      */
     public void genMethodWrite(PrintWriter Out, GeneratorSession G, Object O)
-      throws Exception;
+    throws Exception;
 
     /**
      * 
@@ -163,7 +171,7 @@ public interface CodeGenTildaData extends CodeGenBase
      * @throws Exception
      */
     public void genMethodCopyTo(PrintWriter Out, GeneratorSession G, Object O, List<Column> CopyToColumns)
-      throws Exception;
+    throws Exception;
 
     /**
      * 
@@ -189,7 +197,7 @@ public interface CodeGenTildaData extends CodeGenBase
      */
     public void genMethodToString(PrintWriter Out, GeneratorSession G, Object O);
 
-    
+
     /**
      * 
      * @param out
