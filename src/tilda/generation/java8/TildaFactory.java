@@ -64,7 +64,7 @@ public class TildaFactory implements CodeGenTildaFactory
         boolean needTime = false;
         if (O._LC != ObjectLifecycle.READONLY)
          for (Column C : O._Columns)
-          if (C != null && C._Type == ColumnType.DATETIME && Object.isOCCColumn(C) == false)
+          if (C != null && C._Type == ColumnType.DATETIME)
             {
               needTime = true;
               break;

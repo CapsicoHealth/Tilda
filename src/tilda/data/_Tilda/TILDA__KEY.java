@@ -6,43 +6,17 @@
 
 package tilda.data._Tilda;
 
-import java.io.IOException;
+import java.time.*;
 import java.io.Writer;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.TreeSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+
+import tilda.db.*;
+import tilda.enums.*;
+import tilda.performance.*;
+import tilda.utils.*;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.db.ArrayListResults;
-import tilda.db.Connection;
-import tilda.db.InitMode;
-import tilda.db.JDBCHelper;
-import tilda.db.ListResults;
-import tilda.db.QueryDetails;
-import tilda.db.QueryHelper;
-import tilda.db.processors.RecordProcessor;
-import tilda.enums.ColumnType;
-import tilda.enums.StatementType;
-import tilda.enums.TransactionType;
-import tilda.performance.PerfTracker;
-import tilda.utils.CollectionUtil;
-import tilda.utils.DateTimeUtil;
-import tilda.utils.DurationUtil;
-import tilda.utils.HTMLFilter;
-import tilda.utils.ParseUtil;
-import tilda.utils.JSONUtil;
-import tilda.utils.SystemValues;
-import tilda.utils.TextUtil;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
@@ -50,7 +24,7 @@ import tilda.utils.TextUtil;
 
 /**
 <DIV id='KEY_DIV'>
-<H1>KEY</H1>
+<H1>KEY&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 60%;"><A href="#">top</A></SUP></H1>
 The generated Java 8/PostgreSQL Tilda data class <B>Data_KEY</B> is mapped to the table <B>TILDA.KEY</B>.
 <UL>
 
@@ -85,9 +59,8 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 5 2016, 03:06:35EDT
+ @generated Sep 4 2016, 17:05:48EDT
 */
-@SuppressWarnings({ "unused" })
 public abstract class TILDA__KEY implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
    protected static final Logger LOG = LogManager.getLogger(TILDA__KEY.class.getName());
@@ -1262,7 +1235,6 @@ This is the hasChanged for:<BR>
        LOG.debug("   "+toString());
        java.sql.PreparedStatement PS = null;
        int count = 0;
-       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
        try
         {
           PS = C.prepareStatement(Q);
@@ -1321,9 +1293,8 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__KEY_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__KEY_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
           PS = null;
-          AllocatedArrays = null;
         }
 
        if (__Init == InitMode.CREATE)
@@ -1412,7 +1383,6 @@ This is the hasChanged for:<BR>
        LOG.debug("   "+toString());
        java.sql.PreparedStatement PS=null;
        java.sql.ResultSet RS=null;
-       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
        int count = 0;
 
        try
@@ -1431,6 +1401,7 @@ This is the hasChanged for:<BR>
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
            }
 
+
           RS = PS.executeQuery();
           if (RS.next() == false)
             {
@@ -1446,19 +1417,14 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__KEY_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__KEY_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
-          AllocatedArrays = null;
         }
     }
 
-   @SuppressWarnings("unchecked")
    boolean Init(Connection C, java.sql.ResultSet RS) throws Exception
     {
       int i = 0;
-      tilda.data.ZoneInfo_Data ZI;
-      boolean DateTimeFieldNull;
-      boolean ZoneFieldNull;
      __Init = InitMode.LOOKUP;
       __Saved_refnum      = _refnum      =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__KEY_Factory.COLS.REFNUM._Mask     ;
       __Saved_name        = _name        =                              RS.getString   (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__KEY_Factory.COLS.NAME._Mask       ;
@@ -1471,22 +1437,6 @@ This is the hasChanged for:<BR>
      __Init     = InitMode.READ;
      __Changes  = 0L;
      return AfterRead(C);
-   }
-
-  private final ZonedDateTime ProcessZDT(String TimezoneId, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)
-  throws Exception
-   {
-     tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);
-     if (ZI == null && TextUtil.isNullOrEmpty(TimezoneId) == false)
-      throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + TimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-     ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(RS.getTimestamp(ColumnPos, DateTimeUtil._UTC_CALENDAR), ZI == null ? "null" : ZI.getValue());
-     if (RS.wasNull() == true)
-      __Nulls |= DTField._Mask;
-     boolean DTNull = (__Nulls & DTField._Mask) != 0L;
-     boolean TZNull = (__Nulls & TZField._Mask) != 0L;
-     if (DTNull == false && TZNull == true)
-      throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
-     return ZDT;
    }
 
    protected abstract boolean AfterRead(Connection C) throws Exception;

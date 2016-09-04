@@ -6,43 +6,17 @@
 
 package tilda.data._Tilda;
 
-import java.io.IOException;
+import java.time.*;
 import java.io.Writer;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.TreeSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+
+import tilda.db.*;
+import tilda.enums.*;
+import tilda.performance.*;
+import tilda.utils.*;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.db.ArrayListResults;
-import tilda.db.Connection;
-import tilda.db.InitMode;
-import tilda.db.JDBCHelper;
-import tilda.db.ListResults;
-import tilda.db.QueryDetails;
-import tilda.db.QueryHelper;
-import tilda.db.processors.RecordProcessor;
-import tilda.enums.ColumnType;
-import tilda.enums.StatementType;
-import tilda.enums.TransactionType;
-import tilda.performance.PerfTracker;
-import tilda.utils.CollectionUtil;
-import tilda.utils.DateTimeUtil;
-import tilda.utils.DurationUtil;
-import tilda.utils.HTMLFilter;
-import tilda.utils.ParseUtil;
-import tilda.utils.JSONUtil;
-import tilda.utils.SystemValues;
-import tilda.utils.TextUtil;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
@@ -50,7 +24,7 @@ import tilda.utils.TextUtil;
 
 /**
 <DIV id='ZONEINFO_DIV'>
-<H1>ZONEINFO</H1>
+<H1>ZONEINFO&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 60%;"><A href="#">top</A></SUP></H1>
 The generated Java 8/PostgreSQL Tilda data class <B>Data_ZONEINFO</B> is mapped to the table <B>TILDA.ZONEINFO</B>.
 <UL>
 
@@ -86,9 +60,8 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 5 2016, 03:06:35EDT
+ @generated Sep 4 2016, 17:05:48EDT
 */
-@SuppressWarnings({ "unused" })
 public abstract class TILDA__ZONEINFO implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
    protected static final Logger LOG = LogManager.getLogger(TILDA__ZONEINFO.class.getName());
@@ -1572,7 +1545,6 @@ This is the hasChanged for:<BR>
        LOG.debug("   "+toString());
        java.sql.PreparedStatement PS = null;
        int count = 0;
-       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
        try
         {
           PS = C.prepareStatement(Q);
@@ -1638,9 +1610,8 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
           PS = null;
-          AllocatedArrays = null;
         }
 
        if (__Init == InitMode.CREATE)
@@ -1736,7 +1707,6 @@ This is the hasChanged for:<BR>
        LOG.debug("   "+toString());
        java.sql.PreparedStatement PS=null;
        java.sql.ResultSet RS=null;
-       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
        int count = 0;
 
        try
@@ -1758,6 +1728,7 @@ This is the hasChanged for:<BR>
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
            }
 
+
           RS = PS.executeQuery();
           if (RS.next() == false)
             {
@@ -1773,19 +1744,14 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
-          AllocatedArrays = null;
         }
     }
 
-   @SuppressWarnings("unchecked")
    boolean Init(Connection C, java.sql.ResultSet RS) throws Exception
     {
       int i = 0;
-      tilda.data.ZoneInfo_Data ZI;
-      boolean DateTimeFieldNull;
-      boolean ZoneFieldNull;
      __Init = InitMode.LOOKUP;
       __Saved_id            = _id            =                              RS.getString   (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__ZONEINFO_Factory.COLS.ID._Mask           ; else _id            = _id           .trim();
       __Saved_value         = _value         =                              RS.getString   (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__ZONEINFO_Factory.COLS.VALUE._Mask        ;

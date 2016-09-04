@@ -6,43 +6,18 @@
 
 package tilda.data._Tilda;
 
-import java.io.IOException;
+import java.time.*;
+import java.util.*;
 import java.io.Writer;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.TreeSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+
+import tilda.db.*;
+import tilda.enums.*;
+import tilda.performance.*;
+import tilda.utils.*;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.db.ArrayListResults;
-import tilda.db.Connection;
-import tilda.db.InitMode;
-import tilda.db.JDBCHelper;
-import tilda.db.ListResults;
-import tilda.db.QueryDetails;
-import tilda.db.QueryHelper;
-import tilda.db.processors.RecordProcessor;
-import tilda.enums.ColumnType;
-import tilda.enums.StatementType;
-import tilda.enums.TransactionType;
-import tilda.performance.PerfTracker;
-import tilda.utils.CollectionUtil;
-import tilda.utils.DateTimeUtil;
-import tilda.utils.DurationUtil;
-import tilda.utils.HTMLFilter;
-import tilda.utils.ParseUtil;
-import tilda.utils.JSONUtil;
-import tilda.utils.SystemValues;
-import tilda.utils.TextUtil;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
@@ -50,7 +25,7 @@ import tilda.utils.TextUtil;
 
 /**
 <DIV id='TESTING_DIV'>
-<H1>TESTING</H1>
+<H1>TESTING&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 60%;"><A href="#">top</A></SUP></H1>
 The generated Java 8/PostgreSQL Tilda data class <B>Data_TESTING</B> is mapped to the table <B>TILDA.TESTING</B>.
 <UL>
 
@@ -110,9 +85,8 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 5 2016, 03:06:35EDT
+ @generated Sep 4 2016, 17:05:48EDT
 */
-@SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTING implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject, tilda.interfaces.JSONable
  {
    protected static final Logger LOG = LogManager.getLogger(TILDA__TESTING.class.getName());
@@ -290,7 +264,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
         throw new Exception("Cannot set field 'tilda.data.TILDA.TESTING.refnum2' that is invariant, or part of a read-only or pre-existing WORM object.");
-       if (v == null)
+       if (v == null )
         throw new Exception("Cannot set tilda.data.TILDA.TESTING.refnum2 to null: it's not nullable.");
        else if (CollectionUtil.equals(v, _refnum2) == false)
         {
@@ -1472,7 +1446,7 @@ This is the setter for:<BR>
    public void setTops(List<String> v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (v == null  || v.isEmpty() == true)
         setNullTops();
        else if (CollectionUtil.equals(v, _tops) == false)
         {
@@ -1660,7 +1634,7 @@ This is the setter for:<BR>
    public void setTops2(Set <String> v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (v == null  || v.isEmpty() == true)
         setNullTops2();
        else if (CollectionUtil.equals(v, _tops2) == false)
         {
@@ -2121,7 +2095,7 @@ This is the setter for:<BR>
    public void setA2b(List<Character> v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (v == null  || v.isEmpty() == true)
         setNullA2b();
        else if (CollectionUtil.equals(v, _a2b) == false)
         {
@@ -2299,7 +2273,7 @@ This is the setter for:<BR>
    public void setA2c(Set <Character> v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (v == null  || v.isEmpty() == true)
         setNullA2c();
        else if (CollectionUtil.equals(v, _a2c) == false)
         {
@@ -2612,7 +2586,7 @@ This is the setter for:<BR>
    public void setA3b(List<Boolean> v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (v == null  || v.isEmpty() == true)
         setNullA3b();
        else if (CollectionUtil.equals(v, _a3b) == false)
         {
@@ -2932,7 +2906,7 @@ This is the setter for:<BR>
    public void setA4b(List<Double> v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (v == null  || v.isEmpty() == true)
         setNullA4b();
        else if (CollectionUtil.equals(v, _a4b) == false)
         {
@@ -3252,7 +3226,7 @@ This is the setter for:<BR>
    public void setA5b(List<Float> v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (v == null  || v.isEmpty() == true)
         setNullA5b();
        else if (CollectionUtil.equals(v, _a5b) == false)
         {
@@ -3572,7 +3546,7 @@ This is the setter for:<BR>
    public void setA6b(List<Long> v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (v == null  || v.isEmpty() == true)
         setNullA6b();
        else if (CollectionUtil.equals(v, _a6b) == false)
         {
@@ -3750,7 +3724,7 @@ This is the setter for:<BR>
    public void setA6c(Set <Long> v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (v == null  || v.isEmpty() == true)
         setNullA6c();
        else if (CollectionUtil.equals(v, _a6c) == false)
         {
@@ -4063,7 +4037,7 @@ This is the setter for:<BR>
    public void setA7b(List<Integer> v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
+       if (v == null  || v.isEmpty() == true)
         setNullA7b();
        else if (CollectionUtil.equals(v, _a7b) == false)
         {
@@ -5530,7 +5504,7 @@ This is the hasChanged for:<BR>
                 } 
                if ((TILDA__TESTING_Factory.COLS.REFNUM2._Mask     & __Changes) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.REFNUM2._Mask     & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.REFNUM2._Type, AllocatedArrays, _refnum2);
+                  if ((TILDA__TESTING_Factory.COLS.REFNUM2._Mask     & __Nulls  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.BIGINT ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.REFNUM2._Type, AllocatedArrays, _refnum2);
                 } 
                if ((TILDA__TESTING_Factory.COLS.NAME._Mask        & __Changes) != 0L) 
                 { 
@@ -5562,11 +5536,11 @@ This is the hasChanged for:<BR>
                 } 
                if ((TILDA__TESTING_Factory.COLS.TOPS._Mask        & __Changes) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.TOPS._Mask        & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.TOPS._Type, AllocatedArrays, _tops);
+                  if ((TILDA__TESTING_Factory.COLS.TOPS._Mask        & __Nulls  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.TOPS._Type, AllocatedArrays, _tops);
                 } 
                if ((TILDA__TESTING_Factory.COLS.TOPS2._Mask       & __Changes) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.TOPS2._Mask       & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.TOPS2._Type, AllocatedArrays, _tops2);
+                  if ((TILDA__TESTING_Factory.COLS.TOPS2._Mask       & __Nulls  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.TOPS2._Type, AllocatedArrays, _tops2);
                 } 
                if ((TILDA__TESTING_Factory.COLS.A1._Mask          & __Changes) != 0L) 
                 { 
@@ -5578,11 +5552,11 @@ This is the hasChanged for:<BR>
                 } 
                if ((TILDA__TESTING_Factory.COLS.A2B._Mask         & __Changes) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A2B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A2B._Type, AllocatedArrays, _a2b);
+                  if ((TILDA__TESTING_Factory.COLS.A2B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A2B._Type, AllocatedArrays, _a2b);
                 } 
                if ((TILDA__TESTING_Factory.COLS.A2C._Mask         & __Changes) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A2C._Mask         & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A2C._Type, AllocatedArrays, _a2c);
+                  if ((TILDA__TESTING_Factory.COLS.A2C._Mask         & __Nulls  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A2C._Type, AllocatedArrays, _a2c);
                 } 
                if ((TILDA__TESTING_Factory.COLS.A3._Mask          & __Changes) != 0L) 
                 { 
@@ -5590,7 +5564,7 @@ This is the hasChanged for:<BR>
                 } 
                if ((TILDA__TESTING_Factory.COLS.A3B._Mask         & __Changes) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A3B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.BOOLEAN); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A3B._Type, AllocatedArrays, _a3b);
+                  if ((TILDA__TESTING_Factory.COLS.A3B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.BOOLEAN); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A3B._Type, AllocatedArrays, _a3b);
                 } 
                if ((TILDA__TESTING_Factory.COLS.A4._Mask          & __Changes) != 0L) 
                 { 
@@ -5598,7 +5572,7 @@ This is the hasChanged for:<BR>
                 } 
                if ((TILDA__TESTING_Factory.COLS.A4B._Mask         & __Changes) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A4B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.DOUBLE ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A4B._Type, AllocatedArrays, _a4b);
+                  if ((TILDA__TESTING_Factory.COLS.A4B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.DOUBLE ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A4B._Type, AllocatedArrays, _a4b);
                 } 
                if ((TILDA__TESTING_Factory.COLS.A5._Mask          & __Changes) != 0L) 
                 { 
@@ -5606,7 +5580,7 @@ This is the hasChanged for:<BR>
                 } 
                if ((TILDA__TESTING_Factory.COLS.A5B._Mask         & __Changes) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A5B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.FLOAT  ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A5B._Type, AllocatedArrays, _a5b);
+                  if ((TILDA__TESTING_Factory.COLS.A5B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.FLOAT  ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A5B._Type, AllocatedArrays, _a5b);
                 } 
                if ((TILDA__TESTING_Factory.COLS.A6._Mask          & __Changes) != 0L) 
                 { 
@@ -5614,11 +5588,11 @@ This is the hasChanged for:<BR>
                 } 
                if ((TILDA__TESTING_Factory.COLS.A6B._Mask         & __Changes) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A6B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A6B._Type, AllocatedArrays, _a6b);
+                  if ((TILDA__TESTING_Factory.COLS.A6B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.BIGINT ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A6B._Type, AllocatedArrays, _a6b);
                 } 
                if ((TILDA__TESTING_Factory.COLS.A6C._Mask         & __Changes) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A6C._Mask         & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A6C._Type, AllocatedArrays, _a6c);
+                  if ((TILDA__TESTING_Factory.COLS.A6C._Mask         & __Nulls  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.BIGINT ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A6C._Type, AllocatedArrays, _a6c);
                 } 
                if ((TILDA__TESTING_Factory.COLS.A7._Mask          & __Changes) != 0L) 
                 { 
@@ -5626,7 +5600,7 @@ This is the hasChanged for:<BR>
                 } 
                if ((TILDA__TESTING_Factory.COLS.A7B._Mask         & __Changes) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A7B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.INTEGER); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A7B._Type, AllocatedArrays, _a7b);
+                  if ((TILDA__TESTING_Factory.COLS.A7B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.INTEGER); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A7B._Type, AllocatedArrays, _a7b);
                 } 
                if ((TILDA__TESTING_Factory.COLS.A8._Mask          & __Changes) != 0L) 
                 { 
@@ -5801,6 +5775,7 @@ This is the hasChanged for:<BR>
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
            }
 
+
           RS = PS.executeQuery();
           if (RS.next() == false)
             {
@@ -5826,9 +5801,6 @@ This is the hasChanged for:<BR>
    boolean Init(Connection C, java.sql.ResultSet RS) throws Exception
     {
       int i = 0;
-      tilda.data.ZoneInfo_Data ZI;
-      boolean DateTimeFieldNull;
-      boolean ZoneFieldNull;
      __Init = InitMode.LOOKUP;
       __Saved_refnum      = _refnum      =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.REFNUM._Mask     ;
                             _refnum2 = (List<Long>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.REFNUM2._Type, false); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.REFNUM2._Mask    ;

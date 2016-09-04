@@ -41,11 +41,15 @@ public final class TILDA__1_0
 
    protected static void HandleFinally(java.sql.PreparedStatement PS, long T0, String TableName, StatementType ST, int count, List<java.sql.Array> AllocatedArrays) throws java.sql.SQLException
      {
-       if (PS != null) PS.close(); 
+       if (PS != null)
+        PS.close();
        PerfTracker.add(TableName, ST, System.nanoTime()-T0, count);
-       for (java.sql.Array A : AllocatedArrays)
-        A.free();
-       AllocatedArrays.clear();
+       if (AllocatedArrays != null)
+        {
+          for (java.sql.Array A : AllocatedArrays)
+           A.free();
+          AllocatedArrays.clear();
+        }
      }
 
    public static void initSchema(Connection C) throws Exception
