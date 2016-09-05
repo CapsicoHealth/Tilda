@@ -28,13 +28,6 @@ import tilda.db.ConnectionPool;
 import tilda.db.SelectQuery;
 import tilda.enums.ColumnType;
 import tilda.types.ColumnDefinition;
-import tilda.types.Type_CharPrimitiveNull;
-import tilda.types.Type_DatetimePrimitiveNull;
-import tilda.types.Type_FloatPrimitiveNull;
-import tilda.types.Type_IntegerPrimitive;
-import tilda.types.Type_IntegerPrimitiveNull;
-import tilda.types.Type_StringCollectionNull;
-import tilda.types.Type_StringPrimitiveNull;
 import tilda.utils.CollectionUtil;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.DurationUtil;
@@ -44,65 +37,41 @@ public class TildaSQL
   {
     protected static final Logger LOG = LogManager.getLogger(TildaSQL.class.getName());
 
+    // Sample object that the test rules will be run against.
+    /*@formatter:off*/
     public static class TestObject
       {
-        public char getCLM_TYPE()
-          {
-            return 'I';
-          }
-
-        public String getPRVDR_CLASS()
-          {
-            return "Abc";
-          }
-
-        public String getPRIMARY_ICD9_DGNS_CD()
-          {
-            return "410.11";
-          }
-
-        public List<String> getSECONDARY_ICD9_DGNS_CD()
-          {
-            return null;
-          }
-
-        public String getPRIMARY_ICD9_PRCDR_CD()
-          {
-            return null;
-          }
-
-        public ZonedDateTime getBENE_BIRTH_DT()
-          {
-            return DateTimeUtil.parsefromJSON("2001-03-11");
-          }
-
-        public float getCLM_PMT_AMT()
-          {
-            return 2500;
-          }
+        public String        getDESYNPUF_ID            () { return "1234567"; }
+        public ZonedDateTime getCLM_FROM_DT            () { return DateTimeUtil.parsefromJSON("2016-08-01"); }
+        public ZonedDateTime getCLM_THRU_DT            () { return DateTimeUtil.parsefromJSON("2016-08-07"); }
+        public float         getCLM_PMT_AMT            () { return 2500; }
+        public String        getPRVDR_CLASS            () { return "Abc"; }
+        public char          getCLM_TYPE               () { return 'I'; }
+        public String        getPRIMARY_ICD9_DGNS_CD   () { return "410.11"; }
+        public List<String>  getSECONDARY_ICD9_DGNS_CD () { return null; }
+        public String        getPRIMARY_ICD9_PRCDR_CD  () { return null; }
+        public String        getSECONDARY_ICD9_PRCDR_CD() { return null; }
+        public ZonedDateTime getBENE_BIRTH_DT          () { return DateTimeUtil.parsefromJSON("2001-03-11"); }
+        public char          getBENE_SEX_IDENT_CD      () { return 'F'; }
       }
+    /*@formatter:on*/
 
 
-   /*@formatter:off*/
+    // Meta-data about the sample object used in the test rules.
+    /*@formatter:off*/
     protected static List<ColumnDefinition> _COLS = CollectionUtil.toList(new ColumnDefinition[] {
-           ColumnDefinition.Create(null, null, "DESYNPUF_ID"       , ColumnType.STRING  , false, false, "De-identified patient id")
-          ,ColumnDefinition.Create(null, null, "CLM_ADMSN_DT"      , ColumnType.DATETIME, false, true , "Claim admission date")
-          ,ColumnDefinition.Create(null, null, "CLM_FROM_DT"       , ColumnType.DATETIME, false, true , "Claim start date")
-          ,ColumnDefinition.Create(null, null, "NCH_BENE_DSCHRG_DT", ColumnType.DATETIME, false, true , "Claim discharge date")
-          ,ColumnDefinition.Create(null, null, "CLM_THRU_DT"       , ColumnType.DATETIME, false, true , "Claim end date")
-          ,new Type_FloatPrimitiveNull   ("CMS", "CLAIMSBENEFICIARYVIEW", "CLM_PMT_AMT"            , 7, ""),
-           new Type_StringPrimitiveNull  ("CMS", "CLAIMSBENEFICIARYVIEW", "PRVDR_CLASS"            , 10, ""), 
-           new Type_CharPrimitiveNull    ("CMS", "CLAIMSBENEFICIARYVIEW", "CLM_TYPE"               , 11, ""),
-           new Type_StringPrimitiveNull  ("CMS", "CLAIMSBENEFICIARYVIEW", "PRIMARY_ICD9_DGNS_CD"   , 12, ""), 
-           new Type_StringCollectionNull ("CMS", "CLAIMSBENEFICIARYVIEW", "SECONDARY_ICD9_DGNS_CD" , 13, ""),
-           new Type_StringPrimitiveNull  ("CMS", "CLAIMSBENEFICIARYVIEW", "PRIMARY_ICD9_PRCDR_CD"  , 14, ""), 
-           new Type_StringCollectionNull ("CMS", "CLAIMSBENEFICIARYVIEW", "SECONDARY_ICD9_PRCDR_CD", 15, ""),
-           new Type_IntegerPrimitiveNull ("CMS", "CLAIMSBENEFICIARYVIEW", "CLM_UTLZTN_DAY_CNT"     , 16, ""), 
-           new Type_StringPrimitiveNull  ("CMS", "CLAIMSBENEFICIARYVIEW", "BENE_DEATH_DTTZ"        , 17, ""),
-           new Type_DatetimePrimitiveNull("CMS", "CLAIMSBENEFICIARYVIEW", "BENE_DEATH_DT"          , 18, ""), 
-           new Type_DatetimePrimitiveNull("CMS", "CLAIMSBENEFICIARYVIEW", "BENE_BIRTH_DT"          , 20, ""), 
-           new Type_IntegerPrimitive     ("CMS", "CLAIMSBENEFICIARYVIEW", "BENE_SEX_IDENT_CD"      , 21, ""),
-           new Type_IntegerPrimitive     ("CMS", "CLAIMSBENEFICIARYVIEW", "SP_STATE_CODE"          , 22, "")
+           ColumnDefinition.Create(null, null, "DESYNPUF_ID"            , ColumnType.STRING  , false, false, "De-identified patient id")
+          ,ColumnDefinition.Create(null, null, "CLM_FROM_DT"            , ColumnType.DATETIME, false, true , "Claim start date")
+          ,ColumnDefinition.Create(null, null, "CLM_THRU_DT"            , ColumnType.DATETIME, false, true , "Claim end date")
+          ,ColumnDefinition.Create(null, null, "CLM_PMT_AMT"            , ColumnType.FLOAT   , false, true , "Claim payment")
+          ,ColumnDefinition.Create(null, null, "PRVDR_CLASS"            , ColumnType.STRING  , false, true , "Provider class")
+          ,ColumnDefinition.Create(null, null, "CLM_TYPE"               , ColumnType.CHAR    , false, false, "Claim type")
+          ,ColumnDefinition.Create(null, null, "PRIMARY_ICD9_DGNS_CD"   , ColumnType.STRING  , false, true , "Primary ICD9 diagnosis code")
+          ,ColumnDefinition.Create(null, null, "SECONDARY_ICD9_DGNS_CD" , ColumnType.STRING  , true , true , "Secondary ICD9 diagnosis codes")
+          ,ColumnDefinition.Create(null, null, "PRIMARY_ICD9_PRCDR_CD"  , ColumnType.STRING  , false, true , "Primary ICD9 procedure code")
+          ,ColumnDefinition.Create(null, null, "SECONDARY_ICD9_PRCDR_CD", ColumnType.STRING  , true , true , "Secondary ICD9 procedure codes")
+          ,ColumnDefinition.Create(null, null, "BENE_BIRTH_DT"          , ColumnType.DATETIME, false, true , "Beneficiary date of birth")
+          ,ColumnDefinition.Create(null, null, "BENE_SEX_IDENT_CD"      , ColumnType.CHAR    , false, true , "Beneficiary gender")
     });
    /*@formatter:on*/
 
@@ -130,11 +99,14 @@ public class TildaSQL
 
         LOG.debug("");
         LOG.debug("");
-        LOG.debug("=== TEST 5 =============================================================================================================");
-        toto5();
+        LOG.debug("=== TEST 4 =============================================================================================================");
+        toto4();
       }
 
 
+    /**
+     * Defining and validating a complex rule, and testing some code gen.
+     */
     private static void toto1()
       {
         String[] Expressions = {
@@ -273,6 +245,9 @@ public class TildaSQL
       }
 
 
+    /**
+     * Defining and validating a complex rule.
+     */
     public static void toto2()
       {
         String Expr = "     CLM_TYPE >= 'I' " + SystemValues.NEWLINE
@@ -316,6 +291,9 @@ public class TildaSQL
           }
       }
 
+    /**
+     * Defining and validating a ruleset, along with Java code gen and compiling.
+     */
     public static void toto3()
     throws Exception
       {
@@ -389,17 +367,11 @@ public class TildaSQL
       }
 
 
+    /**
+     * Testing the "hand-written" SQL where clause validation and runtime.
+     * @throws Exception
+     */
     public static void toto4()
-    throws Exception
-      {
-        // TildaSQLTreePrinter w1 = new TildaSQLTreePrinter(parser);
-        // ParseTreeWalker.DEFAULT.walk(w1, tree);
-        // LOG.debug("expr: " + Expr);
-        // LOG.debug(w1._ParseTreeStr.toString());
-      }
-
-
-    public static void toto5()
     throws Exception
       {
         Connection C = ConnectionPool.get("MAIN");
