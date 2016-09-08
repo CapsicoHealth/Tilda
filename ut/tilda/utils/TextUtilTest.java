@@ -296,7 +296,7 @@ public class TextUtilTest
            LOG.error("ERROR: VRegex4  = '"+VRegex4+"'.");
          }
        
-       final int count = 100000;
+       final int count = 1000000;
        
        long T0 = System.nanoTime();
        for (int i = 0; i < count; ++i)
