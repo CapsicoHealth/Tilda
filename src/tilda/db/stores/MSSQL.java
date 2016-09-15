@@ -283,7 +283,7 @@ public class MSSQL implements DBType
                   case "_bpchar": TildaType = ColumnType.CHAR; break;
                   case "_text"  : TildaType = ColumnType.STRING; break;
                   case "_bool"  : TildaType = ColumnType.BOOLEAN; break;
-                  default: throw new Exception("Cannot map SQL TypeName "+TypeName+" for array column.");
+                  default: throw new Exception("Cannot map SQL TypeName "+TypeName+" for array column '"+Name+"'.");
                 }
                break;
             case java.sql.Types.BIGINT       : TypeSql = "BIGINT"       ; TildaType = ColumnType.LONG; break;
