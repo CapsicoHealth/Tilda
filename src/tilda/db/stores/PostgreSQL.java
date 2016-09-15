@@ -266,7 +266,7 @@ public class PostgreSQL implements DBType
       {
         if (T == ColumnType.STRING && M != ColumnMode.CALCULATED)
           return Collection == true ? "text[]" : S < 15 ? PostgresType.CHAR._SQLType + "(" + S + ")" : S < getCLOBThreshhold() ? PostgresType.STRING._SQLType + "(" + S + ")" : "text";
-        return PostgresType.get(T)._SQLType + (Collection == true ? "[]" : "");
+        return PostgresType.get(T)._SQLType + (T != ColumnType.JSON && Collection == true ? "[]" : "");
       }
 
 
