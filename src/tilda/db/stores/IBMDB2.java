@@ -194,6 +194,12 @@ public class IBMDB2 implements DBType
       }
 
     @Override
+    public int getVarCharThreshhold()
+      {
+        return 20;
+      }
+
+    @Override
     public int getCLOBThreshhold()
       {
         return 4096;
@@ -300,8 +306,5 @@ public class IBMDB2 implements DBType
         throw new UnsupportedOperationException();
         
       }
-
-
-
 
   }
