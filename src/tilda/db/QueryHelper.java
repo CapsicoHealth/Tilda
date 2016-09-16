@@ -59,25 +59,32 @@ import tilda.utils.TextUtil;
  */
 public abstract class QueryHelper
   {
-    protected QueryHelper(Connection C, StatementType ST, String SchemaName, String TableName, boolean fullSelect)
-      throws Exception
+    protected QueryHelper(Connection C, StatementType ST, String SchemaName, String TableName, boolean FullSelect)
+    throws Exception
       {
         if (C == null)
           throw new Exception("Cannot create a QueryHelper with a NULL connection.");
 
-        if (fullSelect == false && ST != StatementType.SELECT)
+        if (FullSelect == false && ST != StatementType.SELECT)
           throw new Exception("Cannot create a 'fullSelect' QueryHelper for a StatementType '" + ST.name() + "'.");
 
         _SchemaName = SchemaName;
         _TableName = TableName;
-        _C = C;
         _ST = ST;
-        _FullSelect = fullSelect;
+        _FullSelect = FullSelect;
+        _C = C;
+        init();
+      }
+
+    private void init()
+    throws Exception
+      {
+        _QueryStr = new StringBuilder();        
         _Section = S.START;
 
         if (_ST == StatementType.SELECT)
           {
-            if (fullSelect == true)
+            if (_FullSelect == true)
               _QueryStr.append("select ");
             else
               {
@@ -89,34 +96,34 @@ public abstract class QueryHelper
         else if (_ST == StatementType.UPDATE)
           {
             _QueryStr.append("update ");
-            C.getFullTableVar(_QueryStr, SchemaName, TableName);
+            _C.getFullTableVar(_QueryStr, _SchemaName, _TableName);
             _QueryStr.append(" set ");
             _Froms.add(_SchemaName + "." + _TableName);
           }
         else if (_ST == StatementType.DELETE)
           {
             _QueryStr.append("delete from ");
-            C.getFullTableVar(_QueryStr, SchemaName, TableName);
+            _C.getFullTableVar(_QueryStr, _SchemaName, _TableName);
             _QueryStr.append(" ");
             _Section = S.FROM;
             _Froms.add(_SchemaName + "." + _TableName);
           }
         else
-          throw new Exception("Unsupported Statement Type '" + ST + "' for the QueryHelper: " + _QueryStr.toString());
+          throw new Exception("Unsupported Statement Type '" + _ST + "' for the QueryHelper: " + _QueryStr.toString());
       }
 
     protected static enum S
       {
       START, FROM, SET, WHERE, GROUPBY, ORDERBY;
       }
-
+    
     protected final String        _SchemaName;
     protected final String        _TableName;
     protected final StatementType _ST;
     protected boolean             _FullSelect;
     protected Connection          _C;
 
-    protected StringBuilder       _QueryStr       = new StringBuilder();
+    protected StringBuilder       _QueryStr       = null;
     protected S                   _Section        = null;
     protected boolean             _Where          = false;
     protected int                 _WherePos       = -1;
@@ -125,6 +132,12 @@ public abstract class QueryHelper
     Set<String>                   _Froms          = new HashSet<String>();
     protected int                 _SubSelectCount = 0;
 
+    public void clear()
+    throws Exception
+     {
+       init();
+     }
+    
     public int getCardinality()
       {
         return _Cardinality;
@@ -217,12 +230,12 @@ public abstract class QueryHelper
       {
         protected CaseWhen(SelectQuery whereClause, String value)
           {
-            _WhereClause = whereClause;
+            _WhereClause = whereClause.toString();
             _Value = value;
           }
 
-        protected final SelectQuery _WhereClause;
-        protected final String      _Value;
+        protected final String _WhereClause;
+        protected final String _Value;
       }
 
     public static class CaseClause
@@ -263,7 +276,7 @@ public abstract class QueryHelper
         Str.append("case ");
         for (CaseWhen c : clause._Cases)
           {
-            Str.append(" when ").append(c._WhereClause.toString()).append(" then ");
+            Str.append(" when ").append(c._WhereClause).append(" then ");
             TextUtil.EscapeSingleQuoteForSQL(Str, c._Value);
           }
         Str.append(" else ");
