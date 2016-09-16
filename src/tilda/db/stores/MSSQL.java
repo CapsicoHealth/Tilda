@@ -202,7 +202,7 @@ public class MSSQL implements DBType
         if (Collection == true)
           return "nvarchar(max)";
         if (T == ColumnType.STRING && M != ColumnMode.CALCULATED)
-          return S < 15 ? SQLServerType.CHAR._SQLType + "(" + S + ")" : S < getCLOBThreshhold() ? SQLServerType.STRING._SQLType + "(" + S + ")" : "nvarchar(max)";
+          return S < getVarCharThreshhold() ? SQLServerType.CHAR._SQLType + "(" + S + ")" : S < getCLOBThreshhold() ? SQLServerType.STRING._SQLType + "(" + S + ")" : "nvarchar(max)";
         return SQLServerType.get(T)._SQLType;
       }
 
@@ -235,6 +235,12 @@ public class MSSQL implements DBType
     throws Exception
       {
         throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public int getVarCharThreshhold()
+      {
+        return 20;
       }
 
     @Override

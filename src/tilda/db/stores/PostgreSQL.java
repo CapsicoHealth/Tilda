@@ -257,6 +257,12 @@ public class PostgreSQL implements DBType
       }
 
     @Override
+    public int getVarCharThreshhold()
+      {
+        return 20;
+      }
+
+    @Override
     public int getCLOBThreshhold()
       {
         return 4096;
@@ -265,7 +271,7 @@ public class PostgreSQL implements DBType
     public String getColumnType(ColumnType T, Integer S, ColumnMode M, boolean Collection)
       {
         if (T == ColumnType.STRING && M != ColumnMode.CALCULATED)
-          return Collection == true ? "text[]" : S < 15 ? PostgresType.CHAR._SQLType + "(" + S + ")" : S < getCLOBThreshhold() ? PostgresType.STRING._SQLType + "(" + S + ")" : "text";
+          return Collection == true ? "text[]" : S < getVarCharThreshhold() ? PostgresType.CHAR._SQLType + "(" + S + ")" : S < getCLOBThreshhold() ? PostgresType.STRING._SQLType + "(" + S + ")" : "text";
         return PostgresType.get(T)._SQLType + (T != ColumnType.JSON && Collection == true ? "[]" : "");
       }
 
