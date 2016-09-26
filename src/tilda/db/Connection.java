@@ -309,13 +309,15 @@ public final class Connection
     public int ExecuteUpdate(String SchemaName, String TableName, String Query)
     throws Exception
       {
-        // if (_DB.FullIdentifierOnUpdate() == true)
-        // {
-        // LOG.debug("TILDA("+AnsiUtil.NEGATIVE + TableName + AnsiUtil.NEGATIVE_OFF+") Original query: " + Query);
-        // Query = TextUtil.SearchReplace(Query, TableName+".", "");
-        // }
         return JDBCHelper.ExecuteUpdate(_C, SchemaName, TableName, Query);
       }
+    
+    public int ExecuteInsert(String SchemaName, String TableName, String Query)
+    throws Exception
+      {
+        return JDBCHelper.ExecuteInsert(_C, SchemaName, TableName, Query);
+      }
+    
     
     public void ExecuteDDL(String SchemaName, String TableName, String Query)
     throws Exception
