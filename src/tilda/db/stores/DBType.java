@@ -34,6 +34,8 @@ import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 import tilda.types.ColumnDefinition;
+import tilda.types.Type_DatetimePrimitive;
+import tilda.utils.DurationUtil.IntervalEnum;
 import tilda.utils.pairs.StringStringPair;
 
 public interface DBType
@@ -84,4 +86,5 @@ public interface DBType
     public String        getJsonParametrizedQueryPlaceHolder();
     public void          setOrderByWithNullsOrdering(Connection C, StringBuilder Str, ColumnDefinition Col, boolean Asc, boolean NullsLast);
     public void truncateTable(Connection C, String schemaName, String tableName) throws Exception;
+    public void age(Connection C, StringBuilder Str, Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count, String Operator);
   }

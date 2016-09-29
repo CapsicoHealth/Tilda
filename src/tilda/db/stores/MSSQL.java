@@ -43,7 +43,9 @@ import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.types.ColumnDefinition;
+import tilda.types.Type_DatetimePrimitive;
 import tilda.utils.TextUtil;
+import tilda.utils.DurationUtil.IntervalEnum;
 import tilda.utils.pairs.StringStringPair;
 
 public class MSSQL implements DBType
@@ -69,7 +71,7 @@ public class MSSQL implements DBType
         return "current_timestamp";
       }
 
-    protected static final String[] _LOCK_CONN_ERROR_SUBSTR = { 
+    protected static final String[] _LOCK_CONN_ERROR_SUBSTR = {
         "deadlocked on lock", "lock request time out", "lock inconsistency found", "connection reset", "connection is closed", "connection has been closed"
     };
 
@@ -177,7 +179,7 @@ public class MSSQL implements DBType
         Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getShortName(), Str.toString());
         return true;
       }
-    
+
     @Override
     public boolean dropView(Connection Con, View V)
     throws Exception
@@ -436,6 +438,12 @@ public class MSSQL implements DBType
         Str.append("TRUNCATE TABLE ");
         getFullTableVar(Str, schemaName, tableName);
         C.ExecuteUpdate(schemaName, tableName, Str.toString());
+      }
+
+    @Override
+    public void age(Connection C, StringBuilder Str, Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count, String Operator)
+      {
+        throw new UnsupportedOperationException();
       }
 
   }

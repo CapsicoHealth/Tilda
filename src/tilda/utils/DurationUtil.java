@@ -32,6 +32,12 @@ public class DurationUtil
     public static final long      NANOSECS_PER_MINUTE      = MILLISECS_PER_MINUTE * NANOSECS_PER_MILLISECOND;
     public static final long      NANOSECS_PER_HOUR        = MILLISECS_PER_HOUR * NANOSECS_PER_MILLISECOND;
     public static final long      NANOSECS_PER_DAY         = MILLISECS_PER_DAY * NANOSECS_PER_MILLISECOND;
+    
+    public static enum IntervalEnum
+      {
+        YEARS, MONTHS, DAYS, HOURS, MINUTES, SECONDS
+      }
+    
 
 
     static protected NumberFormat F1                       = new DecimalFormat("###,###.00");

@@ -44,7 +44,9 @@ import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.types.ColumnDefinition;
+import tilda.types.Type_DatetimePrimitive;
 import tilda.utils.CollectionUtil;
+import tilda.utils.DurationUtil.IntervalEnum;
 import tilda.utils.TextUtil;
 import tilda.utils.pairs.StringStringPair;
 
@@ -575,6 +577,17 @@ public class PostgreSQL implements DBType
         Str.append("TRUNCATE ");
         getFullTableVar(Str, schemaName, tableName);
         C.ExecuteUpdate(schemaName, tableName, Str.toString());
+      }
+
+
+    @Override
+    public void age(Connection C, StringBuilder Str, Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count, String Operator)
+      {
+        Str.append(" (");
+        ColEnd.getFullColumnVarForSelect(C, Str);
+        Str.append("-");
+        ColStart.getFullColumnVarForSelect(C, Str);
+        Str.append(") ").append(Operator).append(" INTERVAL ").append(Count).append(" ").append(Type.toString());
       }
 
   }

@@ -43,6 +43,7 @@ import tilda.types.Type_LongPrimitive;
 import tilda.types.Type_StringCollection;
 import tilda.types.Type_StringPrimitive;
 import tilda.utils.DateTimeUtil;
+import tilda.utils.DurationUtil.IntervalEnum;
 import tilda.utils.TextUtil;
 
 /**
@@ -463,7 +464,7 @@ public abstract class QueryHelper
           Col.getShortColumnVarForSelect(_C, _QueryStr);
       }
 
-    public static enum Op
+    protected static enum Op
       {
       EQUALS(" = "), LT(" < "), LTE(" <= "), GT(" > "), GTE(" >= "), NOT_EQUALS(" <> "), PLUS(" + "), MINUS(" - "), MULTIPLY(" * "), DIVIDE(" / "), LIKE(" like "), NOT_LIKE(" not like ");
 
@@ -2390,50 +2391,39 @@ public abstract class QueryHelper
         return this;
       }
     
-    public static enum IntervalEnum
-      {
-        YEARS, MONTHS, DAYS, HOURS, MINUTES, SECONDS
-      }
-
-    protected QueryHelper ageComputation_Base(Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count, String Operator)
-    throws Exception
-      {
-        _QueryStr.append(" (");
-        ColEnd.getFullColumnVarForSelect(_C, _QueryStr);
-        _QueryStr.append("-");
-        ColStart.getFullColumnVarForSelect(_C, _QueryStr);
-        _QueryStr.append(") ").append(Operator).append(" INTERVAL ").append(Count).append(" ").append(Type.toString());
-        return this;
-      }
-    
     public QueryHelper ageGreaterThan(Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count)
     throws Exception
       {
-        return ageComputation_Base(ColStart, ColEnd, Type, Count, ">");
+        _C.age(_QueryStr, ColStart, ColEnd, Type, Count, Op.GT._Str);
+        return this;
       }
 
     public QueryHelper ageGreaterThanOrEqual(Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count)
     throws Exception
       {
-        return ageComputation_Base(ColStart, ColEnd, Type, Count, ">=");
+        _C.age(_QueryStr, ColStart, ColEnd, Type, Count, Op.GTE._Str);
+        return this;
       }
 
     public QueryHelper ageLessThan(Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count)
     throws Exception
       {
-        return ageComputation_Base(ColStart, ColEnd, Type, Count, "<");
+        _C.age(_QueryStr, ColStart, ColEnd, Type, Count, Op.LT._Str);
+        return this;
       }
 
     public QueryHelper ageLessThanOrEqual(Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count)
     throws Exception
       {
-        return ageComputation_Base(ColStart, ColEnd, Type, Count, "<=");
+        _C.age(_QueryStr, ColStart, ColEnd, Type, Count, Op.LTE._Str);
+        return this;
       }
     
     public QueryHelper ageEquals(Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count)
     throws Exception
       {
-        return ageComputation_Base(ColStart, ColEnd, Type, Count, "=");
+        _C.age(_QueryStr, ColStart, ColEnd, Type, Count, Op.EQUALS._Str);
+        return this;
       }
 
     public String toString()

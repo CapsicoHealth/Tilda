@@ -45,8 +45,10 @@ import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 import tilda.performance.PerfTracker;
 import tilda.types.ColumnDefinition;
+import tilda.types.Type_DatetimePrimitive;
 import tilda.utils.AnsiUtil;
 import tilda.utils.CollectionUtil;
+import tilda.utils.DurationUtil.IntervalEnum;
 import tilda.utils.SystemValues;
 import tilda.utils.pairs.StringStringPair;
 
@@ -519,6 +521,11 @@ public final class Connection
     public void truncateTable(String SchemaName, String TableName) throws Exception
       {
         _DB.truncateTable(this, SchemaName, TableName);
+      }
+
+    public void age(StringBuilder Str, Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count, String Operator)
+      {
+        _DB.age(this, Str, ColStart, ColEnd, Type, Count, Operator);
       }
   }
 

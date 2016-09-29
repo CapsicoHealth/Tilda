@@ -37,7 +37,9 @@ import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 import tilda.types.ColumnDefinition;
+import tilda.types.Type_DatetimePrimitive;
 import tilda.utils.TextUtil;
+import tilda.utils.DurationUtil.IntervalEnum;
 import tilda.utils.pairs.StringStringPair;
 
 public class IBMDB2 implements DBType
@@ -306,5 +308,12 @@ public class IBMDB2 implements DBType
         throw new UnsupportedOperationException();
         
       }
+    
+    @Override
+    public void age(Connection C, StringBuilder Str, Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count, String Operator)
+      {
+        throw new UnsupportedOperationException();
+      }
+    
 
   }
