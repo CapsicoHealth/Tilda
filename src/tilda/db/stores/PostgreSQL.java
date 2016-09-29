@@ -585,9 +585,9 @@ public class PostgreSQL implements DBType
       {
         Str.append(" (");
         ColEnd.getFullColumnVarForSelect(C, Str);
-        Str.append("-");
+        Str.append(" - ");
         ColStart.getFullColumnVarForSelect(C, Str);
-        Str.append(") ").append(Operator).append(" INTERVAL ").append(Count).append(" ").append(Type.toString());
+        Str.append(")").append(Operator).append("INTERVAL '").append(Count).append(" ").append(Type.toString()).append("'");
       }
 
   }
