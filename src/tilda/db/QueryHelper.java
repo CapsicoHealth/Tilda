@@ -2389,6 +2389,52 @@ public abstract class QueryHelper
         .append(" AND ").append("'").append(DateTimeUtil.printDateTimeForSQL(Yesterday)).append("'");
         return this;
       }
+    
+    public static enum IntervalEnum
+      {
+        YEARS, MONTHS, DAYS, HOURS, MINUTES, SECONDS
+      }
+
+    protected QueryHelper ageComputation_Base(Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count, String Operator)
+    throws Exception
+      {
+        _QueryStr.append(" (");
+        ColEnd.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append("-");
+        ColStart.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(") ").append(Operator).append(" INTERVAL ").append(Count).append(" ").append(Type.toString());
+        return this;
+      }
+    
+    public QueryHelper ageGreaterThan(Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count)
+    throws Exception
+      {
+        return ageComputation_Base(ColStart, ColEnd, Type, Count, ">");
+      }
+
+    public QueryHelper ageGreaterThanOrEqual(Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count)
+    throws Exception
+      {
+        return ageComputation_Base(ColStart, ColEnd, Type, Count, ">=");
+      }
+
+    public QueryHelper ageLessThan(Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count)
+    throws Exception
+      {
+        return ageComputation_Base(ColStart, ColEnd, Type, Count, "<");
+      }
+
+    public QueryHelper ageLessThanOrEqual(Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count)
+    throws Exception
+      {
+        return ageComputation_Base(ColStart, ColEnd, Type, Count, "<=");
+      }
+    
+    public QueryHelper ageEquals(Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count)
+    throws Exception
+      {
+        return ageComputation_Base(ColStart, ColEnd, Type, Count, "=");
+      }
 
     public String toString()
       {
