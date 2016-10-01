@@ -75,21 +75,6 @@ public class Migrator
                 boolean DbAction = false;
                 for (View V : S._Views)
                   {
-                    if (DBMeta == null)
-                      {
-                        int xxx = 0;
-                        ++xxx;
-                      }
-                    if (V == null)
-                      {
-                        int xxx = 0;
-                        ++xxx;
-                      }
-                    if (V._ParentSchema == null)
-                      {
-                        int xxx = 0;
-                        ++xxx;
-                      }
                     if (DBMeta.getViewMeta(V._ParentSchema._Name, V._Name) != null)
                       {
                         if (C.dropView(V) == false)
