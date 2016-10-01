@@ -30,6 +30,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
+import tilda.db.metadata.ColumnMeta;
 import tilda.db.processors.ScalarRP;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
@@ -37,7 +38,6 @@ import tilda.enums.ColumnType;
 import tilda.generation.Generator;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.generation.postgres9.PostgresType;
-import tilda.migration.ColInfo;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
@@ -227,7 +227,7 @@ public class PostgreSQL implements DBType
       }
 
     @Override
-    public boolean alterTableDropColumn(Connection Con, Object Obj, ColInfo CI)
+    public boolean alterTableDropColumn(Connection Con, Object Obj, ColumnMeta CI)
     throws Exception
       {
         String Q = "ALTER TABLE " + Obj.getShortName() + " DROP COLUMN \"" + CI._Name + "\"";
@@ -424,24 +424,23 @@ public class PostgreSQL implements DBType
     public StringStringPair getTypeMapping(int Type, String Name, int Size, String TypeName)
     throws Exception
       {
+//        LOG.debug("Type: "+Type+"; Name: "+Name+"; Size: "+Size+"; TypeName: "+TypeName+";");
+//        if (Name.equals("feature_id") == true)
+//         {
+//            int xxx = 0;
+//            ++xxx;
+//          }
         ColumnType TildaType = null;
         String TypeSql = null;
         switch (Type)
           {
             /*@formatter:off*/
             case java.sql.Types.ARRAY        : TypeSql = "ARRAY"        ;
-               switch (TypeName)
-                {
-                  case "_int4"  : TildaType = ColumnType.INTEGER; break;
-                  case "_int8"  : TildaType = ColumnType.LONG; break;
-                  case "_float4": TildaType = ColumnType.FLOAT; break;
-                  case "_float8": TildaType = ColumnType.DOUBLE; break;
-                  case "_bpchar": TildaType = ColumnType.CHAR; break;
-                  case "_text"  : TildaType = ColumnType.STRING; break;
-                  case "_bool"  : TildaType = ColumnType.BOOLEAN; break;
-                  default: throw new Exception("Cannot map SQL TypeName "+TypeName+" for array column '"+Name+"'.");
-                }
-               break;
+                                               TildaType = getSubTypeMapping(Name, TypeName, TildaType);
+                                               break;
+            case java.sql.Types.DISTINCT     : TypeSql = "DISTINCT"     ;
+                                               TildaType = getSubTypeMapping(Name, TypeName, TildaType);
+                                               break;
             case java.sql.Types.BIGINT       : TypeSql = "BIGINT"       ; TildaType = ColumnType.LONG; break;
             case java.sql.Types.BINARY       : TypeSql = "BINARY"       ; TildaType = ColumnType.BINARY; break;
             case java.sql.Types.BIT          : TypeSql = "BIT"          ; TildaType = ColumnType.BOOLEAN; break;
@@ -452,7 +451,6 @@ public class PostgreSQL implements DBType
             case java.sql.Types.DATALINK     : TypeSql = "DATALINK"     ; TildaType = null; break;
             case java.sql.Types.DATE         : TypeSql = "DATE"         ; TildaType = null; break;
             case java.sql.Types.DECIMAL      : TypeSql = "DECIMAL"      ; TildaType = ColumnType.DOUBLE; break;
-            case java.sql.Types.DISTINCT     : TypeSql = "DISTINCT"     ; TildaType = null; break;
             case java.sql.Types.DOUBLE       : TypeSql = "DOUBLE"       ; TildaType = ColumnType.DOUBLE; break;
             case java.sql.Types.FLOAT        : TypeSql = "FLOAT"        ; TildaType = ColumnType.FLOAT; break;
             case java.sql.Types.INTEGER      : TypeSql = "INTEGER"      ; TildaType = ColumnType.INTEGER; break;
@@ -492,6 +490,25 @@ public class PostgreSQL implements DBType
             /*@formatter:on*/
           }
         return new StringStringPair(TypeSql, TildaType.name());
+      }
+
+
+    private ColumnType getSubTypeMapping(String Name, String TypeName, ColumnType TildaType)
+    throws Exception
+      {
+        switch (TypeName)
+          {
+            case "_int4"         : TildaType = ColumnType.INTEGER; break;
+            case "_int8"         : TildaType = ColumnType.LONG; break;
+            case "_float4"       : TildaType = ColumnType.FLOAT; break;
+            case "_float8"       : TildaType = ColumnType.DOUBLE; break;
+            case "_bpchar"       : TildaType = ColumnType.CHAR; break;
+            case "_text"         : 
+            case "character_data": TildaType = ColumnType.STRING; break;
+            case "_bool"         : TildaType = ColumnType.BOOLEAN; break;
+            default: throw new Exception("Cannot map SQL TypeName "+TypeName+" for array column '"+Name+"'.");
+          }
+        return TildaType;
       }
 
     @Override

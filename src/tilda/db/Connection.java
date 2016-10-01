@@ -32,13 +32,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
+import tilda.db.metadata.ColumnMeta;
 import tilda.db.processors.RecordProcessor;
 import tilda.db.stores.DBType;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnType;
 import tilda.enums.TransactionType;
 import tilda.generation.interfaces.CodeGenSql;
-import tilda.migration.ColInfo;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
@@ -381,7 +381,7 @@ public final class Connection
         return _DB.alterTableAddColumn(this, Col, DefaultValue);
       }
 
-    public boolean alterTableDropColumn(Object Obj, ColInfo CI)
+    public boolean alterTableDropColumn(Object Obj, ColumnMeta CI)
     throws Exception
       {
         return _DB.alterTableDropColumn(this, Obj, CI);
