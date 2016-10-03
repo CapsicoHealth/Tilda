@@ -89,7 +89,7 @@ public class Migrator
               {
                 for (View V : S._Views)
                   {
-                    if (DBMeta.getViewMeta(V._ParentSchema._Name, V._Name) != null)
+                    if (DBMeta.getViewMeta(V._ParentSchema._Name, V._Name) == null)
                       {
                         LOG.info("The application's data model defines the view '" + V.getShortName() + "' which cannot be found in the database. Trying to create it...");
                         logMigrationWarning();

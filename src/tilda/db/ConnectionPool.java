@@ -263,12 +263,11 @@ public class ConnectionPool
                 warnings += w;
                 LOG.warn("There were " + w + " warning(s) issued because schema discrepencies were found but not fixed.");
                 Migrator.logMigrationWarning();
-                continue;
               }
             LOG.debug("Initializing Schema objects");
             Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
             M.invoke(null, C);
-            _SchemaPackage.put(S._Name, S._Package);
+            _SchemaPackage.put(S._Name.toUpperCase(), S._Package);
             C.commit();
           }
         LOG.debug("");
