@@ -180,7 +180,7 @@ public class ConnectionPool
                 List<Schema> TildaList = LoadTildaResources();
                 DatabaseMeta DBMeta = new DatabaseMeta();
                 for (Schema S : TildaList)
-                 DBMeta.load(C, S._Name);
+                  DBMeta.load(C, S._Name);
                 MigrateDatabase(C, Migrate.isMigrationActive(), TildaList, DBMeta);
               }
           }

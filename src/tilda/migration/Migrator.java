@@ -68,32 +68,47 @@ public class Migrator
 
         if (Parser.loadDependencies(PS, S) == true)
           {
-            // Some DBs, such as Postgres, don't allow to alter a column that's reused as part of a view. So in order to
-            // prepare, we can drop all views.
-            if (Migrate == true)
+            if (DBMeta.getSchemaMeta(S._Name) == null)
               {
-                boolean DbAction = false;
-                for (View V : S._Views)
+                LOG.info("The application's data model defines the schema '" + S.getShortName() + "' which cannot be found in the database. Trying to create it...");
+                if (Migrate == false)
                   {
-                    if (DBMeta.getViewMeta(V._ParentSchema._Name, V._Name) != null)
-                      {
-                        if (C.dropView(V) == false)
-                          throw new Exception("Cannot upgrade schema by dropping the old view '" + V.getShortName() + "'.");
-                        DbAction = true;
-                      }
+                    logMigrationWarning();
+                    return ++warnings;
                   }
-                if (DbAction == true)
-                  C.commit();
+                else if (C.createSchema(S) == false)
+                  throw new Exception("Cannot upgrade database by adding the new schema '" + S.getShortName() + "'.");
+                C.commit();
               }
             else
               {
-                for (View V : S._Views)
+                // Some DBs, such as Postgres, don't allow to alter a column that's reused as part of a view. So in order to
+                // prepare, we can drop all views.
+                if (Migrate == true)
                   {
-                    if (DBMeta.getViewMeta(V._ParentSchema._Name, V._Name) == null)
+                    boolean DbAction = false;
+                    for (View V : S._Views)
                       {
-                        LOG.info("The application's data model defines the view '" + V.getShortName() + "' which cannot be found in the database. Trying to create it...");
-                        logMigrationWarning();
-                        ++warnings;
+                        if (DBMeta.getViewMeta(V._ParentSchema._Name, V._Name) != null)
+                          {
+                            if (C.dropView(V) == false)
+                              throw new Exception("Cannot upgrade schema by dropping the old view '" + V.getShortName() + "'.");
+                            DbAction = true;
+                          }
+                      }
+                    if (DbAction == true)
+                      C.commit();
+                  }
+                else
+                  {
+                    for (View V : S._Views)
+                      {
+                        if (DBMeta.getViewMeta(V._ParentSchema._Name, V._Name) == null)
+                          {
+                            LOG.info("The application's data model defines the view '" + V.getShortName() + "' which cannot be found in the database. Trying to create it...");
+                            logMigrationWarning();
+                            ++warnings;
+                          }
                       }
                   }
               }
