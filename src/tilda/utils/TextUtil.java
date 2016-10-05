@@ -137,10 +137,10 @@ public class TextUtil
                 First = false;
               else
                 X.append(", ");
-              if (s=='\'')
-               X.append("''''");
+              if (s == '\'')
+                X.append("''''");
               else
-               X.append("'").append(s).append("'");
+                X.append("'").append(s).append("'");
             }
       }
 
@@ -1514,6 +1514,11 @@ public class TextUtil
     public static final String PrintVariableStr(String Value, int MaxLen)
       {
         return "[" + (Value == null ? 0 : Value.length()) + "] " + toMaxLength(Value, MaxLen);
+      }
+
+    public static String Trim(String Str)
+      {
+        return Str == null ? null : Str.trim();
       }
 
   }
