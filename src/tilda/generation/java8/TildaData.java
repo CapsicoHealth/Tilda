@@ -1205,8 +1205,10 @@ public class TildaData implements CodeGenTildaData
                       Out.print("_" + C.getName() + " = (" + (C.isSet() == true ? "Set<" : "List<") + JavaJDBCType.get(C._Type)._JavaClassType + ">) C.getArray(RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, " + C.isSet() + ");");
                     else if (C._Type == ColumnType.CHAR)
                       Out.print("_" + C.getName() + Pad + " = ParseUtil.parseCharacter    (RS.get" + JavaJDBCType.get(C._Type)._JDBCType + "(++i)); ");
-                    else
+                    else if (C._Type == ColumnType.STRING)
                       Out.print("_" + C.getName() + Pad + " =                              TextUtil.Trim(RS.get" + JavaJDBCType.get(C._Type)._JDBCType + "(++i)) ; ");
+                    else
+                      Out.print("_" + C.getName() + Pad + " =                              RS.get" + JavaJDBCType.get(C._Type)._JDBCType + "(++i) ; ");
                     Out.print(" if (RS.wasNull() == true) __Nulls |= " + Mask + Pad + ";");
                     break;
                   case DATETIME:
