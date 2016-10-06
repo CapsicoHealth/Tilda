@@ -414,6 +414,21 @@ public class PostgreSQL implements DBType
         .append("END; $$\n")
         .append("LANGUAGE PLPGSQL;\n")
         .append("\n")
+        .append("\n")
+        .append("DROP CAST IF EXISTS (text AS text[]);")
+        .append("CREATE OR REPLACE FUNCTION TILDA.\"strToArray\"(text)") 
+        .append("  RETURNS text[]")
+        .append("  STRICT IMMUTABLE LANGUAGE SQL AS") 
+        .append("'SELECT regexp_split_to_array($1, ''``'');';")
+        .append("CREATE CAST (text AS text[]) WITH FUNCTION TILDA.\"strToArray\"(text) as Implicit;")
+        .append("\n")
+        .append("DROP CAST IF EXISTS (varchar AS text[]);")
+        .append("CREATE OR REPLACE FUNCTION TILDA.\"strToArray\"(varchar)")
+        .append("  RETURNS text[]")
+        .append("  STRICT IMMUTABLE LANGUAGE SQL AS")
+        .append("'SELECT regexp_split_to_array($1, ''``'');';")
+        .append("CREATE CAST (varchar AS text[]) WITH FUNCTION TILDA.\"strToArray\"(varchar) as Implicit;")
+        .append("\n")
         .append("\n");
 
         return Con.ExecuteUpdate("TILDA", "FUNCTIONS", Str.toString()) >= 0;
