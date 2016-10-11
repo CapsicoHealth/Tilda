@@ -1,5 +1,8 @@
-define(['text!../templates/tilda_schema/_new.html', "../core/parser"], function(_NewView, _Parser){
-
+define(['text!../templates/tilda_schema/_new.html', "../core/parser", '../core/file_search'], function(_NewView, _Parser, _FileSearch){
+  var error = function(error){
+    console.log(error.message);
+    console.log(error.stack);
+  }
   var Backbone = require('backbone');
   var _ = require('lodash');
   var promiseError = function(error, reject){
@@ -12,10 +15,65 @@ define(['text!../templates/tilda_schema/_new.html', "../core/parser"], function(
     schemaName: null,
     currentEntry: null,
     packageInfo: null,
+    schemaEntries: [],
     events: {
       'click a[name="schema-file"]': 'handleFileInput',
       'click .saveSchema': 'saveSchema',
-      'change input:radio[name="showObj"]': "togglePapers"
+      'change input:radio[name="showObj"]': "togglePapers",
+      'change select': "changeView"
+    },
+    changeView: function(event){
+      var that = this;
+      var index = parseInt($(event.target).val());
+      if(index == NaN)
+        return;
+      var schemaEntry = this.schemaEntries[index];
+      this.currentEntry = schemaEntry;
+      var init = function(objectEntries){
+        var pkgInfo = objectEntries.packageInfo;
+        that.packageInfo = pkgInfo;
+        that.initCache(objectEntries.cacheEntry).then(function(cache){
+          window.tildaCache = cache;
+          var schemaFname = "_tilda."+pkgInfo.schema.name+".json";
+          that.$el.find(".fName").html("<h4>loaded <i>"+schemaFname+"</i></h4>")
+          that.schemaFrom(objectEntries.schemaEntry).then(function(schema){
+            that.$el.find("#obj_c").html("");
+            that.$el.find("#view_c").html("");
+            that.schemaParser_object = new _Parser(_.clone(schema), "obj_c", {viewOnly: false});
+            that.schemaParser_view = new _Parser(_.clone(schema), "view_c", {viewOnly: true});
+          }).catch(error);
+        }).catch(error);
+      }
+      // Call the reader.readEntries() until no more results are returned.
+      var readEntries = function(dirReader) {
+        var fName = schemaEntry.name;
+        var match = SCHEMA_REGEX.exec(fName);
+        var objects = {}
+        objects.packageInfo = {
+          "schema": {
+            "name": match[1],
+            "path": fName
+          }
+        };
+        objects.schemaEntry = schemaEntry;
+        dirReader.readEntries (function(results) {
+         for(i=0; i<results.length; i++){
+            var fName = results[i].name;
+            var name = objects.schemaEntry.name.split(".")[1];
+            if(fName == "_tilda."+name+".graphInfo.json"){
+              objects.cacheEntry = results[i];
+              break;
+            }
+          }
+          init(objects)
+        }, function(error){console.error(error.message);});
+      };
+      schemaEntry.getParent(function(dEntry){
+        var dirReader = dEntry.createReader();
+        readEntries(dirReader); // Start reading directory contents.
+      }, function(error){
+        console.error(error);
+      })      
     },
     togglePapers: function(){
       if($(event.target).val() == "object"){
@@ -29,6 +87,8 @@ define(['text!../templates/tilda_schema/_new.html', "../core/parser"], function(
     render: function(){
       var that = this;
       that.$el.html(_NewView);
+      var $select = that.$el.find('select');
+      $select.hide();
       return this;
     },
     schemaFrom: function(fileEntry){
@@ -80,24 +140,11 @@ define(['text!../templates/tilda_schema/_new.html', "../core/parser"], function(
     },
     handleFileInput: function(event){
       var that = this;
+      var $select = that.$el.find('select');
+      $select.hide();
       var error = function(error){
         console.log(error.message);
         console.log(error.stack);
-      }
-      var init = function(objectEntries){
-        var pkgInfo = objectEntries.packageInfo;
-        that.packageInfo = pkgInfo;
-        that.initCache(objectEntries.cacheEntry).then(function(cache){
-          window.tildaCache = cache;
-          var schemaFname = "_tilda."+pkgInfo.schema.name+".json";
-          that.$el.find(".fName").html("<h4>loaded <i>"+schemaFname+"</i></h4>")
-          that.schemaFrom(objectEntries.schemaEntry).then(function(schema){
-            that.$el.find("#obj_c").html("");
-            that.$el.find("#view_c").html("");
-            that.schemaParser_object = new _Parser(_.clone(schema), "obj_c", {viewOnly: false});
-            that.schemaParser_view = new _Parser(_.clone(schema), "view_c", {viewOnly: true});
-          }).catch(error);
-        }).catch(error);
       }
       chrome.fileSystem.chooseEntry({ type: 'openDirectory'},  function(entry) {
         that.currentEntry = entry;
@@ -106,45 +153,25 @@ define(['text!../templates/tilda_schema/_new.html', "../core/parser"], function(
           console.error(e);
         }
 
-        var dirReader = entry.createReader();
-        var entries = []
-        // Call the reader.readEntries() until no more results are returned.
-        var readEntries = function() {
-          var objects = {};
-          dirReader.readEntries (function(results) {
-            for(i=0; i<results.length; i++){
-              var fName = results[i].name;
-              var match = SCHEMA_REGEX.exec(fName);
-              if(match){
-                objects.packageInfo = {
-                  "schema": {
-                    "name": match[1],
-                    "path": fName
-                  }
-                };
-                objects.schemaEntry = results[i];
-                break;
-              }
-            }
-           for(i=0; i<results.length; i++){
-              var fName = results[i].name;
-              var name = objects.schemaEntry.name.split(".")[1];
-              if(fName == "_tilda."+name+".graphInfo.json"){
-                objects.cacheEntry = results[i];
-                break;
-              }
-            }
-            init(objects)
-          }, function(error){console.error(error.message);});
-        };
-
-        readEntries(); // Start reading directory contents.
+        var f = new _FileSearch(entry, function(files){
+          console.log("Files ->");
+          console.log(files);
+          that.schemaEntries = files;
+          for(i=0;i<files.length;i++){
+            var file = files[i];
+            $select.append('<option value=\''+i+'\'>'+file.name+'</option')
+          }
+          $select.show();
+        })
       });
       return 0;
     },
     saveSchema: function(event){
-      this.writeUserPrefs(this.currentEntry, event);
-      this.writeSVG(this.currentEntry, event);
+      that = this;
+      this.currentEntry.getParent(function(dEntry){
+        that.writeUserPrefs(dEntry, event);
+        that.writeSVG(dEntry, event);
+      })
     },
     writeSVG: function(entry, event){
       // TODO write to a file.
