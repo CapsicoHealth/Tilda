@@ -39,6 +39,8 @@ define(['text!../templates/tilda_schema/_new.html', "../core/parser", '../core/f
           that.schemaFrom(objectEntries.schemaEntry).then(function(schema){
             that.$el.find("#obj_c").html("");
             that.$el.find("#view_c").html("");
+            that.$el.find("#view_c").show();
+            that.$el.find("#obj_c").show();
             that.schemaParser_object = new _Parser(_.clone(schema), "obj_c", {viewOnly: false});
             that.schemaParser_view = new _Parser(_.clone(schema), "view_c", {viewOnly: true});
           }).catch(error);
