@@ -140,7 +140,7 @@ public class ConnectionPool
       {
         SystemValues.autoInit();
       }
-
+    
     static
       {
         Reader R = null;
@@ -403,6 +403,16 @@ public class ConnectionPool
         LOG.info("---------- O B T A I N E D   C O N N E C T I O N --------- " + Conn._PoolId + " ---- (" + BDS.getNumActive() + "/" + BDS.getNumIdle() + "/" + BDS.getMaxTotal() + ")   ----------");
         return Conn;
       }
+    
+    public static String getDBDetails(String Id)
+      {
+        BasicDataSource BDS = _DataSourcesById.get(Id);
+        if (BDS == null)
+          return null;
+        return BDS.getUrl();
+      }
+
+    
 
     public static String getSchemaPackage(String SchemaName)
       {

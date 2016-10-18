@@ -36,22 +36,21 @@ public class Migrate
 
     public static void main(String[] Args)
       {
+        LOG.info("###################################################################################################");
+        LOG.info("##  This utility will attempt to migrate automatically the database connected to via the 'MAIN'  ##");
+        LOG.info("##  connection definined in tilda.config.json, using ALL the Tilda schema definitions found in   ##");
+        LOG.info("##  JARs in the classpath.                                                                       ##");
+        LOG.info("###################################################################################################");
         LOG.info("");
-        LOG.info("This utility will attempt to migrate automatically the database connected to via the 'MAIN'");
-        LOG.info("connection definined in tilda.config.json, using ALL the Tilda schema definitions found in");
-        LOG.info("JARs in the classpath.");
+        LOG.info("!!! THIS UTILITY MAY CHANGE DATA IN YOUR DATABASE. MAKE SURE YOU HAVE A BACKUP. !!!");
+//        LOG.info("    ===> "+DBUrl);
         LOG.info("");
-        LOG.info("THIS UTILITY MAY CHANGE DATA IN YOUR DATABASE. MAKE SURE YOU HAVE A BACKUP.");
-        LOG.info("Press 'y' followed by enter to continue.");
+        LOG.info("Press 'yes' followed by enter to continue.");
         Scanner scanner = null;
         try
           {
             scanner = new Scanner(System.in);
             String answer = scanner.next();
-            if (answer.toLowerCase().equals("y") == false)
-              throw new Exception("User asked to exit.");
-            LOG.info("Are you sure? Sorry, had to ask! YOU HAVE A BACKUP RIGHT? Press 'yes' followed by enter confirm.");
-            answer = scanner.next();
             if (answer.toLowerCase().equals("yes") == false)
               throw new Exception("User asked to exit.");
             LOG.info("");
