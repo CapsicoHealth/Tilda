@@ -130,17 +130,18 @@ public abstract class Parser
           }
       }
 
+    public static final String _BASE_TILDA_SCHEMA_RESOURCE = "tilda/data/_tilda.Tilda.json";
+    
     public static boolean loadDependencies(ParserSession PS, Schema BaseSchema)
       {
-        String BaseTildaSchemaResource = "tilda/data/_tilda.Tilda.json";
         Schema BaseTilda = null;
-        if (BaseSchema._ResourceName.endsWith(BaseTildaSchemaResource) == false)
+        if (BaseSchema._ResourceName.endsWith(_BASE_TILDA_SCHEMA_RESOURCE) == false)
           {
-            LOG.info("Loading base Tilda schema from '" + BaseTildaSchemaResource + "'.");
-            BaseTilda = fromResource(BaseTildaSchemaResource);
+            LOG.info("Loading base Tilda schema from '" + _BASE_TILDA_SCHEMA_RESOURCE + "'.");
+            BaseTilda = fromResource(_BASE_TILDA_SCHEMA_RESOURCE);
             if (BaseTilda == null)
               return false;
-            PS._Dependencies.put(BaseTilda.getFullName(), BaseTilda);
+            PS.addDependencySchema(BaseTilda);
             if (loadDependencies(BaseSchema, PS._Dependencies) == false)
               return false;
           }
@@ -211,7 +212,7 @@ public abstract class Parser
           {
             if (PS.getSchema(BaseSchema._Package, BaseSchema._Name) == null)
               {
-                PS._Dependencies.put(BaseSchema.getFullName(), BaseSchema);
+                PS.addDependencySchema(BaseSchema);
               }
             BaseSchema.Validate(PS);
           }

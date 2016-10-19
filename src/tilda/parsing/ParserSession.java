@@ -42,20 +42,26 @@ public class ParserSession
         _CGSql = CGSql;
       }
 
-    public Schema          _Main;
-    public CodeGenSql      _CGSql;
-    protected Map<String, Schema>  _Dependencies = new HashMap<String, Schema>();
-    protected Set<String>  _ValidatedSchemas = new HashSet<String>();
-    protected List<String> _Errors           = new ArrayList<String>();
+    public Schema                 _Main;
+    public CodeGenSql             _CGSql;
+    protected Map<String, Schema> _Dependencies     = new HashMap<String, Schema>();
+    protected Set<String>         _ValidatedSchemas = new HashSet<String>();
+    protected List<String>        _Errors           = new ArrayList<String>();
 
     public Iterator<Schema> getDependenciesIterator()
-     {
-       return _Dependencies.values().iterator();
-     }
+      {
+        return _Dependencies.values().iterator();
+      }
+
     public boolean hasDependencies()
-     {
-       return _Dependencies.isEmpty()==false;
-     }
+      {
+        return _Dependencies.isEmpty() == false;
+      }
+
+    public boolean addDependencySchema(Schema S)
+      {
+        return _Dependencies.put(S.getFullName(), S) == null;
+      }
 
     public boolean hasSchemaBeenValidated(Schema S)
       {
@@ -69,7 +75,7 @@ public class ParserSession
 
     public Schema getSchema(String PackageName, String SchemaName)
       {
-        String FullName = PackageName+"."+SchemaName;
+        String FullName = PackageName + "." + SchemaName;
         return _Dependencies.get(FullName);
       }
 
@@ -88,7 +94,7 @@ public class ParserSession
     public boolean AddError(String Err)
       {
         _Errors.add(Err);
-        LOG.error("Error #"+_Errors.size()+": "+Err);
+        LOG.error("Error #" + _Errors.size() + ": " + Err);
         return false;
       }
 
@@ -96,11 +102,11 @@ public class ParserSession
       {
         return _Errors;
       }
-    
+
     public int getErrorCount()
-    {
-      return _Errors.size();
-    }
-    
+      {
+        return _Errors.size();
+      }
+
 
   }

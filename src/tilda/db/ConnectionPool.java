@@ -48,6 +48,7 @@ import tilda.db.metadata.DatabaseMeta;
 import tilda.enums.TransactionType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.migration.Migrator;
+import tilda.parsing.Parser;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Schema;
 import tilda.performance.PerfTracker;
@@ -153,9 +154,8 @@ public class ConnectionPool
             if (isTildaEnabled() == true)
               {
                 C = get("MAIN");
-                List<Schema> TildaList = LoadTildaResources();
+                List<Schema> TildaList = LoadTildaResources(C);
                 DatabaseMeta DBMeta = LoadDatabaseMetaData(C, TildaList);
-
                 MigrateDatabase(C, Migrate.isMigrationActive(), TildaList, DBMeta);
               }
           }
@@ -282,13 +282,14 @@ public class ConnectionPool
         return DBMeta;
       }
 
-    private static List<Schema> LoadTildaResources()
+    private static List<Schema> LoadTildaResources(Connection C)
     throws Exception
       {
         Reader R = null;
         InputStream In = null;
         Enumeration<URL> resEnum = ConnectionPool.class.getClassLoader().getResources(JarFile.MANIFEST_NAME);
         List<Schema> TildaList = new ArrayList<Schema>();
+        Schema BaseTildaSchema = null;
         while (resEnum.hasMoreElements())
           {
             URL url = (URL) resEnum.nextElement();
@@ -317,6 +318,8 @@ public class ConnectionPool
                           Gson gson = new GsonBuilder().setPrettyPrinting().create();
                           Schema S = gson.fromJson(R, Schema.class);
                           S.setOrigin(p);
+                          if (p.equals(Parser._BASE_TILDA_SCHEMA_RESOURCE) == true)
+                            BaseTildaSchema = S;
                           TildaList.add(S);
                           LOG.debug("   Parsed definition for Schema " + S._Package + "::" + S._Name);
                           In.close();
@@ -326,26 +329,39 @@ public class ConnectionPool
           }
         ReorderTildaListWithDependencies(TildaList);
 
+        if (BaseTildaSchema == null)
+          throw new Exception("Tilda cannot start as we didn't find the base Tilda schema resource " + Parser._BASE_TILDA_SCHEMA_RESOURCE);
+
         for (Schema S : TildaList)
           {
-            ParserSession PS = new ParserSession(S, null);
+            CodeGenSql Sql = C.getSQlCodeGen();
+            ParserSession PS = new ParserSession(S, Sql);
             if (S._Dependencies != null)
               for (String DepdencySchemaName : S._Dependencies)
                 {
                   boolean Found = false;
                   for (Schema D : TildaList)
-                    if (DepdencySchemaName.equals(D.getFullName()) == true)
-                      {
-                        if (D._Validated != true)
-                          throw new Exception("Schema " + S._Name + " depends on " + D._Name + " which hasn't been validated properly.");
-                        Found = true;
-                        S._DependencySchemas.add(D);
-                        break;
-                      }
+                    {
+                      if (DepdencySchemaName.equals(D._ResourceName) == true)
+                        {
+                          if (D._Validated != true)
+                            throw new Exception("Schema " + S._Name + " depends on " + D._Name + " which hasn't been validated properly.");
+                          Found = true;
+                          S._DependencySchemas.add(D);
+                        }
+                      PS.addDependencySchema(D);
+                    }
                   if (Found == false)
                     throw new Exception("Schema " + S._Name + " depends on " + DepdencySchemaName + " which hasn't been loaded.");
                 }
-            S.Validate(PS);
+            else
+              {
+                PS.addDependencySchema(BaseTildaSchema);
+                PS.addDependencySchema(S);
+              }
+            S._DependencySchemas.add(BaseTildaSchema);
+            if (S.Validate(PS) == false)
+              throw new Exception("Schema " + S._Name + " from resource " + S._ResourceName + " failed validation.");
           }
 
         return TildaList;

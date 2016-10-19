@@ -99,7 +99,7 @@ public class JsonValidation
 
         _JavaCodeGenStr = WC_CG.getCodeStr();
 
-        LOG.debug("Generated Java rule check:\n" + _JavaCodeGenStr);
+        //LOG.debug("Generated Java rule check:\n" + _JavaCodeGenStr);
 
         return true;
       }
