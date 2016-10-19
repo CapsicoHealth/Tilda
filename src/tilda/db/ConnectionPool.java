@@ -46,7 +46,9 @@ import com.google.gson.annotations.SerializedName;
 import tilda.Migrate;
 import tilda.db.metadata.DatabaseMeta;
 import tilda.enums.TransactionType;
+import tilda.generation.interfaces.CodeGenSql;
 import tilda.migration.Migrator;
+import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Schema;
 import tilda.performance.PerfTracker;
 import tilda.utils.ClassStaticInit;
@@ -140,47 +142,20 @@ public class ConnectionPool
       {
         SystemValues.autoInit();
       }
-    
+
     static
       {
-        Reader R = null;
         Connection C = null;
         try
           {
-            LOG.info("Initializing Tilda: loading configuration file '/tilda.bootstrappers.config.json'.");
-            InputStream In = FileUtil.getResourceAsStream("tilda.bootstrappers.config.json");
-            if (In != null)
-              {
-                R = new BufferedReader(new InputStreamReader(In));
-                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                Bootstrappers Bs = gson.fromJson(R, Bootstrappers.class);
-                if (Bs._classNames != null)
-                  for (String className : Bs._classNames)
-                    ClassStaticInit.initClass(className);
-                R.close();
-                R = null;
-              }
-
-            LOG.info("Initializing Tilda: loading configuration file '/tilda.config.json'.");
-            In = FileUtil.getResourceAsStream("tilda.config.json");
-            if (In == null)
-              throw new Exception("Cannot find Tilda configuration file '/tilda.config.json'.");
-            R = new BufferedReader(new InputStreamReader(In));
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            ConnDefs Defs = gson.fromJson(R, ConnDefs.class);
-            if (Defs.validate() == true)
-              {
-                for (Conn Co : Defs._Conns)
-                  init(Co._Id, Co._Driver, Co._DB, Co._User, Co._Pswd, Co._Initial, Co._Max);
-              }
-
-            C = get("MAIN");
+            InitBootstrappers();
+            ReadConfig();
             if (isTildaEnabled() == true)
               {
+                C = get("MAIN");
                 List<Schema> TildaList = LoadTildaResources();
-                DatabaseMeta DBMeta = new DatabaseMeta();
-                for (Schema S : TildaList)
-                  DBMeta.load(C, S._Name);
+                DatabaseMeta DBMeta = LoadDatabaseMetaData(C, TildaList);
+
                 MigrateDatabase(C, Migrate.isMigrationActive(), TildaList, DBMeta);
               }
           }
@@ -193,17 +168,118 @@ public class ConnectionPool
           {
             try
               {
-                if (R != null)
-                  R.close();
                 if (C != null)
                   C.close();
               }
-            catch (IOException | SQLException E)
+            catch (SQLException E)
               {
                 LOG.error("Cannot initialize Tilda\n", E);
                 System.exit(-1);
               }
           }
+      }
+
+    private static void ReadConfig()
+    throws Exception
+      {
+        LOG.info("Initializing Tilda: loading configuration file '/tilda.config.json'.");
+        Reader R = null;
+        try
+          {
+            InputStream In = FileUtil.getResourceAsStream("tilda.config.json");
+            if (In == null)
+              throw new Exception("Cannot find Tilda configuration file '/tilda.config.json'.");
+            R = new BufferedReader(new InputStreamReader(In));
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            ConnDefs Defs = gson.fromJson(R, ConnDefs.class);
+            if (Defs.validate() == true)
+              {
+                for (Conn Co : Defs._Conns)
+                  {
+                    if (_DataSourcesById.get(Co._Id) == null)
+                      synchronized (_DataSourcesById)
+                        {
+                          if (_DataSourcesById.get(Co._Id) == null) // Definitely no connection pool by that name
+                            {
+                              String Sig = Co._DB + "``" + Co._User;
+                              BasicDataSource BDS = _DataSourcesBySig.get(Sig); // Let's see if that DB definition is already there
+                              if (BDS == null)
+                                {
+                                  LOG.info("Initializing a fresh pool for Id=" + Co._Id + ", DB=" + Co._DB + ", User=" + Co._User + ", and Pswd=Shhhhhhh!");
+                                  BDS = new BasicDataSource();
+                                  BDS.setDriverClassName(Co._Driver);
+                                  BDS.setUrl(Co._DB);
+                                  if (TextUtil.isNullOrEmpty(Co._Pswd) == false && TextUtil.isNullOrEmpty(Co._User) == false)
+                                    {
+                                      BDS.setUsername(Co._User);
+                                      BDS.setPassword(Co._Pswd);
+                                    }
+                                  BDS.setInitialSize(Co._Initial);
+                                  BDS.setMaxTotal(Co._Max);
+                                  BDS.setDefaultAutoCommit(false);
+                                  BDS.setDefaultTransactionIsolation(java.sql.Connection.TRANSACTION_READ_COMMITTED);
+                                  BDS.setDefaultQueryTimeout(20000);
+                                  _DataSourcesBySig.put(Sig, BDS);
+                                }
+                              else
+                                {
+                                  LOG.info("Merging pool with ID " + Co._Id + " into prexisting pool " + Sig);
+                                  if (BDS.getInitialSize() < Co._Initial)
+                                    BDS.setInitialSize(Co._Initial);
+                                  if (BDS.getMaxTotal() < Co._Max)
+                                    BDS.setMaxTotal(Co._Max);
+
+                                }
+                              _DataSourcesById.put(Co._Id, BDS);
+                            }
+                        }
+
+                  }
+              }
+          }
+        finally
+          {
+            if (R != null)
+              R.close();
+          }
+      }
+
+    private static void InitBootstrappers()
+    throws IOException
+      {
+        LOG.info("Initializing Tilda: loading configuration file '/tilda.bootstrappers.config.json'.");
+        Reader R = null;
+        try
+          {
+            InputStream In = FileUtil.getResourceAsStream("tilda.bootstrappers.config.json");
+            if (In != null)
+              {
+                R = new BufferedReader(new InputStreamReader(In));
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                Bootstrappers Bs = gson.fromJson(R, Bootstrappers.class);
+                if (Bs._classNames != null)
+                  for (String className : Bs._classNames)
+                    ClassStaticInit.initClass(className);
+              }
+          }
+        finally
+          {
+            if (R != null)
+              R.close();
+          }
+      }
+
+    private static DatabaseMeta LoadDatabaseMetaData(Connection C, List<Schema> TildaList)
+    throws Exception
+      {
+        DatabaseMeta DBMeta = new DatabaseMeta();
+        LOG.info("Loading database metadata for found Schemas:");
+        for (Schema S : TildaList)
+          {
+            LOG.debug("   " + S._Name);
+            DBMeta.load(C, S._Name);
+          }
+        return DBMeta;
       }
 
     private static List<Schema> LoadTildaResources()
@@ -225,7 +301,7 @@ public class ConnectionPool
                 String Tildas = Man.getMainAttributes().getValue("Tilda");
                 if (TextUtil.isNullOrEmpty(Tildas) == false)
                   {
-                    LOG.debug("Found Tilda(s) " + Tildas + " in " + url.toString());
+                    LOG.info("Found Tilda definition files in " + url.toString());
                     String[] parts = Tildas.split(";");
                     if (parts != null)
                       for (String p : parts)
@@ -236,18 +312,42 @@ public class ConnectionPool
                           In = FileUtil.getResourceAsStream(p);
                           if (In == null)
                             throw new Exception("Tilda schema definition '" + p + "' could not be found in the classpath.");
-                          LOG.info("Inspecting " + p);
+                          LOG.debug("   Reading " + p);
                           R = new BufferedReader(new InputStreamReader(In));
                           Gson gson = new GsonBuilder().setPrettyPrinting().create();
                           Schema S = gson.fromJson(R, Schema.class);
                           S.setOrigin(p);
                           TildaList.add(S);
+                          LOG.debug("   Parsed definition for Schema " + S._Package + "::" + S._Name);
                           In.close();
                         }
                   }
               }
           }
         ReorderTildaListWithDependencies(TildaList);
+
+        for (Schema S : TildaList)
+          {
+            ParserSession PS = new ParserSession(S, null);
+            if (S._Dependencies != null)
+              for (String DepdencySchemaName : S._Dependencies)
+                {
+                  boolean Found = false;
+                  for (Schema D : TildaList)
+                    if (DepdencySchemaName.equals(D.getFullName()) == true)
+                      {
+                        if (D._Validated != true)
+                          throw new Exception("Schema " + S._Name + " depends on " + D._Name + " which hasn't been validated properly.");
+                        Found = true;
+                        S._DependencySchemas.add(D);
+                        break;
+                      }
+                  if (Found == false)
+                    throw new Exception("Schema " + S._Name + " depends on " + DepdencySchemaName + " which hasn't been loaded.");
+                }
+            S.Validate(PS);
+          }
+
         return TildaList;
       }
 
@@ -331,51 +431,11 @@ public class ConnectionPool
           }
       }
 
-    public static void init(String Id, String Driver, String DB, String User, String Pswd, int InitialSize, int MaxSize)
-      {
-        if (_DataSourcesById.get(Id) == null)
-          synchronized (_DataSourcesById)
-            {
-              if (_DataSourcesById.get(Id) == null) // Definitely no connection pool by that name
-                {
-                  String Sig = DB + "``" + User;
-                  BasicDataSource BDS = _DataSourcesBySig.get(Sig); // Let's see if that DB definition is already there
-                  if (BDS == null)
-                    {
-                      LOG.info("Initializing a fresh pool for Id=" + Id + ", DB=" + DB + ", User=" + User + ", and Pswd=Shhhhhhh!");
-                      BDS = new BasicDataSource();
-                      BDS.setDriverClassName(Driver);
-                      BDS.setUrl(DB);
-                      if (TextUtil.isNullOrEmpty(Pswd) == false && TextUtil.isNullOrEmpty(User) == false)
-                        {
-                          BDS.setUsername(User);
-                          BDS.setPassword(Pswd);
-                        }
-                      BDS.setInitialSize(InitialSize);
-                      BDS.setMaxTotal(MaxSize);
-                      BDS.setDefaultAutoCommit(false);
-                      BDS.setDefaultTransactionIsolation(java.sql.Connection.TRANSACTION_READ_COMMITTED);
-                      BDS.setDefaultQueryTimeout(20000);
-                      _DataSourcesBySig.put(Sig, BDS);
-                    }
-                  else
-                    {
-                      LOG.info("Merging pool with ID " + Id + " into prexisting pool " + Sig);
-                      if (BDS.getInitialSize() < InitialSize)
-                        BDS.setInitialSize(InitialSize);
-                      if (BDS.getMaxTotal() < MaxSize)
-                        BDS.setMaxTotal(MaxSize);
-
-                    }
-                  _DataSourcesById.put(Id, BDS);
-                }
-            }
-      }
 
     public static Connection get(String Id)
     throws Exception
       {
-        LOG.info("---------- G E T T I N G   C O N N E C T I O N ----------- " + Id + " ----");
+        LOG.info("-------  G E T T I N G   C O N N E C T I O N  -----  " + Id);
         BasicDataSource BDS = _DataSourcesById.get(Id);
         if (BDS == null)
           throw new Exception("Cannot find a connection pool for " + Id);
@@ -400,10 +460,10 @@ public class ConnectionPool
         if (C == null)
           throw new Exception("Failed obtaining a connection after numerous tries.");
         Connection Conn = new Connection(C, Id);
-        LOG.info("---------- O B T A I N E D   C O N N E C T I O N --------- " + Conn._PoolId + " ---- (" + BDS.getNumActive() + "/" + BDS.getNumIdle() + "/" + BDS.getMaxTotal() + ")   ----------");
+        LOG.info("         G O T           C O N N E C T I O N  -----  " + Conn._PoolId + ", " + BDS.getNumActive() + "/" + BDS.getNumIdle() + "/" + BDS.getMaxTotal());
         return Conn;
       }
-    
+
     public static String getDBDetails(String Id)
       {
         BasicDataSource BDS = _DataSourcesById.get(Id);
@@ -412,7 +472,7 @@ public class ConnectionPool
         return BDS.getUrl();
       }
 
-    
+
 
     public static String getSchemaPackage(String SchemaName)
       {

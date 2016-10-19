@@ -16,12 +16,6 @@
 
 package tilda.migration;
 
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -59,9 +53,8 @@ public class Migrator
     public static int migrate(Connection C, Schema S, DatabaseMeta DBMeta, boolean Migrate)
     throws Exception
       {
-        LOG.debug("");
-        LOG.debug("");
-        LOG.debug("Evaluating differences between the application data model and the existing data schema in the database");
+        LOG.info("");
+        LOG.info("Evaluating differences between the application data model and the existing data schema in the database");
         CodeGenSql Sql = C.getSQlCodeGen();
         ParserSession PS = new ParserSession(S, Sql);
         int warnings = 0;

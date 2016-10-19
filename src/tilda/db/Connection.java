@@ -76,7 +76,7 @@ public final class Connection
       throws Exception, SQLException
       {
         this(C);
-        _PoolId = PoolId + " ---- (#" + _PoolId + ")";
+        _PoolId = PoolId + ": #" + _PoolId;
       }
 
 

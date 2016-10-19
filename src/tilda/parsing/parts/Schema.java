@@ -52,7 +52,8 @@ public class Schema
     transient public String        _ResourceNameShort;
     transient public String        _ProjectRoot;
     transient public List<Schema>  _DependencySchemas = new ArrayList<Schema>();
-
+    transient public Boolean       _Validated = null;
+    
     protected static final Pattern P                  = Pattern.compile("_tilda\\.(\\w+)\\.json");
 
     public void setOrigin(String ResourceName)
@@ -165,7 +166,8 @@ public class Schema
               V.Validate(PS, this);
             }
         
-        return Errs == PS.getErrorCount();
+        _Validated = Errs == PS.getErrorCount();
+        return _Validated;
       }
     public Documentation getDocumentation(){
     	if(_Documentation == null){
