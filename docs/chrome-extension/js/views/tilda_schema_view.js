@@ -1,8 +1,11 @@
-define(['text!../templates/tilda_schema/_new.html', "../core/parser", '../core/file_search'], function(_NewView, _Parser, _FileSearch){
+define(['text!../templates/tilda_schema/_new.html', 
+    "../core/parser", '../core/file_search'],
+  function(_NewView, _Parser, _FileSearch){
   var error = function(error){
     console.log(error.message);
     console.log(error.stack);
   }
+
   var Backbone = require('backbone');
   var _ = require('lodash');
   var promiseError = function(error, reject){
@@ -11,16 +14,55 @@ define(['text!../templates/tilda_schema/_new.html', "../core/parser", '../core/f
     reject(error)
   }
   var SCHEMA_REGEX = /\_tilda\.([A-Z][A-Za-z_0-9]+)\.json/i;
+
+  var fileInputHandler = function(viewScope, entry) {
+    viewScope.currentEntry = entry;
+    var reader = entry.createReader();
+    var errorCallback = function(e) {
+      console.error(e);
+    }
+    var $select = viewScope.$el.find('select');
+    viewScope.$el.find('.actions').hide();
+    var f = new _FileSearch(entry, viewScope.excludeRegex, function(files){
+      console.log("Files ->");
+      console.log(files);
+      $select.html('');
+      $select.append('<option value=\'\'>--- select a schema ---</option');
+      viewScope.schemaEntries = files;
+      for(i=0;i<files.length;i++){
+        var file = files[i];
+        $select.append('<option value=\''+i+'\'>'+file.name+'</option')
+      }
+      viewScope.$el.find('.actions').show();
+    })
+  }
   var TildaSchemaView = Backbone.View.extend({
     schemaName: null,
     currentEntry: null,
     packageInfo: null,
     schemaEntries: [],
+    excludeRegex: null,
     events: {
-      'click a[name="schema-file"]': 'handleFileInput',
+      'click button[name="schema-file"]': 'handleFileInput',
       'click .saveSchema': 'saveSchema',
       'change input:radio[name="showObj"]': "togglePapers",
-      'change select': "changeView"
+      'change select': "changeView",
+      'click .save-regex': 'saveRegex',
+      'click .filterRegex': function(){
+        $('#filterD').modal('show');
+      }
+    },
+    saveRegex: function(event){
+      var value = $('.regex-f').val();
+      this.excludeRegex = new RegExp(value, 'i');
+      console.log(chrome.storage);
+      if(chrome.storage){
+        chrome.storage.local.set("regex-f", value);
+      }
+      console.log(value);
+      console.log(this.excludeRegex);
+      $('#filterD').modal('hide');
+      fileInputHandler(this, this.savedEntry);
     },
     changeView: function(event){
       var that = this;
@@ -89,8 +131,19 @@ define(['text!../templates/tilda_schema/_new.html', "../core/parser", '../core/f
     render: function(){
       var that = this;
       that.$el.html(_NewView);
-      var $select = that.$el.find('select');
-      $select.hide();
+      if(chrome.storage){
+        chrome.storage.local.get("regex-f", function(value){
+          if(value != null || value.length > 0){
+            that.excludeRegex = new RegExp(value, "i");
+            console.log(value);
+            console.log(that.excludeRegex);
+            that.$el.find('.regex-f').val(value);
+          }
+        });        
+      }
+
+      that.$el.find('.actions').hide();
+
       return this;
     },
     schemaFrom: function(fileEntry){
@@ -143,28 +196,14 @@ define(['text!../templates/tilda_schema/_new.html', "../core/parser", '../core/f
     handleFileInput: function(event){
       var that = this;
       var $select = that.$el.find('select');
-      $select.hide();
+      that.$el.find('.actions').hide();
       var error = function(error){
         console.log(error.message);
         console.log(error.stack);
       }
       chrome.fileSystem.chooseEntry({ type: 'openDirectory'},  function(entry) {
-        that.currentEntry = entry;
-        var reader = entry.createReader();
-        var errorCallback = function(e) {
-          console.error(e);
-        }
-
-        var f = new _FileSearch(entry, function(files){
-          console.log("Files ->");
-          console.log(files);
-          that.schemaEntries = files;
-          for(i=0;i<files.length;i++){
-            var file = files[i];
-            $select.append('<option value=\''+i+'\'>'+file.name+'</option')
-          }
-          $select.show();
-        })
+        that.savedEntry = entry;
+        fileInputHandler(that, entry);
       });
       return 0;
     },

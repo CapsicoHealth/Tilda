@@ -12,9 +12,7 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
           } 
         }
       }
-      console.log(objectAttr.position)
-      console.log(objectAttr.size)
-      console.log(objectAttr.attrs.text.text)
+
       var t = new joint.shapes.basic.Rect(objectAttr);
       // t.translate((position+1)*110, (position+1)*30);
       object.set({graphId: t.id})
@@ -46,9 +44,7 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
           }
         }            
       }
-      console.log(objectAttr.position)
-      console.log(objectAttr.size)
-      console.log(objectAttr.attrs.text.text)
+
 
       var t = new joint.shapes.basic.Rect(objectAttr);
       graph.addCell(t);

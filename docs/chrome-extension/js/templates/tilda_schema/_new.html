@@ -1,24 +1,57 @@
-<div style="padding: 5px 0px 5px 10px">
-  <a name="schema-file" style="padding: 0px"><h3>Click me </h3> </a>
-</div>
-<div style="padding: 10px">
-  <div class="inline">
-    <select>
-      <option value="">--select one option---</option>
-    </select>
-  </div>
-  <div class="inline">
-    <input type="radio" name="showObj" value="object" checked="checked"> Object
-    <input type="radio" name="showObj" value="view"> View
-  </div>
-  <div class="inline" style="padding-left: 10px">
-    <button class="saveSchema">Save</button>
-  </div>
+<div class="container-fluid">
 
-</div>
-<div class="fName" style="padding: 10px"></div>
+  <div class="row">
+    <button class="col-md-12" name="schema-file" style="padding: 0px">Open folder </button>
+  </div>
+  <div class="row actions">
+    <hr/>
+    <div class="col-md-4">
+      <select class="form-control"></select>
+    </div>
+    <div class="col-md-5">
+      <form>
+        <label class="radio-inline">
+          <a class="filterRegex form-control">Filter</a>
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="showObj" value="object" checked="checked"> Object
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="showObj" value="view"> View
+        </label>
+        <label class="radio-inline">
+          <button class="saveSchema form-control">Save</button>
+        </label>
+      </form>
+    </div>
+  </div>
+  <div class="fName" style="padding: 10px"></div>
 
-<div class="objects">
-  <div id="obj_c" class="obj"> </div>
-  <div id="view_c" class="obj"> </div>
+  <div class="objects">
+    <div id="obj_c" class="obj"> </div>
+    <div id="view_c" class="obj"> </div>
+  </div>
 </div>
+
+<div id="filterD" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">Exclude Dir</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="message-text" class="control-label">Exclude Directory regex:</label>
+            <textarea placeholder="regex" class="form-control regex-f" id="message-text">\/bin\/*</textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary save-regex">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
