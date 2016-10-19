@@ -51,6 +51,7 @@ import tilda.migration.Migrator;
 import tilda.parsing.Parser;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Schema;
+import tilda.parsing.parts.View;
 import tilda.performance.PerfTracker;
 import tilda.utils.ClassStaticInit;
 import tilda.utils.FileUtil;
@@ -371,6 +372,28 @@ public class ConnectionPool
     throws Exception
       {
         int warnings = 0;
+
+        // Some DBs, such as Postgres, don't allow to alter a column that's reused as part of a view. So in order to
+        // prepare, we can drop all views.
+        if (Migrate == true)
+          {
+            boolean DbAction = false;
+            for (Schema S : TildaList)
+              {
+                for (View V : S._Views)
+                  {
+                    if (DBMeta.getViewMeta(V._ParentSchema._Name, V._Name) != null)
+                      {
+                        if (C.dropView(V) == false)
+                          throw new Exception("Cannot upgrade schema by dropping the old view '" + V.getShortName() + "'.");
+                        DbAction = true;
+                      }
+                  }
+              }
+            if (DbAction == true)
+              C.commit();
+          }
+
         for (Schema S : TildaList)
           {
             int w = Migrator.migrate(C, S, DBMeta, Migrate);

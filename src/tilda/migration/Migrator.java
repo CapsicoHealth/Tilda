@@ -69,33 +69,13 @@ public class Migrator
           }
         else
           {
-            // Some DBs, such as Postgres, don't allow to alter a column that's reused as part of a view. So in order to
-            // prepare, we can drop all views.
-            if (Migrate == true)
+            for (View V : S._Views)
               {
-                boolean DbAction = false;
-                for (View V : S._Views)
+                if (DBMeta.getViewMeta(V._ParentSchema._Name, V._Name) == null)
                   {
-                    if (DBMeta.getViewMeta(V._ParentSchema._Name, V._Name) != null)
-                      {
-                        if (C.dropView(V) == false)
-                          throw new Exception("Cannot upgrade schema by dropping the old view '" + V.getShortName() + "'.");
-                        DbAction = true;
-                      }
-                  }
-                if (DbAction == true)
-                  C.commit();
-              }
-            else
-              {
-                for (View V : S._Views)
-                  {
-                    if (DBMeta.getViewMeta(V._ParentSchema._Name, V._Name) == null)
-                      {
-                        LOG.info("The application's data model defines the view '" + V.getShortName() + "' which cannot be found in the database. Trying to create it...");
-                        logMigrationWarning();
-                        ++warnings;
-                      }
+                    LOG.info("The application's data model defines the view '" + V.getShortName() + "' which cannot be found in the database. Trying to create it...");
+                    logMigrationWarning();
+                    ++warnings;
                   }
               }
           }
