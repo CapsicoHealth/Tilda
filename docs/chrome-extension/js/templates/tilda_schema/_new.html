@@ -1,9 +1,6 @@
 <div class="container-fluid">
 
   <div class="row">
-    <button class="col-md-12" name="schema-file" style="padding: 0px">Open folder </button>
-  </div>
-  <div class="row actions">
     <hr/>
     <div class="col-md-4">
       <select class="form-control"></select>
@@ -11,7 +8,7 @@
     <div class="col-md-5">
       <form>
         <label class="radio-inline">
-          <a class="filterRegex form-control">Filter</a>
+          <a class="filterRegex form-control">Load</a>
         </label>
         <label class="radio-inline">
           <input type="radio" name="showObj" value="object" checked="checked"> Object
@@ -38,9 +35,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="gridSystemModalLabel">Exclude Dir</h4>
+        <h4 class="modal-title" id="gridSystemModalLabel">Load Tilda Schema Files</h4>
       </div>
       <div class="modal-body">
+<!-- 
+	    <div class="row">
+   		  <button class="col-md-12" name="schema-file" style="padding: 0px">Open folder </button>
+		</div>
+ -->
         <form>
           <div class="form-group">
             <label for="message-text" class="control-label">Exclude Directory regex:</label>
@@ -48,10 +50,10 @@
           </div>
         </form>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary save-regex">Save changes</button>
-      </div>
-    </div><!-- /.modal-content -->
+	<div class="modal-footer">
+		<button class="col-md-12" name="schema-file">Pick a folder </button>
+		<button type="button" class="btn btn-primary save-regex" data-dismiss="modal">Load</button>
+	</div>
+   </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

@@ -19,12 +19,19 @@ define(function(){
           } else if (entry.isFile) {
             var fName = entry.name;
             if(SCHEMA_REGEX.test(fName)){
+//              console.log("fName: ", fName);
               if(excluding_regex instanceof RegExp){
                 var full_path = entry.fullPath;
+//                console.log("full_path: ", full_path);
                 if(!excluding_regex.test(full_path)){
+//                  console.log("Not being excluded, so adding it!")
                   files.push(entry);
                 }
+                else {
+//                  console.log("Being excluded, so NOT adding it!")
+                }
               } else {
+//                console.log("Exclusion was not a REGEX, so adding it!")
                 files.push(entry);
               }
             }

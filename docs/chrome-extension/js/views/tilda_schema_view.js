@@ -31,7 +31,7 @@ define(['text!../templates/tilda_schema/_new.html',
       viewScope.schemaEntries = files;
       for(i=0;i<files.length;i++){
         var file = files[i];
-        $select.append('<option value=\''+i+'\'>'+file.name+'</option')
+        $select.append('<option value=\''+i+'\'>'+file.name+'&nbsp;&nbsp;&nbsp;--&nbsp;'+file.fullPath.substring(0, file.fullPath.length - file.name.length)+'</option')
       }
       viewScope.$el.find('.actions').show();
     })
@@ -49,7 +49,7 @@ define(['text!../templates/tilda_schema/_new.html',
       'change select': "changeView",
       'click .save-regex': 'saveRegex',
       'click .filterRegex': function(){
-        $('#filterD').modal('show');
+         $('#filterD').modal('show');
       }
     },
     saveRegex: function(event){
