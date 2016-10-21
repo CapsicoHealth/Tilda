@@ -1,7 +1,8 @@
 define(function(){
   var SCHEMA_REGEX = /\_tilda\.([A-Z][A-Za-z_0-9]+)\.json/i;
-  var showFiles = function (firstEntry, runAfterCompletion) {
+  var showFiles = function (firstEntry, excluding_regex, runAfterCompletion) {
     var directoryReader = firstEntry.createReader();
+    var excluding_regex = excluding_regex;
     var files= [];
     var objectd = {};
     var counter = 0;
@@ -17,14 +18,15 @@ define(function(){
             }
           } else if (entry.isFile) {
             var fName = entry.name;
-            var match = SCHEMA_REGEX.exec(fName);
-            if(match){
-              entry.getParent(function(e){
-                console.log(e);
-              }, function(error){
-                console.error(error)
-              })
-              files.push(entry);
+            if(SCHEMA_REGEX.test(fName)){
+              if(excluding_regex instanceof RegExp){
+                var full_path = entry.fullPath;
+                if(!excluding_regex.test(full_path)){
+                  files.push(entry);
+                }
+              } else {
+                files.push(entry);
+              }
             }
           }
         }
@@ -39,8 +41,8 @@ define(function(){
     readFolder(firstEntry, runAfterCompletion);
   };
 
-  var FileSearch = function(directoryEntry, callback){
-    showFiles(directoryEntry, callback);
+  var FileSearch = function(directoryEntry, excluding_regex, callback){
+    showFiles(directoryEntry, excluding_regex, callback);
   }
   return FileSearch;
 })
