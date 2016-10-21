@@ -52,7 +52,7 @@ public class Migrator
     throws Exception
       {
         LOG.info("");
-        LOG.info("Evaluating differences between the application data model and the existing data schema in the database");
+        LOG.info("Comparing the application's data model with the database's for "+S.getFullName());
         int warnings = 0;
 
         if (DBMeta.getSchemaMeta(S._Name) == null)
@@ -236,6 +236,10 @@ public class Migrator
               }
             C.commit();
           }
+        if (warnings == 0)
+         LOG.info("All OK");
+        else
+         LOG.error("Some issues were found");
 
         return warnings;
       }

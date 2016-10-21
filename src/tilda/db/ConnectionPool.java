@@ -427,6 +427,14 @@ public class ConnectionPool
             Migrator.logMigrationWarning();
             LOG.error("*************************************************************************************************************************************");
           }
+        else
+          {
+            LOG.info("");
+            LOG.info("====================================================================");
+            LOG.info("===  Woohoo! The database matches the Application's data model.  ===");
+            LOG.info("====================================================================");
+            LOG.info("");
+          }
 
         C.commit();
         if (Migrate == true)
