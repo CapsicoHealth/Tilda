@@ -16,10 +16,18 @@
 
 package tilda.migration;
 
-import tilda.db.Connection;
+import java.util.List;
 
-public interface MigrationAction
+import tilda.parsing.parts.Schema;
+
+public class MigrationScript
   {
-    public boolean process(Connection C) throws Exception;
-    public String getDescription();
+    public MigrationScript(Schema S, List<MigrationAction> Actions)
+     {
+       _S = S;
+       _Actions = Actions;
+     }
+
+    public Schema _S;
+    public List<MigrationAction> _Actions;
   }

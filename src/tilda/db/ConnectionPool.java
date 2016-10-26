@@ -47,12 +47,18 @@ import tilda.Migrate;
 import tilda.db.metadata.DatabaseMeta;
 import tilda.enums.TransactionType;
 import tilda.generation.interfaces.CodeGenSql;
+import tilda.migration.MigrationAction;
+import tilda.migration.MigrationScript;
 import tilda.migration.Migrator;
+import tilda.migration.actions.SchemaViewsCreate;
+import tilda.migration.actions.SchemaViewsDrop;
 import tilda.parsing.Parser;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
+import tilda.parsing.parts.Object;
 import tilda.performance.PerfTracker;
+import tilda.utils.AnsiUtil;
 import tilda.utils.ClassStaticInit;
 import tilda.utils.FileUtil;
 import tilda.utils.SystemValues;
@@ -363,52 +369,88 @@ public class ConnectionPool
             S._DependencySchemas.add(BaseTildaSchema);
             if (S.Validate(PS) == false)
               throw new Exception("Schema " + S._Name + " from resource " + S._ResourceName + " failed validation.");
+            for (Object Obj : S._Objects)
+              MasterFactory.register(S._Package, Obj);
+
           }
 
         return TildaList;
       }
 
-    private static int MigrateDatabase(Connection C, boolean Migrate, List<Schema> TildaList, DatabaseMeta DBMeta)
+    private static void MigrateDatabase(Connection C, boolean Migrate, List<Schema> TildaList, DatabaseMeta DBMeta)
     throws Exception
       {
-        int warnings = 0;
+        List<MigrationScript> Scripts = new ArrayList<MigrationScript>();
+        int ActionCount = 0;
 
-        // Some DBs, such as Postgres, don't allow to alter a column that's reused as part of a view. So in order to
-        // prepare, we can drop all views.
-        if (Migrate == true)
+        LOG.info("Analyzing differences between the database and the application's expected data model...");
+        MigrationScript InitScript = new MigrationScript(null, new ArrayList<MigrationAction>());
+        for (Schema S : TildaList)
+          InitScript._Actions.add(new SchemaViewsDrop(S));
+        Scripts.add(InitScript);
+        for (Schema S : TildaList)
           {
-            boolean DbAction = false;
-            for (Schema S : TildaList)
+            List<MigrationAction> L = Migrator.getMigrationActions(S, DBMeta);
+            if (L.isEmpty() == false)
               {
-                for (View V : S._Views)
+                ActionCount += L.size();
+              }
+            L.add(new SchemaViewsCreate(S));
+            Scripts.add(new MigrationScript(S, L));
+          }
+        MigrationScript ClosingScript = new MigrationScript(null, new ArrayList<MigrationAction>());
+        ClosingScript._Actions.add(new TildaHelpersAdd());
+        Scripts.add(ClosingScript);
+
+        if (ActionCount > 0)
+          {
+            LOG.info("There were " + ActionCount + " discrepencies found in the database Vs. the application's required data model:");
+            for (MigrationScript S : Scripts)
+              for (MigrationAction A : S._Actions)
+                LOG.debug("    - " + A.getDescription() + ".");
+            if (Migrate == true)
+              {
+                LOG.info("Applying migration actions.");
+                int ErrorCount = 0;
+                for (MigrationScript S : Scripts)
                   {
-                    if (DBMeta.getViewMeta(V._ParentSchema._Name, V._Name) != null)
-                      {
-                        if (C.dropView(V) == false)
-                          throw new Exception("Cannot upgrade schema by dropping the old view '" + V.getShortName() + "'.");
-                        DbAction = true;
-                      }
+                    for (MigrationAction A : S._Actions)
+                      if (A.process(C) == true)
+                        C.commit();
+                      else
+                        throw new Exception("There was an error with the action '" + A.getDescription() + "'.");
                   }
               }
-            if (DbAction == true)
-              C.commit();
           }
 
         for (Schema S : TildaList)
           {
-            int w = Migrator.migrate(C, S, DBMeta, Migrate);
-            if (w != 0 && Migrate == false)
-              {
-                warnings += w;
-                LOG.warn("There were " + w + " warning(s) issued because schema discrepencies were found but not fixed.");
-                Migrator.logMigrationWarning();
-              }
             LOG.debug("Initializing Schema objects");
             Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
             M.invoke(null, C);
             _SchemaPackage.put(S._Name.toUpperCase(), S._Package);
             C.commit();
           }
+
+        if (ActionCount == 0)
+          {
+            LOG.info("");
+            LOG.info("");
+            LOG.info("====================================================================");
+            LOG.info("===  Woohoo! The database matches the Application's data model.  ===");
+            LOG.info("====================================================================");
+            LOG.info("");
+          }
+        else if (Migrate == true)
+          {
+            LOG.info("");
+            LOG.info("");
+            LOG.info("================================================================================================");
+            LOG.info("===  Woohoo! The database was automatically migrated to match the Application's data model.  ===");
+            LOG.info("================================================================================================");
+            LOG.info("");
+          }
+
         LOG.debug("");
         LOG.debug("Creating/updating Tilda helper stored procedures.");
         if (Migrate == false)
@@ -418,28 +460,8 @@ public class ConnectionPool
         else if (C.addHelperFunctions() == false)
           throw new Exception("Cannot upgrade schema by adding the Tilda helper functions.");
 
-        if (warnings != 0 && Migrate == false)
-          {
-            LOG.error("");
-            LOG.error("");
-            LOG.error("*************************************************************************************************************************************");
-            LOG.warn("There were a total of " + warnings + " warning(s) and/or error(s) issued because schema discrepencies were found but not fixed.");
-            Migrator.logMigrationWarning();
-            LOG.error("*************************************************************************************************************************************");
-          }
-        else
-          {
-            LOG.info("");
-            LOG.info("====================================================================");
-            LOG.info("===  Woohoo! The database matches the Application's data model.  ===");
-            LOG.info("====================================================================");
-            LOG.info("");
-          }
-
-        C.commit();
         if (Migrate == true)
           KeysManager.reloadAll();
-        return warnings;
       }
 
     private static boolean isTildaEnabled()

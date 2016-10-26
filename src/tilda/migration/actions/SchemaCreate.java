@@ -14,12 +14,29 @@
  * limitations under the License.
  */
 
-package tilda.migration;
+package tilda.migration.actions;
 
 import tilda.db.Connection;
+import tilda.migration.MigrationAction;
+import tilda.parsing.parts.Schema;
 
-public interface MigrationAction
+public class SchemaCreate implements MigrationAction
   {
-    public boolean process(Connection C) throws Exception;
-    public String getDescription();
+    public SchemaCreate(Schema S)
+      {
+        _S = S;
+      }
+
+    protected Schema _S;
+
+    public boolean process(Connection C)
+    throws Exception
+      {
+        return C.createSchema(_S);
+      }
+
+    public String getDescription()
+      {
+        return "Create schema "+_S.getFullName();
+      }
   }

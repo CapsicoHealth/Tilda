@@ -14,12 +14,29 @@
  * limitations under the License.
  */
 
-package tilda.migration;
+package tilda.migration.actions;
 
 import tilda.db.Connection;
+import tilda.migration.MigrationAction;
 
-public interface MigrationAction
+public class TildaHelpersAdd implements MigrationAction
   {
-    public boolean process(Connection C) throws Exception;
-    public String getDescription();
+    public TildaHelpersAdd(tilda.parsing.parts.Object O)
+      {
+        _O = O;
+      }
+
+    protected tilda.parsing.parts.Object _O;
+
+    public boolean process(Connection C)
+    throws Exception
+      {
+        return C.createTable(_O);
+      }
+
+    @Override
+    public String getDescription()
+      {
+        return "Create table "+_O.getFullName();
+      }
   }

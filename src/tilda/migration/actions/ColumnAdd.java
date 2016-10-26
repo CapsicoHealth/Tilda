@@ -14,12 +14,30 @@
  * limitations under the License.
  */
 
-package tilda.migration;
+package tilda.migration.actions;
 
 import tilda.db.Connection;
+import tilda.migration.MigrationAction;
+import tilda.parsing.parts.Column;
 
-public interface MigrationAction
+public class ColumnAdd implements MigrationAction
   {
-    public boolean process(Connection C) throws Exception;
-    public String getDescription();
+    public ColumnAdd(Column Col)
+      {
+        _Col = Col;
+      }
+
+    protected Column _Col;
+
+    public boolean process(Connection C)
+    throws Exception
+      {
+        return C.alterTableAddColumn(_Col, _Col._DefaultCreateValue == null ? null : _Col._DefaultCreateValue._Value);
+      }
+
+    @Override
+    public String getDescription()
+      {
+        return "Alter table "+_Col._ParentObject.getFullName()+" add column "+_Col.getName();
+      }
   }

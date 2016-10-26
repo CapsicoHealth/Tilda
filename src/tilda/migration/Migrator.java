@@ -16,6 +16,9 @@
 
 package tilda.migration;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,6 +32,10 @@ import tilda.db.metadata.TableMeta;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
+import tilda.migration.actions.ColumnAdd;
+import tilda.migration.actions.SchemaCreate;
+import tilda.migration.actions.TableCreate;
+import tilda.migration.actions.TableKeyCreate;
 import tilda.parsing.Parser;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
@@ -43,111 +50,49 @@ public class Migrator
     public static final String    TILDA_VERSION       = "1.0";
     public static final String    TILDA_VERSION_VAROK = "1_0";
 
-    public static void logMigrationWarning()
-      {
-        LOG.warn("     " + AnsiUtil.NEGATIVE + "Migration was not activated in the tilda.config file: THE APPLICATION MAY NOT FUNCTION PROPERLY" + AnsiUtil.NEGATIVE_OFF + "!");
-      }
-
-    public static int migrate(Connection C, Schema S, DatabaseMeta DBMeta, boolean Migrate)
+    public static List<MigrationAction> getMigrationActions(Schema S, DatabaseMeta DBMeta)
     throws Exception
       {
         LOG.info("");
         LOG.info("Comparing the application's data model with the database's for "+S.getFullName());
-        int warnings = 0;
 
+        List<MigrationAction> Actions = new ArrayList<MigrationAction>();
+        
         if (DBMeta.getSchemaMeta(S._Name) == null)
-          {
-            LOG.info("The application's data model defines the schema '" + S.getShortName() + "' which cannot be found in the database. Trying to create it...");
-            if (Migrate == false)
-              {
-                logMigrationWarning();
-                return ++warnings;
-              }
-            else if (C.createSchema(S) == false)
-              throw new Exception("Cannot upgrade database by adding the new schema '" + S.getShortName() + "'.");
-            C.commit();
-          }
-        else
-          {
-            for (View V : S._Views)
-              {
-                if (DBMeta.getViewMeta(V._ParentSchema._Name, V._Name) == null)
-                  {
-                    LOG.info("The application's data model defines the view '" + V.getShortName() + "' which cannot be found in the database. Trying to create it...");
-                    logMigrationWarning();
-                    ++warnings;
-                  }
-              }
-          }
+         Actions.add(new SchemaCreate(S));
+
         for (Object Obj : S._Objects)
           {
-            MasterFactory.register(S._Package, Obj);
             if (Obj._FST == FrameworkSourcedType.VIEW)
               continue;
-            if (DBMeta.getTableMeta(Obj._ParentSchema._Name, Obj._Name) == null)
-              {
-                LOG.info("The application's data model defines the table '" + Obj.getShortName() + "' which cannot be found in the database. Trying to create it...");
-                if (Migrate == false)
-                  {
-                    logMigrationWarning();
-                    ++warnings;
-                    continue;
-                  }
-                else if (C.createTable(Obj) == false)
-                  throw new Exception("Cannot upgrade schema by adding the new table '" + Obj.getShortName() + "'.");
-                C.commit();
-                DBMeta.load(C, Obj._ParentSchema._Name, Obj._Name);
-              }
-            else if (Obj._PrimaryKey != null && Obj._PrimaryKey._Autogen == true && KeysManager.hasKey(Obj.getShortName()) == false)
-              {
-                LOG.info("The application's data model defines the table '" + Obj.getShortName() + "' with an auto-gen primary key but no entry in the TILDA.KEY table to track it can be found. Trying to create it...");
-                if (Migrate == false)
-                  {
-                    logMigrationWarning();
-                    ++warnings;
-                  }
-                else
-                  {
-                    if (C.createKeysEntry(Obj) == false)
-                      throw new Exception("Cannot upgrade the schema by adding a new entry for '" + Obj.getShortName() + "' in the TILDA.KEY table.");
-                  }
-              }
             TableMeta TMeta = DBMeta.getTableMeta(Obj._ParentSchema._Name, Obj._Name);
-            for (Column Col : Obj._Columns)
+            if (TMeta == null)
+             Actions.add(new TableCreate(Obj));
+            else 
               {
-                if (Col == null)
-                  continue;
-                if (Col._Mode == ColumnMode.CALCULATED)
-                  continue;
-                ColumnMeta CI = TMeta.getColumnMeta(Col.getName());
-                boolean didSomething = false;
-                if (CI == null)
-                  {
-                    LOG.info("The application's data model defines the column '" + Col.getShortName() + "' which cannot be found in the database. Trying to create it...");
-                    if (Migrate == false)
-                      {
-                        logMigrationWarning();
-                        ++warnings;
-                        continue;
-                      }
-                    else if (C.alterTableAddColumn(Col, Col._DefaultCreateValue == null ? null : Col._DefaultCreateValue._Value) == false)
-                      throw new Exception("Cannot upgrade table '" + Obj.getShortName() + "' by adding the new required column '" + Col.getShortName() + "'.");
-                    didSomething = true;
-                  }
-                else
-                  {
-                    if (CI._Nullable == 1 && Col._Nullable == false)
-                      {
-                        LOG.info("The application's data model defines the column '" + Col.getShortName() + "' as not nullable, but it's nullable in the DB. Trying to alter it...");
-                        if (Migrate == false)
-                          {
-                            logMigrationWarning();
-                            ++warnings;
-                            continue;
-                          }
-                        else if (C.alterTableAlterColumnNull(Col, Col._DefaultCreateValue == null ? null : Col._DefaultCreateValue._Value) == false)
-                          throw new Exception("Cannot upgrade table '" + Obj.getShortName() + "' by updating the column '" + Col.getShortName() + "' from nullable to not nullable.");
-                        didSomething = true;
+                if (Obj._PrimaryKey != null && Obj._PrimaryKey._Autogen == true && KeysManager.hasKey(Obj.getShortName()) == false)
+                 Actions.add(new TableKeyCreate(Obj));
+                for (Column Col : Obj._Columns)
+                 {
+                   if (Col == null || Col._Mode == ColumnMode.CALCULATED)
+                    continue;
+                   ColumnMeta CI = TMeta.getColumnMeta(Col.getName());
+                   if (CI == null)
+                      Actions.add(new ColumnAdd(Col));
+                   else
+                    {
+                      if (CI._Nullable == 1 && Col._Nullable == false)
+                       {
+                         LOG.info("The application's data model defines the column '" + Col.getShortName() + "' as not nullable, but it's nullable in the DB. Trying to alter it...");
+                         if (Migrate == false)
+                           {
+                             logMigrationWarning();
+                             ++warnings;
+                             continue;
+                           }
+                         else if (C.alterTableAlterColumnNull(Col, Col._DefaultCreateValue == null ? null : Col._DefaultCreateValue._Value) == false)
+                           throw new Exception("Cannot upgrade table '" + Obj.getShortName() + "' by updating the column '" + Col.getShortName() + "' from nullable to not nullable.");
+                         didSomething = true;
                       }
                     else if (CI._Nullable == 0 && Col._Nullable == true)
                       {
@@ -236,12 +181,8 @@ public class Migrator
               }
             C.commit();
           }
-        if (warnings == 0)
-         LOG.info("All OK");
-        else
-         LOG.error("Some issues were found");
 
-        return warnings;
+        return Actions;
       }
 
 

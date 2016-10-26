@@ -14,12 +14,28 @@
  * limitations under the License.
  */
 
-package tilda.migration;
+package tilda.migration.actions;
 
 import tilda.db.Connection;
+import tilda.migration.MigrationAction;
 
-public interface MigrationAction
+public class TableKeyCreate implements MigrationAction
   {
-    public boolean process(Connection C) throws Exception;
-    public String getDescription();
+    public TableKeyCreate(tilda.parsing.parts.Object O)
+      {
+        _O = O;
+      }
+
+    protected tilda.parsing.parts.Object _O;
+
+    public boolean process(Connection C)
+    throws Exception
+      {
+        return C.createKeysEntry(_O);
+      }
+
+    public String getDescription()
+      {
+        return "Create/update TILDA.KEY entries for table "+_O.getFullName();
+      }
   }

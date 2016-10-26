@@ -14,12 +14,33 @@
  * limitations under the License.
  */
 
-package tilda.migration;
+package tilda.migration.actions;
 
 import tilda.db.Connection;
+import tilda.migration.MigrationAction;
+import tilda.parsing.parts.Schema;
+import tilda.parsing.parts.View;
 
-public interface MigrationAction
+public class SchemaViewsDrop implements MigrationAction
   {
-    public boolean process(Connection C) throws Exception;
-    public String getDescription();
+    public SchemaViewsDrop(Schema S)
+      {
+        _S = S;
+      }
+
+    protected Schema _S;
+
+    public boolean process(Connection C)
+    throws Exception
+      {
+        for (View V : _S._Views)
+          if (C.dropView(V) == false)
+            return false;
+        return true;
+      }
+
+    public String getDescription()
+      {
+        return "Drop all views for schema " + _S.getFullName();
+      }
   }
