@@ -16,24 +16,33 @@
 
 package tilda.migration.actions;
 
+import tilda.data.ZoneInfo_Factory;
 import tilda.db.Connection;
+import tilda.enums.ColumnType;
 import tilda.migration.MigrationAction;
+import tilda.parsing.parts.Column;
 
-public class TildaHelpersAdd implements MigrationAction
+public class ColumnAlterType implements MigrationAction
   {
-    public TildaHelpersAdd()
+    public ColumnAlterType(Column Col, ColumnType CurrentType)
       {
+        _Col = Col;
+        _CurrentType = CurrentType;
       }
+
+    protected Column _Col;
+    protected ColumnType _CurrentType;
 
     public boolean process(Connection C)
     throws Exception
       {
-        return C.addHelperFunctions();
+        return C.alterTableAlterColumnType(_CurrentType, _Col, ZoneInfo_Factory.getEnumerationById("UTC"));
       }
 
     @Override
     public String getDescription()
       {
-        return "Adding Tilda helper stored procedures";
+        return "Alter table "+_Col._ParentObject.getFullName()
+              +" alter column "+_Col.getName()+" type from "+_CurrentType.toString()+" to "+_Col._Type.toString();
       }
   }

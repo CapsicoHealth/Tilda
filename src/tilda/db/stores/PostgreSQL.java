@@ -30,7 +30,6 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
-import tilda.db.metadata.ColumnMeta;
 import tilda.db.processors.ScalarRP;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
@@ -227,10 +226,10 @@ public class PostgreSQL implements DBType
       }
 
     @Override
-    public boolean alterTableDropColumn(Connection Con, Object Obj, ColumnMeta CI)
+    public boolean alterTableDropColumn(Connection Con, Object Obj, String ColumnName)
     throws Exception
       {
-        String Q = "ALTER TABLE " + Obj.getShortName() + " DROP COLUMN \"" + CI._Name + "\"";
+        String Q = "ALTER TABLE " + Obj.getShortName() + " DROP COLUMN \"" + ColumnName + "\"";
 
         return Con.ExecuteUpdate(Obj._ParentSchema._Name, Obj.getBaseName(), Q) >= 0;
       }

@@ -25,7 +25,6 @@ import java.util.List;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
-import tilda.db.metadata.ColumnMeta;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnType;
 import tilda.generation.interfaces.CodeGenSql;
@@ -57,7 +56,7 @@ public interface DBType
     public boolean dropView(Connection Con, View V) throws Exception;
     public boolean createView(Connection Con, View V) throws Exception;
     public boolean alterTableAddColumn(Connection Con, Column Col, String DefaultValue) throws Exception;
-    public boolean alterTableDropColumn(Connection Con, Object Obj, ColumnMeta CI) throws Exception;
+    public boolean alterTableDropColumn(Connection Con, Object Obj, String ColumnName) throws Exception;
     public boolean alterTableAlterColumnNull(Connection Con, Column Col, String DefaultValue) throws Exception;
     public boolean addHelperFunctions(Connection Con) throws Exception;    
 

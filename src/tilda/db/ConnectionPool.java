@@ -47,18 +47,12 @@ import tilda.Migrate;
 import tilda.db.metadata.DatabaseMeta;
 import tilda.enums.TransactionType;
 import tilda.generation.interfaces.CodeGenSql;
-import tilda.migration.MigrationAction;
-import tilda.migration.MigrationScript;
 import tilda.migration.Migrator;
-import tilda.migration.actions.SchemaViewsCreate;
-import tilda.migration.actions.SchemaViewsDrop;
 import tilda.parsing.Parser;
 import tilda.parsing.ParserSession;
-import tilda.parsing.parts.Schema;
-import tilda.parsing.parts.View;
 import tilda.parsing.parts.Object;
+import tilda.parsing.parts.Schema;
 import tilda.performance.PerfTracker;
-import tilda.utils.AnsiUtil;
 import tilda.utils.ClassStaticInit;
 import tilda.utils.FileUtil;
 import tilda.utils.SystemValues;
@@ -163,7 +157,15 @@ public class ConnectionPool
                 C = get("MAIN");
                 List<Schema> TildaList = LoadTildaResources(C);
                 DatabaseMeta DBMeta = LoadDatabaseMetaData(C, TildaList);
-                MigrateDatabase(C, Migrate.isMigrationActive(), TildaList, DBMeta);
+                Migrator.MigrateDatabase(C, Migrate.isMigrationActive() == false, TildaList, DBMeta);
+                for (Schema S : TildaList)
+                  {
+                    LOG.debug("Initializing Schema objects");
+                    Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
+                    M.invoke(null, C);
+                    _SchemaPackage.put(S._Name.toUpperCase(), S._Package);
+                    C.commit();
+                  }
               }
           }
         catch (Throwable T)
@@ -371,97 +373,9 @@ public class ConnectionPool
               throw new Exception("Schema " + S._Name + " from resource " + S._ResourceName + " failed validation.");
             for (Object Obj : S._Objects)
               MasterFactory.register(S._Package, Obj);
-
           }
 
         return TildaList;
-      }
-
-    private static void MigrateDatabase(Connection C, boolean Migrate, List<Schema> TildaList, DatabaseMeta DBMeta)
-    throws Exception
-      {
-        List<MigrationScript> Scripts = new ArrayList<MigrationScript>();
-        int ActionCount = 0;
-
-        LOG.info("Analyzing differences between the database and the application's expected data model...");
-        MigrationScript InitScript = new MigrationScript(null, new ArrayList<MigrationAction>());
-        for (Schema S : TildaList)
-          InitScript._Actions.add(new SchemaViewsDrop(S));
-        Scripts.add(InitScript);
-        for (Schema S : TildaList)
-          {
-            List<MigrationAction> L = Migrator.getMigrationActions(S, DBMeta);
-            if (L.isEmpty() == false)
-              {
-                ActionCount += L.size();
-              }
-            L.add(new SchemaViewsCreate(S));
-            Scripts.add(new MigrationScript(S, L));
-          }
-        MigrationScript ClosingScript = new MigrationScript(null, new ArrayList<MigrationAction>());
-        ClosingScript._Actions.add(new TildaHelpersAdd());
-        Scripts.add(ClosingScript);
-
-        if (ActionCount > 0)
-          {
-            LOG.info("There were " + ActionCount + " discrepencies found in the database Vs. the application's required data model:");
-            for (MigrationScript S : Scripts)
-              for (MigrationAction A : S._Actions)
-                LOG.debug("    - " + A.getDescription() + ".");
-            if (Migrate == true)
-              {
-                LOG.info("Applying migration actions.");
-                int ErrorCount = 0;
-                for (MigrationScript S : Scripts)
-                  {
-                    for (MigrationAction A : S._Actions)
-                      if (A.process(C) == true)
-                        C.commit();
-                      else
-                        throw new Exception("There was an error with the action '" + A.getDescription() + "'.");
-                  }
-              }
-          }
-
-        for (Schema S : TildaList)
-          {
-            LOG.debug("Initializing Schema objects");
-            Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
-            M.invoke(null, C);
-            _SchemaPackage.put(S._Name.toUpperCase(), S._Package);
-            C.commit();
-          }
-
-        if (ActionCount == 0)
-          {
-            LOG.info("");
-            LOG.info("");
-            LOG.info("====================================================================");
-            LOG.info("===  Woohoo! The database matches the Application's data model.  ===");
-            LOG.info("====================================================================");
-            LOG.info("");
-          }
-        else if (Migrate == true)
-          {
-            LOG.info("");
-            LOG.info("");
-            LOG.info("================================================================================================");
-            LOG.info("===  Woohoo! The database was automatically migrated to match the Application's data model.  ===");
-            LOG.info("================================================================================================");
-            LOG.info("");
-          }
-
-        LOG.debug("");
-        LOG.debug("Creating/updating Tilda helper stored procedures.");
-        if (Migrate == false)
-          {
-            // ++warnings;
-          }
-        else if (C.addHelperFunctions() == false)
-          throw new Exception("Cannot upgrade schema by adding the Tilda helper functions.");
-
-        if (Migrate == true)
-          KeysManager.reloadAll();
       }
 
     private static boolean isTildaEnabled()

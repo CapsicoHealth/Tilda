@@ -22,14 +22,12 @@ import tilda.parsing.parts.Column;
 
 public class ColumnAlterNull implements MigrationAction
   {
-    public ColumnAlterNull(Column Col, boolean Nullable)
+    public ColumnAlterNull(Column Col)
       {
         _Col = Col;
-        _Nullable = Nullable;
       }
 
     protected Column _Col;
-    protected boolean _Nullable;
 
     public boolean process(Connection C)
     throws Exception
@@ -40,6 +38,9 @@ public class ColumnAlterNull implements MigrationAction
     @Override
     public String getDescription()
       {
-        return "Alter table "+_Col._ParentObject.getFullName()+" add column "+_Col.getName();
+        return "Alter table "+_Col._ParentObject.getFullName()
+              +" alter column "+_Col.getName()
+              +(_Col._Nullable==true?" null":" not null")
+              +(_Col._DefaultCreateValue == null ? "" : " with default "+_Col._DefaultCreateValue._Value);
       }
   }

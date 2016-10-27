@@ -28,7 +28,6 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
-import tilda.db.metadata.ColumnMeta;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnType;
 import tilda.generation.interfaces.CodeGenSql;
@@ -38,8 +37,8 @@ import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 import tilda.types.ColumnDefinition;
 import tilda.types.Type_DatetimePrimitive;
-import tilda.utils.TextUtil;
 import tilda.utils.DurationUtil.IntervalEnum;
+import tilda.utils.TextUtil;
 import tilda.utils.pairs.StringStringPair;
 
 public class IBMDB2 implements DBType
@@ -140,7 +139,7 @@ public class IBMDB2 implements DBType
       }
     
     @Override
-    public boolean alterTableDropColumn(Connection Con, Object Obj, ColumnMeta CI)
+    public boolean alterTableDropColumn(Connection Con, Object Obj, String ColumnName)
     throws Exception
       {
         throw new UnsupportedOperationException();

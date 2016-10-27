@@ -18,22 +18,29 @@ package tilda.migration.actions;
 
 import tilda.db.Connection;
 import tilda.migration.MigrationAction;
+import tilda.parsing.parts.Column;
 
-public class TildaHelpersAdd implements MigrationAction
+public class ColumnAlterStringSize implements MigrationAction
   {
-    public TildaHelpersAdd()
+    public ColumnAlterStringSize(Column Col, int CurrentSize)
       {
+        _Col = Col;
+        _CurrentSize = CurrentSize;
       }
+
+    protected Column _Col;
+    protected int _CurrentSize;
 
     public boolean process(Connection C)
     throws Exception
       {
-        return C.addHelperFunctions();
+        return C.alterTableAlterColumnStringSize(_Col, _CurrentSize);
       }
 
     @Override
     public String getDescription()
       {
-        return "Adding Tilda helper stored procedures";
+        return "Alter table "+_Col._ParentObject.getFullName()
+              +(_Col._Size > _CurrentSize ? " expanding" : " shrinking")+" string column "+_Col.getName()+" size from "+_CurrentSize+" to "+_Col._Size;
       }
   }

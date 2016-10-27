@@ -18,22 +18,28 @@ package tilda.migration.actions;
 
 import tilda.db.Connection;
 import tilda.migration.MigrationAction;
+import tilda.parsing.parts.Object;
 
-public class TildaHelpersAdd implements MigrationAction
+public class ColumnDrop implements MigrationAction
   {
-    public TildaHelpersAdd()
+    public ColumnDrop(Object Obj, String ColumnName)
       {
+        _Obj = Obj;
+        _ColumnName = ColumnName;
       }
+
+    protected Object _Obj;
+    protected String _ColumnName;
 
     public boolean process(Connection C)
     throws Exception
       {
-        return C.addHelperFunctions();
+        return C.alterTableDropColumn(_Obj, _ColumnName);
       }
 
     @Override
     public String getDescription()
       {
-        return "Adding Tilda helper stored procedures";
+        return "Alter table "+_Obj.getFullName()+" drop column "+_ColumnName;
       }
   }
