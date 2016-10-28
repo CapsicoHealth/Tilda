@@ -36,6 +36,7 @@ import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -55,6 +56,7 @@ import tilda.parsing.parts.Schema;
 import tilda.performance.PerfTracker;
 import tilda.utils.ClassStaticInit;
 import tilda.utils.FileUtil;
+import tilda.utils.LogUtil;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
 
@@ -70,6 +72,7 @@ public class ConnectionPool
         /*@formatter:off*/
        @SerializedName("connections"   ) public Conn[]      _Conns       = new Conn[0];
        @SerializedName("email"         ) public EmailConfig _EmailConfig;
+       @SerializedName("initDebug"     ) public boolean     _InitDebug = false;
        /*@formatter:on*/
 
         public boolean validate()
@@ -139,6 +142,7 @@ public class ConnectionPool
     protected static Map<String, BasicDataSource> _DataSourcesById  = new HashMap<String, BasicDataSource>();
     protected static Map<String, BasicDataSource> _DataSourcesBySig = new HashMap<String, BasicDataSource>();
     protected static Map<String, String>          _SchemaPackage    = new HashMap<String, String>();
+    protected static boolean                      _InitDebug        = false;
 
     public static void autoInit()
       {
@@ -152,20 +156,29 @@ public class ConnectionPool
           {
             InitBootstrappers();
             ReadConfig();
+            if (_InitDebug == false && Migrate.isMigrationActive() == false)
+              {
+                LOG.info("The initDebug flag in the tilda.config.json file is set to false, and so detailed debugging is turned off during system initialization");
+                LogUtil.setLogLevel(Level.INFO);
+              }
             if (isTildaEnabled() == true)
               {
                 C = get("MAIN");
                 List<Schema> TildaList = LoadTildaResources(C);
                 DatabaseMeta DBMeta = LoadDatabaseMetaData(C, TildaList);
                 Migrator.MigrateDatabase(C, Migrate.isMigrationActive() == false, TildaList, DBMeta);
-                for (Schema S : TildaList)
+                if (Migrate.isMigrationActive() == false)
                   {
-                    LOG.debug("Initializing Schema objects");
-                    Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
-                    M.invoke(null, C);
-                    _SchemaPackage.put(S._Name.toUpperCase(), S._Package);
-                    C.commit();
+                    LOG.info("Initializing Schemas.");
+                    for (Schema S : TildaList)
+                      {
+                        LOG.debug("  " + S.getFullName());
+                        Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
+                        M.invoke(null, C);
+                        _SchemaPackage.put(S._Name.toUpperCase(), S._Package);
+                      }
                   }
+                C.commit();
               }
           }
         catch (Throwable T)
@@ -186,6 +199,8 @@ public class ConnectionPool
                 System.exit(-1);
               }
           }
+        if (_InitDebug == false && Migrate.isMigrationActive() == false)
+          LogUtil.resetLogLevel();
       }
 
     private static void ReadConfig()
@@ -203,6 +218,7 @@ public class ConnectionPool
             ConnDefs Defs = gson.fromJson(R, ConnDefs.class);
             if (Defs.validate() == true)
               {
+                _InitDebug = Defs._InitDebug;
                 for (Conn Co : Defs._Conns)
                   {
                     if (_DataSourcesById.get(Co._Id) == null)
@@ -282,10 +298,10 @@ public class ConnectionPool
     throws Exception
       {
         DatabaseMeta DBMeta = new DatabaseMeta();
-        LOG.info("Loading database metadata for found Schemas:");
+        LOG.info("Loading database metadata for found Schemas.");
         for (Schema S : TildaList)
           {
-            LOG.debug("   " + S._Name);
+            LOG.debug("  " + S._Name);
             DBMeta.load(C, S._Name);
           }
         return DBMeta;
@@ -418,7 +434,7 @@ public class ConnectionPool
     public static Connection get(String Id)
     throws Exception
       {
-        LOG.info("-------  G E T T I N G   C O N N E C T I O N  -----  " + Id);
+        LOG.info(QueryDetails._LOGGING_HEADER + "G E T T I N G   C O N N E C T I O N  -----  " + Id);
         BasicDataSource BDS = _DataSourcesById.get(Id);
         if (BDS == null)
           throw new Exception("Cannot find a connection pool for " + Id);
@@ -443,7 +459,7 @@ public class ConnectionPool
         if (C == null)
           throw new Exception("Failed obtaining a connection after numerous tries.");
         Connection Conn = new Connection(C, Id);
-        LOG.info("         G O T           C O N N E C T I O N  -----  " + Conn._PoolId + ", " + BDS.getNumActive() + "/" + BDS.getNumIdle() + "/" + BDS.getMaxTotal());
+        LOG.info(QueryDetails._LOGGING_HEADER + "G O T           C O N N E C T I O N  -----  " + Conn._PoolId + ", " + BDS.getNumActive() + "/" + BDS.getNumIdle() + "/" + BDS.getMaxTotal());
         return Conn;
       }
 

@@ -116,7 +116,7 @@ public final class Connection
       {
         try
           {
-            LOG.info("---------- " + AnsiUtil.NEGATIVE + "C O M M I T" + AnsiUtil.NEGATIVE_OFF + " ----------------------------------- " + _PoolId + " ------------------------------");
+            LOG.info(QueryDetails._LOGGING_HEADER + AnsiUtil.NEGATIVE + "C O M M I T" + AnsiUtil.NEGATIVE_OFF + "                              -----  " + _PoolId);
             long T0 = System.nanoTime();
             _C.commit();
             _SavePoints.clear();
@@ -142,7 +142,7 @@ public final class Connection
       {
         try
           {
-            LOG.info("---------- " + AnsiUtil.NEGATIVE + "R O L L B A C K" + AnsiUtil.NEGATIVE_OFF + " ------------------------------- " + _PoolId + " ----------");
+            LOG.info(QueryDetails._LOGGING_HEADER + AnsiUtil.NEGATIVE + "R O L L B A C K" + AnsiUtil.NEGATIVE_OFF + "                          -----  " + _PoolId);
             long T0 = System.nanoTime();
             _C.rollback();
             _SavePoints.clear();
@@ -186,9 +186,9 @@ public final class Connection
         try
           {
             if (_C.toString() == _PoolId)
-              LOG.info("---------- C L O S I N G   C O N N E C T I O N ------- " + _PoolId + " ----------");
+              LOG.info(QueryDetails._LOGGING_HEADER + "C L O S I N G   C O N N E C T I O N      -----  " + _PoolId);
             else
-              LOG.info("---------- R E T U R N I N G   C O N N E C T I O N ------- " + _PoolId + " ----------");
+              LOG.info(QueryDetails._LOGGING_HEADER + "R E T U R N I N G   C O N N E C T I O N  -----  " + _PoolId);
             long T0 = System.nanoTime();
             _C.close();
             _SavePoints.clear();

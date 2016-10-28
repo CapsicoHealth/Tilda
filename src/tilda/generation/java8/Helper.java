@@ -494,7 +494,7 @@ public class Helper
                     {
                       String MethodName = "LookupWhere" + I._Name;
                       Out.println(Lead + "     " + MethodName + "Params P = (" + MethodName + "Params) ExtraParams;");
-                      Out.println(Lead + "     LOG.debug(\"  \" + P.toString());");
+                      Out.println(Lead + "     LOG.debug(QueryDetails._LOGGING_HEADER + \"  \" + P.toString());");
                       for (Query.Attribute A : I._SubQuery._Attributes)
                         {
                           Column C = A._Col;
@@ -538,7 +538,7 @@ public class Helper
                   if (SWC._Attributes.isEmpty() == false)
                    {
                      Out.println(Lead + "     " + MethodName + "Params P = (" + MethodName + "Params) ExtraParams;");
-                     Out.println(Lead + "     LOG.debug(\"  \" + P.toString());");
+                     Out.println(Lead + "     LOG.debug(QueryDetails._LOGGING_HEADER + \"  \" + P.toString());");
                    }
                   for (Query.Attribute A : SWC._Attributes)
                     {

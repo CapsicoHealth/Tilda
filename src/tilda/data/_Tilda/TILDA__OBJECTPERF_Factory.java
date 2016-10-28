@@ -525,7 +525,7 @@ This is the column definition for:<BR>
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(SCHEMA_TABLENAME_LABEL, Q);
-       LOG.debug("TILDA([7mTILDA.OBJECTPERF[27m): "+Q);
+       QueryDetails.logQuery("TILDA.OBJECTPERF", Q, null);
        java.sql.PreparedStatement PS=null;
        int count = 0;
        try

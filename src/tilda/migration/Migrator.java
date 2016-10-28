@@ -122,7 +122,6 @@ public class Migrator
     protected static List<MigrationAction> getMigrationActions(Schema S, DatabaseMeta DBMeta)
     throws Exception
       {
-        LOG.info("");
         LOG.info("Comparing the application's data model with the database's for " + S.getFullName());
 
         List<MigrationAction> Actions = new ArrayList<MigrationAction>();

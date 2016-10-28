@@ -60,7 +60,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Sep 4 2016, 17:05:48EDT
+ @generated Oct 28 2016, 00:49:24EDT
 */
 public abstract class TILDA__ZONEINFO implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
@@ -1428,7 +1428,7 @@ This is the hasChanged for:<BR>
        long T0 = System.nanoTime();
        if (__Changes == 0L)
         {
-          LOG.debug("The tilda.data.TILDA.ZONEINFO has not changed: no writing will occur.");
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.ZONEINFO has not changed: no writing will occur.");
           QueryDetails.setLastQuery(TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, "");
           return true;
         }
@@ -1437,7 +1437,7 @@ This is the hasChanged for:<BR>
 
        if (BeforeWrite(C) == false)
         {
-          LOG.debug("The tilda.data.TILDA.ZONEINFO object's BeforeWrite() failed.");
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.ZONEINFO object's BeforeWrite() failed.");
           QueryDetails.setLastQuery(TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, "");
           return false;
         }
@@ -1541,8 +1541,7 @@ This is the hasChanged for:<BR>
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, Q);
-       LOG.debug("TILDA([7mTILDA.ZONEINFO[27m): "+Q);
-       LOG.debug("   "+toString());
+       QueryDetails.logQuery("TILDA.ZONEINFO", Q, toString());
        java.sql.PreparedStatement PS = null;
        int count = 0;
        try
@@ -1669,7 +1668,7 @@ This is the hasChanged for:<BR>
         throw new Exception("This TILDA.ZONEINFO object is being Read() after a Create(), which doesn't make sense.");
        if (__Init == InitMode.READ == true && Force == false && __Changes == 0L)
         {
-          LOG.debug("This TILDA.ZONEINFO object has already been read.");
+          LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.ZONEINFO object has already been read.");
           QueryDetails.setLastQuery(TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, "");
           return true;
         }
@@ -1703,8 +1702,7 @@ This is the hasChanged for:<BR>
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, Q);
-       LOG.debug("TILDA([7mTILDA.ZONEINFO[27m): "+Q);
-       LOG.debug("   "+toString());
+       QueryDetails.logQuery("TILDA.ZONEINFO", Q, toString());
        java.sql.PreparedStatement PS=null;
        java.sql.ResultSet RS=null;
        int count = 0;
@@ -1732,7 +1730,7 @@ This is the hasChanged for:<BR>
           RS = PS.executeQuery();
           if (RS.next() == false)
             {
-              LOG.debug("   [1mNo record was read.[22m");
+              LOG.debug(QueryDetails._LOGGING_HEADER + "   [1mNo record was read.[22m");
               return false;
             }
           count = 1;
@@ -1753,10 +1751,10 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_id            = _id            =                              RS.getString   (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__ZONEINFO_Factory.COLS.ID._Mask           ; else _id            = _id           .trim();
-      __Saved_value         = _value         =                              RS.getString   (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__ZONEINFO_Factory.COLS.VALUE._Mask        ;
-                              _label         =                              RS.getString   (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__ZONEINFO_Factory.COLS.LABEL._Mask        ;
-                              _deactivatedTZ =                              RS.getString   (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask; else _deactivatedTZ = _deactivatedTZ.trim();
+      __Saved_id            = _id            = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__ZONEINFO_Factory.COLS.ID._Mask           ; else _id            = _id           .trim();
+      __Saved_value         = _value         = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__ZONEINFO_Factory.COLS.VALUE._Mask        ;
+                              _label         = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__ZONEINFO_Factory.COLS.LABEL._Mask        ;
+                              _deactivatedTZ = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask; else _deactivatedTZ = _deactivatedTZ.trim();
                               _deactivated   = ProcessZDT(_deactivatedTZ  , "tilda.data.TILDA.ZONEINFO.deactivated"  , RS, ++i, TILDA__ZONEINFO_Factory.COLS.DEACTIVATED  , TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ  );
                               _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
                               _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);

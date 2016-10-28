@@ -109,7 +109,7 @@ public class JDBCHelper
     throws Exception
       {
         TableName = SchemaName+"."+TableName;
-        LOG.debug("TILDA(" + AnsiUtil.NEGATIVE + TableName + AnsiUtil.NEGATIVE_OFF + "): " + Query);
+        QueryDetails.logQuery(TableName, Query, null);
         Statement S = null;
         try
           {
@@ -131,7 +131,7 @@ public class JDBCHelper
     throws Exception
       {
         TableName = SchemaName+"."+TableName;
-        LOG.debug("TILDA(" + AnsiUtil.NEGATIVE + TableName + AnsiUtil.NEGATIVE_OFF + "): " + Query);
+        QueryDetails.logQuery(TableName, Query, null);
         Statement S = null;
         try
           {
@@ -152,7 +152,7 @@ public class JDBCHelper
     throws Exception
       {
         TableName = SchemaName+"."+TableName;
-        LOG.debug("TILDA(" + AnsiUtil.NEGATIVE + TableName + AnsiUtil.NEGATIVE_OFF + "): " + Query);
+        QueryDetails.logQuery(TableName, Query, null);
         Statement S = null;
         try
           {
@@ -175,7 +175,7 @@ public class JDBCHelper
     throws Exception
       {
         TableName = SchemaName+"."+TableName;
-        LOG.debug("TILDA(" + AnsiUtil.NEGATIVE + TableName + AnsiUtil.NEGATIVE_OFF + "): " + Query);
+        QueryDetails.logQuery(TableName, Query, null);
         Statement S = null;
         try
           {

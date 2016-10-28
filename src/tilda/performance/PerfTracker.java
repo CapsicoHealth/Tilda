@@ -23,6 +23,7 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.db.QueryDetails;
 import tilda.enums.StatementType;
 import tilda.enums.TransactionType;
 import tilda.utils.AnsiUtil;
@@ -57,9 +58,9 @@ public abstract class PerfTracker
             }
         I.add(Type, DurationNano, Count);
         if (Count == 0)
-         LOG.warn("   "+AnsiUtil.UNDERLINE+"No record "+Type._PP+" "+AnsiUtil.UNDERLINE_OFF+" in "+DurationUtil.PrintDurationMilliSeconds(DurationNano));
+         LOG.warn(QueryDetails._LOGGING_HEADER+"   "+AnsiUtil.UNDERLINE+"No record "+Type._PP+" "+AnsiUtil.UNDERLINE_OFF+" in "+DurationUtil.PrintDurationMilliSeconds(DurationNano));
         else
-         LOG.debug("   "+Type._PP+" "+Count+" records in "+DurationUtil.PrintDurationMilliSeconds(DurationNano));
+         LOG.debug(QueryDetails._LOGGING_HEADER+"   "+Type._PP+" "+Count+" records in "+DurationUtil.PrintDurationMilliSeconds(DurationNano));
       }
 
     /**
