@@ -15,7 +15,7 @@
   "objects":[
     { "name": "Key", "occ": false, // OCC=false because the fields here also serve as a reference for other tables.
                                    // So we need to define them explicitly here.
-      "description": "The table to keep track of unique keys acroiss distributed objects/tables",
+      "description": "The table to keep track of unique keys across distributed objects/tables",
       "columns":[
         { "name": "refnum"       , "type": "LONG"       , "nullable": false,                          "invariant": true, "description": "The primary key for this record" },
         { "name": "name"         , "type": "STRING"     , "nullable": false, "size": 128,             "invariant": true, "description": "The name of the table/object tracked" },

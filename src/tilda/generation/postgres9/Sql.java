@@ -43,6 +43,7 @@ import tilda.parsing.parts.View;
 import tilda.parsing.parts.ViewColumn;
 import tilda.parsing.parts.ViewJoin;
 import tilda.utils.PaddingTracker;
+import tilda.utils.TextUtil;
 
 public class Sql extends PostgreSQL implements CodeGenSql
   {
@@ -201,6 +202,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 Out.println(") REFERENCES " + FK._DestObjectObj._ParentSchema._Name + "." + FK._DestObjectObj._Name + " ON DELETE restrict ON UPDATE cascade");
               }
         Out.println(" );");
+        Out.println("COMMENT ON TABLE "+O.getShortName()+" IS "+TextUtil.EscapeSingleQuoteForSQL(O._Description)+";");
+        for (Column C : O._Columns)
+          if (C != null && C._Mode != ColumnMode.CALCULATED)
+           Out.println("COMMENT ON COLUMN "+O.getShortName()+".\""+C.getName()+"\" IS "+TextUtil.EscapeSingleQuoteForSQL(C._Description)+";");
       }
 
     @Override
@@ -318,6 +323,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
             Out.println();
           }
         Out.println("    ;");
+        Out.println("COMMENT ON VIEW "+V._ParentSchema._Name + "." + V._Name+" IS "+TextUtil.EscapeSingleQuoteForSQL(V._Description)+";");
+        for (ViewColumn C : V._ViewColumns)
+          if (C != null && C._SameAsObj._Mode != ColumnMode.CALCULATED && C._JoinOnly == false)
+           Out.println("COMMENT ON COLUMN "+V.getShortName()+".\""+C.getName()+"\" IS "+TextUtil.EscapeSingleQuoteForSQL(C._SameAsObj._Description)+";");
       }
 
     private boolean CheckFK(PrintWriter Out, Object Obj1, Object Obj2, ViewColumn C, int JoinIndex)

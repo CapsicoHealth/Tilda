@@ -16,6 +16,7 @@ public class ColumnMeta
         _Size = RS.getInt("COLUMN_SIZE");
         _TypeName = RS.getString("TYPE_NAME");
         _Type = RS.getInt("DATA_TYPE");
+        _Descr = RS.getString("REMARKS");
         StringStringPair SSP = C.getTypeMapping(_Type, _Name, _Size, _TypeName);
         _TypeSql = SSP._N;
         _TildaType = ColumnType.parse(SSP._V);
@@ -28,6 +29,7 @@ public class ColumnMeta
     public final ColumnType _TildaType;
     public final String     _TypeSql;
     public final String     _TypeName;
+    public final String     _Descr;
 
     public boolean isArray()
       {
@@ -36,6 +38,6 @@ public class ColumnMeta
 
     public String toString()
       {
-        return "Name: " + _Name + "; Nullable: " + _Nullable + "; Size: " + _Size + "; Type: " + _Type + "/" + _TypeSql + "; TypeName: " + _TypeName + ";";
+        return "Name: " + _Name + "; Nullable: " + _Nullable + "; Size: " + _Size + "; Type: " + _Type + "/" + _TypeSql + "; TypeName: " + _TypeName + "; Descr: "+_Descr+";";
       }
   }

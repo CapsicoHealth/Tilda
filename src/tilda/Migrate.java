@@ -45,13 +45,13 @@ public class Migrate
         LOG.info("!!! THIS UTILITY MAY CHANGE DATA IN YOUR DATABASE. MAKE SURE YOU HAVE A BACKUP. !!!");
 //        LOG.info("    ===> "+DBUrl);
         LOG.info("");
-        LOG.info("Press 'yes' followed by enter to continue.");
+        LOG.info("Press 'y' followed by enter to continue.");
         Scanner scanner = null;
         try
           {
             scanner = new Scanner(System.in);
             String answer = scanner.next();
-            if (answer.toLowerCase().equals("yes") == false)
+            if (answer.toLowerCase().equals("y") == false)
               throw new Exception("User asked to exit.");
             LOG.info("");
             LOG.info("OK! Starting the migration...");

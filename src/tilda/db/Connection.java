@@ -526,6 +526,16 @@ public final class Connection
       {
         _DB.age(this, Str, ColStart, ColEnd, Type, Count, Operator);
       }
+
+    public boolean alterTableComment(Object Obj) throws Exception
+      {
+        return _DB.alterTableComment(this, Obj);
+      }
+
+    public boolean alterTableAlterColumnComment(Column Col) throws Exception
+      {
+        return _DB.alterTableAlterColumnComment(this, Col);
+      }
   }
 
 

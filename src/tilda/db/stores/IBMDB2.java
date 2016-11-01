@@ -43,16 +43,16 @@ import tilda.utils.pairs.StringStringPair;
 
 public class IBMDB2 implements DBType
   {
-    
+
     static final Logger LOG = LogManager.getLogger(IBMDB2.class.getName());
-    
+
     @Override
     public String getName()
       {
         return "IBMDB2";
       }
-    
-    
+
+
     @Override
     public boolean isErrNoData(String SQLState, int ErrorCode)
       {
@@ -65,12 +65,8 @@ public class IBMDB2 implements DBType
         return "CURRENT TIMESTAMP";
       }
 
-    protected static final String[] _LOCK_CONN_ERROR_SUBSTR = { "deadlocked on lock"
-                                                            , "lock request time out"
-                                                            , "lock inconsistency found"
-                                                            , "connection reset"
-                                                            , "connection is closed"
-                                                            };
+    protected static final String[] _LOCK_CONN_ERROR_SUBSTR = { "deadlocked on lock", "lock request time out", "lock inconsistency found", "connection reset", "connection is closed"
+    };
 
     @Override
     public boolean isLockOrConnectionError(SQLException E)
@@ -137,14 +133,14 @@ public class IBMDB2 implements DBType
       {
         throw new UnsupportedOperationException();
       }
-    
+
     @Override
     public boolean alterTableDropColumn(Connection Con, Object Obj, String ColumnName)
     throws Exception
       {
         throw new UnsupportedOperationException();
       }
-    
+
 
     @Override
     public CodeGenSql getSQlCodeGen()
@@ -165,7 +161,7 @@ public class IBMDB2 implements DBType
       {
         throw new UnsupportedOperationException();
       }
-    
+
     @Override
     public boolean dropView(Connection Con, View V)
     throws Exception
@@ -218,13 +214,14 @@ public class IBMDB2 implements DBType
       {
         throw new UnsupportedOperationException();
       }
-    
+
     @Override
-    public boolean addHelperFunctions(Connection Con) throws Exception
-     {
-       throw new UnsupportedOperationException();
-     }    
-    
+    public boolean addHelperFunctions(Connection Con)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
     @Override
     public StringStringPair getTypeMapping(int type, String name, int size, String typeName)
     throws Exception
@@ -272,7 +269,7 @@ public class IBMDB2 implements DBType
     throws Exception
       {
         // TODO Auto-generated method stub
-        
+
       }
 
 
@@ -296,7 +293,7 @@ public class IBMDB2 implements DBType
     public void setOrderByWithNullsOrdering(Connection C, StringBuilder Str, ColumnDefinition Col, boolean Asc, boolean NullsLast)
       {
         throw new UnsupportedOperationException();
-        
+
       }
 
 
@@ -305,14 +302,25 @@ public class IBMDB2 implements DBType
     throws Exception
       {
         throw new UnsupportedOperationException();
-        
+
       }
-    
+
     @Override
     public void age(Connection C, StringBuilder Str, Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count, String Operator)
       {
         throw new UnsupportedOperationException();
       }
-    
+
+    @Override
+    public boolean alterTableComment(Connection C, Object Obj)
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public boolean alterTableAlterColumnComment(Connection C, Column Col)
+      {
+        throw new UnsupportedOperationException();
+      }
 
   }

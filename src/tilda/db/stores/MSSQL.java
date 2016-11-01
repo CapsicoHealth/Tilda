@@ -445,4 +445,16 @@ public class MSSQL implements DBType
         throw new UnsupportedOperationException();
       }
 
+    @Override
+    public boolean alterTableComment(Connection C, Object Obj)
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public boolean alterTableAlterColumnComment(Connection C, Column Col)
+      {
+        throw new UnsupportedOperationException();
+      }
+    
   }

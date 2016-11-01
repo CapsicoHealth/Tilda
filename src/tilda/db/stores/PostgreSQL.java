@@ -216,7 +216,7 @@ public class PostgreSQL implements DBType
       {
         if (Col._Nullable == false && DefaultValue == null)
           throw new Exception("Cannot add new 'not null' column '" + Col.getFullName() + "' to a table without a default value. Add a default value in the model, or manually migrate your database.");
-        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ADD COLUMN \"" + Col.getName() + "\" " + getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection());
+        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ADD COLUMN \"" + Col.getName() + "\" " + getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection())+";";
         if (Col._Nullable == false)
           {
             Q += " not null DEFAULT " + ValueHelper.printValue(Col, DefaultValue);
@@ -253,7 +253,7 @@ public class PostgreSQL implements DBType
               }
           }
 
-        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" " + (Col._Nullable == false ? "SET" : "DROP") + " NOT NULL";
+        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" " + (Col._Nullable == false ? "SET" : "DROP") + " NOT NULL;";
         return Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) >= 0;
       }
 
@@ -316,6 +316,7 @@ public class PostgreSQL implements DBType
                 String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
                 + "\" TYPE " + getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection())
                 + " USING (trim(\"" + Col.getName() + "\")::" + getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection()) + ");";
+
                 if (Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) < 0)
                   return false;
 
@@ -619,6 +620,22 @@ public class PostgreSQL implements DBType
         Str.append(" - ");
         ColStart.getFullColumnVarForSelect(C, Str);
         Str.append(")").append(Operator).append("INTERVAL '").append(Count).append(" ").append(Type.toString()).append("'");
+      }
+
+
+    @Override
+    public boolean alterTableComment(Connection Con, Object Obj) throws Exception
+      {
+        String Q = "COMMENT ON TABLE "+Obj.getShortName()+" IS "+TextUtil.EscapeSingleQuoteForSQL(Obj._Description)+";";
+        return Con.ExecuteUpdate(Obj._ParentSchema._Name, Obj.getBaseName(), Q) >= 0;
+      }
+
+
+    @Override
+    public boolean alterTableAlterColumnComment(Connection Con, Column Col) throws Exception
+      {
+        String Q = "COMMENT ON COLUMN "+Col._ParentObject.getShortName()+".\"" + Col.getName() + "\" IS "+TextUtil.EscapeSingleQuoteForSQL(Col._Description)+";";
+        return Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) >= 0;
       }
 
   }

@@ -18,11 +18,13 @@ package tilda.migration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.db.Connection;
+import tilda.db.ConnectionPool;
 import tilda.db.KeysManager;
 import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.DatabaseMeta;
@@ -34,10 +36,12 @@ import tilda.migration.actions.ColumnAdd;
 import tilda.migration.actions.ColumnAlterNull;
 import tilda.migration.actions.ColumnAlterStringSize;
 import tilda.migration.actions.ColumnAlterType;
+import tilda.migration.actions.ColumnComment;
 import tilda.migration.actions.ColumnDrop;
 import tilda.migration.actions.SchemaCreate;
 import tilda.migration.actions.SchemaViewsCreate;
 import tilda.migration.actions.SchemaViewsDrop;
+import tilda.migration.actions.TableComment;
 import tilda.migration.actions.TableCreate;
 import tilda.migration.actions.TableKeyCreate;
 import tilda.migration.actions.TildaHelpersAdd;
@@ -86,14 +90,39 @@ public class Migrator
                 LOG.debug("    - " + A.getDescription() + ".");
             if (CheckOnly == false)
               {
+                LOG.info("!!! THIS UTILITY IS ABOUT TO CHANGE DATA IN YOUR DATABASE. MAKE SURE YOU HAVE A BACKUP. !!!");
+                LOG.info(" ===> "+C.getURL());
+                LOG.info("");
+                LOG.info("Press 'yes' followed by enter to continue.");
+                Scanner scanner = null;
+                try
+                  {
+                    scanner = new Scanner(System.in);
+                    String answer = scanner.next();
+                    if (answer.toLowerCase().equals("yes") == false)
+                      throw new Exception("User asked to exit.");
+                    LOG.info("");
+                    LOG.info("OK! Starting the migration...");
+                    LOG.info("------------------------------------");
+                  }
+                catch (Exception E)
+                  {
+                    LOG.error("Cannot migrate the database.\n", E);
+                  }
+                finally
+                  {
+                    if (scanner != null)
+                      scanner.close();
+                  }
                 LOG.info("Applying migration actions.");
                 for (MigrationScript S : Scripts)
                   {
+                    if (S._Actions.isEmpty() == true)
+                      continue;
                     for (MigrationAction A : S._Actions)
-                      if (A.process(C) == true)
-                        C.commit();
-                      else
+                      if (A.process(C) == false)
                         throw new Exception("There was an error with the action '" + A.getDescription() + "'.");
+                    C.commit();
                   }
               }
           }
@@ -138,38 +167,43 @@ public class Migrator
               Actions.add(new TableCreate(Obj));
             else
               {
+                if (Obj._Description.equalsIgnoreCase(TMeta._Descr) == false)
+                 Actions.add(new TableComment(Obj));
                 if (Obj._PrimaryKey != null && Obj._PrimaryKey._Autogen == true && KeysManager.hasKey(Obj.getShortName()) == false)
                   Actions.add(new TableKeyCreate(Obj));
                 for (Column Col : Obj._Columns)
                   {
                     if (Col == null || Col._Mode == ColumnMode.CALCULATED)
                       continue;
-                    ColumnMeta CI = TMeta.getColumnMeta(Col.getName());
-                    if (CI == null)
+                    ColumnMeta CMeta = TMeta.getColumnMeta(Col.getName());
+                    if (CMeta == null)
                       Actions.add(new ColumnAdd(Col));
                     else
                       {
-                        if (CI._Nullable == 1 && Col._Nullable == false || CI._Nullable == 0 && Col._Nullable == true)
+                        if (Col._Description.equalsIgnoreCase(CMeta._Descr) == false)
+                         Actions.add(new ColumnComment(Col));
+                        
+                        if (CMeta._Nullable == 1 && Col._Nullable == false || CMeta._Nullable == 0 && Col._Nullable == true)
                           Actions.add(new ColumnAlterNull(Col));
 
                         if (DBMeta.supportsArrays() == true)
                           {
-                            if (CI.isArray() == false && Col.isCollection() == true && Col._Type != ColumnType.JSON)
+                            if (CMeta.isArray() == false && Col.isCollection() == true && Col._Type != ColumnType.JSON)
                               throw new Exception("The application's data model defines the column '" + Col.getShortName() + "' as an array, but it's not an array in the DB. The database needs to be migrated manually.");
-                            else if (CI.isArray() == true && (Col.isCollection() == false || Col._Type == ColumnType.JSON))
+                            else if (CMeta.isArray() == true && (Col.isCollection() == false || Col._Type == ColumnType.JSON))
                               throw new Exception("The application's data model defines the column '" + Col.getShortName() + "' as an base type, but it's an array in the DB. The database needs to be migrated manually.");
                           }
 
                         if (Col._Type == ColumnType.STRING && Col.isCollection() == false
-                        && (CI._Size < DBMeta.getCLOBThreshhold() && CI._Size != Col._Size
-                        || CI._Size >= DBMeta.getCLOBThreshhold() && Col._Size < DBMeta.getCLOBThreshhold()))
-                          Actions.add(new ColumnAlterStringSize(Col, CI._Size));
+                        && (CMeta._Size < DBMeta.getCLOBThreshhold() && CMeta._Size != Col._Size
+                        || CMeta._Size >= DBMeta.getCLOBThreshhold() && Col._Size < DBMeta.getCLOBThreshhold()))
+                          Actions.add(new ColumnAlterStringSize(Col, CMeta._Size));
 
                         if (Col.isCollection() == false
-                        && (Col._Type == ColumnType.BITFIELD && CI._TildaType != ColumnType.INTEGER
-                        || Col._Type == ColumnType.JSON && CI._TildaType != ColumnType.STRING && CI._TildaType != ColumnType.JSON
-                        || Col._Type != ColumnType.BITFIELD && Col._Type != ColumnType.JSON && Col._Type != CI._TildaType))
-                          Actions.add(new ColumnAlterType(Col, CI._TildaType));
+                        && (Col._Type == ColumnType.BITFIELD && CMeta._TildaType != ColumnType.INTEGER
+                        || Col._Type == ColumnType.JSON && CMeta._TildaType != ColumnType.STRING && CMeta._TildaType != ColumnType.JSON
+                        || Col._Type != ColumnType.BITFIELD && Col._Type != ColumnType.JSON && Col._Type != CMeta._TildaType))
+                          Actions.add(new ColumnAlterType(Col, CMeta._TildaType));
                       }
                   }
                 for (String c : Obj._DropOldColumns)
