@@ -69,7 +69,7 @@ public interface CodeGenSql extends DBType, CodeGenBase
     public void genDDL(PrintWriter Out, Object O)
     throws Exception;
 
-    public void genDDL(PrintWriter Out, View V)
+    public String genDDL(PrintWriter Out, View V)
     throws Exception;
 
     public void genIndex(PrintWriter Out, Index I);

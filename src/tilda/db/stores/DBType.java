@@ -49,19 +49,23 @@ public interface DBType
     public boolean supportsSelectOffset();
     public String  getSelectLimitClause(int Start, int Size);
     
-    public CodeGenSql getSQlCodeGen();    
-    public boolean createSchema(Connection Con, Schema S) throws Exception;
-    public boolean createTable(Connection Con, Object Obj) throws Exception;
-    public boolean alterTableComment(Connection Con, Object Obj) throws Exception;
-    public boolean createKeysEntry(Connection Con, Object Obj) throws Exception;
-    public boolean dropView(Connection Con, View V) throws Exception;
-    public boolean createView(Connection Con, View V) throws Exception;
-    public boolean alterTableAddColumn(Connection Con, Column Col, String DefaultValue) throws Exception;
-    public boolean alterTableDropColumn(Connection Con, Object Obj, String ColumnName) throws Exception;
-    public boolean alterTableAlterColumnNull(Connection Con, Column Col, String DefaultValue) throws Exception;
-    public boolean alterTableAlterColumnComment(Connection Con, Column Col) throws Exception;
-    public boolean addHelperFunctions(Connection Con) throws Exception;    
+    public CodeGenSql getSQlCodeGen();
 
+    public boolean createSchema                   (Connection Con, Schema S) throws Exception;
+    public boolean createTable                    (Connection Con, Object Obj) throws Exception;
+    public boolean alterTableComment              (Connection Con, Object Obj) throws Exception;
+    public boolean createKeysEntry                (Connection Con, Object Obj) throws Exception;
+    public boolean dropView                       (Connection Con, View V) throws Exception;
+    public boolean createView                     (Connection Con, View V) throws Exception;
+    public boolean alterTableAddColumn            (Connection Con, Column Col, String DefaultValue) throws Exception;
+    public boolean alterTableDropColumn           (Connection Con, Object Obj, String ColumnName) throws Exception;
+    public boolean alterTableAlterColumnNull      (Connection Con, Column Col, String DefaultValue) throws Exception;
+    public boolean alterTableAlterColumnComment   (Connection Con, Column Col) throws Exception;
+    public boolean alterTableAlterColumnType      (Connection Con, ColumnType fromType, Column Col, ZoneInfo_Data defaultZI) throws Exception;
+    public boolean alterTableAlterColumnStringSize(Connection Con, Column Col, int DBSize) throws Exception;
+    public boolean addHelperFunctions             (Connection Con) throws Exception;    
+
+    public void   truncateTable(Connection C, String schemaName, String tableName) throws Exception;
 
     public static DBType DB2       = new IBMDB2    ();
     public static DBType SQLServer = new MSSQL     ();
@@ -74,18 +78,15 @@ public interface DBType
 
     public int getVarCharThreshhold();
     public int getCLOBThreshhold();
-    public boolean alterTableAlterColumnStringSize(Connection Con, Column Col, int DBSize) throws Exception;
 
-    public boolean alterTableAlterColumnType(Connection Con, ColumnType fromType, Column Col, ZoneInfo_Data defaultZI) throws Exception;
     public StringStringPair getTypeMapping(int type, String name, int size, String typeName) throws Exception;
-    public void getFullColumnVar(StringBuilder Str, String SchemaName, String TableName, String ColumnName);
-    public void getFullTableVar(StringBuilder Str, String SchemaName, String TableName);
-    public void          setArray(Connection C, PreparedStatement PS, int i, ColumnType Type, List<Array> allocatedArrays, Collection<?> val) throws Exception;
-    public Collection<?> getArray(              ResultSet         RS, int i, ColumnType Type, boolean isSet) throws Exception;
-    public void          setJson (              PreparedStatement PS, int i, String jsonValue) throws Exception;
-    public String        getJson (              ResultSet         RS, int i) throws Exception;
-    public String        getJsonParametrizedQueryPlaceHolder();
-    public void          setOrderByWithNullsOrdering(Connection C, StringBuilder Str, ColumnDefinition Col, boolean Asc, boolean NullsLast);
-    public void truncateTable(Connection C, String schemaName, String tableName) throws Exception;
-    public void age(Connection C, StringBuilder Str, Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count, String Operator);
+    public void             getFullColumnVar(StringBuilder Str, String SchemaName, String TableName, String ColumnName);
+    public void             getFullTableVar(StringBuilder Str, String SchemaName, String TableName);
+    public void             setArray(Connection C, PreparedStatement PS, int i, ColumnType Type, List<Array> allocatedArrays, Collection<?> val) throws Exception;
+    public Collection<?>    getArray(              ResultSet         RS, int i, ColumnType Type, boolean isSet) throws Exception;
+    public void             setJson (              PreparedStatement PS, int i, String jsonValue) throws Exception;
+    public String           getJson (              ResultSet         RS, int i) throws Exception;
+    public String           getJsonParametrizedQueryPlaceHolder();
+    public void             setOrderByWithNullsOrdering(Connection C, StringBuilder Str, ColumnDefinition Col, boolean Asc, boolean NullsLast);
+    public void             age(Connection C, StringBuilder Str, Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count, String Operator);
   }

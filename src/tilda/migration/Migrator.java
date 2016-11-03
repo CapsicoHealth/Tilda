@@ -16,22 +16,25 @@
 
 package tilda.migration;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.util.StringBuilderWriter;
 
 import tilda.db.Connection;
-import tilda.db.ConnectionPool;
 import tilda.db.KeysManager;
 import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.DatabaseMeta;
 import tilda.db.metadata.TableMeta;
+import tilda.db.metadata.ViewMeta;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
+import tilda.generation.interfaces.CodeGenSql;
 import tilda.migration.actions.ColumnAdd;
 import tilda.migration.actions.ColumnAlterNull;
 import tilda.migration.actions.ColumnAlterStringSize;
@@ -39,16 +42,18 @@ import tilda.migration.actions.ColumnAlterType;
 import tilda.migration.actions.ColumnComment;
 import tilda.migration.actions.ColumnDrop;
 import tilda.migration.actions.SchemaCreate;
-import tilda.migration.actions.SchemaViewsCreate;
 import tilda.migration.actions.SchemaViewsDrop;
 import tilda.migration.actions.TableComment;
 import tilda.migration.actions.TableCreate;
 import tilda.migration.actions.TableKeyCreate;
 import tilda.migration.actions.TildaHelpersAdd;
+import tilda.migration.actions.ViewCreate;
+import tilda.migration.actions.ViewUpdate;
 import tilda.parsing.Parser;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
+import tilda.parsing.parts.View;
 
 public class Migrator
   {
@@ -66,28 +71,46 @@ public class Migrator
         LOG.info("Analyzing differences between the database and the application's expected data model...");
         MigrationScript InitScript = new MigrationScript(null, new ArrayList<MigrationAction>());
         for (Schema S : TildaList)
-          InitScript._Actions.add(new SchemaViewsDrop(S));
+          if (S._Views.isEmpty() == false)
+           InitScript._Actions.add(new SchemaViewsDrop(S));
         Scripts.add(InitScript);
         for (Schema S : TildaList)
           {
-            List<MigrationAction> L = Migrator.getMigrationActions(S, DBMeta);
+            List<MigrationAction> L = Migrator.getMigrationActions(C.getSQlCodeGen(), S, DBMeta);
             if (L.isEmpty() == false)
               {
                 ActionCount += L.size();
               }
-            L.add(new SchemaViewsCreate(S));
+            for (View V : S._Views)
+              {
+                boolean Found = false;
+                for (MigrationAction A : L)
+                 {
+                   if (   A.getDescription().equals("Create view " + V.getFullName()) == true  // Evil to hardcode knowledge of the description string.
+                       || A.getDescription().equals("Update view " + V.getFullName()) == true
+                      ) 
+                     {
+                       Found = true;
+                       break;
+                     }
+                 }
+                if (Found == false)
+                 L.add(new ViewCreate(V));
+              }
             Scripts.add(new MigrationScript(S, L));
           }
         MigrationScript ClosingScript = new MigrationScript(null, new ArrayList<MigrationAction>());
         ClosingScript._Actions.add(new TildaHelpersAdd());
         Scripts.add(ClosingScript);
-
+        
         if (ActionCount > 0)
           {
             LOG.info("There were " + ActionCount + " discrepencies found in the database Vs. the application's required data model:");
             for (MigrationScript S : Scripts)
               for (MigrationAction A : S._Actions)
-                LOG.debug("    - " + A.getDescription() + ".");
+                {
+                  LOG.debug("    - " + A.getDescription() + ".");
+                }
             if (CheckOnly == false)
               {
                 LOG.info("!!! THIS UTILITY IS ABOUT TO CHANGE DATA IN YOUR DATABASE. MAKE SURE YOU HAVE A BACKUP. !!!");
@@ -148,7 +171,7 @@ public class Migrator
           }
       }
 
-    protected static List<MigrationAction> getMigrationActions(Schema S, DatabaseMeta DBMeta)
+    protected static List<MigrationAction> getMigrationActions(CodeGenSql CGSQL, Schema S, DatabaseMeta DBMeta)
     throws Exception
       {
         LOG.info("Comparing the application's data model with the database's for " + S.getFullName());
@@ -213,6 +236,23 @@ public class Migrator
                     if (Col == null && CI != null)
                       Actions.add(new ColumnDrop(Obj, c));
                   }
+              }
+          }
+        
+        for (View V : S._Views)
+          {
+            if (V == null)
+              continue;
+            ViewMeta VMeta = DBMeta.getViewMeta(V._ParentSchema._Name, V._Name);
+            if (VMeta == null)
+             Actions.add(new ViewCreate(V));
+            else
+              {
+                StringBuilderWriter Out = new StringBuilderWriter();
+                String ViewDef = CGSQL.genDDL(new PrintWriter(Out), V);
+                Out.close();
+                if (VMeta._Descr.replace("\r\n", " ").replace("\n", " ").trim().equals(ViewDef.replace("\r\n", " ").replace("\n", " ").trim()) == false)
+                 Actions.add(new ViewUpdate(V));
               }
           }
 

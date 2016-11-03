@@ -456,5 +456,5 @@ public class MSSQL implements DBType
       {
         throw new UnsupportedOperationException();
       }
-    
+
   }

@@ -536,6 +536,7 @@ public final class Connection
       {
         return _DB.alterTableAlterColumnComment(this, Col);
       }
+
   }
 
 

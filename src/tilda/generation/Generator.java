@@ -141,10 +141,10 @@ public class Generator
           }
       }
 
-    public static void getFullViewDDL(CodeGenSql CG, PrintWriter Out, View V)
+    public static String getFullViewDDL(CodeGenSql CG, PrintWriter Out, View V)
     throws Exception
       {
-        CG.genDDL(Out, V);
+        return CG.genDDL(Out, V);
       }
 
 
