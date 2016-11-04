@@ -70,9 +70,7 @@ public class Migrate
           }
 
         LOG.info("");
-        LOG.info("=========================================================");
-        LOG.info("===  Woohoo! The database was migrated successfully.  ===");
-        LOG.info("=========================================================");
+        LOG.info("DONE.");
         LOG.info("");
       }
   }

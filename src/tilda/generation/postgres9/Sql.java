@@ -239,7 +239,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
               if (First == true)
                 First = false;
               else
-                Out.print(", ");
+                Out.print("\n     , ");
               if (C._Aggregate != null)
                 Out.print(getAggregateStr(C._Aggregate) + "(");
               Integer I = M.get(C._SameAsObj._ParentObject._Name);
@@ -253,12 +253,12 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 }
               if (C._Aggregate != null)
                 Out.print(")");
-              Out.print(" as \"" + C.getName() + "\"");
+              Out.print(" as \"" + C.getName() + "\" -- "+C._SameAsObj._Description);
             }
         Out.println();
         Set<String> Names = new HashSet<String>();
         List<Object> Objects = new ArrayList<Object>();
-        Out.println("     from " + ObjectMain.getShortName());
+        Out.println("  from " + ObjectMain.getShortName());
         Names.add(ObjectMain.getFullName());
         Objects.add(ObjectMain);
         for (ViewColumn C : V._ViewColumns)
@@ -270,7 +270,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   ViewJoin VJ = V.getViewjoin(T.getBaseName());
                   if (VJ != null)
                     {
-                      Out.print("     " + (C._Join == null ? "left" : C._Join) + " join " + VJ._ObjectObj.getShortName());
+                      Out.print("  " + (C._Join == null ? "left" : C._Join) + " join " + VJ._ObjectObj.getShortName());
                       Query Q = VJ.getQuery(this);
                       if (Q == null)
                         throw new Exception("Cannot generate the view because an 'on' clause matching the active database '" + getName() + "' is not available.");
@@ -309,7 +309,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
           {
             Query q = V._SubQuery.getQuery(this);
             if (q != null)
-              Out.print("     where " + q._Clause);
+              Out.print(" where " + q._Clause);
             Out.println();
           }
         if (V._GroupBy != null)
@@ -328,15 +328,15 @@ public class Sql extends PostgreSQL implements CodeGenSql
             Out.println();
           }
 
-        Out.println("    ;");
-        for (ViewColumn C : V._ViewColumns)
-          if (C != null && C._SameAsObj._Mode != ColumnMode.CALCULATED && C._JoinOnly == false)
-            Out.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + C.getName() + "\" IS E" + TextUtil.EscapeSingleQuoteForSQL(C._SameAsObj._Description) + ";");
+        Out.println("     ;");
 
         OutFinal.println("create or replace view " + V._ParentSchema._Name + "." + V._Name + " as ");
         String Str = OutStr.toString();
         OutFinal.print(Str);
         OutFinal.println("COMMENT ON VIEW " + V._ParentSchema._Name + "." + V._Name + " IS E" + TextUtil.EscapeSingleQuoteForSQL(Str.replace("\r\n", "\\n").replace("\n", "\\n")) + ";");
+        for (ViewColumn C : V._ViewColumns)
+          if (C != null && C._SameAsObj._Mode != ColumnMode.CALCULATED && C._JoinOnly == false)
+            OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + C.getName() + "\" IS E" + TextUtil.EscapeSingleQuoteForSQL(C._SameAsObj._Description) + ";");
         OutStr.close();
         return Str;
       }
@@ -353,7 +353,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
               {
                 if (count == JoinIndex)
                   {
-                    Out.print("     " + (C._Join == null ? "left" : C._Join) + " join " + Obj2.getShortName());
+                    Out.print("  " + (C._Join == null ? "left" : C._Join) + " join " + Obj2.getShortName());
                     if (JoinIndex >= 2)
                       Out.print(" as " + getFullTableVar(Obj2, JoinIndex));
                     Out.print(" on ");
