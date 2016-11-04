@@ -31,7 +31,7 @@ The generated Java 8/PostgreSQL Tilda data class <B>Data_KEY</B> is mapped to th
 <LI>The Object has normal <B>read/write</B> capabilities.</LI>
 <LI>The Object is OCC-enabled. Default created/lastUpdated/deleted columns will be automatically generated.</LI>
 </UL>
-<B>Description</B>: The table to keep track of unique keys acroiss distributed objects/tables<BR>
+<B>Description</B>: The table to keep track of unique keys across distributed objects/tables<BR>
 <BR>
 It contains the following columns:<BR>
  <TABLE border="0px" cellpadding="3px" cellspacing="0px">
@@ -59,7 +59,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Oct 28 2016, 00:49:24EDT
+ @generated Nov 4 2016, 18:53:19EDT
 */
 public abstract class TILDA__KEY implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
