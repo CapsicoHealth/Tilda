@@ -14,31 +14,20 @@
  * limitations under the License.
  */
 
-package tilda.utils;
+package tilda.migration;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.List;
 
-/**
- * <A href="http://en.wikipedia.org/wiki/ANSI_escape_code">http://en.wikipedia.org/wiki/ANSI_escape_code</A>
- * 
- * @author ldh
- *
- */
-public class ClassStaticInit
+import tilda.parsing.parts.Schema;
+
+public class MigrationScript
   {
-    protected static final Logger LOG = LogManager.getLogger(ClassStaticInit.class.getName());
+    public MigrationScript(Schema S, List<MigrationAction> Actions)
+     {
+       _S = S;
+       _Actions = Actions;
+     }
 
-    public static void initClass(String className)
-      {
-        try
-          {
-            LOG.debug("   Initializing class "+className);
-            Class.forName(className);
-          }
-        catch (ClassNotFoundException e)
-          {
-            LOG.catching(e);
-          }
-      }
+    public Schema _S;
+    public List<MigrationAction> _Actions;
   }

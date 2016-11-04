@@ -32,7 +32,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
-import tilda.db.metadata.ColumnMeta;
 import tilda.db.processors.RecordProcessor;
 import tilda.db.stores.DBType;
 import tilda.enums.AggregateType;
@@ -76,7 +75,7 @@ public final class Connection
       throws Exception, SQLException
       {
         this(C);
-        _PoolId = PoolId + " ---- (#" + _PoolId + ")";
+        _PoolId = PoolId + ": #" + _PoolId;
       }
 
 
@@ -117,7 +116,7 @@ public final class Connection
       {
         try
           {
-            LOG.info("---------- " + AnsiUtil.NEGATIVE + "C O M M I T" + AnsiUtil.NEGATIVE_OFF + " ----------------------------------- " + _PoolId + " ------------------------------");
+            LOG.info(QueryDetails._LOGGING_HEADER + AnsiUtil.NEGATIVE + "C O M M I T" + AnsiUtil.NEGATIVE_OFF + "                              -----  " + _PoolId);
             long T0 = System.nanoTime();
             _C.commit();
             _SavePoints.clear();
@@ -143,7 +142,7 @@ public final class Connection
       {
         try
           {
-            LOG.info("---------- " + AnsiUtil.NEGATIVE + "R O L L B A C K" + AnsiUtil.NEGATIVE_OFF + " ------------------------------- " + _PoolId + " ----------");
+            LOG.info(QueryDetails._LOGGING_HEADER + AnsiUtil.NEGATIVE + "R O L L B A C K" + AnsiUtil.NEGATIVE_OFF + "                          -----  " + _PoolId);
             long T0 = System.nanoTime();
             _C.rollback();
             _SavePoints.clear();
@@ -187,9 +186,9 @@ public final class Connection
         try
           {
             if (_C.toString() == _PoolId)
-              LOG.info("---------- C L O S I N G   C O N N E C T I O N ------- " + _PoolId + " ----------");
+              LOG.info(QueryDetails._LOGGING_HEADER + "C L O S I N G   C O N N E C T I O N      -----  " + _PoolId);
             else
-              LOG.info("---------- R E T U R N I N G   C O N N E C T I O N ------- " + _PoolId + " ----------");
+              LOG.info(QueryDetails._LOGGING_HEADER + "R E T U R N I N G   C O N N E C T I O N  -----  " + _PoolId);
             long T0 = System.nanoTime();
             _C.close();
             _SavePoints.clear();
@@ -381,10 +380,10 @@ public final class Connection
         return _DB.alterTableAddColumn(this, Col, DefaultValue);
       }
 
-    public boolean alterTableDropColumn(Object Obj, ColumnMeta CI)
+    public boolean alterTableDropColumn(Object Obj, String ColumnName)
     throws Exception
       {
-        return _DB.alterTableDropColumn(this, Obj, CI);
+        return _DB.alterTableDropColumn(this, Obj, ColumnName);
       }
 
     public boolean alterTableAlterColumnNull(Column Col, String DefaultValue)
@@ -527,6 +526,17 @@ public final class Connection
       {
         _DB.age(this, Str, ColStart, ColEnd, Type, Count, Operator);
       }
+
+    public boolean alterTableComment(Object Obj) throws Exception
+      {
+        return _DB.alterTableComment(this, Obj);
+      }
+
+    public boolean alterTableAlterColumnComment(Column Col) throws Exception
+      {
+        return _DB.alterTableAlterColumnComment(this, Col);
+      }
+
   }
 
 

@@ -30,20 +30,22 @@ public class ViewMeta
   {
     static final Logger LOG = LogManager.getLogger(ViewMeta.class.getName());
 
-    public ViewMeta(String SchemaName, String ViewName)
+    public ViewMeta(String SchemaName, String ViewName, String Descr)
       {
         _SchemaName = SchemaName;
         _ViewName = ViewName;
+        _Descr = Descr;
       }
 
-    public String                     _SchemaName;
-    public String                     _ViewName;
+    public final String               _SchemaName;
+    public final String               _ViewName;
+    public final String               _Descr;
     protected Map<String, ColumnMeta> _DBColumns = new HashMap<String, ColumnMeta>();
 
     public void load(Connection C)
     throws Exception
       {
-//        LOG.debug("View: " + _SchemaName + "." + _ViewName);
+        // LOG.debug("View: " + _SchemaName + "." + _ViewName);
         DatabaseMetaData meta = C.getMetaData();
         ResultSet RS = meta.getColumns(null, _SchemaName.toLowerCase(), _ViewName.toLowerCase(), null);
         while (RS.next() != false)

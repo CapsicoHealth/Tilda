@@ -744,7 +744,7 @@ This is the column definition for:<BR>
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(SCHEMA_TABLENAME_LABEL, Q);
-       LOG.debug("TILDA([7mTILDA.TESTING[27m): "+Q);
+       QueryDetails.logQuery("TILDA.TESTING", Q, null);
        java.sql.PreparedStatement PS=null;
        List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
        int count = 0;
@@ -761,7 +761,7 @@ This is the column definition for:<BR>
              }
              case 2: {
                LookupWhereAllByName2Params P = (LookupWhereAllByName2Params) ExtraParams;
-               LOG.debug("  " + P.toString());
+               LOG.debug(QueryDetails._LOGGING_HEADER + "  " + P.toString());
                if (P._desc2Lower==null) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, P._desc2Lower      );
                PS.setFloat    (++i, P._a5Upper         );
                if (P._name==null) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, P._name       );
@@ -770,7 +770,7 @@ This is the column definition for:<BR>
              }
              case 3: {
                LookupWhereAllByName3Params P = (LookupWhereAllByName3Params) ExtraParams;
-               LOG.debug("  " + P.toString());
+               LOG.debug(QueryDetails._LOGGING_HEADER + "  " + P.toString());
                if (P._name==null) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, P._name       );
                if (P._created==null) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else PS.setTimestamp(++i, new java.sql.Timestamp(P._created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                break;

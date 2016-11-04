@@ -14,31 +14,32 @@
  * limitations under the License.
  */
 
-package tilda.utils;
+package tilda.migration.actions;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import tilda.db.Connection;
+import tilda.migration.MigrationAction;
+import tilda.parsing.parts.Object;
 
-/**
- * <A href="http://en.wikipedia.org/wiki/ANSI_escape_code">http://en.wikipedia.org/wiki/ANSI_escape_code</A>
- * 
- * @author ldh
- *
- */
-public class ClassStaticInit
+public class ColumnDrop implements MigrationAction
   {
-    protected static final Logger LOG = LogManager.getLogger(ClassStaticInit.class.getName());
-
-    public static void initClass(String className)
+    public ColumnDrop(Object Obj, String ColumnName)
       {
-        try
-          {
-            LOG.debug("   Initializing class "+className);
-            Class.forName(className);
-          }
-        catch (ClassNotFoundException e)
-          {
-            LOG.catching(e);
-          }
+        _Obj = Obj;
+        _ColumnName = ColumnName;
+      }
+
+    protected Object _Obj;
+    protected String _ColumnName;
+
+    public boolean process(Connection C)
+    throws Exception
+      {
+        return C.alterTableDropColumn(_Obj, _ColumnName);
+      }
+
+    @Override
+    public String getDescription()
+      {
+        return "Alter table "+_Obj.getFullName()+" drop column "+_ColumnName;
       }
   }

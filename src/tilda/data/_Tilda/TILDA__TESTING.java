@@ -85,7 +85,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Sep 4 2016, 17:05:48EDT
+ @generated Oct 28 2016, 00:49:24EDT
 */
 public abstract class TILDA__TESTING implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject, tilda.interfaces.JSONable
  {
@@ -5334,7 +5334,7 @@ This is the hasChanged for:<BR>
        long T0 = System.nanoTime();
        if (__Changes == 0L)
         {
-          LOG.debug("The tilda.data.TILDA.TESTING has not changed: no writing will occur.");
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.TESTING has not changed: no writing will occur.");
           QueryDetails.setLastQuery(TILDA__TESTING_Factory.SCHEMA_TABLENAME_LABEL, "");
           return true;
         }
@@ -5343,7 +5343,7 @@ This is the hasChanged for:<BR>
 
        if (BeforeWrite(C) == false)
         {
-          LOG.debug("The tilda.data.TILDA.TESTING object's BeforeWrite() failed.");
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.TESTING object's BeforeWrite() failed.");
           QueryDetails.setLastQuery(TILDA__TESTING_Factory.SCHEMA_TABLENAME_LABEL, "");
           return false;
         }
@@ -5489,8 +5489,7 @@ This is the hasChanged for:<BR>
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(TILDA__TESTING_Factory.SCHEMA_TABLENAME_LABEL, Q);
-       LOG.debug("TILDA([7mTILDA.TESTING[27m): "+Q);
-       LOG.debug("   "+toString());
+       QueryDetails.logQuery("TILDA.TESTING", Q, toString());
        java.sql.PreparedStatement PS = null;
        int count = 0;
        List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
@@ -5703,7 +5702,7 @@ This is the hasChanged for:<BR>
         throw new Exception("This TILDA.TESTING object is being Read() after a Create(), which doesn't make sense.");
        if (__Init == InitMode.READ == true && Force == false && __Changes == 0L)
         {
-          LOG.debug("This TILDA.TESTING object has already been read.");
+          LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.TESTING object has already been read.");
           QueryDetails.setLastQuery(TILDA__TESTING_Factory.SCHEMA_TABLENAME_LABEL, "");
           return true;
         }
@@ -5755,8 +5754,7 @@ This is the hasChanged for:<BR>
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(TILDA__TESTING_Factory.SCHEMA_TABLENAME_LABEL, Q);
-       LOG.debug("TILDA([7mTILDA.TESTING[27m): "+Q);
-       LOG.debug("   "+toString());
+       QueryDetails.logQuery("TILDA.TESTING", Q, toString());
        java.sql.PreparedStatement PS=null;
        java.sql.ResultSet RS=null;
        List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
@@ -5779,7 +5777,7 @@ This is the hasChanged for:<BR>
           RS = PS.executeQuery();
           if (RS.next() == false)
             {
-              LOG.debug("   [1mNo record was read.[22m");
+              LOG.debug(QueryDetails._LOGGING_HEADER + "   [1mNo record was read.[22m");
               return false;
             }
           count = 1;
@@ -5804,13 +5802,13 @@ This is the hasChanged for:<BR>
      __Init = InitMode.LOOKUP;
       __Saved_refnum      = _refnum      =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.REFNUM._Mask     ;
                             _refnum2 = (List<Long>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.REFNUM2._Type, false); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.REFNUM2._Mask    ;
-                            _name        =                              RS.getString   (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.NAME._Mask       ; else _name        = _name       .trim();
-                            _description =                              RS.getString   (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask;
-                            _desc2       =                              RS.getString   (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.DESC2._Mask      ;
-                            _desc3       =                              RS.getString   (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.DESC3._Mask      ;
-                            _desc4       =                              RS.getString   (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.DESC4._Mask      ;
-                            _desc5       =                              RS.getString   (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.DESC5._Mask      ;
-                            _desc6       =                              RS.getString   (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.DESC6._Mask      ;
+                            _name        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.NAME._Mask       ; else _name        = _name       .trim();
+                            _description = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask;
+                            _desc2       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.DESC2._Mask      ;
+                            _desc3       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.DESC3._Mask      ;
+                            _desc4       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.DESC4._Mask      ;
+                            _desc5       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.DESC5._Mask      ;
+                            _desc6       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.DESC6._Mask      ;
                             _tops = (List<String>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.TOPS._Type, false); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.TOPS._Mask       ;
                             _tops2 = (Set<String>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.TOPS2._Type, true); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.TOPS2._Mask      ;
                             _a1          =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A1._Mask         ;
@@ -5829,7 +5827,7 @@ This is the hasChanged for:<BR>
                             _a7          =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A7._Mask         ;
                             _a7b = (List<Integer>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A7B._Type, false); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A7B._Mask        ;
                             _a8          =                              RS.getBytes    (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A8._Mask         ;
-                            _a9TZ        =                              RS.getString   (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A9TZ._Mask       ; else _a9TZ        = _a9TZ       .trim();
+                            _a9TZ        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A9TZ._Mask       ; else _a9TZ        = _a9TZ       .trim();
                             _a9          = ProcessZDT(_a9TZ         , "tilda.data.TILDA.TESTING.a9"         , RS, ++i, TILDA__TESTING_Factory.COLS.A9         , TILDA__TESTING_Factory.COLS.A9TZ         );
                             _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
                             _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);

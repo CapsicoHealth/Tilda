@@ -200,6 +200,10 @@ public class Column extends TypeDef
         else
           {
             _SameAsObj = PS.getColumn(R._P, R._S, R._O, R._C);
+
+            if (_SameAsObj == null)
+             _SameAsObj = PS.getColumn(R._P, R._S, R._O, R._C);
+
             if (_SameAsObj == null)
               PS.AddError("Column '" + getFullName() + "' is declaring sameas '" + _SameAs + "' resolving to '" + R.getFullName() + "' which cannot be found.");
             else if (_SameAsObj == this)

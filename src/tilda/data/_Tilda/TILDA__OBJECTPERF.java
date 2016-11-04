@@ -73,7 +73,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Sep 4 2016, 17:05:48EDT
+ @generated Oct 28 2016, 00:49:24EDT
 */
 public abstract class TILDA__OBJECTPERF implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
@@ -2540,7 +2540,7 @@ This is the hasChanged for:<BR>
        long T0 = System.nanoTime();
        if (__Changes == 0L)
         {
-          LOG.debug("The tilda.data.TILDA.OBJECTPERF has not changed: no writing will occur.");
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.OBJECTPERF has not changed: no writing will occur.");
           QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
           return true;
         }
@@ -2549,7 +2549,7 @@ This is the hasChanged for:<BR>
 
        if (BeforeWrite(C) == false)
         {
-          LOG.debug("The tilda.data.TILDA.OBJECTPERF object's BeforeWrite() failed.");
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.OBJECTPERF object's BeforeWrite() failed.");
           QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
           return false;
         }
@@ -2683,8 +2683,7 @@ This is the hasChanged for:<BR>
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, Q);
-       LOG.debug("TILDA([7mTILDA.OBJECTPERF[27m): "+Q);
-       LOG.debug("   "+toString());
+       QueryDetails.logQuery("TILDA.OBJECTPERF", Q, toString());
        java.sql.PreparedStatement PS = null;
        int count = 0;
        try
@@ -2855,7 +2854,7 @@ This is the hasChanged for:<BR>
         throw new Exception("This TILDA.OBJECTPERF object is being Read() after a Create(), which doesn't make sense.");
        if (__Init == InitMode.READ == true && Force == false && __Changes == 0L)
         {
-          LOG.debug("This TILDA.OBJECTPERF object has already been read.");
+          LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.OBJECTPERF object has already been read.");
           QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
           return true;
         }
@@ -2896,8 +2895,7 @@ This is the hasChanged for:<BR>
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, Q);
-       LOG.debug("TILDA([7mTILDA.OBJECTPERF[27m): "+Q);
-       LOG.debug("   "+toString());
+       QueryDetails.logQuery("TILDA.OBJECTPERF", Q, toString());
        java.sql.PreparedStatement PS=null;
        java.sql.ResultSet RS=null;
        int count = 0;
@@ -2921,7 +2919,7 @@ This is the hasChanged for:<BR>
           RS = PS.executeQuery();
           if (RS.next() == false)
             {
-              LOG.debug("   [1mNo record was read.[22m");
+              LOG.debug(QueryDetails._LOGGING_HEADER + "   [1mNo record was read.[22m");
               return false;
             }
           count = 1;
@@ -2942,11 +2940,11 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_schemaName    = _schemaName    =                              RS.getString   (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask   ;
-      __Saved_objectName    = _objectName    =                              RS.getString   (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask   ;
-                              _startPeriodTZ =                              RS.getString   (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask; else _startPeriodTZ = _startPeriodTZ.trim();
+      __Saved_schemaName    = _schemaName    = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask   ;
+      __Saved_objectName    = _objectName    = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask   ;
+                              _startPeriodTZ = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask; else _startPeriodTZ = _startPeriodTZ.trim();
       __Saved_startPeriod   = _startPeriod   = ProcessZDT(_startPeriodTZ  , "tilda.data.TILDA.OBJECTPERF.startPeriod"  , RS, ++i, TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD  , TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ  );
-                              _endPeriodTZ   =                              RS.getString   (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask  ; else _endPeriodTZ   = _endPeriodTZ  .trim();
+                              _endPeriodTZ   = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask  ; else _endPeriodTZ   = _endPeriodTZ  .trim();
                               _endPeriod     = ProcessZDT(_endPeriodTZ    , "tilda.data.TILDA.OBJECTPERF.endPeriod"    , RS, ++i, TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD    , TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ    );
                               _selectNano    =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask   ;
                               _selectCount   =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask  ;

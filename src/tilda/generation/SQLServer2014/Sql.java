@@ -26,6 +26,7 @@ import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.util.StringBuilderWriter;
 
 import tilda.db.stores.MSSQL;
 import tilda.enums.ColumnMode;
@@ -43,6 +44,7 @@ import tilda.parsing.parts.View;
 import tilda.parsing.parts.ViewColumn;
 import tilda.parsing.parts.ViewJoin;
 import tilda.utils.PaddingTracker;
+import tilda.utils.TextUtil;
 
 public class Sql extends MSSQL implements CodeGenSql
   {
@@ -63,7 +65,7 @@ public class Sql extends MSSQL implements CodeGenSql
     @Override
     public String getFullColumnVar(Column C, int i)
       {
-        return "["+C._ParentObject.getSchema()._Name + (i>=2?"_":"].[") + C._ParentObject.getBaseName() + (i>=2?i:"") + "].[" + C.getName() + "]";
+        return "[" + C._ParentObject.getSchema()._Name + (i >= 2 ? "_" : "].[") + C._ParentObject.getBaseName() + (i >= 2 ? i : "") + "].[" + C.getName() + "]";
       }
 
     @Override
@@ -87,7 +89,7 @@ public class Sql extends MSSQL implements CodeGenSql
         super.getFullColumnVar(Str, C._ParentObject.getSchema()._Name, C._ParentObject.getBaseName(), C.getName());
         return Str.toString();
       }
-    
+
     public String getColumnType(ColumnType T, Integer S, ColumnMode M, boolean Collection)
       {
         if (T == ColumnType.STRING && M != ColumnMode.CALCULATED)
@@ -107,10 +109,10 @@ public class Sql extends MSSQL implements CodeGenSql
         if (C._Type == ColumnType.STRING && C._Mode != ColumnMode.CALCULATED)
           return C.isCollection() == true || MultiOverride == true ? "nvarchar(max)" : C._Size < 15 ? SQLServerType.CHAR._SQLType : C._Size < getCLOBThreshhold() ? SQLServerType.STRING._SQLType : "nvarchar(max)";
         if (C._Type == ColumnType.JSON)
-         return "jsonb";
+          return "jsonb";
         return C.isCollection() == true ? SQLServerType.get(C._Type)._SQLArrayType : SQLServerType.get(C._Type)._SQLType;
       }
-    
+
     @Override
     public String getColumnTypeRaw(ColumnType Type, int Size, boolean isArray)
       {
@@ -118,7 +120,7 @@ public class Sql extends MSSQL implements CodeGenSql
           return isArray == true ? "text" : Size < 15 ? SQLServerType.CHAR._SQLType : Size < 4096 ? SQLServerType.STRING._SQLType : "text";
         return isArray == true ? SQLServerType.get(Type)._SQLArrayType : SQLServerType.get(Type)._SQLType;
       }
-    
+
 
     @Override
     public boolean stringNeedsTrim(Column C)
@@ -153,14 +155,14 @@ public class Sql extends MSSQL implements CodeGenSql
 
     @Override
     public void genFileStart(PrintWriter Out, Schema S)
-      throws Exception
+    throws Exception
       {
         Out.println("create schema " + S._Name + ";");
       }
 
     @Override
     public void genClassStart(PrintWriter Out, GeneratorSession G, Object O)
-      throws Exception
+    throws Exception
       {
       }
 
@@ -205,12 +207,15 @@ public class Sql extends MSSQL implements CodeGenSql
       }
 
     @Override
-    public void genDDL(PrintWriter Out, View V)
+    public String genDDL(PrintWriter OutFinal, View V)
     throws Exception
       {
-        Object ObjectMain = V._ViewColumns.get(0)._SameAsObj._ParentObject;         
-        Out.println("create view [" + V._ParentSchema._Name + "].[" + V._Name + "] -- " + V._Description);
-        Out.print("  as select ");
+        StringBuilderWriter OutStr = new StringBuilderWriter();
+        PrintWriter Out = new PrintWriter(OutStr);
+        
+        Object ObjectMain = V._ViewColumns.get(0)._SameAsObj._ParentObject;
+        Out.println("-- " + TextUtil.EscapeSingleQuoteForSQL(V._Description));
+        Out.print("select ");
         boolean First = true;
         Map<String, Integer> M = new HashMap<String, Integer>();
         for (ViewColumn C : V._ViewColumns)
@@ -220,13 +225,13 @@ public class Sql extends MSSQL implements CodeGenSql
                 {
                   Object FKObj = C._SameAsObj.getSingleColFK();
                   if (FKObj != null)
-                   {
-                     Integer I = M.get(FKObj._Name);
-                     I = new Integer(I==null ? 1 : I.intValue()+1);
-                     M.put(FKObj._Name, I);
-                   }
+                    {
+                      Integer I = M.get(FKObj._Name);
+                      I = new Integer(I == null ? 1 : I.intValue() + 1);
+                      M.put(FKObj._Name, I);
+                    }
                 }
-              
+
               if (First == true)
                 First = false;
               else
@@ -264,17 +269,17 @@ public class Sql extends MSSQL implements CodeGenSql
                       Out.print("     " + (C._Join == null ? "left" : C._Join) + " join " + getFullTableVar(VJ._ObjectObj));
                       Query Q = VJ.getQuery(this);
                       if (Q == null)
-                       throw new Exception("Cannot generate the view because an 'on' clause matching the active database '"+getName()+"' is not available.");
+                        throw new Exception("Cannot generate the view because an 'on' clause matching the active database '" + getName() + "' is not available.");
                       Out.print(" on " + Q._Clause);
                       Integer I = M.get(VJ._ObjectObj._Name);
                       if (I != null)
-                       for (int i = 2; i <= I.intValue(); ++i)
-                        {
-                          Out.println();
-                          Out.print("     " + (C._Join == null ? "left" : C._Join) + " join " + getFullTableVar(VJ._ObjectObj));
-                          Out.print(" as "+getFullTableVar(C._SameAsObj._ParentObject, I.intValue()));
-                          Out.print(" on " + Q._Clause);
-                        }
+                        for (int i = 2; i <= I.intValue(); ++i)
+                          {
+                            Out.println();
+                            Out.print("     " + (C._Join == null ? "left" : C._Join) + " join " + getFullTableVar(VJ._ObjectObj));
+                            Out.print(" as " + getFullTableVar(C._SameAsObj._ParentObject, I.intValue()));
+                            Out.print(" on " + Q._Clause);
+                          }
                     }
                   else
                     {
@@ -287,8 +292,8 @@ public class Sql extends MSSQL implements CodeGenSql
                             FoundFK = Obj;
                             Integer I = M.get(C._SameAsObj._ParentObject._Name);
                             if (I != null)
-                             for (int i = 2; i <= I.intValue(); ++i)
-                              CheckFK(Out, Obj, T, C, i);
+                              for (int i = 2; i <= I.intValue(); ++i)
+                                CheckFK(Out, Obj, T, C, i);
                           }
                       if (FoundFK == null)
                         throw new Error("Cannot find a FK relationship between " + T.getFullName() + " and " + ObjectMain.getFullName() + ".");
@@ -318,24 +323,31 @@ public class Sql extends MSSQL implements CodeGenSql
                 }
             Out.println();
           }
-        Out.println("    ;");
+
+        OutFinal.println("create view [" + V._ParentSchema._Name + "].[" + V._Name + "] as ");
+        String Str = OutStr.toString();
+        OutFinal.print(Str);
+        Str = Str.replaceAll("\n", "\\n");
+        //Out.println("COMMENT ON VIEW " + V._ParentSchema._Name + "." + V._Name + " IS " + TextUtil.EscapeSingleQuoteForSQL(Str) + ";");
+        OutStr.close();
+        return Str;
       }
 
     private boolean CheckFK(PrintWriter Out, Object Obj1, Object Obj2, ViewColumn C, int JoinIndex)
       {
         boolean Found = false;
-//        LOG.debug("Checking FKs to " + Obj1.getBaseName());
+        // LOG.debug("Checking FKs to " + Obj1.getBaseName());
         int count = 1;
         for (ForeignKey FK : Obj2._ForeignKeys)
           {
-//            LOG.debug("    . Checking FK " + FK._ParentObject.getBaseName() + " to " + FK._DestObjectObj.getBaseName());
+            // LOG.debug(" . Checking FK " + FK._ParentObject.getBaseName() + " to " + FK._DestObjectObj.getBaseName());
             if (FK._DestObjectObj == Obj1)
               {
                 if (count == JoinIndex)
                   {
                     Out.print("     " + (C._Join == null ? "left" : C._Join) + " join " + getFullTableVar(Obj2));
                     if (JoinIndex >= 2)
-                     Out.print(" as "+getFullTableVar(Obj2, JoinIndex));
+                      Out.print(" as " + getFullTableVar(Obj2, JoinIndex));
                     Out.print(" on ");
                     for (int i = 0; i < FK._SrcColumnObjs.size(); ++i)
                       {
@@ -345,7 +357,7 @@ public class Sql extends MSSQL implements CodeGenSql
                       }
                     Out.println();
                     Found = true;
-    //                LOG.debug("    --> FOUND");
+                    // LOG.debug(" --> FOUND");
                     break;
                   }
                 ++count;
@@ -353,17 +365,17 @@ public class Sql extends MSSQL implements CodeGenSql
           }
         if (Found == false)
           {
-//            LOG.debug("Checking FKs to " + Obj2.getBaseName());
+            // LOG.debug("Checking FKs to " + Obj2.getBaseName());
             for (ForeignKey FK : Obj1._ForeignKeys)
               {
-//                LOG.debug("    . Checking FK "+FK._ParentObject.getBaseName()+" to "+FK._DestObjectObj.getBaseName());
+                // LOG.debug(" . Checking FK "+FK._ParentObject.getBaseName()+" to "+FK._DestObjectObj.getBaseName());
                 if (FK._DestObjectObj == Obj2)
                   {
                     if (count == JoinIndex)
                       {
                         Out.print("     " + (C._Join == null ? "inner" : C._Join) + " join " + getFullTableVar(Obj2));
                         if (JoinIndex >= 2)
-                          Out.print(" as "+getFullTableVar(Obj2, JoinIndex));
+                          Out.print(" as " + getFullTableVar(Obj2, JoinIndex));
                         Out.print(" on ");
                         for (int i = 0; i < FK._SrcColumnObjs.size(); ++i)
                           {
@@ -373,15 +385,15 @@ public class Sql extends MSSQL implements CodeGenSql
                           }
                         Out.println();
                         Found = true;
-    //                    LOG.debug("    --> FOUND");
+                        // LOG.debug(" --> FOUND");
                         break;
                       }
                     ++count;
                   }
               }
           }
-//        if (Found == false)
-//         LOG.debug("    !!!  NOT FOUND  !!!");
+        // if (Found == false)
+        // LOG.debug(" !!! NOT FOUND !!!");
         return Found;
       }
 
@@ -390,7 +402,7 @@ public class Sql extends MSSQL implements CodeGenSql
       {
         if (I._Db == false)
           Out.print("-- app-level index only -- ");
-        Out.print("CREATE" + (I._Unique == true ? " UNIQUE" : "") + " INDEX " + I._ParentObject.getBaseName() + "_" + I._Name + " ON [" + I._ParentObject._ParentSchema._Name+"].["+I._ParentObject._Name + "] (");
+        Out.print("CREATE" + (I._Unique == true ? " UNIQUE" : "") + " INDEX " + I._ParentObject.getBaseName() + "_" + I._Name + " ON [" + I._ParentObject._ParentSchema._Name + "].[" + I._ParentObject._Name + "] (");
         if (I._ColumnObjs.isEmpty() == false)
           PrintColumnList(Out, I._ColumnObjs);
         if (I._OrderByObjs.isEmpty() == false)
@@ -413,8 +425,8 @@ public class Sql extends MSSQL implements CodeGenSql
       {
         Out.println("delete from [TILDA].[KEY] where \"name\" = '" + O._ParentSchema._Name + "." + O._Name + "';");
         Out.println("insert into [TILDA].[KEY] (\"refnum\", \"name\", \"max\", \"count\", \"created\", \"lastUpdated\") values ((select COALESCE(max(\"refnum\"),0)+1 from [TILDA].[KEY]), '"
-            + O._ParentSchema._Name + "." + O._Name + "',(select COALESCE(max(\"refnum\"),0)+1 from [" + O._ParentSchema._Name + "].[" + O._Name+"]"
-            + "), " + O._PrimaryKey._KeyBatch + ", current_timestamp, current_timestamp);");
+        + O._ParentSchema._Name + "." + O._Name + "',(select COALESCE(max(\"refnum\"),0)+1 from [" + O._ParentSchema._Name + "].[" + O._Name + "]"
+        + "), " + O._PrimaryKey._KeyBatch + ", current_timestamp, current_timestamp);");
       }
 
     private static boolean PrintColumnList(PrintWriter Out, List<Column> Columns)
@@ -435,7 +447,7 @@ public class Sql extends MSSQL implements CodeGenSql
 
     @Override
     public void genClassEnd(PrintWriter Out, GeneratorSession G)
-      throws Exception
+    throws Exception
       {
       }
   }

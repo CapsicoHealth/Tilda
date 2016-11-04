@@ -209,7 +209,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("       S.setLength(0);");
         Out.println("       S = null;");
         Out.println("       QueryDetails.setLastQuery(SCHEMA_TABLENAME_LABEL, Q);");
-        Out.println("       LOG.debug(\"TILDA(" + AnsiUtil.NEGATIVE + O.getShortName() + AnsiUtil.NEGATIVE_OFF + "): \"+Q);");
+        Out.println("       QueryDetails.logQuery(\"" + O.getShortName() + "\", Q, null);");
         Out.println("       java.sql.PreparedStatement PS=null;");
 //        Out.println("       java.sql.ResultSet RS=null;");
         for (Column C : O._Columns)

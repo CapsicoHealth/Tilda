@@ -30,8 +30,8 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
-import tilda.db.metadata.ColumnMeta;
 import tilda.db.processors.ScalarRP;
+import tilda.db.processors.StringRP;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
@@ -217,7 +217,7 @@ public class PostgreSQL implements DBType
       {
         if (Col._Nullable == false && DefaultValue == null)
           throw new Exception("Cannot add new 'not null' column '" + Col.getFullName() + "' to a table without a default value. Add a default value in the model, or manually migrate your database.");
-        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ADD COLUMN \"" + Col.getName() + "\" " + getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection());
+        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ADD COLUMN \"" + Col.getName() + "\" " + getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection()) + ";";
         if (Col._Nullable == false)
           {
             Q += " not null DEFAULT " + ValueHelper.printValue(Col, DefaultValue);
@@ -227,10 +227,10 @@ public class PostgreSQL implements DBType
       }
 
     @Override
-    public boolean alterTableDropColumn(Connection Con, Object Obj, ColumnMeta CI)
+    public boolean alterTableDropColumn(Connection Con, Object Obj, String ColumnName)
     throws Exception
       {
-        String Q = "ALTER TABLE " + Obj.getShortName() + " DROP COLUMN \"" + CI._Name + "\"";
+        String Q = "ALTER TABLE " + Obj.getShortName() + " DROP COLUMN \"" + ColumnName + "\"";
 
         return Con.ExecuteUpdate(Obj._ParentSchema._Name, Obj.getBaseName(), Q) >= 0;
       }
@@ -254,7 +254,7 @@ public class PostgreSQL implements DBType
               }
           }
 
-        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" " + (Col._Nullable == false ? "SET" : "DROP") + " NOT NULL";
+        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" " + (Col._Nullable == false ? "SET" : "DROP") + " NOT NULL;";
         return Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) >= 0;
       }
 
@@ -317,6 +317,7 @@ public class PostgreSQL implements DBType
                 String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
                 + "\" TYPE " + getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection())
                 + " USING (trim(\"" + Col.getName() + "\")::" + getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection()) + ");";
+
                 if (Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) < 0)
                   return false;
 
@@ -415,19 +416,19 @@ public class PostgreSQL implements DBType
         .append("LANGUAGE PLPGSQL;\n")
         .append("\n")
         .append("\n")
-        .append("DROP CAST IF EXISTS (text AS text[]);")
-        .append("CREATE OR REPLACE FUNCTION TILDA.\"strToArray\"(text)") 
-        .append("  RETURNS text[]")
-        .append("  STRICT IMMUTABLE LANGUAGE SQL AS") 
-        .append("'SELECT regexp_split_to_array($1, ''``'');';")
-        .append("CREATE CAST (text AS text[]) WITH FUNCTION TILDA.\"strToArray\"(text) as Implicit;")
+        .append("DROP CAST IF EXISTS (text AS text[]);\n")
+        .append("CREATE OR REPLACE FUNCTION TILDA.\"strToArray\"(text)\n")
+        .append("  RETURNS text[]\n")
+        .append("  STRICT IMMUTABLE LANGUAGE SQL AS\n")
+        .append("'SELECT regexp_split_to_array($1, ''``'');';\n")
+        .append("CREATE CAST (text AS text[]) WITH FUNCTION TILDA.\"strToArray\"(text) as Implicit;\n")
         .append("\n")
-        .append("DROP CAST IF EXISTS (varchar AS text[]);")
-        .append("CREATE OR REPLACE FUNCTION TILDA.\"strToArray\"(varchar)")
-        .append("  RETURNS text[]")
-        .append("  STRICT IMMUTABLE LANGUAGE SQL AS")
-        .append("'SELECT regexp_split_to_array($1, ''``'');';")
-        .append("CREATE CAST (varchar AS text[]) WITH FUNCTION TILDA.\"strToArray\"(varchar) as Implicit;")
+        .append("DROP CAST IF EXISTS (varchar AS text[]);\n")
+        .append("CREATE OR REPLACE FUNCTION TILDA.\"strToArray\"(varchar)\n")
+        .append("  RETURNS text[]\n")
+        .append("  STRICT IMMUTABLE LANGUAGE SQL AS\n")
+        .append("'SELECT regexp_split_to_array($1, ''``'');';\n")
+        .append("CREATE CAST (varchar AS text[]) WITH FUNCTION TILDA.\"strToArray\"(varchar) as Implicit;\n")
         .append("\n")
         .append("\n");
 
@@ -439,12 +440,12 @@ public class PostgreSQL implements DBType
     public StringStringPair getTypeMapping(int Type, String Name, int Size, String TypeName)
     throws Exception
       {
-//        LOG.debug("Type: "+Type+"; Name: "+Name+"; Size: "+Size+"; TypeName: "+TypeName+";");
-//        if (Name.equals("feature_id") == true)
-//         {
-//            int xxx = 0;
-//            ++xxx;
-//          }
+        // LOG.debug("Type: "+Type+"; Name: "+Name+"; Size: "+Size+"; TypeName: "+TypeName+";");
+        // if (Name.equals("feature_id") == true)
+        // {
+        // int xxx = 0;
+        // ++xxx;
+        // }
         ColumnType TildaType = null;
         String TypeSql = null;
         switch (Type)
@@ -513,15 +514,30 @@ public class PostgreSQL implements DBType
       {
         switch (TypeName)
           {
-            case "_int4"         : TildaType = ColumnType.INTEGER; break;
-            case "_int8"         : TildaType = ColumnType.LONG; break;
-            case "_float4"       : TildaType = ColumnType.FLOAT; break;
-            case "_float8"       : TildaType = ColumnType.DOUBLE; break;
-            case "_bpchar"       : TildaType = ColumnType.CHAR; break;
-            case "_text"         : 
-            case "character_data": TildaType = ColumnType.STRING; break;
-            case "_bool"         : TildaType = ColumnType.BOOLEAN; break;
-            default: throw new Exception("Cannot map SQL TypeName "+TypeName+" for array column '"+Name+"'.");
+            case "_int4":
+              TildaType = ColumnType.INTEGER;
+              break;
+            case "_int8":
+              TildaType = ColumnType.LONG;
+              break;
+            case "_float4":
+              TildaType = ColumnType.FLOAT;
+              break;
+            case "_float8":
+              TildaType = ColumnType.DOUBLE;
+              break;
+            case "_bpchar":
+              TildaType = ColumnType.CHAR;
+              break;
+            case "_text":
+            case "character_data":
+              TildaType = ColumnType.STRING;
+              break;
+            case "_bool":
+              TildaType = ColumnType.BOOLEAN;
+              break;
+            default:
+              throw new Exception("Cannot map SQL TypeName " + TypeName + " for array column '" + Name + "'.");
           }
         return TildaType;
       }
@@ -622,4 +638,21 @@ public class PostgreSQL implements DBType
         Str.append(")").append(Operator).append("INTERVAL '").append(Count).append(" ").append(Type.toString()).append("'");
       }
 
+
+    @Override
+    public boolean alterTableComment(Connection Con, Object Obj)
+    throws Exception
+      {
+        String Q = "COMMENT ON TABLE " + Obj.getShortName() + " IS " + TextUtil.EscapeSingleQuoteForSQL(Obj._Description) + ";";
+        return Con.ExecuteUpdate(Obj._ParentSchema._Name, Obj.getBaseName(), Q) >= 0;
+      }
+
+
+    @Override
+    public boolean alterTableAlterColumnComment(Connection Con, Column Col)
+    throws Exception
+      {
+        String Q = "COMMENT ON COLUMN " + Col._ParentObject.getShortName() + ".\"" + Col.getName() + "\" IS " + TextUtil.EscapeSingleQuoteForSQL(Col._Description) + ";";
+        return Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) >= 0;
+      }
   }

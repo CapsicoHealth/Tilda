@@ -30,7 +30,6 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
-import tilda.db.metadata.ColumnMeta;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
@@ -44,8 +43,8 @@ import tilda.parsing.parts.View;
 import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.types.ColumnDefinition;
 import tilda.types.Type_DatetimePrimitive;
-import tilda.utils.TextUtil;
 import tilda.utils.DurationUtil.IntervalEnum;
+import tilda.utils.TextUtil;
 import tilda.utils.pairs.StringStringPair;
 
 public class MSSQL implements DBType
@@ -225,7 +224,7 @@ public class MSSQL implements DBType
       }
 
     @Override
-    public boolean alterTableDropColumn(Connection Con, Object Obj, ColumnMeta CI)
+    public boolean alterTableDropColumn(Connection Con, Object Obj, String ColumnName)
     throws Exception
       {
         throw new UnsupportedOperationException();
@@ -442,6 +441,18 @@ public class MSSQL implements DBType
 
     @Override
     public void age(Connection C, StringBuilder Str, Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count, String Operator)
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public boolean alterTableComment(Connection C, Object Obj)
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public boolean alterTableAlterColumnComment(Connection C, Column Col)
       {
         throw new UnsupportedOperationException();
       }

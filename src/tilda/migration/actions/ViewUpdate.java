@@ -14,31 +14,19 @@
  * limitations under the License.
  */
 
-package tilda.utils;
+package tilda.migration.actions;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import tilda.parsing.parts.View;
 
-/**
- * <A href="http://en.wikipedia.org/wiki/ANSI_escape_code">http://en.wikipedia.org/wiki/ANSI_escape_code</A>
- * 
- * @author ldh
- *
- */
-public class ClassStaticInit
+public class ViewUpdate extends ViewCreate
   {
-    protected static final Logger LOG = LogManager.getLogger(ClassStaticInit.class.getName());
-
-    public static void initClass(String className)
+    public ViewUpdate(View V)
       {
-        try
-          {
-            LOG.debug("   Initializing class "+className);
-            Class.forName(className);
-          }
-        catch (ClassNotFoundException e)
-          {
-            LOG.catching(e);
-          }
+        super(V);
+      }
+
+    public String getDescription()
+      {
+        return "Update view " + _V.getFullName();
       }
   }

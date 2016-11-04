@@ -23,6 +23,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.util.StringBuilderWriter;
 
+import tilda.db.QueryDetails;
 import tilda.enums.ColumnMapperMode;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
@@ -842,7 +843,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("       long T0 = System.nanoTime();");
         Out.println("       if (__Changes == 0L)");
         Out.println("        {");
-        Out.println("          LOG.debug(\"The " + O.getFullName() + " has not changed: no writing will occur.\");");
+        Out.println("          LOG.debug(QueryDetails._LOGGING_HEADER + \"The " + O.getFullName() + " has not changed: no writing will occur.\");");
         Out.println("          QueryDetails.setLastQuery(" + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
         Out.println("          return true;");
         Out.println("        }");
@@ -851,7 +852,7 @@ public class TildaData implements CodeGenTildaData
         Out.println();
         Out.println("       if (BeforeWrite(C) == false)");
         Out.println("        {");
-        Out.println("          LOG.debug(\"The " + O.getFullName() + " object's BeforeWrite() failed.\");");
+        Out.println("          LOG.debug(QueryDetails._LOGGING_HEADER + \"The " + O.getFullName() + " object's BeforeWrite() failed.\");");
         Out.println("          QueryDetails.setLastQuery(" + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
         Out.println("          return false;");
         Out.println("        }");
@@ -973,8 +974,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("       S.setLength(0);");
         Out.println("       S = null;");
         Out.println("       QueryDetails.setLastQuery(" + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, Q);");
-        Out.println("       LOG.debug(\"TILDA(" + AnsiUtil.NEGATIVE + O.getShortName() + AnsiUtil.NEGATIVE_OFF + "): \"+Q);");
-        Out.println("       LOG.debug(\"   \"+toString());");
+        Out.println("       QueryDetails.logQuery(\"" + O.getShortName() + "\", Q, toString());");
         Out.println("       java.sql.PreparedStatement PS = null;");
         Out.println("       int count = 0;");
         for (Column C : O._Columns)
@@ -1107,7 +1107,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("        throw new Exception(\"This " + O.getShortName() + " object is being Read() after a Create(), which doesn't make sense.\");");
         Out.println("       if (__Init == InitMode.READ == true && Force == false && __Changes == 0L)");
         Out.println("        {");
-        Out.println("          LOG.debug(\"This " + O.getShortName() + " object has already been read.\");");
+        Out.println("          LOG.debug(QueryDetails._LOGGING_HEADER + \"This " + O.getShortName() + " object has already been read.\");");
         Out.println("          QueryDetails.setLastQuery(" + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
         Out.println("          return true;");
         Out.println("        }");
@@ -1119,8 +1119,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("       S.setLength(0);");
         Out.println("       S = null;");
         Out.println("       QueryDetails.setLastQuery(" + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, Q);");
-        Out.println("       LOG.debug(\"TILDA(" + AnsiUtil.NEGATIVE + O.getShortName() + AnsiUtil.NEGATIVE_OFF + "): \"+Q);");
-        Out.println("       LOG.debug(\"   \"+toString());");
+        Out.println("       QueryDetails.logQuery(\"" + O.getShortName() + "\", Q, toString());");
         Out.println("       java.sql.PreparedStatement PS=null;");
         Out.println("       java.sql.ResultSet RS=null;");
         for (Column C : O._Columns)
@@ -1144,7 +1143,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("          RS = PS.executeQuery();");
         Out.println("          if (RS.next() == false)");
         Out.println("            {");
-        Out.println("              LOG.debug(\"   " + AnsiUtil.BOLD + "No record was read." + AnsiUtil.BOLD_OFF + "\");");
+        Out.println("              LOG.debug(QueryDetails._LOGGING_HEADER + \"   " + AnsiUtil.BOLD + "No record was read." + AnsiUtil.BOLD_OFF + "\");");
         Out.println("              return false;");
         Out.println("            }");
         Out.println("          count = 1;");
