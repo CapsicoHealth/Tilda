@@ -251,7 +251,7 @@ public class Migrator
                 StringBuilderWriter Out = new StringBuilderWriter();
                 String ViewDef = CGSQL.genDDL(new PrintWriter(Out), V);
                 Out.close();
-                if (VMeta._Descr.replace("\r\n", " ").replace("\n", " ").trim().equals(ViewDef.replace("\r\n", " ").replace("\n", " ").trim()) == false)
+                if (VMeta._Descr == null || VMeta._Descr.replace("\r\n", " ").replace("\n", " ").trim().equals(ViewDef.replace("\r\n", " ").replace("\n", " ").trim()) == false)
                  Actions.add(new ViewUpdate(V));
               }
           }
