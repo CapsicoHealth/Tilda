@@ -61,7 +61,7 @@ import tilda.utils.TextUtil;
 public abstract class QueryHelper
   {
     protected QueryHelper(Connection C, StatementType ST, String SchemaName, String TableName, boolean FullSelect)
-    throws Exception
+      throws Exception
       {
         if (C == null)
           throw new Exception("Cannot create a QueryHelper with a NULL connection.");
@@ -80,7 +80,7 @@ public abstract class QueryHelper
     private void init()
     throws Exception
       {
-        _QueryStr = new StringBuilder();        
+        _QueryStr = new StringBuilder();
         _Section = S.START;
 
         if (_ST == StatementType.SELECT)
@@ -117,7 +117,7 @@ public abstract class QueryHelper
       {
       START, FROM, SET, WHERE, GROUPBY, ORDERBY;
       }
-    
+
     protected final String        _SchemaName;
     protected final String        _TableName;
     protected final StatementType _ST;
@@ -135,10 +135,10 @@ public abstract class QueryHelper
 
     public void clear()
     throws Exception
-     {
-       init();
-     }
-    
+      {
+        init();
+      }
+
     public int getCardinality()
       {
         return _Cardinality;
@@ -348,12 +348,16 @@ public abstract class QueryHelper
         return this;
       }
 
-    public QueryHelper subWhere(CaseClause clause) throws Exception
+    public QueryHelper subWhere(CaseClause clause)
+    throws Exception
       {
         boolean First = true;
         for (CaseWhen when : clause._Cases)
           {
-            if (First == true) First = false; else or();
+            if (First == true)
+              First = false;
+            else
+              or();
             openPar();
             _QueryStr.append(when._WhereClause.toString());
             closePar();
@@ -1141,7 +1145,7 @@ public abstract class QueryHelper
 
 
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Col EQUALS Col
+    // EQUALS Val
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public QueryHelper equals(String V)
     throws Exception
@@ -1204,11 +1208,11 @@ public abstract class QueryHelper
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Col EQUALS Col
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    protected QueryHelper equalsBase(ColumnDefinition Col1, ColumnDefinition Col2)
+    protected QueryHelper compareBase(ColumnDefinition Col1, ColumnDefinition Col2, Op O)
     throws Exception
       {
         Col1.getFullColumnVarForSelect(_C, _QueryStr);
-        OpCol(Op.EQUALS, Col2);
+        OpCol(O, Col2);
         return this;
       }
 
@@ -1222,49 +1226,49 @@ public abstract class QueryHelper
     public QueryHelper equals(Type_StringPrimitive Col1, Type_StringPrimitive Col2)
     throws Exception
       {
-        return equalsBase(Col1, Col2);
+        return compareBase(Col1, Col2, Op.EQUALS);
       }
 
     public QueryHelper equals(Type_DatetimePrimitive Col1, Type_DatetimePrimitive Col2)
     throws Exception
       {
-        return equalsBase(Col1, Col2);
+        return compareBase(Col1, Col2, Op.EQUALS);
       }
 
     public QueryHelper equals(Type_CharPrimitive Col1, Type_CharPrimitive Col2)
     throws Exception
       {
-        return equalsBase(Col1, Col2);
+        return compareBase(Col1, Col2, Op.EQUALS);
       }
 
     public QueryHelper equals(Type_BooleanPrimitive Col1, Type_BooleanPrimitive Col2)
     throws Exception
       {
-        return equalsBase(Col1, Col2);
+        return compareBase(Col1, Col2, Op.EQUALS);
       }
 
     public QueryHelper equals(Type_IntegerPrimitive Col1, Type_IntegerPrimitive Col2)
     throws Exception
       {
-        return equalsBase(Col1, Col2);
+        return compareBase(Col1, Col2, Op.EQUALS);
       }
 
     public QueryHelper equals(Type_LongPrimitive Col1, Type_LongPrimitive Col2)
     throws Exception
       {
-        return equalsBase(Col1, Col2);
+        return compareBase(Col1, Col2, Op.EQUALS);
       }
 
     public QueryHelper equals(Type_FloatPrimitive Col1, Type_FloatPrimitive Col2)
     throws Exception
       {
-        return equalsBase(Col1, Col2);
+        return compareBase(Col1, Col2, Op.EQUALS);
       }
 
     public QueryHelper equals(Type_DoublePrimitive Col1, Type_DoublePrimitive Col2)
     throws Exception
       {
-        return equalsBase(Col1, Col2);
+        return compareBase(Col1, Col2, Op.EQUALS);
       }
 
 
@@ -1404,6 +1408,57 @@ public abstract class QueryHelper
         return this;
       }
 
+    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Col < Col
+    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public QueryHelper lt(Type_StringPrimitive Col1, Type_StringPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.LT);
+      }
+
+    public QueryHelper lt(Type_DatetimePrimitive Col1, Type_DatetimePrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.LT);
+      }
+
+    public QueryHelper lt(Type_CharPrimitive Col1, Type_CharPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.LT);
+      }
+
+    public QueryHelper lt(Type_BooleanPrimitive Col1, Type_BooleanPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.LT);
+      }
+
+    public QueryHelper lt(Type_IntegerPrimitive Col1, Type_IntegerPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.LT);
+      }
+
+    public QueryHelper lt(Type_LongPrimitive Col1, Type_LongPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.LT);
+      }
+
+    public QueryHelper lt(Type_FloatPrimitive Col1, Type_FloatPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.LT);
+      }
+
+    public QueryHelper lt(Type_DoublePrimitive Col1, Type_DoublePrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.LT);
+      }
+
 
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Col <= value
@@ -1473,6 +1528,56 @@ public abstract class QueryHelper
       }
 
 
+    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Col <= Col
+    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public QueryHelper lte(Type_StringPrimitive Col1, Type_StringPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.LTE);
+      }
+
+    public QueryHelper lte(Type_DatetimePrimitive Col1, Type_DatetimePrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.LTE);
+      }
+
+    public QueryHelper lte(Type_CharPrimitive Col1, Type_CharPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.LTE);
+      }
+
+    public QueryHelper lte(Type_BooleanPrimitive Col1, Type_BooleanPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.LTE);
+      }
+
+    public QueryHelper lte(Type_IntegerPrimitive Col1, Type_IntegerPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.LTE);
+      }
+
+    public QueryHelper lte(Type_LongPrimitive Col1, Type_LongPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.LTE);
+      }
+
+    public QueryHelper lte(Type_FloatPrimitive Col1, Type_FloatPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.LTE);
+      }
+
+    public QueryHelper lte(Type_DoublePrimitive Col1, Type_DoublePrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.LTE);
+      }
 
 
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1540,6 +1645,58 @@ public abstract class QueryHelper
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         OpVal(Op.GT, ZDT);
         return this;
+      }
+
+
+    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Col > Col
+    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public QueryHelper gt(Type_StringPrimitive Col1, Type_StringPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.GT);
+      }
+
+    public QueryHelper gt(Type_DatetimePrimitive Col1, Type_DatetimePrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.GT);
+      }
+
+    public QueryHelper gt(Type_CharPrimitive Col1, Type_CharPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.GT);
+      }
+
+    public QueryHelper gt(Type_BooleanPrimitive Col1, Type_BooleanPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.GT);
+      }
+
+    public QueryHelper gt(Type_IntegerPrimitive Col1, Type_IntegerPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.GT);
+      }
+
+    public QueryHelper gt(Type_LongPrimitive Col1, Type_LongPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.GT);
+      }
+
+    public QueryHelper gt(Type_FloatPrimitive Col1, Type_FloatPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.GT);
+      }
+
+    public QueryHelper gt(Type_DoublePrimitive Col1, Type_DoublePrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.GT);
       }
 
 
@@ -1621,6 +1778,58 @@ public abstract class QueryHelper
       }
 
 
+    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Col >= Col
+    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public QueryHelper gte(Type_StringPrimitive Col1, Type_StringPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.GTE);
+      }
+
+    public QueryHelper gte(Type_DatetimePrimitive Col1, Type_DatetimePrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.GTE);
+      }
+
+    public QueryHelper gte(Type_CharPrimitive Col1, Type_CharPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.GTE);
+      }
+
+    public QueryHelper gte(Type_BooleanPrimitive Col1, Type_BooleanPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.GTE);
+      }
+
+    public QueryHelper gte(Type_IntegerPrimitive Col1, Type_IntegerPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.GTE);
+      }
+
+    public QueryHelper gte(Type_LongPrimitive Col1, Type_LongPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.GTE);
+      }
+
+    public QueryHelper gte(Type_FloatPrimitive Col1, Type_FloatPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.GTE);
+      }
+
+    public QueryHelper gte(Type_DoublePrimitive Col1, Type_DoublePrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.GTE);
+      }
+
+
 
 
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1691,6 +1900,56 @@ public abstract class QueryHelper
       }
 
 
+    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Col <> Col
+    // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public QueryHelper not_equals(Type_StringPrimitive Col1, Type_StringPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.NOT_EQUALS);
+      }
+
+    public QueryHelper not_equals(Type_DatetimePrimitive Col1, Type_DatetimePrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.NOT_EQUALS);
+      }
+
+    public QueryHelper not_equals(Type_CharPrimitive Col1, Type_CharPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.NOT_EQUALS);
+      }
+
+    public QueryHelper not_equals(Type_BooleanPrimitive Col1, Type_BooleanPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.NOT_EQUALS);
+      }
+
+    public QueryHelper not_equals(Type_IntegerPrimitive Col1, Type_IntegerPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.NOT_EQUALS);
+      }
+
+    public QueryHelper not_equals(Type_LongPrimitive Col1, Type_LongPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.NOT_EQUALS);
+      }
+
+    public QueryHelper not_equals(Type_FloatPrimitive Col1, Type_FloatPrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.NOT_EQUALS);
+      }
+
+    public QueryHelper not_equals(Type_DoublePrimitive Col1, Type_DoublePrimitive Col2)
+    throws Exception
+      {
+        return compareBase(Col1, Col2, Op.NOT_EQUALS);
+      }
 
 
 
@@ -2051,7 +2310,7 @@ public abstract class QueryHelper
         _QueryStr.append("])");
         return this;
       }
-    
+
     public QueryHelper like(Type_StringCollection Col, Collection<String> V)
     throws Exception
       {
@@ -2083,7 +2342,7 @@ public abstract class QueryHelper
         _QueryStr.append("])");
         return this;
       }
-    
+
     public QueryHelper like(Type_StringPrimitive[] Cols, String V)
     throws Exception
       {
@@ -2390,7 +2649,7 @@ public abstract class QueryHelper
         .append(" AND ").append("'").append(DateTimeUtil.printDateTimeForSQL(Yesterday)).append("'");
         return this;
       }
-    
+
     public QueryHelper ageGreaterThan(Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count)
     throws Exception
       {
@@ -2418,7 +2677,7 @@ public abstract class QueryHelper
         _C.age(_QueryStr, ColStart, ColEnd, Type, Count, Op.LTE._Str);
         return this;
       }
-    
+
     public QueryHelper ageEquals(Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count)
     throws Exception
       {
