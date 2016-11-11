@@ -332,17 +332,34 @@ public class PostgreSQL implements DBType
 
     protected static void PrintFunctionIn(StringBuilder Str, String Type)
       {
+//        Str.append("DROP FUNCTION IF EXISTS TILDA.In2(" + Type + "[], " + Type + "[]);\n")
+//        .append("CREATE OR REPLACE FUNCTION TILDA.In2(v " + Type + "[], vals " + Type + "[]) RETURNS boolean AS $$\n")
+//        .append("BEGIN\n")
+//        .append("  IF v is not null AND vals is not null THEN\n")
+//        .append("   RETURN v && vals;\n")
+//        .append("  END IF;\n")
+//        .append("  RETURN false;\n")
+//        .append("END; $$\n")
+//        .append("LANGUAGE PLPGSQL;\n")
+//        .append("\n")
+//        .append("\n");
+        
+//        Str.append("DROP FUNCTION IF EXISTS TILDA.In(" + Type + "[], " + Type + "[]);\n")
+//        .append("CREATE OR REPLACE FUNCTION TILDA.In(v " + Type + "[], vals " + Type + "[])\n")
+//        .append("  RETURNS boolean\n")
+//        .append("  STRICT IMMUTABLE LANGUAGE SQL AS\n")
+//        .append("  'select CASE WHEN v is not null and vals is not null then v && vals else false end;';\n")
+//        .append("\n")
+//        .append("\n");
+        
         Str.append("DROP FUNCTION IF EXISTS TILDA.In(" + Type + "[], " + Type + "[]);\n")
-        .append("CREATE OR REPLACE FUNCTION TILDA.In(v " + Type + "[], vals " + Type + "[]) RETURNS boolean AS $$\n")
-        .append("BEGIN\n")
-        .append("  IF v is not null AND vals is not null THEN\n")
-        .append("   RETURN v && vals;\n")
-        .append("  END IF;\n")
-        .append("  RETURN false;\n")
-        .append("END; $$\n")
-        .append("LANGUAGE PLPGSQL;\n")
+        .append("CREATE OR REPLACE FUNCTION TILDA.In(v " + Type + "[], vals " + Type + "[])\n")
+        .append("  RETURNS boolean\n")
+        .append("  STRICT IMMUTABLE LANGUAGE SQL AS\n")
+        .append("  'select v && vals;';\n")
         .append("\n")
         .append("\n");
+        
       }
 
     @Override

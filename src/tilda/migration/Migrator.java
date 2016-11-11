@@ -139,6 +139,8 @@ public class Migrator
 
         if (ActionCount == 0)
           {
+            new TildaHelpersAdd().process(C);
+            C.commit();
             LOG.info("");
             LOG.info("");
             LOG.info("====================================================================");
