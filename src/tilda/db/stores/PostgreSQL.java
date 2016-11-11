@@ -367,7 +367,7 @@ public class PostgreSQL implements DBType
     throws Exception
       {
         StringBuilder Str = new StringBuilder();
-        Str.append("DROP FUNCTION IF EXISTS TILDA.like(text[], text);\n")
+/*        Str.append("DROP FUNCTION IF EXISTS TILDA.like(text[], text);\n")
         .append("CREATE OR REPLACE FUNCTION TILDA.like(v text[], val text) RETURNS boolean AS $$\n")
         .append("DECLARE\n")
         .append("  str text;\n")
@@ -403,6 +403,17 @@ public class PostgreSQL implements DBType
         .append("  RETURN false;\n")
         .append("END; $$\n")
         .append("LANGUAGE PLPGSQL;\n")
+*/  
+        Str.append("DROP FUNCTION IF EXISTS TILDA.Like(text[], text);\n")
+        .append("CREATE OR REPLACE FUNCTION TILDA.Like(v text[], val text)\n")
+        .append("  RETURNS bigint\n")
+        .append("  STRICT IMMUTABLE LANGUAGE SQL AS\n")
+        .append("  'select count(*) from unnest(v) a where a like val;';\n")
+        .append("DROP FUNCTION IF EXISTS TILDA.Like(text[], text[]);\n")
+        .append("CREATE OR REPLACE FUNCTION TILDA.Like(v text[], val text[])\n")
+        .append("  RETURNS bigint\n")
+        .append("  STRICT IMMUTABLE LANGUAGE SQL AS\n")
+        .append("  'select count(*) from unnest(v) a where a like ANY(val);';\n")
         .append("\n")
         .append("\n");
         PrintFunctionIn(Str, "text");

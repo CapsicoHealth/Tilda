@@ -2269,13 +2269,22 @@ public abstract class QueryHelper
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'like' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
 
-        if (not == true)
-          _QueryStr.append(" not ");
+        _QueryStr.append("(select count(*) from unnest(");
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(") x_ where x_ like ");        
+        TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V);
+        _QueryStr.append(")");
+/*        
         _QueryStr.append(" TILDA.like(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         _QueryStr.append(", ");
         TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V);
         _QueryStr.append(")");
+*/
+        if (not == true)
+          _QueryStr.append("=0");
+        else
+          _QueryStr.append(">0");
         return this;
       }
 
@@ -2293,8 +2302,12 @@ public abstract class QueryHelper
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'like' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
 
-        if (not == true)
-          _QueryStr.append(" not ");
+        _QueryStr.append("(select count(*) from unnest(");
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(") x_ where x_ like ANY(ARRAY[");
+        TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V, true);
+        _QueryStr.append("]))");
+/*
         _QueryStr.append(" TILDA.like(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         _QueryStr.append(", ARRAY[");
@@ -2308,6 +2321,11 @@ public abstract class QueryHelper
             TextUtil.EscapeSingleQuoteForSQL(_QueryStr, v);
           }
         _QueryStr.append("])");
+*/
+        if (not == true)
+          _QueryStr.append("=0");
+        else
+          _QueryStr.append(">0");
         return this;
       }
 
@@ -2325,8 +2343,12 @@ public abstract class QueryHelper
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'like' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
 
-        if (not == true)
-          _QueryStr.append(" not ");
+        _QueryStr.append("(select count(*) from unnest(");
+        Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append(") x_ where x_ like ANY(ARRAY[");
+        TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V, true);
+        _QueryStr.append("]))");
+/*
         _QueryStr.append(" TILDA.like(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         _QueryStr.append(", ARRAY[");
@@ -2340,6 +2362,11 @@ public abstract class QueryHelper
             TextUtil.EscapeSingleQuoteForSQL(_QueryStr, v);
           }
         _QueryStr.append("])");
+*/
+        if (not == true)
+          _QueryStr.append("=0");
+        else
+          _QueryStr.append(">0");
         return this;
       }
 
