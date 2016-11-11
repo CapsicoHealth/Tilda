@@ -35,7 +35,18 @@ public class ColumnDefinition
         _ColumnName = ColumnName;
         _Type = Type;
         _Collection = Collection;
-        _Mask = 1L << Count;
+        if (Count < 64)
+          {
+            _FirstMask = true;
+            _Mask1 = 1L << Count;
+            _Mask2 = 0;
+          }
+        else
+          {
+            _FirstMask = false;
+            _Mask1 = 0;
+            _Mask2 = 1L << Count;
+          }
         _Description = Description;
       }
 
@@ -46,7 +57,9 @@ public class ColumnDefinition
 
     public final ColumnType _Type;
     public final boolean    _Collection;
-    public final long       _Mask;
+    public final boolean    _FirstMask;  
+    public final long       _Mask1;
+    public final long       _Mask2;
     
     public String getSchemaName()
       {

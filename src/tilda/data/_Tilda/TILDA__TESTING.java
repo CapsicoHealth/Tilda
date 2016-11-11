@@ -85,7 +85,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Nov 4 2016, 18:53:19EDT
+ @generated Nov 10 2016, 20:34:14EST
 */
 public abstract class TILDA__TESTING implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject, tilda.interfaces.JSONable
  {
@@ -96,14 +96,15 @@ public abstract class TILDA__TESTING implements tilda.interfaces.WriterObject, t
 
    protected TILDA__TESTING() { }
 
-   private InitMode __Init   = null;
-   private long     __Nulls  = 0L;
+   private InitMode __Init        = null;
+   private long     __Nulls1      = 0L;
+   private long     __Nulls2      = 0L;
+   private long     __Changes1    = 0L;
+   private long     __Changes2    = 0L;
+   private boolean  __NewlyCreated= false;
    private int      __LookupId;
-   private boolean  __NewlyCreated = false;
 
-   private long     __Changes= 0L;
-
-   public  boolean hasChanged    () { return __Changes != 0L; }
+   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L; }
    public  boolean isNewlyCreated() { return __NewlyCreated; }
 
    void initForCreate()
@@ -188,8 +189,8 @@ This is the setter for:<BR>
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.TESTING.refnum' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes |= TILDA__TESTING_Factory.COLS.REFNUM._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.REFNUM._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.REFNUM._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.REFNUM._Mask1;
        _refnum = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -268,8 +269,8 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.TESTING.refnum2 to null: it's not nullable.");
        else if (CollectionUtil.equals(v, _refnum2) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.REFNUM2._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.REFNUM2._Mask;
+          __Changes1 |=  TILDA__TESTING_Factory.COLS.REFNUM2._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.REFNUM2._Mask1;
           if (_refnum2 == null)
            _refnum2 = new ArrayList<Long>();
           else
@@ -290,8 +291,8 @@ This is the setter for:<BR>
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.TESTING.refnum2' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes |= TILDA__TESTING_Factory.COLS.REFNUM2._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.REFNUM2._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.REFNUM2._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.REFNUM2._Mask1;
           _refnum2.add(pos, v);
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -299,13 +300,13 @@ This is the setter for:<BR>
    protected void removeFromRefnum2(Long v) throws Exception
      {
        if (_refnum2.remove(v) == true)
-          __Changes |= TILDA__TESTING_Factory.COLS.REFNUM2._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.REFNUM2._Mask1;
      }
    protected void removeFromRefnum2(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_refnum2.remove(pos) != null)
-          __Changes |= TILDA__TESTING_Factory.COLS.REFNUM2._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.REFNUM2._Mask1;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -327,7 +328,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedRefnum2()
-     { return (TILDA__TESTING_Factory.COLS.REFNUM2._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.REFNUM2._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -403,8 +404,8 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.TESTING.name: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 10.");
        else if (v.equals(_name) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.NAME._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.NAME._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.NAME._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.NAME._Mask1;
        _name = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -429,7 +430,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedName()
-     { return (TILDA__TESTING_Factory.COLS.NAME._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.NAME._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -497,7 +498,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullDescription()
-     { return (TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask & __Nulls) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -528,8 +529,8 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.TESTING.description: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 250.");
        else if (v.equals(_description) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask1;
        _description = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -556,10 +557,10 @@ This is the null setter for:<BR>
    public void setNullDescription()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask & __Nulls) != 0L)
+       if ((TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask;
-       __Nulls   |= TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask;
+       __Changes1 |= TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask1;
+       __Nulls1   |= TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask1;
        _description=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -583,7 +584,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedDescription()
-     { return (TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -651,7 +652,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullDesc2()
-     { return (TILDA__TESTING_Factory.COLS.DESC2._Mask & __Nulls) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.DESC2._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -682,8 +683,8 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.TESTING.desc2: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 3000.");
        else if (v.equals(_desc2) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.DESC2._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.DESC2._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.DESC2._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.DESC2._Mask1;
        _desc2 = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -710,10 +711,10 @@ This is the null setter for:<BR>
    public void setNullDesc2()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__TESTING_Factory.COLS.DESC2._Mask & __Nulls) != 0L)
+       if ((TILDA__TESTING_Factory.COLS.DESC2._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__TESTING_Factory.COLS.DESC2._Mask;
-       __Nulls   |= TILDA__TESTING_Factory.COLS.DESC2._Mask;
+       __Changes1 |= TILDA__TESTING_Factory.COLS.DESC2._Mask1;
+       __Nulls1   |= TILDA__TESTING_Factory.COLS.DESC2._Mask1;
        _desc2=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -737,7 +738,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedDesc2()
-     { return (TILDA__TESTING_Factory.COLS.DESC2._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.DESC2._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -805,7 +806,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullDesc3()
-     { return (TILDA__TESTING_Factory.COLS.DESC3._Mask & __Nulls) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.DESC3._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -836,8 +837,8 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.TESTING.desc3: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5000.");
        else if (v.equals(_desc3) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.DESC3._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.DESC3._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.DESC3._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.DESC3._Mask1;
        _desc3 = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -864,10 +865,10 @@ This is the null setter for:<BR>
    public void setNullDesc3()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__TESTING_Factory.COLS.DESC3._Mask & __Nulls) != 0L)
+       if ((TILDA__TESTING_Factory.COLS.DESC3._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__TESTING_Factory.COLS.DESC3._Mask;
-       __Nulls   |= TILDA__TESTING_Factory.COLS.DESC3._Mask;
+       __Changes1 |= TILDA__TESTING_Factory.COLS.DESC3._Mask1;
+       __Nulls1   |= TILDA__TESTING_Factory.COLS.DESC3._Mask1;
        _desc3=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -891,7 +892,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedDesc3()
-     { return (TILDA__TESTING_Factory.COLS.DESC3._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.DESC3._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -959,7 +960,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullDesc4()
-     { return (TILDA__TESTING_Factory.COLS.DESC4._Mask & __Nulls) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.DESC4._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -990,8 +991,8 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.TESTING.desc4: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 9000.");
        else if (v.equals(_desc4) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.DESC4._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.DESC4._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.DESC4._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.DESC4._Mask1;
        _desc4 = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1018,10 +1019,10 @@ This is the null setter for:<BR>
    public void setNullDesc4()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__TESTING_Factory.COLS.DESC4._Mask & __Nulls) != 0L)
+       if ((TILDA__TESTING_Factory.COLS.DESC4._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__TESTING_Factory.COLS.DESC4._Mask;
-       __Nulls   |= TILDA__TESTING_Factory.COLS.DESC4._Mask;
+       __Changes1 |= TILDA__TESTING_Factory.COLS.DESC4._Mask1;
+       __Nulls1   |= TILDA__TESTING_Factory.COLS.DESC4._Mask1;
        _desc4=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -1045,7 +1046,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedDesc4()
-     { return (TILDA__TESTING_Factory.COLS.DESC4._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.DESC4._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -1113,7 +1114,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullDesc5()
-     { return (TILDA__TESTING_Factory.COLS.DESC5._Mask & __Nulls) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.DESC5._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1144,8 +1145,8 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.TESTING.desc5: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 17000.");
        else if (v.equals(_desc5) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.DESC5._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.DESC5._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.DESC5._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.DESC5._Mask1;
        _desc5 = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1172,10 +1173,10 @@ This is the null setter for:<BR>
    public void setNullDesc5()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__TESTING_Factory.COLS.DESC5._Mask & __Nulls) != 0L)
+       if ((TILDA__TESTING_Factory.COLS.DESC5._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__TESTING_Factory.COLS.DESC5._Mask;
-       __Nulls   |= TILDA__TESTING_Factory.COLS.DESC5._Mask;
+       __Changes1 |= TILDA__TESTING_Factory.COLS.DESC5._Mask1;
+       __Nulls1   |= TILDA__TESTING_Factory.COLS.DESC5._Mask1;
        _desc5=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -1199,7 +1200,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedDesc5()
-     { return (TILDA__TESTING_Factory.COLS.DESC5._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.DESC5._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -1267,7 +1268,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullDesc6()
-     { return (TILDA__TESTING_Factory.COLS.DESC6._Mask & __Nulls) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.DESC6._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1298,8 +1299,8 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.TESTING.desc6: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 33000.");
        else if (v.equals(_desc6) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.DESC6._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.DESC6._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.DESC6._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.DESC6._Mask1;
        _desc6 = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1326,10 +1327,10 @@ This is the null setter for:<BR>
    public void setNullDesc6()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__TESTING_Factory.COLS.DESC6._Mask & __Nulls) != 0L)
+       if ((TILDA__TESTING_Factory.COLS.DESC6._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__TESTING_Factory.COLS.DESC6._Mask;
-       __Nulls   |= TILDA__TESTING_Factory.COLS.DESC6._Mask;
+       __Changes1 |= TILDA__TESTING_Factory.COLS.DESC6._Mask1;
+       __Nulls1   |= TILDA__TESTING_Factory.COLS.DESC6._Mask1;
        _desc6=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -1353,7 +1354,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedDesc6()
-     { return (TILDA__TESTING_Factory.COLS.DESC6._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.DESC6._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -1423,7 +1424,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullTops()
-     { return (TILDA__TESTING_Factory.COLS.TOPS._Mask & __Nulls) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.TOPS._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1450,8 +1451,8 @@ This is the setter for:<BR>
         setNullTops();
        else if (CollectionUtil.equals(v, _tops) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.TOPS._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.TOPS._Mask;
+          __Changes1 |=  TILDA__TESTING_Factory.COLS.TOPS._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.TOPS._Mask1;
           if (_tops == null)
            _tops = new ArrayList<String>();
           else
@@ -1474,8 +1475,8 @@ This is the setter for:<BR>
         }
        else if (_tops.get(pos).equals(v) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.TOPS._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.TOPS._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.TOPS._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.TOPS._Mask1;
           _tops.add(pos, v);
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1483,13 +1484,13 @@ This is the setter for:<BR>
    public void removeFromTops(String v) throws Exception
      {
        if (_tops.remove(v) == true)
-          __Changes |= TILDA__TESTING_Factory.COLS.TOPS._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.TOPS._Mask1;
      }
    public void removeFromTops(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_tops.remove(pos) != null)
-          __Changes |= TILDA__TESTING_Factory.COLS.TOPS._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.TOPS._Mask1;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -1514,10 +1515,10 @@ This is the null setter for:<BR>
    public void setNullTops()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__TESTING_Factory.COLS.TOPS._Mask & __Nulls) != 0L)
+       if ((TILDA__TESTING_Factory.COLS.TOPS._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__TESTING_Factory.COLS.TOPS._Mask;
-       __Nulls   |= TILDA__TESTING_Factory.COLS.TOPS._Mask;
+       __Changes1 |= TILDA__TESTING_Factory.COLS.TOPS._Mask1;
+       __Nulls1   |= TILDA__TESTING_Factory.COLS.TOPS._Mask1;
        _tops=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -1541,7 +1542,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedTops()
-     { return (TILDA__TESTING_Factory.COLS.TOPS._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.TOPS._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -1611,7 +1612,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullTops2()
-     { return (TILDA__TESTING_Factory.COLS.TOPS2._Mask & __Nulls) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.TOPS2._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1638,8 +1639,8 @@ This is the setter for:<BR>
         setNullTops2();
        else if (CollectionUtil.equals(v, _tops2) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.TOPS2._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.TOPS2._Mask;
+          __Changes1 |=  TILDA__TESTING_Factory.COLS.TOPS2._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.TOPS2._Mask1;
           if (_tops2 == null)
            _tops2 = new TreeSet<String>();
           else
@@ -1662,8 +1663,8 @@ This is the setter for:<BR>
         }
        else if (_tops2.contains(v) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.TOPS2._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.TOPS2._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.TOPS2._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.TOPS2._Mask1;
           _tops2.add(v);
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1671,7 +1672,7 @@ This is the setter for:<BR>
    public void removeFromTops2(String v) throws Exception
      {
        if (_tops2.remove(v) == true)
-          __Changes |= TILDA__TESTING_Factory.COLS.TOPS2._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.TOPS2._Mask1;
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1695,10 +1696,10 @@ This is the null setter for:<BR>
    public void setNullTops2()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__TESTING_Factory.COLS.TOPS2._Mask & __Nulls) != 0L)
+       if ((TILDA__TESTING_Factory.COLS.TOPS2._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__TESTING_Factory.COLS.TOPS2._Mask;
-       __Nulls   |= TILDA__TESTING_Factory.COLS.TOPS2._Mask;
+       __Changes1 |= TILDA__TESTING_Factory.COLS.TOPS2._Mask1;
+       __Nulls1   |= TILDA__TESTING_Factory.COLS.TOPS2._Mask1;
        _tops2=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -1722,7 +1723,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedTops2()
-     { return (TILDA__TESTING_Factory.COLS.TOPS2._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.TOPS2._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -1787,7 +1788,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullA1()
-     { return (TILDA__TESTING_Factory.COLS.A1._Mask & __Nulls) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A1._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1811,8 +1812,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _a1)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.A1._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.A1._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A1._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.A1._Mask1;
        _a1 = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1838,10 +1839,10 @@ This is the null setter for:<BR>
    public void setNullA1()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__TESTING_Factory.COLS.A1._Mask & __Nulls) != 0L)
+       if ((TILDA__TESTING_Factory.COLS.A1._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__TESTING_Factory.COLS.A1._Mask;
-       __Nulls   |= TILDA__TESTING_Factory.COLS.A1._Mask;
+       __Changes1 |= TILDA__TESTING_Factory.COLS.A1._Mask1;
+       __Nulls1   |= TILDA__TESTING_Factory.COLS.A1._Mask1;
        _a1=0;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -1864,7 +1865,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedA1()
-     { return (TILDA__TESTING_Factory.COLS.A1._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A1._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -1929,7 +1930,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullA2()
-     { return (TILDA__TESTING_Factory.COLS.A2._Mask & __Nulls) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A2._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1953,8 +1954,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _a2)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.A2._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.A2._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A2._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.A2._Mask1;
        _a2 = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1980,10 +1981,10 @@ This is the null setter for:<BR>
    public void setNullA2()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__TESTING_Factory.COLS.A2._Mask & __Nulls) != 0L)
+       if ((TILDA__TESTING_Factory.COLS.A2._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__TESTING_Factory.COLS.A2._Mask;
-       __Nulls   |= TILDA__TESTING_Factory.COLS.A2._Mask;
+       __Changes1 |= TILDA__TESTING_Factory.COLS.A2._Mask1;
+       __Nulls1   |= TILDA__TESTING_Factory.COLS.A2._Mask1;
        _a2=Character.UNASSIGNED;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -2006,7 +2007,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedA2()
-     { return (TILDA__TESTING_Factory.COLS.A2._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A2._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -2073,7 +2074,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullA2b()
-     { return (TILDA__TESTING_Factory.COLS.A2B._Mask & __Nulls) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A2B._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2099,8 +2100,8 @@ This is the setter for:<BR>
         setNullA2b();
        else if (CollectionUtil.equals(v, _a2b) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.A2B._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.A2B._Mask;
+          __Changes1 |=  TILDA__TESTING_Factory.COLS.A2B._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.A2B._Mask1;
           if (_a2b == null)
            _a2b = new ArrayList<Character>();
           else
@@ -2119,8 +2120,8 @@ This is the setter for:<BR>
         _a2b = new ArrayList<Character>();
        if (_a2b.get(pos).equals(v) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.A2B._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.A2B._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A2B._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.A2B._Mask1;
           _a2b.add(pos, v);
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2128,13 +2129,13 @@ This is the setter for:<BR>
    public void removeFromA2b(Character v) throws Exception
      {
        if (_a2b.remove(v) == true)
-          __Changes |= TILDA__TESTING_Factory.COLS.A2B._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A2B._Mask1;
      }
    public void removeFromA2b(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_a2b.remove(pos) != null)
-          __Changes |= TILDA__TESTING_Factory.COLS.A2B._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A2B._Mask1;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -2158,10 +2159,10 @@ This is the null setter for:<BR>
    public void setNullA2b()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__TESTING_Factory.COLS.A2B._Mask & __Nulls) != 0L)
+       if ((TILDA__TESTING_Factory.COLS.A2B._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__TESTING_Factory.COLS.A2B._Mask;
-       __Nulls   |= TILDA__TESTING_Factory.COLS.A2B._Mask;
+       __Changes1 |= TILDA__TESTING_Factory.COLS.A2B._Mask1;
+       __Nulls1   |= TILDA__TESTING_Factory.COLS.A2B._Mask1;
        _a2b=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -2184,7 +2185,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedA2b()
-     { return (TILDA__TESTING_Factory.COLS.A2B._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A2B._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -2251,7 +2252,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullA2c()
-     { return (TILDA__TESTING_Factory.COLS.A2C._Mask & __Nulls) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A2C._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2277,8 +2278,8 @@ This is the setter for:<BR>
         setNullA2c();
        else if (CollectionUtil.equals(v, _a2c) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.A2C._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.A2C._Mask;
+          __Changes1 |=  TILDA__TESTING_Factory.COLS.A2C._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.A2C._Mask1;
           if (_a2c == null)
            _a2c = new TreeSet<Character>();
           else
@@ -2297,8 +2298,8 @@ This is the setter for:<BR>
         _a2c = new TreeSet<Character>();
        if (_a2c.contains(v) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.A2C._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.A2C._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A2C._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.A2C._Mask1;
           _a2c.add(v);
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2306,7 +2307,7 @@ This is the setter for:<BR>
    public void removeFromA2c(Character v) throws Exception
      {
        if (_a2c.remove(v) == true)
-          __Changes |= TILDA__TESTING_Factory.COLS.A2C._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A2C._Mask1;
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2329,10 +2330,10 @@ This is the null setter for:<BR>
    public void setNullA2c()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__TESTING_Factory.COLS.A2C._Mask & __Nulls) != 0L)
+       if ((TILDA__TESTING_Factory.COLS.A2C._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__TESTING_Factory.COLS.A2C._Mask;
-       __Nulls   |= TILDA__TESTING_Factory.COLS.A2C._Mask;
+       __Changes1 |= TILDA__TESTING_Factory.COLS.A2C._Mask1;
+       __Nulls1   |= TILDA__TESTING_Factory.COLS.A2C._Mask1;
        _a2c=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -2355,7 +2356,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedA2c()
-     { return (TILDA__TESTING_Factory.COLS.A2C._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A2C._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -2420,7 +2421,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullA3()
-     { return (TILDA__TESTING_Factory.COLS.A3._Mask & __Nulls) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A3._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2444,8 +2445,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _a3)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.A3._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.A3._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A3._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.A3._Mask1;
        _a3 = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2471,10 +2472,10 @@ This is the null setter for:<BR>
    public void setNullA3()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__TESTING_Factory.COLS.A3._Mask & __Nulls) != 0L)
+       if ((TILDA__TESTING_Factory.COLS.A3._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__TESTING_Factory.COLS.A3._Mask;
-       __Nulls   |= TILDA__TESTING_Factory.COLS.A3._Mask;
+       __Changes1 |= TILDA__TESTING_Factory.COLS.A3._Mask1;
+       __Nulls1   |= TILDA__TESTING_Factory.COLS.A3._Mask1;
        _a3=false;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -2497,7 +2498,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedA3()
-     { return (TILDA__TESTING_Factory.COLS.A3._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A3._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -2564,7 +2565,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullA3b()
-     { return (TILDA__TESTING_Factory.COLS.A3B._Mask & __Nulls) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A3B._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2590,8 +2591,8 @@ This is the setter for:<BR>
         setNullA3b();
        else if (CollectionUtil.equals(v, _a3b) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.A3B._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.A3B._Mask;
+          __Changes1 |=  TILDA__TESTING_Factory.COLS.A3B._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.A3B._Mask1;
           if (_a3b == null)
            _a3b = new ArrayList<Boolean>();
           else
@@ -2610,8 +2611,8 @@ This is the setter for:<BR>
         _a3b = new ArrayList<Boolean>();
        if (_a3b.get(pos).equals(v) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.A3B._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.A3B._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A3B._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.A3B._Mask1;
           _a3b.add(pos, v);
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2619,13 +2620,13 @@ This is the setter for:<BR>
    public void removeFromA3b(Boolean v) throws Exception
      {
        if (_a3b.remove(v) == true)
-          __Changes |= TILDA__TESTING_Factory.COLS.A3B._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A3B._Mask1;
      }
    public void removeFromA3b(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_a3b.remove(pos) != null)
-          __Changes |= TILDA__TESTING_Factory.COLS.A3B._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A3B._Mask1;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -2649,10 +2650,10 @@ This is the null setter for:<BR>
    public void setNullA3b()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__TESTING_Factory.COLS.A3B._Mask & __Nulls) != 0L)
+       if ((TILDA__TESTING_Factory.COLS.A3B._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__TESTING_Factory.COLS.A3B._Mask;
-       __Nulls   |= TILDA__TESTING_Factory.COLS.A3B._Mask;
+       __Changes1 |= TILDA__TESTING_Factory.COLS.A3B._Mask1;
+       __Nulls1   |= TILDA__TESTING_Factory.COLS.A3B._Mask1;
        _a3b=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -2675,7 +2676,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedA3b()
-     { return (TILDA__TESTING_Factory.COLS.A3B._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A3B._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -2740,7 +2741,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullA4()
-     { return (TILDA__TESTING_Factory.COLS.A4._Mask & __Nulls) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A4._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2764,8 +2765,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _a4)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.A4._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.A4._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A4._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.A4._Mask1;
        _a4 = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2791,10 +2792,10 @@ This is the null setter for:<BR>
    public void setNullA4()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__TESTING_Factory.COLS.A4._Mask & __Nulls) != 0L)
+       if ((TILDA__TESTING_Factory.COLS.A4._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__TESTING_Factory.COLS.A4._Mask;
-       __Nulls   |= TILDA__TESTING_Factory.COLS.A4._Mask;
+       __Changes1 |= TILDA__TESTING_Factory.COLS.A4._Mask1;
+       __Nulls1   |= TILDA__TESTING_Factory.COLS.A4._Mask1;
        _a4=0L;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -2817,7 +2818,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedA4()
-     { return (TILDA__TESTING_Factory.COLS.A4._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A4._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -2884,7 +2885,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullA4b()
-     { return (TILDA__TESTING_Factory.COLS.A4B._Mask & __Nulls) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A4B._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2910,8 +2911,8 @@ This is the setter for:<BR>
         setNullA4b();
        else if (CollectionUtil.equals(v, _a4b) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.A4B._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.A4B._Mask;
+          __Changes1 |=  TILDA__TESTING_Factory.COLS.A4B._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.A4B._Mask1;
           if (_a4b == null)
            _a4b = new ArrayList<Double>();
           else
@@ -2930,8 +2931,8 @@ This is the setter for:<BR>
         _a4b = new ArrayList<Double>();
        if (_a4b.get(pos).equals(v) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.A4B._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.A4B._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A4B._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.A4B._Mask1;
           _a4b.add(pos, v);
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2939,13 +2940,13 @@ This is the setter for:<BR>
    public void removeFromA4b(Double v) throws Exception
      {
        if (_a4b.remove(v) == true)
-          __Changes |= TILDA__TESTING_Factory.COLS.A4B._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A4B._Mask1;
      }
    public void removeFromA4b(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_a4b.remove(pos) != null)
-          __Changes |= TILDA__TESTING_Factory.COLS.A4B._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A4B._Mask1;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -2969,10 +2970,10 @@ This is the null setter for:<BR>
    public void setNullA4b()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__TESTING_Factory.COLS.A4B._Mask & __Nulls) != 0L)
+       if ((TILDA__TESTING_Factory.COLS.A4B._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__TESTING_Factory.COLS.A4B._Mask;
-       __Nulls   |= TILDA__TESTING_Factory.COLS.A4B._Mask;
+       __Changes1 |= TILDA__TESTING_Factory.COLS.A4B._Mask1;
+       __Nulls1   |= TILDA__TESTING_Factory.COLS.A4B._Mask1;
        _a4b=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -2995,7 +2996,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedA4b()
-     { return (TILDA__TESTING_Factory.COLS.A4B._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A4B._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -3060,7 +3061,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullA5()
-     { return (TILDA__TESTING_Factory.COLS.A5._Mask & __Nulls) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A5._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3084,8 +3085,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _a5)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.A5._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.A5._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A5._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.A5._Mask1;
        _a5 = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -3111,10 +3112,10 @@ This is the null setter for:<BR>
    public void setNullA5()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__TESTING_Factory.COLS.A5._Mask & __Nulls) != 0L)
+       if ((TILDA__TESTING_Factory.COLS.A5._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__TESTING_Factory.COLS.A5._Mask;
-       __Nulls   |= TILDA__TESTING_Factory.COLS.A5._Mask;
+       __Changes1 |= TILDA__TESTING_Factory.COLS.A5._Mask1;
+       __Nulls1   |= TILDA__TESTING_Factory.COLS.A5._Mask1;
        _a5=0;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -3137,7 +3138,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedA5()
-     { return (TILDA__TESTING_Factory.COLS.A5._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A5._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -3204,7 +3205,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullA5b()
-     { return (TILDA__TESTING_Factory.COLS.A5B._Mask & __Nulls) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A5B._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3230,8 +3231,8 @@ This is the setter for:<BR>
         setNullA5b();
        else if (CollectionUtil.equals(v, _a5b) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.A5B._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.A5B._Mask;
+          __Changes1 |=  TILDA__TESTING_Factory.COLS.A5B._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.A5B._Mask1;
           if (_a5b == null)
            _a5b = new ArrayList<Float>();
           else
@@ -3250,8 +3251,8 @@ This is the setter for:<BR>
         _a5b = new ArrayList<Float>();
        if (_a5b.get(pos).equals(v) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.A5B._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.A5B._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A5B._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.A5B._Mask1;
           _a5b.add(pos, v);
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -3259,13 +3260,13 @@ This is the setter for:<BR>
    public void removeFromA5b(Float v) throws Exception
      {
        if (_a5b.remove(v) == true)
-          __Changes |= TILDA__TESTING_Factory.COLS.A5B._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A5B._Mask1;
      }
    public void removeFromA5b(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_a5b.remove(pos) != null)
-          __Changes |= TILDA__TESTING_Factory.COLS.A5B._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A5B._Mask1;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -3289,10 +3290,10 @@ This is the null setter for:<BR>
    public void setNullA5b()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__TESTING_Factory.COLS.A5B._Mask & __Nulls) != 0L)
+       if ((TILDA__TESTING_Factory.COLS.A5B._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__TESTING_Factory.COLS.A5B._Mask;
-       __Nulls   |= TILDA__TESTING_Factory.COLS.A5B._Mask;
+       __Changes1 |= TILDA__TESTING_Factory.COLS.A5B._Mask1;
+       __Nulls1   |= TILDA__TESTING_Factory.COLS.A5B._Mask1;
        _a5b=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -3315,7 +3316,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedA5b()
-     { return (TILDA__TESTING_Factory.COLS.A5B._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A5B._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -3380,7 +3381,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullA6()
-     { return (TILDA__TESTING_Factory.COLS.A6._Mask & __Nulls) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A6._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3404,8 +3405,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _a6)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.A6._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.A6._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A6._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.A6._Mask1;
        _a6 = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -3431,10 +3432,10 @@ This is the null setter for:<BR>
    public void setNullA6()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__TESTING_Factory.COLS.A6._Mask & __Nulls) != 0L)
+       if ((TILDA__TESTING_Factory.COLS.A6._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__TESTING_Factory.COLS.A6._Mask;
-       __Nulls   |= TILDA__TESTING_Factory.COLS.A6._Mask;
+       __Changes1 |= TILDA__TESTING_Factory.COLS.A6._Mask1;
+       __Nulls1   |= TILDA__TESTING_Factory.COLS.A6._Mask1;
        _a6=0L;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -3457,7 +3458,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedA6()
-     { return (TILDA__TESTING_Factory.COLS.A6._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A6._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -3524,7 +3525,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullA6b()
-     { return (TILDA__TESTING_Factory.COLS.A6B._Mask & __Nulls) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A6B._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3550,8 +3551,8 @@ This is the setter for:<BR>
         setNullA6b();
        else if (CollectionUtil.equals(v, _a6b) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.A6B._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.A6B._Mask;
+          __Changes1 |=  TILDA__TESTING_Factory.COLS.A6B._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.A6B._Mask1;
           if (_a6b == null)
            _a6b = new ArrayList<Long>();
           else
@@ -3570,8 +3571,8 @@ This is the setter for:<BR>
         _a6b = new ArrayList<Long>();
        if (_a6b.get(pos).equals(v) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.A6B._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.A6B._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A6B._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.A6B._Mask1;
           _a6b.add(pos, v);
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -3579,13 +3580,13 @@ This is the setter for:<BR>
    public void removeFromA6b(Long v) throws Exception
      {
        if (_a6b.remove(v) == true)
-          __Changes |= TILDA__TESTING_Factory.COLS.A6B._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A6B._Mask1;
      }
    public void removeFromA6b(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_a6b.remove(pos) != null)
-          __Changes |= TILDA__TESTING_Factory.COLS.A6B._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A6B._Mask1;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -3609,10 +3610,10 @@ This is the null setter for:<BR>
    public void setNullA6b()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__TESTING_Factory.COLS.A6B._Mask & __Nulls) != 0L)
+       if ((TILDA__TESTING_Factory.COLS.A6B._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__TESTING_Factory.COLS.A6B._Mask;
-       __Nulls   |= TILDA__TESTING_Factory.COLS.A6B._Mask;
+       __Changes1 |= TILDA__TESTING_Factory.COLS.A6B._Mask1;
+       __Nulls1   |= TILDA__TESTING_Factory.COLS.A6B._Mask1;
        _a6b=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -3635,7 +3636,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedA6b()
-     { return (TILDA__TESTING_Factory.COLS.A6B._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A6B._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -3702,7 +3703,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullA6c()
-     { return (TILDA__TESTING_Factory.COLS.A6C._Mask & __Nulls) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A6C._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3728,8 +3729,8 @@ This is the setter for:<BR>
         setNullA6c();
        else if (CollectionUtil.equals(v, _a6c) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.A6C._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.A6C._Mask;
+          __Changes1 |=  TILDA__TESTING_Factory.COLS.A6C._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.A6C._Mask1;
           if (_a6c == null)
            _a6c = new TreeSet<Long>();
           else
@@ -3748,8 +3749,8 @@ This is the setter for:<BR>
         _a6c = new TreeSet<Long>();
        if (_a6c.contains(v) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.A6C._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.A6C._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A6C._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.A6C._Mask1;
           _a6c.add(v);
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -3757,7 +3758,7 @@ This is the setter for:<BR>
    public void removeFromA6c(Long v) throws Exception
      {
        if (_a6c.remove(v) == true)
-          __Changes |= TILDA__TESTING_Factory.COLS.A6C._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A6C._Mask1;
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3780,10 +3781,10 @@ This is the null setter for:<BR>
    public void setNullA6c()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__TESTING_Factory.COLS.A6C._Mask & __Nulls) != 0L)
+       if ((TILDA__TESTING_Factory.COLS.A6C._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__TESTING_Factory.COLS.A6C._Mask;
-       __Nulls   |= TILDA__TESTING_Factory.COLS.A6C._Mask;
+       __Changes1 |= TILDA__TESTING_Factory.COLS.A6C._Mask1;
+       __Nulls1   |= TILDA__TESTING_Factory.COLS.A6C._Mask1;
        _a6c=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -3806,7 +3807,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedA6c()
-     { return (TILDA__TESTING_Factory.COLS.A6C._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A6C._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -3871,7 +3872,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullA7()
-     { return (TILDA__TESTING_Factory.COLS.A7._Mask & __Nulls) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A7._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3895,8 +3896,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _a7)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.A7._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.A7._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A7._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.A7._Mask1;
        _a7 = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -3922,10 +3923,10 @@ This is the null setter for:<BR>
    public void setNullA7()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__TESTING_Factory.COLS.A7._Mask & __Nulls) != 0L)
+       if ((TILDA__TESTING_Factory.COLS.A7._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__TESTING_Factory.COLS.A7._Mask;
-       __Nulls   |= TILDA__TESTING_Factory.COLS.A7._Mask;
+       __Changes1 |= TILDA__TESTING_Factory.COLS.A7._Mask1;
+       __Nulls1   |= TILDA__TESTING_Factory.COLS.A7._Mask1;
        _a7=0;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -3948,7 +3949,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedA7()
-     { return (TILDA__TESTING_Factory.COLS.A7._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A7._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -4015,7 +4016,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullA7b()
-     { return (TILDA__TESTING_Factory.COLS.A7B._Mask & __Nulls) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A7B._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4041,8 +4042,8 @@ This is the setter for:<BR>
         setNullA7b();
        else if (CollectionUtil.equals(v, _a7b) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.A7B._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.A7B._Mask;
+          __Changes1 |=  TILDA__TESTING_Factory.COLS.A7B._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.A7B._Mask1;
           if (_a7b == null)
            _a7b = new ArrayList<Integer>();
           else
@@ -4061,8 +4062,8 @@ This is the setter for:<BR>
         _a7b = new ArrayList<Integer>();
        if (_a7b.get(pos).equals(v) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.A7B._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.A7B._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A7B._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.A7B._Mask1;
           _a7b.add(pos, v);
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -4070,13 +4071,13 @@ This is the setter for:<BR>
    public void removeFromA7b(Integer v) throws Exception
      {
        if (_a7b.remove(v) == true)
-          __Changes |= TILDA__TESTING_Factory.COLS.A7B._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A7B._Mask1;
      }
    public void removeFromA7b(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_a7b.remove(pos) != null)
-          __Changes |= TILDA__TESTING_Factory.COLS.A7B._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A7B._Mask1;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -4100,10 +4101,10 @@ This is the null setter for:<BR>
    public void setNullA7b()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__TESTING_Factory.COLS.A7B._Mask & __Nulls) != 0L)
+       if ((TILDA__TESTING_Factory.COLS.A7B._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__TESTING_Factory.COLS.A7B._Mask;
-       __Nulls   |= TILDA__TESTING_Factory.COLS.A7B._Mask;
+       __Changes1 |= TILDA__TESTING_Factory.COLS.A7B._Mask1;
+       __Nulls1   |= TILDA__TESTING_Factory.COLS.A7B._Mask1;
        _a7b=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -4126,7 +4127,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedA7b()
-     { return (TILDA__TESTING_Factory.COLS.A7B._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A7B._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -4191,7 +4192,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullA8()
-     { return (TILDA__TESTING_Factory.COLS.A8._Mask & __Nulls) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A8._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4213,8 +4214,8 @@ This is the setter for:<BR>
    public void setA8(byte[] v) throws Exception
      {
        long T0 = System.nanoTime();
-          __Changes |= TILDA__TESTING_Factory.COLS.A8._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.A8._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A8._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.A8._Mask1;
        _a8 = v;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -4239,10 +4240,10 @@ This is the null setter for:<BR>
    public void setNullA8()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__TESTING_Factory.COLS.A8._Mask & __Nulls) != 0L)
+       if ((TILDA__TESTING_Factory.COLS.A8._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__TESTING_Factory.COLS.A8._Mask;
-       __Nulls   |= TILDA__TESTING_Factory.COLS.A8._Mask;
+       __Changes1 |= TILDA__TESTING_Factory.COLS.A8._Mask1;
+       __Nulls1   |= TILDA__TESTING_Factory.COLS.A8._Mask1;
        _a8=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -4265,7 +4266,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedA8()
-     { return (TILDA__TESTING_Factory.COLS.A8._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A8._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -4333,7 +4334,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullA9TZ()
-     { return (TILDA__TESTING_Factory.COLS.A9TZ._Mask & __Nulls) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A9TZ._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4364,8 +4365,8 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.TESTING.a9TZ: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
        else if (v.equals(_a9TZ) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.A9TZ._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.A9TZ._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A9TZ._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.A9TZ._Mask1;
        _a9TZ = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -4392,10 +4393,10 @@ This is the null setter for:<BR>
     void setNullA9TZ()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__TESTING_Factory.COLS.A9TZ._Mask & __Nulls) != 0L)
+       if ((TILDA__TESTING_Factory.COLS.A9TZ._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__TESTING_Factory.COLS.A9TZ._Mask;
-       __Nulls   |= TILDA__TESTING_Factory.COLS.A9TZ._Mask;
+       __Changes1 |= TILDA__TESTING_Factory.COLS.A9TZ._Mask1;
+       __Nulls1   |= TILDA__TESTING_Factory.COLS.A9TZ._Mask1;
        _a9TZ=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -4419,7 +4420,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedA9TZ()
-     { return (TILDA__TESTING_Factory.COLS.A9TZ._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A9TZ._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -4484,7 +4485,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullA9()
-     { return (TILDA__TESTING_Factory.COLS.A9._Mask & __Nulls) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A9._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4513,8 +4514,8 @@ This is the setter for:<BR>
         }
        else if (v.equals(_a9) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.A9._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.A9._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.A9._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.A9._Mask1;
        _a9 = v;
           tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
           if (ZI == null)
@@ -4544,10 +4545,10 @@ This is the null setter for:<BR>
    public void setNullA9()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__TESTING_Factory.COLS.A9._Mask & __Nulls) != 0L)
+       if ((TILDA__TESTING_Factory.COLS.A9._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__TESTING_Factory.COLS.A9._Mask;
-       __Nulls   |= TILDA__TESTING_Factory.COLS.A9._Mask;
+       __Changes1 |= TILDA__TESTING_Factory.COLS.A9._Mask1;
+       __Nulls1   |= TILDA__TESTING_Factory.COLS.A9._Mask1;
        _a9=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -4636,7 +4637,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedA9()
-     { return (TILDA__TESTING_Factory.COLS.A9._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.A9._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -4730,8 +4731,8 @@ This is the setter for:<BR>
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.TESTING.created' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes |= TILDA__TESTING_Factory.COLS.CREATED._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.CREATED._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.CREATED._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.CREATED._Mask1;
        _created = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -4849,7 +4850,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedCreated()
-     { return (TILDA__TESTING_Factory.COLS.CREATED._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.CREATED._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -4941,8 +4942,8 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.TESTING.lastUpdated to null: it's not nullable.");
        else if (v.equals(_lastUpdated) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask1;
        _lastUpdated = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -5060,7 +5061,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedLastUpdated()
-     { return (TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -5125,7 +5126,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullDeleted()
-     { return (TILDA__TESTING_Factory.COLS.DELETED._Mask & __Nulls) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.DELETED._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -5153,8 +5154,8 @@ This is the setter for:<BR>
         }
        else if (v.equals(_deleted) == false)
         {
-          __Changes |= TILDA__TESTING_Factory.COLS.DELETED._Mask;
-          __Nulls   &= ~TILDA__TESTING_Factory.COLS.DELETED._Mask;
+          __Changes1 |= TILDA__TESTING_Factory.COLS.DELETED._Mask1;
+          __Nulls1   &= ~TILDA__TESTING_Factory.COLS.DELETED._Mask1;
        _deleted = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -5180,10 +5181,10 @@ This is the null setter for:<BR>
     void setNullDeleted()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__TESTING_Factory.COLS.DELETED._Mask & __Nulls) != 0L)
+       if ((TILDA__TESTING_Factory.COLS.DELETED._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__TESTING_Factory.COLS.DELETED._Mask;
-       __Nulls   |= TILDA__TESTING_Factory.COLS.DELETED._Mask;
+       __Changes1 |= TILDA__TESTING_Factory.COLS.DELETED._Mask1;
+       __Nulls1   |= TILDA__TESTING_Factory.COLS.DELETED._Mask1;
        _deleted=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -5272,7 +5273,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedDeleted()
-     { return (TILDA__TESTING_Factory.COLS.DELETED._Mask & __Changes) != 0L; }
+     { return (TILDA__TESTING_Factory.COLS.DELETED._Mask1 & __Changes1) != 0L; }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -5286,34 +5287,34 @@ This is the hasChanged for:<BR>
    public void CopyTo(tilda.data._Tilda.TILDA__TESTING Dst) throws Exception
      {
        Dst.setName       (_name       );
-       if ((TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask & __Nulls) != 0L) Dst.setNullDescription(); else        Dst.setDescription(_description);
-       if ((TILDA__TESTING_Factory.COLS.DESC2._Mask       & __Nulls) != 0L) Dst.setNullDesc2      (); else        Dst.setDesc2      (_desc2      );
-       if ((TILDA__TESTING_Factory.COLS.DESC3._Mask       & __Nulls) != 0L) Dst.setNullDesc3      (); else        Dst.setDesc3      (_desc3      );
-       if ((TILDA__TESTING_Factory.COLS.DESC4._Mask       & __Nulls) != 0L) Dst.setNullDesc4      (); else        Dst.setDesc4      (_desc4      );
-       if ((TILDA__TESTING_Factory.COLS.DESC5._Mask       & __Nulls) != 0L) Dst.setNullDesc5      (); else        Dst.setDesc5      (_desc5      );
-       if ((TILDA__TESTING_Factory.COLS.DESC6._Mask       & __Nulls) != 0L) Dst.setNullDesc6      (); else        Dst.setDesc6      (_desc6      );
-       if ((TILDA__TESTING_Factory.COLS.TOPS._Mask        & __Nulls) != 0L) Dst.setNullTops       (); else        Dst.setTops       (_tops       );
-       if ((TILDA__TESTING_Factory.COLS.TOPS2._Mask       & __Nulls) != 0L) Dst.setNullTops2      (); else        Dst.setTops2      (_tops2      );
-       if ((TILDA__TESTING_Factory.COLS.A1._Mask          & __Nulls) != 0L) Dst.setNullA1         (); else        Dst.setA1         (_a1         );
-       if ((TILDA__TESTING_Factory.COLS.A2._Mask          & __Nulls) != 0L) Dst.setNullA2         (); else        Dst.setA2         (_a2         );
-       if ((TILDA__TESTING_Factory.COLS.A2B._Mask         & __Nulls) != 0L) Dst.setNullA2b        (); else        Dst.setA2b        (_a2b        );
-       if ((TILDA__TESTING_Factory.COLS.A2C._Mask         & __Nulls) != 0L) Dst.setNullA2c        (); else        Dst.setA2c        (_a2c        );
-       if ((TILDA__TESTING_Factory.COLS.A3._Mask          & __Nulls) != 0L) Dst.setNullA3         (); else        Dst.setA3         (_a3         );
-       if ((TILDA__TESTING_Factory.COLS.A3B._Mask         & __Nulls) != 0L) Dst.setNullA3b        (); else        Dst.setA3b        (_a3b        );
-       if ((TILDA__TESTING_Factory.COLS.A4._Mask          & __Nulls) != 0L) Dst.setNullA4         (); else        Dst.setA4         (_a4         );
-       if ((TILDA__TESTING_Factory.COLS.A4B._Mask         & __Nulls) != 0L) Dst.setNullA4b        (); else        Dst.setA4b        (_a4b        );
-       if ((TILDA__TESTING_Factory.COLS.A5._Mask          & __Nulls) != 0L) Dst.setNullA5         (); else        Dst.setA5         (_a5         );
-       if ((TILDA__TESTING_Factory.COLS.A5B._Mask         & __Nulls) != 0L) Dst.setNullA5b        (); else        Dst.setA5b        (_a5b        );
-       if ((TILDA__TESTING_Factory.COLS.A6._Mask          & __Nulls) != 0L) Dst.setNullA6         (); else        Dst.setA6         (_a6         );
-       if ((TILDA__TESTING_Factory.COLS.A6B._Mask         & __Nulls) != 0L) Dst.setNullA6b        (); else        Dst.setA6b        (_a6b        );
-       if ((TILDA__TESTING_Factory.COLS.A6C._Mask         & __Nulls) != 0L) Dst.setNullA6c        (); else        Dst.setA6c        (_a6c        );
-       if ((TILDA__TESTING_Factory.COLS.A7._Mask          & __Nulls) != 0L) Dst.setNullA7         (); else        Dst.setA7         (_a7         );
-       if ((TILDA__TESTING_Factory.COLS.A7B._Mask         & __Nulls) != 0L) Dst.setNullA7b        (); else        Dst.setA7b        (_a7b        );
-       if ((TILDA__TESTING_Factory.COLS.A8._Mask          & __Nulls) != 0L) Dst.setNullA8         (); else        Dst.setA8         (_a8         );
-       if ((TILDA__TESTING_Factory.COLS.A9TZ._Mask        & __Nulls) != 0L) Dst.setNullA9TZ       (); else        Dst.setA9TZ       (_a9TZ       );
-       if ((TILDA__TESTING_Factory.COLS.A9._Mask          & __Nulls) != 0L) Dst.setNullA9         (); else        Dst.setA9         (_a9         );
+       if ((TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask1 & __Nulls1) != 0L) Dst.setNullDescription(); else        Dst.setDescription(_description);
+       if ((TILDA__TESTING_Factory.COLS.DESC2._Mask1       & __Nulls1) != 0L) Dst.setNullDesc2      (); else        Dst.setDesc2      (_desc2      );
+       if ((TILDA__TESTING_Factory.COLS.DESC3._Mask1       & __Nulls1) != 0L) Dst.setNullDesc3      (); else        Dst.setDesc3      (_desc3      );
+       if ((TILDA__TESTING_Factory.COLS.DESC4._Mask1       & __Nulls1) != 0L) Dst.setNullDesc4      (); else        Dst.setDesc4      (_desc4      );
+       if ((TILDA__TESTING_Factory.COLS.DESC5._Mask1       & __Nulls1) != 0L) Dst.setNullDesc5      (); else        Dst.setDesc5      (_desc5      );
+       if ((TILDA__TESTING_Factory.COLS.DESC6._Mask1       & __Nulls1) != 0L) Dst.setNullDesc6      (); else        Dst.setDesc6      (_desc6      );
+       if ((TILDA__TESTING_Factory.COLS.TOPS._Mask1        & __Nulls1) != 0L) Dst.setNullTops       (); else        Dst.setTops       (_tops       );
+       if ((TILDA__TESTING_Factory.COLS.TOPS2._Mask1       & __Nulls1) != 0L) Dst.setNullTops2      (); else        Dst.setTops2      (_tops2      );
+       if ((TILDA__TESTING_Factory.COLS.A1._Mask1          & __Nulls1) != 0L) Dst.setNullA1         (); else        Dst.setA1         (_a1         );
+       if ((TILDA__TESTING_Factory.COLS.A2._Mask1          & __Nulls1) != 0L) Dst.setNullA2         (); else        Dst.setA2         (_a2         );
+       if ((TILDA__TESTING_Factory.COLS.A2B._Mask1         & __Nulls1) != 0L) Dst.setNullA2b        (); else        Dst.setA2b        (_a2b        );
+       if ((TILDA__TESTING_Factory.COLS.A2C._Mask1         & __Nulls1) != 0L) Dst.setNullA2c        (); else        Dst.setA2c        (_a2c        );
+       if ((TILDA__TESTING_Factory.COLS.A3._Mask1          & __Nulls1) != 0L) Dst.setNullA3         (); else        Dst.setA3         (_a3         );
+       if ((TILDA__TESTING_Factory.COLS.A3B._Mask1         & __Nulls1) != 0L) Dst.setNullA3b        (); else        Dst.setA3b        (_a3b        );
+       if ((TILDA__TESTING_Factory.COLS.A4._Mask1          & __Nulls1) != 0L) Dst.setNullA4         (); else        Dst.setA4         (_a4         );
+       if ((TILDA__TESTING_Factory.COLS.A4B._Mask1         & __Nulls1) != 0L) Dst.setNullA4b        (); else        Dst.setA4b        (_a4b        );
+       if ((TILDA__TESTING_Factory.COLS.A5._Mask1          & __Nulls1) != 0L) Dst.setNullA5         (); else        Dst.setA5         (_a5         );
+       if ((TILDA__TESTING_Factory.COLS.A5B._Mask1         & __Nulls1) != 0L) Dst.setNullA5b        (); else        Dst.setA5b        (_a5b        );
+       if ((TILDA__TESTING_Factory.COLS.A6._Mask1          & __Nulls1) != 0L) Dst.setNullA6         (); else        Dst.setA6         (_a6         );
+       if ((TILDA__TESTING_Factory.COLS.A6B._Mask1         & __Nulls1) != 0L) Dst.setNullA6b        (); else        Dst.setA6b        (_a6b        );
+       if ((TILDA__TESTING_Factory.COLS.A6C._Mask1         & __Nulls1) != 0L) Dst.setNullA6c        (); else        Dst.setA6c        (_a6c        );
+       if ((TILDA__TESTING_Factory.COLS.A7._Mask1          & __Nulls1) != 0L) Dst.setNullA7         (); else        Dst.setA7         (_a7         );
+       if ((TILDA__TESTING_Factory.COLS.A7B._Mask1         & __Nulls1) != 0L) Dst.setNullA7b        (); else        Dst.setA7b        (_a7b        );
+       if ((TILDA__TESTING_Factory.COLS.A8._Mask1          & __Nulls1) != 0L) Dst.setNullA8         (); else        Dst.setA8         (_a8         );
+       if ((TILDA__TESTING_Factory.COLS.A9TZ._Mask1        & __Nulls1) != 0L) Dst.setNullA9TZ       (); else        Dst.setA9TZ       (_a9TZ       );
+       if ((TILDA__TESTING_Factory.COLS.A9._Mask1          & __Nulls1) != 0L) Dst.setNullA9         (); else        Dst.setA9         (_a9         );
        Dst.setLastUpdated(_lastUpdated);
-       if ((TILDA__TESTING_Factory.COLS.DELETED._Mask     & __Nulls) != 0L) Dst.setNullDeleted    (); else        Dst.setDeleted    (_deleted    );
+       if ((TILDA__TESTING_Factory.COLS.DELETED._Mask1     & __Nulls1) != 0L) Dst.setNullDeleted    (); else        Dst.setDeleted    (_deleted    );
      }
 
 /**
@@ -5332,7 +5333,7 @@ This is the hasChanged for:<BR>
    public final boolean Write(Connection C) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Changes == 0L)
+       if (__Changes1 == 0L && __Changes2 == 0L)
         {
           LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.TESTING has not changed: no writing will occur.");
           QueryDetails.setLastQuery(TILDA__TESTING_Factory.SCHEMA_TABLENAME_LABEL, "");
@@ -5353,49 +5354,49 @@ This is the hasChanged for:<BR>
           StringBuilder V = new StringBuilder(1024);
           S.append("insert into "); C.getFullTableVar(S, "TILDA", "TESTING");
           int Pos = S.length();
-          if ((TILDA__TESTING_Factory.COLS.REFNUM._Mask      & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.REFNUM2._Mask     & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.REFNUM2.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.NAME._Mask        & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.NAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.DESCRIPTION.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.DESC2._Mask       & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.DESC2.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.DESC3._Mask       & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.DESC3.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.DESC4._Mask       & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.DESC4.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.DESC5._Mask       & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.DESC5.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.DESC6._Mask       & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.DESC6.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.TOPS._Mask        & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.TOPS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.TOPS2._Mask       & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.TOPS2.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A1._Mask          & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A1.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A2._Mask          & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A2.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A2B._Mask         & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A2B.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A2C._Mask         & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A2C.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A3._Mask          & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A3.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A3B._Mask         & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A3B.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A4._Mask          & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A4.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A4B._Mask         & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A4B.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A5._Mask          & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A5.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A5B._Mask         & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A5B.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A6._Mask          & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A6.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A6B._Mask         & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A6B.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A6C._Mask         & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A6C.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A7._Mask          & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A7.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A7B._Mask         & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A7B.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A8._Mask          & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A8.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TESTING_Factory.COLS.A9TZ._Mask        & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A9TZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.REFNUM._Mask1      & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.REFNUM2._Mask1     & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.REFNUM2.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.NAME._Mask1        & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.NAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask1 & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.DESCRIPTION.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.DESC2._Mask1       & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.DESC2.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.DESC3._Mask1       & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.DESC3.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.DESC4._Mask1       & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.DESC4.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.DESC5._Mask1       & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.DESC5.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.DESC6._Mask1       & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.DESC6.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.TOPS._Mask1        & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.TOPS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.TOPS2._Mask1       & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.TOPS2.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A1._Mask1          & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.A1.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A2._Mask1          & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.A2.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A2B._Mask1         & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.A2B.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A2C._Mask1         & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.A2C.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A3._Mask1          & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.A3.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A3B._Mask1         & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.A3B.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A4._Mask1          & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.A4.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A4B._Mask1         & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.A4B.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A5._Mask1          & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.A5.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A5B._Mask1         & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.A5B.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A6._Mask1          & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.A6.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A6B._Mask1         & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.A6B.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A6C._Mask1         & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.A6C.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A7._Mask1          & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.A7.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A7B._Mask1         & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.A7B.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A8._Mask1          & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.A8.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__TESTING_Factory.COLS.A9TZ._Mask1        & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.A9TZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
-          if ((TILDA__TESTING_Factory.COLS.A9._Mask          & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.A9.getFullColumnVarForInsert(C, S);
-             V.append((TILDA__TESTING_Factory.COLS.A9._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_a9) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if ((TILDA__TESTING_Factory.COLS.A9._Mask1          & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.A9.getFullColumnVarForInsert(C, S);
+             V.append((TILDA__TESTING_Factory.COLS.A9._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_a9) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
 
-          if ((TILDA__TESTING_Factory.COLS.CREATED._Mask     & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
-             V.append((TILDA__TESTING_Factory.COLS.CREATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if ((TILDA__TESTING_Factory.COLS.CREATED._Mask1     & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
+             V.append((TILDA__TESTING_Factory.COLS.CREATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
           else { TILDA__TESTING_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
-          if ((TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
-             V.append((TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if ((TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask1 & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
+             V.append((TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
           else { TILDA__TESTING_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
-          if ((TILDA__TESTING_Factory.COLS.DELETED._Mask     & __Changes) != 0L) { TILDA__TESTING_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
-             V.append((TILDA__TESTING_Factory.COLS.DELETED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if ((TILDA__TESTING_Factory.COLS.DELETED._Mask1     & __Changes1) != 0L) { TILDA__TESTING_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
+             V.append((TILDA__TESTING_Factory.COLS.DELETED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
 
           S.setCharAt(Pos, '(');
@@ -5408,54 +5409,54 @@ This is the hasChanged for:<BR>
         {
           S.append("update "); C.getFullTableVar(S, "TILDA", "TESTING"); S.append(" set");
           int Pos = S.length();
-          if ((TILDA__TESTING_Factory.COLS.REFNUM._Mask      & __Changes) != 0L) TILDA__TESTING_Factory.COLS.REFNUM.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TESTING_Factory.COLS.REFNUM2._Mask     & __Changes) != 0L) TILDA__TESTING_Factory.COLS.REFNUM2.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TESTING_Factory.COLS.NAME._Mask        & __Changes) != 0L) TILDA__TESTING_Factory.COLS.NAME.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask & __Changes) != 0L) TILDA__TESTING_Factory.COLS.DESCRIPTION.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TESTING_Factory.COLS.DESC2._Mask       & __Changes) != 0L) TILDA__TESTING_Factory.COLS.DESC2.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TESTING_Factory.COLS.DESC3._Mask       & __Changes) != 0L) TILDA__TESTING_Factory.COLS.DESC3.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TESTING_Factory.COLS.DESC4._Mask       & __Changes) != 0L) TILDA__TESTING_Factory.COLS.DESC4.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TESTING_Factory.COLS.DESC5._Mask       & __Changes) != 0L) TILDA__TESTING_Factory.COLS.DESC5.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TESTING_Factory.COLS.DESC6._Mask       & __Changes) != 0L) TILDA__TESTING_Factory.COLS.DESC6.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TESTING_Factory.COLS.TOPS._Mask        & __Changes) != 0L) TILDA__TESTING_Factory.COLS.TOPS.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TESTING_Factory.COLS.TOPS2._Mask       & __Changes) != 0L) TILDA__TESTING_Factory.COLS.TOPS2.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TESTING_Factory.COLS.A1._Mask          & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A1.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TESTING_Factory.COLS.A2._Mask          & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A2.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TESTING_Factory.COLS.A2B._Mask         & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A2B.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TESTING_Factory.COLS.A2C._Mask         & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A2C.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TESTING_Factory.COLS.A3._Mask          & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A3.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TESTING_Factory.COLS.A3B._Mask         & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A3B.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TESTING_Factory.COLS.A4._Mask          & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A4.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TESTING_Factory.COLS.A4B._Mask         & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A4B.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TESTING_Factory.COLS.A5._Mask          & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A5.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TESTING_Factory.COLS.A5B._Mask         & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A5B.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TESTING_Factory.COLS.A6._Mask          & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A6.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TESTING_Factory.COLS.A6B._Mask         & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A6B.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TESTING_Factory.COLS.A6C._Mask         & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A6C.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TESTING_Factory.COLS.A7._Mask          & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A7.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TESTING_Factory.COLS.A7B._Mask         & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A7B.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TESTING_Factory.COLS.A8._Mask          & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A8.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TESTING_Factory.COLS.A9TZ._Mask        & __Changes) != 0L) TILDA__TESTING_Factory.COLS.A9TZ.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.REFNUM._Mask1      & __Changes1) != 0L) TILDA__TESTING_Factory.COLS.REFNUM.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.REFNUM2._Mask1     & __Changes1) != 0L) TILDA__TESTING_Factory.COLS.REFNUM2.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.NAME._Mask1        & __Changes1) != 0L) TILDA__TESTING_Factory.COLS.NAME.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask1 & __Changes1) != 0L) TILDA__TESTING_Factory.COLS.DESCRIPTION.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.DESC2._Mask1       & __Changes1) != 0L) TILDA__TESTING_Factory.COLS.DESC2.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.DESC3._Mask1       & __Changes1) != 0L) TILDA__TESTING_Factory.COLS.DESC3.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.DESC4._Mask1       & __Changes1) != 0L) TILDA__TESTING_Factory.COLS.DESC4.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.DESC5._Mask1       & __Changes1) != 0L) TILDA__TESTING_Factory.COLS.DESC5.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.DESC6._Mask1       & __Changes1) != 0L) TILDA__TESTING_Factory.COLS.DESC6.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.TOPS._Mask1        & __Changes1) != 0L) TILDA__TESTING_Factory.COLS.TOPS.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.TOPS2._Mask1       & __Changes1) != 0L) TILDA__TESTING_Factory.COLS.TOPS2.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A1._Mask1          & __Changes1) != 0L) TILDA__TESTING_Factory.COLS.A1.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A2._Mask1          & __Changes1) != 0L) TILDA__TESTING_Factory.COLS.A2.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A2B._Mask1         & __Changes1) != 0L) TILDA__TESTING_Factory.COLS.A2B.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A2C._Mask1         & __Changes1) != 0L) TILDA__TESTING_Factory.COLS.A2C.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A3._Mask1          & __Changes1) != 0L) TILDA__TESTING_Factory.COLS.A3.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A3B._Mask1         & __Changes1) != 0L) TILDA__TESTING_Factory.COLS.A3B.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A4._Mask1          & __Changes1) != 0L) TILDA__TESTING_Factory.COLS.A4.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A4B._Mask1         & __Changes1) != 0L) TILDA__TESTING_Factory.COLS.A4B.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A5._Mask1          & __Changes1) != 0L) TILDA__TESTING_Factory.COLS.A5.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A5B._Mask1         & __Changes1) != 0L) TILDA__TESTING_Factory.COLS.A5B.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A6._Mask1          & __Changes1) != 0L) TILDA__TESTING_Factory.COLS.A6.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A6B._Mask1         & __Changes1) != 0L) TILDA__TESTING_Factory.COLS.A6B.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A6C._Mask1         & __Changes1) != 0L) TILDA__TESTING_Factory.COLS.A6C.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A7._Mask1          & __Changes1) != 0L) TILDA__TESTING_Factory.COLS.A7.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A7B._Mask1         & __Changes1) != 0L) TILDA__TESTING_Factory.COLS.A7B.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A8._Mask1          & __Changes1) != 0L) TILDA__TESTING_Factory.COLS.A8.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__TESTING_Factory.COLS.A9TZ._Mask1        & __Changes1) != 0L) TILDA__TESTING_Factory.COLS.A9TZ.getFullColumnVarForUpdate(C, S);
 
-          if ((TILDA__TESTING_Factory.COLS.A9._Mask & __Changes) != 0L)
+          if ((TILDA__TESTING_Factory.COLS.A9._Mask1 & __Changes1) != 0L)
            {
-             if ((TILDA__TESTING_Factory.COLS.A9._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_a9) == true)
+             if ((TILDA__TESTING_Factory.COLS.A9._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_a9) == true)
               { TILDA__TESTING_Factory.COLS.A9.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
               TILDA__TESTING_Factory.COLS.A9.getFullColumnVarForUpdate(C, S);
            }
 
-          if ((TILDA__TESTING_Factory.COLS.CREATED._Mask & __Changes) != 0L)
+          if ((TILDA__TESTING_Factory.COLS.CREATED._Mask1 & __Changes1) != 0L)
            {
-             if ((TILDA__TESTING_Factory.COLS.CREATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true)
+             if ((TILDA__TESTING_Factory.COLS.CREATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true)
               { TILDA__TESTING_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
               TILDA__TESTING_Factory.COLS.CREATED.getFullColumnVarForUpdate(C, S);
            }
 
-          if ((TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask & __Changes) != 0L)
+          if ((TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask1 & __Changes1) != 0L)
            {
-             if ((TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true)
+             if ((TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true)
               { TILDA__TESTING_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
               TILDA__TESTING_Factory.COLS.LASTUPDATED.getFullColumnVarForUpdate(C, S);
@@ -5466,9 +5467,9 @@ This is the hasChanged for:<BR>
              setLastUpdatedNow();
            }
 
-          if ((TILDA__TESTING_Factory.COLS.DELETED._Mask & __Changes) != 0L)
+          if ((TILDA__TESTING_Factory.COLS.DELETED._Mask1 & __Changes1) != 0L)
            {
-             if ((TILDA__TESTING_Factory.COLS.DELETED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true)
+             if ((TILDA__TESTING_Factory.COLS.DELETED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true)
               { TILDA__TESTING_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
               TILDA__TESTING_Factory.COLS.DELETED.getFullColumnVarForUpdate(C, S);
@@ -5497,133 +5498,133 @@ This is the hasChanged for:<BR>
         {
           PS = C.prepareStatement(Q);
           int i = 0;
-               if ((TILDA__TESTING_Factory.COLS.REFNUM._Mask      & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.REFNUM._Mask1      & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.REFNUM._Mask      & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _refnum);
+                  if ((TILDA__TESTING_Factory.COLS.REFNUM._Mask1      & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _refnum);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.REFNUM2._Mask     & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.REFNUM2._Mask1     & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.REFNUM2._Mask     & __Nulls  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.BIGINT ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.REFNUM2._Type, AllocatedArrays, _refnum2);
+                  if ((TILDA__TESTING_Factory.COLS.REFNUM2._Mask1     & __Nulls1  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.BIGINT ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.REFNUM2._Type, AllocatedArrays, _refnum2);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.NAME._Mask        & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.NAME._Mask1        & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.NAME._Mask        & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _name);
+                  if ((TILDA__TESTING_Factory.COLS.NAME._Mask1        & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _name);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask1 & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _description);
+                  if ((TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask1 & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _description);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.DESC2._Mask       & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.DESC2._Mask1       & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.DESC2._Mask       & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _desc2);
+                  if ((TILDA__TESTING_Factory.COLS.DESC2._Mask1       & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _desc2);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.DESC3._Mask       & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.DESC3._Mask1       & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.DESC3._Mask       & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _desc3);
+                  if ((TILDA__TESTING_Factory.COLS.DESC3._Mask1       & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _desc3);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.DESC4._Mask       & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.DESC4._Mask1       & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.DESC4._Mask       & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _desc4);
+                  if ((TILDA__TESTING_Factory.COLS.DESC4._Mask1       & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _desc4);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.DESC5._Mask       & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.DESC5._Mask1       & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.DESC5._Mask       & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _desc5);
+                  if ((TILDA__TESTING_Factory.COLS.DESC5._Mask1       & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _desc5);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.DESC6._Mask       & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.DESC6._Mask1       & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.DESC6._Mask       & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _desc6);
+                  if ((TILDA__TESTING_Factory.COLS.DESC6._Mask1       & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _desc6);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.TOPS._Mask        & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.TOPS._Mask1        & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.TOPS._Mask        & __Nulls  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.TOPS._Type, AllocatedArrays, _tops);
+                  if ((TILDA__TESTING_Factory.COLS.TOPS._Mask1        & __Nulls1  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.TOPS._Type, AllocatedArrays, _tops);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.TOPS2._Mask       & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.TOPS2._Mask1       & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.TOPS2._Mask       & __Nulls  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.TOPS2._Type, AllocatedArrays, _tops2);
+                  if ((TILDA__TESTING_Factory.COLS.TOPS2._Mask1       & __Nulls1  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.TOPS2._Type, AllocatedArrays, _tops2);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.A1._Mask          & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.A1._Mask1          & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A1._Mask          & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setInt      (++i, _a1);
+                  if ((TILDA__TESTING_Factory.COLS.A1._Mask1          & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setInt      (++i, _a1);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.A2._Mask          & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.A2._Mask1          & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A2._Mask          & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, ""+_a2);
+                  if ((TILDA__TESTING_Factory.COLS.A2._Mask1          & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, ""+_a2);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.A2B._Mask         & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.A2B._Mask1         & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A2B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A2B._Type, AllocatedArrays, _a2b);
+                  if ((TILDA__TESTING_Factory.COLS.A2B._Mask1         & __Nulls1  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A2B._Type, AllocatedArrays, _a2b);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.A2C._Mask         & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.A2C._Mask1         & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A2C._Mask         & __Nulls  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A2C._Type, AllocatedArrays, _a2c);
+                  if ((TILDA__TESTING_Factory.COLS.A2C._Mask1         & __Nulls1  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A2C._Type, AllocatedArrays, _a2c);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.A3._Mask          & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.A3._Mask1          & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A3._Mask          & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.BOOLEAN); else PS.setBoolean  (++i, _a3);
+                  if ((TILDA__TESTING_Factory.COLS.A3._Mask1          & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BOOLEAN); else PS.setBoolean  (++i, _a3);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.A3B._Mask         & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.A3B._Mask1         & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A3B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.BOOLEAN); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A3B._Type, AllocatedArrays, _a3b);
+                  if ((TILDA__TESTING_Factory.COLS.A3B._Mask1         & __Nulls1  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.BOOLEAN); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A3B._Type, AllocatedArrays, _a3b);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.A4._Mask          & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.A4._Mask1          & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A4._Mask          & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.DOUBLE ); else PS.setDouble   (++i, _a4);
+                  if ((TILDA__TESTING_Factory.COLS.A4._Mask1          & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.DOUBLE ); else PS.setDouble   (++i, _a4);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.A4B._Mask         & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.A4B._Mask1         & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A4B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.DOUBLE ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A4B._Type, AllocatedArrays, _a4b);
+                  if ((TILDA__TESTING_Factory.COLS.A4B._Mask1         & __Nulls1  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.DOUBLE ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A4B._Type, AllocatedArrays, _a4b);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.A5._Mask          & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.A5._Mask1          & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A5._Mask          & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.FLOAT  ); else PS.setFloat    (++i, _a5);
+                  if ((TILDA__TESTING_Factory.COLS.A5._Mask1          & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.FLOAT  ); else PS.setFloat    (++i, _a5);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.A5B._Mask         & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.A5B._Mask1         & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A5B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.FLOAT  ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A5B._Type, AllocatedArrays, _a5b);
+                  if ((TILDA__TESTING_Factory.COLS.A5B._Mask1         & __Nulls1  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.FLOAT  ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A5B._Type, AllocatedArrays, _a5b);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.A6._Mask          & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.A6._Mask1          & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A6._Mask          & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _a6);
+                  if ((TILDA__TESTING_Factory.COLS.A6._Mask1          & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _a6);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.A6B._Mask         & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.A6B._Mask1         & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A6B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.BIGINT ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A6B._Type, AllocatedArrays, _a6b);
+                  if ((TILDA__TESTING_Factory.COLS.A6B._Mask1         & __Nulls1  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.BIGINT ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A6B._Type, AllocatedArrays, _a6b);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.A6C._Mask         & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.A6C._Mask1         & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A6C._Mask         & __Nulls  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.BIGINT ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A6C._Type, AllocatedArrays, _a6c);
+                  if ((TILDA__TESTING_Factory.COLS.A6C._Mask1         & __Nulls1  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.BIGINT ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A6C._Type, AllocatedArrays, _a6c);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.A7._Mask          & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.A7._Mask1          & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A7._Mask          & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _a7);
+                  if ((TILDA__TESTING_Factory.COLS.A7._Mask1          & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _a7);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.A7B._Mask         & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.A7B._Mask1         & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A7B._Mask         & __Nulls  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.INTEGER); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A7B._Type, AllocatedArrays, _a7b);
+                  if ((TILDA__TESTING_Factory.COLS.A7B._Mask1         & __Nulls1  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.INTEGER); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A7B._Type, AllocatedArrays, _a7b);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.A8._Mask          & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.A8._Mask1          & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A8._Mask          & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.BINARY ); else PS.setBytes    (++i, _a8);
+                  if ((TILDA__TESTING_Factory.COLS.A8._Mask1          & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BINARY ); else PS.setBytes    (++i, _a8);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.A9TZ._Mask        & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.A9TZ._Mask1        & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A9TZ._Mask        & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _a9TZ);
+                  if ((TILDA__TESTING_Factory.COLS.A9TZ._Mask1        & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _a9TZ);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.A9._Mask          & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.A9._Mask1          & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.A9._Mask          & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_a9) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_a9.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                  if ((TILDA__TESTING_Factory.COLS.A9._Mask1          & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_a9) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_a9.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.CREATED._Mask     & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.CREATED._Mask1     & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.CREATED._Mask     & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                  if ((TILDA__TESTING_Factory.COLS.CREATED._Mask1     & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask1 & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_lastUpdated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                  if ((TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask1 & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_lastUpdated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
-               if ((TILDA__TESTING_Factory.COLS.DELETED._Mask     & __Changes) != 0L) 
+               if ((TILDA__TESTING_Factory.COLS.DELETED._Mask1     & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__TESTING_Factory.COLS.DELETED._Mask     & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deleted.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                  if ((TILDA__TESTING_Factory.COLS.DELETED._Mask1     & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deleted.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
 
           switch (__LookupId)
@@ -5672,9 +5673,7 @@ This is the hasChanged for:<BR>
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
         }
 
-       __Changes= 0L   ;
-       __Nulls  = 0L   ;
-
+       __Changes1= __Changes2= __Nulls1= __Nulls2= 0L;
        return true;
      }
 
@@ -5700,7 +5699,7 @@ This is the hasChanged for:<BR>
        long T0 = System.nanoTime();
        if (__Init == InitMode.CREATE)
         throw new Exception("This TILDA.TESTING object is being Read() after a Create(), which doesn't make sense.");
-       if (__Init == InitMode.READ == true && Force == false && __Changes == 0L)
+       if (__Init == InitMode.READ == true && Force == false && __Changes1 == 0L && __Changes2 == 0L)
         {
           LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.TESTING object has already been read.");
           QueryDetails.setLastQuery(TILDA__TESTING_Factory.SCHEMA_TABLENAME_LABEL, "");
@@ -5800,41 +5799,42 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_refnum      = _refnum      =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.REFNUM._Mask     ;
-                            _refnum2 = (List<Long>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.REFNUM2._Type, false); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.REFNUM2._Mask    ;
-                            _name        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.NAME._Mask       ; else _name        = _name       .trim();
-                            _description = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask;
-                            _desc2       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.DESC2._Mask      ;
-                            _desc3       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.DESC3._Mask      ;
-                            _desc4       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.DESC4._Mask      ;
-                            _desc5       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.DESC5._Mask      ;
-                            _desc6       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.DESC6._Mask      ;
-                            _tops = (List<String>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.TOPS._Type, false); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.TOPS._Mask       ;
-                            _tops2 = (Set<String>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.TOPS2._Type, true); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.TOPS2._Mask      ;
-                            _a1          =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A1._Mask         ;
-                            _a2          = ParseUtil.parseCharacter    (RS.getString   (++i));  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A2._Mask         ;
-                            _a2b = (List<Character>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A2B._Type, false); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A2B._Mask        ;
-                            _a2c = (Set<Character>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A2C._Type, true); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A2C._Mask        ;
-                            _a3          =                              RS.getBoolean  (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A3._Mask         ;
-                            _a3b = (List<Boolean>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A3B._Type, false); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A3B._Mask        ;
-                            _a4          =                              RS.getDouble   (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A4._Mask         ;
-                            _a4b = (List<Double>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A4B._Type, false); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A4B._Mask        ;
-                            _a5          =                              RS.getFloat    (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A5._Mask         ;
-                            _a5b = (List<Float>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A5B._Type, false); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A5B._Mask        ;
-                            _a6          =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A6._Mask         ;
-                            _a6b = (List<Long>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A6B._Type, false); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A6B._Mask        ;
-                            _a6c = (Set<Long>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A6C._Type, true); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A6C._Mask        ;
-                            _a7          =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A7._Mask         ;
-                            _a7b = (List<Integer>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A7B._Type, false); if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A7B._Mask        ;
-                            _a8          =                              RS.getBytes    (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A8._Mask         ;
-                            _a9TZ        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__TESTING_Factory.COLS.A9TZ._Mask       ; else _a9TZ        = _a9TZ       .trim();
+      __Saved_refnum      = _refnum      =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__TESTING_Factory.COLS.REFNUM._Mask1     ;
+                            _refnum2 = (List<Long>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.REFNUM2._Type, false); if (RS.wasNull() == true) __Nulls1 |= TILDA__TESTING_Factory.COLS.REFNUM2._Mask1    ;
+                            _name        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__TESTING_Factory.COLS.NAME._Mask1       ; else _name        = _name       .trim();
+                            _description = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask1;
+                            _desc2       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__TESTING_Factory.COLS.DESC2._Mask1      ;
+                            _desc3       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__TESTING_Factory.COLS.DESC3._Mask1      ;
+                            _desc4       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__TESTING_Factory.COLS.DESC4._Mask1      ;
+                            _desc5       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__TESTING_Factory.COLS.DESC5._Mask1      ;
+                            _desc6       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__TESTING_Factory.COLS.DESC6._Mask1      ;
+                            _tops = (List<String>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.TOPS._Type, false); if (RS.wasNull() == true) __Nulls1 |= TILDA__TESTING_Factory.COLS.TOPS._Mask1       ;
+                            _tops2 = (Set<String>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.TOPS2._Type, true); if (RS.wasNull() == true) __Nulls1 |= TILDA__TESTING_Factory.COLS.TOPS2._Mask1      ;
+                            _a1          =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__TESTING_Factory.COLS.A1._Mask1         ;
+                            _a2          = ParseUtil.parseCharacter    (RS.getString   (++i));  if (RS.wasNull() == true) __Nulls1 |= TILDA__TESTING_Factory.COLS.A2._Mask1         ;
+                            _a2b = (List<Character>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A2B._Type, false); if (RS.wasNull() == true) __Nulls1 |= TILDA__TESTING_Factory.COLS.A2B._Mask1        ;
+                            _a2c = (Set<Character>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A2C._Type, true); if (RS.wasNull() == true) __Nulls1 |= TILDA__TESTING_Factory.COLS.A2C._Mask1        ;
+                            _a3          =                              RS.getBoolean  (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__TESTING_Factory.COLS.A3._Mask1         ;
+                            _a3b = (List<Boolean>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A3B._Type, false); if (RS.wasNull() == true) __Nulls1 |= TILDA__TESTING_Factory.COLS.A3B._Mask1        ;
+                            _a4          =                              RS.getDouble   (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__TESTING_Factory.COLS.A4._Mask1         ;
+                            _a4b = (List<Double>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A4B._Type, false); if (RS.wasNull() == true) __Nulls1 |= TILDA__TESTING_Factory.COLS.A4B._Mask1        ;
+                            _a5          =                              RS.getFloat    (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__TESTING_Factory.COLS.A5._Mask1         ;
+                            _a5b = (List<Float>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A5B._Type, false); if (RS.wasNull() == true) __Nulls1 |= TILDA__TESTING_Factory.COLS.A5B._Mask1        ;
+                            _a6          =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__TESTING_Factory.COLS.A6._Mask1         ;
+                            _a6b = (List<Long>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A6B._Type, false); if (RS.wasNull() == true) __Nulls1 |= TILDA__TESTING_Factory.COLS.A6B._Mask1        ;
+                            _a6c = (Set<Long>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A6C._Type, true); if (RS.wasNull() == true) __Nulls1 |= TILDA__TESTING_Factory.COLS.A6C._Mask1        ;
+                            _a7          =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__TESTING_Factory.COLS.A7._Mask1         ;
+                            _a7b = (List<Integer>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A7B._Type, false); if (RS.wasNull() == true) __Nulls1 |= TILDA__TESTING_Factory.COLS.A7B._Mask1        ;
+                            _a8          =                              RS.getBytes    (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__TESTING_Factory.COLS.A8._Mask1         ;
+                            _a9TZ        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__TESTING_Factory.COLS.A9TZ._Mask1       ; else _a9TZ        = _a9TZ       .trim();
                             _a9          = ProcessZDT(_a9TZ         , "tilda.data.TILDA.TESTING.a9"         , RS, ++i, TILDA__TESTING_Factory.COLS.A9         , TILDA__TESTING_Factory.COLS.A9TZ         );
                             _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
                             _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
                             _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
      __LookupId = 0;
      __Init     = InitMode.READ;
-     __Changes  = 0L;
+     __Changes1  = 0L;
+     __Changes2  = 0L;
      return AfterRead(C);
    }
 
@@ -5846,9 +5846,12 @@ This is the hasChanged for:<BR>
       throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + TimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
      ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(RS.getTimestamp(ColumnPos, DateTimeUtil._UTC_CALENDAR), ZI == null ? "null" : ZI.getValue());
      if (RS.wasNull() == true)
-      __Nulls |= DTField._Mask;
-     boolean DTNull = (__Nulls & DTField._Mask) != 0L;
-     boolean TZNull = (__Nulls & TZField._Mask) != 0L;
+      if (DTField._FirstMask == true)
+       __Nulls1 |= DTField._Mask1;
+      else
+       __Nulls2 |= DTField._Mask2;
+     boolean DTNull = DTField._FirstMask == true ? (__Nulls1 & DTField._Mask1) != 0L : (__Nulls2 & DTField._Mask2) != 0L;
+     boolean TZNull = TZField._FirstMask == true ? (__Nulls1 & TZField._Mask1) != 0L : (__Nulls2 & TZField._Mask2) != 0L;
      if (DTNull == false && TZNull == true)
       throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
      return ZDT;
@@ -5860,34 +5863,34 @@ This is the hasChanged for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "refnum: "                                                                                           +                                   getRefnum     () 
-               + "; refnum2: "                                                                                          + TextUtil.Print                   (getRefnum2    ())
-               + "; name: "                                                                                             + TextUtil.PrintVariableStr        (getName       ())
-               + "; description"   + ((TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask & __Nulls) != 0L ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDescription()))
-               + "; desc2"         + ((TILDA__TESTING_Factory.COLS.DESC2._Mask       & __Nulls) != 0L ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc2      ()))
-               + "; desc3"         + ((TILDA__TESTING_Factory.COLS.DESC3._Mask       & __Nulls) != 0L ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc3      ()))
-               + "; desc4"         + ((TILDA__TESTING_Factory.COLS.DESC4._Mask       & __Nulls) != 0L ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc4      ()))
-               + "; desc5"         + ((TILDA__TESTING_Factory.COLS.DESC5._Mask       & __Nulls) != 0L ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc5      ()))
-               + "; desc6"         + ((TILDA__TESTING_Factory.COLS.DESC6._Mask       & __Nulls) != 0L ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc6      ()))
-               + "; tops"          + ((TILDA__TESTING_Factory.COLS.TOPS._Mask        & __Nulls) != 0L ? ": NULL" : ": " + TextUtil.Print                   (getTops       ()))
-               + "; tops2"         + ((TILDA__TESTING_Factory.COLS.TOPS2._Mask       & __Nulls) != 0L ? ": NULL" : ": " + TextUtil.Print                   (getTops2      ()))
-               + "; a1"            + ((TILDA__TESTING_Factory.COLS.A1._Mask          & __Nulls) != 0L ? ": NULL" : ": " +                                   getA1         () )
-               + "; a2"            + ((TILDA__TESTING_Factory.COLS.A2._Mask          & __Nulls) != 0L ? ": NULL" : ": " +                                   getA2         () )
-               + "; a2b"           + ((TILDA__TESTING_Factory.COLS.A2B._Mask         & __Nulls) != 0L ? ": NULL" : ": " + TextUtil.Print                   (getA2b        ()))
-               + "; a2c"           + ((TILDA__TESTING_Factory.COLS.A2C._Mask         & __Nulls) != 0L ? ": NULL" : ": " + TextUtil.Print                   (getA2c        ()))
-               + "; a3"            + ((TILDA__TESTING_Factory.COLS.A3._Mask          & __Nulls) != 0L ? ": NULL" : ": " +                                   getA3         () )
-               + "; a3b"           + ((TILDA__TESTING_Factory.COLS.A3B._Mask         & __Nulls) != 0L ? ": NULL" : ": " + TextUtil.Print                   (getA3b        ()))
-               + "; a4"            + ((TILDA__TESTING_Factory.COLS.A4._Mask          & __Nulls) != 0L ? ": NULL" : ": " +                                   getA4         () )
-               + "; a4b"           + ((TILDA__TESTING_Factory.COLS.A4B._Mask         & __Nulls) != 0L ? ": NULL" : ": " + TextUtil.Print                   (getA4b        ()))
-               + "; a5"            + ((TILDA__TESTING_Factory.COLS.A5._Mask          & __Nulls) != 0L ? ": NULL" : ": " +                                   getA5         () )
-               + "; a5b"           + ((TILDA__TESTING_Factory.COLS.A5B._Mask         & __Nulls) != 0L ? ": NULL" : ": " + TextUtil.Print                   (getA5b        ()))
-               + "; a6"            + ((TILDA__TESTING_Factory.COLS.A6._Mask          & __Nulls) != 0L ? ": NULL" : ": " +                                   getA6         () )
-               + "; a6b"           + ((TILDA__TESTING_Factory.COLS.A6B._Mask         & __Nulls) != 0L ? ": NULL" : ": " + TextUtil.Print                   (getA6b        ()))
-               + "; a6c"           + ((TILDA__TESTING_Factory.COLS.A6C._Mask         & __Nulls) != 0L ? ": NULL" : ": " + TextUtil.Print                   (getA6c        ()))
-               + "; a7"            + ((TILDA__TESTING_Factory.COLS.A7._Mask          & __Nulls) != 0L ? ": NULL" : ": " +                                   getA7         () )
-               + "; a7b"           + ((TILDA__TESTING_Factory.COLS.A7B._Mask         & __Nulls) != 0L ? ": NULL" : ": " + TextUtil.Print                   (getA7b        ()))
-               + "; a8"            + ((TILDA__TESTING_Factory.COLS.A8._Mask          & __Nulls) != 0L ? ": NULL" : ": " +                                   getA8         () )
-               + "; a9"            + ((TILDA__TESTING_Factory.COLS.A9._Mask          & __Nulls) != 0L ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA9         ()))
+                   "refnum: "                                                                                            +                                   getRefnum     () 
+               + "; refnum2: "                                                                                           + TextUtil.Print                   (getRefnum2    ())
+               + "; name: "                                                                                              + TextUtil.PrintVariableStr        (getName       ())
+               + "; description"   + ((TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask1 & __Nulls1) != 0L ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDescription()))
+               + "; desc2"         + ((TILDA__TESTING_Factory.COLS.DESC2._Mask1       & __Nulls1) != 0L ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc2      ()))
+               + "; desc3"         + ((TILDA__TESTING_Factory.COLS.DESC3._Mask1       & __Nulls1) != 0L ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc3      ()))
+               + "; desc4"         + ((TILDA__TESTING_Factory.COLS.DESC4._Mask1       & __Nulls1) != 0L ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc4      ()))
+               + "; desc5"         + ((TILDA__TESTING_Factory.COLS.DESC5._Mask1       & __Nulls1) != 0L ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc5      ()))
+               + "; desc6"         + ((TILDA__TESTING_Factory.COLS.DESC6._Mask1       & __Nulls1) != 0L ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc6      ()))
+               + "; tops"          + ((TILDA__TESTING_Factory.COLS.TOPS._Mask1        & __Nulls1) != 0L ? ": NULL" : ": " + TextUtil.Print                   (getTops       ()))
+               + "; tops2"         + ((TILDA__TESTING_Factory.COLS.TOPS2._Mask1       & __Nulls1) != 0L ? ": NULL" : ": " + TextUtil.Print                   (getTops2      ()))
+               + "; a1"            + ((TILDA__TESTING_Factory.COLS.A1._Mask1          & __Nulls1) != 0L ? ": NULL" : ": " +                                   getA1         () )
+               + "; a2"            + ((TILDA__TESTING_Factory.COLS.A2._Mask1          & __Nulls1) != 0L ? ": NULL" : ": " +                                   getA2         () )
+               + "; a2b"           + ((TILDA__TESTING_Factory.COLS.A2B._Mask1         & __Nulls1) != 0L ? ": NULL" : ": " + TextUtil.Print                   (getA2b        ()))
+               + "; a2c"           + ((TILDA__TESTING_Factory.COLS.A2C._Mask1         & __Nulls1) != 0L ? ": NULL" : ": " + TextUtil.Print                   (getA2c        ()))
+               + "; a3"            + ((TILDA__TESTING_Factory.COLS.A3._Mask1          & __Nulls1) != 0L ? ": NULL" : ": " +                                   getA3         () )
+               + "; a3b"           + ((TILDA__TESTING_Factory.COLS.A3B._Mask1         & __Nulls1) != 0L ? ": NULL" : ": " + TextUtil.Print                   (getA3b        ()))
+               + "; a4"            + ((TILDA__TESTING_Factory.COLS.A4._Mask1          & __Nulls1) != 0L ? ": NULL" : ": " +                                   getA4         () )
+               + "; a4b"           + ((TILDA__TESTING_Factory.COLS.A4B._Mask1         & __Nulls1) != 0L ? ": NULL" : ": " + TextUtil.Print                   (getA4b        ()))
+               + "; a5"            + ((TILDA__TESTING_Factory.COLS.A5._Mask1          & __Nulls1) != 0L ? ": NULL" : ": " +                                   getA5         () )
+               + "; a5b"           + ((TILDA__TESTING_Factory.COLS.A5B._Mask1         & __Nulls1) != 0L ? ": NULL" : ": " + TextUtil.Print                   (getA5b        ()))
+               + "; a6"            + ((TILDA__TESTING_Factory.COLS.A6._Mask1          & __Nulls1) != 0L ? ": NULL" : ": " +                                   getA6         () )
+               + "; a6b"           + ((TILDA__TESTING_Factory.COLS.A6B._Mask1         & __Nulls1) != 0L ? ": NULL" : ": " + TextUtil.Print                   (getA6b        ()))
+               + "; a6c"           + ((TILDA__TESTING_Factory.COLS.A6C._Mask1         & __Nulls1) != 0L ? ": NULL" : ": " + TextUtil.Print                   (getA6c        ()))
+               + "; a7"            + ((TILDA__TESTING_Factory.COLS.A7._Mask1          & __Nulls1) != 0L ? ": NULL" : ": " +                                   getA7         () )
+               + "; a7b"           + ((TILDA__TESTING_Factory.COLS.A7B._Mask1         & __Nulls1) != 0L ? ": NULL" : ": " + TextUtil.Print                   (getA7b        ()))
+               + "; a8"            + ((TILDA__TESTING_Factory.COLS.A8._Mask1          & __Nulls1) != 0L ? ": NULL" : ": " +                                   getA8         () )
+               + "; a9"            + ((TILDA__TESTING_Factory.COLS.A9._Mask1          & __Nulls1) != 0L ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA9         ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

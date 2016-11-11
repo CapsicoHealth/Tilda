@@ -68,6 +68,8 @@ public class Column extends TypeDef
     public transient ColumnMapper   _MapperDef         ;
     public transient ColumnValue    _DefaultCreateValue;
     public transient ColumnValue    _DefaultUpdateValue;
+    
+    public transient int _SequenceOrder = -1;
 
     private transient ValidationStatus _Validation = ValidationStatus.NONE;
 
@@ -409,5 +411,9 @@ public class Column extends TypeDef
              return FK._DestObjectObj;
           }
         return null;
+      }
+    public void setSequenceOrder(int i)
+      {
+        _SequenceOrder = i;
       }
   }

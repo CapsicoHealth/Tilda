@@ -23,7 +23,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.util.StringBuilderWriter;
 
-import tilda.db.QueryDetails;
 import tilda.enums.ColumnMapperMode;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
@@ -115,14 +114,15 @@ public class TildaData implements CodeGenTildaData
         Out.println();
         Out.println("   protected " + O._BaseClassName + "() { }");
         Out.println();
-        Out.println("   private InitMode __Init   = null;");
-        Out.println("   private long     __Nulls  = 0L;");
+        Out.println("   private InitMode __Init        = null;");
+        Out.println("   private long     __Nulls1      = 0L;");
+        Out.println("   private long     __Nulls2      = 0L;");
+        Out.println("   private long     __Changes1    = 0L;");
+        Out.println("   private long     __Changes2    = 0L;");
+        Out.println("   private boolean  __NewlyCreated= false;");
         Out.println("   private int      __LookupId;");
-        Out.println("   private boolean  __NewlyCreated = false;");
         Out.println();
-        Out.println("   private long     __Changes= 0L;");
-        Out.println();
-        Out.println("   public  boolean hasChanged    () { return __Changes != 0L; }");
+        Out.println("   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L; }");
         Out.println("   public  boolean isNewlyCreated() { return __NewlyCreated; }");
         Out.println();
         Out.println("   void initForCreate()");
@@ -382,7 +382,8 @@ public class TildaData implements CodeGenTildaData
     public void genMethodSet(PrintWriter Out, GeneratorSession G, Column C)
     throws Exception
       {
-        String Mask = Helper.getRuntimeMask(C);
+        int BitFieldId = C._SequenceOrder < 64 ? 1 : 2;
+        String Mask = Helper.getRuntimeMask(C)+BitFieldId;
         String Visibility = Helper.getVisibility(C, true);
         if (C._JsonSchema != null && C.isCollection() == true)
           {
@@ -415,19 +416,25 @@ public class TildaData implements CodeGenTildaData
             Out.println("        {");
             if (C._MapperDef == null)
               {
-                Out.println("          __Changes |= " + Mask + ";");
-                Out.println("          __Nulls   &= ~" + Mask + ";");
+                Out.println("          __Changes"+BitFieldId+" |=  " + Mask + ";");
+                Out.println("          __Nulls"+BitFieldId+"   &= ~" + Mask + ";");
                 if (C._Mapper != null)
                   {
                     if (C._Mapper._Name == ColumnMapperMode.DB)
                       {
-                        Out.println("          __Changes |= " + Helper.getRuntimeMask(C._ParentObject.getColumn(C.getName() + "MappedName")) + ";");
-                        Out.println("          __Nulls   &= ~" + Helper.getRuntimeMask(C._ParentObject.getColumn(C.getName() + "MappedName")) + ";");
+                        Column SecondaryC = C._ParentObject.getColumn(C.getName() + "MappedName");
+                        int SecondaryBitFieldId = SecondaryC._SequenceOrder < 64 ? 1 : 2;
+                        String SecondaryMask = Helper.getRuntimeMask(SecondaryC)+SecondaryBitFieldId;
+                        Out.println("          __Changes"+SecondaryBitFieldId+" |=  " + SecondaryMask + ";");
+                        Out.println("          __Nulls"+SecondaryBitFieldId+"   &= ~" + SecondaryMask + ";");
                       }
                     if (C._Mapper._Group == ColumnMapperMode.DB)
                       {
-                        Out.println("          __Changes |= " + Helper.getRuntimeMask(C._ParentObject.getColumn(C.getName() + "MappedGroup")) + ";");
-                        Out.println("          __Nulls   &= ~" + Helper.getRuntimeMask(C._ParentObject.getColumn(C.getName() + "MappedGroup")) + ";");
+                        Column SecondaryC = C._ParentObject.getColumn(C.getName() + "MappedGroup");
+                        int SecondaryBitFieldId = SecondaryC._SequenceOrder < 64 ? 1 : 2;
+                        String SecondaryMask = Helper.getRuntimeMask(SecondaryC)+SecondaryBitFieldId;
+                        Out.println("          __Changes"+SecondaryBitFieldId+" |=  " + SecondaryMask + ";");
+                        Out.println("          __Nulls"+SecondaryBitFieldId+"   &= ~" + SecondaryMask + ";");
                       }
                   }
               }
@@ -595,8 +602,8 @@ public class TildaData implements CodeGenTildaData
               }
             if (C._Mode != ColumnMode.CALCULATED)
               {
-                Out.println("          __Changes |= " + Mask + ";");
-                Out.println("          __Nulls   &= ~" + Mask + ";");
+                Out.println("          __Changes"+BitFieldId+" |= " + Mask + ";");
+                Out.println("          __Nulls"+BitFieldId+"   &= ~" + Mask + ";");
               }
             if (C.isCollection() == false)
               Out.println("       _" + C.getName() + " = v;");
@@ -640,7 +647,7 @@ public class TildaData implements CodeGenTildaData
                 if (C._Mode != ColumnMode.CALCULATED)
                   {
                     Out.println("       if (_" + C.getName() + ".remove(v) == true)");
-                    Out.println("          __Changes |= " + Mask + ";");
+                    Out.println("          __Changes"+BitFieldId+" |= " + Mask + ";");
                   }
                 else
                   Out.println("       _" + C.getName() + ".remove(v);");
@@ -654,7 +661,7 @@ public class TildaData implements CodeGenTildaData
                 if (C._Mode != ColumnMode.CALCULATED)
                   {
                     Out.println("       if (_" + C.getName() + ".remove(pos) != null)");
-                    Out.println("          __Changes |= " + Mask + ";");
+                    Out.println("          __Changes"+BitFieldId+" |= " + Mask + ";");
                   }
                 else
                   Out.println("       _" + C.getName() + ".remove(pos);");
@@ -682,8 +689,8 @@ public class TildaData implements CodeGenTildaData
               Out.println("        throw new Exception(\"Cannot set " + C.getFullName() + " to null: it's not nullable.\");");
             Out.println("       else");
             Out.println("        {");
-            Out.println("          __Changes |= " + Mask + ";");
-            Out.println("          __Nulls   &= ~" + Mask + ";");
+            Out.println("          __Changes"+BitFieldId+" |= " + Mask + ";");
+            Out.println("          __Nulls"+BitFieldId+"   &= ~" + Mask + ";");
             Out.println("          Gson gson = new GsonBuilder().setPrettyPrinting().create();");
             Out.println("          _" + C.getName() + " = gson.toJson(v, LIST_TYPE_"+C._JsonSchema._TypeName+");");
             Out.println("          _" + C.getName() + "Obj = v;");
@@ -758,7 +765,8 @@ public class TildaData implements CodeGenTildaData
     public void genMethodSetNull(PrintWriter Out, GeneratorSession G, Column C)
     throws Exception
       {
-        String Mask = Helper.getRuntimeMask(C);
+        int BitFieldId = C._SequenceOrder < 64 ? 1 : 2;
+        String Mask = Helper.getRuntimeMask(C)+BitFieldId;
         String Visibility = Helper.getVisibility(C, true);
 
         Out.println("   " + Visibility + " void setNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()");
@@ -766,10 +774,10 @@ public class TildaData implements CodeGenTildaData
         Out.println("       long T0 = System.nanoTime();");
         if (C._Mode != ColumnMode.CALCULATED)
           {
-            Out.println("       if ((" + Mask + " & __Nulls) != 0L)");
+            Out.println("       if ((" + Mask + " & __Nulls"+BitFieldId+") != 0L)");
             Out.println("        return;");
-            Out.println("       __Changes |= " + Mask + ";");
-            Out.println("       __Nulls   |= " + Mask + ";");
+            Out.println("       __Changes"+BitFieldId+" |= " + Mask + ";");
+            Out.println("       __Nulls"+BitFieldId+"   |= " + Mask + ";");
           }
 
         if (C.isCollection() == true)
@@ -809,18 +817,20 @@ public class TildaData implements CodeGenTildaData
     public void genMethodHasChanged(PrintWriter Out, GeneratorSession G, Column C)
     throws Exception
       {
-        String Mask = Helper.getRuntimeMask(C);
+        int BitFieldId = C._SequenceOrder < 64 ? 1 : 2;
+        String Mask = Helper.getRuntimeMask(C)+BitFieldId;
         Out.println("   public boolean hasChanged" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()");
-        Out.println("     { return (" + Mask + " & __Changes) != 0L; }");
+        Out.println("     { return (" + Mask + " & __Changes"+BitFieldId+") != 0L; }");
       }
 
     @Override
     public void genMethodIsNull(PrintWriter Out, GeneratorSession G, Column C)
     throws Exception
       {
-        String Mask = Helper.getRuntimeMask(C);
+        int BitFieldId = C._SequenceOrder < 64 ? 1 : 2;
+        String Mask = Helper.getRuntimeMask(C)+BitFieldId;
         Out.println("   public final boolean isNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()");
-        Out.println("     { return (" + Mask + " & __Nulls) != 0L; }");
+        Out.println("     { return (" + Mask + " & __Nulls"+BitFieldId+") != 0L; }");
       }
 
     @Override
@@ -841,7 +851,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("   public final boolean Write(Connection C) throws Exception");
         Out.println("     {");
         Out.println("       long T0 = System.nanoTime();");
-        Out.println("       if (__Changes == 0L)");
+        Out.println("       if (__Changes1 == 0L && __Changes2 == 0L)");
         Out.println("        {");
         Out.println("          LOG.debug(QueryDetails._LOGGING_HEADER + \"The " + O.getFullName() + " has not changed: no writing will occur.\");");
         Out.println("          QueryDetails.setLastQuery(" + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
@@ -865,16 +875,17 @@ public class TildaData implements CodeGenTildaData
         for (Column C : O._Columns)
           if (C != null && C._Mode != ColumnMode.CALCULATED)
             {
-              String Mask = Helper.getRuntimeMask(C);
+              int BitFieldId = C._SequenceOrder < 64 ? 1 : 2;
+              String Mask = Helper.getRuntimeMask(C)+BitFieldId;
               String Pad = O._PadderColumnNames.getPad(C.getName());
               if (C._Type == ColumnType.DATETIME)
                 Out.println();
-              Out.print("          if ((" + Mask + Pad + " & __Changes) != 0L) { " + Helper.getRuntimeInsertStr(C) + ";");
+              Out.print("          if ((" + Mask + Pad + " & __Changes"+BitFieldId+") != 0L) { " + Helper.getRuntimeInsertStr(C) + ";");
               switch (C._Type)
                 {
                   case DATETIME:
                     Out.println();
-                    Out.println("             V.append((" + Mask + " & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == true ? C.getCommaCurrentTimestamp() : " + Helper.getSupportClassFullName(O._ParentSchema) + "._COMMAQUESTION);");
+                    Out.println("             V.append((" + Mask + " & __Nulls"+BitFieldId+") == 0L && DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == true ? C.getCommaCurrentTimestamp() : " + Helper.getSupportClassFullName(O._ParentSchema) + "._COMMAQUESTION);");
                     Out.println("           }");
                     if (C._DefaultCreateValue != null)
                       {
@@ -913,16 +924,17 @@ public class TildaData implements CodeGenTildaData
         for (Column C : O._Columns)
           if (C != null && C._Mode != ColumnMode.CALCULATED)
             {
-              String Mask = Helper.getRuntimeMask(C);
+              int BitFieldId = C._SequenceOrder < 64 ? 1 : 2;
+              String Mask = Helper.getRuntimeMask(C)+BitFieldId;
               String Pad = O._PadderColumnNames.getPad(C.getName());
               if (C._Type == ColumnType.DATETIME)
                 Out.println();
               switch (C._Type)
                 {
                   case DATETIME:
-                    Out.println("          if ((" + Mask + " & __Changes) != 0L)");
+                    Out.println("          if ((" + Mask + " & __Changes"+BitFieldId+") != 0L)");
                     Out.println("           {");
-                    Out.println("             if ((" + Mask + " & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == true)");
+                    Out.println("             if ((" + Mask + " & __Nulls"+BitFieldId+") == 0L && DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == true)");
                     Out.println("              { " + Helper.getRuntimeInsertStr(C) + "; S.append(C.getEqualCurrentTimestamp()); }");
                     Out.println("             else");
                     Out.println("              " + Helper.getRuntimeUpdateStr(C) + ";");
@@ -952,11 +964,11 @@ public class TildaData implements CodeGenTildaData
                   case LONG:
                   case STRING:
                     if (C._DefaultUpdateValue == null)
-                      Out.println("          if ((" + Mask + Pad + " & __Changes) != 0L) " + Helper.getRuntimeUpdateStr(C) + ";");
+                      Out.println("          if ((" + Mask + Pad + " & __Changes"+BitFieldId+") != 0L) " + Helper.getRuntimeUpdateStr(C) + ";");
                     else
                       {
                         String MethodName = TextUtil.CapitalizeFirstCharacter(C.getName()) + TextUtil.CapitalizeFirstCharacter(C._DefaultUpdateValue._Name);
-                        Out.println("          if ((" + Mask + Pad + " & __Changes) == 0L) set" + MethodName + "();");
+                        Out.println("          if ((" + Mask + Pad + " & __Changes"+BitFieldId+") == 0L) set" + MethodName + "();");
                         Out.println("          " + Helper.getRuntimeUpdateStr(C) + ";");
                       }
 
@@ -990,11 +1002,12 @@ public class TildaData implements CodeGenTildaData
         for (Column C : O._Columns)
           if (C != null && C._Mode != ColumnMode.CALCULATED)
             {
-              String Mask = Helper.getRuntimeMask(C);
+              int BitFieldId = C._SequenceOrder < 64 ? 1 : 2;
+              String Mask = Helper.getRuntimeMask(C)+BitFieldId;
               String Pad = O._PadderColumnNames.getPad(C.getName());
-              Out.println("               if ((" + Mask + Pad + " & __Changes) != 0L) ");
+              Out.println("               if ((" + Mask + Pad + " & __Changes"+BitFieldId+") != 0L) ");
               Out.println("                { ");
-              Out.print("                  if ((" + Mask + Pad + " & __Nulls  ) != 0L) PS.setNull(++i, "+(C.isCollection()==true?"C.supportsArrays()?java.sql.Types.ARRAY:":"")+"java.sql.Types." + JavaJDBCType.get(C._Type)._JDBCSQLType + ");");
+              Out.print("                  if ((" + Mask + Pad + " & __Nulls"+BitFieldId+"  ) != 0L) PS.setNull(++i, "+(C.isCollection()==true?"C.supportsArrays()?java.sql.Types.ARRAY:":"")+"java.sql.Types." + JavaJDBCType.get(C._Type)._JDBCSQLType + ");");
               switch (C._Type)
                 {
                   case DATETIME:
@@ -1056,9 +1069,7 @@ public class TildaData implements CodeGenTildaData
         Out.println();
         Helper.setSavedFields(Out, O);
         Out.println();
-        Out.println("       __Changes= 0L   ;");
-        Out.println("       __Nulls  = 0L   ;");
-        Out.println();
+        Out.println("       __Changes1= __Changes2= __Nulls1= __Nulls2= 0L;");
         Out.println("       return true;");
         Out.println("     }");
         Out.println();
@@ -1074,10 +1085,11 @@ public class TildaData implements CodeGenTildaData
         for (Column C : CopyToColumns)
           if (C != null)
             {
-              String Mask = Helper.getRuntimeMask(C);
+              int BitFieldId = C._SequenceOrder < 64 ? 1 : 2;
+              String Mask = Helper.getRuntimeMask(C)+BitFieldId;
               String Pad = O._PadderColumnNames.getPad(C.getName());
               if (C._Nullable == true)
-                Out.print("       if ((" + Mask + Pad + " & __Nulls) != 0L) Dst.setNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(); else ");
+                Out.print("       if ((" + Mask + Pad + " & __Nulls"+BitFieldId+") != 0L) Dst.setNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(); else ");
               Out.println("       Dst.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + ");");
             }
         Out.println("     }");
@@ -1105,7 +1117,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("       long T0 = System.nanoTime();");
         Out.println("       if (__Init == InitMode.CREATE)");
         Out.println("        throw new Exception(\"This " + O.getShortName() + " object is being Read() after a Create(), which doesn't make sense.\");");
-        Out.println("       if (__Init == InitMode.READ == true && Force == false && __Changes == 0L)");
+        Out.println("       if (__Init == InitMode.READ == true && Force == false && __Changes1 == 0L && __Changes2 == 0L)");
         Out.println("        {");
         Out.println("          LOG.debug(QueryDetails._LOGGING_HEADER + \"This " + O.getShortName() + " object has already been read.\");");
         Out.println("          QueryDetails.setLastQuery(" + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
@@ -1172,7 +1184,8 @@ public class TildaData implements CodeGenTildaData
         for (Column C : O._Columns)
           if (C != null && C._Mode != ColumnMode.CALCULATED)
             {
-              String Mask = Helper.getRuntimeMask(C);
+              int BitFieldId = C._SequenceOrder < 64 ? 1 : 2;
+              String Mask = Helper.getRuntimeMask(C)+BitFieldId;
               String Pad = O._PadderColumnNames.getPad(C.getName());
               String Header = (C.isCollection() == true ? "             " : "          ") + PaddingUtil.getPad(C.getName().length() + Pad.length()) + "   ";
               Out.print("      ");
@@ -1189,7 +1202,7 @@ public class TildaData implements CodeGenTildaData
                     Out.println(Header+"    "+C._JsonSchema._TypeName+"[] tmp = gson.fromJson(_" + C.getName() + ", "+C._JsonSchema._TypeName+"[].class);");
                     Out.println(Header+"    _" + C.getName() + "Obj = CollectionUtil.toList(tmp);");
                     Out.println(Header+"  }");
-                    Out.print(Header+" if (RS.wasNull() == true) __Nulls |= " + Mask + Pad + ";");
+                    Out.print(Header+" if (RS.wasNull() == true) __Nulls"+BitFieldId+" |= " + Mask + Pad + ";");
                     break;
                   case DOUBLE:
                   case FLOAT:
@@ -1208,7 +1221,7 @@ public class TildaData implements CodeGenTildaData
                       Out.print("_" + C.getName() + Pad + " = TextUtil.Trim               (RS.get" + JavaJDBCType.get(C._Type)._JDBCType + "(++i)) ; ");
                     else
                       Out.print("_" + C.getName() + Pad + " =                              RS.get" + JavaJDBCType.get(C._Type)._JDBCType + "(++i) ; ");
-                    Out.print(" if (RS.wasNull() == true) __Nulls |= " + Mask + Pad + ";");
+                    Out.print(" if (RS.wasNull() == true) __Nulls"+BitFieldId+" |= " + Mask + Pad + ";");
                     break;
                   case DATETIME:
                     if (C.isCollection() == true)
@@ -1278,7 +1291,8 @@ public class TildaData implements CodeGenTildaData
             }
         Out.println("     __LookupId = 0;");
         Out.println("     __Init     = InitMode.READ;");
-        Out.println("     __Changes  = 0L;");
+        Out.println("     __Changes1  = 0L;");
+        Out.println("     __Changes2  = 0L;");
         Out.println("     return AfterRead(C);");
         Out.println("   }");
         for (Column C : O._Columns)
@@ -1293,9 +1307,12 @@ public class TildaData implements CodeGenTildaData
             Out.println("      throw new Exception(\"Cannot set field '\"+DTFieldName+\"' because the timezone Id '\" + TimezoneId + \"' is unknown. Make sure it is mapped properly in the ZoneInfo table.\");");
             Out.println("     ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(RS.getTimestamp(ColumnPos, DateTimeUtil._UTC_CALENDAR), ZI == null ? \"null\" : ZI.getValue());");
             Out.println("     if (RS.wasNull() == true)");
-            Out.println("      __Nulls |= DTField._Mask;");
-            Out.println("     boolean DTNull = (__Nulls & DTField._Mask) != 0L;");
-            Out.println("     boolean TZNull = (__Nulls & TZField._Mask) != 0L;");
+            Out.println("      if (DTField._FirstMask == true)");
+            Out.println("       __Nulls1 |= DTField._Mask1;");
+            Out.println("      else");
+            Out.println("       __Nulls2 |= DTField._Mask2;");
+            Out.println("     boolean DTNull = DTField._FirstMask == true ? (__Nulls1 & DTField._Mask1) != 0L : (__Nulls2 & DTField._Mask2) != 0L;");
+            Out.println("     boolean TZNull = TZField._FirstMask == true ? (__Nulls1 & TZField._Mask1) != 0L : (__Nulls2 & TZField._Mask2) != 0L;");
             Out.println("     if (DTNull == false && TZNull == true)");
             Out.println("      throw new Exception(\"The field \"+DTFieldName+\" is not null while its associated timezone field '\"+DTFieldName+\"TZ' is null. A TZ is mandatory for not null timestamps.\");");
             Out.println("     return ZDT;");
@@ -1317,14 +1334,15 @@ public class TildaData implements CodeGenTildaData
         for (Column C : O._Columns)
           if (C != null && C._FrameworkManaged == false)
             {
-              String Mask = Helper.getRuntimeMask(C);
+              int BitFieldId = C._SequenceOrder < 64 ? 1 : 2;
+              String Mask = Helper.getRuntimeMask(C)+BitFieldId;
               String Pad = O._PadderColumnNames.getPad(C.getName());
               boolean Nullable = C._Nullable == true && C._Mode != ColumnMode.CALCULATED;
 
               Out.print((First == false ? "               + \"; " : "                   \"") + C.getName());
 
               if (Nullable)
-                Out.print("\"" + Pad + "   + ((" + Mask + Pad + " & __Nulls) != 0L ? \": NULL\" : \"");
+                Out.print("\"" + Pad + "   + ((" + Mask + Pad + " & __Nulls"+BitFieldId+") != 0L ? \": NULL\" : \"");
 
               String Lead = Nullable == true ? "" : PaddingUtil.getPad(Mask.length() + Pad.length() * 2) + "                                        ";
               if (C.isCollection() == false)

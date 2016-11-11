@@ -35,7 +35,7 @@ import tilda.parsing.ParserSession;
 public class Object extends Base
   {
 
-    static final Logger              LOG                = LogManager.getLogger(Object.class.getName());
+    static final Logger                   LOG             = LogManager.getLogger(Object.class.getName());
 
     /*@formatter:off*/
     @SerializedName("occ"           ) public boolean              _OCC        = true ;
@@ -54,7 +54,7 @@ public class Object extends Base
 
     public transient boolean              _HasUniqueIndex;
     public transient boolean              _HasUniqueQuery;
-    public transient FrameworkSourcedType _FST = FrameworkSourcedType.NONE;
+    public transient FrameworkSourcedType _FST            = FrameworkSourcedType.NONE;
     public transient ObjectLifecycle      _LC;
 
     @Override
@@ -65,25 +65,28 @@ public class Object extends Base
             return C;
         return null;
       }
+
     @Override
     public String[] getColumnNames()
       {
         String[] Cols = new String[_Columns.size()];
         for (int i = 0; i < _Columns.size(); ++i)
-         Cols[i] = _Columns.get(i).getName();
+          Cols[i] = _Columns.get(i).getName();
         return Cols;
       }
-    
+
     @Override
     public ObjectLifecycle getLifecycle()
       {
         return _LC;
       }
+
     @Override
     public boolean isOCC()
       {
         return _OCC;
       }
+
     @Override
     public String getWhat()
       {
@@ -96,7 +99,7 @@ public class Object extends Base
           return true;
 
         if (super.Validate(PS, ParentSchema) == false)
-         return false;
+          return false;
 
         int Errs = PS.getErrorCount();
 
@@ -133,34 +136,45 @@ public class Object extends Base
                 Column C = _Columns.get(i);
                 // It's possible in JSON to have dangling commas, which GSON will read fine as a NULL object. So we need to protect against that.
                 if (C == null)
-                 {
-                   _Columns.remove(i);
-                   --i;
-                   continue;
-                 }
-                if (i >= 64)
-                  PS.AddError("Object '" + getFullName() + "' has declared more than 64 columns!");
-                else
                   {
-                    _PadderColumnNames.track(C.getName());
-                    if (C.Validate(PS, this) == true)
+                    _Columns.remove(i);
+                    --i;
+                    continue;
+                  }
+                _PadderColumnNames.track(C.getName());
+                if (C.Validate(PS, this) == true)
+                  {
+                    if (ColumnNames.add(C.getName().toUpperCase()) == false)
+                      PS.AddError("Column '" + C.getFullName() + "' is defined more than once in Object '" + getFullName() + "'.");
+                    if (C._Type == ColumnType.DATETIME && Object.isOCCColumn(C) == false)
                       {
-                        if (ColumnNames.add(C.getName().toUpperCase()) == false)
-                         PS.AddError("Column '" + C.getFullName() + "' is defined more than once in Object '" + getFullName() + "'.");
-                        if (C._Type == ColumnType.DATETIME && Object.isOCCColumn(C) == false)
-                          {
-                            Column TZCol = new Column(C.getName()+"TZ", null, 0, C._Nullable, ColumnMode.AUTO, C._Invariant, null, "Generated helper column to hold the time zone ID for '"+C.getName()+"'.");
-                            TZCol._SameAs = "tilda.data.TILDA.ZONEINFO.id";
-                            TZCol._FrameworkManaged = true;
-                            _Columns.add(i, TZCol);
-                            ++i;
-                            _PadderColumnNames.track(TZCol.getName());
-                            if (ColumnNames.add(TZCol.getName().toUpperCase()) == false)
-                              PS.AddError("Generated column '" + TZCol.getFullName() + "' conflicts with another column already named the same in Object '" + getFullName() + "'.");
-                            TZCol.Validate(PS, this);
-                            addForeignKey(C.getName(), new String[] { TZCol.getName() }, "tilda.data.TILDA.ZONEINFO");
-                          }
+                        Column TZCol = new Column(C.getName() + "TZ", null, 0, C._Nullable, ColumnMode.AUTO, C._Invariant, null, "Generated helper column to hold the time zone ID for '" + C.getName() + "'.");
+                        TZCol._SameAs = "tilda.data.TILDA.ZONEINFO.id";
+                        TZCol._FrameworkManaged = true;
+                        _Columns.add(i, TZCol);
+                        ++i;
+                        _PadderColumnNames.track(TZCol.getName());
+                        if (ColumnNames.add(TZCol.getName().toUpperCase()) == false)
+                          PS.AddError("Generated column '" + TZCol.getFullName() + "' conflicts with another column already named the same in Object '" + getFullName() + "'.");
+                        TZCol.Validate(PS, this);
+                        addForeignKey(C.getName(), new String[] { TZCol.getName()
+                        }, "tilda.data.TILDA.ZONEINFO");
                       }
+                  }
+              }
+            int Counter = -1;
+            for (int i = 0; i < _Columns.size(); ++i)
+              {
+                Column C = _Columns.get(i);
+                if (C._Mode == ColumnMode.CALCULATED)
+                  continue;
+                C.setSequenceOrder(++Counter);
+                if (Counter >= 128)
+                  {
+                    PS.AddError("Object '" + getFullName() + "' has declared " + (i + 1) + " columns. Max allowed is 128!");
+                    // int xxx = 0;
+                    // for (Column ccc : _Columns)
+                    // LOG.error(" "+(++xxx)+" - "+ccc._Name);
                   }
               }
           }
@@ -169,7 +183,7 @@ public class Object extends Base
           {
             String n = _DropOldColumns[i];
             if (getColumn(n) != null)
-             PS.AddError("Object '" + getFullName() + "' is defining a drop column '" + n + "' which is also already defined as a real column. DropOldColumns is used to automate cleaning of old columns that should no longer be part of a table definition.");
+              PS.AddError("Object '" + getFullName() + "' is defining a drop column '" + n + "' which is also already defined as a real column. DropOldColumns is used to automate cleaning of old columns that should no longer be part of a table definition.");
           }
 
         _HasUniqueIndex = false;
@@ -191,7 +205,7 @@ public class Object extends Base
           {
             if (SWC == null)
               continue;
-            if (SWC.Validate(PS, this, "Object '" + getFullName()+"'", true) == true)
+            if (SWC.Validate(PS, this, "Object '" + getFullName() + "'", true) == true)
               if (Names.add(SWC._Name.toUpperCase()) == false)
                 PS.AddError("Object '" + getFullName() + "' is defining a duplicate query '" + SWC._Name + "'.");
             if (SWC._Unique == true)
@@ -199,7 +213,7 @@ public class Object extends Base
           }
 
         super.ValidateJsonMappings(PS);
-        
+
         if ((_LC = ObjectLifecycle.parse(_LCStr)) == null)
           return PS.AddError("Object '" + getFullName() + "' defined an invalid 'lc' '" + _LCStr + "'.");
 
@@ -281,7 +295,7 @@ public class Object extends Base
       {
         int i = _Columns.indexOf(SiblingCol);
         if (i != -1)
-         _Columns.add(i+1, NewCol);
+          _Columns.add(i + 1, NewCol);
       }
 
     public List<Column> getDefaultCreateColumns()
@@ -320,16 +334,16 @@ public class Object extends Base
             L.add(C);
         return L;
       }
-    
+
     public List<Column> getJsonColumns()
-    {
-      List<Column> L = new ArrayList<Column>();
-      for (Column C : _Columns)
-        if (C != null && C.isJSONColumn() == true)
-          L.add(C);
-      return L;
-    }
-    
+      {
+        List<Column> L = new ArrayList<Column>();
+        for (Column C : _Columns)
+          if (C != null && C.isJSONColumn() == true)
+            L.add(C);
+        return L;
+      }
+
 
     protected void addForeignKey(String Name, String[] ColumnNames, String DestinationObject)
       {
@@ -344,16 +358,16 @@ public class Object extends Base
     public boolean isAutoGenForeignKey(String Name)
       {
         for (ForeignKey FK : _ForeignKeys)
-         {
-          if (FK == null)
-           continue;
-          for (Column C : FK._SrcColumnObjs)
-           if (C != null && C.getName().equals(Name) == true)
-            {
-              if (FK._DestObjectObj._PrimaryKey._Autogen == true)
-                return true;
-            }
-         }
+          {
+            if (FK == null)
+              continue;
+            for (Column C : FK._SrcColumnObjs)
+              if (C != null && C.getName().equals(Name) == true)
+                {
+                  if (FK._DestObjectObj._PrimaryKey._Autogen == true)
+                    return true;
+                }
+          }
         return false;
       }
   }

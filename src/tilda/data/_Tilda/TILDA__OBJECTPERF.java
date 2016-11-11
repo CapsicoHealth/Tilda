@@ -73,7 +73,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Nov 4 2016, 18:53:19EDT
+ @generated Nov 10 2016, 20:34:14EST
 */
 public abstract class TILDA__OBJECTPERF implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
@@ -84,14 +84,15 @@ public abstract class TILDA__OBJECTPERF implements tilda.interfaces.WriterObject
 
    protected TILDA__OBJECTPERF() { }
 
-   private InitMode __Init   = null;
-   private long     __Nulls  = 0L;
+   private InitMode __Init        = null;
+   private long     __Nulls1      = 0L;
+   private long     __Nulls2      = 0L;
+   private long     __Changes1    = 0L;
+   private long     __Changes2    = 0L;
+   private boolean  __NewlyCreated= false;
    private int      __LookupId;
-   private boolean  __NewlyCreated = false;
 
-   private long     __Changes= 0L;
-
-   public  boolean hasChanged    () { return __Changes != 0L; }
+   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L; }
    public  boolean isNewlyCreated() { return __NewlyCreated; }
 
    void initForCreate()
@@ -183,8 +184,8 @@ This is the setter for:<BR>
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.OBJECTPERF.schemaName' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes |= TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask;
-          __Nulls   &= ~TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask;
+          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask1;
+          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask1;
        _schemaName = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -267,8 +268,8 @@ This is the setter for:<BR>
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.OBJECTPERF.objectName' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes |= TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask;
-          __Nulls   &= ~TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask;
+          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask1;
+          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask1;
        _objectName = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -350,8 +351,8 @@ This is the setter for:<BR>
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.OBJECTPERF.startPeriodTZ' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes |= TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask;
-          __Nulls   &= ~TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask;
+          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask1;
+          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask1;
        _startPeriodTZ = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -376,7 +377,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedStartPeriodTZ()
-     { return (TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask & __Changes) != 0L; }
+     { return (TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -450,8 +451,8 @@ This is the setter for:<BR>
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.OBJECTPERF.startPeriod' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes |= TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask;
-          __Nulls   &= ~TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask;
+          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask1;
+          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask1;
        _startPeriod = v;
           tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
           if (ZI == null)
@@ -535,8 +536,8 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.OBJECTPERF.endPeriodTZ: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
        else if (v.equals(_endPeriodTZ) == false)
         {
-          __Changes |= TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask;
-          __Nulls   &= ~TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask;
+          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask1;
+          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask1;
        _endPeriodTZ = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -561,7 +562,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedEndPeriodTZ()
-     { return (TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask & __Changes) != 0L; }
+     { return (TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -632,8 +633,8 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.OBJECTPERF.endPeriod to null: it's not nullable.");
        else if (v.equals(_endPeriod) == false)
         {
-          __Changes |= TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask;
-          __Nulls   &= ~TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask;
+          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask1;
+          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask1;
        _endPeriod = v;
           tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
           if (ZI == null)
@@ -727,7 +728,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedEndPeriod()
-     { return (TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask & __Changes) != 0L; }
+     { return (TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -796,8 +797,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _selectNano)
         {
-          __Changes |= TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask;
-          __Nulls   &= ~TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask;
+          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask1;
+          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask1;
        _selectNano = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -821,7 +822,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedSelectNano()
-     { return (TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask & __Changes) != 0L; }
+     { return (TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -890,8 +891,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _selectCount)
         {
-          __Changes |= TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask;
-          __Nulls   &= ~TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask;
+          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask1;
+          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask1;
        _selectCount = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -915,7 +916,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedSelectCount()
-     { return (TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask & __Changes) != 0L; }
+     { return (TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -984,8 +985,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _selectRecords)
         {
-          __Changes |= TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask;
-          __Nulls   &= ~TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask;
+          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask1;
+          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask1;
        _selectRecords = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1009,7 +1010,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedSelectRecords()
-     { return (TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask & __Changes) != 0L; }
+     { return (TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -1078,8 +1079,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _insertNano)
         {
-          __Changes |= TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask;
-          __Nulls   &= ~TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask;
+          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask1;
+          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask1;
        _insertNano = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1103,7 +1104,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedInsertNano()
-     { return (TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask & __Changes) != 0L; }
+     { return (TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -1172,8 +1173,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _insertCount)
         {
-          __Changes |= TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask;
-          __Nulls   &= ~TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask;
+          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask1;
+          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask1;
        _insertCount = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1197,7 +1198,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedInsertCount()
-     { return (TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask & __Changes) != 0L; }
+     { return (TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -1266,8 +1267,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _insertRecords)
         {
-          __Changes |= TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask;
-          __Nulls   &= ~TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask;
+          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask1;
+          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask1;
        _insertRecords = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1291,7 +1292,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedInsertRecords()
-     { return (TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask & __Changes) != 0L; }
+     { return (TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -1360,8 +1361,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _updateNano)
         {
-          __Changes |= TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask;
-          __Nulls   &= ~TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask;
+          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask1;
+          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask1;
        _updateNano = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1385,7 +1386,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedUpdateNano()
-     { return (TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask & __Changes) != 0L; }
+     { return (TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -1454,8 +1455,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _updateCount)
         {
-          __Changes |= TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask;
-          __Nulls   &= ~TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask;
+          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask1;
+          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask1;
        _updateCount = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1479,7 +1480,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedUpdateCount()
-     { return (TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask & __Changes) != 0L; }
+     { return (TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -1548,8 +1549,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _updateRecords)
         {
-          __Changes |= TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask;
-          __Nulls   &= ~TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask;
+          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask1;
+          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask1;
        _updateRecords = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1573,7 +1574,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedUpdateRecords()
-     { return (TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask & __Changes) != 0L; }
+     { return (TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -1642,8 +1643,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _deleteNano)
         {
-          __Changes |= TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask;
-          __Nulls   &= ~TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask;
+          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask1;
+          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask1;
        _deleteNano = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1667,7 +1668,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedDeleteNano()
-     { return (TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask & __Changes) != 0L; }
+     { return (TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -1736,8 +1737,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _deleteCount)
         {
-          __Changes |= TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask;
-          __Nulls   &= ~TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask;
+          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask1;
+          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask1;
        _deleteCount = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1761,7 +1762,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedDeleteCount()
-     { return (TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask & __Changes) != 0L; }
+     { return (TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -1830,8 +1831,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _deleteRecords)
         {
-          __Changes |= TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask;
-          __Nulls   &= ~TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask;
+          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask1;
+          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask1;
        _deleteRecords = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1855,7 +1856,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedDeleteRecords()
-     { return (TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask & __Changes) != 0L; }
+     { return (TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -1949,8 +1950,8 @@ This is the setter for:<BR>
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.OBJECTPERF.created' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes |= TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask;
-          __Nulls   &= ~TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask;
+          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask1;
+          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask1;
        _created = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2068,7 +2069,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedCreated()
-     { return (TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask & __Changes) != 0L; }
+     { return (TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -2160,8 +2161,8 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.OBJECTPERF.lastUpdated to null: it's not nullable.");
        else if (v.equals(_lastUpdated) == false)
         {
-          __Changes |= TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask;
-          __Nulls   &= ~TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask;
+          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask1;
+          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask1;
        _lastUpdated = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2279,7 +2280,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedLastUpdated()
-     { return (TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask & __Changes) != 0L; }
+     { return (TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -2344,7 +2345,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullDeleted()
-     { return (TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask & __Nulls) != 0L; }
+     { return (TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2372,8 +2373,8 @@ This is the setter for:<BR>
         }
        else if (v.equals(_deleted) == false)
         {
-          __Changes |= TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask;
-          __Nulls   &= ~TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask;
+          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask1;
+          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask1;
        _deleted = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2399,10 +2400,10 @@ This is the null setter for:<BR>
     void setNullDeleted()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask & __Nulls) != 0L)
+       if ((TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask;
-       __Nulls   |= TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask;
+       __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask1;
+       __Nulls1   |= TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask1;
        _deleted=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -2491,7 +2492,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedDeleted()
-     { return (TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask & __Changes) != 0L; }
+     { return (TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask1 & __Changes1) != 0L; }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2519,7 +2520,7 @@ This is the hasChanged for:<BR>
        Dst.setDeleteCount  (_deleteCount  );
        Dst.setDeleteRecords(_deleteRecords);
        Dst.setLastUpdated  (_lastUpdated  );
-       if ((TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask       & __Nulls) != 0L) Dst.setNullDeleted      (); else        Dst.setDeleted      (_deleted      );
+       if ((TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask1       & __Nulls1) != 0L) Dst.setNullDeleted      (); else        Dst.setDeleted      (_deleted      );
      }
 
 /**
@@ -2538,7 +2539,7 @@ This is the hasChanged for:<BR>
    public final boolean Write(Connection C) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Changes == 0L)
+       if (__Changes1 == 0L && __Changes2 == 0L)
         {
           LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.OBJECTPERF has not changed: no writing will occur.");
           QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
@@ -2559,41 +2560,41 @@ This is the hasChanged for:<BR>
           StringBuilder V = new StringBuilder(1024);
           S.append("insert into "); C.getFullTableVar(S, "TILDA", "OBJECTPERF");
           int Pos = S.length();
-          if ((TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask    & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask    & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask1    & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask1    & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask1 & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
-          if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask   & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD.getFullColumnVarForInsert(C, S);
-             V.append((TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_startPeriod) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask1   & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD.getFullColumnVarForInsert(C, S);
+             V.append((TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_startPeriod) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask   & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask1   & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
-          if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask     & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD.getFullColumnVarForInsert(C, S);
-             V.append((TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_endPeriod) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask1     & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD.getFullColumnVarForInsert(C, S);
+             V.append((TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_endPeriod) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask    & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.SELECTNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask   & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask    & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.INSERTNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask   & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask    & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.UPDATENANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask   & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask    & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.DELETENANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask   & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask1    & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.SELECTNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask1   & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask1 & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask1    & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.INSERTNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask1   & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask1 & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask1    & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.UPDATENANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask1   & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask1 & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask1    & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.DELETENANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask1   & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask1 & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
-          if ((TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask       & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
-             V.append((TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if ((TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask1       & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
+             V.append((TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
           else { TILDA__OBJECTPERF_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
-          if ((TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask   & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
-             V.append((TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if ((TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask1   & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
+             V.append((TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
           else { TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
-          if ((TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask       & __Changes) != 0L) { TILDA__OBJECTPERF_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
-             V.append((TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if ((TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask1       & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
+             V.append((TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
 
           S.setCharAt(Pos, '(');
@@ -2606,50 +2607,50 @@ This is the hasChanged for:<BR>
         {
           S.append("update "); C.getFullTableVar(S, "TILDA", "OBJECTPERF"); S.append(" set");
           int Pos = S.length();
-          if ((TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask    & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask    & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask1    & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask1    & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask1 & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ.getFullColumnVarForUpdate(C, S);
 
-          if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask & __Changes) != 0L)
+          if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask1 & __Changes1) != 0L)
            {
-             if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_startPeriod) == true)
+             if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_startPeriod) == true)
               { TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
               TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD.getFullColumnVarForUpdate(C, S);
            }
-          if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask   & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask1   & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ.getFullColumnVarForUpdate(C, S);
 
-          if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask & __Changes) != 0L)
+          if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask1 & __Changes1) != 0L)
            {
-             if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_endPeriod) == true)
+             if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_endPeriod) == true)
               { TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
               TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD.getFullColumnVarForUpdate(C, S);
            }
-          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask    & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.SELECTNANO.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask   & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask    & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.INSERTNANO.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask   & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask    & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.UPDATENANO.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask   & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask    & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.DELETENANO.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask   & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask & __Changes) != 0L) TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask1    & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.SELECTNANO.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask1   & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask1 & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask1    & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.INSERTNANO.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask1   & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask1 & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask1    & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.UPDATENANO.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask1   & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask1 & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask1    & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.DELETENANO.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask1   & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask1 & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS.getFullColumnVarForUpdate(C, S);
 
-          if ((TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask & __Changes) != 0L)
+          if ((TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask1 & __Changes1) != 0L)
            {
-             if ((TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true)
+             if ((TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true)
               { TILDA__OBJECTPERF_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
               TILDA__OBJECTPERF_Factory.COLS.CREATED.getFullColumnVarForUpdate(C, S);
            }
 
-          if ((TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask & __Changes) != 0L)
+          if ((TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask1 & __Changes1) != 0L)
            {
-             if ((TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true)
+             if ((TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true)
               { TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
               TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED.getFullColumnVarForUpdate(C, S);
@@ -2660,9 +2661,9 @@ This is the hasChanged for:<BR>
              setLastUpdatedNow();
            }
 
-          if ((TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask & __Changes) != 0L)
+          if ((TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask1 & __Changes1) != 0L)
            {
-             if ((TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true)
+             if ((TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true)
               { TILDA__OBJECTPERF_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
               TILDA__OBJECTPERF_Factory.COLS.DELETED.getFullColumnVarForUpdate(C, S);
@@ -2690,89 +2691,89 @@ This is the hasChanged for:<BR>
         {
           PS = C.prepareStatement(Q);
           int i = 0;
-               if ((TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask    & __Changes) != 0L) 
+               if ((TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask1    & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask    & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _schemaName);
+                  if ((TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask1    & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _schemaName);
                 } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask    & __Changes) != 0L) 
+               if ((TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask1    & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask    & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _objectName);
+                  if ((TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask1    & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _objectName);
                 } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask & __Changes) != 0L) 
+               if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask1 & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _startPeriodTZ);
+                  if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask1 & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _startPeriodTZ);
                 } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask   & __Changes) != 0L) 
+               if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask1   & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask   & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_startPeriod) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_startPeriod.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                  if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask1   & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_startPeriod) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_startPeriod.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask   & __Changes) != 0L) 
+               if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask1   & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask   & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _endPeriodTZ);
+                  if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask1   & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _endPeriodTZ);
                 } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask     & __Changes) != 0L) 
+               if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask1     & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask     & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_endPeriod) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_endPeriod.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                  if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask1     & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_endPeriod) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_endPeriod.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask    & __Changes) != 0L) 
+               if ((TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask1    & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask    & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _selectNano);
+                  if ((TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask1    & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _selectNano);
                 } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask   & __Changes) != 0L) 
+               if ((TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask1   & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask   & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _selectCount);
+                  if ((TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask1   & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _selectCount);
                 } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask & __Changes) != 0L) 
+               if ((TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask1 & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _selectRecords);
+                  if ((TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask1 & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _selectRecords);
                 } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask    & __Changes) != 0L) 
+               if ((TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask1    & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask    & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _insertNano);
+                  if ((TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask1    & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _insertNano);
                 } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask   & __Changes) != 0L) 
+               if ((TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask1   & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask   & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _insertCount);
+                  if ((TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask1   & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _insertCount);
                 } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask & __Changes) != 0L) 
+               if ((TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask1 & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _insertRecords);
+                  if ((TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask1 & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _insertRecords);
                 } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask    & __Changes) != 0L) 
+               if ((TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask1    & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask    & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _updateNano);
+                  if ((TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask1    & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _updateNano);
                 } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask   & __Changes) != 0L) 
+               if ((TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask1   & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask   & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _updateCount);
+                  if ((TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask1   & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _updateCount);
                 } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask & __Changes) != 0L) 
+               if ((TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask1 & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _updateRecords);
+                  if ((TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask1 & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _updateRecords);
                 } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask    & __Changes) != 0L) 
+               if ((TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask1    & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask    & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _deleteNano);
+                  if ((TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask1    & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _deleteNano);
                 } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask   & __Changes) != 0L) 
+               if ((TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask1   & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask   & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _deleteCount);
+                  if ((TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask1   & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _deleteCount);
                 } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask & __Changes) != 0L) 
+               if ((TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask1 & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _deleteRecords);
+                  if ((TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask1 & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _deleteRecords);
                 } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask       & __Changes) != 0L) 
+               if ((TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask1       & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask       & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                  if ((TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask1       & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask   & __Changes) != 0L) 
+               if ((TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask1   & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask   & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_lastUpdated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                  if ((TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask1   & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_lastUpdated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask       & __Changes) != 0L) 
+               if ((TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask1       & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask       & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deleted.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                  if ((TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask1       & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deleted.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
 
           switch (__LookupId)
@@ -2824,9 +2825,7 @@ This is the hasChanged for:<BR>
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
         }
 
-       __Changes= 0L   ;
-       __Nulls  = 0L   ;
-
+       __Changes1= __Changes2= __Nulls1= __Nulls2= 0L;
        return true;
      }
 
@@ -2852,7 +2851,7 @@ This is the hasChanged for:<BR>
        long T0 = System.nanoTime();
        if (__Init == InitMode.CREATE)
         throw new Exception("This TILDA.OBJECTPERF object is being Read() after a Create(), which doesn't make sense.");
-       if (__Init == InitMode.READ == true && Force == false && __Changes == 0L)
+       if (__Init == InitMode.READ == true && Force == false && __Changes1 == 0L && __Changes2 == 0L)
         {
           LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.OBJECTPERF object has already been read.");
           QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
@@ -2940,30 +2939,31 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_schemaName    = _schemaName    = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask   ;
-      __Saved_objectName    = _objectName    = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask   ;
-                              _startPeriodTZ = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask; else _startPeriodTZ = _startPeriodTZ.trim();
+      __Saved_schemaName    = _schemaName    = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask1   ;
+      __Saved_objectName    = _objectName    = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask1   ;
+                              _startPeriodTZ = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask1; else _startPeriodTZ = _startPeriodTZ.trim();
       __Saved_startPeriod   = _startPeriod   = ProcessZDT(_startPeriodTZ  , "tilda.data.TILDA.OBJECTPERF.startPeriod"  , RS, ++i, TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD  , TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ  );
-                              _endPeriodTZ   = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask  ; else _endPeriodTZ   = _endPeriodTZ  .trim();
+                              _endPeriodTZ   = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask1  ; else _endPeriodTZ   = _endPeriodTZ  .trim();
                               _endPeriod     = ProcessZDT(_endPeriodTZ    , "tilda.data.TILDA.OBJECTPERF.endPeriod"    , RS, ++i, TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD    , TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ    );
-                              _selectNano    =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask   ;
-                              _selectCount   =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask  ;
-                              _selectRecords =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask;
-                              _insertNano    =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask   ;
-                              _insertCount   =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask  ;
-                              _insertRecords =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask;
-                              _updateNano    =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask   ;
-                              _updateCount   =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask  ;
-                              _updateRecords =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask;
-                              _deleteNano    =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask   ;
-                              _deleteCount   =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask  ;
-                              _deleteRecords =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls |= TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask;
+                              _selectNano    =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask1   ;
+                              _selectCount   =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask1  ;
+                              _selectRecords =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask1;
+                              _insertNano    =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask1   ;
+                              _insertCount   =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask1  ;
+                              _insertRecords =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask1;
+                              _updateNano    =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask1   ;
+                              _updateCount   =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask1  ;
+                              _updateRecords =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask1;
+                              _deleteNano    =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask1   ;
+                              _deleteCount   =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask1  ;
+                              _deleteRecords =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask1;
                               _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
                               _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
                               _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
      __LookupId = 0;
      __Init     = InitMode.READ;
-     __Changes  = 0L;
+     __Changes1  = 0L;
+     __Changes2  = 0L;
      return AfterRead(C);
    }
 
@@ -2975,9 +2975,12 @@ This is the hasChanged for:<BR>
       throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + TimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
      ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(RS.getTimestamp(ColumnPos, DateTimeUtil._UTC_CALENDAR), ZI == null ? "null" : ZI.getValue());
      if (RS.wasNull() == true)
-      __Nulls |= DTField._Mask;
-     boolean DTNull = (__Nulls & DTField._Mask) != 0L;
-     boolean TZNull = (__Nulls & TZField._Mask) != 0L;
+      if (DTField._FirstMask == true)
+       __Nulls1 |= DTField._Mask1;
+      else
+       __Nulls2 |= DTField._Mask2;
+     boolean DTNull = DTField._FirstMask == true ? (__Nulls1 & DTField._Mask1) != 0L : (__Nulls2 & DTField._Mask2) != 0L;
+     boolean TZNull = TZField._FirstMask == true ? (__Nulls1 & TZField._Mask1) != 0L : (__Nulls2 & TZField._Mask2) != 0L;
      if (DTNull == false && TZNull == true)
       throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
      return ZDT;
@@ -2989,22 +2992,22 @@ This is the hasChanged for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "schemaName: "                                                                                              + TextUtil.PrintVariableStr        (getSchemaName   ())
-               + "; objectName: "                                                                                              + TextUtil.PrintVariableStr        (getObjectName   ())
-               + "; startPeriod: "                                                                                             + DateTimeUtil.printDateTimeForJSON(getStartPeriod  ())
-               + "; endPeriod: "                                                                                               + DateTimeUtil.printDateTimeForJSON(getEndPeriod    ())
-               + "; selectNano: "                                                                                              +                                   getSelectNano   () 
-               + "; selectCount: "                                                                                             +                                   getSelectCount  () 
-               + "; selectRecords: "                                                                                           +                                   getSelectRecords() 
-               + "; insertNano: "                                                                                              +                                   getInsertNano   () 
-               + "; insertCount: "                                                                                             +                                   getInsertCount  () 
-               + "; insertRecords: "                                                                                           +                                   getInsertRecords() 
-               + "; updateNano: "                                                                                              +                                   getUpdateNano   () 
-               + "; updateCount: "                                                                                             +                                   getUpdateCount  () 
-               + "; updateRecords: "                                                                                           +                                   getUpdateRecords() 
-               + "; deleteNano: "                                                                                              +                                   getDeleteNano   () 
-               + "; deleteCount: "                                                                                             +                                   getDeleteCount  () 
-               + "; deleteRecords: "                                                                                           +                                   getDeleteRecords() 
+                   "schemaName: "                                                                                               + TextUtil.PrintVariableStr        (getSchemaName   ())
+               + "; objectName: "                                                                                               + TextUtil.PrintVariableStr        (getObjectName   ())
+               + "; startPeriod: "                                                                                              + DateTimeUtil.printDateTimeForJSON(getStartPeriod  ())
+               + "; endPeriod: "                                                                                                + DateTimeUtil.printDateTimeForJSON(getEndPeriod    ())
+               + "; selectNano: "                                                                                               +                                   getSelectNano   () 
+               + "; selectCount: "                                                                                              +                                   getSelectCount  () 
+               + "; selectRecords: "                                                                                            +                                   getSelectRecords() 
+               + "; insertNano: "                                                                                               +                                   getInsertNano   () 
+               + "; insertCount: "                                                                                              +                                   getInsertCount  () 
+               + "; insertRecords: "                                                                                            +                                   getInsertRecords() 
+               + "; updateNano: "                                                                                               +                                   getUpdateNano   () 
+               + "; updateCount: "                                                                                              +                                   getUpdateCount  () 
+               + "; updateRecords: "                                                                                            +                                   getUpdateRecords() 
+               + "; deleteNano: "                                                                                               +                                   getDeleteNano   () 
+               + "; deleteCount: "                                                                                              +                                   getDeleteCount  () 
+               + "; deleteRecords: "                                                                                            +                                   getDeleteRecords() 
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

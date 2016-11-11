@@ -60,7 +60,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Nov 4 2016, 18:53:19EDT
+ @generated Nov 10 2016, 20:34:14EST
 */
 public abstract class TILDA__ZONEINFO implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
@@ -71,14 +71,15 @@ public abstract class TILDA__ZONEINFO implements tilda.interfaces.WriterObject, 
 
    protected TILDA__ZONEINFO() { }
 
-   private InitMode __Init   = null;
-   private long     __Nulls  = 0L;
+   private InitMode __Init        = null;
+   private long     __Nulls1      = 0L;
+   private long     __Nulls2      = 0L;
+   private long     __Changes1    = 0L;
+   private long     __Changes2    = 0L;
+   private boolean  __NewlyCreated= false;
    private int      __LookupId;
-   private boolean  __NewlyCreated = false;
 
-   private long     __Changes= 0L;
-
-   public  boolean hasChanged    () { return __Changes != 0L; }
+   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L; }
    public  boolean isNewlyCreated() { return __NewlyCreated; }
 
    void initForCreate()
@@ -170,8 +171,8 @@ This is the setter for:<BR>
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.ZONEINFO.id' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes |= TILDA__ZONEINFO_Factory.COLS.ID._Mask;
-          __Nulls   &= ~TILDA__ZONEINFO_Factory.COLS.ID._Mask;
+          __Changes1 |= TILDA__ZONEINFO_Factory.COLS.ID._Mask1;
+          __Nulls1   &= ~TILDA__ZONEINFO_Factory.COLS.ID._Mask1;
        _id = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -254,8 +255,8 @@ This is the setter for:<BR>
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.ZONEINFO.value' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes |= TILDA__ZONEINFO_Factory.COLS.VALUE._Mask;
-          __Nulls   &= ~TILDA__ZONEINFO_Factory.COLS.VALUE._Mask;
+          __Changes1 |= TILDA__ZONEINFO_Factory.COLS.VALUE._Mask1;
+          __Nulls1   &= ~TILDA__ZONEINFO_Factory.COLS.VALUE._Mask1;
        _value = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -280,7 +281,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedValue()
-     { return (TILDA__ZONEINFO_Factory.COLS.VALUE._Mask & __Changes) != 0L; }
+     { return (TILDA__ZONEINFO_Factory.COLS.VALUE._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -357,8 +358,8 @@ This is the setter for:<BR>
        else if (v.equals(_label) == false)
         {
           v = HTMLFilter.CleanAbsolute(v);
-          __Changes |= TILDA__ZONEINFO_Factory.COLS.LABEL._Mask;
-          __Nulls   &= ~TILDA__ZONEINFO_Factory.COLS.LABEL._Mask;
+          __Changes1 |= TILDA__ZONEINFO_Factory.COLS.LABEL._Mask1;
+          __Nulls1   &= ~TILDA__ZONEINFO_Factory.COLS.LABEL._Mask1;
        _label = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -383,7 +384,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedLabel()
-     { return (TILDA__ZONEINFO_Factory.COLS.LABEL._Mask & __Changes) != 0L; }
+     { return (TILDA__ZONEINFO_Factory.COLS.LABEL._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -451,7 +452,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullDeactivatedTZ()
-     { return (TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask & __Nulls) != 0L; }
+     { return (TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -482,8 +483,8 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.ZONEINFO.deactivatedTZ: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
        else if (v.equals(_deactivatedTZ) == false)
         {
-          __Changes |= TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask;
-          __Nulls   &= ~TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask;
+          __Changes1 |= TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask1;
+          __Nulls1   &= ~TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask1;
        _deactivatedTZ = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -510,10 +511,10 @@ This is the null setter for:<BR>
     void setNullDeactivatedTZ()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask & __Nulls) != 0L)
+       if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask;
-       __Nulls   |= TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask;
+       __Changes1 |= TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask1;
+       __Nulls1   |= TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask1;
        _deactivatedTZ=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -537,7 +538,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedDeactivatedTZ()
-     { return (TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask & __Changes) != 0L; }
+     { return (TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -602,7 +603,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullDeactivated()
-     { return (TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask & __Nulls) != 0L; }
+     { return (TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -631,8 +632,8 @@ This is the setter for:<BR>
         }
        else if (v.equals(_deactivated) == false)
         {
-          __Changes |= TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask;
-          __Nulls   &= ~TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask;
+          __Changes1 |= TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask1;
+          __Nulls1   &= ~TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask1;
        _deactivated = v;
           tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
           if (ZI == null)
@@ -662,10 +663,10 @@ This is the null setter for:<BR>
     void setNullDeactivated()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask & __Nulls) != 0L)
+       if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask;
-       __Nulls   |= TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask;
+       __Changes1 |= TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask1;
+       __Nulls1   |= TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask1;
        _deactivated=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -754,7 +755,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedDeactivated()
-     { return (TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask & __Changes) != 0L; }
+     { return (TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -848,8 +849,8 @@ This is the setter for:<BR>
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.ZONEINFO.created' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes |= TILDA__ZONEINFO_Factory.COLS.CREATED._Mask;
-          __Nulls   &= ~TILDA__ZONEINFO_Factory.COLS.CREATED._Mask;
+          __Changes1 |= TILDA__ZONEINFO_Factory.COLS.CREATED._Mask1;
+          __Nulls1   &= ~TILDA__ZONEINFO_Factory.COLS.CREATED._Mask1;
        _created = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -967,7 +968,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedCreated()
-     { return (TILDA__ZONEINFO_Factory.COLS.CREATED._Mask & __Changes) != 0L; }
+     { return (TILDA__ZONEINFO_Factory.COLS.CREATED._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -1059,8 +1060,8 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.ZONEINFO.lastUpdated to null: it's not nullable.");
        else if (v.equals(_lastUpdated) == false)
         {
-          __Changes |= TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask;
-          __Nulls   &= ~TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask;
+          __Changes1 |= TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask1;
+          __Nulls1   &= ~TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask1;
        _lastUpdated = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1178,7 +1179,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedLastUpdated()
-     { return (TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask & __Changes) != 0L; }
+     { return (TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -1243,7 +1244,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullDeleted()
-     { return (TILDA__ZONEINFO_Factory.COLS.DELETED._Mask & __Nulls) != 0L; }
+     { return (TILDA__ZONEINFO_Factory.COLS.DELETED._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1271,8 +1272,8 @@ This is the setter for:<BR>
         }
        else if (v.equals(_deleted) == false)
         {
-          __Changes |= TILDA__ZONEINFO_Factory.COLS.DELETED._Mask;
-          __Nulls   &= ~TILDA__ZONEINFO_Factory.COLS.DELETED._Mask;
+          __Changes1 |= TILDA__ZONEINFO_Factory.COLS.DELETED._Mask1;
+          __Nulls1   &= ~TILDA__ZONEINFO_Factory.COLS.DELETED._Mask1;
        _deleted = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1298,10 +1299,10 @@ This is the null setter for:<BR>
     void setNullDeleted()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__ZONEINFO_Factory.COLS.DELETED._Mask & __Nulls) != 0L)
+       if ((TILDA__ZONEINFO_Factory.COLS.DELETED._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes |= TILDA__ZONEINFO_Factory.COLS.DELETED._Mask;
-       __Nulls   |= TILDA__ZONEINFO_Factory.COLS.DELETED._Mask;
+       __Changes1 |= TILDA__ZONEINFO_Factory.COLS.DELETED._Mask1;
+       __Nulls1   |= TILDA__ZONEINFO_Factory.COLS.DELETED._Mask1;
        _deleted=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -1390,7 +1391,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedDeleted()
-     { return (TILDA__ZONEINFO_Factory.COLS.DELETED._Mask & __Changes) != 0L; }
+     { return (TILDA__ZONEINFO_Factory.COLS.DELETED._Mask1 & __Changes1) != 0L; }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1404,10 +1405,10 @@ This is the hasChanged for:<BR>
    public void CopyTo(tilda.data._Tilda.TILDA__ZONEINFO Dst) throws Exception
      {
        Dst.setLabel        (_label        );
-       if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask & __Nulls) != 0L) Dst.setNullDeactivatedTZ(); else        Dst.setDeactivatedTZ(_deactivatedTZ);
-       if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask   & __Nulls) != 0L) Dst.setNullDeactivated  (); else        Dst.setDeactivated  (_deactivated  );
+       if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask1 & __Nulls1) != 0L) Dst.setNullDeactivatedTZ(); else        Dst.setDeactivatedTZ(_deactivatedTZ);
+       if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask1   & __Nulls1) != 0L) Dst.setNullDeactivated  (); else        Dst.setDeactivated  (_deactivated  );
        Dst.setLastUpdated  (_lastUpdated  );
-       if ((TILDA__ZONEINFO_Factory.COLS.DELETED._Mask       & __Nulls) != 0L) Dst.setNullDeleted      (); else        Dst.setDeleted      (_deleted      );
+       if ((TILDA__ZONEINFO_Factory.COLS.DELETED._Mask1       & __Nulls1) != 0L) Dst.setNullDeleted      (); else        Dst.setDeleted      (_deleted      );
      }
 
 /**
@@ -1426,7 +1427,7 @@ This is the hasChanged for:<BR>
    public final boolean Write(Connection C) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Changes == 0L)
+       if (__Changes1 == 0L && __Changes2 == 0L)
         {
           LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.ZONEINFO has not changed: no writing will occur.");
           QueryDetails.setLastQuery(TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, "");
@@ -1447,25 +1448,25 @@ This is the hasChanged for:<BR>
           StringBuilder V = new StringBuilder(1024);
           S.append("insert into "); C.getFullTableVar(S, "TILDA", "ZONEINFO");
           int Pos = S.length();
-          if ((TILDA__ZONEINFO_Factory.COLS.ID._Mask            & __Changes) != 0L) { TILDA__ZONEINFO_Factory.COLS.ID.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__ZONEINFO_Factory.COLS.VALUE._Mask         & __Changes) != 0L) { TILDA__ZONEINFO_Factory.COLS.VALUE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__ZONEINFO_Factory.COLS.LABEL._Mask         & __Changes) != 0L) { TILDA__ZONEINFO_Factory.COLS.LABEL.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask & __Changes) != 0L) { TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__ZONEINFO_Factory.COLS.ID._Mask1            & __Changes1) != 0L) { TILDA__ZONEINFO_Factory.COLS.ID.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__ZONEINFO_Factory.COLS.VALUE._Mask1         & __Changes1) != 0L) { TILDA__ZONEINFO_Factory.COLS.VALUE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__ZONEINFO_Factory.COLS.LABEL._Mask1         & __Changes1) != 0L) { TILDA__ZONEINFO_Factory.COLS.LABEL.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask1 & __Changes1) != 0L) { TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
-          if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask   & __Changes) != 0L) { TILDA__ZONEINFO_Factory.COLS.DEACTIVATED.getFullColumnVarForInsert(C, S);
-             V.append((TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_deactivated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask1   & __Changes1) != 0L) { TILDA__ZONEINFO_Factory.COLS.DEACTIVATED.getFullColumnVarForInsert(C, S);
+             V.append((TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_deactivated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
 
-          if ((TILDA__ZONEINFO_Factory.COLS.CREATED._Mask       & __Changes) != 0L) { TILDA__ZONEINFO_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
-             V.append((TILDA__ZONEINFO_Factory.COLS.CREATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if ((TILDA__ZONEINFO_Factory.COLS.CREATED._Mask1       & __Changes1) != 0L) { TILDA__ZONEINFO_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
+             V.append((TILDA__ZONEINFO_Factory.COLS.CREATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
           else { TILDA__ZONEINFO_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
-          if ((TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask   & __Changes) != 0L) { TILDA__ZONEINFO_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
-             V.append((TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if ((TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask1   & __Changes1) != 0L) { TILDA__ZONEINFO_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
+             V.append((TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
           else { TILDA__ZONEINFO_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
-          if ((TILDA__ZONEINFO_Factory.COLS.DELETED._Mask       & __Changes) != 0L) { TILDA__ZONEINFO_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
-             V.append((TILDA__ZONEINFO_Factory.COLS.DELETED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if ((TILDA__ZONEINFO_Factory.COLS.DELETED._Mask1       & __Changes1) != 0L) { TILDA__ZONEINFO_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
+             V.append((TILDA__ZONEINFO_Factory.COLS.DELETED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
 
           S.setCharAt(Pos, '(');
@@ -1478,30 +1479,30 @@ This is the hasChanged for:<BR>
         {
           S.append("update "); C.getFullTableVar(S, "TILDA", "ZONEINFO"); S.append(" set");
           int Pos = S.length();
-          if ((TILDA__ZONEINFO_Factory.COLS.ID._Mask            & __Changes) != 0L) TILDA__ZONEINFO_Factory.COLS.ID.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__ZONEINFO_Factory.COLS.VALUE._Mask         & __Changes) != 0L) TILDA__ZONEINFO_Factory.COLS.VALUE.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__ZONEINFO_Factory.COLS.LABEL._Mask         & __Changes) != 0L) TILDA__ZONEINFO_Factory.COLS.LABEL.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask & __Changes) != 0L) TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__ZONEINFO_Factory.COLS.ID._Mask1            & __Changes1) != 0L) TILDA__ZONEINFO_Factory.COLS.ID.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__ZONEINFO_Factory.COLS.VALUE._Mask1         & __Changes1) != 0L) TILDA__ZONEINFO_Factory.COLS.VALUE.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__ZONEINFO_Factory.COLS.LABEL._Mask1         & __Changes1) != 0L) TILDA__ZONEINFO_Factory.COLS.LABEL.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask1 & __Changes1) != 0L) TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ.getFullColumnVarForUpdate(C, S);
 
-          if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask & __Changes) != 0L)
+          if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask1 & __Changes1) != 0L)
            {
-             if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_deactivated) == true)
+             if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_deactivated) == true)
               { TILDA__ZONEINFO_Factory.COLS.DEACTIVATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
               TILDA__ZONEINFO_Factory.COLS.DEACTIVATED.getFullColumnVarForUpdate(C, S);
            }
 
-          if ((TILDA__ZONEINFO_Factory.COLS.CREATED._Mask & __Changes) != 0L)
+          if ((TILDA__ZONEINFO_Factory.COLS.CREATED._Mask1 & __Changes1) != 0L)
            {
-             if ((TILDA__ZONEINFO_Factory.COLS.CREATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true)
+             if ((TILDA__ZONEINFO_Factory.COLS.CREATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true)
               { TILDA__ZONEINFO_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
               TILDA__ZONEINFO_Factory.COLS.CREATED.getFullColumnVarForUpdate(C, S);
            }
 
-          if ((TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask & __Changes) != 0L)
+          if ((TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask1 & __Changes1) != 0L)
            {
-             if ((TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true)
+             if ((TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true)
               { TILDA__ZONEINFO_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
               TILDA__ZONEINFO_Factory.COLS.LASTUPDATED.getFullColumnVarForUpdate(C, S);
@@ -1512,9 +1513,9 @@ This is the hasChanged for:<BR>
              setLastUpdatedNow();
            }
 
-          if ((TILDA__ZONEINFO_Factory.COLS.DELETED._Mask & __Changes) != 0L)
+          if ((TILDA__ZONEINFO_Factory.COLS.DELETED._Mask1 & __Changes1) != 0L)
            {
-             if ((TILDA__ZONEINFO_Factory.COLS.DELETED._Mask & __Nulls) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true)
+             if ((TILDA__ZONEINFO_Factory.COLS.DELETED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true)
               { TILDA__ZONEINFO_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
               TILDA__ZONEINFO_Factory.COLS.DELETED.getFullColumnVarForUpdate(C, S);
@@ -1548,37 +1549,37 @@ This is the hasChanged for:<BR>
         {
           PS = C.prepareStatement(Q);
           int i = 0;
-               if ((TILDA__ZONEINFO_Factory.COLS.ID._Mask            & __Changes) != 0L) 
+               if ((TILDA__ZONEINFO_Factory.COLS.ID._Mask1            & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__ZONEINFO_Factory.COLS.ID._Mask            & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _id);
+                  if ((TILDA__ZONEINFO_Factory.COLS.ID._Mask1            & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _id);
                 } 
-               if ((TILDA__ZONEINFO_Factory.COLS.VALUE._Mask         & __Changes) != 0L) 
+               if ((TILDA__ZONEINFO_Factory.COLS.VALUE._Mask1         & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__ZONEINFO_Factory.COLS.VALUE._Mask         & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _value);
+                  if ((TILDA__ZONEINFO_Factory.COLS.VALUE._Mask1         & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _value);
                 } 
-               if ((TILDA__ZONEINFO_Factory.COLS.LABEL._Mask         & __Changes) != 0L) 
+               if ((TILDA__ZONEINFO_Factory.COLS.LABEL._Mask1         & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__ZONEINFO_Factory.COLS.LABEL._Mask         & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _label);
+                  if ((TILDA__ZONEINFO_Factory.COLS.LABEL._Mask1         & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _label);
                 } 
-               if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask & __Changes) != 0L) 
+               if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask1 & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _deactivatedTZ);
+                  if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask1 & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _deactivatedTZ);
                 } 
-               if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask   & __Changes) != 0L) 
+               if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask1   & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask   & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deactivated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deactivated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                  if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask1   & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deactivated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deactivated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
-               if ((TILDA__ZONEINFO_Factory.COLS.CREATED._Mask       & __Changes) != 0L) 
+               if ((TILDA__ZONEINFO_Factory.COLS.CREATED._Mask1       & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__ZONEINFO_Factory.COLS.CREATED._Mask       & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                  if ((TILDA__ZONEINFO_Factory.COLS.CREATED._Mask1       & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
-               if ((TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask   & __Changes) != 0L) 
+               if ((TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask1   & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask   & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_lastUpdated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                  if ((TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask1   & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_lastUpdated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
-               if ((TILDA__ZONEINFO_Factory.COLS.DELETED._Mask       & __Changes) != 0L) 
+               if ((TILDA__ZONEINFO_Factory.COLS.DELETED._Mask1       & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__ZONEINFO_Factory.COLS.DELETED._Mask       & __Nulls  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deleted.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                  if ((TILDA__ZONEINFO_Factory.COLS.DELETED._Mask1       & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deleted.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
 
           switch (__LookupId)
@@ -1638,9 +1639,7 @@ This is the hasChanged for:<BR>
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
         }
 
-       __Changes= 0L   ;
-       __Nulls  = 0L   ;
-
+       __Changes1= __Changes2= __Nulls1= __Nulls2= 0L;
        return true;
      }
 
@@ -1666,7 +1665,7 @@ This is the hasChanged for:<BR>
        long T0 = System.nanoTime();
        if (__Init == InitMode.CREATE)
         throw new Exception("This TILDA.ZONEINFO object is being Read() after a Create(), which doesn't make sense.");
-       if (__Init == InitMode.READ == true && Force == false && __Changes == 0L)
+       if (__Init == InitMode.READ == true && Force == false && __Changes1 == 0L && __Changes2 == 0L)
         {
           LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.ZONEINFO object has already been read.");
           QueryDetails.setLastQuery(TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, "");
@@ -1751,17 +1750,18 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_id            = _id            = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__ZONEINFO_Factory.COLS.ID._Mask           ; else _id            = _id           .trim();
-      __Saved_value         = _value         = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__ZONEINFO_Factory.COLS.VALUE._Mask        ;
-                              _label         = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__ZONEINFO_Factory.COLS.LABEL._Mask        ;
-                              _deactivatedTZ = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls |= TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask; else _deactivatedTZ = _deactivatedTZ.trim();
+      __Saved_id            = _id            = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__ZONEINFO_Factory.COLS.ID._Mask1           ; else _id            = _id           .trim();
+      __Saved_value         = _value         = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__ZONEINFO_Factory.COLS.VALUE._Mask1        ;
+                              _label         = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__ZONEINFO_Factory.COLS.LABEL._Mask1        ;
+                              _deactivatedTZ = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask1; else _deactivatedTZ = _deactivatedTZ.trim();
                               _deactivated   = ProcessZDT(_deactivatedTZ  , "tilda.data.TILDA.ZONEINFO.deactivated"  , RS, ++i, TILDA__ZONEINFO_Factory.COLS.DEACTIVATED  , TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ  );
                               _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
                               _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
                               _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
      __LookupId = 0;
      __Init     = InitMode.READ;
-     __Changes  = 0L;
+     __Changes1  = 0L;
+     __Changes2  = 0L;
      return AfterRead(C);
    }
 
@@ -1773,9 +1773,12 @@ This is the hasChanged for:<BR>
       throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + TimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
      ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(RS.getTimestamp(ColumnPos, DateTimeUtil._UTC_CALENDAR), ZI == null ? "null" : ZI.getValue());
      if (RS.wasNull() == true)
-      __Nulls |= DTField._Mask;
-     boolean DTNull = (__Nulls & DTField._Mask) != 0L;
-     boolean TZNull = (__Nulls & TZField._Mask) != 0L;
+      if (DTField._FirstMask == true)
+       __Nulls1 |= DTField._Mask1;
+      else
+       __Nulls2 |= DTField._Mask2;
+     boolean DTNull = DTField._FirstMask == true ? (__Nulls1 & DTField._Mask1) != 0L : (__Nulls2 & DTField._Mask2) != 0L;
+     boolean TZNull = TZField._FirstMask == true ? (__Nulls1 & TZField._Mask1) != 0L : (__Nulls2 & TZField._Mask2) != 0L;
      if (DTNull == false && TZNull == true)
       throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
      return ZDT;
@@ -1787,9 +1790,9 @@ This is the hasChanged for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "id: "                                                                                                    + TextUtil.PrintVariableStr        (getId           ())
-               + "; value: "                                                                                                 + TextUtil.PrintVariableStr        (getValue        ())
-               + "; label: "                                                                                                 + TextUtil.PrintVariableStr        (getLabel        ())
+                   "id: "                                                                                                     + TextUtil.PrintVariableStr        (getId           ())
+               + "; value: "                                                                                                  + TextUtil.PrintVariableStr        (getValue        ())
+               + "; label: "                                                                                                  + TextUtil.PrintVariableStr        (getLabel        ())
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;
