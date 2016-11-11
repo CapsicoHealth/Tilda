@@ -31,7 +31,6 @@ import org.apache.logging.log4j.Logger;
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
 import tilda.db.processors.ScalarRP;
-import tilda.db.processors.StringRP;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
@@ -407,14 +406,14 @@ public class PostgreSQL implements DBType
          */
         Str.append("DROP FUNCTION IF EXISTS TILDA.Like(text[], text);\n")
         .append("CREATE OR REPLACE FUNCTION TILDA.Like(v text[], val text)\n")
-        .append("  RETURNS bigint\n")
+        .append("  RETURNS boolean\n")
         .append("  STRICT IMMUTABLE LANGUAGE SQL AS\n")
-        .append("  'select count(*) from unnest(v) x_ where x_ like val;';\n")
+        .append("  'select count(*)>0 from unnest(v) x_ where x_ like val;';\n")
         .append("DROP FUNCTION IF EXISTS TILDA.Like(text[], text[]);\n")
         .append("CREATE OR REPLACE FUNCTION TILDA.Like(v text[], val text[])\n")
-        .append("  RETURNS bigint\n")
+        .append("  RETURNS boolean\n")
         .append("  STRICT IMMUTABLE LANGUAGE SQL AS\n")
-        .append("  'select count(*) from unnest(v) x_ where x_ like ANY(val);';\n")
+        .append("  'select count(*)>0 from unnest(v) x_ where x_ like ANY(val);';\n")
         .append("\n")
         .append("\n");
         PrintFunctionIn(Str, "text");
