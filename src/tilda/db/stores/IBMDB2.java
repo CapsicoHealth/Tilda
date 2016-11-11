@@ -323,4 +323,11 @@ public class IBMDB2 implements DBType
         throw new UnsupportedOperationException();
       }
 
+
+    @Override
+    public void within(Connection C, StringBuilder Str, Type_DatetimePrimitive Col, Type_DatetimePrimitive ColStart, long DurationCount, IntervalEnum DurationType)
+      {
+        throw new UnsupportedOperationException();
+      }
+
   }

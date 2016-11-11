@@ -2269,7 +2269,9 @@ public abstract class QueryHelper
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'like' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
 
-        _QueryStr.append("(select count(*) from unnest(");
+        if (not == true)
+          _QueryStr.append("not ");
+        _QueryStr.append("exists (select * from unnest(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         _QueryStr.append(") x_ where x_ like ");        
         TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V);
@@ -2302,7 +2304,9 @@ public abstract class QueryHelper
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'like' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
 
-        _QueryStr.append("(select count(*) from unnest(");
+        if (not == true)
+          _QueryStr.append("not ");
+        _QueryStr.append("exists (select * from unnest(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         _QueryStr.append(") x_ where x_ like ANY(ARRAY[");
         TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V, true);
@@ -2322,10 +2326,6 @@ public abstract class QueryHelper
           }
         _QueryStr.append("])");
 */
-        if (not == true)
-          _QueryStr.append("=0");
-        else
-          _QueryStr.append(">0");
         return this;
       }
 
@@ -2343,7 +2343,9 @@ public abstract class QueryHelper
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'like' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
 
-        _QueryStr.append("(select count(*) from unnest(");
+        if (not == true)
+          _QueryStr.append("not ");
+        _QueryStr.append("exists (select * from unnest(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         _QueryStr.append(") x_ where x_ like ANY(ARRAY[");
         TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V, true);
@@ -2363,10 +2365,6 @@ public abstract class QueryHelper
           }
         _QueryStr.append("])");
 */
-        if (not == true)
-          _QueryStr.append("=0");
-        else
-          _QueryStr.append(">0");
         return this;
       }
 
@@ -2711,6 +2709,25 @@ public abstract class QueryHelper
         _C.age(_QueryStr, ColStart, ColEnd, Type, Count, Op.EQUALS._Str);
         return this;
       }
+    
+
+    /**
+     * If Duration is positive, implements the condition Col >= ColStart && Col < ColStart + interval specified.<BR>
+     * If Duration is negative, implements the condition Col > ColStart - interval specified && Col <= ColStart (with the interval negated).<BR>
+     * @param Col
+     * @param ColStart
+     * @param durationCount
+     * @param Type
+     * @return
+     * @throws Exception
+     */
+    public QueryHelper within(Type_DatetimePrimitive Col, Type_DatetimePrimitive ColStart, long durationCount, IntervalEnum Type)
+    throws Exception
+      {
+        _C.within(_QueryStr, Col, ColStart, durationCount, Type);
+        return this;
+      }
+    
 
     public String toString()
       {

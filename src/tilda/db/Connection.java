@@ -537,6 +537,11 @@ public final class Connection
         return _DB.alterTableAlterColumnComment(this, Col);
       }
 
+    public void within(StringBuilder Str, Type_DatetimePrimitive Col, Type_DatetimePrimitive ColStart, long DurationCount, IntervalEnum DurationType)
+      {
+        _DB.within(this, Str, Col, ColStart, DurationCount, DurationType);
+      }
+
   }
 
 

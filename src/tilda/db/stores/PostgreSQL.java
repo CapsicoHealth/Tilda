@@ -332,26 +332,26 @@ public class PostgreSQL implements DBType
 
     protected static void PrintFunctionIn(StringBuilder Str, String Type)
       {
-//        Str.append("DROP FUNCTION IF EXISTS TILDA.In2(" + Type + "[], " + Type + "[]);\n")
-//        .append("CREATE OR REPLACE FUNCTION TILDA.In2(v " + Type + "[], vals " + Type + "[]) RETURNS boolean AS $$\n")
-//        .append("BEGIN\n")
-//        .append("  IF v is not null AND vals is not null THEN\n")
-//        .append("   RETURN v && vals;\n")
-//        .append("  END IF;\n")
-//        .append("  RETURN false;\n")
-//        .append("END; $$\n")
-//        .append("LANGUAGE PLPGSQL;\n")
-//        .append("\n")
-//        .append("\n");
-        
-//        Str.append("DROP FUNCTION IF EXISTS TILDA.In(" + Type + "[], " + Type + "[]);\n")
-//        .append("CREATE OR REPLACE FUNCTION TILDA.In(v " + Type + "[], vals " + Type + "[])\n")
-//        .append("  RETURNS boolean\n")
-//        .append("  STRICT IMMUTABLE LANGUAGE SQL AS\n")
-//        .append("  'select CASE WHEN v is not null and vals is not null then v && vals else false end;';\n")
-//        .append("\n")
-//        .append("\n");
-        
+        // Str.append("DROP FUNCTION IF EXISTS TILDA.In2(" + Type + "[], " + Type + "[]);\n")
+        // .append("CREATE OR REPLACE FUNCTION TILDA.In2(v " + Type + "[], vals " + Type + "[]) RETURNS boolean AS $$\n")
+        // .append("BEGIN\n")
+        // .append(" IF v is not null AND vals is not null THEN\n")
+        // .append(" RETURN v && vals;\n")
+        // .append(" END IF;\n")
+        // .append(" RETURN false;\n")
+        // .append("END; $$\n")
+        // .append("LANGUAGE PLPGSQL;\n")
+        // .append("\n")
+        // .append("\n");
+
+        // Str.append("DROP FUNCTION IF EXISTS TILDA.In(" + Type + "[], " + Type + "[]);\n")
+        // .append("CREATE OR REPLACE FUNCTION TILDA.In(v " + Type + "[], vals " + Type + "[])\n")
+        // .append(" RETURNS boolean\n")
+        // .append(" STRICT IMMUTABLE LANGUAGE SQL AS\n")
+        // .append(" 'select CASE WHEN v is not null and vals is not null then v && vals else false end;';\n")
+        // .append("\n")
+        // .append("\n");
+
         Str.append("DROP FUNCTION IF EXISTS TILDA.In(" + Type + "[], " + Type + "[]);\n")
         .append("CREATE OR REPLACE FUNCTION TILDA.In(v " + Type + "[], vals " + Type + "[])\n")
         .append("  RETURNS boolean\n")
@@ -359,7 +359,7 @@ public class PostgreSQL implements DBType
         .append("  'select v && vals;';\n")
         .append("\n")
         .append("\n");
-        
+
       }
 
     @Override
@@ -367,43 +367,44 @@ public class PostgreSQL implements DBType
     throws Exception
       {
         StringBuilder Str = new StringBuilder();
-/*        Str.append("DROP FUNCTION IF EXISTS TILDA.like(text[], text);\n")
-        .append("CREATE OR REPLACE FUNCTION TILDA.like(v text[], val text) RETURNS boolean AS $$\n")
-        .append("DECLARE\n")
-        .append("  str text;\n")
-        .append("BEGIN\n")
-        .append("  IF v is not null AND val is not null THEN\n")
-        .append("    FOREACH str IN ARRAY v LOOP\n")
-        .append("      IF str LIKE val THEN\n")
-        .append("        RETURN true;\n")
-        .append("      END IF;\n")
-        .append("    END LOOP;\n")
-        .append("  END IF;\n")
-        .append("  RETURN false;\n")
-        .append("END; $$\n")
-        .append("LANGUAGE PLPGSQL;\n")
-        .append("\n")
-        .append("\n")
-        .append("DROP FUNCTION IF EXISTS TILDA.like(text[], text[]);\n")
-        .append("CREATE OR REPLACE FUNCTION TILDA.like(v text[], vals text[]) RETURNS boolean AS $$\n")
-        .append("DECLARE\n")
-        .append("  str1 text;\n")
-        .append("  str2 text;\n")
-        .append("  i integer := 1;\n")
-        .append("BEGIN\n")
-        .append("  IF v is not null AND vals is not null THEN\n")
-        .append("    FOREACH str1 IN ARRAY v LOOP\n")
-        .append("      FOREACH str2 IN ARRAY vals LOOP\n")
-        .append("        IF str1 LIKE str2 THEN\n")
-        .append("          RETURN true;\n")
-        .append("        END IF;\n")
-        .append("      END LOOP;\n")
-        .append("    END LOOP;\n")
-        .append("  END IF;\n")
-        .append("  RETURN false;\n")
-        .append("END; $$\n")
-        .append("LANGUAGE PLPGSQL;\n")
-*/  
+        /*
+         * Str.append("DROP FUNCTION IF EXISTS TILDA.like(text[], text);\n")
+         * .append("CREATE OR REPLACE FUNCTION TILDA.like(v text[], val text) RETURNS boolean AS $$\n")
+         * .append("DECLARE\n")
+         * .append("  str text;\n")
+         * .append("BEGIN\n")
+         * .append("  IF v is not null AND val is not null THEN\n")
+         * .append("    FOREACH str IN ARRAY v LOOP\n")
+         * .append("      IF str LIKE val THEN\n")
+         * .append("        RETURN true;\n")
+         * .append("      END IF;\n")
+         * .append("    END LOOP;\n")
+         * .append("  END IF;\n")
+         * .append("  RETURN false;\n")
+         * .append("END; $$\n")
+         * .append("LANGUAGE PLPGSQL;\n")
+         * .append("\n")
+         * .append("\n")
+         * .append("DROP FUNCTION IF EXISTS TILDA.like(text[], text[]);\n")
+         * .append("CREATE OR REPLACE FUNCTION TILDA.like(v text[], vals text[]) RETURNS boolean AS $$\n")
+         * .append("DECLARE\n")
+         * .append("  str1 text;\n")
+         * .append("  str2 text;\n")
+         * .append("  i integer := 1;\n")
+         * .append("BEGIN\n")
+         * .append("  IF v is not null AND vals is not null THEN\n")
+         * .append("    FOREACH str1 IN ARRAY v LOOP\n")
+         * .append("      FOREACH str2 IN ARRAY vals LOOP\n")
+         * .append("        IF str1 LIKE str2 THEN\n")
+         * .append("          RETURN true;\n")
+         * .append("        END IF;\n")
+         * .append("      END LOOP;\n")
+         * .append("    END LOOP;\n")
+         * .append("  END IF;\n")
+         * .append("  RETURN false;\n")
+         * .append("END; $$\n")
+         * .append("LANGUAGE PLPGSQL;\n")
+         */
         Str.append("DROP FUNCTION IF EXISTS TILDA.Like(text[], text);\n")
         .append("CREATE OR REPLACE FUNCTION TILDA.Like(v text[], val text)\n")
         .append("  RETURNS bigint\n")
@@ -682,5 +683,27 @@ public class PostgreSQL implements DBType
       {
         String Q = "COMMENT ON COLUMN " + Col._ParentObject.getShortName() + ".\"" + Col.getName() + "\" IS " + TextUtil.EscapeSingleQuoteForSQL(Col._Description) + ";";
         return Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) >= 0;
+      }
+
+    @Override
+    public void within(Connection C, StringBuilder Str, Type_DatetimePrimitive Col, Type_DatetimePrimitive ColStart, long DurationCount, IntervalEnum DurationType)
+      {
+        if (DurationCount >= 0)
+          {
+            Str.append(" ("); Col.getFullColumnVarForSelect(C, Str); Str.append(" >= "); ColStart.getFullColumnVarForSelect(C, Str);
+            Str.append(" and ");
+            Col.getFullColumnVarForSelect(C, Str); Str.append(" < "); ColStart.getFullColumnVarForSelect(C, Str);
+            Str.append(" + INTERVAL '").append(DurationCount).append(" ").append(DurationType.toString()).append("'");
+            Str.append(")");
+          }
+        else
+          {
+            DurationCount = -DurationCount;
+            Str.append(" ("); Col.getFullColumnVarForSelect(C, Str); Str.append(" > "); ColStart.getFullColumnVarForSelect(C, Str);
+            Str.append(" - INTERVAL '").append(DurationCount).append(" ").append(DurationType.toString()).append("'");
+            Str.append(" and ");
+            Col.getFullColumnVarForSelect(C, Str); Str.append(" <= "); ColStart.getFullColumnVarForSelect(C, Str);
+            Str.append(")");
+          }
       }
   }
