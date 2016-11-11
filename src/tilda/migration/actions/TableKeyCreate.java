@@ -19,10 +19,11 @@ package tilda.migration.actions;
 import tilda.db.Connection;
 import tilda.migration.MigrationAction;
 
-public class TableKeyCreate implements MigrationAction
+public class TableKeyCreate extends MigrationAction
   {
     public TableKeyCreate(tilda.parsing.parts.Object O)
       {
+        super(false);
         _O = O;
       }
 

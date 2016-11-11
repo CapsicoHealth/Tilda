@@ -21,10 +21,11 @@ import tilda.migration.MigrationAction;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 
-public class SchemaViewsCreate implements MigrationAction
+public class SchemaViewsCreate extends MigrationAction
   {
     public SchemaViewsCreate(Schema S)
       {
+        super(false);
         _S = S;
       }
 

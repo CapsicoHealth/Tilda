@@ -20,10 +20,11 @@ import tilda.db.Connection;
 import tilda.migration.MigrationAction;
 import tilda.parsing.parts.Object;
 
-public class ColumnDrop implements MigrationAction
+public class ColumnDrop extends MigrationAction
   {
     public ColumnDrop(Object Obj, String ColumnName)
       {
+        super(false);
         _Obj = Obj;
         _ColumnName = ColumnName;
       }

@@ -20,10 +20,11 @@ import tilda.db.Connection;
 import tilda.migration.MigrationAction;
 import tilda.parsing.parts.Column;
 
-public class ColumnAlterStringSize implements MigrationAction
+public class ColumnAlterStringSize extends MigrationAction
   {
     public ColumnAlterStringSize(Column Col, int CurrentSize)
       {
+        super(false);
         _Col = Col;
         _CurrentSize = CurrentSize;
       }

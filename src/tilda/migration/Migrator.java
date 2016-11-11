@@ -21,9 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.util.StringBuilderWriter;
 
 import tilda.db.Connection;
 import tilda.db.KeysManager;
@@ -72,49 +72,36 @@ public class Migrator
         MigrationScript InitScript = new MigrationScript(null, new ArrayList<MigrationAction>());
         for (Schema S : TildaList)
           if (S._Views.isEmpty() == false)
-           InitScript._Actions.add(new SchemaViewsDrop(S));
+            InitScript._Actions.add(new SchemaViewsDrop(S));
         Scripts.add(InitScript);
         for (Schema S : TildaList)
           {
             List<MigrationAction> L = Migrator.getMigrationActions(C.getSQlCodeGen(), S, DBMeta);
-            if (L.isEmpty() == false)
-              {
-                ActionCount += L.size();
-              }
-            for (View V : S._Views)
-              {
-                boolean Found = false;
-                for (MigrationAction A : L)
-                 {
-                   if (   A.getDescription().equals("Create view " + V.getFullName()) == true  // Evil to hardcode knowledge of the description string.
-                       || A.getDescription().equals("Update view " + V.getFullName()) == true
-                      ) 
-                     {
-                       Found = true;
-                       break;
-                     }
-                 }
-                if (Found == false)
-                 L.add(new ViewCreate(V));
-              }
+            for (MigrationAction MA : L)
+              if (MA._isDependency == false)
+                ++ActionCount;
             Scripts.add(new MigrationScript(S, L));
           }
         MigrationScript ClosingScript = new MigrationScript(null, new ArrayList<MigrationAction>());
         ClosingScript._Actions.add(new TildaHelpersAdd());
         Scripts.add(ClosingScript);
-        
+
         if (ActionCount > 0)
           {
-            LOG.info("There were " + ActionCount + " discrepencies found in the database Vs. the application's required data model:");
+            LOG.warn("There were " + ActionCount + " discrepencies found in the database Vs. the application's required data model:");
+            int xxx = 0;
             for (MigrationScript S : Scripts)
-              for (MigrationAction A : S._Actions)
+              for (MigrationAction MA : S._Actions)
                 {
-                  LOG.debug("    - " + A.getDescription() + ".");
+                  if (MA._isDependency == false)
+                   LOG.debug("    " + (++xxx) + " - " + MA.getDescription() + ".");
+                  else
+                   LOG.debug("    - (dependency) " + MA.getDescription() + ".");
                 }
             if (CheckOnly == false)
               {
                 LOG.info("!!! THIS UTILITY IS ABOUT TO CHANGE DATA IN YOUR DATABASE. MAKE SURE YOU HAVE A BACKUP. !!!");
-                LOG.info(" ===> "+C.getURL());
+                LOG.info(" ===> " + C.getURL());
                 LOG.info("");
                 LOG.info("Press 'yes' followed by enter to continue.");
                 Scanner scanner = null;
@@ -169,6 +156,15 @@ public class Migrator
             LOG.info("================================================================================================");
             LOG.info("");
           }
+        else
+          {
+            LOG.warn("");
+            LOG.warn("");
+            LOG.warn("==========================================================================================================");
+            LOG.warn("===  The database DOES NOT match the Application's data model. The application may NOT run properly!   ===");
+            LOG.warn("==========================================================================================================");
+            LOG.warn("");
+          }
       }
 
     protected static List<MigrationAction> getMigrationActions(CodeGenSql CGSQL, Schema S, DatabaseMeta DBMeta)
@@ -191,7 +187,7 @@ public class Migrator
             else
               {
                 if (Obj._Description.equalsIgnoreCase(TMeta._Descr) == false)
-                 Actions.add(new TableComment(Obj));
+                  Actions.add(new TableComment(Obj));
                 if (Obj._PrimaryKey != null && Obj._PrimaryKey._Autogen == true && KeysManager.hasKey(Obj.getShortName()) == false)
                   Actions.add(new TableKeyCreate(Obj));
                 for (Column Col : Obj._Columns)
@@ -204,8 +200,8 @@ public class Migrator
                     else
                       {
                         if (Col._Description.equalsIgnoreCase(CMeta._Descr) == false)
-                         Actions.add(new ColumnComment(Col));
-                        
+                          Actions.add(new ColumnComment(Col));
+
                         if (CMeta._Nullable == 1 && Col._Nullable == false || CMeta._Nullable == 0 && Col._Nullable == true)
                           Actions.add(new ColumnAlterNull(Col));
 
@@ -238,21 +234,23 @@ public class Migrator
                   }
               }
           }
-        
+
         for (View V : S._Views)
           {
             if (V == null)
               continue;
             ViewMeta VMeta = DBMeta.getViewMeta(V._ParentSchema._Name, V._Name);
             if (VMeta == null)
-             Actions.add(new ViewCreate(V));
+              Actions.add(new ViewCreate(V, false));
             else
               {
                 StringBuilderWriter Out = new StringBuilderWriter();
                 String ViewDef = CGSQL.genDDL(new PrintWriter(Out), V);
                 Out.close();
                 if (VMeta._Descr == null || VMeta._Descr.replace("\r\n", " ").replace("\n", " ").trim().equals(ViewDef.replace("\r\n", " ").replace("\n", " ").trim()) == false)
-                 Actions.add(new ViewUpdate(V));
+                  Actions.add(new ViewUpdate(V, false));
+                else
+                  Actions.add(new ViewUpdate(V, true));
               }
           }
 

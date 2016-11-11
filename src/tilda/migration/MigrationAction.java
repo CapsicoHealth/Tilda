@@ -18,8 +18,21 @@ package tilda.migration;
 
 import tilda.db.Connection;
 
-public interface MigrationAction
+public abstract class MigrationAction
   {
-    public boolean process(Connection C) throws Exception;
-    public String getDescription();
+    protected MigrationAction()
+      {
+        _isDependency = false;
+      }
+    protected MigrationAction(boolean isDependency)
+      {
+        _isDependency = isDependency;
+      }
+    
+    public final boolean _isDependency; 
+
+    public abstract boolean process(Connection C)
+    throws Exception;
+
+    public abstract String getDescription();
   }

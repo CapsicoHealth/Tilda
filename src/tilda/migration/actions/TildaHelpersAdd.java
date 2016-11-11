@@ -19,10 +19,11 @@ package tilda.migration.actions;
 import tilda.db.Connection;
 import tilda.migration.MigrationAction;
 
-public class TildaHelpersAdd implements MigrationAction
+public class TildaHelpersAdd extends MigrationAction
   {
     public TildaHelpersAdd()
       {
+        super(true);
       }
 
     public boolean process(Connection C)

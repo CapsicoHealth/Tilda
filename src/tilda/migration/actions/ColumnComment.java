@@ -20,10 +20,11 @@ import tilda.db.Connection;
 import tilda.migration.MigrationAction;
 import tilda.parsing.parts.Column;
 
-public class ColumnComment implements MigrationAction
+public class ColumnComment extends MigrationAction
   {
     public ColumnComment(Column Col)
       {
+        super(false);
         _Col = Col;
       }
 

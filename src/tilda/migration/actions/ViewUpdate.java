@@ -20,9 +20,9 @@ import tilda.parsing.parts.View;
 
 public class ViewUpdate extends ViewCreate
   {
-    public ViewUpdate(View V)
+    public ViewUpdate(View V, boolean isDependency)
       {
-        super(V);
+        super(V, isDependency);
       }
 
     public String getDescription()

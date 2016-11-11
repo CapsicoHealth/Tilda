@@ -22,10 +22,11 @@ import tilda.enums.ColumnType;
 import tilda.migration.MigrationAction;
 import tilda.parsing.parts.Column;
 
-public class ColumnAlterType implements MigrationAction
+public class ColumnAlterType extends MigrationAction
   {
     public ColumnAlterType(Column Col, ColumnType CurrentType)
       {
+        super(false);
         _Col = Col;
         _CurrentType = CurrentType;
       }

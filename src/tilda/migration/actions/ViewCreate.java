@@ -20,10 +20,11 @@ import tilda.db.Connection;
 import tilda.migration.MigrationAction;
 import tilda.parsing.parts.View;
 
-public class ViewCreate implements MigrationAction
+public class ViewCreate extends MigrationAction
   {
-    public ViewCreate(View V)
+    public ViewCreate(View V, boolean isDependency)
       {
+        super(isDependency);
         _V = V;
       }
 

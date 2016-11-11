@@ -20,10 +20,11 @@ import tilda.db.Connection;
 import tilda.migration.MigrationAction;
 import tilda.parsing.parts.Schema;
 
-public class SchemaCreate implements MigrationAction
+public class SchemaCreate extends MigrationAction
   {
     public SchemaCreate(Schema S)
       {
+        super(false);
         _S = S;
       }
 

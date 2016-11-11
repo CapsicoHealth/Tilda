@@ -20,10 +20,11 @@ import tilda.db.Connection;
 import tilda.migration.MigrationAction;
 import tilda.parsing.parts.Column;
 
-public class ColumnAlterNull implements MigrationAction
+public class ColumnAlterNull extends MigrationAction
   {
     public ColumnAlterNull(Column Col)
       {
+        super(false);
         _Col = Col;
       }
 
