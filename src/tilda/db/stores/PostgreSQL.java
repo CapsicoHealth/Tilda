@@ -408,12 +408,12 @@ public class PostgreSQL implements DBType
         .append("CREATE OR REPLACE FUNCTION TILDA.Like(v text[], val text)\n")
         .append("  RETURNS boolean\n")
         .append("  STRICT IMMUTABLE LANGUAGE SQL AS\n")
-        .append("  'select count(*)>0 from unnest(v) x_ where x_ like val;';\n")
+        .append("  'select exists (select * from unnest(v) x_ where x_ like val);';\n")
         .append("DROP FUNCTION IF EXISTS TILDA.Like(text[], text[]);\n")
         .append("CREATE OR REPLACE FUNCTION TILDA.Like(v text[], val text[])\n")
         .append("  RETURNS boolean\n")
         .append("  STRICT IMMUTABLE LANGUAGE SQL AS\n")
-        .append("  'select count(*)>0 from unnest(v) x_ where x_ like ANY(val);';\n")
+        .append("  'select exists (select * from unnest(v) x_ where x_ like ANY(val));';\n")
         .append("\n")
         .append("\n");
         PrintFunctionIn(Str, "text");
