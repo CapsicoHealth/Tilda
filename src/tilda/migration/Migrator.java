@@ -94,7 +94,7 @@ public class Migrator
               for (MigrationAction MA : S._Actions)
                 {
                   if (MA._isDependency == false)
-                   LOG.debug("    " + (++xxx) + " - " + MA.getDescription() + ".");
+                   LOG.warn("    " + (++xxx) + " - " + MA.getDescription() + ".");
                   else
                    LOG.debug("    - (dependency) " + MA.getDescription() + ".");
                 }

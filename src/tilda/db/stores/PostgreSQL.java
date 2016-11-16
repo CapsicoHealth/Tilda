@@ -221,7 +221,17 @@ public class PostgreSQL implements DBType
           {
             Q += " not null DEFAULT " + ValueHelper.printValue(Col, DefaultValue);
           }
+        if (Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) < 0)
+         return false;
 
+        return alterTableAlterColumnComment(Con, Col);
+      }
+
+    @Override
+    public boolean alterTableAlterColumnComment(Connection Con, Column Col)
+    throws Exception
+      {
+        String Q = "COMMENT ON COLUMN " + Col._ParentObject.getShortName() + ".\"" + Col.getName() + "\" IS " + TextUtil.EscapeSingleQuoteForSQL(Col._Description) + ";";
         return Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) >= 0;
       }
 
@@ -675,14 +685,6 @@ public class PostgreSQL implements DBType
         return Con.ExecuteUpdate(Obj._ParentSchema._Name, Obj.getBaseName(), Q) >= 0;
       }
 
-
-    @Override
-    public boolean alterTableAlterColumnComment(Connection Con, Column Col)
-    throws Exception
-      {
-        String Q = "COMMENT ON COLUMN " + Col._ParentObject.getShortName() + ".\"" + Col.getName() + "\" IS " + TextUtil.EscapeSingleQuoteForSQL(Col._Description) + ";";
-        return Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) >= 0;
-      }
 
     @Override
     public void within(Connection C, StringBuilder Str, Type_DatetimePrimitive Col, Type_DatetimePrimitive ColStart, long DurationCount, IntervalEnum DurationType)
