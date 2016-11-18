@@ -89,7 +89,7 @@ public class ViewColumn
         _ParentView = ParentView;
 
         // Mandatories
-        if (TextUtil.isNullOrEmpty(_SameAs) == true)
+        if (TextUtil.isNullOrEmpty(_SameAs) == true && AggregateType.COUNT.name().equalsIgnoreCase(_AggregateStr) == false)
           return PS.AddError("View column '" + getFullName() + "' didn't define a 'sameAs'. It is mandatory.");
         
         if (ValidateSameAs(PS) == false)
@@ -108,7 +108,7 @@ public class ViewColumn
           {
             if ((_Aggregate = AggregateType.parse(_AggregateStr)) == null)
              return PS.AddError("View Column '" + getFullName() + "' defined an invalid 'aggregate' '" + _AggregateStr + "'.");
-            if (_SameAsObj._Type == ColumnType.DATETIME)
+            if (_SameAsObj != null && _SameAsObj._Type == ColumnType.DATETIME)
              return PS.AddError("View Column '" + getFullName() + "' defined an aggregate on DATETIME column '" + _SameAsObj._Name + "' which is not supported as timezone information would not be retrievable.");
           }
         

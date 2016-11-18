@@ -14,31 +14,30 @@
  * limitations under the License.
  */
 
-package tilda.enums;
+package tilda.migration.actions;
 
-public enum AggregateType
+import tilda.db.Connection;
+import tilda.migration.MigrationAction;
+import tilda.parsing.parts.Schema;
+
+public class CommitPoint extends MigrationAction
   {
-    SUM, 
-    
-    AVG,
-    
-    MAX,
-    
-    MIN,
-    
-    DEV,
-    
-    VAR,
-
-    COUNT
-    ;
-    
-    public static AggregateType parse(String Str)
+    public CommitPoint()
       {
-        for (AggregateType e : AggregateType.values())
-          if (Str.equalsIgnoreCase(e.name()) == true)
-            return e;
-        return null;
+        super(true);
       }
 
+    protected Schema _S;
+
+    public boolean process(Connection C)
+    throws Exception
+      {
+        C.commit();
+        return true;
+      }
+
+    public String getDescription()
+      {
+        return "Commit point";
+      }
   }

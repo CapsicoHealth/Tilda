@@ -29,6 +29,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.util.StringBuilderWriter;
 
 import tilda.db.stores.PostgreSQL;
+import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.generation.GeneratorSession;
@@ -216,6 +217,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
       {
         StringBuilderWriter OutStr = new StringBuilderWriter();
         PrintWriter Out = new PrintWriter(OutStr);
+        boolean hasAggregates = false;
 
         Object ObjectMain = V._ViewColumns.get(0)._SameAsObj._ParentObject;
         Out.println("-- " + TextUtil.EscapeSingleQuoteForSQL(V._Description));
@@ -223,38 +225,54 @@ public class Sql extends PostgreSQL implements CodeGenSql
         boolean First = true;
         Map<String, Integer> M = new HashMap<String, Integer>();
         for (ViewColumn C : V._ViewColumns)
-          if (C != null && C._SameAsObj._Mode != ColumnMode.CALCULATED && C._JoinOnly == false)
-            {
-              if (ObjectMain._Name.equals(C._SameAsObj._ParentObject._Name) == true)
-                {
-                  Object FKObj = C._SameAsObj.getSingleColFK();
-                  if (FKObj != null)
-                    {
-                      Integer I = M.get(FKObj._Name);
-                      I = new Integer(I == null ? 1 : I.intValue() + 1);
-                      M.put(FKObj._Name, I);
-                    }
-                }
+          {
+            if (C == null)
+              continue;
+            if (C._Aggregate == AggregateType.COUNT || C._SameAsObj._Mode != ColumnMode.CALCULATED && C._JoinOnly == false)
+              {
+                if (First == true)
+                  First = false;
+                else
+                  Out.print("\n     , ");
 
-              if (First == true)
-                First = false;
-              else
-                Out.print("\n     , ");
-              if (C._Aggregate != null)
-                Out.print(getAggregateStr(C._Aggregate) + "(");
-              Integer I = M.get(C._SameAsObj._ParentObject._Name);
-              if (I != null && I.intValue() > 1)
-                {
-                  Out.print(getFullColumnVar(C._SameAsObj, I.intValue()));
-                }
-              else
-                {
-                  Out.print(getFullColumnVar(C._SameAsObj));
-                }
-              if (C._Aggregate != null)
-                Out.print(")");
-              Out.print(" as \"" + C.getName() + "\" -- "+C._SameAsObj._Description);
-            }
+                if (C._Aggregate == AggregateType.COUNT)
+                  {
+                    Out.print("count(*) as \"" + C.getName() + "\"");
+                    hasAggregates = true;
+                  }
+                else
+                  {
+                    if (ObjectMain._Name.equals(C._SameAsObj._ParentObject._Name) == true)
+                      {
+                        Object FKObj = C._SameAsObj.getSingleColFK();
+                        if (FKObj != null)
+                          {
+                            Integer I = M.get(FKObj._Name);
+                            I = new Integer(I == null ? 1 : I.intValue() + 1);
+                            M.put(FKObj._Name, I);
+                          }
+                      }
+
+                    if (C._Aggregate != null)
+                      {
+                        Out.print(getAggregateStr(C._Aggregate) + "(");
+                        hasAggregates = true;
+                      }
+                    Integer I = M.get(C._SameAsObj._ParentObject._Name);
+                    if (I != null && I.intValue() > 1)
+                      {
+                        Out.print(getFullColumnVar(C._SameAsObj, I.intValue()));
+                      }
+                    else
+                      {
+                        Out.print(getFullColumnVar(C._SameAsObj));
+                      }
+                    if (C._Aggregate != null)
+                      Out.print(")");
+                    Out.print(" as \"" + C.getName() + "\" -- " + C._SameAsObj._Description);
+                  }
+              }
+          }
         Out.println();
         Set<String> Names = new HashSet<String>();
         List<Object> Objects = new ArrayList<Object>();
@@ -262,7 +280,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         Names.add(ObjectMain.getFullName());
         Objects.add(ObjectMain);
         for (ViewColumn C : V._ViewColumns)
-          if (C != null)
+          if (C != null && C._SameAsObj != null)
             {
               Object T = C._SameAsObj._ParentObject;
               if (Names.add(T.getFullName()) == true)
@@ -312,18 +330,19 @@ public class Sql extends PostgreSQL implements CodeGenSql
               Out.print(" where " + q._Clause);
             Out.println();
           }
-        if (V._GroupBy != null)
+
+        if (hasAggregates == true)
           {
             Out.print("     group by ");
             First = true;
-            for (Column C : V._GroupBy._GroupByObjs)
-              if (C != null)
+            for (ViewColumn VC : V._ViewColumns)
+              if (VC != null && VC._Aggregate == null && VC._JoinOnly == false)
                 {
                   if (First == true)
                     First = false;
                   else
                     Out.print(", ");
-                  Out.print(getFullColumnVar(C));
+                  Out.print(getFullColumnVar(VC._SameAsObj));
                 }
             Out.println();
           }
@@ -335,7 +354,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         OutFinal.print(Str);
         OutFinal.println("COMMENT ON VIEW " + V._ParentSchema._Name + "." + V._Name + " IS E" + TextUtil.EscapeSingleQuoteForSQL(Str.replace("\r\n", "\\n").replace("\n", "\\n")) + ";");
         for (ViewColumn C : V._ViewColumns)
-          if (C != null && C._SameAsObj._Mode != ColumnMode.CALCULATED && C._JoinOnly == false)
+          if (C != null && C._SameAsObj != null && C._SameAsObj._Mode != ColumnMode.CALCULATED && C._JoinOnly == false)
             OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + C.getName() + "\" IS E" + TextUtil.EscapeSingleQuoteForSQL(C._SameAsObj._Description) + ";");
         OutStr.close();
         return Str;

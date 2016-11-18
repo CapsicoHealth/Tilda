@@ -31,6 +31,7 @@ import org.apache.logging.log4j.Logger;
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
 import tilda.db.processors.ScalarRP;
+import tilda.db.processors.StringListRP;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
@@ -299,8 +300,19 @@ public class PostgreSQL implements DBType
             ScalarRP RP = new ScalarRP();
             Con.ExecuteSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
             if (RP.getResult() > Col._Size)
-              throw new Exception("Cannot alter String column '" + Col.getFullName() + "' from size " + DBSize + " down to " + Col._Size + " because there are values with sizes up to " + RP.getResult()
-              + " that would be truncated. You need to manually migrate your database.");
+              {
+                Q = "select \"" + Col.getName() + "\" || '  (' || length(\"" + Col.getName() + "\") || ')' as _x from "+Col._ParentObject.getShortName()
+                   +" group by \"" + Col.getName() + "\""
+                   +" order by length(\"" + Col.getName() + "\") desc"
+                   +" limit 10";
+                StringListRP SLRP = new StringListRP();
+                Con.ExecuteSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, SLRP);
+                LOG.error("Column sample:");
+                for (String s : SLRP.getResult())
+                  LOG.error("   - "+s);
+                throw new Exception("Cannot alter String column '" + Col.getFullName() + "' from size " + DBSize + " down to " + Col._Size + " because there are values with sizes up to " + RP.getResult()
+                + " that would be truncated. You need to manually migrate your database.");
+              }
           }
 
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" TYPE " + getColumnType(Col._Type, Col._Size, Col._Mode, Col.isCollection());
@@ -468,7 +480,9 @@ public class PostgreSQL implements DBType
         .append("'SELECT regexp_split_to_array($1, ''``'');';\n")
         .append("CREATE CAST (varchar AS text[]) WITH FUNCTION TILDA.\"strToArray\"(varchar) as Implicit;\n")
         .append("\n")
-        .append("\n");
+        .append("\n")
+        .append("CREATE extension if not exists tablefunc;\n")
+        ;
 
         return Con.ExecuteUpdate("TILDA", "FUNCTIONS", Str.toString()) >= 0;
       }

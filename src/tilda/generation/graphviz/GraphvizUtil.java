@@ -212,6 +212,8 @@ public class GraphvizUtil
         LinkedHashSet<String> lhs = new LinkedHashSet<String>();
         for (ViewColumn viewColumn : view._ViewColumns)
           {
+            if (viewColumn._SameAsObj == null)
+              continue;
             Object viewColumnObject = viewColumn._SameAsObj._ParentObject;
             if (viewColumnObject._FST == FrameworkSourcedType.NONE)
               lhs.add(viewColumnObject._Name.toUpperCase());

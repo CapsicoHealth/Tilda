@@ -41,6 +41,7 @@ import tilda.migration.actions.ColumnAlterStringSize;
 import tilda.migration.actions.ColumnAlterType;
 import tilda.migration.actions.ColumnComment;
 import tilda.migration.actions.ColumnDrop;
+import tilda.migration.actions.CommitPoint;
 import tilda.migration.actions.SchemaCreate;
 import tilda.migration.actions.SchemaViewsDrop;
 import tilda.migration.actions.TableComment;
@@ -183,6 +184,7 @@ public class Migrator
           {
             if (Obj._FST == FrameworkSourcedType.VIEW)
               continue;
+            int XXX = Actions.size();
             TableMeta TMeta = DBMeta.getTableMeta(Obj._ParentSchema._Name, Obj._Name);
             if (TMeta == null)
               Actions.add(new TableCreate(Obj));
@@ -234,6 +236,8 @@ public class Migrator
                     if (Col == null && CI != null)
                       Actions.add(new ColumnDrop(Obj, c));
                   }
+                if (XXX != Actions.size())
+                  Actions.add(new CommitPoint());
               }
           }
 
