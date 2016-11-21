@@ -2,7 +2,7 @@ define(function(){
   var SCHEMA_REGEX = /\_tilda\.([A-Z][A-Za-z_0-9]+)\.json/i;
   var showFiles = function (firstEntry, excluding_regex, runAfterCompletion) {
     var directoryReader = firstEntry.createReader();
-    var excluding_regex = excluding_regex;
+//    var excluding_regex = excluding_regex;
     var files= [];
     var objectd = {};
     var counter = 0;
@@ -12,14 +12,15 @@ define(function(){
       directoryReader.readEntries(function (entries) {
         for (var i = 0; i < entries.length; i++) {
           var entry = entries[i];
+//          console.log("entry: ", entry.name);
           if (entry.isDirectory) {
             if (entry) {
               readFolder(entry, callback);
             }
           } else if (entry.isFile) {
             var fName = entry.name;
+//            console.log("fName: ", fName);
             if(SCHEMA_REGEX.test(fName)){
-//              console.log("fName: ", fName);
               if(excluding_regex instanceof RegExp){
                 var full_path = entry.fullPath;
 //                console.log("full_path: ", full_path);
@@ -31,7 +32,7 @@ define(function(){
 //                  console.log("Being excluded, so NOT adding it!")
                 }
               } else {
-//                console.log("Exclusion was not a REGEX, so adding it!")
+//                console.error("Exclusion was not a REGEX, so adding it!")
                 files.push(entry);
               }
             }
