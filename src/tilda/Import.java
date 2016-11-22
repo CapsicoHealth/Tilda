@@ -63,18 +63,24 @@ public class Import
             int Total = 0;
             long T0 = System.nanoTime();
             C = ConnectionPool.get("MAIN");
+            int FileCount = 0;
             if (args[0].equalsIgnoreCase("-packageName") == true)
               {
+                ++FileCount;
                 Total += Do(args[1], args[2], C);
                 C.commit();
               }
             else for (String a : args)
               {
                 Total += Do(null, a, C);
+                ++FileCount;
                 C.commit();
               }
             T0 = System.nanoTime() - T0;
-            LOG.info("All in all, processed a total of " + Total + " records in " + DurationUtil.getDurationSeconds(T0) + "s (" + DurationUtil.PrintPerformancePerMinute(T0, Total) + " records/mn).");
+            LOG.info("");
+            LOG.info("");
+            LOG.info("");
+            LOG.info("All in all, processed a total of " + Total + " records from "+FileCount+" files in " + DurationUtil.getDurationSeconds(T0) + "s (" + DurationUtil.PrintPerformancePerMinute(T0, Total) + " records/mn).");
             StringBuilder Str = new StringBuilder();
             PerfTracker.print(Str);
             // LDH-NOTE: there is a bug in the Log4j code with a limit on buffer size if out to a file!
@@ -109,6 +115,12 @@ public class Import
     protected static int Do(String OverridePackageName, String ImportFileName, Connection C)
       throws Exception
       {
+        LOG.info("");
+        LOG.info("");
+        LOG.info("");
+        LOG.info("=======================================================================================================================");
+        LOG.info("== Importing "+ImportFileName);
+        LOG.info("=======================================================================================================================");
         Reader R = null;
         if (new File(ImportFileName).exists() == false)
          {
