@@ -112,7 +112,9 @@ public class View extends Base
 
         int Errs = PS.getErrorCount();
 
-        if (_OriginalName.endsWith("View") == false)
+        if (_Pivot != null && _OriginalName.endsWith("PivotView") == false)
+          PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring the pivot view '" + getFullName() + "' with a name that doesn't end with 'PivotView'.");
+        else if (_OriginalName.endsWith("View") == false)
           PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring the view '" + getFullName() + "' with a name that doesn't end with 'View'.");
 
         if (_ViewColumns == null || _ViewColumns.isEmpty() == true)

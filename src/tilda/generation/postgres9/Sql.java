@@ -44,6 +44,7 @@ import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.ViewColumn;
 import tilda.parsing.parts.ViewJoin;
+import tilda.parsing.parts.ViewPivot;
 import tilda.utils.PaddingTracker;
 import tilda.utils.TextUtil;
 
@@ -327,8 +328,16 @@ public class Sql extends PostgreSQL implements CodeGenSql
           {
             Query q = V._SubQuery.getQuery(this);
             if (q != null)
-              Out.print(" where " + q._Clause);
+              Out.print(" where (" + q._Clause+")");
             Out.println();
+          }
+        if (V._Pivot != null)
+          {
+            if (V._SubQuery == null)
+             Out.print(" where ");
+            else 
+             Out.print("   and ");
+            Out.println(PivotIn( V._Pivot));
           }
 
         if (hasAggregates == true)
@@ -346,11 +355,50 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 }
             Out.println();
           }
-
+        if (V._Pivot != null)
+          {
+            Out.print("     order by ");
+            First = true;
+            for (ViewColumn VC : V._ViewColumns)
+              if (VC != null && VC._Aggregate == null && VC._JoinOnly == false)
+                {
+                  if (First == true)
+                    First = false;
+                  else
+                    Out.print(", ");
+                  Out.print(getFullColumnVar(VC._SameAsObj));
+                }
+            Out.println();
+          }
         Out.println("     ;");
-
-        OutFinal.println("create or replace view " + V._ParentSchema._Name + "." + V._Name + " as ");
         String Str = OutStr.toString();
+        if (V._Pivot != null)
+          {
+            StringBuilder b = new StringBuilder();
+            b.append("select distinct ").append(getFullColumnVar(V._Pivot._VC._SameAsObj)).append("\n")
+             .append("  from ").append(V._Pivot._VC._SameAsObj._ParentObject.getShortName()).append("\n")
+             .append(" where ").append(PivotIn( V._Pivot)).append("\n")
+             .append("order by ").append(getFullColumnVar(V._Pivot._VC._SameAsObj)).append("\n")
+             ;
+            Str = "select * from crosstab (\n" + TextUtil.EscapeSingleQuoteForSQL(Str)+",\n"+TextUtil.EscapeSingleQuoteForSQL(b.toString())+")\n"
+                 +"as final_result (";
+            for (int i = 0; i < V._ViewColumns.size() - 2; ++i)
+              {
+                ViewColumn VC = V._ViewColumns.get(i);
+                if (VC != null && VC._SameAsObj._Mode != ColumnMode.CALCULATED)
+                  {
+                    if (i != 0)
+                      Str+="  , ";
+                    Str+="\"" + VC.getName() + "\" " + getColumnType(VC._SameAsObj);
+                  }
+              }
+            for (int i = 0; i < V._Pivot._Values.length; ++i)
+              {
+                Str+=", \""+V._Pivot._Values[i]+"\" integer";
+              }
+            Str+=");\n";
+          }
+        OutFinal.println("create or replace view " + V._ParentSchema._Name + "." + V._Name + " as ");
         OutFinal.print(Str);
         OutFinal.println("COMMENT ON VIEW " + V._ParentSchema._Name + "." + V._Name + " IS E" + TextUtil.EscapeSingleQuoteForSQL(Str.replace("\r\n", "\\n").replace("\n", "\\n")) + ";");
         for (ViewColumn C : V._ViewColumns)
@@ -358,6 +406,20 @@ public class Sql extends PostgreSQL implements CodeGenSql
             OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + C.getName() + "\" IS E" + TextUtil.EscapeSingleQuoteForSQL(C._SameAsObj._Description) + ";");
         OutStr.close();
         return Str;
+      }
+
+    private String PivotIn(ViewPivot P)
+      {
+        StringBuilder Str = new StringBuilder();
+        Str.append(getFullColumnVar(P._VC._SameAsObj)).append(" in (");
+        for (int i = 0; i < P._Values.length; ++i)
+          {
+            if (i != 0)
+             Str.append(", ");
+            Str.append(TextUtil.EscapeSingleQuoteForSQL(P._Values[i]));
+          }
+        Str.append(")");
+        return Str.toString();
       }
 
     private boolean CheckFK(PrintWriter Out, Object Obj1, Object Obj2, ViewColumn C, int JoinIndex)
