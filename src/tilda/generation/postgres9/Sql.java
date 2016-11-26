@@ -328,16 +328,16 @@ public class Sql extends PostgreSQL implements CodeGenSql
           {
             Query q = V._SubQuery.getQuery(this);
             if (q != null)
-              Out.print(" where (" + q._Clause+")");
+              Out.print(" where (" + q._Clause + ")");
             Out.println();
           }
         if (V._Pivot != null)
           {
             if (V._SubQuery == null)
-             Out.print(" where ");
-            else 
-             Out.print("   and ");
-            Out.println(PivotIn( V._Pivot));
+              Out.print(" where ");
+            else
+              Out.print("   and ");
+            Out.println(PivotIn(V._Pivot));
           }
 
         if (hasAggregates == true)
@@ -376,34 +376,44 @@ public class Sql extends PostgreSQL implements CodeGenSql
           {
             StringBuilder b = new StringBuilder();
             b.append("select distinct ").append(getFullColumnVar(V._Pivot._VC._SameAsObj)).append("\n")
-             .append("  from ").append(V._Pivot._VC._SameAsObj._ParentObject.getShortName()).append("\n")
-             .append(" where ").append(PivotIn( V._Pivot)).append("\n")
-             .append("order by ").append(getFullColumnVar(V._Pivot._VC._SameAsObj)).append("\n")
-             ;
-            Str = "select * from crosstab (\n" + TextUtil.EscapeSingleQuoteForSQL(Str)+",\n"+TextUtil.EscapeSingleQuoteForSQL(b.toString())+")\n"
-                 +"as final_result (";
+            .append("  from ").append(V._Pivot._VC._SameAsObj._ParentObject.getShortName()).append("\n")
+            .append(" where ").append(PivotIn(V._Pivot)).append("\n")
+            .append("order by ").append(getFullColumnVar(V._Pivot._VC._SameAsObj)).append("\n");
+            Str = "select * from crosstab (\n" + TextUtil.EscapeSingleQuoteForSQL(Str) + ",\n" + TextUtil.EscapeSingleQuoteForSQL(b.toString()) + ")\n"
+            + "as final_result (";
             for (int i = 0; i < V._ViewColumns.size() - 2; ++i)
               {
                 ViewColumn VC = V._ViewColumns.get(i);
                 if (VC != null && VC._SameAsObj._Mode != ColumnMode.CALCULATED)
                   {
                     if (i != 0)
-                      Str+="  , ";
-                    Str+="\"" + VC.getName() + "\" " + getColumnType(VC._SameAsObj);
+                      Str += "  , ";
+                    Str += "\"" + VC.getName() + "\" " + getColumnType(VC._SameAsObj);
                   }
               }
             for (int i = 0; i < V._Pivot._Values.length; ++i)
               {
-                Str+=", \""+V._Pivot._Values[i]+"\" integer";
+                Str += ", \"" + V._Pivot._Values[i] + "\" integer";
               }
-            Str+=");\n";
+            Str += ");\n";
           }
         OutFinal.println("create or replace view " + V._ParentSchema._Name + "." + V._Name + " as ");
         OutFinal.print(Str);
         OutFinal.println("COMMENT ON VIEW " + V._ParentSchema._Name + "." + V._Name + " IS E" + TextUtil.EscapeSingleQuoteForSQL(Str.replace("\r\n", "\\n").replace("\n", "\\n")) + ";");
-        for (ViewColumn C : V._ViewColumns)
-          if (C != null && C._SameAsObj != null && C._SameAsObj._Mode != ColumnMode.CALCULATED && C._JoinOnly == false)
-            OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + C.getName() + "\" IS E" + TextUtil.EscapeSingleQuoteForSQL(C._SameAsObj._Description) + ";");
+        for (int i = 0; i < V._ViewColumns.size(); ++i)
+          {
+            ViewColumn VC = V._ViewColumns.get(i);
+            if (V._Pivot != null && VC == V._Pivot._VC)
+             continue;
+            if (V._Pivot != null && VC._Aggregate == AggregateType.COUNT)
+             continue;
+            if (VC != null && VC._SameAsObj != null && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false)
+              OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + VC.getName() + "\" IS E" + TextUtil.EscapeSingleQuoteForSQL(VC._SameAsObj._Description) + ";");
+          }
+        if (V._Pivot != null)
+         for (int i = 0; i < V._Pivot._Values.length; ++i)
+          OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + V._Pivot._Values[i] + "\" IS E" + TextUtil.EscapeSingleQuoteForSQL("The pivoted column count from '"+V._Pivot._ColumnName+"'='"+V._Pivot._Values[i]+"'") + ";");
+           
         OutStr.close();
         return Str;
       }
@@ -415,7 +425,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         for (int i = 0; i < P._Values.length; ++i)
           {
             if (i != 0)
-             Str.append(", ");
+              Str.append(", ");
             Str.append(TextUtil.EscapeSingleQuoteForSQL(P._Values[i]));
           }
         Str.append(")");

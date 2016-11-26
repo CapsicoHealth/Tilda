@@ -28,6 +28,7 @@ import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMapperMode;
+import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
@@ -68,7 +69,7 @@ public class View extends Base
             return VC;
         return null;
       }
-    
+
     @Override
     public String[] getColumnNames()
       {
@@ -223,6 +224,9 @@ public class View extends Base
           for (ViewJoin VJ : _Joins)
             VJ.Validate(PS, this);
 
+        if (_Pivot != null)
+          _Pivot.Validate(PS, this);
+
         Object O = new Object();
         O._FST = FrameworkSourcedType.VIEW;
         O._Name = _OriginalName;
@@ -231,19 +235,28 @@ public class View extends Base
         O._Json = _Json;
         O._LCStr = ObjectLifecycle.READONLY.name();
         O._OCC = _OCC;
-        for (ViewColumn C : _ViewColumns)
-          if (C != null && C._FrameworkGenerated == false && C._JoinOnly == false)
-            {
-              if (_OCC == false || C.getName().equals("created") == false && C.getName().equals("lastUpdated") == false && C.getName().equals("deleted") == false)
-                {
-                  O._Columns.add(new ViewColumnWrapper(C._SameAsObj, C));
-                }
-            }
+        for (ViewColumn VC : _ViewColumns)
+          {
+            if (_Pivot != null && VC._Name.equals(_Pivot._ColumnName) == true)
+              break;
+            if (VC != null && VC._FrameworkGenerated == false && VC._JoinOnly == false)
+              {
+                if (_OCC == false || VC.getName().equals("created") == false && VC.getName().equals("lastUpdated") == false && VC.getName().equals("deleted") == false)
+                  {
+                    O._Columns.add(new ViewColumnWrapper(VC._SameAsObj, VC));
+                  }
+              }
+          }
+        if (_Pivot != null)
+         for (String Val : _Pivot._Values)
+           {
+             Column C = new Column(Val, ColumnType.INTEGER.name(), 0, true, ColumnMode.NORMAL, true, null, "Pivoted count from column '"+_Pivot._VC._SameAsObj.getShortName()+"'='"+Val+"'");
+             O._Columns.add(C);
+           }
+
         _ParentSchema._Objects.add(O);
         O.Validate(PS, ParentSchema);
-        
-        if (_Pivot != null)
-         _Pivot.Validate(PS, this);
+
 
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
