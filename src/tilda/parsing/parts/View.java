@@ -46,7 +46,8 @@ public class View extends Base
     @SerializedName("joins"    ) public List<ViewJoin>      _Joins      = new ArrayList<ViewJoin  >();
     @SerializedName("subWhere" ) public String              _SubWhere;
     @SerializedName("countStar") public String              _CountStar;
-    @SerializedName("subQuery") public SubWhereClause       _SubQuery;
+    @SerializedName("subQuery" ) public SubWhereClause      _SubQuery;
+    @SerializedName("pivot"    ) public ViewPivot           _Pivot;    
     /*@formatter:on*/
 
     public transient boolean _OCC         = false;
@@ -60,6 +61,14 @@ public class View extends Base
         return null;
       }
 
+    public ViewColumn getViewColumn(String name)
+      {
+        for (ViewColumn VC : _ViewColumns)
+          if (VC != null && VC._Name != null && VC._Name.equalsIgnoreCase(name) == true)
+            return VC;
+        return null;
+      }
+    
     @Override
     public String[] getColumnNames()
       {
@@ -116,40 +125,43 @@ public class View extends Base
         String DeletedColObjName = null;
         for (int i = 0; i < _ViewColumns.size(); ++i)
           {
-            ViewColumn C = _ViewColumns.get(i);
+            ViewColumn VC = _ViewColumns.get(i);
             // It's possible in JSON to have dangling commas, which GSON will read fine as a NULL object. So we need to protect against that.
-            if (C == null)
+            if (VC == null)
               {
                 _ViewColumns.remove(i);
                 --i;
                 continue;
               }
-            C.Validate(PS, this);
-            if (ColumnNames.add(C.getName().toUpperCase()) == false)
-              PS.AddError("Column '" + C.getFullName() + "' is defined more than once in View '" + getFullName() + "'.");
 
-            if (C.getName().equals("created") == true && SameAsHelper.checkRootSameAs(C._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "created")) == true)
-              CreatedColObjName = C._SameAsObj._ParentObject.getFullName();
-            else if (C.getName().equals("lastUpdated") == true && SameAsHelper.checkRootSameAs(C._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "lastUpdated")) == true)
-              LastUpdatedColObjName = C._SameAsObj._ParentObject.getFullName();
-            else if (C.getName().equals("deleted") == true && SameAsHelper.checkRootSameAs(C._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "deleted")) == true)
-              DeletedColObjName = C._SameAsObj._ParentObject.getFullName();
+            if (VC.Validate(PS, this) == false)
+              return false;
 
-            if (ObjectNames.add(C._SameAsObj._ParentObject.getFullName()) == false)
+            if (ColumnNames.add(VC.getName().toUpperCase()) == false)
+              PS.AddError("Column '" + VC.getFullName() + "' is defined more than once in View '" + getFullName() + "'.");
+
+            if (VC.getName().equals("created") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "created")) == true)
+              CreatedColObjName = VC._SameAsObj._ParentObject.getFullName();
+            else if (VC.getName().equals("lastUpdated") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "lastUpdated")) == true)
+              LastUpdatedColObjName = VC._SameAsObj._ParentObject.getFullName();
+            else if (VC.getName().equals("deleted") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "deleted")) == true)
+              DeletedColObjName = VC._SameAsObj._ParentObject.getFullName();
+
+            if (ObjectNames.add(VC._SameAsObj._ParentObject.getFullName()) == false)
               {
-                if (C._Join != null)
-                  PS.AddError("Column '" + C.getFullName() + "' is defining a join type: only the first column of a refered table can define a join type.");
+                if (VC._Join != null)
+                  PS.AddError("Column '" + VC.getFullName() + "' is defining a join type: only the first column of a refered table can define a join type.");
               }
-            else if (ObjectNames.size() == 1 && C._Join != null)
+            else if (ObjectNames.size() == 1 && VC._Join != null)
               {
-                PS.AddError("Column '" + C.getFullName() + "' is defining a join type: columns of the first refered table are considered part of the 'from' clause of a view and cannot define a join type.");
+                PS.AddError("Column '" + VC.getFullName() + "' is defining a join type: columns of the first refered table are considered part of the 'from' clause of a view and cannot define a join type.");
               }
-            if (C._SameAsObj._Type == ColumnType.DATETIME && Object.isOCCColumn(C._SameAsObj) == false)
+            if (VC._SameAsObj._Type == ColumnType.DATETIME && Object.isOCCColumn(VC._SameAsObj) == false)
               {
                 ViewColumn TZCol = new ViewColumn();
-                TZCol._SameAs = C._SameAs + "TZ";
+                TZCol._SameAs = VC._SameAs + "TZ";
                 TZCol._FrameworkGenerated = true;
-                TZCol._Name = C._Name == null ? null : C._Name + "TZ";
+                TZCol._Name = VC._Name == null ? null : VC._Name + "TZ";
                 TZCol.Validate(PS, this);
                 _ViewColumns.add(i, TZCol);
                 ++i;
@@ -157,12 +169,12 @@ public class View extends Base
                   PS.AddError("Generated column '" + TZCol.getFullName() + "' conflicts with another column already named the same in view '" + getFullName() + "'.");
                 _PadderColumnNames.track(TZCol.getName());
               }
-            if (C._SameAsObj._Mapper != null && C._UseMapper == true)
+            if (VC._SameAsObj._Mapper != null && VC._UseMapper == true)
               {
-                if (C._SameAsObj._Mapper._Group == ColumnMapperMode.DB)
-                  CreateMappedViewColumn(PS, ColumnNames, i++, C, "Group");
-                if (C._SameAsObj._Mapper._Name == ColumnMapperMode.DB)
-                  CreateMappedViewColumn(PS, ColumnNames, i++, C, "Name");
+                if (VC._SameAsObj._Mapper._Group == ColumnMapperMode.DB)
+                  CreateMappedViewColumn(PS, ColumnNames, i++, VC, "Group");
+                if (VC._SameAsObj._Mapper._Name == ColumnMapperMode.DB)
+                  CreateMappedViewColumn(PS, ColumnNames, i++, VC, "Name");
               }
           }
         if (TextUtil.isNullOrEmpty(_CountStar) == false)
@@ -227,6 +239,9 @@ public class View extends Base
             }
         _ParentSchema._Objects.add(O);
         O.Validate(PS, ParentSchema);
+        
+        if (_Pivot != null)
+         _Pivot.Validate(PS, this);
 
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
