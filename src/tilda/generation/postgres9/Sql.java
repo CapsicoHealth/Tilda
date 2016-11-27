@@ -294,14 +294,15 @@ public class Sql extends PostgreSQL implements CodeGenSql
                       if (Q == null)
                         throw new Exception("Cannot generate the view because an 'on' clause matching the active database '" + getName() + "' is not available.");
                       Out.print(" on " + Q._Clause);
+                      Out.println();
                       Integer I = M.get(VJ._ObjectObj._Name);
                       if (I != null)
                         for (int i = 2; i <= I.intValue(); ++i)
                           {
-                            Out.println();
                             Out.print("     " + (C._Join == null ? "left" : C._Join) + " join " + VJ._ObjectObj.getShortName());
                             Out.print(" as " + getFullTableVar(C._SameAsObj._ParentObject, I.intValue()));
                             Out.print(" on " + Q._Clause);
+                            Out.println();
                           }
                     }
                   else
@@ -328,7 +329,12 @@ public class Sql extends PostgreSQL implements CodeGenSql
           {
             Query q = V._SubQuery.getQuery(this);
             if (q != null)
-              Out.print(" where (" + q._Clause + ")");
+              {
+                boolean NewLine = q._Clause.indexOf("\n") >= 0;
+                Out.print(" where (");
+                Out.print(NewLine == true ? q._Clause.replaceAll("\n", "\n        ") : q._Clause);
+                Out.print(NewLine == true ? "\n       )" : ")");
+              }
             Out.println();
           }
         if (V._Pivot != null)
@@ -404,16 +410,53 @@ public class Sql extends PostgreSQL implements CodeGenSql
           {
             ViewColumn VC = V._ViewColumns.get(i);
             if (V._Pivot != null && VC == V._Pivot._VC)
-             continue;
+              continue;
             if (V._Pivot != null && VC._Aggregate == AggregateType.COUNT)
-             continue;
+              continue;
             if (VC != null && VC._SameAsObj != null && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false)
               OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + VC.getName() + "\" IS E" + TextUtil.EscapeSingleQuoteForSQL(VC._SameAsObj._Description) + ";");
           }
         if (V._Pivot != null)
-         for (int i = 0; i < V._Pivot._Values.length; ++i)
-          OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + V._Pivot._Values[i] + "\" IS E" + TextUtil.EscapeSingleQuoteForSQL("The pivoted column count from '"+V._Pivot._ColumnName+"'='"+V._Pivot._Values[i]+"'") + ";");
-           
+          for (int i = 0; i < V._Pivot._Values.length; ++i)
+            OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + V._Pivot._Values[i] + "\" IS E" + TextUtil.EscapeSingleQuoteForSQL("The pivoted column count from '" + V._Pivot._ColumnName + "'='" + V._Pivot._Values[i] + "'") + ";");
+
+        if (V._Realize != null)
+          {
+            OutFinal.println();
+            String TName = V._Name.substring(0, V._Name.length()-(V._Pivot != null ? "PivotView" : "View").length());
+            OutFinal.append("DROP FUNCTION IF EXISTS "+V._ParentSchema._Name+".Refill_"+TName+"Realized();\n")
+            .append("CREATE OR REPLACE FUNCTION "+V._ParentSchema._Name+".Refill_"+TName+"Realized() RETURNS boolean AS $$\n")
+            .append("BEGIN\n")
+            .append("  DROP TABLE IF EXISTS "+V._ParentSchema._Name+"."+TName+"Realized;\n")
+            .append("  CREATE TABLE "+V._ParentSchema._Name+"."+TName+"Realized AS SELECT ");
+            First = true;
+            for (ViewColumn VC : V._ViewColumns)
+              {
+                if (VC == null || VC._SameAsObj._Mode != ColumnMode.NORMAL || VC._JoinOnly == true)
+                 continue;
+                if (TextUtil.FindElement(V._Realize._Excludes, VC.getName(), true, 0) == -1)
+                 {
+                   if (First == false)
+                    OutFinal.append(", ");
+                   else
+                     First = false;
+                   OutFinal.append(V._ParentSchema._Name+"."+V._Name+".\""+VC._Name+"\"");
+                 }
+              }
+            OutFinal.append(" FROM "+V._ParentSchema._Name+"."+V._Name+";\n")
+            .append("  return true;\n")
+            .append("END; $$\n")
+            .append("LANGUAGE PLPGSQL;\n")
+            .append("\n")
+            .append("\n")
+            .append("SELECT "+V._ParentSchema._Name+".Refill_"+TName+"Realized();")
+            .append("-- !!! THIS MAY TAKE SEVERAL MINUTES !!! --")
+            .append("\n")
+            .append("\n")
+            ;
+          }
+
+
         OutStr.close();
         return Str;
       }

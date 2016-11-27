@@ -31,8 +31,10 @@ import tilda.enums.ColumnMapperMode;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
+import tilda.enums.JoinType;
 import tilda.enums.ObjectLifecycle;
 import tilda.parsing.ParserSession;
+import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.parsing.parts.helpers.SameAsHelper;
 import tilda.utils.TextUtil;
 
@@ -40,18 +42,21 @@ public class View extends Base
   {
 
 
-    static final Logger      LOG          = LogManager.getLogger(View.class.getName());
+    static final Logger          LOG          = LogManager.getLogger(View.class.getName());
 
     /*@formatter:off*/
-    @SerializedName("columns"  ) public List<ViewColumn>    _ViewColumns= new ArrayList<ViewColumn>();
-    @SerializedName("joins"    ) public List<ViewJoin>      _Joins      = new ArrayList<ViewJoin  >();
-    @SerializedName("subWhere" ) public String              _SubWhere;
-    @SerializedName("countStar") public String              _CountStar;
-    @SerializedName("subQuery" ) public SubWhereClause      _SubQuery;
-    @SerializedName("pivot"    ) public ViewPivot           _Pivot;    
+    @SerializedName("columns"     ) public List<ViewColumn>    _ViewColumns= new ArrayList<ViewColumn>();
+    @SerializedName("joins"       ) public List<ViewJoin>      _Joins      = new ArrayList<ViewJoin  >();
+    @SerializedName("subWhere"    ) public String              _SubWhere;
+    @SerializedName("subWhereX"   ) public String[]            _SubWhereX;
+    @SerializedName("countStar"   ) public String              _CountStar;
+    @SerializedName("subQuery"    ) public SubWhereClause      _SubQuery;
+    @SerializedName("pivot"       ) public ViewPivot           _Pivot;
+    @SerializedName("pivotColumns") public List<ViewPivotColumn>   _PivotColumns;
+    @SerializedName("realize"     ) public ViewRealize             _Realize;
     /*@formatter:on*/
 
-    public transient boolean _OCC         = false;
+    public transient boolean     _OCC         = false;
 
     @Override
     public Column getColumn(String name)
@@ -137,6 +142,60 @@ public class View extends Base
                 continue;
               }
 
+            if (VC._SameAs.endsWith(".*") == true)
+              {
+                _ViewColumns.remove(i);
+                VC._SameAs = VC._SameAs.substring(0, VC._SameAs.length() - 2);
+                ReferenceHelper R = ReferenceHelper.parseObjectReference(VC._SameAs, _ParentSchema);
+                if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true)
+                  return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " with an incorrect syntax. It should be '((package\\.)?schema\\.)?object\\.\\*'.");
+                else
+                  {
+                    String Prefix = TextUtil.Print(VC._Prefix, "");
+                    View V = PS.getView(R._P, R._S, R._O);
+                    if (V != null)
+                      {
+                        if (V._Validated == false)
+                          return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " which has failed validation.");
+                        int j = 0;
+                        for (ViewColumn col : V._ViewColumns)
+                          {
+                            if (col._FrameworkGenerated == true)
+                             continue;
+                            VC = new ViewColumn();
+                            VC._SameAs = col.getFullName();
+                            VC._Name = Prefix+col._Name;
+                            _ViewColumns.add(i + j, VC);
+                            ++j;
+                          }
+                      }
+                    else
+                      {
+                        Object O = PS.getObject(R._P, R._S, R._O);
+                        if (O == null)
+                          return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " resolving to '" + R.getFullName() + "' which cannot be found.");
+                        if (O._Validated == false)
+                          return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " which has failed validation.");
+                        int j = 0;
+                        for (Column col : O._Columns)
+                          {
+                            if (col._FrameworkManaged == true)
+                             continue;
+                            VC = new ViewColumn();
+                            VC._SameAs = col.getFullName();
+                            VC._Name = Prefix+col._Name;
+                            _ViewColumns.add(i + j, VC);
+                            ++j;
+                          }
+                      }
+                    --i;
+                    continue;
+                  }
+              }
+            else if (TextUtil.isNullOrEmpty(VC._Prefix) == false)
+              PS.AddError("Column '" + VC.getFullName() + "' defined a prefix but is not a .* column.");
+              
+
             if (VC.Validate(PS, this) == false)
               return false;
 
@@ -180,6 +239,43 @@ public class View extends Base
                   CreateMappedViewColumn(PS, ColumnNames, i++, VC, "Name");
               }
           }
+
+        if (_PivotColumns != null)
+          for (ViewPivotColumn PVC : _PivotColumns)
+            {
+              if (PVC.Validate(PS, this) == true)
+                {
+                  ViewJoin VJ = new ViewJoin();
+                  VJ._Object = PVC._SourceStr;
+                  Query Q = new Query();
+                  Q._DB = "*";
+                  StringBuilder Str = new StringBuilder();
+                  for (int i = 0; i < PVC._Join.size(); ++i)
+                    {
+                      if (i != 0)
+                        Str.append(" and ");
+                      ViewJoinSimple VJS = PVC._Join.get(i);
+                      Str.append(VJS._FromCol._ParentView._Name).append(".\"").append(VJS._FromCol._Name).append("\" = ").append(VJS._ToCol._SameAsObj._ParentObject._Name).append(".\"").append(VJS._ToCol._Name).append("\"");
+                    }
+                  Q._Clause = Str.toString();
+                  VJ._Ons = new Query[] { Q
+                  };
+                  VJ._JoinStr = JoinType.LEFT.name();
+                  _Joins.add(VJ);
+
+                  String Prefix = TextUtil.Print(PVC._Prefix, "");
+                  for (String Val : PVC._Source._Pivot._Values)
+                    {
+                      ViewColumn VC = new ViewColumn();
+                      VC._SameAs = PVC._SourceStr + "." + Val;
+                      VC._Name = Prefix + Val;
+                      VC.Validate(PS, this);
+                      _ViewColumns.add(VC);
+                      _PadderColumnNames.track(VC.getName());
+                    }
+                }
+            }
+
         if (TextUtil.isNullOrEmpty(_CountStar) == false)
           {
             ViewColumn CountCol = new ViewColumn();
@@ -197,6 +293,13 @@ public class View extends Base
               _OCC = true;
             else
               LOG.warn("The view " + getFullName() + " defined the three OCC columns 'created', 'lastUpdated', and 'deleted' but they came from different objects ('" + CreatedColObjName + "', '" + LastUpdatedColObjName + "', and '" + DeletedColObjName + "' respectively) so the view will not be considered an OCC view.");
+          }
+
+        if (_SubWhereX != null && _SubWhereX.length > 0)
+          {
+            if (TextUtil.isNullOrEmpty(_SubWhere) == false)
+              return PS.AddError("View '" + getFullName() + "' is defining both a subWhere AND a subWhereX: only one is allowed.");
+            _SubWhere = String.join("\n", _SubWhereX);
           }
 
         if (TextUtil.isNullOrEmpty(_SubWhere) == false && _SubQuery != null)
@@ -225,7 +328,9 @@ public class View extends Base
             VJ.Validate(PS, this);
 
         if (_Pivot != null)
-          _Pivot.Validate(PS, this);
+          {
+            _Pivot.Validate(PS, this);
+          }
 
         Object O = new Object();
         O._FST = FrameworkSourcedType.VIEW;
@@ -247,12 +352,24 @@ public class View extends Base
                   }
               }
           }
+        // if (_PivotColumns != null)
+        // for (ViewPivotColumn PVC : _PivotColumns)
+        // {
+        // String Prefix = TextUtil.Print(PVC._Prefix, "");
+        // for (String Val : PVC._Source._Pivot._Values)
+        // {
+        // Column C = new Column(Prefix+Val, ColumnType.INTEGER.name(), 0, true, ColumnMode.NORMAL, true, null, "Pivoted count from column '" +
+        // PVC._Source._Pivot._VC._SameAsObj.getShortName() + "'='" + Val + "'");
+        // O._Columns.add(C);
+        // }
+        // }
+
         if (_Pivot != null)
-         for (String Val : _Pivot._Values)
-           {
-             Column C = new Column(Val, ColumnType.INTEGER.name(), 0, true, ColumnMode.NORMAL, true, null, "Pivoted count from column '"+_Pivot._VC._SameAsObj.getShortName()+"'='"+Val+"'");
-             O._Columns.add(C);
-           }
+          for (String Val : _Pivot._Values)
+            {
+              Column C = new Column(Val, ColumnType.INTEGER.name(), 0, true, ColumnMode.NORMAL, true, null, "Pivoted count from column '" + _Pivot._VC._SameAsObj.getShortName() + "'='" + Val + "'");
+              O._Columns.add(C);
+            }
 
         _ParentSchema._Objects.add(O);
         O.Validate(PS, ParentSchema);

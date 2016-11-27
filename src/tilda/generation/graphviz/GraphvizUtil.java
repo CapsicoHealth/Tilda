@@ -964,12 +964,13 @@ public class GraphvizUtil
             try
               {
                 writer.println("<BR><BR><BR><BR><HR>");
+                b._ParentSchema = schema;
                 Docs.DataClassDocs(writer, G, b);
               }
             catch (Exception e)
               {
                 // TODO Auto-generated catch block
-                LOG.warn("FYI: this can be ignored for now:\n", e);
+                //LOG.warn("FYI: this can be ignored for now:\n", e);
               }
           }
         writer.println("<BR><BR><BR><BR><HR><HR>End.<BR><BR><BR>");

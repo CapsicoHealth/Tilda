@@ -31,6 +31,7 @@ import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
+import tilda.parsing.parts.View;
 
 public class ParserSession
   {
@@ -83,6 +84,12 @@ public class ParserSession
       {
         Schema S = getSchema(PackageName, SchemaName);
         return S == null ? null : S.getObject(ObjectName);
+      }
+
+    public View getView(String PackageName, String SchemaName, String ViewName)
+      {
+        Schema S = getSchema(PackageName, SchemaName);
+        return S == null ? null : S.getView(ViewName);
       }
 
     public Column getColumn(String PackageName, String SchemaName, String ObjectName, String ColumnName)

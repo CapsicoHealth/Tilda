@@ -208,7 +208,8 @@ public class PostgreSQL implements DBType
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
         Generator.getFullViewDDL(getSQlCodeGen(), Out, V);
-        return Con.ExecuteUpdate(V._ParentSchema._Name, V.getBaseName(), Str.toString()) >= 0;
+        Con.ExecuteDDL(V._ParentSchema._Name, V.getBaseName(), Str.toString());
+        return true;
       }
 
     @Override
