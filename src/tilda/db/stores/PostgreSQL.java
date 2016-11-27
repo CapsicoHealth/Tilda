@@ -598,9 +598,9 @@ public class PostgreSQL implements DBType
     public void getFullColumnVar(StringBuilder Str, String SchemaName, String TableName, String ColumnName)
       {
         if (TextUtil.isNullOrEmpty(SchemaName) == false)
-          Str.append(SchemaName).append(".");
-        if (TextUtil.isNullOrEmpty(TableName) == false)
-          Str.append(TableName).append(".");
+          Str.append(SchemaName).append(".").append(TableName).append(".");
+        else if (TextUtil.isNullOrEmpty(TableName) == false)
+          Str.append("\"").append(TableName).append("\".");
         Str.append("\"").append(ColumnName).append("\"");
       }
 
