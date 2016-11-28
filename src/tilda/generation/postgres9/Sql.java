@@ -399,7 +399,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
               }
             for (int i = 0; i < V._Pivot._Values.length; ++i)
               {
-                Str += ", \"" + V._Pivot._Values[i] + "\" integer";
+                Str += ", \"" + V._Pivot._Values[i]._Value + "\" integer";
               }
             Str += ");\n";
           }
@@ -418,7 +418,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
           }
         if (V._Pivot != null)
           for (int i = 0; i < V._Pivot._Values.length; ++i)
-            OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + V._Pivot._Values[i] + "\" IS E" + TextUtil.EscapeSingleQuoteForSQL("The pivoted column count from '" + V._Pivot._ColumnName + "'='" + V._Pivot._Values[i] + "'") + ";");
+            OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + V._Pivot._Values[i]._Value + "\" IS E" 
+                             + TextUtil.EscapeSingleQuoteForSQL("The pivoted column count from '" + V._Pivot._ColumnName + "'='" + V._Pivot._Values[i]._Value + "', "+V._Pivot._Values[i]._Description) 
+                             + ";"
+                            );
 
         if (V._Realize != null)
           {
@@ -469,7 +472,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
           {
             if (i != 0)
               Str.append(", ");
-            Str.append(TextUtil.EscapeSingleQuoteForSQL(P._Values[i]));
+            Str.append(TextUtil.EscapeSingleQuoteForSQL(P._Values[i]._Value));
           }
         Str.append(")");
         return Str.toString();

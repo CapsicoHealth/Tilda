@@ -264,11 +264,11 @@ public class View extends Base
                   _Joins.add(VJ);
 
                   String Prefix = TextUtil.Print(PVC._Prefix, "");
-                  for (String Val : PVC._Source._Pivot._Values)
+                  for (ViewPivotValue VPV : PVC._Source._Pivot._Values)
                     {
                       ViewColumn VC = new ViewColumn();
-                      VC._SameAs = PVC._SourceStr + "." + Val;
-                      VC._Name = Prefix + Val;
+                      VC._SameAs = PVC._SourceStr + "." + VPV._Value;
+                      VC._Name = Prefix + VPV._Value;
                       VC.Validate(PS, this);
                       _ViewColumns.add(VC);
                       _PadderColumnNames.track(VC.getName());
@@ -365,9 +365,9 @@ public class View extends Base
         // }
 
         if (_Pivot != null)
-          for (String Val : _Pivot._Values)
+           for (ViewPivotValue VPV : _Pivot._Values)
             {
-              Column C = new Column(Val, ColumnType.INTEGER.name(), 0, true, ColumnMode.NORMAL, true, null, "Pivoted count from column '" + _Pivot._VC._SameAsObj.getShortName() + "'='" + Val + "'");
+              Column C = new Column(VPV._Value, ColumnType.INTEGER.name(), 0, true, ColumnMode.NORMAL, true, null, "Pivoted count from column '" + _Pivot._VC._SameAsObj.getShortName() + "'='" + VPV._Value + "', "+VPV._Description);
               O._Columns.add(C);
             }
 

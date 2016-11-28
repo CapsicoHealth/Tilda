@@ -33,8 +33,8 @@ public class ViewPivot
     static final Logger             LOG                = LogManager.getLogger(ViewPivot.class.getName());
 
     /*@formatter:off*/
-	@SerializedName("on"       ) public String   _ColumnName;
-    @SerializedName("values"   ) public String[] _Values    ;
+	@SerializedName("on"       ) public String           _ColumnName;
+    @SerializedName("values"   ) public ViewPivotValue[] _Values    ;
     /*@formatter:on*/
 	
     
@@ -58,6 +58,9 @@ public class ViewPivot
 
         if (_Values == null || _Values.length == 0)
           return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot without any 'values' specified.");
+        
+        for (ViewPivotValue VPV : _Values)
+         VPV.Validate(PS, ParentView);
 
         _VC = _ParentView.getViewColumn(_ColumnName);
         if (_VC == null)

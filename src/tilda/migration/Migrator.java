@@ -69,6 +69,12 @@ public class Migrator
         List<MigrationScript> Scripts = new ArrayList<MigrationScript>();
         int ActionCount = 0;
 
+        if (CheckOnly == false)
+          {
+            new TildaHelpersAdd().process(C);
+            C.commit();
+          }
+
         LOG.info("Analyzing differences between the database and the application's expected data model...");
         MigrationScript InitScript = new MigrationScript(null, new ArrayList<MigrationAction>());
         for (Schema S : TildaList)
@@ -83,9 +89,6 @@ public class Migrator
                 ++ActionCount;
             Scripts.add(new MigrationScript(S, L));
           }
-        MigrationScript ClosingScript = new MigrationScript(null, new ArrayList<MigrationAction>());
-        ClosingScript._Actions.add(new TildaHelpersAdd());
-        Scripts.add(ClosingScript);
 
         if (ActionCount > 0)
           {
@@ -95,9 +98,9 @@ public class Migrator
               for (MigrationAction MA : S._Actions)
                 {
                   if (MA._isDependency == false)
-                   LOG.warn("    " + (++xxx) + " - " + MA.getDescription() + ".");
+                    LOG.warn("    " + (++xxx) + " - " + MA.getDescription() + ".");
                   else
-                   LOG.debug("    - (dependency) " + MA.getDescription() + ".");
+                    LOG.debug("    - (dependency) " + MA.getDescription() + ".");
                 }
             if (CheckOnly == false)
               {
@@ -118,7 +121,7 @@ public class Migrator
                   }
                 catch (Exception E)
                   {
-                    LOG.error("Cannot migrate the database.\n", E);
+                    throw E;
                   }
                 finally
                   {
@@ -140,8 +143,6 @@ public class Migrator
 
         if (ActionCount == 0)
           {
-            new TildaHelpersAdd().process(C);
-            C.commit();
             LOG.info("");
             LOG.info("");
             LOG.info("====================================================================");
