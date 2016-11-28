@@ -100,8 +100,13 @@ define(['text!../templates/tilda_schema/_new.html',
           }
         };
         objects.schemaEntry = schemaEntry;
-        dirReader.readEntries (function(results) {
-         for(i=0; i<results.length; i++){
+        var nestedReadEntries = function(callback){
+          dirReader.readEntries(function(results){
+            callback(results)
+          })
+        }
+        var callbackFn = function(results) {
+          for(i=0; i<results.length; i++){
             var fName = results[i].name;
             var name = objects.schemaEntry.name.split(".")[1];
             if(fName == "_tilda."+name+".graphInfo.json"){
@@ -109,8 +114,13 @@ define(['text!../templates/tilda_schema/_new.html',
               break;
             }
           }
-          init(objects)
-        }, function(error){console.error(error.message);});
+          if(results.length >= 90){
+            nestedReadEntries(callbackFn, function(error){console.error(error.message);});
+          } else {
+            init(objects);
+          }
+        }
+        nestedReadEntries(callbackFn, function(error){console.error(error.message);});
       };
       schemaEntry.getParent(function(dEntry){
         var dirReader = dEntry.createReader();
