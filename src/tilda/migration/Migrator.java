@@ -71,6 +71,16 @@ public class Migrator
 
         if (CheckOnly == false)
           {
+            if (DBMeta.getSchemaMeta("TILDA") == null)
+              {
+                for (Schema S : TildaList)
+                  if (S._Name.equalsIgnoreCase("TILDA") == true)
+                    {
+                      new SchemaCreate(S).process(C);
+                      break;
+                    }
+                DBMeta.load(C, "TILDA");
+              }
             new TildaHelpersAdd().process(C);
             C.commit();
           }
