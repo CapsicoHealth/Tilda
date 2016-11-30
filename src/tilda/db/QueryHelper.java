@@ -814,8 +814,18 @@ public abstract class QueryHelper
     // IN
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public boolean isWhereClause()
+    /**
+     * Checks if the query is in a state to accept a where clause. If the query is in FROM state,
+     * it will switch to WHERE state automatically.
+     * @return
+     */
+    protected boolean isWhereClause()
       {
+        if (_Section == S.FROM && _ST == StatementType.SELECT)
+          {
+            _Section = S.WHERE;
+            return true;
+          }
         return _Section == S.WHERE && (_ST == StatementType.SELECT || _ST == StatementType.UPDATE);
       }
 
