@@ -34,7 +34,7 @@ public class ViewRealize
 
     /*@formatter:off*/
     @SerializedName("indices" ) public List<Index> _Indices    = new ArrayList<Index>();
-    @SerializedName("excudes" ) public String[]    _Excludes   = new String[] { };
+    @SerializedName("excludes") public String[]    _Excludes   = new String[] { };
     /*@formatter:on*/
 	
     
