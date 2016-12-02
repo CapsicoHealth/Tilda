@@ -37,6 +37,7 @@ import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
+import tilda.parsing.parts.Formula;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Query;
@@ -376,7 +377,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 }
             Out.println();
           }
-        Out.println("     ;");
+        //Out.println("     ;");
         String Str = OutStr.toString();
         if (V._Pivot != null)
           {
@@ -401,10 +402,22 @@ public class Sql extends PostgreSQL implements CodeGenSql
               {
                 Str += ", \"" + V._Pivot._Values[i]._Value + "\" integer";
               }
-            Str += ");\n";
+            Str += ")\n";
+          }
+        if (V._Formulas != null && V._Formulas.length > 0)
+          {
+            StringBuilder b = new StringBuilder();
+            b.append("select *\n");
+            for (Formula F : V._Formulas)
+              {
+                b.append("     -- ").append(String.join("\n     -- ", F._Description)).append("\n");
+                b.append("     , ").append(F._Formula).append(" as \"").append(F._Name).append("\"\n");
+              }
+            b.append("\n from (\n").append(Str).append("\n      ) as T");
+            Str = b.toString();
           }
         OutFinal.println("create or replace view " + V._ParentSchema._Name + "." + V._Name + " as ");
-        OutFinal.print(Str);
+        OutFinal.print(Str+";\n\n");
         OutFinal.println("COMMENT ON VIEW " + V._ParentSchema._Name + "." + V._Name + " IS E" + TextUtil.EscapeSingleQuoteForSQL(Str.replace("\r\n", "\\n").replace("\n", "\\n")) + ";");
         for (int i = 0; i < V._ViewColumns.size(); ++i)
           {
