@@ -343,8 +343,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             if (V._SubQuery == null)
               Out.print(" where ");
             else
-              Out.print("   and ");
-            Out.println(PivotIn(V._Pivot));
+              Out.print("   and " + getFullColumnVar(V._Pivot._VC._SameAsObj) + " in (" + PrintValueList(V._Pivot) + ")");
           }
 
         if (hasAggregates == true)
@@ -382,12 +381,15 @@ public class Sql extends PostgreSQL implements CodeGenSql
         if (V._Pivot != null)
           {
             StringBuilder b = new StringBuilder();
-            b.append("select distinct ").append(getFullColumnVar(V._Pivot._VC._SameAsObj)).append("\n")
-            .append("  from ").append(V._Pivot._VC._SameAsObj._ParentObject.getShortName()).append("\n")
-            .append(" where ").append(PivotIn(V._Pivot)).append("\n")
-            .append("order by ").append(getFullColumnVar(V._Pivot._VC._SameAsObj)).append("\n");
-            Str = "select * from crosstab (\n" + TextUtil.EscapeSingleQuoteForSQL(Str) + ",\n" + TextUtil.EscapeSingleQuoteForSQL(b.toString()) + ")\n"
+            b.append("select unnest(ARRAY[").append(PrintValueList(V._Pivot)).append("]) as _x order by _x\n");
+//            b.append("select distinct ").append(getFullColumnVar(V._Pivot._VC._SameAsObj)).append("\n")
+//            .append("  from ").append(V._Pivot._VC._SameAsObj._ParentObject.getShortName()).append("\n")
+//            .append(" where ").append(PivotIn(V._Pivot)).append("\n")
+//            .append("order by ").append(getFullColumnVar(V._Pivot._VC._SameAsObj)).append("\n");
+            Str = "select * from crosstab (\n" + TextUtil.EscapeSingleQuoteForSQL(Str) + ",\n" 
+                                               + TextUtil.EscapeSingleQuoteForSQL(b.toString()) + ")\n"
             + "as final_result (";
+            
             for (int i = 0; i < V._ViewColumns.size() - 2; ++i)
               {
                 ViewColumn VC = V._ViewColumns.get(i);
@@ -459,6 +461,17 @@ public class Sql extends PostgreSQL implements CodeGenSql
                    OutFinal.append(V._ParentSchema._Name+"."+V._Name+".\""+VC._Name+"\"");
                  }
               }
+            for (Formula F : V._Formulas)
+              {
+                if (TextUtil.FindElement(V._Realize._Excludes, F._Name, true, 0) == -1)
+                 {
+                   if (First == false)
+                    OutFinal.append(", ");
+                   else
+                     First = false;
+                   OutFinal.append(V._ParentSchema._Name+"."+V._Name+".\""+F._Name+"\"");
+                 }
+              }
             OutFinal.append(" FROM "+V._ParentSchema._Name+"."+V._Name+";\n")
             .append("  return true;\n")
             .append("END; $$\n")
@@ -477,17 +490,15 @@ public class Sql extends PostgreSQL implements CodeGenSql
         return Str;
       }
 
-    private String PivotIn(ViewPivot P)
+    private String PrintValueList(ViewPivot P)
       {
         StringBuilder Str = new StringBuilder();
-        Str.append(getFullColumnVar(P._VC._SameAsObj)).append(" in (");
         for (int i = 0; i < P._Values.length; ++i)
           {
             if (i != 0)
               Str.append(", ");
             Str.append(TextUtil.EscapeSingleQuoteForSQL(P._Values[i]._Value));
           }
-        Str.append(")");
         return Str.toString();
       }
 

@@ -16,6 +16,9 @@
 
 package tilda.parsing.parts;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -75,6 +78,16 @@ public class ViewPivot
         ViewColumn CountCol = _ParentView._ViewColumns.get(_ParentView._ViewColumns.size()-1);
         if (CountCol._Aggregate != AggregateType.COUNT)
           return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot but the 'countStar' column did not validate properl.");
+        
+        // Need Pivot values to be sorted because of how Pivot tables are constructed.
+        Arrays.sort(_Values, new Comparator<ViewPivotValue>()
+          {
+            @Override
+            public int compare(ViewPivotValue arg0, ViewPivotValue arg1)
+              {
+                return arg0._Value.compareTo(arg1._Value);
+              }
+          });
         
         return Errs == PS.getErrorCount();
       }
