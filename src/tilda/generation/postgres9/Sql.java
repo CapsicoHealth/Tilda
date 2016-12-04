@@ -413,14 +413,16 @@ public class Sql extends PostgreSQL implements CodeGenSql
             for (Formula F : V._Formulas)
               {
                 b.append("     -- ").append(String.join("\n     -- ", F._Description)).append("\n");
-                b.append("     , ").append(F._Formula).append(" as \"").append(F._Name).append("\"\n");
+                b.append("     , (").append(F._Formula).append(")::int as \"").append(F._Name).append("\"\n");
               }
             b.append("\n from (\n").append(Str).append("\n      ) as T");
             Str = b.toString();
           }
         OutFinal.println("create or replace view " + V._ParentSchema._Name + "." + V._Name + " as ");
-        OutFinal.print(Str+";\n\n");
+        OutFinal.println(Str+";");
+        OutFinal.println();
         OutFinal.println("COMMENT ON VIEW " + V._ParentSchema._Name + "." + V._Name + " IS E" + TextUtil.EscapeSingleQuoteForSQL(Str.replace("\r\n", "\\n").replace("\n", "\\n")) + ";");
+        OutFinal.println();
         for (int i = 0; i < V._ViewColumns.size(); ++i)
           {
             ViewColumn VC = V._ViewColumns.get(i);
@@ -435,6 +437,12 @@ public class Sql extends PostgreSQL implements CodeGenSql
           for (int i = 0; i < V._Pivot._Values.length; ++i)
             OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + V._Pivot._Values[i]._Value + "\" IS E" 
                              + TextUtil.EscapeSingleQuoteForSQL("The pivoted column count from '" + V._Pivot._ColumnName + "'='" + V._Pivot._Values[i]._Value + "', "+V._Pivot._Values[i]._Description) 
+                             + ";"
+                            );
+        if (V._Formulas != null)
+          for (Formula F : V._Formulas)
+            OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + F._Name + "\" IS E" 
+                             + TextUtil.EscapeSingleQuoteForSQL("The calculated formula: "+String.join("\\n", F._Description))
                              + ";"
                             );
 

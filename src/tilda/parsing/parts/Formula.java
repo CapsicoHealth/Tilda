@@ -16,24 +16,17 @@
 
 package tilda.parsing.parts;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.db.stores.DBType;
-import tilda.enums.ColumnType;
-import tilda.enums.OrderType;
-import tilda.parsing.ParserSession;
-import tilda.parsing.parts.helpers.ReferenceHelper;
-import tilda.utils.TextUtil;
-
 import com.google.gson.annotations.SerializedName;
+
+import tilda.enums.ColumnType;
+import tilda.parsing.ParserSession;
+import tilda.utils.TextUtil;
 
 public class Formula
   {
@@ -73,7 +66,16 @@ public class Formula
         if (_FormulaStrs == null || _FormulaStrs.length == 0)
           PS.AddError("View " + _ParentView.getShortName() + " is defining a SubWhereX without a formula.");
         else
-          _Formula = String.join("\n", _FormulaStrs);
+          {
+            StringBuilder Str = new StringBuilder();
+            for (int i = 0; i < _FormulaStrs.length; ++i)
+              {
+                if (i != 0)
+                 Str.append(" ");
+                Str.append(_FormulaStrs[i].trim());
+              }
+            _Formula = Str.toString();
+          }
 
         if (_Description == null || _Description.length == 0)
           PS.AddError("View " + _ParentView.getShortName() + " is defining a SubWhereX without a description.");
@@ -95,12 +97,28 @@ public class Formula
         while (M.find() == true)
           {
             String s = M.group(1);
-            M.appendReplacement(Str, '"' + M.group(1) + '"');
+            if (_Formula.substring(M.start()).toLowerCase().matches("^\\s*is\\s+null") == true)
+              {
+                M.appendReplacement(Str, '"' + M.group(1) + '"');
+                continue;
+              }
+            for (ViewColumn VC : ParentView._ViewColumns)
+              if (s.equals(VC._Name) == true)
+                {
+                  ColumnType T = VC._SameAsObj._Type;
+                  if (T == ColumnType.INTEGER || T == ColumnType.LONG || T == ColumnType.FLOAT || T == ColumnType.DOUBLE)
+                    {
+                      M.appendReplacement(Str, "coalesce(\"" + M.group(1) + "\", 0)");
+                      break;
+                    }
+                  M.appendReplacement(Str, '"' + M.group(1) + '"');
+                  break;
+                }
           }
         M.appendTail(Str);
         _Formula = Str.toString();
 
-        // Resolve formulas
+        // Resolve sub-formulas
         Str.setLength(0);
         for (Formula F : ParentView._Formulas)
           {
