@@ -22,22 +22,19 @@ import java.util.Comparator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.db.stores.DBType;
-import tilda.enums.AggregateType;
-import tilda.enums.JoinType;
-import tilda.parsing.ParserSession;
-import tilda.parsing.parts.helpers.ReferenceHelper;
-import tilda.utils.TextUtil;
-
 import com.google.gson.annotations.SerializedName;
+
+import tilda.enums.AggregateType;
+import tilda.parsing.ParserSession;
+import tilda.utils.TextUtil;
 
 public class ViewPivot
   {
     static final Logger             LOG                = LogManager.getLogger(ViewPivot.class.getName());
 
     /*@formatter:off*/
-	@SerializedName("on"       ) public String           _ColumnName;
-    @SerializedName("values"   ) public ViewPivotValue[] _Values    ;
+	@SerializedName("on"       ) public String  _ColumnName;
+    @SerializedName("values"   ) public Value[] _Values    ;
     /*@formatter:on*/
 	
     
@@ -62,8 +59,8 @@ public class ViewPivot
         if (_Values == null || _Values.length == 0)
           return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot without any 'values' specified.");
         
-        for (ViewPivotValue VPV : _Values)
-         VPV.Validate(PS, ParentView);
+        for (Value VPV : _Values)
+         VPV.Validate(PS, ParentView, "pivot value");
 
         _VC = _ParentView.getViewColumn(_ColumnName);
         if (_VC == null)
@@ -80,10 +77,10 @@ public class ViewPivot
           return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot but the 'countStar' column did not validate properl.");
         
         // Need Pivot values to be sorted because of how Pivot tables are constructed.
-        Arrays.sort(_Values, new Comparator<ViewPivotValue>()
+        Arrays.sort(_Values, new Comparator<Value>()
           {
             @Override
-            public int compare(ViewPivotValue arg0, ViewPivotValue arg1)
+            public int compare(Value arg0, Value arg1)
               {
                 return arg0._Value.compareTo(arg1._Value);
               }

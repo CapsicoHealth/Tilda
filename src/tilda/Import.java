@@ -121,18 +121,7 @@ public class Import
         LOG.info("=======================================================================================================================");
         LOG.info("== Importing "+ImportFileName);
         LOG.info("=======================================================================================================================");
-        Reader R = null;
-        if (new File(ImportFileName).exists() == false)
-         {
-           InputStream In = FileUtil.getResourceAsStream(ImportFileName);
-           if (In == null)
-             {
-               throw new Exception("Cannot find import file/resource '" + ImportFileName + "'.");
-             }
-           R = new BufferedReader(new InputStreamReader(In));
-         }
-        else
-         R = new BufferedReader(new FileReader(ImportFileName));
+        Reader R = FileUtil.getReaderFromFileOrResource(ImportFileName);
 
         Pattern P = Pattern.compile("\\.*\\_tilda\\.([^\\.]+)\\.sampledata\\.([^\\.]+)\\.json\\z");
         Matcher M = P.matcher(ImportFileName);

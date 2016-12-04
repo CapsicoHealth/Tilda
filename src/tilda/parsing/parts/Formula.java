@@ -34,16 +34,20 @@ public class Formula
 
     /*@formatter:off*/
     @SerializedName("name"       ) public String   _Name       ;
-    @SerializedName("id"         ) public String   _Id         ;
     @SerializedName("type"       ) public String   _TypeStr    ;
     @SerializedName("formula"    ) public String[] _FormulaStrs;
+    @SerializedName("title"      ) public String   _Title      ;
+    @SerializedName("id"         ) public String   _Id         ;
     @SerializedName("description") public String[] _Description;
+    @SerializedName("values"     ) public Value[] _Values;
     /*@formatter:on*/
 
     protected transient View      _ParentView;
 
     public transient ColumnType   _Type;
     public transient String       _Formula;
+    public transient Pattern      _ViewColumnsRegEx;
+    public transient Pattern      _FormulasRegEx;
 
     public Formula()
       {
@@ -59,26 +63,33 @@ public class Formula
           PS.AddError("View " + _ParentView.getShortName() + " is defining a formula without a name.");
 
         if (TextUtil.isNullOrEmpty(_TypeStr) == true)
-          PS.AddError("View " + _ParentView.getShortName() + " is defining a formula without a type.");
+          PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' without a type.");
         else if ((_Type = ColumnType.parse(_TypeStr)) == null)
-          PS.AddError("View " + _ParentView.getShortName() + " defined an invalid 'type' '" + _TypeStr + "'.");
+          PS.AddError("View " + _ParentView.getShortName() + " defined a formula '" + _Name + "' with an invalid type '" + _TypeStr + "'.");
 
         if (_FormulaStrs == null || _FormulaStrs.length == 0)
-          PS.AddError("View " + _ParentView.getShortName() + " is defining a SubWhereX without a formula.");
+          PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' without a formula.");
         else
           {
             StringBuilder Str = new StringBuilder();
             for (int i = 0; i < _FormulaStrs.length; ++i)
               {
                 if (i != 0)
-                 Str.append(" ");
+                  Str.append(" ");
                 Str.append(_FormulaStrs[i].trim());
               }
             _Formula = Str.toString();
           }
 
+        if (TextUtil.isNullOrEmpty(_Title) == true)
+          PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' without a title.");
+
         if (_Description == null || _Description.length == 0)
-          PS.AddError("View " + _ParentView.getShortName() + " is defining a SubWhereX without a description.");
+          PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' without a description.");
+
+        if (_Values != null)
+          for (Value VPV : _Values)
+            VPV.Validate(PS, ParentView, "value for formula '" + _Name + "'");
 
         if (PS.getErrorCount() != Errs)
           return false;
@@ -91,8 +102,8 @@ public class Formula
               Str.append("|");
             Str.append(VC._Name);
           }
-        Pattern P = Pattern.compile("\\b(" + Str.toString() + ")\\b");
-        Matcher M = P.matcher(_Formula);
+        _ViewColumnsRegEx = Pattern.compile("\\b(" + Str.toString() + ")\\b");
+        Matcher M = _ViewColumnsRegEx.matcher(_Formula);
         Str.setLength(0);
         while (M.find() == true)
           {
@@ -126,8 +137,8 @@ public class Formula
               Str.append("|");
             Str.append(F._Name);
           }
-        P = Pattern.compile("\\b(" + Str.toString() + ")\\b");
-        M = P.matcher(_Formula);
+        _FormulasRegEx = Pattern.compile("\\b(" + Str.toString() + ")\\b");
+        M = _FormulasRegEx.matcher(_Formula);
         Str.setLength(0);
         while (M.find() == true)
           {

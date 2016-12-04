@@ -23,7 +23,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.Reader;
 import java.util.Arrays;
 
 import tilda.utils.comparators.FileNameComparator;
@@ -107,7 +109,7 @@ public class FileUtil
     public static PrintWriter getBufferedPrintWriter(String SourceFilePath, boolean append)
     throws IOException
       {
-        if (append == false) // new file, let's check that the parent folder path exists. 
+        if (append == false) // new file, let's check that the parent folder path exists.
           {
             new File(SourceFilePath).getParentFile().mkdirs();
           }
@@ -117,17 +119,41 @@ public class FileUtil
       }
 
     protected static final String[] _PROHIBITED_FILENAMES = {
-      "com1", "com2", "com3", "com4", "com5", "com6", "com7", "com8", "com9",
-      "lpt1", "lpt2", "lpt3", "lpt4", "lpt5", "lpt6", "lpt7", "lpt8", "lpt9", 
-      "con", "nul", "prn"
-     };
-    
+        "com1", "com2", "com3", "com4", "com5", "com6", "com7", "com8", "com9",
+        "lpt1", "lpt2", "lpt3", "lpt4", "lpt5", "lpt6", "lpt7", "lpt8", "lpt9",
+        "con", "nul", "prn"
+    };
+
     public static boolean isFileNameProhibited(String FileName)
       {
         for (String s : _PROHIBITED_FILENAMES)
-         if (s.equalsIgnoreCase(FileName) == true)
-          return true;
+          if (s.equalsIgnoreCase(FileName) == true)
+            return true;
         return false;
       }
+
+    public static Reader getReaderFromFileOrResource(String Name)
+    throws Exception
+      {
+        if (new File(Name).exists() == true)
+          return new BufferedReader(new FileReader(Name));
+
+        InputStream In = FileUtil.getResourceAsStream(Name);
+        if (In == null)
+          throw new Exception("Cannot find import file/resource '" + Name + "'.");
+        return new BufferedReader(new InputStreamReader(In));
+      }
+
+    public static String getBasePathFromFileOrResource(String Name)
+    throws Exception
+      {
+        int i1 = Name.lastIndexOf('/');
+        int i2 = Name.lastIndexOf('\\');
+        if (i1 == -1 && i2 == -1)
+         throw new Exception("Cannot find a path in '" + Name + "'. Looked for '/' and '\\'.");
+        
+        return Name.substring(0, Math.max(i1,  i2));
+      }
+
 
   }

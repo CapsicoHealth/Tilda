@@ -19,43 +19,39 @@ package tilda.parsing.parts;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.db.stores.DBType;
-import tilda.enums.AggregateType;
-import tilda.enums.JoinType;
-import tilda.parsing.ParserSession;
-import tilda.parsing.parts.helpers.ReferenceHelper;
-import tilda.utils.TextUtil;
-
 import com.google.gson.annotations.SerializedName;
 
-public class ViewPivotValue
+import tilda.parsing.ParserSession;
+import tilda.utils.TextUtil;
+
+public class Value
   {
-    static final Logger             LOG                = LogManager.getLogger(ViewPivotValue.class.getName());
+    static final Logger LOG = LogManager.getLogger(Value.class.getName());
 
     /*@formatter:off*/
 	@SerializedName("value"      ) public String _Value;
     @SerializedName("description") public String _Description;
     /*@formatter:on*/
-	
-    
-    public ViewPivotValue()
-     {
-     }
 
-    public transient View       _ParentView;
-    
-    public boolean Validate(ParserSession PS, View ParentView)
+
+    public Value()
+      {
+      }
+
+    public transient View _ParentView;
+
+    public boolean Validate(ParserSession PS, View ParentView, String What)
       {
         int Errs = PS.getErrorCount();
         _ParentView = ParentView;
 
         // Mandatories
         if (TextUtil.isNullOrEmpty(_Value) == true)
-         PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot value with a null or empty value.");
+          PS.AddError("View '" + ParentView.getFullName() + "' is defining a " + What + " with a null or empty value.");
 
         if (TextUtil.isNullOrEmpty(_Value) == true)
-         PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot value with a null or empty description.");
-        
+          PS.AddError("View '" + ParentView.getFullName() + "' is defining a " + What + " with a null or empty description.");
+
         return Errs == PS.getErrorCount();
       }
 

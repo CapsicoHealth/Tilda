@@ -265,7 +265,7 @@ public class View extends Base
                   _Joins.add(VJ);
 
                   String Prefix = TextUtil.Print(PVC._Prefix, "");
-                  for (ViewPivotValue VPV : PVC._Source._Pivot._Values)
+                  for (Value VPV : PVC._Source._Pivot._Values)
                     {
                       ViewColumn VC = new ViewColumn();
                       VC._SameAs = PVC._SourceStr + "." + VPV._Value;
@@ -356,7 +356,7 @@ public class View extends Base
           }
 
         if (_Pivot != null)
-          for (ViewPivotValue VPV : _Pivot._Values)
+          for (Value VPV : _Pivot._Values)
             {
               Column C = new Column(VPV._Value, ColumnType.INTEGER.name(), 0, true, ColumnMode.NORMAL, true, null, "Pivoted count from column '" + _Pivot._VC._SameAsObj.getShortName() + "'='" + VPV._Value + "', " + VPV._Description);
               O._Columns.add(C);
@@ -382,5 +382,14 @@ public class View extends Base
         if (ColumnNames.add(VC.getName().toUpperCase()) == false)
           PS.AddError("Generated column '" + VC.getFullName() + "' conflicts with another column already named the same in view '" + getFullName() + "'.");
         _ViewColumns.add(i, VC);
+      }
+
+    public Formula getFormula(String FormulaName)
+      {
+        if (_Formulas != null)
+          for (Formula F : _Formulas)
+            if (F._Name.equalsIgnoreCase(FormulaName) == true)
+             return F;
+        return null;
       }
   }
