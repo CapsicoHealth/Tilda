@@ -26,10 +26,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.db.processors.RecordProcessor;
-import tilda.performance.PerfTracker;
 import tilda.enums.StatementType;
 import tilda.enums.TransactionType;
-import tilda.utils.AnsiUtil;
+import tilda.performance.PerfTracker;
 import tilda.utils.SystemValues;
 
 public class JDBCHelper
@@ -191,5 +190,7 @@ public class JDBCHelper
             JDBCHelper.CloseStatement(S);
           }
       }
+    
+    
 
   }

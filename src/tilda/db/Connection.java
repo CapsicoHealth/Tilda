@@ -541,6 +541,29 @@ public final class Connection
       {
         _DB.within(this, Str, Col, ColStart, DurationCount, DurationType);
       }
+    
+    
+   public boolean HandleCatch(java.sql.SQLException E, String OperationDebugStr) throws java.sql.SQLException
+     {
+       if (isLockOrConnectionError(E) == true)
+        QueryDetails.setLastQueryDeadlocked();
+       else if (E.getSQLState() == null)
+        {
+          LOG.warn("JDBC Error: No row "+OperationDebugStr+": SQLState is null, ErrorCode="+E.getErrorCode());
+          LOG.warn("JDBC Message: "+E.getMessage());
+          return false;
+        }
+       else if (isErrNoData(E.getSQLState(), E.getErrorCode()) == true)
+        {
+          LOG.warn("JDBC Error: No row "+OperationDebugStr+": SQLState="+E.getSQLState()+", ErrorCode="+E.getErrorCode());
+          LOG.warn("JDBC Message: "+E.getMessage());
+          return false;
+        }
+       LOG.error("JDBC Error: Fatal sql error: SQLState="+E.getSQLState()+", ErrorCode="+E.getErrorCode());
+       LOG.catching(E);
+       throw E;
+     }
+    
 
   }
 
