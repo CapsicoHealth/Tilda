@@ -152,7 +152,7 @@ public class FileUtil
         if (i1 == -1 && i2 == -1)
          throw new Exception("Cannot find a path in '" + Name + "'. Looked for '/' and '\\'.");
         
-        return Name.substring(0, Math.max(i1,  i2));
+        return Name.substring(0, Math.max(i1,  i2)+1);
       }
 
 
