@@ -167,7 +167,12 @@ public class Column extends TypeDef
          return;
 
         if (TextUtil.isNullOrEmpty(_Description) == true)
-          PS.AddError("Column '" + getFullName() + "' didn't define a 'description'. It is mandatory.");
+         {
+           if (_SameAsObj != null)
+            PS.AddError("Column '" + getFullName() + "' didn't define a 'description' and neither did its sameAs reference. It is mandatory.");
+           else
+            PS.AddError("Column '" + getFullName() + "' didn't define a 'description'. It is mandatory.");
+         }
 
         if (_Protect != null && _Type != ColumnType.STRING)
          PS.AddError("Column '" + getFullName() + "' is defined as a '" + _Type + "' with a '_Protect'. Only String columns should have a '_Protect' defined.");
@@ -295,10 +300,8 @@ public class Column extends TypeDef
         if (_Invariant == null && _SameAsObj._PrimaryKey == false)
          _Invariant = _SameAsObj._Invariant;
 
-        // LDH-NOTE: We are not copying "description" over. SameAs allows to reuse type definitions in various contexts,
-        // so the description is unlikely to be reusable.
-//        if (_Description== null)
-//          _Description= _SameAsObj._Description;
+        if (_Description== null)
+          _Description= _SameAsObj._Description;
       }
 
     private void setDefaults()

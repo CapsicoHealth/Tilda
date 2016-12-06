@@ -349,6 +349,15 @@ public class TextUtil
         return true;
       }
 
+    public static boolean isNullOrEmpty(String[] Str)
+      {
+        if (Str != null)
+          for (String s : Str)
+            if (TextUtil.isNullOrEmpty(s) == false)
+              return false;
+        return true;
+      }
+
     public static final String SearchReplace(String Str, String Search, String Replace)
       {
         if (Str == null)

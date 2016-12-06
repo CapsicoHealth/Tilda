@@ -67,8 +67,8 @@ public class Index
             {
               if (C._Mode == ColumnMode.CALCULATED)
                 PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining an index with column '" + C.getName() + "' which is calculated.");
-              else if (_Unique == true && C._Nullable == true)
-                PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a unique index with column '" + C.getName() + "' which is nullable.");
+              else if (_Unique == true && C._Nullable == true && _Columns.length > 1)
+                PS.AddError("Object '" + _ParentObject.getFullName() + "' is using nullable column '" + C.getName() + "' in in a multi-column unique index.");
               else
                 {
                   if (_Unique == true)
