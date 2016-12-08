@@ -44,6 +44,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.db.JDBCHelper;
+import tilda.parsing.parts.Formula;
 
 public class TextUtil
   {
@@ -357,6 +358,17 @@ public class TextUtil
               return false;
         return true;
       }
+    
+    public static <T> boolean isNullOrEmpty(T[] A)
+      {
+        if (A == null || A.length == 0)
+          return true;
+        for (T v : A)
+          if (v != null)
+           return false;
+        return true;
+      }
+    
 
     public static final String SearchReplace(String Str, String Search, String Replace)
       {

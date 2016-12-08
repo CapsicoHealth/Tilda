@@ -23,6 +23,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.regex.Matcher;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -42,6 +45,7 @@ import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Query;
 import tilda.parsing.parts.Schema;
+import tilda.parsing.parts.Value;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.ViewColumn;
 import tilda.parsing.parts.ViewJoin;
@@ -422,6 +426,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 b.append("     , (").append(F._Formula).append(")::int as \"").append(F._Name).append("\"\n");
               }
             b.append("\n from (\n").append(Str).append("\n      ) as T");
+            if (V._Realize != null)
+              b.append("\n-- Realized as "+genRealizedColumnList(V)+"\n");
             Str = b.toString();
           }
         OutFinal.println("create or replace view " + V._ParentSchema._Name + "." + V._Name + " as ");
@@ -458,33 +464,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
             .append("CREATE OR REPLACE FUNCTION " + V._ParentSchema._Name + ".Refill_" + TName + "Realized() RETURNS boolean AS $$\n")
             .append("BEGIN\n")
             .append("  DROP TABLE IF EXISTS " + V._ParentSchema._Name + "." + TName + "Realized;\n")
-            .append("  CREATE TABLE " + V._ParentSchema._Name + "." + TName + "Realized AS SELECT ");
-            First = true;
-            for (ViewColumn VC : V._ViewColumns)
-              {
-                if (VC == null || VC._SameAsObj._Mode != ColumnMode.NORMAL || VC._JoinOnly == true)
-                  continue;
-                if (TextUtil.FindElement(V._Realize._Excludes, VC.getName(), true, 0) == -1)
-                  {
-                    if (First == false)
-                      OutFinal.append(", ");
-                    else
-                      First = false;
-                    OutFinal.append(V._ParentSchema._Name + "." + V._Name + ".\"" + VC._Name + "\"");
-                  }
-              }
-            for (Formula F : V._Formulas)
-              {
-                if (TextUtil.FindElement(V._Realize._Excludes, F._Name, true, 0) == -1)
-                  {
-                    if (First == false)
-                      OutFinal.append(", ");
-                    else
-                      First = false;
-                    OutFinal.append(V._ParentSchema._Name + "." + V._Name + ".\"" + F._Name + "\"");
-                  }
-              }
-            OutFinal.append(" FROM " + V._ParentSchema._Name + "." + V._Name + ";\n")
+            .append("  CREATE TABLE " + V._ParentSchema._Name + "." + TName + "Realized "
+                        +"AS SELECT "+genRealizedColumnList(V)+" FROM " + V._ParentSchema._Name + "." + V._Name + ";\n")
             .append("  return true;\n")
             .append("END; $$\n")
             .append("LANGUAGE PLPGSQL;\n")
@@ -495,10 +476,136 @@ public class Sql extends PostgreSQL implements CodeGenSql
             .append("\n")
             .append("\n");
           }
+        if (V._Formulas != null && V._Formulas.length > 0)
+          {
+            OutputFormulaInDBDocs(OutFinal, V);
+          }
 
 
         OutStr.close();
         return Str;
+      }
+
+    private String genRealizedColumnList(View V)
+      {
+        StringBuilder Str = new StringBuilder();
+        boolean First = true;
+        for (ViewColumn VC : V._ViewColumns)
+          {
+            if (VC == null || VC._SameAsObj._Mode != ColumnMode.NORMAL || VC._JoinOnly == true)
+              continue;
+            if (TextUtil.FindElement(V._Realize._Excludes, VC.getName(), true, 0) == -1)
+              {
+                if (First == false)
+                  Str.append(", ");
+                else
+                  First = false;
+                Str.append(V._ParentSchema._Name + "." + V._Name + ".\"" + VC._Name + "\"");
+              }
+          }
+        for (Formula F : V._Formulas)
+          {
+            if (TextUtil.FindElement(V._Realize._Excludes, F._Name, true, 0) == -1)
+              {
+                if (First == false)
+                  Str.append(", ");
+                else
+                  First = false;
+                Str.append(V._ParentSchema._Name + "." + V._Name + ".\"" + F._Name + "\"");
+              }
+          }
+        return Str.toString();
+      }
+
+    private void OutputFormulaInDBDocs(PrintWriter Out, View V)
+      {
+        Out.println("DELETE FROM " + V._ParentSchema._Name + ".TildaFormulaValue where \"viewName\"=" + TextUtil.EscapeSingleQuoteForSQL(V._Name)+";");
+        Out.println("DELETE FROM " + V._ParentSchema._Name + ".TildaFormulaReference where \"viewName\"=" + TextUtil.EscapeSingleQuoteForSQL(V._Name)+";");
+        Out.println("DELETE FROM " + V._ParentSchema._Name + ".TildaFormula where \"viewName\"=" + TextUtil.EscapeSingleQuoteForSQL(V._Name)+";");
+
+        String RealizedTable = V._Realize == null ? null : V._Name.substring(0, V._Name.length() - (V._Pivot != null ? "PivotView" : "View").length()) + "Realized";
+        Out.println("INSERT INTO " + V._ParentSchema._Name + ".TildaFormula (\"viewName\", \"realizedTableName\", \"name\", \"title\", \"description\", \"formula\", \"html\", \"created\", \"lastUpdated\")");
+        Out.print("    VALUES ");
+        int count = -1;
+        for (Formula F : V._Formulas)
+          {
+            Out.print(++count == 0 ? "(" : "          ,(");
+            Out.print(TextUtil.EscapeSingleQuoteForSQL(V._Name));
+            Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(RealizedTable));
+            Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Name));
+            Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Title));
+            Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(String.join("\n", F._Description)));
+            Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(String.join("\n", F._FormulaStrs)));
+            Out.print(", " + TextUtil.EscapeSingleQuoteForSQL("<B>THIS <U>IS</U> ONLY A TEST <I>HTML</I> FRAGMENT!"));
+            Out.println(", current_timestamp, current_timestamp)");
+          }
+        Out.println("   ;");
+
+        Out.println("INSERT INTO " + V._ParentSchema._Name + ".TildaFormulaValue (\"viewName\", \"formulaName\", \"value\", \"description\", \"created\", \"lastUpdated\")");
+        Out.print("    VALUES ");
+        count = -1;
+        for (Formula F : V._Formulas)
+          {
+            if (F._Values != null && F._Values.length > 0)
+              for (Value Val : F._Values)
+                {
+                  Out.print(++count == 0 ? "(" : "          ,(");
+                  Out.print(TextUtil.EscapeSingleQuoteForSQL(V._Name));
+                  Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Name));
+                  Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(Val._Value));
+                  Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(Val._Description));
+                  Out.println(", current_timestamp, current_timestamp)");
+                }
+          }
+        Out.println("   ;");
+
+        Out.println("INSERT INTO " + V._ParentSchema._Name + ".TildaFormulaReference (\"viewName\", \"formulaName\", \"referenceName\", \"referenceType\", \"description\", \"created\", \"lastUpdated\")");
+        Out.print("    VALUES ");
+        count = -1;
+        for (Formula F : V._Formulas)
+          {
+            Matcher M = F._ViewColumnsRegEx.matcher(String.join("\n", F._FormulaStrs));
+            Set<String> Names = new HashSet<String>();
+            while (M.find() == true)
+              {
+                String s = M.group(1);
+                if (Names.add(s) == false)
+                  continue;
+                ViewColumn VC = V.getViewColumn(s);
+                if (VC != null)
+                  {
+                    Out.print(++count == 0 ? "(" : "          ,(");
+                    Out.print(TextUtil.EscapeSingleQuoteForSQL(V._Name));
+                    Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Name));
+                    Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(VC._Name));
+                    Out.print(", 'CLMN'");
+                    Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(VC._SameAsObj._Description));
+                    Out.println(", current_timestamp, current_timestamp)");
+                  }
+              }
+            Names.clear();
+            M = F._FormulasRegEx.matcher(String.join("\n", F._FormulaStrs));
+            while (M.find() == true)
+              {
+                String s = M.group(1);
+                if (Names.add(s) == false)
+                  continue;
+                for (Formula F2 : V._Formulas)
+                  if (s.equals(F2._Name) == true)
+                    {
+                      Out.print(++count == 0 ? "(" : "          ,(");
+                      Out.print(TextUtil.EscapeSingleQuoteForSQL(V._Name));
+                      Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Name));
+                      Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(F2._Name));
+                      Out.print(", 'FRML'");
+                      Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(String.join("\n", F2._Description)));
+                      Out.println(", current_timestamp, current_timestamp)");
+                      break;
+                    }
+              }
+          }
+        Out.println("   ;");
+
       }
 
     private String PrintValueList(ViewPivot P)

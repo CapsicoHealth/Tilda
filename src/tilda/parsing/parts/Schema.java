@@ -29,6 +29,9 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.enums.ColumnType;
+import tilda.enums.FrameworkSourcedType;
+import tilda.enums.ObjectLifecycle;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
@@ -158,18 +161,161 @@ public class Schema
                 PS.AddError("The Object '" + O._Name + "' conflicts with another Thing already defined with the same name in Schema '" + getFullName() + "'.");
               O.Validate(PS, this);
             }
-        
+        boolean hasFormulas = false;
         for (View V : _Views)
           if (V != null)
             {
               if (ThingNames.add(V._Name.toUpperCase()) == false)
                 PS.AddError("The View '" + V._Name + "' conflicts with another Thing already defined with the same name in Schema '" + getFullName() + "'.");
               V.Validate(PS, this);
+              if (V._Formulas != null && V._Formulas.length > 0)
+               hasFormulas = true;
             }
+        if (hasFormulas == true)
+         CreateFormulaDocumentationTables(PS);
         
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
       }
+    private void CreateFormulaDocumentationTables(ParserSession PS)
+      {
+        Object O = new Object();
+        O._Name = "TildaFormula";
+        O._Description = "Generated table to hold documentation meta-data about formulas defined in this schema";
+        O._LCStr = ObjectLifecycle.READONLY.name();
+        O._OCC = true;
+       
+        Column C = new Column("viewName", ColumnType.STRING.name(), 64, false, null, true, null, "The name of the view this formula is defined in");
+        O._Columns.add(C);
+        C = new Column("realizedTableName", ColumnType.STRING.name(), 64, true, null, true, null, "The name of the realized table, if appropriate");
+        O._Columns.add(C);
+        C = new Column("name", ColumnType.STRING.name(), 64, false, null, true, null, "The name of the formula/column");
+        O._Columns.add(C);
+        C = new Column("title", ColumnType.STRING.name(), 64, false, null, true, null, "The title of the formula/column");
+        O._Columns.add(C);
+        C = new Column("description", ColumnType.STRING.name(), 4096, false, null, true, null, "The description of the formula/column");
+        O._Columns.add(C);
+        C = new Column("formula", ColumnType.STRING.name(), 4096, false, null, true, null, "The formula");
+        O._Columns.add(C);
+        C = new Column("html", ColumnType.STRING.name(), 4096, false, null, true, null, "A pre-rendered html fragment with the full documentation for this formula");
+        O._Columns.add(C);
+
+        O._PrimaryKey = new PrimaryKey();
+        O._PrimaryKey._Columns = new String[] { "viewName", "name"};
+        
+        O._Indices = new ArrayList<Index>();
+        Index I = new Index();
+        I._Name = "ViewName";
+        I._Columns = new String[] { "viewName" };
+        I._OrderBy = new String[] { "name asc" };
+        I._Db = false;
+        O._Indices.add(I);
+        
+        O._Json = new ArrayList<JsonMapping>();
+        JsonMapping J = new JsonMapping();
+        J._Name = "";
+        J._Columns = new String[] { "viewName", "realizedTableName", "name", "title", "description", "formula", "html", "created", "lastUpdated"}; 
+        O._Json.add(J);
+
+        _Objects.add(O);
+        O.Validate(PS, this);
+        
+
+        O = new Object();
+        O._Name = "TildaFormulaValue";
+        O._Description = "Generated table to hold documentation meta-data about the values for the formulas defined in this schema";
+        O._LCStr = ObjectLifecycle.READONLY.name();
+        O._OCC = true;
+       
+        C = new Column("viewName", ColumnType.STRING.name(), 64, false, null, true, null, "The name of the view this formula value is defined in");
+        O._Columns.add(C);
+        C = new Column("formulaName", ColumnType.STRING.name(), 64, false, null, true, null, "The name of the formula/column this value is defined for");
+        O._Columns.add(C);
+        C = new Column("value", ColumnType.STRING.name(), 64, false, null, true, null, "The value");
+        O._Columns.add(C);
+        C = new Column("description", ColumnType.STRING.name(), 4096, false, null, true, null, "The description of the value");
+        O._Columns.add(C);
+        
+        O._PrimaryKey = new PrimaryKey();
+        O._PrimaryKey._Columns = new String[] { "viewName", "formulaName", "value"};
+        
+        O._ForeignKeys = new ArrayList<ForeignKey>();
+        ForeignKey FK = new ForeignKey();
+        FK._Name = "Formula";
+        FK._DestObject = "TildaFormula";
+        FK._SrcColumns= new String[] { "viewName", "formulaName" };
+        
+        O._Indices = new ArrayList<Index>();
+        I = new Index();
+        I._Name = "ViewFormula";
+        I._Columns = new String[] { "viewName", "formulaName" };
+        I._OrderBy = new String[] { "value asc" };
+        I._Db = false;
+        O._Indices.add(I);
+        
+        O._Json = new ArrayList<JsonMapping>();
+        J = new JsonMapping();
+        J._Name = "";
+        J._Columns = new String[] { "viewName", "formulaName", "value", "description", "created", "lastUpdated"}; 
+        O._Json.add(J);
+
+        _Objects.add(O);
+        O.Validate(PS, this);
+
+        O = new Object();
+        O._Name = "TildaFormulaReference";
+        O._Description = "Generated table to hold documentation meta-data about the columns and other formulas referenced by a formula";
+        O._LCStr = ObjectLifecycle.READONLY.name();
+        O._OCC = true;
+       
+        C = new Column("viewName", ColumnType.STRING.name(), 64, false, null, true, null, "The name of the view this formula references is defined in");
+        O._Columns.add(C);
+        C = new Column("formulaName", ColumnType.STRING.name(), 64, false, null, true, null, "The name of the formula/column this value is defined for");
+        O._Columns.add(C);
+        C = new Column("referenceName", ColumnType.STRING.name(), 64, false, null, true, null, "The name of the column or other formula refence");
+        O._Columns.add(C);
+        C = new Column("referenceType", ColumnType.STRING.name(), 4, false, null, true, null, "The type of the refence");
+        C._Values = new ColumnValue[2];
+        C._Values[0] = new ColumnValue();
+        C._Values[0]._Name = "Column";
+        C._Values[0]._Value = "CLMN";
+        C._Values[0]._Description = "A referenced column";
+        C._Values[1] = new ColumnValue();
+        C._Values[1]._Name = "formula";
+        C._Values[1]._Value = "FRML";
+        C._Values[1]._Description = "A referenced Formula";
+        O._Columns.add(C);
+        C = new Column("description", ColumnType.STRING.name(), 4096, false, null, true, null, "The description of the reference");
+        O._Columns.add(C);
+        
+        O._PrimaryKey = new PrimaryKey();
+        O._PrimaryKey._Columns = new String[] { "viewName", "formulaName", "referenceName", "referenceType"};
+
+        O._ForeignKeys = new ArrayList<ForeignKey>();
+        FK = new ForeignKey();
+        FK._Name = "Formula";
+        FK._DestObject = "TildaFormula";
+        FK._SrcColumns= new String[] { "viewName", "formulaName" };
+        
+        O._Indices = new ArrayList<Index>();
+        I = new Index();
+        I._Name = "ViewFormula";
+        I._Columns = new String[] { "viewName", "formulaName" };
+        I._OrderBy = new String[] { "referenceName asc" };
+        I._Db = false;
+        O._Indices.add(I);
+        
+        O._Json = new ArrayList<JsonMapping>();
+        J = new JsonMapping();
+        J._Name = "";
+        J._Columns = new String[] { "viewName", "formulaName", "referenceName", "referenceType", "description", "created", "lastUpdated"}; 
+        O._Json.add(J);
+
+        _Objects.add(O);
+        O.Validate(PS, this);
+
+      }
+
     public Documentation getDocumentation(){
     	if(_Documentation == null){
     		_Documentation = new Documentation();
