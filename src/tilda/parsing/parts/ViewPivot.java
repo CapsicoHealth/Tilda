@@ -69,12 +69,12 @@ public class ViewPivot
         if (_ParentView._ViewColumns.get(_ParentView._ViewColumns.size()-2) != _VC)
           return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot with an unknown 'on' colunn '"+_ColumnName+"' which is not the las column specified in the column list.");
 
-        if (TextUtil.isNullOrEmpty(_ParentView._CountStar) == true)
-          return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot without having defined a 'countStar' column.");
+//        if (TextUtil.isNullOrEmpty(_ParentView._CountStar) == true)
+//          return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot without having defined a 'countStar' column.");
           
-        ViewColumn CountCol = _ParentView._ViewColumns.get(_ParentView._ViewColumns.size()-1);
-        if (CountCol._Aggregate != AggregateType.COUNT)
-          return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot but the 'countStar' column did not validate properl.");
+//        ViewColumn CountCol = _ParentView._ViewColumns.get(_ParentView._ViewColumns.size()-1);
+//        if (CountCol._Aggregate != AggregateType.COUNT)
+//          return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot but the 'countStar' column did not validate properly.");
         
         // Need Pivot values to be sorted because of how Pivot tables are constructed.
         Arrays.sort(_Values, new Comparator<Value>()

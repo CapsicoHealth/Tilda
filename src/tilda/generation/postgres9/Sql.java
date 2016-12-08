@@ -353,7 +353,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
             if (V._SubQuery == null)
               Out.print(" where ");
             else
-              Out.print("   and " + getFullColumnVar(V._Pivot._VC._SameAsObj) + " in (" + PrintValueList(V._Pivot) + ")");
+              Out.print("   and ");
+            Out.print(getFullColumnVar(V._Pivot._VC._SameAsObj) + " in (" + PrintValueList(V._Pivot) + ")");
           }
 
         if (hasAggregates == true)
@@ -412,7 +413,11 @@ public class Sql extends PostgreSQL implements CodeGenSql
               }
             for (int i = 0; i < V._Pivot._Values.length; ++i)
               {
-                Str += ", \"" + V._Pivot._Values[i]._Value + "\" integer";
+                Str += ", \"" + V._Pivot._Values[i]._Value + "\" ";
+                if (V._CountStar != null)
+                 Str+="integer";
+                else
+                 Str+=getColumnType(V._Pivot._VC._SameAsObj);
               }
             Str += ")\n";
           }
@@ -424,7 +429,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
               {
                 String FormulaType = getColumnType(F.getType(), 8192, null, false);
                 b.append("     -- ").append(String.join("\n     -- ", F._Description)).append("\n");
-                b.append("     , (").append(genFormulaCode(V, F)).append(")::"+FormulaType+" as \"").append(F._Name).append("\"\n");
+                b.append("     , (").append(genFormulaCode(V, F)).append(")::" + FormulaType + " as \"").append(F._Name).append("\"\n");
               }
             b.append("\n from (\n").append(Str).append("\n      ) as T");
             if (V._Realize != null)
@@ -439,10 +444,14 @@ public class Sql extends PostgreSQL implements CodeGenSql
         for (int i = 0; i < V._ViewColumns.size(); ++i)
           {
             ViewColumn VC = V._ViewColumns.get(i);
-            if (V._Pivot != null && VC == V._Pivot._VC)
-              continue;
-            if (V._Pivot != null && VC._Aggregate == AggregateType.COUNT)
-              continue;
+            if (V._Pivot != null)
+              {
+                if (   VC == V._Pivot._VC // This is the pivot column 
+                    || i == V._ViewColumns.size() - 1 // This is the last column (either count(*) or something else)
+//                    || VC._Aggregate == AggregateType.COUNT // This is the final count(*) column, so no comment
+                   )
+                  continue; // no comment
+              }
             if (VC != null && VC._SameAsObj != null && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false)
               OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + VC.getName() + "\" IS E" + TextUtil.EscapeSingleQuoteForSQL(VC._SameAsObj._Description) + ";");
           }
@@ -486,7 +495,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         OutStr.close();
         return Str;
       }
-    
+
     private String genFormulaCode(View ParentView, Formula F)
       {
         String FormulaStr = TextUtil.JoinTrim(F._FormulaStrs, " ");
@@ -527,14 +536,14 @@ public class Sql extends PostgreSQL implements CodeGenSql
               if (s.equals(F2._Name) == true)
                 {
                   String FormulaType = getColumnType(F2.getType(), F2._Size, null, false);
-                  M.appendReplacement(Str, "(" + genFormulaCode(ParentView, F2) + ")::"+FormulaType);
+                  M.appendReplacement(Str, "(" + genFormulaCode(ParentView, F2) + ")::" + FormulaType);
                   break;
                 }
           }
         M.appendTail(Str);
 
         return Str.toString();
-      }    
+      }
 
     private String genRealizedColumnList(View V)
       {
