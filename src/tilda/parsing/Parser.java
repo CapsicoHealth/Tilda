@@ -151,54 +151,7 @@ public abstract class Parser
         // We need to reorder the list of dependent schemas for validation to work properly, i.e.,
         // if schema A depends on Schema B, then B should be before in the list.
         List<Schema> Schemas = new ArrayList<Schema>(PS._Dependencies.values());
-        Schema S1 = null;
-        Schema S2 = null;
-        for (int i = 0; i < Schemas.size(); ++i)
-          {
-            Schema s = Schemas.get(i);
-            if (s == null)
-              continue;
-            // Let's find the index the dependency schema that's highest in the list.
-            int highestDependentindex = -1;
-            if (s._DependencySchemas.isEmpty() == false)
-              for (Schema d : s._DependencySchemas)
-                {
-                  int k = Schemas.indexOf(d);
-                  if (k > highestDependentindex)
-                    highestDependentindex = k;
-                }
-            // May repeat if the base Tilda schema was explicitly defined as a dependency, but this is
-            // such a small operation, it's not worth optimizing.
-            int k = Schemas.indexOf(BaseTilda);
-            if (k > highestDependentindex)
-              highestDependentindex = k;
-
-            // If the highest index is greater than that of the current schema, we need to swap.
-            if (highestDependentindex > i)
-              {
-                Schema NewS1 = Schemas.get(highestDependentindex);
-                if (S1 != null) // no check for the first loop.
-                  {
-                    // Check if there is a circular dependency!
-                    if (S1.getFullName().equals(NewS1.getFullName()) && S2.getFullName().equals(s.getFullName())
-                        || S1.getFullName().equals(s.getFullName()) && S2.getFullName().equals(NewS1.getFullName()))
-                      {
-                        PS.AddError("There is a circular dependency between schemas '" + S1.getFullName() + "' and '" + S2.getFullName() + "'.");
-                        return false;
-                      }
-                  }
-                // Update the running swapping state
-                S1 = NewS1;
-                S2 = s;
-                // Do the swapping
-                Schemas.set(i, S1);
-                Schemas.set(highestDependentindex, S2);
-                // Go back one in the index to make sure we re-process the element again that was just swapped.
-                // By definition, it was after the current schema in the loop and therefore wasn't processed yet.
-                --i;
-              }
-          }
-
+        Schema.ReorderTildaListWithDependencies(Schemas);
         LOG.debug("  Reordered dependencies:");
         Iterator<Schema> I = Schemas.iterator();
         while (I.hasNext() == true)

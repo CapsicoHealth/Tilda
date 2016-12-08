@@ -30,7 +30,9 @@ public enum AggregateType
     
     VAR,
 
-    COUNT
+    COUNT,
+
+    ARRAY
     ;
     
     public static AggregateType parse(String Str)

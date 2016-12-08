@@ -55,8 +55,10 @@ import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.performance.PerfTracker;
 import tilda.utils.ClassStaticInit;
+import tilda.utils.CollectionUtil;
 import tilda.utils.FileUtil;
 import tilda.utils.LogUtil;
+import tilda.utils.ReverseIterator;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
 
@@ -352,7 +354,7 @@ public class ConnectionPool
                   }
               }
           }
-        ReorderTildaListWithDependencies(TildaList);
+        Schema.ReorderTildaListWithDependencies(TildaList);
 
         if (BaseTildaSchema == null)
           throw new Exception("Tilda cannot start as we didn't find the base Tilda schema resource " + Parser._BASE_TILDA_SCHEMA_RESOURCE);
@@ -369,7 +371,7 @@ public class ConnectionPool
                     {
                       if (DepdencySchemaName.equals(D._ResourceName) == true)
                         {
-                          if (D._Validated != true)
+                          if (D._Validated != Boolean.TRUE)
                             throw new Exception("Schema " + S._Name + " depends on " + D._Name + " which hasn't been validated properly.");
                           Found = true;
                           S._DependencySchemas.add(D);
@@ -399,36 +401,6 @@ public class ConnectionPool
         return _DataSourcesById.get("MAIN") != null && _DataSourcesById.get("KEYS") != null;
       }
 
-    private static void ReorderTildaListWithDependencies(List<Schema> L)
-      {
-        for (int i = 0; i < L.size(); ++i)
-          {
-            Schema Si = L.get(i);
-            int minIndex = 0;
-            // LOG.debug("Checking dependencies for "+Si._ResourceNameShort);
-            if (Si._Dependencies != null)
-              for (String Dep : Si._Dependencies)
-                {
-                  // LOG.debug(" Checking dependency "+Dep);
-                  for (int j = 0; j < i; ++j)
-                    {
-                      Schema Sj = L.get(j);
-                      // LOG.debug(" Comparing "+Dep+" Vs. "+Sj._ResourceNameShort);
-                      if (Sj._ResourceNameShort.equals(Dep) == true && minIndex < j + 1)
-                        {
-                          minIndex = j + 1;
-                          // LOG.debug(" Found dependency. Setting minIndex="+minIndex);
-                        }
-                    }
-                }
-            if (L.get(0)._ResourceNameShort.equals("tilda/data/_tilda.Tilda.json") == true && minIndex == 0)
-              minIndex = 1;
-            // LOG.debug(" minIndex="+minIndex);
-            Schema S = L.remove(i);
-            L.add(minIndex, S);
-
-          }
-      }
 
 
     public static Connection get(String Id)

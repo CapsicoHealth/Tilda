@@ -199,7 +199,7 @@ public class Docs
           }
         Out.println("</TABLE></BLOCKQUOTE><BR><BR></BLOCKQUOTE>");
 
-        Out.println("<H3>The following measures/formulas are defined:</H3>"
+        Out.println("<H3>The following terms/formulas are defined:</H3>"
         + "<BLOCKQUOTE>"
         + "<TABLE class=\"RowedTable\" border=\"0px\" cellspacing=\"0px\" cellpadding=\"2px\" width=\"75%\">\n");
         if (V._Formulas != null)
@@ -239,7 +239,7 @@ public class Docs
               String FormulaStr = Str.toString();
 
               Out.println("<TR style=\"height: 40px;\"><TD style=\"border: 0px !Important;\" colspan=\"2\">&nbsp;</TD></TR>"
-              + "<TR bgcolor=\"DFECF8\"><TD style=\"text-align:left !important;\" colspan=\"2\"><B>Measure " + F._Name + "</B>" + (TextUtil.isNullOrEmpty(F._Id) == true ? "" : (" &nbsp;&nbsp;&nbsp; (#" + F._Id + ")")) + "</TD></TR>"
+              + "<TR bgcolor=\"DFECF8\"><TD style=\"text-align:left !important;\" colspan=\"2\"><B>Term " + F._Name + "</B>" + (TextUtil.isNullOrEmpty(F._Id) == true ? "" : (" &nbsp;&nbsp;&nbsp; (#" + F._Id + ")")) + "</TD></TR>"
               + "<TR><TD><B>Title</B></TD><TD>" + F._Title + "</TD></TR>"
               + "<TR><TD><B>Description</B></TD><TD>" + CleanForHTML(F._Description) + "</TD></TR>"
               + "<TR><TD><B>Formula</B></TD><TD><PRE style=\"padding-top: 3px;\">" + FormulaStr + "</PRE></TD><TR>");
@@ -261,7 +261,7 @@ public class Docs
                   Out.println("</TABLE>");
                 }
               Out.println("</TD></TR>");
-              Out.println("<TR valign=\"top\"><TD><B>Referenced Formulas</B></TD><TD>");
+              Out.println("<TR valign=\"top\"><TD><B>Referenced Terms</B></TD><TD>");
               if (FormulaMatches.isEmpty() == true)
                 Out.println("None");
               else

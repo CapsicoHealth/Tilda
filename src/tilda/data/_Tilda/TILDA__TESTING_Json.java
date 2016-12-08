@@ -250,7 +250,7 @@ public class TILDA__TESTING_Json
         JSONUtil.Print(Out, "lastUpdated", false, Obj.getLastUpdated());
 
       if (FullObject == true)
-       Out.write(" }\n");
+       Out.write(" }");
       PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
     }
 
@@ -298,7 +298,7 @@ public class TILDA__TESTING_Json
         JSONUtil.Print(Out, "desc3", false, Obj.getDesc3());
 
       if (FullObject == true)
-       Out.write(" }\n");
+       Out.write(" }");
       PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
     }
 

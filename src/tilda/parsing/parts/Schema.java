@@ -21,13 +21,17 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.annotation.Resource;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.parsing.ParserSession;
+import tilda.utils.TextUtil;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -175,5 +179,109 @@ public class Schema
     	}
     	return _Documentation;
     }
+
+    public static int findByResourceName(List<Schema> L, String ResourceName)
+      {
+        for (int i = 0; i < L.size(); ++i)
+          if (L.get(i)._ResourceName.equals(ResourceName) == true)
+           return i;
+        return -1;
+      }
+
+    
+    public static void ReorderTildaListWithDependencies(List<Schema> L)
+      {
+        // LOG.info("Starting with");
+        // PrintSchemaList(L);
+        Set<String> MovedSchemas = new HashSet<String>();
+        for (int i = 0; i < L.size(); ++i)
+          {
+            Schema S = L.get(i);
+            // LOG.info("Checking out " + S._Name + ".");
+            if (S._Name.equals("TILDA") == true)
+              {
+                L.add(0, L.remove(i));
+                // LOG.info("Moving " + S._Name + " to the top.");
+                // PrintSchemaList(L);
+                continue;
+              }
+            if (TextUtil.isNullOrEmpty(S._Dependencies) == true)
+              {
+                // LOG.info("Not touching " + S._Name + " since it has no dependency.");
+                continue;
+              }
+            boolean MovedSomething = false;
+            for (String Dep : S._Dependencies)
+              {
+                int j = Schema.findByResourceName(L, Dep);
+                if (j > i)
+                  {
+                    // LOG.info("Moving " + S._Name + "'s dependency " + L.get(j)._Name + " before.");
+                    L.add(i, L.remove(j));
+                    MovedSomething = true;
+                  }
+              }
+            if (MovedSomething == true)
+              {
+                if (MovedSchemas.add(S._Name) == false)
+                  throw new Error("There is a circular dependency: " + Schema.getCircularPath(S, L));
+                // PrintSchemaList(L);
+                --i;
+              }
+          }
+
+        LOG.info("Reordered Schemas based on dependencies");
+        PrintSchemaList(L);
+
+        // L.clear();
+        // L.addAll(NewL);
+        // ReverseIterator<Schema> RI = new ReverseIterator<>(NewL);
+        // while (RI.hasNext() == true)
+        // L.add(RI.next());
+
+        // LOG.info("Reordered Schemas based on dependencies");
+        // for (Schema S : L)
+        // LOG.info(" "+S._Name);
+
+        return;
+      }
+
+    private static void PrintSchemaList(List<Schema> L)
+      {
+        for (Schema X : L)
+          LOG.info("   " + X._Name);
+      }
+    
+    public static String getCircularPath(Schema S, List<Schema> L)
+      {
+        StringBuilder Str = new StringBuilder();
+        Str.append(S._Name);
+        if (TextUtil.isNullOrEmpty(S._Dependencies) == false)
+         for (String s : S._Dependencies)
+           {
+             int j = Schema.findByResourceName(L, s);
+             Schema D = L.get(j);
+             if (getSubCircularPath(S, D, L, Str) == false)
+              break;
+           }
+        return Str.append(" :)").toString();
+      }
+
+    private static boolean getSubCircularPath(Schema Root, Schema S, List<Schema> L, StringBuilder Str)
+      {
+        Str.append(" --> ").append(S._Name);
+        if (Root._Name.equals(S._Name) == true)
+         return false;
+
+        if (TextUtil.isNullOrEmpty(S._Dependencies) == false)
+         for (String s : S._Dependencies)
+           {
+             int j = Schema.findByResourceName(L, s);
+             Schema D = L.get(j);
+             if (getSubCircularPath(Root, D, L, Str) == false)
+              return false;
+           }
+        return true;
+      }
 
   }

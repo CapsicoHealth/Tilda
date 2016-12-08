@@ -23,7 +23,6 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
 import tilda.db.JDBCHelper;
 import tilda.interfaces.JSONable;
 
@@ -108,10 +107,10 @@ public class JSONPrinter
             _Name = Name;
             _Val = JsonRawValue;
           }
-  
+
         protected final String _Name;
         protected final String _Val;
-  
+
         public void Print(Writer Out, boolean FirstElement, String Header)
         throws Exception
           {
@@ -119,7 +118,7 @@ public class JSONPrinter
             Out.write(_Val);
           }
       }
-    
+
     protected static class ElementBoolean implements ElementDef
       {
         public ElementBoolean(String Name, boolean Val)
@@ -138,42 +137,63 @@ public class JSONPrinter
             JSONUtil.Print(Out, _Name, FirstElement, _Val);
           }
       }
+
     protected static class ElementLong implements ElementDef
-    {
-      public ElementLong(String Name, long Val)
-        {
-          _Name = Name;
-          _Val = Val;
-        }
+      {
+        public ElementLong(String Name, long Val)
+          {
+            _Name = Name;
+            _Val = Val;
+          }
 
-      protected final String  _Name;
-      protected final long    _Val;
+        protected final String _Name;
+        protected final long   _Val;
 
-      public void Print(Writer Out, boolean FirstElement, String Header)
-      throws Exception
-        {
-          Out.write(Header);
-          JSONUtil.Print(Out, _Name, FirstElement, _Val);
-        }
-    }
+        public void Print(Writer Out, boolean FirstElement, String Header)
+        throws Exception
+          {
+            Out.write(Header);
+            JSONUtil.Print(Out, _Name, FirstElement, _Val);
+          }
+      }
+
     protected static class ElementDouble implements ElementDef
-    {
-      public ElementDouble(String Name, double Val)
-        {
-          _Name = Name;
-          _Val = Val;
-        }
+      {
+        public ElementDouble(String Name, double Val)
+          {
+            _Name = Name;
+            _Val = Val;
+          }
 
-      protected final String  _Name;
-      protected final double  _Val;
+        protected final String _Name;
+        protected final double _Val;
 
-      public void Print(Writer Out, boolean FirstElement, String Header)
-      throws Exception
-        {
-          Out.write(Header);
-          JSONUtil.Print(Out, _Name, FirstElement, _Val);
-        }
-    }
+        public void Print(Writer Out, boolean FirstElement, String Header)
+        throws Exception
+          {
+            Out.write(Header);
+            JSONUtil.Print(Out, _Name, FirstElement, _Val);
+          }
+      }
+
+    protected static class ElementString implements ElementDef
+      {
+        public ElementString(String Name, String Val)
+          {
+            _Name = Name;
+            _Val = Val;
+          }
+
+        protected final String _Name;
+        protected final String _Val;
+
+        public void Print(Writer Out, boolean FirstElement, String Header)
+        throws Exception
+          {
+            Out.write(Header);
+            JSONUtil.Print(Out, _Name, FirstElement, _Val);
+          }
+      }
 
     public JSONPrinter addElement(String Name, JSONable Obj, String JsonExportName)
       {
@@ -192,28 +212,37 @@ public class JSONPrinter
         _Elements.add(new ElementValues(Name, Vals));
         return this;
       }
+
     public JSONPrinter addElement(String Name, boolean Val)
       {
         _Elements.add(new ElementBoolean(Name, Val));
         return this;
       }
+
     public JSONPrinter addElement(String Name, long Val)
       {
         _Elements.add(new ElementLong(Name, Val));
         return this;
       }
+
     public JSONPrinter addElement(String Name, double Val)
       {
         _Elements.add(new ElementDouble(Name, Val));
         return this;
       }
-    
+
+    public JSONPrinter addElement(String Name, String Val)
+      {
+        _Elements.add(new ElementString(Name, Val));
+        return this;
+      }
+
     public JSONPrinter addElementRaw(String Name, String JsonRawValue)
       {
         _Elements.add(new ElementRaw(Name, JsonRawValue));
         return this;
       }
-    
+
 
     public void Print(Writer Out)
     throws Exception

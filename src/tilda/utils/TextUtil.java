@@ -468,6 +468,8 @@ public class TextUtil
 
     public static int FindElement(String[] A, String Val, boolean IgnoreCase, int Start)
       {
+        if (A == null)
+          return -1;
         for (int i = Start; i < A.length; ++i)
           {
             String Str = A[i];
@@ -481,6 +483,8 @@ public class TextUtil
 
     public static int FindElement(String[][] A, String Val, int pos, boolean IgnoreCase, int Start)
       {
+        if (A == null)
+          return -1;
         for (int i = Start; i < A.length; ++i)
           {
             String Str = A[i][pos];

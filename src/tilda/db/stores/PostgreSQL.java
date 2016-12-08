@@ -141,6 +141,8 @@ public class PostgreSQL implements DBType
               return "sum";
             case VAR:
               return "variance";
+            case ARRAY:
+              return "array_agg";
             default:
               throw new Error("Cannot convert AggregateType " + AT + " to a database aggregate function name.");
           }

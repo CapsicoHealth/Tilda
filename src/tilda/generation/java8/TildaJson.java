@@ -356,7 +356,7 @@ public class TildaJson implements CodeGenTildaJson
               // First = JSONExport(Out, First, C._ParentObject.getColumn(C.getName()+"TZ"));
             }
         Out.println("      if (FullObject == true)");
-        Out.println("       Out.write(\" }\\n\");");
+        Out.println("       Out.write(\" }\");");
         Out.println("      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);");
         Out.println("    }");
 
