@@ -22,6 +22,7 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.DefaultType;
@@ -57,6 +58,7 @@ public class Column extends TypeDef
     /*@formatter:on*/
     
     public transient boolean        _FrameworkManaged = false;
+    public transient AggregateType  _Aggregate = null; // For view columns really.
     public transient ColumnMode     _Mode;
     public transient ProtectionType _Protect;
     public transient Column         _SameAsObj;
@@ -68,6 +70,7 @@ public class Column extends TypeDef
     public transient ColumnMapper   _MapperDef         ;
     public transient ColumnValue    _DefaultCreateValue;
     public transient ColumnValue    _DefaultUpdateValue;
+
     
     public transient int _SequenceOrder = -1;
 
@@ -86,6 +89,21 @@ public class Column extends TypeDef
         _Invariant = Invariant;
         _ProtectStr = Protect == null ? null : Protect.name();
         _Description = Description;
+      }
+
+    public Column(String Name, ColumnType Type, String Description)
+      {
+        _Name = Name;
+        _Type = Type;
+        _Description = Description;
+        
+//        if (Mapper != null)
+//         _Mapper = new ColumnMapper(Mapper._SrcColumns, Mapper._DestObject, Mapper._Name, Mapper._Group, Mapper._Multi);
+//        
+//        if (Enum != null)
+//          _Enum = new ColumnEnum(Enum._SrcColumns, Enum._DestObject, Enum._Multi);
+//
+//        _Values = ColumnValue.deepCopy(Values);
       }
     
     public Column(String Name, String SameAs, String Description)
@@ -227,9 +245,9 @@ public class Column extends TypeDef
         if (_SameAsObj == null)
           return;
 
-        if (_TypeStr != null && _TypeStr.equals(_SameAsObj._TypeStr) == false)
+        if (_TypeStr != null && _TypeStr.equals(_SameAsObj._TypeStr) == false && _Aggregate == null)
           PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining a type '"+_TypeStr+"' which doesn't match the destination column's type '"+_SameAsObj._TypeStr+"'. Note that redefining a type for a sameas column is superfluous in the first place.");
-        else
+        else if (_Aggregate == null)
           _TypeStr = _SameAsObj._TypeStr;
 
 /* Should we do this or not? For mappers with extra PKs, this adds additional requirements on the new table with 
@@ -270,7 +288,7 @@ public class Column extends TypeDef
                      : _MapperDef._Multi == MultiType.SET  ? "{}"
                      : null;
           }
-        else
+        else if (_Aggregate == null)
           {
             _Size = _SameAsObj._Size;
           }

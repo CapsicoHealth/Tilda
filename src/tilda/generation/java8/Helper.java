@@ -255,7 +255,7 @@ public class Helper
         for (Column C : DefaultUpdateColumns)
           {
             String MethodName = Padder.pad(TextUtil.CapitalizeFirstCharacter(C.getName()) + TextUtil.CapitalizeFirstCharacter(C._DefaultCreateValue._Name));
-            if (C._Type == ColumnType.DATETIME)
+            if (C.getType() == ColumnType.DATETIME)
               {
                 if (C._DefaultCreateValue._Value.equalsIgnoreCase("NOW") == true)
                   Out.println(Prefix + "set" + Padder.pad(TextUtil.CapitalizeFirstCharacter(C.getName()) + "Now") + "();");
@@ -502,12 +502,12 @@ public class Helper
                           // String Mask = getRuntimeMask(C);
                           String Pad = O._PadderColumnNames.getPad(C.getName());
                           Out.print(Lead + "     ");
-                          if (C._Type.isPrimitive() == false)
-                            Out.print("if (P._" + V + "==null) PS.setNull(++i, java.sql.Types." + JavaJDBCType.get(C._Type)._JDBCSQLType + "); else ");
-                          if (C._Type == ColumnType.DATETIME)
+                          if (C.getType().isPrimitive() == false)
+                            Out.print("if (P._" + V + "==null) PS.setNull(++i, java.sql.Types." + JavaJDBCType.get(C.getType())._JDBCSQLType + "); else ");
+                          if (C.getType() == ColumnType.DATETIME)
                             Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(P._" + C.getName() + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
                           else
-                            Out.println("PS.set" + JavaJDBCType.get(C._Type)._JDBCType + "(++i, " + (C._Type == ColumnType.CHAR ? "\"\"+" : "") + "P._" + V + Pad + ");");
+                            Out.println("PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, " + (C.getType() == ColumnType.CHAR ? "\"\"+" : "") + "P._" + V + Pad + ");");
                         }
                     }
                   Out.println(Lead + "     break;");
@@ -547,12 +547,12 @@ public class Helper
                       // String Mask = getRuntimeMask(C);
                       String Pad = O._PadderColumnNames.getPad(C.getName());
                       Out.print(Lead + "     ");
-                      if (C._Type.isPrimitive() == false || A._Multi == true)
-                        Out.print("if (P._" + V + "==null) PS.setNull(++i, java.sql.Types." + JavaJDBCType.get(C._Type)._JDBCSQLType + "); else ");
-                      if (C._Type == ColumnType.DATETIME)
+                      if (C.getType().isPrimitive() == false || A._Multi == true)
+                        Out.print("if (P._" + V + "==null) PS.setNull(++i, java.sql.Types." + JavaJDBCType.get(C.getType())._JDBCSQLType + "); else ");
+                      if (C.getType() == ColumnType.DATETIME)
                         Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(P._" + V + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
                       else if (A._Multi == false)
-                        Out.println("PS.set" + JavaJDBCType.get(C._Type)._JDBCType + "(++i, " + (C._Type == ColumnType.CHAR ? "\"\"+" : "") + "P._" + V + Pad + ");");
+                        Out.println("PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, " + (C.getType() == ColumnType.CHAR ? "\"\"+" : "") + "P._" + V + Pad + ");");
                       else
                         Out.println("C.setArray(PS, ++i, "+O._BaseClassName+"_Factory.COLS."+C.getName().toUpperCase()+"._Type, AllocatedArrays, P._" + V + ");");
                     }
@@ -577,11 +577,11 @@ public class Helper
             String Pad = O._PadderColumnNames.getPad(C.getName());
             Out.print(Lead + "     ");
             if (C._Nullable == true)
-              Out.print("if (" + Pred + "isNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "() == true) PS.setNull(++i, java.sql.Types." + JavaJDBCType.get(C._Type)._JDBCSQLType + ");  else ");
-            if (C._Type == ColumnType.DATETIME)
+              Out.print("if (" + Pred + "isNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "() == true) PS.setNull(++i, java.sql.Types." + JavaJDBCType.get(C.getType())._JDBCSQLType + ");  else ");
+            if (C.getType() == ColumnType.DATETIME)
               Out.println("PS.setTimestamp(++i, new java.sql.Timestamp("+Pred+"_" + C.getName() + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
             else
-              Out.println("PS.set" + JavaJDBCType.get(C._Type)._JDBCType + "(++i, " + (C._Type == ColumnType.CHAR ? "\"\"+" : "") + Pred + "_" + C.getName() + Pad + ");");
+              Out.println("PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, " + (C.getType() == ColumnType.CHAR ? "\"\"+" : "") + Pred + "_" + C.getName() + Pad + ");");
           }
       }
 
@@ -648,18 +648,18 @@ public class Helper
           {
             if (C._Mode == ColumnMode.CALCULATED)
               {
-                if (C.isCollection() == true || C._Type.isPrimitive() == false)
+                if (C.isCollection() == true || C.getType().isPrimitive() == false)
                   Out.println("      if (Obj.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "() != null)");
               }
             else
               {
                 Out.print("      if (Obj.isNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "() == false");
-                if (C.isCollection() == true || C._Type.isPrimitive() == false)
+                if (C.isCollection() == true || C.getType().isPrimitive() == false)
                   Out.print(" && Obj.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "() != null");
                 Out.println(")");
               }
           }
-        if (C._Type == ColumnType.JSON)
+        if (C.getType() == ColumnType.JSON)
           Out.println("        JSONUtil.PrintSubJson(Out, \"" + C.getName() + "\", " + First + ", Obj._" + C.getName() + ");");
         else if (C.isCollection() == false)
           Out.println("        JSONUtil.Print(Out, \"" + C.getName() + "\", " + First + ", Obj.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "());");

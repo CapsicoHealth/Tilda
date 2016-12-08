@@ -71,12 +71,12 @@ public enum JavaJDBCType
     
     public static String getFieldTypeBase(Column C)
       {
-        return JavaJDBCType.get(C._Type)._JavaType;
+        return JavaJDBCType.get(C.getType())._JavaType;
       }
     
     public static String getFieldTypeBaseClass(Column C)
       {
-        return getFieldTypeBaseClass(C._Type);
+        return getFieldTypeBaseClass(C.getType());
       }
     public static String getFieldTypeBaseClass(ColumnType T)
       {
@@ -90,34 +90,34 @@ public enum JavaJDBCType
 
     public static String getFieldTypeParam(Column C, boolean Multi)
       {
-        return  JavaJDBCType.get(C._Type)._JavaType + (Multi==true?"[]":"");
+        return  JavaJDBCType.get(C.getType())._JavaType + (Multi==true?"[]":"");
       }
     public static String getFieldType(Column C)
       {
-        switch (C._TypeCollection)
+        switch (C.getTypeCollection())
           {
             case LIST:
-              return "List<" + JavaJDBCType.get(C._Type)._JavaClassType + ">";
+              return "List<" + JavaJDBCType.get(C.getType())._JavaClassType + ">";
             case NONE:
-              return JavaJDBCType.get(C._Type)._JavaType;
+              return JavaJDBCType.get(C.getType())._JavaType;
             case SET:
-              return "Set <" + JavaJDBCType.get(C._Type)._JavaClassType + ">";
+              return "Set <" + JavaJDBCType.get(C.getType())._JavaClassType + ">";
             default:
-              throw new Error("Unhandled case in switch for ield type '" + C._TypeCollection + "'.");
+              throw new Error("Unhandled case in switch for ield type '" + C.getTypeCollection() + "'.");
           }
       }
     
     public static String getJsonFieldType(JsonField F)
       {
-        switch (F._TypeCollection)
+        switch (F.getTypeCollection())
           {
             case LIST:
             case SET:
-              return JavaJDBCType.get(F._Type)._JavaClassType + "[]";
+              return JavaJDBCType.get(F.getType())._JavaClassType + "[]";
             case NONE:
-              return JavaJDBCType.get(F._Type)._JavaType;
+              return JavaJDBCType.get(F.getType())._JavaType;
             default:
-              throw new Error("Unhandled case in switch for json field type '" + F._TypeCollection + "'.");
+              throw new Error("Unhandled case in switch for json field type '" + F.getTypeCollection() + "'.");
           }
       }
     

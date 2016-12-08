@@ -21,19 +21,16 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.annotation.Resource;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.gson.annotations.SerializedName;
+
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
-
-import com.google.gson.annotations.SerializedName;
 
 public class Schema
   {
@@ -230,8 +227,8 @@ public class Schema
               }
           }
 
-        LOG.info("Reordered Schemas based on dependencies");
-        PrintSchemaList(L);
+//        LOG.info("Reordered Schemas based on dependencies");
+//        PrintSchemaList(L);
 
         // L.clear();
         // L.addAll(NewL);

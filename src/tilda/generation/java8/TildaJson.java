@@ -55,7 +55,7 @@ public class TildaJson implements CodeGenTildaJson
         boolean needTime = false;
         if (O._LC != ObjectLifecycle.READONLY)
          for (Column C : O._Columns)
-          if (C != null && C._Type == ColumnType.DATETIME && Object.isOCCColumn(C) == false)
+          if (C != null && C.getType() == ColumnType.DATETIME && Object.isOCCColumn(C) == false)
             {
               needTime = true;
               break;
@@ -107,13 +107,13 @@ public class TildaJson implements CodeGenTildaJson
         for (Column C : Cols)
           {
             String Pad = C._ParentObject.getColumnPad(C.getName());
-            if (C._Type == ColumnType.DATETIME)
+            if (C.getType() == ColumnType.DATETIME)
               {
                 Out.println("   @SerializedName(\"" + C.getName() + "\"" + Pad + ") public " + (C.isList() == true ? "List<String>" : C.isSet() == true ? "Set<String>" : "String") + "  Str_" + C.getName() + Pad + ";");
                 Out.println("   transient          " + PaddingUtil.getPad(C.getName().length()) + Pad + " public " + (C.isCollection() == true ? JavaJDBCType.getFieldType(C) : JavaJDBCType.getFieldTypeBaseClass(C)) + "  _"
                 + C.getName() + Pad + ";");
               }
-            else if (C._Type == ColumnType.JSON)
+            else if (C.getType() == ColumnType.JSON)
               {
                 if (C.isCollection() == true)
                   Out.println("   @SerializedName(\"" + C.getName() + "\"" + Pad + ") public List<" + C._ParentObject._BaseClassName + "." + C._JsonSchema._TypeName + "> _" + C.getName() + Pad + ";");
@@ -139,9 +139,9 @@ public class TildaJson implements CodeGenTildaJson
             String Pad = C._ParentObject.getColumnPad(C.getName());
             if (C._Nullable == false)
               {
-                if (C.isCollection() == false && C._Type == ColumnType.STRING)
+                if (C.isCollection() == false && C.getType() == ColumnType.STRING)
                   Out.println("      if (TextUtil.isNullOrEmpty(_" + C.getName() + Pad + ") == true)");
-                else if (C.isCollection() == false && C._Type == ColumnType.DATETIME)
+                else if (C.isCollection() == false && C.getType() == ColumnType.DATETIME)
                   Out.println("      if (TextUtil.isNullOrEmpty(Str_" + C.getName() + Pad + ") == true)");
                 else if (C.isCollection() == true)
                   Out.println("      if (_" + C.getName() + Pad + " == null || _" + C.getName() + Pad + ".isEmpty() == true)");
@@ -149,7 +149,7 @@ public class TildaJson implements CodeGenTildaJson
                   Out.println("      if (_" + C.getName() + Pad + " == null)");
                 Out.println("       throw new Exception(\"Incoming value for '" + C.getFullName() + "' was null or empty. It's not nullable in the model.\\n\"+toString());");
               }
-            if (C._Type == ColumnType.DATETIME)
+            if (C.getType() == ColumnType.DATETIME)
               {
                 if (C._Nullable == true)
                   {
@@ -165,7 +165,7 @@ public class TildaJson implements CodeGenTildaJson
                     Out.println("       }");
                   }
               }
-//            else if (C._Type == ColumnType.JSON)
+//            else if (C.getType() == ColumnType.JSON)
 //              {
 //                if (C._Nullable == true)
 //                  {
@@ -280,7 +280,7 @@ public class TildaJson implements CodeGenTildaJson
                   else if (C._PrimaryKey == false)
                     {
                       String Pad = O._PadderColumnNames.getPad(C.getName());
-                      if (C.isCollection() == false && C._Type.isPrimitive() == true)
+                      if (C.isCollection() == false && C.getType().isPrimitive() == true)
                         Out.println("         if (_" + C.getName() + Pad + "!= Obj.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "())");
                       else
                         Out.println("         if (_" + C.getName() + Pad + ".equals(Obj.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "()) == false)");
@@ -352,7 +352,7 @@ public class TildaJson implements CodeGenTildaJson
           if (C != null)
             {
               First = Helper.JSONExport(Out, First, C);
-              // if (C._Type == ColumnType.DATETIME && C.isOCCGenerated() == false)
+              // if (C.getType() == ColumnType.DATETIME && C.isOCCGenerated() == false)
               // First = JSONExport(Out, First, C._ParentObject.getColumn(C.getName()+"TZ"));
             }
         Out.println("      if (FullObject == true)");
@@ -428,11 +428,11 @@ public class TildaJson implements CodeGenTildaJson
               if (First == true)
                 First = false;
               Out.print("\"" + Pad + "+ (_" + C.getName() + Pad + " == null ? \": NULL\" : \"");
-              if (C._Type == ColumnType.DATETIME)
+              if (C.getType() == ColumnType.DATETIME)
                 {
                   Out.print(": \"+DateTimeUtil.printDateTimeForSQL(_" + C.getName() + ")");
                 }
-              else if (C._Type == ColumnType.STRING && C.isCollection() == false)
+              else if (C.getType() == ColumnType.STRING && C.isCollection() == false)
                 {
                   if (C._Size != null && C._Size > 100) // test for NULL for CALCULATED fields
                     Out.print("(\" + (_" + C.getName() + Pad + " == null ? 0 : _" + C.getName() + Pad + ".length())+\"): \"+(_" + C.getName() + Pad + " == null || _" + C.getName() + Pad + ".length() < 100 ? _" + C.getName()

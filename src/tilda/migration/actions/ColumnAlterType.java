@@ -44,6 +44,6 @@ public class ColumnAlterType extends MigrationAction
     public String getDescription()
       {
         return "Alter table "+_Col._ParentObject.getFullName()
-              +" alter column "+_Col.getName()+" type from "+_CurrentType.toString()+" to "+_Col._Type.toString();
+              +" alter column "+_Col.getName()+" type from "+_CurrentType.toString()+" to "+_Col.getType().toString();
       }
   }

@@ -63,7 +63,7 @@ public class TildaFactory implements CodeGenTildaFactory
         boolean needTime = false;
         if (O._LC != ObjectLifecycle.READONLY)
          for (Column C : O._Columns)
-          if (C != null && C._Type == ColumnType.DATETIME)
+          if (C != null && C.getType() == ColumnType.DATETIME)
             {
               needTime = true;
               break;
@@ -75,7 +75,7 @@ public class TildaFactory implements CodeGenTildaFactory
                Iterator<Query.Attribute> I = SWC._Attributes.iterator();
                while (I.hasNext() == true)
                  {
-                   if (I.next()._Col._Type == ColumnType.DATETIME)
+                   if (I.next()._Col.getType() == ColumnType.DATETIME)
                      {
                        needTime = true;
                        break;
@@ -129,7 +129,7 @@ public class TildaFactory implements CodeGenTildaFactory
           if (C != null && C._Mode != ColumnMode.CALCULATED)
             {
               String ColumnPad = O._PadderColumnNames.getPad(C.getName());
-              String TypePad = C._Type.getPad();
+              String TypePad = C.getType().getPad();
               if (C._Nullable == false)
                 TypePad += "    ";
               if (C.isCollection() == false)
@@ -137,7 +137,7 @@ public class TildaFactory implements CodeGenTildaFactory
               // String ColVarFull = TextUtil.EscapeDoubleQuoteWithSlash(G.getSql().getFullColumnVar(C), "", false);
               // String ColVarShort = TextUtil.EscapeDoubleQuoteWithSlash(G.getSql().getShortColumnVar(C), "", false);
               // String ColVarOthers = TextUtil.EscapeDoubleQuoteWithSlash(G.getSql().getShortColumnVar(C), "", false);
-              String ColumnTypeClassName = "Type_" + TextUtil.NormalCapitalization(C._Type.name()) + (C.isCollection() ? "Collection" : "Primitive") + (C._Nullable == true ? "Null" : "");
+              String ColumnTypeClassName = "Type_" + TextUtil.NormalCapitalization(C.getType().name()) + (C.isCollection() ? "Collection" : "Primitive") + (C._Nullable == true ? "Null" : "");
               G.getGenDocs().docField(Out, G, C, "column definition");
               Out.println("     public static " + ColumnTypeClassName + TypePad + " " + C.getName().toUpperCase() + ColumnPad + "= new " + ColumnTypeClassName + TypePad + "(SCHEMA_LABEL, TABLENAME_LABEL, \"" + C.getName() + "\"" + ColumnPad + ", " + (++Counter) + "/*"+C._SequenceOrder+"*/, " + TextUtil.EscapeDoubleQuoteWithSlash(C._Description) + ");");
             }
@@ -293,7 +293,7 @@ public class TildaFactory implements CodeGenTildaFactory
         for (Column C : O._Columns)
           if (C != null)
             {
-              if (C._Type == ColumnType.BINARY)
+              if (C.getType() == ColumnType.BINARY)
                 {
                   Out.println("       if (Values.get(" + TextUtil.EscapeDoubleQuoteWithSlash(C.getName()) + ") != null)");
                   Out.println("        Errors.add(new StringStringPair(" + TextUtil.EscapeDoubleQuoteWithSlash(C.getName()) + ", \"Parameter is of a binary type and cannot be passed as a string value.\"));");
@@ -335,7 +335,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println(");");
         Out.println();
         for (Column C : O._Columns)
-          if (C != null && C._Type != ColumnType.BINARY && C._FrameworkManaged == false && C._Mode == ColumnMode.NORMAL && CreateColumns.contains(C) == false)
+          if (C != null && C.getType() != ColumnType.BINARY && C._FrameworkManaged == false && C._Mode == ColumnMode.NORMAL && CreateColumns.contains(C) == false)
             {
               String Pad = O._PadderColumnNames.getPad(C.getName());
               Out.println("      if (_" + C.getName() + Pad + "!= null) Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + ");");

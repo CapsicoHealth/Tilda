@@ -101,17 +101,17 @@ public class Sql extends MSSQL implements CodeGenSql
     @Override
     public String getColumnType(Column C)
       {
-        return getColumnType(C._Type, C._Size, C._Mode, C.isCollection());
+        return getColumnType(C.getType(), C._Size, C._Mode, C.isCollection());
       }
 
     @Override
     public String getColumnTypeRaw(Column C, boolean MultiOverride)
       {
-        if (C._Type == ColumnType.STRING && C._Mode != ColumnMode.CALCULATED)
+        if (C.getType() == ColumnType.STRING && C._Mode != ColumnMode.CALCULATED)
           return C.isCollection() == true || MultiOverride == true ? "nvarchar(max)" : C._Size < 15 ? SQLServerType.CHAR._SQLType : C._Size < getCLOBThreshhold() ? SQLServerType.STRING._SQLType : "nvarchar(max)";
-        if (C._Type == ColumnType.JSON)
+        if (C.getType() == ColumnType.JSON)
           return "jsonb";
-        return C.isCollection() == true ? SQLServerType.get(C._Type)._SQLArrayType : SQLServerType.get(C._Type)._SQLType;
+        return C.isCollection() == true ? SQLServerType.get(C.getType())._SQLArrayType : SQLServerType.get(C.getType())._SQLType;
       }
 
     @Override
@@ -126,7 +126,7 @@ public class Sql extends MSSQL implements CodeGenSql
     @Override
     public boolean stringNeedsTrim(Column C)
       {
-        return C._Type == ColumnType.STRING && C._Mode != ColumnMode.CALCULATED && C.isCollection() == false && C._Size < 15;
+        return C.getType() == ColumnType.STRING && C._Mode != ColumnMode.CALCULATED && C.isCollection() == false && C._Size < 15;
       }
 
 

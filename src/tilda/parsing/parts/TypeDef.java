@@ -38,8 +38,8 @@ public class TypeDef
     @SerializedName("size" ) public Integer        _Size       ;
     /*@formatter:on*/
 
-    public transient ColumnType        _Type;
-    public transient MultiType         _TypeCollection = MultiType.NONE;
+    protected transient ColumnType     _Type;
+    protected transient MultiType      _TypeCollection = MultiType.NONE;
 
     private transient ValidationStatus _Validation     = ValidationStatus.NONE;
 
@@ -72,19 +72,19 @@ public class TypeDef
             PS.AddError(What + " didn't define a 'type'. It is mandatory.");
             return;
           }
-        
+
         String BaseType = _TypeStr;
         if (_TypeStr.endsWith("[]") == true)
           {
             _TypeCollection = MultiType.LIST;
-            BaseType = _TypeStr.substring(0, _TypeStr.length()-2);
+            BaseType = _TypeStr.substring(0, _TypeStr.length() - 2);
           }
         else if (_TypeStr.endsWith("{}") == true)
           {
             _TypeCollection = MultiType.SET;
-            BaseType = _TypeStr.substring(0, _TypeStr.length()-2);
+            BaseType = _TypeStr.substring(0, _TypeStr.length() - 2);
           }
-        
+
         if ((_Type = ColumnType.parse(BaseType)) == null)
           {
             PS.AddError(What + " defined an invalid 'type' '" + _TypeStr + "'.");
@@ -146,7 +146,7 @@ public class TypeDef
       }
 
     public boolean CheckValueType(ParserSession PS, String What, String Value, boolean DateTimeAllowed, DefaultType Default)
-      throws Error
+    throws Error
       {
         switch (_Type)
           {
@@ -192,5 +192,14 @@ public class TypeDef
           }
 
         return true;
+      }
+
+    public ColumnType getType()
+      {
+        return _Type;
+      }
+    public MultiType getTypeCollection()
+      {
+        return _TypeCollection;
       }
   }

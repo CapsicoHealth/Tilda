@@ -19,22 +19,44 @@ package tilda.parsing.parts;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.enums.AggregateType;
+import tilda.enums.ColumnType;
+
 public class ViewColumnWrapper extends Column
   {
-    static final Logger              LOG                = LogManager.getLogger(View.class.getName());
+    static final Logger LOG = LogManager.getLogger(View.class.getName());
 
     public ViewColumnWrapper(Column SameAsCol, ViewColumn VCol)
       {
         super(SameAsCol._Name, VCol._SameAs, SameAsCol._Description);
         if (VCol._UseMapper == true && SameAsCol._Mapper != null)
-         _Mapper = new ColumnMapper(SameAsCol._Mapper._SrcColumns, SameAsCol._Mapper._DestObject, SameAsCol._Mapper._Name, SameAsCol._Mapper._Group, SameAsCol._Mapper._Multi);
+          _Mapper = new ColumnMapper(SameAsCol._Mapper._SrcColumns, SameAsCol._Mapper._DestObject, SameAsCol._Mapper._Name, SameAsCol._Mapper._Group, SameAsCol._Mapper._Multi);
         if (VCol._UseEnum == true && SameAsCol._Enum != null)
           _Enum = new ColumnEnum(SameAsCol._Enum._DestObject, SameAsCol._Enum._Multi);
+        if (VCol._Aggregate != null)
+          {
+            if (VCol._Aggregate == AggregateType.ARRAY)
+              {
+                _Aggregate = VCol._Aggregate;
+                _TypeStr = SameAsCol._TypeStr + "[]";
+                _Size = 0;
+              }
+            else if (VCol._Aggregate == AggregateType.AVG || VCol._Aggregate == AggregateType.DEV || VCol._Aggregate == AggregateType.VAR)
+              {
+                _Aggregate = VCol._Aggregate;
+                _TypeStr = ColumnType.DOUBLE.name();
+              }
+            else if (VCol._Aggregate == AggregateType.SUM && (SameAsCol._Type == ColumnType.INTEGER || SameAsCol._Type == ColumnType.FLOAT))
+              {
+                _Aggregate = VCol._Aggregate;
+                _TypeStr = SameAsCol._Type == ColumnType.INTEGER ? ColumnType.LONG.name() : ColumnType.DOUBLE.name();
+              }
+          }
         _VCol = VCol;
       }
-    
+
     protected ViewColumn _VCol;
-    
+
     @Override
     public String getFullName()
       {
@@ -46,10 +68,15 @@ public class ViewColumnWrapper extends Column
       {
         return _VCol.getShortName();
       }
-    
+
     @Override
     public String getName()
       {
         return _VCol.getName();
       }
+    
+//    public ColumnType getType()
+//    {
+//      return _Type;
+//    }
   }

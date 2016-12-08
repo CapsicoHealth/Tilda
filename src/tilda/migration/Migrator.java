@@ -222,21 +222,21 @@ public class Migrator
 
                         if (DBMeta.supportsArrays() == true)
                           {
-                            if (CMeta.isArray() == false && Col.isCollection() == true && Col._Type != ColumnType.JSON)
+                            if (CMeta.isArray() == false && Col.isCollection() == true && Col.getType() != ColumnType.JSON)
                               throw new Exception("The application's data model defines the column '" + Col.getShortName() + "' as an array, but it's not an array in the DB. The database needs to be migrated manually.");
-                            else if (CMeta.isArray() == true && (Col.isCollection() == false || Col._Type == ColumnType.JSON))
+                            else if (CMeta.isArray() == true && (Col.isCollection() == false || Col.getType() == ColumnType.JSON))
                               throw new Exception("The application's data model defines the column '" + Col.getShortName() + "' as an base type, but it's an array in the DB. The database needs to be migrated manually.");
                           }
 
-                        if (Col._Type == ColumnType.STRING && Col.isCollection() == false
+                        if (Col.getType() == ColumnType.STRING && Col.isCollection() == false
                         && (CMeta._Size < DBMeta.getCLOBThreshhold() && CMeta._Size != Col._Size
                         || CMeta._Size >= DBMeta.getCLOBThreshhold() && Col._Size < DBMeta.getCLOBThreshhold()))
                           Actions.add(new ColumnAlterStringSize(Col, CMeta._Size));
 
                         if (Col.isCollection() == false
-                        && (Col._Type == ColumnType.BITFIELD && CMeta._TildaType != ColumnType.INTEGER
-                        || Col._Type == ColumnType.JSON && CMeta._TildaType != ColumnType.STRING && CMeta._TildaType != ColumnType.JSON
-                        || Col._Type != ColumnType.BITFIELD && Col._Type != ColumnType.JSON && Col._Type != CMeta._TildaType))
+                        && (Col.getType() == ColumnType.BITFIELD && CMeta._TildaType != ColumnType.INTEGER
+                        || Col.getType() == ColumnType.JSON && CMeta._TildaType != ColumnType.STRING && CMeta._TildaType != ColumnType.JSON
+                        || Col.getType() != ColumnType.BITFIELD && Col.getType() != ColumnType.JSON && Col.getType() != CMeta._TildaType))
                           Actions.add(new ColumnAlterType(Col, CMeta._TildaType));
                       }
                   }

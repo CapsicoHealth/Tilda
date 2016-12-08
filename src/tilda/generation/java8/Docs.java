@@ -203,8 +203,8 @@ public class Docs implements CodeGenDocs
                 + "  <TR><TD align=\"right\"><B>Name</B></TD><TD>" + C.getFullName() + " of type " + JavaJDBCType.getFieldType(C) + "</TD></TR>" + SystemValues.NEWLINE
                 + "  <TR><TD align=\"right\"><B>Column</B></TD><TD>" + C.getShortName() + " of type " + G.getSql().getColumnType(C) + "</TD></TR>" + SystemValues.NEWLINE
             );
-        if (C._Type == ColumnType.STRING)
-          Out.println("  <TR><TD align=\"right\"><B>Size</B></TD><TD>" + (C._Type == ColumnType.STRING ? C._Size : "&nbsp;") + "</TD></TR>");
+        if (C.getType() == ColumnType.STRING)
+          Out.println("  <TR><TD align=\"right\"><B>Size</B></TD><TD>" + (C.getType() == ColumnType.STRING ? C._Size : "&nbsp;") + "</TD></TR>");
 
         Out.println(
             "  <TR><TD align=\"right\"><B>Nullable</B></TD><TD>" + C._Nullable + "</TD></TR>" + SystemValues.NEWLINE

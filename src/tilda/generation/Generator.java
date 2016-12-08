@@ -203,7 +203,7 @@ public class Generator
                 {
                   DG.docField(Out, G, C, "definition");
                   CG.genField(Out, G, C);
-                  if (C._Values != null && C._Type != ColumnType.DATETIME)
+                  if (C._Values != null && C.getType() != ColumnType.DATETIME)
                     {
                       DG.docFieldValues(Out, G, C);
                       CG.genFieldValues(Out, G, C);
@@ -214,7 +214,7 @@ public class Generator
               DG.docField(Out, G, C, "getter");
               CG.genMethodGet(Out, G, C);
 
-              if (C._Values != null && C._Type != ColumnType.DATETIME)
+              if (C._Values != null && C.getType() != ColumnType.DATETIME)
                 for (ColumnValue V : C._Values)
                   {
                     if (V == null)
@@ -261,7 +261,7 @@ public class Generator
 
                   if (O._LC == ObjectLifecycle.NORMAL || O._LC == ObjectLifecycle.WORM)
                     {
-                      if (C._Values != null && C._Type != ColumnType.DATETIME)
+                      if (C._Values != null && C.getType() != ColumnType.DATETIME)
                         for (ColumnValue V : C._Values)
                           if (V != null)
                             {
@@ -273,7 +273,7 @@ public class Generator
 
                       if (C._PrimaryKey == false) // only non pk columns can be changed.
                         {
-                          if (C._Type == ColumnType.DATETIME && C._TypeCollection == MultiType.NONE)
+                          if (C.getType() == ColumnType.DATETIME && C.getTypeCollection() == MultiType.NONE)
                             {
                               Out.println();
                               DG.docField(Out, G, C, "NOW setter");
