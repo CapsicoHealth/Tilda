@@ -146,12 +146,6 @@ public class TildaData implements CodeGenTildaData
       {
         // String Visibility = Helper.getVisibility(C, true);
 
-        if (C.getName().equals("npis") == true)
-          {
-            int xxx = 0;
-            ++xxx;
-          }
-
         if (C.getType() == ColumnType.JSON && C._JsonSchema != null)
           {
             Out.println("   String _" + C.getName() + ";");

@@ -422,12 +422,13 @@ public class Sql extends PostgreSQL implements CodeGenSql
             b.append("select *\n");
             for (Formula F : V._Formulas)
               {
+                String FormulaType = getColumnType(F.getType(), 8192, null, false);
                 b.append("     -- ").append(String.join("\n     -- ", F._Description)).append("\n");
-                b.append("     , (").append(F._Formula).append(")::int as \"").append(F._Name).append("\"\n");
+                b.append("     , (").append(genFormulaCode(V, F)).append(")::"+FormulaType+" as \"").append(F._Name).append("\"\n");
               }
             b.append("\n from (\n").append(Str).append("\n      ) as T");
             if (V._Realize != null)
-              b.append("\n-- Realized as "+genRealizedColumnList(V)+"\n");
+              b.append("\n-- Realized as " + genRealizedColumnList(V) + "\n");
             Str = b.toString();
           }
         OutFinal.println("create or replace view " + V._ParentSchema._Name + "." + V._Name + " as ");
@@ -465,7 +466,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             .append("BEGIN\n")
             .append("  DROP TABLE IF EXISTS " + V._ParentSchema._Name + "." + TName + "Realized;\n")
             .append("  CREATE TABLE " + V._ParentSchema._Name + "." + TName + "Realized "
-                        +"AS SELECT "+genRealizedColumnList(V)+" FROM " + V._ParentSchema._Name + "." + V._Name + ";\n")
+            + "AS SELECT " + genRealizedColumnList(V) + " FROM " + V._ParentSchema._Name + "." + V._Name + ";\n")
             .append("  return true;\n")
             .append("END; $$\n")
             .append("LANGUAGE PLPGSQL;\n")
@@ -485,6 +486,55 @@ public class Sql extends PostgreSQL implements CodeGenSql
         OutStr.close();
         return Str;
       }
+    
+    private String genFormulaCode(View ParentView, Formula F)
+      {
+        String FormulaStr = TextUtil.JoinTrim(F._FormulaStrs, " ");
+
+        Matcher M = F._ViewColumnsRegEx.matcher(FormulaStr);
+        StringBuffer Str = new StringBuffer();
+        while (M.find() == true)
+          {
+            String s = M.group(1);
+            if (FormulaStr.substring(M.start()).toLowerCase().matches("^\\s*is\\s+null") == true)
+              {
+                M.appendReplacement(Str, '"' + M.group(1) + '"');
+                continue;
+              }
+            for (ViewColumn VC : ParentView._ViewColumns)
+              if (s.equals(VC._Name) == true)
+                {
+                  ColumnType T = VC._SameAsObj.getType();
+                  if (T == ColumnType.INTEGER || T == ColumnType.LONG || T == ColumnType.FLOAT || T == ColumnType.DOUBLE)
+                    {
+                      M.appendReplacement(Str, "coalesce(\"" + M.group(1) + "\", 0)");
+                      break;
+                    }
+                  M.appendReplacement(Str, '"' + M.group(1) + '"');
+                  break;
+                }
+          }
+        M.appendTail(Str);
+        FormulaStr = Str.toString();
+
+        // Resolve sub-formulas
+        M = F._FormulasRegEx.matcher(FormulaStr);
+        Str.setLength(0);
+        while (M.find() == true)
+          {
+            String s = M.group(1);
+            for (Formula F2 : ParentView._Formulas)
+              if (s.equals(F2._Name) == true)
+                {
+                  String FormulaType = getColumnType(F2.getType(), F2._Size, null, false);
+                  M.appendReplacement(Str, "(" + genFormulaCode(ParentView, F2) + ")::"+FormulaType);
+                  break;
+                }
+          }
+        M.appendTail(Str);
+
+        return Str.toString();
+      }    
 
     private String genRealizedColumnList(View V)
       {
@@ -519,17 +569,24 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
     private void OutputFormulaInDBDocs(PrintWriter Out, View V)
       {
-        Out.println("DELETE FROM " + V._ParentSchema._Name + ".TildaFormulaValue where \"viewName\"=" + TextUtil.EscapeSingleQuoteForSQL(V._Name)+";");
-        Out.println("DELETE FROM " + V._ParentSchema._Name + ".TildaFormulaReference where \"viewName\"=" + TextUtil.EscapeSingleQuoteForSQL(V._Name)+";");
-        Out.println("DELETE FROM " + V._ParentSchema._Name + ".TildaFormula where \"viewName\"=" + TextUtil.EscapeSingleQuoteForSQL(V._Name)+";");
+        Out.println("DELETE FROM " + V._ParentSchema._Name + ".TildaFormulaValue where \"viewName\"=" + TextUtil.EscapeSingleQuoteForSQL(V._Name) + ";");
+        Out.println("DELETE FROM " + V._ParentSchema._Name + ".TildaFormulaReference where \"viewName\"=" + TextUtil.EscapeSingleQuoteForSQL(V._Name) + ";");
+        Out.println("DELETE FROM " + V._ParentSchema._Name + ".TildaFormula where \"viewName\"=" + TextUtil.EscapeSingleQuoteForSQL(V._Name) + ";");
 
         String RealizedTable = V._Realize == null ? null : V._Name.substring(0, V._Name.length() - (V._Pivot != null ? "PivotView" : "View").length()) + "Realized";
-        Out.println("INSERT INTO " + V._ParentSchema._Name + ".TildaFormula (\"viewName\", \"realizedTableName\", \"name\", \"title\", \"description\", \"formula\", \"html\", \"created\", \"lastUpdated\")");
-        Out.print("    VALUES ");
         int count = -1;
         for (Formula F : V._Formulas)
           {
-            Out.print(++count == 0 ? "(" : "          ,(");
+
+            if (++count == 0)
+              {
+                Out.println("INSERT INTO " + V._ParentSchema._Name + ".TildaFormula (\"viewName\", \"realizedTableName\", \"name\", \"title\", \"description\", \"formula\", \"html\", \"created\", \"lastUpdated\")");
+                Out.print("    VALUES (");
+              }
+            else
+              {
+                Out.print("          ,(");
+              }
             Out.print(TextUtil.EscapeSingleQuoteForSQL(V._Name));
             Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(RealizedTable));
             Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Name));
@@ -539,17 +596,24 @@ public class Sql extends PostgreSQL implements CodeGenSql
             Out.print(", " + TextUtil.EscapeSingleQuoteForSQL("<B>THIS <U>IS</U> ONLY A TEST <I>HTML</I> FRAGMENT!"));
             Out.println(", current_timestamp, current_timestamp)");
           }
-        Out.println("   ;");
+        if (count >= 0)
+          Out.println("   ;");
 
-        Out.println("INSERT INTO " + V._ParentSchema._Name + ".TildaFormulaValue (\"viewName\", \"formulaName\", \"value\", \"description\", \"created\", \"lastUpdated\")");
-        Out.print("    VALUES ");
         count = -1;
         for (Formula F : V._Formulas)
           {
             if (F._Values != null && F._Values.length > 0)
               for (Value Val : F._Values)
                 {
-                  Out.print(++count == 0 ? "(" : "          ,(");
+                  if (++count == 0)
+                    {
+                      Out.println("INSERT INTO " + V._ParentSchema._Name + ".TildaFormulaValue (\"viewName\", \"formulaName\", \"value\", \"description\", \"created\", \"lastUpdated\")");
+                      Out.print("    VALUES (");
+                    }
+                  else
+                    {
+                      Out.print("          ,(");
+                    }
                   Out.print(TextUtil.EscapeSingleQuoteForSQL(V._Name));
                   Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Name));
                   Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(Val._Value));
@@ -557,10 +621,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   Out.println(", current_timestamp, current_timestamp)");
                 }
           }
-        Out.println("   ;");
+        if (count >= 0)
+          Out.println("   ;");
 
-        Out.println("INSERT INTO " + V._ParentSchema._Name + ".TildaFormulaReference (\"viewName\", \"formulaName\", \"referenceName\", \"referenceType\", \"description\", \"created\", \"lastUpdated\")");
-        Out.print("    VALUES ");
         count = -1;
         for (Formula F : V._Formulas)
           {
@@ -574,7 +637,15 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 ViewColumn VC = V.getViewColumn(s);
                 if (VC != null)
                   {
-                    Out.print(++count == 0 ? "(" : "          ,(");
+                    if (++count == 0)
+                      {
+                        Out.println("INSERT INTO " + V._ParentSchema._Name + ".TildaFormulaReference (\"viewName\", \"formulaName\", \"referenceName\", \"referenceType\", \"description\", \"created\", \"lastUpdated\")");
+                        Out.print("    VALUES (");
+                      }
+                    else
+                      {
+                        Out.print("          ,(");
+                      }
                     Out.print(TextUtil.EscapeSingleQuoteForSQL(V._Name));
                     Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Name));
                     Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(VC._Name));
@@ -593,7 +664,15 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 for (Formula F2 : V._Formulas)
                   if (s.equals(F2._Name) == true)
                     {
-                      Out.print(++count == 0 ? "(" : "          ,(");
+                      if (++count == 0)
+                        {
+                          Out.println("INSERT INTO " + V._ParentSchema._Name + ".TildaFormulaReference (\"viewName\", \"formulaName\", \"referenceName\", \"referenceType\", \"description\", \"created\", \"lastUpdated\")");
+                          Out.print("    VALUES (");
+                        }
+                      else
+                        {
+                          Out.print("          ,(");
+                        }
                       Out.print(TextUtil.EscapeSingleQuoteForSQL(V._Name));
                       Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Name));
                       Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(F2._Name));
@@ -604,7 +683,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
                     }
               }
           }
-        Out.println("   ;");
+        if (count >= 0)
+          Out.println("   ;");
 
       }
 

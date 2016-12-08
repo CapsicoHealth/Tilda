@@ -16,7 +16,6 @@
 
 package tilda.parsing.parts;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
@@ -24,17 +23,17 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
-public class Formula
+public class Formula extends TypeDef
   {
     protected static final Logger LOG = LogManager.getLogger(Formula.class.getName());
 
     /*@formatter:off*/
     @SerializedName("name"       ) public String   _Name       ;
-    @SerializedName("type"       ) public String   _TypeStr    ;
     @SerializedName("formula"    ) public String[] _FormulaStrs;
     @SerializedName("title"      ) public String   _Title      ;
     @SerializedName("id"         ) public String   _Id         ;
@@ -44,8 +43,6 @@ public class Formula
 
     protected transient View      _ParentView;
 
-    public transient ColumnType   _Type;
-    public transient String       _Formula;
     public transient Pattern      _ViewColumnsRegEx;
     public transient Pattern      _FormulasRegEx;
 
@@ -69,17 +66,6 @@ public class Formula
 
         if (_FormulaStrs == null || _FormulaStrs.length == 0)
           PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' without a formula.");
-        else
-          {
-            StringBuilder Str = new StringBuilder();
-            for (int i = 0; i < _FormulaStrs.length; ++i)
-              {
-                if (i != 0)
-                  Str.append(" ");
-                Str.append(_FormulaStrs[i].trim());
-              }
-            _Formula = Str.toString();
-          }
 
         if (TextUtil.isNullOrEmpty(_Title) == true)
           PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' without a title.");
@@ -90,6 +76,8 @@ public class Formula
         if (_Values != null)
           for (Value VPV : _Values)
             VPV.Validate(PS, ParentView, "value for formula '" + _Name + "'");
+
+        super.Validate(PS, "Formula '" + _Name + "' in View "+ParentView.getShortName()+"", true, false);
 
         if (PS.getErrorCount() != Errs)
           return false;
@@ -103,33 +91,7 @@ public class Formula
             Str.append(VC._Name);
           }
         _ViewColumnsRegEx = Pattern.compile("\\b(" + Str.toString() + ")\\b");
-        Matcher M = _ViewColumnsRegEx.matcher(_Formula);
-        Str.setLength(0);
-        while (M.find() == true)
-          {
-            String s = M.group(1);
-            if (_Formula.substring(M.start()).toLowerCase().matches("^\\s*is\\s+null") == true)
-              {
-                M.appendReplacement(Str, '"' + M.group(1) + '"');
-                continue;
-              }
-            for (ViewColumn VC : ParentView._ViewColumns)
-              if (s.equals(VC._Name) == true)
-                {
-                  ColumnType T = VC._SameAsObj._Type;
-                  if (T == ColumnType.INTEGER || T == ColumnType.LONG || T == ColumnType.FLOAT || T == ColumnType.DOUBLE)
-                    {
-                      M.appendReplacement(Str, "coalesce(\"" + M.group(1) + "\", 0)");
-                      break;
-                    }
-                  M.appendReplacement(Str, '"' + M.group(1) + '"');
-                  break;
-                }
-          }
-        M.appendTail(Str);
-        _Formula = Str.toString();
-
-        // Resolve sub-formulas
+        
         Str.setLength(0);
         for (Formula F : ParentView._Formulas)
           {
@@ -138,21 +100,7 @@ public class Formula
             Str.append(F._Name);
           }
         _FormulasRegEx = Pattern.compile("\\b(" + Str.toString() + ")\\b");
-        M = _FormulasRegEx.matcher(_Formula);
-        Str.setLength(0);
-        while (M.find() == true)
-          {
-            String s = M.group(1);
-            for (Formula F : ParentView._Formulas)
-              if (s.equals(F._Name) == true)
-                {
-                  M.appendReplacement(Str, "(" + F._Formula + ")::int");
-                  break;
-                }
-          }
-        M.appendTail(Str);
-        _Formula = Str.toString();
-
+                
         return PS.getErrorCount() == Errs;
       }
 
