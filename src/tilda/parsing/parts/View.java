@@ -360,15 +360,11 @@ public class View extends Base
           for (Value VPV : _Pivot._Values)
             {
               ColumnType Type = _CountStar != null ? ColumnType.INTEGER : _Pivot._VC._SameAsObj.getType();
-              Column C = new Column(VPV._Value, Type.name(), Type == ColumnType.STRING ? _Pivot._VC._SameAsObj._Size : 0, 
-                                    true, ColumnMode.NORMAL, true, null, 
-                                    "Pivoted count from column '" + _Pivot._VC._SameAsObj.getShortName() + "'='" + VPV._Value + "', " + VPV._Description
-                                   );
+              Column C = new Column(VPV._Value, Type.name(), Type == ColumnType.STRING ? _Pivot._VC._SameAsObj._Size : 0,
+              true, ColumnMode.NORMAL, true, null,
+              "Pivoted count from column '" + _Pivot._VC._SameAsObj.getShortName() + "'='" + VPV._Value + "', " + VPV._Description);
               O._Columns.add(C);
             }
-
-        _ParentSchema._Objects.add(O);
-        O.Validate(PS, ParentSchema);
 
         if (_ImportFormulas != null)
           for (String s : _ImportFormulas)
@@ -376,12 +372,12 @@ public class View extends Base
               String[] parts = s.split("\\.");
               View V = _ParentSchema.getView(parts[0]);
               if (V == null)
-                PS.AddError("View '" + getFullName() + "' is importing formula '" + parts[1] + "' from view '"+parts[0]+"' which cannot be found in this schema.");
+                PS.AddError("View '" + getFullName() + "' is importing formula '" + parts[1] + "' from view '" + parts[0] + "' which cannot be found in this schema.");
               else
                 {
                   Formula F = V.getFormula(parts[1]);
                   if (F == null)
-                    PS.AddError("View '" + getFullName() + "' is importing formula '" + parts[1] + "' which cannot be found in view '"+parts[0]+"'.");
+                    PS.AddError("View '" + getFullName() + "' is importing formula '" + parts[1] + "' which cannot be found in view '" + parts[0] + "'.");
                   else
                     {
                       F = new Formula(F);
@@ -392,10 +388,18 @@ public class View extends Base
             }
 
         if (_Formulas != null)
-          for (
-
-          Formula F : _Formulas)
+          for (Formula F : _Formulas)
             F.Validate(PS, this);
+        
+        if (_Formulas != null)
+          for (Formula F : _Formulas)
+            {
+              Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "Formula column: "+F._Title);
+              O._Columns.add(C);
+            }
+
+        _ParentSchema._Objects.add(O);
+        O.Validate(PS, ParentSchema);
 
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
