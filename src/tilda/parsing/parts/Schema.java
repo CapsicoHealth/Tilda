@@ -168,7 +168,7 @@ public class Schema
               if (ThingNames.add(V._Name.toUpperCase()) == false)
                 PS.AddError("The View '" + V._Name + "' conflicts with another Thing already defined with the same name in Schema '" + getFullName() + "'.");
               V.Validate(PS, this);
-              if (V._Formulas != null && V._Formulas.length > 0)
+              if (V._Formulas != null && V._Formulas.isEmpty() == false)
                hasFormulas = true;
             }
         if (hasFormulas == true)

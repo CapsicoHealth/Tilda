@@ -42,7 +42,7 @@ public class View extends Base
   {
 
 
-    static final Logger          LOG          = LogManager.getLogger(View.class.getName());
+    static final Logger          LOG             = LogManager.getLogger(View.class.getName());
 
     /*@formatter:off*/
     @SerializedName("columns"       ) public List<ViewColumn>      _ViewColumns= new ArrayList<ViewColumn>();
@@ -54,10 +54,11 @@ public class View extends Base
     @SerializedName("pivot"         ) public ViewPivot             _Pivot;
     @SerializedName("pivotColumns"  ) public List<ViewPivotColumn> _PivotColumns;
     @SerializedName("realize"       ) public ViewRealize           _Realize;
-    @SerializedName("formulaColumns") public Formula[]             _Formulas = new Formula[] { };
+    @SerializedName("importFormulas") public String[]              _ImportFormulas = new String[] { };
+    @SerializedName("formulaColumns") public List<Formula>         _Formulas = new ArrayList<Formula>();
     /*@formatter:on*/
 
-    public transient boolean     _OCC         = false;
+    public transient boolean     _OCC            = false;
 
     @Override
     public Column getColumn(String name)
@@ -358,15 +359,42 @@ public class View extends Base
         if (_Pivot != null)
           for (Value VPV : _Pivot._Values)
             {
-              Column C = new Column(VPV._Value, ColumnType.INTEGER.name(), 0, true, ColumnMode.NORMAL, true, null, "Pivoted count from column '" + _Pivot._VC._SameAsObj.getShortName() + "'='" + VPV._Value + "', " + VPV._Description);
+              ColumnType Type = _CountStar != null ? ColumnType.INTEGER : _Pivot._VC._SameAsObj.getType();
+              Column C = new Column(VPV._Value, Type.name(), Type == ColumnType.STRING ? _Pivot._VC._SameAsObj._Size : 0, 
+                                    true, ColumnMode.NORMAL, true, null, 
+                                    "Pivoted count from column '" + _Pivot._VC._SameAsObj.getShortName() + "'='" + VPV._Value + "', " + VPV._Description
+                                   );
               O._Columns.add(C);
             }
 
         _ParentSchema._Objects.add(O);
         O.Validate(PS, ParentSchema);
 
+        if (_ImportFormulas != null)
+          for (String s : _ImportFormulas)
+            {
+              String[] parts = s.split("\\.");
+              View V = _ParentSchema.getView(parts[0]);
+              if (V == null)
+                PS.AddError("View '" + getFullName() + "' is importing formula '" + parts[1] + "' from view '"+parts[0]+"' which cannot be found in this schema.");
+              else
+                {
+                  Formula F = V.getFormula(parts[1]);
+                  if (F == null)
+                    PS.AddError("View '" + getFullName() + "' is importing formula '" + parts[1] + "' which cannot be found in view '"+parts[0]+"'.");
+                  else
+                    {
+                      F = new Formula(F);
+                      F.Validate(PS, this);
+                      _Formulas.add(0, F);
+                    }
+                }
+            }
+
         if (_Formulas != null)
-          for (Formula F : _Formulas)
+          for (
+
+          Formula F : _Formulas)
             F.Validate(PS, this);
 
         _Validated = Errs == PS.getErrorCount();
@@ -389,7 +417,7 @@ public class View extends Base
         if (_Formulas != null)
           for (Formula F : _Formulas)
             if (F._Name.equalsIgnoreCase(FormulaName) == true)
-             return F;
+              return F;
         return null;
       }
   }

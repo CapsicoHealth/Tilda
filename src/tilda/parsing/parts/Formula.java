@@ -23,7 +23,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
-import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
@@ -48,6 +47,22 @@ public class Formula extends TypeDef
 
     public Formula()
       {
+      }
+
+    public Formula(Formula F)
+      {
+        super(F._TypeStr, F._Size);
+        _Name = F._Name;
+        _FormulaStrs = F._FormulaStrs;
+        _Title = F._Title;
+        _Id = F._Id;
+        _Description = F._Description;
+        if (F._Values != null)
+          {
+            _Values = new Value[F._Values.length];
+            for (int i = 0; i < F._Values.length; ++i)
+              _Values[i] = new Value(F._Values[i]);
+          }
       }
 
     public boolean Validate(ParserSession PS, View ParentView)
@@ -77,7 +92,7 @@ public class Formula extends TypeDef
           for (Value VPV : _Values)
             VPV.Validate(PS, ParentView, "value for formula '" + _Name + "'");
 
-        super.Validate(PS, "Formula '" + _Name + "' in View "+ParentView.getShortName()+"", true, false);
+        super.Validate(PS, "Formula '" + _Name + "' in View " + ParentView.getShortName() + "", true, false);
 
         if (PS.getErrorCount() != Errs)
           return false;
@@ -91,7 +106,7 @@ public class Formula extends TypeDef
             Str.append(VC._Name);
           }
         _ViewColumnsRegEx = Pattern.compile("\\b(" + Str.toString() + ")\\b");
-        
+
         Str.setLength(0);
         for (Formula F : ParentView._Formulas)
           {
@@ -100,7 +115,7 @@ public class Formula extends TypeDef
             Str.append(F._Name);
           }
         _FormulasRegEx = Pattern.compile("\\b(" + Str.toString() + ")\\b");
-                
+
         return PS.getErrorCount() == Errs;
       }
 

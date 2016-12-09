@@ -23,8 +23,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import java.util.regex.Matcher;
 
 import org.apache.logging.log4j.LogManager;
@@ -354,7 +352,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
               Out.print(" where ");
             else
               Out.print("   and ");
-            Out.print(getFullColumnVar(V._Pivot._VC._SameAsObj) + " in (" + PrintValueList(V._Pivot) + ")");
+            Out.println(getFullColumnVar(V._Pivot._VC._SameAsObj) + " in (" + PrintValueList(V._Pivot) + ")");
           }
 
         if (hasAggregates == true)
@@ -415,13 +413,13 @@ public class Sql extends PostgreSQL implements CodeGenSql
               {
                 Str += ", \"" + V._Pivot._Values[i]._Value + "\" ";
                 if (V._CountStar != null)
-                 Str+="integer";
+                  Str += "integer";
                 else
-                 Str+=getColumnType(V._Pivot._VC._SameAsObj);
+                  Str += getColumnType(V._Pivot._VC._SameAsObj);
               }
             Str += ")\n";
           }
-        if (V._Formulas != null && V._Formulas.length > 0)
+        if (V._Formulas != null && V._Formulas.isEmpty() == false)
           {
             StringBuilder b = new StringBuilder();
             b.append("select *\n");
@@ -446,10 +444,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
             ViewColumn VC = V._ViewColumns.get(i);
             if (V._Pivot != null)
               {
-                if (   VC == V._Pivot._VC // This is the pivot column 
-                    || i == V._ViewColumns.size() - 1 // This is the last column (either count(*) or something else)
-//                    || VC._Aggregate == AggregateType.COUNT // This is the final count(*) column, so no comment
-                   )
+                if (VC == V._Pivot._VC // This is the pivot column
+                || i == V._ViewColumns.size() - 1 // This is the last column (either count(*) or something else)
+                // || VC._Aggregate == AggregateType.COUNT // This is the final count(*) column, so no comment
+                )
                   continue; // no comment
               }
             if (VC != null && VC._SameAsObj != null && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false)
@@ -486,7 +484,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             .append("\n")
             .append("\n");
           }
-        if (V._Formulas != null && V._Formulas.length > 0)
+        if (V._Formulas != null && V._Formulas.isEmpty() == false)
           {
             OutputFormulaInDBDocs(OutFinal, V);
           }
@@ -733,7 +731,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                       }
                     Out.println();
                     Found = true;
-                    // LOG.debug(" --> FOUND");
+                    LOG.debug(" --> FOUND");
                     break;
                   }
                 ++count;
@@ -761,7 +759,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                           }
                         Out.println();
                         Found = true;
-                        // LOG.debug(" --> FOUND");
+                        LOG.debug(" --> FOUND");
                         break;
                       }
                     ++count;

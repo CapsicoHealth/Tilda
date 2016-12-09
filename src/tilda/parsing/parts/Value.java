@@ -38,6 +38,12 @@ public class Value
       {
       }
 
+    public Value(Value V)
+      {
+        _Value = V._Value;
+        _Description = V._Description;
+      }
+    
     public transient View _ParentView;
 
     public boolean Validate(ParserSession PS, View ParentView, String What)
