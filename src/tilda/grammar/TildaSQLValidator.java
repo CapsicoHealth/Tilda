@@ -27,10 +27,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.enums.ColumnType;
-import tilda.grammar.TildaSQLParser.Arithmetic_op_addContext;
-import tilda.grammar.TildaSQLParser.Arithmetic_op_mulContext;
+import tilda.grammar.TildaSQLParser.Case_else_exprContext;
+import tilda.grammar.TildaSQLParser.Case_when_exprContext;
 import tilda.grammar.TildaSQLParser.ColumnContext;
 import tilda.grammar.TildaSQLParser.ExprContext;
+import tilda.grammar.TildaSQLParser.Expr_arithContext;
+import tilda.grammar.TildaSQLParser.Expr_caseContext;
+import tilda.grammar.TildaSQLParser.Expr_compContext;
+import tilda.grammar.TildaSQLParser.Expr_concatContext;
+import tilda.grammar.TildaSQLParser.Expr_funcContext;
 import tilda.grammar.TildaSQLParser.ValueBooleanLiteralContext;
 import tilda.grammar.TildaSQLParser.ValueNumericLiteralContext;
 import tilda.grammar.TildaSQLParser.ValueStringLiteralContext;
@@ -143,10 +148,10 @@ public class TildaSQLValidator extends TildaSQLBaseListener
       }
 
     @Override
-    public void exitArithmetic_op_add(Arithmetic_op_addContext ctx)
+    public void exitExpr_arith(Expr_arithContext ctx)
       {
-        ColumnType T2 = _TypeManager.popType();
-        ColumnType T1 = _TypeManager.popType();
+        ColumnType T2 = _TypeManager.popType("lparam: " + ctx.getText());
+        ColumnType T1 = _TypeManager.popType("rparam: " + ctx.getText());
         if (T1 == null || T2 == null)
           {
             _Errors.addError("The operator '" + ctx.getText() + "' requires 2 operands. " + (T1 == null && T2 == null ? "None were found." : "Only one was found."), ctx);
@@ -157,72 +162,23 @@ public class TildaSQLValidator extends TildaSQLBaseListener
             _Errors.addError("The operator '" + ctx.getText() + "' cannot be applied to Datetime values.", ctx);
             return;
           }
-        if (ctx.K_MINUS() != null && (T1 == ColumnType.STRING || T2 == ColumnType.STRING || T1 == ColumnType.CHAR || T2 == ColumnType.CHAR))
-          {
-            _Errors.addError("The operator '" + ctx.getText() + "' cannot be applied to String or Char values.", ctx);
-            return;
-          }
         if (T1 == ColumnType.BOOLEAN || T2 == ColumnType.BOOLEAN)
           {
             _Errors.addError("The operator '" + ctx.getText() + "' cannot be applied to boolean values.", ctx);
             return;
           }
-        if (T1 == ColumnType.CHAR && T2 != ColumnType.CHAR && T2 != ColumnType.STRING
-        || T2 == ColumnType.CHAR && T1 != ColumnType.CHAR && T1 != ColumnType.STRING)
+        if (ctx.arithmetic_op_mul() != null || ctx.arithmetic_op_add() != null && ctx.arithmetic_op_add().K_MINUS() != null)
           {
-            _Errors.addError("The operator '" + ctx.getText() + "' cannot be applied to " + T1.name() + " and " + T2.name() + ".", ctx);
-            return;
+            if (T1 == ColumnType.STRING || T2 == ColumnType.STRING || T1 == ColumnType.CHAR || T2 == ColumnType.CHAR)
+              {
+                _Errors.addError("The operator '" + ctx.getText() + "' cannot be applied to String or Char values.", ctx);
+                return;
+              }
           }
 
         ColumnType T = null;
         if (T1 == ColumnType.STRING || T2 == ColumnType.STRING)
           T = ColumnType.STRING;
-        else if (T1 == ColumnType.DOUBLE || T2 == ColumnType.DOUBLE)
-          T = ColumnType.DOUBLE;
-        else if (T1 == ColumnType.FLOAT || T2 == ColumnType.FLOAT)
-          T = ColumnType.FLOAT;
-        else if (T1 == ColumnType.LONG || T2 == ColumnType.LONG)
-          T = ColumnType.LONG;
-        else if (T1 == ColumnType.INTEGER || T2 == ColumnType.INTEGER)
-          T = ColumnType.INTEGER;
-
-        if (T == null)
-          {
-            _Errors.addError("The operator '" + ctx.getText() + "' cannot be resolved to a type from its operands " + T1.name() + " and " + T2.name() + ".", ctx);
-            return;
-          }
-
-        _TypeManager.pushType(T, ctx.getText());
-        super.exitArithmetic_op_add(ctx);
-      }
-
-    @Override
-    public void exitArithmetic_op_mul(Arithmetic_op_mulContext ctx)
-      {
-        ColumnType T2 = _TypeManager.popType();
-        ColumnType T1 = _TypeManager.popType();
-        if (T1 == null || T2 == null)
-          {
-            _Errors.addError("The operator '" + ctx.getText() + "' requires 2 operands. " + (T1 == null && T2 == null ? "None were found." : "Only one was found."), ctx);
-            return;
-          }
-        if (T1 == ColumnType.DATETIME || T2 == ColumnType.DATETIME)
-          {
-            _Errors.addError("The operator '" + ctx.getText() + "' cannot be applied to Datetime values.", ctx);
-            return;
-          }
-        if (T1 == ColumnType.STRING || T2 == ColumnType.STRING || T1 == ColumnType.CHAR || T2 == ColumnType.CHAR)
-          {
-            _Errors.addError("The operator '" + ctx.getText() + "' cannot be applied to String or Char values.", ctx);
-            return;
-          }
-        if (T1 == ColumnType.BOOLEAN || T2 == ColumnType.BOOLEAN)
-          {
-            _Errors.addError("The operator '" + ctx.getText() + "' cannot be applied to boolean values.", ctx);
-            return;
-          }
-
-        ColumnType T = null;
         if (T1 == ColumnType.DOUBLE || T2 == ColumnType.DOUBLE)
           T = ColumnType.DOUBLE;
         else if (T1 == ColumnType.FLOAT || T2 == ColumnType.FLOAT)
@@ -239,82 +195,81 @@ public class TildaSQLValidator extends TildaSQLBaseListener
           }
 
         _TypeManager.pushType(T, ctx.getText());
-        super.exitArithmetic_op_mul(ctx);
+        super.exitExpr_arith(ctx);
       }
 
 
     @Override
-    public void exitExpr(ExprContext ctx)
+    public void exitExpr_concat(Expr_concatContext ctx)
       {
-        if (ctx.concat != null)
+        ColumnType T2 = _TypeManager.popType("lparam: " + ctx.getText());
+        ColumnType T1 = _TypeManager.popType("rparam: " + ctx.getText());
+        if (T1 == null || T2 == null)
           {
-            ColumnType T2 = _TypeManager.popType();
-            ColumnType T1 = _TypeManager.popType();
-            if (T1 == null || T2 == null)
-              {
-                _Errors.addError("The operator '" + ctx.concat.getText() + "' requires 2 operands. " + (T1 == null && T2 == null ? "None were found." : "Only one was found."), ctx);
-                return;
-              }
-            if (T1 == ColumnType.STRING || T1 == ColumnType.CHAR && T2 == ColumnType.STRING || T2 != ColumnType.CHAR)
-              {
-                _TypeManager.pushType(ColumnType.STRING, ctx.getText());
-              }
-            else
-              {
-                _Errors.addError("The operator '" + ctx.concat.getText() + "' requires 2 operands that must be a String or a Char: they are " + T1.name() + " and " + T2.name() + ".", ctx);
-                return;
-              }
+            _Errors.addError("The operator '" + ctx.concat.getText() + "' requires 2 operands. " + (T1 == null && T2 == null ? "None were found." : "Only one was found."), ctx);
+            return;
           }
-        else if (ctx.comparators1 != null || ctx.comparators2 != null || ctx.like != null)
+        if ((T1 == ColumnType.STRING || T1 == ColumnType.CHAR) && (T2 == ColumnType.STRING || T2 == ColumnType.CHAR))
           {
-            Token Tok = ctx.comparators1 != null ? ctx.comparators1 : ctx.comparators2 != null ? ctx.comparators2 : ctx.like;
-            ColumnType T2 = _TypeManager.popType();
-            ColumnType T1 = _TypeManager.popType();
-            if (T1 == null || T2 == null)
-              {
-                _Errors.addError("The operator '" + Tok.getText() + "' requires 2 operands. " + (T1 == null && T2 == null ? "None were found." : "Only one was found."), ctx);
-                return;
-              }
-            if (   T1 == ColumnType.BOOLEAN && T2 == ColumnType.BOOLEAN
-                || (   (T1 == ColumnType.INTEGER || T1 == ColumnType.LONG || T1 == ColumnType.FLOAT || T1 == ColumnType.DOUBLE)
-                    && (T2 == ColumnType.INTEGER || T2 == ColumnType.LONG || T2 == ColumnType.FLOAT || T2 == ColumnType.DOUBLE)
-                   )
-                || (   (T1 == ColumnType.STRING || T1 == ColumnType.CHAR)
-                    && (T2 == ColumnType.STRING || T2 == ColumnType.CHAR)
-                   )
-               )
-              {
-                _TypeManager.pushType(ColumnType.BOOLEAN, ctx.getText());
-              }
-            else
-              {
-                _Errors.addError("The operator '" + Tok.getText() + "' is comparing operands of incompatible types " + T1.name() + " and " + T2.name() + ".", ctx);
-                return;
-              }
+            _TypeManager.pushType(ColumnType.STRING, ctx.getText());
           }
-        else if (ctx.func != null)
+        else
           {
-            if (ctx.func_name().K_LEN() != null)
-              doFuncLen(ctx, ctx.expr());
-            else if (ctx.func_name().K_DAYS_BETWEEN() != null)
-              doFuncDaysBetween(ctx, ctx.expr());
-            else
-              {
-                _Errors.addError("Unknown function name " + ctx.getText() + ".", ctx);
-                return;
-              }
+            _Errors.addError("The operator '" + ctx.concat.getText() + "' requires 2 operands that must be a String or a Char: they are " + T1.name() + " and " + T2.name() + ".", ctx);
+            return;
           }
-        super.exitExpr(ctx);
+      }
+
+    @Override
+    public void exitExpr_comp(Expr_compContext ctx)
+      {
+        Token Tok = ctx.comparators1 != null ? ctx.comparators1 : ctx.comparators2 != null ? ctx.comparators2 : ctx.like;
+        ColumnType T2 = _TypeManager.popType("lparam: " + ctx.getText());
+        ColumnType T1 = _TypeManager.popType("rparam: " + ctx.getText());
+        if (T1 == null || T2 == null)
+          {
+            _Errors.addError("The operator '" + Tok.getText() + "' requires 2 operands. " + (T1 == null && T2 == null ? "None were found." : "Only one was found."), ctx);
+            return;
+          }
+        if (T1 == ColumnType.BOOLEAN && T2 == ColumnType.BOOLEAN
+        || ((T1 == ColumnType.INTEGER || T1 == ColumnType.LONG || T1 == ColumnType.FLOAT || T1 == ColumnType.DOUBLE)
+        && (T2 == ColumnType.INTEGER || T2 == ColumnType.LONG || T2 == ColumnType.FLOAT || T2 == ColumnType.DOUBLE))
+        || ((T1 == ColumnType.STRING || T1 == ColumnType.CHAR)
+        && (T2 == ColumnType.STRING || T2 == ColumnType.CHAR)))
+          {
+            _TypeManager.pushType(ColumnType.BOOLEAN, ctx.getText());
+          }
+        else
+          {
+            _Errors.addError("The operator '" + Tok.getText() + "' is comparing operands of incompatible types " + T1.name() + " and " + T2.name() + ".", ctx);
+            return;
+          }
+        super.exitExpr_comp(ctx);
+      }
+
+    @Override
+    public void exitExpr_func(Expr_funcContext ctx)
+      {
+        if (ctx.func_name().K_LEN() != null)
+          doFuncLen(ctx, ctx.expr());
+        else if (ctx.func_name().K_DAYS_BETWEEN() != null)
+          doFuncDaysBetween(ctx, ctx.expr());
+        else
+          {
+            _Errors.addError("Unknown function name " + ctx.getText() + ".", ctx);
+            return;
+          }
+        super.exitExpr_func(ctx);
       }
 
     private void doFuncLen(ExprContext ctx, List<ExprContext> Params)
       {
         if (Params.size() != 1)
           {
-            _Errors.addError("Function 'Len' must take a single String parameter: "+Params.size()+" were found.", ctx);
+            _Errors.addError("Function 'Len' must take a single String parameter: " + Params.size() + " were found.", ctx);
             return;
           }
-        ColumnType T = _TypeManager.popType();
+        ColumnType T = _TypeManager.popType("Len()");
         if (T == null)
           {
             _Errors.addError("Function 'Len' must take a single String parameter, but no type could be derived from the parameter.", ctx);
@@ -322,58 +277,58 @@ public class TildaSQLValidator extends TildaSQLBaseListener
           }
         if (T != ColumnType.STRING)
           {
-            _Errors.addError("Function 'Len' must take a single String parameter: the type '"+T.name()+"' was derived instead.", ctx);
+            _Errors.addError("Function 'Len' must take a single String parameter: the type '" + T.name() + "' was derived instead.", ctx);
             return;
           }
-        _TypeManager.pushType(ColumnType.INTEGER, ctx.getText());          
-        
-/*
-        boolean err = false;
+        _TypeManager.pushType(ColumnType.INTEGER, ctx.getText());
 
-        if (Columns.size() == 1)
-          {
-            ColumnDefinition Col = Columns.get(0);
-            if (Col._Type != ColumnType.STRING && Col._Collection != true)
-              {
-                err = true;
-                _Errors.addError("Function 'Len' must take a single Collection column or a list of Strings: parameter '" + Col.getName() + "' is a " + Col._Type.toString() + ".", ctx);
-              }
-          }
-        else
-          for (ColumnDefinition Col : Columns)
-            {
-              if (Col._Type != ColumnType.STRING)
-                {
-                  err = true;
-                  _Errors.addError("Function 'Len' must take a single Collection column or a list of Strings: parameter '" + Col.getName() + "' is a " + Col._Type.name() + ".", ctx);
-                  break;
-                }
-              else if (Col._Collection == true)
-                {
-                  err = true;
-                  _Errors.addError("Function 'Len' must take a single Collection column or a list of Strings: parameter '" + Col.getName() + "' is a Collection.", ctx);
-                  break;
-                }
-            }
-
-        if (err == false)
-          {
-            if (_TypeManager.replaceType(ColumnType.INTEGER, ctx.getText()) == true)
-              if (_CG != null)
-                _CG.funcLen(Columns);
-          }
-*/
+        /*
+         * boolean err = false;
+         * 
+         * if (Columns.size() == 1)
+         * {
+         * ColumnDefinition Col = Columns.get(0);
+         * if (Col._Type != ColumnType.STRING && Col._Collection != true)
+         * {
+         * err = true;
+         * _Errors.addError("Function 'Len' must take a single Collection column or a list of Strings: parameter '" + Col.getName() + "' is a " + Col._Type.toString() + ".", ctx);
+         * }
+         * }
+         * else
+         * for (ColumnDefinition Col : Columns)
+         * {
+         * if (Col._Type != ColumnType.STRING)
+         * {
+         * err = true;
+         * _Errors.addError("Function 'Len' must take a single Collection column or a list of Strings: parameter '" + Col.getName() + "' is a " + Col._Type.name() + ".", ctx);
+         * break;
+         * }
+         * else if (Col._Collection == true)
+         * {
+         * err = true;
+         * _Errors.addError("Function 'Len' must take a single Collection column or a list of Strings: parameter '" + Col.getName() + "' is a Collection.", ctx);
+         * break;
+         * }
+         * }
+         * 
+         * if (err == false)
+         * {
+         * if (_TypeManager.replaceType(ColumnType.INTEGER, ctx.getText()) == true)
+         * if (_CG != null)
+         * _CG.funcLen(Columns);
+         * }
+         */
       }
 
     private void doFuncDaysBetween(ExprContext ctx, List<ExprContext> Params)
       {
         if (Params.size() != 2)
           {
-            _Errors.addError("Function 'DaysBetween' must take two DateTime parameters: "+Params.size()+" were found.", ctx);
+            _Errors.addError("Function 'DaysBetween' must take two DateTime parameters: " + Params.size() + " were found.", ctx);
             return;
           }
-        ColumnType T2 = _TypeManager.popType();
-        ColumnType T1 = _TypeManager.popType();
+        ColumnType T2 = _TypeManager.popType("lparam: " + ctx.getText());
+        ColumnType T1 = _TypeManager.popType("rparam: " + ctx.getText());
         if (T1 == null || T2 == null)
           {
             _Errors.addError("Function 'DaysBetween' must take two DateTime parameters, but only one parameter was found.", ctx);
@@ -381,43 +336,106 @@ public class TildaSQLValidator extends TildaSQLBaseListener
           }
         if (T1 != ColumnType.DATETIME && T2 != ColumnType.DATETIME)
           {
-            _Errors.addError("Function 'DaysBetween' must take two DateTime parameters: the types '"+T1.name()+"' and '"+T2.name()+"' were derived instead.", ctx);
+            _Errors.addError("Function 'DaysBetween' must take two DateTime parameters: the types '" + T1.name() + "' and '" + T2.name() + "' were derived instead.", ctx);
             return;
           }
-        _TypeManager.pushType(ColumnType.INTEGER, ctx.getText());          
+        _TypeManager.pushType(ColumnType.INTEGER, ctx.getText());
 
-/*
-        boolean err = false;
-
-        if (Columns.size() == 2)
-          {
-            for (ColumnDefinition Col : Columns)
-              {
-                if (Col._Type != ColumnType.DATETIME && Col._Collection != true)
-                  {
-                    err = true;
-                    _Errors.addError("Function 'DaysBetween' must take 2 DateTime columns: parameter '" + Col.getName() + "' is a " + Col._Type.toString() + ".", ctx);
-                  }
-              }
-          }
-        else
-          {
-            err = true;
-            _Errors.addError("Function 'DaysBetween' must take 2 DateTime columns: " + Columns.size() + " parameters were found.", ctx);
-          }
-
-        if (err == false)
-          {
-            if (_TypeManager.replaceType(ColumnType.INTEGER, ctx.getText()) == true)
-              if (_CG != null)
-                _CG.funcDaysBetween(Columns.get(0), Columns.get(1));
-          }
-*/
+        /*
+         * boolean err = false;
+         * 
+         * if (Columns.size() == 2)
+         * {
+         * for (ColumnDefinition Col : Columns)
+         * {
+         * if (Col._Type != ColumnType.DATETIME && Col._Collection != true)
+         * {
+         * err = true;
+         * _Errors.addError("Function 'DaysBetween' must take 2 DateTime columns: parameter '" + Col.getName() + "' is a " + Col._Type.toString() + ".", ctx);
+         * }
+         * }
+         * }
+         * else
+         * {
+         * err = true;
+         * _Errors.addError("Function 'DaysBetween' must take 2 DateTime columns: " + Columns.size() + " parameters were found.", ctx);
+         * }
+         * 
+         * if (err == false)
+         * {
+         * if (_TypeManager.replaceType(ColumnType.INTEGER, ctx.getText()) == true)
+         * if (_CG != null)
+         * _CG.funcDaysBetween(Columns.get(0), Columns.get(1));
+         * }
+         */
       }
 
+    @Override
+    public void exitCase_when_expr(Case_when_exprContext ctx)
+      {
+        ColumnType T2 = _TypeManager.popType("then: " + ctx.getText());
+        ColumnType T1 = _TypeManager.popType("when: " + ctx.getText());
+        if (T1 == null || T2 == null)
+          {
+            _Errors.addError("The case/when/then expression cannot derive any type.", ctx);
+            return;
+          }
+        if (T1 != ColumnType.BOOLEAN)
+          {
+            _Errors.addError("The case/when expression is not a boolean: it's a " + T1.name() + ".", ctx);
+            return;
+          }
+        _TypeManager.pushType(T2, "Then");
 
+        super.exitCase_when_expr(ctx);
+      }
 
+    @Override
+    public void exitCase_else_expr(Case_else_exprContext ctx)
+      {
+        super.exitCase_else_expr(ctx);
+      }
 
+    @Override
+    public void exitExpr_case(Expr_caseContext ctx)
+      {
+        ColumnType T = null;
+        List<Case_when_exprContext> L = ctx.case_when_expr();
+        for (Case_when_exprContext c : L)
+          {
+            ColumnType T0 = _TypeManager.popType("Case");
+            if (T == null)
+              {
+                T = T0;
+              }
+            else if (T0 == null)
+              {
+                _Errors.addError("The case/when expression rollup of " + c.getText() + " is failing with no type found.", ctx);
+                return;
+              }
+            else if (T != T0)
+              {
+                _Errors.addError("The case/when expression rollup is failing with type " + T0.name() + " from " + c.getText() + " compared to previous type " + T.name() + ".", ctx);
+                return;
+              }
+          }
+        if (ctx.case_else_expr() != null)
+          {
+            ColumnType T0 = _TypeManager.popType("Case");
+            if (T0 == null)
+              {
+                _Errors.addError("The case/else expression rollup of " + ctx.case_else_expr().getText() + " is failing with no type found.", ctx);
+                return;
+              }
+            if (T != T0)
+              {
+                _Errors.addError("The case/else expression is failing with type " + T0.name() + " from " + ctx.case_else_expr().getText() + " compared to previous type " + T.name() + ".", ctx);
+                return;
+              }
+          }
+        _TypeManager.pushType(T, "CaseWhen");
+        super.exitExpr_case(ctx);
+      }
 
     /*
      * @Override

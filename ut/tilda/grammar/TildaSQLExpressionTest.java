@@ -72,7 +72,7 @@ public class TildaSQLExpressionTest
                      +"          then 5 + DaysBetween(BENE_BIRTH_DT, BENE_DEATH_DT)\n"
                      +"     when Len(DESYNPUF_ID) < 10\n"
                      +"          then Len(DESYNPUF_ID||DESYNPUF_ID||DESYNPUF_ID) \n"
-                     +"     else '12345'||true\n"
+                     +"     else -1\n"
                      +"end"
                     ;
 

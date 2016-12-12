@@ -28,15 +28,16 @@ public class TildaSQLParser extends Parser {
 		PLUS_MINUS=50, YEAR_LITERAL=51, MONTH_LITERAL=52, DAY_LITERAL=53, HOUR_LITERAL_24=54, 
 		MINUTE_LITERAL=55, SECOND_LITERAL=56, HOUR_LITERAL_12=57, SPACES=58, UNEXPECTED_CHAR=59;
 	public static final int
-		RULE_main = 0, RULE_expr = 1, RULE_unary_operator = 2, RULE_func_name = 3, 
-		RULE_arithmetic_op_add = 4, RULE_arithmetic_op_mul = 5, RULE_isnull_op = 6, 
-		RULE_between_op = 7, RULE_literal = 8, RULE_boolean_literal = 9, RULE_numeric_literal = 10, 
-		RULE_timestamp_literal = 11, RULE_string_literal = 12, RULE_bind_parameter = 13, 
-		RULE_column = 14;
+		RULE_main = 0, RULE_expr = 1, RULE_case_when_expr = 2, RULE_case_else_expr = 3, 
+		RULE_unary_operator = 4, RULE_func_name = 5, RULE_arithmetic_op_add = 6, 
+		RULE_arithmetic_op_mul = 7, RULE_isnull_op = 8, RULE_between_op = 9, RULE_literal = 10, 
+		RULE_boolean_literal = 11, RULE_numeric_literal = 12, RULE_timestamp_literal = 13, 
+		RULE_string_literal = 14, RULE_bind_parameter = 15, RULE_column = 16;
 	public static final String[] ruleNames = {
-		"main", "expr", "unary_operator", "func_name", "arithmetic_op_add", "arithmetic_op_mul", 
-		"isnull_op", "between_op", "literal", "boolean_literal", "numeric_literal", 
-		"timestamp_literal", "string_literal", "bind_parameter", "column"
+		"main", "expr", "case_when_expr", "case_else_expr", "unary_operator", 
+		"func_name", "arithmetic_op_add", "arithmetic_op_mul", "isnull_op", "between_op", 
+		"literal", "boolean_literal", "numeric_literal", "timestamp_literal", 
+		"string_literal", "bind_parameter", "column"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
@@ -130,9 +131,9 @@ public class TildaSQLParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(30);
+			setState(34);
 			expr(0);
-			setState(31);
+			setState(35);
 			match(EOF);
 			}
 		}
@@ -148,24 +149,147 @@ public class TildaSQLParser extends Parser {
 	}
 
 	public static class ExprContext extends ParserRuleContext {
-		public Func_nameContext func;
-		public ExprContext case_when;
-		public ExprContext case_then;
-		public ExprContext case_else;
-		public Token concat;
+		public ExprContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_expr; }
+	 
+		public ExprContext() { }
+		public void copyFrom(ExprContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class Expr_compContext extends ExprContext {
 		public Token comparators1;
 		public Token comparators2;
 		public Token like;
-		public Between_opContext between;
-		public Isnull_opContext isnull;
-		public LiteralContext literal() {
-			return getRuleContext(LiteralContext.class,0);
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
 		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public TerminalNode K_NOT_LIKE() { return getToken(TildaSQLParser.K_NOT_LIKE, 0); }
+		public TerminalNode K_LIKE() { return getToken(TildaSQLParser.K_LIKE, 0); }
+		public Expr_compContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).enterExpr_comp(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).exitExpr_comp(this);
+		}
+	}
+	public static class Expr_subContext extends ExprContext {
+		public ExprContext expr() {
+			return getRuleContext(ExprContext.class,0);
+		}
+		public Expr_subContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).enterExpr_sub(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).exitExpr_sub(this);
+		}
+	}
+	public static class Expr_caseContext extends ExprContext {
+		public TerminalNode K_CASE() { return getToken(TildaSQLParser.K_CASE, 0); }
+		public TerminalNode K_END() { return getToken(TildaSQLParser.K_END, 0); }
+		public List<Case_when_exprContext> case_when_expr() {
+			return getRuleContexts(Case_when_exprContext.class);
+		}
+		public Case_when_exprContext case_when_expr(int i) {
+			return getRuleContext(Case_when_exprContext.class,i);
+		}
+		public Case_else_exprContext case_else_expr() {
+			return getRuleContext(Case_else_exprContext.class,0);
+		}
+		public Expr_caseContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).enterExpr_case(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).exitExpr_case(this);
+		}
+	}
+	public static class Expr_arithContext extends ExprContext {
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public Arithmetic_op_mulContext arithmetic_op_mul() {
+			return getRuleContext(Arithmetic_op_mulContext.class,0);
+		}
+		public Arithmetic_op_addContext arithmetic_op_add() {
+			return getRuleContext(Arithmetic_op_addContext.class,0);
+		}
+		public Expr_arithContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).enterExpr_arith(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).exitExpr_arith(this);
+		}
+	}
+	public static class Expr_columnContext extends ExprContext {
 		public ColumnContext column() {
 			return getRuleContext(ColumnContext.class,0);
 		}
-		public Unary_operatorContext unary_operator() {
-			return getRuleContext(Unary_operatorContext.class,0);
+		public Expr_columnContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).enterExpr_column(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).exitExpr_column(this);
+		}
+	}
+	public static class Expr_literalContext extends ExprContext {
+		public LiteralContext literal() {
+			return getRuleContext(LiteralContext.class,0);
+		}
+		public Expr_literalContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).enterExpr_literal(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).exitExpr_literal(this);
+		}
+	}
+	public static class Expr_concatContext extends ExprContext {
+		public Token concat;
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public Expr_concatContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).enterExpr_concat(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).exitExpr_concat(this);
+		}
+	}
+	public static class Expr_funcContext extends ExprContext {
+		public Func_nameContext func;
+		public Func_nameContext func_name() {
+			return getRuleContext(Func_nameContext.class,0);
 		}
 		public List<ExprContext> expr() {
 			return getRuleContexts(ExprContext.class);
@@ -173,49 +297,126 @@ public class TildaSQLParser extends Parser {
 		public ExprContext expr(int i) {
 			return getRuleContext(ExprContext.class,i);
 		}
-		public Func_nameContext func_name() {
-			return getRuleContext(Func_nameContext.class,0);
+		public Expr_funcContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).enterExpr_func(this);
 		}
-		public TerminalNode K_CASE() { return getToken(TildaSQLParser.K_CASE, 0); }
-		public TerminalNode K_END() { return getToken(TildaSQLParser.K_END, 0); }
-		public List<TerminalNode> K_WHEN() { return getTokens(TildaSQLParser.K_WHEN); }
-		public TerminalNode K_WHEN(int i) {
-			return getToken(TildaSQLParser.K_WHEN, i);
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).exitExpr_func(this);
 		}
-		public List<TerminalNode> K_THEN() { return getTokens(TildaSQLParser.K_THEN); }
-		public TerminalNode K_THEN(int i) {
-			return getToken(TildaSQLParser.K_THEN, i);
+	}
+	public static class Expr_betweenContext extends ExprContext {
+		public Between_opContext between;
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
 		}
-		public TerminalNode K_ELSE() { return getToken(TildaSQLParser.K_ELSE, 0); }
-		public Arithmetic_op_mulContext arithmetic_op_mul() {
-			return getRuleContext(Arithmetic_op_mulContext.class,0);
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
 		}
-		public Arithmetic_op_addContext arithmetic_op_add() {
-			return getRuleContext(Arithmetic_op_addContext.class,0);
-		}
-		public TerminalNode K_NOT_LIKE() { return getToken(TildaSQLParser.K_NOT_LIKE, 0); }
-		public TerminalNode K_LIKE() { return getToken(TildaSQLParser.K_LIKE, 0); }
 		public TerminalNode K_AND() { return getToken(TildaSQLParser.K_AND, 0); }
-		public TerminalNode K_OR() { return getToken(TildaSQLParser.K_OR, 0); }
 		public Between_opContext between_op() {
 			return getRuleContext(Between_opContext.class,0);
+		}
+		public Expr_betweenContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).enterExpr_between(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).exitExpr_between(this);
+		}
+	}
+	public static class Expr_inContext extends ExprContext {
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public TerminalNode K_IN() { return getToken(TildaSQLParser.K_IN, 0); }
+		public TerminalNode K_NOT() { return getToken(TildaSQLParser.K_NOT, 0); }
+		public Expr_inContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).enterExpr_in(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).exitExpr_in(this);
+		}
+	}
+	public static class Expr_orContext extends ExprContext {
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public TerminalNode K_OR() { return getToken(TildaSQLParser.K_OR, 0); }
+		public Expr_orContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).enterExpr_or(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).exitExpr_or(this);
+		}
+	}
+	public static class Expr_isnullContext extends ExprContext {
+		public Isnull_opContext isnull;
+		public ExprContext expr() {
+			return getRuleContext(ExprContext.class,0);
 		}
 		public Isnull_opContext isnull_op() {
 			return getRuleContext(Isnull_opContext.class,0);
 		}
-		public TerminalNode K_IN() { return getToken(TildaSQLParser.K_IN, 0); }
-		public TerminalNode K_NOT() { return getToken(TildaSQLParser.K_NOT, 0); }
-		public ExprContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_expr; }
+		public Expr_isnullContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).enterExpr(this);
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).enterExpr_isnull(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).exitExpr(this);
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).exitExpr_isnull(this);
+		}
+	}
+	public static class Expr_andContext extends ExprContext {
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public TerminalNode K_AND() { return getToken(TildaSQLParser.K_AND, 0); }
+		public Expr_andContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).enterExpr_and(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).exitExpr_and(this);
+		}
+	}
+	public static class Expr_unaryContext extends ExprContext {
+		public Unary_operatorContext unary_operator() {
+			return getRuleContext(Unary_operatorContext.class,0);
+		}
+		public ExprContext expr() {
+			return getRuleContext(ExprContext.class,0);
+		}
+		public Expr_unaryContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).enterExpr_unary(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).exitExpr_unary(this);
 		}
 	}
 
@@ -235,7 +436,7 @@ public class TildaSQLParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(73);
+			setState(72);
 			switch (_input.LA(1)) {
 			case NUMERIC_LITERAL:
 			case TIMESTAMP_LITERAL:
@@ -248,13 +449,20 @@ public class TildaSQLParser extends Parser {
 			case K_TRUE:
 			case K_FALSE:
 				{
-				setState(34);
+				_localctx = new Expr_literalContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+
+				setState(38);
 				literal();
 				}
 				break;
 			case IDENTIFIER:
 				{
-				setState(35);
+				_localctx = new Expr_columnContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(39);
 				column();
 				}
 				break;
@@ -262,61 +470,73 @@ public class TildaSQLParser extends Parser {
 			case K_NOT:
 			case K_MINUS:
 				{
-				setState(36);
+				_localctx = new Expr_unaryContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(40);
 				unary_operator();
-				setState(37);
+				setState(41);
 				expr(15);
 				}
 				break;
 			case K_LEN:
 			case K_DAYS_BETWEEN:
 				{
-				setState(39);
-				((ExprContext)_localctx).func = func_name();
-				setState(40);
+				_localctx = new Expr_funcContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(43);
+				((Expr_funcContext)_localctx).func = func_name();
+				setState(44);
 				match(T__5);
-				setState(49);
+				setState(53);
 				_la = _input.LA(1);
 				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__5) | (1L << T__8) | (1L << NUMERIC_LITERAL) | (1L << TIMESTAMP_LITERAL) | (1L << CURRENT_TIMESTAMP) | (1L << TIMESTAMP_YESTERDAY) | (1L << TIMESTAMP_TODAY) | (1L << TIMESTAMP_TOMORROW) | (1L << STRING_LITERAL) | (1L << BIND_PARAMETER) | (1L << K_NOT) | (1L << K_MINUS) | (1L << K_LEN) | (1L << K_DAYS_BETWEEN) | (1L << K_CASE) | (1L << K_TRUE) | (1L << K_FALSE) | (1L << IDENTIFIER))) != 0)) {
 					{
-					setState(41);
+					setState(45);
 					expr(0);
-					setState(46);
+					setState(50);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 					while (_la==T__6) {
 						{
 						{
-						setState(42);
+						setState(46);
 						match(T__6);
-						setState(43);
+						setState(47);
 						expr(0);
 						}
 						}
-						setState(48);
+						setState(52);
 						_errHandler.sync(this);
 						_la = _input.LA(1);
 					}
 					}
 				}
 
-				setState(51);
+				setState(55);
 				match(T__7);
 				}
 				break;
 			case T__5:
 				{
-				setState(53);
+				_localctx = new Expr_subContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(57);
 				match(T__5);
-				setState(54);
+				setState(58);
 				expr(0);
-				setState(55);
+				setState(59);
 				match(T__7);
 				}
 				break;
 			case K_CASE:
 				{
-				setState(57);
+				_localctx = new Expr_caseContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(61);
 				match(K_CASE);
 				setState(63); 
 				_errHandler.sync(this);
@@ -324,32 +544,24 @@ public class TildaSQLParser extends Parser {
 				do {
 					{
 					{
-					setState(58);
-					match(K_WHEN);
-					setState(59);
-					((ExprContext)_localctx).case_when = expr(0);
-					setState(60);
-					match(K_THEN);
-					setState(61);
-					((ExprContext)_localctx).case_then = expr(0);
+					setState(62);
+					case_when_expr();
 					}
 					}
 					setState(65); 
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				} while ( _la==K_WHEN );
-				setState(69);
+				setState(68);
 				_la = _input.LA(1);
 				if (_la==K_ELSE) {
 					{
 					setState(67);
-					match(K_ELSE);
-					setState(68);
-					((ExprContext)_localctx).case_else = expr(0);
+					case_else_expr();
 					}
 				}
 
-				setState(71);
+				setState(70);
 				match(K_END);
 				}
 				break;
@@ -357,7 +569,7 @@ public class TildaSQLParser extends Parser {
 				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(127);
+			setState(126);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,8,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -365,194 +577,194 @@ public class TildaSQLParser extends Parser {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(125);
+					setState(124);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
 					case 1:
 						{
-						_localctx = new ExprContext(_parentctx, _parentState);
+						_localctx = new Expr_concatContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(75);
+						setState(74);
 						if (!(precpred(_ctx, 14))) throw new FailedPredicateException(this, "precpred(_ctx, 14)");
+						setState(75);
+						((Expr_concatContext)_localctx).concat = match(T__0);
 						setState(76);
-						((ExprContext)_localctx).concat = match(T__0);
-						setState(77);
 						expr(15);
 						}
 						break;
 					case 2:
 						{
-						_localctx = new ExprContext(_parentctx, _parentState);
+						_localctx = new Expr_arithContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(78);
+						setState(77);
 						if (!(precpred(_ctx, 13))) throw new FailedPredicateException(this, "precpred(_ctx, 13)");
-						setState(79);
+						setState(78);
 						arithmetic_op_mul();
-						setState(80);
+						setState(79);
 						expr(14);
 						}
 						break;
 					case 3:
 						{
-						_localctx = new ExprContext(_parentctx, _parentState);
+						_localctx = new Expr_arithContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(82);
+						setState(81);
 						if (!(precpred(_ctx, 12))) throw new FailedPredicateException(this, "precpred(_ctx, 12)");
-						setState(83);
+						setState(82);
 						arithmetic_op_add();
-						setState(84);
+						setState(83);
 						expr(13);
 						}
 						break;
 					case 4:
 						{
-						_localctx = new ExprContext(_parentctx, _parentState);
+						_localctx = new Expr_compContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(86);
+						setState(85);
 						if (!(precpred(_ctx, 11))) throw new FailedPredicateException(this, "precpred(_ctx, 11)");
-						setState(87);
-						((ExprContext)_localctx).comparators1 = _input.LT(1);
+						setState(86);
+						((Expr_compContext)_localctx).comparators1 = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << K_LT) | (1L << K_LTE) | (1L << K_GT) | (1L << K_GTE))) != 0)) ) {
-							((ExprContext)_localctx).comparators1 = (Token)_errHandler.recoverInline(this);
+							((Expr_compContext)_localctx).comparators1 = (Token)_errHandler.recoverInline(this);
 						} else {
 							consume();
 						}
-						setState(88);
+						setState(87);
 						expr(12);
 						}
 						break;
 					case 5:
 						{
-						_localctx = new ExprContext(_parentctx, _parentState);
+						_localctx = new Expr_compContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(89);
+						setState(88);
 						if (!(precpred(_ctx, 10))) throw new FailedPredicateException(this, "precpred(_ctx, 10)");
-						setState(90);
-						((ExprContext)_localctx).comparators2 = _input.LT(1);
+						setState(89);
+						((Expr_compContext)_localctx).comparators2 = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__2) | (1L << T__3) | (1L << T__4))) != 0)) ) {
-							((ExprContext)_localctx).comparators2 = (Token)_errHandler.recoverInline(this);
+							((Expr_compContext)_localctx).comparators2 = (Token)_errHandler.recoverInline(this);
 						} else {
 							consume();
 						}
-						setState(91);
+						setState(90);
 						expr(11);
 						}
 						break;
 					case 6:
 						{
-						_localctx = new ExprContext(_parentctx, _parentState);
+						_localctx = new Expr_compContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(92);
+						setState(91);
 						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
-						setState(93);
-						((ExprContext)_localctx).like = _input.LT(1);
+						setState(92);
+						((Expr_compContext)_localctx).like = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==K_LIKE || _la==K_NOT_LIKE) ) {
-							((ExprContext)_localctx).like = (Token)_errHandler.recoverInline(this);
+							((Expr_compContext)_localctx).like = (Token)_errHandler.recoverInline(this);
 						} else {
 							consume();
 						}
-						setState(94);
+						setState(93);
 						expr(10);
 						}
 						break;
 					case 7:
 						{
-						_localctx = new ExprContext(_parentctx, _parentState);
+						_localctx = new Expr_andContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(95);
+						setState(94);
 						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
-						setState(96);
+						setState(95);
 						match(K_AND);
-						setState(97);
+						setState(96);
 						expr(9);
 						}
 						break;
 					case 8:
 						{
-						_localctx = new ExprContext(_parentctx, _parentState);
+						_localctx = new Expr_orContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(98);
+						setState(97);
 						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
-						setState(99);
+						setState(98);
 						match(K_OR);
-						setState(100);
+						setState(99);
 						expr(8);
 						}
 						break;
 					case 9:
 						{
-						_localctx = new ExprContext(_parentctx, _parentState);
+						_localctx = new Expr_betweenContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(101);
+						setState(100);
 						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
+						setState(101);
+						((Expr_betweenContext)_localctx).between = between_op();
 						setState(102);
-						((ExprContext)_localctx).between = between_op();
-						setState(103);
 						expr(0);
-						setState(104);
+						setState(103);
 						match(K_AND);
-						setState(105);
+						setState(104);
 						expr(4);
 						}
 						break;
 					case 10:
 						{
-						_localctx = new ExprContext(_parentctx, _parentState);
+						_localctx = new Expr_isnullContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(107);
+						setState(106);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
-						setState(108);
-						((ExprContext)_localctx).isnull = isnull_op();
+						setState(107);
+						((Expr_isnullContext)_localctx).isnull = isnull_op();
 						}
 						break;
 					case 11:
 						{
-						_localctx = new ExprContext(_parentctx, _parentState);
+						_localctx = new Expr_inContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
-						setState(109);
+						setState(108);
 						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
-						setState(111);
+						setState(110);
 						_la = _input.LA(1);
 						if (_la==K_NOT) {
 							{
-							setState(110);
+							setState(109);
 							match(K_NOT);
 							}
 						}
 
-						setState(113);
+						setState(112);
 						match(K_IN);
-						setState(114);
+						setState(113);
 						match(T__5);
-						setState(115);
+						setState(114);
 						expr(0);
-						setState(120);
+						setState(119);
 						_errHandler.sync(this);
 						_la = _input.LA(1);
 						while (_la==T__6) {
 							{
 							{
-							setState(116);
+							setState(115);
 							match(T__6);
-							setState(117);
+							setState(116);
 							expr(0);
 							}
 							}
-							setState(122);
+							setState(121);
 							_errHandler.sync(this);
 							_la = _input.LA(1);
 						}
-						setState(123);
+						setState(122);
 						match(T__7);
 						}
 						break;
 					}
 					} 
 				}
-				setState(129);
+				setState(128);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,8,_ctx);
 			}
@@ -565,6 +777,101 @@ public class TildaSQLParser extends Parser {
 		}
 		finally {
 			unrollRecursionContexts(_parentctx);
+		}
+		return _localctx;
+	}
+
+	public static class Case_when_exprContext extends ParserRuleContext {
+		public ExprContext case_when;
+		public ExprContext case_then;
+		public TerminalNode K_WHEN() { return getToken(TildaSQLParser.K_WHEN, 0); }
+		public TerminalNode K_THEN() { return getToken(TildaSQLParser.K_THEN, 0); }
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public Case_when_exprContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_case_when_expr; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).enterCase_when_expr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).exitCase_when_expr(this);
+		}
+	}
+
+	public final Case_when_exprContext case_when_expr() throws RecognitionException {
+		Case_when_exprContext _localctx = new Case_when_exprContext(_ctx, getState());
+		enterRule(_localctx, 4, RULE_case_when_expr);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(129);
+			match(K_WHEN);
+			setState(130);
+			((Case_when_exprContext)_localctx).case_when = expr(0);
+			setState(131);
+			match(K_THEN);
+			setState(132);
+			((Case_when_exprContext)_localctx).case_then = expr(0);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Case_else_exprContext extends ParserRuleContext {
+		public ExprContext case_else;
+		public TerminalNode K_ELSE() { return getToken(TildaSQLParser.K_ELSE, 0); }
+		public ExprContext expr() {
+			return getRuleContext(ExprContext.class,0);
+		}
+		public Case_else_exprContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_case_else_expr; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).enterCase_else_expr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).exitCase_else_expr(this);
+		}
+	}
+
+	public final Case_else_exprContext case_else_expr() throws RecognitionException {
+		Case_else_exprContext _localctx = new Case_else_exprContext(_ctx, getState());
+		enterRule(_localctx, 6, RULE_case_else_expr);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(134);
+			match(K_ELSE);
+			setState(135);
+			((Case_else_exprContext)_localctx).case_else = expr(0);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
 		}
 		return _localctx;
 	}
@@ -587,12 +894,12 @@ public class TildaSQLParser extends Parser {
 
 	public final Unary_operatorContext unary_operator() throws RecognitionException {
 		Unary_operatorContext _localctx = new Unary_operatorContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_unary_operator);
+		enterRule(_localctx, 8, RULE_unary_operator);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(130);
+			setState(137);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__8) | (1L << K_NOT) | (1L << K_MINUS))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -631,12 +938,12 @@ public class TildaSQLParser extends Parser {
 
 	public final Func_nameContext func_name() throws RecognitionException {
 		Func_nameContext _localctx = new Func_nameContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_func_name);
+		enterRule(_localctx, 10, RULE_func_name);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(132);
+			setState(139);
 			_la = _input.LA(1);
 			if ( !(_la==K_LEN || _la==K_DAYS_BETWEEN) ) {
 			_errHandler.recoverInline(this);
@@ -674,12 +981,12 @@ public class TildaSQLParser extends Parser {
 
 	public final Arithmetic_op_addContext arithmetic_op_add() throws RecognitionException {
 		Arithmetic_op_addContext _localctx = new Arithmetic_op_addContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_arithmetic_op_add);
+		enterRule(_localctx, 12, RULE_arithmetic_op_add);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(134);
+			setState(141);
 			_la = _input.LA(1);
 			if ( !(_la==T__8 || _la==K_MINUS) ) {
 			_errHandler.recoverInline(this);
@@ -717,12 +1024,12 @@ public class TildaSQLParser extends Parser {
 
 	public final Arithmetic_op_mulContext arithmetic_op_mul() throws RecognitionException {
 		Arithmetic_op_mulContext _localctx = new Arithmetic_op_mulContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_arithmetic_op_mul);
+		enterRule(_localctx, 14, RULE_arithmetic_op_mul);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(136);
+			setState(143);
 			_la = _input.LA(1);
 			if ( !(_la==T__9 || _la==K_DIV) ) {
 			_errHandler.recoverInline(this);
@@ -764,32 +1071,32 @@ public class TildaSQLParser extends Parser {
 
 	public final Isnull_opContext isnull_op() throws RecognitionException {
 		Isnull_opContext _localctx = new Isnull_opContext(_ctx, getState());
-		enterRule(_localctx, 12, RULE_isnull_op);
+		enterRule(_localctx, 16, RULE_isnull_op);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(138);
+			setState(145);
 			match(K_IS);
-			setState(140);
+			setState(147);
 			_la = _input.LA(1);
 			if (_la==K_NOT) {
 				{
-				setState(139);
+				setState(146);
 				match(K_NOT);
 				}
 			}
 
-			setState(142);
+			setState(149);
 			match(K_NULL);
-			setState(145);
+			setState(152);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,10,_ctx) ) {
 			case 1:
 				{
-				setState(143);
+				setState(150);
 				match(K_OR);
-				setState(144);
+				setState(151);
 				match(K_EMPTY);
 				}
 				break;
@@ -826,21 +1133,21 @@ public class TildaSQLParser extends Parser {
 
 	public final Between_opContext between_op() throws RecognitionException {
 		Between_opContext _localctx = new Between_opContext(_ctx, getState());
-		enterRule(_localctx, 14, RULE_between_op);
+		enterRule(_localctx, 18, RULE_between_op);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(148);
+			setState(155);
 			_la = _input.LA(1);
 			if (_la==K_NOT) {
 				{
-				setState(147);
+				setState(154);
 				match(K_NOT);
 				}
 			}
 
-			setState(150);
+			setState(157);
 			match(K_BETWEEN);
 			}
 		}
@@ -939,15 +1246,15 @@ public class TildaSQLParser extends Parser {
 
 	public final LiteralContext literal() throws RecognitionException {
 		LiteralContext _localctx = new LiteralContext(_ctx, getState());
-		enterRule(_localctx, 16, RULE_literal);
+		enterRule(_localctx, 20, RULE_literal);
 		try {
-			setState(157);
+			setState(164);
 			switch (_input.LA(1)) {
 			case NUMERIC_LITERAL:
 				_localctx = new ValueNumericLiteralContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(152);
+				setState(159);
 				numeric_literal();
 				}
 				break;
@@ -956,7 +1263,7 @@ public class TildaSQLParser extends Parser {
 				_localctx = new ValueBooleanLiteralContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(153);
+				setState(160);
 				boolean_literal();
 				}
 				break;
@@ -968,7 +1275,7 @@ public class TildaSQLParser extends Parser {
 				_localctx = new ValueTimestampLiteralContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(154);
+				setState(161);
 				timestamp_literal();
 				}
 				break;
@@ -976,7 +1283,7 @@ public class TildaSQLParser extends Parser {
 				_localctx = new ValueStringLiteralContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(155);
+				setState(162);
 				string_literal();
 				}
 				break;
@@ -984,7 +1291,7 @@ public class TildaSQLParser extends Parser {
 				_localctx = new ValueBindParamContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(156);
+				setState(163);
 				bind_parameter();
 				}
 				break;
@@ -1022,12 +1329,12 @@ public class TildaSQLParser extends Parser {
 
 	public final Boolean_literalContext boolean_literal() throws RecognitionException {
 		Boolean_literalContext _localctx = new Boolean_literalContext(_ctx, getState());
-		enterRule(_localctx, 18, RULE_boolean_literal);
+		enterRule(_localctx, 22, RULE_boolean_literal);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(159);
+			setState(166);
 			_la = _input.LA(1);
 			if ( !(_la==K_TRUE || _la==K_FALSE) ) {
 			_errHandler.recoverInline(this);
@@ -1065,11 +1372,11 @@ public class TildaSQLParser extends Parser {
 
 	public final Numeric_literalContext numeric_literal() throws RecognitionException {
 		Numeric_literalContext _localctx = new Numeric_literalContext(_ctx, getState());
-		enterRule(_localctx, 20, RULE_numeric_literal);
+		enterRule(_localctx, 24, RULE_numeric_literal);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(161);
+			setState(168);
 			match(NUMERIC_LITERAL);
 			}
 		}
@@ -1107,35 +1414,35 @@ public class TildaSQLParser extends Parser {
 
 	public final Timestamp_literalContext timestamp_literal() throws RecognitionException {
 		Timestamp_literalContext _localctx = new Timestamp_literalContext(_ctx, getState());
-		enterRule(_localctx, 22, RULE_timestamp_literal);
+		enterRule(_localctx, 26, RULE_timestamp_literal);
 		try {
-			setState(177);
+			setState(184);
 			switch (_input.LA(1)) {
 			case TIMESTAMP_LITERAL:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(163);
+				setState(170);
 				match(TIMESTAMP_LITERAL);
 				}
 				break;
 			case CURRENT_TIMESTAMP:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(164);
+				setState(171);
 				match(CURRENT_TIMESTAMP);
 				}
 				break;
 			case TIMESTAMP_YESTERDAY:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(165);
+				setState(172);
 				match(TIMESTAMP_YESTERDAY);
-				setState(167);
+				setState(174);
 				_errHandler.sync(this);
 				switch ( getInterpreter().adaptivePredict(_input,13,_ctx) ) {
 				case 1:
 					{
-					setState(166);
+					setState(173);
 					match(LAST);
 					}
 					break;
@@ -1145,14 +1452,14 @@ public class TildaSQLParser extends Parser {
 			case TIMESTAMP_TODAY:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(169);
+				setState(176);
 				match(TIMESTAMP_TODAY);
-				setState(171);
+				setState(178);
 				_errHandler.sync(this);
 				switch ( getInterpreter().adaptivePredict(_input,14,_ctx) ) {
 				case 1:
 					{
-					setState(170);
+					setState(177);
 					match(LAST);
 					}
 					break;
@@ -1162,14 +1469,14 @@ public class TildaSQLParser extends Parser {
 			case TIMESTAMP_TOMORROW:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(173);
+				setState(180);
 				match(TIMESTAMP_TOMORROW);
-				setState(175);
+				setState(182);
 				_errHandler.sync(this);
 				switch ( getInterpreter().adaptivePredict(_input,15,_ctx) ) {
 				case 1:
 					{
-					setState(174);
+					setState(181);
 					match(LAST);
 					}
 					break;
@@ -1209,11 +1516,11 @@ public class TildaSQLParser extends Parser {
 
 	public final String_literalContext string_literal() throws RecognitionException {
 		String_literalContext _localctx = new String_literalContext(_ctx, getState());
-		enterRule(_localctx, 24, RULE_string_literal);
+		enterRule(_localctx, 28, RULE_string_literal);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(179);
+			setState(186);
 			match(STRING_LITERAL);
 			}
 		}
@@ -1246,11 +1553,11 @@ public class TildaSQLParser extends Parser {
 
 	public final Bind_parameterContext bind_parameter() throws RecognitionException {
 		Bind_parameterContext _localctx = new Bind_parameterContext(_ctx, getState());
-		enterRule(_localctx, 26, RULE_bind_parameter);
+		enterRule(_localctx, 30, RULE_bind_parameter);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(181);
+			setState(188);
 			match(BIND_PARAMETER);
 			}
 		}
@@ -1286,23 +1593,23 @@ public class TildaSQLParser extends Parser {
 
 	public final ColumnContext column() throws RecognitionException {
 		ColumnContext _localctx = new ColumnContext(_ctx, getState());
-		enterRule(_localctx, 28, RULE_column);
+		enterRule(_localctx, 32, RULE_column);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(185);
+			setState(192);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,17,_ctx) ) {
 			case 1:
 				{
-				setState(183);
+				setState(190);
 				match(IDENTIFIER);
-				setState(184);
+				setState(191);
 				match(T__10);
 				}
 				break;
 			}
-			setState(187);
+			setState(194);
 			match(IDENTIFIER);
 			}
 		}
@@ -1353,67 +1660,69 @@ public class TildaSQLParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3=\u00c0\4\2\t\2\4"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3=\u00c7\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
-		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\3\2\3\2\3\2\3\3\3\3"+
-		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\7\3/\n\3\f\3\16\3\62\13\3\5\3\64"+
-		"\n\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\6\3B\n\3\r\3\16\3"+
-		"C\3\3\3\3\5\3H\n\3\3\3\3\3\5\3L\n\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
+		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
+		"\3\2\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\7\3\63\n\3\f"+
+		"\3\16\3\66\13\3\5\38\n\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\6\3B\n\3\r\3"+
+		"\16\3C\3\3\5\3G\n\3\3\3\3\3\5\3K\n\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
 		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
-		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3r\n\3\3\3\3\3\3\3\3\3\3\3"+
-		"\7\3y\n\3\f\3\16\3|\13\3\3\3\3\3\7\3\u0080\n\3\f\3\16\3\u0083\13\3\3\4"+
-		"\3\4\3\5\3\5\3\6\3\6\3\7\3\7\3\b\3\b\5\b\u008f\n\b\3\b\3\b\3\b\5\b\u0094"+
-		"\n\b\3\t\5\t\u0097\n\t\3\t\3\t\3\n\3\n\3\n\3\n\3\n\5\n\u00a0\n\n\3\13"+
-		"\3\13\3\f\3\f\3\r\3\r\3\r\3\r\5\r\u00aa\n\r\3\r\3\r\5\r\u00ae\n\r\3\r"+
-		"\3\r\5\r\u00b2\n\r\5\r\u00b4\n\r\3\16\3\16\3\17\3\17\3\20\3\20\5\20\u00bc"+
-		"\n\20\3\20\3\20\3\20\2\3\4\21\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36\2"+
-		"\n\3\2\"%\3\2\4\7\3\2\33\34\5\2\13\13\35\35))\3\2*+\4\2\13\13))\4\2\f"+
-		"\f((\3\2\61\62\u00d5\2 \3\2\2\2\4K\3\2\2\2\6\u0084\3\2\2\2\b\u0086\3\2"+
-		"\2\2\n\u0088\3\2\2\2\f\u008a\3\2\2\2\16\u008c\3\2\2\2\20\u0096\3\2\2\2"+
-		"\22\u009f\3\2\2\2\24\u00a1\3\2\2\2\26\u00a3\3\2\2\2\30\u00b3\3\2\2\2\32"+
-		"\u00b5\3\2\2\2\34\u00b7\3\2\2\2\36\u00bb\3\2\2\2 !\5\4\3\2!\"\7\2\2\3"+
-		"\"\3\3\2\2\2#$\b\3\1\2$L\5\22\n\2%L\5\36\20\2&\'\5\6\4\2\'(\5\4\3\21("+
-		"L\3\2\2\2)*\5\b\5\2*\63\7\b\2\2+\60\5\4\3\2,-\7\t\2\2-/\5\4\3\2.,\3\2"+
-		"\2\2/\62\3\2\2\2\60.\3\2\2\2\60\61\3\2\2\2\61\64\3\2\2\2\62\60\3\2\2\2"+
-		"\63+\3\2\2\2\63\64\3\2\2\2\64\65\3\2\2\2\65\66\7\n\2\2\66L\3\2\2\2\67"+
-		"8\7\b\2\289\5\4\3\29:\7\n\2\2:L\3\2\2\2;A\7,\2\2<=\7-\2\2=>\5\4\3\2>?"+
-		"\7.\2\2?@\5\4\3\2@B\3\2\2\2A<\3\2\2\2BC\3\2\2\2CA\3\2\2\2CD\3\2\2\2DG"+
-		"\3\2\2\2EF\7/\2\2FH\5\4\3\2GE\3\2\2\2GH\3\2\2\2HI\3\2\2\2IJ\7\60\2\2J"+
-		"L\3\2\2\2K#\3\2\2\2K%\3\2\2\2K&\3\2\2\2K)\3\2\2\2K\67\3\2\2\2K;\3\2\2"+
-		"\2L\u0081\3\2\2\2MN\f\20\2\2NO\7\3\2\2O\u0080\5\4\3\21PQ\f\17\2\2QR\5"+
-		"\f\7\2RS\5\4\3\20S\u0080\3\2\2\2TU\f\16\2\2UV\5\n\6\2VW\5\4\3\17W\u0080"+
-		"\3\2\2\2XY\f\r\2\2YZ\t\2\2\2Z\u0080\5\4\3\16[\\\f\f\2\2\\]\t\3\2\2]\u0080"+
-		"\5\4\3\r^_\f\13\2\2_`\t\4\2\2`\u0080\5\4\3\fab\f\n\2\2bc\7\27\2\2c\u0080"+
-		"\5\4\3\13de\f\t\2\2ef\7 \2\2f\u0080\5\4\3\ngh\f\5\2\2hi\5\20\t\2ij\5\4"+
-		"\3\2jk\7\27\2\2kl\5\4\3\6l\u0080\3\2\2\2mn\f\6\2\2n\u0080\5\16\b\2oq\f"+
-		"\4\2\2pr\7\35\2\2qp\3\2\2\2qr\3\2\2\2rs\3\2\2\2st\7\31\2\2tu\7\b\2\2u"+
-		"z\5\4\3\2vw\7\t\2\2wy\5\4\3\2xv\3\2\2\2y|\3\2\2\2zx\3\2\2\2z{\3\2\2\2"+
-		"{}\3\2\2\2|z\3\2\2\2}~\7\n\2\2~\u0080\3\2\2\2\177M\3\2\2\2\177P\3\2\2"+
-		"\2\177T\3\2\2\2\177X\3\2\2\2\177[\3\2\2\2\177^\3\2\2\2\177a\3\2\2\2\177"+
-		"d\3\2\2\2\177g\3\2\2\2\177m\3\2\2\2\177o\3\2\2\2\u0080\u0083\3\2\2\2\u0081"+
-		"\177\3\2\2\2\u0081\u0082\3\2\2\2\u0082\5\3\2\2\2\u0083\u0081\3\2\2\2\u0084"+
-		"\u0085\t\5\2\2\u0085\7\3\2\2\2\u0086\u0087\t\6\2\2\u0087\t\3\2\2\2\u0088"+
-		"\u0089\t\7\2\2\u0089\13\3\2\2\2\u008a\u008b\t\b\2\2\u008b\r\3\2\2\2\u008c"+
-		"\u008e\7\32\2\2\u008d\u008f\7\35\2\2\u008e\u008d\3\2\2\2\u008e\u008f\3"+
-		"\2\2\2\u008f\u0090\3\2\2\2\u0090\u0093\7\36\2\2\u0091\u0092\7 \2\2\u0092"+
-		"\u0094\7\37\2\2\u0093\u0091\3\2\2\2\u0093\u0094\3\2\2\2\u0094\17\3\2\2"+
-		"\2\u0095\u0097\7\35\2\2\u0096\u0095\3\2\2\2\u0096\u0097\3\2\2\2\u0097"+
-		"\u0098\3\2\2\2\u0098\u0099\7\30\2\2\u0099\21\3\2\2\2\u009a\u00a0\5\26"+
-		"\f\2\u009b\u00a0\5\24\13\2\u009c\u00a0\5\30\r\2\u009d\u00a0\5\32\16\2"+
-		"\u009e\u00a0\5\34\17\2\u009f\u009a\3\2\2\2\u009f\u009b\3\2\2\2\u009f\u009c"+
-		"\3\2\2\2\u009f\u009d\3\2\2\2\u009f\u009e\3\2\2\2\u00a0\23\3\2\2\2\u00a1"+
-		"\u00a2\t\t\2\2\u00a2\25\3\2\2\2\u00a3\u00a4\7\16\2\2\u00a4\27\3\2\2\2"+
-		"\u00a5\u00b4\7\17\2\2\u00a6\u00b4\7\20\2\2\u00a7\u00a9\7\21\2\2\u00a8"+
-		"\u00aa\7\24\2\2\u00a9\u00a8\3\2\2\2\u00a9\u00aa\3\2\2\2\u00aa\u00b4\3"+
-		"\2\2\2\u00ab\u00ad\7\22\2\2\u00ac\u00ae\7\24\2\2\u00ad\u00ac\3\2\2\2\u00ad"+
-		"\u00ae\3\2\2\2\u00ae\u00b4\3\2\2\2\u00af\u00b1\7\23\2\2\u00b0\u00b2\7"+
-		"\24\2\2\u00b1\u00b0\3\2\2\2\u00b1\u00b2\3\2\2\2\u00b2\u00b4\3\2\2\2\u00b3"+
-		"\u00a5\3\2\2\2\u00b3\u00a6\3\2\2\2\u00b3\u00a7\3\2\2\2\u00b3\u00ab\3\2"+
-		"\2\2\u00b3\u00af\3\2\2\2\u00b4\31\3\2\2\2\u00b5\u00b6\7\25\2\2\u00b6\33"+
-		"\3\2\2\2\u00b7\u00b8\7\26\2\2\u00b8\35\3\2\2\2\u00b9\u00ba\7\63\2\2\u00ba"+
-		"\u00bc\7\r\2\2\u00bb\u00b9\3\2\2\2\u00bb\u00bc\3\2\2\2\u00bc\u00bd\3\2"+
-		"\2\2\u00bd\u00be\7\63\2\2\u00be\37\3\2\2\2\24\60\63CGKqz\177\u0081\u008e"+
-		"\u0093\u0096\u009f\u00a9\u00ad\u00b1\u00b3\u00bb";
+		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3q\n\3\3\3\3\3\3\3\3\3\3\3"+
+		"\7\3x\n\3\f\3\16\3{\13\3\3\3\3\3\7\3\177\n\3\f\3\16\3\u0082\13\3\3\4\3"+
+		"\4\3\4\3\4\3\4\3\5\3\5\3\5\3\6\3\6\3\7\3\7\3\b\3\b\3\t\3\t\3\n\3\n\5\n"+
+		"\u0096\n\n\3\n\3\n\3\n\5\n\u009b\n\n\3\13\5\13\u009e\n\13\3\13\3\13\3"+
+		"\f\3\f\3\f\3\f\3\f\5\f\u00a7\n\f\3\r\3\r\3\16\3\16\3\17\3\17\3\17\3\17"+
+		"\5\17\u00b1\n\17\3\17\3\17\5\17\u00b5\n\17\3\17\3\17\5\17\u00b9\n\17\5"+
+		"\17\u00bb\n\17\3\20\3\20\3\21\3\21\3\22\3\22\5\22\u00c3\n\22\3\22\3\22"+
+		"\3\22\2\3\4\23\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"\2\n\3\2\"%\3"+
+		"\2\4\7\3\2\33\34\5\2\13\13\35\35))\3\2*+\4\2\13\13))\4\2\f\f((\3\2\61"+
+		"\62\u00da\2$\3\2\2\2\4J\3\2\2\2\6\u0083\3\2\2\2\b\u0088\3\2\2\2\n\u008b"+
+		"\3\2\2\2\f\u008d\3\2\2\2\16\u008f\3\2\2\2\20\u0091\3\2\2\2\22\u0093\3"+
+		"\2\2\2\24\u009d\3\2\2\2\26\u00a6\3\2\2\2\30\u00a8\3\2\2\2\32\u00aa\3\2"+
+		"\2\2\34\u00ba\3\2\2\2\36\u00bc\3\2\2\2 \u00be\3\2\2\2\"\u00c2\3\2\2\2"+
+		"$%\5\4\3\2%&\7\2\2\3&\3\3\2\2\2\'(\b\3\1\2(K\5\26\f\2)K\5\"\22\2*+\5\n"+
+		"\6\2+,\5\4\3\21,K\3\2\2\2-.\5\f\7\2.\67\7\b\2\2/\64\5\4\3\2\60\61\7\t"+
+		"\2\2\61\63\5\4\3\2\62\60\3\2\2\2\63\66\3\2\2\2\64\62\3\2\2\2\64\65\3\2"+
+		"\2\2\658\3\2\2\2\66\64\3\2\2\2\67/\3\2\2\2\678\3\2\2\289\3\2\2\29:\7\n"+
+		"\2\2:K\3\2\2\2;<\7\b\2\2<=\5\4\3\2=>\7\n\2\2>K\3\2\2\2?A\7,\2\2@B\5\6"+
+		"\4\2A@\3\2\2\2BC\3\2\2\2CA\3\2\2\2CD\3\2\2\2DF\3\2\2\2EG\5\b\5\2FE\3\2"+
+		"\2\2FG\3\2\2\2GH\3\2\2\2HI\7\60\2\2IK\3\2\2\2J\'\3\2\2\2J)\3\2\2\2J*\3"+
+		"\2\2\2J-\3\2\2\2J;\3\2\2\2J?\3\2\2\2K\u0080\3\2\2\2LM\f\20\2\2MN\7\3\2"+
+		"\2N\177\5\4\3\21OP\f\17\2\2PQ\5\20\t\2QR\5\4\3\20R\177\3\2\2\2ST\f\16"+
+		"\2\2TU\5\16\b\2UV\5\4\3\17V\177\3\2\2\2WX\f\r\2\2XY\t\2\2\2Y\177\5\4\3"+
+		"\16Z[\f\f\2\2[\\\t\3\2\2\\\177\5\4\3\r]^\f\13\2\2^_\t\4\2\2_\177\5\4\3"+
+		"\f`a\f\n\2\2ab\7\27\2\2b\177\5\4\3\13cd\f\t\2\2de\7 \2\2e\177\5\4\3\n"+
+		"fg\f\5\2\2gh\5\24\13\2hi\5\4\3\2ij\7\27\2\2jk\5\4\3\6k\177\3\2\2\2lm\f"+
+		"\6\2\2m\177\5\22\n\2np\f\4\2\2oq\7\35\2\2po\3\2\2\2pq\3\2\2\2qr\3\2\2"+
+		"\2rs\7\31\2\2st\7\b\2\2ty\5\4\3\2uv\7\t\2\2vx\5\4\3\2wu\3\2\2\2x{\3\2"+
+		"\2\2yw\3\2\2\2yz\3\2\2\2z|\3\2\2\2{y\3\2\2\2|}\7\n\2\2}\177\3\2\2\2~L"+
+		"\3\2\2\2~O\3\2\2\2~S\3\2\2\2~W\3\2\2\2~Z\3\2\2\2~]\3\2\2\2~`\3\2\2\2~"+
+		"c\3\2\2\2~f\3\2\2\2~l\3\2\2\2~n\3\2\2\2\177\u0082\3\2\2\2\u0080~\3\2\2"+
+		"\2\u0080\u0081\3\2\2\2\u0081\5\3\2\2\2\u0082\u0080\3\2\2\2\u0083\u0084"+
+		"\7-\2\2\u0084\u0085\5\4\3\2\u0085\u0086\7.\2\2\u0086\u0087\5\4\3\2\u0087"+
+		"\7\3\2\2\2\u0088\u0089\7/\2\2\u0089\u008a\5\4\3\2\u008a\t\3\2\2\2\u008b"+
+		"\u008c\t\5\2\2\u008c\13\3\2\2\2\u008d\u008e\t\6\2\2\u008e\r\3\2\2\2\u008f"+
+		"\u0090\t\7\2\2\u0090\17\3\2\2\2\u0091\u0092\t\b\2\2\u0092\21\3\2\2\2\u0093"+
+		"\u0095\7\32\2\2\u0094\u0096\7\35\2\2\u0095\u0094\3\2\2\2\u0095\u0096\3"+
+		"\2\2\2\u0096\u0097\3\2\2\2\u0097\u009a\7\36\2\2\u0098\u0099\7 \2\2\u0099"+
+		"\u009b\7\37\2\2\u009a\u0098\3\2\2\2\u009a\u009b\3\2\2\2\u009b\23\3\2\2"+
+		"\2\u009c\u009e\7\35\2\2\u009d\u009c\3\2\2\2\u009d\u009e\3\2\2\2\u009e"+
+		"\u009f\3\2\2\2\u009f\u00a0\7\30\2\2\u00a0\25\3\2\2\2\u00a1\u00a7\5\32"+
+		"\16\2\u00a2\u00a7\5\30\r\2\u00a3\u00a7\5\34\17\2\u00a4\u00a7\5\36\20\2"+
+		"\u00a5\u00a7\5 \21\2\u00a6\u00a1\3\2\2\2\u00a6\u00a2\3\2\2\2\u00a6\u00a3"+
+		"\3\2\2\2\u00a6\u00a4\3\2\2\2\u00a6\u00a5\3\2\2\2\u00a7\27\3\2\2\2\u00a8"+
+		"\u00a9\t\t\2\2\u00a9\31\3\2\2\2\u00aa\u00ab\7\16\2\2\u00ab\33\3\2\2\2"+
+		"\u00ac\u00bb\7\17\2\2\u00ad\u00bb\7\20\2\2\u00ae\u00b0\7\21\2\2\u00af"+
+		"\u00b1\7\24\2\2\u00b0\u00af\3\2\2\2\u00b0\u00b1\3\2\2\2\u00b1\u00bb\3"+
+		"\2\2\2\u00b2\u00b4\7\22\2\2\u00b3\u00b5\7\24\2\2\u00b4\u00b3\3\2\2\2\u00b4"+
+		"\u00b5\3\2\2\2\u00b5\u00bb\3\2\2\2\u00b6\u00b8\7\23\2\2\u00b7\u00b9\7"+
+		"\24\2\2\u00b8\u00b7\3\2\2\2\u00b8\u00b9\3\2\2\2\u00b9\u00bb\3\2\2\2\u00ba"+
+		"\u00ac\3\2\2\2\u00ba\u00ad\3\2\2\2\u00ba\u00ae\3\2\2\2\u00ba\u00b2\3\2"+
+		"\2\2\u00ba\u00b6\3\2\2\2\u00bb\35\3\2\2\2\u00bc\u00bd\7\25\2\2\u00bd\37"+
+		"\3\2\2\2\u00be\u00bf\7\26\2\2\u00bf!\3\2\2\2\u00c0\u00c1\7\63\2\2\u00c1"+
+		"\u00c3\7\r\2\2\u00c2\u00c0\3\2\2\2\u00c2\u00c3\3\2\2\2\u00c3\u00c4\3\2"+
+		"\2\2\u00c4\u00c5\7\63\2\2\u00c5#\3\2\2\2\24\64\67CFJpy~\u0080\u0095\u009a"+
+		"\u009d\u00a6\u00b0\u00b4\u00b8\u00ba\u00c2";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

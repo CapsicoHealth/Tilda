@@ -76,10 +76,10 @@ public class TypeManager
         _LastError = "Unknown column name '" + colName + "'.";
       }
 
-    public ColumnType popType()
+    public ColumnType popType(String Descr)
       {
         ColumnType T = _TypeStack.isEmpty() == true ? null : _TypeStack.pop();
-        LOG.debug("- "+T.name());
+        LOG.debug("- "+(T==null?"NULL":T.name())+" ("+Descr+")");
         return T;
       }
 

@@ -22,24 +22,31 @@ main
  ;
 
 expr
- : literal
- | column
- | unary_operator expr
- | expr concat='||' expr
- | expr arithmetic_op_mul expr
- | expr arithmetic_op_add expr
- | expr comparators1=( '<' | '<=' | '>' | '>=' ) expr
- | expr comparators2=( '=' | '==' | '!=' | '<>' ) expr
- | expr like=(K_NOT_LIKE | K_LIKE) expr
- | expr K_AND expr
- | expr K_OR expr
- | func=func_name '(' (expr ( ',' expr )*)? ')'
- | '(' expr ')'
- | expr isnull=isnull_op
- | expr between=between_op expr K_AND expr
- | expr K_NOT? K_IN '(' expr ( ',' expr )* ')'
- | K_CASE ( K_WHEN case_when=expr K_THEN case_then=expr )+ ( K_ELSE case_else=expr )? K_END                   
+ : literal                                               #expr_literal
+ | column                                                #expr_column
+ | unary_operator expr                                   #expr_unary
+ | expr concat='||' expr                                 #expr_concat
+ | expr arithmetic_op_mul expr                           #expr_arith
+ | expr arithmetic_op_add expr                           #expr_arith
+ | expr comparators1=( '<' | '<=' | '>' | '>=' ) expr    #expr_comp
+ | expr comparators2=( '=' | '==' | '!=' | '<>' ) expr   #expr_comp
+ | expr like=(K_NOT_LIKE | K_LIKE) expr                  #expr_comp
+ | expr K_AND expr                                       #expr_and
+ | expr K_OR expr                                        #expr_or
+ | func=func_name '(' (expr ( ',' expr )*)? ')'          #expr_func
+ | '(' expr ')'                                          #expr_sub
+ | expr isnull=isnull_op                                 #expr_isnull
+ | expr between=between_op expr K_AND expr               #expr_between
+ | expr K_NOT? K_IN '(' expr ( ',' expr )* ')'           #expr_in
+ | K_CASE case_when_expr+ case_else_expr? K_END          #expr_case 
 ;
+
+case_when_expr
+ : K_WHEN case_when=expr K_THEN case_then=expr
+ ;
+case_else_expr
+ : K_ELSE case_else=expr
+ ;
 
 unary_operator
  : '-'
