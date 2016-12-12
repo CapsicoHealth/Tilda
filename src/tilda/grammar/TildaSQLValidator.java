@@ -23,6 +23,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import org.antlr.v4.runtime.tree.TerminalNode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,6 +33,7 @@ import tilda.grammar.TildaSQLParser.Case_when_exprContext;
 import tilda.grammar.TildaSQLParser.ColumnContext;
 import tilda.grammar.TildaSQLParser.ExprContext;
 import tilda.grammar.TildaSQLParser.Expr_arithContext;
+import tilda.grammar.TildaSQLParser.Expr_boolContext;
 import tilda.grammar.TildaSQLParser.Expr_caseContext;
 import tilda.grammar.TildaSQLParser.Expr_compContext;
 import tilda.grammar.TildaSQLParser.Expr_concatContext;
@@ -231,11 +233,17 @@ public class TildaSQLValidator extends TildaSQLBaseListener
             _Errors.addError("The operator '" + Tok.getText() + "' requires 2 operands. " + (T1 == null && T2 == null ? "None were found." : "Only one was found."), ctx);
             return;
           }
-        if (T1 == ColumnType.BOOLEAN && T2 == ColumnType.BOOLEAN
-        || ((T1 == ColumnType.INTEGER || T1 == ColumnType.LONG || T1 == ColumnType.FLOAT || T1 == ColumnType.DOUBLE)
-        && (T2 == ColumnType.INTEGER || T2 == ColumnType.LONG || T2 == ColumnType.FLOAT || T2 == ColumnType.DOUBLE))
-        || ((T1 == ColumnType.STRING || T1 == ColumnType.CHAR)
-        && (T2 == ColumnType.STRING || T2 == ColumnType.CHAR)))
+    /*@formatter:off*/
+        if (   T1 == ColumnType.BOOLEAN && T2 == ColumnType.BOOLEAN
+            || T1 == ColumnType.DATETIME && T2 == ColumnType.DATETIME
+            || (    (T1 == ColumnType.INTEGER || T1 == ColumnType.LONG || T1 == ColumnType.FLOAT || T1 == ColumnType.DOUBLE)
+                 && (T2 == ColumnType.INTEGER || T2 == ColumnType.LONG || T2 == ColumnType.FLOAT || T2 == ColumnType.DOUBLE)
+               )
+            || (   (T1 == ColumnType.STRING || T1 == ColumnType.CHAR)
+                && (T2 == ColumnType.STRING || T2 == ColumnType.CHAR)
+               )
+           )
+    /*@formatter:on*/
           {
             _TypeManager.pushType(ColumnType.BOOLEAN, ctx.getText());
           }
@@ -435,6 +443,29 @@ public class TildaSQLValidator extends TildaSQLBaseListener
           }
         _TypeManager.pushType(T, "CaseWhen");
         super.exitExpr_case(ctx);
+      }
+
+    @Override
+    public void exitExpr_bool(Expr_boolContext ctx)
+      {
+        TerminalNode Tok = ctx.K_AND() != null ? ctx.K_AND() : ctx.K_OR();
+        ColumnType T2 = _TypeManager.popType("lparam: " + ctx.getText());
+        ColumnType T1 = _TypeManager.popType("rparam: " + ctx.getText());
+        if (T1 == null || T2 == null)
+          {
+            _Errors.addError("The operator '" + Tok.getText() + "' requires 2 operands. " + (T1 == null && T2 == null ? "None were found." : "Only one was found."), ctx);
+            return;
+          }
+        if (T1 == ColumnType.BOOLEAN && T2 == ColumnType.BOOLEAN)
+          {
+            _TypeManager.pushType(ColumnType.BOOLEAN, ctx.getText());
+          }
+        else
+          {
+            _Errors.addError("The operator '" + Tok.getText() + "' is comparing operands of non boolean types " + T1.name() + " and " + T2.name() + ".", ctx);
+            return;
+          }
+        super.exitExpr_bool(ctx);
       }
 
     /*

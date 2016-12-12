@@ -254,6 +254,25 @@ public class TildaSQLParser extends Parser {
 			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).exitExpr_column(this);
 		}
 	}
+	public static class Expr_boolContext extends ExprContext {
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public TerminalNode K_AND() { return getToken(TildaSQLParser.K_AND, 0); }
+		public TerminalNode K_OR() { return getToken(TildaSQLParser.K_OR, 0); }
+		public Expr_boolContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).enterExpr_bool(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).exitExpr_bool(this);
+		}
+	}
 	public static class Expr_literalContext extends ExprContext {
 		public LiteralContext literal() {
 			return getRuleContext(LiteralContext.class,0);
@@ -348,24 +367,6 @@ public class TildaSQLParser extends Parser {
 			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).exitExpr_in(this);
 		}
 	}
-	public static class Expr_orContext extends ExprContext {
-		public List<ExprContext> expr() {
-			return getRuleContexts(ExprContext.class);
-		}
-		public ExprContext expr(int i) {
-			return getRuleContext(ExprContext.class,i);
-		}
-		public TerminalNode K_OR() { return getToken(TildaSQLParser.K_OR, 0); }
-		public Expr_orContext(ExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).enterExpr_or(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).exitExpr_or(this);
-		}
-	}
 	public static class Expr_isnullContext extends ExprContext {
 		public Isnull_opContext isnull;
 		public ExprContext expr() {
@@ -382,24 +383,6 @@ public class TildaSQLParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).exitExpr_isnull(this);
-		}
-	}
-	public static class Expr_andContext extends ExprContext {
-		public List<ExprContext> expr() {
-			return getRuleContexts(ExprContext.class);
-		}
-		public ExprContext expr(int i) {
-			return getRuleContext(ExprContext.class,i);
-		}
-		public TerminalNode K_AND() { return getToken(TildaSQLParser.K_AND, 0); }
-		public Expr_andContext(ExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).enterExpr_and(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof TildaSQLListener ) ((TildaSQLListener)listener).exitExpr_and(this);
 		}
 	}
 	public static class Expr_unaryContext extends ExprContext {
@@ -672,7 +655,7 @@ public class TildaSQLParser extends Parser {
 						break;
 					case 7:
 						{
-						_localctx = new Expr_andContext(new ExprContext(_parentctx, _parentState));
+						_localctx = new Expr_boolContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(94);
 						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
@@ -684,7 +667,7 @@ public class TildaSQLParser extends Parser {
 						break;
 					case 8:
 						{
-						_localctx = new Expr_orContext(new ExprContext(_parentctx, _parentState));
+						_localctx = new Expr_boolContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(97);
 						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");

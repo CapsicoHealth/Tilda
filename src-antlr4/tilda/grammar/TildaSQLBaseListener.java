@@ -88,6 +88,18 @@ public class TildaSQLBaseListener implements TildaSQLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterExpr_bool(TildaSQLParser.Expr_boolContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExpr_bool(TildaSQLParser.Expr_boolContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterExpr_literal(TildaSQLParser.Expr_literalContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -148,18 +160,6 @@ public class TildaSQLBaseListener implements TildaSQLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpr_or(TildaSQLParser.Expr_orContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitExpr_or(TildaSQLParser.Expr_orContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterExpr_isnull(TildaSQLParser.Expr_isnullContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -167,18 +167,6 @@ public class TildaSQLBaseListener implements TildaSQLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitExpr_isnull(TildaSQLParser.Expr_isnullContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterExpr_and(TildaSQLParser.Expr_andContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitExpr_and(TildaSQLParser.Expr_andContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

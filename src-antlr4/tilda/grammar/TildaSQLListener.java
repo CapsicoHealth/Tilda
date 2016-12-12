@@ -78,6 +78,18 @@ public interface TildaSQLListener extends ParseTreeListener {
 	 */
 	void exitExpr_column(TildaSQLParser.Expr_columnContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code expr_bool}
+	 * labeled alternative in {@link TildaSQLParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpr_bool(TildaSQLParser.Expr_boolContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code expr_bool}
+	 * labeled alternative in {@link TildaSQLParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpr_bool(TildaSQLParser.Expr_boolContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code expr_literal}
 	 * labeled alternative in {@link TildaSQLParser#expr}.
 	 * @param ctx the parse tree
@@ -138,18 +150,6 @@ public interface TildaSQLListener extends ParseTreeListener {
 	 */
 	void exitExpr_in(TildaSQLParser.Expr_inContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code expr_or}
-	 * labeled alternative in {@link TildaSQLParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterExpr_or(TildaSQLParser.Expr_orContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code expr_or}
-	 * labeled alternative in {@link TildaSQLParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitExpr_or(TildaSQLParser.Expr_orContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code expr_isnull}
 	 * labeled alternative in {@link TildaSQLParser#expr}.
 	 * @param ctx the parse tree
@@ -161,18 +161,6 @@ public interface TildaSQLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExpr_isnull(TildaSQLParser.Expr_isnullContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code expr_and}
-	 * labeled alternative in {@link TildaSQLParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterExpr_and(TildaSQLParser.Expr_andContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code expr_and}
-	 * labeled alternative in {@link TildaSQLParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitExpr_and(TildaSQLParser.Expr_andContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code expr_unary}
 	 * labeled alternative in {@link TildaSQLParser#expr}.

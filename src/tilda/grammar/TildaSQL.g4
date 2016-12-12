@@ -31,8 +31,8 @@ expr
  | expr comparators1=( '<' | '<=' | '>' | '>=' ) expr    #expr_comp
  | expr comparators2=( '=' | '==' | '!=' | '<>' ) expr   #expr_comp
  | expr like=(K_NOT_LIKE | K_LIKE) expr                  #expr_comp
- | expr K_AND expr                                       #expr_and
- | expr K_OR expr                                        #expr_or
+ | expr K_AND expr                                       #expr_bool
+ | expr K_OR expr                                        #expr_bool
  | func=func_name '(' (expr ( ',' expr )*)? ')'          #expr_func
  | '(' expr ')'                                          #expr_sub
  | expr isnull=isnull_op                                 #expr_isnull
