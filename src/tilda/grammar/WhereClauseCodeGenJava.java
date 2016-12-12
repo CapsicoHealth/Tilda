@@ -243,6 +243,14 @@ public class WhereClauseCodeGenJava implements WhereClauseCodeGen
       }
 
     @Override
+    public void funcDaysBetween(ColumnDefinition Col1, ColumnDefinition Col2)
+      {
+        // TODO Auto-generated method stub
+        
+      }
+
+    
+    @Override
     public void col(ColumnDefinition Column)
       {
         makeColumn(_CodeGen, Column);
@@ -372,4 +380,5 @@ public class WhereClauseCodeGenJava implements WhereClauseCodeGen
     public void end()
       {
       }
+
   }

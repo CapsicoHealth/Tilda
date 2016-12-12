@@ -148,7 +148,7 @@ public class WhereClauseCodeGenTildaQL implements WhereClauseCodeGen
       {
         makeColumn(_CodeGen, Column);
       }
-    
+
     public void funcLen(List<ColumnDefinition> Columns)
       {
         if (Columns.size() == 1 && Columns.get(0)._Collection == true)
@@ -164,7 +164,14 @@ public class WhereClauseCodeGenTildaQL implements WhereClauseCodeGen
             _CodeGen.append(")");
           }
       }
-    
+
+    @Override
+    public void funcDaysBetween(ColumnDefinition Col1, ColumnDefinition Col2)
+      {
+        // TODO Auto-generated method stub
+
+      }
+
 
     @Override
     public String binClose()

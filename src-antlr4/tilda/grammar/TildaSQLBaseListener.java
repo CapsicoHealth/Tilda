@@ -16,6 +16,42 @@ public class TildaSQLBaseListener implements TildaSQLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterRoot_expr(TildaSQLParser.Root_exprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRoot_expr(TildaSQLParser.Root_exprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExpr2(TildaSQLParser.Expr2Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExpr2(TildaSQLParser.Expr2Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterUnary_operator(TildaSQLParser.Unary_operatorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitUnary_operator(TildaSQLParser.Unary_operatorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterWhere(TildaSQLParser.WhereContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -112,13 +148,13 @@ public class TildaSQLBaseListener implements TildaSQLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFunc_expr(TildaSQLParser.Func_exprContext ctx) { }
+	@Override public void enterFunc_name(TildaSQLParser.Func_nameContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFunc_expr(TildaSQLParser.Func_exprContext ctx) { }
+	@Override public void exitFunc_name(TildaSQLParser.Func_nameContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

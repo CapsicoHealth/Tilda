@@ -160,7 +160,7 @@ public class TildaSQL
             LOG.debug("Parsing base expression " + i + ".");
             LOG.debug("    --> " + Expr);
             // Expression parsing
-            TildaSQLValidator Validator = new TildaSQLValidator(Expr);
+            TildaSQLValidator Validator = new TildaSQLValidator(Expr, true);
             if (Validator.getParserSyntaxErrors() != 0)
               {
                 LOG.error("    --> Base expression " + i + " failed with " + Validator.getParserSyntaxErrors() + " errors.");
@@ -269,7 +269,7 @@ public class TildaSQL
         + " AND (    CLM_PMT_AMT >= 2*((5+(?{var1}+1)))" + SystemValues.NEWLINE
         + "     )" + SystemValues.NEWLINE;
 
-        TildaSQLValidator Validator = new TildaSQLValidator(Expr);
+        TildaSQLValidator Validator = new TildaSQLValidator(Expr, true);
         Validator.setColumnEnvironment(_COLS);
 
         if (Validator.getParserSyntaxErrors() != 0)

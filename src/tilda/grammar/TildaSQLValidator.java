@@ -41,6 +41,7 @@ import tilda.grammar.TildaSQLParser.Bool_opContext;
 import tilda.grammar.TildaSQLParser.ColumnContext;
 import tilda.grammar.TildaSQLParser.Isnull_exprContext;
 import tilda.grammar.TildaSQLParser.ValueBindParamContext;
+import tilda.grammar.TildaSQLParser.ValueContext;
 import tilda.grammar.TildaSQLParser.ValueNumericLiteralContext;
 import tilda.grammar.TildaSQLParser.ValueStringLiteralContext;
 import tilda.grammar.TildaSQLParser.ValueTimestampLiteralContext;
@@ -55,26 +56,35 @@ public class TildaSQLValidator extends TildaSQLBaseListener
   {
     protected static final Logger LOG = LogManager.getLogger(TildaSQLValidator.class.getName());
 
-    public TildaSQLValidator(String Expr)
+    public TildaSQLValidator(String Expr, boolean Where)
       {
         ANTLRInputStream in = new ANTLRInputStream(Expr);
         TildaSQLLexer lexer = new TildaSQLLexer(in);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         TildaSQLParser parser = new TildaSQLParser(tokens);
-        _Tree = parser.where();
+        _Tree = Where == true ? parser.where() : parser.root_expr();
         _SyntaxErrors = parser.getNumberOfSyntaxErrors();
+        _TreePrinter = new TildaSQLTreePrinter(parser);
       }
 
-    protected ParseTree          _Tree;
-    protected int                _SyntaxErrors;
+    protected ParseTree           _Tree;
+    protected int                 _SyntaxErrors;
 
-    protected TypeManager        _TypeManager = new TypeManager();
-    protected ErrorList          _Errors      = new ErrorList();
-    protected WhereClauseCodeGen _CG;
+    protected TypeManager         _TypeManager = new TypeManager();
+    protected ErrorList           _Errors      = new ErrorList();
+    protected WhereClauseCodeGen  _CG;
+
+    protected TildaSQLTreePrinter _TreePrinter;
 
     public int getParserSyntaxErrors()
       {
         return _SyntaxErrors;
+      }
+
+    public String PrintParseTree()
+      {
+        ParseTreeWalker.DEFAULT.walk(_TreePrinter, _Tree);
+        return _TreePrinter._ParseTreeStr.toString();
       }
 
     public void setColumnEnvironment(List<ColumnDefinition> Columns)
@@ -147,15 +157,35 @@ public class TildaSQLValidator extends TildaSQLBaseListener
             else
               _Errors.addError(_TypeManager.getLastError(), ctx);
           }
-
-        if (ctx.func_expr() != null)
+        for (ValueContext valCtx : ctx.bin_expr_lhs().value())
           {
-            if (ctx.func_expr().K_LEN() != null)
+            ColumnType Type = null;;
+            if (valCtx instanceof ValueTimestampLiteralContext == true)
+                Type = ColumnType.DATETIME;
+            else if (valCtx instanceof ValueStringLiteralContext == true)
+                Type = ColumnType.STRING;
+            else if (valCtx instanceof ValueNumericLiteralContext == true)
+                Type = ColumnType.INTEGER;
+            else if (valCtx instanceof ValueBindParamContext == true)
+                Type = ColumnType.LONG;
+            else
+              _Errors.addError("Unknown value type "+valCtx.getClass().getName(), valCtx);
+            if (Type != null)
+              Columns.add(new ColumnDefinition(null, null, valCtx.getText(), 0, Type, false, "Value constant"));
+          }
+
+        if (ctx.func_name() != null)
+          {
+            if (ctx.func_name().K_LEN() != null)
               {
                 doFuncLen(ctx, Columns);
               }
+            else if (ctx.func_name().K_DAYS_BETWEEN() != null)
+              {
+                doFuncDaysBetween(ctx, Columns);
+              }
             else
-              _Errors.addError("Unknown function " + ctx.func_expr().getText(), ctx);
+              _Errors.addError("Unknown function " + ctx.func_name().getText(), ctx);
             Columns.clear();
           }
 
@@ -259,6 +289,35 @@ public class TildaSQLValidator extends TildaSQLBaseListener
             if (_TypeManager.replaceType(ColumnType.INTEGER, ctx.getText()) == true)
               if (_CG != null)
                 _CG.funcLen(Columns);
+          }
+      }
+
+    private void doFuncDaysBetween(Bin_exprContext ctx, List<ColumnDefinition> Columns)
+      {
+        boolean err = false;
+
+        if (Columns.size() == 2)
+          {
+            for (ColumnDefinition Col : Columns)
+              {
+                if (Col._Type != ColumnType.DATETIME && Col._Collection != true)
+                  {
+                    err = true;
+                    _Errors.addError("Function 'DaysBetween' must take 2 DateTime columns: parameter '" + Col.getName() + "' is a " + Col._Type.toString() + ".", ctx);
+                  }
+              }
+          }
+        else
+          {
+            err = true;
+            _Errors.addError("Function 'DaysBetween' must take 2 DateTime columns: " + Columns.size() + " parameters were found.", ctx);
+          }
+
+        if (err == false)
+          {
+            if (_TypeManager.replaceType(ColumnType.INTEGER, ctx.getText()) == true)
+              if (_CG != null)
+                _CG.funcDaysBetween(Columns.get(0), Columns.get(1));
           }
       }
 
@@ -531,4 +590,5 @@ public class TildaSQLValidator extends TildaSQLBaseListener
 
         super.enterIsnull_expr(ctx);
       }
+
   }

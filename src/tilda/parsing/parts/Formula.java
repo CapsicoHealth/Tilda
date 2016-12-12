@@ -16,6 +16,9 @@
 
 package tilda.parsing.parts;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
@@ -23,8 +26,14 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.enums.AggregateType;
 import tilda.enums.ColumnType;
+import tilda.enums.MultiType;
+import tilda.grammar.ErrorList;
+import tilda.grammar.TildaSQLValidator;
+import tilda.grammar.WhereClauseCodeGenJavaOnJson;
 import tilda.parsing.ParserSession;
+import tilda.types.ColumnDefinition;
 import tilda.utils.TextUtil;
 
 public class Formula extends TypeDef
@@ -115,6 +124,46 @@ public class Formula extends TypeDef
             Str.append(F._Name);
           }
         _FormulasRegEx = Pattern.compile("\\b(" + Str.toString() + ")\\b");
+
+        return PS.getErrorCount() == Errs;
+      }
+
+    public static boolean ValidateFormulaCode(ParserSession PS, View ParentView)
+      {
+        int Errs = PS.getErrorCount();
+
+        List<ColumnDefinition> ColDefs = new ArrayList<ColumnDefinition>();
+        for (ViewColumn VC : ParentView._ViewColumns)
+          {
+            ColumnDefinition Col = ColumnDefinition.Create(null, null, VC._Name,
+            VC._Aggregate == AggregateType.COUNT ? ColumnType.INTEGER : VC._SameAsObj.getType(),
+            VC._Aggregate != AggregateType.COUNT && VC._SameAsObj._TypeCollection != MultiType.NONE, 
+            VC._Aggregate == AggregateType.COUNT ? false : VC._SameAsObj._Nullable,
+            VC._Aggregate == AggregateType.COUNT ? "count" : VC._SameAsObj._Description);
+            ColDefs.add(Col);
+          }
+        for (Formula F : ParentView._Formulas)
+          {
+            ColumnDefinition Col = ColumnDefinition.Create(null, null, F._Name, F._Type, F._TypeCollection != MultiType.NONE, true, F._Title);
+            ColDefs.add(Col);
+          }
+
+        for (Formula F : ParentView._Formulas)
+          {
+            TildaSQLValidator SQLValidator = new TildaSQLValidator(String.join("\n", F._FormulaStrs), false);
+            if (SQLValidator.getParserSyntaxErrors() != 0)
+              {
+                PS.AddError("View " + ParentView.getShortName() + " is defining a formula '" + F._Name + "' with an invalid formula.");
+                return false;
+              }
+
+            SQLValidator.setColumnEnvironment(ColDefs);
+            SQLValidator.validate();
+            Iterator<ErrorList.Error> I = SQLValidator.getValidationErrors().getErrors();
+            if (I != null)
+              while (I.hasNext() == true)
+                PS.AddError("View " + ParentView.getShortName() + " is defining a formula '" + F._Name + "' with an invalid formula: " + I.next());
+          }
 
         return PS.getErrorCount() == Errs;
       }

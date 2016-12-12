@@ -390,16 +390,19 @@ public class View extends Base
         if (_Formulas != null)
           for (Formula F : _Formulas)
             F.Validate(PS, this);
-        
+
         if (_Formulas != null)
           for (Formula F : _Formulas)
             {
-              Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "Formula column: "+F._Title);
+              Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "Formula column: " + F._Title);
               O._Columns.add(C);
             }
 
         _ParentSchema._Objects.add(O);
         O.Validate(PS, ParentSchema);
+
+//        if (_Formulas != null)
+//          Formula.ValidateFormulaCode(PS, this);
 
         _Validated = Errs == PS.getErrorCount();
         return _Validated;

@@ -61,6 +61,13 @@ public interface WhereClauseCodeGen
      */
     public void funcLen(List<ColumnDefinition> Columns);
 
+    /**
+     * Must be called with 2 'datetime' columns and the number of days between them is computed.<BR>
+     * <B style="color:red; font-size: 125%;">Implementers of this interface are <U>NOT</U> expected to do this validation!</B>
+     * @param Columns a list of column definitions
+     */
+    public void funcDaysBetween(ColumnDefinition Col1, ColumnDefinition Col2);
+    
     public void col                  (ColumnDefinition Column);
 
     public void   valueListOpen        ();

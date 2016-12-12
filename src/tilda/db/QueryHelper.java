@@ -380,7 +380,7 @@ public abstract class QueryHelper
         if (_Section != S.WHERE)
           throw new Exception("Invalid query syntax: Calling subWhere() after a " + _Section + ": " + _QueryStr.toString());
 
-        TildaSQLValidator Validator = new TildaSQLValidator(subWhereClause);
+        TildaSQLValidator Validator = new TildaSQLValidator(subWhereClause, true);
         if (Validator.getParserSyntaxErrors() != 0)
           throw new Exception("SubWhereClause '" + subWhereClause + "' had " + Validator.getParserSyntaxErrors() + " syntax error(s).");
         Validator.validate();

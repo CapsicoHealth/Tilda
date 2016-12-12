@@ -74,7 +74,7 @@ public class JsonValidation
           Str.append(s).append("\n");
 
         WhereClauseCodeGenJavaOnJson WC_CG = new WhereClauseCodeGenJavaOnJson();
-        TildaSQLValidator Validator = new TildaSQLValidator(Str.toString());
+        TildaSQLValidator Validator = new TildaSQLValidator(Str.toString(), true);
         if (Validator.getParserSyntaxErrors() != 0)
           {
             PS.AddError("Column '" + C.getFullName() + " defined a jsonSchema with an invalid validation rule.");

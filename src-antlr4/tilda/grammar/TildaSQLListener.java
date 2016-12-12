@@ -8,6 +8,36 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface TildaSQLListener extends ParseTreeListener {
 	/**
+	 * Enter a parse tree produced by {@link TildaSQLParser#root_expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterRoot_expr(TildaSQLParser.Root_exprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TildaSQLParser#root_expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitRoot_expr(TildaSQLParser.Root_exprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TildaSQLParser#expr2}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpr2(TildaSQLParser.Expr2Context ctx);
+	/**
+	 * Exit a parse tree produced by {@link TildaSQLParser#expr2}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpr2(TildaSQLParser.Expr2Context ctx);
+	/**
+	 * Enter a parse tree produced by {@link TildaSQLParser#unary_operator}.
+	 * @param ctx the parse tree
+	 */
+	void enterUnary_operator(TildaSQLParser.Unary_operatorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TildaSQLParser#unary_operator}.
+	 * @param ctx the parse tree
+	 */
+	void exitUnary_operator(TildaSQLParser.Unary_operatorContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TildaSQLParser#where}.
 	 * @param ctx the parse tree
 	 */
@@ -88,15 +118,15 @@ public interface TildaSQLListener extends ParseTreeListener {
 	 */
 	void exitBin_expr_lhs(TildaSQLParser.Bin_expr_lhsContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TildaSQLParser#func_expr}.
+	 * Enter a parse tree produced by {@link TildaSQLParser#func_name}.
 	 * @param ctx the parse tree
 	 */
-	void enterFunc_expr(TildaSQLParser.Func_exprContext ctx);
+	void enterFunc_name(TildaSQLParser.Func_nameContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link TildaSQLParser#func_expr}.
+	 * Exit a parse tree produced by {@link TildaSQLParser#func_name}.
 	 * @param ctx the parse tree
 	 */
-	void exitFunc_expr(TildaSQLParser.Func_exprContext ctx);
+	void exitFunc_name(TildaSQLParser.Func_nameContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TildaSQLParser#value_list}.
 	 * @param ctx the parse tree
