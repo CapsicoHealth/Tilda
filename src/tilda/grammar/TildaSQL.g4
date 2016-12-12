@@ -17,28 +17,28 @@
 grammar TildaSQL;
 
 
-root_expr
- : expr2 EOF
+main
+ : expr EOF
  ;
- 
-expr2
- : value
+
+expr
+ : literal
  | column
- | unary_operator expr2
- | expr2 concat='||' expr2
- | expr2 arithmetic_op_mul expr2
- | expr2 arithmetic_op_add expr2
- | expr2 comparators1=( '<' | '<=' | '>' | '>=' ) expr2
- | expr2 comparators2=( '=' | '==' | '!=' | '<>' ) expr2
- | expr2 like=bin_like expr2
- | expr2 K_AND expr2
- | expr2 K_OR expr2
- | func=func_name '(' (expr2 ( ',' expr2 )*)? ')'
- | '(' expr2 ')'
- | expr2 isnull=isnull_op
- | expr2 between=between_op expr2 K_AND expr2
- | expr2 K_NOT? K_IN '(' expr2 ( ',' expr2 )* ')'
- | K_CASE ( K_WHEN expr2 K_THEN expr2 )+ ( K_ELSE expr2 )? K_END                   
+ | unary_operator expr
+ | expr concat='||' expr
+ | expr arithmetic_op_mul expr
+ | expr arithmetic_op_add expr
+ | expr comparators1=( '<' | '<=' | '>' | '>=' ) expr
+ | expr comparators2=( '=' | '==' | '!=' | '<>' ) expr
+ | expr like=(K_NOT_LIKE | K_LIKE) expr
+ | expr K_AND expr
+ | expr K_OR expr
+ | func=func_name '(' (expr ( ',' expr )*)? ')'
+ | '(' expr ')'
+ | expr isnull=isnull_op
+ | expr between=between_op expr K_AND expr
+ | expr K_NOT? K_IN '(' expr ( ',' expr )* ')'
+ | K_CASE ( K_WHEN case_when=expr K_THEN case_then=expr )+ ( K_ELSE case_else=expr )? K_END                   
 ;
 
 unary_operator
@@ -47,101 +47,28 @@ unary_operator
  | K_NOT
 ;
 
-where
- : expr EOF
- ; 
-
-expr
- : bool_expr
- | bin_expr
- | between_expr
- | expr_sub
- ;
- 
-expr_sub
- : '(' expr ')'
- ;
- 
-bool_expr
- : l_expr=bool_expr op=bool_op r_expr=bool_expr     
- | s_expr=bin_expr                                                                
- | isnull_expr
- | bool_expr_sub                                                                  
- ;
-
-bool_op
- : K_AND K_NOT?
- | K_OR K_NOT?
- ;
- 
-bool_expr_sub
- : '(' bool_expr ')'
- ; 
-
-bin_expr
- : (bin_expr_lhs | func_name '(' bin_expr_lhs ')') (bin_op|bin_like) (column | arithmetic_expr_base)
- | bin_expr_lhs (K_NOT)? K_IN  value_list
- ;
-
-bin_expr_lhs
- : (value|column) (('+' | '||' | ',') (value|column))*
- ;
- 
 func_name
  : K_LEN
  | K_DAYS_BETWEEN
  ;
 
-value_list
- : '(' value (',' value)* ')'
- ;
-
-bin_like: (K_NOT)? K_LIKE;
-bin_op: K_LT | K_LTE | K_GT | K_GTE | K_EQ | K_NEQ;
-
-arithmetic_expr_base
- : arithmetic_expr
- ;
-
-arithmetic_expr
- : arithmetic_expr arithmetic_op_mul arithmetic_expr      # ArithmeticExpr
- | arithmetic_expr arithmetic_op_add arithmetic_expr      # ArithmeticExpr
- | value                                                  # ArithmeticExprVal
- | arithmetic_expr_sub                                    # ArithmeticExprSub
- ;
- 
-arithmetic_expr_sub
- : '(' s_expr=arithmetic_expr ')'
- ;
-
 arithmetic_op_add: '+' | K_MINUS;
 arithmetic_op_mul: '*' | K_DIV;
- 
+isnull_op: K_IS K_NOT? K_NULL (K_OR K_EMPTY)?;
+between_op: K_NOT? K_BETWEEN;
 
-isnull_expr
- : column isnull_op
- ;
-
-isnull_op
- : K_IS K_NOT? K_NULL (K_OR K_EMPTY)?
- ;
-
-between_expr
- : col=column op=between_op val1=value K_AND val2=value
- ;
-
-between_op
- : K_NOT? K_BETWEEN
- ;
- 
- 
-
-value
+literal
  : numeric_literal     # ValueNumericLiteral
+ | boolean_literal     # ValueBooleanLiteral
  | timestamp_literal   # ValueTimestampLiteral
  | string_literal      # ValueStringLiteral
  | bind_parameter      # ValueBindParam
  ; 
+
+boolean_literal
+ : K_TRUE
+ | K_FALSE
+ ;
 
 numeric_literal
  : NUMERIC_LITERAL
@@ -150,7 +77,6 @@ numeric_literal
 NUMERIC_LITERAL
  : DIGIT+ ( '.' DIGIT* )?
  ;
-
 
 timestamp_literal // ISO: '2011-12-03T10:15:30+01:00'.
  : TIMESTAMP_LITERAL
@@ -184,11 +110,6 @@ BIND_PARAMETER
  : '?{' IDENTIFIER '}'
  ;
 
-
-function
- : IDENTIFIER '(' ( arithmetic_expr_base ( ',' arithmetic_expr_base )* )? ')'
- ;
-
 column
  : ( IDENTIFIER '.' )? IDENTIFIER
  ;
@@ -199,6 +120,7 @@ K_BETWEEN : B E T W E E N;
 K_IN : I N;
 K_IS : I S;
 K_LIKE : L I K E;
+K_NOT_LIKE : N O T ' '+ L I K E;
 K_NOT : N O T;
 K_NULL : N U L L;
 K_EMPTY : E M P T Y;
@@ -219,6 +141,8 @@ K_WHEN : W H E N;
 K_THEN : T H E N;
 K_ELSE : E L S E;
 K_END : E N D;
+K_TRUE : T R U E;
+K_FALSE : F A L S E;
 
 
 IDENTIFIER

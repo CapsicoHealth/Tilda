@@ -8,45 +8,15 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface TildaSQLListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link TildaSQLParser#root_expr}.
+	 * Enter a parse tree produced by {@link TildaSQLParser#main}.
 	 * @param ctx the parse tree
 	 */
-	void enterRoot_expr(TildaSQLParser.Root_exprContext ctx);
+	void enterMain(TildaSQLParser.MainContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link TildaSQLParser#root_expr}.
+	 * Exit a parse tree produced by {@link TildaSQLParser#main}.
 	 * @param ctx the parse tree
 	 */
-	void exitRoot_expr(TildaSQLParser.Root_exprContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TildaSQLParser#expr2}.
-	 * @param ctx the parse tree
-	 */
-	void enterExpr2(TildaSQLParser.Expr2Context ctx);
-	/**
-	 * Exit a parse tree produced by {@link TildaSQLParser#expr2}.
-	 * @param ctx the parse tree
-	 */
-	void exitExpr2(TildaSQLParser.Expr2Context ctx);
-	/**
-	 * Enter a parse tree produced by {@link TildaSQLParser#unary_operator}.
-	 * @param ctx the parse tree
-	 */
-	void enterUnary_operator(TildaSQLParser.Unary_operatorContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TildaSQLParser#unary_operator}.
-	 * @param ctx the parse tree
-	 */
-	void exitUnary_operator(TildaSQLParser.Unary_operatorContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TildaSQLParser#where}.
-	 * @param ctx the parse tree
-	 */
-	void enterWhere(TildaSQLParser.WhereContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TildaSQLParser#where}.
-	 * @param ctx the parse tree
-	 */
-	void exitWhere(TildaSQLParser.WhereContext ctx);
+	void exitMain(TildaSQLParser.MainContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TildaSQLParser#expr}.
 	 * @param ctx the parse tree
@@ -58,65 +28,15 @@ public interface TildaSQLListener extends ParseTreeListener {
 	 */
 	void exitExpr(TildaSQLParser.ExprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TildaSQLParser#expr_sub}.
+	 * Enter a parse tree produced by {@link TildaSQLParser#unary_operator}.
 	 * @param ctx the parse tree
 	 */
-	void enterExpr_sub(TildaSQLParser.Expr_subContext ctx);
+	void enterUnary_operator(TildaSQLParser.Unary_operatorContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link TildaSQLParser#expr_sub}.
+	 * Exit a parse tree produced by {@link TildaSQLParser#unary_operator}.
 	 * @param ctx the parse tree
 	 */
-	void exitExpr_sub(TildaSQLParser.Expr_subContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TildaSQLParser#bool_expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterBool_expr(TildaSQLParser.Bool_exprContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TildaSQLParser#bool_expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitBool_expr(TildaSQLParser.Bool_exprContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TildaSQLParser#bool_op}.
-	 * @param ctx the parse tree
-	 */
-	void enterBool_op(TildaSQLParser.Bool_opContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TildaSQLParser#bool_op}.
-	 * @param ctx the parse tree
-	 */
-	void exitBool_op(TildaSQLParser.Bool_opContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TildaSQLParser#bool_expr_sub}.
-	 * @param ctx the parse tree
-	 */
-	void enterBool_expr_sub(TildaSQLParser.Bool_expr_subContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TildaSQLParser#bool_expr_sub}.
-	 * @param ctx the parse tree
-	 */
-	void exitBool_expr_sub(TildaSQLParser.Bool_expr_subContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TildaSQLParser#bin_expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterBin_expr(TildaSQLParser.Bin_exprContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TildaSQLParser#bin_expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitBin_expr(TildaSQLParser.Bin_exprContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TildaSQLParser#bin_expr_lhs}.
-	 * @param ctx the parse tree
-	 */
-	void enterBin_expr_lhs(TildaSQLParser.Bin_expr_lhsContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TildaSQLParser#bin_expr_lhs}.
-	 * @param ctx the parse tree
-	 */
-	void exitBin_expr_lhs(TildaSQLParser.Bin_expr_lhsContext ctx);
+	void exitUnary_operator(TildaSQLParser.Unary_operatorContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TildaSQLParser#func_name}.
 	 * @param ctx the parse tree
@@ -127,92 +47,6 @@ public interface TildaSQLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFunc_name(TildaSQLParser.Func_nameContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TildaSQLParser#value_list}.
-	 * @param ctx the parse tree
-	 */
-	void enterValue_list(TildaSQLParser.Value_listContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TildaSQLParser#value_list}.
-	 * @param ctx the parse tree
-	 */
-	void exitValue_list(TildaSQLParser.Value_listContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TildaSQLParser#bin_like}.
-	 * @param ctx the parse tree
-	 */
-	void enterBin_like(TildaSQLParser.Bin_likeContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TildaSQLParser#bin_like}.
-	 * @param ctx the parse tree
-	 */
-	void exitBin_like(TildaSQLParser.Bin_likeContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TildaSQLParser#bin_op}.
-	 * @param ctx the parse tree
-	 */
-	void enterBin_op(TildaSQLParser.Bin_opContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TildaSQLParser#bin_op}.
-	 * @param ctx the parse tree
-	 */
-	void exitBin_op(TildaSQLParser.Bin_opContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TildaSQLParser#arithmetic_expr_base}.
-	 * @param ctx the parse tree
-	 */
-	void enterArithmetic_expr_base(TildaSQLParser.Arithmetic_expr_baseContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TildaSQLParser#arithmetic_expr_base}.
-	 * @param ctx the parse tree
-	 */
-	void exitArithmetic_expr_base(TildaSQLParser.Arithmetic_expr_baseContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ArithmeticExpr}
-	 * labeled alternative in {@link TildaSQLParser#arithmetic_expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterArithmeticExpr(TildaSQLParser.ArithmeticExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ArithmeticExpr}
-	 * labeled alternative in {@link TildaSQLParser#arithmetic_expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitArithmeticExpr(TildaSQLParser.ArithmeticExprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ArithmeticExprSub}
-	 * labeled alternative in {@link TildaSQLParser#arithmetic_expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterArithmeticExprSub(TildaSQLParser.ArithmeticExprSubContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ArithmeticExprSub}
-	 * labeled alternative in {@link TildaSQLParser#arithmetic_expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitArithmeticExprSub(TildaSQLParser.ArithmeticExprSubContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ArithmeticExprVal}
-	 * labeled alternative in {@link TildaSQLParser#arithmetic_expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterArithmeticExprVal(TildaSQLParser.ArithmeticExprValContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ArithmeticExprVal}
-	 * labeled alternative in {@link TildaSQLParser#arithmetic_expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitArithmeticExprVal(TildaSQLParser.ArithmeticExprValContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TildaSQLParser#arithmetic_expr_sub}.
-	 * @param ctx the parse tree
-	 */
-	void enterArithmetic_expr_sub(TildaSQLParser.Arithmetic_expr_subContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TildaSQLParser#arithmetic_expr_sub}.
-	 * @param ctx the parse tree
-	 */
-	void exitArithmetic_expr_sub(TildaSQLParser.Arithmetic_expr_subContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TildaSQLParser#arithmetic_op_add}.
 	 * @param ctx the parse tree
@@ -234,16 +68,6 @@ public interface TildaSQLListener extends ParseTreeListener {
 	 */
 	void exitArithmetic_op_mul(TildaSQLParser.Arithmetic_op_mulContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TildaSQLParser#isnull_expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterIsnull_expr(TildaSQLParser.Isnull_exprContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TildaSQLParser#isnull_expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitIsnull_expr(TildaSQLParser.Isnull_exprContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link TildaSQLParser#isnull_op}.
 	 * @param ctx the parse tree
 	 */
@@ -253,16 +77,6 @@ public interface TildaSQLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitIsnull_op(TildaSQLParser.Isnull_opContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TildaSQLParser#between_expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterBetween_expr(TildaSQLParser.Between_exprContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TildaSQLParser#between_expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitBetween_expr(TildaSQLParser.Between_exprContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TildaSQLParser#between_op}.
 	 * @param ctx the parse tree
@@ -275,52 +89,74 @@ public interface TildaSQLListener extends ParseTreeListener {
 	void exitBetween_op(TildaSQLParser.Between_opContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ValueNumericLiteral}
-	 * labeled alternative in {@link TildaSQLParser#value}.
+	 * labeled alternative in {@link TildaSQLParser#literal}.
 	 * @param ctx the parse tree
 	 */
 	void enterValueNumericLiteral(TildaSQLParser.ValueNumericLiteralContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code ValueNumericLiteral}
-	 * labeled alternative in {@link TildaSQLParser#value}.
+	 * labeled alternative in {@link TildaSQLParser#literal}.
 	 * @param ctx the parse tree
 	 */
 	void exitValueNumericLiteral(TildaSQLParser.ValueNumericLiteralContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code ValueBooleanLiteral}
+	 * labeled alternative in {@link TildaSQLParser#literal}.
+	 * @param ctx the parse tree
+	 */
+	void enterValueBooleanLiteral(TildaSQLParser.ValueBooleanLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ValueBooleanLiteral}
+	 * labeled alternative in {@link TildaSQLParser#literal}.
+	 * @param ctx the parse tree
+	 */
+	void exitValueBooleanLiteral(TildaSQLParser.ValueBooleanLiteralContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code ValueTimestampLiteral}
-	 * labeled alternative in {@link TildaSQLParser#value}.
+	 * labeled alternative in {@link TildaSQLParser#literal}.
 	 * @param ctx the parse tree
 	 */
 	void enterValueTimestampLiteral(TildaSQLParser.ValueTimestampLiteralContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code ValueTimestampLiteral}
-	 * labeled alternative in {@link TildaSQLParser#value}.
+	 * labeled alternative in {@link TildaSQLParser#literal}.
 	 * @param ctx the parse tree
 	 */
 	void exitValueTimestampLiteral(TildaSQLParser.ValueTimestampLiteralContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ValueStringLiteral}
-	 * labeled alternative in {@link TildaSQLParser#value}.
+	 * labeled alternative in {@link TildaSQLParser#literal}.
 	 * @param ctx the parse tree
 	 */
 	void enterValueStringLiteral(TildaSQLParser.ValueStringLiteralContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code ValueStringLiteral}
-	 * labeled alternative in {@link TildaSQLParser#value}.
+	 * labeled alternative in {@link TildaSQLParser#literal}.
 	 * @param ctx the parse tree
 	 */
 	void exitValueStringLiteral(TildaSQLParser.ValueStringLiteralContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ValueBindParam}
-	 * labeled alternative in {@link TildaSQLParser#value}.
+	 * labeled alternative in {@link TildaSQLParser#literal}.
 	 * @param ctx the parse tree
 	 */
 	void enterValueBindParam(TildaSQLParser.ValueBindParamContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code ValueBindParam}
-	 * labeled alternative in {@link TildaSQLParser#value}.
+	 * labeled alternative in {@link TildaSQLParser#literal}.
 	 * @param ctx the parse tree
 	 */
 	void exitValueBindParam(TildaSQLParser.ValueBindParamContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TildaSQLParser#boolean_literal}.
+	 * @param ctx the parse tree
+	 */
+	void enterBoolean_literal(TildaSQLParser.Boolean_literalContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TildaSQLParser#boolean_literal}.
+	 * @param ctx the parse tree
+	 */
+	void exitBoolean_literal(TildaSQLParser.Boolean_literalContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TildaSQLParser#numeric_literal}.
 	 * @param ctx the parse tree
@@ -361,16 +197,6 @@ public interface TildaSQLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitBind_parameter(TildaSQLParser.Bind_parameterContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TildaSQLParser#function}.
-	 * @param ctx the parse tree
-	 */
-	void enterFunction(TildaSQLParser.FunctionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TildaSQLParser#function}.
-	 * @param ctx the parse tree
-	 */
-	void exitFunction(TildaSQLParser.FunctionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TildaSQLParser#column}.
 	 * @param ctx the parse tree

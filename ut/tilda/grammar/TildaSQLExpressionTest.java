@@ -68,11 +68,11 @@ public class TildaSQLExpressionTest
      */
     public static void toto()
       {
-        String Expr = "case when DaysBetween(BENE_BIRTH_DT, TIMESTAMP_TODAY) > '65' "
-                     +"          then 5 + DaysBetween(BENE_BIRTH_DT, BENE_DEATH_DT) "
-                     +"     when Len(DESYNPUF_ID) < 10"
-                     +"          then Len(DESYNPUF_ID)"
-                     +"     else -1"
+        String Expr = "case when DaysBetween(BENE_BIRTH_DT, TIMESTAMP_TODAY) > 65\n"
+                     +"          then 5 + DaysBetween(BENE_BIRTH_DT, BENE_DEATH_DT)\n"
+                     +"     when Len(DESYNPUF_ID) < 10\n"
+                     +"          then Len(DESYNPUF_ID||DESYNPUF_ID||DESYNPUF_ID) \n"
+                     +"     else '12345'||true\n"
                      +"end"
                     ;
 
