@@ -145,8 +145,11 @@ public class Migrator
                     if (S._Actions.isEmpty() == true)
                       continue;
                     for (MigrationAction A : S._Actions)
-                      if (A.process(C) == false)
-                        throw new Exception("There was an error with the action '" + A.getDescription() + "'.");
+                      {
+                        if (A.process(C) == false)
+                          throw new Exception("There was an error with the action '" + A.getDescription() + "'.");
+                        C.commit();
+                      }
                     C.commit();
                   }
               }
