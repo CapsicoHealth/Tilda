@@ -401,8 +401,8 @@ public class View extends Base
         _ParentSchema._Objects.add(O);
         O.Validate(PS, ParentSchema);
 
-//        if (_Formulas != null)
-//          Formula.ValidateFormulaCode(PS, this);
+        if (_Formulas != null)
+          Formula.ValidateFormulaCode(PS, this);
 
         _Validated = Errs == PS.getErrorCount();
         return _Validated;

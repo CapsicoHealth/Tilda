@@ -31,7 +31,6 @@ import tilda.enums.ColumnType;
 import tilda.enums.MultiType;
 import tilda.grammar.ErrorList;
 import tilda.grammar.TildaSQLValidator;
-import tilda.grammar.WhereClauseCodeGenJavaOnJson;
 import tilda.parsing.ParserSession;
 import tilda.types.ColumnDefinition;
 import tilda.utils.TextUtil;
