@@ -76,7 +76,7 @@ public class TildaSQLExpressionTest
                      +"end"
                     ;
 
-        TildaSQLValidator Validator = new TildaSQLValidator(Expr, false);
+        TildaSQLValidator Validator = new TildaSQLValidator(Expr);
         if (Validator.getParserSyntaxErrors() != 0)
           {
             LOG.error("\n"+Validator.PrintParseTree());

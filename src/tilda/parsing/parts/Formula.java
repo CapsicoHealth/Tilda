@@ -149,7 +149,7 @@ public class Formula extends TypeDef
 
         for (Formula F : ParentView._Formulas)
           {
-            TildaSQLValidator SQLValidator = new TildaSQLValidator(String.join("\n", F._FormulaStrs), false);
+            TildaSQLValidator SQLValidator = new TildaSQLValidator(String.join("\n", F._FormulaStrs));
             if (SQLValidator.getParserSyntaxErrors() != 0)
               {
                 PS.AddError("View " + ParentView.getShortName() + " is defining a formula '" + F._Name + "' with an invalid formula.");

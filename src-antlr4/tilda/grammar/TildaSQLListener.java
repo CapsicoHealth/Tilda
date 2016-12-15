@@ -290,6 +290,18 @@ public interface TildaSQLListener extends ParseTreeListener {
 	 */
 	void exitValueTimestampLiteral(TildaSQLParser.ValueTimestampLiteralContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code ValueCharLiteral}
+	 * labeled alternative in {@link TildaSQLParser#literal}.
+	 * @param ctx the parse tree
+	 */
+	void enterValueCharLiteral(TildaSQLParser.ValueCharLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ValueCharLiteral}
+	 * labeled alternative in {@link TildaSQLParser#literal}.
+	 * @param ctx the parse tree
+	 */
+	void exitValueCharLiteral(TildaSQLParser.ValueCharLiteralContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code ValueStringLiteral}
 	 * labeled alternative in {@link TildaSQLParser#literal}.
 	 * @param ctx the parse tree
@@ -343,6 +355,16 @@ public interface TildaSQLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTimestamp_literal(TildaSQLParser.Timestamp_literalContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TildaSQLParser#char_literal}.
+	 * @param ctx the parse tree
+	 */
+	void enterChar_literal(TildaSQLParser.Char_literalContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TildaSQLParser#char_literal}.
+	 * @param ctx the parse tree
+	 */
+	void exitChar_literal(TildaSQLParser.Char_literalContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TildaSQLParser#string_literal}.
 	 * @param ctx the parse tree

@@ -47,7 +47,7 @@ public class TildaSQLServlet extends HttpServlet
 
         PrintWriter _PrintWriter = response.getWriter();
         String Expr = request.getParameter("expr");
-        _Validator = new TildaSQLValidator(Expr, true);
+        _Validator = new TildaSQLValidator(Expr);
         String ColDefsStr = request.getParameter("colDefsJson");
         try
           {

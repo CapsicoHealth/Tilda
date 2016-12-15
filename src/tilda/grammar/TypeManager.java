@@ -82,6 +82,21 @@ public class TypeManager
         LOG.debug("- "+(T==null?"NULL":T.name())+" ("+Descr+")");
         return T;
       }
+    
+    public static boolean areCompatible(ColumnType T1, ColumnType T2)
+      {
+        /*@formatter:off*/
+        return T1 == ColumnType.BOOLEAN && T2 == ColumnType.BOOLEAN
+            || T1 == ColumnType.DATETIME && T2 == ColumnType.DATETIME
+            || (    (T1 == ColumnType.INTEGER || T1 == ColumnType.LONG || T1 == ColumnType.FLOAT || T1 == ColumnType.DOUBLE)
+                 && (T2 == ColumnType.INTEGER || T2 == ColumnType.LONG || T2 == ColumnType.FLOAT || T2 == ColumnType.DOUBLE)
+               )
+            || (    (T1 == ColumnType.STRING || T1 == ColumnType.CHAR)
+                 && (T2 == ColumnType.STRING || T2 == ColumnType.CHAR)
+               );
+        /*@formatter:on*/
+      }
+    
 
 
     /*

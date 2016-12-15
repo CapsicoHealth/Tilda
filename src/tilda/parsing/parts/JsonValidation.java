@@ -25,6 +25,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.enums.ColumnType;
 import tilda.enums.MultiType;
 import tilda.grammar.ErrorList;
 import tilda.grammar.TildaSQLValidator;
@@ -69,12 +70,10 @@ public class JsonValidation
             ColDefs.add(Col);
           }
 
-        StringBuilder Str = new StringBuilder();
-        for (String s : _Rule)
-          Str.append(s).append("\n");
+        String Str = String.join("\n", _Rule);
 
         WhereClauseCodeGenJavaOnJson WC_CG = new WhereClauseCodeGenJavaOnJson();
-        TildaSQLValidator Validator = new TildaSQLValidator(Str.toString(), true);
+        TildaSQLValidator Validator = new TildaSQLValidator(Str.toString());
         if (Validator.getParserSyntaxErrors() != 0)
           {
             PS.AddError("Column '" + C.getFullName() + " defined a jsonSchema with an invalid validation rule.");
@@ -88,6 +87,7 @@ public class JsonValidation
         if (I != null)
           {
             boolean Err = false;
+            LOG.debug("Column '" + C.getFullName() + " defined an invalid jsonSchema validation rule\n" + Str);
             while (I.hasNext() == true)
               {
                 PS.AddError("Column '" + C.getFullName() + " defined a jsonSchema with an invalid validation rule: " + I.next());
@@ -96,10 +96,21 @@ public class JsonValidation
             if (Err == true)
               return false;
           }
+        ColumnType T = Validator.getFinalExpressionType();
+        if (T == null)
+          PS.AddError("Column '" + C.getFullName() + " defined a jsonSchema validation rule without a result type.");
+        else
+          {
+            if (T != ColumnType.BOOLEAN)
+              PS.AddError("Column '" + C.getFullName() + " defined a jsonSchema validation rule with a type '" + T.name() + "': a Boolean expression was expected.");
+            T = Validator.getFinalExpressionType();
+            if (T != null)
+              PS.AddError("Column '" + C.getFullName() + " defined a jsonSchema validation rule with an extra type '" + T.name() + "'. Only one result type was expected.");
+          }
 
         _JavaCodeGenStr = WC_CG.getCodeStr();
 
-        //LOG.debug("Generated Java rule check:\n" + _JavaCodeGenStr);
+        // LOG.debug("Generated Java rule check:\n" + _JavaCodeGenStr);
 
         return true;
       }

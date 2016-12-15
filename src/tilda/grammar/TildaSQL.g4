@@ -22,23 +22,23 @@ main
  ;
 
 expr
- : literal                                               #expr_literal
- | column                                                #expr_column
- | unary_operator expr                                   #expr_unary
- | expr concat='||' expr                                 #expr_concat
+ : expr concat='||' expr                                 #expr_concat
  | expr arithmetic_op_mul expr                           #expr_arith
  | expr arithmetic_op_add expr                           #expr_arith
- | expr comparators1=( '<' | '<=' | '>' | '>=' ) expr    #expr_comp
+ | expr comparators1=( '<' | '<=' | '>'  | '>=' ) expr   #expr_comp
  | expr comparators2=( '=' | '==' | '!=' | '<>' ) expr   #expr_comp
  | expr like=(K_NOT_LIKE | K_LIKE) expr                  #expr_comp
- | expr K_AND expr                                       #expr_bool
- | expr K_OR expr                                        #expr_bool
  | func=func_name '(' (expr ( ',' expr )*)? ')'          #expr_func
  | '(' expr ')'                                          #expr_sub
  | expr isnull=isnull_op                                 #expr_isnull
  | expr between=between_op expr K_AND expr               #expr_between
- | expr K_NOT? K_IN '(' expr ( ',' expr )* ')'           #expr_in
- | K_CASE case_when_expr+ case_else_expr? K_END          #expr_case 
+ | in_main=expr K_NOT? K_IN '(' expr ( ',' expr )* ')'   #expr_in
+ | K_CASE case_when_expr+ case_else_expr? K_END          #expr_case
+ | expr K_AND expr                                       #expr_bool
+ | expr K_OR expr                                        #expr_bool
+ | literal                                               #expr_literal
+ | column                                                #expr_column
+ | unary_operator expr                                   #expr_unary 
 ;
 
 case_when_expr
@@ -68,6 +68,7 @@ literal
  : numeric_literal     # ValueNumericLiteral
  | boolean_literal     # ValueBooleanLiteral
  | timestamp_literal   # ValueTimestampLiteral
+ | char_literal        # ValueCharLiteral
  | string_literal      # ValueStringLiteral
  | bind_parameter      # ValueBindParam
  ; 
@@ -99,6 +100,15 @@ TIMESTAMP_YESTERDAY      : T I M E S T A M P '_' Y E S T E R D A Y;
 TIMESTAMP_TODAY          : T I M E S T A M P '_' T O D A Y;
 TIMESTAMP_TOMORROW       : T I M E S T A M P '_' T O M O R R O W;
 LAST: L A S T;
+
+
+char_literal
+ : CHAR_LITERAL
+ ;
+
+CHAR_LITERAL
+ : '\'' ( ~'\'' | '\'\'' | '\\\'') '\''
+ ;
 
 
 string_literal

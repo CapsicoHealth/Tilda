@@ -44,7 +44,7 @@ public class SelectQueryParsedAndValidated extends SelectQuery
       {
         super(null, null, OMD._ObjectName, false);
 
-        TildaSQLValidator Validator = new TildaSQLValidator(WhereClause, true);
+        TildaSQLValidator Validator = new TildaSQLValidator(WhereClause);
         Validator.setColumnEnvironment(OMD._Cols);
 
         if (Validator.getParserSyntaxErrors() != 0)

@@ -316,6 +316,18 @@ public class TildaSQLBaseListener implements TildaSQLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterValueCharLiteral(TildaSQLParser.ValueCharLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitValueCharLiteral(TildaSQLParser.ValueCharLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterValueStringLiteral(TildaSQLParser.ValueStringLiteralContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -371,6 +383,18 @@ public class TildaSQLBaseListener implements TildaSQLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitTimestamp_literal(TildaSQLParser.Timestamp_literalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterChar_literal(TildaSQLParser.Char_literalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitChar_literal(TildaSQLParser.Char_literalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

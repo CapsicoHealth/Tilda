@@ -69,7 +69,7 @@ public class WhereClauseCompositionClassGenerator
           }
         WhereClauseDef WCD = new WhereClauseDef(Name, Source);
         _WhereClauses.put(Name, WCD);
-        TildaSQLValidator Validator = new TildaSQLValidator(Source, true);
+        TildaSQLValidator Validator = new TildaSQLValidator(Source);
         if (Validator.getParserSyntaxErrors() != 0)
           {
             LOG.error("    --> Expression '" + Name + "' failed parsing with " + Validator.getParserSyntaxErrors() + " errors.");

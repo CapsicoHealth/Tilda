@@ -16,6 +16,8 @@
 
 package tilda.grammar;
 
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -33,23 +35,28 @@ import tilda.grammar.TildaSQLParser.Case_when_exprContext;
 import tilda.grammar.TildaSQLParser.ColumnContext;
 import tilda.grammar.TildaSQLParser.ExprContext;
 import tilda.grammar.TildaSQLParser.Expr_arithContext;
+import tilda.grammar.TildaSQLParser.Expr_betweenContext;
 import tilda.grammar.TildaSQLParser.Expr_boolContext;
 import tilda.grammar.TildaSQLParser.Expr_caseContext;
 import tilda.grammar.TildaSQLParser.Expr_compContext;
 import tilda.grammar.TildaSQLParser.Expr_concatContext;
 import tilda.grammar.TildaSQLParser.Expr_funcContext;
+import tilda.grammar.TildaSQLParser.Expr_inContext;
+import tilda.grammar.TildaSQLParser.Expr_isnullContext;
 import tilda.grammar.TildaSQLParser.ValueBooleanLiteralContext;
+import tilda.grammar.TildaSQLParser.ValueCharLiteralContext;
 import tilda.grammar.TildaSQLParser.ValueNumericLiteralContext;
 import tilda.grammar.TildaSQLParser.ValueStringLiteralContext;
 import tilda.grammar.TildaSQLParser.ValueTimestampLiteralContext;
 import tilda.types.ColumnDefinition;
+import tilda.utils.DateTimeUtil;
 import tilda.utils.ParseUtil;
 
 public class TildaSQLValidator extends TildaSQLBaseListener
   {
     protected static final Logger LOG = LogManager.getLogger(TildaSQLValidator.class.getName());
 
-    public TildaSQLValidator(String Expr, boolean Where)
+    public TildaSQLValidator(String Expr)
       {
         ANTLRInputStream in = new ANTLRInputStream(Expr);
         TildaSQLLexer lexer = new TildaSQLLexer(in);
@@ -100,6 +107,11 @@ public class TildaSQLValidator extends TildaSQLBaseListener
         return _Errors;
       }
 
+    public ColumnType getFinalExpressionType()
+      {
+        return _TypeManager.popType("Expression Type");
+      }
+
     @Override
     public void exitColumn(ColumnContext ctx)
       {
@@ -125,6 +137,10 @@ public class TildaSQLValidator extends TildaSQLBaseListener
             else
               _TypeManager.pushType(Type, ctx.getText());
           }
+
+        if (_CG != null)
+          _CG.valueLiteralNumeric(ctx.getText());
+
         super.exitValueNumericLiteral(ctx);
       }
 
@@ -132,13 +148,61 @@ public class TildaSQLValidator extends TildaSQLBaseListener
     public void exitValueStringLiteral(ValueStringLiteralContext ctx)
       {
         _TypeManager.pushType(ColumnType.STRING, ctx.getText());
+
+        String Str = ctx.getText();
+        Str = Str.substring(1, Str.length() - 1).replaceAll("\'\'", "'");
+
+        if (_CG != null)
+          _CG.valueLiteralString(Str);
+
         super.exitValueStringLiteral(ctx);
+      }
+
+    @Override
+    public void exitValueCharLiteral(ValueCharLiteralContext ctx)
+      {
+        _TypeManager.pushType(ColumnType.CHAR, ctx.getText());
+
+        if (_CG != null)
+          _CG.valueLiteralChar(ctx.getText().charAt(1)); // 'x' if the token, the char we want is at pos=1
+
+        super.exitValueCharLiteral(ctx);
       }
 
     @Override
     public void exitValueTimestampLiteral(ValueTimestampLiteralContext ctx)
       {
         _TypeManager.pushType(ColumnType.DATETIME, ctx.getText());
+
+        if (ctx.timestamp_literal().CURRENT_TIMESTAMP() != null)
+          {
+            if (_CG != null)
+              _CG.valueTimestampCurrent();
+          }
+        else if (ctx.timestamp_literal().TIMESTAMP_YESTERDAY() != null)
+          {
+            if (_CG != null)
+              _CG.valueTimestampYesterday(ctx.timestamp_literal().LAST() == null);
+          }
+        else if (ctx.timestamp_literal().TIMESTAMP_TODAY() != null)
+          {
+            if (_CG != null)
+              _CG.valueTimestampToday(ctx.timestamp_literal().LAST() == null);
+          }
+        else if (ctx.timestamp_literal().TIMESTAMP_TOMORROW() != null)
+          {
+            if (_CG != null)
+              _CG.valueTimestampTomorrow(ctx.timestamp_literal().LAST() == null);
+          }
+        else
+          {
+            ZonedDateTime ZDT = DateTimeUtil.parsefromJSON(ctx.getText().substring(1, ctx.getText().length() - 1));
+            if (ZDT == null)
+              _Errors.addError("Invalid timestamp " + ctx.getText(), ctx);
+            if (_CG != null)
+              _CG.valueLiteralTimestamp(ZDT);
+          }
+
         super.exitValueTimestampLiteral(ctx);
       }
 
@@ -233,17 +297,7 @@ public class TildaSQLValidator extends TildaSQLBaseListener
             _Errors.addError("The operator '" + Tok.getText() + "' requires 2 operands. " + (T1 == null && T2 == null ? "None were found." : "Only one was found."), ctx);
             return;
           }
-    /*@formatter:off*/
-        if (   T1 == ColumnType.BOOLEAN && T2 == ColumnType.BOOLEAN
-            || T1 == ColumnType.DATETIME && T2 == ColumnType.DATETIME
-            || (    (T1 == ColumnType.INTEGER || T1 == ColumnType.LONG || T1 == ColumnType.FLOAT || T1 == ColumnType.DOUBLE)
-                 && (T2 == ColumnType.INTEGER || T2 == ColumnType.LONG || T2 == ColumnType.FLOAT || T2 == ColumnType.DOUBLE)
-               )
-            || (   (T1 == ColumnType.STRING || T1 == ColumnType.CHAR)
-                && (T2 == ColumnType.STRING || T2 == ColumnType.CHAR)
-               )
-           )
-    /*@formatter:on*/
+        if (TypeManager.areCompatible(T1, T2) == true)
           {
             _TypeManager.pushType(ColumnType.BOOLEAN, ctx.getText());
           }
@@ -467,6 +521,88 @@ public class TildaSQLValidator extends TildaSQLBaseListener
           }
         super.exitExpr_bool(ctx);
       }
+
+    @Override
+    public void exitExpr_between(Expr_betweenContext ctx)
+      {
+        ColumnType T3 = _TypeManager.popType("between2: " + ctx.getText());
+        ColumnType T2 = _TypeManager.popType("between1: " + ctx.getText());
+        ColumnType T1 = _TypeManager.popType("val: " + ctx.getText());
+
+        int count = 0;
+        if (T1 == null)
+          ++count;
+        if (T2 == null)
+          ++count;
+        if (T3 == null)
+          ++count;
+        if (count != 3)
+          {
+            _Errors.addError("The operator 'between' needs 3 DateTime parameters: " + count + " were found instead", ctx);
+            return;
+          }
+        else if (T1 != ColumnType.DATETIME && T2 != ColumnType.DATETIME && T3 != ColumnType.DATETIME)
+          {
+            _Errors.addError("The operator 'between' needs 3 DateTime parameters: " + T1.name() + ", " + T2.name() + " and " + T3.name() + " were found instead", ctx);
+            return;
+          }
+
+        _TypeManager.pushType(ColumnType.BOOLEAN, "between");
+
+        super.exitExpr_between(ctx);
+      }
+
+    @Override
+    public void exitExpr_isnull(Expr_isnullContext ctx)
+      {
+        ColumnType T1 = _TypeManager.popType("val: " + ctx.getText());
+        if (T1 == null)
+          {
+            _Errors.addError("The operator 'is null' needs 1 parameters: none were found instead", ctx);
+            return;
+          }
+
+        _TypeManager.pushType(ColumnType.BOOLEAN, "is null");
+
+        // if (_CG != null)
+        // _CG.isNull(CD, ctx.isnull_op().K_NOT() != null, ctx.isnull_op().K_EMPTY() != null);
+
+        super.exitExpr_isnull(ctx);
+      }
+
+    @Override
+    public void exitExpr_in(Expr_inContext ctx)
+      {
+        List<ColumnType> ParamTypes = new ArrayList<ColumnType>();
+        List<String> ParamValues = new ArrayList<String>();
+        if (ctx.expr() != null)
+          for (ExprContext e : ctx.expr())
+            {
+              ColumnType T = _TypeManager.popType("in param: " + e.getText());
+              if (T == null)
+                {
+                  _Errors.addError("The operator 'in' expected " + ctx.expr().size() + " parameters: only " + ParamTypes.size() + " were found instead", ctx);
+                  return;
+                }
+              ParamTypes.add(0, T);
+              ParamValues.add(0, e.getText());
+            }
+        ColumnType TMain = ParamTypes.get(0);
+        for (int i = 1; i < ParamTypes.size(); ++i)
+          {
+            ColumnType T = ParamTypes.get(i);
+            if (TypeManager.areCompatible(TMain, T) == false)
+              {
+                _Errors.addError("The operator 'in' is trying to match incompatible types '" + TMain.name()+"' with '"+T.name()+"' from value '"+ParamValues.get(i)+"'", ctx);
+                return;
+              }
+          }
+
+        _TypeManager.pushType(ColumnType.BOOLEAN, "is null");
+
+        super.exitExpr_in(ctx);
+      }
+
 
     /*
      * @Override
