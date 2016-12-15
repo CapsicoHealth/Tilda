@@ -479,7 +479,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             .append("LANGUAGE PLPGSQL;\n")
             .append("\n")
             .append("\n")
-            .append("SELECT " + V._ParentSchema._Name + ".Refill_" + TName + "Realized();")
+            .append("-- SELECT " + V._ParentSchema._Name + ".Refill_" + TName + "Realized();")
             .append("-- !!! THIS MAY TAKE SEVERAL MINUTES !!! --")
             .append("\n")
             .append("\n");
