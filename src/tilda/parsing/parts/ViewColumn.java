@@ -30,7 +30,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class ViewColumn
   {
-    static final Logger             LOG                = LogManager.getLogger(ViewColumn.class.getName());
+    static final Logger LOG        = LogManager.getLogger(ViewColumn.class.getName());
 
     /*@formatter:off*/
 	@SerializedName("name"       ) public String         _Name         ;
@@ -42,32 +42,32 @@ public class ViewColumn
     @SerializedName("useMapper"  ) public boolean        _UseMapper     = false;
     @SerializedName("useEnum"    ) public boolean        _UseEnum       = false;
     /*@formatter:on*/
-    
-    
-    
-    
+
+
+
+
     public ViewColumn()
-     {
-     }
-/*
-    public ViewColumn(String Name, String SameAs, JoinType Join, boolean JoinOnly, AggregateType  Aggregate)
       {
-        _Name = Name;
-        _SameAs = SameAs;
-        _Join = Join;
-        _JoinOnly = JoinOnly;
-        _Aggregate = Aggregate;
       }
-*/
+    /*
+     * public ViewColumn(String Name, String SameAs, JoinType Join, boolean JoinOnly, AggregateType Aggregate)
+     * {
+     * _Name = Name;
+     * _SameAs = SameAs;
+     * _Join = Join;
+     * _JoinOnly = JoinOnly;
+     * _Aggregate = Aggregate;
+     * }
+     */
 
-    public transient View     _ParentView;
-    public transient Column   _SameAsObj;
-    public transient JoinType _Join;
-    public transient AggregateType _Aggregate;    
-    public transient boolean  _FailedValidation = false;
+    public transient View          _ParentView;
+    public transient Column        _SameAsObj;
+    public transient JoinType      _Join;
+    public transient AggregateType _Aggregate;
+    public transient boolean       _FailedValidation   = false;
 
-    public boolean _FrameworkGenerated = false;
-    
+    public boolean                 _FrameworkGenerated = false;
+
 
     public String getFullName()
       {
@@ -78,12 +78,12 @@ public class ViewColumn
       {
         return _ParentView.getShortName() + "." + _Name;
       }
-    
+
     public String getName()
       {
         return _Name;
       }
-    
+
     public boolean Validate(ParserSession PS, View ParentView)
       {
         int Errs = PS.getErrorCount();
@@ -92,27 +92,27 @@ public class ViewColumn
         // Mandatories
         if (TextUtil.isNullOrEmpty(_SameAs) == true && AggregateType.COUNT.name().equalsIgnoreCase(_AggregateStr) == false)
           return PS.AddError("View column '" + getFullName() + "' didn't define a 'sameAs'. It is mandatory.");
-        
+
         if (ValidateSameAs(PS) == false)
           return false;
-        
+
         if (TextUtil.isNullOrEmpty(_Name) == true)
           {
             _Name = _SameAsObj._Name;
           }
-        
+
         if (_JoinStr != null)
           if ((_Join = JoinType.parse(_JoinStr)) == null)
             return PS.AddError("View Column '" + getFullName() + "' defined an invalid 'joinType' '" + _JoinStr + "'.");
-        
+
         if (_AggregateStr != null)
           {
             if ((_Aggregate = AggregateType.parse(_AggregateStr)) == null)
-             return PS.AddError("View Column '" + getFullName() + "' defined an invalid 'aggregate' '" + _AggregateStr + "'.");
+              return PS.AddError("View Column '" + getFullName() + "' defined an invalid 'aggregate' '" + _AggregateStr + "'.");
             if (_SameAsObj != null && _SameAsObj._Type == ColumnType.DATETIME)
-             return PS.AddError("View Column '" + getFullName() + "' defined an aggregate on DATETIME column '" + _SameAsObj._Name + "' which is not supported as timezone information would not be retrievable.");
+              return PS.AddError("View Column '" + getFullName() + "' defined an aggregate on DATETIME column '" + _SameAsObj._Name + "' which is not supported as timezone information would not be retrievable.");
           }
-        
+
         return Errs == PS.getErrorCount();
       }
 
@@ -131,6 +131,33 @@ public class ViewColumn
         else
           {
             Column Col = PS.getColumn(R._P, R._S, R._O, R._C);
+            Schema S = PS.getSchema(R._P, R._S);
+            if (S == null)
+              {
+                LOG.error("Cannot find Schema '" + R._P + "." + R._S + "'.");
+              }
+            else
+              {
+                Object O = S.getObject(R._O);
+                if (O == null)
+                  {
+                    LOG.error("Cannot find Object '" + R._S + "." + R._O + "'.");
+                    LOG.error("Known Objects: ");
+                    for (Object o : S._Objects)
+                      LOG.error("   - "+o.getFullName());
+                  }
+                else
+                  {
+                    Column C = O.getColumn(R._C);
+                    if (C == null)
+                      {
+                        LOG.error("Cannot find Column '" + R._S + "." + R._O + "." + R._C + "'.");
+                        LOG.error("Known Columns: ");
+                        for (Column c : O._Columns)
+                         LOG.error("   - "+O.getFullName());
+                      }
+                  }
+              }
             if (Col == null)
               PS.AddError("Column '" + getFullName() + "' is declaring sameas '" + _SameAs + "' resolving to '" + R.getFullName() + "' which cannot be found.");
             else
