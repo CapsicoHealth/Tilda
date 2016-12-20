@@ -55,7 +55,7 @@ public class TypeManager
 
     public void pushType(ColumnType Type, String Descr)
       {
-        LOG.debug("+ "+Type.name()+" ("+Descr+")");
+        LOG.debug("+ " + Type.name() + " (" + Descr + ")");
         _TypeStack.push(Type);
       }
 
@@ -79,10 +79,10 @@ public class TypeManager
     public ColumnType popType(String Descr)
       {
         ColumnType T = _TypeStack.isEmpty() == true ? null : _TypeStack.pop();
-        LOG.debug("- "+(T==null?"NULL":T.name())+" ("+Descr+")");
+        LOG.debug("- " + (T == null ? "NULL" : T.name()) + " (" + Descr + ")");
         return T;
       }
-    
+
     public static boolean areCompatible(ColumnType T1, ColumnType T2)
       {
         /*@formatter:off*/
@@ -96,7 +96,21 @@ public class TypeManager
                );
         /*@formatter:on*/
       }
-    
+
+
+    public ColumnDefinition handleColumn(ColumnContext column)
+      {
+        if (_Columns != null && _Columns.isEmpty() == false)
+          {
+            String colName = column.getText();
+            for (ColumnDefinition col : _Columns)
+              if (col.getName().equalsIgnoreCase(colName) == true)
+               return col;
+            _LastError = "Unknown column name '" + colName + "'.";
+            return null;
+          }
+        return ColumnDefinition.Create(null, null, column.getText(), ColumnType.STRING, false, true, "Default STRING variable");
+      }
 
 
     /*

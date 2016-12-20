@@ -43,6 +43,7 @@ import tilda.grammar.TildaSQLParser.Expr_concatContext;
 import tilda.grammar.TildaSQLParser.Expr_funcContext;
 import tilda.grammar.TildaSQLParser.Expr_inContext;
 import tilda.grammar.TildaSQLParser.Expr_isnullContext;
+import tilda.grammar.TildaSQLParser.Expr_subContext;
 import tilda.grammar.TildaSQLParser.ValueBooleanLiteralContext;
 import tilda.grammar.TildaSQLParser.ValueCharLiteralContext;
 import tilda.grammar.TildaSQLParser.ValueNumericLiteralContext;
@@ -210,6 +211,8 @@ public class TildaSQLValidator extends TildaSQLBaseListener
     public void exitValueBooleanLiteral(ValueBooleanLiteralContext ctx)
       {
         _TypeManager.pushType(ColumnType.BOOLEAN, ctx.getText());
+        if (_CG != null)
+          _CG.valueLiteralBoolean(ctx.getText().equalsIgnoreCase("true") == true);
         super.exitValueBooleanLiteral(ctx);
       }
 
@@ -523,6 +526,21 @@ public class TildaSQLValidator extends TildaSQLBaseListener
       }
 
     @Override
+    public void enterExpr_sub(Expr_subContext ctx)
+      {
+        if (_CG != null)
+          _CG.arithmeticOpenPar();
+        super.enterExpr_sub(ctx);
+      }
+    public void exitExpr_sub(Expr_subContext ctx)
+      {
+        if (_CG != null)
+          _CG.arithmeticClosePar();
+        super.enterExpr_sub(ctx);
+      }
+    
+
+    @Override
     public void exitExpr_between(Expr_betweenContext ctx)
       {
         ColumnType T3 = _TypeManager.popType("between2: " + ctx.getText());
@@ -564,8 +582,15 @@ public class TildaSQLValidator extends TildaSQLBaseListener
 
         _TypeManager.pushType(ColumnType.BOOLEAN, "is null");
 
-        // if (_CG != null)
-        // _CG.isNull(CD, ctx.isnull_op().K_NOT() != null, ctx.isnull_op().K_EMPTY() != null);
+        ColumnDefinition CD = _TypeManager.handleColumn(ctx.column());
+        if (CD == null)
+          {
+            _Errors.addError(_TypeManager.getLastError(), ctx);
+            return;
+          }
+
+        if (_CG != null)
+          _CG.isNull(CD, ctx.isnull_op().K_NOT() != null, ctx.isnull_op().K_EMPTY() != null);
 
         super.exitExpr_isnull(ctx);
       }
@@ -593,7 +618,7 @@ public class TildaSQLValidator extends TildaSQLBaseListener
             ColumnType T = ParamTypes.get(i);
             if (TypeManager.areCompatible(TMain, T) == false)
               {
-                _Errors.addError("The operator 'in' is trying to match incompatible types '" + TMain.name()+"' with '"+T.name()+"' from value '"+ParamValues.get(i)+"'", ctx);
+                _Errors.addError("The operator 'in' is trying to match incompatible types '" + TMain.name() + "' with '" + T.name() + "' from value '" + ParamValues.get(i) + "'", ctx);
                 return;
               }
           }

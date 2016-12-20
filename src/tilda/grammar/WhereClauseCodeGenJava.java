@@ -246,7 +246,6 @@ public class WhereClauseCodeGenJava implements WhereClauseCodeGen
     public void funcDaysBetween(ColumnDefinition Col1, ColumnDefinition Col2)
       {
         // TODO Auto-generated method stub
-        
       }
 
     
@@ -290,6 +289,12 @@ public class WhereClauseCodeGenJava implements WhereClauseCodeGen
     public void valueLiteralString(String Str)
       {
         TextUtil.EscapeDoubleQuoteWithSlash(_CodeGen, Str);
+      }
+
+    @Override
+    public void valueLiteralBoolean(boolean Val)
+      {
+        _CodeGen.append(Val);
       }
 
     @Override

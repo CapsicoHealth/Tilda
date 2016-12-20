@@ -75,6 +75,7 @@ public interface WhereClauseCodeGen
     public void   valueLiteralNumeric  (String Number);
     public void   valueLiteralChar     (char c);
     public void   valueLiteralString   (String Str);
+    public void   valueLiteralBoolean  (boolean Val);
     public void   valueLiteralTimestamp(ZonedDateTime ZDT);
     public void   valueTimestampCurrent();
     public void   valueTimestampYesterday(boolean first);

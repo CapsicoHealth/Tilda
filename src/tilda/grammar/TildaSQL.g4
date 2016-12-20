@@ -30,7 +30,7 @@ expr
  | expr like=(K_NOT_LIKE | K_LIKE) expr                  #expr_comp
  | func=func_name '(' (expr ( ',' expr )*)? ')'          #expr_func
  | '(' expr ')'                                          #expr_sub
- | expr isnull=isnull_op                                 #expr_isnull
+ | column isnull=isnull_op                               #expr_isnull
  | expr between=between_op expr K_AND expr               #expr_between
  | in_main=expr K_NOT? K_IN '(' expr ( ',' expr )* ')'   #expr_in
  | K_CASE case_when_expr+ case_else_expr? K_END          #expr_case
