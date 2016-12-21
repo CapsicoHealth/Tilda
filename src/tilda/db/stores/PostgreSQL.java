@@ -490,6 +490,12 @@ public class PostgreSQL implements DBType
         .append("'SELECT date_part(''days'', $2 - $1)::integer;';\n")
         .append("\n")
         .append("\n")
+        .append("CREATE OR REPLACE FUNCTION TILDA.Age(timestamptz, timestamptz)\n")
+        .append("  RETURNS integer\n")
+        .append("  STRICT IMMUTABLE LANGUAGE SQL AS\n")
+        .append("'SELECT date_part(''year'', age($2, $1)) + date_part('month', age($2, $1))/12.0;';\n")
+        .append("\n")
+        .append("\n")
         .append("CREATE extension if not exists tablefunc;\n")
         ;
 
