@@ -55,7 +55,6 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
-import tilda.utils.TextUtil;
 
 public class Migrator
   {

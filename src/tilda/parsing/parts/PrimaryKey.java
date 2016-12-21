@@ -28,9 +28,9 @@ import com.google.gson.annotations.SerializedName;
 public class PrimaryKey
   {
     /*@formatter:off*/
-    @SerializedName("columns")  public String[] _Columns;
-    @SerializedName("autogen")  public Boolean  _Autogen  = Boolean.FALSE;
-    @SerializedName("keyBatch") public Integer  _KeyBatch;
+    @SerializedName("columns"  )  public String[] _Columns;
+    @SerializedName("autogen"  )  public Boolean  _Autogen  = Boolean.FALSE;
+    @SerializedName("keyBatch" )  public Integer  _KeyBatch;
     /*@formatter:on*/
 
     public transient List<Column> _ColumnObjs = new ArrayList<Column>();
