@@ -489,6 +489,7 @@ public class PostgreSQL implements DBType
         .append("  RETURNS integer\n")
         .append("  STRICT IMMUTABLE LANGUAGE SQL AS\n")
         .append("'SELECT date_part(''days'', $2 - $1)::integer+(case $3 when true then 0 else 1 end);';\n")
+        .append("COMMENT ON FUNCTION TILDA.DaysBetween(timestamptz, timestamptz, boolean) IS 'Computes the number of days between 2 dates ''start'' and ''end''. The third parameter indicates whether the midnight rule should be applied or not. If true, the number of days between 2016-12-01 and 2016-12-02 for example will be 1 (i.e., one mignight passed). If false, the returned count will be 2.';")
         .append("\n")
         .append("\n")
         .append("CREATE OR REPLACE FUNCTION TILDA.Age(timestamptz, timestamptz)\n")
