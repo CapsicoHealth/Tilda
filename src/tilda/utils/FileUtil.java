@@ -90,7 +90,7 @@ public class FileUtil
     public static void copyFileContentsIntoAnotherFile(String inputFileName, PrintWriter Out)
     throws IOException
       {
-        BufferedReader br = new BufferedReader(new FileReader(inputFileName));
+        BufferedReader br = new BufferedReader(getReaderFromFileOrResource(inputFileName));
         try
           {
             String line = br.readLine();
@@ -133,14 +133,14 @@ public class FileUtil
       }
 
     public static Reader getReaderFromFileOrResource(String Name)
-    throws Exception
+    throws IOException
       {
         if (new File(Name).exists() == true)
           return new BufferedReader(new FileReader(Name));
 
         InputStream In = FileUtil.getResourceAsStream(Name);
         if (In == null)
-          throw new Exception("Cannot find import file/resource '" + Name + "'.");
+          throw new IOException("Cannot find import file/resource '" + Name + "'.");
         return new BufferedReader(new InputStreamReader(In));
       }
 

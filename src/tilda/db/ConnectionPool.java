@@ -49,6 +49,7 @@ import tilda.db.metadata.DatabaseMeta;
 import tilda.enums.TransactionType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.migration.Migrator;
+import tilda.parsing.Loader;
 import tilda.parsing.Parser;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Object;
@@ -312,52 +313,9 @@ public class ConnectionPool
     private static List<Schema> LoadTildaResources(Connection C)
     throws Exception
       {
-        Reader R = null;
-        InputStream In = null;
-        Enumeration<URL> resEnum = ConnectionPool.class.getClassLoader().getResources(JarFile.MANIFEST_NAME);
-        List<Schema> TildaList = new ArrayList<Schema>();
-        Schema BaseTildaSchema = null;
-        while (resEnum.hasMoreElements())
-          {
-            URL url = (URL) resEnum.nextElement();
-            In = url.openStream();
-            if (In != null)
-              {
-                Manifest Man = new Manifest();
-                Man.read(In);
-                In.close();
-                String Tildas = Man.getMainAttributes().getValue("Tilda");
-                if (TextUtil.isNullOrEmpty(Tildas) == false)
-                  {
-                    LOG.info("Found Tilda definition files in " + url.toString());
-                    String[] parts = Tildas.split(";");
-                    if (parts != null)
-                      for (String p : parts)
-                        {
-                          if (TextUtil.isNullOrEmpty(p) == true)
-                            continue;
-                          p = p.trim();
-                          In = FileUtil.getResourceAsStream(p);
-                          if (In == null)
-                            throw new Exception("Tilda schema definition '" + p + "' could not be found in the classpath.");
-                          LOG.debug("   Reading " + p);
-                          R = new BufferedReader(new InputStreamReader(In));
-                          Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                          Schema S = gson.fromJson(R, Schema.class);
-                          S.setOrigin(p);
-                          if (p.equals(Parser._BASE_TILDA_SCHEMA_RESOURCE) == true)
-                            BaseTildaSchema = S;
-                          TildaList.add(S);
-                          LOG.debug("   Parsed definition for Schema " + S._Package + "::" + S._Name);
-                          In.close();
-                        }
-                  }
-              }
-          }
-        Schema.ReorderTildaListWithDependencies(TildaList);
-
-        if (BaseTildaSchema == null)
-          throw new Exception("Tilda cannot start as we didn't find the base Tilda schema resource " + Parser._BASE_TILDA_SCHEMA_RESOURCE);
+        List<Schema> TildaList = Loader.LoadTildaResources();
+        if (TildaList == null)
+          throw new Exception("Tilda cannot start as we didn't find the necessary Tilda resources.");
 
         for (Schema S : TildaList)
           {
@@ -383,10 +341,10 @@ public class ConnectionPool
                 }
             else
               {
-                PS.addDependencySchema(BaseTildaSchema);
+                PS.addDependencySchema(TildaList.get(0));
                 PS.addDependencySchema(S);
               }
-            S._DependencySchemas.add(BaseTildaSchema);
+            S._DependencySchemas.add(TildaList.get(0));
             if (S.Validate(PS) == false)
               throw new Exception("Schema " + S._Name + " from resource " + S._ResourceName + " failed validation.");
             for (Object Obj : S._Objects)
@@ -395,6 +353,7 @@ public class ConnectionPool
 
         return TildaList;
       }
+
 
     private static boolean isTildaEnabled()
       {

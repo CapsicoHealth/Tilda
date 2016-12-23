@@ -731,7 +731,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                       }
                     Out.println();
                     Found = true;
-                    LOG.debug(" --> FOUND");
+//                    LOG.debug(" --> FOUND");
                     break;
                   }
                 ++count;
@@ -759,7 +759,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                           }
                         Out.println();
                         Found = true;
-                        LOG.debug(" --> FOUND");
+//                        LOG.debug(" --> FOUND");
                         break;
                       }
                     ++count;

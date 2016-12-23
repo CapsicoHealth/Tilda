@@ -36,6 +36,9 @@ public class Migrate
 
     public static void main(String[] Args)
       {
+        LOG.info("");
+        LOG.info("Tilda migration utility");
+        LOG.info("");
         LOG.info("###################################################################################################");
         LOG.info("##  This utility will attempt to migrate automatically the database connected to via the 'MAIN'  ##");
         LOG.info("##  connection definined in tilda.config.json, using ALL the Tilda schema definitions found in   ##");
