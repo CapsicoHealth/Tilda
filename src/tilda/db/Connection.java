@@ -320,10 +320,10 @@ public final class Connection
       }
     
     
-    public void ExecuteDDL(String SchemaName, String TableName, String Query)
+    public boolean ExecuteDDL(String SchemaName, String TableName, String Query)
     throws Exception
       {
-        JDBCHelper.ExecuteDDL(_C, SchemaName, TableName, Query);
+        return JDBCHelper.ExecuteDDL(_C, SchemaName, TableName, Query);
       }
 
     public Array createArrayOf(String TypeName, java.lang.Object[] A)

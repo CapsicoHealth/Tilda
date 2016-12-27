@@ -107,7 +107,7 @@ public class JDBCHelper
     public static int ExecuteSelect(Connection C, String SchemaName, String TableName, String Query, RecordProcessor RP, int Start, boolean Offsetted, int Size, boolean Limited, boolean CountAll)
     throws Exception
       {
-        TableName = SchemaName+"."+TableName;
+        TableName = SchemaName + "." + TableName;
         QueryDetails.logQuery(TableName, Query, null);
         Statement S = null;
         try
@@ -129,7 +129,7 @@ public class JDBCHelper
     public static int ExecuteUpdate(Connection C, String SchemaName, String TableName, String Query)
     throws Exception
       {
-        TableName = SchemaName+"."+TableName;
+        TableName = SchemaName + "." + TableName;
         QueryDetails.logQuery(TableName, Query, null);
         Statement S = null;
         try
@@ -146,11 +146,11 @@ public class JDBCHelper
             JDBCHelper.CloseStatement(S);
           }
       }
-    
-    public static void ExecuteDDL(Connection C, String SchemaName, String TableName, String Query)
+
+    public static boolean ExecuteDDL(Connection C, String SchemaName, String TableName, String Query)
     throws Exception
       {
-        TableName = SchemaName+"."+TableName;
+        TableName = SchemaName + "." + TableName;
         QueryDetails.logQuery(TableName, Query, null);
         Statement S = null;
         try
@@ -158,22 +158,23 @@ public class JDBCHelper
             long T0 = System.nanoTime();
             QueryDetails.setLastQuery(TableName, Query);
             S = C.createStatement();
-            if (S.execute(Query) == false)
-             while (S.getMoreResults() == true || S.getUpdateCount() != -1)
-               S.getResultSet();
+            S.execute(Query);
+            while (S.getMoreResults() == true || S.getUpdateCount() != -1)
+              S.getResultSet();
             PerfTracker.add(TableName, StatementType.UPDATE, System.nanoTime() - T0, 1);
+            return true;
           }
         finally
           {
             JDBCHelper.CloseStatement(S);
           }
       }
-    
+
 
     public static int ExecuteInsert(Connection C, String SchemaName, String TableName, String Query)
     throws Exception
       {
-        TableName = SchemaName+"."+TableName;
+        TableName = SchemaName + "." + TableName;
         QueryDetails.logQuery(TableName, Query, null);
         Statement S = null;
         try
@@ -190,7 +191,7 @@ public class JDBCHelper
             JDBCHelper.CloseStatement(S);
           }
       }
-    
-    
+
+
 
   }

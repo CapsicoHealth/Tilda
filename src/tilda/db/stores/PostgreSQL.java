@@ -170,7 +170,7 @@ public class PostgreSQL implements DBType
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
         getSQlCodeGen().genFileStart(Out, S);
-        return Con.ExecuteUpdate(S.getShortName(), null, Str.toString()) >= 0;
+        return Con.ExecuteDDL(S.getShortName(), null, Str.toString());
       }
 
     @Override
@@ -180,8 +180,7 @@ public class PostgreSQL implements DBType
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
         Generator.getTableDDL(getSQlCodeGen(), Out, Obj, true, true);
-        Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Str.toString());
-        return true;
+        return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Str.toString());
       }
 
     @Override
@@ -191,16 +190,14 @@ public class PostgreSQL implements DBType
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
         Generator.getTableDDL(getSQlCodeGen(), Out, Obj, false, true);
-        Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Str.toString());
-        return true;
+        return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Str.toString());
       }
 
     @Override
     public boolean dropView(Connection Con, View V)
     throws Exception
       {
-        Con.ExecuteDDL(V._ParentSchema._Name, V.getBaseName(), "DROP VIEW IF EXISTS " + V.getShortName() + " CASCADE");
-        return true;
+        return Con.ExecuteDDL(V._ParentSchema._Name, V.getBaseName(), "DROP VIEW IF EXISTS " + V.getShortName() + " CASCADE");
       }
 
     @Override
@@ -210,8 +207,7 @@ public class PostgreSQL implements DBType
         StringWriter Str = new StringWriter();
         PrintWriter Out = new PrintWriter(Str);
         Generator.getFullViewDDL(getSQlCodeGen(), Out, V);
-        Con.ExecuteDDL(V._ParentSchema._Name, V.getBaseName(), Str.toString());
-        return true;
+        return Con.ExecuteDDL(V._ParentSchema._Name, V.getBaseName(), Str.toString());
       }
 
     @Override
@@ -225,7 +221,7 @@ public class PostgreSQL implements DBType
           {
             Q += " not null DEFAULT " + ValueHelper.printValue(Col, DefaultValue);
           }
-        if (Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) < 0)
+        if (Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) == false)
          return false;
 
         return alterTableAlterColumnComment(Con, Col);
@@ -236,7 +232,7 @@ public class PostgreSQL implements DBType
     throws Exception
       {
         String Q = "COMMENT ON COLUMN " + Col._ParentObject.getShortName() + ".\"" + Col.getName() + "\" IS " + TextUtil.EscapeSingleQuoteForSQL(Col._Description) + ";";
-        return Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) >= 0;
+        return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
       }
 
     @Override
@@ -245,7 +241,7 @@ public class PostgreSQL implements DBType
       {
         String Q = "ALTER TABLE " + Obj.getShortName() + " DROP COLUMN \"" + ColumnName + "\"";
 
-        return Con.ExecuteUpdate(Obj._ParentSchema._Name, Obj.getBaseName(), Q) >= 0;
+        return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
       }
 
 
@@ -268,7 +264,7 @@ public class PostgreSQL implements DBType
           }
 
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" " + (Col._Nullable == false ? "SET" : "DROP") + " NOT NULL;";
-        return Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) >= 0;
+        return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
       }
 
     @Override
@@ -319,7 +315,7 @@ public class PostgreSQL implements DBType
           }
 
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection());
-        return Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) >= 0;
+        return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
       }
 
 
@@ -334,7 +330,7 @@ public class PostgreSQL implements DBType
                 String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
                 + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection())
                 + " USING (trim(\"" + Col.getName() + "\")::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + ");";
-                return Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) >= 0;
+                return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
               }
             else if (Col.getType() == ColumnType.DATETIME)
               {
@@ -342,8 +338,8 @@ public class PostgreSQL implements DBType
                 + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection())
                 + " USING (trim(\"" + Col.getName() + "\")::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + ");";
 
-                if (Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) < 0)
-                  return false;
+                if (Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) == false)
+                 return false;
 
                 Col = Col._ParentObject.getColumn(Col.getName() + "TZ");
                 Q = "UPDATE " + Col._ParentObject.getShortName() + " SET \"" + Col.getName() + "\" = 'UTC' WHERE \"" + Col.getName() + "\" IS NULL";
@@ -351,7 +347,9 @@ public class PostgreSQL implements DBType
                 return Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) >= 0;
               }
           }
-        return false;
+         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
+                + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + ";";
+         return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
       }
 
     protected static void PrintFunctionIn(StringBuilder Str, String Type)
@@ -376,8 +374,7 @@ public class PostgreSQL implements DBType
         // .append("\n")
         // .append("\n");
 
-        Str.append("DROP FUNCTION IF EXISTS TILDA.In(" + Type + "[], " + Type + "[]);\n")
-        .append("CREATE OR REPLACE FUNCTION TILDA.In(v " + Type + "[], vals " + Type + "[])\n")
+        Str.append("CREATE OR REPLACE FUNCTION TILDA.In(v " + Type + "[], vals " + Type + "[])\n")
         .append("  RETURNS boolean\n")
         .append("  STRICT IMMUTABLE LANGUAGE SQL AS\n")
         .append("  'select v && vals;';\n")
@@ -429,8 +426,7 @@ public class PostgreSQL implements DBType
          * .append("END; $$\n")
          * .append("LANGUAGE PLPGSQL;\n")
          */
-        Str.append("DROP FUNCTION IF EXISTS TILDA.Like(text[], text);\n")
-        .append("CREATE OR REPLACE FUNCTION TILDA.Like(v text[], val text)\n")
+        Str.append("CREATE OR REPLACE FUNCTION TILDA.Like(v text[], val text)\n")
         .append("  RETURNS boolean\n")
         .append("  STRICT IMMUTABLE LANGUAGE SQL AS\n")
         .append("  'select exists (select * from unnest(v) x_ where x_ like val);';\n")
@@ -445,8 +441,7 @@ public class PostgreSQL implements DBType
         PrintFunctionIn(Str, "integer");
         PrintFunctionIn(Str, "bigint");
 
-        Str.append("DROP FUNCTION IF EXISTS TILDA.getKeyBatch(text, integer);\n")
-        .append("CREATE OR REPLACE FUNCTION TILDA.getKeyBatch(t text, c integer) RETURNS TABLE (min_key_inclusive bigint, max_key_exclusive bigint) AS $$\n")
+        Str.append("CREATE OR REPLACE FUNCTION TILDA.getKeyBatch(t text, c integer) RETURNS TABLE (min_key_inclusive bigint, max_key_exclusive bigint) AS $$\n")
         .append("DECLARE\n")
         .append("  val bigint;\n")
         .append("BEGIN\n")
@@ -457,7 +452,6 @@ public class PostgreSQL implements DBType
         .append("LANGUAGE PLPGSQL;\n")
         .append("\n")
         .append("\n")
-        .append("DROP FUNCTION IF EXISTS TILDA.getKeyBatchAsMaxExclusive(text, integer);\n")
         .append("CREATE OR REPLACE FUNCTION TILDA.getKeyBatchAsMaxExclusive(t text, c integer) RETURNS bigint AS $$\n")
         .append("DECLARE\n")
         .append("  val bigint;\n")
@@ -484,7 +478,6 @@ public class PostgreSQL implements DBType
         .append("CREATE CAST (varchar AS text[]) WITH FUNCTION TILDA.strToArray(varchar) as Implicit;\n")
         .append("\n")
         .append("\n")
-        .append("drop FUNCTION IF EXISTS TILDA.DaysBetween(timestamptz, timestamptz);\n")
         .append("CREATE OR REPLACE FUNCTION TILDA.DaysBetween(timestamptz, timestamptz, boolean)\n")
         .append("  RETURNS integer\n")
         .append("  STRICT IMMUTABLE LANGUAGE SQL AS\n")
@@ -507,7 +500,7 @@ public class PostgreSQL implements DBType
         .append("CREATE extension if not exists tablefunc;\n")
         ;
 
-        return Con.ExecuteUpdate("TILDA", "FUNCTIONS", Str.toString()) >= 0;
+        return Con.ExecuteDDL("TILDA", "FUNCTIONS", Str.toString());
       }
 
 
@@ -719,7 +712,7 @@ public class PostgreSQL implements DBType
     throws Exception
       {
         String Q = "COMMENT ON TABLE " + Obj.getShortName() + " IS " + TextUtil.EscapeSingleQuoteForSQL(Obj._Description) + ";";
-        return Con.ExecuteUpdate(Obj._ParentSchema._Name, Obj.getBaseName(), Q) >= 0;
+        return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
       }
 
 

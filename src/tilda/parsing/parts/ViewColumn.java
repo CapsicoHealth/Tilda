@@ -154,7 +154,7 @@ public class ViewColumn
                         LOG.error("Cannot find Column '" + R._S + "." + R._O + "." + R._C + "'.");
                         LOG.error("Known Columns: ");
                         for (Column c : O._Columns)
-                         LOG.error("   - "+O.getFullName());
+                         LOG.error("   - "+c.getFullName());
                       }
                   }
               }

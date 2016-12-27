@@ -41,7 +41,6 @@ import tilda.migration.actions.ColumnAlterStringSize;
 import tilda.migration.actions.ColumnAlterType;
 import tilda.migration.actions.ColumnComment;
 import tilda.migration.actions.ColumnDrop;
-import tilda.migration.actions.CommitPoint;
 import tilda.migration.actions.SchemaCreate;
 import tilda.migration.actions.SchemaViewsDrop;
 import tilda.migration.actions.TableComment;
@@ -149,7 +148,7 @@ public class Migrator
                           throw new Exception("There was an error with the action '" + A.getDescription() + "'.");
                         C.commit();
                       }
-                    C.commit();
+//                    C.commit();
                   }
               }
           }
@@ -250,8 +249,8 @@ public class Migrator
                     if (Col == null && CI != null)
                       Actions.add(new ColumnDrop(Obj, c));
                   }
-                if (XXX != Actions.size())
-                  Actions.add(new CommitPoint());
+//                if (XXX != Actions.size())
+//                  Actions.add(new CommitPoint());
               }
           }
 
