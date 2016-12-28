@@ -30,12 +30,12 @@ import tilda.utils.TextUtil;
 
 public class ViewPivotColumn
   {
-    static final Logger         LOG   = LogManager.getLogger(ViewPivotColumn.class.getName());
+    static final Logger   LOG = LogManager.getLogger(ViewPivotColumn.class.getName());
 
     /*@formatter:off*/
-	@SerializedName("source"   ) public String  _SourceStr;
-    @SerializedName("prefix"   ) public String  _Prefix;
-    @SerializedName("join"     ) public List<ViewJoinSimple> _Join = new ArrayList<ViewJoinSimple>();
+	@SerializedName("source"   ) public String         _SourceStr;
+    @SerializedName("prefix"   ) public String         _Prefix;
+    @SerializedName("join"     ) public ViewJoinSimple _Join;
     /*@formatter:on*/
 
     public ViewPivotColumn()
@@ -56,7 +56,7 @@ public class ViewPivotColumn
         if (TextUtil.isNullOrEmpty(_SourceStr) == true)
           return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot column without any 'source' pivot view specified.");
 
-        if (_Join.isEmpty() == true)
+        if (_Join == null)
           return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot column without any 'join' information.");
 
         ReferenceHelper R = ReferenceHelper.parseObjectReference(_SourceStr, _ParentView._ParentSchema);
@@ -72,12 +72,9 @@ public class ViewPivotColumn
             if (_Source._Validated == false)
               return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot column with a source '" + _SourceStr + "' which has failed validation.");
           }
-        
-        
-        for (ViewJoinSimple J : _Join)
-          {
-            J.Validate(PS, _ParentView, _Source);
-          }
+
+
+        _Join.Validate(PS, _ParentView, _Source);
 
         return Errs == PS.getErrorCount();
       }

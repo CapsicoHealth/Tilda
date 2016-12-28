@@ -16,11 +16,18 @@
 
 package tilda.parsing.parts.helpers;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import tilda.parsing.parts.Base;
+import tilda.parsing.parts.Column;
+import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 
 public class ReferenceHelper
   {
+    static final Logger LOG = LogManager.getLogger(ReferenceHelper.class.getName());
+
     protected ReferenceHelper(String P, String S, String O, String C)
       {
         _P = P;
@@ -36,12 +43,12 @@ public class ReferenceHelper
 
     public String getFullName()
       {
-        return _P + "."+ _S + "." + _O + (_C == null ? "" : ("." + _C));
+        return _P + "." + _S + "." + _O + (_C == null ? "" : ("." + _C));
       }
-    
+
     public String getFullSchemaName()
       {
-        return _P + "."+ _S;
+        return _P + "." + _S;
       }
 
 
@@ -51,9 +58,9 @@ public class ReferenceHelper
         String P = ParsePackage(parts, 4);
         int i = P == null ? -1 : parts.length - 4;
         if (P == null)
-         P = ParentObject.getSchema()._Package;
+          P = ParentObject.getSchema()._Package;
         String S = parts.length >= 3 ? parts[++i]
-                 : ParentObject.getSchema()._Name;
+        : ParentObject.getSchema()._Name;
         String O = parts.length >= 2 ? parts[++i] : ParentObject.getBaseName();
         String C = parts.length >= 1 ? parts[++i] : null;
 
@@ -68,9 +75,9 @@ public class ReferenceHelper
         if (P == null)
           P = ParentSchema._Package;
         String S = parts.length >= 2 ? parts[++i]
-                 : ParentSchema._Name;
+        : ParentSchema._Name;
         String O = parts.length >= 1 ? parts[++i] : null;
-        
+
         return new ReferenceHelper(P, S, O, null);
       }
 
@@ -90,6 +97,22 @@ public class ReferenceHelper
             return Package.toString();
           }
         return null;
+      }
+
+    public void LogErrorKnownObjects(Schema S)
+      {
+        LOG.error("Cannot find Object '" + _S + "." + _O + "'.");
+        LOG.debug("Known Objects from Schema "+S.getFullName()+": ");
+        for (Object o : S._Objects)
+          LOG.debug("   - " + o.getFullName());
+      }
+
+    public void LogErrorKnownColumns(Object O)
+      {
+        LOG.error("Cannot find Column '" + _S + "." + _O + "." + _C + "'.");
+        LOG.debug("Known Columns from Object "+O.getFullName()+": ");
+        for (Column c : O._Columns)
+          LOG.debug("   - " + c.getFullName());
       }
 
   }

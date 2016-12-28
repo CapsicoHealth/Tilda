@@ -16,6 +16,9 @@
 
 package tilda.parsing.parts;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,16 +29,16 @@ import tilda.utils.TextUtil;
 
 public class ViewJoinSimple
   {
-    static final Logger         LOG = LogManager.getLogger(ViewJoinSimple.class.getName());
+    static final Logger               LOG      = LogManager.getLogger(ViewJoinSimple.class.getName());
 
     /*@formatter:off*/
-	@SerializedName("from") public String  _From;
-    @SerializedName("to"  ) public String  _To  ;
+	@SerializedName("from") public String[]  _From;
+    @SerializedName("to"  ) public String[]  _To  ;
     /*@formatter:on*/
 
-    public transient View       _ParentView;
-    public transient ViewColumn _FromCol;
-    public transient ViewColumn _ToCol;
+    public transient View             _ParentView;
+    public transient List<ViewColumn> _FromCol = new ArrayList<ViewColumn>();
+    public transient List<ViewColumn> _ToCol   = new ArrayList<ViewColumn>();
 
     public ViewJoinSimple()
       {
@@ -50,20 +53,47 @@ public class ViewJoinSimple
           PS.AddError("View '" + ParentView.getFullName() + "' is defining pivot columns from " + Source.getFullName() + " with a join expression with an empty 'from'.");
         else
           {
-            _FromCol = Source.getViewColumn(_From);
-            if (_FromCol == null)
-              PS.AddError("View '" + ParentView.getFullName() + "' is defining pivot columns from " + Source.getFullName() + " with a join 'from' of '"+_From+"' which cannot be resolved.");
+            for (String str : _From)
+              {
+                ViewColumn VC = Source.getViewColumn(str);
+                if (VC == null)
+                  {
+                    PS.AddError("View '" + ParentView.getFullName() + "' is defining pivot columns from " + Source.getFullName() + " with a join 'from' of '" + str + "' which cannot be resolved.");
+                    PrintKnownColumns(Source);
+                  }
+                else
+                  {
+                    _FromCol.add(VC);
+                  }
+              }
           }
 
         if (TextUtil.isNullOrEmpty(_To) == true)
           PS.AddError("View '" + ParentView.getFullName() + "' is defining pivot columns from " + Source.getFullName() + " with a join expression with an empty 'to'.");
         else
           {
-            _ToCol = _ParentView.getViewColumn(_To);
-            if (_ToCol == null)
-              PS.AddError("View '" + ParentView.getFullName() + "' is defining pivot columns from " + Source.getFullName() + " with a join 'to' of '"+_To+"' which cannot be resolved.");
+            for (String str : _To)
+              {
+                ViewColumn VC = ParentView.getViewColumn(str);
+                if (VC == null)
+                  {
+                    PS.AddError("View '" + ParentView.getFullName() + "' is defining pivot columns from " + Source.getFullName() + " with a join 'to' of '" + str + "' which cannot be resolved.");
+                    PrintKnownColumns(_ParentView);
+                  }
+                else
+                  {
+                    _ToCol.add(VC);
+                  }
+              }
           }
 
         return Errs == PS.getErrorCount();
+      }
+
+    private void PrintKnownColumns(View Source)
+      {
+        LOG.debug("Known columns from view " + Source.getFullName() + ":");
+        for (ViewColumn c : Source._ViewColumns)
+          LOG.debug("   - " + c._Name + " (from " + c._SameAsObj.getShortName() + ")");
       }
   }

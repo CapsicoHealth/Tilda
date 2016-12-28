@@ -98,7 +98,7 @@ public class ViewColumn
 
         if (TextUtil.isNullOrEmpty(_Name) == true)
           {
-            _Name = _SameAsObj._Name;
+            _Name = _SameAsObj.getName();
           }
 
         if (_JoinStr != null)
@@ -110,7 +110,7 @@ public class ViewColumn
             if ((_Aggregate = AggregateType.parse(_AggregateStr)) == null)
               return PS.AddError("View Column '" + getFullName() + "' defined an invalid 'aggregate' '" + _AggregateStr + "'.");
             if (_SameAsObj != null && _SameAsObj._Type == ColumnType.DATETIME)
-              return PS.AddError("View Column '" + getFullName() + "' defined an aggregate on DATETIME column '" + _SameAsObj._Name + "' which is not supported as timezone information would not be retrievable.");
+              return PS.AddError("View Column '" + getFullName() + "' defined an aggregate on DATETIME column '" + _SameAsObj.getName() + "' which is not supported as timezone information would not be retrievable.");
           }
 
         return Errs == PS.getErrorCount();
@@ -130,7 +130,7 @@ public class ViewColumn
           PS.AddError("Column '" + getFullName() + "' is declaring sameas '" + _SameAs + "' with an incorrect syntax. It should be '(((package\\.)?schema\\.)?object\\.)?column'.");
         else
           {
-            Column Col = PS.getColumn(R._P, R._S, R._O, R._C);
+            Column Col = null;
             Schema S = PS.getSchema(R._P, R._S);
             if (S == null)
               {
@@ -140,28 +140,19 @@ public class ViewColumn
               {
                 Object O = S.getObject(R._O);
                 if (O == null)
-                  {
-                    LOG.error("Cannot find Object '" + R._S + "." + R._O + "'.");
-                    LOG.error("Known Objects: ");
-                    for (Object o : S._Objects)
-                      LOG.error("   - "+o.getFullName());
-                  }
+                  R.LogErrorKnownObjects(S);
                 else
                   {
-                    Column C = O.getColumn(R._C);
-                    if (C == null)
-                      {
-                        LOG.error("Cannot find Column '" + R._S + "." + R._O + "." + R._C + "'.");
-                        LOG.error("Known Columns: ");
-                        for (Column c : O._Columns)
-                         LOG.error("   - "+c.getFullName());
-                      }
+                    Col = O.getColumn(R._C);
+                    if (Col == null)
+                      R.LogErrorKnownColumns(O);
                   }
               }
             if (Col == null)
               PS.AddError("Column '" + getFullName() + "' is declaring sameas '" + _SameAs + "' resolving to '" + R.getFullName() + "' which cannot be found.");
             else
               _SameAsObj = Col;
+
           }
 
         return Errs == PS.getErrorCount();

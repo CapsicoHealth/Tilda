@@ -497,6 +497,20 @@ public class PostgreSQL implements DBType
         .append("'SELECT TILDA.Age($1, $2) >= $3 AND TILDA.Age($1, $2) < $4';\n")
         .append("\n")
         .append("\n")
+        .append("CREATE OR REPLACE FUNCTION TILDA.toInt(str varchar)\n")
+        .append("RETURNS INTEGER AS $$\n")
+        .append("DECLARE v_int_value INTEGER DEFAULT NULL;\n")
+        .append("BEGIN\n")
+        .append("    BEGIN\n")
+        .append("        v_int_value := str::INTEGER;\n")
+        .append("    EXCEPTION WHEN OTHERS THEN\n")
+        .append("        RETURN NULL;\n")
+        .append("    END;\n")
+        .append("RETURN v_int_value;\n")
+        .append("END;\n")
+        .append("$$ LANGUAGE plpgsql;\n")
+        .append("\n")
+        .append("\n")
         .append("CREATE extension if not exists tablefunc;\n")
         ;
 
@@ -509,11 +523,6 @@ public class PostgreSQL implements DBType
     throws Exception
       {
         // LOG.debug("Type: "+Type+"; Name: "+Name+"; Size: "+Size+"; TypeName: "+TypeName+";");
-        // if (Name.equals("feature_id") == true)
-        // {
-        // int xxx = 0;
-        // ++xxx;
-        // }
         ColumnType TildaType = null;
         String TypeSql = null;
         switch (Type)

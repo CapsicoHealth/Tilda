@@ -185,7 +185,7 @@ public class View extends Base
                               continue;
                             VC = new ViewColumn();
                             VC._SameAs = col.getFullName();
-                            VC._Name = Prefix + col._Name;
+                            VC._Name = Prefix + col.getName();
                             _ViewColumns.add(i + j, VC);
                             ++j;
                           }
@@ -196,8 +196,7 @@ public class View extends Base
               }
             else if (TextUtil.isNullOrEmpty(VC._Prefix) == false)
               PS.AddError("Column '" + VC.getFullName() + "' defined a prefix but is not a .* column.");
-
-
+            
             if (VC.Validate(PS, this) == false)
               return false;
 
@@ -252,12 +251,12 @@ public class View extends Base
                   Query Q = new Query();
                   Q._DB = "*";
                   StringBuilder Str = new StringBuilder();
-                  for (int i = 0; i < PVC._Join.size(); ++i)
+                  for (int i = 0; i < PVC._Join._FromCol.size(); ++i)
                     {
                       if (i != 0)
                         Str.append(" and ");
-                      ViewJoinSimple VJS = PVC._Join.get(i);
-                      Str.append(VJS._FromCol._ParentView._Name).append(".\"").append(VJS._FromCol._Name).append("\" = ").append(VJS._ToCol._SameAsObj._ParentObject._Name).append(".\"").append(VJS._ToCol._Name).append("\"");
+                      Str.append(PVC._Join._FromCol.get(i)._ParentView._Name).append(".\"").append(PVC._Join._FromCol.get(i)._Name).append("\" = ")
+                      .append(PVC._Join._ToCol.get(i)._SameAsObj._ParentObject._Name).append(".\"").append(PVC._Join._ToCol.get(i)._Name).append("\"");
                     }
                   Q._Clause = Str.toString();
                   VJ._Ons = new Query[] { Q
@@ -390,11 +389,11 @@ public class View extends Base
         if (_Formulas != null)
           for (Formula F : _Formulas)
             F.Validate(PS, this);
-        
+
         if (_Formulas != null)
           for (Formula F : _Formulas)
             {
-              Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "Formula column: "+F._Title);
+              Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "Formula column: " + F._Title);
               O._Columns.add(C);
             }
 
