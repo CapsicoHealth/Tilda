@@ -30,7 +30,6 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.ColumnType;
-import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
@@ -58,21 +57,23 @@ public class Schema
     transient public List<Schema>  _DependencySchemas = new ArrayList<Schema>();
     transient public Boolean       _Validated = null;
     
-    protected static final Pattern P                  = Pattern.compile("_tilda\\.(\\w+)\\.json");
+    protected static final Pattern P                  = Pattern.compile("/?_tilda\\.(\\w+)\\.json");
 
     public void setOrigin(String ResourceName)
       throws Exception
       {
         _ResourceName = ResourceName;
-        String Pack = _Package.replaceAll("\\.", "/");
+        ResourceName = "/"+ResourceName; 
+        
+        String Pack = "/"+_Package.replaceAll("\\.", "/")+"/";
         ResourceName = ResourceName.replaceAll(File.separatorChar == '\\' ? "\\\\" : "\\" + File.separatorChar, "/");
         int i = ResourceName.indexOf(Pack);
         if (i == -1)
           throw new Exception("The Schema being loaded from resource '" + ResourceName + "' does not match its package declaration '" + _Package + "'.");
 
-        _ProjectRoot = ResourceName.substring(0,  i);
-        _ResourceNameShort = ResourceName.substring(i);
-        String res = ResourceName.substring(i+Pack.length()+1);
+        _ProjectRoot = ResourceName.substring(i==0?0:1,  i);
+        _ResourceNameShort = ResourceName.substring(i+1);
+        String res = ResourceName.substring(i+Pack.length()-1);
         Matcher M = P.matcher(res);
         while (M.matches() == true)
           {

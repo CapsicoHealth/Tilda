@@ -79,7 +79,7 @@ public abstract class Parser
           }
         catch (Throwable T)
           {
-            LOG.error("Cannot load Tilda schema from file '" + FilePath + "'.", T);
+            LOG.error("Cannot load Tilda schema from file '" + FilePath + "'.\n", T);
             return null;
           }
         finally
@@ -114,7 +114,7 @@ public abstract class Parser
           }
         catch (Throwable T)
           {
-            LOG.error("Cannot load Tilda schema from resource '" + ResourceName + "'.", T);
+            LOG.error("Cannot load Tilda schema from resource '" + ResourceName + "'.\n", T);
             return null;
           }
         finally
