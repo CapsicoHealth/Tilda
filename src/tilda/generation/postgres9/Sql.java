@@ -17,9 +17,12 @@
 package tilda.generation.postgres9;
 
 import java.io.PrintWriter;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -50,6 +53,7 @@ import tilda.parsing.parts.ViewJoin;
 import tilda.parsing.parts.ViewPivot;
 import tilda.utils.PaddingTracker;
 import tilda.utils.TextUtil;
+import tilda.utils.pairs.StringIntPair;
 
 public class Sql extends PostgreSQL implements CodeGenSql
   {
@@ -215,6 +219,187 @@ public class Sql extends PostgreSQL implements CodeGenSql
             Out.println("COMMENT ON COLUMN " + O.getShortName() + ".\"" + C.getName() + "\" IS E" + TextUtil.EscapeSingleQuoteForSQL(C._Description) + ";");
       }
 
+
+    private static TableInfo getElementFromLast(Deque<TableInfo> S, Object O)
+      {
+        Iterator<TableInfo> I = S.descendingIterator();
+        while (I.hasNext() == true)
+          {
+            TableInfo TI = I.next();
+            if (TI._O == O)
+              return TI;
+          }
+        return null;
+      }
+
+
+    private static ForeignKey getClosestFKTable(Object O, Deque<TableInfo> S, View V, int columnCount)
+      {
+        List<ForeignKey> FKs = new ArrayList<ForeignKey>();
+
+        Iterator<TableInfo> I = S.descendingIterator();
+        LOG.debug("Checking FK for " + O.getShortName());
+        while (I.hasNext() == true)
+          {
+            TableInfo TI = I.next();
+            // LOG.debug(" Checking from " + TI._O.getShortName());
+            for (ForeignKey FK : O._ForeignKeys)
+              if (FK._DestObjectObj.getFullName().equals(TI._O.getFullName()) == true)
+                {
+                  // LOG.debug(" --> Found from " + TI._O.getShortName()+" to " + O.getShortName());
+                  FKs.add(FK);
+                }
+            if (FKs.isEmpty() == true)
+              {
+                // LOG.debug(" Checking to " + TI._O.getShortName());
+                for (ForeignKey FK : TI._O._ForeignKeys)
+                  if (FK._DestObjectObj.getFullName().equals(O.getFullName()) == true)
+                    {
+                      // LOG.debug(" --> Found FK from "+O.getShortName()+" to " + TI._O.getShortName());
+                      FKs.add(FK);
+                    }
+              }
+          }
+
+        ForeignKey MostRecentFK = null;
+        int MostRecentFKPos = -1;
+        for (ForeignKey FK : FKs)
+          {
+            int pos = -1;
+            StringBuilder Str = new StringBuilder();
+            for (Column C : FK._SrcColumnObjs)
+              {
+                for (int i = columnCount; i >= 0; --i)
+                  if (V._ViewColumns.get(i)._SameAsObj.getFullName().equals(C.getFullName()) == true)
+                    {
+                      if (pos != -1 && i != pos - 1)
+                        throw new Error("********** ERROR, FK columns in view not in right order!");
+                      pos = i;
+                      break;
+                    }
+                Str.append("   ").append(C.getShortName());
+              }
+            if (pos == -1 && MostRecentFKPos == -1)
+              throw new Error("********** ERROR, could not find FK columns!");
+//            LOG.debug(" --> Found " + Str.toString());
+            if (pos > MostRecentFKPos)
+              {
+                MostRecentFKPos = pos;
+                MostRecentFK = FK;
+              }
+          }
+        if (MostRecentFK != null)
+          {
+            StringBuilder Str = new StringBuilder();
+            for (Column C : MostRecentFK._SrcColumnObjs)
+              Str.append("   ").append(C.getShortName());
+//            LOG.debug(" --> PICKED " + Str.toString());
+          }
+
+        return MostRecentFK;
+      }
+
+    private static class TableInfo
+      {
+        public TableInfo(Object O, int V)
+          {
+            _O = O;
+            _N = O.getShortName();
+            _V = V;
+          }
+
+        public final Object _O;
+        public final String _N;
+        public final int    _V;
+
+        public String getFullName()
+          {
+            return _N + (_V == 1 ? "" : "_" + _V);
+          }
+      }
+
+
+    private static String getFKStatement(ForeignKey FK, Deque<TableInfo> TableStack)
+      {
+        List<Column> Columns1;
+        List<Column> Columns2;
+
+        Columns1 = FK._SrcColumnObjs;
+        Columns2 = FK._DestObjectObj._PrimaryKey._ColumnObjs;
+
+        StringBuilder Str = new StringBuilder();
+        for (int i = 0; i < Columns1.size(); ++i)
+          {
+            if (Str.length() > 0)
+              Str.append(" and ");
+            Column C1 = Columns1.get(i);
+            Column C2 = Columns2.get(i);
+            TableInfo TI1 = getElementFromLast(TableStack, C1._ParentObject);
+            TableInfo TI2 = getElementFromLast(TableStack, C2._ParentObject);
+            Str.append(TI1.getFullName()+"."+C1.getName()).append(" = ").append(TI2.getFullName()+"."+C2.getName());
+          }
+
+        return Str.toString();
+      }
+
+    private static void DummyExperiment(View V)
+      {
+        StringBuilder ColList = new StringBuilder();
+        StringBuilder FromList = new StringBuilder();
+
+        Map<String, TableInfo> TableMap = new HashMap<String, TableInfo>();
+        Deque<TableInfo> TableStack = new ArrayDeque<TableInfo>();
+        int columnCount = -1;
+        for (ViewColumn VC : V._ViewColumns)
+          {
+            ++columnCount;
+            Object T = VC._SameAsObj._ParentObject;
+            TableInfo TI = getElementFromLast(TableStack, T);
+            if (TI == null)
+              {
+                TableInfo MappedTI = TableMap.remove(T.getShortName());
+                TI = new TableInfo(T, MappedTI == null ? 1 : MappedTI._V + 1);
+                TableStack.add(TI);
+                TableMap.put(TI._N, TI);
+                FromList.append((TableMap.size() == 1 ? "  FROM      " : "       JOIN ") + TI._N + (TI._V == 1 ? "" : " as " + TI.getFullName()));
+                if (TableMap.size() != 1)
+                  {
+                    FromList.append(" on ");
+                    ForeignKey FK = getClosestFKTable(T, TableStack, V, columnCount);
+                    if (FK != null)
+                      {
+                        String Str = getFKStatement(FK, TableStack);
+                        FromList.append(Str);
+                      }
+                    else
+                      {
+                        FromList.append("XXX__XXX");
+                      }
+                  }
+                FromList.append("\n");
+              }
+            else
+              {
+                if (TI != TableStack.peekLast())
+                  do
+                    {
+                      TableStack.pollLast();
+                    } while (TI != TableStack.peekLast());
+              }
+            ColList.append("       " + TI._N + (TI._V == 1 ? "" : "_" + TI._V) + "." + VC._SameAsObj.getName() + " as " + VC.getName() + "\n");
+          }
+        LOG.debug("DUMMY EXPERIMENT\n" + ColList + FromList);
+        System.exit(-1);
+      }
+
+
+
+
+
+
+
+
+
     @Override
     public String genDDL(PrintWriter OutFinal, View V)
     throws Exception
@@ -289,6 +474,12 @@ public class Sql extends PostgreSQL implements CodeGenSql
         Out.println("  from " + ObjectMain.getShortName());
         Names.add(ObjectMain.getFullName());
         Objects.add(ObjectMain);
+
+        if (V.getBaseName().equalsIgnoreCase("VisitGroupOasisProcessTESTView") == true)
+          {
+//            DummyExperiment(V);
+          }
+
         for (ViewColumn C : V._ViewColumns)
           if (C != null && C._SameAsObj != null)
             {
@@ -402,7 +593,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             for (int i = 0; i < V._ViewColumns.size() - 2; ++i)
               {
                 ViewColumn VC = V._ViewColumns.get(i);
-                if (VC != null && VC._SameAsObj._Mode != ColumnMode.CALCULATED)
+                if (VC != null && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false)
                   {
                     if (i != 0)
                       Str += "  , ";
@@ -731,7 +922,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                       }
                     Out.println();
                     Found = true;
-//                    LOG.debug(" --> FOUND");
+                    // LOG.debug(" --> FOUND");
                     break;
                   }
                 ++count;
@@ -742,7 +933,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             // LOG.debug("Checking FKs to " + Obj2.getBaseName());
             for (ForeignKey FK : Obj1._ForeignKeys)
               {
-                // LOG.debug(" . Checking FK "+FK._ParentObject.getBaseName()+" to "+FK._DestObjectObj.getBaseName());
+                // LOG.debug(" . Checking FK " + FK._ParentObject.getBaseName() + " to " + FK._DestObjectObj.getBaseName());
                 if (FK._DestObjectObj == Obj2)
                   {
                     if (count == JoinIndex)
@@ -759,7 +950,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                           }
                         Out.println();
                         Found = true;
-//                        LOG.debug(" --> FOUND");
+                        // LOG.debug(" --> FOUND");
                         break;
                       }
                     ++count;
