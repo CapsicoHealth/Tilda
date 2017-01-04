@@ -196,7 +196,7 @@ public class View extends Base
               }
             else if (TextUtil.isNullOrEmpty(VC._Prefix) == false)
               PS.AddError("Column '" + VC.getFullName() + "' defined a prefix but is not a .* column.");
-            
+
             if (VC.Validate(PS, this) == false)
               return false;
 
@@ -325,9 +325,14 @@ public class View extends Base
               }
           }
 
+        Set<String> JoinObjectNames = new HashSet<String>();
         if (_Joins != null)
           for (ViewJoin VJ : _Joins)
-            VJ.Validate(PS, this);
+            {
+              VJ.Validate(PS, this);
+              if (JoinObjectNames.add(VJ._ObjectObj.getShortName()) == false)
+                PS.AddError("View '" + getFullName() + "' is defining a a duplicate join with object VJ._ObjectObj.getShortName().");
+            }
 
         if (_Pivot != null)
           {
