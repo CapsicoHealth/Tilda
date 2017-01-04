@@ -281,7 +281,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
               }
             if (pos == -1 && MostRecentFKPos == -1)
               throw new Error("********** ERROR, could not find FK columns!");
-//            LOG.debug(" --> Found " + Str.toString());
+            // LOG.debug(" --> Found " + Str.toString());
             if (pos > MostRecentFKPos)
               {
                 MostRecentFKPos = pos;
@@ -293,7 +293,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             StringBuilder Str = new StringBuilder();
             for (Column C : MostRecentFK._SrcColumnObjs)
               Str.append("   ").append(C.getShortName());
-//            LOG.debug(" --> PICKED " + Str.toString());
+            // LOG.debug(" --> PICKED " + Str.toString());
           }
 
         return MostRecentFK;
@@ -336,23 +336,27 @@ public class Sql extends PostgreSQL implements CodeGenSql
             Column C2 = Columns2.get(i);
             TableInfo TI1 = getElementFromLast(TableStack, C1._ParentObject);
             TableInfo TI2 = getElementFromLast(TableStack, C2._ParentObject);
-            Str.append(TI1.getFullName()+"."+C1.getName()).append(" = ").append(TI2.getFullName()+"."+C2.getName());
+            Str.append(TI1.getFullName() + "." + C1.getName()).append(" = ").append(TI2.getFullName() + "." + C2.getName());
           }
 
         return Str.toString();
       }
 
-    private static void DummyExperiment(View V)
+    private void DummyExperiment(StringBuilder Str, View V)
       {
-        StringBuilder ColList = new StringBuilder();
+        Str.append("select ");
         StringBuilder FromList = new StringBuilder();
 
         Map<String, TableInfo> TableMap = new HashMap<String, TableInfo>();
         Deque<TableInfo> TableStack = new ArrayDeque<TableInfo>();
         int columnCount = -1;
+        boolean First = true;
         for (ViewColumn VC : V._ViewColumns)
           {
             ++columnCount;
+            if (VC._Aggregate != AggregateType.COUNT && (VC._SameAsObj._Mode == ColumnMode.CALCULATED || VC._JoinOnly == true))
+              continue;
+
             Object T = VC._SameAsObj._ParentObject;
             TableInfo TI = getElementFromLast(TableStack, T);
             if (TI == null)
@@ -361,15 +365,14 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 TI = new TableInfo(T, MappedTI == null ? 1 : MappedTI._V + 1);
                 TableStack.add(TI);
                 TableMap.put(TI._N, TI);
-                FromList.append((TableMap.size() == 1 ? "  FROM      " : "       JOIN ") + TI._N + (TI._V == 1 ? "" : " as " + TI.getFullName()));
+                FromList.append((TableMap.size() == 1 ? "" : "       JOIN ") + TI._N + (TI._V == 1 ? "" : " as " + TI.getFullName()));
                 if (TableMap.size() != 1)
                   {
                     FromList.append(" on ");
                     ForeignKey FK = getClosestFKTable(T, TableStack, V, columnCount);
                     if (FK != null)
                       {
-                        String Str = getFKStatement(FK, TableStack);
-                        FromList.append(Str);
+                        FromList.append(getFKStatement(FK, TableStack));
                       }
                     else
                       {
@@ -386,12 +389,45 @@ public class Sql extends PostgreSQL implements CodeGenSql
                       TableStack.pollLast();
                     } while (TI != TableStack.peekLast());
               }
-            ColList.append("       " + TI._N + (TI._V == 1 ? "" : "_" + TI._V) + "." + VC._SameAsObj.getName() + " as " + VC.getName() + "\n");
+
+            if (First == true)
+              First = false;
+            else
+              Str.append("\n     , ");
+            PrintViewColumn(Str, VC, TI);
           }
-        LOG.debug("DUMMY EXPERIMENT\n" + ColList + FromList);
-        System.exit(-1);
+        
+        Str.append("\n  from ").append(FromList);
       }
 
+    private boolean PrintViewColumn(StringBuilder Str, ViewColumn VC, TableInfo TI)
+      {
+        boolean hasAggregates = false;
+        if (VC._Aggregate == AggregateType.COUNT)
+          {
+            Str.append("count(*) as \"" + VC.getName() + "\"");
+            hasAggregates = true;
+          }
+        else
+          {
+            if (VC._Aggregate != null)
+              {
+                Str.append(getAggregateStr(VC._Aggregate) + "(");
+                if (VC._Aggregate == AggregateType.ARRAY && VC._SameAsObj.getType() == ColumnType.STRING)
+                  Str.append("trim(");
+                hasAggregates = true;
+              }
+            Str.append(TI._N + (TI._V == 1 ? "" : "_" + TI._V) + ".\"" + VC._SameAsObj.getName() + "\"");
+            if (VC._Aggregate != null)
+              {
+                if (VC._Aggregate == AggregateType.ARRAY && VC._SameAsObj.getType() == ColumnType.STRING)
+                  Str.append(")");
+                Str.append(")");
+              }
+            Str.append(" as \"" + VC.getName() + "\" -- " + VC._SameAsObj._Description);
+          }
+        return hasAggregates;
+      }
 
 
 
@@ -477,7 +513,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
         if (V.getBaseName().equalsIgnoreCase("VisitGroupOasisProcessTESTView") == true)
           {
-//            DummyExperiment(V);
+            DummyExperiment(V);
           }
 
         for (ViewColumn C : V._ViewColumns)
