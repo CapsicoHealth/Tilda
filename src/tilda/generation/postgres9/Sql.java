@@ -47,6 +47,7 @@ import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.Value;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.ViewColumn;
+import tilda.parsing.parts.ViewJoin;
 import tilda.parsing.parts.ViewPivot;
 import tilda.utils.PaddingTracker;
 import tilda.utils.TextUtil;
@@ -233,7 +234,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             Column C2 = Columns2.get(i);
             TableRankTracker TI1 = TableRankTracker.getElementFromLast(TableStack, C1._ParentObject);
             TableRankTracker TI2 = TableRankTracker.getElementFromLast(TableStack, C2._ParentObject);
-            Str.append(TI1.getFullName() + "." + C1.getName()).append(" = ").append(TI2.getFullName() + "." + C2.getName());
+            Str.append((TI1 == null ? "null" : TI1.getFullName()) + "." + C1.getName()).append(" = ").append((TI2 == null ? "null" : TI2.getFullName()) + "." + C2.getName());
           }
 
         return Str.toString();
@@ -270,8 +271,15 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   {
                     ForeignKey FK = TableRankTracker.getClosestFKTable(TableStack, T, V, columnCount);
                     if (FK == null)
-                      throw new Exception("View " + V.getFullName() + " is using " + T.getShortName() + " but cannot find any foreign keys in any tables used so far: " + TableRankTracker.PrintTableNames(TableStack));
-                    String JoinType = FK._DestObjectObj.getFullName().equals(T.getFullName()) == true ? "left  join" : "inner join";
+                      {
+                        FK = CheckAlternateJoinDefs(T, V);
+                        if (FK == null)
+                          {
+                            LOG.debug("FromList: " + FromList);
+                            throw new Exception("View " + V.getFullName() + " is using " + T.getShortName() + " but cannot find any foreign keys in any tables used so far: " + TableRankTracker.PrintTableNames(TableStack));
+                          }
+                      }
+                    String JoinType = FK._DestObjectObj.getFullName().equals(T.getFullName()) == true ? "left  join " : "inner join ";
                     FromList.append(JoinType + TI._N + (TI._V == 1 ? "" : " as " + TI.getFullName()) + " on " + getFKStatement(FK, TableStack));
                   }
                 else
@@ -350,6 +358,15 @@ public class Sql extends PostgreSQL implements CodeGenSql
           }
 
         return Str.toString();
+      }
+
+    private ForeignKey CheckAlternateJoinDefs(Object T, View V)
+      {
+        for (ViewJoin VJ : V._Joins)
+          {
+            if (VJ.)
+          }
+        return null;
       }
 
     private boolean PrintViewColumn(StringBuilder Str, ViewColumn VC, TableRankTracker TI)
