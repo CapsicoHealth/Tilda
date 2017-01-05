@@ -17,6 +17,7 @@
 package tilda.parsing.parts;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
@@ -437,4 +438,13 @@ public class Column extends TypeDef
       {
         _SequenceOrder = i;
       }
+
+    public static String PrintColumnList(List<Column> L)
+      {
+        StringBuilder Str = new StringBuilder();
+        for (Column C : L)
+          Str.append(Str.length() == 0 ? "" : ", ").append(C.getShortName());
+        return Str.toString();
+      }
+    
   }

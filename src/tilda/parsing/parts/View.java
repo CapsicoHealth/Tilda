@@ -200,7 +200,7 @@ public class View extends Base
             if (VC.Validate(PS, this) == false)
               return false;
 
-            if (ColumnNames.add(VC.getName().toUpperCase()) == false)
+            if (VC._JoinOnly == false && ColumnNames.add(VC.getName().toUpperCase()) == false)
               PS.AddError("Column '" + VC.getFullName() + "' is defined more than once in View '" + getFullName() + "'.");
 
             if (VC.getName().equals("created") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "created")) == true)

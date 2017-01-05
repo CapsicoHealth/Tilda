@@ -157,4 +157,9 @@ public class ViewColumn
 
         return Errs == PS.getErrorCount();
       }
+    
+//    public Column getSameAsDeep()
+//     {
+//       if (_SameAsObj)
+//     }
   }
