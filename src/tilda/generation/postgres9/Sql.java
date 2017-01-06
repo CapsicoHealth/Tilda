@@ -255,14 +255,15 @@ public class Sql extends PostgreSQL implements CodeGenSql
             _SequenceOrder = SequenceOrder;
             _implicitPKImport = implicitPKImport;
             _PK = C._PrimaryKey == true ? C._ParentObject._PrimaryKey : null;
-            for (ForeignKey FK : C._ParentObject._ForeignKeys)
-              {
-                for (Column fkcol : FK._SrcColumnObjs)
-                  if (C.getFullName().equals(fkcol.getFullName()) == true)
-                    {
-                      _FKs.add(FK);
-                    }
-              }
+            if (implicitPKImport == false)
+              for (ForeignKey FK : C._ParentObject._ForeignKeys)
+                {
+                  for (Column fkcol : FK._SrcColumnObjs)
+                    if (C.getFullName().equals(fkcol.getFullName()) == true)
+                      {
+                        _FKs.add(FK);
+                      }
+                }
           }
 
         public final ViewColumn       _VC;
@@ -272,55 +273,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
         public final PrimaryKey       _PK;
         public final List<ForeignKey> _FKs = new ArrayList<ForeignKey>();
 
-        public static ForeignKey getClosestFKTable(List<FuckThat> FuckList, Object T, int columnCount)
+        public static List<FuckThat> ScanView(View V)
           {
-            LOG.debug("Searching for FK to/from " + T.getShortName() +" from view column #"+columnCount);
-            int i = FuckList.size() - 1;
-            while (i > columnCount && i >= 0)
-              --i;
-            while (i >= 0)
-              {
-                FuckThat FT = FuckList.get(--i);
-                if (FT.isBoring() == true)
-                  continue;
-                LOG.debug("   Examining info from " + FT._VC.getShortName() + " (" + FT._SequenceOrder + ")");
-                for (ForeignKey FK : FT._FKs)
-                  {
-                    LOG.debug("      Looking at FK " + FK._Name + " from " + FK._ParentObject.getShortName() + " to " + FK._DestObjectObj.getShortName());
-                    if (FK._DestObjectObj.getFullName().equals(T.getFullName()) == true)
-                      {
-                        LOG.debug("         --> WOOHOO!");
-                        return FK;
-                      }
-                  }
-                if (FT._PK != null)
-                  for (ForeignKey FK : T._ForeignKeys)
-                    {
-                      LOG.debug("      Looking at FK " + FK._Name + " to " + FK._DestObjectObj.getShortName() + " from " + FK._ParentObject.getShortName());
-                      if (FK._ParentObject.getFullName().equals(T.getFullName()) == true)
-                        {
-                          LOG.debug("         --> WOOHOO!");
-                          return FK;
-                        }
-                    }
-              }
-            return null;
-          }
-
-        private boolean isBoring()
-          {
-            return _PK == null && _FKs.isEmpty() == true;
-          }
-
-
-      }
-
-
-    private String PrintBaseView(View V)
-    throws Exception
-      {
-        List<FuckThat> FuckList = new ArrayList<FuckThat>();
-          {
+            List<FuckThat> FuckList = new ArrayList<FuckThat>();
             LOG.debug("\n\nDETAILS for view " + V.getShortName());
             int i = -1;
             Set<String> TableNames = new HashSet<String>();
@@ -345,26 +300,140 @@ public class Sql extends PostgreSQL implements CodeGenSql
                           }
                       }
                   }
-                FuckList.add(FT);
+                if (FT.isBoring() == false)
+                  FuckList.add(FT);
               }
-
             for (FuckThat FT : FuckList)
               {
                 boolean Printed = false;
                 if (FT._PK != null)
                   {
-                    LOG.debug(FT._VC.getShortName() + " (" + FT._SequenceOrder + ") -> " + FT._C.getShortName() + (FT._implicitPKImport == true ? " as an implicitly imported" : " is a") + " primary key");
+                    LOG.debug(FT._VC._SameAsObj.getShortName() + "(" + FT._SequenceOrder + ") as " + FT._VC._Name + "      --> " + FT._C.getShortName() + " is " + (FT._implicitPKImport == true ? "an implicitly imported" : "a") + " primary key");
                     Printed = true;
                   }
                 for (ForeignKey FK : FT._FKs)
                   {
-                    LOG.debug(FT._VC.getShortName() + " (" + FT._SequenceOrder + ") -> " + FT._C.getShortName() + (FT._implicitPKImport == true ? " as an implicitly imported" : " is part of a") + " FK " + FK._Name + " to " + FK._DestObjectObj.getShortName());
+                    LOG.debug(FT._VC._SameAsObj.getShortName() + "(" + FT._SequenceOrder + ") as " + FT._VC._Name + "      --> " + FT._C.getShortName() + " is part of " + (FT._implicitPKImport == true ? "an implicitly imported" : "a") + " FK " + FK._Name + " to " + FK._DestObjectObj.getShortName());
                     Printed = true;
                   }
               }
             LOG.debug("---------------------------------------------------\n");
+
+            return FuckList;
           }
 
+
+        public static ForeignKey getClosestFKTable(List<FuckThat> FuckList, View V, Object T, int columnSequenceOrder)
+          {
+            LOG.debug("Searching for FK to/from " + T.getShortName() + " from view column #" + columnSequenceOrder);
+            int i = FuckList.size() - 1;
+            while (FuckList.get(i)._SequenceOrder >= columnSequenceOrder && i >= 0)
+              --i;
+            while (i >= 0)
+              {
+                FuckThat FT = FuckList.get(i--);
+                if (FT.isBoring() == true)
+                  continue;
+                LOG.debug("   Examining info from " + FT._VC.getShortName() + " as " + FT._C.getShortName() + " (" + FT._SequenceOrder + ")");
+                List<ForeignKey> PotentialFKs = new ArrayList<ForeignKey>();
+                for (ForeignKey FK : FT._C._ParentObject._ForeignKeys)
+                  {
+                    LOG.debug("      Looking at FK " + FK._Name + " from " + FK._ParentObject.getFullName() + " to " + FK._DestObjectObj.getFullName() + " (->" + T.getFullName() + ")");
+                    if (FK._DestObjectObj.getFullName().equals(T.getFullName()) == true)
+                      PotentialFKs.add(FK);
+                  }
+                if (PotentialFKs.isEmpty() == false)
+                  {
+                    ForeignKey FK = FuckThat.pickMostRecentFKPart1(PotentialFKs, V, columnSequenceOrder);
+                    if (FK != null)
+                      {
+                        LOG.debug("WOOHOO! Picked " + FK._Name);
+                        return FK;
+                      }
+                    return null;
+                  }
+
+                if (FT._PK != null)
+                  {
+                    PotentialFKs.clear();
+                    for (ForeignKey FK : T._ForeignKeys)
+                      {
+                        LOG.debug("      Looking at FK " + FK._Name + " to " + FK._DestObjectObj.getShortName() + " from " + FK._ParentObject.getShortName());
+                        if (FK._DestObjectObj.getFullName().equals(FT._C._ParentObject.getFullName()) == true)
+                          PotentialFKs.add(FK);
+                      }
+                    if (PotentialFKs.isEmpty() == false)
+                      {
+                        ForeignKey FK = FuckThat.pickMostRecentFKPart2(PotentialFKs, columnSequenceOrder);
+                        LOG.debug("WOOHOO! Picked " + FK._Name);
+                        return FK;
+                      }
+                  }
+              }
+            return null;
+          }
+
+        private static ForeignKey pickMostRecentFKPart1(List<ForeignKey> potentialFKs, View V, int columnSequenceOrder)
+          {
+            if (potentialFKs.size() == 1)
+              return potentialFKs.get(0);
+            int MostRecentSequenceOrder = -1;
+            ForeignKey MostRecentFK = null;
+            for (ForeignKey FK : potentialFKs)
+              {
+                for (Column C : FK._SrcColumnObjs)
+                  {
+                    LOG.debug("      FK " + FK._Name + ": " + C.getShortName() + "(" + C.getSequenceOrder() + ")");
+                    int i = -1;
+                    for (ViewColumn VJ : V._ViewColumns)
+                      {
+                        ++i;
+                        if (VJ.getSameAsRoot().getFullName().equals(C.getFullName()) == true)
+                          {
+                            if (i < columnSequenceOrder && i > MostRecentSequenceOrder)
+                              {
+                                MostRecentSequenceOrder = i;
+                                MostRecentFK = FK;
+                                LOG.debug("            --> Original sequence order:" + i);
+                              }
+                          }
+                      }
+                  }
+              }
+            return MostRecentFK;
+          }
+
+        private static ForeignKey pickMostRecentFKPart2(List<ForeignKey> potentialFKs, int columnSequenceOrder)
+          {
+            int MostRecentSequenceOrder = -1;
+            ForeignKey MostRecentFK = null;
+            for (ForeignKey FK : potentialFKs)
+              {
+                for (Column C : FK._SrcColumnObjs)
+                  {
+                    if (C.getSequenceOrder() < columnSequenceOrder && C.getSequenceOrder() > MostRecentSequenceOrder)
+                      {
+                        MostRecentSequenceOrder = C.getSequenceOrder();
+                        MostRecentFK = FK;
+                      }
+                  }
+              }
+            return MostRecentFK;
+          }
+
+        private boolean isBoring()
+          {
+            return _PK == null && _FKs.isEmpty() == true;
+          }
+
+
+      }
+
+
+    private String PrintBaseView(View V)
+    throws Exception
+      {
+        List<FuckThat> FuckList = FuckThat.ScanView(V);
 
         StringBuilder Str = new StringBuilder();
         Str.append("-- " + TextUtil.EscapeSingleQuoteForSQL(V._Description) + "\n");
@@ -382,7 +451,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             if (VC._Aggregate != AggregateType.COUNT && (VC._SameAsObj._Mode == ColumnMode.CALCULATED || VC._JoinOnly == true))
               continue;
 
-            Object T = VC._SameAsObj._ParentObject;
+            Object T = VC.getSameAsRoot()._ParentObject;
             TableRankTracker TI = TableRankTracker.getElementFromLast(TableStack, T);
 
             if (TI == null)
@@ -393,15 +462,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 TableMap.put(TI._N, TI);
                 if (TableMap.size() != 1)
                   {
-                    // ForeignKey FK = TableRankTracker.getClosestFKTable(TableStack, T, V, columnCount);
-                    ForeignKey FK = FuckThat.getClosestFKTable(FuckList, T, columnCount);
-                    if (FK == null)
+                    ViewJoin VJ = V.getViewjoin(T.getBaseName());
+                    if (VJ != null)
                       {
-                        ViewJoin VJ = V.getViewjoin(T.getBaseName());
-                        if (VJ == null)
-                          {
-                            throw new Exception("View " + V.getFullName() + " is using " + T.getShortName() + " but cannot find any foreign keys in any tables used so far: " + TableRankTracker.PrintTableNames(TableStack));
-                          }
                         FromList.append("     " + JoinType.printJoinType(VC._Join) + " " + VJ._ObjectObj.getShortName());
                         Query Q = VJ.getQuery(this);
                         if (Q == null)
@@ -421,9 +484,18 @@ public class Sql extends PostgreSQL implements CodeGenSql
                       }
                     else
                       {
-                        String JT = VC._Join != null ? JoinType.printJoinType(VC._Join)
-                        : FK._DestObjectObj.getFullName().equals(T.getFullName()) == false ? "left  join " : "inner join ";
-                        FromList.append("     " + JT + TI._N + (TI._V == 1 ? "" : " as " + TI.getFullName()) + " on " + getFKStatement(FK, TableStack));
+                        // ForeignKey FK = TableRankTracker.getClosestFKTable(TableStack, T, V, columnCount);
+                        ForeignKey FK = FuckThat.getClosestFKTable(FuckList, V, T, columnCount);
+                        if (FK == null)
+                          {
+                            throw new Exception("View " + V.getFullName() + " is using " + T.getShortName() + " but cannot find any foreign keys in any tables used so far: " + TableRankTracker.PrintTableNames(TableStack));
+                          }
+                        else
+                          {
+                            String JT = VC._Join != null ? JoinType.printJoinType(VC._Join)
+                            : FK._DestObjectObj.getFullName().equals(T.getFullName()) == false ? "left  join " : "inner join ";
+                            FromList.append("     " + JT + TI._N + (TI._V == 1 ? "" : " as " + TI.getFullName()) + " on " + getFKStatement(FK, TableStack));
+                          }
                       }
                   }
                 else
