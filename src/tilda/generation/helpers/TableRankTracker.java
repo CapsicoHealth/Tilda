@@ -43,7 +43,7 @@ public class TableRankTracker
       {
         Set<String> TableNames = new HashSet<String>();
         return getElementFromLast(TRTD, O, TableNames, 0);
-        }
+      }
 
     public static TableRankTracker getElementFromLast(Deque<TableRankTracker> TRTD, Object O, Set<String> TableNames, int Level)
       {
@@ -51,6 +51,8 @@ public class TableRankTracker
         while (I.hasNext() == true)
           {
             TableRankTracker TI = I.next();
+            if (TI._O.getFullName().equals(O.getFullName()) == true)
+              return TI;
             if (TI._O._FST == FrameworkSourcedType.VIEW)
               {
                 View SubV = TI._O._ParentSchema.getView(TI._O._ParentSchema._Name, TI._O._Name);
@@ -60,10 +62,9 @@ public class TableRankTracker
                     if (TableNames.add(VC._SameAsObj._ParentObject.getFullName()) == true)
                       SubTRTD.add(new TableRankTracker(VC._SameAsObj._ParentObject, 1));
                   }
-                return getElementFromLast(SubTRTD, O, TableNames, Level+1);
+                if (getElementFromLast(SubTRTD, O, TableNames, Level + 1) != null)
+                  return TI;
               }
-            else if (TI._O.getFullName().equals(O.getFullName()) == true)
-              return TI;
           }
         return null;
       }
@@ -82,14 +83,14 @@ public class TableRankTracker
         return Str.toString();
       }
 
-    public static int findFKDeep(Deque<TableRankTracker> TRTD, Object O, View V)
+    public static int findFKDeep(Deque<TableRankTracker> TRTD, Object O, List<Column> FKSourceCols, View V, int columnCount)
     throws Exception
       {
         Set<String> TableNames = new HashSet<String>();
-        return findFKDeep(TRTD, O, V, TableNames, 0);
+        return findFKDeep(TRTD, O, FKSourceCols, V, columnCount, TableNames, 0);
       }
 
-    public static int findFKDeep(Deque<TableRankTracker> TRTD, Object O, View V, Set<String> TableNames, int Level)
+    public static int findFKDeep(Deque<TableRankTracker> TRTD, Object O, List<Column> FKSourceCols, View V, int columnCount, Set<String> TableNames, int Level)
     throws Exception
       {
         Iterator<TableRankTracker> I = TRTD.descendingIterator();
@@ -110,7 +111,7 @@ public class TableRankTracker
                 if (SubTRTD.isEmpty() == false)
                   {
                     LOG.debug(PaddingUtil.getPad(Level * 3) + "Checking referenced view " + TI._O.getShortName());
-                    if (findFKDeep(SubTRTD, O, V, TableNames, Level + 1) != -1)
+                    if (findFKDeep(SubTRTD, O, FKSourceCols, V, columnCount, TableNames, Level + 1) != -1)
                       {
                         LOG.debug(PaddingUtil.getPad(Level * 3) + "Got it from a sub-table!");
                         return i;
@@ -122,12 +123,51 @@ public class TableRankTracker
                 LOG.debug(PaddingUtil.getPad(Level * 3) + "Checking referenced table " + TI._O.getShortName());
                 if (TI._O.getFullName().equals(O.getFullName()) == true)
                   {
-                    LOG.debug(PaddingUtil.getPad(Level * 3) + "Got it!");
-                    return i;
+                    LOG.debug(PaddingUtil.getPad(Level * 3) + "Got it! Now searching for nearest column from table " + O.getShortName() + ".");
+                    if (Level == 0)
+                      {
+                        while (columnCount >= 0)
+                          {
+                            ViewColumn VC = V._ViewColumns.get(columnCount);
+                            if (VC._SameAsObj._ParentObject.getFullName().equals(O.getFullName()) == true)
+                             return columnCount;
+                            --columnCount;
+                          }
+
+                      }
+                    else if (recurseStuff(V, O, columnCount, FKSourceCols) != -1)
+                      return columnCount;
                   }
               }
           }
         return -1;
+      }
+
+    private static int recurseStuff(View V, Object O, int columnStart, List<Column> FKSourceCols)
+      {
+        while (columnStart >= 0)
+          {
+            ViewColumn VC = V._ViewColumns.get(columnStart);
+            LOG.debug("   Checking view column " + VC.getShortName() + " (" + columnStart + ") from  sameAs " + VC._SameAsObj.getShortName());
+            if (VC._SameAsObj._ParentObject._FST == FrameworkSourcedType.VIEW)
+              {
+                View SubV = V._ParentSchema.getView(VC._SameAsObj._ParentObject._ParentSchema._Name, VC._SameAsObj._ParentObject._Name);
+                if (recurseStuff(SubV, O, SubV._ViewColumns.size() - 1, FKSourceCols) != -1)
+                  return columnStart;
+              }
+            else if (CheckColIn(VC._SameAsObj, FKSourceCols) == true && VC._SameAsObj._ParentObject.getFullName().equals(O.getFullName()) == true)
+              return columnStart;
+            --columnStart;
+          }
+        return -1;
+      }
+
+    private static boolean CheckColIn(Column Col, List<Column> Columns)
+      {
+        for (Column C : Columns)
+          if (C.getFullName().equals(Col.getFullName()) == true)
+            return true;
+        return false;
       }
 
     public static ForeignKey getClosestFKTable(Deque<TableRankTracker> TRTD, Object O, View V, int columnCount)
@@ -148,10 +188,20 @@ public class TableRankTracker
 
         ForeignKey MostRecentFK = null;
         int MostRecentFKPos = -1;
+        LOG.debug("Searching for FK to/from " + O.getShortName());
         for (ForeignKey FK : FKs)
           {
-            Object FKObj = O.getFullName().equals(FK._ParentObject.getFullName()) == true || O._FST == FrameworkSourcedType.VIEW ? FK._DestObjectObj : O;
-            int pos = TableRankTracker.findFKDeep(TRTD, FKObj, V);
+            Object FKObj = O.getFullName().equals(FK._ParentObject.getFullName()) == true || O._FST == FrameworkSourcedType.VIEW
+            ? FK._DestObjectObj
+            : O.getFullName().equals(FK._ParentObject.getFullName()) == true
+            ? FK._ParentObject
+            : O;
+            List<Column> FKColumns = FKObj.getFullName().equals(FK._ParentObject.getFullName()) == true ? FK._SrcColumnObjs : FK._DestObjectObj._PrimaryKey._ColumnObjs;
+            LOG.debug("Examining FK " + FK._Name + ": " + FK._ParentObject.getShortName() + " -> " + FK._DestObjectObj.getShortName());
+            LOG.debug("   Picked Obj: " + FKObj.getShortName());
+            LOG.debug("   Picked FK columns: " + Column.PrintColumnList(FKColumns));
+            int pos = TableRankTracker.findFKDeep(TRTD, FKObj, FKColumns, V, columnCount);
+            LOG.debug("   Most recent reference to " + FKObj.getShortName() + " as pos :" + pos + ".");
             if (pos == -1 && MostRecentFKPos == -1)
               throw new Exception("The view " + V.getShortName() + " uses columns from table " + FK._DestObjectObj.getShortName() + " and no foreign key can be found to/from " + O.getShortName() + ".");
             LOG.debug(" --> Found FK " + FK._Name + ": " + Column.PrintColumnList(FK._SrcColumnObjs));
@@ -159,6 +209,7 @@ public class TableRankTracker
               {
                 MostRecentFKPos = pos;
                 MostRecentFK = FK;
+                LOG.debug("   This is now the new most-recent FK.");
               }
           }
         if (MostRecentFK != null)
@@ -202,7 +253,7 @@ public class TableRankTracker
             for (ForeignKey FK : TI._O._ForeignKeys)
               if (FK._DestObjectObj.getFullName().equals(O.getFullName()) == true)
                 {
-                  LOG.debug(PaddingUtil.getPad(Level * 3) + "  --> Found FK from " + TI._O.getShortName() + " to " + O.getShortName());
+                  LOG.debug(PaddingUtil.getPad(Level * 3) + "  --> Found FK " + FK._Name + " from " + TI._O.getShortName() + " to " + O.getShortName());
                   FKs.add(FK);
                 }
           }

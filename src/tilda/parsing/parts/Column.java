@@ -73,7 +73,7 @@ public class Column extends TypeDef
     public transient ColumnValue    _DefaultUpdateValue;
 
     
-    public transient int _SequenceOrder = -1;
+    protected transient int _SequenceOrder = -1;
 
     private transient ValidationStatus _Validation = ValidationStatus.NONE;
 
@@ -434,9 +434,14 @@ public class Column extends TypeDef
           }
         return null;
       }
+
     public void setSequenceOrder(int i)
       {
         _SequenceOrder = i;
+      }
+    public int getSequenceOrder()
+      {
+        return _SequenceOrder;
       }
 
     public static String PrintColumnList(List<Column> L)
@@ -445,6 +450,11 @@ public class Column extends TypeDef
         for (Column C : L)
           Str.append(Str.length() == 0 ? "" : ", ").append(C.getShortName());
         return Str.toString();
+      }
+
+    public String toString()
+      {
+        return getClass().getName() + ":" + getFullName();
       }
     
   }

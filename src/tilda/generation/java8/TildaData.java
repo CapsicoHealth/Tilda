@@ -384,7 +384,7 @@ public class TildaData implements CodeGenTildaData
     public void genMethodSet(PrintWriter Out, GeneratorSession G, Column C)
     throws Exception
       {
-        int BitFieldId = C._SequenceOrder < 64 ? 1 : 2;
+        int BitFieldId = C.getSequenceOrder() < 64 ? 1 : 2;
         String Mask = Helper.getRuntimeMask(C) + BitFieldId;
         String Visibility = Helper.getVisibility(C, true);
         if (C._JsonSchema != null && C.isCollection() == true)
@@ -425,7 +425,7 @@ public class TildaData implements CodeGenTildaData
                     if (C._Mapper._Name == ColumnMapperMode.DB)
                       {
                         Column SecondaryC = C._ParentObject.getColumn(C.getName() + "MappedName");
-                        int SecondaryBitFieldId = SecondaryC._SequenceOrder < 64 ? 1 : 2;
+                        int SecondaryBitFieldId = SecondaryC.getSequenceOrder() < 64 ? 1 : 2;
                         String SecondaryMask = Helper.getRuntimeMask(SecondaryC) + SecondaryBitFieldId;
                         Out.println("          __Changes" + SecondaryBitFieldId + " |=  " + SecondaryMask + ";");
                         Out.println("          __Nulls" + SecondaryBitFieldId + "   &= ~" + SecondaryMask + ";");
@@ -433,7 +433,7 @@ public class TildaData implements CodeGenTildaData
                     if (C._Mapper._Group == ColumnMapperMode.DB)
                       {
                         Column SecondaryC = C._ParentObject.getColumn(C.getName() + "MappedGroup");
-                        int SecondaryBitFieldId = SecondaryC._SequenceOrder < 64 ? 1 : 2;
+                        int SecondaryBitFieldId = SecondaryC.getSequenceOrder() < 64 ? 1 : 2;
                         String SecondaryMask = Helper.getRuntimeMask(SecondaryC) + SecondaryBitFieldId;
                         Out.println("          __Changes" + SecondaryBitFieldId + " |=  " + SecondaryMask + ";");
                         Out.println("          __Nulls" + SecondaryBitFieldId + "   &= ~" + SecondaryMask + ";");
@@ -767,7 +767,7 @@ public class TildaData implements CodeGenTildaData
     public void genMethodSetNull(PrintWriter Out, GeneratorSession G, Column C)
     throws Exception
       {
-        int BitFieldId = C._SequenceOrder < 64 ? 1 : 2;
+        int BitFieldId = C.getSequenceOrder() < 64 ? 1 : 2;
         String Mask = Helper.getRuntimeMask(C) + BitFieldId;
         String Visibility = Helper.getVisibility(C, true);
 
@@ -819,7 +819,7 @@ public class TildaData implements CodeGenTildaData
     public void genMethodHasChanged(PrintWriter Out, GeneratorSession G, Column C)
     throws Exception
       {
-        int BitFieldId = C._SequenceOrder < 64 ? 1 : 2;
+        int BitFieldId = C.getSequenceOrder() < 64 ? 1 : 2;
         String Mask = Helper.getRuntimeMask(C) + BitFieldId;
         Out.println("   public boolean hasChanged" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()");
         Out.println("     { return (" + Mask + " & __Changes" + BitFieldId + ") != 0L; }");
@@ -829,7 +829,7 @@ public class TildaData implements CodeGenTildaData
     public void genMethodIsNull(PrintWriter Out, GeneratorSession G, Column C)
     throws Exception
       {
-        int BitFieldId = C._SequenceOrder < 64 ? 1 : 2;
+        int BitFieldId = C.getSequenceOrder() < 64 ? 1 : 2;
         String Mask = Helper.getRuntimeMask(C) + BitFieldId;
         Out.println("   public final boolean isNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()");
         Out.println("     { return (" + Mask + " & __Nulls" + BitFieldId + ") != 0L; }");
@@ -877,7 +877,7 @@ public class TildaData implements CodeGenTildaData
         for (Column C : O._Columns)
           if (C != null && C._Mode != ColumnMode.CALCULATED)
             {
-              int BitFieldId = C._SequenceOrder < 64 ? 1 : 2;
+              int BitFieldId = C.getSequenceOrder() < 64 ? 1 : 2;
               String Mask = Helper.getRuntimeMask(C) + BitFieldId;
               String Pad = O._PadderColumnNames.getPad(C.getName());
               if (C.getType() == ColumnType.DATETIME)
@@ -926,7 +926,7 @@ public class TildaData implements CodeGenTildaData
         for (Column C : O._Columns)
           if (C != null && C._Mode != ColumnMode.CALCULATED)
             {
-              int BitFieldId = C._SequenceOrder < 64 ? 1 : 2;
+              int BitFieldId = C.getSequenceOrder() < 64 ? 1 : 2;
               String Mask = Helper.getRuntimeMask(C) + BitFieldId;
               String Pad = O._PadderColumnNames.getPad(C.getName());
               if (C.getType() == ColumnType.DATETIME)
@@ -1004,7 +1004,7 @@ public class TildaData implements CodeGenTildaData
         for (Column C : O._Columns)
           if (C != null && C._Mode != ColumnMode.CALCULATED)
             {
-              int BitFieldId = C._SequenceOrder < 64 ? 1 : 2;
+              int BitFieldId = C.getSequenceOrder() < 64 ? 1 : 2;
               String Mask = Helper.getRuntimeMask(C) + BitFieldId;
               String Pad = O._PadderColumnNames.getPad(C.getName());
               Out.println("               if ((" + Mask + Pad + " & __Changes" + BitFieldId + ") != 0L) ");
@@ -1087,7 +1087,7 @@ public class TildaData implements CodeGenTildaData
         for (Column C : CopyToColumns)
           if (C != null)
             {
-              int BitFieldId = C._SequenceOrder < 64 ? 1 : 2;
+              int BitFieldId = C.getSequenceOrder() < 64 ? 1 : 2;
               String Mask = Helper.getRuntimeMask(C) + BitFieldId;
               String Pad = O._PadderColumnNames.getPad(C.getName());
               if (C._Nullable == true)
@@ -1186,7 +1186,7 @@ public class TildaData implements CodeGenTildaData
         for (Column C : O._Columns)
           if (C != null && C._Mode != ColumnMode.CALCULATED)
             {
-              int BitFieldId = C._SequenceOrder < 64 ? 1 : 2;
+              int BitFieldId = C.getSequenceOrder() < 64 ? 1 : 2;
               String Mask = Helper.getRuntimeMask(C) + BitFieldId;
               String Pad = O._PadderColumnNames.getPad(C.getName());
               String Header = (C.isCollection() == true ? "             " : "          ") + PaddingUtil.getPad(C.getName().length() + Pad.length()) + "   ";
@@ -1347,7 +1347,7 @@ public class TildaData implements CodeGenTildaData
         for (Column C : O._Columns)
           if (C != null && C._FrameworkManaged == false)
             {
-              int BitFieldId = C._SequenceOrder < 64 ? 1 : 2;
+              int BitFieldId = C.getSequenceOrder() < 64 ? 1 : 2;
               String Mask = Helper.getRuntimeMask(C) + BitFieldId;
               String Pad = O._PadderColumnNames.getPad(C.getName());
               boolean Nullable = C._Nullable == true && C._Mode != ColumnMode.CALCULATED;

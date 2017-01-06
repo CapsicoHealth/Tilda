@@ -26,9 +26,10 @@ public class ViewColumnWrapper extends Column
   {
     static final Logger LOG = LogManager.getLogger(View.class.getName());
 
-    public ViewColumnWrapper(Column SameAsCol, ViewColumn VCol)
+    public ViewColumnWrapper(Column SameAsCol, ViewColumn VCol, int SequenceOrder)
       {
         super(SameAsCol._Name, VCol._SameAs, SameAsCol._Description);
+        _SequenceOrder = SequenceOrder;
         if (VCol._UseMapper == true && SameAsCol._Mapper != null)
           _Mapper = new ColumnMapper(SameAsCol._Mapper._SrcColumns, SameAsCol._Mapper._DestObject, SameAsCol._Mapper._Name, SameAsCol._Mapper._Group, SameAsCol._Mapper._Multi);
         if (VCol._UseEnum == true && SameAsCol._Enum != null)
@@ -74,9 +75,4 @@ public class ViewColumnWrapper extends Column
       {
         return _VCol.getName();
       }
-    
-//    public ColumnType getType()
-//    {
-//      return _Type;
-//    }
   }

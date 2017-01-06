@@ -21,6 +21,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
@@ -29,6 +32,8 @@ import tilda.utils.TextUtil;
 
 public class ValidationHelper
   {
+    static final Logger LOG = LogManager.getLogger(ValidationHelper.class.getName());
+
     public static List<Column> ProcessColumn(ParserSession PS, Base ParentObject, String What, String[] ColumnNames, Processor P)
       {
         List<Column> Columns = new ArrayList<Column>();
@@ -67,11 +72,12 @@ public class ValidationHelper
       }
 
     public static String _ValidIdentifierMessage = "Names must conform to a common subset of SQL, C++, Java, .Net and JavaScript identifier conventions.";
+
     public static boolean isValidIdentifier(String Name)
       {
         char[] chars = Name.toCharArray();
         if (Character.isJavaIdentifierStart(chars[0]) == false)
-         return false;
+          return false;
         for (int i = 1; i < chars.length; ++i)
           if (Character.isJavaIdentifierPart(chars[i]) == false)
             return false;

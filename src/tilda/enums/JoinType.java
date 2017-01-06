@@ -31,5 +31,10 @@ public enum JoinType
             return e;
         return null;
       }
+    
+    public static String printJoinType(JoinType JT)
+     {
+       return JT == null || JT==JoinType.INNER ? "inner join" : JT == JoinType.LEFT ? "left  join" : "right join";
+     }
 
   }

@@ -342,6 +342,7 @@ public class View extends Base
         O._Json = _Json;
         O._LCStr = ObjectLifecycle.READONLY.name();
         O._OCC = _OCC;
+        int Counter = -1;
         for (ViewColumn VC : _ViewColumns)
           {
             if (_Pivot != null && VC._Name.equals(_Pivot._ColumnName) == true)
@@ -350,7 +351,7 @@ public class View extends Base
               {
                 if (_OCC == false || VC.getName().equals("created") == false && VC.getName().equals("lastUpdated") == false && VC.getName().equals("deleted") == false)
                   {
-                    O._Columns.add(new ViewColumnWrapper(VC._SameAsObj, VC));
+                    O._Columns.add(new ViewColumnWrapper(VC._SameAsObj, VC, ++Counter));
                   }
               }
           }
