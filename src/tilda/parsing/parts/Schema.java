@@ -136,14 +136,14 @@ public class Schema
         return null;
       }
     
-    public View getView(String SchemaName, String ViewName)
+    public View getSourceView(Object O)
       {
-        if (_Name.equals(SchemaName) == true)
-         return getView(ViewName);
+        if (_Name.equals(O._ParentSchema._Name) == true)
+         return getView(O._Name);
         for (Schema S : _DependencySchemas)
           {
-            if (S._Name.equals(SchemaName) == true)
-             return S.getView(ViewName);
+            if (S._Name.equals(O._ParentSchema._Name) == true)
+             return S.getView(O._Name);
           }
         return null;
       }

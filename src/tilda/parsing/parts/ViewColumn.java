@@ -162,9 +162,9 @@ public class ViewColumn
     public Column getSameAsRoot()
       {
 //        LOG.debug("SameAs Root for " + getShortName() + ": " + _SameAsObj.getShortName());
-        if (_SameAsObj._ParentObject._FST == FrameworkSourcedType.VIEW)
+        if (_SameAsObj != null && _SameAsObj._ParentObject._FST == FrameworkSourcedType.VIEW)
           {
-            View SubV = _ParentView._ParentSchema.getView(_SameAsObj._ParentObject._ParentSchema._Name, _SameAsObj._ParentObject._Name);
+            View SubV = _ParentView._ParentSchema.getSourceView(_SameAsObj._ParentObject);
 //            LOG.debug("SameAs is part of a sub-view " + SubV.getShortName());
             ViewColumn VC = SubV.getViewColumn(_SameAsObj.getName());
             if (VC != null)

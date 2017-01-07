@@ -18,7 +18,6 @@ package tilda.generation.postgres9;
 
 import java.io.PrintWriter;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -36,6 +35,7 @@ import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.JoinType;
 import tilda.generation.GeneratorSession;
+import tilda.generation.helpers.FuckThat;
 import tilda.generation.helpers.TableRankTracker;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Base;
@@ -44,7 +44,6 @@ import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Formula;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
-import tilda.parsing.parts.PrimaryKey;
 import tilda.parsing.parts.Query;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.Value;
@@ -53,7 +52,6 @@ import tilda.parsing.parts.ViewColumn;
 import tilda.parsing.parts.ViewJoin;
 import tilda.parsing.parts.ViewPivot;
 import tilda.utils.PaddingTracker;
-import tilda.utils.PaddingUtil;
 import tilda.utils.TextUtil;
 
 public class Sql extends PostgreSQL implements CodeGenSql
@@ -246,190 +244,6 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
 
 
-    private static class FuckThat
-      {
-        public FuckThat(ViewColumn VC, Column C, int SequenceOrder, boolean implicitPKImport)
-          {
-            _VC = VC;
-            _C = C;
-            _SequenceOrder = SequenceOrder;
-            _implicitPKImport = implicitPKImport;
-            _PK = C._PrimaryKey == true ? C._ParentObject._PrimaryKey : null;
-            if (implicitPKImport == false)
-              for (ForeignKey FK : C._ParentObject._ForeignKeys)
-                {
-                  for (Column fkcol : FK._SrcColumnObjs)
-                    if (C.getFullName().equals(fkcol.getFullName()) == true)
-                      {
-                        _FKs.add(FK);
-                      }
-                }
-          }
-
-        public final ViewColumn       _VC;
-        public final int              _SequenceOrder;
-        public final boolean          _implicitPKImport;
-        public final Column           _C;
-        public final PrimaryKey       _PK;
-        public final List<ForeignKey> _FKs = new ArrayList<ForeignKey>();
-
-        public static List<FuckThat> ScanView(View V)
-          {
-            List<FuckThat> FuckList = new ArrayList<FuckThat>();
-            LOG.debug("\n\nDETAILS for view " + V.getShortName());
-            int i = -1;
-            Set<String> TableNames = new HashSet<String>();
-            for (ViewColumn VC : V._ViewColumns)
-              {
-                if (VC._Name.equals("startOasisRefnum") == true)
-                  {
-                    LOG.debug("xxx");
-                  }
-                Column C = VC.getSameAsRoot();
-                FuckThat FT = new FuckThat(VC, C, ++i, false);
-                if (FT._PK != null)
-                  TableNames.add(VC._SameAsObj._ParentObject.getShortName());
-                else if (FT._PK == null && C == VC._SameAsObj) // not a PK and was first-level field
-                  {
-                    if (TableNames.add(VC._SameAsObj._ParentObject.getShortName()) == true && VC._SameAsObj._ParentObject._PrimaryKey != null)
-                      {
-                        for (Column col : VC._SameAsObj._ParentObject._PrimaryKey._ColumnObjs)
-                          {
-                            FuckThat FT2 = new FuckThat(VC, col, i, true);
-                            FuckList.add(FT2);
-                          }
-                      }
-                  }
-                if (FT.isBoring() == false)
-                  FuckList.add(FT);
-              }
-            for (FuckThat FT : FuckList)
-              {
-                boolean Printed = false;
-                if (FT._PK != null)
-                  {
-                    LOG.debug(FT._VC._SameAsObj.getShortName() + "(" + FT._SequenceOrder + ") as " + FT._VC._Name + "      --> " + FT._C.getShortName() + " is " + (FT._implicitPKImport == true ? "an implicitly imported" : "a") + " primary key");
-                    Printed = true;
-                  }
-                for (ForeignKey FK : FT._FKs)
-                  {
-                    LOG.debug(FT._VC._SameAsObj.getShortName() + "(" + FT._SequenceOrder + ") as " + FT._VC._Name + "      --> " + FT._C.getShortName() + " is part of " + (FT._implicitPKImport == true ? "an implicitly imported" : "a") + " FK " + FK._Name + " to " + FK._DestObjectObj.getShortName());
-                    Printed = true;
-                  }
-              }
-            LOG.debug("---------------------------------------------------\n");
-
-            return FuckList;
-          }
-
-
-        public static ForeignKey getClosestFKTable(List<FuckThat> FuckList, View V, Object T, int columnSequenceOrder)
-          {
-            LOG.debug("Searching for FK to/from " + T.getShortName() + " from view column #" + columnSequenceOrder);
-            int i = FuckList.size() - 1;
-            while (FuckList.get(i)._SequenceOrder >= columnSequenceOrder && i >= 0)
-              --i;
-            while (i >= 0)
-              {
-                FuckThat FT = FuckList.get(i--);
-                if (FT.isBoring() == true)
-                  continue;
-                LOG.debug("   Examining info from " + FT._VC.getShortName() + " as " + FT._C.getShortName() + " (" + FT._SequenceOrder + ")");
-                List<ForeignKey> PotentialFKs = new ArrayList<ForeignKey>();
-                for (ForeignKey FK : FT._C._ParentObject._ForeignKeys)
-                  {
-                    LOG.debug("      Looking at FK " + FK._Name + " from " + FK._ParentObject.getFullName() + " to " + FK._DestObjectObj.getFullName() + " (->" + T.getFullName() + ")");
-                    if (FK._DestObjectObj.getFullName().equals(T.getFullName()) == true)
-                      PotentialFKs.add(FK);
-                  }
-                if (PotentialFKs.isEmpty() == false)
-                  {
-                    ForeignKey FK = FuckThat.pickMostRecentFKPart1(PotentialFKs, V, columnSequenceOrder);
-                    if (FK != null)
-                      {
-                        LOG.debug("WOOHOO! Picked " + FK._Name);
-                        return FK;
-                      }
-                    return null;
-                  }
-
-                if (FT._PK != null)
-                  {
-                    PotentialFKs.clear();
-                    for (ForeignKey FK : T._ForeignKeys)
-                      {
-                        LOG.debug("      Looking at FK " + FK._Name + " to " + FK._DestObjectObj.getShortName() + " from " + FK._ParentObject.getShortName());
-                        if (FK._DestObjectObj.getFullName().equals(FT._C._ParentObject.getFullName()) == true)
-                          PotentialFKs.add(FK);
-                      }
-                    if (PotentialFKs.isEmpty() == false)
-                      {
-                        ForeignKey FK = FuckThat.pickMostRecentFKPart2(PotentialFKs, columnSequenceOrder);
-                        LOG.debug("WOOHOO! Picked " + FK._Name);
-                        return FK;
-                      }
-                  }
-              }
-            return null;
-          }
-
-        private static ForeignKey pickMostRecentFKPart1(List<ForeignKey> potentialFKs, View V, int columnSequenceOrder)
-          {
-            if (potentialFKs.size() == 1)
-              return potentialFKs.get(0);
-            int MostRecentSequenceOrder = -1;
-            ForeignKey MostRecentFK = null;
-            for (ForeignKey FK : potentialFKs)
-              {
-                for (Column C : FK._SrcColumnObjs)
-                  {
-                    LOG.debug("      FK " + FK._Name + ": " + C.getShortName() + "(" + C.getSequenceOrder() + ")");
-                    int i = -1;
-                    for (ViewColumn VJ : V._ViewColumns)
-                      {
-                        ++i;
-                        if (VJ.getSameAsRoot().getFullName().equals(C.getFullName()) == true)
-                          {
-                            if (i < columnSequenceOrder && i > MostRecentSequenceOrder)
-                              {
-                                MostRecentSequenceOrder = i;
-                                MostRecentFK = FK;
-                                LOG.debug("            --> Original sequence order:" + i);
-                              }
-                          }
-                      }
-                  }
-              }
-            return MostRecentFK;
-          }
-
-        private static ForeignKey pickMostRecentFKPart2(List<ForeignKey> potentialFKs, int columnSequenceOrder)
-          {
-            int MostRecentSequenceOrder = -1;
-            ForeignKey MostRecentFK = null;
-            for (ForeignKey FK : potentialFKs)
-              {
-                for (Column C : FK._SrcColumnObjs)
-                  {
-                    if (C.getSequenceOrder() < columnSequenceOrder && C.getSequenceOrder() > MostRecentSequenceOrder)
-                      {
-                        MostRecentSequenceOrder = C.getSequenceOrder();
-                        MostRecentFK = FK;
-                      }
-                  }
-              }
-            return MostRecentFK;
-          }
-
-        private boolean isBoring()
-          {
-            return _PK == null && _FKs.isEmpty() == true;
-          }
-
-
-      }
-
-
     private String PrintBaseView(View V)
     throws Exception
       {
@@ -448,10 +262,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
         for (ViewColumn VC : V._ViewColumns)
           {
             ++columnCount;
-            if (VC._Aggregate != AggregateType.COUNT && (VC._SameAsObj._Mode == ColumnMode.CALCULATED || VC._JoinOnly == true))
+            if (VC._SameAs == null)
               continue;
-
-            Object T = VC.getSameAsRoot()._ParentObject;
+            Object T = VC._SameAsObj._ParentObject;
             TableRankTracker TI = TableRankTracker.getElementFromLast(TableStack, T);
 
             if (TI == null)
@@ -594,7 +407,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   Str.append("trim(");
                 hasAggregates = true;
               }
-            Str.append(TI._N + (TI._V == 1 ? "" : "_" + TI._V) + ".\"" + VC._SameAsObj.getName() + "\"");
+            Str.append(VC._SameAsObj._ParentObject.getShortName() + (TI._V == 1 ? "" : "_" + TI._V) + ".\"" + VC._SameAsObj.getName() + "\"");
             if (VC._Aggregate != null)
               {
                 if (VC._Aggregate == AggregateType.ARRAY && VC._SameAsObj.getType() == ColumnType.STRING)

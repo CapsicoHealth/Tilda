@@ -59,6 +59,7 @@ public class View extends Base
     /*@formatter:on*/
 
     public transient boolean     _OCC            = false;
+    public transient PrimaryKey _PK = null;
 
     @Override
     public Column getColumn(String name)
@@ -196,7 +197,7 @@ public class View extends Base
               }
             else if (TextUtil.isNullOrEmpty(VC._Prefix) == false)
               PS.AddError("Column '" + VC.getFullName() + "' defined a prefix but is not a .* column.");
-            
+
             if (VC.Validate(PS, this) == false)
               return false;
 
@@ -398,11 +399,64 @@ public class View extends Base
               O._Columns.add(C);
             }
 
+        
+        PrimaryKey PK = _ViewColumns.get(0)._SameAsObj._ParentObject._PrimaryKey;
+        if (PK != null)
+          {
+            if (PK._Autogen == true && getSameAsColumn(PK._ParentObject.getFullName(), "refnum") != null)
+              {
+                O._PrimaryKey = new PrimaryKey();
+                O._PrimaryKey._Columns = new String[] { _ViewColumns.get(0)._Name
+                };
+                _PK = O._PrimaryKey;
+              }
+            else
+              {
+                int countFound = -1;
+                String[] ColNames = new String[PK._ColumnObjs.size()];
+                for (Column C : PK._ColumnObjs)
+                  {
+                    ViewColumn VC = getViewColumnFromSameAsColumn(C._ParentObject.getFullName(), C._Name);
+                    if (VC != null)
+                      ColNames[++countFound] = VC._Name;
+                    else
+                      break;
+                  }
+                if (countFound == PK._ColumnObjs.size() - 1)
+                  {
+                    O._PrimaryKey = new PrimaryKey();
+                    O._PrimaryKey._Columns = ColNames;
+                    _PK = O._PrimaryKey;
+                  }
+              }
+          }
+
+
         _ParentSchema._Objects.add(O);
         O.Validate(PS, ParentSchema);
 
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
+      }
+
+    private Column getSameAsColumn(String ObjectFullName, String ColName)
+      {
+        for (ViewColumn VC : _ViewColumns)
+          {
+            if (VC._SameAsObj._ParentObject.getFullName().equals(ObjectFullName) == true && VC._SameAsObj.getName().equals(ColName) == true)
+              return VC._SameAsObj;
+          }
+        return null;
+      }
+
+    private ViewColumn getViewColumnFromSameAsColumn(String ObjectFullName, String ColName)
+      {
+        for (ViewColumn VC : _ViewColumns)
+          {
+            if (VC._SameAsObj._ParentObject.getFullName().equals(ObjectFullName) == true && VC._SameAsObj.getName().equals(ColName) == true)
+              return VC;
+          }
+        return null;
       }
 
     private void CreateMappedViewColumn(ParserSession PS, Set<String> ColumnNames, int i, ViewColumn C, String ExtraName)

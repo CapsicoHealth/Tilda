@@ -55,7 +55,10 @@ public class TableRankTracker
               return TI;
             if (TI._O._FST == FrameworkSourcedType.VIEW)
               {
-                View SubV = TI._O._ParentSchema.getView(TI._O._ParentSchema._Name, TI._O._Name);
+                View SubV = TI._O._ParentSchema.getSourceView(TI._O);
+                if (SubV._PK != null && SubV._PK._ColumnObjs.get(0)._ParentObject.getFullName().equals(O.getFullName()) == true)
+                  return TI;
+/*                
                 Deque<TableRankTracker> SubTRTD = new ArrayDeque<TableRankTracker>();
                 for (ViewColumn VC : SubV._ViewColumns)
                   {
@@ -64,6 +67,7 @@ public class TableRankTracker
                   }
                 if (getElementFromLast(SubTRTD, O, TableNames, Level + 1) != null)
                   return TI;
+*/
               }
           }
         return null;
@@ -101,7 +105,7 @@ public class TableRankTracker
             --i;
             if (TI._O._FST == FrameworkSourcedType.VIEW) // go down the rabbit hole
               {
-                View SubV = TI._O._ParentSchema.getView(TI._O._ParentSchema._Name, TI._O._Name);
+                View SubV = TI._O._ParentSchema.getSourceView(TI._O);
                 Deque<TableRankTracker> SubTRTD = new ArrayDeque<TableRankTracker>();
                 for (ViewColumn VC : SubV._ViewColumns)
                   {
@@ -151,7 +155,7 @@ public class TableRankTracker
             LOG.debug("   Checking view column " + VC.getShortName() + " (" + columnStart + ") from  sameAs " + VC._SameAsObj.getShortName());
             if (VC._SameAsObj._ParentObject._FST == FrameworkSourcedType.VIEW)
               {
-                View SubV = V._ParentSchema.getView(VC._SameAsObj._ParentObject._ParentSchema._Name, VC._SameAsObj._ParentObject._Name);
+                View SubV = V._ParentSchema.getSourceView(VC._SameAsObj._ParentObject);
                 if (recurseStuff(SubV, O, SubV._ViewColumns.size() - 1, FKSourceCols) != -1)
                   return columnStart;
               }
@@ -232,8 +236,8 @@ public class TableRankTracker
           {
             boolean TI_View = TI._O._FST == FrameworkSourcedType.VIEW;
             LOG.debug(PaddingUtil.getPad(Level * 3) + "Checking referenced view (" + (TI_View ? "TI" : "O") + ") " + (TI_View ? TI._O : O).getShortName());
-            View SubV = TI_View ? TI._O._ParentSchema.getView(TI._O._ParentSchema._Name, TI._O._Name)
-            : O._ParentSchema.getView(O._ParentSchema._Name, O._Name);
+            View SubV = TI_View ? TI._O._ParentSchema.getSourceView(TI._O)
+            : O._ParentSchema.getSourceView(O);
             for (ViewColumn VC : SubV._ViewColumns)
               {
                 if (TableNames.add(VC._SameAsObj._ParentObject.getFullName()) == true)
