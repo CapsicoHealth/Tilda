@@ -443,7 +443,7 @@ public class View extends Base
       {
         for (ViewColumn VC : _ViewColumns)
           {
-            if (VC._SameAsObj._ParentObject.getFullName().equals(ObjectFullName) == true && VC._SameAsObj.getName().equals(ColName) == true)
+            if (VC._SameAsObj != null && VC._SameAsObj._ParentObject.getFullName().equals(ObjectFullName) == true && VC._SameAsObj.getName().equals(ColName) == true)
               return VC._SameAsObj;
           }
         return null;
@@ -453,7 +453,7 @@ public class View extends Base
       {
         for (ViewColumn VC : _ViewColumns)
           {
-            if (VC._SameAsObj._ParentObject.getFullName().equals(ObjectFullName) == true && VC._SameAsObj.getName().equals(ColName) == true)
+            if (VC._SameAsObj != null && VC._SameAsObj._ParentObject.getFullName().equals(ObjectFullName) == true && VC._SameAsObj.getName().equals(ColName) == true)
               return VC;
           }
         return null;

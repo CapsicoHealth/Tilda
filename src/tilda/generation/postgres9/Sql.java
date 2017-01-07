@@ -236,7 +236,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
             Column C2 = Columns2.get(i);
             TableRankTracker TI1 = TableRankTracker.getElementFromLast(TableStack, C1._ParentObject);
             TableRankTracker TI2 = TableRankTracker.getElementFromLast(TableStack, C2._ParentObject);
-            Str.append((TI1 == null ? "null" : TI1.getFullName()) + ".\"" + C1.getName()).append("\" = ").append((TI2 == null ? "null" : TI2.getFullName()) + ".\"" + C2.getName() + "\"");
+            if (TI2 == null)
+             throw new Error("Cannot find referenced table "+C2._ParentObject.getFullName());
+            Str.append(TI1.getFullName() + ".\"" + C1.getName()).append("\" = ").append(TI2.getFullName() + ".\"" + C2.getName() + "\"");
           }
 
         return Str.toString();
@@ -305,6 +307,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
                           }
                         else
                           {
+                            if (TI._N.equalsIgnoreCase("PATIENTS.SCORE") == true)
+                              {
+                                LOG.debug("xxx");
+                              }
                             String JT = VC._Join != null ? JoinType.printJoinType(VC._Join)
                             : FK._DestObjectObj.getFullName().equals(T.getFullName()) == false ? "left  join " : "inner join ";
                             FromList.append("     " + JT + TI._N + (TI._V == 1 ? "" : " as " + TI.getFullName()) + " on " + getFKStatement(FK, TableStack));

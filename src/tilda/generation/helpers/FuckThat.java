@@ -20,34 +20,34 @@ public class FuckThat
   {
     protected static final Logger LOG = LogManager.getLogger(FuckThat.class.getName());
 
-    public FuckThat(ViewColumn VC, Column C, int SequenceOrder, boolean implicitPKImport)
+    public FuckThat(ViewColumn VC, Column C, int SequenceOrder, boolean implicitFKImport)
       {
         _VC = VC;
         _C = C;
         _SequenceOrder = SequenceOrder;
-        _implicitPKImport = implicitPKImport;
+        _implicitFKImport = implicitFKImport;
         _PK = C._PrimaryKey == true ? C._ParentObject._PrimaryKey : null;
         for (ForeignKey FK : C._ParentObject._ForeignKeys)
           {
-            LOG.debug("Looking at FK " + FK._Name);
+            // LOG.debug("Looking at FK " + FK._Name);
             boolean Found = false;
             for (Column fkcol : FK._SrcColumnObjs)
               {
-                LOG.debug("Comparing " + C.getFullName() + " with " + fkcol.getFullName());
+                // LOG.debug("Comparing " + C.getFullName() + " with " + fkcol.getFullName());
                 if (C.getFullName().equals(fkcol.getFullName()) == true)
                   {
                     Found = true;
                     break;
                   }
               }
-            if (implicitPKImport == true || Found == true)
+            if (Found == true)
               _FKs.add(FK);
           }
       }
 
     public final ViewColumn       _VC;
     public final int              _SequenceOrder;
-    public final boolean          _implicitPKImport;
+    public final boolean          _implicitFKImport;
     public final Column           _C;
     public final PrimaryKey       _PK;
     public final List<ForeignKey> _FKs = new ArrayList<ForeignKey>();
@@ -64,7 +64,7 @@ public class FuckThat
             if (C == null || C._FrameworkManaged == true || C._Mode == ColumnMode.CALCULATED) // for counts and calculated fields where there is no mapping to an actual column.
               continue;
             // LOG.debug(" - " + VC.getShortName() + " as " + VC._SameAsObj.getShortName());
-            if (VC.getShortName().equalsIgnoreCase("PATIENTS.PATIENTVIEW.refnum") == true)
+            if (VC.getShortName().equalsIgnoreCase("patients.score.name") == true)
               {
                 LOG.debug("xxx");
               }
@@ -92,12 +92,12 @@ public class FuckThat
             boolean Printed = false;
             if (FT._PK != null)
               {
-                LOG.debug(FT._VC._SameAsObj.getShortName() + "(" + FT._SequenceOrder + ") as " + FT._VC._Name + "      --> " + FT._C.getShortName() + " is " + (FT._implicitPKImport == true ? "an implicitly imported" : "a") + " primary key");
+                LOG.debug(FT._VC._SameAsObj.getShortName() + "(" + FT._SequenceOrder + ") as " + FT._VC._Name + "      --> " + FT._C.getShortName() + " is " + (FT._implicitFKImport == true ? "an implicitly imported" : "a") + " primary key");
                 Printed = true;
               }
             for (ForeignKey FK : FT._FKs)
               {
-                LOG.debug(FT._VC._SameAsObj.getShortName() + "(" + FT._SequenceOrder + ") as " + FT._VC._Name + "      --> " + FT._C.getShortName() + " is part of " + (FT._implicitPKImport == true ? "an implicitly imported" : "a") + " FK " + FK._Name + " to " + FK._DestObjectObj.getShortName());
+                LOG.debug(FT._VC._SameAsObj.getShortName() + "(" + FT._SequenceOrder + ") as " + FT._VC._Name + "      --> " + FT._C.getShortName() + " is part of " + (FT._implicitFKImport == true ? "an implicitly imported" : "a") + " FK " + FK._Name + " to " + FK._DestObjectObj.getShortName());
                 Printed = true;
               }
           }
@@ -123,6 +123,11 @@ public class FuckThat
             if (FT.isBoring() == true)
               continue;
             LOG.debug("   Examining info from " + FT._VC.getShortName() + " as " + FT._C.getShortName() + " (" + FT._SequenceOrder + ")");
+            if (FT._VC.getShortName().equalsIgnoreCase("DATAMART.HISANSWERPIVOTVIEW.assessmentRefnum") == true)
+              {
+                LOG.debug("xxx");
+              }
+
             List<ForeignKey> PotentialFKs = new ArrayList<ForeignKey>();
             for (ForeignKey FK : FT._C._ParentObject._ForeignKeys)
               {
@@ -153,6 +158,8 @@ public class FuckThat
                 if (PotentialFKs.isEmpty() == false)
                   {
                     ForeignKey FK = FuckThat.pickMostRecentFKPart2(PotentialFKs, columnSequenceOrder);
+                    if (FK == null)
+                      throw new Error("FK could not be resolved!");
                     LOG.debug("WOOHOO! Picked " + FK._Name);
                     return FK;
                   }
@@ -193,6 +200,8 @@ public class FuckThat
 
     private static ForeignKey pickMostRecentFKPart2(List<ForeignKey> potentialFKs, int columnSequenceOrder)
       {
+        if (potentialFKs.size() == 1)
+          return potentialFKs.get(0);
         int MostRecentSequenceOrder = -1;
         ForeignKey MostRecentFK = null;
         for (ForeignKey FK : potentialFKs)
