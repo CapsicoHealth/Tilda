@@ -36,7 +36,7 @@ public class TableRankTracker
 
     public String getFullName()
       {
-        return _N + (_V == 1 ? "" : "_" + _V);
+        return _V == 1 ? _N : _N.replace(".", "_") + "_" + _V;
       }
 
     public static TableRankTracker getElementFromLast(Deque<TableRankTracker> TRTD, Object O)

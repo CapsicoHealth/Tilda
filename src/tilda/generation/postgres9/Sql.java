@@ -237,7 +237,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             TableRankTracker TI1 = TableRankTracker.getElementFromLast(TableStack, C1._ParentObject);
             TableRankTracker TI2 = TableRankTracker.getElementFromLast(TableStack, C2._ParentObject);
             if (TI2 == null)
-             throw new Error("Cannot find referenced table "+C2._ParentObject.getFullName());
+              throw new Error("Cannot find referenced table " + C2._ParentObject.getFullName());
             Str.append(TI1.getFullName() + ".\"" + C1.getName()).append("\" = ").append(TI2.getFullName() + ".\"" + C2.getName() + "\"");
           }
 
@@ -264,7 +264,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         for (ViewColumn VC : V._ViewColumns)
           {
             ++columnCount;
-            if (VC._SameAs == null)
+            if (VC._SameAs == null || VC._SameAsObj._Mode == ColumnMode.CALCULATED)
               continue;
             Object T = VC._SameAsObj._ParentObject;
             TableRankTracker TI = TableRankTracker.getElementFromLast(TableStack, T);
@@ -313,7 +313,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                               }
                             String JT = VC._Join != null ? JoinType.printJoinType(VC._Join)
                             : FK._DestObjectObj.getFullName().equals(T.getFullName()) == false ? "left  join " : "inner join ";
-                            FromList.append("     " + JT + TI._N + (TI._V == 1 ? "" : " as " + TI.getFullName()) + " on " + getFKStatement(FK, TableStack));
+                            FromList.append("     " + JT + " " + TI._N + (TI._V == 1 ? " " : " as " + TI.getFullName()) + " on " + getFKStatement(FK, TableStack));
                           }
                       }
                   }
@@ -330,12 +330,15 @@ public class Sql extends PostgreSQL implements CodeGenSql
                     } while (TI != TableStack.peekLast());
               }
 
-            if (First == true)
-              First = false;
-            else
-              Str.append("\n     , ");
-            if (PrintViewColumn(Str, VC, TI) == true)
-              hasAggregates = true;
+            if (VC._JoinOnly == false)
+              {
+                if (First == true)
+                  First = false;
+                else
+                  Str.append("\n     , ");
+                if (PrintViewColumn(Str, VC, TI) == true)
+                  hasAggregates = true;
+              }
           }
 
         Str.append("\n  from ").append(FromList);
@@ -413,7 +416,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   Str.append("trim(");
                 hasAggregates = true;
               }
-            Str.append(VC._SameAsObj._ParentObject.getShortName() + (TI._V == 1 ? "" : "_" + TI._V) + ".\"" + VC._SameAsObj.getName() + "\"");
+            Str.append(TI.getFullName()/* VC._SameAsObj._ParentObject.getShortName() + (TI._V == 1 ? "" : "_" + TI._V) */ + ".\"" + VC._SameAsObj.getName() + "\"");
             if (VC._Aggregate != null)
               {
                 if (VC._Aggregate == AggregateType.ARRAY && VC._SameAsObj.getType() == ColumnType.STRING)
