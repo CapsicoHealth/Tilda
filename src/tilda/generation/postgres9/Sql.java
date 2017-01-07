@@ -280,7 +280,12 @@ public class Sql extends PostgreSQL implements CodeGenSql
                     ViewJoin VJ = V.getViewjoin(T.getBaseName());
                     if (VJ != null)
                       {
-                        FromList.append("     " + JoinType.printJoinType(VC._Join) + " " + VJ._ObjectObj.getShortName());
+                        if (VJ._ObjectObj.getShortName().equalsIgnoreCase("PATIENTS.SCORE") == true)
+                          {
+                            LOG.debug("xxx");
+                          }
+
+                        FromList.append("     " + JoinType.printJoinType(VJ._Join) + " " + VJ._ObjectObj.getShortName());
                         Query Q = VJ.getQuery(this);
                         if (Q == null)
                           throw new Exception("Cannot generate the view because an 'on' clause matching the active database '" + getName() + "' is not available.");
