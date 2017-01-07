@@ -59,6 +59,7 @@ public class View extends Base
     /*@formatter:on*/
 
     public transient boolean     _OCC            = false;
+    public transient PrimaryKey _PK = null;
 
     @Override
     public Column getColumn(String name)
@@ -200,7 +201,7 @@ public class View extends Base
             if (VC.Validate(PS, this) == false)
               return false;
 
-            if (ColumnNames.add(VC.getName().toUpperCase()) == false)
+            if (VC._JoinOnly == false && ColumnNames.add(VC.getName().toUpperCase()) == false)
               PS.AddError("Column '" + VC.getFullName() + "' is defined more than once in View '" + getFullName() + "'.");
 
             if (VC.getName().equals("created") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "created")) == true)
@@ -347,6 +348,7 @@ public class View extends Base
         O._Json = _Json;
         O._LCStr = ObjectLifecycle.READONLY.name();
         O._OCC = _OCC;
+        int Counter = -1;
         for (ViewColumn VC : _ViewColumns)
           {
             if (_Pivot != null && VC._Name.equals(_Pivot._ColumnName) == true)
@@ -355,7 +357,7 @@ public class View extends Base
               {
                 if (_OCC == false || VC.getName().equals("created") == false && VC.getName().equals("lastUpdated") == false && VC.getName().equals("deleted") == false)
                   {
-                    O._Columns.add(new ViewColumnWrapper(VC._SameAsObj, VC));
+                    O._Columns.add(new ViewColumnWrapper(VC._SameAsObj, VC, ++Counter));
                   }
               }
           }
@@ -402,11 +404,64 @@ public class View extends Base
               O._Columns.add(C);
             }
 
+        
+        PrimaryKey PK = _ViewColumns.get(0)._SameAsObj._ParentObject._PrimaryKey;
+        if (PK != null)
+          {
+            if (PK._Autogen == true && getSameAsColumn(PK._ParentObject.getFullName(), "refnum") != null)
+              {
+                O._PrimaryKey = new PrimaryKey();
+                O._PrimaryKey._Columns = new String[] { _ViewColumns.get(0)._Name
+                };
+                _PK = O._PrimaryKey;
+              }
+            else
+              {
+                int countFound = -1;
+                String[] ColNames = new String[PK._ColumnObjs.size()];
+                for (Column C : PK._ColumnObjs)
+                  {
+                    ViewColumn VC = getViewColumnFromSameAsColumn(C._ParentObject.getFullName(), C._Name);
+                    if (VC != null)
+                      ColNames[++countFound] = VC._Name;
+                    else
+                      break;
+                  }
+                if (countFound == PK._ColumnObjs.size() - 1)
+                  {
+                    O._PrimaryKey = new PrimaryKey();
+                    O._PrimaryKey._Columns = ColNames;
+                    _PK = O._PrimaryKey;
+                  }
+              }
+          }
+
+
         _ParentSchema._Objects.add(O);
         O.Validate(PS, ParentSchema);
 
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
+      }
+
+    private Column getSameAsColumn(String ObjectFullName, String ColName)
+      {
+        for (ViewColumn VC : _ViewColumns)
+          {
+            if (VC._SameAsObj != null && VC._SameAsObj._ParentObject.getFullName().equals(ObjectFullName) == true && VC._SameAsObj.getName().equals(ColName) == true)
+              return VC._SameAsObj;
+          }
+        return null;
+      }
+
+    private ViewColumn getViewColumnFromSameAsColumn(String ObjectFullName, String ColName)
+      {
+        for (ViewColumn VC : _ViewColumns)
+          {
+            if (VC._SameAsObj != null && VC._SameAsObj._ParentObject.getFullName().equals(ObjectFullName) == true && VC._SameAsObj.getName().equals(ColName) == true)
+              return VC;
+          }
+        return null;
       }
 
     private void CreateMappedViewColumn(ParserSession PS, Set<String> ColumnNames, int i, ViewColumn C, String ExtraName)

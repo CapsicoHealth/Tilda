@@ -21,6 +21,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnType;
+import tilda.enums.FrameworkSourcedType;
 import tilda.enums.JoinType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
@@ -157,4 +158,28 @@ public class ViewColumn
 
         return Errs == PS.getErrorCount();
       }
+
+    public Column getSameAsRoot()
+      {
+//        LOG.debug("SameAs Root for " + getShortName() + ": " + _SameAsObj.getShortName());
+        if (_SameAsObj != null && _SameAsObj._ParentObject._FST == FrameworkSourcedType.VIEW)
+          {
+            View SubV = _ParentView._ParentSchema.getSourceView(_SameAsObj._ParentObject);
+//            LOG.debug("SameAs is part of a sub-view " + SubV.getShortName());
+            ViewColumn VC = SubV.getViewColumn(_SameAsObj.getName());
+            if (VC != null)
+              return VC.getSameAsRoot();
+            else
+              {
+//                LOG.error("Could not find column " + _SameAsObj.getShortName() + " in view " + SubV.getShortName());
+                return null;
+              }
+          }
+        return _SameAsObj;
+      }
+    
+    public String toString()
+    {
+      return getClass().getName()+":"+getFullName();
+    }
   }

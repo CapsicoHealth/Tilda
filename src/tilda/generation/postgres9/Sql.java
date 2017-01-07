@@ -18,11 +18,9 @@ package tilda.generation.postgres9;
 
 import java.io.PrintWriter;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -30,13 +28,15 @@ import java.util.regex.Matcher;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.util.StringBuilderWriter;
 
 import tilda.db.stores.PostgreSQL;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.enums.JoinType;
 import tilda.generation.GeneratorSession;
+import tilda.generation.helpers.FuckThat;
+import tilda.generation.helpers.TableRankTracker;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
@@ -53,7 +53,6 @@ import tilda.parsing.parts.ViewJoin;
 import tilda.parsing.parts.ViewPivot;
 import tilda.utils.PaddingTracker;
 import tilda.utils.TextUtil;
-import tilda.utils.pairs.StringIntPair;
 
 public class Sql extends PostgreSQL implements CodeGenSql
   {
@@ -220,106 +219,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
       }
 
 
-    private static TableInfo getElementFromLast(Deque<TableInfo> S, Object O)
-      {
-        Iterator<TableInfo> I = S.descendingIterator();
-        while (I.hasNext() == true)
-          {
-            TableInfo TI = I.next();
-            if (TI._O == O)
-              return TI;
-          }
-        return null;
-      }
-
-
-    private static ForeignKey getClosestFKTable(Object O, Deque<TableInfo> S, View V, int columnCount)
-      {
-        List<ForeignKey> FKs = new ArrayList<ForeignKey>();
-
-        Iterator<TableInfo> I = S.descendingIterator();
-        LOG.debug("Checking FK for " + O.getShortName());
-        while (I.hasNext() == true)
-          {
-            TableInfo TI = I.next();
-            // LOG.debug(" Checking from " + TI._O.getShortName());
-            for (ForeignKey FK : O._ForeignKeys)
-              if (FK._DestObjectObj.getFullName().equals(TI._O.getFullName()) == true)
-                {
-                  // LOG.debug(" --> Found from " + TI._O.getShortName()+" to " + O.getShortName());
-                  FKs.add(FK);
-                }
-            if (FKs.isEmpty() == true)
-              {
-                // LOG.debug(" Checking to " + TI._O.getShortName());
-                for (ForeignKey FK : TI._O._ForeignKeys)
-                  if (FK._DestObjectObj.getFullName().equals(O.getFullName()) == true)
-                    {
-                      // LOG.debug(" --> Found FK from "+O.getShortName()+" to " + TI._O.getShortName());
-                      FKs.add(FK);
-                    }
-              }
-          }
-
-        ForeignKey MostRecentFK = null;
-        int MostRecentFKPos = -1;
-        for (ForeignKey FK : FKs)
-          {
-            int pos = -1;
-            StringBuilder Str = new StringBuilder();
-            for (Column C : FK._SrcColumnObjs)
-              {
-                for (int i = columnCount; i >= 0; --i)
-                  if (V._ViewColumns.get(i)._SameAsObj.getFullName().equals(C.getFullName()) == true)
-                    {
-                      if (pos != -1 && i != pos - 1)
-                        throw new Error("********** ERROR, FK columns in view not in right order!");
-                      pos = i;
-                      break;
-                    }
-                Str.append("   ").append(C.getShortName());
-              }
-            if (pos == -1 && MostRecentFKPos == -1)
-              throw new Error("********** ERROR, could not find FK columns!");
-//            LOG.debug(" --> Found " + Str.toString());
-            if (pos > MostRecentFKPos)
-              {
-                MostRecentFKPos = pos;
-                MostRecentFK = FK;
-              }
-          }
-        if (MostRecentFK != null)
-          {
-            StringBuilder Str = new StringBuilder();
-            for (Column C : MostRecentFK._SrcColumnObjs)
-              Str.append("   ").append(C.getShortName());
-//            LOG.debug(" --> PICKED " + Str.toString());
-          }
-
-        return MostRecentFK;
-      }
-
-    private static class TableInfo
-      {
-        public TableInfo(Object O, int V)
-          {
-            _O = O;
-            _N = O.getShortName();
-            _V = V;
-          }
-
-        public final Object _O;
-        public final String _N;
-        public final int    _V;
-
-        public String getFullName()
-          {
-            return _N + (_V == 1 ? "" : "_" + _V);
-          }
-      }
-
-
-    private static String getFKStatement(ForeignKey FK, Deque<TableInfo> TableStack)
+    private static String getFKStatement(ForeignKey FK, Deque<TableRankTracker> TableStack)
       {
         List<Column> Columns1;
         List<Column> Columns2;
@@ -334,48 +234,96 @@ public class Sql extends PostgreSQL implements CodeGenSql
               Str.append(" and ");
             Column C1 = Columns1.get(i);
             Column C2 = Columns2.get(i);
-            TableInfo TI1 = getElementFromLast(TableStack, C1._ParentObject);
-            TableInfo TI2 = getElementFromLast(TableStack, C2._ParentObject);
-            Str.append(TI1.getFullName()+"."+C1.getName()).append(" = ").append(TI2.getFullName()+"."+C2.getName());
+            TableRankTracker TI1 = TableRankTracker.getElementFromLast(TableStack, C1._ParentObject);
+            TableRankTracker TI2 = TableRankTracker.getElementFromLast(TableStack, C2._ParentObject);
+            if (TI2 == null)
+              throw new Error("Cannot find referenced table " + C2._ParentObject.getFullName());
+            Str.append(TI1.getFullName() + ".\"" + C1.getName()).append("\" = ").append(TI2.getFullName() + ".\"" + C2.getName() + "\"");
           }
 
         return Str.toString();
       }
 
-    private static void DummyExperiment(View V)
-      {
-        StringBuilder ColList = new StringBuilder();
-        StringBuilder FromList = new StringBuilder();
 
-        Map<String, TableInfo> TableMap = new HashMap<String, TableInfo>();
-        Deque<TableInfo> TableStack = new ArrayDeque<TableInfo>();
+
+    private String PrintBaseView(View V)
+    throws Exception
+      {
+        List<FuckThat> FuckList = FuckThat.ScanView(V);
+
+        StringBuilder Str = new StringBuilder();
+        Str.append("-- " + TextUtil.EscapeSingleQuoteForSQL(V._Description) + "\n");
+        Str.append("select ");
+        StringBuilder FromList = new StringBuilder();
+        boolean hasAggregates = false;
+
+        Map<String, TableRankTracker> TableMap = new HashMap<String, TableRankTracker>();
+        Deque<TableRankTracker> TableStack = new ArrayDeque<TableRankTracker>();
         int columnCount = -1;
+        boolean First = true;
         for (ViewColumn VC : V._ViewColumns)
           {
             ++columnCount;
+            if (VC._SameAs == null || VC._SameAsObj._Mode == ColumnMode.CALCULATED)
+              continue;
             Object T = VC._SameAsObj._ParentObject;
-            TableInfo TI = getElementFromLast(TableStack, T);
+            TableRankTracker TI = TableRankTracker.getElementFromLast(TableStack, T);
+
             if (TI == null)
               {
-                TableInfo MappedTI = TableMap.remove(T.getShortName());
-                TI = new TableInfo(T, MappedTI == null ? 1 : MappedTI._V + 1);
+                TableRankTracker MappedTI = TableMap.remove(T.getShortName());
+                TI = new TableRankTracker(T, MappedTI == null ? 1 : MappedTI._V + 1);
                 TableStack.add(TI);
                 TableMap.put(TI._N, TI);
-                FromList.append((TableMap.size() == 1 ? "  FROM      " : "       JOIN ") + TI._N + (TI._V == 1 ? "" : " as " + TI.getFullName()));
                 if (TableMap.size() != 1)
                   {
-                    FromList.append(" on ");
-                    ForeignKey FK = getClosestFKTable(T, TableStack, V, columnCount);
-                    if (FK != null)
+                    ViewJoin VJ = V.getViewjoin(T.getBaseName());
+                    if (VJ != null)
                       {
-                        String Str = getFKStatement(FK, TableStack);
-                        FromList.append(Str);
+                        if (VJ._ObjectObj.getShortName().equalsIgnoreCase("PATIENTS.SCORE") == true)
+                          {
+                            LOG.debug("xxx");
+                          }
+
+                        FromList.append("     " + JoinType.printJoinType(VJ._Join) + " " + VJ._ObjectObj.getShortName());
+                        Query Q = VJ.getQuery(this);
+                        if (Q == null)
+                          throw new Exception("Cannot generate the view because an 'on' clause matching the active database '" + getName() + "' is not available.");
+                        FromList.append(" on " + Q._Clause);
+                        TableRankTracker TI2 = TableRankTracker.getElementFromLast(TableStack, VJ._ObjectObj);
+                        if (TI2 == null)
+                          {
+                            throw new Exception("View " + V.getFullName() + " is using " + T.getShortName() + " but cannot find any any valid join definitions.");
+                          }
+                        for (int i = 2; i <= TI._V; ++i)
+                          {
+                            FromList.append("\n     " + JoinType.printJoinType(VC._Join) + " " + VJ._ObjectObj.getShortName());
+                            FromList.append(" as " + getFullTableVar(VC._SameAsObj._ParentObject, TI._V));
+                            FromList.append(" on " + Q._Clause);
+                          }
                       }
                     else
                       {
-                        FromList.append("XXX__XXX");
+                        // ForeignKey FK = TableRankTracker.getClosestFKTable(TableStack, T, V, columnCount);
+                        ForeignKey FK = FuckThat.getClosestFKTable(FuckList, V, T, columnCount);
+                        if (FK == null)
+                          {
+                            throw new Exception("View " + V.getFullName() + " is using " + T.getShortName() + " but cannot find any foreign keys in any tables used so far: " + TableRankTracker.PrintTableNames(TableStack));
+                          }
+                        else
+                          {
+                            if (TI._N.equalsIgnoreCase("PATIENTS.SCORE") == true)
+                              {
+                                LOG.debug("xxx");
+                              }
+                            String JT = VC._Join != null ? JoinType.printJoinType(VC._Join)
+                            : FK._DestObjectObj.getFullName().equals(T.getFullName()) == false ? "left  join " : "inner join ";
+                            FromList.append("     " + JT + " " + TI._N + (TI._V == 1 ? " " : " as " + TI.getFullName()) + " on " + getFKStatement(FK, TableStack));
+                          }
                       }
                   }
+                else
+                  FromList.append(TI._N);
                 FromList.append("\n");
               }
             else
@@ -386,17 +334,104 @@ public class Sql extends PostgreSQL implements CodeGenSql
                       TableStack.pollLast();
                     } while (TI != TableStack.peekLast());
               }
-            ColList.append("       " + TI._N + (TI._V == 1 ? "" : "_" + TI._V) + "." + VC._SameAsObj.getName() + " as " + VC.getName() + "\n");
+
+            if (VC._JoinOnly == false)
+              {
+                if (First == true)
+                  First = false;
+                else
+                  Str.append("\n     , ");
+                if (PrintViewColumn(Str, VC, TI) == true)
+                  hasAggregates = true;
+              }
           }
-        LOG.debug("DUMMY EXPERIMENT\n" + ColList + FromList);
-        System.exit(-1);
+
+        Str.append("\n  from ").append(FromList);
+
+        if (V._SubQuery != null)
+
+          {
+            Query q = V._SubQuery.getQuery(this);
+            if (q != null)
+              {
+                boolean NewLine = q._Clause.indexOf("\n") >= 0;
+                Str.append(" where (");
+                Str.append(NewLine == true ? q._Clause.replaceAll("\n", "\n        ") : q._Clause);
+                Str.append(NewLine == true ? "\n       )" : ")");
+              }
+            Str.append("\n");
+          }
+        if (V._Pivot != null)
+          {
+            if (V._SubQuery == null)
+              Str.append(" where ");
+            else
+              Str.append("   and ");
+            Str.append(getFullColumnVar(V._Pivot._VC._SameAsObj) + " in (" + PrintValueList(V._Pivot) + ")\n");
+          }
+
+        if (hasAggregates == true)
+          {
+            Str.append("     group by ");
+            First = true;
+            for (ViewColumn VC : V._ViewColumns)
+              if (VC != null && VC._Aggregate == null && VC._JoinOnly == false)
+                {
+                  if (First == true)
+                    First = false;
+                  else
+                    Str.append(", ");
+                  Str.append(getFullColumnVar(VC._SameAsObj));
+                }
+            Str.append("\n");
+          }
+        if (V._Pivot != null)
+          {
+            Str.append("     order by ");
+            First = true;
+            for (ViewColumn VC : V._ViewColumns)
+              if (VC != null && VC._Aggregate == null && VC._JoinOnly == false)
+                {
+                  if (First == true)
+                    First = false;
+                  else
+                    Str.append(", ");
+                  Str.append(getFullColumnVar(VC._SameAsObj));
+                }
+            Str.append("\n");
+          }
+
+        return Str.toString();
       }
 
-
-
-
-
-
+    private boolean PrintViewColumn(StringBuilder Str, ViewColumn VC, TableRankTracker TI)
+      {
+        boolean hasAggregates = false;
+        if (VC._Aggregate == AggregateType.COUNT)
+          {
+            Str.append("count(*) as \"" + VC.getName() + "\"");
+            hasAggregates = true;
+          }
+        else
+          {
+            if (VC._Aggregate != null)
+              {
+                Str.append(getAggregateStr(VC._Aggregate) + "(");
+                if (VC._Aggregate == AggregateType.ARRAY && VC._SameAsObj.getType() == ColumnType.STRING)
+                  Str.append("trim(");
+                hasAggregates = true;
+              }
+            Str.append(TI.getFullName()/* VC._SameAsObj._ParentObject.getShortName() + (TI._V == 1 ? "" : "_" + TI._V) */ + ".\"" + VC._SameAsObj.getName() + "\"");
+            if (VC._Aggregate != null)
+              {
+                if (VC._Aggregate == AggregateType.ARRAY && VC._SameAsObj.getType() == ColumnType.STRING)
+                  Str.append(")");
+                Str.append(")");
+              }
+            Str.append(" as \"" + VC.getName() + "\" -- " + VC._SameAsObj._Description);
+          }
+        return hasAggregates;
+      }
 
 
 
@@ -404,180 +439,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
     public String genDDL(PrintWriter OutFinal, View V)
     throws Exception
       {
-        StringBuilderWriter OutStr = new StringBuilderWriter();
-        PrintWriter Out = new PrintWriter(OutStr);
-        boolean hasAggregates = false;
-
-        Object ObjectMain = V._ViewColumns.get(0)._SameAsObj._ParentObject;
-        Out.println("-- " + TextUtil.EscapeSingleQuoteForSQL(V._Description));
-        Out.print("select ");
-        boolean First = true;
-        Map<String, Integer> M = new HashMap<String, Integer>();
-        for (ViewColumn VC : V._ViewColumns)
-          {
-            if (VC == null)
-              continue;
-            if (VC._Aggregate == AggregateType.COUNT || VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false)
-              {
-                if (First == true)
-                  First = false;
-                else
-                  Out.print("\n     , ");
-
-                if (VC._Aggregate == AggregateType.COUNT)
-                  {
-                    Out.print("count(*) as \"" + VC.getName() + "\"");
-                    hasAggregates = true;
-                  }
-                else
-                  {
-                    if (ObjectMain._Name.equals(VC._SameAsObj._ParentObject._Name) == true)
-                      {
-                        Object FKObj = VC._SameAsObj.getSingleColFK();
-                        if (FKObj != null)
-                          {
-                            Integer I = M.get(FKObj._Name);
-                            I = new Integer(I == null ? 1 : I.intValue() + 1);
-                            M.put(FKObj._Name, I);
-                          }
-                      }
-
-                    if (VC._Aggregate != null)
-                      {
-                        Out.print(getAggregateStr(VC._Aggregate) + "(");
-                        if (VC._Aggregate == AggregateType.ARRAY && VC._SameAsObj.getType() == ColumnType.STRING)
-                          Out.print("trim(");
-                        hasAggregates = true;
-                      }
-                    Integer I = M.get(VC._SameAsObj._ParentObject._Name);
-                    if (I != null && I.intValue() > 1)
-                      {
-                        Out.print(getFullColumnVar(VC._SameAsObj, I.intValue()));
-                      }
-                    else
-                      {
-                        Out.print(getFullColumnVar(VC._SameAsObj));
-                      }
-                    if (VC._Aggregate != null)
-                      {
-                        if (VC._Aggregate == AggregateType.ARRAY && VC._SameAsObj.getType() == ColumnType.STRING)
-                          Out.print(")");
-                        Out.print(")");
-                      }
-                    Out.print(" as \"" + VC.getName() + "\" -- " + VC._SameAsObj._Description);
-                  }
-              }
-          }
-        Out.println();
-        Set<String> Names = new HashSet<String>();
-        List<Object> Objects = new ArrayList<Object>();
-        Out.println("  from " + ObjectMain.getShortName());
-        Names.add(ObjectMain.getFullName());
-        Objects.add(ObjectMain);
-
-        if (V.getBaseName().equalsIgnoreCase("VisitGroupOasisProcessTESTView") == true)
-          {
-//            DummyExperiment(V);
-          }
-
-        for (ViewColumn C : V._ViewColumns)
-          if (C != null && C._SameAsObj != null)
-            {
-              Object T = C._SameAsObj._ParentObject;
-              if (Names.add(T.getFullName()) == true)
-                {
-                  ViewJoin VJ = V.getViewjoin(T.getBaseName());
-                  if (VJ != null)
-                    {
-                      Out.print("  " + (C._Join == null ? "left" : C._Join) + " join " + VJ._ObjectObj.getShortName());
-                      Query Q = VJ.getQuery(this);
-                      if (Q == null)
-                        throw new Exception("Cannot generate the view because an 'on' clause matching the active database '" + getName() + "' is not available.");
-                      Out.print(" on " + Q._Clause);
-                      Out.println();
-                      Integer I = M.get(VJ._ObjectObj._Name);
-                      if (I != null)
-                        for (int i = 2; i <= I.intValue(); ++i)
-                          {
-                            Out.print("     " + (C._Join == null ? "left" : C._Join) + " join " + VJ._ObjectObj.getShortName());
-                            Out.print(" as " + getFullTableVar(C._SameAsObj._ParentObject, I.intValue()));
-                            Out.print(" on " + Q._Clause);
-                            Out.println();
-                          }
-                    }
-                  else
-                    {
-                      Object FoundFK = null;
-                      for (Object Obj : Objects)
-                        if (CheckFK(Out, Obj, T, C, 1) == true)
-                          {
-                            if (FoundFK != null)
-                              throw new Error("Object " + T.getFullName() + " has an FK to both " + FoundFK.getFullName() + " and " + Obj.getFullName() + ", which makes creating a view ambiguous.");
-                            FoundFK = Obj;
-                            Integer I = M.get(C._SameAsObj._ParentObject._Name);
-                            if (I != null)
-                              for (int i = 2; i <= I.intValue(); ++i)
-                                CheckFK(Out, Obj, T, C, i);
-                          }
-                      if (FoundFK == null)
-                        throw new Error("Cannot find a FK relationship between " + T.getFullName() + " and " + ObjectMain.getFullName() + ".");
-                    }
-                  Objects.add(T);
-                }
-            }
-        if (V._SubQuery != null)
-          {
-            Query q = V._SubQuery.getQuery(this);
-            if (q != null)
-              {
-                boolean NewLine = q._Clause.indexOf("\n") >= 0;
-                Out.print(" where (");
-                Out.print(NewLine == true ? q._Clause.replaceAll("\n", "\n        ") : q._Clause);
-                Out.print(NewLine == true ? "\n       )" : ")");
-              }
-            Out.println();
-          }
-        if (V._Pivot != null)
-          {
-            if (V._SubQuery == null)
-              Out.print(" where ");
-            else
-              Out.print("   and ");
-            Out.println(getFullColumnVar(V._Pivot._VC._SameAsObj) + " in (" + PrintValueList(V._Pivot) + ")");
-          }
-
-        if (hasAggregates == true)
-          {
-            Out.print("     group by ");
-            First = true;
-            for (ViewColumn VC : V._ViewColumns)
-              if (VC != null && VC._Aggregate == null && VC._JoinOnly == false)
-                {
-                  if (First == true)
-                    First = false;
-                  else
-                    Out.print(", ");
-                  Out.print(getFullColumnVar(VC._SameAsObj));
-                }
-            Out.println();
-          }
-        if (V._Pivot != null)
-          {
-            Out.print("     order by ");
-            First = true;
-            for (ViewColumn VC : V._ViewColumns)
-              if (VC != null && VC._Aggregate == null && VC._JoinOnly == false)
-                {
-                  if (First == true)
-                    First = false;
-                  else
-                    Out.print(", ");
-                  Out.print(getFullColumnVar(VC._SameAsObj));
-                }
-            Out.println();
-          }
-        // Out.println(" ;");
-        String Str = OutStr.toString();
+        String Str = PrintBaseView(V);
         if (V._Pivot != null)
           {
             StringBuilder b = new StringBuilder();
@@ -680,8 +542,6 @@ public class Sql extends PostgreSQL implements CodeGenSql
             OutputFormulaInDBDocs(OutFinal, V);
           }
 
-
-        OutStr.close();
         return Str;
       }
 

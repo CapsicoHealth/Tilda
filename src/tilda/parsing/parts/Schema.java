@@ -108,6 +108,18 @@ public class Schema
             return O;
         return null;
       }
+
+    public Object getObject(String SchemaName, String ObjectName)
+      {
+        if (_Name.equals(SchemaName) == true)
+         return getObject(ObjectName);
+        for (Schema S : _DependencySchemas)
+          {
+            if (S._Name.equals(SchemaName) == true)
+             return S.getObject(ObjectName);
+          }
+        return null;
+      }
     
     public boolean isDefinedInOrder(Object FirstObj, Object SecondObj)
       {
@@ -121,6 +133,18 @@ public class Schema
         for (View V : _Views)
           if (V != null && V._Name != null && V._Name.equalsIgnoreCase(Name) == true)
             return V;
+        return null;
+      }
+    
+    public View getSourceView(Object O)
+      {
+        if (_Name.equals(O._ParentSchema._Name) == true)
+         return getView(O._Name);
+        for (Schema S : _DependencySchemas)
+          {
+            if (S._Name.equals(O._ParentSchema._Name) == true)
+             return S.getView(O._Name);
+          }
         return null;
       }
 

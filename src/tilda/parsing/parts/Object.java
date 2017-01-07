@@ -172,9 +172,6 @@ public class Object extends Base
                 if (Counter >= 128)
                   {
                     PS.AddError("Object '" + getFullName() + "' has declared " + (i + 1) + " columns. Max allowed is 128!");
-                    // int xxx = 0;
-                    // for (Column ccc : _Columns)
-                    // LOG.error(" "+(++xxx)+" - "+ccc._Name);
                   }
               }
           }
