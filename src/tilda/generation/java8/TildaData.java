@@ -119,12 +119,14 @@ public class TildaData implements CodeGenTildaData
         Out.println("   private InitMode __Init        = null;");
         Out.println("   private long     __Nulls1      = 0L;");
         Out.println("   private long     __Nulls2      = 0L;");
+        Out.println("   private long     __Nulls3      = 0L;");
         Out.println("   private long     __Changes1    = 0L;");
         Out.println("   private long     __Changes2    = 0L;");
+        Out.println("   private long     __Changes3    = 0L;");
         Out.println("   private boolean  __NewlyCreated= false;");
         Out.println("   private int      __LookupId;");
         Out.println();
-        Out.println("   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L; }");
+        Out.println("   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L || __Changes3 != 0L; }");
         Out.println("   public  boolean isNewlyCreated() { return __NewlyCreated; }");
         Out.println();
         Out.println("   void initForCreate()");
@@ -384,7 +386,7 @@ public class TildaData implements CodeGenTildaData
     public void genMethodSet(PrintWriter Out, GeneratorSession G, Column C)
     throws Exception
       {
-        int BitFieldId = C.getSequenceOrder() < 64 ? 1 : 2;
+        int BitFieldId = C.getSequenceOrder() / 64 + 1;
         String Mask = Helper.getRuntimeMask(C) + BitFieldId;
         String Visibility = Helper.getVisibility(C, true);
         if (C._JsonSchema != null && C.isCollection() == true)
@@ -419,7 +421,7 @@ public class TildaData implements CodeGenTildaData
             if (C._MapperDef == null)
               {
                 Out.println("          __Changes" + BitFieldId + " |=  " + Mask + ";");
-                Out.println("          __Nulls" + BitFieldId + "   &= ~" + Mask + ";");
+                Out.println("          __Nulls"   + BitFieldId + "   &= ~" + Mask + ";");
                 if (C._Mapper != null)
                   {
                     if (C._Mapper._Name == ColumnMapperMode.DB)
@@ -853,7 +855,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("   public final boolean Write(Connection C) throws Exception");
         Out.println("     {");
         Out.println("       long T0 = System.nanoTime();");
-        Out.println("       if (__Changes1 == 0L && __Changes2 == 0L)");
+        Out.println("       if (hasChanged() == false)");
         Out.println("        {");
         Out.println("          LOG.debug(QueryDetails._LOGGING_HEADER + \"The " + O.getFullName() + " has not changed: no writing will occur.\");");
         Out.println("          QueryDetails.setLastQuery(" + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
@@ -1071,7 +1073,7 @@ public class TildaData implements CodeGenTildaData
         Out.println();
         Helper.setSavedFields(Out, O);
         Out.println();
-        Out.println("       __Changes1= __Changes2= __Nulls1= __Nulls2= 0L;");
+        Out.println("       __Changes1= __Changes2= __Changes3= __Nulls1= __Nulls2= __Nulls3= 0L;");
         Out.println("       return true;");
         Out.println("     }");
         Out.println();
@@ -1119,7 +1121,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("       long T0 = System.nanoTime();");
         Out.println("       if (__Init == InitMode.CREATE)");
         Out.println("        throw new Exception(\"This " + O.getShortName() + " object is being Read() after a Create(), which doesn't make sense.\");");
-        Out.println("       if (__Init == InitMode.READ == true && Force == false && __Changes1 == 0L && __Changes2 == 0L)");
+        Out.println("       if (__Init == InitMode.READ == true && Force == false && hasChanged()==false)");
         Out.println("        {");
         Out.println("          LOG.debug(QueryDetails._LOGGING_HEADER + \"This " + O.getShortName() + " object has already been read.\");");
         Out.println("          QueryDetails.setLastQuery(" + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
@@ -1306,6 +1308,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("     __Init     = InitMode.READ;");
         Out.println("     __Changes1  = 0L;");
         Out.println("     __Changes2  = 0L;");
+        Out.println("     __Changes3  = 0L;");
         Out.println("     return AfterRead(C);");
         Out.println("   }");
         for (Column C : O._Columns)

@@ -169,7 +169,7 @@ public class Object extends Base
                 if (C._Mode == ColumnMode.CALCULATED)
                   continue;
                 C.setSequenceOrder(++Counter);
-                if (Counter >= 128)
+                if (Counter >= 64*3)
                   {
                     PS.AddError("Object '" + getFullName() + "' has declared " + (i + 1) + " columns. Max allowed is 128!");
                   }

@@ -180,10 +180,11 @@ public class FuckThat
               {
                 LOG.debug("      FK " + FK._Name + ": " + C.getShortName() + "(" + C.getSequenceOrder() + ")");
                 int i = -1;
-                for (ViewColumn VJ : V._ViewColumns)
+                for (ViewColumn VC : V._ViewColumns)
                   {
                     ++i;
-                    if (VJ.getSameAsRoot().getFullName().equals(C.getFullName()) == true)
+                    Column sameAsRoot = VC.getSameAsRoot();
+                    if (sameAsRoot != null && sameAsRoot.getFullName().equals(C.getFullName()) == true)
                       {
                         if (i < columnSequenceOrder && i > MostRecentSequenceOrder)
                           {

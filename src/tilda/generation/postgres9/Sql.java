@@ -264,77 +264,79 @@ public class Sql extends PostgreSQL implements CodeGenSql
         for (ViewColumn VC : V._ViewColumns)
           {
             ++columnCount;
-            if (VC._SameAs == null || VC._SameAsObj._Mode == ColumnMode.CALCULATED)
-              continue;
-            Object T = VC._SameAsObj._ParentObject;
-            TableRankTracker TI = TableRankTracker.getElementFromLast(TableStack, T);
-
-            if (TI == null)
+            TableRankTracker TI = null;
+            if (VC._SameAs != null && VC._SameAsObj._Mode == ColumnMode.CALCULATED)
+             continue;
+            if (VC._SameAs != null)
               {
-                TableRankTracker MappedTI = TableMap.remove(T.getShortName());
-                TI = new TableRankTracker(T, MappedTI == null ? 1 : MappedTI._V + 1);
-                TableStack.add(TI);
-                TableMap.put(TI._N, TI);
-                if (TableMap.size() != 1)
+                Object T = VC._SameAsObj._ParentObject;
+                TI = TableRankTracker.getElementFromLast(TableStack, T);
+                if (TI == null)
                   {
-                    ViewJoin VJ = V.getViewjoin(T.getBaseName());
-                    if (VJ != null)
+                    TableRankTracker MappedTI = TableMap.remove(T.getShortName());
+                    TI = new TableRankTracker(T, MappedTI == null ? 1 : MappedTI._V + 1);
+                    TableStack.add(TI);
+                    TableMap.put(TI._N, TI);
+                    if (TableMap.size() != 1)
                       {
-                        if (VJ._ObjectObj.getShortName().equalsIgnoreCase("PATIENTS.SCORE") == true)
+                        ViewJoin VJ = V.getViewjoin(T.getBaseName());
+                        if (VJ != null)
                           {
-                            LOG.debug("xxx");
-                          }
-
-                        FromList.append("     " + JoinType.printJoinType(VJ._Join) + " " + VJ._ObjectObj.getShortName());
-                        Query Q = VJ.getQuery(this);
-                        if (Q == null)
-                          throw new Exception("Cannot generate the view because an 'on' clause matching the active database '" + getName() + "' is not available.");
-                        FromList.append(" on " + Q._Clause);
-                        TableRankTracker TI2 = TableRankTracker.getElementFromLast(TableStack, VJ._ObjectObj);
-                        if (TI2 == null)
-                          {
-                            throw new Exception("View " + V.getFullName() + " is using " + T.getShortName() + " but cannot find any any valid join definitions.");
-                          }
-                        for (int i = 2; i <= TI._V; ++i)
-                          {
-                            FromList.append("\n     " + JoinType.printJoinType(VC._Join) + " " + VJ._ObjectObj.getShortName());
-                            FromList.append(" as " + getFullTableVar(VC._SameAsObj._ParentObject, TI._V));
-                            FromList.append(" on " + Q._Clause);
-                          }
-                      }
-                    else
-                      {
-                        // ForeignKey FK = TableRankTracker.getClosestFKTable(TableStack, T, V, columnCount);
-                        ForeignKey FK = FuckThat.getClosestFKTable(FuckList, V, T, columnCount);
-                        if (FK == null)
-                          {
-                            throw new Exception("View " + V.getFullName() + " is using " + T.getShortName() + " but cannot find any foreign keys in any tables used so far: " + TableRankTracker.PrintTableNames(TableStack));
-                          }
-                        else
-                          {
-                            if (TI._N.equalsIgnoreCase("PATIENTS.SCORE") == true)
+                            if (VJ._ObjectObj.getShortName().equalsIgnoreCase("PATIENTS.SCORE") == true)
                               {
                                 LOG.debug("xxx");
                               }
-                            String JT = VC._Join != null ? JoinType.printJoinType(VC._Join)
-                            : FK._DestObjectObj.getFullName().equals(T.getFullName()) == false ? "left  join " : "inner join ";
-                            FromList.append("     " + JT + " " + TI._N + (TI._V == 1 ? " " : " as " + TI.getFullName()) + " on " + getFKStatement(FK, TableStack));
+
+                            FromList.append("     " + JoinType.printJoinType(VJ._Join) + " " + VJ._ObjectObj.getShortName());
+                            Query Q = VJ.getQuery(this);
+                            if (Q == null)
+                              throw new Exception("Cannot generate the view because an 'on' clause matching the active database '" + getName() + "' is not available.");
+                            FromList.append(" on " + Q._Clause);
+                            TableRankTracker TI2 = TableRankTracker.getElementFromLast(TableStack, VJ._ObjectObj);
+                            if (TI2 == null)
+                              {
+                                throw new Exception("View " + V.getFullName() + " is using " + T.getShortName() + " but cannot find any any valid join definitions.");
+                              }
+                            for (int i = 2; i <= TI._V; ++i)
+                              {
+                                FromList.append("\n     " + JoinType.printJoinType(VC._Join) + " " + VJ._ObjectObj.getShortName());
+                                FromList.append(" as " + getFullTableVar(VC._SameAsObj._ParentObject, TI._V));
+                                FromList.append(" on " + Q._Clause);
+                              }
+                          }
+                        else
+                          {
+                            // ForeignKey FK = TableRankTracker.getClosestFKTable(TableStack, T, V, columnCount);
+                            ForeignKey FK = FuckThat.getClosestFKTable(FuckList, V, T, columnCount);
+                            if (FK == null)
+                              {
+                                throw new Exception("View " + V.getFullName() + " is using " + T.getShortName() + " but cannot find any foreign keys in any tables used so far: " + TableRankTracker.PrintTableNames(TableStack));
+                              }
+                            else
+                              {
+                                if (TI._N.equalsIgnoreCase("PATIENTS.SCORE") == true)
+                                  {
+                                    LOG.debug("xxx");
+                                  }
+                                String JT = VC._Join != null ? JoinType.printJoinType(VC._Join)
+                                : FK._DestObjectObj.getFullName().equals(T.getFullName()) == false || FK._SrcColumnObjs.get(0)._Nullable == true ? "left  join" : "inner join";
+                                FromList.append("     " + JT + " " + TI._N + (TI._V == 1 ? " " : " as " + TI.getFullName()) + " on " + getFKStatement(FK, TableStack));
+                              }
                           }
                       }
+                    else
+                      FromList.append(TI._N);
+                    FromList.append("\n");
                   }
                 else
-                  FromList.append(TI._N);
-                FromList.append("\n");
+                  {
+                    if (TI != TableStack.peekLast())
+                      do
+                        {
+                          TableStack.pollLast();
+                        } while (TI != TableStack.peekLast());
+                  }
               }
-            else
-              {
-                if (TI != TableStack.peekLast())
-                  do
-                    {
-                      TableStack.pollLast();
-                    } while (TI != TableStack.peekLast());
-              }
-
             if (VC._JoinOnly == false)
               {
                 if (First == true)

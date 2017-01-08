@@ -40,12 +40,25 @@ public class ColumnDefinition
             _FirstMask = true;
             _Mask1 = 1L << Count;
             _Mask2 = 0;
+            _Mask3 = 0;
           }
-        else
+        else if (Count < 128)
           {
             _FirstMask = false;
             _Mask1 = 0;
             _Mask2 = 1L << Count;
+            _Mask3 = 0;
+          }
+        else if (Count < 192)
+          {
+            _FirstMask = false;
+            _Mask1 = 0;
+            _Mask2 = 0;
+            _Mask3 = 1L << Count;
+          }
+        else
+          {
+            throw new Error("Trying to instanciate a column that requires a _Mask with more than 192 bits.");
           }
         _Description = Description;
       }
@@ -60,6 +73,7 @@ public class ColumnDefinition
     public final boolean    _FirstMask;  
     public final long       _Mask1;
     public final long       _Mask2;
+    public final long       _Mask3;
     
     public String getSchemaName()
       {

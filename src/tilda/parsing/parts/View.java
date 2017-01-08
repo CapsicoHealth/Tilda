@@ -17,8 +17,10 @@
 package tilda.parsing.parts;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
@@ -26,6 +28,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.db.stores.DBType;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMapperMode;
 import tilda.enums.ColumnMode;
@@ -37,6 +40,7 @@ import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.parsing.parts.helpers.SameAsHelper;
 import tilda.utils.TextUtil;
+import tilda.utils.pairs.StringIntPair;
 
 public class View extends Base
   {
@@ -59,7 +63,7 @@ public class View extends Base
     /*@formatter:on*/
 
     public transient boolean     _OCC            = false;
-    public transient PrimaryKey _PK = null;
+    public transient PrimaryKey  _PK             = null;
 
     @Override
     public Column getColumn(String name)
@@ -243,41 +247,48 @@ public class View extends Base
           }
 
         if (_PivotColumns != null)
-          for (ViewPivotColumn PVC : _PivotColumns)
-            {
-              if (PVC.Validate(PS, this) == true)
-                {
-                  ViewJoin VJ = new ViewJoin();
-                  VJ._Object = PVC._SourceStr;
-                  Query Q = new Query();
-                  Q._DB = "*";
-                  StringBuilder Str = new StringBuilder();
-                  for (int i = 0; i < PVC._Join._FromCol.size(); ++i)
-                    {
-                      if (i != 0)
-                        Str.append(" and ");
-                      Str.append(PVC._Join._FromCol.get(i)._ParentView._Name).append(".\"").append(PVC._Join._FromCol.get(i)._Name).append("\" = ")
-                      .append(PVC._Join._ToCol.get(i)._SameAsObj._ParentObject._Name).append(".\"").append(PVC._Join._ToCol.get(i)._Name).append("\"");
-                    }
-                  Q._Clause = Str.toString();
-                  VJ._Ons = new Query[] { Q
-                  };
-                  VJ._JoinStr = JoinType.LEFT.name();
-                  _Joins.add(VJ);
+          {
+            Set<String> PivotNames = new HashSet<String>();
+            for (ViewPivotColumn PVC : _PivotColumns)
+              {
+                if (PivotNames.add(PVC._SourceStr) == false)
+                  {
+                    PS.AddError("The PivotView '" + PVC._SourceStr + "' is defined more than once in View '" + getFullName() + "'.");
+                    break;
+                  }
+                if (PVC.Validate(PS, this) == true)
+                  {
+                    ViewJoin VJ = new ViewJoin();
+                    VJ._Object = PVC._SourceStr;
+                    Query Q = new Query();
+                    Q._DB = "*";
+                    StringBuilder Str = new StringBuilder();
+                    for (int i = 0; i < PVC._Join._FromCol.size(); ++i)
+                      {
+                        if (i != 0)
+                          Str.append(" and ");
+                        Str.append(PVC._Join._FromCol.get(i)._ParentView._Name).append(".\"").append(PVC._Join._FromCol.get(i)._Name).append("\" = ")
+                        .append(PVC._Join._ToCol.get(i)._SameAsObj._ParentObject._Name).append(".\"").append(PVC._Join._ToCol.get(i)._Name).append("\"");
+                      }
+                    Q._Clause = Str.toString();
+                    VJ._Ons = new Query[] { Q
+                    };
+                    VJ._JoinStr = JoinType.LEFT.name();
+                    _Joins.add(VJ);
 
-                  String Prefix = TextUtil.Print(PVC._Prefix, "");
-                  for (Value VPV : PVC._Source._Pivot._Values)
-                    {
-                      ViewColumn VC = new ViewColumn();
-                      VC._SameAs = PVC._SourceStr + "." + VPV._Value;
-                      VC._Name = Prefix + VPV._Value;
-                      VC.Validate(PS, this);
-                      _ViewColumns.add(VC);
-                      _PadderColumnNames.track(VC.getName());
-                    }
-                }
-            }
-
+                    String Prefix = TextUtil.Print(PVC._Prefix, "");
+                    for (Value VPV : PVC._Source._Pivot._Values)
+                      {
+                        ViewColumn VC = new ViewColumn();
+                        VC._SameAs = PVC._SourceStr + "." + VPV._Value;
+                        VC._Name = Prefix + VPV._Value;
+                        VC.Validate(PS, this);
+                        _ViewColumns.add(VC);
+                        _PadderColumnNames.track(VC.getName());
+                      }
+                  }
+              }
+          }
         if (TextUtil.isNullOrEmpty(_CountStar) == false)
           {
             ViewColumn CountCol = new ViewColumn();
@@ -331,8 +342,8 @@ public class View extends Base
           for (ViewJoin VJ : _Joins)
             {
               VJ.Validate(PS, this);
-              if (JoinObjectNames.add(VJ._ObjectObj.getShortName()) == false)
-                PS.AddError("View '" + getFullName() + "' is defining a a duplicate join with object VJ._ObjectObj.getShortName().");
+              if (JoinObjectNames.add(VJ._ObjectObj.getShortName() + " on " + VJ.getQuery(DBType.Postgres)) == false)
+                PS.AddError("View '" + getFullName() + "' is defining a a duplicate join with object " + VJ._ObjectObj.getShortName() + ".");
             }
 
         if (_Pivot != null)
@@ -404,7 +415,7 @@ public class View extends Base
               O._Columns.add(C);
             }
 
-        
+
         PrimaryKey PK = _ViewColumns.get(0)._SameAsObj._ParentObject._PrimaryKey;
         if (PK != null)
           {
