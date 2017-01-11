@@ -266,7 +266,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             ++columnCount;
             TableRankTracker TI = null;
             if (VC._SameAs != null && VC._SameAsObj._Mode == ColumnMode.CALCULATED)
-             continue;
+              continue;
             if (VC._SameAs != null)
               {
                 Object T = VC._SameAsObj._ParentObject;
@@ -416,18 +416,20 @@ public class Sql extends PostgreSQL implements CodeGenSql
           }
         else
           {
+            boolean trimNeeded = VC._Aggregate == AggregateType.ARRAY && VC._SameAsObj.getType() == ColumnType.STRING
+            || VC._ParentView._Pivot != null && VC._ParentView._Pivot._ColumnName.equals(VC._Name) == true;
             if (VC._Aggregate != null)
               {
                 Str.append(getAggregateStr(VC._Aggregate) + "(");
-                if (VC._Aggregate == AggregateType.ARRAY && VC._SameAsObj.getType() == ColumnType.STRING)
-                  Str.append("trim(");
                 hasAggregates = true;
               }
+            if (trimNeeded)
+              Str.append("trim(");
             Str.append(TI.getFullName()/* VC._SameAsObj._ParentObject.getShortName() + (TI._V == 1 ? "" : "_" + TI._V) */ + ".\"" + VC._SameAsObj.getName() + "\"");
+            if (trimNeeded)
+              Str.append(")");
             if (VC._Aggregate != null)
               {
-                if (VC._Aggregate == AggregateType.ARRAY && VC._SameAsObj.getType() == ColumnType.STRING)
-                  Str.append(")");
                 Str.append(")");
               }
             Str.append(" as \"" + VC.getName() + "\" -- " + VC._SameAsObj._Description);

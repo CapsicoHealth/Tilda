@@ -386,15 +386,17 @@ public class View extends Base
         if (_ImportFormulas != null)
           for (String s : _ImportFormulas)
             {
-              String[] parts = s.split("\\.");
-              View V = _ParentSchema.getView(parts[0]);
+              ReferenceHelper R = ReferenceHelper.parseColumnReference(s, this);
+              if (TextUtil.isNullOrEmpty(R._O) == true || TextUtil.isNullOrEmpty(R._C) == true)
+                PS.AddError("View '" + getFullName() + "' is importing formula '" + s + "' which cannot be parsed as a reference.");
+              View V = PS.getView(R._P, R._S, R._O);
               if (V == null)
-                PS.AddError("View '" + getFullName() + "' is importing formula '" + parts[1] + "' from view '" + parts[0] + "' which cannot be found in this schema.");
+                PS.AddError("View '" + getFullName() + "' is importing formula '" + s + "' from view '" + R._S+"."+R._O + "' which cannot be found.");
               else
                 {
-                  Formula F = V.getFormula(parts[1]);
+                  Formula F = V.getFormula(R._C);
                   if (F == null)
-                    PS.AddError("View '" + getFullName() + "' is importing formula '" + parts[1] + "' which cannot be found in view '" + parts[0] + "'.");
+                    PS.AddError("View '" + getFullName() + "' is importing formula '" + s + "' which cannot be found in view '" + R._S+"."+R._O + "'.");
                   else
                     {
                       F = new Formula(F);
