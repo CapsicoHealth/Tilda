@@ -340,7 +340,8 @@ public class ConnectionPool
             if (S.Validate(PS) == false)
               throw new Exception("Schema " + S._Name + " from resource " + S._ResourceName + " failed validation.");
             for (Object Obj : S._Objects)
-              MasterFactory.register(S._Package, Obj);
+              if (Obj != null)
+               MasterFactory.register(S._Package, Obj);
           }
 
         return TildaList;
