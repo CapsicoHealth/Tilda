@@ -30,6 +30,7 @@ public class Value
 
     /*@formatter:off*/
 	@SerializedName("value"      ) public String _Value;
+    @SerializedName("name"       ) public String _Name;
     @SerializedName("description") public String _Description;
     /*@formatter:on*/
 

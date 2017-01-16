@@ -280,8 +280,8 @@ public class View extends Base
                     for (Value VPV : PVC._Source._Pivot._Values)
                       {
                         ViewColumn VC = new ViewColumn();
-                        VC._SameAs = PVC._SourceStr + "." + VPV._Value;
-                        VC._Name = Prefix + VPV._Value;
+                        VC._SameAs = PVC._SourceStr + "." + TextUtil.Print(VPV._Name, VPV._Value);
+                        VC._Name = Prefix + TextUtil.Print(VPV._Name, VPV._Value);
                         VC.Validate(PS, this);
                         _ViewColumns.add(VC);
                         _PadderColumnNames.track(VC.getName());
@@ -377,7 +377,7 @@ public class View extends Base
           for (Value VPV : _Pivot._Values)
             {
               ColumnType Type = _CountStar != null ? ColumnType.INTEGER : _Pivot._VC._SameAsObj.getType();
-              Column C = new Column(VPV._Value, Type.name(), Type == ColumnType.STRING ? _Pivot._VC._SameAsObj._Size : 0,
+              Column C = new Column(TextUtil.Print(VPV._Name, VPV._Value), Type.name(), Type == ColumnType.STRING ? _Pivot._VC._SameAsObj._Size : 0,
               true, ColumnMode.NORMAL, true, null,
               "Pivoted count from column '" + _Pivot._VC._SameAsObj.getShortName() + "'='" + VPV._Value + "', " + VPV._Description);
               O._Columns.add(C);

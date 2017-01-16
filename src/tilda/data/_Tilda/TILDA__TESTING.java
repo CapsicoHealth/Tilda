@@ -85,7 +85,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Dec 7 2016, 20:34:29CST
+ @generated Jan 15 2017, 22:19:20EST
 */
 public abstract class TILDA__TESTING implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject, tilda.interfaces.JSONable
  {
@@ -99,12 +99,14 @@ public abstract class TILDA__TESTING implements tilda.interfaces.WriterObject, t
    private InitMode __Init        = null;
    private long     __Nulls1      = 0L;
    private long     __Nulls2      = 0L;
+   private long     __Nulls3      = 0L;
    private long     __Changes1    = 0L;
    private long     __Changes2    = 0L;
+   private long     __Changes3    = 0L;
    private boolean  __NewlyCreated= false;
    private int      __LookupId;
 
-   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L; }
+   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L || __Changes3 != 0L; }
    public  boolean isNewlyCreated() { return __NewlyCreated; }
 
    void initForCreate()
@@ -5333,7 +5335,7 @@ This is the hasChanged for:<BR>
    public final boolean Write(Connection C) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Changes1 == 0L && __Changes2 == 0L)
+       if (hasChanged() == false)
         {
           LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.TESTING has not changed: no writing will occur.");
           QueryDetails.setLastQuery(TILDA__TESTING_Factory.SCHEMA_TABLENAME_LABEL, "");
@@ -5673,7 +5675,7 @@ This is the hasChanged for:<BR>
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
         }
 
-       __Changes1= __Changes2= __Nulls1= __Nulls2= 0L;
+       __Changes1= __Changes2= __Changes3= __Nulls1= __Nulls2= __Nulls3= 0L;
        return true;
      }
 
@@ -5699,7 +5701,7 @@ This is the hasChanged for:<BR>
        long T0 = System.nanoTime();
        if (__Init == InitMode.CREATE)
         throw new Exception("This TILDA.TESTING object is being Read() after a Create(), which doesn't make sense.");
-       if (__Init == InitMode.READ == true && Force == false && __Changes1 == 0L && __Changes2 == 0L)
+       if (__Init == InitMode.READ == true && Force == false && hasChanged()==false)
         {
           LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.TESTING object has already been read.");
           QueryDetails.setLastQuery(TILDA__TESTING_Factory.SCHEMA_TABLENAME_LABEL, "");
@@ -5835,6 +5837,7 @@ This is the hasChanged for:<BR>
      __Init     = InitMode.READ;
      __Changes1  = 0L;
      __Changes2  = 0L;
+     __Changes3  = 0L;
      return AfterRead(C);
    }
 

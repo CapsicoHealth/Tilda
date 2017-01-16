@@ -369,7 +369,13 @@ public class Sql extends PostgreSQL implements CodeGenSql
               Str.append(" where ");
             else
               Str.append("   and ");
-            Str.append(getFullColumnVar(V._Pivot._VC._SameAsObj) + " in (" + PrintValueList(V._Pivot) + ")\n");
+            if (V._Pivot._VC._SameAsObj.getType() == ColumnType.STRING)
+              Str.append("trim(");
+            Str.append(getFullColumnVar(V._Pivot._VC._SameAsObj));
+            if (V._Pivot._VC._SameAsObj.getType() == ColumnType.STRING)
+              Str.append(")");
+            Str.append(" in (").append(PrintValueList(V._Pivot)).append(")\n");
+
           }
 
         if (hasAggregates == true)
@@ -468,7 +474,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
               }
             for (int i = 0; i < V._Pivot._Values.length; ++i)
               {
-                Str += ", \"" + V._Pivot._Values[i]._Value + "\" ";
+                Str += ", \"" + TextUtil.Print(V._Pivot._Values[i]._Name, V._Pivot._Values[i]._Value) + "\" ";
                 if (V._CountStar != null)
                   Str += "integer";
                 else
@@ -512,7 +518,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
           }
         if (V._Pivot != null)
           for (int i = 0; i < V._Pivot._Values.length; ++i)
-            OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + V._Pivot._Values[i]._Value + "\" IS E"
+            OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + TextUtil.Print(V._Pivot._Values[i]._Name, V._Pivot._Values[i]._Value) + "\" IS E"
             + TextUtil.EscapeSingleQuoteForSQL("The pivoted column count from '" + V._Pivot._ColumnName + "'='" + V._Pivot._Values[i]._Value + "', " + V._Pivot._Values[i]._Description)
             + ";");
         if (V._Formulas != null)
