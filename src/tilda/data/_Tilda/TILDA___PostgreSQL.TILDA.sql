@@ -31,13 +31,13 @@ CREATE UNIQUE INDEX ZONEINFO_Value ON TILDA.ZONEINFO ("value");
 
 
 create table if not exists TILDA.KEY -- The table to keep track of unique keys across distributed objects/tables
- (  "refnum"       bigint        not null   -- The primary key for this record
-  , "name"         varchar(128)  not null   -- The name of the table/object tracked
-  , "max"          bigint        not null   -- The pre-allocated max RefNum for this table/object.
-  , "count"        integer       not null   -- The size of the pre-allocation required by this table/object.
-  , "created"      timestamptz   not null   -- The timestamp for when the record was created.
-  , "lastUpdated"  timestamptz   not null   -- The timestamp for when the record was last updated.
-  , "deleted"      timestamptz              -- The timestamp for when the record was deleted.
+ (  "refnum"          bigint        not null   -- The primary key for this record
+  , "name"            varchar(128)  not null   -- The name of the table/object tracked
+  , "max"             bigint        not null   -- The pre-allocated max RefNum for this table/object.
+  , "count"           integer       not null   -- The size of the pre-allocation required by this table/object.
+  , "created"         timestamptz   not null   -- The timestamp for when the record was created.
+  , "lastUpdated"     timestamptz   not null   -- The timestamp for when the record was last updated.
+  , "deleted"         timestamptz              -- The timestamp for when the record was deleted.
   , PRIMARY KEY("refnum")
  );
 COMMENT ON TABLE TILDA.KEY IS E'The table to keep track of unique keys across distributed objects/tables';

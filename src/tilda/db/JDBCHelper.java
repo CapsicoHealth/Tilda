@@ -30,6 +30,7 @@ import tilda.enums.StatementType;
 import tilda.enums.TransactionType;
 import tilda.performance.PerfTracker;
 import tilda.utils.SystemValues;
+import tilda.utils.TextUtil;
 
 public class JDBCHelper
   {
@@ -190,6 +191,21 @@ public class JDBCHelper
           {
             JDBCHelper.CloseStatement(S);
           }
+      }
+
+
+    public static String PrintResultSet(ResultSet RS)
+    throws SQLException
+      {
+        int count = RS.getMetaData().getColumnCount();
+        StringBuilder Str = new StringBuilder();
+        for (int i = 1; i <= count; ++i)
+          {
+            String Name = RS.getMetaData().getColumnName(i);
+            String Val = RS.getString(i);
+            Str.append(Name).append("=").append(TextUtil.toMaxLength(Val, 20)).append("; ");
+          }
+        return Str.toString();
       }
 
 

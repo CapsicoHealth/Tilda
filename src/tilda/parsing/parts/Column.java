@@ -411,7 +411,7 @@ public class Column extends TypeDef
       }
     public boolean isOCCGenerated()
       {
-        return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && (_Name.equals("created") == true || _Name.equals("lastUpdated") == true || _Name.equals("deleted") == true);
+        return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && (_Name.equals("created") == true || _Name.equals("lastUpdated") == true || _Name.equals("createdETL") == true || _Name.equals("lastUpdatedETL") == true || _Name.equals("deleted") == true);
       }
     
     public boolean isJSONColumn()

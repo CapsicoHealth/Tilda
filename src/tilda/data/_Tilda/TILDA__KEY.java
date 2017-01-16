@@ -47,19 +47,21 @@ It contains the following columns:<BR>
   <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Creation</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Creation&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Creation time</TD></TR>
 </TABLE>
 </TD></TR>
-  <TR valign="top" bgcolor="#FFFFFF"><TD>6&nbsp;&nbsp;</TD><TD align="right"><B>lastUpdated</B>&nbsp;&nbsp;</TD><TD>ZonedDateTime&nbsp;&nbsp;</TD><TD>timestamptz&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">AUTO&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The timestamp for when the record was last updated.</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD></TD><TD></TD><TD colspan="10" align="center">
+  <TR valign="top" bgcolor="#FFFFFF"><TD>6&nbsp;&nbsp;</TD><TD align="right"><B>createdETL</B>&nbsp;&nbsp;</TD><TD>ZonedDateTime&nbsp;&nbsp;</TD><TD>timestamptz&nbsp;&nbsp;</TD><TD align="center">&#x2611;&nbsp;&nbsp;</TD><TD align="center">CALCULATED&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The timestamp for when the record was ETL-created.</TD></TR>
+  <TR valign="top" bgcolor="#DFECF8"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>lastUpdated</B>&nbsp;&nbsp;</TD><TD>ZonedDateTime&nbsp;&nbsp;</TD><TD>timestamptz&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">AUTO&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The timestamp for when the record was last updated.</TD></TR>
+  <TR bgcolor="#DFECF8"><TD></TD><TD></TD><TD colspan="10" align="center">
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
   <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Update</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Update&nbsp;&nbsp;</TD><TD>ALWAYS&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Last updated time</TD></TR>
 </TABLE>
 </TD></TR>
-  <TR valign="top" bgcolor="#DFECF8"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>deleted</B>&nbsp;&nbsp;</TD><TD>ZonedDateTime&nbsp;&nbsp;</TD><TD>timestamptz&nbsp;&nbsp;</TD><TD align="center">&#x2611;&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The timestamp for when the record was deleted.</TD></TR>
+  <TR valign="top" bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>lastUpdatedETL</B>&nbsp;&nbsp;</TD><TD>ZonedDateTime&nbsp;&nbsp;</TD><TD>timestamptz&nbsp;&nbsp;</TD><TD align="center">&#x2611;&nbsp;&nbsp;</TD><TD align="center">CALCULATED&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The timestamp for when the record was last ETL-updated.</TD></TR>
+  <TR valign="top" bgcolor="#DFECF8"><TD>9&nbsp;&nbsp;</TD><TD align="right"><B>deleted</B>&nbsp;&nbsp;</TD><TD>ZonedDateTime&nbsp;&nbsp;</TD><TD>timestamptz&nbsp;&nbsp;</TD><TD align="center">&#x2611;&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The timestamp for when the record was deleted.</TD></TR>
 </TABLE>
 </DIV>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Dec 7 2016, 20:34:29CST
+ @generated Jan 15 2017, 21:41:40EST
 */
 public abstract class TILDA__KEY implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
@@ -73,12 +75,14 @@ public abstract class TILDA__KEY implements tilda.interfaces.WriterObject, tilda
    private InitMode __Init        = null;
    private long     __Nulls1      = 0L;
    private long     __Nulls2      = 0L;
+   private long     __Nulls3      = 0L;
    private long     __Changes1    = 0L;
    private long     __Changes2    = 0L;
+   private long     __Changes3    = 0L;
    private boolean  __NewlyCreated= false;
    private int      __LookupId;
 
-   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L; }
+   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L || __Changes3 != 0L; }
    public  boolean isNewlyCreated() { return __NewlyCreated; }
 
    void initForCreate()
@@ -682,6 +686,32 @@ This is the hasChanged for:<BR>
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.KEY.createdETL -> TILDA.KEY."createdETL"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.KEY.createdETL of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.KEY.createdETL of type timestamptz</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was ETL-created.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>CALCULATED</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public abstract ZonedDateTime getCreatedETL();
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.KEY.lastUpdated -> TILDA.KEY."lastUpdated"
@@ -886,6 +916,32 @@ This is the hasChanged for:<BR>
 */
    public boolean hasChangedLastUpdated()
      { return (TILDA__KEY_Factory.COLS.LASTUPDATED._Mask1 & __Changes1) != 0L; }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.KEY.lastUpdatedETL -> TILDA.KEY."lastUpdatedETL"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.KEY.lastUpdatedETL of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.KEY.lastUpdatedETL of type timestamptz</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last ETL-updated.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>CALCULATED</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public abstract ZonedDateTime getLastUpdatedETL();
 
 
 
@@ -1110,10 +1166,10 @@ This is the hasChanged for:<BR>
 */
    public void CopyTo(tilda.data._Tilda.TILDA__KEY Dst) throws Exception
      {
-       Dst.setMax        (_max        );
-       Dst.setCount      (_count      );
-       Dst.setLastUpdated(_lastUpdated);
-       if ((TILDA__KEY_Factory.COLS.DELETED._Mask1     & __Nulls1) != 0L) Dst.setNullDeleted    (); else        Dst.setDeleted    (_deleted    );
+       Dst.setMax           (_max           );
+       Dst.setCount         (_count         );
+       Dst.setLastUpdated   (_lastUpdated   );
+       if ((TILDA__KEY_Factory.COLS.DELETED._Mask1        & __Nulls1) != 0L) Dst.setNullDeleted       (); else        Dst.setDeleted       (_deleted       );
      }
 
 /**
@@ -1132,7 +1188,7 @@ This is the hasChanged for:<BR>
    public final boolean Write(Connection C) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Changes1 == 0L && __Changes2 == 0L)
+       if (hasChanged() == false)
         {
           LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.KEY has not changed: no writing will occur.");
           QueryDetails.setLastQuery(TILDA__KEY_Factory.SCHEMA_TABLENAME_LABEL, "");
@@ -1153,20 +1209,20 @@ This is the hasChanged for:<BR>
           StringBuilder V = new StringBuilder(1024);
           S.append("insert into "); C.getFullTableVar(S, "TILDA", "KEY");
           int Pos = S.length();
-          if ((TILDA__KEY_Factory.COLS.REFNUM._Mask1      & __Changes1) != 0L) { TILDA__KEY_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__KEY_Factory.COLS.NAME._Mask1        & __Changes1) != 0L) { TILDA__KEY_Factory.COLS.NAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__KEY_Factory.COLS.MAX._Mask1         & __Changes1) != 0L) { TILDA__KEY_Factory.COLS.MAX.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__KEY_Factory.COLS.COUNT._Mask1       & __Changes1) != 0L) { TILDA__KEY_Factory.COLS.COUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__KEY_Factory.COLS.REFNUM._Mask1         & __Changes1) != 0L) { TILDA__KEY_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__KEY_Factory.COLS.NAME._Mask1           & __Changes1) != 0L) { TILDA__KEY_Factory.COLS.NAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__KEY_Factory.COLS.MAX._Mask1            & __Changes1) != 0L) { TILDA__KEY_Factory.COLS.MAX.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__KEY_Factory.COLS.COUNT._Mask1          & __Changes1) != 0L) { TILDA__KEY_Factory.COLS.COUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
-          if ((TILDA__KEY_Factory.COLS.CREATED._Mask1     & __Changes1) != 0L) { TILDA__KEY_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
+          if ((TILDA__KEY_Factory.COLS.CREATED._Mask1        & __Changes1) != 0L) { TILDA__KEY_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
              V.append((TILDA__KEY_Factory.COLS.CREATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
           else { TILDA__KEY_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
-          if ((TILDA__KEY_Factory.COLS.LASTUPDATED._Mask1 & __Changes1) != 0L) { TILDA__KEY_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
+          if ((TILDA__KEY_Factory.COLS.LASTUPDATED._Mask1    & __Changes1) != 0L) { TILDA__KEY_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
              V.append((TILDA__KEY_Factory.COLS.LASTUPDATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
           else { TILDA__KEY_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
-          if ((TILDA__KEY_Factory.COLS.DELETED._Mask1     & __Changes1) != 0L) { TILDA__KEY_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
+          if ((TILDA__KEY_Factory.COLS.DELETED._Mask1        & __Changes1) != 0L) { TILDA__KEY_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
              V.append((TILDA__KEY_Factory.COLS.DELETED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
 
@@ -1180,10 +1236,10 @@ This is the hasChanged for:<BR>
         {
           S.append("update "); C.getFullTableVar(S, "TILDA", "KEY"); S.append(" set");
           int Pos = S.length();
-          if ((TILDA__KEY_Factory.COLS.REFNUM._Mask1      & __Changes1) != 0L) TILDA__KEY_Factory.COLS.REFNUM.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__KEY_Factory.COLS.NAME._Mask1        & __Changes1) != 0L) TILDA__KEY_Factory.COLS.NAME.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__KEY_Factory.COLS.MAX._Mask1         & __Changes1) != 0L) TILDA__KEY_Factory.COLS.MAX.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__KEY_Factory.COLS.COUNT._Mask1       & __Changes1) != 0L) TILDA__KEY_Factory.COLS.COUNT.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__KEY_Factory.COLS.REFNUM._Mask1         & __Changes1) != 0L) TILDA__KEY_Factory.COLS.REFNUM.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__KEY_Factory.COLS.NAME._Mask1           & __Changes1) != 0L) TILDA__KEY_Factory.COLS.NAME.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__KEY_Factory.COLS.MAX._Mask1            & __Changes1) != 0L) TILDA__KEY_Factory.COLS.MAX.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__KEY_Factory.COLS.COUNT._Mask1          & __Changes1) != 0L) TILDA__KEY_Factory.COLS.COUNT.getFullColumnVarForUpdate(C, S);
 
           if ((TILDA__KEY_Factory.COLS.CREATED._Mask1 & __Changes1) != 0L)
            {
@@ -1239,42 +1295,42 @@ This is the hasChanged for:<BR>
         {
           PS = C.prepareStatement(Q);
           int i = 0;
-               if ((TILDA__KEY_Factory.COLS.REFNUM._Mask1      & __Changes1) != 0L) 
+               if ((TILDA__KEY_Factory.COLS.REFNUM._Mask1         & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__KEY_Factory.COLS.REFNUM._Mask1      & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _refnum);
+                  if ((TILDA__KEY_Factory.COLS.REFNUM._Mask1         & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _refnum);
                 } 
-               if ((TILDA__KEY_Factory.COLS.NAME._Mask1        & __Changes1) != 0L) 
+               if ((TILDA__KEY_Factory.COLS.NAME._Mask1           & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__KEY_Factory.COLS.NAME._Mask1        & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _name);
+                  if ((TILDA__KEY_Factory.COLS.NAME._Mask1           & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _name);
                 } 
-               if ((TILDA__KEY_Factory.COLS.MAX._Mask1         & __Changes1) != 0L) 
+               if ((TILDA__KEY_Factory.COLS.MAX._Mask1            & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__KEY_Factory.COLS.MAX._Mask1         & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _max);
+                  if ((TILDA__KEY_Factory.COLS.MAX._Mask1            & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _max);
                 } 
-               if ((TILDA__KEY_Factory.COLS.COUNT._Mask1       & __Changes1) != 0L) 
+               if ((TILDA__KEY_Factory.COLS.COUNT._Mask1          & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__KEY_Factory.COLS.COUNT._Mask1       & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _count);
+                  if ((TILDA__KEY_Factory.COLS.COUNT._Mask1          & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _count);
                 } 
-               if ((TILDA__KEY_Factory.COLS.CREATED._Mask1     & __Changes1) != 0L) 
+               if ((TILDA__KEY_Factory.COLS.CREATED._Mask1        & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__KEY_Factory.COLS.CREATED._Mask1     & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                  if ((TILDA__KEY_Factory.COLS.CREATED._Mask1        & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
-               if ((TILDA__KEY_Factory.COLS.LASTUPDATED._Mask1 & __Changes1) != 0L) 
+               if ((TILDA__KEY_Factory.COLS.LASTUPDATED._Mask1    & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__KEY_Factory.COLS.LASTUPDATED._Mask1 & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_lastUpdated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                  if ((TILDA__KEY_Factory.COLS.LASTUPDATED._Mask1    & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_lastUpdated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
-               if ((TILDA__KEY_Factory.COLS.DELETED._Mask1     & __Changes1) != 0L) 
+               if ((TILDA__KEY_Factory.COLS.DELETED._Mask1        & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__KEY_Factory.COLS.DELETED._Mask1     & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deleted.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                  if ((TILDA__KEY_Factory.COLS.DELETED._Mask1        & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deleted.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
 
           switch (__LookupId)
            {
              case 0:
-               PS.setLong     (++i, _refnum     );
+               PS.setLong     (++i, _refnum        );
                break;
              case 1:
-               PS.setString   (++i, _name       );
+               PS.setString   (++i, _name          );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -1310,16 +1366,16 @@ This is the hasChanged for:<BR>
        switch (__LookupId)
         {
           case 0:
-             __Saved_refnum      = _refnum     ;
+             __Saved_refnum         = _refnum        ;
              break;
           case 1:
-             __Saved_name        = _name       ;
+             __Saved_name           = _name          ;
              break;
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
         }
 
-       __Changes1= __Changes2= __Nulls1= __Nulls2= 0L;
+       __Changes1= __Changes2= __Changes3= __Nulls1= __Nulls2= __Nulls3= 0L;
        return true;
      }
 
@@ -1345,7 +1401,7 @@ This is the hasChanged for:<BR>
        long T0 = System.nanoTime();
        if (__Init == InitMode.CREATE)
         throw new Exception("This TILDA.KEY object is being Read() after a Create(), which doesn't make sense.");
-       if (__Init == InitMode.READ == true && Force == false && __Changes1 == 0L && __Changes2 == 0L)
+       if (__Init == InitMode.READ == true && Force == false && hasChanged()==false)
         {
           LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.KEY object has already been read.");
           QueryDetails.setLastQuery(TILDA__KEY_Factory.SCHEMA_TABLENAME_LABEL, "");
@@ -1389,10 +1445,10 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setLong     (++i, _refnum     );
+               PS.setLong     (++i, _refnum        );
                break;
              case 1:
-               PS.setString   (++i, _name       );
+               PS.setString   (++i, _name          );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -1423,17 +1479,18 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_refnum      = _refnum      =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__KEY_Factory.COLS.REFNUM._Mask1     ;
-      __Saved_name        = _name        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__KEY_Factory.COLS.NAME._Mask1       ;
-                            _max         =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__KEY_Factory.COLS.MAX._Mask1        ;
-                            _count       =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__KEY_Factory.COLS.COUNT._Mask1      ;
-                            _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
-                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
-                            _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
+      __Saved_refnum         = _refnum         =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__KEY_Factory.COLS.REFNUM._Mask1        ;
+      __Saved_name           = _name           = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__KEY_Factory.COLS.NAME._Mask1          ;
+                               _max            =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__KEY_Factory.COLS.MAX._Mask1           ;
+                               _count          =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__KEY_Factory.COLS.COUNT._Mask1         ;
+                               _created        = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
+                               _lastUpdated    = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
+                               _deleted        = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes1  = 0L;
      __Changes2  = 0L;
+     __Changes3  = 0L;
      return AfterRead(C);
    }
 
@@ -1443,13 +1500,15 @@ This is the hasChanged for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "refnum: "                                                                                        +                                   getRefnum     () 
-               + "; name: "                                                                                          + TextUtil.PrintVariableStr        (getName       ())
-               + "; max: "                                                                                           +                                   getMax        () 
-               + "; count: "                                                                                         +                                   getCount      () 
-               + "; created: "                                                                                       + DateTimeUtil.printDateTimeForJSON(getCreated    ())
-               + "; lastUpdated: "                                                                                   + DateTimeUtil.printDateTimeForJSON(getLastUpdated())
-               + "; deleted"       + ((TILDA__KEY_Factory.COLS.DELETED._Mask1     & __Nulls1) != 0L ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted    ()))
+                   "refnum: "                                                                                              +                                   getRefnum        () 
+               + "; name: "                                                                                                + TextUtil.PrintVariableStr        (getName          ())
+               + "; max: "                                                                                                 +                                   getMax           () 
+               + "; count: "                                                                                               +                                   getCount         () 
+               + "; created: "                                                                                             + DateTimeUtil.printDateTimeForJSON(getCreated       ())
+               + "; createdETL: "                                                                                          + DateTimeUtil.printDateTimeForJSON(getCreatedETL    ())
+               + "; lastUpdated: "                                                                                         + DateTimeUtil.printDateTimeForJSON(getLastUpdated   ())
+               + "; lastUpdatedETL: "                                                                                      + DateTimeUtil.printDateTimeForJSON(getLastUpdatedETL())
+               + "; deleted"          + ((TILDA__KEY_Factory.COLS.DELETED._Mask1        & __Nulls1) != 0L ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted       ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;
