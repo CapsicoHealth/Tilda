@@ -17,10 +17,8 @@
 package tilda.parsing.parts;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
@@ -40,7 +38,6 @@ import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.parsing.parts.helpers.SameAsHelper;
 import tilda.utils.TextUtil;
-import tilda.utils.pairs.StringIntPair;
 
 public class View extends Base
   {
@@ -386,17 +383,19 @@ public class View extends Base
         if (_ImportFormulas != null)
           for (String s : _ImportFormulas)
             {
+              if (TextUtil.isNullOrEmpty(s) == true)
+                continue;
               ReferenceHelper R = ReferenceHelper.parseColumnReference(s, this);
               if (TextUtil.isNullOrEmpty(R._O) == true || TextUtil.isNullOrEmpty(R._C) == true)
                 PS.AddError("View '" + getFullName() + "' is importing formula '" + s + "' which cannot be parsed as a reference.");
               View V = PS.getView(R._P, R._S, R._O);
               if (V == null)
-                PS.AddError("View '" + getFullName() + "' is importing formula '" + s + "' from view '" + R._S+"."+R._O + "' which cannot be found.");
+                PS.AddError("View '" + getFullName() + "' is importing formula '" + s + "' from view '" + R._S + "." + R._O + "' which cannot be found.");
               else
                 {
                   Formula F = V.getFormula(R._C);
                   if (F == null)
-                    PS.AddError("View '" + getFullName() + "' is importing formula '" + s + "' which cannot be found in view '" + R._S+"."+R._O + "'.");
+                    PS.AddError("View '" + getFullName() + "' is importing formula '" + s + "' which cannot be found in view '" + R._S + "." + R._O + "'.");
                   else
                     {
                       F = new Formula(F);
