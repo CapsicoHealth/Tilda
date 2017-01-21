@@ -166,10 +166,12 @@ public class View extends Base
                           {
                             if (col._FrameworkGenerated == true)
                               continue;
-                            VC = new ViewColumn();
-                            VC._SameAs = col.getFullName();
-                            VC._Name = Prefix + col._Name;
-                            _ViewColumns.add(i + j, VC);
+                            if (TextUtil.FindElement(VC._Exclude, col._Name, false, 0) != -1)
+                             continue;
+                            ViewColumn NewVC = new ViewColumn();
+                            NewVC._SameAs = col.getFullName();
+                            NewVC._Name = Prefix + col._Name;
+                            _ViewColumns.add(i + j, NewVC);
                             ++j;
                           }
                       }

@@ -37,6 +37,7 @@ public class ViewColumn
 	@SerializedName("name"       ) public String         _Name         ;
 	@SerializedName("sameas"     ) public String         _SameAs       ;
     @SerializedName("prefix"     ) public String         _Prefix       ;
+    @SerializedName("exclude"    ) public String[]       _Exclude      = new String[] { };
     @SerializedName("joinType"   ) public String         _JoinStr      ;
     @SerializedName("joinOnly"   ) public boolean        _JoinOnly      = false;
     @SerializedName("aggregate"  ) public String         _AggregateStr ;

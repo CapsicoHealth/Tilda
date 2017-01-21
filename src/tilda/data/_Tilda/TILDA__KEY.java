@@ -59,7 +59,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jan 15 2017, 22:19:20EST
+ @generated Jan 20 2017, 23:53:52EST
 */
 public abstract class TILDA__KEY implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
@@ -74,13 +74,15 @@ public abstract class TILDA__KEY implements tilda.interfaces.WriterObject, tilda
    private long     __Nulls1      = 0L;
    private long     __Nulls2      = 0L;
    private long     __Nulls3      = 0L;
+   private long     __Nulls4      = 0L;
    private long     __Changes1    = 0L;
    private long     __Changes2    = 0L;
    private long     __Changes3    = 0L;
+   private long     __Changes4    = 0L;
    private boolean  __NewlyCreated= false;
    private int      __LookupId;
 
-   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L || __Changes3 != 0L; }
+   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L || __Changes3 != 0L || __Changes4 != 0L; }
    public  boolean isNewlyCreated() { return __NewlyCreated; }
 
    void initForCreate()
@@ -1321,7 +1323,7 @@ This is the hasChanged for:<BR>
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
         }
 
-       __Changes1= __Changes2= __Changes3= __Nulls1= __Nulls2= __Nulls3= 0L;
+       __Changes1= __Changes2= __Changes3= __Changes4= __Nulls1= __Nulls2= __Nulls3= __Nulls4= 0L;
        return true;
      }
 
@@ -1437,6 +1439,7 @@ This is the hasChanged for:<BR>
      __Changes1  = 0L;
      __Changes2  = 0L;
      __Changes3  = 0L;
+     __Changes4  = 0L;
      return AfterRead(C);
    }
 

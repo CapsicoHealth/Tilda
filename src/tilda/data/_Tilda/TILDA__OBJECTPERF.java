@@ -73,7 +73,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jan 15 2017, 22:19:20EST
+ @generated Jan 20 2017, 23:53:52EST
 */
 public abstract class TILDA__OBJECTPERF implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
@@ -88,13 +88,15 @@ public abstract class TILDA__OBJECTPERF implements tilda.interfaces.WriterObject
    private long     __Nulls1      = 0L;
    private long     __Nulls2      = 0L;
    private long     __Nulls3      = 0L;
+   private long     __Nulls4      = 0L;
    private long     __Changes1    = 0L;
    private long     __Changes2    = 0L;
    private long     __Changes3    = 0L;
+   private long     __Changes4    = 0L;
    private boolean  __NewlyCreated= false;
    private int      __LookupId;
 
-   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L || __Changes3 != 0L; }
+   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L || __Changes3 != 0L || __Changes4 != 0L; }
    public  boolean isNewlyCreated() { return __NewlyCreated; }
 
    void initForCreate()
@@ -2827,7 +2829,7 @@ This is the hasChanged for:<BR>
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
         }
 
-       __Changes1= __Changes2= __Changes3= __Nulls1= __Nulls2= __Nulls3= 0L;
+       __Changes1= __Changes2= __Changes3= __Changes4= __Nulls1= __Nulls2= __Nulls3= __Nulls4= 0L;
        return true;
      }
 
@@ -2967,6 +2969,7 @@ This is the hasChanged for:<BR>
      __Changes1  = 0L;
      __Changes2  = 0L;
      __Changes3  = 0L;
+     __Changes4  = 0L;
      return AfterRead(C);
    }
 
@@ -2978,12 +2981,26 @@ This is the hasChanged for:<BR>
       throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + TimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
      ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(RS.getTimestamp(ColumnPos, DateTimeUtil._UTC_CALENDAR), ZI == null ? "null" : ZI.getValue());
      if (RS.wasNull() == true)
-      if (DTField._FirstMask == true)
+      if (DTField._MaskId == 1)
        __Nulls1 |= DTField._Mask1;
-      else
+      else if (DTField._MaskId == 2)
        __Nulls2 |= DTField._Mask2;
-     boolean DTNull = DTField._FirstMask == true ? (__Nulls1 & DTField._Mask1) != 0L : (__Nulls2 & DTField._Mask2) != 0L;
-     boolean TZNull = TZField._FirstMask == true ? (__Nulls1 & TZField._Mask1) != 0L : (__Nulls2 & TZField._Mask2) != 0L;
+      else if (DTField._MaskId == 3)
+       __Nulls3 |= DTField._Mask3;
+      else if (DTField._MaskId == 4)
+       __Nulls4 |= DTField._Mask4;
+      else
+       throw new Error("RUNTIME TILDA ERROR: Invalid MaskId="+DTField._MaskId+" for column "+DTFieldName+". Values should be between 1 and 4.");
+     boolean DTNull = DTField._MaskId == 1 ? (__Nulls1 & DTField._Mask1) != 0L
+                    : DTField._MaskId == 2 ? (__Nulls2 & DTField._Mask2) != 0L
+                    : DTField._MaskId == 3 ? (__Nulls3 & DTField._Mask3) != 0L
+                                           : (__Nulls4 & DTField._Mask4) != 0L
+                                           ;
+     boolean TZNull = TZField._MaskId == 1 ? (__Nulls1 & TZField._Mask1) != 0L
+                    : TZField._MaskId == 2 ? (__Nulls2 & TZField._Mask2) != 0L
+                    : TZField._MaskId == 3 ? (__Nulls3 & TZField._Mask3) != 0L
+                                           : (__Nulls4 & TZField._Mask4) != 0L
+                                           ;
      if (DTNull == false && TZNull == true)
       throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
      return ZDT;
