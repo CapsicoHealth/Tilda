@@ -174,6 +174,16 @@ public class View extends Base
                             _ViewColumns.add(i + j, NewVC);
                             ++j;
                           }
+                        for (Formula F : V._Formulas)
+                          {
+                            if (TextUtil.FindElement(VC._Exclude, F._Name, false, 0) != -1)
+                             continue;
+                            ViewColumn NewVC = new ViewColumn();
+                            NewVC._SameAs = V.getFullName()+"."+F._Name;
+                            NewVC._Name = Prefix + F._Name;
+                            _ViewColumns.add(i + j, NewVC);
+                            ++j;
+                          }
                       }
                     else
                       {
