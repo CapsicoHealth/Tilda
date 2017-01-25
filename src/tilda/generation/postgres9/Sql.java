@@ -35,7 +35,7 @@ import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.JoinType;
 import tilda.generation.GeneratorSession;
-import tilda.generation.helpers.FuckThat;
+import tilda.generation.helpers.TotalMess;
 import tilda.generation.helpers.TableRankTracker;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Base;
@@ -249,7 +249,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
     private String PrintBaseView(View V)
     throws Exception
       {
-        List<FuckThat> FuckList = FuckThat.ScanView(V);
+        List<TotalMess> FuckList = TotalMess.ScanView(V);
 
         StringBuilder Str = new StringBuilder();
         Str.append("-- " + TextUtil.EscapeSingleQuoteForSQL(V._Description) + "\n");
@@ -307,7 +307,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                         else
                           {
                             // ForeignKey FK = TableRankTracker.getClosestFKTable(TableStack, T, V, columnCount);
-                            ForeignKey FK = FuckThat.getClosestFKTable(FuckList, V, T, columnCount);
+                            ForeignKey FK = TotalMess.getClosestFKTable(FuckList, V, T, columnCount);
                             if (FK == null)
                               {
                                 throw new Exception("View " + V.getFullName() + " is using " + T.getShortName() + " but cannot find any foreign keys in any tables used so far: " + TableRankTracker.PrintTableNames(TableStack));
