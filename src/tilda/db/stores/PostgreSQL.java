@@ -430,11 +430,14 @@ public class PostgreSQL implements DBType
         .append("  RETURNS boolean\n")
         .append("  STRICT IMMUTABLE LANGUAGE SQL AS\n")
         .append("  'select exists (select * from unnest(v) x_ where x_ like val);';\n")
-        .append("DROP FUNCTION IF EXISTS TILDA.Like(text[], text[]);\n")
         .append("CREATE OR REPLACE FUNCTION TILDA.Like(v text[], val text[])\n")
         .append("  RETURNS boolean\n")
         .append("  STRICT IMMUTABLE LANGUAGE SQL AS\n")
         .append("  'select exists (select * from unnest(v) x_ where x_ like ANY(val));';\n")
+        .append("CREATE OR REPLACE FUNCTION TILDA.Like(v text, val text[])\n")
+        .append("  RETURNS boolean\n")
+        .append("  STRICT IMMUTABLE LANGUAGE SQL AS\n")
+        .append("  'select v like ANY(val);';\n")
         .append("\n")
         .append("\n");
         PrintFunctionIn(Str, "text");
@@ -516,6 +519,9 @@ public class PostgreSQL implements DBType
         .append("DECLARE v_int_value INTEGER DEFAULT NULL;\n")
         .append("BEGIN\n")
         .append("    BEGIN\n")
+        .append("        if str is null\n")
+        .append("        then return val;\n")
+        .append("        end if;\n")
         .append("        v_int_value := str::INTEGER;\n")
         .append("    EXCEPTION WHEN OTHERS THEN\n")
         .append("        RETURN val;\n")
@@ -536,7 +542,7 @@ public class PostgreSQL implements DBType
     public StringStringPair getTypeMapping(int Type, String Name, int Size, String TypeName)
     throws Exception
       {
-        // LOG.debug("Type: "+Type+"; Name: "+Name+"; Size: "+Size+"; TypeName: "+TypeName+";");
+        //LOG.debug("Type: "+Type+"; Name: "+Name+"; Size: "+Size+"; TypeName: "+TypeName+";");
         ColumnType TildaType = null;
         String TypeSql = null;
         switch (Type)
@@ -596,7 +602,7 @@ public class PostgreSQL implements DBType
             default: throw new Exception("Cannot map SQL Type "+Type+" for column "+Name+"("+TypeName+").");
             /*@formatter:on*/
           }
-        return new StringStringPair(TypeSql, TildaType.name());
+        return new StringStringPair(TypeSql, TildaType==null?null:TildaType.name());
       }
 
 

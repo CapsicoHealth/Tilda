@@ -128,6 +128,10 @@ public class ViewColumn
 
         ReferenceHelper R = ReferenceHelper.parseColumnReference(_SameAs, _ParentView);
 
+        if (_SameAs.equals("com.capsico.datamart.data.DATAMART.EPISODEMEDICALORDERSVIEW.medicalOrdersCount") == true)
+          {
+            LOG.debug("xxx");
+          }
         if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true || TextUtil.isNullOrEmpty(R._C) == true)
           PS.AddError("Column '" + getFullName() + "' is declaring sameas '" + _SameAs + "' with an incorrect syntax. It should be '(((package\\.)?schema\\.)?object\\.)?column'.");
         else

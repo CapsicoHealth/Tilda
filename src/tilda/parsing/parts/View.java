@@ -167,7 +167,7 @@ public class View extends Base
                             if (col._FrameworkGenerated == true)
                               continue;
                             if (TextUtil.FindElement(VC._Exclude, col._Name, false, 0) != -1)
-                             continue;
+                              continue;
                             ViewColumn NewVC = new ViewColumn();
                             NewVC._SameAs = col.getFullName();
                             NewVC._Name = Prefix + col._Name;
@@ -177,10 +177,18 @@ public class View extends Base
                         for (Formula F : V._Formulas)
                           {
                             if (TextUtil.FindElement(VC._Exclude, F._Name, false, 0) != -1)
-                             continue;
+                              continue;
                             ViewColumn NewVC = new ViewColumn();
-                            NewVC._SameAs = V.getFullName()+"."+F._Name;
+                            NewVC._SameAs = V.getFullName() + "." + F._Name;
                             NewVC._Name = Prefix + F._Name;
+                            _ViewColumns.add(i + j, NewVC);
+                            ++j;
+                          }
+                        if (TextUtil.isNullOrEmpty(V._CountStar) == false)
+                          {
+                            ViewColumn NewVC = new ViewColumn();
+                            NewVC._SameAs = V.getFullName() + "." + V._CountStar;
+                            NewVC._Name = Prefix + V._CountStar;
                             _ViewColumns.add(i + j, NewVC);
                             ++j;
                           }
@@ -380,6 +388,12 @@ public class View extends Base
                     O._Columns.add(new ViewColumnWrapper(VC._SameAsObj, VC, ++Counter));
                   }
               }
+          }
+        if (TextUtil.isNullOrEmpty(_CountStar) == false)
+          {
+            ColumnType Type = ColumnType.INTEGER;
+            Column C = new Column(_CountStar, Type.name(), 0, true, ColumnMode.NORMAL, true, null, "Count column");
+            O._Columns.add(C);
           }
 
         if (_Pivot != null)

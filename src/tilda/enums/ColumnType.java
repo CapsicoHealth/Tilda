@@ -64,6 +64,8 @@ public enum ColumnType
 
     public static ColumnType parse(String Str)
       {
+        if (Str == null)
+         return null;
         for (ColumnType e : ColumnType.values())
           if (Str.equalsIgnoreCase(e.name()) == true)
             return e;

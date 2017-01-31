@@ -169,7 +169,7 @@ public class Object extends Base
                 if (C._Mode == ColumnMode.CALCULATED)
                   continue;
                 C.setSequenceOrder(++Counter);
-                if (Counter >= 64*4)
+                if (Counter >= 64 * 4)
                   {
                     PS.AddError("Object '" + getFullName() + "' has declared " + (i + 1) + " columns. Max allowed is 256!");
                   }
@@ -264,6 +264,18 @@ public class Object extends Base
         for (Column C : _Columns)
           if (C != null && (C.getName().equalsIgnoreCase("created") == true || C.getName().equalsIgnoreCase("lastUpdated") == true || C.getName().equalsIgnoreCase("deleted") == true))
             return PS.AddError("Object '" + getFullName() + "' has defined OCC to be true but is also defining column '" + C.getName() + "', which is a reserved name.");
+
+        Object KeyObj = PS.getObject("tilda.data", "TILDA", "KEY");
+        if (KeyObj == null)
+          {
+            LOG.error("WHHHUUUT???? TILDA.KEY cannot be found");
+            throw new Error("There is a class-path issue here... This process cannot see the base Tilda object definitions.");
+          }
+        else if (KeyObj.getColumn("created") == null)
+          {
+            LOG.error("WHHHUUUT???? TILDA.KEY.created cannot be found");
+            throw new Error("There is a class-path issue here... This process cannot see the base Tilda object definitions.");
+          }
 
         Column C = new Column("created", null, 0, false, ColumnMode.AUTO, true, null, PS.getColumn("tilda.data", "TILDA", "KEY", "created")._Description);
         C._SameAs = "tilda.data.TILDA.KEY.created";
