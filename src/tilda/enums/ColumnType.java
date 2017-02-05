@@ -39,6 +39,7 @@ public enum ColumnType
     FLOAT   (true , true ),
     DOUBLE  (true , true ),
     BOOLEAN (true , true ),
+    DATE    (false, false),
     DATETIME(false, false),
     BINARY  (false, false),
     BITFIELD(false, true );

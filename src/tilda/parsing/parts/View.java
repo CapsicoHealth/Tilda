@@ -53,6 +53,7 @@ public class View extends Base
     @SerializedName("countStar"     ) public String                _CountStar;
     @SerializedName("subQuery"      ) public SubWhereClause        _SubQuery;
     @SerializedName("pivot"         ) public ViewPivot             _Pivot;
+    @SerializedName("timeSeries"    ) public ViewTimeSeries        _TimeSeries;
     @SerializedName("pivotColumns"  ) public List<ViewPivotColumn> _PivotColumns;
     @SerializedName("realize"       ) public ViewRealize           _Realize;
     @SerializedName("importFormulas") public String[]              _ImportFormulas = new String[] { };
@@ -189,6 +190,7 @@ public class View extends Base
                             ViewColumn NewVC = new ViewColumn();
                             NewVC._SameAs = V.getFullName() + "." + V._CountStar;
                             NewVC._Name = Prefix + V._CountStar;
+                            NewVC._Aggregate = AggregateType.COUNT;
                             _ViewColumns.add(i + j, NewVC);
                             ++j;
                           }
@@ -260,6 +262,38 @@ public class View extends Base
                   CreateMappedViewColumn(PS, ColumnNames, i++, VC, "Group");
                 if (VC._SameAsObj._Mapper._Name == ColumnMapperMode.DB)
                   CreateMappedViewColumn(PS, ColumnNames, i++, VC, "Name");
+              }
+          }
+
+        if (_TimeSeries != null)
+          {
+            if (_TimeSeries.Validate(PS, this) == true)
+              {
+                int firstAgg = -1;
+                for (int i = 0; i < _ViewColumns.size(); ++i)
+                  {
+                    ViewColumn VC = _ViewColumns.get(i);
+                    if (VC._Aggregate != null)
+                      {
+                        firstAgg = i;
+                        break;
+                      }
+                  }
+                if (firstAgg == -1 && _CountStar != null)
+                  firstAgg = _ViewColumns.size();
+
+                if (firstAgg == -1)
+                  PS.AddError("The View '" + getFullName() + "' is defining a time series without having defined any aggregate column.");
+                else
+                  {
+                    if (_Pivot != null)
+                      --firstAgg;
+                    ViewColumn VC = new ViewColumn();
+                    VC._SameAs = "_TS.p";
+                    VC._Name = _TimeSeries._Name;
+                    VC._FrameworkGenerated = true;
+                    _ViewColumns.add(firstAgg, VC);
+                  }
               }
           }
 
@@ -396,7 +430,7 @@ public class View extends Base
             O._Columns.add(C);
           }
 
-        if (_Pivot != null)
+        if (_Pivot != null && _Pivot._Values != null)
           for (Value VPV : _Pivot._Values)
             {
               ColumnType Type = _CountStar != null ? ColumnType.INTEGER : _Pivot._VC._SameAsObj.getType();
@@ -433,14 +467,16 @@ public class View extends Base
 
         if (_Formulas != null)
           for (Formula F : _Formulas)
-            F.Validate(PS, this);
+            if (F != null)
+              F.Validate(PS, this);
 
         if (_Formulas != null)
           for (Formula F : _Formulas)
-            {
-              Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "Formula column: " + F._Title);
-              O._Columns.add(C);
-            }
+            if (F != null)
+              {
+                Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "Formula column: " + F._Title);
+                O._Columns.add(C);
+              }
 
 
         PrimaryKey PK = _ViewColumns.get(0)._SameAsObj._ParentObject._PrimaryKey;

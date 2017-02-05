@@ -29,6 +29,7 @@ public enum PostgresType
     FLOAT   ("real"            , "float4" , ColumnType.FLOAT   ),
     DOUBLE  ("double precision", "float8" , ColumnType.DOUBLE  ),
     BOOLEAN ("boolean"         , "bool"   , ColumnType.BOOLEAN ),
+    DATE    ("date"            , null     , ColumnType.DATE    ),
     DATETIME("timestamptz"     , null     , ColumnType.DATETIME),
     BINARY  ("BYTEA"           , null     , ColumnType.BINARY  ),
     BITFIELD("INTEGER"         , "int4"   , ColumnType.BITFIELD);

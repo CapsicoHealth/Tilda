@@ -60,7 +60,7 @@ public class TildaData implements CodeGenTildaData
         Out.println("package " + O._ParentSchema._Package + "." + Helper.TILDA_GEN_PACKAGE + ";");
         Out.println();
         for (Column C : O._Columns)
-          if (C != null && C.getType() == ColumnType.DATETIME)
+          if (C != null && (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATE))
             {
               Out.println("import java.time.*;");
               break;
@@ -556,6 +556,7 @@ public class TildaData implements CodeGenTildaData
                     Out.println("       if (v != _" + C.getName() + ")");
                   Out.println("        {");
                   break;
+                case DATE:
                 case DATETIME:
                 case STRING:
                 case JSON:
@@ -889,6 +890,7 @@ public class TildaData implements CodeGenTildaData
               Out.print("          if ((" + Mask + Pad + " & __Changes" + BitFieldId + ") != 0L) { " + Helper.getRuntimeInsertStr(C) + ";");
               switch (C.getType())
                 {
+                  case DATE:
                   case DATETIME:
                     Out.println();
                     Out.println("             V.append((" + Mask + " & __Nulls" + BitFieldId + ") == 0L && DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == true ? C.getCommaCurrentTimestamp() : " + Helper.getSupportClassFullName(O._ParentSchema) + "._COMMAQUESTION);");
@@ -937,6 +939,7 @@ public class TildaData implements CodeGenTildaData
                 Out.println();
               switch (C.getType())
                 {
+                  case DATE:
                   case DATETIME:
                     Out.println("          if ((" + Mask + " & __Changes" + BitFieldId + ") != 0L)");
                     Out.println("           {");
@@ -1016,6 +1019,13 @@ public class TildaData implements CodeGenTildaData
               Out.print("                  if ((" + Mask + Pad + " & __Nulls" + BitFieldId + "  ) != 0L) PS.setNull(++i, " + (C.isCollection() == true ? "C.supportsArrays()?java.sql.Types.ARRAY:" : "") + "java.sql.Types." + JavaJDBCType.get(C.getType())._JDBCSQLType + ");");
               switch (C.getType())
                 {
+                  case DATE:
+                    Out.print(" else if (DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == false) ");
+                    if (C.isCollection() == false)
+                      Out.println("PS.setDate(++i, new java.sql.Date(_" + C.getName() + ".getYear(), _" + C.getName() + ".getMonthValue(), _" + C.getName() + ".getDayOfMonth()));");
+                    else
+                      Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, AllocatedArrays, _" + C.getName() + ");");
+                    break;
                   case DATETIME:
                     Out.print(" else if (DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == false) ");
                     if (C.isCollection() == false)
@@ -1228,6 +1238,12 @@ public class TildaData implements CodeGenTildaData
                     else
                       Out.print("_" + C.getName() + Pad + " =                              RS.get" + JavaJDBCType.get(C.getType())._JDBCType + "(++i) ; ");
                     Out.print(" if (RS.wasNull() == true) __Nulls" + BitFieldId + " |= " + Mask + Pad + ";");
+                    break;
+                  case DATE:
+                    if (C.isCollection() == true)
+                      // Out.print("_" + C.getName() + Pad + " = " + SerializeArray(G) + "((" + JavaJDBCType.get(C.getType())._JavaClassType + "[])RS.getArray(++i).getArray());");
+                      throw new Error("Cannot do Date arrays yet!");
+                    Out.print("_" + C.getName() + Pad + " = DateTimeUtil.toLocalDate(RS.getDate(++i));");
                     break;
                   case DATETIME:
                     if (C.isCollection() == true)

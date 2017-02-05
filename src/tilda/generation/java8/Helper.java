@@ -506,6 +506,8 @@ public class Helper
                             Out.print("if (P._" + V + "==null) PS.setNull(++i, java.sql.Types." + JavaJDBCType.get(C.getType())._JDBCSQLType + "); else ");
                           if (C.getType() == ColumnType.DATETIME)
                             Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(P._" + C.getName() + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
+                          else if (C.getType() == ColumnType.DATE)
+                            Out.println("PS.setDate(++i, new java.sql.Date(P._" + C.getName() + ".getYear(), P._" + C.getName() + ".getMonthValue(), P._" + C.getName() + ".getDayOfMonth()));");
                           else
                             Out.println("PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, " + (C.getType() == ColumnType.CHAR ? "\"\"+" : "") + "P._" + V + Pad + ");");
                         }
@@ -551,6 +553,8 @@ public class Helper
                         Out.print("if (P._" + V + "==null) PS.setNull(++i, java.sql.Types." + JavaJDBCType.get(C.getType())._JDBCSQLType + "); else ");
                       if (C.getType() == ColumnType.DATETIME)
                         Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(P._" + V + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
+                      else if (C.getType() == ColumnType.DATE)
+                        Out.println("PS.setDate(++i, new java.sql.Date(P._" + C.getName() + ".getYear(), P._" + C.getName() + ".getMonthValue(), P._" + C.getName() + ".getDayOfMonth()));");
                       else if (A._Multi == false)
                         Out.println("PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, " + (C.getType() == ColumnType.CHAR ? "\"\"+" : "") + "P._" + V + Pad + ");");
                       else
@@ -580,6 +584,8 @@ public class Helper
               Out.print("if (" + Pred + "isNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "() == true) PS.setNull(++i, java.sql.Types." + JavaJDBCType.get(C.getType())._JDBCSQLType + ");  else ");
             if (C.getType() == ColumnType.DATETIME)
               Out.println("PS.setTimestamp(++i, new java.sql.Timestamp("+Pred+"_" + C.getName() + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
+            else if (C.getType() == ColumnType.DATE)
+              Out.println("PS.setDate(++i, new java.sql.Date("+Pred+"_" + C.getName() + ".getYear(), "+Pred+"_" + C.getName() + ".getMonthValue(), "+Pred+"_" + C.getName() + ".getDayOfMonth()));");
             else
               Out.println("PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, " + (C.getType() == ColumnType.CHAR ? "\"\"+" : "") + Pred + "_" + C.getName() + Pad + ");");
           }

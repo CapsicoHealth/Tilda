@@ -1,5 +1,5 @@
 /* ===========================================================================
- * Copyright (C) 2015 CapsicoHealth Inc.
+ * Copyright (C) 2016 CapsicoHealth Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,6 @@
  */
 
 package tilda.parsing.parts;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
