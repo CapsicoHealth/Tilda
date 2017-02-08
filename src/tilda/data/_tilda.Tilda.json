@@ -17,18 +17,20 @@
                                    // So we need to define them explicitly here.
       "description": "The table to keep track of unique keys across distributed objects/tables",
       "columns":[
-        { "name": "refnum"       , "type": "LONG"       , "nullable": false,                          "invariant": true, "description": "The primary key for this record" },
-        { "name": "name"         , "type": "STRING"     , "nullable": false, "size": 128,             "invariant": true, "description": "The name of the table/object tracked" },
-        { "name": "max"          , "type": "LONG"       , "nullable": false,                                             "description": "The pre-allocated max RefNum for this table/object." },
-        { "name": "count"        , "type": "INTEGER"    , "nullable": false,                                             "description": "The size of the pre-allocation required by this table/object." },
+        { "name": "refnum"        , "type": "LONG"       , "nullable": false,                          "invariant": true, "description": "The primary key for this record" },
+        { "name": "name"          , "type": "STRING"     , "nullable": false, "size": 128,             "invariant": true, "description": "The name of the table/object tracked" },
+        { "name": "max"           , "type": "LONG"       , "nullable": false,                                             "description": "The pre-allocated max RefNum for this table/object." },
+        { "name": "count"         , "type": "INTEGER"    , "nullable": false,                                             "description": "The size of the pre-allocation required by this table/object." },
         
-        { "name": "created"      , "type": "DATETIME"   , "nullable": false,            "mode": "AUTO", "invariant": true, "description": "The timestamp for when the record was created.",
-                                 "values": [ { "name": "Creation", "value": "NOW", "description": "Creation time", "default": "CREATE"} ]
+        { "name": "created"       , "type": "DATETIME"   , "nullable": false,          "mode": "AUTO", "invariant": true, "description": "The timestamp for when the record was created.",
+                                    "values": [ { "name": "Creation", "value": "NOW", "description": "Creation time"    , "default": "CREATE"} ]
         },
-        { "name": "lastUpdated"  , "type": "DATETIME"   , "nullable": false,            "mode": "AUTO",                  "description": "The timestamp for when the record was last updated.",
-                                 "values": [ { "name": "Update", "value": "NOW", "description": "Last updated time", "default": "ALWAYS"} ]
+        { "name": "createdETL"    , "type": "DATETIME"   , "nullable": true ,          "mode": "CALCULATED",              "description": "The timestamp for when the record was ETL-created."},
+        { "name": "lastUpdated"   , "type": "DATETIME"   , "nullable": false,          "mode": "AUTO",                    "description": "The timestamp for when the record was last updated.",
+                                    "values": [ { "name": "Update"  , "value": "NOW", "description": "Last updated time", "default": "ALWAYS"} ]
         },
-        { "name": "deleted"      , "type": "DATETIME"   , "nullable": true,                                            "description": "The timestamp for when the record was deleted." }
+        { "name": "lastUpdatedETL", "type": "DATETIME"   , "nullable": true ,          "mode": "CALCULATED",              "description": "The timestamp for when the record was last ETL-updated."},
+        { "name": "deleted"       , "type": "DATETIME"   , "nullable": true ,                                             "description": "The timestamp for when the record was deleted." }
       ],
       // No autogen since this is the KEY table itself
       // Also, because the KEY table serves as a reference, the refnum column is also used as a reference and so must be defined. 

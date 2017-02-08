@@ -39,6 +39,7 @@ public class Object extends Base
 
     /*@formatter:off*/
     @SerializedName("occ"           ) public boolean              _OCC        = true ;
+    @SerializedName("etl"           ) public boolean              _ETL        = false;
     @SerializedName("lc"            ) public String               _LCStr      = ObjectLifecycle.NORMAL.toString();
 
     @SerializedName("columns"       ) public List<Column>         _Columns    = new ArrayList<Column        >();
@@ -105,7 +106,7 @@ public class Object extends Base
 
         if (getFullName().equals("tilda.data.TILDA.KEY") == true)
           {
-            if (getColumn("created") == null || getColumn("lastUpdated") == null || getColumn("deleted") == null)
+            if (getColumn("created") == null || getColumn("lastUpdated") == null || getColumn("deleted") == null || getColumn("lastUpdatedETL") == null || getColumn("createdETL") == null)
               return PS.AddError("Object '" + getFullName() + "' is a built-in Tilda framework object but doesn't seem to have defined the base OCC (created, lastUpdated, deleted) columns.");
             if (getColumn("refnum") == null)
               return PS.AddError("Object '" + getFullName() + "' is a built-in Tilda framework object but doesn't seem to have defined the base refnum columns.");
@@ -115,7 +116,7 @@ public class Object extends Base
           {
             if (_OCC == true)
               {
-                if (CreateOCCColumns(PS) == false)
+                if (CreateOCCColumns(PS, _ETL) == false)
                   return false;
               }
             if (_PrimaryKey != null && _PrimaryKey._Autogen == true)
@@ -259,10 +260,10 @@ public class Object extends Base
         return true;
       }
 
-    private boolean CreateOCCColumns(ParserSession PS)
+    private boolean CreateOCCColumns(ParserSession PS, boolean addETLLastUpdated)
       {
         for (Column C : _Columns)
-          if (C != null && (C.getName().equalsIgnoreCase("created") == true || C.getName().equalsIgnoreCase("lastUpdated") == true || C.getName().equalsIgnoreCase("deleted") == true))
+          if (C != null && (C.getName().equalsIgnoreCase("created") == true || C.getName().equalsIgnoreCase("lastUpdated") == true || C.getName().equalsIgnoreCase("createdETL") == true || C.getName().equalsIgnoreCase("lastUpdatedETL") == true || C.getName().equalsIgnoreCase("deleted") == true))
             return PS.AddError("Object '" + getFullName() + "' has defined OCC to be true but is also defining column '" + C.getName() + "', which is a reserved name.");
 
         Object KeyObj = PS.getObject("tilda.data", "TILDA", "KEY");
@@ -291,6 +292,19 @@ public class Object extends Base
         C._SameAs = "tilda.data.TILDA.KEY.deleted";
         C._FrameworkManaged = true;
         _Columns.add(C);
+
+        if (addETLLastUpdated == true)
+          {
+            C = new Column("createdETL", null, 0, true, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "KEY", "createdETL")._Description);
+            C._SameAs = "tilda.data.TILDA.KEY.createdETL";
+            C._FrameworkManaged = true;
+            _Columns.add(C);
+            
+            C = new Column("lastUpdatedETL", null, 0, true, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "KEY", "lastUpdatedETL")._Description);
+            C._SameAs = "tilda.data.TILDA.KEY.lastUpdatedETL";
+            C._FrameworkManaged = true;
+            _Columns.add(C);
+          }
 
         return true;
       }

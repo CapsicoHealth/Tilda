@@ -134,7 +134,9 @@ public class View extends Base
         Set<String> ColumnNames = new HashSet<String>();
         Set<String> ObjectNames = new HashSet<String>();
         String CreatedColObjName = null;
+        String CreatedETLColObjName = null;
         String LastUpdatedColObjName = null;
+        String LastUpdatedETLColObjName = null;
         String DeletedColObjName = null;
         for (int i = 0; i < _ViewColumns.size(); ++i)
           {
@@ -229,11 +231,16 @@ public class View extends Base
 
             if (VC.getName().equals("created") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "created")) == true)
               CreatedColObjName = VC._SameAsObj._ParentObject.getFullName();
+            if (VC.getName().equals("createdETL") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "createdETL")) == true)
+              CreatedETLColObjName = VC._SameAsObj._ParentObject.getFullName();
             else if (VC.getName().equals("lastUpdated") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "lastUpdated")) == true)
               LastUpdatedColObjName = VC._SameAsObj._ParentObject.getFullName();
+            else if (VC.getName().equals("lastUpdatedETL") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "lastUpdatedETL")) == true)
+              LastUpdatedETLColObjName = VC._SameAsObj._ParentObject.getFullName();
             else if (VC.getName().equals("deleted") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "deleted")) == true)
               DeletedColObjName = VC._SameAsObj._ParentObject.getFullName();
 
+            LOG.debug("VC: "+VC._Name+"; VC._SameAsObj: "+VC._SameAsObj+"; VC._SameAsObj._ParentObject: "+VC._SameAsObj._ParentObject+";");
             if (ObjectNames.add(VC._SameAsObj._ParentObject.getFullName()) == false)
               {
                 if (VC._Join != null)
@@ -417,7 +424,7 @@ public class View extends Base
               break;
             if (VC != null && VC._FrameworkGenerated == false && VC._JoinOnly == false)
               {
-                if (_OCC == false || VC.getName().equals("created") == false && VC.getName().equals("lastUpdated") == false && VC.getName().equals("deleted") == false)
+                if (_OCC == false || VC.getName().equals("created") == false && VC.getName().equals("lastUpdated") == false && VC.getName().equals("createdETL") == false && VC.getName().equals("lastUpdatedETL") == false && VC.getName().equals("deleted") == false)
                   {
                     O._Columns.add(new ViewColumnWrapper(VC._SameAsObj, VC, ++Counter));
                   }
