@@ -808,6 +808,7 @@ public class TildaData implements CodeGenTildaData
                 Out.println("       _" + C.getName() + "=0;");
                 break;
               case DATETIME:
+              case DATE:
               case STRING:
               case JSON:
               case BINARY:

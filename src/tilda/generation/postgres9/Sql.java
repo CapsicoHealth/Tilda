@@ -371,13 +371,24 @@ public class Sql extends PostgreSQL implements CodeGenSql
                                                                           ;
 
             Str.append("join (select * from generate_series(date_trunc('"+Period+"', current_date) - interval '"+Lookback+"', date_trunc('"+Period+"', current_date), '"+Step+"') as p\n");
+            
+            
             if (V._TimeSeries._Join._Range.length == 2)
-              Str.append("     ) as _TS on date_trunc('" + Period + "', " + V._TimeSeries._Join._ObjectObj.getShortName() + ".\"" + V._TimeSeries._Join._Range[0] + "\") <= _TS.p\n")
-              .append("            and (   " + V._TimeSeries._Join._ObjectObj.getShortName() + ".\"" + V._TimeSeries._Join._Range[1] + "\" is null\n")
-              .append("                 or date_trunc('" + Period + "', " + V._TimeSeries._Join._ObjectObj.getShortName() + ".\"" + V._TimeSeries._Join._Range[1] + "\") >= _TS.p\n")
-              .append("                )\n");
+              {
+                // Gotta calculate if the range of the data fetched [s2, e2] overlaps with the range of the time series [s1, s2]
+                // It's gotta be: S2 < e1 && E2 >= s1
+                String s1 = "_TS.p";
+                String e1 = "_TS.p + interval '"+Step+"'";
+                String s2v = V._TimeSeries._Join._ObjectObj.getShortName() + ".\"" + V._TimeSeries._Join._Range[0] + "\"";
+                String s2 = "date_trunc('" + Period + "', " + s2v +")";
+                String e2v = V._TimeSeries._Join._ObjectObj.getShortName() + ".\"" + V._TimeSeries._Join._Range[1] + "\"";
+                String e2 = "date_trunc('" + Period + "', " + e2v + ")";
+                
+              Str.append("     ) as _TS on "+s2+" < "+e1+"\n")
+                 .append("            and ("+e2v+" is null or "+e2+" >= "+s1+")\n");
+              }
             else
-              Str.append("     ) as _TS on date_trunc('" + Period + "', " + V._TimeSeries._Join._ObjectObj.getShortName() + ".\"" + V._TimeSeries._Join._Range[0] + "\") == _TS.p\n");
+              Str.append("     ) as _TS on date_trunc('" + Period + "', " + V._TimeSeries._Join._ObjectObj.getShortName() + ".\"" + V._TimeSeries._Join._Range[0] + "\") = _TS.p\n");
           }
 
         if (V._SubQuery != null)
