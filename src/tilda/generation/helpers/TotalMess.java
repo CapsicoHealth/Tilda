@@ -16,11 +16,11 @@ import tilda.parsing.parts.PrimaryKey;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.ViewColumn;
 
-public class FuckThat
+public class TotalMess
   {
-    protected static final Logger LOG = LogManager.getLogger(FuckThat.class.getName());
+    protected static final Logger LOG = LogManager.getLogger(TotalMess.class.getName());
 
-    public FuckThat(ViewColumn VC, Column C, int SequenceOrder, boolean implicitFKImport)
+    public TotalMess(ViewColumn VC, Column C, int SequenceOrder, boolean implicitFKImport)
       {
         _VC = VC;
         _C = C;
@@ -52,9 +52,9 @@ public class FuckThat
     public final PrimaryKey       _PK;
     public final List<ForeignKey> _FKs = new ArrayList<ForeignKey>();
 
-    public static List<FuckThat> ScanView(View V)
+    public static List<TotalMess> ScanView(View V)
       {
-        List<FuckThat> FuckList = new ArrayList<FuckThat>();
+        List<TotalMess> FuckList = new ArrayList<TotalMess>();
         int i = -1;
         Set<String> TableNames = new HashSet<String>();
         for (ViewColumn VC : V._ViewColumns)
@@ -68,7 +68,7 @@ public class FuckThat
               {
                 LOG.debug("xxx");
               }
-            FuckThat FT = new FuckThat(VC, C, i, false);
+            TotalMess FT = new TotalMess(VC, C, i, false);
             if (FT._PK != null)
               TableNames.add(VC._SameAsObj._ParentObject.getShortName());
             else if (FT._PK == null && C == VC._SameAsObj) // not a PK and was first-level field
@@ -77,7 +77,7 @@ public class FuckThat
                   {
                     for (Column col : VC._SameAsObj._ParentObject._PrimaryKey._ColumnObjs)
                       {
-                        FuckThat FT2 = new FuckThat(VC, col, i, true);
+                        TotalMess FT2 = new TotalMess(VC, col, i, true);
                         FuckList.add(FT2);
                       }
                   }
@@ -87,7 +87,7 @@ public class FuckThat
           }
 
         LOG.debug("\n\nDETAILS for view " + V.getShortName());
-        for (FuckThat FT : FuckList)
+        for (TotalMess FT : FuckList)
           {
             boolean Printed = false;
             if (FT._PK != null)
@@ -107,7 +107,7 @@ public class FuckThat
       }
 
 
-    public static ForeignKey getClosestFKTable(List<FuckThat> FuckList, View V, Object T, int columnSequenceOrder)
+    public static ForeignKey getClosestFKTable(List<TotalMess> FuckList, View V, Object T, int columnSequenceOrder)
       {
         LOG.debug("Searching for FK to/from " + T.getShortName() + " from view column #" + columnSequenceOrder);
         if (T.getShortName().equals("PATIENTS.PATIENTVIEW") == true)
@@ -119,7 +119,7 @@ public class FuckThat
           --i;
         while (i >= 0)
           {
-            FuckThat FT = FuckList.get(i--);
+            TotalMess FT = FuckList.get(i--);
             if (FT.isBoring() == true)
               continue;
             LOG.debug("   Examining info from " + FT._VC.getShortName() + " as " + FT._C.getShortName() + " (" + FT._SequenceOrder + ")");
@@ -137,7 +137,7 @@ public class FuckThat
               }
             if (PotentialFKs.isEmpty() == false)
               {
-                ForeignKey FK = FuckThat.pickMostRecentFKPart1(PotentialFKs, V, columnSequenceOrder);
+                ForeignKey FK = TotalMess.pickMostRecentFKPart1(PotentialFKs, V, columnSequenceOrder);
                 if (FK != null)
                   {
                     LOG.debug("WOOHOO! Picked " + FK._Name);
@@ -157,7 +157,7 @@ public class FuckThat
                   }
                 if (PotentialFKs.isEmpty() == false)
                   {
-                    ForeignKey FK = FuckThat.pickMostRecentFKPart2(PotentialFKs, columnSequenceOrder);
+                    ForeignKey FK = TotalMess.pickMostRecentFKPart2(PotentialFKs, columnSequenceOrder);
                     if (FK == null)
                       throw new Error("FK could not be resolved!");
                     LOG.debug("WOOHOO! Picked " + FK._Name);

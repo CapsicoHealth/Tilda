@@ -34,8 +34,9 @@ import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.JoinType;
+import tilda.enums.TimeSeriesType;
 import tilda.generation.GeneratorSession;
-import tilda.generation.helpers.FuckThat;
+import tilda.generation.helpers.TotalMess;
 import tilda.generation.helpers.TableRankTracker;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Base;
@@ -249,7 +250,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
     private String PrintBaseView(View V)
     throws Exception
       {
-        List<FuckThat> FuckList = FuckThat.ScanView(V);
+        List<TotalMess> FuckList = TotalMess.ScanView(V);
 
         StringBuilder Str = new StringBuilder();
         Str.append("-- " + TextUtil.EscapeSingleQuoteForSQL(V._Description) + "\n");
@@ -265,9 +266,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
           {
             ++columnCount;
             TableRankTracker TI = null;
-            if (VC._SameAs != null && VC._SameAsObj._Mode == ColumnMode.CALCULATED)
+            if (VC._SameAsObj != null && VC._SameAsObj._Mode == ColumnMode.CALCULATED)
               continue;
-            if (VC._SameAs != null)
+            if (VC._SameAs != null && VC._SameAsObj != null)
               {
                 Object T = VC._SameAsObj._ParentObject;
                 TI = TableRankTracker.getElementFromLast(TableStack, T);
@@ -282,11 +283,6 @@ public class Sql extends PostgreSQL implements CodeGenSql
                         ViewJoin VJ = V.getViewjoin(T.getBaseName());
                         if (VJ != null)
                           {
-                            if (VJ._ObjectObj.getShortName().equalsIgnoreCase("PATIENTS.SCORE") == true)
-                              {
-                                LOG.debug("xxx");
-                              }
-
                             FromList.append("     " + JoinType.printJoinType(VJ._Join) + " " + VJ._ObjectObj.getShortName());
                             Query Q = VJ.getQuery(this);
                             if (Q == null)
@@ -307,7 +303,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                         else
                           {
                             // ForeignKey FK = TableRankTracker.getClosestFKTable(TableStack, T, V, columnCount);
-                            ForeignKey FK = FuckThat.getClosestFKTable(FuckList, V, T, columnCount);
+                            ForeignKey FK = TotalMess.getClosestFKTable(FuckList, V, T, columnCount);
                             if (FK == null)
                               {
                                 throw new Exception("View " + V.getFullName() + " is using " + T.getShortName() + " but cannot find any foreign keys in any tables used so far: " + TableRankTracker.PrintTableNames(TableStack));
@@ -340,18 +336,62 @@ public class Sql extends PostgreSQL implements CodeGenSql
             if (VC._JoinOnly == false)
               {
                 if (First == true)
-                  First = false;
+                  {
+                    if (V._Pivot != null && V._ViewColumns.size() > 3)
+                      {
+                        Str.append("(");
+                      }
+                    First = false;
+                  }
                 else
                   Str.append("\n     , ");
-                if (PrintViewColumn(Str, VC, TI) == true)
+                if (PrintViewColumn(Str, VC, TI, V._Pivot != null && V._ViewColumns.size() > 3 && columnCount <= V._ViewColumns.size() - 3) == true)
                   hasAggregates = true;
+                if (V._Pivot != null && V._ViewColumns.size() > 3 && columnCount == V._ViewColumns.size() - 3)
+                  {
+                    Str.append("\n       )::" + V.getShortName() + "_WT as _wt");
+                  }
               }
           }
 
         Str.append("\n  from ").append(FromList);
 
-        if (V._SubQuery != null)
+        if (V._TimeSeries != null)
+          {
+            String Period = V._TimeSeries._Type == TimeSeriesType.DAILY ? "day"
+            : V._TimeSeries._Type == TimeSeriesType.MONTHLY ? "month"
+            : V._TimeSeries._Type == TimeSeriesType.QUARTERLY ? "quarter"
+            : "year";
+            
+            String Lookback = V._TimeSeries._Type == TimeSeriesType.QUARTERLY ? (V._TimeSeries._Lookback*3)+" month"
+                                                                              : V._TimeSeries._Lookback+" "+Period
+                                                                              ;
+            String Step = V._TimeSeries._Type == TimeSeriesType.QUARTERLY ? "3 month"
+                                                                          : "1 "+Period
+                                                                          ;
 
+            Str.append("join (select * from generate_series(date_trunc('"+Period+"', current_date) - interval '"+Lookback+"', date_trunc('"+Period+"', current_date), '"+Step+"') as p\n");
+            
+            
+            if (V._TimeSeries._Join._Range.length == 2)
+              {
+                // Gotta calculate if the range of the data fetched [s2, e2] overlaps with the range of the time series [s1, s2]
+                // It's gotta be: S2 < e1 && E2 >= s1
+                String s1 = "_TS.p";
+                String e1 = "_TS.p + interval '"+Step+"'";
+                String s2v = V._TimeSeries._Join._ObjectObj.getShortName() + ".\"" + V._TimeSeries._Join._Range[0] + "\"";
+                String s2 = "date_trunc('" + Period + "', " + s2v +")";
+                String e2v = V._TimeSeries._Join._ObjectObj.getShortName() + ".\"" + V._TimeSeries._Join._Range[1] + "\"";
+                String e2 = "date_trunc('" + Period + "', " + e2v + ")";
+                
+              Str.append("     ) as _TS on "+s2+" < "+e1+"\n")
+                 .append("            and ("+e2v+" is null or "+e2+" >= "+s1+")\n");
+              }
+            else
+              Str.append("     ) as _TS on date_trunc('" + Period + "', " + V._TimeSeries._Join._ObjectObj.getShortName() + ".\"" + V._TimeSeries._Join._Range[0] + "\") = _TS.p\n");
+          }
+
+        if (V._SubQuery != null)
           {
             Query q = V._SubQuery.getQuery(this);
             if (q != null)
@@ -369,50 +409,63 @@ public class Sql extends PostgreSQL implements CodeGenSql
               Str.append(" where ");
             else
               Str.append("   and ");
-            Str.append(getFullColumnVar(V._Pivot._VC._SameAsObj) + " in (" + PrintValueList(V._Pivot) + ")\n");
+            if (V._Pivot._VC._SameAsObj.getType() == ColumnType.STRING)
+              Str.append("trim(");
+            Str.append(getFullColumnVar(V._Pivot._VC._SameAsObj));
+            if (V._Pivot._VC._SameAsObj.getType() == ColumnType.STRING)
+              Str.append(")");
+            Str.append(" in (").append(PrintValueList(V._Pivot)).append(")\n");
+
           }
 
         if (hasAggregates == true)
           {
-            Str.append("     group by ");
-            First = true;
-            for (ViewColumn VC : V._ViewColumns)
-              if (VC != null && VC._Aggregate == null && VC._JoinOnly == false)
-                {
-                  if (First == true)
-                    First = false;
-                  else
-                    Str.append(", ");
-                  Str.append(getFullColumnVar(VC._SameAsObj));
-                }
-            Str.append("\n");
+            if (V._Pivot != null)
+              {
+                Str.append("     group by 1, 2\n");
+              }
+            else
+              {
+                Str.append("     group by ");
+                First = true;
+                for (ViewColumn VC : V._ViewColumns)
+                  if (VC != null && VC._Aggregate == null && VC._JoinOnly == false)
+                    {
+                      if (First == true)
+                        First = false;
+                      else
+                        Str.append(", ");
+                      if (VC._SameAsObj == null && VC._SameAs != null && VC._FrameworkGenerated == true)
+                        {
+                          Str.append(VC._SameAs);
+                        }
+                      else
+                        {
+                          Str.append(getFullColumnVar(VC._SameAsObj));
+                        }
+                    }
+                Str.append("\n");
+              }
           }
         if (V._Pivot != null)
           {
-            Str.append("     order by ");
-            First = true;
-            for (ViewColumn VC : V._ViewColumns)
-              if (VC != null && VC._Aggregate == null && VC._JoinOnly == false)
-                {
-                  if (First == true)
-                    First = false;
-                  else
-                    Str.append(", ");
-                  Str.append(getFullColumnVar(VC._SameAsObj));
-                }
-            Str.append("\n");
+            Str.append("     order by 1, 2\n");
           }
 
         return Str.toString();
       }
 
-    private boolean PrintViewColumn(StringBuilder Str, ViewColumn VC, TableRankTracker TI)
+    private boolean PrintViewColumn(StringBuilder Str, ViewColumn VC, TableRankTracker TI, boolean NoAs)
       {
         boolean hasAggregates = false;
         if (VC._Aggregate == AggregateType.COUNT)
           {
-            Str.append("count(*) as \"" + VC.getName() + "\"");
+            Str.append("count(*)");
             hasAggregates = true;
+          }
+        else if (VC._SameAs != null && VC._SameAsObj == null && VC._FrameworkGenerated == true)
+          {
+            Str.append(VC._SameAs);
           }
         else
           {
@@ -432,8 +485,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
               {
                 Str.append(")");
               }
-            Str.append(" as \"" + VC.getName() + "\" -- " + VC._SameAsObj._Description);
           }
+        if (NoAs == false)
+          Str.append(" as \"" + VC.getName() + "\" " + (VC._SameAsObj == null ? "" : "-- " + VC._SameAsObj._Description));
         return hasAggregates;
       }
 
@@ -452,23 +506,53 @@ public class Sql extends PostgreSQL implements CodeGenSql
             // .append(" from ").append(V._Pivot._VC._SameAsObj._ParentObject.getShortName()).append("\n")
             // .append(" where ").append(PivotIn(V._Pivot)).append("\n")
             // .append("order by ").append(getFullColumnVar(V._Pivot._VC._SameAsObj)).append("\n");
-            Str = "select * from crosstab (\n" + TextUtil.EscapeSingleQuoteForSQL(Str) + ",\n"
-            + TextUtil.EscapeSingleQuoteForSQL(b.toString()) + ")\n"
-            + "as final_result (";
-
-            for (int i = 0; i < V._ViewColumns.size() - 2; ++i)
+            StringBuilder SelectStr = new StringBuilder();
+            if (V._Pivot != null && V._ViewColumns.size() > 3)
               {
-                ViewColumn VC = V._ViewColumns.get(i);
-                if (VC != null && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false)
+                for (int i = 0; i < V._ViewColumns.size() - 2; ++i)
                   {
-                    if (i != 0)
-                      Str += "  , ";
-                    Str += "\"" + VC.getName() + "\" " + getColumnType(VC._SameAsObj);
+                    ViewColumn VC = V._ViewColumns.get(i);
+                    if (VC._JoinOnly == true)
+                      continue;
+                    if (SelectStr.length() != 0)
+                      SelectStr.append("\n     , ");
+                    SelectStr.append("(_wt).\"" + VC._Name + "\"");
+                  }
+                for (Value v : V._Pivot._Values)
+                  {
+                    SelectStr.append("\n     , \"" + v._Name + "\"");
                   }
               }
+            else
+              SelectStr.append("*");
+
+            Str = "select " + SelectStr.toString() + "\n from crosstab (\n" + TextUtil.EscapeSingleQuoteForSQL(Str) + ",\n"
+            + TextUtil.EscapeSingleQuoteForSQL(b.toString()) + ")\n"
+            + "as final_result (";
+            if (V._Pivot != null && V._ViewColumns.size() > 3)
+              {
+                Str += "_wt " + V.getShortName() + "_WT";
+              }
+            else
+              for (int i = 0; i < V._ViewColumns.size() - 2; ++i)
+                {
+                  ViewColumn VC = V._ViewColumns.get(i);
+                  if (VC._SameAs.equals("_TS.p") == true)
+                    {
+                      if (i != 0)
+                        Str += "  , ";
+                      Str += "\"" + VC.getName() + "\" Date";
+                    }
+                  else if (VC != null && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false)
+                    {
+                      if (i != 0)
+                        Str += "  , ";
+                      Str += "\"" + VC.getName() + "\" " + getColumnType(VC._SameAsObj);
+                    }
+                }
             for (int i = 0; i < V._Pivot._Values.length; ++i)
               {
-                Str += ", \"" + V._Pivot._Values[i]._Value + "\" ";
+                Str += ", \"" + TextUtil.Print(V._Pivot._Values[i]._Name, V._Pivot._Values[i]._Value) + "\" ";
                 if (V._CountStar != null)
                   Str += "integer";
                 else
@@ -482,6 +566,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
             b.append("select *\n");
             for (Formula F : V._Formulas)
               {
+                if (F == null)
+                  continue;
                 String FormulaType = getColumnType(F.getType(), 8192, null, false);
                 b.append("     -- ").append(String.join("\n     -- ", F._Description)).append("\n");
                 b.append("     , (").append(genFormulaCode(V, F)).append(")::" + FormulaType + " as \"").append(F._Name).append("\"\n");
@@ -491,6 +577,31 @@ public class Sql extends PostgreSQL implements CodeGenSql
               b.append("\n-- Realized as " + genRealizedColumnList(V) + "\n");
             Str = b.toString();
           }
+        if (V._Pivot != null && V._ViewColumns.size() > 3)
+          {
+            OutFinal.println("DROP TYPE IF EXISTS " + V.getShortName() + "_WT cascade;");
+            OutFinal.println("CREATE TYPE " + V.getShortName() + "_WT AS (");
+            boolean First = true;
+            for (int i = 0; i < V._ViewColumns.size() - 2; ++i)
+              {
+                ViewColumn VC = V._ViewColumns.get(i);
+                if (VC._JoinOnly == true)
+                  continue;
+                if (First == true)
+                  {
+                    OutFinal.print("      ");
+                    First = false;
+                  }
+                else
+                  OutFinal.print("    , ");
+                if (VC._SameAs.equals("_TS.p") == true)
+                  OutFinal.println("\"p\" date");
+                else
+                  OutFinal.println("\"" + VC._Name + "\" " + getColumnType(VC._SameAsObj));
+              }
+            OutFinal.println("   );");
+          }
+
         OutFinal.println("create or replace view " + V._ParentSchema._Name + "." + V._Name + " as ");
         OutFinal.println(Str + ";");
         OutFinal.println();
@@ -512,14 +623,15 @@ public class Sql extends PostgreSQL implements CodeGenSql
           }
         if (V._Pivot != null)
           for (int i = 0; i < V._Pivot._Values.length; ++i)
-            OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + V._Pivot._Values[i]._Value + "\" IS E"
+            OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + TextUtil.Print(V._Pivot._Values[i]._Name, V._Pivot._Values[i]._Value) + "\" IS E"
             + TextUtil.EscapeSingleQuoteForSQL("The pivoted column count from '" + V._Pivot._ColumnName + "'='" + V._Pivot._Values[i]._Value + "', " + V._Pivot._Values[i]._Description)
             + ";");
         if (V._Formulas != null)
           for (Formula F : V._Formulas)
-            OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + F._Name + "\" IS E"
-            + TextUtil.EscapeSingleQuoteForSQL("The calculated formula: " + String.join("\\n", F._Description))
-            + ";");
+            if (F != null)
+              OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + F._Name + "\" IS E"
+              + TextUtil.EscapeSingleQuoteForSQL("The calculated formula: " + String.join("\\n", F._Description))
+              + ";");
 
         if (V._Realize != null)
           {
@@ -617,6 +729,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
           }
         for (Formula F : V._Formulas)
           {
+            if (F == null)
+              continue;
             if (TextUtil.FindElement(V._Realize._Excludes, F._Name, true, 0) == -1)
               {
                 if (First == false)
@@ -639,6 +753,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
         int count = -1;
         for (Formula F : V._Formulas)
           {
+            if (F == null)
+              continue;
 
             if (++count == 0)
               {
@@ -664,7 +780,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         count = -1;
         for (Formula F : V._Formulas)
           {
-            if (F._Values != null && F._Values.length > 0)
+            if (F != null && F._Values != null && F._Values.length > 0)
               for (Value Val : F._Values)
                 {
                   if (++count == 0)
@@ -689,6 +805,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
         count = -1;
         for (Formula F : V._Formulas)
           {
+            if (F == null)
+              continue;
             Matcher M = F._ViewColumnsRegEx.matcher(String.join("\n", F._FormulaStrs));
             Set<String> Names = new HashSet<String>();
             while (M.find() == true)

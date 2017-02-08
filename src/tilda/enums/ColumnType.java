@@ -39,6 +39,7 @@ public enum ColumnType
     FLOAT   (true , true ),
     DOUBLE  (true , true ),
     BOOLEAN (true , true ),
+    DATE    (false, false),
     DATETIME(false, false),
     BINARY  (false, false),
     BITFIELD(false, true );
@@ -64,6 +65,8 @@ public enum ColumnType
 
     public static ColumnType parse(String Str)
       {
+        if (Str == null)
+         return null;
         for (ColumnType e : ColumnType.values())
           if (Str.equalsIgnoreCase(e.name()) == true)
             return e;

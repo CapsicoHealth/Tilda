@@ -37,6 +37,7 @@ public class ViewColumn
 	@SerializedName("name"       ) public String         _Name         ;
 	@SerializedName("sameas"     ) public String         _SameAs       ;
     @SerializedName("prefix"     ) public String         _Prefix       ;
+    @SerializedName("exclude"    ) public String[]       _Exclude      = new String[] { };
     @SerializedName("joinType"   ) public String         _JoinStr      ;
     @SerializedName("joinOnly"   ) public boolean        _JoinOnly      = false;
     @SerializedName("aggregate"  ) public String         _AggregateStr ;
@@ -127,6 +128,10 @@ public class ViewColumn
 
         ReferenceHelper R = ReferenceHelper.parseColumnReference(_SameAs, _ParentView);
 
+        if (_SameAs.equals("com.capsico.datamart.data.DATAMART.EPISODEMEDICALORDERSVIEW.medicalOrdersCount") == true)
+          {
+            LOG.debug("xxx");
+          }
         if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true || TextUtil.isNullOrEmpty(R._C) == true)
           PS.AddError("Column '" + getFullName() + "' is declaring sameas '" + _SameAs + "' with an incorrect syntax. It should be '(((package\\.)?schema\\.)?object\\.)?column'.");
         else

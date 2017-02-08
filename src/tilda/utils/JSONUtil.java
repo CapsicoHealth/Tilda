@@ -18,6 +18,7 @@ package tilda.utils;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.HashMap;
@@ -66,6 +67,19 @@ public class JSONUtil
         Out.write("\"");
       }
 
+    protected static void PrintLocalDate(Writer Out, LocalDate v)
+    throws IOException
+      {
+        if (v == null)
+          {
+            Out.write("null");
+            return;
+          }
+        Out.write("\"");
+        Out.write(DateTimeUtil.printDateForJSON(v));
+        Out.write("\"");
+      }
+    
     protected static void PrintChar(Writer Out, char v)
     throws IOException
       {
@@ -129,6 +143,13 @@ public class JSONUtil
       {
         Print(Out, Name, FirstElement);
         PrintZonedDateTime(Out, v);
+      }
+
+    public static void Print(Writer Out, String Name, boolean FirstElement, LocalDate v)
+    throws IOException
+      {
+        Print(Out, Name, FirstElement);
+        PrintLocalDate(Out, v);
       }
 
     public static void Print(Writer Out, String Name, boolean FirstElement, boolean v)

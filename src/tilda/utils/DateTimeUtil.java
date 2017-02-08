@@ -16,6 +16,7 @@
 
 package tilda.utils;
 
+import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -39,19 +40,31 @@ public class DateTimeUtil
     protected static final ZoneId     _UTC                = ZoneId.of("Etc/UTC");
     
     public static final ZonedDateTime NOW_PLACEHOLDER_ZDT = NewUTC(999, 12, 31, 23, 59, 0, 0);
+    public static final LocalDate     NOW_PLACEHOLDER_D   = LocalDate.of(999, 12, 31);
 
     public static boolean isNowPlaceholder(ZonedDateTime ZDT)
       {
         return ZDT != null && ZDT.equals(NOW_PLACEHOLDER_ZDT);
       }
+    public static boolean isNowPlaceholder(LocalDate D)
+      {
+        return D != null && D.equals(NOW_PLACEHOLDER_D);
+      }
+    
 
     public static final ZonedDateTime UNDEFINED_PLACEHOLDER_ZDT = NewUTC(1, 1, 1, 0, 0, 0, 0);
+    public static final LocalDate     UNDEFINED_PLACEHOLDER_D   = LocalDate.of(1, 1, 1);
 
     public static boolean isUndefinedPlaceholder(ZonedDateTime ZDT)
       {
         return ZDT != null && ZDT.equals(UNDEFINED_PLACEHOLDER_ZDT);
       }
+    public static boolean isUndefinedPlaceholder(LocalDate D)
+      {
+        return D != null && D.equals(UNDEFINED_PLACEHOLDER_D);
+      }
 
+    
     public static final Calendar _UTC_CALENDAR = Calendar.getInstance(java.util.TimeZone.getTimeZone(_UTC.getId()));
 
     /**
@@ -133,12 +146,10 @@ public class DateTimeUtil
       {
         return ZDT.format(DateTimeFormatter.ofPattern(Pattern));
       }
-
     public static String printDateTime(ZonedDateTime ZDT)
       {
         return ZDT.format(DateTimeFormatter.ISO_ZONED_DATE_TIME);
       }
-
     public static String printDateTime(List<ZonedDateTime> L)
       {
         StringBuilder Str = new StringBuilder();
@@ -150,17 +161,35 @@ public class DateTimeUtil
           }
         return Str.toString();
       }
-    
-
     public static String printDateTimeForSQL(ZonedDateTime ZDT)
       {
         return ZDT == null ? null : ZDT.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
       }
-
     public static String printDateTimeForJSON(ZonedDateTime ZDT)
       {
         return ZDT == null ? null : ZDT.format(DateTimeFormatter.ISO_ZONED_DATE_TIME);
       }
+
+    public static String printDate(LocalDate D)
+      {
+        return D.format(DateTimeFormatter.ISO_DATE);
+      }
+    public static String printDateForJSON(LocalDate D)
+      {
+        return D.format(DateTimeFormatter.ISO_DATE);
+      }
+    public static String printDate(List<LocalDate> L)
+      {
+        StringBuilder Str = new StringBuilder();
+        boolean First = true; 
+        for (LocalDate d : L)
+          {
+            if (First == true) First = false; else Str.append(", ");
+            Str.append(DateTimeUtil.printDate(d));
+          }
+        return Str.toString();
+      }
+
 
     /**
      * Will parse an ISO string, even if partially done. It will auto-complete as per {@link #parseWithoutZone(String)}. 
@@ -193,8 +222,24 @@ public class DateTimeUtil
           }
         return null;
       }
-    
     private static Pattern _ISO_NOZONE_DATETIME = Pattern.compile("(\\d{4}).(\\d{2}).(\\d{2}).(\\d{2}).(\\d{2}).(\\d{2})");
+
+
+    public static LocalDate parseDateFromJSON(String DateStr)
+      {
+        if (TextUtil.isNullOrEmpty(DateStr) == true)
+          return null;
+        try
+          {
+            return LocalDate.parse(DateStr, DateTimeFormatter.ISO_DATE);
+          }
+        catch (Exception E)
+          {
+            LOG.catching(E);
+          }
+        return null;
+      }
+    
     
     /**
      * Takes a zone-less timestamp and returns a ZonedDateTime based on the system zone.
@@ -325,6 +370,13 @@ public class DateTimeUtil
           }
         return ZDT.withZoneSameInstant(_UTC);
       }
+    
+    
+    public static LocalDate toLocalDate(java.sql.Date D)
+      {
+        return D == null ? null : LocalDate.of(D.getYear(), D.getMonth(), D.getDay());
+      }
+    
 
 
 

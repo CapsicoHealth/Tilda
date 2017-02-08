@@ -16,6 +16,7 @@
 
 package tilda.utils;
 
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -717,6 +718,26 @@ public class ParseUtil
           }
         return ZDT;
       }
+
+    public static LocalDate parseLocalDate(String Value)
+      {
+        return DateTimeUtil.parseDateFromJSON(Value);
+      }
+    
+    public static LocalDate parseLocalDate(String Name, boolean Mandatory, String Value, List<StringStringPair> Errors)
+      {
+        if (ParseUtil.parseString(Name, Mandatory, Value, Errors) == null)
+         return null;
+        
+        LocalDate D = parseLocalDate(Value);
+        if (D == null && Mandatory == true)
+          {
+            LOG.error("Invalid parameter format '" + Name + "'.");
+            Errors.add(new StringStringPair(Name, "Invalid parameter value '"+Value+"': expecting a date formatted string."));
+          }
+        return D;
+      }
+    
 
     /**
      * 

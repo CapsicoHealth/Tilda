@@ -37,24 +37,35 @@ public class ColumnDefinition
         _Collection = Collection;
         if (Count < 64)
           {
-            _FirstMask = true;
+            _MaskId = 1;
             _Mask1 = 1L << Count;
             _Mask2 = 0;
             _Mask3 = 0;
+            _Mask4 = 0;
           }
         else if (Count < 128)
           {
-            _FirstMask = false;
+            _MaskId = 2;
             _Mask1 = 0;
             _Mask2 = 1L << Count;
             _Mask3 = 0;
+            _Mask4 = 0;
           }
         else if (Count < 192)
           {
-            _FirstMask = false;
+            _MaskId = 3;
             _Mask1 = 0;
             _Mask2 = 0;
             _Mask3 = 1L << Count;
+            _Mask4 = 0;
+          }
+        else if (Count < 256)
+          {
+            _MaskId = 4;
+            _Mask1 = 0;
+            _Mask2 = 0;
+            _Mask3 = 0;
+            _Mask4 = 1L << Count;
           }
         else
           {
@@ -70,10 +81,11 @@ public class ColumnDefinition
 
     public final ColumnType _Type;
     public final boolean    _Collection;
-    public final boolean    _FirstMask;  
+    public final int        _MaskId;  
     public final long       _Mask1;
     public final long       _Mask2;
     public final long       _Mask3;
+    public final long       _Mask4;
     
     public String getSchemaName()
       {

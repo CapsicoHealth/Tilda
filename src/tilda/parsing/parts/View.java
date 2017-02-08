@@ -17,10 +17,8 @@
 package tilda.parsing.parts;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
@@ -40,7 +38,6 @@ import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.parsing.parts.helpers.SameAsHelper;
 import tilda.utils.TextUtil;
-import tilda.utils.pairs.StringIntPair;
 
 public class View extends Base
   {
@@ -56,6 +53,7 @@ public class View extends Base
     @SerializedName("countStar"     ) public String                _CountStar;
     @SerializedName("subQuery"      ) public SubWhereClause        _SubQuery;
     @SerializedName("pivot"         ) public ViewPivot             _Pivot;
+    @SerializedName("timeSeries"    ) public ViewTimeSeries        _TimeSeries;
     @SerializedName("pivotColumns"  ) public List<ViewPivotColumn> _PivotColumns;
     @SerializedName("realize"       ) public ViewRealize           _Realize;
     @SerializedName("importFormulas") public String[]              _ImportFormulas = new String[] { };
@@ -171,10 +169,31 @@ public class View extends Base
                           {
                             if (col._FrameworkGenerated == true)
                               continue;
-                            VC = new ViewColumn();
-                            VC._SameAs = col.getFullName();
-                            VC._Name = Prefix + col._Name;
-                            _ViewColumns.add(i + j, VC);
+                            if (TextUtil.FindElement(VC._Exclude, col._Name, false, 0) != -1)
+                              continue;
+                            ViewColumn NewVC = new ViewColumn();
+                            NewVC._SameAs = col.getFullName();
+                            NewVC._Name = Prefix + col._Name;
+                            _ViewColumns.add(i + j, NewVC);
+                            ++j;
+                          }
+                        for (Formula F : V._Formulas)
+                          {
+                            if (TextUtil.FindElement(VC._Exclude, F._Name, false, 0) != -1)
+                              continue;
+                            ViewColumn NewVC = new ViewColumn();
+                            NewVC._SameAs = V.getFullName() + "." + F._Name;
+                            NewVC._Name = Prefix + F._Name;
+                            _ViewColumns.add(i + j, NewVC);
+                            ++j;
+                          }
+                        if (TextUtil.isNullOrEmpty(V._CountStar) == false)
+                          {
+                            ViewColumn NewVC = new ViewColumn();
+                            NewVC._SameAs = V.getFullName() + "." + V._CountStar;
+                            NewVC._Name = Prefix + V._CountStar;
+                            NewVC._Aggregate = AggregateType.COUNT;
+                            _ViewColumns.add(i + j, NewVC);
                             ++j;
                           }
                       }
@@ -253,6 +272,38 @@ public class View extends Base
               }
           }
 
+        if (_TimeSeries != null)
+          {
+            if (_TimeSeries.Validate(PS, this) == true)
+              {
+                int firstAgg = -1;
+                for (int i = 0; i < _ViewColumns.size(); ++i)
+                  {
+                    ViewColumn VC = _ViewColumns.get(i);
+                    if (VC._Aggregate != null)
+                      {
+                        firstAgg = i;
+                        break;
+                      }
+                  }
+                if (firstAgg == -1 && _CountStar != null)
+                  firstAgg = _ViewColumns.size();
+
+                if (firstAgg == -1)
+                  PS.AddError("The View '" + getFullName() + "' is defining a time series without having defined any aggregate column.");
+                else
+                  {
+                    if (_Pivot != null)
+                      --firstAgg;
+                    ViewColumn VC = new ViewColumn();
+                    VC._SameAs = "_TS.p";
+                    VC._Name = _TimeSeries._Name;
+                    VC._FrameworkGenerated = true;
+                    _ViewColumns.add(firstAgg, VC);
+                  }
+              }
+          }
+
         if (_PivotColumns != null)
           {
             Set<String> PivotNames = new HashSet<String>();
@@ -287,8 +338,8 @@ public class View extends Base
                     for (Value VPV : PVC._Source._Pivot._Values)
                       {
                         ViewColumn VC = new ViewColumn();
-                        VC._SameAs = PVC._SourceStr + "." + VPV._Value;
-                        VC._Name = Prefix + VPV._Value;
+                        VC._SameAs = PVC._SourceStr + "." + TextUtil.Print(VPV._Name, VPV._Value);
+                        VC._Name = Prefix + TextUtil.Print(VPV._Name, VPV._Value);
                         VC.Validate(PS, this);
                         _ViewColumns.add(VC);
                         _PadderColumnNames.track(VC.getName());
@@ -379,12 +430,18 @@ public class View extends Base
                   }
               }
           }
+        if (TextUtil.isNullOrEmpty(_CountStar) == false)
+          {
+            ColumnType Type = ColumnType.INTEGER;
+            Column C = new Column(_CountStar, Type.name(), 0, true, ColumnMode.NORMAL, true, null, "Count column");
+            O._Columns.add(C);
+          }
 
-        if (_Pivot != null)
+        if (_Pivot != null && _Pivot._Values != null)
           for (Value VPV : _Pivot._Values)
             {
               ColumnType Type = _CountStar != null ? ColumnType.INTEGER : _Pivot._VC._SameAsObj.getType();
-              Column C = new Column(VPV._Value, Type.name(), Type == ColumnType.STRING ? _Pivot._VC._SameAsObj._Size : 0,
+              Column C = new Column(TextUtil.Print(VPV._Name, VPV._Value), Type.name(), Type == ColumnType.STRING ? _Pivot._VC._SameAsObj._Size : 0,
               true, ColumnMode.NORMAL, true, null,
               "Pivoted count from column '" + _Pivot._VC._SameAsObj.getShortName() + "'='" + VPV._Value + "', " + VPV._Description);
               O._Columns.add(C);
@@ -393,17 +450,19 @@ public class View extends Base
         if (_ImportFormulas != null)
           for (String s : _ImportFormulas)
             {
+              if (TextUtil.isNullOrEmpty(s) == true)
+                continue;
               ReferenceHelper R = ReferenceHelper.parseColumnReference(s, this);
               if (TextUtil.isNullOrEmpty(R._O) == true || TextUtil.isNullOrEmpty(R._C) == true)
                 PS.AddError("View '" + getFullName() + "' is importing formula '" + s + "' which cannot be parsed as a reference.");
               View V = PS.getView(R._P, R._S, R._O);
               if (V == null)
-                PS.AddError("View '" + getFullName() + "' is importing formula '" + s + "' from view '" + R._S+"."+R._O + "' which cannot be found.");
+                PS.AddError("View '" + getFullName() + "' is importing formula '" + s + "' from view '" + R._S + "." + R._O + "' which cannot be found.");
               else
                 {
                   Formula F = V.getFormula(R._C);
                   if (F == null)
-                    PS.AddError("View '" + getFullName() + "' is importing formula '" + s + "' which cannot be found in view '" + R._S+"."+R._O + "'.");
+                    PS.AddError("View '" + getFullName() + "' is importing formula '" + s + "' which cannot be found in view '" + R._S + "." + R._O + "'.");
                   else
                     {
                       F = new Formula(F);
@@ -415,14 +474,16 @@ public class View extends Base
 
         if (_Formulas != null)
           for (Formula F : _Formulas)
-            F.Validate(PS, this);
+            if (F != null)
+              F.Validate(PS, this);
 
         if (_Formulas != null)
           for (Formula F : _Formulas)
-            {
-              Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "Formula column: " + F._Title);
-              O._Columns.add(C);
-            }
+            if (F != null)
+              {
+                Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "Formula column: " + F._Title);
+                O._Columns.add(C);
+              }
 
 
         PrimaryKey PK = _ViewColumns.get(0)._SameAsObj._ParentObject._PrimaryKey;

@@ -110,6 +110,8 @@ public class Formula extends TypeDef
         Str.setLength(0);
         for (Formula F : ParentView._Formulas)
           {
+            if (F == null)
+             continue;
             if (Str.length() != 0)
               Str.append("|");
             Str.append(F._Name);
