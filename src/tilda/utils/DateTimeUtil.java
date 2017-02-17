@@ -374,7 +374,8 @@ public class DateTimeUtil
     
     public static LocalDate toLocalDate(java.sql.Date D)
       {
-        return D == null ? null : LocalDate.of(D.getYear(), D.getMonth(), D.getDay());
+    	//LOG.debug("y: "+D.getYear()+"; m: "+D.getMonth()+"; d: "+D.getDate());
+        return D == null ? null : LocalDate.of(D.getYear()+1900, D.getMonth()+1, D.getDate());
       }
     
 
