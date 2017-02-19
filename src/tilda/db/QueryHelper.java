@@ -817,6 +817,7 @@ public abstract class QueryHelper
     /**
      * Checks if the query is in a state to accept a where clause. If the query is in FROM state,
      * it will switch to WHERE state automatically.
+     * 
      * @return
      */
     protected boolean isWhereClause()
@@ -2252,17 +2253,27 @@ public abstract class QueryHelper
     public QueryHelper like(Type_StringPrimitive Col, String V)
     throws Exception
       {
-        return like(Col, V, false);
+        return like(Col, V, false, false);
       }
 
-    public QueryHelper like(Type_StringPrimitive Col, String V, boolean not)
+    public QueryHelper like(Type_StringPrimitive Col, String V, boolean caseInsensitive)
+    throws Exception
+      {
+        return like(Col, V, caseInsensitive, false);
+      }
+
+    public QueryHelper like(Type_StringPrimitive Col, String V, boolean caseInsensitive, boolean not)
     throws Exception
       {
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'like' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
 
+        if (caseInsensitive == true)
+          _QueryStr.append("lower(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        OpVal(not == true ? Op.NOT_LIKE : Op.LIKE, V);
+        if (caseInsensitive == true)
+          _QueryStr.append(")");
+        OpVal(not == true ? Op.NOT_LIKE : Op.LIKE, caseInsensitive==true && V != null ? V.toLowerCase() : V);
         return this;
       }
 
@@ -2270,10 +2281,16 @@ public abstract class QueryHelper
     public QueryHelper like(Type_StringCollection Col, String V)
     throws Exception
       {
-        return like(Col, V, false);
+        return like(Col, V, false, false);
       }
 
-    public QueryHelper like(Type_StringCollection Col, String V, boolean not)
+    public QueryHelper like(Type_StringCollection Col, String V, boolean caseInsensitive)
+    throws Exception
+      {
+        return like(Col, V, caseInsensitive, false);
+      }
+
+    public QueryHelper like(Type_StringCollection Col, String V, boolean caseInsensitive, boolean not)
     throws Exception
       {
         if (isWhereClause() == false)
@@ -2283,16 +2300,16 @@ public abstract class QueryHelper
           _QueryStr.append("not ");
         _QueryStr.append("exists (select * from unnest(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        _QueryStr.append(") x_ where x_ like ");        
+        _QueryStr.append(") x_ where x_ ").append(caseInsensitive == true ? "ilike" : "like").append(" ");
         TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V);
         _QueryStr.append(")");
-/*        
-        _QueryStr.append(" TILDA.like(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        _QueryStr.append(", ");
-        TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V);
-        _QueryStr.append(")");
-*/
+        /*
+         * _QueryStr.append(" TILDA.like(");
+         * Col.getFullColumnVarForSelect(_C, _QueryStr);
+         * _QueryStr.append(", ");
+         * TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V);
+         * _QueryStr.append(")");
+         */
         if (not == true)
           _QueryStr.append("=0");
         else
@@ -2303,10 +2320,16 @@ public abstract class QueryHelper
     public QueryHelper like(Type_StringCollection Col, String[] V)
     throws Exception
       {
-        return like(Col, V, false);
+        return like(Col, V, false, false);
       }
 
-    public QueryHelper like(Type_StringCollection Col, String[] V, boolean not)
+    public QueryHelper like(Type_StringCollection Col, String[] V, boolean caseInsensitive)
+    throws Exception
+      {
+        return like(Col, V, caseInsensitive, false);
+      }
+
+    public QueryHelper like(Type_StringCollection Col, String[] V, boolean caseInsensitive, boolean not)
     throws Exception
       {
         if (V == null || V.length == 0)
@@ -2318,34 +2341,25 @@ public abstract class QueryHelper
           _QueryStr.append("not ");
         _QueryStr.append("exists (select * from unnest(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        _QueryStr.append(") x_ where x_ like ANY(ARRAY[");
+        _QueryStr.append(") x_ where x_ ").append(caseInsensitive == true ? "ilike" : "like").append(" ANY(ARRAY[");
         TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V, true);
         _QueryStr.append("]))");
-/*
-        _QueryStr.append(" TILDA.like(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        _QueryStr.append(", ARRAY[");
-        boolean First = true;
-        for (String v : V)
-          {
-            if (First == true)
-              First = false;
-            else
-              _QueryStr.append(", ");
-            TextUtil.EscapeSingleQuoteForSQL(_QueryStr, v);
-          }
-        _QueryStr.append("])");
-*/
         return this;
       }
 
     public QueryHelper like(Type_StringCollection Col, Collection<String> V)
     throws Exception
       {
-        return like(Col, V, false);
+        return like(Col, V, false, false);
       }
 
-    public QueryHelper like(Type_StringCollection Col, Collection<String> V, boolean not)
+    public QueryHelper like(Type_StringCollection Col, Collection<String> V, boolean caseInsensitive)
+    throws Exception
+      {
+        return like(Col, V, caseInsensitive, false);
+      }
+
+    public QueryHelper like(Type_StringCollection Col, Collection<String> V, boolean caseInsensitive, boolean not)
     throws Exception
       {
         if (V == null || V.isEmpty() == true)
@@ -2357,34 +2371,25 @@ public abstract class QueryHelper
           _QueryStr.append("not ");
         _QueryStr.append("exists (select * from unnest(");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        _QueryStr.append(") x_ where x_ like ANY(ARRAY[");
+        _QueryStr.append(") x_ where x_ ").append(caseInsensitive == true ? "ilike" : "like").append(" ANY(ARRAY[");
         TextUtil.EscapeSingleQuoteForSQL(_QueryStr, V, true);
         _QueryStr.append("]))");
-/*
-        _QueryStr.append(" TILDA.like(");
-        Col.getFullColumnVarForSelect(_C, _QueryStr);
-        _QueryStr.append(", ARRAY[");
-        boolean First = true;
-        for (String v : V)
-          {
-            if (First == true)
-              First = false;
-            else
-              _QueryStr.append(", ");
-            TextUtil.EscapeSingleQuoteForSQL(_QueryStr, v);
-          }
-        _QueryStr.append("])");
-*/
         return this;
       }
 
     public QueryHelper like(Type_StringPrimitive[] Cols, String V)
     throws Exception
       {
-        return like(Cols, V, false);
+        return like(Cols, V, false, false);
       }
 
-    public QueryHelper like(Type_StringPrimitive[] Cols, String V, boolean not)
+    public QueryHelper like(Type_StringPrimitive[] Cols, String V, boolean caseInsensitive)
+    throws Exception
+      {
+        return like(Cols, V, caseInsensitive, false);
+      }
+
+    public QueryHelper like(Type_StringPrimitive[] Cols, String V, boolean caseInsensitive, boolean not)
     throws Exception
       {
         if (isWhereClause() == false)
@@ -2395,22 +2400,23 @@ public abstract class QueryHelper
           {
             if (First == true)
               {
-                _QueryStr.append(" lower(");
+                if (caseInsensitive == true)
+                  _QueryStr.append(" lower(");
                 First = false;
               }
             else
               _QueryStr.append(" || ' ' || ");
             c.getFullColumnVarForSelect(_C, _QueryStr);
           }
-        if (First == false)
+        if (First == false && caseInsensitive == true)
           _QueryStr.append(")");
 
-        OpVal(not == true ? Op.NOT_LIKE : Op.LIKE, V);
+        OpVal(not == true ? Op.NOT_LIKE : Op.LIKE, caseInsensitive == true && V != null ? V.toLowerCase() : V);
         return this;
       }
 
 
-    public QueryHelper like(Type_StringPrimitive Col, String[] V, boolean or)
+    public QueryHelper like(Type_StringPrimitive Col, String[] V, boolean or, boolean caseInsensitive)
     throws Exception
       {
         if (V == null || V.length == 0)
@@ -2427,12 +2433,12 @@ public abstract class QueryHelper
               or();
             else
               and();
-            like(Col, v);
+            like(Col, v, caseInsensitive);
           }
         return this;
       }
 
-    public QueryHelper like(Type_StringPrimitive[] Cols, String[] V, boolean or)
+    public QueryHelper like(Type_StringPrimitive[] Cols, String[] V, boolean or, boolean caseInsensitive)
     throws Exception
       {
         if (V == null || V.length == 0)
@@ -2449,7 +2455,7 @@ public abstract class QueryHelper
               or();
             else
               and();
-            like(Cols, v);
+            like(Cols, v, caseInsensitive);
           }
         return this;
       }
@@ -2719,11 +2725,12 @@ public abstract class QueryHelper
         _C.age(_QueryStr, ColStart, ColEnd, Type, Count, Op.EQUALS._Str);
         return this;
       }
-    
+
 
     /**
      * If Duration is positive, implements the condition Col >= ColStart && Col < ColStart + interval specified.<BR>
      * If Duration is negative, implements the condition Col > ColStart - interval specified && Col <= ColStart (with the interval negated).<BR>
+     * 
      * @param Col
      * @param ColStart
      * @param durationCount
@@ -2737,7 +2744,7 @@ public abstract class QueryHelper
         _C.within(_QueryStr, Col, ColStart, durationCount, Type);
         return this;
       }
-    
+
 
     public String toString()
       {
