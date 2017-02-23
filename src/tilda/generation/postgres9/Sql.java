@@ -739,7 +739,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
           {
             String s = M.group(1);
             for (Formula F2 : ParentView._Formulas)
-              if (s.equals(F2._Name) == true)
+              if (s.equals(F2._Name) == true && s.equals(F._Name) == false)
                 {
                   String FormulaType = getColumnType(F2.getType(), F2._Size, null, false);
                   M.appendReplacement(Str, "(" + genFormulaCode(ParentView, F2) + ")::" + FormulaType);
