@@ -362,30 +362,65 @@ public class Sql extends PostgreSQL implements CodeGenSql
             : V._TimeSeries._Type == TimeSeriesType.MONTHLY ? "month"
             : V._TimeSeries._Type == TimeSeriesType.QUARTERLY ? "quarter"
             : "year";
-            
-            String Lookback = V._TimeSeries._Type == TimeSeriesType.QUARTERLY ? (V._TimeSeries._Lookback*3)+" month"
-                                                                              : V._TimeSeries._Lookback+" "+Period
-                                                                              ;
-            String Step = V._TimeSeries._Type == TimeSeriesType.QUARTERLY ? "3 month"
-                                                                          : "1 "+Period
-                                                                          ;
 
-            Str.append("join (select * from generate_series(date_trunc('"+Period+"', current_date) - interval '"+Lookback+"', date_trunc('"+Period+"', current_date), '"+Step+"') as p\n");
-            
-            
-            if (V._TimeSeries._Join._Range.length == 2)
+            String Lookback = V._TimeSeries._Type == TimeSeriesType.QUARTERLY ? (V._TimeSeries._Lookback * 3) + " month"
+            : V._TimeSeries._Lookback + " " + Period;
+            String Step = V._TimeSeries._Type == TimeSeriesType.QUARTERLY ? "3 month"
+            : "1 " + Period;
+
+            Str.append("join (select * from generate_series(date_trunc('" + Period + "', current_date) - interval '" + Lookback + "', date_trunc('" + Period + "', current_date), '" + Step + "') as p\n");
+
+
+            if (V._TimeSeries._Join._RangeColEnd != null && V._TimeSeries._Join._RangeColEnd.isEmpty() == false)
               {
                 // Gotta calculate if the range of the data fetched [s2, e2] overlaps with the range of the time series [s1, s2]
                 // It's gotta be: S2 < e1 && E2 >= s1
                 String s1 = "_TS.p";
-                String e1 = "_TS.p + interval '"+Step+"'";
-                String s2v = V._TimeSeries._Join._ObjectObj.getShortName() + ".\"" + V._TimeSeries._Join._Range[0] + "\"";
-                String s2 = "date_trunc('" + Period + "', " + s2v +")";
-                String e2v = V._TimeSeries._Join._ObjectObj.getShortName() + ".\"" + V._TimeSeries._Join._Range[1] + "\"";
-                String e2 = "date_trunc('" + Period + "', " + e2v + ")";
-                
-              Str.append("     ) as _TS on "+s2+" < "+e1+"\n")
-                 .append("            and ("+e2v+" is null or "+e2+" >= "+s1+")\n");
+                String e1 = "_TS.p + interval '" + Step + "'";
+                String s2v;
+                if (V._TimeSeries._Join._RangeColStart.size() == 1)
+                  s2v = getFullColumnVar(V._TimeSeries._Join._RangeColStart.get(0));
+                else
+                  {
+                    StringBuilder s = new StringBuilder();
+                    for (int i = 0; i < V._TimeSeries._Join._RangeColStart.size() - 1; ++i)
+                      {
+                        s.append("coalesce(");
+                        s.append(getFullColumnVar(V._TimeSeries._Join._RangeColStart.get(i)));
+                        s.append(", ");
+                      }
+                    s.append(getFullColumnVar(V._TimeSeries._Join._RangeColStart.get(V._TimeSeries._Join._RangeColStart.size() - 1)));
+                    for (int i = 0; i < V._TimeSeries._Join._RangeColStart.size() - 1; ++i)
+                      {
+                        s.append(")");
+                      }
+                    s2v = s.toString();
+                  }
+                String s2 = "date_trunc('" + Period + "', " + s2v + ")";
+
+                String e2;
+                if (V._TimeSeries._Join._RangeColEnd.size() == 1)
+                  {
+                    String e2v = getFullColumnVar(V._TimeSeries._Join._RangeColEnd.get(0));
+                    e2 = e2v + " is null or date_trunc('" + Period + "', " + e2v + ") >= " + s1;
+                  }
+                else
+                  {
+                    StringBuilder s = new StringBuilder();
+                    s.append("case");
+                    for (int i = 0; i < V._TimeSeries._Join._RangeColEnd.size() - 1; ++i)
+                      {
+                        String e2v = getFullColumnVar(V._TimeSeries._Join._RangeColEnd.get(i));
+                        s.append(" when "+e2v+" is not null then date_trunc('" + Period + "', " + e2v + ") >= " + s1);
+                      }
+                    String e2v = getFullColumnVar(V._TimeSeries._Join._RangeColEnd.get(V._TimeSeries._Join._RangeColEnd.size() - 1));
+                    s.append(" else "+e2v+" is null or "+e2v+" >= "+ s1);
+                    s.append(" end");
+                    e2 = s.toString();
+                  }
+
+                Str.append("     ) as _TS on " + s2 + " < " + e1 + "\n");
+                Str.append("            and (" + e2 + ")\n");
               }
             else
               Str.append("     ) as _TS on date_trunc('" + Period + "', " + V._TimeSeries._Join._ObjectObj.getShortName() + ".\"" + V._TimeSeries._Join._Range[0] + "\") = _TS.p\n");
@@ -475,6 +510,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
               {
                 Str.append(getAggregateStr(VC._Aggregate) + "(");
                 hasAggregates = true;
+                if (VC._Distinct == true)
+                  Str.append("distinct ");
               }
             if (trimNeeded)
               Str.append("trim(");
@@ -484,6 +521,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
             if (VC._Aggregate != null)
               {
                 Str.append(")");
+                if (TextUtil.isNullOrEmpty(VC._Filter) == false)
+                  {
+                    Str.append(" filter(where ").append(VC._Filter).append(")");
+                  }
               }
           }
         if (NoAs == false)

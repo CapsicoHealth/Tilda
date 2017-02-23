@@ -37,10 +37,12 @@ public class ViewColumn
 	@SerializedName("name"       ) public String         _Name         ;
 	@SerializedName("sameas"     ) public String         _SameAs       ;
     @SerializedName("prefix"     ) public String         _Prefix       ;
-    @SerializedName("exclude"    ) public String[]       _Exclude      = new String[] { };
+    @SerializedName("exclude"    ) public String[]       _Exclude       = new String[] { };
     @SerializedName("joinType"   ) public String         _JoinStr      ;
     @SerializedName("joinOnly"   ) public boolean        _JoinOnly      = false;
     @SerializedName("aggregate"  ) public String         _AggregateStr ;
+    @SerializedName("distinct"   ) public Boolean        _Distinct     ;
+    @SerializedName("filter"     ) public String         _Filter       ;
     @SerializedName("useMapper"  ) public boolean        _UseMapper     = false;
     @SerializedName("useEnum"    ) public boolean        _UseEnum       = false;
     /*@formatter:on*/
@@ -114,6 +116,13 @@ public class ViewColumn
             if (_SameAsObj != null && _SameAsObj._Type == ColumnType.DATETIME)
               return PS.AddError("View Column '" + getFullName() + "' defined an aggregate on DATETIME column '" + _SameAsObj.getName() + "' which is not supported as timezone information would not be retrievable.");
           }
+        if (_Aggregate == null)
+          {
+            if (_Distinct != null)
+              return PS.AddError("View Column '" + getFullName() + "' defined a distinct value without specifying an aggregate. Distincts without aggregates make no sense.");
+            if (TextUtil.isNullOrEmpty(_Filter) == false)
+              return PS.AddError("View Column '" + getFullName() + "' defined a filter without specifying an aggregate. Filters are only valid with aggregates.");
+          }
 
         return Errs == PS.getErrorCount();
       }
@@ -166,25 +175,25 @@ public class ViewColumn
 
     public Column getSameAsRoot()
       {
-//        LOG.debug("SameAs Root for " + getShortName() + ": " + _SameAsObj.getShortName());
+        // LOG.debug("SameAs Root for " + getShortName() + ": " + _SameAsObj.getShortName());
         if (_SameAsObj != null && _SameAsObj._ParentObject._FST == FrameworkSourcedType.VIEW)
           {
             View SubV = _ParentView._ParentSchema.getSourceView(_SameAsObj._ParentObject);
-//            LOG.debug("SameAs is part of a sub-view " + SubV.getShortName());
+            // LOG.debug("SameAs is part of a sub-view " + SubV.getShortName());
             ViewColumn VC = SubV.getViewColumn(_SameAsObj.getName());
             if (VC != null)
               return VC.getSameAsRoot();
             else
               {
-//                LOG.error("Could not find column " + _SameAsObj.getShortName() + " in view " + SubV.getShortName());
+                // LOG.error("Could not find column " + _SameAsObj.getShortName() + " in view " + SubV.getShortName());
                 return null;
               }
           }
         return _SameAsObj;
       }
-    
+
     public String toString()
-    {
-      return getClass().getName()+":"+getFullName();
-    }
+      {
+        return getClass().getName() + ":" + getFullName();
+      }
   }

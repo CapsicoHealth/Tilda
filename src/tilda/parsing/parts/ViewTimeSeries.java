@@ -16,17 +16,11 @@
 
 package tilda.parsing.parts;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
-import tilda.enums.AggregateType;
 import tilda.enums.TimeSeriesType;
 import tilda.parsing.ParserSession;
 import tilda.utils.SystemValues;

@@ -16,17 +16,17 @@
 
 package tilda.parsing.parts;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.db.stores.DBType;
-import tilda.enums.JoinType;
-import tilda.enums.ValidationStatus;
+import com.google.gson.annotations.SerializedName;
+
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.utils.TextUtil;
-
-import com.google.gson.annotations.SerializedName;
 
 public class ViewTimeSeriesJoin
   {
@@ -42,10 +42,11 @@ public class ViewTimeSeriesJoin
       {
       }
 
-    public transient View     _ParentView;
-    public transient Object   _ObjectObj;
-    public transient Column[] _RangeCols = new Column[2];
-    public transient boolean  _FailedValidation = false;
+    public transient View         _ParentView;
+    public transient Object       _ObjectObj;
+    public transient List<Column> _RangeColStart    = new ArrayList<Column>();
+    public transient List<Column> _RangeColEnd      = new ArrayList<Column>();
+    public transient boolean      _FailedValidation = false;
 
 
     public boolean Validate(ParserSession PS, View ParentView)
@@ -66,7 +67,7 @@ public class ViewTimeSeriesJoin
           return PS.AddError("View '" + ParentView.getFullName() + "' is defining a Time Series without any 'range' specified.");
 
         if (_Range.length > 2)
-          return PS.AddError("View '" + ParentView.getFullName() + "' is defining a Time Series with a 'range' contanng more than 2 columns. A start and optional end are required.");
+          return PS.AddError("View '" + ParentView.getFullName() + "' is defining a Time Series with a 'range' containing more than 2 sets of columns. A start and optional end are required.");
 
         ReferenceHelper R = ReferenceHelper.parseObjectReference(_Object, ParentView._ParentSchema);
         if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true)
@@ -80,21 +81,37 @@ public class ViewTimeSeriesJoin
               return PS.AddError("View '" + ParentView.getFullName() + "' declares Time Series object '" + _Object + "' which has failed validation.");
           }
 
-        for (int i = 0; i < _Range.length; ++i)
-          {
-            R = ReferenceHelper.parseColumnReference(_Range[i], _ObjectObj);
-            if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true)
-              PS.AddError("View '" + ParentView.getFullName() + "' declares a Time Series range column '" + _Range[i] + "' with an incorrect syntax. It should be '(((package\\.)?schema\\.)?object.)?column'.");
-            
-            Column C = PS.getColumn(R._P, R._S, R._O, R._C);
-            if (C == null)
-              return PS.AddError("View '" + ParentView.getFullName() + "' declares Time Series range column '" + _Range[i] + "' resolving to '" + R.getFullName() + "' which cannot be found.");
-            if (C.hasBeenValidatedSuccessfully() == false)
-              return PS.AddError("View '" + ParentView.getFullName() + "' declares Time Series range column '" + _Range[i] + "' which has failed validation.");
-            _RangeCols[i] = C;
-          }
+        _RangeColStart = ParseColumns(PS, _Range[0]);
+        if (_Range.length == 2)
+          _RangeColEnd = ParseColumns(PS, _Range[1]);
 
         return Errs == PS.getErrorCount();
+      }
+
+
+    private List<Column> ParseColumns(ParserSession PS, String Str)
+      {
+        String[] parts = Str.split("\\s*,\\s*");
+        List<Column> L = new ArrayList<Column>();
+        for (int i = 0; i < parts.length; ++i)
+          {
+            ReferenceHelper R = ReferenceHelper.parseColumnReference(parts[i], _ObjectObj);
+            if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true)
+              PS.AddError("View '" + _ParentView.getFullName() + "' declares a Time Series range column '" + parts[i] + "' with an incorrect syntax. It should be '(((package\\.)?schema\\.)?object.)?column'.");
+            Column C = PS.getColumn(R._P, R._S, R._O, R._C);
+            if (C == null)
+              {
+                PS.AddError("View '" + _ParentView.getFullName() + "' declares Time Series range column '" + parts[i] + "' resolving to '" + R.getFullName() + "' which cannot be found.");
+                return null;
+              }
+            if (C.hasBeenValidatedSuccessfully() == false)
+              {
+                PS.AddError("View '" + _ParentView.getFullName() + "' declares Time Series range column '" + parts[i] + "' which has failed validation.");
+                return null;
+              }
+            L.add(C);
+          }
+        return L;
       }
 
   }
