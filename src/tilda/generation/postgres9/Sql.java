@@ -510,7 +510,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
               {
                 Str.append(getAggregateStr(VC._Aggregate) + "(");
                 hasAggregates = true;
-                if (VC._Distinct == true)
+                if (VC._Distinct == Boolean.TRUE)
                   Str.append("distinct ");
               }
             if (trimNeeded)
