@@ -78,7 +78,7 @@ public class Enumeration
         O._Columns.add(C);
         
         C = new Column("deactivated", ColumnType.DATETIME.toString(), null, true, ColumnMode.NORMAL, false, null, "The label for this enumeration.");
-        C._FrameworkManaged = true;
+//        C._FrameworkManaged = true;
         O._Columns.add(C);
         
         PrimaryKey PK = new PrimaryKey();
