@@ -147,7 +147,7 @@ public class Object extends Base
                   {
                     if (ColumnNames.add(C.getName().toUpperCase()) == false)
                       PS.AddError("Column '" + C.getFullName() + "' is defined more than once in Object '" + getFullName() + "'.");
-                    if (C._Type == ColumnType.DATETIME && Object.isOCCColumn(C) == false)
+                    if (C._Type == ColumnType.DATETIME && Object.isOCCColumn(C) == false && C._FrameworkManaged == false)
                       {
                         Column TZCol = new Column(C.getName() + "TZ", null, 0, C._Nullable, ColumnMode.AUTO, C._Invariant, null, "Generated helper column to hold the time zone ID for '" + C.getName() + "'.");
                         TZCol._SameAs = "tilda.data.TILDA.ZONEINFO.id";

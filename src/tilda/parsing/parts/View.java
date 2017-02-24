@@ -54,6 +54,7 @@ public class View extends Base
     @SerializedName("subQuery"      ) public SubWhereClause        _SubQuery;
     @SerializedName("pivot"         ) public ViewPivot             _Pivot;
     @SerializedName("timeSeries"    ) public ViewTimeSeries        _TimeSeries;
+    @SerializedName("distinctOn"    ) public ViewDistinctOn        _DistinctOn;
     @SerializedName("pivotColumns"  ) public List<ViewPivotColumn> _PivotColumns;
     @SerializedName("realize"       ) public ViewRealize           _Realize;
     @SerializedName("importFormulas") public String[]              _ImportFormulas = new String[] { };
@@ -165,15 +166,17 @@ public class View extends Base
                         if (V._Validated == false)
                           return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " which has failed validation.");
                         int j = 0;
+
                         for (ViewColumn col : V._ViewColumns)
                           {
-                            if (col._FrameworkGenerated == true)
+                            if (col._FrameworkGenerated == true && col._SameAs.equals("_TS.p") == false)
                               continue;
                             if (TextUtil.FindElement(VC._Exclude, col._Name, false, 0) != -1)
                               continue;
                             ViewColumn NewVC = new ViewColumn();
                             NewVC._SameAs = col.getFullName();
                             NewVC._Name = Prefix + col._Name;
+                            NewVC._FrameworkGenerated = col._FrameworkGenerated;
                             _ViewColumns.add(i + j, NewVC);
                             ++j;
                           }
@@ -240,7 +243,7 @@ public class View extends Base
             else if (VC.getName().equals("deleted") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "deleted")) == true)
               DeletedColObjName = VC._SameAsObj._ParentObject.getFullName();
 
-            LOG.debug("VC: "+VC._Name+"; VC._SameAsObj: "+VC._SameAsObj+"; VC._SameAsObj._ParentObject: "+VC._SameAsObj._ParentObject+";");
+            //LOG.debug("VC: " + VC._Name + "; VC._SameAsObj: " + VC._SameAsObj + "; VC._SameAsObj._ParentObject: " + VC._SameAsObj._ParentObject + ";");
             if (ObjectNames.add(VC._SameAsObj._ParentObject.getFullName()) == false)
               {
                 if (VC._Join != null)
@@ -250,7 +253,7 @@ public class View extends Base
               {
                 PS.AddError("Column '" + VC.getFullName() + "' is defining a join type: columns of the first refered table are considered part of the 'from' clause of a view and cannot define a join type.");
               }
-            if (VC._SameAsObj._Type == ColumnType.DATETIME && Object.isOCCColumn(VC._SameAsObj) == false)
+            if (VC._SameAsObj._Type == ColumnType.DATETIME && Object.isOCCColumn(VC._SameAsObj) == false && VC._Aggregate == null && VC._FrameworkGenerated == false)
               {
                 ViewColumn TZCol = new ViewColumn();
                 TZCol._SameAs = VC._SameAs + "TZ";
@@ -277,20 +280,34 @@ public class View extends Base
             if (_TimeSeries.Validate(PS, this) == true)
               {
                 int firstAgg = -1;
-                for (int i = 0; i < _ViewColumns.size(); ++i)
+                if (_DistinctOn == null)
                   {
-                    ViewColumn VC = _ViewColumns.get(i);
-                    if (VC._Aggregate != null)
+                    for (int i = 0; i < _ViewColumns.size(); ++i)
                       {
-                        firstAgg = i;
-                        break;
+                        ViewColumn VC = _ViewColumns.get(i);
+                        if (VC._Aggregate != null)
+                          {
+                            firstAgg = i;
+                            break;
+                          }
                       }
+                    if (firstAgg == -1 && _CountStar != null)
+                      firstAgg = _ViewColumns.size();
                   }
-                if (firstAgg == -1 && _CountStar != null)
-                  firstAgg = _ViewColumns.size();
+                else
+                  {
+                    for (int i = 0; i < _DistinctOn._Columns.length; ++i)
+                      if (_DistinctOn._Columns[i].equals(_TimeSeries._Name) == true)
+                        {
+                          firstAgg = i;
+                          break;
+                        }
+                    if (firstAgg == -1)
+                      firstAgg = _DistinctOn._Columns.length;
+                  }
 
                 if (firstAgg == -1)
-                  PS.AddError("The View '" + getFullName() + "' is defining a time series without having defined any aggregate column.");
+                  PS.AddError("The View '" + getFullName() + "' is defining a time series without having defined any aggregate column or distinct on.");
                 else
                   {
                     if (_Pivot != null)
@@ -299,10 +316,25 @@ public class View extends Base
                     VC._SameAs = "_TS.p";
                     VC._Name = _TimeSeries._Name;
                     VC._FrameworkGenerated = true;
+                    VC._ParentView = this;
                     _ViewColumns.add(firstAgg, VC);
                   }
               }
           }
+
+        if (_DistinctOn != null)
+          {
+            _DistinctOn.Validate(PS, this);
+            for (ViewColumn VC : _ViewColumns)
+              if (VC._Aggregate != null)
+                {
+                  PS.AddError("View '" + getFullName() + "' is defining a DistinctOn and Aggregate columns: only one or the other is allowed.");
+                  break;
+                }
+            if (_CountStar != null)
+              PS.AddError("View '" + getFullName() + "' is defining a DistinctOn and a CountStar: only one or the other is allowed.");
+          }
+
 
         if (_PivotColumns != null)
           {
@@ -375,7 +407,9 @@ public class View extends Base
           }
 
         if (TextUtil.isNullOrEmpty(_SubWhere) == false && _SubQuery != null)
-          PS.AddError("View '" + getFullName() + "' is defining both a subWhere AND a subQuery: only one is allowed.");
+          PS.AddError("View '" +
+
+          getFullName() + "' is defining both a subWhere AND a subQuery: only one is allowed.");
         else
           {
             if (TextUtil.isNullOrEmpty(_SubWhere) == false)
@@ -447,6 +481,14 @@ public class View extends Base
               O._Columns.add(C);
             }
 
+        if (_TimeSeries != null)
+          {
+            ColumnType Type = ColumnType.DATETIME;
+            Column C = new Column(_TimeSeries._Name, Type.name(), 0, true, ColumnMode.NORMAL, true, null, "Timeseries period");
+            C._FrameworkManaged = true;
+            O._Columns.add(C);
+          }
+
         if (_ImportFormulas != null)
           for (String s : _ImportFormulas)
             {
@@ -517,10 +559,9 @@ public class View extends Base
               }
           }
 
-
         _ParentSchema._Objects.add(O);
         O.Validate(PS, ParentSchema);
-
+        
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
       }

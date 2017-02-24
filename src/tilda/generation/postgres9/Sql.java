@@ -255,6 +255,25 @@ public class Sql extends PostgreSQL implements CodeGenSql
         StringBuilder Str = new StringBuilder();
         Str.append("-- " + TextUtil.EscapeSingleQuoteForSQL(V._Description) + "\n");
         Str.append("select ");
+        if (V._DistinctOn != null)
+          {
+            Str.append("distinct on(");
+            boolean First = true;
+            for (ViewColumn VC : V._DistinctOn._ColumnObjs)
+              {
+                if (First == true)
+                  First = false;
+                else
+                  Str.append(", ");
+                if (VC._SameAs != null && VC._SameAsObj == null && VC._FrameworkGenerated == true)
+                  Str.append(VC._SameAs);
+                else
+                  {
+                    Str.append("\"").append(VC._Name).append("\"");
+                  }
+              }
+            Str.append(")\n");
+          }
         StringBuilder FromList = new StringBuilder();
         boolean hasAggregates = false;
 
@@ -411,10 +430,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
                     for (int i = 0; i < V._TimeSeries._Join._RangeColEnd.size() - 1; ++i)
                       {
                         String e2v = getFullColumnVar(V._TimeSeries._Join._RangeColEnd.get(i));
-                        s.append(" when "+e2v+" is not null then date_trunc('" + Period + "', " + e2v + ") >= " + s1);
+                        s.append(" when " + e2v + " is not null then date_trunc('" + Period + "', " + e2v + ") >= " + s1);
                       }
                     String e2v = getFullColumnVar(V._TimeSeries._Join._RangeColEnd.get(V._TimeSeries._Join._RangeColEnd.size() - 1));
-                    s.append(" else "+e2v+" is null or "+e2v+" >= "+ s1);
+                    s.append(" else " + e2v + " is null or " + e2v + " >= " + s1);
                     s.append(" end");
                     e2 = s.toString();
                   }
@@ -486,6 +505,32 @@ public class Sql extends PostgreSQL implements CodeGenSql
           {
             Str.append("     order by 1, 2\n");
           }
+
+        if (V._DistinctOn != null)
+          {
+            Str.append("order by ");
+            First = true;
+            for (ViewColumn VC : V._DistinctOn._ColumnObjs)
+              {
+                if (First == true)
+                  First = false;
+                else
+                  Str.append(", ");
+                if (VC._SameAs != null && VC._SameAsObj == null && VC._FrameworkGenerated == true)
+                  Str.append(VC._SameAs);
+                else
+                  {
+                    Str.append("\"").append(VC._Name).append("\"");
+                  }
+              }
+            for (int i = 0; i < V._DistinctOn._OrderByObjs.size(); ++i)
+              {
+                Column C = V._DistinctOn._OrderByObjs.get(i);
+                Str.append(", ").append(getFullColumnVar(C)).append(" ").append(V._DistinctOn._OrderByOrders.get(i).name());
+              }
+            Str.append("\n");
+          }
+
 
         return Str.toString();
       }

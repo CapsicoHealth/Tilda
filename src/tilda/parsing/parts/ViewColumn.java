@@ -19,15 +19,14 @@ package tilda.parsing.parts;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.gson.annotations.SerializedName;
+
 import tilda.enums.AggregateType;
-import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.JoinType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.utils.TextUtil;
-
-import com.google.gson.annotations.SerializedName;
 
 public class ViewColumn
   {
@@ -113,8 +112,8 @@ public class ViewColumn
           {
             if ((_Aggregate = AggregateType.parse(_AggregateStr)) == null)
               return PS.AddError("View Column '" + getFullName() + "' defined an invalid 'aggregate' '" + _AggregateStr + "'.");
-            if (_SameAsObj != null && _SameAsObj._Type == ColumnType.DATETIME)
-              return PS.AddError("View Column '" + getFullName() + "' defined an aggregate on DATETIME column '" + _SameAsObj.getName() + "' which is not supported as timezone information would not be retrievable.");
+//            if (_SameAsObj != null && _SameAsObj._Type == ColumnType.DATETIME)
+//              return PS.AddError("View Column '" + getFullName() + "' defined an aggregate on DATETIME column '" + _SameAsObj.getName() + "' which is not supported as timezone information would not be retrievable.");
           }
         if (_Aggregate == null)
           {
