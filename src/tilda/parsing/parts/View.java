@@ -163,22 +163,40 @@ public class View extends Base
                     View V = PS.getView(R._P, R._S, R._O);
                     if (V != null)
                       {
+                        if (V._Name.equalsIgnoreCase("LABSHISTORYPIVOTVIEW") == true)
+                          LOG.debug("xxx");
                         if (V._Validated == false)
                           return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " which has failed validation.");
                         int j = 0;
-
+                        int vcColCount = -1;
                         for (ViewColumn col : V._ViewColumns)
                           {
-                            if (col._FrameworkGenerated == true && col._SameAs.equals("_TS.p") == false)
+                            ++vcColCount;
+                            if (col._FrameworkGenerated == true && col._SameAs != null && col._SameAs.equals("_TS.p") == false)
                               continue;
                             if (TextUtil.FindElement(VC._Exclude, col._Name, false, 0) != -1)
                               continue;
+                            if (V._Pivot != null && vcColCount >= V._ViewColumns.size() - 2) // (V._TimeSeries!=null?2:3))
+                              break;
                             ViewColumn NewVC = new ViewColumn();
                             NewVC._SameAs = col.getFullName();
                             NewVC._Name = Prefix + col._Name;
                             NewVC._FrameworkGenerated = col._FrameworkGenerated;
                             _ViewColumns.add(i + j, NewVC);
+                            _PadderColumnNames.track(NewVC.getName());
                             ++j;
+                          }
+                        if (V._Pivot != null)
+                          {
+                            for (Value VPV : V._Pivot._Values)
+                              {
+                                ViewColumn NewVC = new ViewColumn();
+                                NewVC._SameAs = V.getShortName() + "." + TextUtil.Print(VPV._Name, VPV._Value);
+                                NewVC._Name = Prefix + TextUtil.Print(VPV._Name, VPV._Value);
+                                _ViewColumns.add(i + j, NewVC);
+                                _PadderColumnNames.track(NewVC.getName());
+                                ++j;
+                              }
                           }
                         for (Formula F : V._Formulas)
                           {
@@ -188,15 +206,17 @@ public class View extends Base
                             NewVC._SameAs = V.getFullName() + "." + F._Name;
                             NewVC._Name = Prefix + F._Name;
                             _ViewColumns.add(i + j, NewVC);
+                            _PadderColumnNames.track(NewVC.getName());
                             ++j;
                           }
-                        if (TextUtil.isNullOrEmpty(V._CountStar) == false)
+                        if (V._Pivot == null && TextUtil.isNullOrEmpty(V._CountStar) == false)
                           {
                             ViewColumn NewVC = new ViewColumn();
                             NewVC._SameAs = V.getFullName() + "." + V._CountStar;
                             NewVC._Name = Prefix + V._CountStar;
                             NewVC._Aggregate = AggregateType.COUNT;
                             _ViewColumns.add(i + j, NewVC);
+                            _PadderColumnNames.track(NewVC.getName());
                             ++j;
                           }
                       }
@@ -243,7 +263,7 @@ public class View extends Base
             else if (VC.getName().equals("deleted") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "deleted")) == true)
               DeletedColObjName = VC._SameAsObj._ParentObject.getFullName();
 
-            //LOG.debug("VC: " + VC._Name + "; VC._SameAsObj: " + VC._SameAsObj + "; VC._SameAsObj._ParentObject: " + VC._SameAsObj._ParentObject + ";");
+            // LOG.debug("VC: " + VC._Name + "; VC._SameAsObj: " + VC._SameAsObj + "; VC._SameAsObj._ParentObject: " + VC._SameAsObj._ParentObject + ";");
             if (ObjectNames.add(VC._SameAsObj._ParentObject.getFullName()) == false)
               {
                 if (VC._Join != null)
@@ -253,7 +273,7 @@ public class View extends Base
               {
                 PS.AddError("Column '" + VC.getFullName() + "' is defining a join type: columns of the first refered table are considered part of the 'from' clause of a view and cannot define a join type.");
               }
-            if (VC._SameAsObj._Type == ColumnType.DATETIME && Object.isOCCColumn(VC._SameAsObj) == false && VC._Aggregate == null && VC._FrameworkGenerated == false)
+            if (VC._SameAsObj._Type == ColumnType.DATETIME && Object.isOCCColumn(VC._SameAsObj) == false && VC._Aggregate == null && VC._FrameworkGenerated == false && VC._SameAsObj._FrameworkManaged == false)
               {
                 ViewColumn TZCol = new ViewColumn();
                 TZCol._SameAs = VC._SameAs + "TZ";
@@ -277,6 +297,8 @@ public class View extends Base
 
         if (_TimeSeries != null)
           {
+            if (_Name.equalsIgnoreCase("LabsHistoryPivotView") == true)
+              LOG.debug("xxx");
             if (_TimeSeries.Validate(PS, this) == true)
               {
                 int firstAgg = -1;
@@ -300,6 +322,9 @@ public class View extends Base
                       if (_DistinctOn._Columns[i].equals(_TimeSeries._Name) == true)
                         {
                           firstAgg = i;
+                          if (_Pivot != null)
+                            ++firstAgg;
+
                           break;
                         }
                     if (firstAgg == -1)
@@ -483,7 +508,7 @@ public class View extends Base
 
         if (_TimeSeries != null)
           {
-            ColumnType Type = ColumnType.DATETIME;
+            ColumnType Type = ColumnType.DATE;
             Column C = new Column(_TimeSeries._Name, Type.name(), 0, true, ColumnMode.NORMAL, true, null, "Timeseries period");
             C._FrameworkManaged = true;
             O._Columns.add(C);
@@ -561,7 +586,7 @@ public class View extends Base
 
         _ParentSchema._Objects.add(O);
         O.Validate(PS, ParentSchema);
-        
+
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
       }

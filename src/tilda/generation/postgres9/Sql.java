@@ -441,6 +441,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 Str.append("     ) as _TS on " + s2 + " < " + e1 + "\n");
                 Str.append("            and (" + e2 + ")\n");
               }
+            else if (V._TimeSeries._Join._Range.length == 2)
+              Str.append("     ) as _TS on date_trunc('" + Period + "', " + V._TimeSeries._Join._ObjectObj.getShortName() + ".\"" + V._TimeSeries._Join._Range[0] + "\") <= _TS.p\n");
             else
               Str.append("     ) as _TS on date_trunc('" + Period + "', " + V._TimeSeries._Join._ObjectObj.getShortName() + ".\"" + V._TimeSeries._Join._Range[0] + "\") = _TS.p\n");
           }

@@ -91,25 +91,28 @@ public class ViewTimeSeriesJoin
 
     private List<Column> ParseColumns(ParserSession PS, String Str)
       {
-        String[] parts = Str.split("\\s*,\\s*");
         List<Column> L = new ArrayList<Column>();
-        for (int i = 0; i < parts.length; ++i)
+        if (TextUtil.isNullOrEmpty(Str) == false)
           {
-            ReferenceHelper R = ReferenceHelper.parseColumnReference(parts[i], _ObjectObj);
-            if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true)
-              PS.AddError("View '" + _ParentView.getFullName() + "' declares a Time Series range column '" + parts[i] + "' with an incorrect syntax. It should be '(((package\\.)?schema\\.)?object.)?column'.");
-            Column C = PS.getColumn(R._P, R._S, R._O, R._C);
-            if (C == null)
+            String[] parts = Str.split("\\s*,\\s*");
+            for (int i = 0; i < parts.length; ++i)
               {
-                PS.AddError("View '" + _ParentView.getFullName() + "' declares Time Series range column '" + parts[i] + "' resolving to '" + R.getFullName() + "' which cannot be found.");
-                return null;
+                ReferenceHelper R = ReferenceHelper.parseColumnReference(parts[i], _ObjectObj);
+                if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true)
+                  PS.AddError("View '" + _ParentView.getFullName() + "' declares a Time Series range column '" + parts[i] + "' with an incorrect syntax. It should be '(((package\\.)?schema\\.)?object.)?column'.");
+                Column C = PS.getColumn(R._P, R._S, R._O, R._C);
+                if (C == null)
+                  {
+                    PS.AddError("View '" + _ParentView.getFullName() + "' declares Time Series range column '" + parts[i] + "' resolving to '" + R.getFullName() + "' which cannot be found.");
+                    return null;
+                  }
+                if (C.hasBeenValidatedSuccessfully() == false)
+                  {
+                    PS.AddError("View '" + _ParentView.getFullName() + "' declares Time Series range column '" + parts[i] + "' which has failed validation.");
+                    return null;
+                  }
+                L.add(C);
               }
-            if (C.hasBeenValidatedSuccessfully() == false)
-              {
-                PS.AddError("View '" + _ParentView.getFullName() + "' declares Time Series range column '" + parts[i] + "' which has failed validation.");
-                return null;
-              }
-            L.add(C);
           }
         return L;
       }
