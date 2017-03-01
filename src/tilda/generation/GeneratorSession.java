@@ -38,7 +38,7 @@ public class GeneratorSession
     throws Exception
      {
        Language = Language.toLowerCase();
-       Database = Database.toLowerCase();
+       //Database = Database.toLowerCase();
        
        for (int i = LanguageMajorVersion; i >= 1; --i)
          {
