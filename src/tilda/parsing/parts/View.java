@@ -502,7 +502,7 @@ public class View extends Base
               ColumnType Type = _CountStar != null ? ColumnType.INTEGER : _Pivot._VC._SameAsObj.getType();
               Column C = new Column(TextUtil.Print(VPV._Name, VPV._Value), Type.name(), Type == ColumnType.STRING ? _Pivot._VC._SameAsObj._Size : 0,
               true, ColumnMode.NORMAL, true, null,
-              "Pivoted count from column '" + _Pivot._VC._SameAsObj.getShortName() + "'='" + VPV._Value + "', " + VPV._Description);
+              VPV._Description + " (pivot on "+_Pivot._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')");
               O._Columns.add(C);
             }
 

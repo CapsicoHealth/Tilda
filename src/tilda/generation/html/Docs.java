@@ -257,7 +257,7 @@ public class Docs
                 {
                   Out.println("<TABLE border=\"0px\">");
                   for (String ColName : ColumnMatches)
-                    Out.println("<TR><TD align=\"right\"><B style=\"color:#00AA00;\">" + ColName + "</B>:</TD><TD>" + V.getColumn(ColName)._Description + "</TD></TR>");
+                    Out.println("<TR><TD valign=\"top\" align=\"right\"><B style=\"color:#00AA00;\">" + ColName + "</B>:</TD><TD>" + V.getColumn(ColName)._Description + "</TD></TR>");
                   Out.println("</TABLE>");
                 }
               Out.println("</TD></TR>");
@@ -268,7 +268,7 @@ public class Docs
                 {
                   Out.println("<TABLE border=\"0px\">");
                   for (String FormulaName : FormulaMatches)
-                    Out.println("<TR><TD align=\"right\"><B style=\"color:#0000AA;\">" + FormulaName + "</B>:</TD><TD>" + CleanForHTML(V.getFormula(FormulaName)._Description) + "</TD></TR>");
+                    Out.println("<TR><TD valign=\"top\" align=\"right\"><B style=\"color:#0000AA;\">" + FormulaName + "</B>:</TD><TD>" + CleanForHTML(V.getFormula(FormulaName)._Description) + "</TD></TR>");
                   Out.println("</TABLE>");
                 }
               Out.println("</TD></TR>");
