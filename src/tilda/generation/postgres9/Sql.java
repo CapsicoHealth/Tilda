@@ -382,13 +382,14 @@ public class Sql extends PostgreSQL implements CodeGenSql
             : V._TimeSeries._Type == TimeSeriesType.QUARTERLY ? "quarter"
             : "year";
 
+            int LookbackNum = V._TimeSeries._Type == TimeSeriesType.QUARTERLY ? V._TimeSeries._Lookback * 3 : V._TimeSeries._Lookback;
             String Lookback = V._TimeSeries._Type == TimeSeriesType.QUARTERLY ? (V._TimeSeries._Lookback * 3) + " month"
             : V._TimeSeries._Lookback + " " + Period;
             String Step = V._TimeSeries._Type == TimeSeriesType.QUARTERLY ? "3 month"
             : "1 " + Period;
 
-            Str.append("join (select * from generate_series(date_trunc('" + Period + "', current_date) - interval '" + Lookback + "', date_trunc('" + Period + "', current_date), '" + Step + "') as p\n");
-
+//          Str.append("join (select * from generate_series(date_trunc('" + Period + "', current_date) - interval '" + Lookback + "', date_trunc('" + Period + "', current_date), '" + Step + "') as p\n");
+            Str.append("join (select (date_trunc('"+Period+"', current_date - interval '"+Lookback+"') + (_t||' "+Period+"')::interval)::date as p from generate_series(0, "+LookbackNum+") as _t\n");
 
             if (V._TimeSeries._Join._RangeColEnd != null && V._TimeSeries._Join._RangeColEnd.isEmpty() == false)
               {
