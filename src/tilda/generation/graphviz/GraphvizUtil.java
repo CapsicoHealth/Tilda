@@ -21,7 +21,9 @@ import org.json.simple.parser.JSONParser;
 
 import tilda.enums.FrameworkSourcedType;
 import tilda.generation.GeneratorSession;
+import tilda.generation.html.DocGen;
 import tilda.generation.html.Docs;
+import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Documentation;
 import tilda.parsing.parts.Enumeration;
@@ -188,13 +190,13 @@ public class GraphvizUtil
     public GraphvizUtil(Schema schema, GeneratorSession G)
       {
         this.schema = schema;
-        this.objects = schema._Objects;
-        this.mappers = schema._Mappers;
-        this.views = schema._Views;
-        this.enumerations = schema._Enumerations;
+        this.objects = new ArrayList<Object>(schema._Objects);
+        this.mappers = new ArrayList<Mapper>(schema._Mappers);
+        this.views = new ArrayList<View>(schema._Views);
+        this.enumerations = new ArrayList<Enumeration>(schema._Enumerations);
         this.schemaName = schema._Name;
-        this._objects = new ArrayList<Object>();
-        this._objects.addAll(objects);
+        this._objects = new ArrayList<Object>(objects);
+        
         try
           {
             this.builder = factory.newDocumentBuilder();
@@ -865,7 +867,7 @@ public class GraphvizUtil
       }
     
 
-    public void writeSchema()
+    public void writeSchema(DocGen DG, ParserSession PS)
       {
         Documentation d = this.schema.getDocumentation();
         if (d._Graph.equalsIgnoreCase("complex"))
@@ -874,7 +876,7 @@ public class GraphvizUtil
           writeSimpleSchema();
         try
           {
-            writeHTML();
+            writeHTML(DG, PS);
           }
         catch (Exception e)
           {
@@ -883,7 +885,7 @@ public class GraphvizUtil
       }
 
 
-    private void writeHTML()
+    private void writeHTML(DocGen DG, ParserSession PS)
     throws Exception
       {
         Documentation d = this.schema.getDocumentation();
@@ -959,20 +961,9 @@ public class GraphvizUtil
             LOG.error("Generator session cannot be intialized");
             return;
           }
-        for (Object b : schema._Objects)
-          {
-            try
-              {
-                writer.println("<BR><BR><BR><BR><HR>");
-                b._ParentSchema = schema;
-                Docs.DataClassDocs(writer, G, b);
-              }
-            catch (Exception e)
-              {
-                // TODO Auto-generated catch block
-                //LOG.warn("FYI: this can be ignored for now:\n", e);
-              }
-          }
+        
+        DG.WriteTablesAndViews(PS, writer);
+
         writer.println("<BR><BR><BR><BR><HR><HR>End.<BR><BR><BR>");
         writer.println("<SCRIPT>");
         writer.println("(function(){");

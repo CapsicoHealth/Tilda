@@ -44,6 +44,9 @@ public class Docs
     public static void DataClassDocs(PrintWriter Out, GeneratorSession G, Object O)
     throws Exception
       {
+        if ( O.getShortName().equalsIgnoreCase("DATAMART2.SCREENING"))
+          System.out.println("xxx");
+        
         Out.println("<DIV id='" + O._Name + "_DIV'>");
         Out.println("<H1>" + O._Name + "&nbsp;&nbsp;&nbsp;&nbsp;<SUP style=\"font-size: 60%;\"><A href=\"#\">top</A></SUP></H1>" + SystemValues.NEWLINE
         + "The generated " + Helper.getCodeGenLanguage() + "/" + G.getSql().getName() + " Tilda data class <B>Data_" + O._Name + "</B> is mapped to the table <B>" + O.getShortName() + "</B>." + SystemValues.NEWLINE

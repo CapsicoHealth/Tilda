@@ -57,6 +57,28 @@ public class DocGen
         return S._ProjectRoot + File.separator + ".." + File.separator + "";
       }
 
+    
+    public void writeSchema(ParserSession PS)
+      {
+        File file = new File(getSchemaChromeAppGenHTML(schema, ".html"));
+        if (!file.exists())
+          {
+            new GraphvizUtil(this.schema, G).writeSchema(this, PS);
+          }
+        else
+          {
+            try
+              {
+                writeHTML(PS);
+              }
+            catch (Exception e)
+              {
+                e.printStackTrace();
+              }
+
+          }
+      }
+    
     private void writeHTML(ParserSession PS)
     throws Exception
       {
@@ -74,6 +96,16 @@ public class DocGen
             FileUtil.copyFileContentsIntoAnotherFile(base64FileName, writer);
           }
 
+        WriteTablesAndViews(PS, writer);
+
+        writer.println("<BR><BR><BR><BR><BR><HR>- End -<BR><BR><BR>");
+        writer.println("</BODY>");
+        writer.println("</HTML>");
+        writer.close();
+      }
+
+    public void WriteTablesAndViews(ParserSession PS, PrintWriter writer)
+      {
         for (Object b : schema._Objects)
           {
             try
@@ -92,7 +124,7 @@ public class DocGen
           {
             if (V._Realize == null)
               continue;
-            if (First = true)
+            if (First == true)
               {
                 First = false;
                 writer.println("<BR><BR><BR><HR><H1>Realized Datamart Tables</H1>");
@@ -107,32 +139,6 @@ public class DocGen
                 // TODO Auto-generated catch block
                 LOG.warn("FYI: this can be ignored for now:\n", e);
               }
-          }
-
-        writer.println("<BR><BR><BR><BR><BR><HR>- End -<BR><BR><BR>");
-        writer.println("</BODY>");
-        writer.println("</HTML>");
-        writer.close();
-      }
-
-    public void writeSchema(ParserSession PS)
-      {
-        File file = new File(getSchemaChromeAppGenHTML(schema, ".html"));
-        if (!file.exists())
-          {
-            new GraphvizUtil(this.schema, G).writeSchema();
-          }
-        else
-          {
-            try
-              {
-                writeHTML(PS);
-              }
-            catch (Exception e)
-              {
-                e.printStackTrace();
-              }
-
           }
       }
 
