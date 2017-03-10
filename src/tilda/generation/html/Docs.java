@@ -181,6 +181,8 @@ public class Docs
         boolean First = true;
         for (ViewColumn VC : V._ViewColumns)
           {
+            if (VC == null || VC._SameAsObj == null)
+             continue;
             Object O = VC._SameAsObj._ParentObject;
             if (ObjectNames.add(O.getShortName()) == false)
               continue;

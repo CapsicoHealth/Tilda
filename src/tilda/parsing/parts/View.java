@@ -422,7 +422,7 @@ public class View extends Base
             else
               LOG.warn("The view " + getFullName() + " defined the three OCC columns 'created', 'lastUpdated', and 'deleted' but they came from different objects ('" + CreatedColObjName + "', '" + LastUpdatedColObjName + "', and '" + DeletedColObjName + "' respectively) so the view will not be considered an OCC view.");
           }
-
+        
         if (_SubWhereX != null)
           {
             _SubWhereX.Validate(PS, this, "View");
@@ -586,6 +586,9 @@ public class View extends Base
 
         _ParentSchema._Objects.add(O);
         O.Validate(PS, ParentSchema);
+        
+        if (_Realize != null)
+         _Realize.Validate(PS, new ViewRealizedWrapper(O));        
 
         _Validated = Errs == PS.getErrorCount();
         return _Validated;

@@ -388,8 +388,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
             String Step = V._TimeSeries._Type == TimeSeriesType.QUARTERLY ? "3 month"
             : "1 " + Period;
 
-//          Str.append("join (select * from generate_series(date_trunc('" + Period + "', current_date) - interval '" + Lookback + "', date_trunc('" + Period + "', current_date), '" + Step + "') as p\n");
-            Str.append("join (select (date_trunc('"+Period+"', current_date - interval '"+Lookback+"') + (_t||' "+Period+"')::interval)::date as p from generate_series(0, "+LookbackNum+") as _t\n");
+            // Str.append("join (select * from generate_series(date_trunc('" + Period + "', current_date) - interval '" + Lookback + "', date_trunc('" + Period + "', current_date),
+            // '" + Step + "') as p\n");
+            Str.append("join (select (date_trunc('" + Period + "', current_date - interval '" + Lookback + "') + (_t||' " + Period + "')::interval)::date as p from generate_series(0, " + LookbackNum + ") as _t\n");
 
             if (V._TimeSeries._Join._RangeColEnd != null && V._TimeSeries._Join._RangeColEnd.isEmpty() == false)
               {
@@ -730,8 +731,13 @@ public class Sql extends PostgreSQL implements CodeGenSql
             .append("CREATE OR REPLACE FUNCTION " + V._ParentSchema._Name + ".Refill_" + TName + "Realized() RETURNS boolean AS $$\n")
             .append("BEGIN\n")
             .append("  DROP TABLE IF EXISTS " + V._ParentSchema._Name + "." + TName + "Realized;\n")
-            .append("  CREATE TABLE " + V._ParentSchema._Name + "." + TName + "Realized "
-            + "AS SELECT " + genRealizedColumnList(V) + " FROM " + V._ParentSchema._Name + "." + V._Name + ";\n")
+            .append("  CREATE UNLOGGED TABLE " + V._ParentSchema._Name + "." + TName + "Realized " + "AS SELECT " + genRealizedColumnList(V) + " FROM " + V._ParentSchema._Name + "." + V._Name + ";\n");
+            
+            for (Index I : V._Realize._Indices)
+              if (I != null)
+                genIndex(OutFinal, I);
+            
+            OutFinal.append("  ANALYZE " + V._ParentSchema._Name + "." + TName + "Realized;\n")
             .append("  return true;\n")
             .append("END; $$\n")
             .append("LANGUAGE PLPGSQL;\n")
@@ -805,7 +811,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         boolean First = true;
         for (ViewColumn VC : V._ViewColumns)
           {
-            if (VC == null || VC._SameAsObj._Mode != ColumnMode.NORMAL || VC._JoinOnly == true)
+            if (VC == null || (VC._SameAsObj != null && VC._SameAsObj._Mode != ColumnMode.NORMAL) || VC._JoinOnly == true)
               continue;
             if (TextUtil.FindElement(V._Realize._Excludes, VC.getName(), true, 0) == -1)
               {
@@ -1038,7 +1044,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
       {
         if (I._Db == false)
           Out.print("-- app-level index only -- ");
-        Out.print("CREATE" + (I._Unique == true ? " UNIQUE" : "") + " INDEX " + I._ParentObject.getBaseName() + "_" + I._Name + " ON " + I._ParentObject.getShortName() + " (");
+        Out.print("CREATE" + (I._Unique == true ? " UNIQUE" : "") + " INDEX " + I._Parent.getBaseName() + "_" + I._Name + " ON " + I._Parent.getShortName() + " (");
         if (I._ColumnObjs.isEmpty() == false)
           PrintColumnList(Out, I._ColumnObjs);
         if (I._OrderByObjs.isEmpty() == false)

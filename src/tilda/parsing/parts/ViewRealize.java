@@ -24,34 +24,35 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
-import tilda.enums.AggregateType;
 import tilda.parsing.ParserSession;
-import tilda.utils.TextUtil;
 
 public class ViewRealize
   {
-    static final Logger             LOG                = LogManager.getLogger(ViewRealize.class.getName());
+    static final Logger LOG       = LogManager.getLogger(ViewRealize.class.getName());
 
     /*@formatter:off*/
     @SerializedName("indices" ) public List<Index> _Indices    = new ArrayList<Index>();
     @SerializedName("excludes") public String[]    _Excludes   = new String[] { };
     /*@formatter:on*/
-	
-    
-    public ViewRealize()
-     {
-     }
 
-    public transient View       _ParentView;
+
+    public ViewRealize()
+      {
+      }
+
+    public transient Base       _Parent;
     public transient ViewColumn _VC;
     public transient boolean    _FailedValidation = false;
 
-    
-    public boolean Validate(ParserSession PS, View ParentView)
+
+    public boolean Validate(ParserSession PS, Base Parent)
       {
         int Errs = PS.getErrorCount();
-        _ParentView = ParentView;
+        _Parent = Parent;
 
+        for (Index I : _Indices)
+          if (I != null)
+            I.Validate(PS, _Parent);
 
         return Errs == PS.getErrorCount();
       }
