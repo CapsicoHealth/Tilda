@@ -190,6 +190,8 @@ public class View extends Base
                           {
                             for (Value VPV : V._Pivot._Values)
                               {
+                                if (TextUtil.FindElement(VC._Exclude, TextUtil.Print(VPV._Name, VPV._Value), false, 0) != -1)
+                                 continue;
                                 ViewColumn NewVC = new ViewColumn();
                                 NewVC._SameAs = V.getShortName() + "." + TextUtil.Print(VPV._Name, VPV._Value);
                                 NewVC._Name = Prefix + TextUtil.Print(VPV._Name, VPV._Value);

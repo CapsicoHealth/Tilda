@@ -374,13 +374,28 @@ public class PostgreSQL implements DBType
         // .append("\n")
         // .append("\n");
 
-        Str.append("CREATE OR REPLACE FUNCTION TILDA.In(v " + Type + "[], vals " + Type + "[])\n")
+        Str.append("CREATE OR REPLACE FUNCTION TILDA.In(v ").append(Type).append("[], vals ").append(Type).append("[])\n")
         .append("  RETURNS boolean\n")
         .append("  IMMUTABLE LANGUAGE SQL AS\n")
         .append("  'select v && vals;';\n")
         .append("\n")
         .append("\n");
 
+      }
+    
+    
+    protected static void PrintFunctionTo(StringBuilder Str, String FuncTypeName, String Type)
+      {
+        Str.append("CREATE OR REPLACE FUNCTION TILDA.to").append(FuncTypeName).append("(str varchar, val ").append(Type).append(")\n")
+        .append("RETURNS ").append(Type).append(" AS $$\n")
+        .append("BEGIN\n")
+        .append("  RETURN case when str is null then val else str::").append(Type).append(" end;\n")
+        .append("EXCEPTION WHEN OTHERS THEN\n")
+        .append("  RETURN val;\n")
+        .append("END;\n")
+        .append("$$ LANGUAGE plpgsql IMMUTABLE;\n")
+        .append("\n")
+        .append("\n");
       }
 
     @Override
@@ -443,6 +458,9 @@ public class PostgreSQL implements DBType
         PrintFunctionIn(Str, "text");
         PrintFunctionIn(Str, "integer");
         PrintFunctionIn(Str, "bigint");
+        PrintFunctionTo(Str, "Int", "integer");
+        PrintFunctionTo(Str, "Double", "double precision");
+        PrintFunctionTo(Str, "Date", "Date");
 
         Str.append("CREATE OR REPLACE FUNCTION TILDA.getKeyBatch(t text, c integer) RETURNS TABLE (min_key_inclusive bigint, max_key_exclusive bigint) AS $$\n")
         .append("DECLARE\n")
@@ -500,28 +518,9 @@ public class PostgreSQL implements DBType
         .append("'SELECT TILDA.Age($1, $2) >= $3 AND TILDA.Age($1, $2) < $4';\n")
         .append("\n")
         .append("\n")
-        .append("CREATE OR REPLACE FUNCTION TILDA.toInt(str varchar, val integer)\n")
-        .append("RETURNS INTEGER AS $$\n")
-        .append("BEGIN\n")
-        .append("  RETURN case when str is null then val else str::INTEGER end;\n")
-        .append("EXCEPTION WHEN OTHERS THEN\n")
-        .append("  RETURN val;\n")
-        .append("END;\n")
-        .append("$$ LANGUAGE plpgsql IMMUTABLE;\n")
-        .append("\n")
-        .append("\n")
-        .append("CREATE OR REPLACE FUNCTION TILDA.toDouble(str varchar, val double precision)\n")
-        .append("RETURNS double precision AS $$\n")
-        .append("BEGIN\n")
-        .append("  RETURN case when str is null then val else str::double precision end;\n")
-        .append("EXCEPTION WHEN OTHERS THEN\n")
-        .append("  RETURN val;\n")
-        .append("END;\n")
-        .append("$$ LANGUAGE plpgsql IMMUTABLE;\n")
-        .append("\n")
-        .append("\n")
         .append("CREATE extension if not exists tablefunc;\n")
         ;
+        
 
         return Con.ExecuteDDL("TILDA", "FUNCTIONS", Str.toString());
       }
