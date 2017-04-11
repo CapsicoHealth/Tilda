@@ -35,7 +35,7 @@ import tilda.parsing.ParserSession;
 public class Object extends Base
   {
 
-    static final Logger                   LOG             = LogManager.getLogger(Object.class.getName());
+    static final Logger                   LOG          = LogManager.getLogger(Object.class.getName());
 
     /*@formatter:off*/
     @SerializedName("occ"           ) public boolean              _OCC        = true ;
@@ -49,13 +49,14 @@ public class Object extends Base
     @SerializedName("indices"       ) public List<Index>          _Indices    = new ArrayList<Index         >();
     @SerializedName("http"          ) public HttpMapping[]        _Http       = { };
     @SerializedName("history"       ) public String     []        _History    = { };
-    @SerializedName("dropOldColumns") public String     []        _DropOldColumns = { };
+    @SerializedName("migrations"    ) public Migration  []        _Migrations = { };
+//    @SerializedName("dropOldColumns") public String     []        _DropOldColumns = { };
     
     /*@formatter:on*/
 
     public transient boolean              _HasUniqueIndex;
     public transient boolean              _HasUniqueQuery;
-    public transient FrameworkSourcedType _FST            = FrameworkSourcedType.NONE;
+    public transient FrameworkSourcedType _FST         = FrameworkSourcedType.NONE;
     public transient ObjectLifecycle      _LC;
 
     @Override
@@ -177,15 +178,22 @@ public class Object extends Base
               }
           }
 
-        for (int i = 0; i < _DropOldColumns.length; ++i)
+        Set<String> Names = new HashSet<String>();
+        for (int i = 0; i < _Migrations.length; ++i)
           {
-            String n = _DropOldColumns[i];
-            if (getColumn(n) != null)
-              PS.AddError("Object '" + getFullName() + "' is defining a drop column '" + n + "' which is also already defined as a real column. DropOldColumns is used to automate cleaning of old columns that should no longer be part of a table definition.");
+            Migration M = _Migrations[i];
+            if (M != null)
+              if (M.Validate(PS, this, i) == true)
+                {
+                  for (String col : M._ColumnNames)
+                    if (Names.add(col) == false)
+                      PS.AddError("Object '" + getFullName() + "' has declared migration #" + i + " with a column '" + col + "' which has already been specified in another migration!");
+                }
           }
 
+
         _HasUniqueIndex = false;
-        Set<String> Names = new HashSet<String>();
+        Names.clear();
         for (Index I : _Indices)
           {
             if (I == null)
@@ -299,7 +307,7 @@ public class Object extends Base
             C._SameAs = "tilda.data.TILDA.KEY.createdETL";
             C._FrameworkManaged = true;
             _Columns.add(C);
-            
+
             C = new Column("lastUpdatedETL", null, 0, true, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "KEY", "lastUpdatedETL")._Description);
             C._SameAs = "tilda.data.TILDA.KEY.lastUpdatedETL";
             C._FrameworkManaged = true;

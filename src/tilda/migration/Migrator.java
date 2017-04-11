@@ -242,6 +242,7 @@ public class Migrator
                           Actions.add(new ColumnAlterType(Col, CMeta._TildaType));
                       }
                   }
+/*
                 for (String c : Obj._DropOldColumns)
                   {
                     ColumnMeta CI = TMeta.getColumnMeta(c);
@@ -249,11 +250,11 @@ public class Migrator
                     if (Col == null && CI != null)
                       Actions.add(new ColumnDrop(Obj, c));
                   }
+*/
 //                if (XXX != Actions.size())
 //                  Actions.add(new CommitPoint());
               }
           }
-
         for (View V : S._Views)
           {
             if (V == null)

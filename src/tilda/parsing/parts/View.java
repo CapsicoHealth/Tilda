@@ -150,7 +150,7 @@ public class View extends Base
                 continue;
               }
 
-            if (VC._SameAs.endsWith(".*") == true)
+            if (VC._SameAs != null && VC._SameAs.endsWith(".*") == true)
               {
                 _ViewColumns.remove(i);
                 VC._SameAs = VC._SameAs.substring(0, VC._SameAs.length() - 2);
