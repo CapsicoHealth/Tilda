@@ -215,9 +215,15 @@ public class PostgreSQL implements DBType
     throws Exception
       {
         if (Col._Nullable == false && DefaultValue == null)
-          throw new Exception("Cannot add new 'not null' column '" + Col.getFullName() + "' to a table without a default value. Add a default value in the model, or manually migrate your database.");
+          {
+            String Q = "SELECT count(*) from " + Col._ParentObject.getShortName();
+            ScalarRP RP = new ScalarRP();
+            Con.ExecuteSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
+            if (RP.getResult() > 0)
+             throw new Exception("Cannot add new 'not null' column '" + Col.getFullName() + "' to a table without a default value. Add a default value in the model, or manually migrate your database.");
+          }
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ADD COLUMN \"" + Col.getName() + "\" " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection());
-        if (Col._Nullable == false)
+        if (Col._Nullable == false && DefaultValue != null)
           {
             Q += " not null DEFAULT " + ValueHelper.printValue(Col, DefaultValue);
           }

@@ -40,6 +40,7 @@ import tilda.generation.interfaces.CodeGenTildaFactory;
 import tilda.generation.interfaces.CodeGenTildaJson;
 import tilda.generation.interfaces.CodeGenTildaSupport;
 import tilda.parsing.Parser;
+import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
 import tilda.parsing.parts.ForeignKey;
@@ -49,7 +50,6 @@ import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.SubWhereClause;
 import tilda.parsing.parts.View;
-import tilda.utils.TextUtil;
 
 public class Generator
   {
@@ -94,13 +94,23 @@ public class Generator
         CodeGenSql CG = G.getSql();
         CodeGenSqlDocs DG = G.getSqlDocs();
 
-        File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(S._Objects.get(0)));
+        Base B = S._Objects.isEmpty() == false ? S._Objects.get(0)
+        : S._Views.isEmpty() == false ? S._Views.get(0)
+        : null;
+
+        if (B == null)
+          {
+            LOG.debug("  No objects or views found: the SQL file will not be generated.");
+            return;
+          }
+
+        File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(B));
         PrintWriter Out = new PrintWriter(f);
         LOG.debug("  Generating the SQL file.");
-        // LOG.debug(" -> " + f.getCanonicalPath());
         DG.FileDocs(Out, G);
         Out.println();
         CG.genFileStart(Out, S);
+
         for (Object O : S._Objects)
           if (O != null && O._FST != FrameworkSourcedType.VIEW)
             {
@@ -111,6 +121,7 @@ public class Generator
               getTableDDL(CG, Out, O, true, true);
             }
         Out.println();
+
         for (View V : S._Views)
           if (V != null)
             {
@@ -121,6 +132,7 @@ public class Generator
               getFullViewDDL(CG, Out, V);
             }
         Out.println();
+
         Out.close();
       }
 
