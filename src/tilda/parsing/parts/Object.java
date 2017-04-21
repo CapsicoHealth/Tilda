@@ -143,7 +143,8 @@ public class Object extends Base
                     --i;
                     continue;
                   }
-                _PadderColumnNames.track(C.getName());
+                
+                _PadderColumnNames.track(C.getLogicalName());
                 if (C.Validate(PS, this) == true)
                   {
                     if (ColumnNames.add(C.getName().toUpperCase()) == false)
@@ -258,8 +259,14 @@ public class Object extends Base
     private boolean CreateAutogenPK(ParserSession PS)
       {
         for (Column C : _Columns)
-          if (C != null && C.getName().equalsIgnoreCase("refnum") == true)
-            return PS.AddError("Object '" + getFullName() + "' has defined an autogen primary key but is also defining column 'refnum', which is a reserved name.");
+          {
+            if (C == null)
+              continue;
+
+            String N = C.getLogicalName();
+            if (N != null && N.equalsIgnoreCase("refnum") == true)
+              return PS.AddError("Object '" + getFullName() + "' has defined an autogen primary key but is also defining column 'refnum', which is a reserved name.");
+          }
 
         Column C = new Column("refnum", null, 0, false, null, true, null, PS.getColumn("tilda.data", "TILDA", "KEY", "refnum")._Description);
         C._SameAs = "tilda.data.TILDA.KEY.refnum";
@@ -271,8 +278,14 @@ public class Object extends Base
     private boolean CreateOCCColumns(ParserSession PS, boolean addETLLastUpdated)
       {
         for (Column C : _Columns)
-          if (C != null && (C.getName().equalsIgnoreCase("created") == true || C.getName().equalsIgnoreCase("lastUpdated") == true || C.getName().equalsIgnoreCase("createdETL") == true || C.getName().equalsIgnoreCase("lastUpdatedETL") == true || C.getName().equalsIgnoreCase("deleted") == true))
-            return PS.AddError("Object '" + getFullName() + "' has defined OCC to be true but is also defining column '" + C.getName() + "', which is a reserved name.");
+          {
+            if (C == null)
+              continue;
+
+            String N = C.getLogicalName();
+            if (N != null && (N.equalsIgnoreCase("created") == true || N.equalsIgnoreCase("lastUpdated") == true || N.equalsIgnoreCase("createdETL") == true || N.equalsIgnoreCase("lastUpdatedETL") == true || N.equalsIgnoreCase("deleted") == true))
+              return PS.AddError("Object '" + getFullName() + "' has defined OCC to be true but is also defining column '" + C.getName() + "', which is a reserved name.");
+          }
 
         Object KeyObj = PS.getObject("tilda.data", "TILDA", "KEY");
         if (KeyObj == null)

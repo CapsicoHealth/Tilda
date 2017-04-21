@@ -151,15 +151,17 @@ public class Column extends TypeDef
 
     private void ValidateBase(ParserSession PS, Object ParentObject)
       {
-        if (TextUtil.isNullOrEmpty(_Name) == true)
+        
+        String N = getLogicalName();        
+        if (TextUtil.isNullOrEmpty(N) == true)
           {
             PS.AddError("Column '" + getFullName() + "' didn't define a 'name'. It is mandatory.");
             return;
           }
 
-        if (ValidationHelper.isValidIdentifier(_Name) == false)
+        if (ValidationHelper.isValidIdentifier(N) == false)
           {
-            PS.AddError("Column '" + getFullName() + "' has a name '" + _Name + "' which is not valid. " + ValidationHelper._ValidIdentifierMessage);
+            PS.AddError("Column '" + getFullName() + "' has a name '" + N + "' which is not valid. " + ValidationHelper._ValidIdentifierMessage);
             return;
           }
 
@@ -222,9 +224,6 @@ public class Column extends TypeDef
 
         ReferenceHelper R = ReferenceHelper.parseColumnReference(_SameAs, _ParentObject);
         
-        if (_SameAs.endsWith("primaryPayorFreq") == true)
-          LOG.debug("Hello");
-
         if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true || TextUtil.isNullOrEmpty(R._C) == true)
           PS.AddError("Column '" + getFullName() + "' is declaring sameas '" + _SameAs + "' with an incorrect syntax. It should be '(((package\\.)?schema\\.)?object\\.)?column'.");
         else
@@ -258,6 +257,9 @@ public class Column extends TypeDef
       {
         if (_SameAsObj == null)
           return;
+
+        if (_Name == null)
+          _Name = _SameAsObj._Name;
 
         if (_TypeStr != null && _TypeStr.equals(_SameAsObj._TypeStr) == false && _Aggregate == null)
           PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining a type '" + _TypeStr + "' which doesn't match the destination column's type '" + _SameAsObj._TypeStr + "'. Note that redefining a type for a sameas column is superfluous in the first place.");
@@ -471,6 +473,14 @@ public class Column extends TypeDef
     public String toString()
       {
         return getClass().getName() + ":" + getFullName();
+      }
+
+    String getLogicalName()
+      {
+        String N = getName();
+        if (N == null && _SameAs != null)
+          N = _SameAs.substring(_SameAs.lastIndexOf('.') + 1);
+        return N;
       }
 
   }
