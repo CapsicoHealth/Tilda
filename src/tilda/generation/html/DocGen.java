@@ -96,6 +96,8 @@ public class DocGen
             FileUtil.copyFileContentsIntoAnotherFile(base64FileName, writer);
           }
 
+        
+        writeSearchHTML(writer);
         WriteTablesAndViews(PS, writer);
 
         writer.println("<BR><BR><BR><BR><BR><HR>- End -<BR><BR><BR>");
@@ -142,4 +144,176 @@ public class DocGen
           }
       }
 
+    public void writeSearchHTML(PrintWriter writer) {
+    	
+    	writer.println("<BR><BR><BR><HR>");
+    	writer.println("<input type=\"text\" oninput=\"eventListener()\", id=\"search_input\" placeholder=\"Search Tables/Views, Columns, Formulae\" autocomplete=\"off\">");
+    	writer.println("<br><br>");
+    	writer.println("<table class=\"search_results\" border=\"0px\" cellpadding=\"3px\" cellspacing=\"0px\"></table>");
+    	
+    	writer.println(
+	    	"<style> 								"+
+	    	"	input[type=text] { 					"+
+	    	"		padding:10px;  					"+
+	    	"    	width: 90%; 					"+
+	    	"    	border:2px solid #CCC; 			"+ 
+	    	"    	-webkit-border-radius: 5px; 	"+
+	    	"    	border-radius: 5px; 			"+
+	    	"  	} 									"+
+	    	"  	.inner-table td{ 					"+
+	    	"    	min-width: 300px; 				"+
+	    	"  	} 									"+
+	    	"  	input[type=text]:focus { 			"+
+	    	"    	border-color:#DFECF8; 			"+
+	    	"  	} 									"+
+	    	"  	a:link    { 						"+
+	    	"    	font-weight:      bold; 		"+
+	    	"    	color:            black; 		"+
+	    	"  	}  									"+
+	    	"  	a:visited { 						"+
+	    	"    	font-weight:      bold; 		"+
+	    	"  	} 									"+
+	    	"</style>");
+    	
+    	
+    	writer.println(    	
+	    	"<script> "+
+	    	"  var tables    = {}; "+
+	    	"  var columns   = {}; "+
+	    	"  var formulae  = {}; "+
+	
+	    	"  var searchInput; "+
+	    	"  var searchResultsDiv; "+
+	
+	    	"  window.onload = function() { "+
+	    	"    tables = getData(\"tables\"); "+
+	    	"    columns = getData(\"columns\"); "+
+	    	"    formulae = getData(\"formula\"); "+
+	    	"  } "+
+	
+	    	"  var openDiv = function(divId) { "+
+	    	"    var targetDiv = document.getElementById(divId); "+
+	    	"    if (targetDiv != undefined || targetDiv != null) { "+
+	    	"      window.location = \"#\" + divId; "+
+	    	"      targetDiv.style.cssText = \"color: red\"; "+
+	    	"      window.setTimeout(function() {targetDiv.style.cssText = \"\"}, 2000) "+
+	    	"    } "+
+	    	"  } "+
+	
+	    	"  var eventListener = function(event) { "+
+	    	"    if ( searchInput == null || searchInput == undefined ) { "+
+	    	"      searchInput = document.getElementById(\"search_input\"); "+
+	    	"    } "+
+	    	"    if ( searchResultsDiv == null || searchResultsDiv == undefined ) { "+
+	    	"      searchResultsDiv = document.getElementsByClassName(\"search_results\")[0]; "+
+	    	"    } "+
+	    	"    var searchInputText = searchInput.value; "+
+	    	"    searchResultsDiv.innerHTML = \"\"; "+
+	    	    
+	    	"    if(searchInputText.length < 3) return; "+
+	
+	    	"    var filteredResults = getFilteredResults(searchInputText); "+
+	    	"    filteredResults = sortFilteredResults(filteredResults); "+
+	
+	    	"    var tempElement; "+
+	    	"    var tempElementBody; "+
+	    	"    var count = 0; "+
+	
+	    	"    // Append Header "+
+	    	"    tempElement = document.createElement(\"tr\"); "+
+	    	"    tempElement.innerHTML = \"<th align='left'>Table/View</th><th align='left'>Column/Formula</th>\" "+
+	    	"    searchResultsDiv.appendChild(tempElement) "+
+	
+	    	"    for (key in filteredResults) { "+
+	    	"      value = filteredResults[key]; "+
+	    	"      tempElement = document.createElement(\"tr\") "+
+	    	"      tempElement.setAttribute(\"valign\", \"top\"); "+
+	    	"      if (count%2==0) " +
+	    	"        tempElement.setAttribute(\"bgcolor\",\"#D2FFDA\"); "+
+	    	"      // Reset Temp Variable "+
+	    	"      tempElementBody = \"\"; "+
+	    	"      // Add Table/View "+
+	    	"      tempElementBody += \"<td><table><tr><td><u>\" "+
+	    	"      tempElementBody += \"<b onclick=openDiv('\"+key+\"_DIV')>\"+key+\"</b>\" "+
+	    	"      tempElementBody += \"</u></td></tr></table></td>\" "+
+	    	"      if (value.length > 0) { "+
+	    	"        // Add Columns/Formulae (if Any) "+
+	    	"        tempElementBody += \"<td><table class='inner-table' align='top'><tr>\" "+
+	    	"        for(var i = 0; i < value.length; i++) { "+
+	    	"          if (i > 0 && i%3==0) tempElementBody += \"</tr><tr>\" "+
+	    	"            tempElementBody += \"<td><u>\" "+
+	    	"            tempElementBody += \"<b onclick=openDiv('\"+key+\"-\"+value[i]+\"_DIV')>\"+value[i]+\"</b>\" "+
+	    	"            tempElementBody += \"</u></td>\" "+
+	    	"        } "+
+	    	"        tempElementBody += \"</tr></table></td>\" "+
+	    	"      } "+
+	    	"      tempElement.innerHTML = tempElementBody; "+
+	    	"      searchResultsDiv.appendChild(tempElement); "+
+	    	"      count++; "+
+	    	"    } "+
+	    	"  } "+
+	
+	    	"  // Helper Methods "+
+	    	"  var sortFilteredResults = function(results) { "+
+	    	"    var sortedResults = {}; "+
+	    	"    Object.keys(results).sort().forEach(function(key) { "+
+	    	"      sortedResults[key] = results[key]; "+
+	    	"    }); "+
+	    	"    return sortedResults; "+
+	    	"  } "+
+	
+	    	"  var getFilteredData = function(regex, sourceData, destinationData) { "+
+	    	"    for (key in sourceData) { "+
+	    	"      var table_name = sourceData[key][0]; "+
+	    	"      var column_name = sourceData[key][1]; "+
+	
+	    	"      if (regex.test(table_name)) { "+
+	    	"        if( destinationData[table_name] == undefined) "+
+	    	"          destinationData[table_name] = []; "+
+	    	"      } "+
+	
+	    	"      if (column_name != undefined && regex.test(column_name)) { "+
+	    	"        var existing_columns = destinationData[table_name]; "+
+	    	"        if ( existing_columns == undefined) existing_columns = []; "+
+	    	"        existing_columns.push(column_name); "+
+	    	"        destinationData[table_name] = existing_columns; "+
+	    	"      } "+
+	    	"    } "+
+	    	"    return destinationData; "+
+	    	"  } "+
+	
+	    	"  var getFilteredResults = function(queryString) { "+
+	    	"    var regex = new RegExp(queryString, 'gi'); "+
+	    	"    var matchingResults = {}; "+
+	    	"    getFilteredData(regex, tables, matchingResults); "+
+	    	"    getFilteredData(regex, columns, matchingResults); "+
+	    	"    getFilteredData(regex, formulae, matchingResults); "+
+	    	"    return matchingResults; "+
+	    	"  } "+
+	
+	    	"  var getData = function(type) { "+
+	    	"    var dataDivs = document.getElementsByClassName(type); "+
+	    	"    var divIds = {}; "+
+	    	"    var tempId; "+
+	    	"    for(var i = 0; i < dataDivs.length; i++) { "+
+	    	"      tempId = dataDivs[i].getAttribute(\"id\"); "+
+	    	"      if ( tempId != undefined && tempId.length > 0) { "+
+	    	"        divIds[tempId] = tempId.replace(\"_DIV\", \"\").split(\"-\"); "+
+	    	"      } "+
+	    	"    } "+
+	    	"    return divIds; "+
+	    	"  } "+
+	
+	    	"  Object.extend = function(source1, source2, destination) { "+
+	    	"    for (var key in source1) { "+
+	    	"      destination[key] = source1[key]; "+
+	    	"    } "+
+	    	"    for (var key in source2) { "+
+	    	"      destination[key] = source2[key]; "+
+	    	"    } "+
+	    	"    return destination; "+
+	    	"  } "+
+	    	"</script> ");    	
+    }
+    
   }
