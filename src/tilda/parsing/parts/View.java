@@ -176,6 +176,8 @@ public class View extends Base
                               continue;
                             if (TextUtil.FindElement(VC._Exclude, col._Name, false, 0) != -1)
                               continue;
+                            if (col._JoinOnly == true)
+                              continue;
                             if (V._Pivot != null && vcColCount >= V._ViewColumns.size() - 2) // (V._TimeSeries!=null?2:3))
                               break;
                             ViewColumn NewVC = new ViewColumn();
