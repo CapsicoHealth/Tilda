@@ -149,7 +149,7 @@ public class DocGen
     	writer.println("<BR><BR><BR><HR>");
     	writer.println("<input type=\"text\" oninput=\"eventListener()\", id=\"search_input\" placeholder=\"Search Tables/Views, Columns, Formulae\" autocomplete=\"off\">");
     	writer.println("<br><br>");
-    	writer.println("<table class=\"search_results\" border=\"0px\" cellpadding=\"3px\" cellspacing=\"0px\"></table>");
+    	writer.println("<table style=\"padding-left: 40px;\" class=\"search_results\" border=\"0px\" cellpadding=\"3px\" cellspacing=\"0px\"></table>");
     	
     	writer.println(
 	    	"<style> 								"+
