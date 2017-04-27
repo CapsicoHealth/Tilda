@@ -172,6 +172,10 @@ public class DocGen
     	writer.println("   a:visited {");
     	writer.println("     font-weight:      bold;");
     	writer.println("   }");
+    	writer.println(".border_right {");
+    	writer.println("	border-right: 2px solid #000;");
+    	writer.println("}");
+
     	writer.println("</style>");
     	
     	
@@ -219,7 +223,7 @@ public class DocGen
 		    
 		writer.println("    // Append Header ");
 		writer.println("    tempElement = document.createElement(\"tr\"); ");
-		writer.println("    tempElement.innerHTML = \"<th align='left'>Table/View</th><th align='left'>Column/Formula</th>\" ");
+		writer.println("    tempElement.innerHTML = \"<th class='border_right' align='left'>Table/View</th><th align='left'>Column/Formula</th>\" ");
 		writer.println("    searchResultsDiv.appendChild(tempElement) ");
 		    
 		writer.println("    for (key in filteredResults) { ");
@@ -231,7 +235,7 @@ public class DocGen
 		writer.println("      // Reset Temp Variable ");
 		writer.println("      tempElementBody = \"\"; ");
 		writer.println("      // Add Table/View ");
-		writer.println("      tempElementBody += \"<td><table><tr><td><u>\" ");
+		writer.println("      tempElementBody += \"<td class='border_right'><table><tr><td><u>\" ");
 		writer.println("      tempElementBody += \"<b onclick=openDiv('\"+key+\"_DIV')>\"+key+\"</b>\" ");
 		writer.println("      tempElementBody += \"</u></td></tr></table></td>\" ");
 		writer.println("      if (value.length > 0) { ");
