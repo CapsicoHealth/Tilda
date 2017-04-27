@@ -96,6 +96,8 @@ public class DocGen
             FileUtil.copyFileContentsIntoAnotherFile(base64FileName, writer);
           }
 
+        
+        writeSearchHTML(writer);
         WriteTablesAndViews(PS, writer);
 
         writer.println("<BR><BR><BR><BR><BR><HR>- End -<BR><BR><BR>");
@@ -142,4 +144,178 @@ public class DocGen
           }
       }
 
+    public void writeSearchHTML(PrintWriter writer) {
+    	
+    	writer.println("<BR><BR><BR><HR>");
+    	writer.println("<input type=\"text\" oninput=\"eventListener()\", id=\"search_input\" placeholder=\"Search Tables/Views, Columns, Formulae\" autocomplete=\"off\">");
+    	writer.println("<br><br>");
+    	writer.println("<table style=\"padding-left: 40px;\" class=\"search_results\" border=\"0px\" cellpadding=\"3px\" cellspacing=\"0px\"></table>");
+    	
+    	writer.println("<style>");
+    	writer.println(" input[type=text] {");
+    	writer.println("   padding:10px;");
+    	writer.println("     width: 100%;");
+    	writer.println("     border:2px solid #CCC;");
+    	writer.println("     -webkit-border-radius: 5px;");
+    	writer.println("     border-radius: 5px;");
+    	writer.println("   }");
+    	writer.println("   .inner-table td{");
+    	writer.println("     min-width: 300px;");
+    	writer.println("   }");
+    	writer.println("   input[type=text]:focus {");
+    	writer.println("     border-color:#DFECF8;");
+    	writer.println("   } ");
+    	writer.println("   a:link    {  ");
+    	writer.println("     font-weight:      bold;");
+    	writer.println("     color:            black;");
+    	writer.println("   } ");
+    	writer.println("   a:visited {");
+    	writer.println("     font-weight:      bold;");
+    	writer.println("   }");
+    	writer.println(".border_right {");
+    	writer.println("	border-right: 2px solid #000;");
+    	writer.println("}");
+
+    	writer.println("</style>");
+    	
+    	
+		writer.println("<script> ");
+		writer.println("  var tables    = {}; ");
+		writer.println("  var columns   = {}; ");
+		writer.println("  var formulae  = {}; ");
+		    
+		writer.println("  var searchInput; ");
+		writer.println("  var searchResultsDiv; ");
+		    
+		writer.println("  window.onload = function() { ");
+		writer.println("    tables = getData(\"tables\"); ");
+		writer.println("    columns = getData(\"columns\"); ");
+		writer.println("    formulae = getData(\"formula\"); ");
+		writer.println("  } ");
+		    
+		writer.println("  var openDiv = function(divId) { ");
+		writer.println("    var targetDiv = document.getElementById(divId); ");
+		writer.println("    if (targetDiv != undefined || targetDiv != null) { ");
+		writer.println("      window.location = \"#\" + divId; ");
+		writer.println("      targetDiv.style.cssText = \"color: red\"; ");
+		writer.println("      window.setTimeout(function() {targetDiv.style.cssText = \"\"}, 2000) ");
+		writer.println("    } ");
+		writer.println("  } ");
+		    
+		writer.println("  var eventListener = function(event) { ");
+		writer.println("    if ( searchInput == null || searchInput == undefined ) { ");
+		writer.println("      searchInput = document.getElementById(\"search_input\"); ");
+		writer.println("    } ");
+		writer.println("    if ( searchResultsDiv == null || searchResultsDiv == undefined ) { ");
+		writer.println("      searchResultsDiv = document.getElementsByClassName(\"search_results\")[0]; ");
+		writer.println("    } ");
+		writer.println("    var searchInputText = searchInput.value; ");
+		writer.println("    searchResultsDiv.innerHTML = \"\"; ");
+		                
+		writer.println("    if(searchInputText.length < 3) return; ");
+		    
+		writer.println("    var filteredResults = getFilteredResults(searchInputText); ");
+		writer.println("    filteredResults = sortFilteredResults(filteredResults); ");
+		    
+		writer.println("    var tempElement; ");
+		writer.println("    var tempElementBody; ");
+		writer.println("    var count = 0; ");
+		    
+		writer.println("    // Append Header ");
+		writer.println("    tempElement = document.createElement(\"tr\"); ");
+		writer.println("    tempElement.innerHTML = \"<th class='border_right' align='left'>Table/View</th><th align='left'>Column/Formula</th>\" ");
+		writer.println("    searchResultsDiv.appendChild(tempElement) ");
+		    
+		writer.println("    for (key in filteredResults) { ");
+		writer.println("      value = filteredResults[key]; ");
+		writer.println("      tempElement = document.createElement(\"tr\") ");
+		writer.println("      tempElement.setAttribute(\"valign\", \"top\"); ");
+		writer.println("      if (count%2==0) ");
+		writer.println("        tempElement.setAttribute(\"bgcolor\",\"#D2FFDA\"); ");
+		writer.println("      // Reset Temp Variable ");
+		writer.println("      tempElementBody = \"\"; ");
+		writer.println("      // Add Table/View ");
+		writer.println("      tempElementBody += \"<td class='border_right'><table><tr><td><u>\" ");
+		writer.println("      tempElementBody += \"<b onclick=openDiv('\"+key+\"_DIV')>\"+key+\"</b>\" ");
+		writer.println("      tempElementBody += \"</u></td></tr></table></td>\" ");
+		writer.println("      if (value.length > 0) { ");
+		writer.println("        // Add Columns/Formulae (if Any) ");
+		writer.println("        tempElementBody += \"<td><table class='inner-table' align='top'><tr>\" ");
+		writer.println("        for(var i = 0; i < value.length; i++) { ");
+		writer.println("          if (i > 0 && i%3==0) tempElementBody += \"</tr><tr>\" ");
+		writer.println("            tempElementBody += \"<td><u>\" ");
+		writer.println("            tempElementBody += \"<b onclick=openDiv('\"+key+\"-\"+value[i]+\"_DIV')>\"+value[i]+\"</b>\" ");
+		writer.println("            tempElementBody += \"</u></td>\" ");
+		writer.println("        } ");
+		writer.println("        tempElementBody += \"</tr></table></td>\" ");
+		writer.println("      } ");
+		writer.println("      tempElement.innerHTML = tempElementBody; ");
+		writer.println("      searchResultsDiv.appendChild(tempElement); ");
+		writer.println("      count++; ");
+		writer.println("    } ");
+		writer.println("  } ");
+		    
+		writer.println("  // Helper Methods ");
+		writer.println("  var sortFilteredResults = function(results) { ");
+		writer.println("    var sortedResults = {}; ");
+		writer.println("    Object.keys(results).sort().forEach(function(key) { ");
+		writer.println("      sortedResults[key] = results[key]; ");
+		writer.println("    }); ");
+		writer.println("    return sortedResults; ");
+		writer.println("  } ");
+		    
+		writer.println("  var getFilteredData = function(regex, sourceData, destinationData) { ");
+		writer.println("    for (key in sourceData) { ");
+		writer.println("      var table_name = sourceData[key][0]; ");
+		writer.println("      var column_name = sourceData[key][1]; ");
+		    
+		writer.println("      if (regex.test(table_name)) { ");
+		writer.println("        if( destinationData[table_name] == undefined) ");
+		writer.println("          destinationData[table_name] = []; ");
+		writer.println("      } ");
+		    
+		writer.println("      if (column_name != undefined && regex.test(column_name)) { ");
+		writer.println("        var existing_columns = destinationData[table_name]; ");
+		writer.println("        if ( existing_columns == undefined) existing_columns = []; ");
+		writer.println("        existing_columns.push(column_name); ");
+		writer.println("        destinationData[table_name] = existing_columns; ");
+		writer.println("      } ");
+		writer.println("    } ");
+		writer.println("    return destinationData; ");
+		writer.println("  } ");
+		    
+		writer.println("  var getFilteredResults = function(queryString) { ");
+		writer.println("    var regex = new RegExp(queryString, 'gi'); ");
+		writer.println("    var matchingResults = {}; ");
+		writer.println("    getFilteredData(regex, tables, matchingResults); ");
+		writer.println("    getFilteredData(regex, columns, matchingResults); ");
+		writer.println("    getFilteredData(regex, formulae, matchingResults); ");
+		writer.println("    return matchingResults; ");
+		writer.println("  } ");
+		    
+		writer.println("  var getData = function(type) { ");
+		writer.println("    var dataDivs = document.getElementsByClassName(type); ");
+		writer.println("    var divIds = {}; ");
+		writer.println("    var tempId; ");
+		writer.println("    for(var i = 0; i < dataDivs.length; i++) { ");
+		writer.println("      tempId = dataDivs[i].getAttribute(\"id\"); ");
+		writer.println("      if ( tempId != undefined && tempId.length > 0) { ");
+		writer.println("        divIds[tempId] = tempId.replace(\"_DIV\", \"\").split(\"-\"); ");
+		writer.println("      } ");
+		writer.println("    } ");
+		writer.println("    return divIds; ");
+		writer.println("  } ");
+		    
+		writer.println("  Object.extend = function(source1, source2, destination) { ");
+		writer.println("    for (var key in source1) { ");
+		writer.println("      destination[key] = source1[key]; ");
+		writer.println("    } ");
+		writer.println("    for (var key in source2) { ");
+		writer.println("      destination[key] = source2[key]; ");
+		writer.println("    } ");
+		writer.println("    return destination; ");
+		writer.println("  } ");
+		writer.println("</script> ");
+    }
+    
   }

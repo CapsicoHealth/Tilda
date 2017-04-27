@@ -962,6 +962,7 @@ public class GraphvizUtil
             return;
           }
         
+        DG.writeSearchHTML(writer);
         DG.WriteTablesAndViews(PS, writer);
 
         writer.println("<BR><BR><BR><BR><HR><HR>End.<BR><BR><BR>");

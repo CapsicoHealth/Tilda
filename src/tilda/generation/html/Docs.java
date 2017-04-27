@@ -47,7 +47,7 @@ public class Docs
         if ( O.getShortName().equalsIgnoreCase("DATAMART2.SCREENING"))
           System.out.println("xxx");
         
-        Out.println("<DIV id='" + O._Name + "_DIV'>");
+        Out.println("<DIV id='" + O._Name + "_DIV' class='tables'>");
         Out.println("<H1>" + O._Name + "&nbsp;&nbsp;&nbsp;&nbsp;<SUP style=\"font-size: 60%;\"><A href=\"#\">top</A></SUP></H1>" + SystemValues.NEWLINE
         + "The generated " + Helper.getCodeGenLanguage() + "/" + G.getSql().getName() + " Tilda data class <B>Data_" + O._Name + "</B> is mapped to the table <B>" + O.getShortName() + "</B>." + SystemValues.NEWLINE
         + "<UL>" + SystemValues.NEWLINE);
@@ -88,7 +88,7 @@ public class Docs
             Out.println(
             "  <TR valign=\"top\" bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#DFECF8") + "\">"
             + "<TD>" + i + "&nbsp;&nbsp;</TD>"
-            + "<TD align=\"right\"><B>" + C.getName() + "</B>&nbsp;&nbsp;</TD>"
+            + "<TD align=\"right\"><B id='"+O._Name+"-"+C.getName()+"_DIV' class='columns'>" + C.getName() + "</B>&nbsp;&nbsp;</TD>"
             + "<TD>" + JavaJDBCType.getFieldType(C) + (C.isList() == true ? " List<>" : C.isSet() == true ? " Set<>" : "") + "&nbsp;&nbsp;</TD>"
             // + "<TD><B>" + C.getName() + "</B>&nbsp;&nbsp;</TD>"
             + "<TD>" + G.getSql().getColumnType(C) + "&nbsp;&nbsp;</TD>"
@@ -156,7 +156,7 @@ public class Docs
     throws Exception
       {
         String TName = V._Name.substring(0, V._Name.length() - (V._Pivot != null ? "PivotView" : "View").length()) + "Realized";
-        Out.println("<DIV id='" + TName + "_DIV'>");
+        Out.println("<DIV id='" + TName + "_DIV' class='tables'>");
         Out.println("<H2>" + TName + "&nbsp;&nbsp;&nbsp;&nbsp;<SUP style=\"font-size: 60%;\"><A href=\"#\">top</A></SUP></H1>" + SystemValues.NEWLINE
         + "The generated DataMart table based on the View <B>" + V._Name + "</B>." + SystemValues.NEWLINE
         + "<BR><BR>"
@@ -244,7 +244,7 @@ public class Docs
               String FormulaStr = Str.toString();
 
               Out.println("<TR style=\"height: 40px;\"><TD style=\"border: 0px !Important;\" colspan=\"2\">&nbsp;</TD></TR>"
-              + "<TR bgcolor=\"DFECF8\"><TD style=\"text-align:left !important;\" colspan=\"2\"><B>Term " + F._Name + "</B>" + (TextUtil.isNullOrEmpty(F._Id) == true ? "" : (" &nbsp;&nbsp;&nbsp; (#" + F._Id + ")")) + "</TD></TR>"
+              + "<TR bgcolor=\"DFECF8\"><TD style=\"text-align:left !important;\" colspan=\"2\"><B id='"+TName+"-"+F._Name+"_DIV' class='formula'>Term " + F._Name + "</B>" + (TextUtil.isNullOrEmpty(F._Id) == true ? "" : (" &nbsp;&nbsp;&nbsp; (#" + F._Id + ")")) + "</TD></TR>"
               + "<TR><TD><B>Title</B></TD><TD>" + F._Title + "</TD></TR>"
               + "<TR><TD><B>Description</B></TD><TD>" + CleanForHTML(F._Description) + "</TD></TR>"
               + "<TR><TD><B>Formula</B></TD><TD><PRE style=\"padding-top: 3px;\">" + FormulaStr + "</PRE></TD><TR>");
