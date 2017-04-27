@@ -61,10 +61,13 @@ public class ViewDistinctOn
 
         _ColumnObjs = ParseColumns(PS, _ParentView, _Columns);
 
+        int offset = 0;
         for (int i = 0; i < _ColumnObjs.size(); ++i)
           {
-            if (_ColumnObjs.get(i)._Name.equalsIgnoreCase(ParentView._ViewColumns.get(i)._Name) == false)
-              return PS.AddError("View '" + _ParentView.getFullName() + "' is defining distinctOn with columns not matching the initial columns of the view.");
+            if (ParentView._ViewColumns.get(i)._FrameworkGenerated == true && ParentView._ViewColumns.get(i)._Name.equals(_ColumnObjs.get(i)._Name+"TZ") == true)
+             ++offset; 
+            if (_ColumnObjs.get(i)._Name.equalsIgnoreCase(ParentView._ViewColumns.get(i+offset)._Name) == false)
+              return PS.AddError("View '" + _ParentView.getFullName() + "' is defining distinctOn with columns not matching the initial columns of the view: expecting '"+ParentView._ViewColumns.get(i+offset)._Name+"' in position "+i+" but got '"+_ColumnObjs.get(i)._Name+"' instead.");
           }
 
         if (_OrderBy != null && _OrderBy.length > 0)

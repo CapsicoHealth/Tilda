@@ -193,7 +193,7 @@ public class View extends Base
                             for (Value VPV : V._Pivot._Values)
                               {
                                 if (TextUtil.FindElement(VC._Exclude, TextUtil.Print(VPV._Name, VPV._Value), false, 0) != -1)
-                                 continue;
+                                  continue;
                                 ViewColumn NewVC = new ViewColumn();
                                 NewVC._SameAs = V.getShortName() + "." + TextUtil.Print(VPV._Name, VPV._Value);
                                 NewVC._Name = Prefix + TextUtil.Print(VPV._Name, VPV._Value);
@@ -301,8 +301,6 @@ public class View extends Base
 
         if (_TimeSeries != null)
           {
-            if (_Name.equalsIgnoreCase("LabsHistoryPivotView") == true)
-              LOG.debug("xxx");
             if (_TimeSeries.Validate(PS, this) == true)
               {
                 int firstAgg = -1;
@@ -322,17 +320,21 @@ public class View extends Base
                   }
                 else
                   {
+                    int offset = 0;
                     for (int i = 0; i < _DistinctOn._Columns.length; ++i)
-                      if (_DistinctOn._Columns[i].equals(_TimeSeries._Name) == true)
-                        {
-                          firstAgg = i;
-                          if (_Pivot != null)
-                            ++firstAgg;
-
-                          break;
-                        }
+                      {
+                        if (getColumn(_DistinctOn._Columns[i]) != null && getColumn(_DistinctOn._Columns[i])._Type == ColumnType.DATETIME)
+                         ++offset;
+                        if (_DistinctOn._Columns[i].equals(_TimeSeries._Name) == true)
+                          {
+                            firstAgg = i+offset;
+                            if (_Pivot != null)
+                              ++firstAgg;
+                            break;
+                          }
+                      }
                     if (firstAgg == -1)
-                      firstAgg = _DistinctOn._Columns.length;
+                      firstAgg = _DistinctOn._Columns.length+offset;
                   }
 
                 if (firstAgg == -1)
@@ -426,7 +428,7 @@ public class View extends Base
             else
               LOG.warn("The view " + getFullName() + " defined the three OCC columns 'created', 'lastUpdated', and 'deleted' but they came from different objects ('" + CreatedColObjName + "', '" + LastUpdatedColObjName + "', and '" + DeletedColObjName + "' respectively) so the view will not be considered an OCC view.");
           }
-        
+
         if (_SubWhereX != null)
           {
             _SubWhereX.Validate(PS, this, "View");
@@ -506,7 +508,7 @@ public class View extends Base
               ColumnType Type = _CountStar != null ? ColumnType.INTEGER : _Pivot._VC._SameAsObj.getType();
               Column C = new Column(TextUtil.Print(VPV._Name, VPV._Value), Type.name(), Type == ColumnType.STRING ? _Pivot._VC._SameAsObj._Size : 0,
               true, ColumnMode.NORMAL, true, null,
-              VPV._Description + " (pivot on "+_Pivot._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')");
+              VPV._Description + " (pivot on " + _Pivot._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')");
               O._Columns.add(C);
             }
 
@@ -590,9 +592,9 @@ public class View extends Base
 
         _ParentSchema._Objects.add(O);
         O.Validate(PS, ParentSchema);
-        
+
         if (_Realize != null)
-         _Realize.Validate(PS, new ViewRealizedWrapper(O));        
+          _Realize.Validate(PS, new ViewRealizedWrapper(O));
 
         _Validated = Errs == PS.getErrorCount();
         return _Validated;

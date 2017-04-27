@@ -773,7 +773,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             for (ViewColumn VC : ParentView._ViewColumns)
               if (s.equals(VC._Name) == true)
                 {
-                  ColumnType T = VC._SameAsObj.getType();
+                  ColumnType T = VC._SameAsObj == null && VC._SameAs.equals("_TS.p") == true ? ColumnType.DATE : VC._SameAsObj.getType();
                   if (T == ColumnType.INTEGER || T == ColumnType.LONG || T == ColumnType.FLOAT || T == ColumnType.DOUBLE)
                     {
                       M.appendReplacement(Str, "coalesce(\"" + M.group(1) + "\", 0)");
@@ -925,7 +925,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                     Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Name));
                     Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(VC._Name));
                     Out.print(", 'CLMN'");
-                    Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(VC._SameAsObj._Description));
+                    Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(VC._SameAsObj == null && VC._SameAs.equals("_TS.p") == true ? "Time series period" : VC._SameAsObj._Description));
                     Out.println(", current_timestamp, current_timestamp)");
                   }
               }
