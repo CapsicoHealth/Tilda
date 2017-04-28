@@ -47,9 +47,11 @@ public class Docs
         if ( O.getShortName().equalsIgnoreCase("DATAMART2.SCREENING"))
           System.out.println("xxx");
         
+        Out.println("<DIV>");
         Out.println("<DIV id='" + O._Name + "_DIV' class='tables'>");
-        Out.println("<H1>" + O._Name + "&nbsp;&nbsp;&nbsp;&nbsp;<SUP style=\"font-size: 60%;\"><A href=\"#\">top</A></SUP></H1>" + SystemValues.NEWLINE
-        + "The generated " + Helper.getCodeGenLanguage() + "/" + G.getSql().getName() + " Tilda data class <B>Data_" + O._Name + "</B> is mapped to the table <B>" + O.getShortName() + "</B>." + SystemValues.NEWLINE
+        Out.println("<H1>" + O._Name + "&nbsp;&nbsp;&nbsp;&nbsp;<SUP style=\"font-size: 60%;\"><A href=\"#\">top</A></SUP></H1>");
+        Out.println("</DIV>");
+        Out.println("The generated " + Helper.getCodeGenLanguage() + "/" + G.getSql().getName() + " Tilda data class <B>Data_" + O._Name + "</B> is mapped to the table <B>" + O.getShortName() + "</B>." + SystemValues.NEWLINE
         + "<UL>" + SystemValues.NEWLINE);
         switch (O._LC)
           {
@@ -156,9 +158,12 @@ public class Docs
     throws Exception
       {
         String TName = V._Name.substring(0, V._Name.length() - (V._Pivot != null ? "PivotView" : "View").length()) + "Realized";
+        Out.println("<DIV>");
         Out.println("<DIV id='" + TName + "_DIV' class='tables'>");
-        Out.println("<H2>" + TName + "&nbsp;&nbsp;&nbsp;&nbsp;<SUP style=\"font-size: 60%;\"><A href=\"#\">top</A></SUP></H1>" + SystemValues.NEWLINE
-        + "The generated DataMart table based on the View <B>" + V._Name + "</B>." + SystemValues.NEWLINE
+        Out.println("<H2>" + TName + "&nbsp;&nbsp;&nbsp;&nbsp;<SUP style=\"font-size: 60%;\"><A href=\"#\">top</A></SUP></H1>");
+        Out.println("</DIV>");
+        Out.println(
+        "The generated DataMart table based on the View <B>" + V._Name + "</B>." + SystemValues.NEWLINE
         + "<BR><BR>"
         + "<STYLE>"
         + ".RowedTable > TBODY > TR > TD {"
