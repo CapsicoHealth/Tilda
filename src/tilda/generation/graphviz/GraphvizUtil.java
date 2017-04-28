@@ -916,7 +916,7 @@ public class GraphvizUtil
         + "\r\n"
         + "    location.href = \"#\";"
         + "\r\n"
-        + "    window.location.href = \"#\"+target.id+\"_DIV\";"
+        + "    openDiv(target.id+\"_DIV\");"
         + "\r\n"
         + "  }"
         + "\r\n"
@@ -926,8 +926,11 @@ public class GraphvizUtil
         writer.println("</SCRIPT>");
         writer.println("</HEAD>");
         writer.println("<BODY>");
-    	writer.println("<DIV class='svgs'>");
 
+        DG.writeSearchHTML(writer); // Add Search Box
+        
+        writer.println("<BR><BR><HR>");
+        writer.println("<DIV class='svgs'>");
         if (d._Graph.equalsIgnoreCase("complex"))
           {
             for (int i = 0; i < 4; ++i)
@@ -962,7 +965,6 @@ public class GraphvizUtil
             return;
           }
         
-        DG.writeSearchHTML(writer);
         DG.WriteTablesAndViews(PS, writer);
 
         writer.println("<BR><BR><BR><BR><HR><HR>End.<BR><BR><BR>");
