@@ -147,7 +147,7 @@ public class DocGen
 
     public void writeSearchHTML(PrintWriter writer) {
     	
-    	writer.println("<BR><BR>");
+    	writer.println("<BR>");
     	writer.println("<input type=\"text\" oninput=\"eventListener()\", id=\"search_input\" placeholder=\"Search Tables/Views, Columns, Formulae\" autocomplete=\"off\">");
     	writer.println("<br><br>");
     	writer.println("<table style=\"padding-left: 40px;\" class=\"search_results\" border=\"0px\" cellpadding=\"3px\" cellspacing=\"0px\"></table>");
@@ -217,7 +217,7 @@ public class DocGen
 		writer.println("      }, 3000); ");
 		writer.println("    } ");
 		writer.println("  } ");
-		    
+
 		writer.println("  var eventListener = function(event) { ");
 		writer.println("    if ( searchInput == null || searchInput == undefined ) { ");
 		writer.println("      searchInput = document.getElementById(\"search_input\"); ");
@@ -227,19 +227,23 @@ public class DocGen
 		writer.println("    } ");
 		writer.println("    var searchInputText = searchInput.value; ");
 		writer.println("    searchResultsDiv.innerHTML = \"\"; ");
-		                
+
 		writer.println("    if(searchInputText.length < 3) return; ");
-		    
+
 		writer.println("    var filteredResults = getFilteredResults(searchInputText); ");
 		writer.println("    filteredResults = sortFilteredResults(filteredResults); ");
-		    
+
 		writer.println("    var tempElement; ");
 		writer.println("    var tempElementBody; ");
 		writer.println("    var count = 0; ");
 		    
 		writer.println("    // Append Header ");
 		writer.println("    tempElement = document.createElement(\"tr\"); ");
-		writer.println("    tempElement.innerHTML = \"<th class='border_right' align='left'>Table/View</th><th align='left'>Column/Formula</th>\" ");
+		writer.println("    if (Object.keys(filteredResults).length > 0) { ");
+		writer.println("      tempElement.innerHTML = \"<th class='border_right' align='left'>Table/View</th><th align='left'>Column/Formula</th>\"; ");
+		writer.println("    } else { ");
+		writer.println("      tempElement.innerHTML = \"<td>No</td><td>Results</td><td>Found</td>\" ");
+		writer.println("    } ");
 		writer.println("    searchResultsDiv.appendChild(tempElement) ");
 		    
 		writer.println("    for (key in filteredResults) { ");

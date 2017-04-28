@@ -916,7 +916,7 @@ public class GraphvizUtil
         + "\r\n"
         + "    location.href = \"#\";"
         + "\r\n"
-        + "    window.location.href = \"#\"+target.id+\"_DIV\";"
+        + "    openDiv(target.id+\"_DIV\");"
         + "\r\n"
         + "  }"
         + "\r\n"
@@ -929,6 +929,7 @@ public class GraphvizUtil
 
         DG.writeSearchHTML(writer); // Add Search Box
         
+        writer.println("<BR><BR><HR>");
         writer.println("<DIV class='svgs'>");
         if (d._Graph.equalsIgnoreCase("complex"))
           {
