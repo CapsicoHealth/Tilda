@@ -115,7 +115,7 @@ public class TotalMess
             LOG.debug("xxx");
           }
         int i = FuckList.size() - 1;
-        while (FuckList.get(i)._SequenceOrder >= columnSequenceOrder && i >= 0)
+        while (i >= 0 && FuckList.get(i)._SequenceOrder >= columnSequenceOrder)
           --i;
         while (i >= 0)
           {

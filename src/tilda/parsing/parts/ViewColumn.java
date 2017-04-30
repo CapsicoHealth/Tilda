@@ -178,6 +178,8 @@ public class ViewColumn
         if (_SameAsObj != null && _SameAsObj._ParentObject._FST == FrameworkSourcedType.VIEW)
           {
             View SubV = _ParentView._ParentSchema.getSourceView(_SameAsObj._ParentObject);
+            if (SubV == null)
+             return null;
             // LOG.debug("SameAs is part of a sub-view " + SubV.getShortName());
             ViewColumn VC = SubV.getViewColumn(_SameAsObj.getName());
             if (VC != null)
