@@ -16,6 +16,12 @@
 
 package tilda.parsing.parts;
 
+import java.time.Month;
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,17 +29,19 @@ import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.TimeSeriesType;
 import tilda.parsing.ParserSession;
+import tilda.utils.DateTimeUtil;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
 
 public class ViewTimeSeries
   {
-    static final Logger             LOG       = LogManager.getLogger(ViewTimeSeries.class.getName());
+    static final Logger       LOG       = LogManager.getLogger(ViewTimeSeries.class.getName());
 
     /*@formatter:off*/
 	@SerializedName("name"      ) public String             _Name    ;
     @SerializedName("type"      ) public TimeSeriesType     _Type    ;
     @SerializedName("lookback"  ) public int                _Lookback = SystemValues.EVIL_VALUE;
+    @SerializedName("between"   ) public String[]           _Between;
     @SerializedName("join"      ) public ViewTimeSeriesJoin _Join;
     /*@formatter:on*/
 
@@ -54,20 +62,48 @@ public class ViewTimeSeries
 
         // Mandatories
         if (TextUtil.isNullOrEmpty(_Name) == true)
-          return PS.AddError("View '" + ParentView.getFullName() + "' is defining a time Series without any name.");
+          PS.AddError("View '" + ParentView.getFullName() + "' is defining a time Series without any name.");
 
         if (_Type == null)
-          return PS.AddError("View '" + ParentView.getFullName() + "' is defining a time Series without any type.");
+          PS.AddError("View '" + ParentView.getFullName() + "' is defining a time Series without any type.");
 
-        if (_Lookback < 1)
-          return PS.AddError("View '" + ParentView.getFullName() + "' is defining a time Series without a valid lookback: it is required and must be > 0.");
+        if (_Lookback < 1 && _Between == null)
+          PS.AddError("View '" + ParentView.getFullName() + "' is defining a time Series without a valid lookback or a between: one or the other is required.");
+
+        if (_Lookback >= 1 && _Between != null)
+          PS.AddError("View '" + ParentView.getFullName() + "' is defining a time Series with both a lookback and a between: one or the other is required.");
+
+        if (_Between != null)
+          {
+            if (_Between.length != 2)
+              PS.AddError("View '" + ParentView.getFullName() + "' is defining a time Series with a between that doesn't have exactly 2 values.");
+            else
+              {
+                if (_Between[0] != null)
+                  {
+                    ZonedDateTime Start = DateTimeUtil.parseWithoutZone(_Between[0]);
+                    if (Start == null)
+                      PS.AddError("View '" + ParentView.getFullName() + "' is defining a time Series with a between's start date '" + _Between[0] + "' that cannot be parsed as 'YYYY-mm-dd'.");
+                    else if (DateTimeUtil.validateBoundary(_Type, true, Start) == false)
+                      PS.AddError("View '" + ParentView.getFullName() + "' is defining a time Series with a between's start date '" + _Between[0] + "' that is not a valid 1st day boundary for a " + _Type + " type.");
+                  }
+
+                if (_Between[1] != null)
+                  {
+                    ZonedDateTime End = DateTimeUtil.parseWithoutZone(_Between[1]);
+                    if (End == null)
+                      PS.AddError("View '" + ParentView.getFullName() + "' is defining a time Series with a between's end date '" + _Between[1] + "' that cannot be parsed as 'YYYY-mm-dd'.");
+                    else if (DateTimeUtil.validateBoundary(_Type, false, End) == false)
+                      PS.AddError("View '" + ParentView.getFullName() + "' is defining a time Series with a between's end date '" + _Between[1] + "' that is not a valid last-day boundary for a " + _Type + " type.");
+                  }
+              }
+          }
 
         if (_Join == null)
-          return PS.AddError("View '" + ParentView.getFullName() + "' is defining a time Series without specifying a join.");
-
-        _Join.Validate(PS, ParentView);
+          PS.AddError("View '" + ParentView.getFullName() + "' is defining a time Series without specifying a join.");
+        else
+          _Join.Validate(PS, ParentView);
 
         return Errs == PS.getErrorCount();
       }
-
   }
