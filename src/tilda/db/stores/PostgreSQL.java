@@ -515,7 +515,7 @@ public class PostgreSQL implements DBType
         .append("CREATE OR REPLACE FUNCTION TILDA.Age(timestamptz, timestamptz)\n")
         .append("  RETURNS float\n")
         .append("  IMMUTABLE LANGUAGE SQL AS\n")
-        .append("'SELECT date_part(''year'', age($2, $1)) + date_part(''month'', age($2, $1))/12.0;';\n")
+        .append("'SELECT date_part(''year'', age($2, $1)) + date_part(''month'', age($2, $1))/12.0 + date_part(''day'', age($2, $1))/365.0;';\n")
         .append("\n")
         .append("\n")
         .append("CREATE OR REPLACE FUNCTION TILDA.AgeBetween(timestamptz, timestamptz, float, float)\n")

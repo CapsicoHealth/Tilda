@@ -163,8 +163,6 @@ public class View extends Base
                     View V = PS.getView(R._P, R._S, R._O);
                     if (V != null)
                       {
-                        if (V._Name.equalsIgnoreCase("LABSHISTORYPIVOTVIEW") == true)
-                          LOG.debug("xxx");
                         if (V._Validated == false)
                           return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " which has failed validation.");
                         int j = 0;
@@ -226,6 +224,9 @@ public class View extends Base
                       }
                     else
                       {
+                        Schema S = PS.getSchema(R._P, R._S);
+                        if (S == null)
+                         return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " resolving to '" + R.getFullName() + "' with a schema which cannot be found. Please check the declared dependencies for this schema.");
                         Object O = PS.getObject(R._P, R._S, R._O);
                         if (O == null)
                           return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " resolving to '" + R.getFullName() + "' which cannot be found.");
