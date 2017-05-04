@@ -205,11 +205,11 @@ public class DocGen
 		writer.println("  var searchInput; ");
 		writer.println("  var searchResultsDiv; ");
 		    
-		writer.println("  window.onload = function() { ");
+		writer.println("  window.addEventListener(\"load\", function() { ");
 		writer.println("    tables = getData(\"tables\"); ");
 		writer.println("    columns = getData(\"columns\"); ");
 		writer.println("    formulae = getData(\"formula\"); ");
-		writer.println("  } ");
+		writer.println("  }, false); ");
 		    
 		writer.println("  var openDiv = function(divId) { ");
 		writer.println("    var targetDiv = document.getElementById(divId); ");
