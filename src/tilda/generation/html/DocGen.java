@@ -147,18 +147,23 @@ public class DocGen
 
     public void writeSearchHTML(PrintWriter writer) {
     	
-    	writer.println("<BR>");
+    	writer.println("<BR><BR>");
+    	writer.println("<H1>SEARCH</H1>");
     	writer.println("<input type=\"text\" oninput=\"eventListener()\", id=\"search_input\" placeholder=\"Search Tables/Views, Columns, Formulae\" autocomplete=\"off\">");
     	writer.println("<br><br>");
-    	writer.println("<table style=\"padding-left: 40px;\" class=\"search_results\" border=\"0px\" cellpadding=\"3px\" cellspacing=\"0px\"></table>");
+    	writer.println("<table class=\"search_results\" border=\"0px\" cellpadding=\"3px\" cellspacing=\"0px\"></table>");
     	
     	writer.println("<style>");
-    	writer.println("  input[type=text] {");
+    	writer.println("  #search_input {");
     	writer.println("    padding:10px;");
-    	writer.println("    width: 100%;");
+    	writer.println("    width: 98%;");
+    	writer.println("    margin-left: 2%;");
     	writer.println("    border:2px solid #CCC;");
     	writer.println("    -webkit-border-radius: 5px;");
     	writer.println("    border-radius: 5px;");
+    	writer.println("   }");
+    	writer.println("  .search_results { ");
+    	writer.println("	padding-left: 2%; ");
     	writer.println("   }");
     	writer.println("  .blink_div { ");
     	writer.println("    animation: blink-animation 0.75s steps(5, start) infinite; ");
@@ -185,9 +190,9 @@ public class DocGen
     	writer.println("   a:visited {");
     	writer.println("     font-weight:      bold;");
     	writer.println("   }");
-    	writer.println(".border_right {");
+    	writer.println("  .border_right {");
     	writer.println("	border-right: 2px solid #000;");
-    	writer.println("}");
+    	writer.println("  }");
 
     	writer.println("</style>");
     	
@@ -200,11 +205,11 @@ public class DocGen
 		writer.println("  var searchInput; ");
 		writer.println("  var searchResultsDiv; ");
 		    
-		writer.println("  window.onload = function() { ");
+		writer.println("  window.addEventListener(\"load\", function() { ");
 		writer.println("    tables = getData(\"tables\"); ");
 		writer.println("    columns = getData(\"columns\"); ");
 		writer.println("    formulae = getData(\"formula\"); ");
-		writer.println("  } ");
+		writer.println("  }, false); ");
 		    
 		writer.println("  var openDiv = function(divId) { ");
 		writer.println("    var targetDiv = document.getElementById(divId); ");

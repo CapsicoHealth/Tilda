@@ -926,7 +926,7 @@ public class GraphvizUtil
         writer.println("</SCRIPT>");
         writer.println("</HEAD>");
         writer.println("<BODY>");
-
+        
         DG.writeSearchHTML(writer); // Add Search Box
         
         writer.println("<BR><BR><HR>");
