@@ -2,6 +2,7 @@ package tilda.generation.html;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -109,12 +110,13 @@ public class DocGen
 
     public void WriteTablesAndViews(ParserSession PS, PrintWriter writer)
       {
-        for (Object b : schema._Objects)
+    	ArrayList<String> renderedTables =  new ArrayList<>();
+    	for (Object b : schema._Objects)
           {
             try
               {
                 writer.println("<BR><BR><BR><HR>");
-                Docs.DataClassDocs(writer, G, b);
+                Docs.DataClassDocs(writer, G, b, renderedTables);
               }
             catch (Exception e)
               {

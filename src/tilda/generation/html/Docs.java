@@ -17,6 +17,7 @@
 package tilda.generation.html;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
@@ -41,7 +42,13 @@ import tilda.utils.TextUtil;
 
 public class Docs
   {
-    public static void DataClassDocs(PrintWriter Out, GeneratorSession G, Object O)
+	
+	public static void DataClassDocs(PrintWriter Out, GeneratorSession G, Object O)
+	throws Exception {
+		DataClassDocs(Out, G, O, new ArrayList<String>());
+	}
+
+	public static void DataClassDocs(PrintWriter Out, GeneratorSession G, Object O, ArrayList<String> renderedTables)
     throws Exception
       {
         if ( O.getShortName().equalsIgnoreCase("DATAMART2.SCREENING"))
@@ -81,7 +88,7 @@ public class Docs
         + "It contains the following columns:<BR>" + SystemValues.NEWLINE
         + " <TABLE border=\"0px\" cellpadding=\"3px\" cellspacing=\"0px\">" + SystemValues.NEWLINE
         + "   <TR><TH>&nbsp;</TH><TH align=\"right\">Name&nbsp;&nbsp;</TH><TH align=\"left\">Type</TH><!--TH align=\"left\">Column</TH--><TH align=\"left\">Type</TH><TH align=\"left\">Nullable</TH><TH align=\"left\">Mode</TH><TH align=\"left\">Invariant</TH><TH align=\"left\">Protect</TH><TH align=\"left\">Description</TH></TR>" + SystemValues.NEWLINE);
-
+       
         int i = 1;
         for (Column C : O._Columns)
           {
@@ -100,6 +107,7 @@ public class Docs
             + "<TD align=\"center\">" + (C._Protect == null ? "" : C._Protect) + "&nbsp;&nbsp;</TD>"
             + "<TD>" + C._Description + "</TD>"
             + "</TR>");
+            
             if (C._MapperDef != null)
               {
                 Out.println("  <TR bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#DFECF8") + "\"><TD></TD><TD></TD><TD colspan=\"10\" align=\"center\">");
@@ -116,6 +124,101 @@ public class Docs
           }
         Out.println("</TABLE>");
         Out.println("</DIV>");
+        
+        renderedTables.add(O.getFullName());
+
+        for(Column C : O._Columns) {
+        	if (C._SameAsObj != null ) {
+        		if ( !renderedTables.contains(C._SameAsObj._ParentObject.getFullName()) )
+        			DependentDataClassDocs(Out, G, C._SameAsObj._ParentObject, renderedTables);
+        	}
+        }
+        
+      }
+
+    private static void DependentDataClassDocs(PrintWriter Out, GeneratorSession G, Object O, ArrayList<String> renderedTables)
+    throws Exception
+      {
+    	Out.println("<DIV>");
+    	Out.println("<BR><BR><BR><HR>");
+        Out.println("<DIV id='" + O._Name + "_DIV'>");
+        Out.println("<H1>" + O.getFullName() + "&nbsp;&nbsp;&nbsp;&nbsp;<SUP style=\"font-size: 60%;\"><A href=\"#\">top</A></SUP></H1>");
+        Out.println("</DIV>");
+        Out.println("<UL>");
+        switch (O._LC)
+          {
+            case NORMAL:
+              Out.println("<LI>The Object has normal <B>read/write</B> capabilities.</LI>");
+              break;
+            case READONLY:
+              Out.println("<LI>The Object is <B>ReadOnly</B>.</LI>");
+              break;
+            case WORM:
+              Out.println("<LI>The Object is <B>WORM</B> (Write Once Read Many).</LI>");
+              break;
+            default:
+              throw new Exception("Unknown Object lifecycle value '" + O._LC + "' when generating class docs");
+          }
+
+        if (O._OCC == true)
+          Out.println("<LI>The Object is OCC-enabled. Default created/lastUpdated/deleted columns will be automatically generated.</LI>");
+        else
+          Out.println("<LI>That Object is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>");
+
+        Out.println("</UL>");
+
+        Out.println(
+        "<B>Description</B>: " + O._Description + "<BR>" + SystemValues.NEWLINE
+        + "<BR>" + SystemValues.NEWLINE
+        + "It contains the following columns:<BR>" + SystemValues.NEWLINE
+        + " <TABLE border=\"0px\" cellpadding=\"3px\" cellspacing=\"0px\">" + SystemValues.NEWLINE
+        + "   <TR><TH>&nbsp;</TH><TH align=\"right\">Name&nbsp;&nbsp;</TH><TH align=\"left\">Type</TH><!--TH align=\"left\">Column</TH--><TH align=\"left\">Type</TH><TH align=\"left\">Nullable</TH><TH align=\"left\">Mode</TH><TH align=\"left\">Invariant</TH><TH align=\"left\">Protect</TH><TH align=\"left\">Description</TH></TR>" + SystemValues.NEWLINE);
+       
+        int i = 1;
+        for (Column C : O._Columns)
+          {
+            if (C == null)
+              continue;
+            Out.println(
+            "  <TR valign=\"top\" bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#DFECF8") + "\">"
+            + "<TD>" + i + "&nbsp;&nbsp;</TD>"
+            + "<TD align=\"right\"><B id='"+O._Name+"-"+C.getName()+"_DIV'>" + C.getName() + "</B>&nbsp;&nbsp;</TD>"
+            + "<TD>" + JavaJDBCType.getFieldType(C) + (C.isList() == true ? " List<>" : C.isSet() == true ? " Set<>" : "") + "&nbsp;&nbsp;</TD>"
+            // + "<TD><B>" + C.getName() + "</B>&nbsp;&nbsp;</TD>"
+            + "<TD>" + G.getSql().getColumnType(C) + "&nbsp;&nbsp;</TD>"
+            + "<TD align=\"center\">" + (C._Nullable == true ? "&#x2611;" : "") + "&nbsp;&nbsp;</TD>"
+            + "<TD align=\"center\">" + (C._Mode == ColumnMode.NORMAL ? "" : C._Mode) + "&nbsp;&nbsp;</TD>"
+            + "<TD align=\"center\">" + (C._Invariant == false ? "" : "&#x2611;") + "&nbsp;&nbsp;</TD>"
+            + "<TD align=\"center\">" + (C._Protect == null ? "" : C._Protect) + "&nbsp;&nbsp;</TD>"
+            + "<TD>" + C._Description + "</TD>"
+            + "</TR>");
+            
+            if (C._MapperDef != null)
+              {
+                Out.println("  <TR bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#DFECF8") + "\"><TD></TD><TD></TD><TD colspan=\"10\" align=\"center\">");
+                Out.println("This column is automatically generated against the Mapper " + C._SameAsObj.getFullName() + ".");
+                Out.println("</TD></TR>");
+              }
+            if (C._Values != null)
+              {
+                Out.println("  <TR bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#DFECF8") + "\"><TD></TD><TD></TD><TD colspan=\"10\" align=\"center\">");
+                docFieldValues(Out, C);
+                Out.println("</TD></TR>");
+              }
+            ++i;
+          }
+        Out.println("</TABLE>");
+        Out.println("</DIV>");
+
+        renderedTables.add(O.getFullName());
+       
+        for(Column C : O._Columns) {
+        	if (C._SameAsObj != null ) {
+        		if ( !renderedTables.contains(C._SameAsObj._ParentObject.getFullName()) )
+        			DependentDataClassDocs(Out, G, C._SameAsObj._ParentObject, renderedTables);
+        	}
+        }
+
       }
 
 
