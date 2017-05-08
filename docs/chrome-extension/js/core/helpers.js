@@ -34,7 +34,7 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
     console.log("Deps --> "+object.get("name"));
     var references = object.get("references") || [];
     _.each(references, function(value, i){
-      var key = package+"."+value.get("friendlyName");
+      var key = package+"#"+value.get("friendlyName");
       console.log("Key --> "+key);
       objectAttr = window.tildaCache[key];
       var fn = X[value.get("_type")];
@@ -70,7 +70,7 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
 
     var references = object.get("references") || [];
     _.each(references, function(value, i){
-      var key = package+"."+value.get("friendlyName");
+      var key = package+"#"+value.get("friendlyName");
       console.log("Key --> "+key);
       console.log("Type --> "+value.get("_type"));
       objectAttr = window.tildaCache[key];
@@ -97,7 +97,7 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
       if(object.get('rendered') == null){
         var t = new joint.shapes.basic.Rect(attr);
         graph.addCell(t);
-        o.set({graphId: t.id, rendered: true})
+        o.set({graphId: t.id, rendered: true, package: package})
         return t;
       }
     }
@@ -105,7 +105,7 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
 
     var references = object.get("references") || [];
     _.each(references, function(value, i){
-      var key = package+"."+value.get("friendlyName");
+      var key = package+"#"+value.get("friendlyName");
       objectAttr = window.tildaCache[key];
       var fn = X[value.get("_type")];
       fn.apply(this, [graph, value, gotoNextPosition(position), objectAttr, package])
@@ -131,7 +131,7 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
       if(o.get('graphId') == null){
         var t = new joint.shapes.basic.Rect(attr);
         graph.addCell(t);
-        o.set({graphId: t.id, rendered: true})
+        o.set({graphId: t.id, rendered: true, package: package})
         return t;
       }
     }
@@ -140,7 +140,7 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
     // dependencies;
     var references = object.get("references") || [];
     _.each(references, function(value, i){
-      var key = package+"."+value.get("friendlyName");
+      var key = package+"#"+value.get("friendlyName");
       objectAttr = window.tildaCache[key];
       var fn = X[value.get("_type")];
       fn.apply(this, [graph, value, gotoNextPosition(position), objectAttr, package])

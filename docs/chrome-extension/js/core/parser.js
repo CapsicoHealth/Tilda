@@ -59,7 +59,7 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
       var that = this;
 
       var elementChangeHandler = function(event){
-        var eventObject = that.collection.findWhere({graphId: event.get("graphId")})
+        var eventObject = that.collection.findWhere({graphId: event.get("id")})
         var key = that.pKey+"#"+eventObject.get("friendlyName");
         var position = eventObject.get("data").position;
         if(eventObject.get("data").position == null){
@@ -128,13 +128,13 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
 
       _.each(this.objects, function(object, i){
         var object = that.objects.at(i);
-        var key = that.schemaName+object.get("friendlyName");
+        var key = that.pKey+"#"+object.get("friendlyName");
         var objFn = renderObject[object.get("_type")];
         if ( objFn != null){
           var position = gotoNextPosition(currentPos);
           var objectAttr = window.tildaCache[key];
 
-          var t = objFn(graph, object, position, objectAttr, that.package+"#"+that.opts.viewOnly);
+          var t = objFn(graph, object, position, objectAttr, key);
           if(t != null){
             t.on('change:position', _.debounce(elementChangeHandler, 500, { 'maxWait' : 1000 }));
           }

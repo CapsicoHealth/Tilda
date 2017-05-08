@@ -69,6 +69,7 @@ define(['text!../templates/tilda_schema/_new.html',
       var that = this;
       var fName = $(event.target).val();
       var schemaEntry = this.schemaEntries[fName];
+      that.currentEntry = schemaEntry;
       var init = function(objectEntries){
         var pkgInfo = objectEntries.packageInfo;
         that.packageInfo = pkgInfo;
@@ -169,6 +170,7 @@ define(['text!../templates/tilda_schema/_new.html',
         that.writeUserPrefs(dEntry, event);
         that.writeSVG(dEntry, event);
       })
+      return false;
     },
     writeSVG: function(entry, event){
       // TODO write to a file.
