@@ -15,33 +15,42 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
   var CustomElementView = CEV.CustomElementView;
   var renderObject = Helpers.renderObject;
   var renderObjectRelations = LinkRenderer;
-  var p = function(package, eleId, opts){
-    this.package = package;
+  var p = function(schema, eleId, opts){
+    this.schema = schema
     this.opts = opts;
     this.eleId = eleId;
+    this.pKey = this.schema.package.toLowerCase()+"#"+this.opts.viewOnly;
     this.objects = new ObjectCollection();
     this.paper = null;
-    this.collection = window.collection.clone();
-    this.schemaName = this.package.split(".")[1];
-    var that = this;
-    // reset object positions.
-    _.each(this.collection, function(object, i){
-      var object = that.collection.at(i);
-      object.set({"graphId": null});
-    })
-    if(this.opts.viewOnly){
-      this.objects = new ObjectCollection(this.collection.where({_type: "View", schemaName: this.schemaName}));
-    } else {
-      var objects = this.collection.filter(function (obj) {
-        return obj.get('_type') !== 'View' && obj.get('schemaName') == that.schemaName;
-      });
-      this.objects = new ObjectCollection(objects);
-    }
-    this.pKey = this.schemaName+"#"+this.opts.viewOnly;
-
-    console.log("pKey --> "+this.pKey);
+    console.log("pKey --> "+this.pKey)
     var currentPos = { x: -150, y: 30 }
+    this.parse = function(){
+      var that = this;
+      var pushElement = function(collection, schemaObj, _type, _inSchema){
+        var t = new ParserElement();
+        t.set({data: schemaObj, name: schemaObj.name,
+         _type: _type, inSchema: _inSchema, package: that.schema.package, pKey: that.pKey});
+        collection.add(t);
+      }
+      _.each(this.schema.objects, function(object, i){
+        pushElement(that.objects, object, "Object", true)
+      })
+      if(this.opts.viewOnly){
+        _.each(this.schema.views, function(view, i){
+          pushElement(that.objects, view, "View", true)
+        })
+      }
+      else{
+        _.each(this.schema.enumerations, function(enumeration, i){
+          pushElement(that.objects, enumeration, "Enumeration", true)
+        })
 
+        _.each(this.schema.mappers, function (mapper, i){
+          pushElement(that.objects, mapper, "Mapper", true)
+        })
+
+      }
+    }
     this.resetAll = function(){
       var elements = this.paper.model.getElements();
       var links = this.paper.model.getLinks();
@@ -59,13 +68,16 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
       var that = this;
 
       var elementChangeHandler = function(event){
-        var eventObject = that.collection.findWhere({graphId: event.get("id")})
-        var key = that.pKey+"#"+eventObject.get("friendlyName");
+        var eventObject = that.objects.findWhere({graphId: event.get("id")});
+        var key = that.schema.package.toLowerCase()+"#"+eventObject.get("name").toLowerCase();
         var position = eventObject.get("data").position;
         if(eventObject.get("data").position == null){
           eventObject.get("data").position = {};
           var position = eventObject.get("data").position;
         }
+        // Store preferences.
+        var syncSet = {};
+        // console.log("key -> "+key+"\nObject -> "+JSON.stringify(event.toJSON()));
         window.tildaCache[key] = event.toJSON();
       }
 
@@ -91,7 +103,7 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
         linkView: CustomLinkView
       });
       this.paper = paper;
-      window.paper = paper;
+
 
       var dragStartPosition = null;
       paper.on('blank:pointerdown',function(event, x, y) {
@@ -124,39 +136,50 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
           paper.scale(newScale, newScale, p.x, p.y);
         }
       });
-      console.error("Package --> "+that.package+"#"+that.opts.viewOnly);
 
-      _.each(this.objects, function(object, i){
-        var object = that.objects.at(i);
-        var key = that.pKey+"#"+object.get("friendlyName");
-        var objFn = renderObject[object.get("_type")];
+      var that = this;
+      var elementChangeHandler = function(event){
+        var eventObject = that.objects.findWhere({graphId: event.get("id")});
+        var key = eventObject.get("pKey")+"#"+eventObject.get("name").toLowerCase();
+        var position = eventObject.get("data").position;
+        if(eventObject.get("data").position == null){
+          eventObject.get("data").position = {};
+          var position = eventObject.get("data").position;
+        }
+        // Store preferences.
+        window.tildaCache[key] = event.toJSON();
+      }
+      var objects = this.objects
+      if(this.opts.viewOnly){
+        objects = new ObjectCollection(objects.where({_type: "View"}));
+      }
+
+      _.each(objects, function(object, i){
+        var object = objects.at(i);
+        var key = object.get("pKey")+"#"+object.get("name").toLowerCase();
+        var objFn = renderObject[object.get("_type")]
         if ( objFn != null){
           var position = gotoNextPosition(currentPos);
           var objectAttr = window.tildaCache[key];
-
-          var t = objFn(graph, object, position, objectAttr, key);
-          if(t != null){
-            t.on('change:position', _.debounce(elementChangeHandler, 500, { 'maxWait' : 1000 }));
-          }
+          var t = objFn(graph, object, position, objectAttr);
+          object.set("graphId", t.get("id"));
+          object.set("rendered", true);
+          t.on('change:position', _.debounce(elementChangeHandler, 500, { 'maxWait' : 1000 }));
         }
       })
 
-      _.each(this.objects, function(object, i){
-        var object = that.objects.at(i);
-        var key = object.get("_type");
+      _.each(objects, function(object, i){
+        var object = objects.at(i);
+        var key = that.opts.viewOnly ? "only"+object.get("_type") : object.get("_type")
         var objFn = renderObjectRelations[key]
         if(objFn != null){
-          objFn(graph, object, that.pKey);
+          objFn(graph, object, that.objects, gotoNextPosition(currentPos));
         }
       })
 
     }
-    try{
-      this.render();
-    } catch(e){
-      console.error(e.message);
-      console.error(e.stack)
-    }
+    this.parse();
+    this.render();
   }
 
   return p;
