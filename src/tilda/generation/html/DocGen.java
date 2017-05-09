@@ -110,13 +110,13 @@ public class DocGen
 
     public void WriteTablesAndViews(ParserSession PS, PrintWriter writer)
       {
-    	ArrayList<String> renderedTables =  new ArrayList<>();
+    	writeModalHTMLAndJS(writer);
     	for (Object b : schema._Objects)
           {
             try
               {
                 writer.println("<BR><BR><BR><HR>");
-                Docs.DataClassDocs(writer, G, b, renderedTables);
+                Docs.DataClassDocs(writer, G, b);
               }
             catch (Exception e)
               {
@@ -147,6 +147,74 @@ public class DocGen
           }
       }
 
+    public void writeModalHTMLAndJS(PrintWriter writer) {
+    	writer.println("<style>");
+    	writer.println("  .modal { ");
+    	writer.println("      display: none; /* Hidden by default */ ");
+    	writer.println("      position: fixed; /* Stay in place */ ");
+    	writer.println("      z-index: 1; /* Sit on top */ ");
+    	writer.println("      left: 0; ");
+    	writer.println("      top: 0; ");
+    	writer.println("      width: 100%; /* Full width */ ");
+    	writer.println("      height: 100%; /* Full height */ ");
+    	writer.println("      overflow: auto; /* Enable scroll if needed */ ");
+    	writer.println("      background-color: rgb(0,0,0); /* Fallback color */ ");
+    	writer.println("      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */ ");
+    	writer.println("  } ");
+    	writer.println("   ");
+    	writer.println("  .modal-content { ");
+    	writer.println("      background-color: #fefefe; ");
+    	writer.println("      margin: 15% auto; /* 15% from the top and centered */ ");
+    	writer.println("      padding: 20px; ");
+    	writer.println("      border: 1px solid #888; ");
+    	writer.println("      width: 80%; /* Could be more or less, depending on screen size */ ");
+    	writer.println("  } ");
+    	writer.println("   ");
+    	writer.println("  .close { ");
+    	writer.println("      color: #aaa; ");
+    	writer.println("      float: right; ");
+    	writer.println("      font-size: 28px; ");
+    	writer.println("      font-weight: bold; ");
+    	writer.println("  } ");
+    	writer.println("   ");
+    	writer.println("  .cursor_pointer { ");
+    	writer.println("    cursor: pointer; ");
+    	writer.println("  } ");
+    	writer.println("  .close:hover, ");
+    	writer.println("  .close:focus { ");
+    	writer.println("      color: black; ");
+    	writer.println("      text-decoration: none; ");
+    	writer.println("      cursor: pointer; ");
+    	writer.println("  } ");
+    	writer.println("</style>");
+    	
+
+    	writer.println("<script>");
+    	writer.println("  var onModalCloseClicked = function(modalId) {");
+    	writer.println("    modal = document.getElementById(modalId);");
+    	writer.println("    modal.style.display = \"none\";");
+    	writer.println("  }");
+    	writer.println("  var onModalShowClicked = function(id) {");
+    	writer.println("    modal = document.getElementById(id+\"_MODAL\");");
+    	writer.println("    modal.style.display = \"block\";");
+    	writer.println("  }");
+    	writer.println("  window.addEventListener('load', function() { ");
+    	writer.println("    expand_buttons = document.getElementsByClassName(\"expand_div\"); ");
+    	writer.println("    for ( var i = 0; i < expand_buttons.length; i++ ) { ");
+    	writer.println("      expand_buttons[i].addEventListener(\"click\", function(event) { ");
+    	writer.println("        if ( event.target.parentElement.getElementsByTagName(\"div\")[0].style.display == \"none\" ) {");
+    	writer.println("      	   event.target.parentElement.getElementsByTagName(\"div\")[0].style.display = \"block\" ");
+    	writer.println("      	   event.target.innerHTML = \"&#9660;\" ");
+    	writer.println("      	} else { ");
+    	writer.println("      	   event.target.parentElement.getElementsByTagName(\"div\")[0].style.display = \"none\" ");
+    	writer.println("      	   event.target.innerHTML = \"&#9654;\" ");
+    	writer.println("      	} ");
+    	writer.println("      }, false); ");
+    	writer.println("    } ");
+    	writer.println("  }, false); ");
+    	writer.println("</script>");
+    }
+    
     public void writeSearchHTML(PrintWriter writer) {
     	
     	writer.println("<BR><BR>");
