@@ -75,7 +75,7 @@ public class Generator
         genTildaSupport(G, GenFolder, S);
 
         for (Object O : S._Objects)
-          if (O != null)
+          if (O != null && O._DBOnly == false)
             {
               genTildaData(G, GenFolder, O);
               genTildaFactory(G, GenFolder, O);

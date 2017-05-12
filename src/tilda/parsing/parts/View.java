@@ -59,6 +59,7 @@ public class View extends Base
     @SerializedName("realize"       ) public ViewRealize           _Realize;
     @SerializedName("importFormulas") public String[]              _ImportFormulas = new String[] { };
     @SerializedName("formulaColumns") public List<Formula>         _Formulas = new ArrayList<Formula>();
+    @SerializedName("dbOnly"        ) public boolean               _DBOnly = false;
     /*@formatter:on*/
 
     public transient boolean     _OCC            = false;
@@ -226,7 +227,7 @@ public class View extends Base
                       {
                         Schema S = PS.getSchema(R._P, R._S);
                         if (S == null)
-                         return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " resolving to '" + R.getFullName() + "' with a schema which cannot be found. Please check the declared dependencies for this schema.");
+                          return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " resolving to '" + R.getFullName() + "' with a schema which cannot be found. Please check the declared dependencies for this schema.");
                         Object O = PS.getObject(R._P, R._S, R._O);
                         if (O == null)
                           return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " resolving to '" + R.getFullName() + "' which cannot be found.");
@@ -325,17 +326,17 @@ public class View extends Base
                     for (int i = 0; i < _DistinctOn._Columns.length; ++i)
                       {
                         if (getColumn(_DistinctOn._Columns[i]) != null && getColumn(_DistinctOn._Columns[i])._Type == ColumnType.DATETIME)
-                         ++offset;
+                          ++offset;
                         if (_DistinctOn._Columns[i].equals(_TimeSeries._Name) == true)
                           {
-                            firstAgg = i+offset;
+                            firstAgg = i + offset;
                             if (_Pivot != null)
                               ++firstAgg;
                             break;
                           }
                       }
                     if (firstAgg == -1)
-                      firstAgg = _DistinctOn._Columns.length+offset;
+                      firstAgg = _DistinctOn._Columns.length + offset;
                   }
 
                 if (firstAgg == -1)
@@ -591,6 +592,7 @@ public class View extends Base
               }
           }
 
+        O._DBOnly = _DBOnly;
         _ParentSchema._Objects.add(O);
         O.Validate(PS, ParentSchema);
 

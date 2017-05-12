@@ -58,6 +58,8 @@ public class Object extends Base
     public transient boolean              _HasUniqueQuery;
     public transient FrameworkSourcedType _FST         = FrameworkSourcedType.NONE;
     public transient ObjectLifecycle      _LC;
+    public transient boolean              _DBOnly;
+
 
     @Override
     public Column getColumn(String name)
