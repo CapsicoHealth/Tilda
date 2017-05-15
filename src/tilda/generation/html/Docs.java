@@ -113,7 +113,7 @@ public class Docs
             + "<TD align=\"center\">" + (C._Protect == null ? "" : C._Protect) + "&nbsp;&nbsp;</TD>"
             + "<TD>" + C._Description + "</TD>"
             + "</TR>");
-
+            
             if (C._MapperDef != null)
               {
                 Out.println("  <TR bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#DFECF8") + "\"><TD></TD><TD></TD><TD colspan=\"10\" align=\"center\">");
@@ -157,6 +157,21 @@ public class Docs
 		}
 	}
 
+	private static void PrintDependentHierarchy(PrintWriter Out, ViewColumn C, int level) {
+		if ( C != null ) {
+			Out.println("<DIV>");
+			String indentedBody = "";
+			for(int i = 1; i < level ; i++) indentedBody += "&nbsp;&nbsp;&nbsp;&nbsp;";
+			if (C._SameAsObj != null ) {
+				Out.println(indentedBody + "<SPAN class='expand_div'>&#9660;</SPAN> " + C.getShortName());
+				PrintDependentHierarchy(Out, C._SameAsObj, ++level);
+			} else {
+				Out.println(indentedBody + "&nbsp;&nbsp;&nbsp;&nbsp;" + C.getShortName());
+			}
+			Out.println("</DIV>");			
+		}
+	}
+		
     private static void docFieldValues(PrintWriter Out, Column C)
       {
         Out.println("<TABLE border=\"0px\" cellpadding=\"2px\" cellspacing=\"0px\">"
@@ -248,8 +263,8 @@ public class Docs
         Out.println("</TABLE></BLOCKQUOTE><BR><BR></BLOCKQUOTE>");
 
         Out.println("<H3>The following terms/formulas are defined:</H3>"
-        + "<BLOCKQUOTE>"
-        + "<TABLE class=\"RowedTable\" border=\"0px\" cellspacing=\"0px\" cellpadding=\"2px\" width=\"75%\">\n");
+        + "<BLOCKQUOTE>\n");
+      
         if (V._Formulas != null)
           for (Formula F : V._Formulas)
             {
@@ -262,7 +277,7 @@ public class Docs
                   ViewColumn VC = V.getViewColumn(s);
                   if (VC != null)
                     {
-                      M.appendReplacement(Str, "<B style=\"color:#00AA00;\">" + s + "</B>");
+                	  M.appendReplacement(Str, "<B style=\"color:#00AA00;\">" + s + "</B>");
                       ColumnMatches.add(s);
                     }
                 }
@@ -286,9 +301,21 @@ public class Docs
 
               String FormulaStr = Str.toString();
 
-              Out.println("<TR style=\"height: 40px;\"><TD style=\"border: 0px !Important;\" colspan=\"2\">&nbsp;</TD></TR>"
-              + "<TR bgcolor=\"DFECF8\"><TD style=\"text-align:left !important;\" colspan=\"2\"><B id='"+TName+"-"+F._Name+"_DIV' class='formula'>Term " + F._Name + "</B>" + (TextUtil.isNullOrEmpty(F._Id) == true ? "" : (" &nbsp;&nbsp;&nbsp; (#" + F._Id + ")")) + "</TD></TR>"
-              + "<TR><TD><B>Title</B></TD><TD>" + F._Title + "</TD></TR>"
+              // Start Table
+              Out.println("<TABLE class=\"RowedTable\" border=\"0px\" cellspacing=\"0px\" cellpadding=\"2px\" width=\"75%\">");
+              
+              // Start Rows
+              Out.println("<TR style=\"height: 40px;\"><TD style=\"border: 0px !Important;\" colspan=\"2\">&nbsp;</TD></TR>");
+              
+              Out.println("<TR bgcolor=\"DFECF8\">");
+              if ( !FormulaMatches.isEmpty() || !ColumnMatches.isEmpty() ) {
+            	  Out.println("<TD onclick=\"onModalShowClicked('"+TName+"-"+F._Name+"')\" style=\"text-align:left !important;\" colspan=\"2\"><B id='"+TName+"-"+F._Name+"_DIV' class='formula cursor_pointer'>Term " + F._Name + " ...</B>" + (TextUtil.isNullOrEmpty(F._Id) == true ? "" : (" &nbsp;&nbsp;&nbsp; (#" + F._Id + ")")) + "</TD>");
+              } else {
+            	  Out.println("<TD style=\"text-align:left !important;\" colspan=\"2\"><B id='"+TName+"-"+F._Name+"_DIV' class='formula'>Term " + F._Name + "</B>" + (TextUtil.isNullOrEmpty(F._Id) == true ? "" : (" &nbsp;&nbsp;&nbsp; (#" + F._Id + ")")) + "</TD>");
+              }
+              Out.println("</TR>");
+              
+              Out.println("<TR><TD><B>Title</B></TD><TD>" + F._Title + "</TD></TR>"
               + "<TR><TD><B>Description</B></TD><TD>" + CleanForHTML(F._Description) + "</TD></TR>"
               + "<TR><TD><B>Formula</B></TD><TD><PRE style=\"padding-top: 3px;\">" + FormulaStr + "</PRE></TD><TR>");
               if (F._Values != null && F._Values.length > 0)
@@ -302,10 +329,10 @@ public class Docs
               if (ColumnMatches.isEmpty() == true)
                 Out.println("None");
               else
-                {
+                { 
                   Out.println("<TABLE border=\"0px\">");
                   for (String ColName : ColumnMatches)
-                    Out.println("<TR><TD valign=\"top\" align=\"right\"><B style=\"color:#00AA00;\">" + ColName + "</B>:</TD><TD>" + V.getColumn(ColName)._Description + "</TD></TR>");
+                	  Out.println("<TR><TD valign=\"top\" align=\"right\"><B style=\"color:#00AA00;\">" + ColName + "</B>:</TD><TD>" + V.getColumn(ColName)._Description + "</TD></TR>");
                   Out.println("</TABLE>");
                 }
               Out.println("</TD></TR>");
@@ -320,8 +347,35 @@ public class Docs
                   Out.println("</TABLE>");
                 }
               Out.println("</TD></TR>");
+              
+              // End Table
+              Out.println("</TABLE>");
+              
+              if (!ColumnMatches.isEmpty() || !FormulaMatches.isEmpty() ) {
+                  Out.println("<DIV id='"+TName+"-"+F._Name+"_MODAL' class='modal'>");
+                  Out.println("<DIV class='modal-content'>");
+                  Out.println("<DIV onclick=\"onModalCloseClicked('"+TName+"-"+F._Name+"_MODAL')\" class='close'>&times;</DIV>");
+
+                  for( String formulaName : FormulaMatches ) {
+                	  Formula formula = V.getFormula(formulaName);
+                	  Out.println("<BR>");
+                	  Out.println("<DIV>");
+                	  Out.println(formula.getParentView().getShortName() + "." + formula._Name);
+                	  Out.println("</DIV>");
+                  }
+                  
+                  for( String columnName : ColumnMatches ) {
+                	  ViewColumn col = V.getViewColumn(columnName);
+                	  
+                	  Out.println("<BR>");
+                	  PrintDependentHierarchy(Out, col, 1);
+                  }
+                  
+                  Out.println("</DIV></DIV>");
+              }
+              
             }
-        Out.println("</TABLE></BLOCKQUOTE>");
+        Out.println("</BLOCKQUOTE>");
       }
 
 

@@ -65,6 +65,10 @@ public class Formula extends TypeDef
           }
       }
 
+    public View getParentView() {
+    	return this._ParentView;
+    }
+    
     public boolean Validate(ParserSession PS, View ParentView)
       {
         int Errs = PS.getErrorCount();
