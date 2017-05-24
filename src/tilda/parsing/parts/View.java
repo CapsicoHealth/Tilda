@@ -491,10 +491,7 @@ public class View extends Base
               break;
             if (VC != null && VC._FrameworkGenerated == false && VC._JoinOnly == false)
               {
-                if (_OCC == false || VC.getName().equals("created") == false && VC.getName().equals("lastUpdated") == false && VC.getName().equals("createdETL") == false && VC.getName().equals("lastUpdatedETL") == false && VC.getName().equals("deleted") == false)
-                  {
-                    O._Columns.add(new ViewColumnWrapper(VC._SameAsObj, VC, ++Counter));
-                  }
+                O._Columns.add(new ViewColumnWrapper(VC._SameAsObj, VC, ++Counter));
               }
           }
         if (TextUtil.isNullOrEmpty(_CountStar) == false)
