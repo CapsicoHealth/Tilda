@@ -216,13 +216,13 @@ public class Schema
         O._Columns.add(C);
         C = new Column("name", ColumnType.STRING.name(), 64, false, null, true, null, "The name of the formula/column");
         O._Columns.add(C);
-        C = new Column("title", ColumnType.STRING.name(), 64, false, null, true, null, "The title of the formula/column");
+        C = new Column("title", ColumnType.STRING.name(), 128, false, null, true, null, "The title of the formula/column");
         O._Columns.add(C);
-        C = new Column("description", ColumnType.STRING.name(), 4096, false, null, true, null, "The description of the formula/column");
+        C = new Column("description", ColumnType.STRING.name(), 8192, false, null, true, null, "The description of the formula/column");
         O._Columns.add(C);
-        C = new Column("formula", ColumnType.STRING.name(), 4096, false, null, true, null, "The formula");
+        C = new Column("formula", ColumnType.STRING.name(), 8192, false, null, true, null, "The formula");
         O._Columns.add(C);
-        C = new Column("html", ColumnType.STRING.name(), 4096, false, null, true, null, "A pre-rendered html fragment with the full documentation for this formula");
+        C = new Column("html", ColumnType.STRING.name(), 16384, false, null, true, null, "A pre-rendered html fragment with the full documentation for this formula");
         O._Columns.add(C);
 
         O._PrimaryKey = new PrimaryKey();
