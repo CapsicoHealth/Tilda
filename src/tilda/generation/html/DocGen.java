@@ -149,6 +149,10 @@ public class DocGen
 
     public void writeModalHTMLAndJS(PrintWriter writer) {
     	writer.println("<style>");
+    	writer.println("  .hierarchy:hover {  ");
+    	writer.println("      color: red; ");
+    	writer.println("      text-decoration: none; ");
+    	writer.println("  } ");
     	writer.println("  .modal { ");
     	writer.println("      display: none; /* Hidden by default */ ");
     	writer.println("      position: fixed; /* Stay in place */ ");
@@ -167,7 +171,8 @@ public class DocGen
     	writer.println("      margin: 15% auto; /* 15% from the top and centered */ ");
     	writer.println("      padding: 20px; ");
     	writer.println("      border: 1px solid #888; ");
-    	writer.println("      width: 80%; /* Could be more or less, depending on screen size */ ");
+    	writer.println("      width: 70%; /* Could be more or less, depending on screen size */ ");
+    	writer.println("      min-height: 20%; ");
     	writer.println("  } ");
     	writer.println("   ");
     	writer.println("  .close { ");
@@ -176,7 +181,9 @@ public class DocGen
     	writer.println("      font-size: 28px; ");
     	writer.println("      font-weight: bold; ");
     	writer.println("  } ");
-    	writer.println("   ");
+    	writer.println("  .cursor_pointer:hover { ");
+    	writer.println("    color: red; ");
+    	writer.println("  } ");
     	writer.println("  .cursor_pointer { ");
     	writer.println("    cursor: pointer; ");
     	writer.println("  } ");
@@ -194,6 +201,30 @@ public class DocGen
     	writer.println("    modal = document.getElementById(modalId);");
     	writer.println("    modal.style.display = \"none\";");
     	writer.println("  }");
+    	writer.println("  window.addEventListener(\"click\", function(event) { ");
+    	writer.println("    targetId = event.target.getAttribute(\"id\"); ");
+    	writer.println("    if (targetId != null && targetId.endsWith(\"_MODAL\")){ ");
+    	writer.println("      onModalCloseClicked(targetId); ");
+    	writer.println("    } ");
+    	writer.println("  }); ");
+    	writer.println("    document.onkeydown = function(evt) { ");
+    	writer.println("      evt = evt || window.event; ");
+    	writer.println("      var isEscape = false; ");
+    	writer.println("      if (\"key\" in evt) { ");
+    	writer.println("        isEscape = (evt.key == \"Escape\" || evt.key == \"Esc\"); ");
+    	writer.println("      } else { ");
+    	writer.println("        isEscape = (evt.keyCode == 27); ");
+    	writer.println("      } ");
+    	writer.println("      if (isEscape) { ");
+    	writer.println("        closeAllModals(); ");
+    	writer.println("      } ");
+    	writer.println("    }; ");
+    	writer.println("  var closeAllModals = function() { ");
+    	writer.println("    var modals = document.getElementsByClassName(\"modal\"); ");
+    	writer.println("    for(var i = 0; i < modals.length; i++) {");
+    	writer.println("      modals[i].style.display = 'none'; ");
+    	writer.println("    } ");
+    	writer.println("  } ");
     	writer.println("  var onModalShowClicked = function(id) {");
     	writer.println("    modal = document.getElementById(id+\"_MODAL\");");
     	writer.println("    modal.style.display = \"block\";");
@@ -281,7 +312,7 @@ public class DocGen
 		writer.println("    formulae = getData(\"formula\"); ");
 		writer.println("  }, false); ");
 		    
-		writer.println("  var openDiv = function(divId) { ");
+		writer.println("  var openDiv = function(divId) {");
 		writer.println("    var targetDiv = document.getElementById(divId); ");
 		writer.println("    if (targetDiv != undefined || targetDiv != null) { ");
 		writer.println("      window.location = \"#\" + divId; ");
