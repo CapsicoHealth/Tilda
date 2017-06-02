@@ -69,6 +69,10 @@ public class Formula extends TypeDef
     	return this._ParentView;
     }
     
+    public String getShortName() {
+    	return this._ParentView.getShortName()+"."+this._Name; 
+    }
+    
     public boolean Validate(ParserSession PS, View ParentView)
       {
         int Errs = PS.getErrorCount();

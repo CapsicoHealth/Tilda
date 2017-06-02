@@ -149,9 +149,8 @@ public class DocGen
 
     public void writeModalHTMLAndJS(PrintWriter writer) {
     	writer.println("<style>");
-    	writer.println("  .hierarchy:hover {  ");
-    	writer.println("      color: red; ");
-    	writer.println("      text-decoration: none; ");
+    	writer.println("  .dotted_underline { ");
+    	writer.println("  	border-bottom: 1px dotted; ");
     	writer.println("  } ");
     	writer.println("  .modal { ");
     	writer.println("      display: none; /* Hidden by default */ ");
@@ -172,7 +171,6 @@ public class DocGen
     	writer.println("      padding: 20px; ");
     	writer.println("      border: 1px solid #888; ");
     	writer.println("      width: 70%; /* Could be more or less, depending on screen size */ ");
-    	writer.println("      min-height: 20%; ");
     	writer.println("  } ");
     	writer.println("   ");
     	writer.println("  .close { ");
@@ -180,9 +178,6 @@ public class DocGen
     	writer.println("      float: right; ");
     	writer.println("      font-size: 28px; ");
     	writer.println("      font-weight: bold; ");
-    	writer.println("  } ");
-    	writer.println("  .cursor_pointer:hover { ");
-    	writer.println("    color: red; ");
     	writer.println("  } ");
     	writer.println("  .cursor_pointer { ");
     	writer.println("    cursor: pointer; ");
