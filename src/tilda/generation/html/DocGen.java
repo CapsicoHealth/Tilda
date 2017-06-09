@@ -167,10 +167,12 @@ public class DocGen
     	writer.println("   ");
     	writer.println("  .modal-content { ");
     	writer.println("      background-color: #fefefe; ");
-    	writer.println("      margin: 15% auto; /* 15% from the top and centered */ ");
+    	writer.println("      margin: 2% auto; /* 10% from the top and centered */ ");
     	writer.println("      padding: 20px; ");
     	writer.println("      border: 1px solid #888; ");
-    	writer.println("      width: 70%; /* Could be more or less, depending on screen size */ ");
+    	writer.println("      width: 90%; ");
+    	writer.println("      height: 82%; ");
+    	writer.println("      overflow: auto; ");
     	writer.println("  } ");
     	writer.println("   ");
     	writer.println("  .close { ");

@@ -144,9 +144,9 @@ public class Docs
           // Out.println("<DIV><CENTER><H2>Dependencies for Column "+C.getShortName()+"</H2></CENTER></DIV>");
           Out.println("<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>");
 
-          Out.println("<table> ");
+          Out.println("<table style='margin: auto;'> ");
           Out.println("  <tr> ");
-          Out.println("    <th align='left' width=\"200em\">Schema</th> ");
+          Out.println("    <th align='left' width=\"300em\">Schema</th> ");
           Out.println("    <th align='left' width=\"400em\">Table/View</th> ");
           Out.println("    <th align='left' >Column/Formula</th> ");
           Out.println("  </tr> ");
@@ -169,12 +169,17 @@ public class Docs
 					PrintColumn(Out, C, level, false, "");
 				else
 					PrintColumn(Out, C, level, true, "");
-			}
-			
+			}			
 			
 			if(view != null && view._Pivot != null && view._Pivot.hasValue(C.getName())) {
 				// Follow Pivot
-				PrintColumn(Out, view._Pivot._VC._SameAsObj, level + 1, false, " = '"+C.getName()+"'");
+				Column sameAs = view._Pivot._VC._SameAsObj;
+				
+				if(sameAs._SameAsObj != null)
+					PrintColumn(Out, view._Pivot._VC._SameAsObj, level + 1, false, " = '"+C.getName()+"'");
+				else
+					PrintColumn(Out, view._Pivot._VC._SameAsObj, level + 1, true, " = '"+C.getName()+"'");			
+				
 				PrintColumnHierarchy(Out, view._Pivot._VC._SameAsObj._ParentObject, view._Pivot._VC._SameAsObj, true, ++level);
 				
 			} else if( view != null && C._SameAsObj!= null) {
@@ -203,6 +208,12 @@ public class Docs
 			
 			if (V._Pivot != null && V._Pivot.hasValue(VC.getName())) {
 				// Follow Pivot
+				Column sameAs = V._Pivot._VC._SameAsObj;
+				if(sameAs._SameAsObj != null)
+					PrintColumn(Out, V._Pivot._VC._SameAsObj, level + 1, false, " = '"+VC.getName()+"'");
+				else
+					PrintColumn(Out, V._Pivot._VC._SameAsObj, level + 1, true, " = '"+VC.getName()+"'");
+				
 				PrintColumn(Out, V._Pivot._VC._SameAsObj, level + 1, false, " = '"+VC.getName()+"'");
 				PrintColumnHierarchy(Out, V._Pivot._VC._SameAsObj._ParentObject, V._Pivot._VC._SameAsObj, true, ++level);
 				
@@ -213,6 +224,34 @@ public class Docs
 			}
 		}
 	}
+		
+	private static void PrintFormulaHierarchy(PrintWriter Out, View V, Formula F, boolean skipPrintColumn, int level) {
+		if (V != null && F != null) {
+			SortedSet<String> columnMatches = getColumnMatches(F);
+			SortedSet<String> formulaMatches = getFormulaMatches(F);
+			if(!skipPrintColumn) {
+				if (columnMatches != null || formulaMatches != null)
+					PrintFormula(Out, F, level, false);
+				else
+					PrintFormula(Out, F, level, true);
+			}
+			
+			for(String col : columnMatches) {
+				int innerLevel = level;
+				ViewColumn VC = V.getViewColumn(col);
+				Out.println("<tr><td></td></tr><tr><td></td></tr>");
+				PrintColumnHierarchy(Out, VC._ParentView, VC, false, ++innerLevel );
+			}
+			
+			for(String formula : formulaMatches) {
+				int innerLevel = level;
+				Formula F2 = V.getFormula(formula);
+				Out.println("<tr><td></td></tr><tr><td></td></tr>");
+				PrintFormulaHierarchy(Out, F2.getParentView(), F2, false, ++innerLevel);
+			}
+
+		}
+	}
 
 	private static void PrintColumn(PrintWriter Out, Column C, int level, boolean isLast, @NotNull String valueToAppend) {
 		String indentedBody = "";
@@ -221,18 +260,18 @@ public class Docs
 		String schemaDocFileName = "TILDA___Docs."+C._ParentObject._ParentSchema._Name+".html";
 		String tableName = schemaDocFileName+"#"+C._ParentObject._Name+"_DIV";
 		String columnName = schemaDocFileName+"#"+C._ParentObject._Name+"-"+C.getName()+"_DIV";
-		Out.println("<tr>");
+		Out.println("<tr bgcolor=\"#DFECF8\">");
 		if (level < 2)
 			Out.println("<td><a href='"+schemaDocFileName+"'>"+C._ParentObject._ParentSchema._Name+"</a></td>");
 		else
 			Out.println("<td>"+indentedBody+"&#9492;&#9472;<a href='"+schemaDocFileName+"'>"+C._ParentObject._ParentSchema._Name+"</a></td>");
 		
-		Out.println("<td><a href='"+tableName+"'>"+C._ParentObject._Name+"</a></td>");
+		Out.println("<td><a href='"+tableName+"'>"+C._ParentObject._OriginalName+"</a></td>");
 		
-		if (level < 2)
+		if (isLast)
 			Out.println("<td><a href='"+columnName+"'>"+C.getName()+"</a>"+valueToAppend+" -- "+C._TypeStr+"</td>");
 		else
-			Out.println("<td><a href='"+columnName+"'>"+C.getName()+"</a>"+valueToAppend+"</td>");;
+			Out.println("<td><a href='"+columnName+"'>"+C.getName()+"</a>"+valueToAppend+"</td>");
 		Out.println("</tr>");
 	}
 	
@@ -244,22 +283,22 @@ public class Docs
 		String tableName = schemaDocFileName+"#"+VC._ParentView._Name+"_DIV";
 		String columnName = schemaDocFileName+"#"+VC._ParentView._Name+"-"+VC.getName()+"_DIV";
 
-		Out.println("<tr>");
+		Out.println("<tr bgcolor=\"#ECDFF8\">");
 		if (level < 2)
 			Out.println("<td><a href='"+schemaDocFileName+"'>"+VC._ParentView._ParentSchema._Name+"</a></td>");
 		else
 			Out.println("<td>"+indentedBody+"&#9492;&#9472;<a href='"+schemaDocFileName+"'>"+VC._ParentView._ParentSchema._Name+"</a></td>");
 
-		Out.println("<td><a href='"+tableName+"'>"+VC._ParentView._Name+"</a></td>");
+		Out.println("<td><a href='"+tableName+"'>"+VC._ParentView._OriginalName+"</a></td>");
 		
-		if (level < 2)
+		if (isLast)
 			Out.println("<td><a href='"+columnName+"'>"+VC.getName()+"</a>"+valueToAppend+" -- "+VC._SameAsObj._TypeStr+"</td>");
 		else
 			Out.println("<td><a href='"+columnName+"'>"+VC.getName()+"</a>"+valueToAppend+"</td>");
 		Out.println("</tr>");
 	}
 	
-	private static void PrintFormula(PrintWriter Out, Formula F, int level) {
+	private static void PrintFormula(PrintWriter Out, Formula F, int level, boolean isLast) {
 		String indentedBody = "";
 		for(int i = 2; i < level ; i++) indentedBody += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 		
@@ -267,15 +306,15 @@ public class Docs
 		String tableName = schemaDocFileName+"#"+F.getParentView()._Name+"_DIV";
 		String columnName = schemaDocFileName+"#"+F.getParentView()._Name+"-"+F._Name+"_DIV";
 		
-		Out.println("<tr>");
+		Out.println("<tr bgcolor=\"#ECDFF8\">");
 		if (level < 2) // Prints symbol for hierarchy
 			Out.println("<td><a href='"+schemaDocFileName+"'>"+F.getParentView()._ParentSchema._Name+"</a></td>");
 		else
 			Out.println("<td>"+indentedBody+"&#9492;&#9472;<a href='"+schemaDocFileName+"'>"+F.getParentView()._ParentSchema._Name+"</a></td>");
 
-		Out.println("<td><a href='"+tableName+"'>"+F.getParentView()._Name+"</a></td>");
+		Out.println("<td><a href='"+tableName+"'>"+F.getParentView()._OriginalName+"</a></td>");
 		
-		if (level < 2) // Prints Root Node Data type
+		if (isLast)
 			Out.println("<td><a href='"+columnName+"'>"+F._Name+"</a> -- "+F._TypeStr+"</td>");
 		else
 			Out.println("<td><a href='"+columnName+"'>"+F._Name+"</a></td>");
@@ -317,6 +356,38 @@ public class Docs
       {
         return Str.replaceAll("(?i)\\b([_a-z][a-z0-9_]*\\.)*([_a-z][a-z0-9_]*\\.[_a-z][a-z0-9_]*\\.[_a-z][a-z0-9_])", "$2");
       }
+    
+    
+    public static SortedSet<String> getColumnMatches(Formula F) {
+        SortedSet<String> ColumnMatches = new TreeSet<String>();
+        Matcher M = F._ViewColumnsRegEx.matcher(String.join("\n", F._FormulaStrs));
+        while (M.find() == true)
+          {
+            String s = M.group(1);
+            ViewColumn VC = F.getParentView().getViewColumn(s);
+            if (VC != null)
+              {
+            	ColumnMatches.add(s);
+              }
+          }
+        return ColumnMatches;
+    }
+    
+    public static SortedSet<String> getFormulaMatches(Formula F) {
+    	SortedSet<String> FormulaMatches = new TreeSet<String>();
+        Matcher M = F._FormulasRegEx.matcher(String.join("\n", F._FormulaStrs));
+        while (M.find() == true)
+          {
+            String s = M.group(1);
+            for (Formula F2 : F.getParentView()._Formulas)
+              if (s.equals(F2._Name) == true)
+                {
+                  FormulaMatches.add(s);
+                  break;
+                }
+          }
+        return FormulaMatches;
+    }
 
     public static void RealizedDataMartTableDocs(PrintWriter Out, ParserSession PS, View V)
     throws Exception
@@ -379,6 +450,7 @@ public class Docs
         if (V._Formulas != null)
           for (Formula F : V._Formulas)
             {
+        	  
               StringBuffer Str = new StringBuffer();
               SortedSet<String> ColumnMatches = new TreeSet<String>();
               Matcher M = F._ViewColumnsRegEx.matcher(String.join("\n", F._FormulaStrs));
@@ -469,30 +541,15 @@ public class Docs
                   // Out.println("<DIV><CENTER><H2>Dependencies for Formula "+F.getShortName()+"</H2></CENTER></DIV>");
                   Out.println("<DIV><CENTER><H2>Formula Dependencies</H2></CENTER></DIV>");
 
-                  Out.println("<table> ");
+                  Out.println("<table style='margin: auto;'> ");
                   Out.println("  <tr> ");
-                  Out.println("    <th align='left' width=\"200em\">Schema</th> ");
+                  Out.println("    <th align='left' width=\"300em\">Schema</th> ");
                   Out.println("    <th align='left' width=\"400em\">Table/View</th> ");
                   Out.println("    <th align='left' >Column/Formula</th> ");
                   Out.println("  </tr> ");
 
                   Out.println("<tr><td></td></tr><tr><td></td></tr>");
-                  PrintFormula(Out, F, 1);
-                  
-                  // formula dependencies
-                  for( String formulaName : FormulaMatches ) {
-                	  Formula formula = V.getFormula(formulaName);
-                	  Out.println("<tr><td></td></tr><tr><td></td></tr>");
-                	  PrintFormula(Out, formula, 2);
-                  }
-                  
-                  // Column dependencies
-                  for( String columnName : ColumnMatches ) {
-                	  ViewColumn VC = V.getViewColumn(columnName);
-                	  
-                	  Out.println("<tr><td></td></tr><tr><td></td></tr>");
-                	  PrintColumnHierarchy(Out, VC._ParentView, VC, false, 2);
-                  }
+                  PrintFormulaHierarchy(Out, F.getParentView(), F, false, 1);
 
                   Out.println("</table>");
                   Out.println("</DIV></DIV>");
