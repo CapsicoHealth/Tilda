@@ -2,6 +2,7 @@ package tilda.generation.graphviz;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.lang.reflect.Field;
@@ -776,7 +777,10 @@ public class GraphvizUtil
             printer.flush();
             LOG.info("Generating dot file for " + this.schemaName + " done.");
             LOG.info("Generating schema svg file for " + this.schemaName);
-            BufferedReader streamReader = new BufferedReader(new InputStreamReader(FileUtil.getResourceAsStream("tilda.config.json"), "UTF-8"));
+            InputStream IS = FileUtil.getResourceAsStream("tilda.config.json");
+            if (IS == null)
+             throw new Exception("Cannot locate tilda.config.json in the root class path.");
+            BufferedReader streamReader = new BufferedReader(new InputStreamReader(IS, "UTF-8"));
             StringBuilder responseStrBuilder = new StringBuilder();
 
             String inputStr;

@@ -197,7 +197,6 @@ public class Migrator
           {
             if (Obj._FST == FrameworkSourcedType.VIEW)
               continue;
-            int XXX = Actions.size();
             TableMeta TMeta = DBMeta.getTableMeta(Obj._ParentSchema._Name, Obj._Name);
             if (TMeta == null)
               Actions.add(new TableCreate(Obj));
