@@ -197,6 +197,7 @@ public class DocGen
     	writer.println("  var onModalCloseClicked = function(modalId) {");
     	writer.println("    modal = document.getElementById(modalId);");
     	writer.println("    modal.style.display = \"none\";");
+    	writer.println("    document.documentElement.style.overflow = \"auto\"; ");
     	writer.println("  }");
     	writer.println("  window.addEventListener(\"click\", function(event) { ");
     	writer.println("    targetId = event.target.getAttribute(\"id\"); ");
@@ -221,10 +222,12 @@ public class DocGen
     	writer.println("    for(var i = 0; i < modals.length; i++) {");
     	writer.println("      modals[i].style.display = 'none'; ");
     	writer.println("    } ");
+    	writer.println("    document.documentElement.style.overflow = \"auto\"; ");
     	writer.println("  } ");
     	writer.println("  var onModalShowClicked = function(id) {");
     	writer.println("    modal = document.getElementById(id+\"_MODAL\");");
     	writer.println("    modal.style.display = \"block\";");
+    	writer.println("    document.documentElement.style.overflow = \"hidden\"; ");
     	writer.println("  }");
     	writer.println("  window.addEventListener('load', function() { ");
     	writer.println("    expand_buttons = document.getElementsByClassName(\"expand_div\"); ");
