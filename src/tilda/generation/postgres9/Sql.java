@@ -88,6 +88,12 @@ public class Sql extends PostgreSQL implements CodeGenSql
       {
         return getColumnType(C.getType(), C._Size, C._Mode, C.isCollection());
       }
+    
+    @Override
+    public String getColumnType(Column C, ColumnType AggregateType)
+      {
+        return getColumnType(AggregateType, C._Size, C._Mode, C.isCollection());
+      }
 
     @Override
     public String getColumnTypeRaw(Column C, boolean MultiOverride)
@@ -640,13 +646,15 @@ public class Sql extends PostgreSQL implements CodeGenSql
                       Str += "\"" + VC.getName() + "\" " + getColumnType(VC._SameAsObj);
                     }
                 }
+            ViewColumn VC = V._ViewColumns.get(V._ViewColumns.size() - 1);
+            ColumnType Type = VC.getAggregateType();
             for (int i = 0; i < V._Pivot._Values.length; ++i)
               {
                 Str += ", \"" + TextUtil.Print(V._Pivot._Values[i]._Name, V._Pivot._Values[i]._Value) + "\" ";
                 if (V._CountStar != null)
-                  Str += "integer";
+                  Str += "bigint";
                 else
-                  Str += getColumnType(V._Pivot._VC._SameAsObj);
+                  Str += getColumnType(V._Pivot._VC._SameAsObj, Type);
               }
             Str += ")\n";
           }

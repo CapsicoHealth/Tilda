@@ -496,21 +496,23 @@ public class View extends Base
           }
         if (TextUtil.isNullOrEmpty(_CountStar) == false)
           {
-            ColumnType Type = ColumnType.INTEGER;
+            ColumnType Type = ColumnType.LONG;
             Column C = new Column(_CountStar, Type.name(), 0, true, ColumnMode.NORMAL, true, null, "Count column");
             O._Columns.add(C);
           }
 
         if (_Pivot != null && _Pivot._Values != null)
-          for (Value VPV : _Pivot._Values)
-            {
-              ColumnType Type = _CountStar != null ? ColumnType.INTEGER : _Pivot._VC._SameAsObj.getType();
-              Column C = new Column(TextUtil.Print(VPV._Name, VPV._Value), Type.name(), Type == ColumnType.STRING ? _Pivot._VC._SameAsObj._Size : 0,
-              true, ColumnMode.NORMAL, true, null,
-              VPV._Description + " (pivot on " + _Pivot._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')");
-              O._Columns.add(C);
-            }
-
+          {
+            ViewColumn VC = _ViewColumns.get(_ViewColumns.size() - 1);
+            ColumnType Type = VC.getAggregateType();
+            for (Value VPV : _Pivot._Values)
+              {
+                Column C = new Column(TextUtil.Print(VPV._Name, VPV._Value), Type.name(), Type == ColumnType.STRING ? _Pivot._VC._SameAsObj._Size : 0,
+                true, ColumnMode.NORMAL, true, null,
+                VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + _Pivot._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')");
+                O._Columns.add(C);
+              }
+          }
         if (_TimeSeries != null)
           {
             ColumnType Type = ColumnType.DATE;
@@ -639,4 +641,5 @@ public class View extends Base
               return F;
         return null;
       }
+    
   }
