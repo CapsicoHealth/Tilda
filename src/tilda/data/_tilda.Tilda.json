@@ -8,7 +8,7 @@
       "description": "blah blah",
       "id"    : { "type": "STRING", "size":  5  },
       "value" : { "type": "STRING", "size":  50 }
-    }
+    } 	 	
    ],
 
    
