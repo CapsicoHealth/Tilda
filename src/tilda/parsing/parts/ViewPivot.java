@@ -87,5 +87,13 @@ public class ViewPivot
         
         return Errs == PS.getErrorCount();
       }
+    
+    public boolean hasValue(String searchValue) {
+    	for(Value value : _Values) {
+    		if(value._Name.equals(searchValue))
+    			return true;
+    	}
+    	return false;
+    }
 
   }
