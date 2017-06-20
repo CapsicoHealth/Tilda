@@ -145,7 +145,7 @@ public class Docs
           Out.println("<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>");
 
           Out.println("<table style='margin: auto;'> ");
-          Out.println("  <tr bgcolor=\"#a3c8eb\"> ");
+          Out.println("  <tr> ");
           Out.println("    <th align='left' width=\"300em\">Schema</th> ");
           Out.println("    <th align='left' width=\"400em\">Table/View</th> ");
           Out.println("    <th align='left' >Column/Formula</th> ");
@@ -172,16 +172,16 @@ public class Docs
 			
 			if(view != null && view._Pivot != null && view._Pivot.hasValue(C.getName())) {
 				// Follow Pivot
-				Column sameAs = view._Pivot._VC._SameAsObj;
 				ViewColumn pivotColumn = view._ViewColumns.get(view._ViewColumns.size() - 1);
-				String pivotOn = " (on "+sameAs.getName()+" = '"+C.getName()+"')";
+				Column sameAs = pivotColumn._SameAsObj;
+				String pivotOn = " (on "+view._Pivot._VC._SameAsObj.getName()+" = '"+C.getName()+"')";
 			
-				if(sameAs._SameAsObj != null)
+				if(sameAs != null) {
 					PrintPivot(Out, pivotColumn, ++level, false, pivotOn);
+					PrintColumnHierarchy(Out, sameAs._ParentObject, sameAs, true, ++level);
+				}
 				else
-					PrintPivot(Out, pivotColumn, ++level, true, pivotOn);			
-				
-				PrintColumnHierarchy(Out, sameAs._ParentObject, sameAs, true, ++level);
+					PrintPivot(Out, pivotColumn, ++level, true, pivotOn);
 				
 			} else if( view != null && C._SameAsObj!= null) {
 				// Follow SameAs
@@ -208,15 +208,15 @@ public class Docs
 			if (V._Pivot != null && V._Pivot.hasValue(VC.getName())) {
 				// Follow Pivot
 				ViewColumn pivotColumn = V._ViewColumns.get(V._ViewColumns.size() - 1);
-				Column sameAs = V._Pivot._VC._SameAsObj;
-				String pivotOn = " on "+sameAs.getName()+" = '"+VC.getName()+"'";
+				Column sameAs = pivotColumn._SameAsObj;
+				String pivotOn = " on "+V._Pivot._VC._SameAsObj.getName()+" = '"+VC.getName()+"'";
 				
-				if(sameAs._SameAsObj != null)
+				if(sameAs != null) {
 					PrintPivot(Out, pivotColumn, ++level, false, pivotOn);
+					PrintColumnHierarchy(Out, sameAs._ParentObject, sameAs, true, ++level);					
+				}
 				else
 					PrintPivot(Out, pivotColumn, ++level, true, pivotOn);
-				
-				PrintColumnHierarchy(Out, sameAs._ParentObject, sameAs, true, ++level);
 				
 			} else if (VC._SameAsObj != null) {
 				// Follow SameAs
@@ -259,11 +259,14 @@ public class Docs
 		String schemaDocFileName = "TILDA___Docs."+pivotColumn._ParentView._ParentSchema._Name+".html";
 		String tableName = schemaDocFileName+"#"+pivotColumn._ParentView._Name+"_DIV";
 
-		
-		if (++hierarchyAlternateCounter % 2 == 0)
+
+		if(level < 2)
 			Out.println("<tr bgcolor=\"#a3c8eb\">");
+		else if (++hierarchyAlternateCounter % 2 == 0)
+			Out.println("<tr bgcolor=\"#DFECF8\">");
 		else
 			Out.println("<tr>");
+		
 		if (level < 2)
 			Out.println("<td><a href='"+schemaDocFileName+"'>"+pivotColumn._ParentView._ParentSchema._Name+"</a></td>");
 		else
@@ -286,8 +289,10 @@ public class Docs
 		String tableName = schemaDocFileName+"#"+C._ParentObject._Name+"_DIV";
 		String columnName = schemaDocFileName+"#"+C._ParentObject._Name+"-"+C.getName()+"_DIV";
 		
-		if (++hierarchyAlternateCounter % 2 == 0)
+		if(level < 2)
 			Out.println("<tr bgcolor=\"#a3c8eb\">");
+		else if (++hierarchyAlternateCounter % 2 == 0)
+			Out.println("<tr bgcolor=\"#DFECF8\">");
 		else
 			Out.println("<tr>");
 
@@ -313,8 +318,10 @@ public class Docs
 		String tableName = schemaDocFileName+"#"+VC._ParentView._Name+"_DIV";
 		String columnName = schemaDocFileName+"#"+VC._ParentView._Name+"-"+VC.getName()+"_DIV";
 
-		if (++hierarchyAlternateCounter % 2 == 0)
+		if(level < 2)
 			Out.println("<tr bgcolor=\"#a3c8eb\">");
+		else if (++hierarchyAlternateCounter % 2 == 0)
+			Out.println("<tr bgcolor=\"#DFECF8\">");
 		else
 			Out.println("<tr>");
 		
@@ -340,8 +347,10 @@ public class Docs
 		String tableName = schemaDocFileName+"#"+F.getParentView()._Name+"_DIV";
 		String columnName = schemaDocFileName+"#"+F.getParentView()._Name+"-"+F._Name+"_DIV";
 
-		if (++hierarchyAlternateCounter % 2 == 0)
+		if(level < 2)
 			Out.println("<tr bgcolor=\"#a3c8eb\">");
+		else if (++hierarchyAlternateCounter % 2 == 0)
+			Out.println("<tr bgcolor=\"#DFECF8\">");
 		else
 			Out.println("<tr>");
 
@@ -580,7 +589,7 @@ public class Docs
                   Out.println("<DIV><CENTER><H2>Formula Dependencies</H2></CENTER></DIV>");
 
                   Out.println("<table style='margin: auto;'> ");
-                  Out.println("  <tr bgcolor=\"#a3c8eb\"> ");
+                  Out.println("  <tr> ");
                   Out.println("    <th align='left' width=\"300em\">Schema</th> ");
                   Out.println("    <th align='left' width=\"400em\">Table/View</th> ");
                   Out.println("    <th align='left' >Column/Formula</th> ");
