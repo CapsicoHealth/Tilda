@@ -263,7 +263,7 @@ public class Docs
 		if (level == 1) {
 			Out.println("<tr bgcolor=\"#a3c8eb\">");
 		} else if (level < prevLevel) {
-			Out.println("<tr><td>&nbsp;</td></tr><tr><td></td></tr>");
+			Out.println("<tr><td>&nbsp;</td></tr>");
 			Out.println("<tr bgcolor=\"#DFECF8\">");
 			prevLevel = level;
 			rootLevel = level;
@@ -276,12 +276,12 @@ public class Docs
 		}
 
 		Out.println("<td>"+indentedBody+"<a href='"+schemaDocFileName+"'>"+C._ParentObject._ParentSchema._Name+"</a></td>");
-		Out.println("<td><a href='"+tableName+"'>"+C._ParentObject._OriginalName+"</a></td>");
+		Out.println("<td>"+indentedBody+"<a href='"+tableName+"'>"+C._ParentObject._OriginalName+"</a></td>");
 		
 		if (isLast)
-			Out.println("<td><a href='"+columnName+"'>"+C.getName()+"</a>"+valueToAppend+" -- "+C._TypeStr+"</td>");
+			Out.println("<td>"+indentedBody+"<a href='"+columnName+"'>"+C.getName()+"</a>"+valueToAppend+" -- "+C._TypeStr+"</td>");
 		else
-			Out.println("<td><a href='"+columnName+"'>"+C.getName()+"</a>"+valueToAppend+"</td>");
+			Out.println("<td>"+indentedBody+"<a href='"+columnName+"'>"+C.getName()+"</a>"+valueToAppend+"</td>");
 		Out.println("</tr>");
 	}
 	
@@ -297,7 +297,7 @@ public class Docs
 		if (level == 1) {
 			Out.println("<tr bgcolor=\"#a3c8eb\">");
 		} else if (level < prevLevel) {
-			Out.println("<tr><td>&nbsp;</td></tr><tr><td></td></tr>");
+			Out.println("<tr><td>&nbsp;</td></tr>");
 			Out.println("<tr bgcolor=\"#DFECF8\">");
 			prevLevel = level;
 			rootLevel = level;
@@ -310,12 +310,12 @@ public class Docs
 		}
 		
 		Out.println("<td>"+indentedBody+"<a href='"+schemaDocFileName+"'>"+VC._ParentView._ParentSchema._Name+"</a></td>");
-		Out.println("<td><a href='"+tableName+"'>"+VC._ParentView._OriginalName+"</a></td>");
+		Out.println("<td>"+indentedBody+"<a href='"+tableName+"'>"+VC._ParentView._OriginalName+"</a></td>");
 		
 		if (isLast)
-			Out.println("<td><a href='"+columnName+"'>"+VC.getName()+"</a>"+valueToAppend+" -- "+VC._SameAsObj._TypeStr+"</td>");
+			Out.println("<td>"+indentedBody+"<a href='"+columnName+"'>"+VC.getName()+"</a>"+valueToAppend+" -- "+VC._SameAsObj._TypeStr+"</td>");
 		else
-			Out.println("<td><a href='"+columnName+"'>"+VC.getName()+"</a>"+valueToAppend+"</td>");
+			Out.println("<td>"+indentedBody+"<a href='"+columnName+"'>"+VC.getName()+"</a>"+valueToAppend+"</td>");
 		Out.println("</tr>");
 	}
 	
@@ -330,7 +330,7 @@ public class Docs
 		if (level == 1) {
 			Out.println("<tr bgcolor=\"#a3c8eb\">");
 		} else if (level < prevLevel) {
-			Out.println("<tr><td>&nbsp;</td></tr><tr><td></td></tr>");
+			Out.println("<tr><td>&nbsp;</td></tr>");
 			Out.println("<tr bgcolor=\"#DFECF8\">");
 			prevLevel = level;
 			rootLevel = level;
@@ -343,12 +343,12 @@ public class Docs
 		}
 		
 		Out.println("<td>"+indentedBody+"<a href='"+schemaDocFileName+"'>"+pivotColumn._ParentView._ParentSchema._Name+"</a></td>");
-		Out.println("<td><a href='"+tableName+"'>"+pivotColumn._ParentView._OriginalName+"</a></td>");
+		Out.println("<td>"+indentedBody+"<a href='"+tableName+"'>"+pivotColumn._ParentView._OriginalName+"</a></td>");
 		
 		if (isLast)
-			Out.println("<td>"+pivotColumn.getAggregateName()+valueToAppend+"</td>");
+			Out.println("<td>"+indentedBody+pivotColumn.getAggregateName()+valueToAppend+"</td>");
 		else
-			Out.println("<td>"+pivotColumn.getAggregateName()+valueToAppend+"</td>");
+			Out.println("<td>"+indentedBody+pivotColumn.getAggregateName()+valueToAppend+"</td>");
 		Out.println("</tr>");
 	}
 	
@@ -364,7 +364,7 @@ public class Docs
 		if (level == 1) {
 			Out.println("<tr bgcolor=\"#a3c8eb\">");
 		} else if (level < prevLevel) {
-			Out.println("<tr><td>&nbsp;</td></tr><tr><td></td></tr>");
+			Out.println("<tr><td>&nbsp;</td></tr>");
 			Out.println("<tr bgcolor=\"#DFECF8\">");
 			prevLevel = level;
 			rootLevel = level;
@@ -377,12 +377,12 @@ public class Docs
 		}
 
 		Out.println("<td>"+indentedBody+"<a href='"+schemaDocFileName+"'>"+F.getParentView()._ParentSchema._Name+"</a></td>");
-		Out.println("<td><a href='"+tableName+"'>"+F.getParentView()._OriginalName+"</a></td>");
+		Out.println("<td>"+indentedBody+"<a href='"+tableName+"'>"+F.getParentView()._OriginalName+"</a></td>");
 		
 		if (isLast)
-			Out.println("<td><a href='"+columnName+"'>"+F._Name+"</a> -- "+F._TypeStr+"</td>");
+			Out.println("<td>"+indentedBody+"<a href='"+columnName+"'>"+F._Name+"</a> -- "+F._TypeStr+"</td>");
 		else
-			Out.println("<td><a href='"+columnName+"'>"+F._Name+"</a></td>");
+			Out.println("<td>"+indentedBody+"<a href='"+columnName+"'>"+F._Name+"</a></td>");
 		Out.println("</tr>");
 	}
 		
