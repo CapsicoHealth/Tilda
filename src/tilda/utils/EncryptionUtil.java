@@ -17,6 +17,7 @@
 package tilda.utils;
 
 import java.security.MessageDigest;
+import java.security.SecureRandom;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,7 +27,7 @@ public class EncryptionUtil
   {
 
     protected static final Logger LOG = LogManager.getLogger(EncryptionUtil.class.getName());
-    
+
     public static String hash(String plaintext)
       {
         if (TextUtil.isNullOrEmpty(plaintext) == true)
@@ -42,5 +43,14 @@ public class EncryptionUtil
             LOG.error(e);
             return null;
           }
+      }
+
+
+    public static String getToken(int size)
+      {
+        SecureRandom random = new SecureRandom();
+        byte bytes[] = new byte[size < 16 ? 16 : size];
+        random.nextBytes(bytes);
+        return bytes.toString();
       }
   }
