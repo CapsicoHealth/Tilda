@@ -44,7 +44,8 @@ import tilda.utils.TextUtil;
 public class Docs
   {
 	
-	private static int hierarchyAlternateCounter = 0;
+	private static int prevLevel = 0;
+	private static int rootLevel = 1;
 	
 	public static void DataClassDocs(PrintWriter Out, GeneratorSession G, Object O)
     throws Exception
@@ -145,14 +146,13 @@ public class Docs
           Out.println("<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>");
 
           Out.println("<table style='margin: auto;'> ");
-          Out.println("  <tr bgcolor=\"#a3c8eb\"> ");
+          Out.println("  <tr> ");
           Out.println("    <th align='left' width=\"300em\">Schema</th> ");
           Out.println("    <th align='left' width=\"400em\">Table/View</th> ");
           Out.println("    <th align='left' >Column/Formula</th> ");
           Out.println("  </tr> ");
           
-          hierarchyAlternateCounter = 0;
-          Out.println("<tr><td></td></tr><tr><td></td></tr>");
+          prevLevel = 5;
           PrintColumnHierarchy(Out, O, C, false, 1);
           
           Out.println("</table>");
@@ -172,16 +172,16 @@ public class Docs
 			
 			if(view != null && view._Pivot != null && view._Pivot.hasValue(C.getName())) {
 				// Follow Pivot
-				Column sameAs = view._Pivot._VC._SameAsObj;
 				ViewColumn pivotColumn = view._ViewColumns.get(view._ViewColumns.size() - 1);
-				String pivotOn = " (on "+sameAs.getName()+" = '"+C.getName()+"')";
+				Column sameAs = pivotColumn._SameAsObj;
+				String pivotOn = " (on "+view._Pivot._VC._SameAsObj.getName()+" = '"+C.getName()+"')";
 			
-				if(sameAs._SameAsObj != null)
+				if(sameAs != null) {
 					PrintPivot(Out, pivotColumn, ++level, false, pivotOn);
+					PrintColumnHierarchy(Out, sameAs._ParentObject, sameAs, true, ++level);
+				}
 				else
-					PrintPivot(Out, pivotColumn, ++level, true, pivotOn);			
-				
-				PrintColumnHierarchy(Out, sameAs._ParentObject, sameAs, true, ++level);
+					PrintPivot(Out, pivotColumn, ++level, true, pivotOn);
 				
 			} else if( view != null && C._SameAsObj!= null) {
 				// Follow SameAs
@@ -208,15 +208,15 @@ public class Docs
 			if (V._Pivot != null && V._Pivot.hasValue(VC.getName())) {
 				// Follow Pivot
 				ViewColumn pivotColumn = V._ViewColumns.get(V._ViewColumns.size() - 1);
-				Column sameAs = V._Pivot._VC._SameAsObj;
-				String pivotOn = " on "+sameAs.getName()+" = '"+VC.getName()+"'";
+				Column sameAs = pivotColumn._SameAsObj;
+				String pivotOn = " on "+V._Pivot._VC._SameAsObj.getName()+" = '"+VC.getName()+"'";
 				
-				if(sameAs._SameAsObj != null)
+				if(sameAs != null) {
 					PrintPivot(Out, pivotColumn, ++level, false, pivotOn);
+					PrintColumnHierarchy(Out, sameAs._ParentObject, sameAs, true, ++level);					
+				}
 				else
 					PrintPivot(Out, pivotColumn, ++level, true, pivotOn);
-				
-				PrintColumnHierarchy(Out, sameAs._ParentObject, sameAs, true, ++level);
 				
 			} else if (VC._SameAsObj != null) {
 				// Follow SameAs
@@ -238,127 +238,153 @@ public class Docs
 			for(String col : columnMatches) {
 				int innerLevel = level;
 				ViewColumn VC = V.getViewColumn(col);
-				Out.println("<tr><td></td></tr><tr><td></td></tr>");
 				PrintColumnHierarchy(Out, VC._ParentView, VC, false, ++innerLevel );
 			}
 			
 			for(String formula : formulaMatches) {
 				int innerLevel = level;
 				Formula F2 = V.getFormula(formula);
-				Out.println("<tr><td></td></tr><tr><td></td></tr>");
 				PrintFormulaHierarchy(Out, F2.getParentView(), F2, false, ++innerLevel);
 			}
 
 		}
 	}
 
-	private static void PrintPivot(PrintWriter Out, ViewColumn pivotColumn, int level, boolean isLast, @NotNull String valueToAppend) {
-		String indentedBody = "";
-		for(int i = 2; i < level ; i++) indentedBody += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-		
-		String schemaDocFileName = "TILDA___Docs."+pivotColumn._ParentView._ParentSchema._Name+".html";
-		String tableName = schemaDocFileName+"#"+pivotColumn._ParentView._Name+"_DIV";
-
-		
-		if (++hierarchyAlternateCounter % 2 == 0)
-			Out.println("<tr bgcolor=\"#a3c8eb\">");
-		else
-			Out.println("<tr>");
-		if (level < 2)
-			Out.println("<td><a href='"+schemaDocFileName+"'>"+pivotColumn._ParentView._ParentSchema._Name+"</a></td>");
-		else
-			Out.println("<td>"+indentedBody+"&#9492;&#9472;<a href='"+schemaDocFileName+"'>"+pivotColumn._ParentView._ParentSchema._Name+"</a></td>");
-		
-		Out.println("<td><a href='"+tableName+"'>"+pivotColumn._ParentView._OriginalName+"</a></td>");
-		
-		if (isLast)
-			Out.println("<td>"+pivotColumn.getAggregateName()+valueToAppend+"</td>");
-		else
-			Out.println("<td>"+pivotColumn.getAggregateName()+valueToAppend+"</td>");
-		Out.println("</tr>");
-	}
-
 	private static void PrintColumn(PrintWriter Out, Column C, int level, boolean isLast, @NotNull String valueToAppend) {
 		String indentedBody = "";
 		for(int i = 2; i < level ; i++) indentedBody += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-
+		if(level > 1) 					indentedBody += "&#9492;&#9472;";
+		
 		String schemaDocFileName = "TILDA___Docs."+C._ParentObject._ParentSchema._Name+".html";
 		String tableName = schemaDocFileName+"#"+C._ParentObject._Name+"_DIV";
 		String columnName = schemaDocFileName+"#"+C._ParentObject._Name+"-"+C.getName()+"_DIV";
 		
-		if (++hierarchyAlternateCounter % 2 == 0)
+	
+		if (level == 1) {
 			Out.println("<tr bgcolor=\"#a3c8eb\">");
-		else
+		} else if (level < prevLevel) {
+			Out.println("<tr><td>&nbsp;</td></tr>");
+			Out.println("<tr bgcolor=\"#DFECF8\">");
+			prevLevel = level;
+			rootLevel = level;
+		} else if ((level - rootLevel) % 2 == 0 ) {
+			Out.println("<tr bgcolor=\"#DFECF8\">");
+			prevLevel = level;
+		} else {
 			Out.println("<tr>");
+			prevLevel = level;
+		}
 
-		if (level < 2)
-			Out.println("<td><a href='"+schemaDocFileName+"'>"+C._ParentObject._ParentSchema._Name+"</a></td>");
-		else
-			Out.println("<td>"+indentedBody+"&#9492;&#9472;<a href='"+schemaDocFileName+"'>"+C._ParentObject._ParentSchema._Name+"</a></td>");
-		
-		Out.println("<td><a href='"+tableName+"'>"+C._ParentObject._OriginalName+"</a></td>");
+		Out.println("<td>"+indentedBody+"<a href='"+schemaDocFileName+"'>"+C._ParentObject._ParentSchema._Name+"</a></td>");
+		Out.println("<td>"+indentedBody+"<a href='"+tableName+"'>"+C._ParentObject._OriginalName+"</a></td>");
 		
 		if (isLast)
-			Out.println("<td><a href='"+columnName+"'>"+C.getName()+"</a>"+valueToAppend+" -- "+C._TypeStr+"</td>");
+			Out.println("<td>"+indentedBody+"<a href='"+columnName+"'>"+C.getName()+"</a>"+valueToAppend+" -- "+C._TypeStr+"</td>");
 		else
-			Out.println("<td><a href='"+columnName+"'>"+C.getName()+"</a>"+valueToAppend+"</td>");
+			Out.println("<td>"+indentedBody+"<a href='"+columnName+"'>"+C.getName()+"</a>"+valueToAppend+"</td>");
 		Out.println("</tr>");
 	}
 	
 	private static void PrintColumn(PrintWriter Out, ViewColumn VC, int level, boolean isLast, @NotNull String valueToAppend) {
 		String indentedBody = "";
 		for(int i = 2; i < level ; i++) indentedBody += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+		if(level > 1) 					indentedBody += "&#9492;&#9472;";
 		
 		String schemaDocFileName = "TILDA___Docs."+VC._ParentView._ParentSchema._Name+".html";
 		String tableName = schemaDocFileName+"#"+VC._ParentView._Name+"_DIV";
 		String columnName = schemaDocFileName+"#"+VC._ParentView._Name+"-"+VC.getName()+"_DIV";
 
-		if (++hierarchyAlternateCounter % 2 == 0)
+		if (level == 1) {
 			Out.println("<tr bgcolor=\"#a3c8eb\">");
-		else
+		} else if (level < prevLevel) {
+			Out.println("<tr><td>&nbsp;</td></tr>");
+			Out.println("<tr bgcolor=\"#DFECF8\">");
+			prevLevel = level;
+			rootLevel = level;
+		} else if ((level - rootLevel) % 2 == 0 ) {
+			Out.println("<tr bgcolor=\"#DFECF8\">");
+			prevLevel = level;
+		} else {
 			Out.println("<tr>");
+			prevLevel = level;
+		}
 		
-		if (level < 2)
-			Out.println("<td><a href='"+schemaDocFileName+"'>"+VC._ParentView._ParentSchema._Name+"</a></td>");
-		else
-			Out.println("<td>"+indentedBody+"&#9492;&#9472;<a href='"+schemaDocFileName+"'>"+VC._ParentView._ParentSchema._Name+"</a></td>");
-
-		Out.println("<td><a href='"+tableName+"'>"+VC._ParentView._OriginalName+"</a></td>");
+		Out.println("<td>"+indentedBody+"<a href='"+schemaDocFileName+"'>"+VC._ParentView._ParentSchema._Name+"</a></td>");
+		Out.println("<td>"+indentedBody+"<a href='"+tableName+"'>"+VC._ParentView._OriginalName+"</a></td>");
 		
 		if (isLast)
-			Out.println("<td><a href='"+columnName+"'>"+VC.getName()+"</a>"+valueToAppend+" -- "+VC._SameAsObj._TypeStr+"</td>");
+			Out.println("<td>"+indentedBody+"<a href='"+columnName+"'>"+VC.getName()+"</a>"+valueToAppend+" -- "+VC._SameAsObj._TypeStr+"</td>");
 		else
-			Out.println("<td><a href='"+columnName+"'>"+VC.getName()+"</a>"+valueToAppend+"</td>");
+			Out.println("<td>"+indentedBody+"<a href='"+columnName+"'>"+VC.getName()+"</a>"+valueToAppend+"</td>");
+		Out.println("</tr>");
+	}
+	
+	private static void PrintPivot(PrintWriter Out, ViewColumn pivotColumn, int level, boolean isLast, @NotNull String valueToAppend) {
+		String indentedBody = "";
+		for(int i = 2; i < level ; i++) indentedBody += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+		if(level > 1) 					indentedBody += "&#9492;&#9472;";
+		
+		String schemaDocFileName = "TILDA___Docs."+pivotColumn._ParentView._ParentSchema._Name+".html";
+		String tableName = schemaDocFileName+"#"+pivotColumn._ParentView._Name+"_DIV";
+
+		if (level == 1) {
+			Out.println("<tr bgcolor=\"#a3c8eb\">");
+		} else if (level < prevLevel) {
+			Out.println("<tr><td>&nbsp;</td></tr>");
+			Out.println("<tr bgcolor=\"#DFECF8\">");
+			prevLevel = level;
+			rootLevel = level;
+		} else if ((level - rootLevel) % 2 == 0 ) {
+			Out.println("<tr bgcolor=\"#DFECF8\">");
+			prevLevel = level;
+		} else {
+			Out.println("<tr>");
+			prevLevel = level;
+		}
+		
+		Out.println("<td>"+indentedBody+"<a href='"+schemaDocFileName+"'>"+pivotColumn._ParentView._ParentSchema._Name+"</a></td>");
+		Out.println("<td>"+indentedBody+"<a href='"+tableName+"'>"+pivotColumn._ParentView._OriginalName+"</a></td>");
+		
+		if (isLast)
+			Out.println("<td>"+indentedBody+pivotColumn.getAggregateName()+valueToAppend+"</td>");
+		else
+			Out.println("<td>"+indentedBody+pivotColumn.getAggregateName()+valueToAppend+"</td>");
 		Out.println("</tr>");
 	}
 	
 	private static void PrintFormula(PrintWriter Out, Formula F, int level, boolean isLast) {
 		String indentedBody = "";
 		for(int i = 2; i < level ; i++) indentedBody += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+		if(level > 1) 					indentedBody += "&#9492;&#9472;";
 		
 		String schemaDocFileName = "TILDA___Docs."+ F.getParentView()._ParentSchema._Name+".html";
 		String tableName = schemaDocFileName+"#"+F.getParentView()._Name+"_DIV";
 		String columnName = schemaDocFileName+"#"+F.getParentView()._Name+"-"+F._Name+"_DIV";
 
-		if (++hierarchyAlternateCounter % 2 == 0)
+		if (level == 1) {
 			Out.println("<tr bgcolor=\"#a3c8eb\">");
-		else
+		} else if (level < prevLevel) {
+			Out.println("<tr><td>&nbsp;</td></tr>");
+			Out.println("<tr bgcolor=\"#DFECF8\">");
+			prevLevel = level;
+			rootLevel = level;
+		} else if ((level - rootLevel) % 2 == 0 ) {
+			Out.println("<tr bgcolor=\"#DFECF8\">");
+			prevLevel = level;
+		} else {
 			Out.println("<tr>");
+			prevLevel = level;
+		}
 
-		if (level < 2) // Prints symbol for hierarchy
-			Out.println("<td><a href='"+schemaDocFileName+"'>"+F.getParentView()._ParentSchema._Name+"</a></td>");
-		else
-			Out.println("<td>"+indentedBody+"&#9492;&#9472;<a href='"+schemaDocFileName+"'>"+F.getParentView()._ParentSchema._Name+"</a></td>");
-
-		Out.println("<td><a href='"+tableName+"'>"+F.getParentView()._OriginalName+"</a></td>");
+		Out.println("<td>"+indentedBody+"<a href='"+schemaDocFileName+"'>"+F.getParentView()._ParentSchema._Name+"</a></td>");
+		Out.println("<td>"+indentedBody+"<a href='"+tableName+"'>"+F.getParentView()._OriginalName+"</a></td>");
 		
 		if (isLast)
-			Out.println("<td><a href='"+columnName+"'>"+F._Name+"</a> -- "+F._TypeStr+"</td>");
+			Out.println("<td>"+indentedBody+"<a href='"+columnName+"'>"+F._Name+"</a> -- "+F._TypeStr+"</td>");
 		else
-			Out.println("<td><a href='"+columnName+"'>"+F._Name+"</a></td>");
+			Out.println("<td>"+indentedBody+"<a href='"+columnName+"'>"+F._Name+"</a></td>");
 		Out.println("</tr>");
 	}
-
 		
     private static void docFieldValues(PrintWriter Out, Column C)
       {
@@ -580,14 +606,13 @@ public class Docs
                   Out.println("<DIV><CENTER><H2>Formula Dependencies</H2></CENTER></DIV>");
 
                   Out.println("<table style='margin: auto;'> ");
-                  Out.println("  <tr bgcolor=\"#a3c8eb\"> ");
+                  Out.println("  <tr> ");
                   Out.println("    <th align='left' width=\"300em\">Schema</th> ");
                   Out.println("    <th align='left' width=\"400em\">Table/View</th> ");
                   Out.println("    <th align='left' >Column/Formula</th> ");
                   Out.println("  </tr> ");
 
-                  hierarchyAlternateCounter = 0;
-                  Out.println("<tr><td></td></tr><tr><td></td></tr>");
+                  prevLevel = 5;
                   PrintFormulaHierarchy(Out, F.getParentView(), F, false, 1);
 
                   Out.println("</table>");
