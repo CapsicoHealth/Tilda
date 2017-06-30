@@ -104,7 +104,8 @@ public class ReferenceHelper
         LOG.error("Cannot find Object '" + _S + "." + _O + "'.");
         LOG.debug("Known Objects from Schema "+S.getFullName()+": ");
         for (Object o : S._Objects)
-          LOG.debug("   - " + o.getFullName());
+          if (o != null)
+           LOG.debug("   - " + o.getFullName());
       }
 
     public void LogErrorKnownColumns(Object O)
