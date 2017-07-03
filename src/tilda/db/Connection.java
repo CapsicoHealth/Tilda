@@ -522,6 +522,11 @@ public final class Connection
         _DB.truncateTable(this, SchemaName, TableName);
       }
 
+    public void setTableLogging(String SchemaName, String TableName, boolean Logged) throws Exception
+      {
+        _DB.setTableLogging(this, SchemaName, TableName, Logged);
+      }
+    
     public void age(StringBuilder Str, Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count, String Operator)
       {
         _DB.age(this, Str, ColStart, ColEnd, Type, Count, Operator);

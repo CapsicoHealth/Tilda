@@ -751,4 +751,16 @@ public class PostgreSQL implements DBType
             Str.append(")");
           }
       }
+
+    @Override
+    public boolean setTableLogging(Connection Con, String schemaName, String tableName, boolean logged) throws Exception
+      {
+        StringBuilder Str = new StringBuilder();
+        Str.append("ALTER TABLE ");
+        getFullTableVar(Str, schemaName, tableName);
+        Str.append(" SET ").append(logged==true ? "LOGGED" : "UNLOGGED");
+        return Con.ExecuteDDL(schemaName, tableName, Str.toString());
+      }
+  
+  
   }
