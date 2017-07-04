@@ -65,6 +65,14 @@ public class Formula extends TypeDef
           }
       }
 
+    public View getParentView() {
+    	return this._ParentView;
+    }
+    
+    public String getShortName() {
+    	return this._ParentView.getShortName()+"."+this._Name; 
+    }
+    
     public boolean Validate(ParserSession PS, View ParentView)
       {
         int Errs = PS.getErrorCount();
@@ -84,6 +92,9 @@ public class Formula extends TypeDef
 
         if (TextUtil.isNullOrEmpty(_Title) == true)
           PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' without a title.");
+        
+        else if (_Title.length() > 128)
+          PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' with a title that is too long. 128 characters maximum.");
 
         if (_Description == null || _Description.length == 0)
           PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' without a description.");

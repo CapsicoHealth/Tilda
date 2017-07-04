@@ -16,11 +16,7 @@
 
 package tilda.parsing.parts;
 
-import java.time.Month;
 import java.time.ZonedDateTime;
-import java.time.temporal.ChronoField;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -79,7 +75,9 @@ public class ViewTimeSeries
               PS.AddError("View '" + ParentView.getFullName() + "' is defining a time Series with a between that doesn't have exactly 2 values.");
             else
               {
-                if (_Between[0] != null)
+                if (_Between[0] == null)
+                  PS.AddError("View '" + ParentView.getFullName() + "' is defining a time Series with a between's start date '" + _Between[0] + "' that is null. A start date must be specified. Only the end date is optional");
+                else
                   {
                     ZonedDateTime Start = DateTimeUtil.parseWithoutZone(_Between[0]);
                     if (Start == null)
@@ -87,6 +85,7 @@ public class ViewTimeSeries
                     else if (DateTimeUtil.validateBoundary(_Type, true, Start) == false)
                       PS.AddError("View '" + ParentView.getFullName() + "' is defining a time Series with a between's start date '" + _Between[0] + "' that is not a valid 1st day boundary for a " + _Type + " type.");
                   }
+                
 
                 if (_Between[1] != null)
                   {

@@ -58,6 +58,8 @@ public class Object extends Base
     public transient boolean              _HasUniqueQuery;
     public transient FrameworkSourcedType _FST         = FrameworkSourcedType.NONE;
     public transient ObjectLifecycle      _LC;
+    public transient boolean              _DBOnly;
+
 
     @Override
     public Column getColumn(String name)
@@ -113,7 +115,7 @@ public class Object extends Base
               return PS.AddError("Object '" + getFullName() + "' is a built-in Tilda framework object but doesn't seem to have defined the base refnum columns.");
             _OCC = true;
           }
-        else
+        else if (_FST != FrameworkSourcedType.VIEW)
           {
             if (_OCC == true)
               {

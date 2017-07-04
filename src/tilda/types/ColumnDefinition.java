@@ -101,6 +101,12 @@ public class ColumnDefinition
       {
         C.getFullColumnVar(Str, null, _TableName, _ColumnName);
       }
+    public String getFullColumnVarForSelect(Connection C)
+      {
+        StringBuilder Str = new StringBuilder();
+        getFullColumnVarForSelect(C, Str);
+        return Str.toString();
+      }
 
     public void getShortColumnVarForSelect(Connection C, StringBuilder Str)
       {

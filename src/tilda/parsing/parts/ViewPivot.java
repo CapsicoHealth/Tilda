@@ -24,7 +24,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
-import tilda.enums.AggregateType;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
@@ -88,5 +87,13 @@ public class ViewPivot
         
         return Errs == PS.getErrorCount();
       }
+    
+    public boolean hasValue(String searchValue) {
+    	for(Value value : _Values) {
+    		if(value._Name.equals(searchValue))
+    			return true;
+    	}
+    	return false;
+    }
 
   }

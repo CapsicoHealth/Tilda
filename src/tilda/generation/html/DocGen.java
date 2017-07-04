@@ -2,6 +2,7 @@ package tilda.generation.html;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -109,7 +110,8 @@ public class DocGen
 
     public void WriteTablesAndViews(ParserSession PS, PrintWriter writer)
       {
-        for (Object b : schema._Objects)
+    	writeModalHTMLAndJS(writer);
+    	for (Object b : schema._Objects)
           {
             try
               {
@@ -145,20 +147,124 @@ public class DocGen
           }
       }
 
+    public void writeModalHTMLAndJS(PrintWriter writer) {
+    	writer.println("<style>");
+    	writer.println("  .dotted_underline { ");
+    	writer.println("  	border-bottom: 1px dotted; ");
+    	writer.println("  } ");
+    	writer.println("  .modal { ");
+    	writer.println("      display: none; /* Hidden by default */ ");
+    	writer.println("      position: fixed; /* Stay in place */ ");
+    	writer.println("      z-index: 1; /* Sit on top */ ");
+    	writer.println("      left: 0; ");
+    	writer.println("      top: 0; ");
+    	writer.println("      width: 100%; /* Full width */ ");
+    	writer.println("      height: 100%; /* Full height */ ");
+    	writer.println("      overflow: auto; /* Enable scroll if needed */ ");
+    	writer.println("      background-color: rgb(0,0,0); /* Fallback color */ ");
+    	writer.println("      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */ ");
+    	writer.println("  } ");
+    	writer.println("   ");
+    	writer.println("  .modal-content { ");
+    	writer.println("      background-color: #fefefe; ");
+    	writer.println("      margin: 2% auto; /* 10% from the top and centered */ ");
+    	writer.println("      padding: 20px; ");
+    	writer.println("      border: 1px solid #888; ");
+    	writer.println("      width: 90%; ");
+    	writer.println("      height: 82%; ");
+    	writer.println("      overflow: auto; ");
+    	writer.println("  } ");
+    	writer.println("   ");
+    	writer.println("  .close { ");
+    	writer.println("      color: #aaa; ");
+    	writer.println("      float: right; ");
+    	writer.println("      font-size: 28px; ");
+    	writer.println("      font-weight: bold; ");
+    	writer.println("  } ");
+    	writer.println("  .cursor_pointer { ");
+    	writer.println("    cursor: pointer; ");
+    	writer.println("  } ");
+    	writer.println("  .close:hover, ");
+    	writer.println("  .close:focus { ");
+    	writer.println("      color: black; ");
+    	writer.println("      text-decoration: none; ");
+    	writer.println("      cursor: pointer; ");
+    	writer.println("  } ");
+    	writer.println("</style>");
+    	
+
+    	writer.println("<script>");
+    	writer.println("  var onModalCloseClicked = function(modalId) {");
+    	writer.println("    modal = document.getElementById(modalId);");
+    	writer.println("    modal.style.display = \"none\";");
+    	writer.println("    document.documentElement.style.overflow = \"auto\"; ");
+    	writer.println("  }");
+    	writer.println("  window.addEventListener(\"click\", function(event) { ");
+    	writer.println("    targetId = event.target.getAttribute(\"id\"); ");
+    	writer.println("    if (targetId != null && targetId.endsWith(\"_MODAL\")){ ");
+    	writer.println("      onModalCloseClicked(targetId); ");
+    	writer.println("    } ");
+    	writer.println("  }); ");
+    	writer.println("    document.onkeydown = function(evt) { ");
+    	writer.println("      evt = evt || window.event; ");
+    	writer.println("      var isEscape = false; ");
+    	writer.println("      if (\"key\" in evt) { ");
+    	writer.println("        isEscape = (evt.key == \"Escape\" || evt.key == \"Esc\"); ");
+    	writer.println("      } else { ");
+    	writer.println("        isEscape = (evt.keyCode == 27); ");
+    	writer.println("      } ");
+    	writer.println("      if (isEscape) { ");
+    	writer.println("        closeAllModals(); ");
+    	writer.println("      } ");
+    	writer.println("    }; ");
+    	writer.println("  var closeAllModals = function() { ");
+    	writer.println("    var modals = document.getElementsByClassName(\"modal\"); ");
+    	writer.println("    for(var i = 0; i < modals.length; i++) {");
+    	writer.println("      modals[i].style.display = 'none'; ");
+    	writer.println("    } ");
+    	writer.println("    document.documentElement.style.overflow = \"auto\"; ");
+    	writer.println("  } ");
+    	writer.println("  var onModalShowClicked = function(id) {");
+    	writer.println("    modal = document.getElementById(id+\"_MODAL\");");
+    	writer.println("    modal.style.display = \"block\";");
+    	writer.println("    document.documentElement.style.overflow = \"hidden\"; ");
+    	writer.println("  }");
+    	writer.println("  window.addEventListener('load', function() { ");
+    	writer.println("    expand_buttons = document.getElementsByClassName(\"expand_div\"); ");
+    	writer.println("    for ( var i = 0; i < expand_buttons.length; i++ ) { ");
+    	writer.println("      expand_buttons[i].addEventListener(\"click\", function(event) { ");
+    	writer.println("        if ( event.target.parentElement.getElementsByTagName(\"div\")[0].style.display == \"none\" ) {");
+    	writer.println("      	   event.target.parentElement.getElementsByTagName(\"div\")[0].style.display = \"block\" ");
+    	writer.println("      	   event.target.innerHTML = \"&#9660;\" ");
+    	writer.println("      	} else { ");
+    	writer.println("      	   event.target.parentElement.getElementsByTagName(\"div\")[0].style.display = \"none\" ");
+    	writer.println("      	   event.target.innerHTML = \"&#9654;\" ");
+    	writer.println("      	} ");
+    	writer.println("      }, false); ");
+    	writer.println("    } ");
+    	writer.println("  }, false); ");
+    	writer.println("</script>");
+    }
+    
     public void writeSearchHTML(PrintWriter writer) {
     	
-    	writer.println("<BR>");
+    	writer.println("<BR><BR>");
+    	writer.println("<H1>SEARCH</H1>");
     	writer.println("<input type=\"text\" oninput=\"eventListener()\", id=\"search_input\" placeholder=\"Search Tables/Views, Columns, Formulae\" autocomplete=\"off\">");
     	writer.println("<br><br>");
-    	writer.println("<table style=\"padding-left: 40px;\" class=\"search_results\" border=\"0px\" cellpadding=\"3px\" cellspacing=\"0px\"></table>");
+    	writer.println("<table class=\"search_results\" border=\"0px\" cellpadding=\"3px\" cellspacing=\"0px\"></table>");
     	
     	writer.println("<style>");
-    	writer.println("  input[type=text] {");
+    	writer.println("  #search_input {");
     	writer.println("    padding:10px;");
-    	writer.println("    width: 100%;");
+    	writer.println("    width: 98%;");
+    	writer.println("    margin-left: 2%;");
     	writer.println("    border:2px solid #CCC;");
     	writer.println("    -webkit-border-radius: 5px;");
     	writer.println("    border-radius: 5px;");
+    	writer.println("   }");
+    	writer.println("  .search_results { ");
+    	writer.println("	padding-left: 2%; ");
     	writer.println("   }");
     	writer.println("  .blink_div { ");
     	writer.println("    animation: blink-animation 0.75s steps(5, start) infinite; ");
@@ -185,9 +291,9 @@ public class DocGen
     	writer.println("   a:visited {");
     	writer.println("     font-weight:      bold;");
     	writer.println("   }");
-    	writer.println(".border_right {");
+    	writer.println("  .border_right {");
     	writer.println("	border-right: 2px solid #000;");
-    	writer.println("}");
+    	writer.println("  }");
 
     	writer.println("</style>");
     	
@@ -200,13 +306,13 @@ public class DocGen
 		writer.println("  var searchInput; ");
 		writer.println("  var searchResultsDiv; ");
 		    
-		writer.println("  window.onload = function() { ");
+		writer.println("  window.addEventListener(\"load\", function() { ");
 		writer.println("    tables = getData(\"tables\"); ");
 		writer.println("    columns = getData(\"columns\"); ");
 		writer.println("    formulae = getData(\"formula\"); ");
-		writer.println("  } ");
+		writer.println("  }, false); ");
 		    
-		writer.println("  var openDiv = function(divId) { ");
+		writer.println("  var openDiv = function(divId) {");
 		writer.println("    var targetDiv = document.getElementById(divId); ");
 		writer.println("    if (targetDiv != undefined || targetDiv != null) { ");
 		writer.println("      window.location = \"#\" + divId; ");

@@ -103,6 +103,11 @@ public class Sql extends MSSQL implements CodeGenSql
       {
         return getColumnType(C.getType(), C._Size, C._Mode, C.isCollection());
       }
+    @Override
+    public String getColumnType(Column C, ColumnType AggregateType)
+      {
+        return getColumnType(AggregateType, C._Size, C._Mode, C.isCollection());
+      }
 
     @Override
     public String getColumnTypeRaw(Column C, boolean MultiOverride)

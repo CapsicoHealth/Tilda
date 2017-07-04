@@ -22,6 +22,7 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.AggregateType;
+import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.JoinType;
 import tilda.parsing.ParserSession;
@@ -87,6 +88,20 @@ public class ViewColumn
         return _Name;
       }
 
+    public String getAggregateName()
+      {
+        return _Aggregate == null ? getName() 
+             : _Aggregate == AggregateType.COUNT && _SameAsObj == null ? "COUNT(*)" 
+             : _Aggregate.name()+"("+(_SameAsObj ==null ? getShortName() : _SameAsObj.getShortName())+")";
+      }
+
+    public ColumnType getAggregateType()
+      {
+        return _Aggregate == null ? _SameAsObj.getType()
+             : _Aggregate == AggregateType.COUNT && _SameAsObj == null ? ColumnType.LONG 
+             : _Aggregate.getType(_SameAsObj.getType());
+      }
+    
     public boolean Validate(ParserSession PS, View ParentView)
       {
         int Errs = PS.getErrorCount();
@@ -112,8 +127,9 @@ public class ViewColumn
           {
             if ((_Aggregate = AggregateType.parse(_AggregateStr)) == null)
               return PS.AddError("View Column '" + getFullName() + "' defined an invalid 'aggregate' '" + _AggregateStr + "'.");
-//            if (_SameAsObj != null && _SameAsObj._Type == ColumnType.DATETIME)
-//              return PS.AddError("View Column '" + getFullName() + "' defined an aggregate on DATETIME column '" + _SameAsObj.getName() + "' which is not supported as timezone information would not be retrievable.");
+            // if (_SameAsObj != null && _SameAsObj._Type == ColumnType.DATETIME)
+            // return PS.AddError("View Column '" + getFullName() + "' defined an aggregate on DATETIME column '" + _SameAsObj.getName() + "' which is not supported as timezone
+            // information would not be retrievable.");
           }
         if (_Aggregate == null)
           {
@@ -179,7 +195,7 @@ public class ViewColumn
           {
             View SubV = _ParentView._ParentSchema.getSourceView(_SameAsObj._ParentObject);
             if (SubV == null)
-             return null;
+              return null;
             // LOG.debug("SameAs is part of a sub-view " + SubV.getShortName());
             ViewColumn VC = SubV.getViewColumn(_SameAsObj.getName());
             if (VC != null)

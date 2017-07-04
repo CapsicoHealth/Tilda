@@ -76,4 +76,10 @@ public class ViewColumnWrapper extends Column
       {
         return _VCol.getName();
       }
+    
+    @Override
+    public boolean isOCCGenerated()
+    {
+      return _VCol._SameAsObj == null ? super.isOCCGenerated() : _VCol._SameAsObj.isOCCGenerated();
+    }
   }

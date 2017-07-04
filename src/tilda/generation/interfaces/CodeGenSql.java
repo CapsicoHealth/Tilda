@@ -51,6 +51,7 @@ public interface CodeGenSql extends DBType, CodeGenBase
     public String getShortColumnVar(Column C);
 
     public String getColumnType(Column C);
+    public String getColumnType(Column C, ColumnType AggregateType);
 
     public String getColumnTypeRaw(Column C, boolean MultiOverride);
 

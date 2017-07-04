@@ -59,6 +59,7 @@ public class View extends Base
     @SerializedName("realize"       ) public ViewRealize           _Realize;
     @SerializedName("importFormulas") public String[]              _ImportFormulas = new String[] { };
     @SerializedName("formulaColumns") public List<Formula>         _Formulas = new ArrayList<Formula>();
+    @SerializedName("dbOnly"        ) public boolean               _DBOnly = false;
     /*@formatter:on*/
 
     public transient boolean     _OCC            = false;
@@ -163,8 +164,6 @@ public class View extends Base
                     View V = PS.getView(R._P, R._S, R._O);
                     if (V != null)
                       {
-                        if (V._Name.equalsIgnoreCase("LABSHISTORYPIVOTVIEW") == true)
-                          LOG.debug("xxx");
                         if (V._Validated == false)
                           return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " which has failed validation.");
                         int j = 0;
@@ -226,6 +225,9 @@ public class View extends Base
                       }
                     else
                       {
+                        Schema S = PS.getSchema(R._P, R._S);
+                        if (S == null)
+                          return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " resolving to '" + R.getFullName() + "' with a schema which cannot be found. Please check the declared dependencies for this schema.");
                         Object O = PS.getObject(R._P, R._S, R._O);
                         if (O == null)
                           return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " resolving to '" + R.getFullName() + "' which cannot be found.");
@@ -324,17 +326,17 @@ public class View extends Base
                     for (int i = 0; i < _DistinctOn._Columns.length; ++i)
                       {
                         if (getColumn(_DistinctOn._Columns[i]) != null && getColumn(_DistinctOn._Columns[i])._Type == ColumnType.DATETIME)
-                         ++offset;
+                          ++offset;
                         if (_DistinctOn._Columns[i].equals(_TimeSeries._Name) == true)
                           {
-                            firstAgg = i+offset;
+                            firstAgg = i + offset;
                             if (_Pivot != null)
                               ++firstAgg;
                             break;
                           }
                       }
                     if (firstAgg == -1)
-                      firstAgg = _DistinctOn._Columns.length+offset;
+                      firstAgg = _DistinctOn._Columns.length + offset;
                   }
 
                 if (firstAgg == -1)
@@ -489,29 +491,28 @@ public class View extends Base
               break;
             if (VC != null && VC._FrameworkGenerated == false && VC._JoinOnly == false)
               {
-                if (_OCC == false || VC.getName().equals("created") == false && VC.getName().equals("lastUpdated") == false && VC.getName().equals("createdETL") == false && VC.getName().equals("lastUpdatedETL") == false && VC.getName().equals("deleted") == false)
-                  {
-                    O._Columns.add(new ViewColumnWrapper(VC._SameAsObj, VC, ++Counter));
-                  }
+                O._Columns.add(new ViewColumnWrapper(VC._SameAsObj, VC, ++Counter));
               }
           }
         if (TextUtil.isNullOrEmpty(_CountStar) == false)
           {
-            ColumnType Type = ColumnType.INTEGER;
+            ColumnType Type = ColumnType.LONG;
             Column C = new Column(_CountStar, Type.name(), 0, true, ColumnMode.NORMAL, true, null, "Count column");
             O._Columns.add(C);
           }
 
         if (_Pivot != null && _Pivot._Values != null)
-          for (Value VPV : _Pivot._Values)
-            {
-              ColumnType Type = _CountStar != null ? ColumnType.INTEGER : _Pivot._VC._SameAsObj.getType();
-              Column C = new Column(TextUtil.Print(VPV._Name, VPV._Value), Type.name(), Type == ColumnType.STRING ? _Pivot._VC._SameAsObj._Size : 0,
-              true, ColumnMode.NORMAL, true, null,
-              VPV._Description + " (pivot on " + _Pivot._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')");
-              O._Columns.add(C);
-            }
-
+          {
+            ViewColumn VC = _ViewColumns.get(_ViewColumns.size() - 1);
+            ColumnType Type = VC.getAggregateType();
+            for (Value VPV : _Pivot._Values)
+              {
+                Column C = new Column(TextUtil.Print(VPV._Name, VPV._Value), Type.name(), Type == ColumnType.STRING ? _Pivot._VC._SameAsObj._Size : 0,
+                true, ColumnMode.NORMAL, true, null,
+                VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + _Pivot._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')");
+                O._Columns.add(C);
+              }
+          }
         if (_TimeSeries != null)
           {
             ColumnType Type = ColumnType.DATE;
@@ -590,6 +591,7 @@ public class View extends Base
               }
           }
 
+        O._DBOnly = _DBOnly;
         _ParentSchema._Objects.add(O);
         O.Validate(PS, ParentSchema);
 
@@ -639,4 +641,5 @@ public class View extends Base
               return F;
         return null;
       }
+    
   }

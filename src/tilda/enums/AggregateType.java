@@ -18,29 +18,64 @@ package tilda.enums;
 
 public enum AggregateType
   {
-    SUM, 
-    
-    AVG,
-    
-    MAX,
-    
-    MIN,
-    
-    DEV,
-    
-    VAR,
+  SUM,
 
-    COUNT,
+  AVG,
 
-    ARRAY
-    ;
-    
+  MAX,
+
+  MIN,
+
+  DEV,
+
+  VAR,
+
+  COUNT,
+
+  ARRAY;
+
     public static AggregateType parse(String Str)
       {
         for (AggregateType e : AggregateType.values())
           if (Str.equalsIgnoreCase(e.name()) == true)
             return e;
         return null;
+      }
+
+    public ColumnType getType(ColumnType T)
+      {
+        switch (this)
+          {
+            case ARRAY:
+              return T;
+            case AVG:
+              if (T == ColumnType.FLOAT || T == ColumnType.DOUBLE || T == ColumnType.INTEGER || T == ColumnType.LONG)
+                return ColumnType.DOUBLE;
+              break;
+            case COUNT:
+              return ColumnType.LONG;
+            case DEV:
+              if (T == ColumnType.FLOAT || T == ColumnType.DOUBLE || T == ColumnType.INTEGER || T == ColumnType.LONG)
+                return ColumnType.DOUBLE;
+              break;
+            case MAX:
+              return T;
+            case MIN:
+              return T;
+            case SUM:
+              if (T == ColumnType.FLOAT || T == ColumnType.DOUBLE)
+                return ColumnType.DOUBLE;
+              if (T == ColumnType.INTEGER || T == ColumnType.LONG)
+                return ColumnType.LONG;
+              break;
+            case VAR:
+              if (T == ColumnType.FLOAT || T == ColumnType.DOUBLE || T == ColumnType.INTEGER || T == ColumnType.LONG)
+                return ColumnType.DOUBLE;
+              break;
+            default:
+              throw new Error("Incomplete Switch statment: unknown ColumnType " + this.name() + ";");
+          }
+        throw new Error("Cannot do a " + name() + " aggregate on type " + T.name() + ".");
       }
 
   }
