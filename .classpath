@@ -6,6 +6,7 @@
 			<attribute name="owner.project.facets" value="#system#;jst.utility"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/mail-1.4.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-logging-1.2.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
