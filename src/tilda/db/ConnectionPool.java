@@ -104,9 +104,9 @@ public class ConnectionPool
     private static class EmailConfig
       {
         /*@formatter:off*/
-        @SerializedName("smtp"   ) public String _SMTP    = null;
-        @SerializedName("userId" ) public String _UserId  = null;
-        @SerializedName("pswd"   ) public String _Pswd    = null;
+        @SerializedName("smtp"        ) public String _SMTP      = null;
+        @SerializedName("userId"      ) public String _UserId    = null;
+        @SerializedName("pswd"        ) public String _Pswd      = null;
         /*@formatter:on*/
       }
 
@@ -132,12 +132,13 @@ public class ConnectionPool
       }
 
 
-    static final Logger                           LOG               = LogManager.getLogger(ConnectionPool.class.getName());
+    static final Logger                           LOG                 = LogManager.getLogger(ConnectionPool.class.getName());
 
-    protected static Map<String, BasicDataSource> _DataSourcesById  = new HashMap<String, BasicDataSource>();
-    protected static Map<String, BasicDataSource> _DataSourcesBySig = new HashMap<String, BasicDataSource>();
-    protected static Map<String, String>          _SchemaPackage    = new HashMap<String, String>();
-    protected static boolean                      _InitDebug        = false;
+    protected static Map<String, BasicDataSource> _DataSourcesById    = new HashMap<String, BasicDataSource>();
+    protected static Map<String, BasicDataSource> _DataSourcesBySig   = new HashMap<String, BasicDataSource>();
+    protected static Map<String, String>          _SchemaPackage      = new HashMap<String, String>();
+    protected static Map<String, String>          _EmailConfigDetails = null;
+    protected static boolean                      _InitDebug          = false;
 
     public static void autoInit()
       {
@@ -255,6 +256,12 @@ public class ConnectionPool
                         }
 
                   }
+                if(Defs._EmailConfig != null){
+                	_EmailConfigDetails = new HashMap<String, String>(); 
+                	_EmailConfigDetails.put("SMTP", Defs._EmailConfig._SMTP);
+                	_EmailConfigDetails.put("UserId", Defs._EmailConfig._UserId);
+                	_EmailConfigDetails.put("Pswd", Defs._EmailConfig._Pswd);
+                }
               }
           }
         finally
@@ -401,4 +408,8 @@ public class ConnectionPool
       {
         return _SchemaPackage.get(SchemaName.toUpperCase());
       }
+
+	public static Map<String, String> getEmailConfig() {		
+		return _EmailConfigDetails;
+	}
   }
