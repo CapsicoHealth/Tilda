@@ -2637,11 +2637,18 @@ public abstract class QueryHelper
       }
 
 
+    /**
+     * Generates a BETWEEN statement based on the age range provided. Following with the standard Between
+     * semantics, the range is considered fully inclusive, i.e., x <= age <= y.
+     * @param Col
+     * @param ageRange
+     * @return
+     */
     public QueryHelper ageBetween(Type_DatetimePrimitive Col, int[] ageRange)
       {
         ZonedDateTime Today = DateTimeUtil.getTodayTimestamp(true);
-        ZonedDateTime D1 = Today.minusYears(ageRange[1]);
-        ZonedDateTime D2 = Today.minusYears(ageRange[0] - 1).minusNanos(1);
+        ZonedDateTime D1 = Today.minusYears(ageRange[1]+1).plusDays(1);
+        ZonedDateTime D2 = Today.minusYears(ageRange[0]);
         Col.getFullColumnVarForSelect(_C, _QueryStr);
         _QueryStr.append(" BETWEEN ").append("'").append(DateTimeUtil.printDateTimeForSQL(D1)).append("'")
         .append(" AND ").append("'").append(DateTimeUtil.printDateTimeForSQL(D2)).append("'");
