@@ -20,6 +20,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.Clock;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -31,6 +33,7 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.data.ZoneInfo_Factory;
 import tilda.db.Connection;
 import tilda.db.ConnectionPool;
 
@@ -42,16 +45,30 @@ public class DateTimeUtilTest
       {
         try
           {
+            Test0();
+            
 //            Test1();
-            Test2();
-            Test3();
-            Test4();
-            Test5();
+//            Test2();
+//            Test3();
+//            Test4();
+//            Test5();
           }
         catch (Exception e)
           {
             LOG.catching(e);
           }
+      }
+    
+    private static void Test0()
+      {
+        String value = "4/4/1940 00:00";
+        String DateTimePattern = "M/d/yyyy HH:mm";
+//        String value = "1940-04-04 00:00:00";
+//        String DateTimePattern = "yyyy-MM-dd HH:mm:ss";
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DateTimePattern);
+        LocalDateTime dateTime = LocalDateTime.parse(value, formatter);
+        
       }
 
 /*
