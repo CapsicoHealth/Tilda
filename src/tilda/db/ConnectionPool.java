@@ -208,7 +208,7 @@ public class ConnectionPool
           {
             InputStream In = FileUtil.getResourceAsStream("tilda.config.json");
             if (In == null)
-              throw new Exception("Cannot find Tilda configuration file '/tilda.config.json'.");
+              throw new Exception("Cannot find the Tilda configuration file '/tilda.config.json' in the classpath.");
             R = new BufferedReader(new InputStreamReader(In));
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             ConnDefs Defs = gson.fromJson(R, ConnDefs.class);
