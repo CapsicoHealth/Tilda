@@ -106,8 +106,22 @@ public class Schema
         for (Object O : _Objects)
           if (O != null && O._Name != null && O._Name.equalsIgnoreCase(Name) == true)
             return O;
+        LOG.debug("Object "+Name+" cannot be found on Schema "+getFullName()+" out of the current Object list ["+getObjectList()+"].");
         return null;
       }
+    
+    public String getObjectList()
+      {
+        StringBuilder Str = new StringBuilder();
+        for (Object O : _Objects)
+          {
+            if (Str.length() != 0)
+              Str.append(", ");
+            Str.append(O.getFullName());
+          }
+        return Str.toString();
+      }
+    
 
     public Object getObject(String SchemaName, String ObjectName)
       {
