@@ -747,7 +747,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
             .append("CREATE OR REPLACE FUNCTION " + V._ParentSchema._Name + ".Refill_" + TName + "Realized() RETURNS boolean AS $$\n")
             .append("BEGIN\n")
             .append("  DROP TABLE IF EXISTS " + V._ParentSchema._Name + "." + TName + "Realized;\n")
-            .append("  CREATE UNLOGGED TABLE " + V._ParentSchema._Name + "." + TName + "Realized " + "AS SELECT " + genRealizedColumnList(V) + " FROM " + V._ParentSchema._Name + "." + V._Name + ";\n");
+            .append("  CREATE TABLE " + V._ParentSchema._Name + "." + TName + "Realized " + "AS SELECT " + genRealizedColumnList(V) + " FROM " + V._ParentSchema._Name + "." + V._Name + ";\n");
+//            .append("  CREATE UNLOGGED TABLE " + V._ParentSchema._Name + "." + TName + "Realized " + "AS SELECT " + genRealizedColumnList(V) + " FROM " + V._ParentSchema._Name + "." + V._Name + ";\n");
             
             for (Index I : V._Realize._Indices)
               if (I != null)

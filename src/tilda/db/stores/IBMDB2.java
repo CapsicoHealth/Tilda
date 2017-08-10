@@ -329,12 +329,4 @@ public class IBMDB2 implements DBType
       {
         throw new UnsupportedOperationException();
       }
-
-
-    @Override
-    public boolean setTableLogging(Connection connection, String schemaName, String tableName, boolean logged) throws Exception
-      {
-        throw new UnsupportedOperationException();
-      }
-
   }

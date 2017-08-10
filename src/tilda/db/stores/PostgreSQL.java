@@ -752,6 +752,7 @@ public class PostgreSQL implements DBType
           }
       }
 
+/*
     @Override
     public boolean setTableLogging(Connection Con, String schemaName, String tableName, boolean logged) throws Exception
       {
@@ -761,6 +762,6 @@ public class PostgreSQL implements DBType
         Str.append(" SET ").append(logged==true ? "LOGGED" : "UNLOGGED");
         return Con.ExecuteDDL(schemaName, tableName, Str.toString());
       }
-  
+*/
   
   }

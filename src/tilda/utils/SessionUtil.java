@@ -29,7 +29,8 @@ public class SessionUtil
 
     public static enum Attributes
       {
-        USERREFNUM;
+        USERREFNUM
+       ,TENANTREFNUM;
       }
 
 
