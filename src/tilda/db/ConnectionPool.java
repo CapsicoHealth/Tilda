@@ -164,9 +164,10 @@ public class ConnectionPool
             if (isTildaEnabled() == true)
               {
                 C = get("MAIN");
+                
                 List<Schema> TildaList = LoadTildaResources(C);
                 DatabaseMeta DBMeta = LoadDatabaseMetaData(C, TildaList);
-                Migrator.MigrateDatabase(C, Migrate.isMigrationActive() == false, TildaList, DBMeta);
+                Migrator.MigrateDatabase(C, Migrate.isMigrationActive() == false, TildaList, DBMeta, true);
                 if (Migrate.isMigrationActive() == false)
                   {
                     LOG.info("Initializing Schemas.");
@@ -203,6 +204,24 @@ public class ConnectionPool
           LogUtil.resetLogLevel();
       }
 
+    public static void migrateDatabases(Connection C) 
+    throws Exception 
+      {
+        List<Schema> TildaList = LoadTildaResources(C);
+        DatabaseMeta DBMeta = LoadDatabaseMetaData(C, TildaList);
+        Migrator.MigrateDatabase(C, false, TildaList, DBMeta, false);
+        LOG.info("");
+        LOG.info("Initializing Schemas. Url: "+C.getURL());
+        for (Schema S : TildaList)
+          {
+            LOG.debug("  " + S.getFullName());
+            Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
+            M.invoke(null, C);
+            _SchemaPackage.put(S._Name.toUpperCase(), S._Package);
+          }
+        C.commit();      
+      }
+    
     private static void ReadConfig()
     throws Exception
       {
@@ -382,6 +401,63 @@ public class ConnectionPool
       }
 
 
+    private static BasicDataSource createBDS(String dbDriver, String dbUrl, String dbUser, String dbPswd, int minConn, int maxConn)
+      {
+        try 
+          {
+            BasicDataSource BDS = new BasicDataSource();
+            BDS.setDriverClassName(dbDriver);
+            BDS.setUrl(dbUrl);
+            if (TextUtil.isNullOrEmpty(dbPswd) == false && TextUtil.isNullOrEmpty(dbUser) == false)
+              {
+                BDS.setUsername(dbUser);
+                BDS.setPassword(dbPswd);
+              }
+            BDS.setInitialSize(minConn);
+            BDS.setMaxTotal(maxConn);
+            BDS.setDefaultAutoCommit(false);
+            BDS.setDefaultTransactionIsolation(java.sql.Connection.TRANSACTION_READ_COMMITTED);
+            BDS.setDefaultQueryTimeout(20000);
+            return BDS;
+          } 
+        catch(Throwable T)
+          {
+            LOG.error("Failed to create BasicDataSource for "+dbUrl);
+            return null;
+          }
+      }
+    
+    public static Connection get(String dbDriver, String dbUrl, String dbUser, String dbPswd, int minConn, int maxConn)
+    throws Exception
+      {
+        LOG.info(QueryDetails._LOGGING_HEADER + "G E T T I N G   C O N N E C T I O N  -----  " + dbUrl);
+        BasicDataSource BDS = createBDS(dbDriver, dbUrl, dbUser, dbPswd, minConn, maxConn);
+        if (BDS == null)
+          throw new Exception("Cannot find a connection pool for " + dbUrl);
+        java.sql.Connection C = null;
+        for (int i = 1; i < 100; ++i)
+          {
+            try
+              {
+                long T0 = System.nanoTime();
+                C = BDS.getConnection();
+                PerfTracker.add(TransactionType.CONNECTION_GET, System.nanoTime() - T0);
+                break;
+              }
+            catch (SQLException E)
+              {
+                LOG.error("   - Attempt #" + i + " failed to obtain a connection: " + E.getMessage());
+                if (i == 1)
+                  LOG.error("     (Sleeping for 30 seconds, and will re-try again, for a max of 100 times)");
+                Thread.sleep(1000 * 30);
+              }
+          }
+        if (C == null)
+          throw new Exception("Failed obtaining a connection after numerous tries.");
+        Connection Conn = new Connection(C, BDS.getUrl());
+        LOG.info(QueryDetails._LOGGING_HEADER + "G O T           C O N N E C T I O N  -----  " + Conn._PoolId + ", " + BDS.getNumActive() + "/" + BDS.getNumIdle() + "/" + BDS.getMaxTotal());
+        return Conn;
+      }
 
     public static Connection get(String Id)
     throws Exception

@@ -62,7 +62,7 @@ public class Migrator
     public static final String    TILDA_VERSION       = "1.0";
     public static final String    TILDA_VERSION_VAROK = "1_0";
 
-    public static void MigrateDatabase(Connection C, boolean CheckOnly, List<Schema> TildaList, DatabaseMeta DBMeta)
+    public static void MigrateDatabase(Connection C, boolean CheckOnly, List<Schema> TildaList, DatabaseMeta DBMeta, boolean askForConfirmation)
     throws Exception
       {
         List<MigrationScript> Scripts = new ArrayList<MigrationScript>();
@@ -111,7 +111,7 @@ public class Migrator
                   else
                     LOG.debug("    - (dependency) " + MA.getDescription() + ".");
                 }
-            if (CheckOnly == false)
+            if (CheckOnly == false && askForConfirmation)
               {
                 LOG.info("!!! THIS UTILITY IS ABOUT TO CHANGE DATA IN YOUR DATABASE. MAKE SURE YOU HAVE A BACKUP. !!!");
                 LOG.info(" ===> " + C.getURL());
