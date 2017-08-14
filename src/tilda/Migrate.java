@@ -77,11 +77,4 @@ public class Migrate
         LOG.info("DONE.");
         LOG.info("");
       }
-    
-    @SuppressWarnings("unused")
-    private static void migrateDatabase(Connection C) 
-    throws Exception
-      {
-        ConnectionPool.migrateDatabases(C);
-      }
   }

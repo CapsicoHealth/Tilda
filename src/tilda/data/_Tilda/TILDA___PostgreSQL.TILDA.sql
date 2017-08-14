@@ -219,3 +219,33 @@ delete from TILDA.KEY where "name" = 'TILDA.TESTING';
 insert into TILDA.KEY ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.KEY), 'TILDA.TESTING',(select COALESCE(max("refnum"),0)+1 from TILDA.TESTING), 250, current_timestamp, current_timestamp);
 
 
+
+create table if not exists TILDA.CONNECTIONS -- Tilda DB Connections Configurations
+ (  "id"           character(15)  not null   -- Connection ID
+  , "driver"       varchar(100)   not null   -- DB Driver
+  , "db"           varchar(200)   not null   -- DB Url
+  , "user"         varchar(30)    not null   -- DB User
+  , "pswd"         varchar(40)    not null   -- DB Password
+  , "initial"      integer        not null   -- Minimum Connections
+  , "max"          integer        not null   -- Maximum Connections
+  , "schemas"      text[]         not null   -- Schemas
+  , "created"      timestamptz    not null   -- The timestamp for when the record was created.
+  , "lastUpdated"  timestamptz    not null   -- The timestamp for when the record was last updated.
+  , "deleted"      timestamptz               -- The timestamp for when the record was deleted.
+  , PRIMARY KEY("id")
+ );
+COMMENT ON TABLE TILDA.CONNECTIONS IS E'Tilda DB Connections Configurations';
+COMMENT ON COLUMN TILDA.CONNECTIONS."id" IS E'Connection ID';
+COMMENT ON COLUMN TILDA.CONNECTIONS."driver" IS E'DB Driver';
+COMMENT ON COLUMN TILDA.CONNECTIONS."db" IS E'DB Url';
+COMMENT ON COLUMN TILDA.CONNECTIONS."user" IS E'DB User';
+COMMENT ON COLUMN TILDA.CONNECTIONS."pswd" IS E'DB Password';
+COMMENT ON COLUMN TILDA.CONNECTIONS."initial" IS E'Minimum Connections';
+COMMENT ON COLUMN TILDA.CONNECTIONS."max" IS E'Maximum Connections';
+COMMENT ON COLUMN TILDA.CONNECTIONS."schemas" IS E'Schemas';
+COMMENT ON COLUMN TILDA.CONNECTIONS."created" IS E'The timestamp for when the record was created.';
+COMMENT ON COLUMN TILDA.CONNECTIONS."lastUpdated" IS E'The timestamp for when the record was last updated.';
+COMMENT ON COLUMN TILDA.CONNECTIONS."deleted" IS E'The timestamp for when the record was deleted.';
+CREATE INDEX CONNECTIONS_AllById ON TILDA.CONNECTIONS ("id" ASC);
+
+

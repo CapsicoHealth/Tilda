@@ -23,8 +23,10 @@ import org.apache.logging.log4j.Logger;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
-<DIV id='KEY_DIV'>
+<DIV>
+<DIV id='KEY_DIV' class='tables'>
 <H1>KEY&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 60%;"><A href="#">top</A></SUP></H1>
+</DIV>
 The generated Java 8/PostgreSQL Tilda data class <B>Data_KEY</B> is mapped to the table <B>TILDA.KEY</B>.
 <UL>
 
@@ -37,31 +39,202 @@ It contains the following columns:<BR>
  <TABLE border="0px" cellpadding="3px" cellspacing="0px">
    <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><!--TH align="left">Column</TH--><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
 
-  <TR valign="top" bgcolor="#DFECF8"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>refnum</B>&nbsp;&nbsp;</TD><TD>long&nbsp;&nbsp;</TD><TD>bigint&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&#x2611;&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The primary key for this record</TD></TR>
-  <TR valign="top" bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>name</B>&nbsp;&nbsp;</TD><TD>String&nbsp;&nbsp;</TD><TD>varchar(128)&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&#x2611;&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The name of the table/object tracked</TD></TR>
-  <TR valign="top" bgcolor="#DFECF8"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>max</B>&nbsp;&nbsp;</TD><TD>long&nbsp;&nbsp;</TD><TD>bigint&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The pre-allocated max RefNum for this table/object.</TD></TR>
-  <TR valign="top" bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>count</B>&nbsp;&nbsp;</TD><TD>int&nbsp;&nbsp;</TD><TD>integer&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The size of the pre-allocation required by this table/object.</TD></TR>
-  <TR valign="top" bgcolor="#DFECF8"><TD>5&nbsp;&nbsp;</TD><TD align="right"><B>created</B>&nbsp;&nbsp;</TD><TD>ZonedDateTime&nbsp;&nbsp;</TD><TD>timestamptz&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">AUTO&nbsp;&nbsp;</TD><TD align="center">&#x2611;&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The timestamp for when the record was created.</TD></TR>
+  <TR valign="top" bgcolor="#DFECF8"><TD>1&nbsp;&nbsp;</TD>
+<TD align="right"><B id='KEY-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;&nbsp;</TD><TD>bigint&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&#x2611;&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The primary key for this record</TD></TR>
+  <TR valign="top" bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD>
+<TD align="right"><B id='KEY-name_DIV' class='columns'>name</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;&nbsp;</TD><TD>varchar(128)&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&#x2611;&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The name of the table/object tracked</TD></TR>
+  <TR valign="top" bgcolor="#DFECF8"><TD>3&nbsp;&nbsp;</TD>
+<TD align="right"><B id='KEY-max_DIV' class='columns'>max</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;&nbsp;</TD><TD>bigint&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The pre-allocated max RefNum for this table/object.</TD></TR>
+  <TR valign="top" bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD>
+<TD align="right"><B id='KEY-count_DIV' class='columns'>count</B>&nbsp;&nbsp;</TD>
+<TD>int&nbsp;&nbsp;</TD><TD>integer&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The size of the pre-allocation required by this table/object.</TD></TR>
+  <TR valign="top" bgcolor="#DFECF8"><TD>5&nbsp;&nbsp;</TD>
+<TD align="right"><B id='KEY-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;&nbsp;</TD><TD>timestamptz&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">AUTO&nbsp;&nbsp;</TD><TD align="center">&#x2611;&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The timestamp for when the record was created.</TD></TR>
   <TR bgcolor="#DFECF8"><TD></TD><TD></TD><TD colspan="10" align="center">
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
   <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Creation</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Creation&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Creation time</TD></TR>
 </TABLE>
 </TD></TR>
-  <TR valign="top" bgcolor="#FFFFFF"><TD>6&nbsp;&nbsp;</TD><TD align="right"><B>createdETL</B>&nbsp;&nbsp;</TD><TD>ZonedDateTime&nbsp;&nbsp;</TD><TD>timestamptz&nbsp;&nbsp;</TD><TD align="center">&#x2611;&nbsp;&nbsp;</TD><TD align="center">CALCULATED&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The timestamp for when the record was ETL-created.</TD></TR>
-  <TR valign="top" bgcolor="#DFECF8"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>lastUpdated</B>&nbsp;&nbsp;</TD><TD>ZonedDateTime&nbsp;&nbsp;</TD><TD>timestamptz&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">AUTO&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The timestamp for when the record was last updated.</TD></TR>
+  <TR valign="top" bgcolor="#FFFFFF"><TD>6&nbsp;&nbsp;</TD>
+<TD align="right"><B id='KEY-createdETL_DIV' class='columns'>createdETL</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;&nbsp;</TD><TD>timestamptz&nbsp;&nbsp;</TD><TD align="center">&#x2611;&nbsp;&nbsp;</TD><TD align="center">CALCULATED&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The timestamp for when the record was ETL-created.</TD></TR>
+  <TR valign="top" bgcolor="#DFECF8"><TD>7&nbsp;&nbsp;</TD>
+<TD align="right"><B id='KEY-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;&nbsp;</TD><TD>timestamptz&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">AUTO&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The timestamp for when the record was last updated.</TD></TR>
   <TR bgcolor="#DFECF8"><TD></TD><TD></TD><TD colspan="10" align="center">
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
   <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Update</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Update&nbsp;&nbsp;</TD><TD>ALWAYS&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Last updated time</TD></TR>
 </TABLE>
 </TD></TR>
-  <TR valign="top" bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>lastUpdatedETL</B>&nbsp;&nbsp;</TD><TD>ZonedDateTime&nbsp;&nbsp;</TD><TD>timestamptz&nbsp;&nbsp;</TD><TD align="center">&#x2611;&nbsp;&nbsp;</TD><TD align="center">CALCULATED&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The timestamp for when the record was last ETL-updated.</TD></TR>
-  <TR valign="top" bgcolor="#DFECF8"><TD>9&nbsp;&nbsp;</TD><TD align="right"><B>deleted</B>&nbsp;&nbsp;</TD><TD>ZonedDateTime&nbsp;&nbsp;</TD><TD>timestamptz&nbsp;&nbsp;</TD><TD align="center">&#x2611;&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The timestamp for when the record was deleted.</TD></TR>
+  <TR valign="top" bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD>
+<TD align="right"><B id='KEY-lastUpdatedETL_DIV' class='columns'>lastUpdatedETL</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;&nbsp;</TD><TD>timestamptz&nbsp;&nbsp;</TD><TD align="center">&#x2611;&nbsp;&nbsp;</TD><TD align="center">CALCULATED&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The timestamp for when the record was last ETL-updated.</TD></TR>
+  <TR valign="top" bgcolor="#DFECF8"><TD>9&nbsp;&nbsp;</TD>
+<TD align="right"><B id='KEY-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;&nbsp;</TD><TD>timestamptz&nbsp;&nbsp;</TD><TD align="center">&#x2611;&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The timestamp for when the record was deleted.</TD></TR>
 </TABLE>
+<DIV id='KEY-refnum_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('KEY-refnum_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#KEY_DIV'>Key</a></td>
+<td><a href='TILDA___Docs.TILDA.html#KEY-refnum_DIV'>refnum</a> -- LONG</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='KEY-name_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('KEY-name_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#KEY_DIV'>Key</a></td>
+<td><a href='TILDA___Docs.TILDA.html#KEY-name_DIV'>name</a> -- STRING</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='KEY-max_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('KEY-max_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#KEY_DIV'>Key</a></td>
+<td><a href='TILDA___Docs.TILDA.html#KEY-max_DIV'>max</a> -- LONG</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='KEY-count_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('KEY-count_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#KEY_DIV'>Key</a></td>
+<td><a href='TILDA___Docs.TILDA.html#KEY-count_DIV'>count</a> -- INTEGER</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='KEY-created_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('KEY-created_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#KEY_DIV'>Key</a></td>
+<td><a href='TILDA___Docs.TILDA.html#KEY-created_DIV'>created</a> -- DATETIME</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='KEY-createdETL_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('KEY-createdETL_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#KEY_DIV'>Key</a></td>
+<td><a href='TILDA___Docs.TILDA.html#KEY-createdETL_DIV'>createdETL</a> -- DATETIME</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='KEY-lastUpdated_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('KEY-lastUpdated_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#KEY_DIV'>Key</a></td>
+<td><a href='TILDA___Docs.TILDA.html#KEY-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='KEY-lastUpdatedETL_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('KEY-lastUpdatedETL_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#KEY_DIV'>Key</a></td>
+<td><a href='TILDA___Docs.TILDA.html#KEY-lastUpdatedETL_DIV'>lastUpdatedETL</a> -- DATETIME</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='KEY-deleted_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('KEY-deleted_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#KEY_DIV'>Key</a></td>
+<td><a href='TILDA___Docs.TILDA.html#KEY-deleted_DIV'>deleted</a> -- DATETIME</td>
+</tr>
+</table>
+</DIV></DIV>
 </DIV>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Feb 8 2017, 13:55:12CST
+ @generated Aug 14 2017, 12:32:55IST
 */
 public abstract class TILDA__KEY implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
@@ -1460,7 +1633,7 @@ This is the hasChanged for:<BR>
           RS = PS.executeQuery();
           if (RS.next() == false)
             {
-              LOG.debug(QueryDetails._LOGGING_HEADER + "   [1mNo record was read.[22m");
+              LOG.debug(QueryDetails._LOGGING_HEADER + "   No record was read.");
               return false;
             }
           count = 1;

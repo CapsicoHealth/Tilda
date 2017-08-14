@@ -11,10 +11,8 @@
     }
    ],
 
-   
   "objects":[
-    { "name": "Key", "occ": false, // OCC=false because the fields here also serve as a reference for other tables.
-                                   // So we need to define them explicitly here.
+    { "name": "Key", "occ": false,
       "description": "The table to keep track of unique keys across distributed objects/tables",
       "columns":[
         { "name": "refnum"        , "type": "LONG"       , "nullable": false,                          "invariant": true, "description": "The primary key for this record" },
@@ -32,8 +30,6 @@
         { "name": "lastUpdatedETL", "type": "DATETIME"   , "nullable": true ,          "mode": "CALCULATED",              "description": "The timestamp for when the record was last ETL-updated."},
         { "name": "deleted"       , "type": "DATETIME"   , "nullable": true ,                                             "description": "The timestamp for when the record was deleted." }
       ],
-      // No autogen since this is the KEY table itself
-      // Also, because the KEY table serves as a reference, the refnum column is also used as a reference and so must be defined. 
       "primary": { "columns": ["refnum"], "autogen": false },
       "indices":[ 
       	{ "name": "Name"     , "columns": ["name"],                          "db": true },
@@ -138,6 +134,36 @@
       "http":[
         { "name": "", "mandatories": ["refnum", "name", "description"] }
       ]
+    },
+    {
+    	"name": "CONNECTIONS",
+    	"description": "Tilda DB Connections Configurations",
+    	"columns": [
+    		{ "name": "id", 		"type": "STRING", 		"nullable": false, "size": "15", 	"description": "Connection ID", 		"invariant": true 	},
+    		{ "name": "driver", 	"type": "STRING", 		"nullable": false, "size": "100", 	"description": "DB Driver" 									},
+    		{ "name": "db", 		"type": "STRING", 		"nullable": false, "size": "200", 	"description": "DB Url" 									},
+    		{ "name": "user", 		"type": "STRING", 		"nullable": false, "size": "30", 	"description": "DB User" 									},
+    		{ "name": "pswd", 		"type": "STRING", 		"nullable": false, "size": "40", 	"description": "DB Password" 								},
+    		{ "name": "initial", 	"type": "INTEGER", 		"nullable": false, 					"description": "Minimum Connections" 						},
+    		{ "name": "max", 		"type": "INTEGER", 		"nullable": false, 					"description": "Maximum Connections" 						},
+    		{ "name": "schemas", 	"type": "STRING[]", 	"nullable": false, 					"description": "Schemas" 									}
+    	],
+    	"primary": { "columns": ["id"], "autogen": false },
+    	"indices": [
+    		{ "name": "AllById", "orderBy": ["id asc"], "db": true }
+    	],
+    	"queries": [
+    		{
+    			"name": "AllButDeleted",
+    			"description": "All Connections except deleted",
+    			"from": [],
+    			"wheres": [
+					{ "db":"*", "clause":"deleted is null" }    			
+    			],
+    			"orderBy": ["id asc"]
+    		}
+    	]
+    	
     }
   ]
 }

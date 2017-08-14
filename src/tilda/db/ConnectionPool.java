@@ -28,11 +28,13 @@ import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.logging.log4j.Level;
@@ -44,6 +46,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 
 import tilda.Migrate;
+import tilda.data.CONNECTIONS_Data;
+import tilda.data.CONNECTIONS_Factory;
 import tilda.db.metadata.DatabaseMeta;
 import tilda.enums.TransactionType;
 import tilda.generation.interfaces.CodeGenSql;
@@ -152,6 +156,7 @@ public class ConnectionPool
     static
       {
         Connection C = null;
+        Connection Keys = null;
         try
           {
             InitBootstrappers();
@@ -163,23 +168,35 @@ public class ConnectionPool
               }
             if (isTildaEnabled() == true)
               {
-                C = get("MAIN");
+                Keys = get("KEYS");
+                if (Keys == null){
+                  throw new Exception("Must define atleast one KEYS Connection in /tilda.config.json");
+                }                  
+                ReadConnections(Keys);
                 
-                List<Schema> TildaList = LoadTildaResources(C);
-                DatabaseMeta DBMeta = LoadDatabaseMetaData(C, TildaList);
-                Migrator.MigrateDatabase(C, Migrate.isMigrationActive() == false, TildaList, DBMeta, true);
-                if (Migrate.isMigrationActive() == false)
+                
+                Iterator<String> connectionIds = _DataSourcesById.keySet().iterator();
+                while(connectionIds.hasNext())
                   {
-                    LOG.info("Initializing Schemas.");
-                    for (Schema S : TildaList)
+                    C = get(connectionIds.next());
+                    List<Schema> TildaList = LoadTildaResources(C);
+                    DatabaseMeta DBMeta = LoadDatabaseMetaData(C, TildaList);
+                    Migrator.MigrateDatabase(C, Migrate.isMigrationActive() == false, TildaList, DBMeta);
+                    if (Migrate.isMigrationActive() == false)
                       {
-                        LOG.debug("  " + S.getFullName());
-                        Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
-                        M.invoke(null, C);
-                        _SchemaPackage.put(S._Name.toUpperCase(), S._Package);
+                        LOG.info("Initializing Schemas.");
+                        for (Schema S : TildaList)
+                          {
+                            LOG.debug("  " + S.getFullName());
+                            Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
+                            M.invoke(null, C);
+                            _SchemaPackage.put(S._Name.toUpperCase(), S._Package);
+                          }
                       }
+                    C.commit();
+                    C.close();
+                    C = null;
                   }
-                C.commit();
               }
           }
         catch (Throwable T)
@@ -193,6 +210,8 @@ public class ConnectionPool
               {
                 if (C != null)
                   C.close();
+                if (Keys != null)
+                  Keys.close();
               }
             catch (SQLException E)
               {
@@ -204,22 +223,58 @@ public class ConnectionPool
           LogUtil.resetLogLevel();
       }
 
-    public static void migrateDatabases(Connection C) 
-    throws Exception 
+    private static void ReadConnections(Connection Keys)
+    throws Exception
       {
-        List<Schema> TildaList = LoadTildaResources(C);
-        DatabaseMeta DBMeta = LoadDatabaseMetaData(C, TildaList);
-        Migrator.MigrateDatabase(C, false, TildaList, DBMeta, false);
-        LOG.info("");
-        LOG.info("Initializing Schemas. Url: "+C.getURL());
-        for (Schema S : TildaList)
+        LOG.info("Adding Connections from CONNECTIONS table to Pool");
+        
+        CONNECTIONS_Data connection = null;
+        ListResults<CONNECTIONS_Data> connections = CONNECTIONS_Factory.LookupWhereAllButDeleted(Keys, 0, 10000);
+        Iterator<CONNECTIONS_Data> iterator = connections.iterator();
+        while(iterator.hasNext())
           {
-            LOG.debug("  " + S.getFullName());
-            Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
-            M.invoke(null, C);
-            _SchemaPackage.put(S._Name.toUpperCase(), S._Package);
+            connection = iterator.next();
+            if (_DataSourcesById.get(connection.getId()) == null)
+            synchronized (_DataSourcesById)
+              {
+
+                String Sig = connection.getDb() + "``" + connection.getUser();
+                BasicDataSource BDS = _DataSourcesBySig.get(Sig); // Let's see if that DB definition is already there
+                if (BDS == null)
+                  {
+                    LOG.info("Initializing a fresh pool for Id=" + connection.getId() + ", DB=" + connection.getDb() + ", User=" + connection.getUser() + ", and Pswd=Shhhhhhh!");
+                    BDS = new BasicDataSource();
+                    BDS.setDriverClassName(connection.getDriver());
+                    BDS.setUrl(connection.getDb());
+                    if (TextUtil.isNullOrEmpty(connection.getPswd()) == false && TextUtil.isNullOrEmpty(connection.getUser()) == false)
+                      {
+                        BDS.setUsername(connection.getUser());
+                        BDS.setPassword(connection.getPswd());
+                      }
+                    BDS.setInitialSize(connection.getInitial());
+                    BDS.setMaxTotal(connection.getMax());
+                    BDS.setDefaultAutoCommit(false);
+                    BDS.setDefaultTransactionIsolation(java.sql.Connection.TRANSACTION_READ_COMMITTED);
+                    BDS.setDefaultQueryTimeout(20000);
+                    _DataSourcesBySig.put(Sig, BDS);
+                  }
+                else
+                  {
+                    LOG.info("Merging pool with ID " + connection.getId() + " into prexisting pool " + Sig);
+                    if (BDS.getInitialSize() < connection.getInitial())
+                      BDS.setInitialSize(connection.getInitial());
+                    if (BDS.getMaxTotal() < connection.getMax())
+                      BDS.setMaxTotal(connection.getMax());
+
+                  }
+                _DataSourcesById.put(connection.getId(), BDS);
+              }
+            else
+              {
+                throw new Exception("Connection with Id: "+connection.getId()+" is already defined");
+              }
           }
-        C.commit();      
+        LOG.info("Completed Adding Connections from CONNECTIONS table to Pool");
       }
     
     private static void ReadConfig()
@@ -400,65 +455,6 @@ public class ConnectionPool
         return _DataSourcesById.get("MAIN") != null && _DataSourcesById.get("KEYS") != null;
       }
 
-
-    private static BasicDataSource createBDS(String dbDriver, String dbUrl, String dbUser, String dbPswd, int minConn, int maxConn)
-      {
-        try 
-          {
-            BasicDataSource BDS = new BasicDataSource();
-            BDS.setDriverClassName(dbDriver);
-            BDS.setUrl(dbUrl);
-            if (TextUtil.isNullOrEmpty(dbPswd) == false && TextUtil.isNullOrEmpty(dbUser) == false)
-              {
-                BDS.setUsername(dbUser);
-                BDS.setPassword(dbPswd);
-              }
-            BDS.setInitialSize(minConn);
-            BDS.setMaxTotal(maxConn);
-            BDS.setDefaultAutoCommit(false);
-            BDS.setDefaultTransactionIsolation(java.sql.Connection.TRANSACTION_READ_COMMITTED);
-            BDS.setDefaultQueryTimeout(20000);
-            return BDS;
-          } 
-        catch(Throwable T)
-          {
-            LOG.error("Failed to create BasicDataSource for "+dbUrl);
-            return null;
-          }
-      }
-    
-    public static Connection get(String dbDriver, String dbUrl, String dbUser, String dbPswd, int minConn, int maxConn)
-    throws Exception
-      {
-        LOG.info(QueryDetails._LOGGING_HEADER + "G E T T I N G   C O N N E C T I O N  -----  " + dbUrl);
-        BasicDataSource BDS = createBDS(dbDriver, dbUrl, dbUser, dbPswd, minConn, maxConn);
-        if (BDS == null)
-          throw new Exception("Cannot find a connection pool for " + dbUrl);
-        java.sql.Connection C = null;
-        for (int i = 1; i < 100; ++i)
-          {
-            try
-              {
-                long T0 = System.nanoTime();
-                C = BDS.getConnection();
-                PerfTracker.add(TransactionType.CONNECTION_GET, System.nanoTime() - T0);
-                break;
-              }
-            catch (SQLException E)
-              {
-                LOG.error("   - Attempt #" + i + " failed to obtain a connection: " + E.getMessage());
-                if (i == 1)
-                  LOG.error("     (Sleeping for 30 seconds, and will re-try again, for a max of 100 times)");
-                Thread.sleep(1000 * 30);
-              }
-          }
-        if (C == null)
-          throw new Exception("Failed obtaining a connection after numerous tries.");
-        Connection Conn = new Connection(C, BDS.getUrl());
-        LOG.info(QueryDetails._LOGGING_HEADER + "G O T           C O N N E C T I O N  -----  " + Conn._PoolId + ", " + BDS.getNumActive() + "/" + BDS.getNumIdle() + "/" + BDS.getMaxTotal());
-        return Conn;
-      }
-
     public static Connection get(String Id)
     throws Exception
       {
@@ -498,8 +494,6 @@ public class ConnectionPool
           return null;
         return BDS.getUrl();
       }
-
-
 
     public static String getSchemaPackage(String SchemaName)
       {
