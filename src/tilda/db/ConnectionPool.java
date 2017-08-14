@@ -23,12 +23,16 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Method;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.jar.JarFile;
+import java.util.jar.Manifest;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.logging.log4j.Level;
@@ -206,9 +210,25 @@ public class ConnectionPool
         Reader R = null;
         try
           {
-            InputStream In = FileUtil.getResourceAsStream("tilda.config.json");
+            boolean Secondary = false;
+            InputStream In = FileUtil.getResourceAsStream("/tilda.config.json");
+            if (In == null)
+              {
+                LOG.debug("Cannot read the config file. Trying a secondary source as 'tilda.config.json'");
+                In = FileUtil.getResourceAsStream("tilda.config.json");
+                Secondary = true;
+              }
             if (In == null)
               throw new Exception("Cannot find the Tilda configuration file '/tilda.config.json' in the classpath.");
+
+            Enumeration<URL> resEnum = ConnectionPool.class.getClassLoader().getResources(Secondary == false ? "/tilda.config.json" : "tilda.config.json");
+            while (resEnum.hasMoreElements())
+              {
+                URL url = (URL) resEnum.nextElement();
+                LOG.info("   Found tilda.config.json file in " + url.toString());
+                break;
+              }
+
             R = new BufferedReader(new InputStreamReader(In));
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             ConnDefs Defs = gson.fromJson(R, ConnDefs.class);
@@ -256,12 +276,13 @@ public class ConnectionPool
                         }
 
                   }
-                if(Defs._EmailConfig != null){
-                	_EmailConfigDetails = new HashMap<String, String>(); 
-                	_EmailConfigDetails.put("SMTP", Defs._EmailConfig._SMTP);
-                	_EmailConfigDetails.put("UserId", Defs._EmailConfig._UserId);
-                	_EmailConfigDetails.put("Pswd", Defs._EmailConfig._Pswd);
-                }
+                if (Defs._EmailConfig != null)
+                  {
+                    _EmailConfigDetails = new HashMap<String, String>();
+                    _EmailConfigDetails.put("SMTP", Defs._EmailConfig._SMTP);
+                    _EmailConfigDetails.put("UserId", Defs._EmailConfig._UserId);
+                    _EmailConfigDetails.put("Pswd", Defs._EmailConfig._Pswd);
+                  }
               }
           }
         finally
@@ -348,7 +369,7 @@ public class ConnectionPool
               throw new Exception("Schema " + S._Name + " from resource " + S._ResourceName + " failed validation.");
             for (Object Obj : S._Objects)
               if (Obj != null)
-               MasterFactory.register(S._Package, Obj);
+                MasterFactory.register(S._Package, Obj);
           }
 
         return TildaList;
@@ -409,7 +430,8 @@ public class ConnectionPool
         return _SchemaPackage.get(SchemaName.toUpperCase());
       }
 
-	public static Map<String, String> getEmailConfig() {		
-		return _EmailConfigDetails;
-	}
+    public static Map<String, String> getEmailConfig()
+      {
+        return _EmailConfigDetails;
+      }
   }
