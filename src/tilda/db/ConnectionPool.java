@@ -40,6 +40,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.postgresql.util.PSQLException;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -172,12 +173,12 @@ public class ConnectionPool
                 if (Keys == null){
                   throw new Exception("Must define atleast one KEYS Connection in /tilda.config.json");
                 }                  
-                ReadConnections(Keys);
-                
+                ReadConnections(Keys);                
                 
                 Iterator<String> connectionIds = _DataSourcesById.keySet().iterator();
                 while(connectionIds.hasNext())
                   {
+                    // SKIP LOGS AND KEYS ??
                     C = get(connectionIds.next());
                     List<Schema> TildaList = LoadTildaResources(C);
                     DatabaseMeta DBMeta = LoadDatabaseMetaData(C, TildaList);
@@ -229,7 +230,14 @@ public class ConnectionPool
         LOG.info("Adding Connections from CONNECTIONS table to Pool");
         
         CONNECTIONS_Data connection = null;
-        ListResults<CONNECTIONS_Data> connections = CONNECTIONS_Factory.LookupWhereAllButDeleted(Keys, 0, 10000);
+        ListResults<CONNECTIONS_Data> connections = null;
+        try {
+          connections = CONNECTIONS_Factory.LookupWhereAllButDeleted(Keys, 0, 10000);
+        } catch (PSQLException e) {
+           LOG.error("PSQLException while trying to fetch connections from DB.");
+           e.printStackTrace();
+           return;
+        }
         Iterator<CONNECTIONS_Data> iterator = connections.iterator();
         while(iterator.hasNext())
           {

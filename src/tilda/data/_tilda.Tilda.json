@@ -139,11 +139,11 @@
     	"name": "CONNECTIONS",
     	"description": "Tilda DB Connections Configurations",
     	"columns": [
-    		{ "name": "id", 		"type": "STRING", 		"nullable": false, "size": "15", 	"description": "Connection ID", 		"invariant": true 	},
-    		{ "name": "driver", 	"type": "STRING", 		"nullable": false, "size": "100", 	"description": "DB Driver" 									},
-    		{ "name": "db", 		"type": "STRING", 		"nullable": false, "size": "200", 	"description": "DB Url" 									},
-    		{ "name": "user", 		"type": "STRING", 		"nullable": false, "size": "30", 	"description": "DB User" 									},
-    		{ "name": "pswd", 		"type": "STRING", 		"nullable": false, "size": "40", 	"description": "DB Password" 								},
+    		{ "name": "id", 		"type": "STRING", 		"nullable": false, "size": 15, 		"description": "Connection ID", 		"invariant": true 	},
+    		{ "name": "driver", 	"type": "STRING", 		"nullable": false, "size": 100, 	"description": "DB Driver" 									},
+    		{ "name": "db", 		"type": "STRING", 		"nullable": false, "size": 200, 	"description": "DB Url" 									},
+    		{ "name": "user", 		"type": "STRING", 		"nullable": false, "size": 30, 		"description": "DB User" 									},
+    		{ "name": "pswd", 		"type": "STRING", 		"nullable": false, "size": 40, 		"description": "DB Password" 								},
     		{ "name": "initial", 	"type": "INTEGER", 		"nullable": false, 					"description": "Minimum Connections" 						},
     		{ "name": "max", 		"type": "INTEGER", 		"nullable": false, 					"description": "Maximum Connections" 						},
     		{ "name": "schemas", 	"type": "STRING[]", 	"nullable": false, 					"description": "Schemas" 									}
