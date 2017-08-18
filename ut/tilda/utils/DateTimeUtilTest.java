@@ -20,7 +20,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.Clock;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
@@ -33,7 +32,6 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.data.ZoneInfo_Factory;
 import tilda.db.Connection;
 import tilda.db.ConnectionPool;
 
@@ -45,7 +43,10 @@ public class DateTimeUtilTest
       {
         try
           {
-            Test0();
+            String TS = "2017-07-31 14:25:11.873-04";
+            DateTimeUtil.parse(TS, "yyyy-MM-dd HH:mm:ss.SSSX");
+            
+//            Test0();
             
 //            Test1();
 //            Test2();
