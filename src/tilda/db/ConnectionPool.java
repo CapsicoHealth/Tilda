@@ -187,7 +187,7 @@ public class ConnectionPool
                       TildaList = LoadTildaResources(C);
                     
                     DatabaseMeta DBMeta = LoadDatabaseMetaData(C, TildaList);
-                    Migrator.MigrateDatabase(C, Migrate.isMigrationActive() == false, TildaList, DBMeta);
+                    Migrator.MigrateDatabase(C, Migrate.isMigrationActive() == false, first, TildaList, DBMeta);
                     if (first == true && Migrate.isMigrationActive() == false)
                       {
                         LOG.info("Initializing Schemas.");

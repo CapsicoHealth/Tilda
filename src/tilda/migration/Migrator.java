@@ -18,6 +18,8 @@ package tilda.migration;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -62,7 +64,7 @@ public class Migrator
     public static final String    TILDA_VERSION       = "1.0";
     public static final String    TILDA_VERSION_VAROK = "1_0";
 
-    public static void MigrateDatabase(Connection C, boolean CheckOnly, List<Schema> TildaList, DatabaseMeta DBMeta)
+    public static void MigrateDatabase(Connection C, boolean CheckOnly, boolean firstMigration, List<Schema> TildaList, DatabaseMeta DBMeta)
     throws Exception
       {
         List<MigrationScript> Scripts = new ArrayList<MigrationScript>();
@@ -113,43 +115,8 @@ public class Migrator
                 }
             if (CheckOnly == false)
               {
-                LOG.info("!!! THIS UTILITY IS ABOUT TO CHANGE DATA IN YOUR DATABASE. MAKE SURE YOU HAVE A BACKUP. !!!");
-                LOG.info(" ===> " + C.getURL());
-                LOG.info("");
-                LOG.info("Press 'yes' followed by enter to continue.");
-                Scanner scanner = null;
-                try
-                  {
-                    scanner = new Scanner(System.in);
-                    String answer = scanner.next();
-                    if (answer.toLowerCase().equals("yes") == false)
-                      throw new Exception("User asked to exit.");
-                    LOG.info("");
-                    LOG.info("OK! Starting the migration...");
-                    LOG.info("------------------------------------");
-                  }
-                catch (Exception E)
-                  {
-                    throw E;
-                  }
-                finally
-                  {
-                    if (scanner != null)
-                      scanner.close();
-                  }
-                LOG.info("Applying migration actions.");
-                for (MigrationScript S : Scripts)
-                  {
-                    if (S._Actions.isEmpty() == true)
-                      continue;
-                    for (MigrationAction A : S._Actions)
-                      {
-                        if (A.process(C) == false)
-                          throw new Exception("There was an error with the action '" + A.getDescription() + "'.");
-                        C.commit();
-                      }
-//                    C.commit();
-                  }
+                confirmMigration(Arrays.asList(C.getURL()), firstMigration);
+                applyMigrations(C, Scripts);
               }
           }
 
@@ -183,6 +150,62 @@ public class Migrator
           }
       }
 
+    protected static void confirmMigration(List<String> connectionUrls, boolean firstMigration)
+    throws Exception
+    {
+      LOG.info("!!! THIS UTILITY IS ABOUT TO CHANGE DATA IN YOUR DATABASE. MAKE SURE YOU HAVE A BACKUP. !!!");
+      Iterator<String> iterator = connectionUrls.iterator();
+      while(iterator.hasNext())
+        {
+          LOG.info(" ===> " + iterator.next());
+        }
+      LOG.info("");
+      
+      
+      if (firstMigration == true)
+        {
+          LOG.info("Press 'yes' followed by enter to continue.");
+          Scanner scanner = null;
+          try
+            {
+              scanner = new Scanner(System.in);
+              String answer = scanner.next();
+              if (answer.toLowerCase().equals("yes") == false)
+                throw new Exception("User asked to exit.");
+              LOG.info("");
+              LOG.info("OK! Starting the migration...");
+              LOG.info("------------------------------------");
+            }
+          catch (Exception E)
+            {
+              throw E;
+            }
+          finally
+            {
+              if (scanner != null)
+                scanner.close();
+            }      
+        }
+    }
+    
+    protected static void applyMigrations(Connection C, List<MigrationScript> Scripts)
+    throws Exception
+    {
+      LOG.info("Applying migration actions.");
+      for (MigrationScript S : Scripts)
+        {
+          if (S._Actions.isEmpty() == true)
+            continue;
+          for (MigrationAction A : S._Actions)
+            {
+              if (A.process(C) == false)
+                throw new Exception("There was an error with the action '" + A.getDescription() + "'.");
+              C.commit();
+            }
+//          C.commit();
+        }      
+    }
+    
     protected static List<MigrationAction> getMigrationActions(CodeGenSql CGSQL, Schema S, DatabaseMeta DBMeta)
     throws Exception
       {
