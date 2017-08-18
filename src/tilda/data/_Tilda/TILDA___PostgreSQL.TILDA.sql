@@ -53,6 +53,25 @@ CREATE UNIQUE INDEX KEY_Name ON TILDA.KEY ("name");
 
 
 
+create table if not exists TILDA.MAPPING -- Performance logs for the Tilda framework
+ (  "type"         character(10)  not null   -- The type this mapping is for
+  , "src"          varchar(1024)  not null   -- The source value for this mapping
+  , "dst"          varchar(1024)  not null   -- The the destination (mapped) value for this mapping.
+  , "created"      timestamptz    not null   -- The timestamp for when the record was created.
+  , "lastUpdated"  timestamptz    not null   -- The timestamp for when the record was last updated.
+  , "deleted"      timestamptz               -- The timestamp for when the record was deleted.
+ );
+COMMENT ON TABLE TILDA.MAPPING IS E'Performance logs for the Tilda framework';
+COMMENT ON COLUMN TILDA.MAPPING."type" IS E'The type this mapping is for';
+COMMENT ON COLUMN TILDA.MAPPING."src" IS E'The source value for this mapping';
+COMMENT ON COLUMN TILDA.MAPPING."dst" IS E'The the destination (mapped) value for this mapping.';
+COMMENT ON COLUMN TILDA.MAPPING."created" IS E'The timestamp for when the record was created.';
+COMMENT ON COLUMN TILDA.MAPPING."lastUpdated" IS E'The timestamp for when the record was last updated.';
+COMMENT ON COLUMN TILDA.MAPPING."deleted" IS E'The timestamp for when the record was deleted.';
+CREATE UNIQUE INDEX MAPPING_TypeSrcDst ON TILDA.MAPPING ("type", "src", "dst");
+
+
+
 create table if not exists TILDA.OBJECTPERF -- Performance logs for the Tilda framework
  (  "schemaName"     varchar(64)   not null   -- The name of the schema tracked
   , "objectName"     varchar(64)   not null   -- The name of the table/object tracked

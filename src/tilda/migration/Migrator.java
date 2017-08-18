@@ -40,7 +40,6 @@ import tilda.migration.actions.ColumnAlterNull;
 import tilda.migration.actions.ColumnAlterStringSize;
 import tilda.migration.actions.ColumnAlterType;
 import tilda.migration.actions.ColumnComment;
-import tilda.migration.actions.ColumnDrop;
 import tilda.migration.actions.SchemaCreate;
 import tilda.migration.actions.SchemaViewsDrop;
 import tilda.migration.actions.TableComment;
@@ -68,21 +67,11 @@ public class Migrator
         List<MigrationScript> Scripts = new ArrayList<MigrationScript>();
         int ActionCount = 0;
 
-        if (CheckOnly == false)
-          {
-            if (DBMeta.getSchemaMeta("TILDA") == null)
-              {
-                for (Schema S : TildaList)
-                  if (S._Name.equalsIgnoreCase("TILDA") == true)
-                    {
-                      new SchemaCreate(S).process(C);
-                      break;
-                    }
-                DBMeta.load(C, "TILDA");
-              }
-            new TildaHelpersAdd().process(C);
-            C.commit();
-          }
+//        if (CheckOnly == false)
+//          {
+//            new TildaHelpersAdd().process(C);
+//            C.commit();
+//          }
 
         LOG.info("Analyzing differences between the database and the application's expected data model...");
         MigrationScript InitScript = new MigrationScript(null, new ArrayList<MigrationAction>());
@@ -96,6 +85,8 @@ public class Migrator
             for (MigrationAction MA : L)
               if (MA._isDependency == false)
                 ++ActionCount;
+            if (S._Name.equalsIgnoreCase("TILDA") == true)
+             L.add(new TildaHelpersAdd());
             Scripts.add(new MigrationScript(S, L));
           }
 
@@ -148,13 +139,14 @@ public class Migrator
                           throw new Exception("There was an error with the action '" + A.getDescription() + "'.");
                         C.commit();
                       }
-//                    C.commit();
+                    // C.commit();
                   }
               }
           }
 
         if (ActionCount == 0)
           {
+            new TildaHelpersAdd().process(C);
             LOG.info("");
             LOG.info("");
             LOG.info("====================================================================");
@@ -241,17 +233,17 @@ public class Migrator
                           Actions.add(new ColumnAlterType(Col, CMeta._TildaType));
                       }
                   }
-/*
-                for (String c : Obj._DropOldColumns)
-                  {
-                    ColumnMeta CI = TMeta.getColumnMeta(c);
-                    Column Col = Obj.getColumn(c);
-                    if (Col == null && CI != null)
-                      Actions.add(new ColumnDrop(Obj, c));
-                  }
-*/
-//                if (XXX != Actions.size())
-//                  Actions.add(new CommitPoint());
+                /*
+                 * for (String c : Obj._DropOldColumns)
+                 * {
+                 * ColumnMeta CI = TMeta.getColumnMeta(c);
+                 * Column Col = Obj.getColumn(c);
+                 * if (Col == null && CI != null)
+                 * Actions.add(new ColumnDrop(Obj, c));
+                 * }
+                 */
+                // if (XXX != Actions.size())
+                // Actions.add(new CommitPoint());
               }
           }
         for (View V : S._Views)
