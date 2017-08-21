@@ -18,6 +18,7 @@ package tilda;
 
 import java.io.Reader;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -55,32 +56,52 @@ public class Import
         Connection C = null;
         try
           {
-            int Total = 0;
-            long T0 = System.nanoTime();
-            C = ConnectionPool.get("MAIN");
-            int FileCount = 0;
-            if (args[0].equalsIgnoreCase("-packageName") == true)
-              {
-                ++FileCount;
-                Total += Do(args[1], args[2], C);
-                C.commit();
-              }
-            else for (String a : args)
-              {
-                Total += Do(null, a, C);
-                ++FileCount;
-                C.commit();
-              }
-            T0 = System.nanoTime() - T0;
-            LOG.info("");
-            LOG.info("");
-            LOG.info("");
-            LOG.info("All in all, processed a total of " + Total + " records from "+FileCount+" files in " + DurationUtil.getDurationSeconds(T0) + "s (" + DurationUtil.PrintPerformancePerMinute(T0, Total) + " records/mn).");
+            int TotalRecords = 0;
+            int TotalFiles = 0;
+            long TotalTime = System.nanoTime();
             StringBuilder Str = new StringBuilder();
+            
+            Iterator<String> connectionIds = ConnectionPool.getUniqueDataSourceIds().iterator();
+            while (connectionIds.hasNext()) 
+              {
+                int RecordsCount = 0;
+                long timeTaken = System.nanoTime();
+                int FileCount = 0;
+
+                C = ConnectionPool.get(connectionIds.next());              
+                if (args[0].equalsIgnoreCase("-packageName") == true)
+                  {
+                    ++FileCount;
+                    RecordsCount += Do(args[1], args[2], C);
+                    C.commit();
+                  }
+                else for (String a : args)
+                  {
+                    RecordsCount += Do(null, a, C);
+                    ++FileCount;
+                    C.commit();
+                  }
+                timeTaken = System.nanoTime() - timeTaken;
+                LOG.info("\n\n\n");
+                LOG.info("===> "+ C.getURL());
+                LOG.info("Processed a total of " + RecordsCount + " records from "+FileCount+" files in " + DurationUtil.getDurationSeconds(timeTaken) + "s (" + DurationUtil.PrintPerformancePerMinute(timeTaken, RecordsCount) + " records/mn).");
+                Str.setLength(0);
+                PerfTracker.print(Str);
+                LOG.info(TextUtil.toMaxLength(Str.toString(), 20000));
+                
+                // Counters
+                TotalRecords += RecordsCount;
+                TotalFiles += FileCount;
+              }
+            TotalTime = System.nanoTime() - TotalTime;
+            // LOG.info("All in all, processed a total of " + TotalRecords + " records from "+ TotalFiles +" files in " + DurationUtil.getDurationSeconds(TotalTime) + "s (" + DurationUtil.PrintPerformancePerMinute(TotalTime, TotalRecords) + " records/mn).");
+            LOG.info("All in all, processed a total of " + TotalRecords + " records in " + DurationUtil.getDurationSeconds(TotalTime) + "s (" + DurationUtil.PrintPerformancePerMinute(TotalTime, TotalRecords) + " records/mn).");
+            Str.setLength(0);
             PerfTracker.print(Str);
             // LDH-NOTE: there is a bug in the Log4j code with a limit on buffer size if out to a file!
-//            LOG.info(Str.toString());
+            // LOG.info(Str.toString());
             LOG.info(TextUtil.toMaxLength(Str.toString(), 20000));
+            
           }
         catch (Throwable T)
           {

@@ -490,7 +490,7 @@ public class ConnectionPool
         return _EmailConfigDetails;
       }
     
-    public static ArrayList<String> getDataSourceIds()
+    public static ArrayList<String> getUniqueDataSourceIds()
       {
         return _UniqueDataSourceIds;
       }
