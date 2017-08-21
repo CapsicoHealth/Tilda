@@ -48,8 +48,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 
 import tilda.Migrate;
-import tilda.data.CONNECTIONS_Data;
-import tilda.data.CONNECTIONS_Factory;
+import tilda.data.Connections_Data;
+import tilda.data.Connections_Factory;
 import tilda.db.metadata.DatabaseMeta;
 import tilda.enums.TransactionType;
 import tilda.generation.interfaces.CodeGenSql;
@@ -235,18 +235,18 @@ public class ConnectionPool
       {
         LOG.info("Adding Connections from tilda.CONNECTIONS table to Pool");
         
-        CONNECTIONS_Data connection = null;
-        ListResults<CONNECTIONS_Data> connections = null;
+        Connections_Data connection = null;
+        ListResults<Connections_Data> connections = null;
         try 
           {
-            connections = CONNECTIONS_Factory.LookupWhereAllButDeleted(Keys, 0, 10000);
+            connections = Connections_Factory.LookupWhereAllButDeleted(Keys, 0, 10000);
           } 
         catch (Exception e) 
            {
              LOG.error("Database level connections list is not available. Skipping ... \n", e);
              return;
            }
-        Iterator<CONNECTIONS_Data> iterator = connections.iterator();
+        Iterator<Connections_Data> iterator = connections.iterator();
         while(iterator.hasNext())
           {
             connection = iterator.next();

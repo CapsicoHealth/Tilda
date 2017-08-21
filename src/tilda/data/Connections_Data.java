@@ -13,11 +13,11 @@ import tilda.db.Connection;
 This is the application class <B>Data_CONNECTIONS</B> mapped to the table <B>TILDA.CONNECTIONS</B>.
 @see tilda.data._Tilda.TILDA__CONNECTIONS
 */
-public class CONNECTIONS_Data extends tilda.data._Tilda.TILDA__CONNECTIONS
+public class Connections_Data extends tilda.data._Tilda.TILDA__CONNECTIONS
  {
-   protected static final Logger LOG = LogManager.getLogger(CONNECTIONS_Data.class.getName());
+   protected static final Logger LOG = LogManager.getLogger(Connections_Data.class.getName());
 
-   public CONNECTIONS_Data() { }
+   public Connections_Data() { }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

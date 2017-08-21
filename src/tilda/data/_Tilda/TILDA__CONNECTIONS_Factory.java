@@ -260,7 +260,7 @@ This is the column definition for:<BR>
          {
            if (__INITIALIZED == false)
             {
-              tilda.data.CONNECTIONS_Factory.init(C);
+              tilda.data.Connections_Factory.init(C);
               __INITIALIZED = true;
             }
          }
@@ -270,21 +270,21 @@ This is the column definition for:<BR>
        public RecordProcessorInternal(Connection C, int Start)
          {
            _C = C;
-           _L = new ArrayListResults<tilda.data.CONNECTIONS_Data>(Start);
+           _L = new ArrayListResults<tilda.data.Connections_Data>(Start);
          }
-       public RecordProcessorInternal(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.CONNECTIONS_Data> OP)
+       public RecordProcessorInternal(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Connections_Data> OP)
          {
            _C = C;
            _OP = OP;
          }
        protected Connection _C = null;
-       protected tilda.db.processors.ObjectProcessor<tilda.data.CONNECTIONS_Data> _OP;
-       protected ArrayListResults<tilda.data.CONNECTIONS_Data> _L = null;
+       protected tilda.db.processors.ObjectProcessor<tilda.data.Connections_Data> _OP;
+       protected ArrayListResults<tilda.data.Connections_Data> _L = null;
        public void    Start  () { }
        public void    End    (boolean HasMore, int Max) { if (_OP == null) _L.wrapup(HasMore, Max); }
        public boolean Process(int Index, java.sql.ResultSet RS) throws Exception
         {
-          tilda.data.CONNECTIONS_Data Obj = new tilda.data.CONNECTIONS_Data();
+          tilda.data.Connections_Data Obj = new tilda.data.Connections_Data();
           boolean OK = ((tilda.data._Tilda.TILDA__CONNECTIONS)Obj).Init(_C, RS);
           if (OK == true)
            {
@@ -390,9 +390,9 @@ This is the column definition for:<BR>
  @param max         Maximum Connections
  @param schemas     Schemas
 */
-   static public tilda.data.CONNECTIONS_Data Create(String id, String driver, String db, String user, String pswd, int initial, int max, List<String> schemas) throws Exception
+   static public tilda.data.Connections_Data Create(String id, String driver, String db, String user, String pswd, int initial, int max, List<String> schemas) throws Exception
      {
-       tilda.data._Tilda.TILDA__CONNECTIONS Obj = new tilda.data.CONNECTIONS_Data();
+       tilda.data._Tilda.TILDA__CONNECTIONS Obj = new tilda.data.Connections_Data();
        Obj.initForCreate();
 
 
@@ -410,10 +410,10 @@ This is the column definition for:<BR>
        Obj.setCreatedNow       ();
        Obj.setLastUpdatedNow   ();
 
-       return (tilda.data.CONNECTIONS_Data) Obj;
+       return (tilda.data.Connections_Data) Obj;
      }
 
-   static public tilda.data.CONNECTIONS_Data Create(Map<String, String> Values, List<StringStringPair> Errors)
+   static public tilda.data.Connections_Data Create(Map<String, String> Values, List<StringStringPair> Errors)
    throws Exception
      {
        int IncomingErrors = Errors.size();
@@ -430,25 +430,25 @@ This is the column definition for:<BR>
        if (IncomingErrors != Errors.size())
         return null;
 
-      tilda.data.CONNECTIONS_Data Obj = tilda.data.CONNECTIONS_Factory.Create(_id, _driver, _db, _user, _pswd, _initial, _max, _schemas);
+      tilda.data.Connections_Data Obj = tilda.data.Connections_Factory.Create(_id, _driver, _db, _user, _pswd, _initial, _max, _schemas);
 
 
       return Obj;
      }
 
-   static public tilda.data.CONNECTIONS_Data LookupByPrimaryKey(String id) throws Exception
+   static public tilda.data.Connections_Data LookupByPrimaryKey(String id) throws Exception
      {
-       tilda.data._Tilda.TILDA__CONNECTIONS Obj = new tilda.data.CONNECTIONS_Data();
+       tilda.data._Tilda.TILDA__CONNECTIONS Obj = new tilda.data.Connections_Data();
        Obj.initForLookup(0);
 
        Obj.setId         (id         ); Obj.__Saved_id          = Obj._id         ;
 
-       return (tilda.data.CONNECTIONS_Data) Obj;
+       return (tilda.data.Connections_Data) Obj;
      }
 
-   static public ListResults<tilda.data.CONNECTIONS_Data> LookupWhereAllById(Connection C, int Start, int Size) throws Exception
+   static public ListResults<tilda.data.Connections_Data> LookupWhereAllById(Connection C, int Start, int Size) throws Exception
      {
-       tilda.data._Tilda.TILDA__CONNECTIONS Obj = new tilda.data.CONNECTIONS_Data();
+       tilda.data._Tilda.TILDA__CONNECTIONS Obj = new tilda.data.Connections_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
 
 
@@ -458,9 +458,9 @@ This is the column definition for:<BR>
        return RPI._L;
      }
 
-   static public void LookupWhereAllById(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.CONNECTIONS_Data> OP, int Start, int Size) throws Exception
+   static public void LookupWhereAllById(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Connections_Data> OP, int Start, int Size) throws Exception
      {
-       tilda.data._Tilda.TILDA__CONNECTIONS Obj = new tilda.data.CONNECTIONS_Data();
+       tilda.data._Tilda.TILDA__CONNECTIONS Obj = new tilda.data.Connections_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
 
 
@@ -470,9 +470,9 @@ This is the column definition for:<BR>
      }
 
 
-   static public ListResults<tilda.data.CONNECTIONS_Data> LookupWhereAllButDeleted(Connection C, int Start, int Size) throws Exception
+   static public ListResults<tilda.data.Connections_Data> LookupWhereAllButDeleted(Connection C, int Start, int Size) throws Exception
      {
-       tilda.data._Tilda.TILDA__CONNECTIONS Obj = new tilda.data.CONNECTIONS_Data();
+       tilda.data._Tilda.TILDA__CONNECTIONS Obj = new tilda.data.Connections_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
 
 
@@ -484,13 +484,13 @@ This is the column definition for:<BR>
 
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }
    public static SelectQuery newWhereQuery (Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, false); }
-   public static ListResults<tilda.data.CONNECTIONS_Data> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception
+   public static ListResults<tilda.data.Connections_Data> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
        ReadMany(C, -7, RPI, null, Q, Start, Size);
        return RPI._L;
      }
-   public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.CONNECTIONS_Data> OP, int Start, int Size) throws Exception
+   public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.Connections_Data> OP, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
        ReadMany(C, -7, RPI, null, Q, Start, Size);

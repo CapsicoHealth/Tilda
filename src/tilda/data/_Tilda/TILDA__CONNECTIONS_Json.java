@@ -32,7 +32,7 @@ public class TILDA__CONNECTIONS_Json
    @SerializedName("schemas"    ) public List<String>  _schemas    ;
    /*@formatter:on*/
 
-   public tilda.data.CONNECTIONS_Data Write(Connection C) throws Exception
+   public tilda.data.Connections_Data Write(Connection C) throws Exception
     {
       if (TextUtil.isNullOrEmpty(_id         ) == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.CONNECTIONS.id' was null or empty. It's not nullable in the model.\n"+toString());
@@ -51,11 +51,11 @@ public class TILDA__CONNECTIONS_Json
       if (_schemas     == null || _schemas    .isEmpty() == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.CONNECTIONS.schemas' was null or empty. It's not nullable in the model.\n"+toString());
 
-      tilda.data.CONNECTIONS_Data Obj = tilda.data.CONNECTIONS_Factory.Create(_id, _driver, _db, _user, _pswd, _initial, _max, _schemas);
+      tilda.data.Connections_Data Obj = tilda.data.Connections_Factory.Create(_id, _driver, _db, _user, _pswd, _initial, _max, _schemas);
       Update(Obj);
       if (Obj.Write(C) == false)
        {
-         Obj = tilda.data.CONNECTIONS_Factory.LookupByPrimaryKey(_id);
+         Obj = tilda.data.Connections_Factory.LookupByPrimaryKey(_id);
          if (Obj.Read(C) == false)
           throw new Exception("Cannot create the tilda.data.TILDA.CONNECTIONS object.\n"+toString());
          if (_driver     != null) Obj.setDriver     (_driver     );
@@ -72,7 +72,7 @@ public class TILDA__CONNECTIONS_Json
       return Obj;
    }
 
-   public void Update(tilda.data.CONNECTIONS_Data Obj) throws Exception
+   public void Update(tilda.data.Connections_Data Obj) throws Exception
     {
       if (_id         != null) Obj.setId         (_id         );
       if (_driver     != null) Obj.setDriver     (_driver     );
