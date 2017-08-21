@@ -67,12 +67,6 @@ public class Migrator
         List<MigrationScript> Scripts = new ArrayList<MigrationScript>();
         int ActionCount = 0;
 
-//        if (CheckOnly == false)
-//          {
-//            new TildaHelpersAdd().process(C);
-//            C.commit();
-//          }
-
         LOG.info("Analyzing differences between the database and the application's expected data model...");
         MigrationScript InitScript = new MigrationScript(null, new ArrayList<MigrationAction>());
         for (Schema S : TildaList)

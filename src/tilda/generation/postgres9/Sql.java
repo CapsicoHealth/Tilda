@@ -52,6 +52,7 @@ import tilda.parsing.parts.View;
 import tilda.parsing.parts.ViewColumn;
 import tilda.parsing.parts.ViewJoin;
 import tilda.parsing.parts.ViewPivot;
+import tilda.parsing.parts.ViewRealizeMapping;
 import tilda.utils.PaddingTracker;
 import tilda.utils.TextUtil;
 
@@ -777,7 +778,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
       {
         String FormulaStr = TextUtil.JoinTrim(F._FormulaStrs, " ");
 
-        Matcher M = F._ViewColumnsRegEx.matcher(FormulaStr);
+        Matcher M = F.getParentView()._ViewColumnsRegEx.matcher(FormulaStr);
         StringBuffer Str = new StringBuffer();
         while (M.find() == true)
           {
@@ -804,7 +805,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         FormulaStr = Str.toString();
 
         // Resolve sub-formulas
-        M = F._FormulasRegEx.matcher(FormulaStr);
+        M = F.getParentView()._FormulasRegEx.matcher(FormulaStr);
         Str.setLength(0);
         while (M.find() == true)
           {
@@ -836,7 +837,11 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   Str.append(", ");
                 else
                   First = false;
-                Str.append(V._ParentSchema._Name + "." + V._Name + ".\"" + VC._Name + "\"");
+                ViewRealizeMapping VRM = V._Realize.getMapping(VC.getName());
+                if (VRM == null)
+                 Str.append(V._ParentSchema._Name + "." + V._Name + ".\"" + VC._Name + "\"");
+                else
+                 Str.append(VRM.printMapping());
               }
           }
         for (Formula F : V._Formulas)
@@ -849,7 +854,11 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   Str.append(", ");
                 else
                   First = false;
-                Str.append(V._ParentSchema._Name + "." + V._Name + ".\"" + F._Name + "\"");
+                ViewRealizeMapping VRM = V._Realize.getMapping(F._Name);
+                if (VRM == null)
+                 Str.append(V._ParentSchema._Name + "." + V._Name + ".\"" + F._Name + "\"");
+                else
+                 Str.append(VRM.printMapping());
               }
           }
         return Str.toString();
@@ -919,7 +928,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
           {
             if (F == null)
               continue;
-            Matcher M = F._ViewColumnsRegEx.matcher(String.join("\n", F._FormulaStrs));
+            Matcher M = F.getParentView()._ViewColumnsRegEx.matcher(String.join("\n", F._FormulaStrs));
             Set<String> Names = new HashSet<String>();
             while (M.find() == true)
               {
@@ -947,7 +956,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   }
               }
             Names.clear();
-            M = F._FormulasRegEx.matcher(String.join("\n", F._FormulaStrs));
+            M = F.getParentView()._FormulasRegEx.matcher(String.join("\n", F._FormulaStrs));
             while (M.find() == true)
               {
                 String s = M.group(1);

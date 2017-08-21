@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -64,6 +65,8 @@ public class View extends Base
 
     public transient boolean     _OCC            = false;
     public transient PrimaryKey  _PK             = null;
+    public transient Pattern     _ViewColumnsRegEx;
+    public transient Pattern     _FormulasRegEx;
 
     @Override
     public Column getColumn(String name)
@@ -549,16 +552,32 @@ public class View extends Base
         if (_Formulas != null)
           for (Formula F : _Formulas)
             if (F != null)
-              F.Validate(PS, this);
-
-        if (_Formulas != null)
-          for (Formula F : _Formulas)
-            if (F != null)
               {
+                F.Validate(PS, this);
                 Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "Formula column: " + F._Title);
                 O._Columns.add(C);
               }
 
+        // Preparing regexes for anything that needs to do search and replace.
+        StringBuffer Str = new StringBuffer();
+        for (ViewColumn VC : _ViewColumns)
+          {
+            if (Str.length() != 0)
+              Str.append("|");
+            Str.append(VC._Name);
+          }
+        _ViewColumnsRegEx = Pattern.compile("\\b(" + Str.toString() + ")\\b");
+
+        Str.setLength(0);
+        for (Formula F : _Formulas)
+          {
+            if (F == null)
+              continue;
+            if (Str.length() != 0)
+              Str.append("|");
+            Str.append(F._Name);
+          }
+        _FormulasRegEx = Pattern.compile("\\b(" + Str.toString() + ")\\b");
 
         PrimaryKey PK = _ViewColumns.get(0)._SameAsObj._ParentObject._PrimaryKey;
         if (PK != null)
@@ -596,7 +615,7 @@ public class View extends Base
         O.Validate(PS, ParentSchema);
 
         if (_Realize != null)
-          _Realize.Validate(PS, new ViewRealizedWrapper(O));
+          _Realize.Validate(PS, this, new ViewRealizedWrapper(O));
 
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
@@ -641,5 +660,5 @@ public class View extends Base
               return F;
         return null;
       }
-    
+
   }
