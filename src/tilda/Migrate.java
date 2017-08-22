@@ -28,11 +28,22 @@ public class Migrate
   {
     static final Logger    LOG               = LogManager.getLogger(Migrate.class.getName());
 
-    static private boolean _MIGRATION_START_ = false;
+    static private boolean _MIGRATION_START_  = false;
+    static private boolean _IS_TESTING_       = false;
 
     static public boolean isMigrationActive()
       {
         return _MIGRATION_START_;
+      }
+    
+    static public boolean isTesting()
+      {
+        return _IS_TESTING_;
+      }    
+    
+    public static void setIsTesting(boolean isTesting)
+      {
+        _IS_TESTING_ = isTesting;
       }
 
     public static void main(String[] Args)
@@ -60,6 +71,7 @@ public class Migrate
             LOG.info("");
             LOG.info("OK! Starting the migration...");
             LOG.info("------------------------------------");
+
             _MIGRATION_START_ = true;
             ConnectionPool.autoInit();
           }

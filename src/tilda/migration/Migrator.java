@@ -27,6 +27,7 @@ import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.Migrate;
 import tilda.db.Connection;
 import tilda.db.KeysManager;
 import tilda.db.metadata.ColumnMeta;
@@ -105,7 +106,8 @@ public class Migrator
           }
         else if (CheckOnly == false)
           {
-            KeysManager.reloadAll();
+            if (Migrate.isTesting() == false)
+              KeysManager.reloadAll();
             LOG.info("");
             LOG.info("");
             LOG.info("================================================================================================");
@@ -152,7 +154,7 @@ public class Migrator
       List<MigrationScript> Scripts = new ArrayList<MigrationScript>();
       int ActionCount = 0;
       
-      if (CheckOnly == false)
+      if (CheckOnly == false && Migrate.isTesting() == false)
         AddTildaHelpers(C, TildaList, DBMeta);
       
       LOG.info("===> Analyzing DB ( Url: "+C.getURL()+" )");
@@ -227,7 +229,8 @@ public class Migrator
                 {
                   if (A.process(C) == false)
                     throw new Exception("There was an error with the action '" + A.getDescription() + "'.");
-                  C.commit();
+                  if (Migrate.isTesting() == false)
+                    C.commit();
                 }
             }      
         }

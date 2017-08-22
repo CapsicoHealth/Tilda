@@ -172,10 +172,7 @@ public class ConnectionPool
               }
             if (isTildaEnabled() == true)
               {
-                Keys = get("KEYS");
-                if (Keys == null){
-                  throw new Exception("Must define atleast one KEYS Connection in /tilda.config.json");
-                }                  
+                Keys = get("KEYS");  
                 ReadConnections(Keys);                
                 
                 List<MigrationDataModel> migrationDataList = new ArrayList<>();
@@ -204,7 +201,8 @@ public class ConnectionPool
                           }
                         first = false;
                       }
-                    C.commit();
+                    if (Migrate.isTesting() == false)
+                      C.commit();
                   }
                 
                 // Migrate Databases
@@ -473,6 +471,8 @@ public class ConnectionPool
             catch (SQLException E)
               {
                 LOG.error("   - Attempt #" + i + " failed to obtain a connection: " + E.getMessage());
+                if (Migrate.isTesting() == true)
+                  throw E;
                 if (i == 1)
                   LOG.error("     (Sleeping for 30 seconds, and will re-try again, for a max of 100 times)");
                 Thread.sleep(1000 * 30);
