@@ -18,6 +18,8 @@ package tilda;
 
 import java.io.Reader;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -45,63 +47,57 @@ public class Import
         ConnectionPool.autoInit();
         LOG.info("\n*************************************************************************************************************************************\n");
 
-        if (args.length == 0)
+        ArrayList<String> arguments = new ArrayList<>(Arrays.asList(args));
+        
+        if (arguments.size() == 0)
           {
             LOG.error("This utility must be called with at least 1 argument: the path to an JSON import file named as _tilda.<Schema>.sampledata.<samplePackage>.json.");
             LOG.error("The utility will then execute the class <Schema.package>+'.importers.'+<samplesPackage>.Root which must implement the ImportProcessor class.");
             LOG.error("Alternatively, the utility can be called with 3 parameters '-package <packageName> <path-to-json-file> where the packageName from the JSON file name will be overriden by the suplied packageName to resolve to the right importer.");
+            LOG.error("*** For Multiple Tenants System,");
+            LOG.error("    This utility must be called with Tenant Database ConnectionId as its last argument on which would like to run this import");            
             System.exit(1);
           }
 
         Connection C = null;
         try
           {
-            int TotalRecords = 0;
-            int TotalFiles = 0;
-            long TotalTime = System.nanoTime();
-            StringBuilder Str = new StringBuilder();
-            
-            Iterator<String> connectionIds = ConnectionPool.getUniqueDataSourceIds().iterator();
-            while (connectionIds.hasNext()) 
+            int RecordsCount = 0;
+            long timeTaken = System.nanoTime();
+            int FileCount = 0;
+                        
+            if (ConnectionPool.getUniqueDataSourceIds().size() > 1) // Multi Tenant System
               {
-                int RecordsCount = 0;
-                long timeTaken = System.nanoTime();
-                int FileCount = 0;
-
-                C = ConnectionPool.get(connectionIds.next());              
-                if (args[0].equalsIgnoreCase("-packageName") == true)
-                  {
-                    ++FileCount;
-                    RecordsCount += Do(args[1], args[2], C);
-                    C.commit();
-                  }
-                else for (String a : args)
-                  {
-                    RecordsCount += Do(null, a, C);
-                    ++FileCount;
-                    C.commit();
-                  }
-                timeTaken = System.nanoTime() - timeTaken;
-                LOG.info("\n\n\n");
-                LOG.info("===> "+ C.getURL());
-                LOG.info("Processed a total of " + RecordsCount + " records from "+FileCount+" files in " + DurationUtil.getDurationSeconds(timeTaken) + "s (" + DurationUtil.PrintPerformancePerMinute(timeTaken, RecordsCount) + " records/mn).");
-                Str.setLength(0);
-                PerfTracker.print(Str);
-                LOG.info(TextUtil.toMaxLength(Str.toString(), 20000));
-                
-                // Counters
-                TotalRecords += RecordsCount;
-                TotalFiles += FileCount;
+                C = ConnectionPool.get(arguments.get(arguments.size() - 1));
+                arguments.remove(arguments.size() - 1);
               }
-            TotalTime = System.nanoTime() - TotalTime;
-            // LOG.info("All in all, processed a total of " + TotalRecords + " records from "+ TotalFiles +" files in " + DurationUtil.getDurationSeconds(TotalTime) + "s (" + DurationUtil.PrintPerformancePerMinute(TotalTime, TotalRecords) + " records/mn).");
-            LOG.info("All in all, processed a total of " + TotalRecords + " records in " + DurationUtil.getDurationSeconds(TotalTime) + "s (" + DurationUtil.PrintPerformancePerMinute(TotalTime, TotalRecords) + " records/mn).");
+            else // Single Tenant System
+              {
+                 C = ConnectionPool.get("MAIN");
+              }
+
+            if (arguments.get(0).equalsIgnoreCase("-packageName") == true)
+              {
+                ++FileCount;
+                RecordsCount += Do(arguments.get(1), arguments.get(2), C);
+                C.commit();
+              }
+            else for (String a : arguments)
+              {
+                RecordsCount += Do(null, a, C);
+                ++FileCount;
+                C.commit();
+              }
+            timeTaken = System.nanoTime() - timeTaken;
+            LOG.info("\n\n\n");
+            LOG.info("===> "+ C.getURL());
+            LOG.info("Processed a total of " + RecordsCount + " records from "+FileCount+" files in " + DurationUtil.getDurationSeconds(timeTaken) + "s (" + DurationUtil.PrintPerformancePerMinute(timeTaken, RecordsCount) + " records/mn).");
+            StringBuilder Str = new StringBuilder();
             Str.setLength(0);
             PerfTracker.print(Str);
             // LDH-NOTE: there is a bug in the Log4j code with a limit on buffer size if out to a file!
             // LOG.info(Str.toString());
             LOG.info(TextUtil.toMaxLength(Str.toString(), 20000));
-            
           }
         catch (Throwable T)
           {

@@ -62,6 +62,7 @@ import tilda.performance.PerfTracker;
 import tilda.utils.ClassStaticInit;
 import tilda.utils.FileUtil;
 import tilda.utils.LogUtil;
+import tilda.utils.MigrationDataModel;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
 
@@ -177,17 +178,20 @@ public class ConnectionPool
                 }                  
                 ReadConnections(Keys);                
                 
+                List<MigrationDataModel> migrationDataList = new ArrayList<>();
                 Iterator<String> connectionIds = _UniqueDataSourceIds.iterator();
                 List<Schema> TildaList = null;
                 boolean first = true;
+               
                 while(connectionIds.hasNext())
                   {
                     C = get(connectionIds.next());
                     if (TildaList == null) 
                       TildaList = LoadTildaResources(C);
-                    
                     DatabaseMeta DBMeta = LoadDatabaseMetaData(C, TildaList);
-                    Migrator.MigrateDatabase(C, Migrate.isMigrationActive() == false, first, TildaList, DBMeta);
+
+                    MigrationDataModel migrationData = Migrator.AnalyzeDatabase(C, Migrate.isMigrationActive() == false, TildaList, DBMeta);
+                    migrationDataList.add(migrationData);
                     if (first == true && Migrate.isMigrationActive() == false)
                       {
                         LOG.info("Initializing Schemas.");
@@ -201,6 +205,15 @@ public class ConnectionPool
                         first = false;
                       }
                     C.commit();
+                  }
+                
+                // Migrate Databases
+                Migrator.MigrateDatabase(migrationDataList, Migrate.isMigrationActive() == false);
+                // Close Connections
+                Iterator<MigrationDataModel> dataIterator = migrationDataList.iterator();
+                while(dataIterator.hasNext())
+                  {
+                    C = dataIterator.next().getConnection();
                     C.close();
                     C = null;
                   }
