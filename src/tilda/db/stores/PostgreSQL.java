@@ -285,13 +285,18 @@ public class PostgreSQL implements DBType
         return 4096;
       }
 
+    @Override
+    public void getColumnType(StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection)
+      {
+        Str.append(getColumnType(T, S, M, Collection));
+      }
+
     public String getColumnType(ColumnType T, Integer S, ColumnMode M, boolean Collection)
       {
         if (T == ColumnType.STRING && M != ColumnMode.CALCULATED)
           return Collection == true ? "text[]" : S < getVarCharThreshhold() ? PostgresType.CHAR._SQLType + "(" + S + ")" : S < getCLOBThreshhold() ? PostgresType.STRING._SQLType + "(" + S + ")" : "text";
         return PostgresType.get(T)._SQLType + (T != ColumnType.JSON && Collection == true ? "[]" : "");
       }
-
 
     @Override
     public boolean alterTableAlterColumnStringSize(Connection Con, Column Col, int DBSize)
