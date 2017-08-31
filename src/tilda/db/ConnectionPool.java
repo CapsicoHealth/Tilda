@@ -145,7 +145,7 @@ public class ConnectionPool
 
     static final Logger                           LOG                   = LogManager.getLogger(ConnectionPool.class.getName());
 
-    protected static ArrayList<String>            _UniqueDataSourceIds  = new ArrayList<>();
+    protected static Map<String, String>          _UniqueDataSourceIds  = new HashMap<String, String>();
     protected static Map<String, BasicDataSource> _DataSourcesById      = new HashMap<String, BasicDataSource>();
     protected static Map<String, BasicDataSource> _DataSourcesBySig     = new HashMap<String, BasicDataSource>();
     protected static Map<String, String>          _SchemaPackage        = new HashMap<String, String>();
@@ -175,20 +175,20 @@ public class ConnectionPool
                 Keys = get("KEYS");  
                 ReadConnections(Keys);                
                 
-                List<MigrationDataModel> migrationDataList = new ArrayList<>();
-                Iterator<String> connectionIds = _UniqueDataSourceIds.iterator();
-                List<Schema> TildaList = null;
                 boolean first = true;
-               
+                List<Schema> TildaList = null;
+                Iterator<String> connectionIds = getUniqueDataSourceIds().keySet().iterator();
+                List<String> connectionUrls = new ArrayList<>(getUniqueDataSourceIds().values());
+                
                 while(connectionIds.hasNext())
                   {
-                    C = get(connectionIds.next());
+                    String connectionId = connectionIds.next();
+                    C = get(connectionId);
                     if (TildaList == null) 
                       TildaList = LoadTildaResources(C);
                     DatabaseMeta DBMeta = LoadDatabaseMetaData(C, TildaList);
 
-                    MigrationDataModel migrationData = Migrator.AnalyzeDatabase(C, Migrate.isMigrationActive() == false, TildaList, DBMeta);
-                    migrationDataList.add(migrationData);
+                    Migrator.MigrateDatabase(C, Migrate.isMigrationActive() == false, TildaList, DBMeta, first, connectionUrls);
                     if (first == true && Migrate.isMigrationActive() == false)
                       {
                         LOG.info("Initializing Schemas.");
@@ -199,19 +199,10 @@ public class ConnectionPool
                             M.invoke(null, C);
                             _SchemaPackage.put(S._Name.toUpperCase(), S._Package);
                           }
-                        first = false;
                       }
+                    first = false;
                     if (Migrate.isTesting() == false)
                       C.commit();
-                  }
-                
-                // Migrate Databases
-                Migrator.MigrateDatabase(migrationDataList, Migrate.isMigrationActive() == false);
-                // Close Connections
-                Iterator<MigrationDataModel> dataIterator = migrationDataList.iterator();
-                while(dataIterator.hasNext())
-                  {
-                    C = dataIterator.next().getConnection();
                     C.close();
                     C = null;
                   }
@@ -371,7 +362,7 @@ public class ConnectionPool
                     BDS.setDefaultAutoCommit(false);
                     BDS.setDefaultTransactionIsolation(java.sql.Connection.TRANSACTION_READ_COMMITTED);
                     BDS.setDefaultQueryTimeout(20000);
-                    _UniqueDataSourceIds.add(id);
+                    _UniqueDataSourceIds.put(id, db);
                     _DataSourcesBySig.put(Sig, BDS);
                   }
                 else
@@ -503,7 +494,7 @@ public class ConnectionPool
         return _EmailConfigDetails;
       }
     
-    public static ArrayList<String> getUniqueDataSourceIds()
+    public static Map<String, String> getUniqueDataSourceIds()
       {
         return _UniqueDataSourceIds;
       }

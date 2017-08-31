@@ -29,6 +29,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.Migrate;
 import tilda.db.Connection;
+import tilda.db.ConnectionPool;
 import tilda.db.KeysManager;
 import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.DatabaseMeta;
@@ -66,36 +67,39 @@ public class Migrator
     public static final String    TILDA_VERSION       = "1.0";
     public static final String    TILDA_VERSION_VAROK = "1_0";
 
-    public static void MigrateDatabase(List<MigrationDataModel> MigrationDataList, boolean CheckOnly)
+    public static void MigrateDatabase(Connection C, boolean CheckOnly, List<Schema> TildaList, DatabaseMeta DBMeta, boolean first, List<String> connectionUrls)
     throws Exception
       {
-        long TotalActions = 0;
-        Iterator<MigrationDataModel> dataIterator = MigrationDataList.iterator();
-        List<String> ConnectionUrls = new ArrayList<String>();
+        if(CheckOnly == false)
+          AddTildaHelpers(C, TildaList, DBMeta);       
+
+        MigrationDataModel migrationData = Migrator.AnalyzeDatabase(C, CheckOnly, TildaList, DBMeta);
         
-        // Iterates MigrationDataList
-        // To Calculate TotalActions & listing All Connections 
-        while(dataIterator.hasNext())
-          {
-            MigrationDataModel migrationData = dataIterator.next();
-            ConnectionUrls.add(migrationData.getConnection().getURL());
-            TotalActions += migrationData.getActionCount();
-          }
-          
-        if (TotalActions > 0)
-          {
-            LOG.warn("");
-            LOG.warn("There were, combined, " + TotalActions + " discrepencies found in the all databases Vs. the application's required data model:");
-            LOG.warn("");
-            PrintDiscrepencies(MigrationDataList); // Iterates MigrationDataList
-            if (CheckOnly == false)
+        if(ConnectionPool.getUniqueDataSourceIds().size() > 1)
+          { // Multi Tenant
+            PrintDiscrepancies(migrationData);
+            if(CheckOnly == false)
               {
-                confirmMigration(ConnectionUrls);
-                applyMigrations(MigrationDataList); // Iterates MigrationDataList
+                if(first)
+                  confirmMigration(connectionUrls);
+                applyMigration(C, migrationData);
               }
           }
-
-        if (TotalActions == 0)
+        else
+          { // Single Tenant
+            if(migrationData.getActionCount() > 0)
+              {
+                PrintDiscrepancies(migrationData);
+                if(CheckOnly == false)
+                  {
+                    confirmMigration(connectionUrls);
+                    applyMigration(C, migrationData);
+                  }
+                  
+              }
+          }        
+        
+         if (migrationData.getActionCount() == 0)
           {
             LOG.info("");
             LOG.info("");
@@ -126,26 +130,20 @@ public class Migrator
           }
       }
 
-    public static void PrintDiscrepencies(List<MigrationDataModel> MigrationDataList)
+    public static void PrintDiscrepancies(MigrationDataModel migrationData)
     {
-      MigrationDataModel migrationData = null;
-      Iterator<MigrationDataModel> iterator = MigrationDataList.iterator();      
-      while(iterator.hasNext())
-        {
-          migrationData = iterator.next();
-          LOG.info("");
-          LOG.warn("There were " + migrationData.getActionCount() + " discrepencies found in the database Vs. the application's required data model:");
-          LOG.info("===> DB Url: "+migrationData.getConnection().getURL());
-          int counter = 0;
-          for (MigrationScript S : migrationData.getMigrationScripts())
-            for (MigrationAction MA : S._Actions)
-              {
-                if (MA._isDependency == false)
-                  LOG.warn("    " + (++counter) + " - " + MA.getDescription() + ".");
-                else
-                  LOG.debug("    - (dependency) " + MA.getDescription() + ".");
-              }
-        }      
+        LOG.info("");
+        LOG.warn("There were " + migrationData.getActionCount() + " discrepencies found in the database Vs. the application's required data model:");
+        LOG.info("");
+        int counter = 0;
+        for (MigrationScript S : migrationData.getMigrationScripts())
+          for (MigrationAction MA : S._Actions)
+            {
+              if (MA._isDependency == false)
+                LOG.warn("    " + (++counter) + " - " + MA.getDescription() + ".");
+              else
+                LOG.debug("    - (dependency) " + MA.getDescription() + ".");
+            }
     }
     
     public static MigrationDataModel AnalyzeDatabase(Connection C, boolean CheckOnly, List<Schema> TildaList, DatabaseMeta DBMeta)
@@ -172,7 +170,7 @@ public class Migrator
               ++ActionCount;
           Scripts.add(new MigrationScript(S, L));
         }
-      return new MigrationDataModel(C, ActionCount, Scripts);
+      return new MigrationDataModel(ActionCount, Scripts);
     }
     
     protected static void confirmMigration(List<String> connectionUrls)
@@ -209,39 +207,28 @@ public class Migrator
         }      
     }
     
-    protected static void applyMigrations(List<MigrationDataModel> MigrationDataList)
+    protected static void applyMigration(Connection C, MigrationDataModel migrationData)
     throws Exception
     {
-      Connection C = null;
-      MigrationDataModel migrationData = null;
-      Iterator<MigrationDataModel> iterator = MigrationDataList.iterator();
-      while(iterator.hasNext())
+      LOG.info("===> Migrating DB ( Url: "+ C.getURL()+" )");
+      LOG.info("Applying migration actions.");
+      for (MigrationScript S : migrationData.getMigrationScripts())
         {
-          migrationData = iterator.next();
-          C = migrationData.getConnection();
-          LOG.info("===> DB Url: "+ C.getURL());
-          LOG.info("Applying migration actions.");
-          for (MigrationScript S : migrationData.getMigrationScripts())
+          if (S._Actions.isEmpty() == true)
+            continue;
+          for (MigrationAction A : S._Actions)
             {
-              if (S._Actions.isEmpty() == true)
-                continue;
-              for (MigrationAction A : S._Actions)
-                {
-                  if (A.process(C) == false)
-                    throw new Exception("There was an error with the action '" + A.getDescription() + "'.");
-                  if (Migrate.isTesting() == false)
-                    C.commit();
-                }
-            }      
-        }
+              if (A.process(C) == false)
+                throw new Exception("There was an error with the action '" + A.getDescription() + "'.");
+              if (Migrate.isTesting() == false)
+                C.commit();
+            }
+        }      
     }
     
     public static void AddTildaHelpers(Connection C, List<Schema> TildaList, DatabaseMeta DBMeta)
     throws Exception
     {
-      // Add Tilda to DBMeta if doesn't exist
-      // Rajendra: Why??
-     
       if (DBMeta.getSchemaMeta("TILDA") == null)
         {
           for (Schema S : TildaList)
