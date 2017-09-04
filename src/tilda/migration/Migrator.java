@@ -74,9 +74,10 @@ public class Migrator
           AddTildaHelpers(C, TildaList, DBMeta);       
 
         MigrationDataModel migrationData = Migrator.AnalyzeDatabase(C, CheckOnly, TildaList, DBMeta);
-        
-        if(ConnectionPool.getUniqueDataSourceIds().size() > 1)
-          { // Multi Tenant
+
+        // RPJ-TODO: Simplify if-else logic
+        if(ConnectionPool.isMultiTenant())
+          {
             PrintDiscrepancies(migrationData);
             if(CheckOnly == false)
               {
@@ -86,16 +87,16 @@ public class Migrator
               }
           }
         else
-          { // Single Tenant
+          {
             if(migrationData.getActionCount() > 0)
               {
                 PrintDiscrepancies(migrationData);
                 if(CheckOnly == false)
                   {
-                    confirmMigration(connectionUrls);
+                    if (first)
+                      confirmMigration(connectionUrls);
                     applyMigration(C, migrationData);
-                  }
-                  
+                  }                  
               }
           }        
         

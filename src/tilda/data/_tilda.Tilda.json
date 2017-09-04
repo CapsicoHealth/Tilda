@@ -136,9 +136,10 @@
       ]
     },
     {
-      "name": "Connections",
+      "name": "Connection",
       "description": "Tilda DB Connections Configurations",
       "columns": [
+		{ "name": "active",     "type": "BOOLEAN",    "nullable": true,                 "description": "Status Flag"                                },
         { "name": "id",         "type": "STRING",     "nullable": false, "size": 15,    "description": "Connection ID",        "invariant": true    },
         { "name": "driver",     "type": "STRING",     "nullable": false, "size": 100,   "description": "DB Driver"                                  },
         { "name": "db",         "type": "STRING",     "nullable": false, "size": 200,   "description": "DB Url"                                     },
@@ -154,11 +155,11 @@
       ],
       "queries": [
         {
-          "name": "AllButDeleted",
-          "description": "All Connections except deleted",
+          "name": "Active",
+          "description": "All Active Connections",
           "from": [],
           "wheres": [
-            { "db":"*", "clause":"deleted is null" }          
+            { "db":"*", "clause":"active IS NOT false" }
           ],
           "orderBy": ["id asc"]
         }

@@ -220,8 +220,9 @@ insert into TILDA.KEY ("refnum", "name", "max", "count", "created", "lastUpdated
 
 
 
-create table if not exists TILDA.CONNECTIONS -- Tilda DB Connections Configurations
- (  "id"           character(15)  not null   -- Connection ID
+create table if not exists TILDA.CONNECTION -- Tilda DB Connections Configurations
+ (  "active"       boolean                   -- Status Flag
+  , "id"           character(15)  not null   -- Connection ID
   , "driver"       varchar(100)   not null   -- DB Driver
   , "db"           varchar(200)   not null   -- DB Url
   , "user"         varchar(30)    not null   -- DB User
@@ -234,18 +235,19 @@ create table if not exists TILDA.CONNECTIONS -- Tilda DB Connections Configurati
   , "deleted"      timestamptz               -- The timestamp for when the record was deleted.
   , PRIMARY KEY("id")
  );
-COMMENT ON TABLE TILDA.CONNECTIONS IS E'Tilda DB Connections Configurations';
-COMMENT ON COLUMN TILDA.CONNECTIONS."id" IS E'Connection ID';
-COMMENT ON COLUMN TILDA.CONNECTIONS."driver" IS E'DB Driver';
-COMMENT ON COLUMN TILDA.CONNECTIONS."db" IS E'DB Url';
-COMMENT ON COLUMN TILDA.CONNECTIONS."user" IS E'DB User';
-COMMENT ON COLUMN TILDA.CONNECTIONS."pswd" IS E'DB Password';
-COMMENT ON COLUMN TILDA.CONNECTIONS."initial" IS E'Minimum Connections';
-COMMENT ON COLUMN TILDA.CONNECTIONS."max" IS E'Maximum Connections';
-COMMENT ON COLUMN TILDA.CONNECTIONS."schemas" IS E'Schemas';
-COMMENT ON COLUMN TILDA.CONNECTIONS."created" IS E'The timestamp for when the record was created.';
-COMMENT ON COLUMN TILDA.CONNECTIONS."lastUpdated" IS E'The timestamp for when the record was last updated.';
-COMMENT ON COLUMN TILDA.CONNECTIONS."deleted" IS E'The timestamp for when the record was deleted.';
-CREATE INDEX CONNECTIONS_AllById ON TILDA.CONNECTIONS ("id" ASC);
+COMMENT ON TABLE TILDA.CONNECTION IS E'Tilda DB Connections Configurations';
+COMMENT ON COLUMN TILDA.CONNECTION."active" IS E'Status Flag';
+COMMENT ON COLUMN TILDA.CONNECTION."id" IS E'Connection ID';
+COMMENT ON COLUMN TILDA.CONNECTION."driver" IS E'DB Driver';
+COMMENT ON COLUMN TILDA.CONNECTION."db" IS E'DB Url';
+COMMENT ON COLUMN TILDA.CONNECTION."user" IS E'DB User';
+COMMENT ON COLUMN TILDA.CONNECTION."pswd" IS E'DB Password';
+COMMENT ON COLUMN TILDA.CONNECTION."initial" IS E'Minimum Connections';
+COMMENT ON COLUMN TILDA.CONNECTION."max" IS E'Maximum Connections';
+COMMENT ON COLUMN TILDA.CONNECTION."schemas" IS E'Schemas';
+COMMENT ON COLUMN TILDA.CONNECTION."created" IS E'The timestamp for when the record was created.';
+COMMENT ON COLUMN TILDA.CONNECTION."lastUpdated" IS E'The timestamp for when the record was last updated.';
+COMMENT ON COLUMN TILDA.CONNECTION."deleted" IS E'The timestamp for when the record was deleted.';
+CREATE INDEX CONNECTION_AllById ON TILDA.CONNECTION ("id" ASC);
 
 

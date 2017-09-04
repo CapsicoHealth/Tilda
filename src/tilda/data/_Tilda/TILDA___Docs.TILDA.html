@@ -2135,10 +2135,10 @@ It contains the following columns:<BR>
 </DIV>
 <BR><BR><BR><HR>
 <DIV>
-<DIV id='CONNECTIONS_DIV' class='tables'>
-<H1>CONNECTIONS&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 60%;"><A href="#">top</A></SUP></H1>
+<DIV id='CONNECTION_DIV' class='tables'>
+<H1>CONNECTION&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 60%;"><A href="#">top</A></SUP></H1>
 </DIV>
-The generated Java 8/PostgreSQL Tilda data class <B>Data_CONNECTIONS</B> is mapped to the table <B>TILDA.CONNECTIONS</B>.
+The generated Java 8/PostgreSQL Tilda data class <B>Data_CONNECTION</B> is mapped to the table <B>TILDA.CONNECTION</B>.
 <UL>
 
 <LI>The Object has normal <B>read/write</B> capabilities.</LI>
@@ -2151,52 +2151,55 @@ It contains the following columns:<BR>
    <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><!--TH align="left">Column</TH--><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
 
   <TR valign="top" bgcolor="#DFECF8"><TD>1&nbsp;&nbsp;</TD>
-<TD align="right"><B id='CONNECTIONS-id_DIV' class='columns'>id</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD><TD>character(15)&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&#x2611;&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>Connection ID</TD></TR>
+<TD align="right"><B id='CONNECTION-active_DIV' class='columns'>active</B>&nbsp;&nbsp;</TD>
+<TD>boolean&nbsp;&nbsp;</TD><TD>boolean&nbsp;&nbsp;</TD><TD align="center">&#x2611;&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>Status Flag</TD></TR>
   <TR valign="top" bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD>
-<TD align="right"><B id='CONNECTIONS-driver_DIV' class='columns'>driver</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD><TD>varchar(100)&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>DB Driver</TD></TR>
+<TD align="right"><B id='CONNECTION-id_DIV' class='columns'>id</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;&nbsp;</TD><TD>character(15)&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&#x2611;&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>Connection ID</TD></TR>
   <TR valign="top" bgcolor="#DFECF8"><TD>3&nbsp;&nbsp;</TD>
-<TD align="right"><B id='CONNECTIONS-db_DIV' class='columns'>db</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD><TD>varchar(200)&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>DB Url</TD></TR>
+<TD align="right"><B id='CONNECTION-driver_DIV' class='columns'>driver</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;&nbsp;</TD><TD>varchar(100)&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>DB Driver</TD></TR>
   <TR valign="top" bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD>
-<TD align="right"><B id='CONNECTIONS-user_DIV' class='columns'>user</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD><TD>varchar(30)&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>DB User</TD></TR>
+<TD align="right"><B id='CONNECTION-db_DIV' class='columns'>db</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;&nbsp;</TD><TD>varchar(200)&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>DB Url</TD></TR>
   <TR valign="top" bgcolor="#DFECF8"><TD>5&nbsp;&nbsp;</TD>
-<TD align="right"><B id='CONNECTIONS-pswd_DIV' class='columns'>pswd</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD><TD>varchar(40)&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>DB Password</TD></TR>
+<TD align="right"><B id='CONNECTION-user_DIV' class='columns'>user</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;&nbsp;</TD><TD>varchar(30)&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>DB User</TD></TR>
   <TR valign="top" bgcolor="#FFFFFF"><TD>6&nbsp;&nbsp;</TD>
-<TD align="right"><B id='CONNECTIONS-initial_DIV' class='columns'>initial</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;&nbsp;</TD><TD>integer&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>Minimum Connections</TD></TR>
+<TD align="right"><B id='CONNECTION-pswd_DIV' class='columns'>pswd</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;&nbsp;</TD><TD>varchar(40)&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>DB Password</TD></TR>
   <TR valign="top" bgcolor="#DFECF8"><TD>7&nbsp;&nbsp;</TD>
-<TD align="right"><B id='CONNECTIONS-max_DIV' class='columns'>max</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;&nbsp;</TD><TD>integer&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>Maximum Connections</TD></TR>
+<TD align="right"><B id='CONNECTION-initial_DIV' class='columns'>initial</B>&nbsp;&nbsp;</TD>
+<TD>int&nbsp;&nbsp;</TD><TD>integer&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>Minimum Connections</TD></TR>
   <TR valign="top" bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD>
-<TD align="right"><B id='CONNECTIONS-schemas_DIV' class='columns'>schemas</B>&nbsp;&nbsp;</TD>
-<TD>List<String> List<>&nbsp;&nbsp;</TD><TD>text[]&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>Schemas</TD></TR>
+<TD align="right"><B id='CONNECTION-max_DIV' class='columns'>max</B>&nbsp;&nbsp;</TD>
+<TD>int&nbsp;&nbsp;</TD><TD>integer&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>Maximum Connections</TD></TR>
   <TR valign="top" bgcolor="#DFECF8"><TD>9&nbsp;&nbsp;</TD>
-<TD align="right"><B id='CONNECTIONS-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='CONNECTION-schemas_DIV' class='columns'>schemas</B>&nbsp;&nbsp;</TD>
+<TD>List<String> List<>&nbsp;&nbsp;</TD><TD>text[]&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>Schemas</TD></TR>
+  <TR valign="top" bgcolor="#FFFFFF"><TD>10&nbsp;&nbsp;</TD>
+<TD align="right"><B id='CONNECTION-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD><TD>timestamptz&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">AUTO&nbsp;&nbsp;</TD><TD align="center">&#x2611;&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The timestamp for when the record was created.</TD></TR>
-  <TR bgcolor="#DFECF8"><TD></TD><TD></TD><TD colspan="10" align="center">
+  <TR bgcolor="#FFFFFF"><TD></TD><TD></TD><TD colspan="10" align="center">
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
   <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Creation</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Creation&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Creation time</TD></TR>
 </TABLE>
 </TD></TR>
-  <TR valign="top" bgcolor="#FFFFFF"><TD>10&nbsp;&nbsp;</TD>
-<TD align="right"><B id='CONNECTIONS-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8"><TD>11&nbsp;&nbsp;</TD>
+<TD align="right"><B id='CONNECTION-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD><TD>timestamptz&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">AUTO&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The timestamp for when the record was last updated.</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD></TD><TD></TD><TD colspan="10" align="center">
+  <TR bgcolor="#DFECF8"><TD></TD><TD></TD><TD colspan="10" align="center">
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
   <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Update</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Update&nbsp;&nbsp;</TD><TD>ALWAYS&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Last updated time</TD></TR>
 </TABLE>
 </TD></TR>
-  <TR valign="top" bgcolor="#DFECF8"><TD>11&nbsp;&nbsp;</TD>
-<TD align="right"><B id='CONNECTIONS-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF"><TD>12&nbsp;&nbsp;</TD>
+<TD align="right"><B id='CONNECTION-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD><TD>timestamptz&nbsp;&nbsp;</TD><TD align="center">&#x2611;&nbsp;&nbsp;</TD><TD align="center">AUTO&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The timestamp for when the record was deleted.</TD></TR>
 </TABLE>
-<DIV id='CONNECTIONS-id_MODAL' class='modal'>
+<DIV id='CONNECTION-active_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('CONNECTIONS-id_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('CONNECTION-active_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -2206,14 +2209,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTIONS_DIV'>Connections</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTIONS-id_DIV'>id</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#CONNECTION_DIV'>Connection</a></td>
+<td><a href='TILDA___Docs.TILDA.html#CONNECTION-active_DIV'>active</a> -- BOOLEAN</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='CONNECTIONS-driver_MODAL' class='modal'>
+<DIV id='CONNECTION-id_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('CONNECTIONS-driver_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('CONNECTION-id_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -2223,14 +2226,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTIONS_DIV'>Connections</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTIONS-driver_DIV'>driver</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#CONNECTION_DIV'>Connection</a></td>
+<td><a href='TILDA___Docs.TILDA.html#CONNECTION-id_DIV'>id</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='CONNECTIONS-db_MODAL' class='modal'>
+<DIV id='CONNECTION-driver_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('CONNECTIONS-db_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('CONNECTION-driver_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -2240,14 +2243,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTIONS_DIV'>Connections</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTIONS-db_DIV'>db</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#CONNECTION_DIV'>Connection</a></td>
+<td><a href='TILDA___Docs.TILDA.html#CONNECTION-driver_DIV'>driver</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='CONNECTIONS-user_MODAL' class='modal'>
+<DIV id='CONNECTION-db_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('CONNECTIONS-user_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('CONNECTION-db_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -2257,14 +2260,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTIONS_DIV'>Connections</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTIONS-user_DIV'>user</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#CONNECTION_DIV'>Connection</a></td>
+<td><a href='TILDA___Docs.TILDA.html#CONNECTION-db_DIV'>db</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='CONNECTIONS-pswd_MODAL' class='modal'>
+<DIV id='CONNECTION-user_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('CONNECTIONS-pswd_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('CONNECTION-user_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -2274,14 +2277,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTIONS_DIV'>Connections</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTIONS-pswd_DIV'>pswd</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#CONNECTION_DIV'>Connection</a></td>
+<td><a href='TILDA___Docs.TILDA.html#CONNECTION-user_DIV'>user</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='CONNECTIONS-initial_MODAL' class='modal'>
+<DIV id='CONNECTION-pswd_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('CONNECTIONS-initial_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('CONNECTION-pswd_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -2291,14 +2294,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTIONS_DIV'>Connections</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTIONS-initial_DIV'>initial</a> -- INTEGER</td>
+<td><a href='TILDA___Docs.TILDA.html#CONNECTION_DIV'>Connection</a></td>
+<td><a href='TILDA___Docs.TILDA.html#CONNECTION-pswd_DIV'>pswd</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='CONNECTIONS-max_MODAL' class='modal'>
+<DIV id='CONNECTION-initial_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('CONNECTIONS-max_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('CONNECTION-initial_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -2308,14 +2311,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTIONS_DIV'>Connections</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTIONS-max_DIV'>max</a> -- INTEGER</td>
+<td><a href='TILDA___Docs.TILDA.html#CONNECTION_DIV'>Connection</a></td>
+<td><a href='TILDA___Docs.TILDA.html#CONNECTION-initial_DIV'>initial</a> -- INTEGER</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='CONNECTIONS-schemas_MODAL' class='modal'>
+<DIV id='CONNECTION-max_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('CONNECTIONS-schemas_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('CONNECTION-max_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -2325,14 +2328,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTIONS_DIV'>Connections</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTIONS-schemas_DIV'>schemas</a> -- STRING[]</td>
+<td><a href='TILDA___Docs.TILDA.html#CONNECTION_DIV'>Connection</a></td>
+<td><a href='TILDA___Docs.TILDA.html#CONNECTION-max_DIV'>max</a> -- INTEGER</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='CONNECTIONS-created_MODAL' class='modal'>
+<DIV id='CONNECTION-schemas_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('CONNECTIONS-created_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('CONNECTION-schemas_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -2342,14 +2345,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTIONS_DIV'>Connections</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTIONS-created_DIV'>created</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#CONNECTION_DIV'>Connection</a></td>
+<td><a href='TILDA___Docs.TILDA.html#CONNECTION-schemas_DIV'>schemas</a> -- STRING[]</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='CONNECTIONS-lastUpdated_MODAL' class='modal'>
+<DIV id='CONNECTION-created_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('CONNECTIONS-lastUpdated_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('CONNECTION-created_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -2359,14 +2362,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTIONS_DIV'>Connections</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTIONS-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#CONNECTION_DIV'>Connection</a></td>
+<td><a href='TILDA___Docs.TILDA.html#CONNECTION-created_DIV'>created</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='CONNECTIONS-deleted_MODAL' class='modal'>
+<DIV id='CONNECTION-lastUpdated_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('CONNECTIONS-deleted_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('CONNECTION-lastUpdated_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -2376,8 +2379,25 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTIONS_DIV'>Connections</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTIONS-deleted_DIV'>deleted</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#CONNECTION_DIV'>Connection</a></td>
+<td><a href='TILDA___Docs.TILDA.html#CONNECTION-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='CONNECTION-deleted_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('CONNECTION-deleted_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#CONNECTION_DIV'>Connection</a></td>
+<td><a href='TILDA___Docs.TILDA.html#CONNECTION-deleted_DIV'>deleted</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>

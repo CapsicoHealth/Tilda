@@ -48,8 +48,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 
 import tilda.Migrate;
-import tilda.data.Connections_Data;
-import tilda.data.Connections_Factory;
+import tilda.data.Connection_Data;
+import tilda.data.Connection_Factory;
 import tilda.db.metadata.DatabaseMeta;
 import tilda.enums.TransactionType;
 import tilda.generation.interfaces.CodeGenSql;
@@ -237,18 +237,18 @@ public class ConnectionPool
       {
         LOG.info("Adding Connections from tilda.CONNECTIONS table to Pool");
         
-        Connections_Data connection = null;
-        ListResults<Connections_Data> connections = null;
+        Connection_Data connection = null;
+        ListResults<Connection_Data> connections = null;
         try 
           {
-            connections = Connections_Factory.LookupWhereAllButDeleted(Keys, 0, 10000);
+            connections = Connection_Factory.LookupWhereActive(Keys, 0, 10000);
           } 
         catch (Exception e) 
            {
              LOG.error("Database level connections list is not available. Skipping ... \n", e);
              return;
            }
-        Iterator<Connections_Data> iterator = connections.iterator();
+        Iterator<Connection_Data> iterator = connections.iterator();
         while(iterator.hasNext())
           {
             connection = iterator.next();
@@ -494,8 +494,42 @@ public class ConnectionPool
         return _EmailConfigDetails;
       }
     
-    public static Map<String, String> getUniqueDataSourceIds()
+    private static Map<String, String> getUniqueDataSourceIds()
       {
         return _UniqueDataSourceIds;
+      }
+    
+    // Same as _UniqueDataSourceIds. But, Excludes KEYS
+    private static Map<String, String>          _AllDataSourceIds       = null; 
+    public static Map<String, String> getAllDataSourceIds()
+      {
+        if (_AllDataSourceIds == null)
+          {
+            _AllDataSourceIds = new HashMap<>(getUniqueDataSourceIds());
+            // In Development, We might point KEYS and MAIN to the same DB.
+            // _UniqueDataSourceIds will not have MAIN as key.
+            // By Deleting KEYS, We'll make _AllDataSourceIds empty.
+            if(_AllDataSourceIds.containsKey("MAIN"))
+              _AllDataSourceIds.remove("KEYS");
+          }
+        return _AllDataSourceIds;
+      }
+    
+    // Same as _UniqueDataSourceIds. But, Excludes KEYS & MAIN
+    private static Map<String, String>          _AllTenantDataSourceIds = null;
+    public static Map<String, String> getAllTenantDataSourceIds()
+      {
+        if(_AllTenantDataSourceIds == null)
+          {
+            _AllTenantDataSourceIds = new HashMap<>(getUniqueDataSourceIds());
+            _AllTenantDataSourceIds.remove("MAIN");
+            _AllTenantDataSourceIds.remove("KEYS");
+          }
+        return _AllTenantDataSourceIds;
+      }
+    
+    public static boolean isMultiTenant()
+      {
+        return getAllTenantDataSourceIds().size() > 0;
       }
   }
