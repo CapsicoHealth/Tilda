@@ -1,0 +1,50 @@
+{
+  "package": "tilda.data_test"
+ ,"dependencies": ["com/capsico/organizations/data/_tilda.Organizations.json"
+                  ]
+ ,"documentation": {
+     "graph":"complex",
+     "description": [
+         "This schema blah blah blah.<BR>"
+        ,"<B>Copyright (c) 2017, CapsicoHealth Inc., All rights reserved.</B>"
+      ]
+   }
+
+ ,"objects":[
+      { "name": "Test"
+       ,"description": "The table to keep track tests amd owners"
+       ,"columns":[
+            { "name": "userRefnum", "sameAs": "com.capsico.people.data.PEOPLE.User.refnum" , "nullable": false,              "invariant": true, "description": "The user of the test" }
+           ,{ "name": "name"      , "type": "STRING"                                       , "nullable": false, "size": 128, "invariant": true, "description": "The name of the test" }
+         ]
+       ,"primary": { "autogen": true }
+       ,"foreign": [
+            { "name":"User", "srcColumns":["userRefnum"], "destObject":"com.capsico.people.data.PEOPLE.User" }
+         ]
+       ,"indices":[ 
+            { "name": "Name"     , "columns": ["name"] }
+         ]
+       ,"json":[
+            { "name": "", "columns": ["refnum", "userRefnum", "name"] }
+         ]
+      }
+   ]
+   
+   
+ ,"views": [
+      { "name": "TestView"
+       ,"description": "A join of test and user"
+       ,"columns":[
+            { "sameas": "Test.refnum"                            }
+           ,{ "sameas": "Test.name"                              }
+           ,{ "sameas": "com.capsico.people.data.PEOPLE.User.id", "name": "userId"    }
+         ]
+       ,"subWhere": "Test.deleted is null"
+       ,"queries": [
+         ]
+       ,"json":[
+            { "name": "", "columns": ["refnum", "name", "userId"] }
+         ]
+      }
+   ]
+}
