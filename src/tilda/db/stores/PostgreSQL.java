@@ -405,6 +405,18 @@ public class PostgreSQL implements DBType
         .append("  RETURN val;\n")
         .append("END;\n")
         .append("$$ LANGUAGE plpgsql IMMUTABLE;\n")
+        .append("CREATE OR REPLACE FUNCTION TILDA.to").append(FuncTypeName).append("(str1 varchar, str2 varchar, val ").append(Type).append(")\n")
+        .append("RETURNS ").append(Type).append(" AS $$\n")
+        .append("BEGIN\n")
+        .append("  RETURN coalesce(Tilda.to").append(FuncTypeName).append("(str1, null), Tilda.to").append(FuncTypeName).append("(str2, val));\n")
+        .append("END;\n")
+        .append("$$ LANGUAGE plpgsql IMMUTABLE;\n")
+        .append("CREATE OR REPLACE FUNCTION TILDA.to").append(FuncTypeName).append("(str1 varchar, str2 varchar, str3 varchar, val ").append(Type).append(")\n")
+        .append("RETURNS ").append(Type).append(" AS $$\n")
+        .append("BEGIN\n")
+        .append("  RETURN coalesce(Tilda.to").append(FuncTypeName).append("(str1, null), Tilda.to").append(FuncTypeName).append("(str2, null), Tilda.to").append(FuncTypeName).append("(str3, val));\n")
+        .append("END;\n")
+        .append("$$ LANGUAGE plpgsql IMMUTABLE;\n")
         .append("\n")
         .append("\n");
       }
