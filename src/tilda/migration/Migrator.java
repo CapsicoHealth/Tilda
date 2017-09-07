@@ -18,6 +18,8 @@ package tilda.migration;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,7 +27,9 @@ import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.Migrate;
 import tilda.db.Connection;
+import tilda.db.ConnectionPool;
 import tilda.db.KeysManager;
 import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.DatabaseMeta;
@@ -53,6 +57,7 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
+import tilda.utils.MigrationDataModel;
 
 public class Migrator
   {
@@ -61,84 +66,40 @@ public class Migrator
     public static final String    TILDA_VERSION       = "1.0";
     public static final String    TILDA_VERSION_VAROK = "1_0";
 
-    public static void MigrateDatabase(Connection C, boolean CheckOnly, List<Schema> TildaList, DatabaseMeta DBMeta)
+    public static void MigrateDatabase(Connection C, boolean CheckOnly, List<Schema> TildaList, DatabaseMeta DBMeta, boolean first, List<String> connectionUrls)
     throws Exception
       {
-        List<MigrationScript> Scripts = new ArrayList<MigrationScript>();
-        int ActionCount = 0;
+        if(CheckOnly == false)
+          AddTildaHelpers(C, TildaList, DBMeta);       
 
-        LOG.info("Analyzing differences between the database and the application's expected data model...");
-        MigrationScript InitScript = new MigrationScript(null, new ArrayList<MigrationAction>());
-        for (Schema S : TildaList)
-          if (S._Views.isEmpty() == false)
-            InitScript._Actions.add(new SchemaViewsDrop(S));
-        Scripts.add(InitScript);
-        for (Schema S : TildaList)
-          {
-            List<MigrationAction> L = Migrator.getMigrationActions(C.getSQlCodeGen(), S, DBMeta);
-            for (MigrationAction MA : L)
-              if (MA._isDependency == false)
-                ++ActionCount;
-            if (S._Name.equalsIgnoreCase("TILDA") == true)
-             L.add(new TildaHelpersAdd());
-            Scripts.add(new MigrationScript(S, L));
-          }
+        MigrationDataModel migrationData = Migrator.AnalyzeDatabase(C, CheckOnly, TildaList, DBMeta);
 
-        if (ActionCount > 0)
+        // RPJ-TODO: Simplify if-else logic
+        if(ConnectionPool.isMultiTenant())
           {
-            LOG.warn("There were " + ActionCount + " discrepencies found in the database Vs. the application's required data model:");
-            int xxx = 0;
-            for (MigrationScript S : Scripts)
-              for (MigrationAction MA : S._Actions)
-                {
-                  if (MA._isDependency == false)
-                    LOG.warn("    " + (++xxx) + " - " + MA.getDescription() + ".");
-                  else
-                    LOG.debug("    - (dependency) " + MA.getDescription() + ".");
-                }
-            if (CheckOnly == false)
+            PrintDiscrepancies(migrationData);
+            if(CheckOnly == false)
               {
-                LOG.info("!!! THIS UTILITY IS ABOUT TO CHANGE DATA IN YOUR DATABASE. MAKE SURE YOU HAVE A BACKUP. !!!");
-                LOG.info(" ===> " + C.getURL());
-                LOG.info("");
-                LOG.info("Press 'yes' followed by enter to continue.");
-                Scanner scanner = null;
-                try
-                  {
-                    scanner = new Scanner(System.in);
-                    String answer = scanner.next();
-                    if (answer.toLowerCase().equals("yes") == false)
-                      throw new Exception("User asked to exit.");
-                    LOG.info("");
-                    LOG.info("OK! Starting the migration...");
-                    LOG.info("------------------------------------");
-                  }
-                catch (Exception E)
-                  {
-                    throw E;
-                  }
-                finally
-                  {
-                    if (scanner != null)
-                      scanner.close();
-                  }
-                LOG.info("Applying migration actions.");
-                for (MigrationScript S : Scripts)
-                  {
-                    if (S._Actions.isEmpty() == true)
-                      continue;
-                    for (MigrationAction A : S._Actions)
-                      {
-                        if (A.process(C) == false)
-                          throw new Exception("There was an error with the action '" + A.getDescription() + "'.");
-                        C.commit();
-                      }
-                    // C.commit();
-                  }
+                if(first)
+                  confirmMigration(connectionUrls);
+                applyMigration(C, migrationData);
               }
           }
-
-        if (ActionCount == 0)
+        else
+          {
+            if(migrationData.getActionCount() > 0)
+              {
+                PrintDiscrepancies(migrationData);
+                if(CheckOnly == false)
+                  {
+                    if (first)
+                      confirmMigration(connectionUrls);
+                    applyMigration(C, migrationData);
+                  }                  
+              }
+          }        
+        
+         if (migrationData.getActionCount() == 0)
           {
             new TildaHelpersAdd().process(C);
             LOG.info("");
@@ -157,7 +118,8 @@ public class Migrator
           }
         else if (CheckOnly == false)
           {
-            KeysManager.reloadAll();
+            if (Migrate.isTesting() == false)
+              KeysManager.reloadAll();
             LOG.info("");
             LOG.info("");
             LOG.info("======================================================================================");
@@ -191,6 +153,121 @@ public class Migrator
           }
       }
 
+    public static void PrintDiscrepancies(MigrationDataModel migrationData)
+    {
+        LOG.info("");
+        LOG.warn("There were " + migrationData.getActionCount() + " discrepencies found in the database Vs. the application's required data model:");
+        LOG.info("");
+        int counter = 0;
+        for (MigrationScript S : migrationData.getMigrationScripts())
+          for (MigrationAction MA : S._Actions)
+            {
+              if (MA._isDependency == false)
+                LOG.warn("    " + (++counter) + " - " + MA.getDescription() + ".");
+              else
+                LOG.debug("    - (dependency) " + MA.getDescription() + ".");
+            }
+    }
+    
+    public static MigrationDataModel AnalyzeDatabase(Connection C, boolean CheckOnly, List<Schema> TildaList, DatabaseMeta DBMeta)
+    throws Exception
+    {
+      List<MigrationScript> Scripts = new ArrayList<MigrationScript>();
+      int ActionCount = 0;
+      
+      if (CheckOnly == false && Migrate.isTesting() == false)
+        AddTildaHelpers(C, TildaList, DBMeta);
+      
+      LOG.info("===> Analyzing DB ( Url: "+C.getURL()+" )");
+      LOG.info("Analyzing differences between the database and the application's expected data model...");
+      MigrationScript InitScript = new MigrationScript(null, new ArrayList<MigrationAction>());
+      for (Schema S : TildaList)
+        if (S._Views.isEmpty() == false)
+          InitScript._Actions.add(new SchemaViewsDrop(S));
+      Scripts.add(InitScript);
+      for (Schema S : TildaList)
+        {
+          List<MigrationAction> L = Migrator.getMigrationActions(C.getSQlCodeGen(), S, DBMeta);
+          for (MigrationAction MA : L)
+            if (MA._isDependency == false)
+              ++ActionCount;
+          if (S._Name.equalsIgnoreCase("TILDA") == true)
+            L.add(new TildaHelpersAdd());
+          Scripts.add(new MigrationScript(S, L));
+        }
+      return new MigrationDataModel(ActionCount, Scripts);
+    }
+    
+    protected static void confirmMigration(List<String> connectionUrls)
+    throws Exception
+    {
+      LOG.info("");
+      LOG.info("!!! THIS UTILITY IS ABOUT TO CHANGE DATA IN FOLLOWING DATABASE(S). MAKE SURE YOU HAVE A BACKUP. !!!");
+      Iterator<String> iterator = connectionUrls.iterator();
+      while(iterator.hasNext())
+        {
+          LOG.info(" ===> " + iterator.next());
+        }
+      LOG.info("");            
+      LOG.info("Press 'yes' followed by enter to continue.");
+      Scanner scanner = null;
+      try
+        {
+          scanner = new Scanner(System.in);
+          String answer = scanner.next();
+          if (answer.toLowerCase().equals("yes") == false)
+            throw new Exception("User asked to exit.");
+          LOG.info("");
+          LOG.info("OK! Starting the migration...");
+          LOG.info("------------------------------------");
+        }
+      catch (Exception E)
+        {
+          throw E;
+        }
+      finally
+        {
+          if (scanner != null)
+            scanner.close();
+        }      
+    }
+    
+    protected static void applyMigration(Connection C, MigrationDataModel migrationData)
+    throws Exception
+    {
+      LOG.info("===> Migrating DB ( Url: "+ C.getURL()+" )");
+      LOG.info("Applying migration actions.");
+      for (MigrationScript S : migrationData.getMigrationScripts())
+        {
+          if (S._Actions.isEmpty() == true)
+            continue;
+          for (MigrationAction A : S._Actions)
+            {
+              if (A.process(C) == false)
+                throw new Exception("There was an error with the action '" + A.getDescription() + "'.");
+              if (Migrate.isTesting() == false)
+                C.commit();
+            }
+        }      
+    }
+    
+    public static void AddTildaHelpers(Connection C, List<Schema> TildaList, DatabaseMeta DBMeta)
+    throws Exception
+    {
+      if (DBMeta.getSchemaMeta("TILDA") == null)
+        {
+          for (Schema S : TildaList)
+            if (S._Name.equalsIgnoreCase("TILDA") == true)
+              {
+                new SchemaCreate(S).process(C);
+                break;
+              }
+          DBMeta.load(C, "TILDA");
+        }
+      new TildaHelpersAdd().process(C);
+      C.commit();
+    }
+    
     protected static List<MigrationAction> getMigrationActions(CodeGenSql CGSQL, Schema S, DatabaseMeta DBMeta)
     throws Exception
       {

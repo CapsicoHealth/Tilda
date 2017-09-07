@@ -83,8 +83,10 @@ public class MasterFactory
     throws Exception
       {
         String Key = Obj.getShortName();
-        if (_M.get(Key) != null)
-          throw new Exception("Trying to register Tilda Object " + Key + " more than once!");
+        if (_M.get(Key) != null) 
+          {
+            throw new Exception("Trying to register Tilda Object " + Key + " more than once!");
+          }
 
         if (Obj._DBOnly == false)
           {

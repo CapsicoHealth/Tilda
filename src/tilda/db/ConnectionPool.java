@@ -25,25 +25,31 @@ import java.io.Reader;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.postgresql.util.PSQLException;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 
 import tilda.Migrate;
+import tilda.data.Connection_Data;
+import tilda.data.Connection_Factory;
 import tilda.db.metadata.DatabaseMeta;
 import tilda.enums.TransactionType;
 import tilda.generation.interfaces.CodeGenSql;
@@ -56,6 +62,7 @@ import tilda.performance.PerfTracker;
 import tilda.utils.ClassStaticInit;
 import tilda.utils.FileUtil;
 import tilda.utils.LogUtil;
+import tilda.utils.MigrationDataModel;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
 
@@ -136,13 +143,14 @@ public class ConnectionPool
       }
 
 
-    static final Logger                           LOG                 = LogManager.getLogger(ConnectionPool.class.getName());
+    static final Logger                           LOG                   = LogManager.getLogger(ConnectionPool.class.getName());
 
-    protected static Map<String, BasicDataSource> _DataSourcesById    = new HashMap<String, BasicDataSource>();
-    protected static Map<String, BasicDataSource> _DataSourcesBySig   = new HashMap<String, BasicDataSource>();
-    protected static Map<String, String>          _SchemaPackage      = new HashMap<String, String>();
-    protected static Map<String, String>          _EmailConfigDetails = null;
-    protected static boolean                      _InitDebug          = false;
+    protected static Map<String, String>          _UniqueDataSourceIds  = new HashMap<String, String>();
+    protected static Map<String, BasicDataSource> _DataSourcesById      = new HashMap<String, BasicDataSource>();
+    protected static Map<String, BasicDataSource> _DataSourcesBySig     = new HashMap<String, BasicDataSource>();
+    protected static Map<String, String>          _SchemaPackage        = new HashMap<String, String>();
+    protected static Map<String, String>          _EmailConfigDetails   = null;
+    protected static boolean                      _InitDebug            = false;
 
     public static void autoInit()
       {
@@ -152,6 +160,7 @@ public class ConnectionPool
     static
       {
         Connection C = null;
+        Connection Keys = null;
         try
           {
             InitBootstrappers();
@@ -163,22 +172,40 @@ public class ConnectionPool
               }
             if (isTildaEnabled() == true)
               {
-                C = get("MAIN");
-                List<Schema> TildaList = LoadTildaResources(C);
-                DatabaseMeta DBMeta = LoadDatabaseMetaData(C, TildaList);
-                Migrator.MigrateDatabase(C, Migrate.isMigrationActive() == false, TildaList, DBMeta);
-                if (Migrate.isMigrationActive() == false)
+                Keys = get("KEYS");  
+                ReadConnections(Keys);                
+                
+                boolean first = true;
+                List<Schema> TildaList = null;
+                Iterator<String> connectionIds = getUniqueDataSourceIds().keySet().iterator();
+                List<String> connectionUrls = new ArrayList<>(getUniqueDataSourceIds().values());
+                
+                while(connectionIds.hasNext())
                   {
-                    LOG.info("Initializing Schemas.");
-                    for (Schema S : TildaList)
+                    String connectionId = connectionIds.next();
+                    C = get(connectionId);
+                    if (TildaList == null) 
+                      TildaList = LoadTildaResources(C);
+                    DatabaseMeta DBMeta = LoadDatabaseMetaData(C, TildaList);
+
+                    Migrator.MigrateDatabase(C, Migrate.isMigrationActive() == false, TildaList, DBMeta, first, connectionUrls);
+                    if (first == true && Migrate.isMigrationActive() == false)
                       {
-                        LOG.debug("  " + S.getFullName());
-                        Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
-                        M.invoke(null, C);
-                        _SchemaPackage.put(S._Name.toUpperCase(), S._Package);
+                        LOG.info("Initializing Schemas.");
+                        for (Schema S : TildaList)
+                          {
+                            LOG.debug("  " + S.getFullName());
+                            Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
+                            M.invoke(null, C);
+                            _SchemaPackage.put(S._Name.toUpperCase(), S._Package);
+                          }
                       }
+                    first = false;
+                    if (Migrate.isTesting() == false)
+                      C.commit();
+                    C.close();
+                    C = null;
                   }
-                C.commit();
               }
           }
         catch (Throwable T)
@@ -192,6 +219,8 @@ public class ConnectionPool
               {
                 if (C != null)
                   C.close();
+                if (Keys != null)
+                  Keys.close();
               }
             catch (SQLException E)
               {
@@ -203,6 +232,31 @@ public class ConnectionPool
           LogUtil.resetLogLevel();
       }
 
+    private static void ReadConnections(Connection Keys)
+    throws Exception
+      {
+        LOG.info("Adding Connections from tilda.CONNECTIONS table to Pool");
+        
+        Connection_Data connection = null;
+        ListResults<Connection_Data> connections = null;
+        try 
+          {
+            connections = Connection_Factory.LookupWhereActive(Keys, 0, 10000);
+          } 
+        catch (Exception e) 
+           {
+             LOG.error("Database level connections list is not available. Skipping ... \n", e);
+             return;
+           }
+        Iterator<Connection_Data> iterator = connections.iterator();
+        while(iterator.hasNext())
+          {
+            connection = iterator.next();
+            AddDatasource(connection.getId(), connection.getDriver(), connection.getDb(), connection.getUser(), connection.getPswd(), connection.getInitial(), connection.getMax());
+          }
+        LOG.info("Completed Adding Connections from tilda.CONNECTIONS table to Pool");
+      }
+    
     private static void ReadConfig()
     throws Exception
       {
@@ -237,44 +291,7 @@ public class ConnectionPool
                 _InitDebug = Defs._InitDebug;
                 for (Conn Co : Defs._Conns)
                   {
-                    if (_DataSourcesById.get(Co._Id) == null)
-                      synchronized (_DataSourcesById)
-                        {
-                          if (_DataSourcesById.get(Co._Id) == null) // Definitely no connection pool by that name
-                            {
-                              String Sig = Co._DB + "``" + Co._User;
-                              BasicDataSource BDS = _DataSourcesBySig.get(Sig); // Let's see if that DB definition is already there
-                              if (BDS == null)
-                                {
-                                  LOG.info("Initializing a fresh pool for Id=" + Co._Id + ", DB=" + Co._DB + ", User=" + Co._User + ", and Pswd=Shhhhhhh!");
-                                  BDS = new BasicDataSource();
-                                  BDS.setDriverClassName(Co._Driver);
-                                  BDS.setUrl(Co._DB);
-                                  if (TextUtil.isNullOrEmpty(Co._Pswd) == false && TextUtil.isNullOrEmpty(Co._User) == false)
-                                    {
-                                      BDS.setUsername(Co._User);
-                                      BDS.setPassword(Co._Pswd);
-                                    }
-                                  BDS.setInitialSize(Co._Initial);
-                                  BDS.setMaxTotal(Co._Max);
-                                  BDS.setDefaultAutoCommit(false);
-                                  BDS.setDefaultTransactionIsolation(java.sql.Connection.TRANSACTION_READ_COMMITTED);
-                                  BDS.setDefaultQueryTimeout(20000);
-                                  _DataSourcesBySig.put(Sig, BDS);
-                                }
-                              else
-                                {
-                                  LOG.info("Merging pool with ID " + Co._Id + " into prexisting pool " + Sig);
-                                  if (BDS.getInitialSize() < Co._Initial)
-                                    BDS.setInitialSize(Co._Initial);
-                                  if (BDS.getMaxTotal() < Co._Max)
-                                    BDS.setMaxTotal(Co._Max);
-
-                                }
-                              _DataSourcesById.put(Co._Id, BDS);
-                            }
-                        }
-
+                    AddDatasource(Co._Id, Co._Driver, Co._DB, Co._User, Co._Pswd, Co._Initial, Co._Max);
                   }
                 if (Defs._EmailConfig != null)
                   {
@@ -317,6 +334,50 @@ public class ConnectionPool
           }
       }
 
+    private static void AddDatasource(String id, String driver, String db, String user, String pswd, int initial, int max) 
+    throws Exception 
+      {
+        if (_DataSourcesById.get(id) != null)
+          throw new Exception("Connection with Id: "+id+" is defined in the database but has been defined in /tilda.config.json.");
+        
+        synchronized (_DataSourcesById)
+          {
+            if (_DataSourcesById.get(id) == null) // Definitely no connection pool by that name
+              {
+                String Sig = db + "``" + user;
+                BasicDataSource BDS = _DataSourcesBySig.get(Sig); // Let's see if that DB definition is already there
+                if (BDS == null)
+                  {
+                    LOG.info("Initializing a fresh pool for Id=" + id + ", DB=" + db + ", User=" + user + ", and Pswd=Shhhhhhh!");
+                    BDS = new BasicDataSource();
+                    BDS.setDriverClassName(driver);
+                    BDS.setUrl(db);
+                    if (TextUtil.isNullOrEmpty(pswd) == false && TextUtil.isNullOrEmpty(user) == false)
+                      {
+                        BDS.setUsername(user);
+                        BDS.setPassword(pswd);
+                      }
+                    BDS.setInitialSize(initial);
+                    BDS.setMaxTotal(max);
+                    BDS.setDefaultAutoCommit(false);
+                    BDS.setDefaultTransactionIsolation(java.sql.Connection.TRANSACTION_READ_COMMITTED);
+                    BDS.setDefaultQueryTimeout(20000);
+                    _UniqueDataSourceIds.put(id, db);
+                    _DataSourcesBySig.put(Sig, BDS);
+                  }
+                else
+                  {
+                    LOG.info("Merging pool with ID " + id + " into prexisting pool " + Sig);
+                    if (BDS.getInitialSize() < initial)
+                      BDS.setInitialSize(initial);
+                    if (BDS.getMaxTotal() < max)
+                      BDS.setMaxTotal(max);
+                  }
+                _DataSourcesById.put(id, BDS);
+              }
+          }
+      }
+    
     private static DatabaseMeta LoadDatabaseMetaData(Connection C, List<Schema> TildaList)
     throws Exception
       {
@@ -381,8 +442,6 @@ public class ConnectionPool
         return _DataSourcesById.get("MAIN") != null && _DataSourcesById.get("KEYS") != null;
       }
 
-
-
     public static Connection get(String Id)
     throws Exception
       {
@@ -403,6 +462,8 @@ public class ConnectionPool
             catch (SQLException E)
               {
                 LOG.error("   - Attempt #" + i + " failed to obtain a connection: " + E.getMessage());
+                if (Migrate.isTesting() == true)
+                  throw E;
                 if (i == 1)
                   LOG.error("     (Sleeping for 30 seconds, and will re-try again, for a max of 100 times)");
                 Thread.sleep(1000 * 30);
@@ -423,8 +484,6 @@ public class ConnectionPool
         return BDS.getUrl();
       }
 
-
-
     public static String getSchemaPackage(String SchemaName)
       {
         return _SchemaPackage.get(SchemaName.toUpperCase());
@@ -433,5 +492,44 @@ public class ConnectionPool
     public static Map<String, String> getEmailConfig()
       {
         return _EmailConfigDetails;
+      }
+    
+    private static Map<String, String> getUniqueDataSourceIds()
+      {
+        return _UniqueDataSourceIds;
+      }
+    
+    // Same as _UniqueDataSourceIds. But, Excludes KEYS
+    private static Map<String, String>          _AllDataSourceIds       = null; 
+    public static Map<String, String> getAllDataSourceIds()
+      {
+        if (_AllDataSourceIds == null)
+          {
+            _AllDataSourceIds = new HashMap<>(getUniqueDataSourceIds());
+            // In Development, We might point KEYS and MAIN to the same DB.
+            // _UniqueDataSourceIds will not have MAIN as key.
+            // By Deleting KEYS, We'll make _AllDataSourceIds empty.
+            if(_AllDataSourceIds.containsKey("MAIN"))
+              _AllDataSourceIds.remove("KEYS");
+          }
+        return _AllDataSourceIds;
+      }
+    
+    // Same as _UniqueDataSourceIds. But, Excludes KEYS & MAIN
+    private static Map<String, String>          _AllTenantDataSourceIds = null;
+    public static Map<String, String> getAllTenantDataSourceIds()
+      {
+        if(_AllTenantDataSourceIds == null)
+          {
+            _AllTenantDataSourceIds = new HashMap<>(getUniqueDataSourceIds());
+            _AllTenantDataSourceIds.remove("MAIN");
+            _AllTenantDataSourceIds.remove("KEYS");
+          }
+        return _AllTenantDataSourceIds;
+      }
+    
+    public static boolean isMultiTenant()
+      {
+        return getAllTenantDataSourceIds().size() > 0;
       }
   }

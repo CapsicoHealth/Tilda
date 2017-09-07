@@ -21,17 +21,29 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.db.Connection;
 import tilda.db.ConnectionPool;
 
 public class Migrate
   {
     static final Logger    LOG               = LogManager.getLogger(Migrate.class.getName());
 
-    static private boolean _MIGRATION_START_ = false;
+    static private boolean _MIGRATION_START_  = false;
+    static private boolean _IS_TESTING_       = false;
 
     static public boolean isMigrationActive()
       {
         return _MIGRATION_START_;
+      }
+    
+    static public boolean isTesting()
+      {
+        return _IS_TESTING_;
+      }    
+    
+    public static void setIsTesting(boolean isTesting)
+      {
+        _IS_TESTING_ = isTesting;
       }
 
     public static void main(String[] Args)
@@ -46,7 +58,7 @@ public class Migrate
         LOG.info("###################################################################################################");
         LOG.info("");
         LOG.info("!!! THIS UTILITY MAY CHANGE DATA IN YOUR DATABASE. MAKE SURE YOU HAVE A BACKUP. !!!");
-//        LOG.info("    ===> "+DBUrl);
+        //LOG.info("    ===> "+DBUrl);
         LOG.info("");
         LOG.info("Press 'y' followed by enter to continue.");
         Scanner scanner = null;
@@ -59,6 +71,7 @@ public class Migrate
             LOG.info("");
             LOG.info("OK! Starting the migration...");
             LOG.info("------------------------------------");
+
             _MIGRATION_START_ = true;
             ConnectionPool.autoInit();
           }
