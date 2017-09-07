@@ -51,11 +51,7 @@ public class Import
         Connection C = null;
         ArrayList<String> arguments = new ArrayList<>(Arrays.asList(args));
         
-        if (arguments.size() < 4)
-          {
-            PrintUsageHint();
-            System.exit(1);
-          }
+        ValidateParams(arguments);
 
         try
           {
@@ -89,9 +85,9 @@ public class Import
                         C.close();
                         C = null;                        
                       }
-                    i+=4;
                   }
                 else { throw new Exception("Cannot find a -f parameter starting the command line"); }
+                i+=4;
               }
             
             timeTaken = System.nanoTime() - timeTaken;
@@ -130,17 +126,36 @@ public class Import
         LOG.info("Import completed.");
       }
     
+    private static void ValidateParams(ArrayList<String> arguments)
+      {
+        if (arguments.size() % 4 != 0)
+          {
+            PrintUsageHint();
+            System.exit(-1);
+          }
+        
+        for (int i = 0 ; i < arguments.size() ; )
+          {
+            if ( !"-f".equals(arguments.get(i)) || arguments.get(i+1) == null 
+                || !"-c".equals(arguments.get(i+2)) || arguments.get(i+3) == null )
+              {
+                PrintUsageHint();
+                System.exit(-1);
+              }
+            i += 4;
+          }
+      }
+
     private static void PrintUsageHint()
       {
-        LOG.error("This utility must be called with at least 4 argument:");
-        LOG.error("    1) -f ");
-        LOG.error("    2) The path to an JSON import file named as _tilda.<Schema>.sampledata.<samplePackage>.json.");
-        LOG.error("    3) -c ");
-        LOG.error("    4) Comma Separated values of Connection Id. Ex: MAIN,PEPPER");
-        LOG.error("The utility will then execute the class <Schema.package>+'.importers.'+<samplesPackage>.Root which must implement the ImportProcessor class.");
+        LOG.error("");
+        LOG.error("Import utility must be called with parameter(s) in following format:");
+        LOG.error("-f <file_name> -c ( ALL | ALL_TENANTS | <connection_id>) ");
+        LOG.error("Ex: -f tilda/data/_tilda.Tilda.sampledata.zones.json -c MAIN,KEYS");
         LOG.error("*** for Multi Tenant System.");
         LOG.error("    ALL           = All Connection Ids. Except 'KEYS'");
         LOG.error("    ALL_TENANTS   = All Connection Ids. Except 'MAIN' & 'KEYS'");
+        LOG.error("");
       }
     
     protected static int Do(Importer I, Connection C)
