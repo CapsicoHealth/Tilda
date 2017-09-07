@@ -104,7 +104,7 @@ public class Query
 
     private static final Pattern _ParamPattern    = Pattern.compile("\\?\\(([a-z_A-Z]\\w*)?\\)");
     private static final Pattern _ArrayPattern    = Pattern.compile("\\?\\[([a-z_A-Z]\\w*)?\\]");
-    private static final Pattern _ComplexColRegex = Pattern.compile("\\b([a-zA-Z]\\w+(\\.[a-zA-Z]\\w+)+)\\b");
+    private static final Pattern _ComplexColRegex = Pattern.compile("\\b([a-zA-Z]\\w+(\\.[a-zA-Z]\\w+)+)(?!\\()\\b");
 
     public boolean Validate(ParserSession PS, Base ParentObject, String OwnerObjName)
       {

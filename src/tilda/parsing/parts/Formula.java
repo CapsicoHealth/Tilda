@@ -16,8 +16,6 @@
 
 package tilda.parsing.parts;
 
-import java.util.regex.Pattern;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -41,9 +39,6 @@ public class Formula extends TypeDef
     /*@formatter:on*/
 
     protected transient View      _ParentView;
-
-    public transient Pattern      _ViewColumnsRegEx;
-    public transient Pattern      _FormulasRegEx;
 
     public Formula()
       {
@@ -104,30 +99,6 @@ public class Formula extends TypeDef
             VPV.Validate(PS, ParentView, "value for formula '" + _Name + "'");
 
         super.Validate(PS, "Formula '" + _Name + "' in View " + ParentView.getShortName() + "", true, false);
-
-        if (PS.getErrorCount() != Errs)
-          return false;
-
-        // Resolve columns
-        StringBuffer Str = new StringBuffer();
-        for (ViewColumn VC : ParentView._ViewColumns)
-          {
-            if (Str.length() != 0)
-              Str.append("|");
-            Str.append(VC._Name);
-          }
-        _ViewColumnsRegEx = Pattern.compile("\\b(" + Str.toString() + ")\\b");
-
-        Str.setLength(0);
-        for (Formula F : ParentView._Formulas)
-          {
-            if (F == null)
-             continue;
-            if (Str.length() != 0)
-              Str.append("|");
-            Str.append(F._Name);
-          }
-        _FormulasRegEx = Pattern.compile("\\b(" + Str.toString() + ")\\b");
 
         return PS.getErrorCount() == Errs;
       }

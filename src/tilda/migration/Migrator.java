@@ -44,7 +44,6 @@ import tilda.migration.actions.ColumnAlterNull;
 import tilda.migration.actions.ColumnAlterStringSize;
 import tilda.migration.actions.ColumnAlterType;
 import tilda.migration.actions.ColumnComment;
-import tilda.migration.actions.ColumnDrop;
 import tilda.migration.actions.SchemaCreate;
 import tilda.migration.actions.SchemaViewsDrop;
 import tilda.migration.actions.TableComment;
@@ -102,11 +101,19 @@ public class Migrator
         
          if (migrationData.getActionCount() == 0)
           {
+            new TildaHelpersAdd().process(C);
             LOG.info("");
             LOG.info("");
             LOG.info("====================================================================");
-            LOG.info("===  Woohoo! The database matches the Application's data model.  ===");
+            LOG.info("                         ____     __ __    __                   ");
+            LOG.info("                        / __ \\   / //_/   / /                  ");
+            LOG.info("                       / / / /  / ,<     / /                    ");
+            LOG.info("                      / /_/ /  / /| |   /_/                     ");
+            LOG.info("                      \\____/  /_/ |_|  (_)                     ");
+            LOG.info("");
+            LOG.info("     The database already matched the Application's data model.     ");
             LOG.info("====================================================================");
+            LOG.info("");
             LOG.info("");
           }
         else if (CheckOnly == false)
@@ -115,18 +122,33 @@ public class Migrator
               KeysManager.reloadAll();
             LOG.info("");
             LOG.info("");
-            LOG.info("================================================================================================");
-            LOG.info("===  Woohoo! The database was automatically migrated to match the Application's data model.  ===");
-            LOG.info("================================================================================================");
+            LOG.info("======================================================================================");
+            LOG.info("              __    __                  _                          _   ");
+            LOG.info("             / / /\\ \\ \\  ___     ___   | |__     ___     ___      / \\  ");
+            LOG.info("             \\ \\/  \\/ / / _ \\   / _ \\  | '_ \\   / _ \\   / _ \\    /  /  ");
+            LOG.info("              \\  /\\  / | (_) | | (_) | | | | | | (_) | | (_) |  /\\_/   "); 
+            LOG.info("               \\/  \\/   \\___/   \\___/  |_| |_|  \\___/   \\___/   \\/     ");   
+            LOG.info("");
+            LOG.info("    The database was automatically migrated to match the Application's data model.    ");
+            LOG.info("======================================================================================");
             LOG.info("");
           }
         else
           {
             LOG.warn("");
             LOG.warn("");
-            LOG.warn("==========================================================================================================");
-            LOG.warn("===  The database DOES NOT match the Application's data model. The application may NOT run properly!   ===");
-            LOG.warn("==========================================================================================================");
+            LOG.warn("=============================================================================================================");
+            LOG.warn(" _             _          _          _  _  _       _         _    _  _  _    _         _       _  _        _ ");
+            LOG.warn("(_)           (_)       _(_)_       (_)(_)(_) _   (_) _     (_)  (_)(_)(_)  (_) _     (_)   _ (_)(_) _    (_)"); 
+            LOG.warn("(_)           (_)     _(_) (_)_     (_)      (_)  (_)(_)_   (_)     (_)     (_)(_)_   (_)  (_)      (_)   (_)");
+            LOG.warn("(_)     _     (_)   _(_)     (_)_   (_) _  _ (_)  (_)  (_)_ (_)     (_)     (_)  (_)_ (_)  (_)    _  _    (_)"); 
+            LOG.warn("(_)   _(_)_   (_)  (_) _  _  _ (_)  (_)(_)(_)     (_)    (_)(_)     (_)     (_)    (_)(_)  (_)   (_)(_)   (_)");
+            LOG.warn("(_)  (_) (_)  (_)  (_)(_)(_)(_)(_)  (_)(_) _      (_)       (_)     (_)     (_)       (_)  (_)      (_)      ");
+            LOG.warn("(_)_(_)   (_)_(_)  (_)         (_)  (_)   (_) _   (_)       (_)   _ (_) _   (_)       (_)  (_) _  _ (_)    _ ");
+            LOG.warn("  (_)       (_)    (_)         (_)  (_)      (_)  (_)       (_)  (_)(_)(_)  (_)       (_)     (_)(_)(_)   (_)");
+            LOG.warn("");
+            LOG.warn("       The database DOES NOT match the Application's data model. The application may NOT run properly!       ");
+            LOG.warn("=============================================================================================================");
             LOG.warn("");
           }
       }
@@ -169,6 +191,8 @@ public class Migrator
           for (MigrationAction MA : L)
             if (MA._isDependency == false)
               ++ActionCount;
+          if (S._Name.equalsIgnoreCase("TILDA") == true)
+            L.add(new TildaHelpersAdd());
           Scripts.add(new MigrationScript(S, L));
         }
       return new MigrationDataModel(ActionCount, Scripts);
@@ -302,17 +326,17 @@ public class Migrator
                           Actions.add(new ColumnAlterType(Col, CMeta._TildaType));
                       }
                   }
-/*
-                for (String c : Obj._DropOldColumns)
-                  {
-                    ColumnMeta CI = TMeta.getColumnMeta(c);
-                    Column Col = Obj.getColumn(c);
-                    if (Col == null && CI != null)
-                      Actions.add(new ColumnDrop(Obj, c));
-                  }
-*/
-//                if (XXX != Actions.size())
-//                  Actions.add(new CommitPoint());
+                /*
+                 * for (String c : Obj._DropOldColumns)
+                 * {
+                 * ColumnMeta CI = TMeta.getColumnMeta(c);
+                 * Column Col = Obj.getColumn(c);
+                 * if (Col == null && CI != null)
+                 * Actions.add(new ColumnDrop(Obj, c));
+                 * }
+                 */
+                // if (XXX != Actions.size())
+                // Actions.add(new CommitPoint());
               }
           }
         for (View V : S._Views)

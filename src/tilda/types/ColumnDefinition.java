@@ -22,6 +22,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.db.Connection;
+import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 
 public class ColumnDefinition
@@ -112,6 +113,25 @@ public class ColumnDefinition
       {
         C.getFullColumnVar(Str, null, null, _ColumnName);
       }
+    public String getShortColumnVarForSelect(Connection C)
+      {
+        StringBuilder Str = new StringBuilder();
+        C.getFullColumnVar(Str, null, null, _ColumnName);
+        return Str.toString();
+      }
+    
+    
+    public void getColumnType(Connection C, StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection)
+      {
+        C.getColumnType(Str, T, S, M, Collection);
+      }
+    public String getColumnType(Connection C, ColumnType T, Integer S, ColumnMode M, boolean Collection)
+      {
+        StringBuilder Str = new StringBuilder();
+        getColumnType(C, Str, T, S, M, Collection);
+        return Str.toString();
+      }
+    
 
 
     public void getFullColumnVarForInsert(Connection C, StringBuilder Str)

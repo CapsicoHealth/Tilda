@@ -35,6 +35,7 @@ import tilda.data.ZoneInfo_Data;
 import tilda.db.processors.RecordProcessor;
 import tilda.db.stores.DBType;
 import tilda.enums.AggregateType;
+import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.TransactionType;
 import tilda.generation.interfaces.CodeGenSql;
@@ -460,7 +461,7 @@ public final class Connection
       {
         return _DB.addHelperFunctions(this);
       }
-
+    
     public StringStringPair getTypeMapping(int Type, String Name, int Size, String TypeName)
     throws Exception
       {
@@ -486,6 +487,12 @@ public final class Connection
       {
         _DB.getFullColumnVar(Str, SchemaName, TableName, ColumnName);
       }
+    
+    public void getColumnType(StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection)
+      {
+        _DB.getColumnType(Str, T, S, M, Collection);
+      }
+    
 
     public void getFullTableVar(StringBuilder Str, String SchemaName, String TableName)
       {
@@ -567,8 +574,7 @@ public final class Connection
        LOG.error("JDBC Error: Fatal sql error: SQLState="+E.getSQLState()+", ErrorCode="+E.getErrorCode());
        LOG.catching(E);
        throw E;
-     }
-    
+     }    
 
   }
 

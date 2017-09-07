@@ -424,7 +424,7 @@ public class Docs
     
     public static SortedSet<String> getColumnMatches(Formula F) {
         SortedSet<String> ColumnMatches = new TreeSet<String>();
-        Matcher M = F._ViewColumnsRegEx.matcher(String.join("\n", F._FormulaStrs));
+        Matcher M = F.getParentView()._ViewColumnsRegEx.matcher(String.join("\n", F._FormulaStrs));
         while (M.find() == true)
           {
             String s = M.group(1);
@@ -439,7 +439,7 @@ public class Docs
     
     public static SortedSet<String> getFormulaMatches(Formula F) {
     	SortedSet<String> FormulaMatches = new TreeSet<String>();
-        Matcher M = F._FormulasRegEx.matcher(String.join("\n", F._FormulaStrs));
+        Matcher M = F.getParentView()._FormulasRegEx.matcher(String.join("\n", F._FormulaStrs));
         while (M.find() == true)
           {
             String s = M.group(1);
@@ -517,7 +517,7 @@ public class Docs
         	  
               StringBuffer Str = new StringBuffer();
               SortedSet<String> ColumnMatches = new TreeSet<String>();
-              Matcher M = F._ViewColumnsRegEx.matcher(String.join("\n", F._FormulaStrs));
+              Matcher M = F.getParentView()._ViewColumnsRegEx.matcher(String.join("\n", F._FormulaStrs));
               while (M.find() == true)
                 {
                   String s = M.group(1);
@@ -531,7 +531,7 @@ public class Docs
               M.appendTail(Str);
 
               SortedSet<String> FormulaMatches = new TreeSet<String>();
-              M = F._FormulasRegEx.matcher(Str.toString());
+              M = F.getParentView()._FormulasRegEx.matcher(Str.toString());
               Str.setLength(0);
               while (M.find() == true)
                 {

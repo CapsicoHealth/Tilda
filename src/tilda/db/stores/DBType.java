@@ -26,6 +26,7 @@ import java.util.List;
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
 import tilda.enums.AggregateType;
+import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
@@ -81,7 +82,8 @@ public interface DBType
 
     public StringStringPair getTypeMapping(int type, String name, int size, String typeName) throws Exception;
     public void             getFullColumnVar(StringBuilder Str, String SchemaName, String TableName, String ColumnName);
-    public void             getFullTableVar(StringBuilder Str, String SchemaName, String TableName);
+    public void             getFullTableVar (StringBuilder Str, String SchemaName, String TableName);
+    public void             getColumnType   (StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection);
     public void             setArray(Connection C, PreparedStatement PS, int i, ColumnType Type, List<Array> allocatedArrays, Collection<?> val) throws Exception;
     public Collection<?>    getArray(              ResultSet         RS, int i, ColumnType Type, boolean isSet) throws Exception;
     public void             setJson (              PreparedStatement PS, int i, String jsonValue) throws Exception;

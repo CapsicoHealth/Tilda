@@ -334,7 +334,7 @@ public class DocGen
 		writer.println("    var searchInputText = searchInput.value; ");
 		writer.println("    searchResultsDiv.innerHTML = \"\"; ");
 
-		writer.println("    if(searchInputText.length < 3) return; ");
+		writer.println("    if(searchInputText.length < 1) return; ");
 
 		writer.println("    var filteredResults = getFilteredResults(searchInputText); ");
 		writer.println("    filteredResults = sortFilteredResults(filteredResults); ");

@@ -29,6 +29,7 @@ import org.apache.logging.log4j.Logger;
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
 import tilda.enums.AggregateType;
+import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
@@ -247,6 +248,11 @@ public class IBMDB2 implements DBType
         Str.append("\"").append(SchemaName).append("\".\"").append(TableName).append("\"");
       }
 
+    @Override
+    public void getColumnType(StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection)
+      {
+        throw new UnsupportedOperationException();        
+      }
 
     @Override
     public void setArray(Connection C, PreparedStatement PS, int i, ColumnType Type, List<Array> allocatedArrays, Collection<?> val)
@@ -329,4 +335,5 @@ public class IBMDB2 implements DBType
       {
         throw new UnsupportedOperationException();
       }
+
   }

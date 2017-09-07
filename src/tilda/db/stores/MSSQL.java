@@ -363,6 +363,12 @@ public class MSSQL implements DBType
       }
 
     @Override
+    public void getColumnType(StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection)
+      {
+        throw new UnsupportedOperationException();        
+      }
+
+    @Override
     public void setArray(Connection C, PreparedStatement PS, int i, ColumnType Type, List<Array> allocatedArrays, Collection<?> val)
     throws Exception
       {

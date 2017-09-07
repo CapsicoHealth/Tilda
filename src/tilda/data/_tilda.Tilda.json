@@ -38,6 +38,20 @@
     },
 
 
+
+    { "name": "Mapping",
+      "description": "Performance logs for the Tilda framework",
+      "columns":[
+         { "name": "type"       , "type": "STRING", "nullable": false, "size":   10, "invariant": true, "description": "The type this mapping is for" }
+        ,{ "name": "src"        , "type": "STRING", "nullable": false, "size": 1024, "invariant": true, "description": "The source value for this mapping" }
+        ,{ "name": "dst"        , "type": "STRING", "nullable": false, "size": 1024, "invariant": true, "description": "The the destination (mapped) value for this mapping." }
+       ],
+      "indices":[ 
+         { "name": "TypeSrcDst", "columns": ["type", "src", "dst"], "db": true }
+       ]
+    },
+
+
     { "name": "ObjectPerf", "occ": true,
       "description": "Performance logs for the Tilda framework",
       "columns":[
