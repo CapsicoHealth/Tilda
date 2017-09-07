@@ -26,7 +26,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.loader.csv.ImportProcessor;
-import tilda.loader.parser.CMSData;
 import tilda.loader.parser.Config;
 import tilda.loader.parser.DataObject;
 import tilda.loader.ui.DataImportTableModel;
@@ -42,8 +41,9 @@ public class Load
     private JScrollPane           scrollPane;
     protected static final Logger LOG         = LogManager.getLogger(Load.class.getName());
     static Connection             C           = null;
-    static CMSData                CMS         = null;
-    Load                 app         = null;
+    static Config                 Conf        = null;
+
+    Load                          app         = null;
     JLabel                        statusLabel = new JLabel("");
     JButton                       btnRun      = new JButton("Run Import");
     JButton                       btnCancel   = new JButton("Cancel");
@@ -101,17 +101,17 @@ public class Load
           }
 
         String ConfigFileName = args[1];
-        CMS = Config.fromFile(ConfigFileName);
+        Conf = Config.fromFile(ConfigFileName);
 
         if (mode == 1)
           {
             LOG.debug("Starting the utility in silent mode and processing " + ConfigFileName);
-            ImportProcessor.process(C, CMS, CMS._CmsData);
+            ImportProcessor.process(C, Conf, Conf._CmsData);
           }
         else
           {
 
-            List<DataObject> list = CMS._CmsData;
+            List<DataObject> list = Conf._CmsData;
             data = new Object[list.size()][3];
             for (int i = 0; i < list.size(); ++i)
               {
@@ -226,7 +226,7 @@ public class Load
                                   }
                                 // Call Import code.
                                 List<DataObject> FilterImportTablesList = new ArrayList<DataObject>();
-                                List<DataObject> list = CMS._CmsData;
+                                List<DataObject> list = Conf._CmsData;
                                 for (DataObject D : list)
                                   {
                                     String fullTableName = D._SchemaName + "." + D._TableName;
@@ -234,7 +234,7 @@ public class Load
                                     if (ImportTables.contains(fullTableName) == true)
                                       FilterImportTablesList.add(D);
                                   }
-                                ImportProcessor.process(C, CMS, FilterImportTablesList);
+                                ImportProcessor.process(C, Conf, FilterImportTablesList);
                                 LOG.debug("Import Tables completed.");
                               }
                             catch (Exception e)

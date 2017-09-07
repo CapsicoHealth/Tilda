@@ -27,8 +27,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.loader.GenericLoader;
-import tilda.loader.parser.CMSData;
 import tilda.loader.parser.ColumnHeader;
+import tilda.loader.parser.Config;
 import tilda.loader.parser.DataObject;
 
 import tilda.data.ZoneInfo_Factory;
@@ -71,7 +71,7 @@ public class CSVImporter
         public final long   _TimeNano;
       }
 
-    public static List<Results> process(Connection C, CMSData CMS, DataObject cmsDO)
+    public static List<Results> process(Connection C, Config Conf, DataObject cmsDO)
       {
 
         long t0 = System.nanoTime();
@@ -86,7 +86,7 @@ public class CSVImporter
             ArrayList<Results> resultsList = new ArrayList<Results>();
             for (String file : fileList)
               {
-                String absoluteFilePath = CMS._RootFolder + file;
+                String absoluteFilePath = Conf._RootFolder + file;
 
                 LOG.debug("Looking for data file or resource " + absoluteFilePath + ".");
                 Reader R = FileUtil.getReaderFromFileOrResource(absoluteFilePath);

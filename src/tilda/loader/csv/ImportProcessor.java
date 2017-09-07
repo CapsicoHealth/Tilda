@@ -8,7 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.loader.csv.CSVImporter.Results;
-import tilda.loader.parser.CMSData;
+import tilda.loader.parser.Config;
 import tilda.loader.parser.DataObject;
 
 import tilda.db.Connection;
@@ -18,7 +18,7 @@ public class ImportProcessor
   {
     protected static final Logger LOG = LogManager.getLogger(ImportProcessor.class.getName());
 
-    public static void process(Connection C, CMSData CMS, List<DataObject> CMSDataList)
+    public static void process(Connection C, Config Conf, List<DataObject> CMSDataList)
       {
         try
           {
@@ -28,7 +28,7 @@ public class ImportProcessor
             for (DataObject Data : CMSDataList)
               {
                 validate(Data);
-                List<Results> Res = CSVImporter.process(C, CMS, Data);
+                List<Results> Res = CSVImporter.process(C, Conf, Data);
                 if (Res == null)
                   break;
                 Results.addAll(Res);
