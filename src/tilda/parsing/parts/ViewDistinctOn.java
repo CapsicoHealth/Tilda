@@ -28,8 +28,6 @@ import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.OrderType;
 import tilda.parsing.ParserSession;
-import tilda.parsing.parts.helpers.ReferenceHelper;
-import tilda.utils.TextUtil;
 
 public class ViewDistinctOn
   {

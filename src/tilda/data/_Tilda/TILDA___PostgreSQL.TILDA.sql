@@ -270,3 +270,71 @@ COMMENT ON COLUMN TILDA.CONNECTION."deleted" IS E'The timestamp for when the rec
 CREATE INDEX CONNECTION_AllById ON TILDA.CONNECTION ("id" ASC);
 
 
+
+create table if not exists TILDA.JOBS -- Kettle Jobs
+ (  "Id"            integer        not null   -- Id
+  , "Name"          varchar(120)              -- Name
+  , "StartTimeTZ"   character(5)              -- Generated helper column to hold the time zone ID for 'StartTime'.
+  , "StartTime"     timestamptz               -- StartTime
+  , "EndTimeTZ"     character(5)              -- Generated helper column to hold the time zone ID for 'EndTime'.
+  , "EndTime"       timestamptz               -- EndTime
+  , "TotalRecords"  integer                   -- TotalRecords
+  , "Status"        varchar(200)              -- Status
+  , "Error"         varchar(1000)             -- Error
+  , "created"       timestamptz    not null   -- The timestamp for when the record was created.
+  , "lastUpdated"   timestamptz    not null   -- The timestamp for when the record was last updated.
+  , "deleted"       timestamptz               -- The timestamp for when the record was deleted.
+  , FOREIGN KEY ("StartTimeTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
+  , FOREIGN KEY ("EndTimeTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
+ );
+COMMENT ON TABLE TILDA.JOBS IS E'Kettle Jobs';
+COMMENT ON COLUMN TILDA.JOBS."Id" IS E'Id';
+COMMENT ON COLUMN TILDA.JOBS."Name" IS E'Name';
+COMMENT ON COLUMN TILDA.JOBS."StartTimeTZ" IS E'Generated helper column to hold the time zone ID for ''StartTime''.';
+COMMENT ON COLUMN TILDA.JOBS."StartTime" IS E'StartTime';
+COMMENT ON COLUMN TILDA.JOBS."EndTimeTZ" IS E'Generated helper column to hold the time zone ID for ''EndTime''.';
+COMMENT ON COLUMN TILDA.JOBS."EndTime" IS E'EndTime';
+COMMENT ON COLUMN TILDA.JOBS."TotalRecords" IS E'TotalRecords';
+COMMENT ON COLUMN TILDA.JOBS."Status" IS E'Status';
+COMMENT ON COLUMN TILDA.JOBS."Error" IS E'Error';
+COMMENT ON COLUMN TILDA.JOBS."created" IS E'The timestamp for when the record was created.';
+COMMENT ON COLUMN TILDA.JOBS."lastUpdated" IS E'The timestamp for when the record was last updated.';
+COMMENT ON COLUMN TILDA.JOBS."deleted" IS E'The timestamp for when the record was deleted.';
+CREATE UNIQUE INDEX JOBS_Job_Id ON TILDA.JOBS ("Id");
+
+
+
+create table if not exists TILDA.JOB_DETAIL -- Job Detail
+ (  "Id"                      integer        not null   -- Id
+  , "Job_Id"                  integer        not null   -- Job Id
+  , "FileName"                varchar(200)              -- FileName
+  , "FileRecords"             integer                   -- FileRecords
+  , "FileProcessStartTimeTZ"  character(5)              -- Generated helper column to hold the time zone ID for 'FileProcessStartTime'.
+  , "FileProcessStartTime"    timestamptz               -- FileProcessStartTime
+  , "FileProcessEndTimeTZ"    character(5)              -- Generated helper column to hold the time zone ID for 'FileProcessEndTime'.
+  , "FileProcessEndTime"      timestamptz               -- FileProcessEndTime
+  , "Status"                  varchar(200)              -- Status
+  , "Error"                   varchar(1000)             -- Error
+  , "created"                 timestamptz    not null   -- The timestamp for when the record was created.
+  , "lastUpdated"             timestamptz    not null   -- The timestamp for when the record was last updated.
+  , "deleted"                 timestamptz               -- The timestamp for when the record was deleted.
+  , FOREIGN KEY ("FileProcessStartTimeTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
+  , FOREIGN KEY ("FileProcessEndTimeTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
+ );
+COMMENT ON TABLE TILDA.JOB_DETAIL IS E'Job Detail';
+COMMENT ON COLUMN TILDA.JOB_DETAIL."Id" IS E'Id';
+COMMENT ON COLUMN TILDA.JOB_DETAIL."Job_Id" IS E'Job Id';
+COMMENT ON COLUMN TILDA.JOB_DETAIL."FileName" IS E'FileName';
+COMMENT ON COLUMN TILDA.JOB_DETAIL."FileRecords" IS E'FileRecords';
+COMMENT ON COLUMN TILDA.JOB_DETAIL."FileProcessStartTimeTZ" IS E'Generated helper column to hold the time zone ID for ''FileProcessStartTime''.';
+COMMENT ON COLUMN TILDA.JOB_DETAIL."FileProcessStartTime" IS E'FileProcessStartTime';
+COMMENT ON COLUMN TILDA.JOB_DETAIL."FileProcessEndTimeTZ" IS E'Generated helper column to hold the time zone ID for ''FileProcessEndTime''.';
+COMMENT ON COLUMN TILDA.JOB_DETAIL."FileProcessEndTime" IS E'FileProcessEndTime';
+COMMENT ON COLUMN TILDA.JOB_DETAIL."Status" IS E'Status';
+COMMENT ON COLUMN TILDA.JOB_DETAIL."Error" IS E'Error';
+COMMENT ON COLUMN TILDA.JOB_DETAIL."created" IS E'The timestamp for when the record was created.';
+COMMENT ON COLUMN TILDA.JOB_DETAIL."lastUpdated" IS E'The timestamp for when the record was last updated.';
+COMMENT ON COLUMN TILDA.JOB_DETAIL."deleted" IS E'The timestamp for when the record was deleted.';
+CREATE UNIQUE INDEX JOB_DETAIL_Job_File_Id ON TILDA.JOB_DETAIL ("Id", "Job_Id");
+
+

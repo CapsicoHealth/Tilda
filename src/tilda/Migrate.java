@@ -21,7 +21,6 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.db.Connection;
 import tilda.db.ConnectionPool;
 
 public class Migrate

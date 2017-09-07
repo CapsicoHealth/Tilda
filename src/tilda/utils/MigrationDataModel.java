@@ -2,7 +2,6 @@ package tilda.utils;
 
 import java.util.List;
 
-import tilda.db.Connection;
 import tilda.migration.MigrationScript;
 
 public class MigrationDataModel

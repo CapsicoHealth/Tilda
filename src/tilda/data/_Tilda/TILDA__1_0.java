@@ -61,6 +61,8 @@ public final class TILDA__1_0
       tilda.data._Tilda.TILDA__TRANSPERF_Factory.initObject(C);
       tilda.data._Tilda.TILDA__TESTING_Factory.initObject(C);
       tilda.data._Tilda.TILDA__CONNECTION_Factory.initObject(C);
+      tilda.data._Tilda.TILDA__JOBS_Factory.initObject(C);
+      tilda.data._Tilda.TILDA__JOB_DETAIL_Factory.initObject(C);
     }
 
  }

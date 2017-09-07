@@ -2,7 +2,6 @@ package tilda.generation.html;
 
 import java.io.File;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

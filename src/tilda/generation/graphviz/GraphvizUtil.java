@@ -23,7 +23,6 @@ import org.json.simple.parser.JSONParser;
 import tilda.enums.FrameworkSourcedType;
 import tilda.generation.GeneratorSession;
 import tilda.generation.html.DocGen;
-import tilda.generation.html.Docs;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Documentation;
