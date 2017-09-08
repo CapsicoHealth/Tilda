@@ -55,9 +55,9 @@ public class Config
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             Config C = gson.fromJson(R, Config.class);
             C._RootFolder = FileUtil.getBasePathFromFileOrResource(FilePath);
-//  -silentMode=0 ${project_loc:CMSData}/config.CMS.json
+            //  -silentMode=0 ${project_loc:CMSData}/config.CMS.json
             C.validate();
-             
+            
             return C;
           }
         catch (Throwable T)

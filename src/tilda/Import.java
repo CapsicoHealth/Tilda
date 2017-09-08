@@ -44,21 +44,20 @@ public class Import
 
     public static void main(String[] args)
       {
+        Connection C = null;
+        ArrayList<String> arguments = new ArrayList<>(Arrays.asList(args));
+        ValidateParams(arguments);
+        
         LOG.info("\n*************************************************************************************************************************************");
         ConnectionPool.autoInit();
         LOG.info("\n*************************************************************************************************************************************\n");
-
-        Connection C = null;
-        ArrayList<String> arguments = new ArrayList<>(Arrays.asList(args));
-        
-        ValidateParams(arguments);
 
         try
           {
             long timeTaken = System.nanoTime();
             int RecordsCount = 0;
             
-            for(int i=0; i < arguments.size() ; )
+            for(int i=0; i < arguments.size() ; i += 4)
               {
                 if("-f".equals(arguments.get(i)))
                   {
