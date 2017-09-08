@@ -279,6 +279,8 @@ public class Migrator
 
         for (Object Obj : S._Objects)
           {
+            if (Obj == null)
+             continue;
             if (Obj._FST == FrameworkSourcedType.VIEW)
               continue;
             TableMeta TMeta = DBMeta.getTableMeta(Obj._ParentSchema._Name, Obj._Name);
@@ -313,16 +315,16 @@ public class Migrator
                               throw new Exception("The application's data model defines the column '" + Col.getShortName() + "' as an base type, but it's an array in the DB. The database needs to be migrated manually.");
                           }
 
-                        if (Col.getType() == ColumnType.STRING && Col.isCollection() == false
-                        && (CMeta._Size < DBMeta.getCLOBThreshhold() && CMeta._Size != Col._Size
-                        || CMeta._Size >= DBMeta.getCLOBThreshhold() && Col._Size < DBMeta.getCLOBThreshhold()))
-                          Actions.add(new ColumnAlterStringSize(Col, CMeta._Size));
-
                         if (Col.isCollection() == false
                         && (Col.getType() == ColumnType.BITFIELD && CMeta._TildaType != ColumnType.INTEGER
                         || Col.getType() == ColumnType.JSON && CMeta._TildaType != ColumnType.STRING && CMeta._TildaType != ColumnType.JSON
                         || Col.getType() != ColumnType.BITFIELD && Col.getType() != ColumnType.JSON && Col.getType() != CMeta._TildaType))
                           Actions.add(new ColumnAlterType(Col, CMeta._TildaType));
+
+                        if (Col.getType() == ColumnType.STRING && Col.isCollection() == false
+                        && (CMeta._Size < DBMeta.getCLOBThreshhold() && CMeta._Size != Col._Size
+                        || CMeta._Size >= DBMeta.getCLOBThreshhold() && Col._Size < DBMeta.getCLOBThreshhold()))
+                          Actions.add(new ColumnAlterStringSize(Col, CMeta._Size));
                       }
                   }
                 /*
