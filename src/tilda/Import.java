@@ -135,8 +135,8 @@ public class Import
         
         for (int i = 0 ; i < arguments.size() ; )
           {
-            if ( !"-f".equals(arguments.get(i)) || arguments.get(i+1) == null 
-                || !"-c".equals(arguments.get(i+2)) || arguments.get(i+3) == null )
+            if ( !"-f".equals(arguments.get(i)) || TextUtil.isNullOrEmpty(arguments.get(i+1)) 
+              || !"-c".equals(arguments.get(i+2)) || TextUtil.isNullOrEmpty(arguments.get(i+3)) )
               {
                 PrintUsageHint();
                 System.exit(-1);

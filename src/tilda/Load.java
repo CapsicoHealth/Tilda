@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -47,44 +48,46 @@ import tilda.loader.csv.ImportProcessor;
 import tilda.loader.parser.Config;
 import tilda.loader.parser.DataObject;
 import tilda.loader.ui.DataImportTableModel;
+import tilda.utils.TextUtil;
 import tilda.db.Connection;
 import tilda.db.ConnectionPool;
 
 public class Load
   {
-
+    protected static final Logger LOG               = LogManager.getLogger(Load.class.getName());
+    Load                          app               = null;
+    
+    private static Object[][]     data              = null;
+    private static Object[][]     connections       = null;
+    private static Config         Conf              = null;
+    
     private JFrame                frmDataImport;
-    private static Object[][]     data        = null;
     private JTable                table;
     private JScrollPane           scrollPane;
-    protected static final Logger LOG         = LogManager.getLogger(Load.class.getName());
-    static Connection             C           = null;
-    static Config                 Conf        = null;
 
-    Load                          app         = null;
-    JLabel                        statusLabel = new JLabel("");
-    JButton                       btnRun      = new JButton("Run Import");
-    JButton                       btnCancel   = new JButton("Cancel");
-
-    /**
-     * Launch the application.
-     */
+    // UI
+    JLabel                        statusLabel       = new JLabel("");
+    JButton                       btnRun            = new JButton("Run Import");
+    JButton                       btnCancel         = new JButton("Cancel");
+    
+    // Main
     public static void main(String[] argsArray)
     throws Exception
       {
-
         List<String> arguments = new ArrayList<>(Arrays.asList(argsArray));
-        String[] silentModePair = arguments.get(0).split("=");
-        arguments.remove(0);
         
-        ValidateArguments(silentModePair, arguments);
-
+        if ( !isValidArguments(arguments) ) 
+          {
+            PrintUsageHint();
+            System.exit(-1);
+          }
+        
         LOG.info("\n*************************************************************************************************************************************");
         ConnectionPool.autoInit();
         LOG.info("\n*************************************************************************************************************************************\n");
 
-        C = ConnectionPool.get("MAIN");
-        
+        String[] silentModePair = arguments.get(0).split("=");
+        arguments.remove(0);
         boolean isSilentMode = Integer.parseInt(silentModePair[1]) == 1;
        
         if (isSilentMode)
@@ -96,20 +99,18 @@ public class Load
                 
                 LOG.debug("Starting the utility in silent mode and processing " + ConfigFileName);
                 
-                List<String> objectNamesList = new ArrayList<>(Arrays.asList(arguments.get(i+3).split(",")));
-                FilterObjects(objectNamesList);
-                
+                List<String> selectedObjectsList = new ArrayList<>(Arrays.asList(arguments.get(i+3).split(",")));
                 List<String> connectionIdsList = new ArrayList<>(Arrays.asList(arguments.get(i+5).split(",")));
-                RunImportProcessor(connectionIdsList);
+                StartImportProcessor(selectedObjectsList, connectionIdsList, Conf, Conf._CmsData);
               }
           }
         else
           {
             String ConfigFileName = arguments.get(0);
-            Conf = Config.fromFile(ConfigFileName);
+            Config Conf = Config.fromFile(ConfigFileName);
             
             List<DataObject> list = Conf._CmsData;
-            data = new Object[list.size()][3];
+            data = new Object[list.size()][2];
             for (int i = 0; i < list.size(); ++i)
               {
                 DataObject DO = list.get(i);
@@ -118,11 +119,24 @@ public class Load
                 String schemaName = DO._SchemaName;
                 String tableName = DO._TableName;
                 String schemaPlusTable = schemaName + "." + tableName;
-                data[i][0] = schemaPlusTable.toUpperCase();
+                data[i][0] = schemaPlusTable; // .toUpperCase();
                 data[i][1] = new Boolean(false);
-                data[i][2] = new Boolean(false);
               }
-
+            
+            // Multi-Tenancy Logic
+            Map<String, String> allConnections = ConnectionPool.getAllDataSourceIds();
+            Iterator<String> iterator = allConnections.keySet().iterator();
+            connections = new Object[allConnections.size()][3];
+            int i = 0;
+            while(iterator.hasNext())
+              {
+                String id = iterator.next();
+                String url = allConnections.get(id);
+                connections[i][0] = id;
+                connections[i][1] = url;
+                connections[i][2] = new Boolean(false);                 
+              }              
+            
             EventQueue.invokeLater(new Runnable()
               {
                 public void run()
@@ -141,7 +155,29 @@ public class Load
           }
       }
 
-    private static void RunImportProcessor(List<String> connectionIdsList)
+    private static void StartImportProcessor(List<String> selectedObjectsList, List<String> connectionIdsList, Config conf, List<DataObject> _CmsData) 
+    throws Exception
+      {
+        List<DataObject> filteredObjects = FilterObjects(selectedObjectsList, _CmsData);
+        RunImportProcessor(connectionIdsList, conf, filteredObjects);
+      }
+
+    private static List<DataObject> FilterObjects(List<String> selectedObjects, List<DataObject> AllDataObjects)
+      {
+        List<DataObject> filteredList = new ArrayList<>();
+        
+        Iterator<DataObject> iterator = AllDataObjects.iterator();
+        while(iterator.hasNext())
+          {
+            DataObject dataObject = iterator.next();
+            String tempObjectName = dataObject._SchemaName + "." + dataObject._TableName;
+            if(selectedObjects.contains(tempObjectName) == false)
+              filteredList.add(dataObject);
+          }
+        return filteredList;
+      }
+
+    private static void RunImportProcessor(List<String> connectionIdsList, Config Conf, List<DataObject> dataObjects)
     throws Exception
       {
         Connection C = null;
@@ -160,9 +196,7 @@ public class Load
               {
                 C = ConnectionPool.get(connectionIterator.next());
                 // TODO: LOG that import processor is running
-                ImportProcessor.process(C, Conf, Conf._CmsData);
-                C.commit();
-                C.close();
+                ImportProcessor.process(C, Conf, dataObjects);
                 C = null;                        
               }
           }
@@ -173,54 +207,67 @@ public class Load
           }
       }
 
-    /*
-     * Removes unnecessary objects from Conf._CmsData
-     * Keeping only those objects which are passed using -o argument
-     */
-    private static void FilterObjects(List<String> objectNamesList)
+    private static boolean isValidArguments(List<String> arguments)
       {
-        String tempObjectName = null;
-        Iterator<DataObject> cmsDataIterator = Conf._CmsData.iterator();
-        while(cmsDataIterator.hasNext())
-          {
-            DataObject dataObject = cmsDataIterator.next();
-            tempObjectName = dataObject._SchemaName + "." + dataObject._TableName;
-            if(objectNamesList.contains(tempObjectName) == false)
-              Conf._CmsData.remove(dataObject);
-          }
-      }
+        if (arguments.size() < 2)
+            return false;
 
-    private static void ValidateArguments(String[] silentModePair, List<String> args)
-      {
-        /* ********** TODO Validations *********** */
-        if (args.size() < 2)
-          {
-            PrintUsageHint();
-            System.exit(-1);
-          }
-
-        // Validate if silentModePair[1] must be an integer
+        String[] silentModePair = arguments.get(0).split("=");
+        
         if (silentModePair != null && silentModePair.length != 2)
-          {
-            LOG.debug("Usage DataImportApp -silentMode=0/1 dataImport.json ");
-            System.exit(-1);
-          }
+          return false;
 
         if (silentModePair[0].equalsIgnoreCase("-silentMode") == false)
-          {
-            LOG.debug("Usage DataImportApp -silentMode=0/1 dataImport.json ");
-            System.exit(-1);
+          return false;
+
+        int mode = -1;
+        try {
+          mode = Integer.parseInt(silentModePair[1]);
+        } catch (Exception E) {
+          return false;
+        }
+        
+        if (mode == 1)
+          { // CLI Mode
+            if ( (arguments.size() % 6) != 1 )
+              return false;
+            
+            for ( int i = 1; i < arguments.size(); i += 6)
+              {
+                if ( !"-f".equals(arguments.get(i)) || TextUtil.isNullOrEmpty(arguments.get(i+1))
+                  || !"-o".equals(arguments.get(i+2)) || TextUtil.isNullOrEmpty(arguments.get(i+3))
+                  || !"-c".equals(arguments.get(i+4)) || TextUtil.isNullOrEmpty(arguments.get(i+5)) )
+                  return false;
+              }
           }
+        else if ( TextUtil.isNullOrEmpty(arguments.get(1)) )
+          {
+            return false;
+          }
+          
+
+        return true;
       }
 
     private static void PrintUsageHint()
       {
-        
+        LOG.error("");
+        LOG.error("Load utility *must* be called with following parameters :");
+        LOG.error("*** UI Mode");
+        LOG.error("    -silentMode=0 <filepath>");
+        LOG.error("ex: -silentMode=0 com/c/c/data/config.C.json");
+        LOG.error("");
+        LOG.error("*** CLI Mode");
+        LOG.error("    -silentMode=1 -f <filepath>                 -o <object_name>,<object_name>,..   -c MAIN,KEYS,.. ");
+        LOG.error("ex: -silentMode=1 -f com/c/c/data/config.C.json -o cms.HCPCS_CODES,cms.CPT_CODES    -c MAIN,KEYS");
+        LOG.error("");        
+        LOG.error("*** for Multi Tenant System.");
+        LOG.error("    ALL           = All Connection Ids. Except 'KEYS'");
+        LOG.error("    ALL_TENANTS   = All Connection Ids. Except 'MAIN' & 'KEYS'");
+        LOG.error("");        
       }
 
-    /**
-     * Create the application.
-     */
+    // Constructor
     public Load()
       {
         initialize();
@@ -236,23 +283,11 @@ public class Load
         try
           {
             UIManager.setLookAndFeel(
-            UIManager.getSystemLookAndFeelClassName());
+              UIManager.getSystemLookAndFeelClassName());
           }
-        catch (ClassNotFoundException e1)
+        catch (Exception e)
           {
-            e1.printStackTrace();
-          }
-        catch (InstantiationException e1)
-          {
-            e1.printStackTrace();
-          }
-        catch (IllegalAccessException e1)
-          {
-            e1.printStackTrace();
-          }
-        catch (UnsupportedLookAndFeelException e1)
-          {
-            e1.printStackTrace();
+            e.printStackTrace();
           }
 
         frmDataImport = new JFrame();
@@ -275,6 +310,7 @@ public class Load
                   {
                     List<String> truncateTables = new ArrayList<String>();
                     List<String> ImportTables = new ArrayList<String>();
+                    List<String> ConnectionIds = new ArrayList<String>();
 
                     EventQueue.invokeLater(new Runnable()
                       {
@@ -286,25 +322,20 @@ public class Load
                                 for (int i = 0; i < data.length; ++i)
                                   {
                                     Boolean ImportValue = (Boolean) data[i][1];
-                                    Boolean TruncateValue = (Boolean) data[i][2];
-
-                                    if (TruncateValue == true)
-                                      truncateTables.add((String) data[i][0]);
-
                                     if (ImportValue == true)
                                       ImportTables.add((String) data[i][0]);
                                   }
-                                // Call Import code.
-                                List<DataObject> FilterImportTablesList = new ArrayList<DataObject>();
-                                List<DataObject> list = Conf._CmsData;
-                                for (DataObject D : list)
+
+                                for (int i = 0; i < connections.length ; i++)
                                   {
-                                    String fullTableName = D._SchemaName + "." + D._TableName;
-                                    fullTableName = fullTableName.toUpperCase();
-                                    if (ImportTables.contains(fullTableName) == true)
-                                      FilterImportTablesList.add(D);
+                                    Boolean connection = (Boolean) connections[i][2];
+                                    if(connection == true)
+                                      ConnectionIds.add((String) connections[i][0]);
                                   }
-                                ImportProcessor.process(C, Conf, FilterImportTablesList);
+                                
+                                
+                                List<DataObject> filteredObjects = FilterObjects(ImportTables, Conf._CmsData);
+                                StartImportProcessor(ImportTables, ConnectionIds, Conf,  filteredObjects);
                                 LOG.debug("Import Tables completed.");
                               }
                             catch (Exception e)
@@ -344,6 +375,8 @@ public class Load
         frmDataImport.getContentPane().add(scrollPane);
 
         table = new JTable(new DataImportTableModel(data));
+        
+        // TODO add another table for connections
 
         table.getColumnModel().getColumn(0).setPreferredWidth(560);
         table.getColumnModel().getColumn(1).setPreferredWidth(80);
@@ -377,4 +410,3 @@ public class Load
         statusLabel.setText(text);
       }
   }
-
