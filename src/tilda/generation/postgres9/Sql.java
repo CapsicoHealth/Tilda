@@ -844,6 +844,17 @@ public class Sql extends PostgreSQL implements CodeGenSql
                  Str.append(VRM.printMapping());
               }
           }
+        for (ViewRealizeMapping VRM : V._Realize._Mappings)
+          {
+            if (V.getColumn(VRM._Name) == null)
+              {
+                if (First == false)
+                  Str.append(", ");
+                else
+                  First = false;
+                Str.append(VRM.printMapping());
+              }
+          }
         for (Formula F : V._Formulas)
           {
             if (F == null)
