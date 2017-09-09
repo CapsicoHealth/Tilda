@@ -213,7 +213,7 @@ public class Sql extends MSSQL implements CodeGenSql
       }
 
     @Override
-    public String genDDL(PrintWriter OutFinal, View V)
+    public void genDDL(PrintWriter OutFinal, View V)
     throws Exception
       {
         StringBuilderWriter OutStr = new StringBuilderWriter();
@@ -353,7 +353,22 @@ public class Sql extends MSSQL implements CodeGenSql
         Str = Str.replaceAll("\n", "\\n");
         // Out.println("COMMENT ON VIEW " + V._ParentSchema._Name + "." + V._Name + " IS " + TextUtil.EscapeSingleQuoteForSQL(Str) + ";");
         OutStr.close();
-        return Str;
+      }
+    
+    @Override
+    public void genDDLComments(PrintWriter Out, View V)
+    throws Exception
+      {
+        // TODO Auto-generated method stub
+        
+      }
+
+    @Override
+    public void genDDLMetadata(PrintWriter Out, View V)
+    throws Exception
+      {
+        // TODO Auto-generated method stub
+        
       }
 
     private boolean CheckFK(PrintWriter Out, Object Obj1, Object Obj2, ViewColumn C, int JoinIndex)

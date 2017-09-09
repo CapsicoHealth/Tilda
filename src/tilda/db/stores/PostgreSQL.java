@@ -25,6 +25,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -204,10 +205,34 @@ public class PostgreSQL implements DBType
     public boolean createView(Connection Con, View V)
     throws Exception
       {
-        StringWriter Str = new StringWriter();
+        StringBuilderWriter Str = new StringBuilderWriter();
         PrintWriter Out = new PrintWriter(Str);
-        Generator.getFullViewDDL(getSQlCodeGen(), Out, V);
-        return Con.ExecuteDDL(V._ParentSchema._Name, V.getBaseName(), Str.toString());
+        Generator.getViewBaseDDL(getSQlCodeGen(), Out, V);
+        if (Con.ExecuteDDL(V._ParentSchema._Name, V.getBaseName(), Str.toString()) == false)
+          return false;
+        Out.close();
+
+        Str = new StringBuilderWriter();
+        Out = new PrintWriter(Str);
+        Generator.getViewCommentsDDL(getSQlCodeGen(), Out, V);
+        if (Str.getBuilder().length() != 0)
+          {
+            if (Con.ExecuteDDL(V._ParentSchema._Name, V.getBaseName(), Str.toString()) == false)
+              return false;
+            Out.close();
+          }
+
+        Str = new StringBuilderWriter();
+        Out = new PrintWriter(Str);
+        Generator.getViewMetadataDDL(getSQlCodeGen(), Out, V);
+        if (Str.getBuilder().length() != 0)
+          {
+            if (Con.ExecuteDDL(V._ParentSchema._Name, V.getBaseName(), Str.toString()) == false)
+              return false;
+            Out.close();
+          }
+
+        return true;
       }
 
     @Override
@@ -220,7 +245,7 @@ public class PostgreSQL implements DBType
             ScalarRP RP = new ScalarRP();
             Con.ExecuteSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
             if (RP.getResult() > 0)
-             throw new Exception("Cannot add new 'not null' column '" + Col.getFullName() + "' to a table without a default value. Add a default value in the model, or manually migrate your database.");
+              throw new Exception("Cannot add new 'not null' column '" + Col.getFullName() + "' to a table without a default value. Add a default value in the model, or manually migrate your database.");
           }
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ADD COLUMN \"" + Col.getName() + "\" " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection());
         if (Col._Nullable == false && DefaultValue != null)
@@ -228,7 +253,7 @@ public class PostgreSQL implements DBType
             Q += " not null DEFAULT " + ValueHelper.printValue(Col, DefaultValue);
           }
         if (Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) == false)
-         return false;
+          return false;
 
         return alterTableAlterColumnComment(Con, Col);
       }
@@ -311,15 +336,15 @@ public class PostgreSQL implements DBType
             Con.ExecuteSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
             if (RP.getResult() > Col._Size)
               {
-                Q = "select \"" + Col.getName() + "\" || '  (' || length(\"" + Col.getName() + "\") || ')' as _x from "+Col._ParentObject.getShortName()
-                   +" group by \"" + Col.getName() + "\""
-                   +" order by length(\"" + Col.getName() + "\") desc"
-                   +" limit 10";
+                Q = "select \"" + Col.getName() + "\" || '  (' || length(\"" + Col.getName() + "\") || ')' as _x from " + Col._ParentObject.getShortName()
+                + " group by \"" + Col.getName() + "\""
+                + " order by length(\"" + Col.getName() + "\") desc"
+                + " limit 10";
                 StringListRP SLRP = new StringListRP();
                 Con.ExecuteSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, SLRP);
                 LOG.error("Column sample:");
                 for (String s : SLRP.getResult())
-                  LOG.error("   - "+s);
+                  LOG.error("   - " + s);
                 throw new Exception("Cannot alter String column '" + Col.getFullName() + "' from size " + DBSize + " down to " + Col._Size + " because there are values with sizes up to " + RP.getResult()
                 + " that would be truncated. You need to manually migrate your database.");
               }
@@ -336,7 +361,7 @@ public class PostgreSQL implements DBType
       {
         if (fromType == ColumnType.STRING)
           {
-            if (Col.getType() == ColumnType.INTEGER || Col.getType() == ColumnType.LONG || Col.getType() == ColumnType.FLOAT || Col.getType() == ColumnType.DOUBLE  || Col.getType() == ColumnType.DATE)
+            if (Col.getType() == ColumnType.INTEGER || Col.getType() == ColumnType.LONG || Col.getType() == ColumnType.FLOAT || Col.getType() == ColumnType.DOUBLE || Col.getType() == ColumnType.DATE)
               {
                 String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
                 + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection())
@@ -350,7 +375,7 @@ public class PostgreSQL implements DBType
                 + " USING (trim(\"" + Col.getName() + "\")::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + ");";
 
                 if (Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) == false)
-                 return false;
+                  return false;
 
                 Col = Col._ParentObject.getColumn(Col.getName() + "TZ");
                 Q = "UPDATE " + Col._ParentObject.getShortName() + " SET \"" + Col.getName() + "\" = 'UTC' WHERE \"" + Col.getName() + "\" IS NULL";
@@ -358,9 +383,9 @@ public class PostgreSQL implements DBType
                 return Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) >= 0;
               }
           }
-         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
-                + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + ";";
-         return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
+        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
+        + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + ";";
+        return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
       }
 
     protected static void PrintFunctionIn(StringBuilder Str, String Type)
@@ -393,8 +418,8 @@ public class PostgreSQL implements DBType
         .append("\n");
 
       }
-    
-    
+
+
     protected static void PrintFunctionTo(StringBuilder Str, String FuncTypeName, String Type)
       {
         Str.append("CREATE OR REPLACE FUNCTION TILDA.to").append(FuncTypeName).append("(str varchar, val ").append(Type).append(")\n")
@@ -446,7 +471,7 @@ public class PostgreSQL implements DBType
         PrintFunctionTo(Str, "Int", "integer");
         PrintFunctionTo(Str, "Double", "double precision");
         PrintFunctionTo(Str, "Date", "Date");
-        
+
         Str.append("CREATE OR REPLACE FUNCTION TILDA.getKeyBatch(t text, c integer) RETURNS TABLE (min_key_inclusive bigint, max_key_exclusive bigint) AS $$\n")
         .append("DECLARE\n")
         .append("  val bigint;\n")
@@ -488,7 +513,8 @@ public class PostgreSQL implements DBType
         .append("  RETURNS integer\n")
         .append("  IMMUTABLE LANGUAGE SQL AS\n")
         .append("'SELECT date_part(''days'', $2 - $1)::integer+(case $3 or $2 < $1 when true then 0 else 1 end);';\n")
-        .append("COMMENT ON FUNCTION TILDA.DaysBetween(timestamptz, timestamptz, boolean) IS 'Computes the number of days between 2 dates ''start'' and ''end''. The third parameter indicates whether the midnight rule should be applied or not. If true, the number of days between 2016-12-01 and 2016-12-02 for example will be 1 (i.e., one mignight passed). If false, the returned count will be 2.';\n")
+        .append(
+        "COMMENT ON FUNCTION TILDA.DaysBetween(timestamptz, timestamptz, boolean) IS 'Computes the number of days between 2 dates ''start'' and ''end''. The third parameter indicates whether the midnight rule should be applied or not. If true, the number of days between 2016-12-01 and 2016-12-02 for example will be 1 (i.e., one mignight passed). If false, the returned count will be 2.';\n")
         .append("\n")
         .append("\n")
         .append("CREATE OR REPLACE FUNCTION TILDA.daysBetween(timestamptz, timestamptz)\n")
@@ -538,8 +564,7 @@ public class PostgreSQL implements DBType
         .append("'SELECT dst from TILDA.MAPPING where type=$1 and src=upper($2)';\n")
         .append("\n")
         .append("\n")
-        .append("CREATE extension if not exists tablefunc;\n")
-        ;
+        .append("CREATE extension if not exists tablefunc;\n");
 
         return Con.ExecuteDDL("TILDA", "FUNCTIONS", Str.toString());
       }
@@ -548,7 +573,7 @@ public class PostgreSQL implements DBType
     public StringStringPair getTypeMapping(int Type, String Name, int Size, String TypeName)
     throws Exception
       {
-        //LOG.debug("Type: "+Type+"; Name: "+Name+"; Size: "+Size+"; TypeName: "+TypeName+";");
+        // LOG.debug("Type: "+Type+"; Name: "+Name+"; Size: "+Size+"; TypeName: "+TypeName+";");
         ColumnType TildaType = null;
         String TypeSql = null;
         switch (Type)
@@ -608,7 +633,7 @@ public class PostgreSQL implements DBType
             default: throw new Exception("Cannot map SQL Type "+Type+" for column "+Name+"("+TypeName+").");
             /*@formatter:on*/
           }
-        return new StringStringPair(TypeSql, TildaType==null?null:TildaType.name());
+        return new StringStringPair(TypeSql, TildaType == null ? null : TildaType.name());
       }
 
 
@@ -756,33 +781,43 @@ public class PostgreSQL implements DBType
       {
         if (DurationCount >= 0)
           {
-            Str.append(" ("); Col.getFullColumnVarForSelect(C, Str); Str.append(" >= "); ColStart.getFullColumnVarForSelect(C, Str);
+            Str.append(" (");
+            Col.getFullColumnVarForSelect(C, Str);
+            Str.append(" >= ");
+            ColStart.getFullColumnVarForSelect(C, Str);
             Str.append(" and ");
-            Col.getFullColumnVarForSelect(C, Str); Str.append(" < "); ColStart.getFullColumnVarForSelect(C, Str);
+            Col.getFullColumnVarForSelect(C, Str);
+            Str.append(" < ");
+            ColStart.getFullColumnVarForSelect(C, Str);
             Str.append(" + INTERVAL '").append(DurationCount).append(" ").append(DurationType.toString()).append("'");
             Str.append(")");
           }
         else
           {
             DurationCount = -DurationCount;
-            Str.append(" ("); Col.getFullColumnVarForSelect(C, Str); Str.append(" > "); ColStart.getFullColumnVarForSelect(C, Str);
+            Str.append(" (");
+            Col.getFullColumnVarForSelect(C, Str);
+            Str.append(" > ");
+            ColStart.getFullColumnVarForSelect(C, Str);
             Str.append(" - INTERVAL '").append(DurationCount).append(" ").append(DurationType.toString()).append("'");
             Str.append(" and ");
-            Col.getFullColumnVarForSelect(C, Str); Str.append(" <= "); ColStart.getFullColumnVarForSelect(C, Str);
+            Col.getFullColumnVarForSelect(C, Str);
+            Str.append(" <= ");
+            ColStart.getFullColumnVarForSelect(C, Str);
             Str.append(")");
           }
       }
 
-/*
-    @Override
-    public boolean setTableLogging(Connection Con, String schemaName, String tableName, boolean logged) throws Exception
-      {
-        StringBuilder Str = new StringBuilder();
-        Str.append("ALTER TABLE ");
-        getFullTableVar(Str, schemaName, tableName);
-        Str.append(" SET ").append(logged==true ? "LOGGED" : "UNLOGGED");
-        return Con.ExecuteDDL(schemaName, tableName, Str.toString());
-      }
-*/
-  
+    /*
+     * @Override
+     * public boolean setTableLogging(Connection Con, String schemaName, String tableName, boolean logged) throws Exception
+     * {
+     * StringBuilder Str = new StringBuilder();
+     * Str.append("ALTER TABLE ");
+     * getFullTableVar(Str, schemaName, tableName);
+     * Str.append(" SET ").append(logged==true ? "LOGGED" : "UNLOGGED");
+     * return Con.ExecuteDDL(schemaName, tableName, Str.toString());
+     * }
+     */
+
   }

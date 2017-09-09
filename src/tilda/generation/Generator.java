@@ -154,11 +154,31 @@ public class Generator
           }
       }
 
-    public static String getFullViewDDL(CodeGenSql CG, PrintWriter Out, View V)
+    public static void getFullViewDDL(CodeGenSql CG, PrintWriter Out, View V)
     throws Exception
       {
-        return CG.genDDL(Out, V);
+        getViewBaseDDL(CG, Out, V);
+        Out.append("\n");
+        getViewCommentsDDL(CG, Out, V);
+        Out.append("\n");
+        getViewMetadataDDL(CG, Out, V);
       }
+    public static void getViewBaseDDL(CodeGenSql CG, PrintWriter Out, View V)
+    throws Exception
+      {
+        CG.genDDL(Out, V);
+      }
+    public static void getViewCommentsDDL(CodeGenSql CG, PrintWriter Out, View V)
+    throws Exception
+      {
+        CG.genDDLComments(Out, V);
+      }
+    public static void getViewMetadataDDL(CodeGenSql CG, PrintWriter Out, View V)
+    throws Exception
+      {
+        CG.genDDLMetadata(Out, V);
+      }
+    
 
 
     protected static void genTildaSupport(GeneratorSession G, File GenFolder, Schema S)
