@@ -38,15 +38,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EtchedBorder;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.loader.csv.ImportProcessor;
 import tilda.loader.parser.Config;
 import tilda.loader.parser.DataObject;
+import tilda.loader.ui.ConnectionsTableModel;
 import tilda.loader.ui.DataImportTableModel;
 import tilda.utils.TextUtil;
 import tilda.db.Connection;
@@ -62,8 +61,6 @@ public class Load
     private static Config         Conf              = null;
     
     private JFrame                frmDataImport;
-    private JTable                table;
-    private JScrollPane           scrollPane;
 
     // UI
     JLabel                        statusLabel       = new JLabel("");
@@ -92,22 +89,25 @@ public class Load
        
         if (isSilentMode)
           {
+            
+            LOG.debug("Starting the utility in silent mode.");
+            
             for(int i = 0; i < arguments.size() ; i += 6)
               {
                 String ConfigFileName = arguments.get(i+1);
                 Conf = Config.fromFile(ConfigFileName);
-                
-                LOG.debug("Starting the utility in silent mode and processing " + ConfigFileName);
-                
+
+                LOG.debug("Processing file " + ConfigFileName);
                 List<String> selectedObjectsList = new ArrayList<>(Arrays.asList(arguments.get(i+3).split(",")));
                 List<String> connectionIdsList = new ArrayList<>(Arrays.asList(arguments.get(i+5).split(",")));
                 StartImportProcessor(selectedObjectsList, connectionIdsList, Conf, Conf._CmsData);
               }
+            LOG.debug("Import Tables completed.");
           }
         else
           {
-            String ConfigFileName = arguments.get(0);
-            Config Conf = Config.fromFile(ConfigFileName);
+            String ConfigFileName = arguments.get(1);
+            Conf = Config.fromFile(ConfigFileName);
             
             List<DataObject> list = Conf._CmsData;
             data = new Object[list.size()][2];
@@ -134,7 +134,7 @@ public class Load
                 String url = allConnections.get(id);
                 connections[i][0] = id;
                 connections[i][1] = url;
-                connections[i][2] = new Boolean(false);                 
+                connections[i][2] = new Boolean(false);
               }              
             
             EventQueue.invokeLater(new Runnable()
@@ -155,11 +155,12 @@ public class Load
           }
       }
 
-    private static void StartImportProcessor(List<String> selectedObjectsList, List<String> connectionIdsList, Config conf, List<DataObject> _CmsData) 
+    private static void StartImportProcessor(List<String> selectedObjectNames, List<String> connectionIdsList, Config conf, List<DataObject> _CmsData) 
     throws Exception
       {
-        List<DataObject> filteredObjects = FilterObjects(selectedObjectsList, _CmsData);
-        RunImportProcessor(connectionIdsList, conf, filteredObjects);
+        List<DataObject> filteredObjects = FilterObjects(selectedObjectNames, _CmsData);
+        if (connectionIdsList.size() > 0 && filteredObjects.size() > 0)
+          RunImportProcessor(connectionIdsList, conf, filteredObjects);
       }
 
     private static List<DataObject> FilterObjects(List<String> selectedObjects, List<DataObject> AllDataObjects)
@@ -171,7 +172,7 @@ public class Load
           {
             DataObject dataObject = iterator.next();
             String tempObjectName = dataObject._SchemaName + "." + dataObject._TableName;
-            if(selectedObjects.contains(tempObjectName) == false)
+            if(selectedObjects.contains(tempObjectName) == true)
               filteredList.add(dataObject);
           }
         return filteredList;
@@ -190,26 +191,18 @@ public class Load
           {
             connectionIterator = ConnectionPool.getAllTenantDataSourceIds().keySet().iterator(); 
           }
-        try
+        while(connectionIterator.hasNext())
           {
-            while(connectionIterator.hasNext())
-              {
-                C = ConnectionPool.get(connectionIterator.next());
-                // TODO: LOG that import processor is running
-                ImportProcessor.process(C, Conf, dataObjects);
-                C = null;                        
-              }
-          }
-        catch (Exception E)
-          {
-            // TODO rollback and finally close connection
-            throw E;
+            C = ConnectionPool.get(connectionIterator.next());
+            LOG.debug("Running ImportProcessor");
+            ImportProcessor.process(C, Conf, dataObjects);
+            C = null;
           }
       }
 
     private static boolean isValidArguments(List<String> arguments)
       {
-        if (arguments.size() < 2)
+        if (arguments.size() < 3)
             return false;
 
         String[] silentModePair = arguments.get(0).split("=");
@@ -240,7 +233,7 @@ public class Load
                   return false;
               }
           }
-        else if ( TextUtil.isNullOrEmpty(arguments.get(1)) )
+        else if ( !"-f".equals(arguments.get(1)) || TextUtil.isNullOrEmpty(arguments.get(2)) ) 
           {
             return false;
           }
@@ -254,11 +247,11 @@ public class Load
         LOG.error("");
         LOG.error("Load utility *must* be called with following parameters :");
         LOG.error("*** UI Mode");
-        LOG.error("    -silentMode=0 <filepath>");
-        LOG.error("ex: -silentMode=0 com/c/c/data/config.C.json");
+        LOG.error("    -silentMode=0 -f <filepath>");
+        LOG.error("ex: -silentMode=0 -f com/c/c/data/config.C.json");
         LOG.error("");
         LOG.error("*** CLI Mode");
-        LOG.error("    -silentMode=1 -f <filepath>                 -o <object_name>,<object_name>,..   -c MAIN,KEYS,.. ");
+        LOG.error("    -silentMode=1 -f <filepath>                 -o <object_name>,<object_name>,..   -c <connection_id>,... ");
         LOG.error("ex: -silentMode=1 -f com/c/c/data/config.C.json -o cms.HCPCS_CODES,cms.CPT_CODES    -c MAIN,KEYS");
         LOG.error("");        
         LOG.error("*** for Multi Tenant System.");
@@ -290,6 +283,11 @@ public class Load
             e.printStackTrace();
           }
 
+        
+        JScrollPane           scroller1, scroller2;
+        JTable                table1,    table2;
+
+        
         frmDataImport = new JFrame();
         frmDataImport.setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
         frmDataImport.setTitle("CapsicoHealth Data Import");
@@ -308,7 +306,7 @@ public class Load
                 int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to run the data import?", "Warning", dialogButton);
                 if (dialogResult == 0)
                   {
-                    List<String> truncateTables = new ArrayList<String>();
+                    // List<String> truncateTables = new ArrayList<String>();
                     List<String> ImportTables = new ArrayList<String>();
                     List<String> ConnectionIds = new ArrayList<String>();
 
@@ -331,11 +329,9 @@ public class Load
                                     Boolean connection = (Boolean) connections[i][2];
                                     if(connection == true)
                                       ConnectionIds.add((String) connections[i][0]);
-                                  }
+                                  }                                
                                 
-                                
-                                List<DataObject> filteredObjects = FilterObjects(ImportTables, Conf._CmsData);
-                                StartImportProcessor(ImportTables, ConnectionIds, Conf,  filteredObjects);
+                                StartImportProcessor(ImportTables, ConnectionIds, Conf,  Conf._CmsData);
                                 LOG.debug("Import Tables completed.");
                               }
                             catch (Exception e)
@@ -369,38 +365,47 @@ public class Load
         btnCancel.setBounds(465, 724, 97, 25);
         frmDataImport.getContentPane().add(btnCancel);
 
-        scrollPane = new JScrollPane();
-        scrollPane.setBounds(34, 31, 852, 642);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        frmDataImport.getContentPane().add(scrollPane);
+        // Scroller1 setup
+        scroller1 = new JScrollPane();
+        scroller1.setBounds(34, 31, 852, 400);
+        scroller1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        frmDataImport.getContentPane().add(scroller1);
 
-        table = new JTable(new DataImportTableModel(data));
+        // Table1 Setup
+        table1 = new JTable(new DataImportTableModel(data));
+        table1.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 14));
+        table1.getTableHeader().setReorderingAllowed(false);
+        table1.setRowHeight(25);
+        table1.getColumnModel().getColumn(0).setPreferredWidth(550);
+        table1.getColumnModel().getColumn(1).setPreferredWidth(80);
+        table1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);        
+        table1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+                
         
-        // TODO add another table for connections
-
-        table.getColumnModel().getColumn(0).setPreferredWidth(560);
-        table.getColumnModel().getColumn(1).setPreferredWidth(80);
-        table.getColumnModel().getColumn(2).setPreferredWidth(80);
-
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-        // TableColumn tc = table.getColumnModel().getColumn(2);
-        // tc.setCellRenderer(new TableCellRenderer());
-
-        table.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 14));
-        table.setRowHeight(25);
-        table.getTableHeader().setReorderingAllowed(false);
-
-        scrollPane.setViewportView(table);
-        table.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-
-
+        // Scroller2 Setup
+        scroller2 = new JScrollPane();
+        scroller2.setBounds(34, 460, 852, 242);
+        scroller2.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        frmDataImport.getContentPane().add(scroller2);
+        
+        // Table2 Setup
+        table2 = new JTable(new ConnectionsTableModel(connections));
+        table2.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 14));
+        table2.getTableHeader().setReorderingAllowed(false);
+        table2.setRowHeight(25);
+        table2.getColumnModel().getColumn(0).setPreferredWidth(200);
+        table2.getColumnModel().getColumn(1).setPreferredWidth(350);
+        table2.getColumnModel().getColumn(2).setPreferredWidth(80);
+        table2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);        
+        table2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+        
+        scroller1.setViewportView(table1);
+        scroller2.setViewportView(table2);        
+        
         statusLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
         statusLabel.setBounds(44, 686, 852, 31);
         frmDataImport.getContentPane().add(statusLabel);
 
-        // ImageIcon icon = new ImageIcon(this.getClass().getResource("/images/capsico.png"));
-        // frmDataImport.setIconImage(icon.getImage());
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         frmDataImport.setLocation(dim.width / 2 - frmDataImport.getSize().width / 2, dim.height / 2 - frmDataImport.getSize().height / 2);
       }
