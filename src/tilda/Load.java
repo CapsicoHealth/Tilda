@@ -47,6 +47,7 @@ import tilda.loader.parser.Config;
 import tilda.loader.parser.DataObject;
 import tilda.loader.ui.ConnectionsTableModel;
 import tilda.loader.ui.DataImportTableModel;
+import tilda.utils.DurationUtil;
 import tilda.utils.TextUtil;
 import tilda.db.Connection;
 import tilda.db.ConnectionPool;
@@ -91,7 +92,6 @@ public class Load
           {
             
             LOG.debug("Starting the utility in silent mode.");
-            
             for(int i = 0; i < arguments.size() ; i += 6)
               {
                 String ConfigFileName = arguments.get(i+1);
@@ -191,13 +191,21 @@ public class Load
           {
             connectionIterator = ConnectionPool.getAllTenantDataSourceIds().keySet().iterator(); 
           }
-        while(connectionIterator.hasNext())
-          {
-            C = ConnectionPool.get(connectionIterator.next());
-            LOG.debug("Running ImportProcessor");
-            ImportProcessor.process(C, Conf, dataObjects);
-            C = null;
-          }
+        
+        long timeTaken = System.nanoTime();
+
+//        while(connectionIterator.hasNext())
+//          {
+//            C = ConnectionPool.get(connectionIterator.next());
+//            ImportProcessor.process(C, Conf, dataObjects);
+//            C = null;
+//          }
+        
+        LOG.debug("Running ImportProcessor");
+        ImportProcessor.parallelProcess(connectionIdsList, Conf._RootFolder, dataObjects);
+
+        timeTaken = System.nanoTime() - timeTaken;
+        LOG.debug("Time taken for ImportProcessor.process() = "+ DurationUtil.PrintDuration(timeTaken));
       }
 
     private static boolean isValidArguments(List<String> arguments)
