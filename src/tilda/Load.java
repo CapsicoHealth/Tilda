@@ -119,7 +119,7 @@ public class Load
                 String schemaName = DO._SchemaName;
                 String tableName = DO._TableName;
                 String schemaPlusTable = schemaName + "." + tableName;
-                data[i][0] = schemaPlusTable; // .toUpperCase();
+                data[i][0] = schemaPlusTable.toUpperCase();
                 data[i][1] = new Boolean(false);
               }
             
@@ -135,6 +135,7 @@ public class Load
                 connections[i][0] = id;
                 connections[i][1] = url;
                 connections[i][2] = new Boolean(false);
+                i++;
               }              
             
             EventQueue.invokeLater(new Runnable()
@@ -172,6 +173,7 @@ public class Load
           {
             DataObject dataObject = iterator.next();
             String tempObjectName = dataObject._SchemaName + "." + dataObject._TableName;
+            tempObjectName = tempObjectName.toUpperCase();
             if(selectedObjects.contains(tempObjectName) == true)
               filteredList.add(dataObject);
           }
@@ -260,7 +262,7 @@ public class Load
         LOG.error("");
         LOG.error("*** CLI Mode");
         LOG.error("    -silentMode=1 -f <filepath>                 -o <object_name>,<object_name>,..   -c <connection_id>,... ");
-        LOG.error("ex: -silentMode=1 -f com/c/c/data/config.C.json -o cms.HCPCS_CODES,cms.CPT_CODES    -c MAIN,KEYS");
+        LOG.error("ex: -silentMode=1 -f com/c/c/data/config.C.json -o CMS.HCPCS_CODES,CMS.CPT_CODES    -c MAIN,KEYS");
         LOG.error("");        
         LOG.error("*** for Multi Tenant System.");
         LOG.error("    ALL           = All Connection Ids. Except 'KEYS'");
