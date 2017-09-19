@@ -24,7 +24,7 @@ public class ConnectionsTableModel extends AbstractTableModel
     @Override
     public int getRowCount()
       {
-        return this.connections.length;
+        return (connections != null ? connections.length : 0);
       }
 
     public String getColumnName(int col)

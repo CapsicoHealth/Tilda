@@ -38,7 +38,7 @@ public class DataImportTableModel extends AbstractTableModel
 
     public int getRowCount()
       {
-        return data.length;
+        return (data != null ? data.length : 0);
       }
 
     public String getColumnName(int col)

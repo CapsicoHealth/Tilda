@@ -49,7 +49,6 @@ import tilda.loader.ui.ConnectionsTableModel;
 import tilda.loader.ui.DataImportTableModel;
 import tilda.utils.DurationUtil;
 import tilda.utils.TextUtil;
-import tilda.db.Connection;
 import tilda.db.ConnectionPool;
 
 public class Load
@@ -67,6 +66,8 @@ public class Load
     JLabel                        statusLabel       = new JLabel("");
     JButton                       btnRun            = new JButton("Run Import");
     JButton                       btnCancel         = new JButton("Cancel");
+    JButton                       btnAllTables      = new JButton("Select All Tables");
+    JButton                       btnAllConnections = new JButton("Select All Connections");
     
     // Main
     public static void main(String[] argsArray)
@@ -183,30 +184,19 @@ public class Load
     private static void RunImportProcessor(List<String> connectionIdsList, Config Conf, List<DataObject> dataObjects)
     throws Exception
       {
-        Connection C = null;
-        Iterator<String> connectionIterator = connectionIdsList.iterator();
         if ( "ALL".equals(connectionIdsList.get(0)) )
           {
-            connectionIterator = ConnectionPool.getAllDataSourceIds().keySet().iterator();
+            connectionIdsList = new ArrayList<>(ConnectionPool.getAllDataSourceIds().keySet());
           }                      
         else if ( "ALL_TENANTS".equals(connectionIdsList.get(0)) )
           {
-            connectionIterator = ConnectionPool.getAllTenantDataSourceIds().keySet().iterator(); 
+            connectionIdsList = new ArrayList<>(ConnectionPool.getAllTenantDataSourceIds().keySet());
           }
         
-        long timeTaken = System.nanoTime();
-
-//        while(connectionIterator.hasNext())
-//          {
-//            C = ConnectionPool.get(connectionIterator.next());
-//            ImportProcessor.process(C, Conf, dataObjects);
-//            C = null;
-//          }
-        
         LOG.debug("Running ImportProcessor");
+        long timeTaken = System.nanoTime();
         ImportProcessor.parallelProcess(connectionIdsList, Conf._RootFolder, dataObjects);
-
-        timeTaken = System.nanoTime() - timeTaken;
+        timeTaken = System.nanoTime() - timeTaken;        
         LOG.debug("Time taken for ImportProcessor.process() = "+ DurationUtil.PrintDuration(timeTaken));
       }
 
@@ -279,6 +269,7 @@ public class Load
 
     /**
      * Initialize the contents of the frame.
+     * @wbp.parser.entryPoint
      */
     private void initialize()
       {
@@ -292,12 +283,12 @@ public class Load
           {
             e.printStackTrace();
           }
-
         
-        JScrollPane           scroller1, scroller2;
-        JTable                table1,    table2;
+        JScrollPane                   scroller1, scroller2;
+        JTable                        table1,    table2;
+        DataImportTableModel          tableDataModel;
+        ConnectionsTableModel         connectionDataModel;
 
-        
         frmDataImport = new JFrame();
         frmDataImport.setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
         frmDataImport.setTitle("CapsicoHealth Data Import");
@@ -305,9 +296,8 @@ public class Load
         frmDataImport.setBounds(100, 100, 938, 828);
         frmDataImport.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frmDataImport.getContentPane().setLayout(null);
-        frmDataImport.setResizable(false);
-
-
+        // frmDataImport.setResizable(false);
+        
         btnRun.addActionListener(new ActionListener()
           {
             public void actionPerformed(ActionEvent e)
@@ -333,14 +323,12 @@ public class Load
                                     if (ImportValue == true)
                                       ImportTables.add((String) data[i][0]);
                                   }
-
                                 for (int i = 0; i < connections.length ; i++)
                                   {
                                     Boolean connection = (Boolean) connections[i][2];
                                     if(connection == true)
                                       ConnectionIds.add((String) connections[i][0]);
-                                  }                                
-                                
+                                  }
                                 StartImportProcessor(ImportTables, ConnectionIds, Conf,  Conf._CmsData);
                                 LOG.debug("Import Tables completed.");
                               }
@@ -351,20 +339,17 @@ public class Load
                             System.exit(1);
                           }
                       });
-
                   }
               }
           });
-        btnRun.setBounds(351, 724, 97, 25);
+        btnRun.setBounds(351, 736, 97, 25);
         frmDataImport.getContentPane().add(btnRun);
 
         btnCancel.addActionListener(new ActionListener()
           {
             public void actionPerformed(ActionEvent e)
               {
-
                 int dialogButton = JOptionPane.YES_NO_OPTION;
-
                 int dialogResult = JOptionPane.showConfirmDialog(null, "Close the dialog", "Warning", dialogButton);
                 if (dialogResult == 0)
                   {
@@ -372,17 +357,18 @@ public class Load
                   }
               }
           });
-        btnCancel.setBounds(465, 724, 97, 25);
+        btnCancel.setBounds(458, 736, 97, 25);
         frmDataImport.getContentPane().add(btnCancel);
 
         // Scroller1 setup
         scroller1 = new JScrollPane();
-        scroller1.setBounds(34, 31, 852, 400);
+        scroller1.setBounds(34, 44, 852, 387);
         scroller1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         frmDataImport.getContentPane().add(scroller1);
 
         // Table1 Setup
-        table1 = new JTable(new DataImportTableModel(data));
+        tableDataModel = new DataImportTableModel(data); 
+        table1 = new JTable(tableDataModel);
         table1.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 14));
         table1.getTableHeader().setReorderingAllowed(false);
         table1.setRowHeight(25);
@@ -394,12 +380,13 @@ public class Load
         
         // Scroller2 Setup
         scroller2 = new JScrollPane();
-        scroller2.setBounds(34, 460, 852, 242);
+        scroller2.setBounds(34, 476, 852, 242);
         scroller2.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         frmDataImport.getContentPane().add(scroller2);
         
         // Table2 Setup
-        table2 = new JTable(new ConnectionsTableModel(connections));
+        connectionDataModel = new ConnectionsTableModel(connections);
+        table2 = new JTable(connectionDataModel);
         table2.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 14));
         table2.getTableHeader().setReorderingAllowed(false);
         table2.setRowHeight(25);
@@ -410,12 +397,28 @@ public class Load
         table2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         
         scroller1.setViewportView(table1);
-        scroller2.setViewportView(table2);        
+        scroller2.setViewportView(table2);
         
-        statusLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        statusLabel.setBounds(44, 686, 852, 31);
-        frmDataImport.getContentPane().add(statusLabel);
-
+        btnAllTables.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+            for(int i=0; i < data.length; i++)
+                data[i][1] = true;
+            tableDataModel.fireTableDataChanged();
+          }
+        });
+        btnAllTables.setBounds(733, 21, 153, 23);
+        frmDataImport.getContentPane().add(btnAllTables);
+        
+        btnAllConnections.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+            for(int i=0; i < connections.length; i++)
+                connections[i][2] = true;
+            connectionDataModel.fireTableDataChanged();
+          }
+        });
+        btnAllConnections.setBounds(695, 453, 191, 23);
+        frmDataImport.getContentPane().add(btnAllConnections);
+        
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         frmDataImport.setLocation(dim.width / 2 - frmDataImport.getSize().width / 2, dim.height / 2 - frmDataImport.getSize().height / 2);
       }
