@@ -91,7 +91,7 @@ public class Import
                       }
                     i+=4;
                   }
-                else { /* Do Nothing, at the moment */ }
+                else { throw new Exception("Cannot find a -f parameter starting the command line"); }
               }
             
             timeTaken = System.nanoTime() - timeTaken;
