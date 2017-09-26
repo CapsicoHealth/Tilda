@@ -37,9 +37,9 @@ public class ImporterThread implements Callable<List<Results>>
             C = ConnectionPool.get(this.connectionId);
             result = CSVImporter.process(C, rootFolder, this.dataObject);
           }
-        catch(Exception e) 
+        catch(Throwable T) 
           {
-            LOG.error("Exception in one of ImporterThread execution.", e);
+            LOG.error("Exception in one of ImporterThread execution.", T);
             result = null;
           }
         finally

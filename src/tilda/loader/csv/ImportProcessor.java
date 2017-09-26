@@ -88,9 +88,9 @@ public class ImportProcessor
     /*
      * Launch and Shutdown threads
      */
-    public static void parallelProcess(List<String> connectionIds, String rootFolder, List<DataObject> CMSDataList)
+    public static void parallelProcess(List<String> connectionIds, String rootFolder, int threadsCount, List<DataObject> CMSDataList)
       {
-          ExecutorService pool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+          ExecutorService pool = Executors.newFixedThreadPool(threadsCount);
           List<Future<List<Results>>> futures = new ArrayList<>();
           
           List<Results> Results = new ArrayList<Results>();

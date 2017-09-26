@@ -56,6 +56,7 @@ public class Load
     protected static final Logger LOG               = LogManager.getLogger(Load.class.getName());
     Load                          app               = null;
     
+    private static int            threadsCount      = 1;
     private static Object[][]     data              = null;
     private static Object[][]     connections       = null;
     private static Config         Conf              = null;
@@ -86,8 +87,13 @@ public class Load
         LOG.info("\n*************************************************************************************************************************************\n");
 
         String[] silentModePair = arguments.get(0).split("=");
-        arguments.remove(0);
+        String[] threadsPair = arguments.get(1).split("=");
+        
+        threadsCount = Integer.parseInt(threadsPair[1]);
         boolean isSilentMode = Integer.parseInt(silentModePair[1]) == 1;
+        
+        arguments.remove(0);
+        arguments.remove(0);
        
         if (isSilentMode)
           {
@@ -195,21 +201,19 @@ public class Load
         
         LOG.debug("Running ImportProcessor");
         long timeTaken = System.nanoTime();
-        ImportProcessor.parallelProcess(connectionIdsList, Conf._RootFolder, dataObjects);
+        ImportProcessor.parallelProcess(connectionIdsList, Conf._RootFolder, threadsCount, dataObjects);
         timeTaken = System.nanoTime() - timeTaken;        
         LOG.debug("Time taken for ImportProcessor.process() = "+ DurationUtil.PrintDuration(timeTaken));
       }
 
     private static boolean isValidArguments(List<String> arguments)
       {
-        if (arguments.size() < 3)
+        if (arguments.size() < 4)
             return false;
 
         String[] silentModePair = arguments.get(0).split("=");
-        
         if (silentModePair != null && silentModePair.length != 2)
           return false;
-
         if (silentModePair[0].equalsIgnoreCase("-silentMode") == false)
           return false;
 
@@ -220,12 +224,26 @@ public class Load
           return false;
         }
         
+        String[] threadsPair = arguments.get(1).split("=");
+        if (threadsPair != null && threadsPair.length != 2)
+          return false;
+        if (threadsPair[0].equalsIgnoreCase("-threads") == false)
+          return false;
+
+        try {
+          int threads = Integer.parseInt(threadsPair[1]);
+          if (threads < 1)
+            throw new Exception();
+        } catch (Exception E) {
+          return false;
+        }
+        
         if (mode == 1)
           { // CLI Mode
-            if ( (arguments.size() % 6) != 1 )
+            if ( (arguments.size() % 6) != 2 )
               return false;
             
-            for ( int i = 1; i < arguments.size(); i += 6)
+            for ( int i = 2; i < arguments.size(); i += 6)
               {
                 if ( !"-f".equals(arguments.get(i)) || TextUtil.isNullOrEmpty(arguments.get(i+1))
                   || !"-o".equals(arguments.get(i+2)) || TextUtil.isNullOrEmpty(arguments.get(i+3))
@@ -233,7 +251,7 @@ public class Load
                   return false;
               }
           }
-        else if ( !"-f".equals(arguments.get(1)) || TextUtil.isNullOrEmpty(arguments.get(2)) ) 
+        else if ( !"-f".equals(arguments.get(2)) || TextUtil.isNullOrEmpty(arguments.get(3)) ) 
           {
             return false;
           }
@@ -247,12 +265,12 @@ public class Load
         LOG.error("");
         LOG.error("Load utility *must* be called with following parameters :");
         LOG.error("*** UI Mode");
-        LOG.error("    -silentMode=0 -f <filepath>");
-        LOG.error("ex: -silentMode=0 -f com/c/c/data/config.C.json");
+        LOG.error("    -silentMode=0 -threads=<No.of Threads> -f <filepath>");
+        LOG.error("ex: -silentMode=0 -threads=2               -f com/c/c/data/config.C.json");
         LOG.error("");
         LOG.error("*** CLI Mode");
-        LOG.error("    -silentMode=1 -f <filepath>                 -o <object_name>,<object_name>,..   -c <connection_id>,... ");
-        LOG.error("ex: -silentMode=1 -f com/c/c/data/config.C.json -o CMS.HCPCS_CODES,CMS.CPT_CODES    -c MAIN,KEYS");
+        LOG.error("    -silentMode=1 -threads=<No.of Threads> -f <filepath>                 -o <object_name>,<object_name>,..   -c <connection_id>,... ");
+        LOG.error("ex: -silentMode=1 -threads=2               -f com/c/c/data/config.C.json -o CMS.HCPCS_CODES,CMS.CPT_CODES    -c MAIN,KEYS");
         LOG.error("");        
         LOG.error("*** for Multi Tenant System.");
         LOG.error("    ALL           = All Connection Ids. Except 'KEYS'");
