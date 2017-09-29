@@ -30,7 +30,8 @@ public class SessionUtil
     public static enum Attributes
       {
         USERREFNUM
-       ,TENANTUSERREFNUM;
+       ,TENANTUSERREFNUM
+       ,FORCE_COMMIT;
       }
 
 
