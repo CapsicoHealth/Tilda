@@ -27,11 +27,14 @@ public class SessionUtil
   {
     protected static final Logger LOG = LogManager.getLogger(SessionUtil.class.getName());
 
+    public static final int FORCE_RELOAD_USER = 1;
+    public static final int FORCE_COMMIT = 2;
     public static enum Attributes
       {
         USERREFNUM
        ,TENANTUSERREFNUM
-       ,FORCE_COMMIT;
+       ,FORCE_COMMIT
+       ,FORCE_RELOAD_USER;
       }
 
 
