@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 
+import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -54,6 +55,7 @@ import tilda.parsing.parts.ViewJoin;
 import tilda.parsing.parts.ViewPivot;
 import tilda.parsing.parts.ViewRealizeMapping;
 import tilda.utils.PaddingTracker;
+import tilda.utils.PaddingUtil;
 import tilda.utils.TextUtil;
 
 public class Sql extends PostgreSQL implements CodeGenSql
@@ -89,7 +91,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
       {
         return getColumnType(C.getType(), C._Size, C._Mode, C.isCollection());
       }
-    
+
     @Override
     public String getColumnType(Column C, ColumnType AggregateType)
       {
@@ -387,20 +389,16 @@ public class Sql extends PostgreSQL implements CodeGenSql
             String Period = V._TimeSeries._Type == TimeSeriesType.DAILY ? "day"
             : V._TimeSeries._Type == TimeSeriesType.MONTHLY ? "month"
             : V._TimeSeries._Type == TimeSeriesType.QUARTERLY ? "quarter"
-            : "year"
-            ;
+            : "year";
 
             String LookbackNum = V._TimeSeries._Between != null
-             ? ("Tilda."+Period+"sBetween('"+V._TimeSeries._Between[0]+"', "+(V._TimeSeries._Between[1]==null?"current_date":("'"+V._TimeSeries._Between[1]+"'"))+")::integer+1")
-             : (""+ (V._TimeSeries._Type == TimeSeriesType.QUARTERLY ? V._TimeSeries._Lookback * 3 : V._TimeSeries._Lookback))
-             ;
+            ? ("Tilda." + Period + "sBetween('" + V._TimeSeries._Between[0] + "', " + (V._TimeSeries._Between[1] == null ? "current_date" : ("'" + V._TimeSeries._Between[1] + "'")) + ")::integer+1")
+            : ("" + (V._TimeSeries._Type == TimeSeriesType.QUARTERLY ? V._TimeSeries._Lookback * 3 : V._TimeSeries._Lookback));
             String Lookback = V._TimeSeries._Between != null
-             ? ("'"+V._TimeSeries._Between[0]+"'::date")
-             : (" current_date - interval '"
-               +(V._TimeSeries._Type == TimeSeriesType.QUARTERLY ? (V._TimeSeries._Lookback * 3) + " month"
-                                                                 : V._TimeSeries._Lookback + " " + Period
-                )+"'")
-             ;
+            ? ("'" + V._TimeSeries._Between[0] + "'::date")
+            : (" current_date - interval '"
+            + (V._TimeSeries._Type == TimeSeriesType.QUARTERLY ? (V._TimeSeries._Lookback * 3) + " month"
+            : V._TimeSeries._Lookback + " " + Period) + "'");
             String Step = V._TimeSeries._Type == TimeSeriesType.QUARTERLY ? "3 month" : "1 " + Period;
 
             // Str.append("join (select * from generate_series(date_trunc('" + Period + "', current_date) - interval '" + Lookback + "', date_trunc('" + Period + "', current_date),
@@ -599,7 +597,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
 
     @Override
-    public String genDDL(PrintWriter OutFinal, View V)
+    public void genDDL(PrintWriter OutFinal, View V)
     throws Exception
       {
         String Str = PrintBaseView(V);
@@ -681,7 +679,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
               }
             b.append("\n from (\n").append(Str).append("\n      ) as T");
             if (V._Realize != null)
-              b.append("\n-- Realized as " + genRealizedColumnList(V) + "\n");
+              b.append("\n-- Realized as " + genRealizedColumnList(V, " ") + "\n");
             Str = b.toString();
           }
         if (V._Pivot != null && V._ViewColumns.size() > 3)
@@ -711,8 +709,45 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
         OutFinal.println("create or replace view " + V._ParentSchema._Name + "." + V._Name + " as ");
         OutFinal.println(Str + ";");
-        OutFinal.println();
-        OutFinal.println("COMMENT ON VIEW " + V._ParentSchema._Name + "." + V._Name + " IS E" + TextUtil.EscapeSingleQuoteForSQL(Str.replace("\r\n", "\\n").replace("\n", "\\n")) + ";");
+
+        if (V._Realize != null)
+          {
+            OutFinal.println();
+            String TName = V._Name.substring(0, V._Name.length() - (V._Pivot != null ? "PivotView" : "View").length());
+            String RName = V._ParentSchema._Name + "." + TName + "Realized";
+            OutFinal.append("DROP FUNCTION IF EXISTS " + V._ParentSchema._Name + ".Refill_" + TName + "Realized();\n")
+            .append("CREATE OR REPLACE FUNCTION " + V._ParentSchema._Name + ".Refill_" + TName + "Realized() RETURNS boolean AS $$\n")
+            .append("BEGIN\n")
+            .append("  DROP TABLE IF EXISTS " + RName + ";\n")
+            .append("  CREATE TABLE " + RName + " AS SELECT " + genRealizedColumnList(V, "\n                         " + PaddingUtil.getPad(RName.length())) 
+                   +"\n                    " + PaddingUtil.getPad(RName.length())+" FROM " + V._ParentSchema._Name + "." + V._Name + ";\n");
+            // .append(" CREATE UNLOGGED TABLE " + V._ParentSchema._Name + "." + TName + "Realized " + "AS SELECT " + genRealizedColumnList(V) + " FROM " + V._ParentSchema._Name +
+            // "." + V._Name + ";\n");
+
+            for (Index I : V._Realize._Indices)
+              if (I != null)
+                genIndex(OutFinal, I);
+
+            OutFinal.append("  ANALYZE " + V._ParentSchema._Name + "." + TName + "Realized;\n")
+            .append("  return true;\n")
+            .append("END; $$\n")
+            .append("LANGUAGE PLPGSQL;\n")
+            .append("\n")
+            .append("-- SELECT " + V._ParentSchema._Name + ".Refill_" + TName + "Realized();")
+            .append("-- !!! THIS MAY TAKE SEVERAL MINUTES !!! --")
+            ;
+          }
+      }
+    
+    @Override
+    public void genDDLComments(PrintWriter OutFinal, View V)
+    throws Exception
+      {
+        StringBuilderWriter Str = new StringBuilderWriter();
+        PrintWriter Out = new PrintWriter(Str);
+        genDDL(Out, V);
+        
+        OutFinal.println("COMMENT ON VIEW " + V._ParentSchema._Name + "." + V._Name + " IS E" + TextUtil.EscapeSingleQuoteForSQL(Str.toString().replace("\r\n", "\\n").replace("\n", "\\n")) + ";");
         OutFinal.println();
         for (int i = 0; i < V._ViewColumns.size(); ++i)
           {
@@ -739,39 +774,136 @@ public class Sql extends PostgreSQL implements CodeGenSql
               OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + F._Name + "\" IS E"
               + TextUtil.EscapeSingleQuoteForSQL("The calculated formula: " + String.join("\\n", F._Description))
               + ";");
+      }
+    
+    @Override
+    public void genDDLMetadata(PrintWriter OutFinal, View V)
+    throws Exception
+      {
+        if (V._Formulas == null || V._Formulas.isEmpty() == true)
+         return ;
+        
+        OutFinal.println("DELETE FROM " + V._ParentSchema._Name + ".TildaFormulaValue where \"viewName\"=" + TextUtil.EscapeSingleQuoteForSQL(V._Name) + ";");
+        OutFinal.println("DELETE FROM " + V._ParentSchema._Name + ".TildaFormulaReference where \"viewName\"=" + TextUtil.EscapeSingleQuoteForSQL(V._Name) + ";");
+        OutFinal.println("DELETE FROM " + V._ParentSchema._Name + ".TildaFormula where \"viewName\"=" + TextUtil.EscapeSingleQuoteForSQL(V._Name) + ";");
 
-        if (V._Realize != null)
+        String RealizedTable = V._Realize == null ? null : V._Name.substring(0, V._Name.length() - (V._Pivot != null ? "PivotView" : "View").length()) + "Realized";
+        int count = -1;
+        for (Formula F : V._Formulas)
           {
-            OutFinal.println();
-            String TName = V._Name.substring(0, V._Name.length() - (V._Pivot != null ? "PivotView" : "View").length());
-            OutFinal.append("DROP FUNCTION IF EXISTS " + V._ParentSchema._Name + ".Refill_" + TName + "Realized();\n")
-            .append("CREATE OR REPLACE FUNCTION " + V._ParentSchema._Name + ".Refill_" + TName + "Realized() RETURNS boolean AS $$\n")
-            .append("BEGIN\n")
-            .append("  DROP TABLE IF EXISTS " + V._ParentSchema._Name + "." + TName + "Realized;\n")
-            .append("  CREATE TABLE " + V._ParentSchema._Name + "." + TName + "Realized " + "AS SELECT " + genRealizedColumnList(V) + " FROM " + V._ParentSchema._Name + "." + V._Name + ";\n");
-//            .append("  CREATE UNLOGGED TABLE " + V._ParentSchema._Name + "." + TName + "Realized " + "AS SELECT " + genRealizedColumnList(V) + " FROM " + V._ParentSchema._Name + "." + V._Name + ";\n");
-            
-            for (Index I : V._Realize._Indices)
-              if (I != null)
-                genIndex(OutFinal, I);
-            
-            OutFinal.append("  ANALYZE " + V._ParentSchema._Name + "." + TName + "Realized;\n")
-            .append("  return true;\n")
-            .append("END; $$\n")
-            .append("LANGUAGE PLPGSQL;\n")
-            .append("\n")
-            .append("\n")
-            .append("-- SELECT " + V._ParentSchema._Name + ".Refill_" + TName + "Realized();")
-            .append("-- !!! THIS MAY TAKE SEVERAL MINUTES !!! --")
-            .append("\n")
-            .append("\n");
-          }
-        if (V._Formulas != null && V._Formulas.isEmpty() == false)
-          {
-            OutputFormulaInDBDocs(OutFinal, V);
-          }
+            if (F == null)
+              continue;
 
-        return Str;
+            if (++count == 0)
+              {
+                OutFinal.println("INSERT INTO " + V._ParentSchema._Name + ".TildaFormula (\"viewName\", \"realizedTableName\", \"name\", \"title\", \"description\", \"formula\", \"html\", \"created\", \"lastUpdated\")");
+                OutFinal.print("    VALUES (");
+              }
+            else
+              {
+                OutFinal.print("          ,(");
+              }
+            OutFinal.print(TextUtil.EscapeSingleQuoteForSQL(V._Name));
+            OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(RealizedTable));
+            OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Name));
+            OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Title));
+            OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(String.join("\n", F._Description)));
+            OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(String.join("\n", F._FormulaStrs)));
+            OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL("<B>THIS <U>IS</U> ONLY A TEST <I>HTML</I> FRAGMENT!"));
+            OutFinal.println(", current_timestamp, current_timestamp)");
+          }
+        if (count >= 0)
+          OutFinal.println("   ;");
+
+        count = -1;
+        for (Formula F : V._Formulas)
+          {
+            if (F != null && F._Values != null && F._Values.length > 0)
+              for (Value Val : F._Values)
+                {
+                  if (++count == 0)
+                    {
+                      OutFinal.println("INSERT INTO " + V._ParentSchema._Name + ".TildaFormulaValue (\"viewName\", \"formulaName\", \"value\", \"description\", \"created\", \"lastUpdated\")");
+                      OutFinal.print("    VALUES (");
+                    }
+                  else
+                    {
+                      OutFinal.print("          ,(");
+                    }
+                  OutFinal.print(TextUtil.EscapeSingleQuoteForSQL(V._Name));
+                  OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Name));
+                  OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(Val._Value));
+                  OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(Val._Description));
+                  OutFinal.println(", current_timestamp, current_timestamp)");
+                }
+          }
+        if (count >= 0)
+          OutFinal.println("   ;");
+
+        count = -1;
+        for (Formula F : V._Formulas)
+          {
+            if (F == null)
+              continue;
+            Matcher M = F.getParentView()._ViewColumnsRegEx.matcher(String.join("\n", F._FormulaStrs));
+            Set<String> Names = new HashSet<String>();
+            while (M.find() == true)
+              {
+                String s = M.group(1);
+                if (Names.add(s) == false)
+                  continue;
+                ViewColumn VC = V.getViewColumn(s);
+                if (VC != null)
+                  {
+                    if (++count == 0)
+                      {
+                        OutFinal.println("INSERT INTO " + V._ParentSchema._Name + ".TildaFormulaReference (\"viewName\", \"formulaName\", \"referenceName\", \"referenceType\", \"description\", \"created\", \"lastUpdated\")");
+                        OutFinal.print("    VALUES (");
+                      }
+                    else
+                      {
+                        OutFinal.print("          ,(");
+                      }
+                    OutFinal.print(TextUtil.EscapeSingleQuoteForSQL(V._Name));
+                    OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Name));
+                    OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(VC._Name));
+                    OutFinal.print(", 'CLMN'");
+                    OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(VC._SameAsObj == null && VC._SameAs.equals("_TS.p") == true ? "Time series period" : VC._SameAsObj._Description));
+                    OutFinal.println(", current_timestamp, current_timestamp)");
+                  }
+              }
+            Names.clear();
+            M = F.getParentView()._FormulasRegEx.matcher(String.join("\n", F._FormulaStrs));
+            while (M.find() == true)
+              {
+                String s = M.group(1);
+                if (Names.add(s) == false)
+                  continue;
+                for (Formula F2 : V._Formulas)
+                  if (s.equals(F2._Name) == true)
+                    {
+                      if (++count == 0)
+                        {
+                          OutFinal.println("INSERT INTO " + V._ParentSchema._Name + ".TildaFormulaReference (\"viewName\", \"formulaName\", \"referenceName\", \"referenceType\", \"description\", \"created\", \"lastUpdated\")");
+                          OutFinal.print("    VALUES (");
+                        }
+                      else
+                        {
+                          OutFinal.print("          ,(");
+                        }
+                      OutFinal.print(TextUtil.EscapeSingleQuoteForSQL(V._Name));
+                      OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Name));
+                      OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(F2._Name));
+                      OutFinal.print(", 'FRML'");
+                      OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(String.join("\n", F2._Description)));
+                      OutFinal.println(", current_timestamp, current_timestamp)");
+                      break;
+                    }
+              }
+          }
+        if (count >= 0)
+          OutFinal.println("   ;");
+        
       }
 
     private String genFormulaCode(View ParentView, Formula F)
@@ -823,7 +955,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         return Str.toString();
       }
 
-    private String genRealizedColumnList(View V)
+    private String genRealizedColumnList(View V, String Lead)
       {
         StringBuilder Str = new StringBuilder();
         boolean First = true;
@@ -834,14 +966,25 @@ public class Sql extends PostgreSQL implements CodeGenSql
             if (TextUtil.FindElement(V._Realize._Excludes, VC.getName(), true, 0) == -1)
               {
                 if (First == false)
-                  Str.append(", ");
+                  Str.append(Lead).append(",");
                 else
                   First = false;
                 ViewRealizeMapping VRM = V._Realize.getMapping(VC.getName());
                 if (VRM == null)
-                 Str.append(V._ParentSchema._Name + "." + V._Name + ".\"" + VC._Name + "\"");
+                  Str.append(V._ParentSchema._Name + "." + V._Name + ".\"" + VC._Name + "\"");
                 else
-                 Str.append(VRM.printMapping());
+                  Str.append(VRM.printMapping());
+              }
+          }
+        for (ViewRealizeMapping VRM : V._Realize._Mappings)
+          {
+            if (V.getColumn(VRM._Name) == null && V.getFormula(VRM._Name) == null)
+              {
+                if (First == false)
+                  Str.append(Lead).append(",");
+                else
+                  First = false;
+                Str.append(VRM.printMapping());
               }
           }
         for (Formula F : V._Formulas)
@@ -851,142 +994,17 @@ public class Sql extends PostgreSQL implements CodeGenSql
             if (TextUtil.FindElement(V._Realize._Excludes, F._Name, true, 0) == -1)
               {
                 if (First == false)
-                  Str.append(", ");
+                  Str.append(Lead).append(",");
                 else
                   First = false;
                 ViewRealizeMapping VRM = V._Realize.getMapping(F._Name);
                 if (VRM == null)
-                 Str.append(V._ParentSchema._Name + "." + V._Name + ".\"" + F._Name + "\"");
+                  Str.append(V._ParentSchema._Name + "." + V._Name + ".\"" + F._Name + "\"");
                 else
-                 Str.append(VRM.printMapping());
+                  Str.append(VRM.printMapping());
               }
           }
         return Str.toString();
-      }
-
-    private void OutputFormulaInDBDocs(PrintWriter Out, View V)
-      {
-        Out.println("DELETE FROM " + V._ParentSchema._Name + ".TildaFormulaValue where \"viewName\"=" + TextUtil.EscapeSingleQuoteForSQL(V._Name) + ";");
-        Out.println("DELETE FROM " + V._ParentSchema._Name + ".TildaFormulaReference where \"viewName\"=" + TextUtil.EscapeSingleQuoteForSQL(V._Name) + ";");
-        Out.println("DELETE FROM " + V._ParentSchema._Name + ".TildaFormula where \"viewName\"=" + TextUtil.EscapeSingleQuoteForSQL(V._Name) + ";");
-
-        String RealizedTable = V._Realize == null ? null : V._Name.substring(0, V._Name.length() - (V._Pivot != null ? "PivotView" : "View").length()) + "Realized";
-        int count = -1;
-        for (Formula F : V._Formulas)
-          {
-            if (F == null)
-              continue;
-
-            if (++count == 0)
-              {
-                Out.println("INSERT INTO " + V._ParentSchema._Name + ".TildaFormula (\"viewName\", \"realizedTableName\", \"name\", \"title\", \"description\", \"formula\", \"html\", \"created\", \"lastUpdated\")");
-                Out.print("    VALUES (");
-              }
-            else
-              {
-                Out.print("          ,(");
-              }
-            Out.print(TextUtil.EscapeSingleQuoteForSQL(V._Name));
-            Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(RealizedTable));
-            Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Name));
-            Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Title));
-            Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(String.join("\n", F._Description)));
-            Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(String.join("\n", F._FormulaStrs)));
-            Out.print(", " + TextUtil.EscapeSingleQuoteForSQL("<B>THIS <U>IS</U> ONLY A TEST <I>HTML</I> FRAGMENT!"));
-            Out.println(", current_timestamp, current_timestamp)");
-          }
-        if (count >= 0)
-          Out.println("   ;");
-
-        count = -1;
-        for (Formula F : V._Formulas)
-          {
-            if (F != null && F._Values != null && F._Values.length > 0)
-              for (Value Val : F._Values)
-                {
-                  if (++count == 0)
-                    {
-                      Out.println("INSERT INTO " + V._ParentSchema._Name + ".TildaFormulaValue (\"viewName\", \"formulaName\", \"value\", \"description\", \"created\", \"lastUpdated\")");
-                      Out.print("    VALUES (");
-                    }
-                  else
-                    {
-                      Out.print("          ,(");
-                    }
-                  Out.print(TextUtil.EscapeSingleQuoteForSQL(V._Name));
-                  Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Name));
-                  Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(Val._Value));
-                  Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(Val._Description));
-                  Out.println(", current_timestamp, current_timestamp)");
-                }
-          }
-        if (count >= 0)
-          Out.println("   ;");
-
-        count = -1;
-        for (Formula F : V._Formulas)
-          {
-            if (F == null)
-              continue;
-            Matcher M = F.getParentView()._ViewColumnsRegEx.matcher(String.join("\n", F._FormulaStrs));
-            Set<String> Names = new HashSet<String>();
-            while (M.find() == true)
-              {
-                String s = M.group(1);
-                if (Names.add(s) == false)
-                  continue;
-                ViewColumn VC = V.getViewColumn(s);
-                if (VC != null)
-                  {
-                    if (++count == 0)
-                      {
-                        Out.println("INSERT INTO " + V._ParentSchema._Name + ".TildaFormulaReference (\"viewName\", \"formulaName\", \"referenceName\", \"referenceType\", \"description\", \"created\", \"lastUpdated\")");
-                        Out.print("    VALUES (");
-                      }
-                    else
-                      {
-                        Out.print("          ,(");
-                      }
-                    Out.print(TextUtil.EscapeSingleQuoteForSQL(V._Name));
-                    Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Name));
-                    Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(VC._Name));
-                    Out.print(", 'CLMN'");
-                    Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(VC._SameAsObj == null && VC._SameAs.equals("_TS.p") == true ? "Time series period" : VC._SameAsObj._Description));
-                    Out.println(", current_timestamp, current_timestamp)");
-                  }
-              }
-            Names.clear();
-            M = F.getParentView()._FormulasRegEx.matcher(String.join("\n", F._FormulaStrs));
-            while (M.find() == true)
-              {
-                String s = M.group(1);
-                if (Names.add(s) == false)
-                  continue;
-                for (Formula F2 : V._Formulas)
-                  if (s.equals(F2._Name) == true)
-                    {
-                      if (++count == 0)
-                        {
-                          Out.println("INSERT INTO " + V._ParentSchema._Name + ".TildaFormulaReference (\"viewName\", \"formulaName\", \"referenceName\", \"referenceType\", \"description\", \"created\", \"lastUpdated\")");
-                          Out.print("    VALUES (");
-                        }
-                      else
-                        {
-                          Out.print("          ,(");
-                        }
-                      Out.print(TextUtil.EscapeSingleQuoteForSQL(V._Name));
-                      Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Name));
-                      Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(F2._Name));
-                      Out.print(", 'FRML'");
-                      Out.print(", " + TextUtil.EscapeSingleQuoteForSQL(String.join("\n", F2._Description)));
-                      Out.println(", current_timestamp, current_timestamp)");
-                      break;
-                    }
-              }
-          }
-        if (count >= 0)
-          Out.println("   ;");
-
       }
 
     private String PrintValueList(ViewPivot P)

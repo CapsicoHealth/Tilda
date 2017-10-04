@@ -1,3 +1,19 @@
+/* ===========================================================================
+ * Copyright (C) 2017 CapsicoHealth Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package tilda.loader.csv;
 
 import java.io.Reader;
@@ -27,8 +43,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.loader.GenericLoader;
-import tilda.loader.parser.CMSData;
 import tilda.loader.parser.ColumnHeader;
+import tilda.loader.parser.Config;
 import tilda.loader.parser.DataObject;
 
 import tilda.data.ZoneInfo_Factory;
@@ -71,7 +87,13 @@ public class CSVImporter
         public final long   _TimeNano;
       }
 
-    public static List<Results> process(Connection C, CMSData CMS, DataObject cmsDO)
+    // RPJ-NOTE: Wrapper for backward compatibility
+    public static List<Results> process(Connection C, Config Conf, DataObject cmsDO)
+      {
+         return process(C, Conf._RootFolder, cmsDO);
+      }
+    
+    public static List<Results> process(Connection C, String rootFolder, DataObject cmsDO)
       {
 
         long t0 = System.nanoTime();
@@ -86,7 +108,7 @@ public class CSVImporter
             ArrayList<Results> resultsList = new ArrayList<Results>();
             for (String file : fileList)
               {
-                String absoluteFilePath = CMS._RootFolder + file;
+                String absoluteFilePath = rootFolder + file;
 
                 LOG.debug("Looking for data file or resource " + absoluteFilePath + ".");
                 Reader R = FileUtil.getReaderFromFileOrResource(absoluteFilePath);
@@ -109,8 +131,8 @@ public class CSVImporter
 
                 StringBuilder Str = GenerateSQL(cmsDO._SchemaName, cmsDO._TableName, columns, DBColumns);
                 NumOfRecs = insertData(C, t0, DBColumns, cmsDO._HeadersIncluded, records, Str, cmsDO._SchemaName,
-                cmsDO._TableName, headers, columns, cmsDO.getMultiHeaderColumnMap(), completeHeaders,
-                cmsDO._dateTimePattern, cmsDO._zoneId, cmsDO._datePattern);
+                  cmsDO._TableName, headers, columns, cmsDO.getMultiHeaderColumnMap(), completeHeaders,
+                  cmsDO._dateTimePattern, cmsDO._zoneId, cmsDO._datePattern);
                 // C.setTableLogging(cmsDO._SchemaName, cmsDO._TableName, true);
                 NumOfRecs = (cmsDO._HeadersIncluded == true) ? (NumOfRecs - 1) : NumOfRecs;
                 t0 = System.nanoTime() - t0;
@@ -161,9 +183,9 @@ public class CSVImporter
      * @throws SQLException
      */
     private static long insertData(Connection C, long t0, Map<String, ColumnMeta> DBColumns, boolean withHeader,
-    Iterable<CSVRecord> records, StringBuilder Str, String schemaName, String tableName, String[] headers,
-    String[] columns, Map<String, ColumnHeader> columnMap, String[] completeHeaders, String DateTimePattern,
-    String DateTimeZoneInfoId, String DatePattern)
+      Iterable<CSVRecord> records, StringBuilder Str, String schemaName, String tableName, String[] headers,
+      String[] columns, Map<String, ColumnHeader> columnMap, String[] completeHeaders, String DateTimePattern,
+      String DateTimeZoneInfoId, String DatePattern)
     throws Exception
       {
         TableMeta TM = new TableMeta(schemaName, tableName, "");

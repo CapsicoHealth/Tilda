@@ -1,3 +1,19 @@
+/* ===========================================================================
+ * Copyright (C) 2017 CapsicoHealth Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package tilda.loader.ui;
 
 import javax.swing.table.AbstractTableModel;
@@ -7,8 +23,7 @@ public class DataImportTableModel extends AbstractTableModel
 
     private static final long serialVersionUID = 6603195072158914607L;
 
-    private String[]          columnNames      = { "Table", "Import", "Truncate"
-    };
+    private String[]          columnNames      = { "Table", "Import" };
     private Object[][]        data             = null;
 
     public DataImportTableModel(Object data[][])
@@ -23,7 +38,7 @@ public class DataImportTableModel extends AbstractTableModel
 
     public int getRowCount()
       {
-        return data.length;
+        return (data != null ? data.length : 0);
       }
 
     public String getColumnName(int col)
@@ -43,14 +58,7 @@ public class DataImportTableModel extends AbstractTableModel
 
     public boolean isCellEditable(int row, int col)
       {
-        if (col == 1 || col == 2)
-          {
-            return true;
-          }
-        else
-          {
-            return false;
-          }
+        return (col == 1 || col == 2);
       }
 
     /*
@@ -60,8 +68,6 @@ public class DataImportTableModel extends AbstractTableModel
     public void setValueAt(Object value, int row, int col)
       {
         data[row][col] = value;
-        data[row][2] = value;
         fireTableCellUpdated(row, col);
-        fireTableCellUpdated(row, 2);
       }
   }

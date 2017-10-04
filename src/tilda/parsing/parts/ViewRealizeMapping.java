@@ -51,8 +51,8 @@ public class ViewRealizeMapping
         if (TextUtil.isNullOrEmpty(_Name) == true)
           return PS.AddError("A realize-mapping for '" + _ParentView.getFullName() + "' is being defined without a column.");
 
-        if (_ParentView.getColumn(_Name) == null && _ParentView.getFormula(_Name) == null)
-          return PS.AddError("A realize-mapping for '" + _ParentView.getFullName() + "' is being defined for column or formula '" + _Name + "' which cannot be found.");
+//        if (_ParentView.getColumn(_Name) == null && _ParentView.getFormula(_Name) == null)
+//          return PS.AddError("A realize-mapping for '" + _ParentView.getFullName() + "' is being defined for column/formula '" + _Name + "' which cannot be found.");
 
         if (TextUtil.isNullOrEmpty(_Mapper) == true)
           return PS.AddError("A realize-mapping for '" + _ParentView.getFullName() + "' is being defined for column '" + _Name + "' without a mapper.");
