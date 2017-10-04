@@ -284,7 +284,7 @@ public class TildaJson implements CodeGenTildaJson
                         Out.println("         if (_" + C.getName() + Pad + "!= Obj.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "())");
                       else
                         Out.println("         if (_" + C.getName() + Pad + ".equals(Obj.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "()) == false)");
-                      Out.println("          throw new Exception(\"Cannot update the invariant field '" + C.getFullName() + "': \"+Obj.toString());");
+                      Out.println("          throw new Exception(\"Cannot update the invariant field '" + C.getFullName() + "' from '\"+Obj.get"+TextUtil.CapitalizeFirstCharacter(C.getName())+"()+\"' to '\"+_"+C.getName()+"+\"': \"+Obj.toString());");
                     }
                 }
             if (count != 0)

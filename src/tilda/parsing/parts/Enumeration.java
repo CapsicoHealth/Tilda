@@ -71,7 +71,7 @@ public class Enumeration
         Column C = new Column("id", _Id._TypeStr, _Id._Size, false, ColumnMode.NORMAL, true, null, "The id for this enumeration.");
         O._Columns.add(C);
         
-        C = new Column("value", _Value._TypeStr, _Value._Size, false, ColumnMode.NORMAL, true, null, "The value for this enumeration.");
+        C = new Column("value", _Value._TypeStr, _Value._Size, false, ColumnMode.NORMAL, false, null, "The value for this enumeration.");
         O._Columns.add(C);
         
         C = new Column("label", ColumnType.STRING.toString(), 254, false, ColumnMode.NORMAL, false, ProtectionType.ABSOLUTE, "The label for this enumeration.");

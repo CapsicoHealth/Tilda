@@ -171,12 +171,12 @@ public class Import
         LOG.info("=======================================================================================================================");
         Reader R = FileUtil.getReaderFromFileOrResource(ImportFileName);
 
-        Pattern P = Pattern.compile("\\.*\\_tilda\\.([^\\.]+)\\.sampledata\\.([^\\.]+)\\.json\\z");
+        Pattern P = Pattern.compile("\\.*\\_tilda\\.([^\\.]+)\\.(sampledata|initdata)\\.([^\\.]+)\\.json\\z");
         Matcher M = P.matcher(ImportFileName);
         if (M.find() == false)
           throw new Exception("The argument '" + ImportFileName + "' is invalid: it should match the format '_tilda.'+<SchemaName>+'.sampledata.'+<samplesPackage>+'.json'.");
         String SchemaName = M.group(1);
-        String SamplePackageName = OverridePackageName == null ? M.group(2) : OverridePackageName;
+        String SamplePackageName = OverridePackageName == null ? M.group(3) : OverridePackageName;
 
         String SchemaPackage = ConnectionPool.getSchemaPackage(SchemaName);
         if (SchemaPackage == null)
@@ -190,7 +190,7 @@ public class Import
           }
         catch (ClassNotFoundException E)
           {
-            throw new Exception("The root importer class as inferred from the input file '" + ImportFileName + "' cannot be found in the classpath.");
+            throw new Exception("The root importer class '"+RootClassName+"' as inferred from the input file '" + ImportFileName + "' cannot be found in the classpath.");
           }
 
         // long T = System.nanoTime();

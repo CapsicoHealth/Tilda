@@ -69,8 +69,8 @@ public class Migrator
     public static void MigrateDatabase(Connection C, boolean CheckOnly, List<Schema> TildaList, DatabaseMeta DBMeta, boolean first, List<String> connectionUrls)
     throws Exception
       {
-//        if (CheckOnly == false)
-//          AddTildaHelpers(C, TildaList, DBMeta);
+        // if (CheckOnly == false)
+        // AddTildaHelpers(C, TildaList, DBMeta);
 
         MigrationDataModel migrationData = Migrator.AnalyzeDatabase(C, CheckOnly, TildaList, DBMeta);
 
@@ -101,8 +101,11 @@ public class Migrator
 
         if (migrationData.getActionCount() == 0)
           {
-            new TildaHelpersAdd().process(C);
-            new TildaAclAdd(TildaList).process(C);        
+            if (CheckOnly == false)
+              {
+                new TildaHelpersAdd().process(C);
+                new TildaAclAdd(TildaList).process(C);
+              }
             LOG.info("");
             LOG.info("");
             LOG.info("====================================================================");
@@ -176,8 +179,8 @@ public class Migrator
         List<MigrationScript> Scripts = new ArrayList<MigrationScript>();
         int ActionCount = 0;
 
-//        if (CheckOnly == false && Migrate.isTesting() == false)
-//          AddTildaHelpers(C, TildaList, DBMeta);
+        // if (CheckOnly == false && Migrate.isTesting() == false)
+        // AddTildaHelpers(C, TildaList, DBMeta);
 
         LOG.info("===> Analyzing DB ( Url: " + C.getURL() + " )");
         LOG.info("Analyzing differences between the database and the application's expected data model...");
@@ -197,7 +200,7 @@ public class Migrator
             Scripts.add(new MigrationScript(S, L));
           }
         List<MigrationAction> L = new ArrayList<MigrationAction>();
-        L.add(new TildaAclAdd(TildaList));        
+        L.add(new TildaAclAdd(TildaList));
         Scripts.add(new MigrationScript(null, L));
         return new MigrationDataModel(ActionCount, Scripts);
       }
@@ -255,24 +258,24 @@ public class Migrator
           }
       }
 
-/*
-    public static void AddTildaHelpers(Connection C, List<Schema> TildaList, DatabaseMeta DBMeta)
-    throws Exception
-      {
-        if (DBMeta.getSchemaMeta("TILDA") == null)
-          {
-            for (Schema S : TildaList)
-              if (S._Name.equalsIgnoreCase("TILDA") == true)
-                {
-                  new SchemaCreate(S).process(C);
-                  break;
-                }
-            DBMeta.load(C, "TILDA");
-          }
-        new TildaHelpersAdd().process(C);
-        C.commit();
-      }
-*/
+    /*
+     * public static void AddTildaHelpers(Connection C, List<Schema> TildaList, DatabaseMeta DBMeta)
+     * throws Exception
+     * {
+     * if (DBMeta.getSchemaMeta("TILDA") == null)
+     * {
+     * for (Schema S : TildaList)
+     * if (S._Name.equalsIgnoreCase("TILDA") == true)
+     * {
+     * new SchemaCreate(S).process(C);
+     * break;
+     * }
+     * DBMeta.load(C, "TILDA");
+     * }
+     * new TildaHelpersAdd().process(C);
+     * C.commit();
+     * }
+     */
     protected static List<MigrationAction> getMigrationActions(CodeGenSql CGSQL, Schema S, DatabaseMeta DBMeta)
     throws Exception
       {
