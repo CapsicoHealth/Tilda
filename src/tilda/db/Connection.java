@@ -461,6 +461,11 @@ public final class Connection
       {
         return _DB.addHelperFunctions(this);
       }
+
+    public boolean addAclRoles(List<Schema> TildaList) throws Exception
+      {
+        return _DB.addAclRoles(this, TildaList);
+      }    
     
     public StringStringPair getTypeMapping(int Type, String Name, int Size, String TypeName)
     throws Exception
@@ -574,8 +579,7 @@ public final class Connection
        LOG.error("JDBC Error: Fatal sql error: SQLState="+E.getSQLState()+", ErrorCode="+E.getErrorCode());
        LOG.catching(E);
        throw E;
-     }    
-
+     }
   }
 
 

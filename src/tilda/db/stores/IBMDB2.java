@@ -336,4 +336,12 @@ public class IBMDB2 implements DBType
         throw new UnsupportedOperationException();
       }
 
+
+    @Override
+    public boolean addAclRoles(Connection Con, List<Schema> TildaList)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
   }

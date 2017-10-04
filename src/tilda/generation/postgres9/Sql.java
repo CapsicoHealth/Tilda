@@ -246,6 +246,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
             Column C2 = Columns2.get(i);
             TableRankTracker TI1 = TableRankTracker.getElementFromLast(TableStack, C1._ParentObject);
             TableRankTracker TI2 = TableRankTracker.getElementFromLast(TableStack, C2._ParentObject);
+            if (TI1 == null)
+              throw new Error("Cannot find source table " + C1._ParentObject.getFullName());
             if (TI2 == null)
               throw new Error("Cannot find referenced table " + C2._ParentObject.getFullName());
             Str.append(TI1.getFullName() + ".\"" + C1.getName()).append("\" = ").append(TI2.getFullName() + ".\"" + C2.getName() + "\"");
@@ -713,10 +715,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
         if (V._Realize != null)
           {
             OutFinal.println();
-            String TName = V._Name.substring(0, V._Name.length() - (V._Pivot != null ? "PivotView" : "View").length());
-            String RName = V._ParentSchema._Name + "." + TName + "Realized";
-            OutFinal.append("DROP FUNCTION IF EXISTS " + V._ParentSchema._Name + ".Refill_" + TName + "Realized();\n")
-            .append("CREATE OR REPLACE FUNCTION " + V._ParentSchema._Name + ".Refill_" + TName + "Realized() RETURNS boolean AS $$\n")
+            String TName = V.getRealizedTableName(false);
+            String RName = V.getRealizedTableName(true);
+            OutFinal.append("DROP FUNCTION IF EXISTS " + V._ParentSchema._Name + ".Refill_" + TName + "();\n")
+            .append("CREATE OR REPLACE FUNCTION " + V._ParentSchema._Name + ".Refill_" + TName + "() RETURNS boolean AS $$\n")
             .append("BEGIN\n")
             .append("  DROP TABLE IF EXISTS " + RName + ";\n")
             .append("  CREATE TABLE " + RName + " AS SELECT " + genRealizedColumnList(V, "\n                         " + PaddingUtil.getPad(RName.length())) 
@@ -728,12 +730,15 @@ public class Sql extends PostgreSQL implements CodeGenSql
               if (I != null)
                 genIndex(OutFinal, I);
 
-            OutFinal.append("  ANALYZE " + V._ParentSchema._Name + "." + TName + "Realized;\n")
+            OutFinal.append("  GRANT ALL ON ").append(RName).append(" TO tilda_app;\n");
+            OutFinal.append("  GRANT SELECT ON ").append(RName).append(" TO tilda_read_only;\n");
+            OutFinal.append("  GRANT SELECT ON ").append(RName).append(" TO tilda_reporting;\n");
+            OutFinal.append("  ANALYZE " + RName + ";\n")
             .append("  return true;\n")
             .append("END; $$\n")
             .append("LANGUAGE PLPGSQL;\n")
             .append("\n")
-            .append("-- SELECT " + V._ParentSchema._Name + ".Refill_" + TName + "Realized();")
+            .append("-- SELECT " + V._ParentSchema._Name + ".Refill_" + TName + "();")
             .append("-- !!! THIS MAY TAKE SEVERAL MINUTES !!! --")
             ;
           }

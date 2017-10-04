@@ -48,6 +48,7 @@ import tilda.migration.actions.SchemaViewsDrop;
 import tilda.migration.actions.TableComment;
 import tilda.migration.actions.TableCreate;
 import tilda.migration.actions.TableKeyCreate;
+import tilda.migration.actions.TildaAclAdd;
 import tilda.migration.actions.TildaHelpersAdd;
 import tilda.migration.actions.ViewCreate;
 import tilda.migration.actions.ViewUpdate;
@@ -101,6 +102,7 @@ public class Migrator
         if (migrationData.getActionCount() == 0)
           {
             new TildaHelpersAdd().process(C);
+            new TildaAclAdd(TildaList).process(C);        
             LOG.info("");
             LOG.info("");
             LOG.info("====================================================================");
@@ -194,6 +196,9 @@ public class Migrator
               L.add(new TildaHelpersAdd());
             Scripts.add(new MigrationScript(S, L));
           }
+        List<MigrationAction> L = new ArrayList<MigrationAction>();
+        L.add(new TildaAclAdd(TildaList));        
+        Scripts.add(new MigrationScript(null, L));
         return new MigrationDataModel(ActionCount, Scripts);
       }
 

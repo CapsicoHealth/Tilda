@@ -27,6 +27,7 @@ import com.sun.istack.internal.NotNull;
 
 import tilda.enums.ColumnMode;
 import tilda.enums.FrameworkSourcedType;
+import tilda.enums.ProtectionType;
 import tilda.generation.GeneratorSession;
 import tilda.generation.java8.Helper;
 import tilda.generation.java8.JavaJDBCType;
@@ -54,70 +55,74 @@ public class Docs
           System.out.println("xxx");
         
         View view = O._ParentSchema.getView(O._Name);
+        String ObjType = view == null ? "Table":"View";
         
         Out.println("<DIV>");
         Out.println("<DIV id='" + O._Name + "_DIV' class='tables'>");
-        Out.println("<H1>" + O._Name + "&nbsp;&nbsp;&nbsp;&nbsp;<SUP style=\"font-size: 60%;\"><A href=\"#\">top</A></SUP></H1>");
+        Out.println("<H2>" + O._Name + "&nbsp;&nbsp;&nbsp;&nbsp;<SUP style=\"font-size: 60%;\"><A href=\"#\">top</A></SUP></H2>");
         Out.println("</DIV>");
-        Out.println("The generated " + Helper.getCodeGenLanguage() + "/" + G.getSql().getName() + " Tilda data class <B>Data_" + O._Name + "</B> is mapped to the table <B>" + O.getShortName() + "</B>." + SystemValues.NEWLINE
+        Out.println("The generated " + Helper.getCodeGenLanguage() + "/" + G.getSql().getName() + " Tilda data class <B>Data_" + O._Name + "</B> is mapped to the "+ObjType+" <B>" + O.getShortName() + "</B>." + SystemValues.NEWLINE
         + "<UL>" + SystemValues.NEWLINE);
-        switch (O._LC)
+        if (view == null)
+         switch (O._LC)
           {
             case NORMAL:
-              Out.println("<LI>The Object has normal <B>read/write</B> capabilities.</LI>");
+              Out.println("<LI>The "+ObjType+" has normal <B>read/write</B> capabilities.</LI>");
               break;
             case READONLY:
-              Out.println("<LI>The Object is <B>ReadOnly</B>.</LI>");
+              Out.println("<LI>The "+ObjType+" is <B>ReadOnly</B>.</LI>");
               break;
             case WORM:
-              Out.println("<LI>The Object is <B>WORM</B> (Write Once Read Many).</LI>");
+              Out.println("<LI>The "+ObjType+" is <B>WORM</B> (Write Once Read Many).</LI>");
               break;
             default:
               throw new Exception("Unknown Object lifecycle value '" + O._LC + "' when generating class docs");
           }
 
+        
         if (O._OCC == true)
-          Out.println("<LI>The Object is OCC-enabled. Default created/lastUpdated/deleted columns will be automatically generated.</LI>");
+          Out.println("<LI>The "+ObjType+" is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>");
         else
-          Out.println("<LI>That Object is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>");
+          Out.println("<LI>That "+ObjType+" is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>");
 
         Out.println("</UL>");
 
-        Out.println(
-        "<B>Description</B>: " + O._Description + "<BR>" + SystemValues.NEWLINE
-        + "<BR>" + SystemValues.NEWLINE
-        + "It contains the following columns:<BR>" + SystemValues.NEWLINE
-        + " <TABLE border=\"0px\" cellpadding=\"3px\" cellspacing=\"0px\">" + SystemValues.NEWLINE
-        + "   <TR><TH>&nbsp;</TH><TH align=\"right\">Name&nbsp;&nbsp;</TH><TH align=\"left\">Type</TH><!--TH align=\"left\">Column</TH--><TH align=\"left\">Type</TH><TH align=\"left\">Nullable</TH><TH align=\"left\">Mode</TH><TH align=\"left\">Invariant</TH><TH align=\"left\">Protect</TH><TH align=\"left\">Description</TH></TR>" + SystemValues.NEWLINE);
+        Out.println("<B>Description</B>: " + O._Description + "<BR>" + SystemValues.NEWLINE
+                  + "<BR>" + SystemValues.NEWLINE
+                  );
+        
+        if (view != null)
+          DoSubWhereDetails(Out, view);
+        
+        Out.println("It contains the following columns:<BR>" + SystemValues.NEWLINE
+                  + " <TABLE border=\"0px\" cellpadding=\"3px\" cellspacing=\"0px\" style=\"border:1px solid grey;\">" + SystemValues.NEWLINE
+                  + "   <TR><TH>&nbsp;</TH><TH align=\"right\">Name&nbsp;&nbsp;</TH><TH align=\"left\">Type</TH><!--TH align=\"left\">Column</TH--><TH align=\"left\">Type</TH><TH align=\"left\">Nullable</TH><TH align=\"left\">Mode</TH><TH align=\"left\">Invariant</TH><TH align=\"left\">Protect</TH><TH align=\"left\">Description</TH></TR>" + SystemValues.NEWLINE
+                  );
        
         int i = 1;
         for (Column C : O._Columns)
           {
             if (C == null)
               continue;
-            Out.println(
-            "  <TR valign=\"top\" bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#DFECF8") + "\">"
-            + "<TD>" + i + "&nbsp;&nbsp;</TD>"
-            );
+            Out.println("  <TR valign=\"top\" bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#DFECF8") + "\">");
+            Out.println("    <TD>" + i + "&nbsp;&nbsp;</TD>");
+            if(C.getSingleColFK() != null || (view != null && C._SameAsObj != null) || (view != null && view._Pivot != null && view._Pivot.hasValue(C.getName())) )
+             {
+               Out.println("<TD onclick=\"onModalShowClicked('"+O._Name+"-"+C.getName()+"')\" align=\"right\"><B id='"+O._Name+"-"+C.getName()+"_DIV' class='columns dotted_underline cursor_pointer'>" + C.getName() + "</B>&nbsp;&nbsp;</TD>");
+             } 
+            else
+             {
+               Out.println("<TD align=\"right\"><B id='"+O._Name+"-"+C.getName()+"_DIV' class='columns'>" + C.getName() + "</B>&nbsp;&nbsp;</TD>");
+             }
             
-            if(C.getSingleColFK() != null || (view != null && C._SameAsObj != null) || (view != null && view._Pivot != null && view._Pivot.hasValue(C.getName())) ) {
-            	Out.println("<TD onclick=\"onModalShowClicked('"+O._Name+"-"+C.getName()+"')\" align=\"right\"><B id='"+O._Name+"-"+C.getName()+"_DIV' class='columns dotted_underline cursor_pointer'>" + C.getName() + "</B>&nbsp;&nbsp;</TD>");
-            } else {
-            	Out.println("<TD align=\"right\"><B id='"+O._Name+"-"+C.getName()+"_DIV' class='columns'>" + C.getName() + "</B>&nbsp;&nbsp;</TD>");
-            }
-            
-        	
-            
-            Out.println(
-            "<TD>" + JavaJDBCType.getFieldType(C) + (C.isList() == true ? " List<>" : C.isSet() == true ? " Set<>" : "") + "&nbsp;&nbsp;</TD>"
-            // + "<TD><B>" + C.getName() + "</B>&nbsp;&nbsp;</TD>"
-            + "<TD>" + G.getSql().getColumnType(C) + "&nbsp;&nbsp;</TD>"
-            + "<TD align=\"center\">" + (C._Nullable == true ? "&#x2611;" : "") + "&nbsp;&nbsp;</TD>"
-            + "<TD align=\"center\">" + (C._Mode == ColumnMode.NORMAL ? "" : C._Mode) + "&nbsp;&nbsp;</TD>"
-            + "<TD align=\"center\">" + (C._Invariant == false ? "" : "&#x2611;") + "&nbsp;&nbsp;</TD>"
-            + "<TD align=\"center\">" + (C._Protect == null ? "" : C._Protect) + "&nbsp;&nbsp;</TD>"
-            + "<TD>" + C._Description + "</TD>"
-            + "</TR>");
+            Out.println("<TD>" + JavaJDBCType.getFieldType(C) + (C.isList() == true ? " List<>" : C.isSet() == true ? " Set<>" : "") + "&nbsp;&nbsp;</TD>");
+            Out.println("<TD>" + G.getSql().getColumnType(C) + "&nbsp;&nbsp;</TD>");
+            Out.println("<TD align=\"center\">" + (C._Nullable == true ? "&#x2611;" : "&#x2610") + "&nbsp;&nbsp;</TD>");
+            Out.println("<TD align=\"left\">" + (C._Mode == ColumnMode.NORMAL ? "-" : C._Mode) + "&nbsp;&nbsp;</TD>");
+            Out.println("<TD align=\"center\">" + (C._Invariant == false ? "&#x2610" : "&#x2611;") + "&nbsp;&nbsp;</TD>");
+            Out.println("<TD align=\"center\">" + (C._Protect == null ? "-" : C._Protect) + "&nbsp;&nbsp;</TD>");
+            Out.println("<TD>" + C._Description + "</TD>");
+            Out.println("</TR>");
             
             if (C._MapperDef != null)
               {
@@ -131,33 +136,28 @@ public class Docs
                 docFieldValues(Out, C);
                 Out.println("</TD></TR>");
               }
-            
             ++i;
-            
           }
-
         Out.println("</TABLE>");
                
-        for(Column C : O._Columns) {
-          Out.println("<DIV id='"+O._Name+"-"+C.getName()+"_MODAL' class='modal'>");
-          Out.println("<DIV class='modal-content'>");
-          Out.println("<SPAN onclick=\"onModalCloseClicked('"+O._Name+"-"+C.getName()+"_MODAL')\" class='close'>&times;</SPAN>");
-          // Out.println("<DIV><CENTER><H2>Dependencies for Column "+C.getShortName()+"</H2></CENTER></DIV>");
-          Out.println("<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>");
-
-          Out.println("<table style='margin: auto;'> ");
-          Out.println("  <tr> ");
-          Out.println("    <th align='left' width=\"300em\">Schema</th> ");
-          Out.println("    <th align='left' width=\"400em\">Table/View</th> ");
-          Out.println("    <th align='left' >Column/Formula</th> ");
-          Out.println("  </tr> ");
-          
-          prevLevel = 5;
-          PrintColumnHierarchy(Out, O, C, false, 1);
-          
-          Out.println("</table>");
-          Out.println("</DIV></DIV>");
-        }       
+        for (Column C : O._Columns)
+          {
+            Out.println("<DIV id='" + O._Name + "-" + C.getName() + "_MODAL' class='modal'>");
+            Out.println("<DIV class='modal-content'>");
+            Out.println("<SPAN onclick=\"onModalCloseClicked('" + O._Name + "-" + C.getName() + "_MODAL')\" class='close'>&times;</SPAN>");
+            // Out.println("<DIV><CENTER><H2>Dependencies for Column "+C.getShortName()+"</H2></CENTER></DIV>");
+            Out.println("<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>");
+            Out.println("<table style='margin: auto;'> ");
+            Out.println("  <tr> ");
+            Out.println("    <th align='left' width=\"300em\">Schema</th> ");
+            Out.println("    <th align='left' width=\"400em\">Table/View</th> ");
+            Out.println("    <th align='left' >Column/Formula</th> ");
+            Out.println("  </tr> ");
+            prevLevel = 5;
+            PrintColumnHierarchy(Out, O, C, false, 1);
+            Out.println("</table>");
+            Out.println("</DIV></DIV>");
+          }
         
         Out.println("</DIV>");
       }
@@ -388,15 +388,15 @@ public class Docs
 		
     private static void docFieldValues(PrintWriter Out, Column C)
       {
-        Out.println("<TABLE border=\"0px\" cellpadding=\"2px\" cellspacing=\"0px\">"
+        Out.println("<TABLE border=\"0px\" cellpadding=\"2px\" cellspacing=\"0px\" style=\"border:1px solid #999;\">"
         + "   <TR align=\"left\"><TH>&nbsp;</TH><TH align=\"right\">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>");
         int i = 0;
         for (ColumnValue V : C._Values)
           {
             if (V == null)
               continue;
-            Out.println("  <TR bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#FFF2CC") + "\">"
-            + "<TD>" + i + "&nbsp;&nbsp;</TD>"
+            Out.println("  <TR bgcolor=\"" + (i % 2 == 1 ? "#FFFFFF" : "#FFF2CC") + "\">"
+            + "<TD>" + (i+1) + "&nbsp;&nbsp;</TD>"
             + "<TD align=\"right\"><B>" + V._Name + "</B>&nbsp;&nbsp;</TD>"
             + "<TD>" + V._Value + "&nbsp;&nbsp;</TD>"
             + "<TD>" + V._Label + "&nbsp;&nbsp;</TD>"
@@ -456,7 +456,7 @@ public class Docs
     public static void RealizedDataMartTableDocs(PrintWriter Out, ParserSession PS, View V)
     throws Exception
       {
-        String TName = V._Name.substring(0, V._Name.length() - (V._Pivot != null ? "PivotView" : "View").length()) + "Realized";
+        String TName = V.getRealizedTableName(false);
         Out.println("<DIV>");
         Out.println("<DIV id='" + TName + "_DIV' class='tables'>");
         Out.println("<H2>" + TName + "&nbsp;&nbsp;&nbsp;&nbsp;<SUP style=\"font-size: 60%;\"><A href=\"#\">top</A></SUP></H1>");
@@ -479,7 +479,8 @@ public class Docs
         + "</STYLE>");
 
         Out.println("<H3>Inclusions/Exclusions Criteria</H3>");
-        DoewSubWhereDetails(Out, V);
+        Out.println(V._Description);
+        DoSubWhereDetails(Out, V);
 
         Set<String> ObjectNames = new HashSet<String>();
         boolean First = true;
@@ -502,7 +503,8 @@ public class Docs
                 if (V2 == null)
                   throw new Exception("Cannot find View " + O._ParentSchema._Package + "." + O._ParentSchema._Name + "." + O._Name);
                 Out.println("<TR><TD>" + V2.getShortName() + "</TD><TD>");
-                DoewSubWhereDetails(Out, V2);
+                Out.println(V._Description);
+                DoSubWhereDetails(Out, V2);
                 Out.println("</TD></TR>");
               }
           }
@@ -624,9 +626,8 @@ public class Docs
       }
 
 
-    private static void DoewSubWhereDetails(PrintWriter Out, View V)
+    private static void DoSubWhereDetails(PrintWriter Out, View V)
       {
-        Out.println(V._Description);
         if (V._SubWhereX != null)
           Out.println("<BLOCKQUOTE>That view is filtered: "
           + "<BLOCKQUOTE><PRE>" + cleanClause(String.join("\n", V._SubWhereX._Clause)) + "</PRE>"

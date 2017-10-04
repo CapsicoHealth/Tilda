@@ -120,6 +120,11 @@ public class View extends Base
               return vj;
         return null;
       }
+    
+    public String getRealizedTableName(boolean includeSchemaName)
+     {
+       return _Realize == null ? null : (includeSchemaName==true?_ParentSchema._Name+".":"")+_Name.substring(0, _Name.length() - (_Pivot != null ? "PivotView" : "View").length()) + "Realized";
+     }
 
     public boolean Validate(ParserSession PS, Schema ParentSchema)
       {

@@ -569,6 +569,42 @@ public class PostgreSQL implements DBType
         return Con.ExecuteDDL("TILDA", "FUNCTIONS", Str.toString());
       }
 
+    
+    
+    
+    public void reCreateRole(StringBuilder Str, String Role)
+    throws Exception
+      { 
+        Role = Role.toLowerCase();
+        Str.append("DELETE FROM pg_catalog.pg_authid WHERE rolname='"+Role+"';\n");
+        Str.append("CREATE ROLE "+Role+";\n");
+      }
+    
+    @Override
+    public boolean addAclRoles(Connection Con, List<Schema> TildaList)
+    throws Exception
+      {        
+        StringBuilder Str = new StringBuilder();
+        reCreateRole(Str, "tilda_app");
+        reCreateRole(Str, "tilda_read_only");
+        reCreateRole(Str, "tilda_reporting");
+
+        for (Schema S : TildaList)
+          {
+            Str.append("GRANT USAGE ON SCHEMA ").append(S.getShortName()).append(" TO tilda_app;\n");
+            Str.append("GRANT ALL ON ALL TABLES IN SCHEMA ").append(S.getShortName()).append(" TO tilda_app;\n");
+            Str.append("GRANT ALL ON ALL FUNCTIONS IN SCHEMA ").append(S.getShortName()).append(" TO tilda_app;\n");
+            Str.append("GRANT ALL ON ALL SEQUENCES IN SCHEMA ").append(S.getShortName()).append(" TO tilda_app;\n");
+            
+            Str.append("GRANT USAGE ON SCHEMA ").append(S.getShortName()).append(" TO tilda_read_only;\n");
+            Str.append("GRANT SELECT ON ALL TABLES IN SCHEMA ").append(S.getShortName()).append(" TO tilda_read_only;\n");
+            Str.append("GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA ").append(S.getShortName()).append(" TO tilda_read_only;\n");
+            Str.append("GRANT SELECT ON ALL SEQUENCES IN SCHEMA ").append(S.getShortName()).append(" TO tilda_read_only;\n");
+          }
+
+        return Con.ExecuteDDL("TILDA", "ACL_ROLES", Str.toString());
+     }
+    
     @Override
     public StringStringPair getTypeMapping(int Type, String Name, int Size, String TypeName)
     throws Exception

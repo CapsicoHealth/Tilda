@@ -469,4 +469,11 @@ public class MSSQL implements DBType
         throw new UnsupportedOperationException();
       }
 
+    @Override
+    public boolean addAclRoles(Connection Con, List<Schema> TildaList)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
   }

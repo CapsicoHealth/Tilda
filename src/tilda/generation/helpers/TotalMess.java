@@ -29,6 +29,8 @@ public class TotalMess
         _PK = C._PrimaryKey == true ? C._ParentObject._PrimaryKey : null;
         for (ForeignKey FK : C._ParentObject._ForeignKeys)
           {
+            if (FK == null)
+             continue;
             // LOG.debug("Looking at FK " + FK._Name);
             boolean Found = false;
             for (Column fkcol : FK._SrcColumnObjs)

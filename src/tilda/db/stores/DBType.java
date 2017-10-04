@@ -65,6 +65,7 @@ public interface DBType
     public boolean alterTableAlterColumnType      (Connection Con, ColumnType fromType, Column Col, ZoneInfo_Data defaultZI) throws Exception;
     public boolean alterTableAlterColumnStringSize(Connection Con, Column Col, int DBSize) throws Exception;
     public boolean addHelperFunctions             (Connection Con) throws Exception;    
+    public boolean addAclRoles                    (Connection Con, List<Schema> TildaList) throws Exception;
 
     public void   truncateTable(Connection C, String schemaName, String tableName) throws Exception;
 

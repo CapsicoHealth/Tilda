@@ -201,6 +201,7 @@ public class Schema
               O.Validate(PS, this);
             }
         boolean hasFormulas = false;
+        boolean hasDataMarts = false;
         for (View V : _Views)
           if (V != null)
             {
@@ -209,6 +210,8 @@ public class Schema
               V.Validate(PS, this);
               if (V._Formulas != null && V._Formulas.isEmpty() == false)
                hasFormulas = true;
+              if (V._Realize != null)
+               hasDataMarts = true;
             }
         if (hasFormulas == true)
          CreateFormulaDocumentationTables(PS);
@@ -216,6 +219,7 @@ public class Schema
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
       }
+
     private void CreateFormulaDocumentationTables(ParserSession PS)
       {
         Object O = new Object();
@@ -352,9 +356,8 @@ public class Schema
 
         _Objects.add(O);
         O.Validate(PS, this);
-
       }
-
+    
     public Documentation getDocumentation(){
     	if(_Documentation == null){
     		_Documentation = new Documentation();
@@ -464,6 +467,14 @@ public class Schema
               return false;
            }
         return true;
+      }
+
+    public boolean hasDataMart()
+      {
+        for (View V : _Views)
+         if (V._Realize != null)
+          return true;
+        return false;
       }
 
   }
