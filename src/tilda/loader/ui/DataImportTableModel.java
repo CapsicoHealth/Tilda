@@ -23,8 +23,7 @@ public class DataImportTableModel extends AbstractTableModel
 
     private static final long serialVersionUID = 6603195072158914607L;
 
-    private String[]          columnNames      = { "Table", "Import", "Truncate"
-    };
+    private String[]          columnNames      = { "Table", "Import" };
     private Object[][]        data             = null;
 
     public DataImportTableModel(Object data[][])
@@ -39,7 +38,7 @@ public class DataImportTableModel extends AbstractTableModel
 
     public int getRowCount()
       {
-        return data.length;
+        return (data != null ? data.length : 0);
       }
 
     public String getColumnName(int col)
@@ -59,14 +58,7 @@ public class DataImportTableModel extends AbstractTableModel
 
     public boolean isCellEditable(int row, int col)
       {
-        if (col == 1 || col == 2)
-          {
-            return true;
-          }
-        else
-          {
-            return false;
-          }
+        return (col == 1 || col == 2);
       }
 
     /*
@@ -76,8 +68,6 @@ public class DataImportTableModel extends AbstractTableModel
     public void setValueAt(Object value, int row, int col)
       {
         data[row][col] = value;
-        data[row][2] = value;
         fireTableCellUpdated(row, col);
-        fireTableCellUpdated(row, 2);
       }
   }

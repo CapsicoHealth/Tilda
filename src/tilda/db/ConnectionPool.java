@@ -43,6 +43,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 
+import tilda.Load;
 import tilda.Migrate;
 import tilda.data.Connection_Data;
 import tilda.data.Connection_Factory;
@@ -140,7 +141,11 @@ public class ConnectionPool
 
     static final Logger                           LOG                   = LogManager.getLogger(ConnectionPool.class.getName());
 
+    // _UniqueDataSourceIds is a helper object. Used mainly to retrieve Unique ConnectionID's
+    // contains ConnectionId & Connection URL in each entry.
     protected static Map<String, String>          _UniqueDataSourceIds  = new HashMap<String, String>();
+    
+    
     protected static Map<String, BasicDataSource> _DataSourcesById      = new HashMap<String, BasicDataSource>();
     protected static Map<String, BasicDataSource> _DataSourcesBySig     = new HashMap<String, BasicDataSource>();
     protected static Map<String, String>          _SchemaPackage        = new HashMap<String, String>();
@@ -357,11 +362,29 @@ public class ConnectionPool
                     BDS.setDefaultAutoCommit(false);
                     BDS.setDefaultTransactionIsolation(java.sql.Connection.TRANSACTION_READ_COMMITTED);
                     BDS.setDefaultQueryTimeout(20000);
-                    _UniqueDataSourceIds.put(id, db);
+                    _UniqueDataSourceIds.put(id, BDS.getUrl());
                     _DataSourcesBySig.put(Sig, BDS);
                   }
                 else
                   {
+                    if ("MAIN".equalsIgnoreCase(id))
+                      {
+                        String keyToReplace = null;
+                        Iterator<String> uniqueKeys = _UniqueDataSourceIds.keySet().iterator();
+                        while(uniqueKeys.hasNext())
+                          {
+                            String key = uniqueKeys.next();
+                            if (_UniqueDataSourceIds.get(key).equalsIgnoreCase(BDS.getUrl()))
+                              keyToReplace = key;
+                          }
+                        
+                        if (keyToReplace != null)
+                          {
+                            _UniqueDataSourceIds.put("MAIN", BDS.getUrl());
+                            _UniqueDataSourceIds.remove(keyToReplace);
+                          }
+                      }
+                    
                     LOG.info("Merging pool with ID " + id + " into prexisting pool " + Sig);
                     if (BDS.getInitialSize() < initial)
                       BDS.setInitialSize(initial);

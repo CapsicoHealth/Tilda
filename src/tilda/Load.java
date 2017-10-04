@@ -25,7 +25,10 @@ import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -35,100 +38,86 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EtchedBorder;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.loader.csv.ImportProcessor;
 import tilda.loader.parser.Config;
 import tilda.loader.parser.DataObject;
+import tilda.loader.ui.ConnectionsTableModel;
 import tilda.loader.ui.DataImportTableModel;
-import tilda.db.Connection;
+import tilda.utils.DurationUtil;
+import tilda.utils.TextUtil;
 import tilda.db.ConnectionPool;
 
 public class Load
   {
-
+    protected static final Logger LOG               = LogManager.getLogger(Load.class.getName());
+    Load                          app               = null;
+    
+    private static int            threadsCount      = 1;
+    private static Object[][]     data              = null;
+    private static Object[][]     connections       = null;
+    private static Config         Conf              = null;
+    
     private JFrame                frmDataImport;
-    private static Object[][]     data        = null;
-    private JTable                table;
-    private JScrollPane           scrollPane;
-    protected static final Logger LOG         = LogManager.getLogger(Load.class.getName());
-    static Connection             C           = null;
-    static Config                 Conf        = null;
 
-    Load                          app         = null;
-    JLabel                        statusLabel = new JLabel("");
-    JButton                       btnRun      = new JButton("Run Import");
-    JButton                       btnCancel   = new JButton("Cancel");
-
-    /**
-     * Launch the application.
-     */
-    public static void main(String[] args)
+    // UI
+    JLabel                        statusLabel       = new JLabel("");
+    JButton                       btnRun            = new JButton("Run Import");
+    JButton                       btnCancel         = new JButton("Cancel");
+    JButton                       btnAllTables      = new JButton("Select All Tables");
+    JButton                       btnAllConnections = new JButton("Select All Connections");
+    
+    // Main
+    public static void main(String[] argsArray)
     throws Exception
       {
-
-        if (args.length != 2)
+        List<String> arguments = new ArrayList<>(Arrays.asList(argsArray));
+        
+        if ( !isValidArguments(arguments) ) 
           {
-            LOG.debug("Usage DataImportApp -silentMode=1/0 dataImport.json ");
+            PrintUsageHint();
             System.exit(-1);
           }
-
-
+        
         LOG.info("\n*************************************************************************************************************************************");
         ConnectionPool.autoInit();
         LOG.info("\n*************************************************************************************************************************************\n");
 
-        C = ConnectionPool.get("MAIN");
-
-        String silentModePair[] = args[0].split("=");
-
-        if (silentModePair != null && silentModePair.length != 2)
+        String[] silentModePair = arguments.get(0).split("=");
+        String[] threadsPair = arguments.get(1).split("=");
+        
+        threadsCount = Integer.parseInt(threadsPair[1]);
+        boolean isSilentMode = Integer.parseInt(silentModePair[1]) == 1;
+        
+        arguments.remove(0);
+        arguments.remove(0);
+       
+        if (isSilentMode)
           {
-            LOG.debug("Usage DataImportApp -silentMode=0/1 dataImport.json ");
-            System.exit(-1);
-          }
+            
+            LOG.debug("Starting the utility in silent mode.");
+            for(int i = 0; i < arguments.size() ; i += 6)
+              {
+                String ConfigFileName = arguments.get(i+1);
+                Conf = Config.fromFile(ConfigFileName);
 
-        if (silentModePair[0].equalsIgnoreCase("-silentMode") == false)
-          {
-            LOG.debug("Usage DataImportApp -silentMode=0/1 dataImport.json ");
-            System.exit(-1);
-          }
-
-        int mode = -1;
-        try
-          {
-            mode = Integer.parseInt(silentModePair[1]);
-          }
-        catch (NumberFormatException Exc)
-          {
-            LOG.debug("Usage DataImportApp -silentMode=0/1 dataImport.json ");
-            System.exit(-1);
-          }
-
-        if (!(mode == 0 || mode == 1))
-          {
-            LOG.debug("Usage DataImportApp -silentMode=0/1 dataImport.json ");
-            System.exit(-1);
-
-          }
-
-        String ConfigFileName = args[1];
-        Conf = Config.fromFile(ConfigFileName);
-
-        if (mode == 1)
-          {
-            LOG.debug("Starting the utility in silent mode and processing " + ConfigFileName);
-            ImportProcessor.process(C, Conf, Conf._CmsData);
+                LOG.debug("Processing file " + ConfigFileName);
+                List<String> selectedObjectsList = new ArrayList<>(Arrays.asList(arguments.get(i+3).split(",")));
+                List<String> connectionIdsList = new ArrayList<>(Arrays.asList(arguments.get(i+5).split(",")));
+                StartImportProcessor(selectedObjectsList, connectionIdsList, Conf, Conf._CmsData);
+              }
+            LOG.debug("Import Tables completed.");
           }
         else
           {
-
+            String ConfigFileName = arguments.get(1);
+            Conf = Config.fromFile(ConfigFileName);
+            
             List<DataObject> list = Conf._CmsData;
-            data = new Object[list.size()][3];
+            data = new Object[list.size()][2];
             for (int i = 0; i < list.size(); ++i)
               {
                 DataObject DO = list.get(i);
@@ -139,9 +128,23 @@ public class Load
                 String schemaPlusTable = schemaName + "." + tableName;
                 data[i][0] = schemaPlusTable.toUpperCase();
                 data[i][1] = new Boolean(false);
-                data[i][2] = new Boolean(false);
               }
-
+            
+            // Multi-Tenancy Logic
+            Map<String, String> allConnections = ConnectionPool.getAllDataSourceIds();
+            Iterator<String> iterator = allConnections.keySet().iterator();
+            connections = new Object[allConnections.size()][3];
+            int i = 0;
+            while(iterator.hasNext())
+              {
+                String id = iterator.next();
+                String url = allConnections.get(id);
+                connections[i][0] = id;
+                connections[i][1] = url;
+                connections[i][2] = new Boolean(false);
+                i++;
+              }              
+            
             EventQueue.invokeLater(new Runnable()
               {
                 public void run()
@@ -160,9 +163,122 @@ public class Load
           }
       }
 
-    /**
-     * Create the application.
-     */
+    private static void StartImportProcessor(List<String> selectedObjectNames, List<String> connectionIdsList, Config conf, List<DataObject> _CmsData) 
+    throws Exception
+      {
+        List<DataObject> filteredObjects = FilterObjects(selectedObjectNames, _CmsData);
+        if (connectionIdsList.size() > 0 && filteredObjects.size() > 0)
+          RunImportProcessor(connectionIdsList, conf, filteredObjects);
+      }
+
+    private static List<DataObject> FilterObjects(List<String> selectedObjects, List<DataObject> AllDataObjects)
+      {
+        List<DataObject> filteredList = new ArrayList<>();
+        
+        Iterator<DataObject> iterator = AllDataObjects.iterator();
+        while(iterator.hasNext())
+          {
+            DataObject dataObject = iterator.next();
+            String tempObjectName = dataObject._SchemaName + "." + dataObject._TableName;
+            tempObjectName = tempObjectName.toUpperCase();
+            if(selectedObjects.contains(tempObjectName) == true)
+              filteredList.add(dataObject);
+          }
+        return filteredList;
+      }
+
+    private static void RunImportProcessor(List<String> connectionIdsList, Config Conf, List<DataObject> dataObjects)
+    throws Exception
+      {
+        if ( "ALL".equals(connectionIdsList.get(0)) )
+          {
+            connectionIdsList = new ArrayList<>(ConnectionPool.getAllDataSourceIds().keySet());
+          }                      
+        else if ( "ALL_TENANTS".equals(connectionIdsList.get(0)) )
+          {
+            connectionIdsList = new ArrayList<>(ConnectionPool.getAllTenantDataSourceIds().keySet());
+          }
+        
+        LOG.debug("Running ImportProcessor");
+        long timeTaken = System.nanoTime();
+        ImportProcessor.parallelProcess(connectionIdsList, Conf._RootFolder, threadsCount, dataObjects);
+        timeTaken = System.nanoTime() - timeTaken;        
+        LOG.debug("Time taken for ImportProcessor.process() = "+ DurationUtil.PrintDuration(timeTaken));
+      }
+
+    private static boolean isValidArguments(List<String> arguments)
+      {
+        if (arguments.size() < 4)
+            return false;
+
+        String[] silentModePair = arguments.get(0).split("=");
+        if (silentModePair != null && silentModePair.length != 2)
+          return false;
+        if (silentModePair[0].equalsIgnoreCase("-silentMode") == false)
+          return false;
+
+        int mode = -1;
+        try {
+          mode = Integer.parseInt(silentModePair[1]);
+        } catch (Exception E) {
+          return false;
+        }
+        
+        String[] threadsPair = arguments.get(1).split("=");
+        if (threadsPair != null && threadsPair.length != 2)
+          return false;
+        if (threadsPair[0].equalsIgnoreCase("-threads") == false)
+          return false;
+
+        try {
+          int threads = Integer.parseInt(threadsPair[1]);
+          if (threads < 1)
+            throw new Exception();
+        } catch (Exception E) {
+          return false;
+        }
+        
+        if (mode == 1)
+          { // CLI Mode
+            if ( (arguments.size() % 6) != 2 )
+              return false;
+            
+            for ( int i = 2; i < arguments.size(); i += 6)
+              {
+                if ( !"-f".equals(arguments.get(i)) || TextUtil.isNullOrEmpty(arguments.get(i+1))
+                  || !"-o".equals(arguments.get(i+2)) || TextUtil.isNullOrEmpty(arguments.get(i+3))
+                  || !"-c".equals(arguments.get(i+4)) || TextUtil.isNullOrEmpty(arguments.get(i+5)) )
+                  return false;
+              }
+          }
+        else if ( !"-f".equals(arguments.get(2)) || TextUtil.isNullOrEmpty(arguments.get(3)) ) 
+          {
+            return false;
+          }
+          
+
+        return true;
+      }
+
+    private static void PrintUsageHint()
+      {
+        LOG.error("");
+        LOG.error("Load utility *must* be called with following parameters :");
+        LOG.error("*** UI Mode");
+        LOG.error("    -silentMode=0 -threads=<No.of Threads> -f <filepath>");
+        LOG.error("ex: -silentMode=0 -threads=2               -f com/c/c/data/config.C.json");
+        LOG.error("");
+        LOG.error("*** CLI Mode");
+        LOG.error("    -silentMode=1 -threads=<No.of Threads> -f <filepath>                 -o <object_name>,<object_name>,..   -c <connection_id>,... ");
+        LOG.error("ex: -silentMode=1 -threads=2               -f com/c/c/data/config.C.json -o CMS.HCPCS_CODES,CMS.CPT_CODES    -c MAIN,KEYS");
+        LOG.error("");        
+        LOG.error("*** for Multi Tenant System.");
+        LOG.error("    ALL           = All Connection Ids. Except 'KEYS'");
+        LOG.error("    ALL_TENANTS   = All Connection Ids. Except 'MAIN' & 'KEYS'");
+        LOG.error("");        
+      }
+
+    // Constructor
     public Load()
       {
         initialize();
@@ -171,6 +287,7 @@ public class Load
 
     /**
      * Initialize the contents of the frame.
+     * @wbp.parser.entryPoint
      */
     private void initialize()
       {
@@ -178,28 +295,17 @@ public class Load
         try
           {
             UIManager.setLookAndFeel(
-            UIManager.getSystemLookAndFeelClassName());
+              UIManager.getSystemLookAndFeelClassName());
           }
-        catch (ClassNotFoundException e1)
+        catch (Exception e)
           {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
+            e.printStackTrace();
           }
-        catch (InstantiationException e1)
-          {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-          }
-        catch (IllegalAccessException e1)
-          {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-          }
-        catch (UnsupportedLookAndFeelException e1)
-          {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-          }
+        
+        JScrollPane                   scroller1, scroller2;
+        JTable                        table1,    table2;
+        DataImportTableModel          tableDataModel;
+        ConnectionsTableModel         connectionDataModel;
 
         frmDataImport = new JFrame();
         frmDataImport.setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
@@ -208,9 +314,8 @@ public class Load
         frmDataImport.setBounds(100, 100, 938, 828);
         frmDataImport.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frmDataImport.getContentPane().setLayout(null);
-        frmDataImport.setResizable(false);
-
-
+        // frmDataImport.setResizable(false);
+        
         btnRun.addActionListener(new ActionListener()
           {
             public void actionPerformed(ActionEvent e)
@@ -219,8 +324,9 @@ public class Load
                 int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to run the data import?", "Warning", dialogButton);
                 if (dialogResult == 0)
                   {
-                    List<String> truncateTables = new ArrayList<String>();
+                    // List<String> truncateTables = new ArrayList<String>();
                     List<String> ImportTables = new ArrayList<String>();
+                    List<String> ConnectionIds = new ArrayList<String>();
 
                     EventQueue.invokeLater(new Runnable()
                       {
@@ -232,25 +338,16 @@ public class Load
                                 for (int i = 0; i < data.length; ++i)
                                   {
                                     Boolean ImportValue = (Boolean) data[i][1];
-                                    Boolean TruncateValue = (Boolean) data[i][2];
-
-                                    if (TruncateValue == true)
-                                      truncateTables.add((String) data[i][0]);
-
                                     if (ImportValue == true)
                                       ImportTables.add((String) data[i][0]);
                                   }
-                                // Call Import code.
-                                List<DataObject> FilterImportTablesList = new ArrayList<DataObject>();
-                                List<DataObject> list = Conf._CmsData;
-                                for (DataObject D : list)
+                                for (int i = 0; i < connections.length ; i++)
                                   {
-                                    String fullTableName = D._SchemaName + "." + D._TableName;
-                                    fullTableName = fullTableName.toUpperCase();
-                                    if (ImportTables.contains(fullTableName) == true)
-                                      FilterImportTablesList.add(D);
+                                    Boolean connection = (Boolean) connections[i][2];
+                                    if(connection == true)
+                                      ConnectionIds.add((String) connections[i][0]);
                                   }
-                                ImportProcessor.process(C, Conf, FilterImportTablesList);
+                                StartImportProcessor(ImportTables, ConnectionIds, Conf,  Conf._CmsData);
                                 LOG.debug("Import Tables completed.");
                               }
                             catch (Exception e)
@@ -260,20 +357,17 @@ public class Load
                             System.exit(1);
                           }
                       });
-
                   }
               }
           });
-        btnRun.setBounds(351, 724, 97, 25);
+        btnRun.setBounds(351, 736, 97, 25);
         frmDataImport.getContentPane().add(btnRun);
 
         btnCancel.addActionListener(new ActionListener()
           {
             public void actionPerformed(ActionEvent e)
               {
-
                 int dialogButton = JOptionPane.YES_NO_OPTION;
-
                 int dialogResult = JOptionPane.showConfirmDialog(null, "Close the dialog", "Warning", dialogButton);
                 if (dialogResult == 0)
                   {
@@ -281,47 +375,74 @@ public class Load
                   }
               }
           });
-        btnCancel.setBounds(465, 724, 97, 25);
+        btnCancel.setBounds(458, 736, 97, 25);
         frmDataImport.getContentPane().add(btnCancel);
 
-        scrollPane = new JScrollPane();
-        scrollPane.setBounds(34, 31, 852, 642);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        frmDataImport.getContentPane().add(scrollPane);
+        // Scroller1 setup
+        scroller1 = new JScrollPane();
+        scroller1.setBounds(34, 44, 852, 387);
+        scroller1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        frmDataImport.getContentPane().add(scroller1);
 
-        table = new JTable(new DataImportTableModel(data));
-
-        table.getColumnModel().getColumn(0).setPreferredWidth(560);
-        table.getColumnModel().getColumn(1).setPreferredWidth(80);
-        table.getColumnModel().getColumn(2).setPreferredWidth(80);
-
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-        // TableColumn tc = table.getColumnModel().getColumn(2);
-        // tc.setCellRenderer(new TableCellRenderer());
-
-        table.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 14));
-        table.setRowHeight(25);
-        table.getTableHeader().setReorderingAllowed(false);
-
-        scrollPane.setViewportView(table);
-        table.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-
-
-        statusLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        statusLabel.setBounds(44, 686, 852, 31);
-        frmDataImport.getContentPane().add(statusLabel);
-
-        // ImageIcon icon = new ImageIcon(this.getClass().getResource("/images/capsico.png"));
-        // frmDataImport.setIconImage(icon.getImage());
+        // Table1 Setup
+        tableDataModel = new DataImportTableModel(data); 
+        table1 = new JTable(tableDataModel);
+        table1.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 14));
+        table1.getTableHeader().setReorderingAllowed(false);
+        table1.setRowHeight(25);
+        table1.getColumnModel().getColumn(0).setPreferredWidth(550);
+        table1.getColumnModel().getColumn(1).setPreferredWidth(80);
+        table1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);        
+        table1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+                
+        
+        // Scroller2 Setup
+        scroller2 = new JScrollPane();
+        scroller2.setBounds(34, 476, 852, 242);
+        scroller2.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        frmDataImport.getContentPane().add(scroller2);
+        
+        // Table2 Setup
+        connectionDataModel = new ConnectionsTableModel(connections);
+        table2 = new JTable(connectionDataModel);
+        table2.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 14));
+        table2.getTableHeader().setReorderingAllowed(false);
+        table2.setRowHeight(25);
+        table2.getColumnModel().getColumn(0).setPreferredWidth(200);
+        table2.getColumnModel().getColumn(1).setPreferredWidth(350);
+        table2.getColumnModel().getColumn(2).setPreferredWidth(80);
+        table2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);        
+        table2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+        
+        scroller1.setViewportView(table1);
+        scroller2.setViewportView(table2);
+        
+        btnAllTables.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+            for(int i=0; i < data.length; i++)
+                data[i][1] = true;
+            tableDataModel.fireTableDataChanged();
+          }
+        });
+        btnAllTables.setBounds(733, 21, 153, 23);
+        frmDataImport.getContentPane().add(btnAllTables);
+        
+        btnAllConnections.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+            for(int i=0; i < connections.length; i++)
+                connections[i][2] = true;
+            connectionDataModel.fireTableDataChanged();
+          }
+        });
+        btnAllConnections.setBounds(695, 453, 191, 23);
+        frmDataImport.getContentPane().add(btnAllConnections);
+        
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         frmDataImport.setLocation(dim.width / 2 - frmDataImport.getSize().width / 2, dim.height / 2 - frmDataImport.getSize().height / 2);
       }
 
     public void setStatus(String text)
       {
-
         statusLabel.setText(text);
       }
   }
-

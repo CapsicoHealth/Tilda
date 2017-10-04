@@ -69,9 +69,6 @@ public class Migrator
     public static void MigrateDatabase(Connection C, boolean CheckOnly, List<Schema> TildaList, DatabaseMeta DBMeta, boolean first, List<String> connectionUrls)
     throws Exception
       {
-        // if (CheckOnly == false)
-        // AddTildaHelpers(C, TildaList, DBMeta);
-
         MigrationDataModel migrationData = Migrator.AnalyzeDatabase(C, CheckOnly, TildaList, DBMeta);
 
         // RPJ-TODO: Simplify if-else logic

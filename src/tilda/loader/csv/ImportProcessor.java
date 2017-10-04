@@ -18,11 +18,17 @@ package tilda.loader.csv;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.loader.csv.ImporterThread;
 import tilda.loader.csv.CSVImporter.Results;
 import tilda.loader.parser.Config;
 import tilda.loader.parser.DataObject;
@@ -38,9 +44,7 @@ public class ImportProcessor
       {
         try
           {
-
             List<Results> Results = new ArrayList<Results>();
-
             for (DataObject Data : CMSDataList)
               {
                 validate(Data);
@@ -81,6 +85,59 @@ public class ImportProcessor
           }
       }
 
+    /*
+     * Launch and Shutdown threads
+     */
+    public static void parallelProcess(List<String> connectionIds, String rootFolder, int threadsCount, List<DataObject> CMSDataList)
+      {
+          ExecutorService pool = Executors.newFixedThreadPool(threadsCount);
+          List<Future<List<Results>>> futures = new ArrayList<>();
+          
+          List<Results> Results = new ArrayList<Results>();
+          for (DataObject Data : CMSDataList)
+            {
+              validate(Data);
+              for(String connectionId : connectionIds)
+                {
+                  Callable<List<Results>> thread = new ImporterThread(connectionId, rootFolder, Data);
+                  Future<List<Results>> future =  pool.submit(thread);
+                  futures.add(future);
+                }
+            }
+          
+          Iterator<Future<List<Results>>> iterator = futures.iterator(); 
+          while(iterator.hasNext())
+            {
+              Future<List<Results>> future = iterator.next();
+              List<Results> Res;
+              try
+                {
+                  Res = future.get();
+                }
+              catch (InterruptedException | ExecutionException e)
+                {
+                  LOG.error("Exception in one of the ImporterThread's..", e);
+                  Res = null;
+                }
+              if (Res == null)
+                break;
+              Results.addAll(Res);
+            }
+
+          long totalCount = 0;
+          long totalNano = 0;
+          for (Results R : Results)
+            {
+              totalCount += R._RecordsCount;
+              totalNano += R._TimeNano;
+              LOG.debug("Processed file " + R._FileName + " into table " + R._TableName + " in " + DurationUtil.PrintDurationSeconds(R._TimeNano) +
+              " (" + DurationUtil.PrintPerformancePerMinute(R._TimeNano, R._RecordsCount) + " Records/min)");
+            }
+          LOG.debug("--------------------------------------------------------------------------------------------------------------");
+          LOG.debug("In total, processed " + totalCount + " in " + DurationUtil.PrintDuration(totalNano) + " (" + DurationUtil.PrintPerformancePerMinute(totalNano, totalCount) + " Records/min)");
+      }
+    
+    
     public static boolean truncateTable(Connection C, String SchemaName, String TableName)
       {
 
