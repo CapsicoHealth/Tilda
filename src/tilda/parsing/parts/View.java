@@ -112,11 +112,12 @@ public class View extends Base
         return "View";
       }
 
-    public ViewJoin getViewjoin(String ObjectName)
+    public ViewJoin getViewjoin(String ObjectName, String As)
       {
         if (_Joins != null)
           for (ViewJoin vj : _Joins)
-            if (vj != null && vj._ObjectObj.getBaseName().equals(ObjectName) == true)
+            if (vj != null && vj._ObjectObj.getBaseName().equals(ObjectName) == true 
+                           && (TextUtil.isNullOrEmpty(As)==true || As.equals(vj._As) == true))
               return vj;
         return null;
       }
@@ -189,6 +190,7 @@ public class View extends Base
                               break;
                             ViewColumn NewVC = new ViewColumn();
                             NewVC._SameAs = col.getFullName();
+                            NewVC._As = VC._As;
                             NewVC._Name = Prefix + col._Name;
                             NewVC._FrameworkGenerated = col._FrameworkGenerated;
                             _ViewColumns.add(i + j, NewVC);
@@ -203,6 +205,7 @@ public class View extends Base
                                   continue;
                                 ViewColumn NewVC = new ViewColumn();
                                 NewVC._SameAs = V.getShortName() + "." + TextUtil.Print(VPV._Name, VPV._Value);
+                                NewVC._As = VC._As;
                                 NewVC._Name = Prefix + TextUtil.Print(VPV._Name, VPV._Value);
                                 _ViewColumns.add(i + j, NewVC);
                                 _PadderColumnNames.track(NewVC.getName());
@@ -216,6 +219,7 @@ public class View extends Base
                             ViewColumn NewVC = new ViewColumn();
                             NewVC._SameAs = V.getFullName() + "." + F._Name;
                             NewVC._Name = Prefix + F._Name;
+                            NewVC._As = VC._As;
                             _ViewColumns.add(i + j, NewVC);
                             _PadderColumnNames.track(NewVC.getName());
                             ++j;
@@ -224,6 +228,7 @@ public class View extends Base
                           {
                             ViewColumn NewVC = new ViewColumn();
                             NewVC._SameAs = V.getFullName() + "." + V._CountStar;
+                            NewVC._As = VC._As;
                             NewVC._Name = Prefix + V._CountStar;
                             NewVC._Aggregate = AggregateType.COUNT;
                             _ViewColumns.add(i + j, NewVC);

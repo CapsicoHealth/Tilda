@@ -244,8 +244,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
               Str.append(" and ");
             Column C1 = Columns1.get(i);
             Column C2 = Columns2.get(i);
-            TableRankTracker TI1 = TableRankTracker.getElementFromLast(TableStack, C1._ParentObject);
-            TableRankTracker TI2 = TableRankTracker.getElementFromLast(TableStack, C2._ParentObject);
+            TableRankTracker TI1 = TableRankTracker.getElementFromLast(TableStack, C1._ParentObject, null);
+            TableRankTracker TI2 = TableRankTracker.getElementFromLast(TableStack, C2._ParentObject, null);
             if (TI1 == null)
               throw new Error("Cannot find source table " + C1._ParentObject.getFullName());
             if (TI2 == null)
@@ -301,28 +301,31 @@ public class Sql extends PostgreSQL implements CodeGenSql
             if (VC._SameAs != null && VC._SameAsObj != null)
               {
                 Object T = VC._SameAsObj._ParentObject;
-                TI = TableRankTracker.getElementFromLast(TableStack, T);
+                TI = TableRankTracker.getElementFromLast(TableStack, T, VC._As);
                 if (TI == null)
                   {
                     TableRankTracker MappedTI = TableMap.remove(T.getShortName());
-                    TI = new TableRankTracker(T, MappedTI == null ? 1 : MappedTI._V + 1);
+                    TI = new TableRankTracker(T, MappedTI == null ? 1 : MappedTI._V + 1, VC._As);
                     TableStack.add(TI);
                     TableMap.put(TI._N, TI);
                     if (TableMap.size() != 1)
                       {
-                        ViewJoin VJ = V.getViewjoin(T.getBaseName());
+                        ViewJoin VJ = V.getViewjoin(T.getBaseName(), VC._As);
                         if (VJ != null)
                           {
                             FromList.append("     " + JoinType.printJoinType(VJ._Join) + " " + VJ._ObjectObj.getShortName());
+                            if (TextUtil.isNullOrEmpty(VJ._As) == false)
+                              FromList.append(" as " + VJ._ObjectObj.getShortName().replace(".", "_") + VJ._As);
                             Query Q = VJ.getQuery(this);
                             if (Q == null)
                               throw new Exception("Cannot generate the view because an 'on' clause matching the active database '" + getName() + "' is not available.");
                             FromList.append(" on " + Q._Clause);
-                            TableRankTracker TI2 = TableRankTracker.getElementFromLast(TableStack, VJ._ObjectObj);
+                            TableRankTracker TI2 = TableRankTracker.getElementFromLast(TableStack, VJ._ObjectObj, VJ._As);
                             if (TI2 == null)
                               {
                                 throw new Exception("View " + V.getFullName() + " is using " + T.getShortName() + " but cannot find any any valid join definitions.");
                               }
+                            if (TextUtil.isNullOrEmpty(VC._As) == true)
                             for (int i = 2; i <= TI._V; ++i)
                               {
                                 FromList.append("\n     " + JoinType.printJoinType(VC._Join) + " " + VJ._ObjectObj.getShortName());
@@ -340,13 +343,12 @@ public class Sql extends PostgreSQL implements CodeGenSql
                               }
                             else
                               {
-                                if (TI._N.equalsIgnoreCase("PATIENTS.SCORE") == true)
-                                  {
-                                    LOG.debug("xxx");
-                                  }
                                 String JT = VC._Join != null ? JoinType.printJoinType(VC._Join)
                                 : FK._DestObjectObj.getFullName().equals(T.getFullName()) == false || FK._SrcColumnObjs.get(0)._Nullable == true ? "left  join" : "inner join";
-                                FromList.append("     " + JT + " " + TI._N + (TI._V == 1 ? " " : " as " + TI.getFullName()) + " on " + getFKStatement(FK, TableStack));
+                                FromList.append("     " + JT + " " + TI._N);
+                                if (TI._V > 1 || TextUtil.isNullOrEmpty(TI._As) == false)
+                                  FromList.append(" as " + TI.getFullName());
+                                FromList.append(" on " + getFKStatement(FK, TableStack));
                               }
                           }
                       }

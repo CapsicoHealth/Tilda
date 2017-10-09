@@ -285,7 +285,7 @@ public class Sql extends MSSQL implements CodeGenSql
               Object T = C._SameAsObj._ParentObject;
               if (Names.add(T.getFullName()) == true)
                 {
-                  ViewJoin VJ = V.getViewjoin(T.getBaseName());
+                  ViewJoin VJ = V.getViewjoin(T.getBaseName(), C._As);
                   if (VJ != null)
                     {
                       Out.print("     " + (C._Join == null ? "left" : C._Join) + " join " + getFullTableVar(VJ._ObjectObj));

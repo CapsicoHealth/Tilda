@@ -18,45 +18,51 @@ import tilda.parsing.parts.Object;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.ViewColumn;
 import tilda.utils.PaddingUtil;
+import tilda.utils.TextUtil;
 
 public class TableRankTracker
   {
     protected static final Logger LOG = LogManager.getLogger(TableRankTracker.class.getName());
 
-    public TableRankTracker(Object O, int V)
+    public TableRankTracker(Object O, int V, String As)
       {
         _O = O;
         _N = O.getShortName();
         _V = V;
+        _As = As;
       }
 
     public final Object _O;
     public final String _N;
     public final int    _V;
+    public final String _As;
 
     public String getFullName()
       {
-        return _V == 1 ? _N : _N.replace(".", "_") + "_" + _V;
+        return TextUtil.isNullOrEmpty(_As)==false ? (_N.replace(".", "_")+_As) : _V == 1 ? _N : _N.replace(".", "_") + "_" + _V;
       }
 
-    public static TableRankTracker getElementFromLast(Deque<TableRankTracker> TRTD, Object O)
+    public static TableRankTracker getElementFromLast(Deque<TableRankTracker> TRTD, Object O, String As)
       {
         Set<String> TableNames = new HashSet<String>();
-        return getElementFromLast(TRTD, O, TableNames, 0);
+        return getElementFromLast(TRTD, O, TableNames, 0, As);
       }
 
-    public static TableRankTracker getElementFromLast(Deque<TableRankTracker> TRTD, Object O, Set<String> TableNames, int Level)
+    public static TableRankTracker getElementFromLast(Deque<TableRankTracker> TRTD, Object O, Set<String> TableNames, int Level, String As)
       {
         Iterator<TableRankTracker> I = TRTD.descendingIterator();
         while (I.hasNext() == true)
           {
             TableRankTracker TI = I.next();
-            if (TI._O.getFullName().equals(O.getFullName()) == true)
+            if (TI._O.getFullName().equals(O.getFullName()) == true && (TextUtil.isNullOrEmpty(As) == true || As.equals(TI._As) == true))
               return TI;
+
             if (TI._O._FST == FrameworkSourcedType.VIEW)
               {
                 View SubV = TI._O._ParentSchema.getSourceView(TI._O);
-                if (SubV._PK != null && SubV._PK._ColumnObjs.get(0)._ParentObject.getFullName().equals(O.getFullName()) == true)
+                if (SubV._PK != null && SubV._PK._ColumnObjs.get(0)._ParentObject.getFullName().equals(O.getFullName()) == true
+                                     && (TextUtil.isNullOrEmpty(As) == true || As.equals(TI._As) == true)
+                   )
                   return TI;
 /*                
                 Deque<TableRankTracker> SubTRTD = new ArrayDeque<TableRankTracker>();
@@ -70,6 +76,7 @@ public class TableRankTracker
 */
               }
           }
+        
         return null;
       }
 
@@ -110,7 +117,7 @@ public class TableRankTracker
                 for (ViewColumn VC : SubV._ViewColumns)
                   {
                     if (TableNames.add(VC._SameAsObj._ParentObject.getFullName()) == true)
-                      SubTRTD.add(new TableRankTracker(VC._SameAsObj._ParentObject, 1));
+                      SubTRTD.add(new TableRankTracker(VC._SameAsObj._ParentObject, 1, VC._As));
                   }
                 if (SubTRTD.isEmpty() == false)
                   {
@@ -241,7 +248,7 @@ public class TableRankTracker
             for (ViewColumn VC : SubV._ViewColumns)
               {
                 if (TableNames.add(VC._SameAsObj._ParentObject.getFullName()) == true)
-                  getAllForeignMatchingKeys(TI_View ? O : TI._O, FKs, new TableRankTracker(VC._SameAsObj._ParentObject, 1), TableNames, Level + 1);
+                  getAllForeignMatchingKeys(TI_View ? O : TI._O, FKs, new TableRankTracker(VC._SameAsObj._ParentObject, 1, VC._As), TableNames, Level + 1);
               }
           }
         else
