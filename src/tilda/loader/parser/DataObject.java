@@ -36,6 +36,8 @@ public class DataObject
     @SerializedName("zoneId"      	 )      public String             _zoneId;
     @SerializedName("headersIncluded")      public boolean            _HeadersIncluded;
     @SerializedName("multiHeaderDelimeter") public String             _multiHeaderDelimeter;
+    @SerializedName("uniqueColumns"  )      public List<String>       _uniqueColumnsList    = new ArrayList<String>();
+    @SerializedName("upsert"         )      public boolean            _upsert;
     
     
     
@@ -77,4 +79,20 @@ public class DataObject
             CH.validate();
         
       }
+    
+    public String[] getUniqueColumnsList()
+      {
+        return _uniqueColumnsList.toArray(new String[_uniqueColumnsList.size()]);
+      }
+    
+    public boolean isUpsert()
+      {
+        return _upsert;
+      }
+    
+    public String getTableFullName()
+      {
+        return this._SchemaName + "." + this._TableName;
+      }
+
   }
