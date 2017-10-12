@@ -386,81 +386,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
     protected StringBuilder GenerateSQL(boolean isUpsert, String schemaName, String tableName, String[] columns, Map<String, ColumnMeta> DBColumns, String[] uniqueColumns)
       {
         // create prepare statement.
-        StringBuilder Str = new StringBuilder();
-  
-        Str.append("INSERT INTO ").append(schemaName).append(".").append(tableName).append("(");
-  
-        boolean occ = false;
-        if (DBColumns.get("refnum") != null && TextUtil.FindElement(columns, "refnum", false, 0) == -1)
-          {
-            Str.append("\"refnum\"");
-            occ = true;
-          }
-        if (DBColumns.get("lastupdated") != null && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
-          {
-            if (occ == true)
-              Str.append(",");
-            Str.append("\"lastUpdated\"");
-            occ = true;
-          }
-        if (DBColumns.get("created") != null && TextUtil.FindElement(columns, "created", false, 0) == -1)
-          {
-            if (occ == true)
-              Str.append(",");
-            Str.append("\"created\"");
-            occ = true;
-          }
-  
-        for (int i = 0; i < columns.length; ++i)// String column : getColumns())
-          {
-            if (occ == true)
-              {
-                Str.append(",");
-                occ = false;
-              }
-            if (i != 0)
-              Str.append(",");
-  
-            Str.append("\"").append(columns[i]).append("\"");
-          }
-        Str.append(") ");
-        Str.append(" Values (");
-  
-        if (DBColumns.get("refnum") != null && TextUtil.FindElement(columns, "refnum", false, 0) == -1)
-          {
-            Str.append("?");
-            occ = true;
-          }
-        if (DBColumns.get("lastupdated") != null && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
-          {
-            if (occ == true)
-              Str.append(",");
-  
-            Str.append("?");
-            occ = true;
-          }
-        if (DBColumns.get("created") != null && TextUtil.FindElement(columns, "created", false, 0) == -1)
-          {
-            if (occ == true)
-              Str.append(",");
-  
-            Str.append("?");
-            occ = true;
-          }
-  
-        for (int i = 0; i < columns.length; ++i)// String column : getColumns())
-          {
-            if (occ == true)
-              {
-                Str.append(",");
-                occ = false;
-              }
-            if (i != 0)
-              Str.append(",");
-  
-            Str.append("?");
-          }
-        Str.append(")");        
+        StringBuilder Str = GenerateInsertSQL(schemaName, tableName, columns, DBColumns);
         
         // UPSERT Additions
         if (isUpsert)
@@ -468,10 +394,6 @@ public class PostgreSQLCSVImporter extends CSVImporter
             Str.append(" ON CONFLICT(");
             for (int i = 0; i < uniqueColumns.length; ++i)
               {
-                if (occ == true) {
-                  Str.append(",");
-                  occ = false;
-                }
                 if (i != 0) {
                   Str.append(",");
                 }                  
@@ -481,10 +403,6 @@ public class PostgreSQLCSVImporter extends CSVImporter
             
             for (int i = 0; i < columns.length; ++i)
               {
-                if (occ == true) {
-                  Str.append(",");
-                  occ = false;
-                }
                 if (i != 0) {
                   Str.append(",");
                 }                  

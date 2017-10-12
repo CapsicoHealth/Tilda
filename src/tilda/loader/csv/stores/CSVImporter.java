@@ -162,6 +162,87 @@ public abstract class CSVImporter
           }
       }
 
+    protected StringBuilder GenerateInsertSQL(String schemaName, String tableName, String columns[], 
+      Map<String, ColumnMeta> DBColumns) 
+      {
+        StringBuilder Str = new StringBuilder();
+        
+        Str.append("INSERT INTO ").append(schemaName).append(".").append(tableName).append("(");
+  
+        boolean occ = false;
+        if (DBColumns.get("refnum") != null && TextUtil.FindElement(columns, "refnum", false, 0) == -1)
+          {
+            Str.append("\"refnum\"");
+            occ = true;
+          }
+        if (DBColumns.get("lastupdated") != null && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
+          {
+            if (occ == true)
+              Str.append(",");
+            Str.append("\"lastUpdated\"");
+            occ = true;
+          }
+        if (DBColumns.get("created") != null && TextUtil.FindElement(columns, "created", false, 0) == -1)
+          {
+            if (occ == true)
+              Str.append(",");
+            Str.append("\"created\"");
+            occ = true;
+          }
+  
+        for (int i = 0; i < columns.length; ++i)
+          {
+            if (occ == true)
+              {
+                Str.append(",");
+                occ = false;
+              }
+            if (i != 0)
+              Str.append(",");
+  
+            Str.append("\"").append(columns[i]).append("\"");
+          }
+        Str.append(") ");
+        Str.append(" Values (");
+  
+        if (DBColumns.get("refnum") != null && TextUtil.FindElement(columns, "refnum", false, 0) == -1)
+          {
+            Str.append("?");
+            occ = true;
+          }
+        if (DBColumns.get("lastupdated") != null && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
+          {
+            if (occ == true)
+              Str.append(",");
+  
+            Str.append("?");
+            occ = true;
+          }
+        if (DBColumns.get("created") != null && TextUtil.FindElement(columns, "created", false, 0) == -1)
+          {
+            if (occ == true)
+              Str.append(",");
+  
+            Str.append("?");
+            occ = true;
+          }
+  
+        for (int i = 0; i < columns.length; ++i)
+          {
+            if (occ == true)
+              {
+                Str.append(",");
+                occ = false;
+              }
+            if (i != 0)
+              Str.append(",");
+  
+            Str.append("?");
+          }
+        Str.append(")");        
+        return Str;
+      }
+    
     protected static boolean isRecordAllNullOrEmpty(CSVRecord record)
       {
         for (int i = 0; i < record.size(); ++i)

@@ -28,7 +28,8 @@ public class MSSQLCSVImporter extends CSVImporter
     @Override
     protected StringBuilder GenerateSQL(boolean isUpsert, String schemaName, String tableName, String[] columns, Map<String, ColumnMeta> DBColumns, String[] uniqueColumns)
       {
-        return null;
+        StringBuilder Str = GenerateInsertSQL(schemaName, tableName, columns, DBColumns);
+        return Str;
       }
 
   }
