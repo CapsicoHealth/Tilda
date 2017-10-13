@@ -93,7 +93,6 @@ public class ImportProcessor
     
     public static boolean truncateTable(Connection C, String SchemaName, String TableName)
       {
-
         try
           {
             C.truncateTable(SchemaName, TableName);

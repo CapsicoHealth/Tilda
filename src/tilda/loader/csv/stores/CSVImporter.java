@@ -102,12 +102,7 @@ public abstract class CSVImporter
             Map<String, ColumnMeta> DBColumns = TM._Columns;
 
             createSchemaAndTable(C, cmsDO._SchemaName, cmsDO._TableName, columns, 500);
-            if(cmsDO.isUpsert() == false)
-              {
-                ImportProcessor.truncateTable(C, cmsDO._SchemaName, cmsDO._TableName);
-                LOG.debug("Truncated Tables completed.");
-              }
-            StringBuilder Str = GenerateSQL(cmsDO.isUpsert(), cmsDO._SchemaName, cmsDO._TableName, columns, DBColumns, uniqueColumns);
+            StringBuilder Str = GenerateSQL(cmsDO.isUpserts(), cmsDO._SchemaName, cmsDO._TableName, columns, DBColumns, uniqueColumns);
             
             for (String file : fileList)
               {
@@ -119,7 +114,7 @@ public abstract class CSVImporter
                 Iterable<CSVRecord> records = csvFormat.parse(R);
                 getHeader(completeHeaders, cmsDO._HeadersIncluded, records);
                 
-                NumOfRecs = insertData(cmsDO.isUpsert(), t0, DBColumns, cmsDO._HeadersIncluded, records, Str, cmsDO._SchemaName,
+                NumOfRecs = insertData(cmsDO.isUpserts(), t0, DBColumns, cmsDO._HeadersIncluded, records, Str, cmsDO._SchemaName,
                   cmsDO._TableName, headers, columns, cmsDO.getMultiHeaderColumnMap(), completeHeaders, cmsDO._dateTimePattern, 
                   cmsDO._zoneId, cmsDO._datePattern);
                 // C.setTableLogging(cmsDO._SchemaName, cmsDO._TableName, true);

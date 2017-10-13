@@ -37,7 +37,8 @@ public class DataObject
     @SerializedName("headersIncluded")      public boolean            _HeadersIncluded;
     @SerializedName("multiHeaderDelimeter") public String             _multiHeaderDelimeter;
     @SerializedName("uniqueColumns"  )      public List<String>       _uniqueColumnsList    = new ArrayList<String>();
-    @SerializedName("upsert"         )      public boolean            _upsert;
+    @SerializedName("upserts"        )      public boolean            _upserts;
+    @SerializedName("inserts"        )      public boolean            _inserts;
     
     
     
@@ -84,12 +85,17 @@ public class DataObject
       {
         return _uniqueColumnsList.toArray(new String[_uniqueColumnsList.size()]);
       }
-    
-    public boolean isUpsert()
+      
+    public boolean isUpserts()
       {
-        return _upsert;
+        return this._upserts;
       }
     
+    public boolean isInserts()
+      {
+        return this._inserts;
+      }
+
     public String getTableFullName()
       {
         return this._SchemaName + "." + this._TableName;

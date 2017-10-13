@@ -111,7 +111,7 @@ public class Load
                 List<String> selectedObjectsList = new ArrayList<>(Arrays.asList(arguments.get(i+3).split(",")));
                 List<String> connectionIdsList = new ArrayList<>(Arrays.asList(arguments.get(i+5).split(",")));
                 List<DataObject> filteredObjects = FilterObjects(selectedObjectsList, Conf._CmsData);
-                List<String> errors = validateUniqueColumns(connectionIdsList, filteredObjects);
+                List<String> errors = ValidateDataObjects(connectionIdsList, filteredObjects);
                 if ( errors.size() > 0 )
                   {
                     for(String error: errors)
@@ -187,7 +187,7 @@ public class Load
           }
       }
     
-    private static List<String> validateUniqueColumns(List<String> connectionIdsList, List<DataObject> selectedDO)
+    private static List<String> ValidateDataObjects(List<String> connectionIdsList, List<DataObject> selectedDO)
       {
         List<String> errorMessages = new ArrayList<>();
         Connection C = null;
@@ -198,15 +198,21 @@ public class Load
                 C = ConnectionPool.get(connectionId);
                 for(DataObject DO : selectedDO )
                   {
-                    if (DO.isUpsert() == false)
-                      continue; // Skip if not Upserting
+                    if ( DO.isUpserts() == DO.isInserts())
+                      {
+                        errorMessages.add("Both 'inserts' and 'upserts' keys cannot be of same value. Table: "+DO.getTableFullName());
+                        continue;
+                      }
                       
+                    if(DO.isUpserts() == false)
+                      continue; // Skip uniqueColumns validation if not Upserts
+                    
                     String[] uniqueColumns = DO.getUniqueColumnsList();
                     if (uniqueColumns.length < 1)
                       {
                         errorMessages.add("'uniqueColumns' is not defined in JSON file for Table: "+DO.getTableFullName());
                         continue;
-                      }                     
+                      }
                       
                     TableMeta tableMeta = new TableMeta(DO._SchemaName, DO._TableName, "");
                     tableMeta.load(C);
@@ -215,7 +221,7 @@ public class Load
                       {
                         errorMessages.add("Unique Index is not defined for Table: "+ DO.getTableFullName() + " in DB: "+ connectionId);
                       }
-                  }                
+                  }            
               }
           }
         catch (Throwable T)
@@ -443,7 +449,7 @@ public class Load
                                 // Validate Table indices
                                 List<DataObject> selectedDO = FilterObjects(ImportTables, Conf._CmsData);
                                 LOG.debug("Validating Selected Table Indices..");
-                                List<String> errors = validateUniqueColumns(ConnectionIds, selectedDO);
+                                List<String> errors = ValidateDataObjects(ConnectionIds, selectedDO);
                                 if ( errors.size() > 0 )
                                   {
                                     String error = TextUtil.JoinTrim(errors.toArray(new String[errors.size()]), ", \n");
