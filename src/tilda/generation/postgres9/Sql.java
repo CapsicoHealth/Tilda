@@ -522,7 +522,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 Str.append("\n");
               }
           }
-        if (V._Pivot != null)
+        if (V._Pivot != null &&  V._ViewColumns.size() > 3)
           {
             Str.append("     order by 1, 2\n");
           }
@@ -562,6 +562,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
         if (VC._Aggregate == AggregateType.COUNT)
           {
             Str.append("count(*)");
+            if (TextUtil.isNullOrEmpty(VC._Filter) == false)
+              {
+                Str.append(" filter(where ").append(VC._Filter).append(")");
+              }
             hasAggregates = true;
           }
         else if (VC._SameAs != null && VC._SameAsObj == null && VC._FrameworkGenerated == true)
@@ -607,67 +611,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
         String Str = PrintBaseView(V);
         if (V._Pivot != null)
           {
-            StringBuilder b = new StringBuilder();
-            b.append("select unnest(ARRAY[").append(PrintValueList(V._Pivot)).append("]) as _x order by _x\n");
-            // b.append("select distinct ").append(getFullColumnVar(V._Pivot._VC._SameAsObj)).append("\n")
-            // .append(" from ").append(V._Pivot._VC._SameAsObj._ParentObject.getShortName()).append("\n")
-            // .append(" where ").append(PivotIn(V._Pivot)).append("\n")
-            // .append("order by ").append(getFullColumnVar(V._Pivot._VC._SameAsObj)).append("\n");
-            StringBuilder SelectStr = new StringBuilder();
-            if (V._Pivot != null && V._ViewColumns.size() > 3)
-              {
-                for (int i = 0; i < V._ViewColumns.size() - 2; ++i)
-                  {
-                    ViewColumn VC = V._ViewColumns.get(i);
-                    if (VC._JoinOnly == true)
-                      continue;
-                    if (SelectStr.length() != 0)
-                      SelectStr.append("\n     , ");
-                    SelectStr.append("(_wt).\"" + VC._Name + "\"");
-                  }
-                for (Value v : V._Pivot._Values)
-                  {
-                    SelectStr.append("\n     , \"" + v._Name + "\"");
-                  }
-              }
-            else
-              SelectStr.append("*");
-
-            Str = "select " + SelectStr.toString() + "\n from crosstab (\n" + TextUtil.EscapeSingleQuoteForSQL(Str) + ",\n"
-            + TextUtil.EscapeSingleQuoteForSQL(b.toString()) + ")\n"
-            + "as final_result (";
-            if (V._Pivot != null && V._ViewColumns.size() > 3)
-              {
-                Str += "_wt " + V.getShortName() + "_WT";
-              }
-            else
-              for (int i = 0; i < V._ViewColumns.size() - 2; ++i)
-                {
-                  ViewColumn VC = V._ViewColumns.get(i);
-                  if (VC._SameAs.equals("_TS.p") == true)
-                    {
-                      if (i != 0)
-                        Str += "  , ";
-                      Str += "\"" + VC.getName() + "\" Date";
-                    }
-                  else if (VC != null && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false)
-                    {
-                      if (i != 0)
-                        Str += "  , ";
-                      Str += "\"" + VC.getName() + "\" " + getColumnType(VC._SameAsObj);
-                    }
-                }
-            ViewColumn VC = V._ViewColumns.get(V._ViewColumns.size() - 1);
-            ColumnType Type = VC.getAggregateType();
-            for (int i = 0; i < V._Pivot._Values.length; ++i)
-              {
-                Str += ", \"" + TextUtil.Print(V._Pivot._Values[i]._Name, V._Pivot._Values[i]._Value) + "\" ";
-                if (V._CountStar != null)
-                  Str += "bigint";
-                else
-                  Str += getColumnType(V._Pivot._VC._SameAsObj, Type);
-              }
-            Str += ")\n";
+            
+            Str = V._ViewColumns.size() > 3 ? PivotPostgresWay(V, Str) : PivotGenericWay(V, Str);
           }
         if (V._Formulas != null && V._Formulas.isEmpty() == false)
           {
@@ -745,6 +690,115 @@ public class Sql extends PostgreSQL implements CodeGenSql
             ;
           }
       }
+
+    private String PivotPostgresWay(View V, String Str)
+      {
+        StringBuilder b = new StringBuilder();
+        b.append("select unnest(ARRAY[").append(PrintValueList(V._Pivot)).append("]) as _x order by _x\n");
+        // b.append("select distinct ").append(getFullColumnVar(V._Pivot._VC._SameAsObj)).append("\n")
+        // .append(" from ").append(V._Pivot._VC._SameAsObj._ParentObject.getShortName()).append("\n")
+        // .append(" where ").append(PivotIn(V._Pivot)).append("\n")
+        // .append("order by ").append(getFullColumnVar(V._Pivot._VC._SameAsObj)).append("\n");
+        StringBuilder SelectStr = new StringBuilder();
+        if (V._Pivot != null && V._ViewColumns.size() > 3)
+          {
+            for (int i = 0; i < V._ViewColumns.size() - 2; ++i)
+              {
+                ViewColumn VC = V._ViewColumns.get(i);
+                if (VC._JoinOnly == true)
+                  continue;
+                if (SelectStr.length() != 0)
+                  SelectStr.append("\n     , ");
+                SelectStr.append("(_wt).\"" + VC._Name + "\"");
+              }
+            for (Value v : V._Pivot._Values)
+              {
+                SelectStr.append("\n     , \"" + v._Name + "\"");
+              }
+          }
+        else
+          SelectStr.append("*");
+
+        Str = "select " + SelectStr.toString() + "\n from crosstab (\n" + TextUtil.EscapeSingleQuoteForSQL(Str) + ",\n"
+        + TextUtil.EscapeSingleQuoteForSQL(b.toString()) + ")\n"
+        + "as final_result (";
+        if (V._Pivot != null && V._ViewColumns.size() > 3)
+          {
+            Str += "_wt " + V.getShortName() + "_WT";
+          }
+        else
+          for (int i = 0; i < V._ViewColumns.size() - 2; ++i)
+            {
+              ViewColumn VC = V._ViewColumns.get(i);
+              if (VC._SameAs.equals("_TS.p") == true)
+                {
+                  if (i != 0)
+                    Str += "  , ";
+                  Str += "\"" + VC.getName() + "\" Date";
+                }
+              else if (VC != null && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false)
+                {
+                  if (i != 0)
+                    Str += "  , ";
+                  Str += "\"" + VC.getName() + "\" " + getColumnType(VC._SameAsObj);
+                }
+            }
+        ViewColumn VC = V._ViewColumns.get(V._ViewColumns.size() - 1);
+        ColumnType Type = VC.getAggregateType();
+        for (int i = 0; i < V._Pivot._Values.length; ++i)
+          {
+            Str += ", \"" + TextUtil.Print(V._Pivot._Values[i]._Name, V._Pivot._Values[i]._Value) + "\" ";
+            if (V._CountStar != null)
+              Str += "bigint";
+            else
+              Str += getColumnType(V._Pivot._VC._SameAsObj, Type);
+          }
+        Str += ")\n";
+        return Str;
+      }
+
+    
+    private String PivotGenericWay(View V, String Str)
+    throws Exception
+      {
+        Str = "with T as (\n" + Str + ") select \n";
+          for (int i = 0; i < V._ViewColumns.size() - 2; ++i)
+            {
+              ViewColumn VC = V._ViewColumns.get(i);
+              if (VC._SameAs.equals("_TS.p") == true)
+                {
+                  if (i != 0)
+                    Str += "  , ";
+                  Str += "\"" + VC.getName() + "\" "; //Date";
+                }
+              else if (VC != null && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false)
+                {
+                  if (i != 0)
+                    Str += "  , ";
+                  Str += "\"" + VC.getName() + "\" "; // + getColumnType(VC._SameAsObj);
+                }
+            }
+        ViewColumn VC_base = V._ViewColumns.get(V._ViewColumns.size() - 2);
+        ViewColumn VC_pivot = V._ViewColumns.get(V._ViewColumns.size() - 1);
+        if (VC_pivot._Aggregate != null && VC_pivot._Aggregate != AggregateType.COUNT && VC_pivot._Aggregate != AggregateType.SUM)
+         throw new Exception("Cannot do a  pivot on an aggregated "+VC_pivot._Aggregate.name()+" for view "+V.getFullName()+".");
+        for (int i = 0; i < V._Pivot._Values.length; ++i)
+          {
+            if (V._CountStar != null)
+              Str += "\n, sum(\"count\") filter (where \""+VC_base.getName()+ "\"= '" + TextUtil.Print(V._Pivot._Values[i]._Name, V._Pivot._Values[i]._Value) + "') ";
+            else if (VC_pivot._Aggregate == AggregateType.COUNT || VC_pivot._Aggregate == AggregateType.SUM)
+              Str += "\n, sum(\""+VC_pivot.getName()+"\") filter (where \""+VC_base.getName()+ "\"= '" + TextUtil.Print(V._Pivot._Values[i]._Name, V._Pivot._Values[i]._Value) + "') ";
+            else
+              Str += "\n, max(case when \""+VC_base.getName()+ "\"= '" + TextUtil.Print(V._Pivot._Values[i]._Name, V._Pivot._Values[i]._Value) + "' then \""+VC_pivot.getName()+"\" end)";
+            Str+=" as \""+TextUtil.Print(V._Pivot._Values[i]._Name, V._Pivot._Values[i]._Value)+"\"";
+          }
+        Str += "\n"
+            + "from T\n"
+            + "group by 1\n";
+        return Str;
+      }
+    
+    
     
     @Override
     public void genDDLComments(PrintWriter OutFinal, View V)

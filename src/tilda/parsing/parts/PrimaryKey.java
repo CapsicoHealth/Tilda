@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tilda.enums.ColumnMode;
+import tilda.enums.FrameworkSourcedType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ValidationHelper;
 
@@ -66,6 +67,9 @@ public class PrimaryKey
           @Override
           public boolean process(ParserSession PS, Base ParentObject, String What, Column C)
             {
+              if (C._ParentObject._FST == FrameworkSourcedType.VIEW)
+               return true;
+              
               if (C._Nullable == true)
                 PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a primary key with column '" + C.getName() + "' which is nullable.");
               if (C._Invariant == false)
