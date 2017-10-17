@@ -36,7 +36,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.loader.GenericLoader;
-import tilda.loader.csv.ImportProcessor;
 import tilda.loader.parser.ColumnHeader;
 import tilda.loader.parser.DataObject;
 
@@ -68,21 +67,7 @@ public abstract class CSVImporter
 
     protected abstract StringBuilder GenerateSQL(boolean isUpsert, String schemaName, String tableName, String columns[],
       Map<String, ColumnMeta> DBColumns, String lookupColumns[]);
-    
-    public static CSVImporter newInstance(Connection C, String rootFolder, DataObject cmsDO) throws Exception
-      {
-        switch(C.getDBTypeName())
-        {
-          case "PostgreSQL":
-            return new PostgreSQLCSVImporter(C, rootFolder, cmsDO);
-          case "IBMDB2":
-            return new IBMDB2CSVImporter(C, rootFolder, cmsDO);
-          case "MSSQL":
-            return new MSSQLCSVImporter(C, rootFolder, cmsDO);
-        }
-        throw new Exception("CSVImporter is not defined for DB Type: "+C.getDBTypeName());
-      }  
-    
+        
     public List<Results> process()
       {
         long t0 = System.nanoTime();

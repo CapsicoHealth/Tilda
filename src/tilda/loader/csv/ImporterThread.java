@@ -35,7 +35,7 @@ public class ImporterThread implements Callable<List<Results>>
         try
           {
             C = ConnectionPool.get(this.connectionId);
-            CSVImporter importer = CSVImporter.newInstance(C, this.rootFolder, this.dataObject);            
+            CSVImporter importer = CSVImporterFactory.newInstance(C, this.rootFolder, this.dataObject);            
             result = importer.process();
           }
         catch(Throwable T) 
