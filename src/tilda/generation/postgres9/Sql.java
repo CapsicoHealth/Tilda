@@ -258,7 +258,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
 
 
-    private String PrintBaseView(View V)
+    private String PrintBaseView(View V, boolean OmmitTZs)
     throws Exception
       {
         List<TotalMess> FuckList = TotalMess.ScanView(V);
@@ -326,12 +326,12 @@ public class Sql extends PostgreSQL implements CodeGenSql
                                 throw new Exception("View " + V.getFullName() + " is using " + T.getShortName() + " but cannot find any any valid join definitions.");
                               }
                             if (TextUtil.isNullOrEmpty(VC._As) == true)
-                            for (int i = 2; i <= TI._V; ++i)
-                              {
-                                FromList.append("\n     " + JoinType.printJoinType(VC._Join) + " " + VJ._ObjectObj.getShortName());
-                                FromList.append(" as " + getFullTableVar(VC._SameAsObj._ParentObject, TI._V));
-                                FromList.append(" on " + Q._Clause);
-                              }
+                              for (int i = 2; i <= TI._V; ++i)
+                                {
+                                  FromList.append("\n     " + JoinType.printJoinType(VC._Join) + " " + VJ._ObjectObj.getShortName());
+                                  FromList.append(" as " + getFullTableVar(VC._SameAsObj._ParentObject, TI._V));
+                                  FromList.append(" on " + Q._Clause);
+                                }
                           }
                         else
                           {
@@ -365,7 +365,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
                         } while (TI != TableStack.peekLast());
                   }
               }
-            if (VC._JoinOnly == false)
+ 
+            if (VC._JoinOnly == false && (OmmitTZs == false || OmmitTZs == true && VC._SameAsObj != null && VC._SameAsObj._Mode == ColumnMode.NORMAL))
               {
                 if (First == true)
                   {
@@ -522,7 +523,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 Str.append("\n");
               }
           }
-        if (V._Pivot != null &&  V._ViewColumns.size() > 3)
+        if (V._Pivot != null && V._ViewColumns.size() > 3)
           {
             Str.append("     order by 1, 2\n");
           }
@@ -608,28 +609,14 @@ public class Sql extends PostgreSQL implements CodeGenSql
     public void genDDL(PrintWriter OutFinal, View V)
     throws Exception
       {
-        String Str = PrintBaseView(V);
+        String Str = PrintBaseView(V, false);
         if (V._Pivot != null)
           {
-            
             Str = V._ViewColumns.size() > 3 ? PivotPostgresWay(V, Str) : PivotGenericWay(V, Str);
           }
         if (V._Formulas != null && V._Formulas.isEmpty() == false)
           {
-            StringBuilder b = new StringBuilder();
-            b.append("select *\n");
-            for (Formula F : V._Formulas)
-              {
-                if (F == null)
-                  continue;
-                String FormulaType = getColumnType(F.getType(), 8192, null, false);
-                b.append("     -- ").append(String.join("\n     -- ", F._Description)).append("\n");
-                b.append("     , (").append(genFormulaCode(V, F)).append(")::" + FormulaType + " as \"").append(F._Name).append("\"\n");
-              }
-            b.append("\n from (\n").append(Str).append("\n      ) as T");
-            if (V._Realize != null)
-              b.append("\n-- Realized as " + genRealizedColumnList(V, " ") + "\n");
-            Str = b.toString();
+            Str = DoFormulasSuperView(V, Str);
           }
         if (V._Pivot != null && V._ViewColumns.size() > 3)
           {
@@ -668,8 +655,36 @@ public class Sql extends PostgreSQL implements CodeGenSql
             .append("CREATE OR REPLACE FUNCTION " + V._ParentSchema._Name + ".Refill_" + TName + "() RETURNS boolean AS $$\n")
             .append("BEGIN\n")
             .append("  DROP TABLE IF EXISTS " + RName + ";\n")
-            .append("  CREATE TABLE " + RName + " AS SELECT " + genRealizedColumnList(V, "\n                         " + PaddingUtil.getPad(RName.length())) 
-                   +"\n                    " + PaddingUtil.getPad(RName.length())+" FROM " + V._ParentSchema._Name + "." + V._Name + ";\n");
+            .append("  CREATE TABLE " + RName + " AS ");
+
+            if (V._Realize._SubRealized.length != 0)
+              {
+                StringBuilder r = new StringBuilder();
+                r.append("(?i)\\b(");
+                boolean First = true;
+                for (String s : V._Realize._SubRealized)
+                  {
+                    if (First == false)
+                      r.append("|");
+                    else
+                      First = false;
+
+                    r.append(View.getRootViewName(s).toUpperCase());
+                  }
+                r.append(")(PIVOT)?VIEW\\b");
+                String BV = PrintBaseView(V, true).replaceAll(r.toString(), "$1Realized");
+                if (V._Formulas != null && V._Formulas.isEmpty() == false)
+                    BV = DoFormulasSuperView(V, BV);
+
+                OutFinal.append("With TT as (").append(BV).append(")");
+              }
+            OutFinal.append("SELECT ").append(genRealizedColumnList(V, "\n                         " + PaddingUtil.getPad(RName.length()))
+            + "\n                    " + PaddingUtil.getPad(RName.length()));
+            
+            if (V._Realize._SubRealized.length != 0)
+              OutFinal.append(" FROM TT;\n");
+            else
+             OutFinal.append(" FROM " + V._ParentSchema._Name + "." + V._Name + ";\n");
             // .append(" CREATE UNLOGGED TABLE " + V._ParentSchema._Name + "." + TName + "Realized " + "AS SELECT " + genRealizedColumnList(V) + " FROM " + V._ParentSchema._Name +
             // "." + V._Name + ";\n");
 
@@ -686,9 +701,27 @@ public class Sql extends PostgreSQL implements CodeGenSql
             .append("LANGUAGE PLPGSQL;\n")
             .append("\n")
             .append("-- SELECT " + V._ParentSchema._Name + ".Refill_" + TName + "();")
-            .append("-- !!! THIS MAY TAKE SEVERAL MINUTES !!! --")
-            ;
+            .append("-- !!! THIS MAY TAKE SEVERAL MINUTES !!! --");
           }
+      }
+
+    private String DoFormulasSuperView(View V, String Str)
+      {
+        StringBuilder b = new StringBuilder();
+        b.append("select *\n");
+        for (Formula F : V._Formulas)
+          {
+            if (F == null)
+              continue;
+            String FormulaType = getColumnType(F.getType(), 8192, null, false);
+            b.append("     -- ").append(String.join("\n     -- ", F._Description)).append("\n");
+            b.append("     , (").append(genFormulaCode(V, F)).append(")::" + FormulaType + " as \"").append(F._Name).append("\"\n");
+          }
+        b.append("\n from (\n").append(Str).append("\n      ) as T");
+        if (V._Realize != null)
+          b.append("\n-- Realized as " + genRealizedColumnList(V, " ") + "\n");
+        Str = b.toString();
+        return Str;
       }
 
     private String PivotPostgresWay(View V, String Str)
@@ -757,49 +790,49 @@ public class Sql extends PostgreSQL implements CodeGenSql
         return Str;
       }
 
-    
+
     private String PivotGenericWay(View V, String Str)
     throws Exception
       {
         Str = "with T as (\n" + Str + ") select \n";
-          for (int i = 0; i < V._ViewColumns.size() - 2; ++i)
-            {
-              ViewColumn VC = V._ViewColumns.get(i);
-              if (VC._SameAs.equals("_TS.p") == true)
-                {
-                  if (i != 0)
-                    Str += "  , ";
-                  Str += "\"" + VC.getName() + "\" "; //Date";
-                }
-              else if (VC != null && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false)
-                {
-                  if (i != 0)
-                    Str += "  , ";
-                  Str += "\"" + VC.getName() + "\" "; // + getColumnType(VC._SameAsObj);
-                }
-            }
+        for (int i = 0; i < V._ViewColumns.size() - 2; ++i)
+          {
+            ViewColumn VC = V._ViewColumns.get(i);
+            if (VC._SameAs.equals("_TS.p") == true)
+              {
+                if (i != 0)
+                  Str += "  , ";
+                Str += "\"" + VC.getName() + "\" "; // Date";
+              }
+            else if (VC != null && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false)
+              {
+                if (i != 0)
+                  Str += "  , ";
+                Str += "\"" + VC.getName() + "\" "; // + getColumnType(VC._SameAsObj);
+              }
+          }
         ViewColumn VC_base = V._ViewColumns.get(V._ViewColumns.size() - 2);
         ViewColumn VC_pivot = V._ViewColumns.get(V._ViewColumns.size() - 1);
         if (VC_pivot._Aggregate != null && VC_pivot._Aggregate != AggregateType.COUNT && VC_pivot._Aggregate != AggregateType.SUM)
-         throw new Exception("Cannot do a  pivot on an aggregated "+VC_pivot._Aggregate.name()+" for view "+V.getFullName()+".");
+          throw new Exception("Cannot do a  pivot on an aggregated " + VC_pivot._Aggregate.name() + " for view " + V.getFullName() + ".");
         for (int i = 0; i < V._Pivot._Values.length; ++i)
           {
             if (V._CountStar != null)
-              Str += "\n, sum(\"count\") filter (where \""+VC_base.getName()+ "\"= '" + TextUtil.Print(V._Pivot._Values[i]._Name, V._Pivot._Values[i]._Value) + "') ";
+              Str += "\n, sum(\"count\") filter (where \"" + VC_base.getName() + "\"= '" + TextUtil.Print(V._Pivot._Values[i]._Name, V._Pivot._Values[i]._Value) + "') ";
             else if (VC_pivot._Aggregate == AggregateType.COUNT || VC_pivot._Aggregate == AggregateType.SUM)
-              Str += "\n, sum(\""+VC_pivot.getName()+"\") filter (where \""+VC_base.getName()+ "\"= '" + TextUtil.Print(V._Pivot._Values[i]._Name, V._Pivot._Values[i]._Value) + "') ";
+              Str += "\n, sum(\"" + VC_pivot.getName() + "\") filter (where \"" + VC_base.getName() + "\"= '" + V._Pivot._Values[i]._Value + "') ";
             else
-              Str += "\n, max(case when \""+VC_base.getName()+ "\"= '" + TextUtil.Print(V._Pivot._Values[i]._Name, V._Pivot._Values[i]._Value) + "' then \""+VC_pivot.getName()+"\" end)";
-            Str+=" as \""+TextUtil.Print(V._Pivot._Values[i]._Name, V._Pivot._Values[i]._Value)+"\"";
+              Str += "\n, max(case when \"" + VC_base.getName() + "\"= '" + V._Pivot._Values[i]._Value + "' then \"" + VC_pivot.getName() + "\" end)";
+            Str += " as \"" + TextUtil.Print(V._Pivot._Values[i]._Name, V._Pivot._Values[i]._Value) + "\"";
           }
         Str += "\n"
-            + "from T\n"
-            + "group by 1\n";
+        + "from T\n"
+        + "group by 1\n";
         return Str;
       }
-    
-    
-    
+
+
+
     @Override
     public void genDDLComments(PrintWriter OutFinal, View V)
     throws Exception
@@ -807,7 +840,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         StringBuilderWriter Str = new StringBuilderWriter();
         PrintWriter Out = new PrintWriter(Str);
         genDDL(Out, V);
-        
+
         OutFinal.println("COMMENT ON VIEW " + V._ParentSchema._Name + "." + V._Name + " IS E" + TextUtil.EscapeSingleQuoteForSQL(Str.toString().replace("\r\n", "\\n").replace("\n", "\\n")) + ";");
         OutFinal.println();
         for (int i = 0; i < V._ViewColumns.size(); ++i)
@@ -836,14 +869,14 @@ public class Sql extends PostgreSQL implements CodeGenSql
               + TextUtil.EscapeSingleQuoteForSQL("The calculated formula: " + String.join("\\n", F._Description))
               + ";");
       }
-    
+
     @Override
     public void genDDLMetadata(PrintWriter OutFinal, View V)
     throws Exception
       {
         if (V._Formulas == null || V._Formulas.isEmpty() == true)
-         return ;
-        
+          return;
+
         OutFinal.println("DELETE FROM " + V._ParentSchema._Name + ".TildaFormulaValue where \"viewName\"=" + TextUtil.EscapeSingleQuoteForSQL(V._Name) + ";");
         OutFinal.println("DELETE FROM " + V._ParentSchema._Name + ".TildaFormulaReference where \"viewName\"=" + TextUtil.EscapeSingleQuoteForSQL(V._Name) + ";");
         OutFinal.println("DELETE FROM " + V._ParentSchema._Name + ".TildaFormula where \"viewName\"=" + TextUtil.EscapeSingleQuoteForSQL(V._Name) + ";");
@@ -964,7 +997,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
           }
         if (count >= 0)
           OutFinal.println("   ;");
-        
+
       }
 
     private String genFormulaCode(View ParentView, Formula F)
@@ -1032,7 +1065,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   First = false;
                 ViewRealizeMapping VRM = V._Realize.getMapping(VC.getName());
                 if (VRM == null)
-                  Str.append(V._ParentSchema._Name + "." + V._Name + ".\"" + VC._Name + "\"");
+                  Str.append(/*V._ParentSchema._Name + "." + V._Name + "."+*/"\"" + VC._Name + "\"");
                 else
                   Str.append(VRM.printMapping());
               }
@@ -1060,7 +1093,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   First = false;
                 ViewRealizeMapping VRM = V._Realize.getMapping(F._Name);
                 if (VRM == null)
-                  Str.append(V._ParentSchema._Name + "." + V._Name + ".\"" + F._Name + "\"");
+                  Str.append(/*V._ParentSchema._Name + "." + V._Name + "."+*/"\"" + F._Name + "\"");
                 else
                   Str.append(VRM.printMapping());
               }

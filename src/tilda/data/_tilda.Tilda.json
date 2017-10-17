@@ -231,7 +231,7 @@
         { "name": "SchemaByObjectStart", "columns": ["schemaName"], "orderBy": ["objectName", "startPeriod desc"], "db": true },
         { "name": "SchemaObjectByStart", "columns": ["schemaName", "objectName"], "orderBy": ["startPeriod desc"], "db": false }
       ]
-    },
+    }
                      
     
   ]

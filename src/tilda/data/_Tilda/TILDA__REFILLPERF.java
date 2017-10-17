@@ -7,7 +7,6 @@
 package tilda.data._Tilda;
 
 import java.time.*;
-import java.util.*;
 import java.io.Writer;
 
 import tilda.db.*;
@@ -25,16 +24,16 @@ import org.apache.logging.log4j.Logger;
 
 /**
 <DIV>
-<DIV id='CONNECTION_DIV' class='tables'>
-<H2>CONNECTION&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 60%;"><A href="#">top</A></SUP></H2>
+<DIV id='REFILLPERF_DIV' class='tables'>
+<H2>REFILLPERF&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 60%;"><A href="#">top</A></SUP></H2>
 </DIV>
-The generated Java 8/PostgreSQL Tilda data class <B>Data_CONNECTION</B> is mapped to the Table <B>TILDA.CONNECTION</B>.
+The generated Java 8/PostgreSQL Tilda data class <B>Data_REFILLPERF</B> is mapped to the Table <B>TILDA.REFILLPERF</B>.
 <UL>
 
 <LI>The Table has normal <B>read/write</B> capabilities.</LI>
 <LI>The Table is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
 </UL>
-<B>Description</B>: Tilda DB Connections Configurations<BR>
+<B>Description</B>: Performance logs for the Tilda Refills<BR>
 <BR>
 
 It contains the following columns:<BR>
@@ -43,106 +42,106 @@ It contains the following columns:<BR>
 
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
-<TD align="right"><B id='CONNECTION-active_DIV' class='columns'>active</B>&nbsp;&nbsp;</TD>
-<TD>boolean&nbsp;&nbsp;</TD>
-<TD>boolean&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="right"><B id='REFILLPERF-schemaName_DIV' class='columns'>schemaName</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;&nbsp;</TD>
+<TD>varchar(64)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Status Flag</TD>
+<TD>The name of the schema tracked</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>2&nbsp;&nbsp;</TD>
-<TD align="right"><B id='CONNECTION-id_DIV' class='columns'>id</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='REFILLPERF-objectName_DIV' class='columns'>objectName</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;&nbsp;</TD>
-<TD>character(15)&nbsp;&nbsp;</TD>
+<TD>varchar(64)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Connection ID</TD>
+<TD>The name of the table/object tracked</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>3&nbsp;&nbsp;</TD>
-<TD align="right"><B id='CONNECTION-driver_DIV' class='columns'>driver</B>&nbsp;&nbsp;</TD>
+<TD onclick="onModalShowClicked('REFILLPERF-startPeriodTZ')" align="right"><B id='REFILLPERF-startPeriodTZ_DIV' class='columns dotted_underline cursor_pointer'>startPeriodTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;&nbsp;</TD>
-<TD>varchar(100)&nbsp;&nbsp;</TD>
+<TD>character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>DB Driver</TD>
+<TD>Generated helper column to hold the time zone ID for 'startPeriod'.</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>4&nbsp;&nbsp;</TD>
-<TD align="right"><B id='CONNECTION-db_DIV' class='columns'>db</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD>
-<TD>varchar(200)&nbsp;&nbsp;</TD>
+<TD align="right"><B id='REFILLPERF-startPeriod_DIV' class='columns'>startPeriod</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;&nbsp;</TD>
+<TD>timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>DB Url</TD>
+<TD>The timestamp for when the refill started.</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>5&nbsp;&nbsp;</TD>
-<TD align="right"><B id='CONNECTION-user_DIV' class='columns'>user</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD>
-<TD>varchar(30)&nbsp;&nbsp;</TD>
+<TD align="right"><B id='REFILLPERF-timeCreateMs_DIV' class='columns'>timeCreateMs</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;&nbsp;</TD>
+<TD>bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>DB User</TD>
+<TD>The time, in milliseconds, the create took.</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>6&nbsp;&nbsp;</TD>
-<TD align="right"><B id='CONNECTION-pswd_DIV' class='columns'>pswd</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD>
-<TD>varchar(40)&nbsp;&nbsp;</TD>
+<TD align="right"><B id='REFILLPERF-timeIndexMs_DIV' class='columns'>timeIndexMs</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;&nbsp;</TD>
+<TD>bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>DB Password</TD>
+<TD>The time, in milliseconds, the indexing took.</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>7&nbsp;&nbsp;</TD>
-<TD align="right"><B id='CONNECTION-initial_DIV' class='columns'>initial</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;&nbsp;</TD>
-<TD>integer&nbsp;&nbsp;</TD>
+<TD align="right"><B id='REFILLPERF-timeAnalyzeMs_DIV' class='columns'>timeAnalyzeMs</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;&nbsp;</TD>
+<TD>bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Minimum Connections</TD>
+<TD>The time, in milliseconds, the analyze took.</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>8&nbsp;&nbsp;</TD>
-<TD align="right"><B id='CONNECTION-max_DIV' class='columns'>max</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;&nbsp;</TD>
-<TD>integer&nbsp;&nbsp;</TD>
+<TD align="right"><B id='REFILLPERF-timeTotalMs_DIV' class='columns'>timeTotalMs</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;&nbsp;</TD>
+<TD>bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Maximum Connections</TD>
+<TD>The time, in milliseconds, the whole refill took.</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>9&nbsp;&nbsp;</TD>
-<TD align="right"><B id='CONNECTION-schemas_DIV' class='columns'>schemas</B>&nbsp;&nbsp;</TD>
-<TD>List<String> List<>&nbsp;&nbsp;</TD>
-<TD>text[]&nbsp;&nbsp;</TD>
+<TD align="right"><B id='REFILLPERF-columnsMs_DIV' class='columns'>columnsMs</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;&nbsp;</TD>
+<TD>bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Schemas</TD>
+<TD>The list of columns that were refilled.</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>10&nbsp;&nbsp;</TD>
-<TD align="right"><B id='CONNECTION-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='REFILLPERF-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -158,7 +157,7 @@ It contains the following columns:<BR>
 </TD></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>11&nbsp;&nbsp;</TD>
-<TD align="right"><B id='CONNECTION-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='REFILLPERF-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -174,7 +173,7 @@ It contains the following columns:<BR>
 </TD></TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>12&nbsp;&nbsp;</TD>
-<TD align="right"><B id='CONNECTION-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='REFILLPERF-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -184,9 +183,9 @@ It contains the following columns:<BR>
 <TD>The timestamp for when the record was deleted.</TD>
 </TR>
 </TABLE>
-<DIV id='CONNECTION-active_MODAL' class='modal'>
+<DIV id='REFILLPERF-schemaName_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('CONNECTION-active_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('REFILLPERF-schemaName_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -196,14 +195,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTION_DIV'>Connection</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTION-active_DIV'>active</a> -- BOOLEAN</td>
+<td><a href='TILDA___Docs.TILDA.html#REFILLPERF_DIV'>RefillPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#REFILLPERF-schemaName_DIV'>schemaName</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='CONNECTION-id_MODAL' class='modal'>
+<DIV id='REFILLPERF-objectName_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('CONNECTION-id_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('REFILLPERF-objectName_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -213,14 +212,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTION_DIV'>Connection</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTION-id_DIV'>id</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#REFILLPERF_DIV'>RefillPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#REFILLPERF-objectName_DIV'>objectName</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='CONNECTION-driver_MODAL' class='modal'>
+<DIV id='REFILLPERF-startPeriodTZ_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('CONNECTION-driver_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('REFILLPERF-startPeriodTZ_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -230,14 +229,20 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTION_DIV'>Connection</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTION-driver_DIV'>driver</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#REFILLPERF_DIV'>RefillPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#REFILLPERF-startPeriodTZ_DIV'>startPeriodTZ</a></td>
+</tr>
+<tr><td>&nbsp;</td></tr>
+<tr bgcolor="#DFECF8">
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZONEINFO_DIV'>ZoneInfo</a></td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZONEINFO-id_DIV'>id</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='CONNECTION-db_MODAL' class='modal'>
+<DIV id='REFILLPERF-startPeriod_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('CONNECTION-db_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('REFILLPERF-startPeriod_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -247,14 +252,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTION_DIV'>Connection</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTION-db_DIV'>db</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#REFILLPERF_DIV'>RefillPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#REFILLPERF-startPeriod_DIV'>startPeriod</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='CONNECTION-user_MODAL' class='modal'>
+<DIV id='REFILLPERF-timeCreateMs_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('CONNECTION-user_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('REFILLPERF-timeCreateMs_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -264,14 +269,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTION_DIV'>Connection</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTION-user_DIV'>user</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#REFILLPERF_DIV'>RefillPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#REFILLPERF-timeCreateMs_DIV'>timeCreateMs</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='CONNECTION-pswd_MODAL' class='modal'>
+<DIV id='REFILLPERF-timeIndexMs_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('CONNECTION-pswd_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('REFILLPERF-timeIndexMs_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -281,14 +286,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTION_DIV'>Connection</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTION-pswd_DIV'>pswd</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#REFILLPERF_DIV'>RefillPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#REFILLPERF-timeIndexMs_DIV'>timeIndexMs</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='CONNECTION-initial_MODAL' class='modal'>
+<DIV id='REFILLPERF-timeAnalyzeMs_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('CONNECTION-initial_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('REFILLPERF-timeAnalyzeMs_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -298,14 +303,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTION_DIV'>Connection</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTION-initial_DIV'>initial</a> -- INTEGER</td>
+<td><a href='TILDA___Docs.TILDA.html#REFILLPERF_DIV'>RefillPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#REFILLPERF-timeAnalyzeMs_DIV'>timeAnalyzeMs</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='CONNECTION-max_MODAL' class='modal'>
+<DIV id='REFILLPERF-timeTotalMs_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('CONNECTION-max_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('REFILLPERF-timeTotalMs_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -315,14 +320,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTION_DIV'>Connection</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTION-max_DIV'>max</a> -- INTEGER</td>
+<td><a href='TILDA___Docs.TILDA.html#REFILLPERF_DIV'>RefillPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#REFILLPERF-timeTotalMs_DIV'>timeTotalMs</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='CONNECTION-schemas_MODAL' class='modal'>
+<DIV id='REFILLPERF-columnsMs_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('CONNECTION-schemas_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('REFILLPERF-columnsMs_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -332,14 +337,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTION_DIV'>Connection</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTION-schemas_DIV'>schemas</a> -- STRING[]</td>
+<td><a href='TILDA___Docs.TILDA.html#REFILLPERF_DIV'>RefillPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#REFILLPERF-columnsMs_DIV'>columnsMs</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='CONNECTION-created_MODAL' class='modal'>
+<DIV id='REFILLPERF-created_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('CONNECTION-created_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('REFILLPERF-created_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -349,14 +354,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTION_DIV'>Connection</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTION-created_DIV'>created</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#REFILLPERF_DIV'>RefillPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#REFILLPERF-created_DIV'>created</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='CONNECTION-lastUpdated_MODAL' class='modal'>
+<DIV id='REFILLPERF-lastUpdated_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('CONNECTION-lastUpdated_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('REFILLPERF-lastUpdated_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -366,14 +371,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTION_DIV'>Connection</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTION-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#REFILLPERF_DIV'>RefillPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#REFILLPERF-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='CONNECTION-deleted_MODAL' class='modal'>
+<DIV id='REFILLPERF-deleted_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('CONNECTION-deleted_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('REFILLPERF-deleted_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -383,8 +388,8 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTION_DIV'>Connection</a></td>
-<td><a href='TILDA___Docs.TILDA.html#CONNECTION-deleted_DIV'>deleted</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#REFILLPERF_DIV'>RefillPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#REFILLPERF-deleted_DIV'>deleted</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
@@ -394,14 +399,14 @@ It contains the following columns:<BR>
  @version  Tilda 1.0
  @generated Oct 15 2017, 13:01:56EDT
 */
-public abstract class TILDA__CONNECTION implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
+public abstract class TILDA__REFILLPERF implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
-   protected static final Logger LOG = LogManager.getLogger(TILDA__CONNECTION.class.getName());
+   protected static final Logger LOG = LogManager.getLogger(TILDA__REFILLPERF.class.getName());
 
-   public static final Class<TILDA__CONNECTION_Factory> FACTORY_CLASS= TILDA__CONNECTION_Factory.class;
-   public static final String TABLENAME = TextUtil.Print("TILDA.CONNECTION", "");
+   public static final Class<TILDA__REFILLPERF_Factory> FACTORY_CLASS= TILDA__REFILLPERF_Factory.class;
+   public static final String TABLENAME = TextUtil.Print("TILDA.REFILLPERF", "");
 
-   protected TILDA__CONNECTION() { }
+   protected TILDA__REFILLPERF() { }
 
    private InitMode __Init        = null;
    private long     __Nulls1      = 0L;
@@ -438,220 +443,78 @@ public abstract class TILDA__CONNECTION implements tilda.interfaces.WriterObject
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.active -> TILDA.CONNECTION."active"
+//   Field tilda.data.TILDA.REFILLPERF.schemaName -> TILDA.REFILLPERF."schemaName"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.active of type boolean</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.active of type boolean</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.schemaName of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.schemaName of type varchar(64)</TD></TR>
 
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Status Flag</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the schema tracked</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   boolean _active;
+   String _schemaName;
+   protected String __Saved_schemaName;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.active -> TILDA.CONNECTION."active"
+//   Field tilda.data.TILDA.REFILLPERF.schemaName -> TILDA.REFILLPERF."schemaName"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.active of type boolean</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.active of type boolean</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.schemaName of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.schemaName of type varchar(64)</TD></TR>
 
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Status Flag</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the schema tracked</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean getActive()
-      { return _active; }
+   public final String getSchemaName()
+      { return _schemaName; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.active -> TILDA.CONNECTION."active"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.active of type boolean</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.active of type boolean</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Status Flag</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isNullActive()
-     { return (TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask1 & __Nulls1) != 0L; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.active -> TILDA.CONNECTION."active"
+//   Field tilda.data.TILDA.REFILLPERF.schemaName -> TILDA.REFILLPERF."schemaName"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.active of type boolean</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.active of type boolean</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.schemaName of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.schemaName of type varchar(64)</TD></TR>
 
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Status Flag</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setActive(boolean v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (v != _active)
-        {
-          __Changes1 |= TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask1;
-          __Nulls1   &= ~TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask1;
-       _active = v;
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.active -> TILDA.CONNECTION."active"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.active of type boolean</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.active of type boolean</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Status Flag</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setNullActive()
-     {
-       long T0 = System.nanoTime();
-       if ((TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask1 & __Nulls1) != 0L)
-        return;
-       __Changes1 |= TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask1;
-       __Nulls1   |= TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask1;
-       _active=false;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.active -> TILDA.CONNECTION."active"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.active of type boolean</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.active of type boolean</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Status Flag</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedActive()
-     { return (TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask1 & __Changes1) != 0L; }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.id -> TILDA.CONNECTION."id"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.id of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.id of type character(15)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>15</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Connection ID</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the schema tracked</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _id;
-   protected String __Saved_id;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.id -> TILDA.CONNECTION."id"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.id of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.id of type character(15)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>15</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Connection ID</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final String getId()
-      { return _id; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.id -> TILDA.CONNECTION."id"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.id of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.id of type character(15)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>15</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Connection ID</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   protected void setId(String v) throws Exception
+   protected void setSchemaName(String v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.CONNECTION.id to null: it's not nullable.");
-       else if (v.length() > 15)
-        throw new Exception("Cannot set tilda.data.TILDA.CONNECTION.id: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 15.");
-       else if (v.equals(_id) == false)
+        throw new Exception("Cannot set tilda.data.TILDA.REFILLPERF.schemaName to null: it's not nullable.");
+       else if (v.length() > 64)
+        throw new Exception("Cannot set tilda.data.TILDA.REFILLPERF.schemaName: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
+       else if (v.equals(_schemaName) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.CONNECTION.id' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes1 |= TILDA__CONNECTION_Factory.COLS.ID._Mask1;
-          __Nulls1   &= ~TILDA__CONNECTION_Factory.COLS.ID._Mask1;
-       _id = v;
+           throw new Exception("Cannot set field 'tilda.data.TILDA.REFILLPERF.schemaName' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes1 |= TILDA__REFILLPERF_Factory.COLS.SCHEMANAME._Mask1;
+          __Nulls1   &= ~TILDA__REFILLPERF_Factory.COLS.SCHEMANAME._Mask1;
+       _schemaName = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -664,99 +527,81 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.driver -> TILDA.CONNECTION."driver"
+//   Field tilda.data.TILDA.REFILLPERF.objectName -> TILDA.REFILLPERF."objectName"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.driver of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.driver of type varchar(100)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.objectName of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.objectName of type varchar(64)</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>100</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>DB Driver</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the table/object tracked</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _driver;
+   String _objectName;
+   protected String __Saved_objectName;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.driver -> TILDA.CONNECTION."driver"
+//   Field tilda.data.TILDA.REFILLPERF.objectName -> TILDA.REFILLPERF."objectName"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.driver of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.driver of type varchar(100)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.objectName of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.objectName of type varchar(64)</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>100</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>DB Driver</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the table/object tracked</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final String getDriver()
-      { return _driver; }
+   public final String getObjectName()
+      { return _objectName; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.driver -> TILDA.CONNECTION."driver"
+//   Field tilda.data.TILDA.REFILLPERF.objectName -> TILDA.REFILLPERF."objectName"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.driver of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.driver of type varchar(100)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.objectName of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.objectName of type varchar(64)</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>100</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>DB Driver</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The name of the table/object tracked</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setDriver(String v) throws Exception
+   protected void setObjectName(String v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.CONNECTION.driver to null: it's not nullable.");
-       else if (v.length() > 100)
-        throw new Exception("Cannot set tilda.data.TILDA.CONNECTION.driver: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 100.");
-       else if (v.equals(_driver) == false)
+        throw new Exception("Cannot set tilda.data.TILDA.REFILLPERF.objectName to null: it's not nullable.");
+       else if (v.length() > 64)
+        throw new Exception("Cannot set tilda.data.TILDA.REFILLPERF.objectName: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
+       else if (v.equals(_objectName) == false)
         {
-          __Changes1 |= TILDA__CONNECTION_Factory.COLS.DRIVER._Mask1;
-          __Nulls1   &= ~TILDA__CONNECTION_Factory.COLS.DRIVER._Mask1;
-       _driver = v;
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.REFILLPERF.objectName' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes1 |= TILDA__REFILLPERF_Factory.COLS.OBJECTNAME._Mask1;
+          __Nulls1   &= ~TILDA__REFILLPERF_Factory.COLS.OBJECTNAME._Mask1;
+       _objectName = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.driver -> TILDA.CONNECTION."driver"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.driver of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.driver of type varchar(100)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>100</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>DB Driver</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedDriver()
-     { return (TILDA__CONNECTION_Factory.COLS.DRIVER._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -766,99 +611,101 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.db -> TILDA.CONNECTION."db"
+//   Field tilda.data.TILDA.REFILLPERF.startPeriodTZ -> TILDA.REFILLPERF."startPeriodTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.db of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.db of type varchar(200)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.startPeriodTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.startPeriodTZ of type character(5)</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>200</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>DB Url</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'startPeriod'.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _db;
+   String _startPeriodTZ;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.db -> TILDA.CONNECTION."db"
+//   Field tilda.data.TILDA.REFILLPERF.startPeriodTZ -> TILDA.REFILLPERF."startPeriodTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.db of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.db of type varchar(200)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.startPeriodTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.startPeriodTZ of type character(5)</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>200</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>DB Url</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'startPeriod'.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final String getDb()
-      { return _db; }
+   public final String getStartPeriodTZ()
+      { return _startPeriodTZ; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.db -> TILDA.CONNECTION."db"
+//   Field tilda.data.TILDA.REFILLPERF.startPeriodTZ -> TILDA.REFILLPERF."startPeriodTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.db of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.db of type varchar(200)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.startPeriodTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.startPeriodTZ of type character(5)</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>200</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>DB Url</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'startPeriod'.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setDb(String v) throws Exception
+    void setStartPeriodTZ(String v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.CONNECTION.db to null: it's not nullable.");
-       else if (v.length() > 200)
-        throw new Exception("Cannot set tilda.data.TILDA.CONNECTION.db: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 200.");
-       else if (v.equals(_db) == false)
+        throw new Exception("Cannot set tilda.data.TILDA.REFILLPERF.startPeriodTZ to null: it's not nullable.");
+       else if (v.length() > 5)
+        throw new Exception("Cannot set tilda.data.TILDA.REFILLPERF.startPeriodTZ: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
+       else if (v.equals(_startPeriodTZ) == false)
         {
-          __Changes1 |= TILDA__CONNECTION_Factory.COLS.DB._Mask1;
-          __Nulls1   &= ~TILDA__CONNECTION_Factory.COLS.DB._Mask1;
-       _db = v;
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.REFILLPERF.startPeriodTZ' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes1 |= TILDA__REFILLPERF_Factory.COLS.STARTPERIODTZ._Mask1;
+          __Nulls1   &= ~TILDA__REFILLPERF_Factory.COLS.STARTPERIODTZ._Mask1;
+       _startPeriodTZ = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.db -> TILDA.CONNECTION."db"
+//   Field tilda.data.TILDA.REFILLPERF.startPeriodTZ -> TILDA.REFILLPERF."startPeriodTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.db of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.db of type varchar(200)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.startPeriodTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.startPeriodTZ of type character(5)</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>200</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>DB Url</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'startPeriod'.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public boolean hasChangedDb()
-     { return (TILDA__CONNECTION_Factory.COLS.DB._Mask1 & __Changes1) != 0L; }
+   public boolean hasChangedStartPeriodTZ()
+     { return (TILDA__REFILLPERF_Factory.COLS.STARTPERIODTZ._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -868,99 +715,80 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.user -> TILDA.CONNECTION."user"
+//   Field tilda.data.TILDA.REFILLPERF.startPeriod -> TILDA.REFILLPERF."startPeriod"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.user of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.user of type varchar(30)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.startPeriod of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.startPeriod of type timestamptz</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>30</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>DB User</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the refill started.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _user;
+   ZonedDateTime _startPeriod;
+   protected ZonedDateTime __Saved_startPeriod;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.user -> TILDA.CONNECTION."user"
+//   Field tilda.data.TILDA.REFILLPERF.startPeriod -> TILDA.REFILLPERF."startPeriod"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.user of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.user of type varchar(30)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.startPeriod of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.startPeriod of type timestamptz</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>30</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>DB User</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the refill started.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final String getUser()
-      { return _user; }
+   public final ZonedDateTime getStartPeriod()
+      { return _startPeriod; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.user -> TILDA.CONNECTION."user"
+//   Field tilda.data.TILDA.REFILLPERF.startPeriod -> TILDA.REFILLPERF."startPeriod"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.user of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.user of type varchar(30)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.startPeriod of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.startPeriod of type timestamptz</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>30</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>DB User</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the refill started.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setUser(String v) throws Exception
+   protected void setStartPeriod(ZonedDateTime v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.CONNECTION.user to null: it's not nullable.");
-       else if (v.length() > 30)
-        throw new Exception("Cannot set tilda.data.TILDA.CONNECTION.user: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 30.");
-       else if (v.equals(_user) == false)
+        throw new Exception("Cannot set tilda.data.TILDA.REFILLPERF.startPeriod to null: it's not nullable.");
+       else if (v.equals(_startPeriod) == false)
         {
-          __Changes1 |= TILDA__CONNECTION_Factory.COLS.USER._Mask1;
-          __Nulls1   &= ~TILDA__CONNECTION_Factory.COLS.USER._Mask1;
-       _user = v;
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.REFILLPERF.startPeriod' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes1 |= TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask1;
+          __Nulls1   &= ~TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask1;
+       _startPeriod = v;
+          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
+          if (ZI == null)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.REFILLPERF.startPeriod' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+          setStartPeriodTZ(ZI.getId());
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.user -> TILDA.CONNECTION."user"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.user of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.user of type varchar(30)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>30</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>DB User</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedUser()
-     { return (TILDA__CONNECTION_Factory.COLS.USER._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -970,99 +798,91 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.pswd -> TILDA.CONNECTION."pswd"
+//   Field tilda.data.TILDA.REFILLPERF.timeCreateMs -> TILDA.REFILLPERF."timeCreateMs"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.pswd of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.pswd of type varchar(40)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.timeCreateMs of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.timeCreateMs of type bigint</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>40</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>DB Password</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the create took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _pswd;
+   long _timeCreateMs= SystemValues.EVIL_VALUE;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.pswd -> TILDA.CONNECTION."pswd"
+//   Field tilda.data.TILDA.REFILLPERF.timeCreateMs -> TILDA.REFILLPERF."timeCreateMs"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.pswd of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.pswd of type varchar(40)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.timeCreateMs of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.timeCreateMs of type bigint</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>40</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>DB Password</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the create took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final String getPswd()
-      { return _pswd; }
+   public final long getTimeCreateMs()
+      { return _timeCreateMs; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.pswd -> TILDA.CONNECTION."pswd"
+//   Field tilda.data.TILDA.REFILLPERF.timeCreateMs -> TILDA.REFILLPERF."timeCreateMs"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.pswd of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.pswd of type varchar(40)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.timeCreateMs of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.timeCreateMs of type bigint</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>40</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>DB Password</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the create took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setPswd(String v) throws Exception
+   public void setTimeCreateMs(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.CONNECTION.pswd to null: it's not nullable.");
-       else if (v.length() > 40)
-        throw new Exception("Cannot set tilda.data.TILDA.CONNECTION.pswd: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 40.");
-       else if (v.equals(_pswd) == false)
+       if (v != _timeCreateMs)
         {
-          __Changes1 |= TILDA__CONNECTION_Factory.COLS.PSWD._Mask1;
-          __Nulls1   &= ~TILDA__CONNECTION_Factory.COLS.PSWD._Mask1;
-       _pswd = v;
+          __Changes1 |= TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask1;
+          __Nulls1   &= ~TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask1;
+       _timeCreateMs = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.pswd -> TILDA.CONNECTION."pswd"
+//   Field tilda.data.TILDA.REFILLPERF.timeCreateMs -> TILDA.REFILLPERF."timeCreateMs"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.pswd of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.pswd of type varchar(40)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.timeCreateMs of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.timeCreateMs of type bigint</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>40</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>DB Password</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the create took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public boolean hasChangedPswd()
-     { return (TILDA__CONNECTION_Factory.COLS.PSWD._Mask1 & __Changes1) != 0L; }
+   public boolean hasChangedTimeCreateMs()
+     { return (TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -1072,91 +892,91 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.initial -> TILDA.CONNECTION."initial"
+//   Field tilda.data.TILDA.REFILLPERF.timeIndexMs -> TILDA.REFILLPERF."timeIndexMs"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.initial of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.initial of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.timeIndexMs of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.timeIndexMs of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Minimum Connections</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the indexing took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   int _initial= SystemValues.EVIL_VALUE;
+   long _timeIndexMs= SystemValues.EVIL_VALUE;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.initial -> TILDA.CONNECTION."initial"
+//   Field tilda.data.TILDA.REFILLPERF.timeIndexMs -> TILDA.REFILLPERF."timeIndexMs"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.initial of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.initial of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.timeIndexMs of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.timeIndexMs of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Minimum Connections</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the indexing took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final int getInitial()
-      { return _initial; }
+   public final long getTimeIndexMs()
+      { return _timeIndexMs; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.initial -> TILDA.CONNECTION."initial"
+//   Field tilda.data.TILDA.REFILLPERF.timeIndexMs -> TILDA.REFILLPERF."timeIndexMs"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.initial of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.initial of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.timeIndexMs of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.timeIndexMs of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Minimum Connections</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the indexing took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setInitial(int v) throws Exception
+   public void setTimeIndexMs(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _initial)
+       if (v != _timeIndexMs)
         {
-          __Changes1 |= TILDA__CONNECTION_Factory.COLS.INITIAL._Mask1;
-          __Nulls1   &= ~TILDA__CONNECTION_Factory.COLS.INITIAL._Mask1;
-       _initial = v;
+          __Changes1 |= TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask1;
+          __Nulls1   &= ~TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask1;
+       _timeIndexMs = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.initial -> TILDA.CONNECTION."initial"
+//   Field tilda.data.TILDA.REFILLPERF.timeIndexMs -> TILDA.REFILLPERF."timeIndexMs"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.initial of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.initial of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.timeIndexMs of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.timeIndexMs of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Minimum Connections</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the indexing took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public boolean hasChangedInitial()
-     { return (TILDA__CONNECTION_Factory.COLS.INITIAL._Mask1 & __Changes1) != 0L; }
+   public boolean hasChangedTimeIndexMs()
+     { return (TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -1166,91 +986,91 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.max -> TILDA.CONNECTION."max"
+//   Field tilda.data.TILDA.REFILLPERF.timeAnalyzeMs -> TILDA.REFILLPERF."timeAnalyzeMs"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.max of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.max of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.timeAnalyzeMs of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.timeAnalyzeMs of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Maximum Connections</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the analyze took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   int _max= SystemValues.EVIL_VALUE;
+   long _timeAnalyzeMs= SystemValues.EVIL_VALUE;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.max -> TILDA.CONNECTION."max"
+//   Field tilda.data.TILDA.REFILLPERF.timeAnalyzeMs -> TILDA.REFILLPERF."timeAnalyzeMs"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.max of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.max of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.timeAnalyzeMs of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.timeAnalyzeMs of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Maximum Connections</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the analyze took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final int getMax()
-      { return _max; }
+   public final long getTimeAnalyzeMs()
+      { return _timeAnalyzeMs; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.max -> TILDA.CONNECTION."max"
+//   Field tilda.data.TILDA.REFILLPERF.timeAnalyzeMs -> TILDA.REFILLPERF."timeAnalyzeMs"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.max of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.max of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.timeAnalyzeMs of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.timeAnalyzeMs of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Maximum Connections</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the analyze took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setMax(int v) throws Exception
+   public void setTimeAnalyzeMs(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _max)
+       if (v != _timeAnalyzeMs)
         {
-          __Changes1 |= TILDA__CONNECTION_Factory.COLS.MAX._Mask1;
-          __Nulls1   &= ~TILDA__CONNECTION_Factory.COLS.MAX._Mask1;
-       _max = v;
+          __Changes1 |= TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask1;
+          __Nulls1   &= ~TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask1;
+       _timeAnalyzeMs = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.max -> TILDA.CONNECTION."max"
+//   Field tilda.data.TILDA.REFILLPERF.timeAnalyzeMs -> TILDA.REFILLPERF."timeAnalyzeMs"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.max of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.max of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.timeAnalyzeMs of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.timeAnalyzeMs of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Maximum Connections</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the analyze took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public boolean hasChangedMax()
-     { return (TILDA__CONNECTION_Factory.COLS.MAX._Mask1 & __Changes1) != 0L; }
+   public boolean hasChangedTimeAnalyzeMs()
+     { return (TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -1260,133 +1080,91 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.schemas -> TILDA.CONNECTION."schemas"
+//   Field tilda.data.TILDA.REFILLPERF.timeTotalMs -> TILDA.REFILLPERF."timeTotalMs"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.schemas of type List<String></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.schemas of type text[]</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.timeTotalMs of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.timeTotalMs of type bigint</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>null</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Schemas</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the whole refill took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   List<String> _schemas= new ArrayList<String>();
+   long _timeTotalMs= SystemValues.EVIL_VALUE;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.schemas -> TILDA.CONNECTION."schemas"
+//   Field tilda.data.TILDA.REFILLPERF.timeTotalMs -> TILDA.REFILLPERF."timeTotalMs"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.schemas of type List<String></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.schemas of type text[]</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.timeTotalMs of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.timeTotalMs of type bigint</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>null</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Schemas</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the whole refill took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final Iterator<String> getSchemas()
-      { return _schemas==null? null : _schemas.iterator(); }
-   public final boolean hasSchemas(String v)
-      { return _schemas==null? false : _schemas.contains(v); }
+   public final long getTimeTotalMs()
+      { return _timeTotalMs; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.schemas -> TILDA.CONNECTION."schemas"
+//   Field tilda.data.TILDA.REFILLPERF.timeTotalMs -> TILDA.REFILLPERF."timeTotalMs"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.schemas of type List<String></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.schemas of type text[]</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.timeTotalMs of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.timeTotalMs of type bigint</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>null</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Schemas</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the whole refill took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setSchemas(List<String> v) throws Exception
+   public void setTimeTotalMs(long v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v == null )
-        throw new Exception("Cannot set tilda.data.TILDA.CONNECTION.schemas to null: it's not nullable.");
-       else if (CollectionUtil.equals(v, _schemas) == false)
+       if (v != _timeTotalMs)
         {
-          __Changes1 |=  TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask1;
-          __Nulls1   &= ~TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask1;
-          if (_schemas == null)
-           _schemas = new ArrayList<String>();
-          else
-           _schemas.clear();
-          for (String i : v)
-           {
-             _schemas.add(i);
-          }
+          __Changes1 |= TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask1;
+          __Nulls1   &= ~TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask1;
+       _timeTotalMs = v;
         }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-   public void addToSchemas(int pos, String v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_schemas == null)
-        _schemas = new ArrayList<String>();
-       if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.CONNECTION.schemas to null: it's not nullable.");
-       else if (_schemas.get(pos).equals(v) == false)
-        {
-          __Changes1 |= TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask1;
-          __Nulls1   &= ~TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask1;
-          _schemas.add(pos, v);
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-   public void removeFromSchemas(String v) throws Exception
-     {
-       if (_schemas.remove(v) == true)
-          __Changes1 |= TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask1;
-     }
-   public void removeFromSchemas(int pos) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (_schemas.remove(pos) != null)
-          __Changes1 |= TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask1;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.schemas -> TILDA.CONNECTION."schemas"
+//   Field tilda.data.TILDA.REFILLPERF.timeTotalMs -> TILDA.REFILLPERF."timeTotalMs"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.schemas of type List<String></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.schemas of type text[]</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.timeTotalMs of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.timeTotalMs of type bigint</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>null</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Schemas</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the whole refill took.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public boolean hasChangedSchemas()
-     { return (TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask1 & __Changes1) != 0L; }
+   public boolean hasChangedTimeTotalMs()
+     { return (TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -1396,13 +1174,107 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.created -> TILDA.CONNECTION."created"
+//   Field tilda.data.TILDA.REFILLPERF.columnsMs -> TILDA.REFILLPERF."columnsMs"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.columnsMs of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.columnsMs of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The list of columns that were refilled.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   long _columnsMs= SystemValues.EVIL_VALUE;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.REFILLPERF.columnsMs -> TILDA.REFILLPERF."columnsMs"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.columnsMs of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.columnsMs of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The list of columns that were refilled.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final long getColumnsMs()
+      { return _columnsMs; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.REFILLPERF.columnsMs -> TILDA.REFILLPERF."columnsMs"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.columnsMs of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.columnsMs of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The list of columns that were refilled.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setColumnsMs(long v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (v != _columnsMs)
+        {
+          __Changes1 |= TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask1;
+          __Nulls1   &= ~TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask1;
+       _columnsMs = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.REFILLPERF.columnsMs -> TILDA.REFILLPERF."columnsMs"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the hasChanged for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.columnsMs of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.columnsMs of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The list of columns that were refilled.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public boolean hasChangedColumnsMs()
+     { return (TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask1 & __Changes1) != 0L; }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.REFILLPERF.created -> TILDA.REFILLPERF."created"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -1422,13 +1294,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.created -> TILDA.CONNECTION."created"
+//   Field tilda.data.TILDA.REFILLPERF.created -> TILDA.REFILLPERF."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -1449,13 +1321,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.created -> TILDA.CONNECTION."created"
+//   Field tilda.data.TILDA.REFILLPERF.created -> TILDA.REFILLPERF."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -1475,13 +1347,13 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.CONNECTION.created to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.REFILLPERF.created to null: it's not nullable.");
        else if (v.equals(_created) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.CONNECTION.created' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes1 |= TILDA__CONNECTION_Factory.COLS.CREATED._Mask1;
-          __Nulls1   &= ~TILDA__CONNECTION_Factory.COLS.CREATED._Mask1;
+           throw new Exception("Cannot set field 'tilda.data.TILDA.REFILLPERF.created' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes1 |= TILDA__REFILLPERF_Factory.COLS.CREATED._Mask1;
+          __Nulls1   &= ~TILDA__REFILLPERF_Factory.COLS.CREATED._Mask1;
        _created = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1489,13 +1361,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.created -> TILDA.CONNECTION."created"
+//   Field tilda.data.TILDA.REFILLPERF.created -> TILDA.REFILLPERF."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the NOW setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -1518,13 +1390,13 @@ This is the NOW setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.created -> TILDA.CONNECTION."created"
+//   Field tilda.data.TILDA.REFILLPERF.created -> TILDA.REFILLPERF."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the UNDEFINED setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -1547,13 +1419,13 @@ This is the UNDEFINED setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.created -> TILDA.CONNECTION."created"
+//   Field tilda.data.TILDA.REFILLPERF.created -> TILDA.REFILLPERF."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -1576,13 +1448,13 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.created -> TILDA.CONNECTION."created"
+//   Field tilda.data.TILDA.REFILLPERF.created -> TILDA.REFILLPERF."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -1599,7 +1471,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedCreated()
-     { return (TILDA__CONNECTION_Factory.COLS.CREATED._Mask1 & __Changes1) != 0L; }
+     { return (TILDA__REFILLPERF_Factory.COLS.CREATED._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -1609,13 +1481,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.lastUpdated -> TILDA.CONNECTION."lastUpdated"
+//   Field tilda.data.TILDA.REFILLPERF.lastUpdated -> TILDA.REFILLPERF."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
@@ -1635,13 +1507,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.lastUpdated -> TILDA.CONNECTION."lastUpdated"
+//   Field tilda.data.TILDA.REFILLPERF.lastUpdated -> TILDA.REFILLPERF."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
@@ -1662,13 +1534,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.lastUpdated -> TILDA.CONNECTION."lastUpdated"
+//   Field tilda.data.TILDA.REFILLPERF.lastUpdated -> TILDA.REFILLPERF."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
@@ -1688,11 +1560,11 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.CONNECTION.lastUpdated to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.REFILLPERF.lastUpdated to null: it's not nullable.");
        else if (v.equals(_lastUpdated) == false)
         {
-          __Changes1 |= TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask1;
-          __Nulls1   &= ~TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask1;
+          __Changes1 |= TILDA__REFILLPERF_Factory.COLS.LASTUPDATED._Mask1;
+          __Nulls1   &= ~TILDA__REFILLPERF_Factory.COLS.LASTUPDATED._Mask1;
        _lastUpdated = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1700,13 +1572,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.lastUpdated -> TILDA.CONNECTION."lastUpdated"
+//   Field tilda.data.TILDA.REFILLPERF.lastUpdated -> TILDA.REFILLPERF."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the NOW setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
@@ -1729,13 +1601,13 @@ This is the NOW setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.lastUpdated -> TILDA.CONNECTION."lastUpdated"
+//   Field tilda.data.TILDA.REFILLPERF.lastUpdated -> TILDA.REFILLPERF."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the UNDEFINED setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
@@ -1758,13 +1630,13 @@ This is the UNDEFINED setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.lastUpdated -> TILDA.CONNECTION."lastUpdated"
+//   Field tilda.data.TILDA.REFILLPERF.lastUpdated -> TILDA.REFILLPERF."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
@@ -1787,13 +1659,13 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.lastUpdated -> TILDA.CONNECTION."lastUpdated"
+//   Field tilda.data.TILDA.REFILLPERF.lastUpdated -> TILDA.REFILLPERF."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
@@ -1810,7 +1682,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedLastUpdated()
-     { return (TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask1 & __Changes1) != 0L; }
+     { return (TILDA__REFILLPERF_Factory.COLS.LASTUPDATED._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -1820,13 +1692,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.deleted -> TILDA.CONNECTION."deleted"
+//   Field tilda.data.TILDA.REFILLPERF.deleted -> TILDA.REFILLPERF."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
@@ -1839,13 +1711,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.deleted -> TILDA.CONNECTION."deleted"
+//   Field tilda.data.TILDA.REFILLPERF.deleted -> TILDA.REFILLPERF."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
@@ -1859,13 +1731,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.deleted -> TILDA.CONNECTION."deleted"
+//   Field tilda.data.TILDA.REFILLPERF.deleted -> TILDA.REFILLPERF."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
@@ -1875,17 +1747,17 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullDeleted()
-     { return (TILDA__CONNECTION_Factory.COLS.DELETED._Mask1 & __Nulls1) != 0L; }
+     { return (TILDA__REFILLPERF_Factory.COLS.DELETED._Mask1 & __Nulls1) != 0L; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.deleted -> TILDA.CONNECTION."deleted"
+//   Field tilda.data.TILDA.REFILLPERF.deleted -> TILDA.REFILLPERF."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
@@ -1903,8 +1775,8 @@ This is the setter for:<BR>
         }
        else if (v.equals(_deleted) == false)
         {
-          __Changes1 |= TILDA__CONNECTION_Factory.COLS.DELETED._Mask1;
-          __Nulls1   &= ~TILDA__CONNECTION_Factory.COLS.DELETED._Mask1;
+          __Changes1 |= TILDA__REFILLPERF_Factory.COLS.DELETED._Mask1;
+          __Nulls1   &= ~TILDA__REFILLPERF_Factory.COLS.DELETED._Mask1;
        _deleted = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1912,13 +1784,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.deleted -> TILDA.CONNECTION."deleted"
+//   Field tilda.data.TILDA.REFILLPERF.deleted -> TILDA.REFILLPERF."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
@@ -1930,23 +1802,23 @@ This is the null setter for:<BR>
     void setNullDeleted()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__CONNECTION_Factory.COLS.DELETED._Mask1 & __Nulls1) != 0L)
+       if ((TILDA__REFILLPERF_Factory.COLS.DELETED._Mask1 & __Nulls1) != 0L)
         return;
-       __Changes1 |= TILDA__CONNECTION_Factory.COLS.DELETED._Mask1;
-       __Nulls1   |= TILDA__CONNECTION_Factory.COLS.DELETED._Mask1;
+       __Changes1 |= TILDA__REFILLPERF_Factory.COLS.DELETED._Mask1;
+       __Nulls1   |= TILDA__REFILLPERF_Factory.COLS.DELETED._Mask1;
        _deleted=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.deleted -> TILDA.CONNECTION."deleted"
+//   Field tilda.data.TILDA.REFILLPERF.deleted -> TILDA.REFILLPERF."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the NOW setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
@@ -1962,13 +1834,13 @@ This is the NOW setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.deleted -> TILDA.CONNECTION."deleted"
+//   Field tilda.data.TILDA.REFILLPERF.deleted -> TILDA.REFILLPERF."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the UNDEFINED setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
@@ -1984,13 +1856,13 @@ This is the UNDEFINED setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.deleted -> TILDA.CONNECTION."deleted"
+//   Field tilda.data.TILDA.REFILLPERF.deleted -> TILDA.REFILLPERF."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
@@ -2006,13 +1878,13 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.deleted -> TILDA.CONNECTION."deleted"
+//   Field tilda.data.TILDA.REFILLPERF.deleted -> TILDA.REFILLPERF."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
@@ -2022,7 +1894,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedDeleted()
-     { return (TILDA__CONNECTION_Factory.COLS.DELETED._Mask1 & __Changes1) != 0L; }
+     { return (TILDA__REFILLPERF_Factory.COLS.DELETED._Mask1 & __Changes1) != 0L; }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2033,18 +1905,15 @@ This is the hasChanged for:<BR>
  Copies all the field which are not part of the primary key, not are CALCULATED and not invariant, from the 
  current object to the destination. 
 */
-   public void CopyTo(tilda.data._Tilda.TILDA__CONNECTION Dst) throws Exception
+   public void CopyTo(tilda.data._Tilda.TILDA__REFILLPERF Dst) throws Exception
      {
-       if ((TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask1      & __Nulls1) != 0L) Dst.setNullActive     (); else        Dst.setActive     (_active     );
-       Dst.setDriver     (_driver     );
-       Dst.setDb         (_db         );
-       Dst.setUser       (_user       );
-       Dst.setPswd       (_pswd       );
-       Dst.setInitial    (_initial    );
-       Dst.setMax        (_max        );
-       Dst.setSchemas    (_schemas    );
-       Dst.setLastUpdated(_lastUpdated);
-       if ((TILDA__CONNECTION_Factory.COLS.DELETED._Mask1     & __Nulls1) != 0L) Dst.setNullDeleted    (); else        Dst.setDeleted    (_deleted    );
+       Dst.setTimeCreateMs (_timeCreateMs );
+       Dst.setTimeIndexMs  (_timeIndexMs  );
+       Dst.setTimeAnalyzeMs(_timeAnalyzeMs);
+       Dst.setTimeTotalMs  (_timeTotalMs  );
+       Dst.setColumnsMs    (_columnsMs    );
+       Dst.setLastUpdated  (_lastUpdated  );
+       if ((TILDA__REFILLPERF_Factory.COLS.DELETED._Mask1       & __Nulls1) != 0L) Dst.setNullDeleted      (); else        Dst.setDeleted      (_deleted      );
      }
 
 /**
@@ -2065,8 +1934,8 @@ This is the hasChanged for:<BR>
        long T0 = System.nanoTime();
        if (hasChanged() == false)
         {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.CONNECTION has not changed: no writing will occur.");
-          QueryDetails.setLastQuery(TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, "");
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.REFILLPERF has not changed: no writing will occur.");
+          QueryDetails.setLastQuery(TILDA__REFILLPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
           return true;
         }
 
@@ -2074,36 +1943,39 @@ This is the hasChanged for:<BR>
 
        if (BeforeWrite(C) == false)
         {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.CONNECTION object's BeforeWrite() failed.");
-          QueryDetails.setLastQuery(TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, "");
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.REFILLPERF object's BeforeWrite() failed.");
+          QueryDetails.setLastQuery(TILDA__REFILLPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
           return false;
         }
 
        if (__Init == InitMode.CREATE)
         {
           StringBuilder V = new StringBuilder(1024);
-          S.append("insert into "); C.getFullTableVar(S, "TILDA", "CONNECTION");
+          S.append("insert into "); C.getFullTableVar(S, "TILDA", "REFILLPERF");
           int Pos = S.length();
-          if ((TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask1      & __Changes1) != 0L) { TILDA__CONNECTION_Factory.COLS.ACTIVE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__CONNECTION_Factory.COLS.ID._Mask1          & __Changes1) != 0L) { TILDA__CONNECTION_Factory.COLS.ID.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__CONNECTION_Factory.COLS.DRIVER._Mask1      & __Changes1) != 0L) { TILDA__CONNECTION_Factory.COLS.DRIVER.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__CONNECTION_Factory.COLS.DB._Mask1          & __Changes1) != 0L) { TILDA__CONNECTION_Factory.COLS.DB.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__CONNECTION_Factory.COLS.USER._Mask1        & __Changes1) != 0L) { TILDA__CONNECTION_Factory.COLS.USER.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__CONNECTION_Factory.COLS.PSWD._Mask1        & __Changes1) != 0L) { TILDA__CONNECTION_Factory.COLS.PSWD.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__CONNECTION_Factory.COLS.INITIAL._Mask1     & __Changes1) != 0L) { TILDA__CONNECTION_Factory.COLS.INITIAL.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__CONNECTION_Factory.COLS.MAX._Mask1         & __Changes1) != 0L) { TILDA__CONNECTION_Factory.COLS.MAX.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask1     & __Changes1) != 0L) { TILDA__CONNECTION_Factory.COLS.SCHEMAS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__REFILLPERF_Factory.COLS.SCHEMANAME._Mask1    & __Changes1) != 0L) { TILDA__REFILLPERF_Factory.COLS.SCHEMANAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__REFILLPERF_Factory.COLS.OBJECTNAME._Mask1    & __Changes1) != 0L) { TILDA__REFILLPERF_Factory.COLS.OBJECTNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__REFILLPERF_Factory.COLS.STARTPERIODTZ._Mask1 & __Changes1) != 0L) { TILDA__REFILLPERF_Factory.COLS.STARTPERIODTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
-          if ((TILDA__CONNECTION_Factory.COLS.CREATED._Mask1     & __Changes1) != 0L) { TILDA__CONNECTION_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
-             V.append((TILDA__CONNECTION_Factory.COLS.CREATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if ((TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask1   & __Changes1) != 0L) { TILDA__REFILLPERF_Factory.COLS.STARTPERIOD.getFullColumnVarForInsert(C, S);
+             V.append((TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_startPeriod) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          else { TILDA__CONNECTION_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
-          if ((TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask1 & __Changes1) != 0L) { TILDA__CONNECTION_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
-             V.append((TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if ((TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask1  & __Changes1) != 0L) { TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask1   & __Changes1) != 0L) { TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask1 & __Changes1) != 0L) { TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask1   & __Changes1) != 0L) { TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask1     & __Changes1) != 0L) { TILDA__REFILLPERF_Factory.COLS.COLUMNSMS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+
+          if ((TILDA__REFILLPERF_Factory.COLS.CREATED._Mask1       & __Changes1) != 0L) { TILDA__REFILLPERF_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
+             V.append((TILDA__REFILLPERF_Factory.COLS.CREATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          else { TILDA__CONNECTION_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
-          if ((TILDA__CONNECTION_Factory.COLS.DELETED._Mask1     & __Changes1) != 0L) { TILDA__CONNECTION_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
-             V.append((TILDA__CONNECTION_Factory.COLS.DELETED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          else { TILDA__REFILLPERF_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
+          if ((TILDA__REFILLPERF_Factory.COLS.LASTUPDATED._Mask1   & __Changes1) != 0L) { TILDA__REFILLPERF_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
+             V.append((TILDA__REFILLPERF_Factory.COLS.LASTUPDATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+           }
+          else { TILDA__REFILLPERF_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
+          if ((TILDA__REFILLPERF_Factory.COLS.DELETED._Mask1       & __Changes1) != 0L) { TILDA__REFILLPERF_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
+             V.append((TILDA__REFILLPERF_Factory.COLS.DELETED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
 
           S.setCharAt(Pos, '(');
@@ -2114,51 +1986,58 @@ This is the hasChanged for:<BR>
         }
        else // InitMode can be anything else
         {
-          S.append("update "); C.getFullTableVar(S, "TILDA", "CONNECTION"); S.append(" set");
+          S.append("update "); C.getFullTableVar(S, "TILDA", "REFILLPERF"); S.append(" set");
           int Pos = S.length();
-          if ((TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask1      & __Changes1) != 0L) TILDA__CONNECTION_Factory.COLS.ACTIVE.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__CONNECTION_Factory.COLS.ID._Mask1          & __Changes1) != 0L) TILDA__CONNECTION_Factory.COLS.ID.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__CONNECTION_Factory.COLS.DRIVER._Mask1      & __Changes1) != 0L) TILDA__CONNECTION_Factory.COLS.DRIVER.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__CONNECTION_Factory.COLS.DB._Mask1          & __Changes1) != 0L) TILDA__CONNECTION_Factory.COLS.DB.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__CONNECTION_Factory.COLS.USER._Mask1        & __Changes1) != 0L) TILDA__CONNECTION_Factory.COLS.USER.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__CONNECTION_Factory.COLS.PSWD._Mask1        & __Changes1) != 0L) TILDA__CONNECTION_Factory.COLS.PSWD.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__CONNECTION_Factory.COLS.INITIAL._Mask1     & __Changes1) != 0L) TILDA__CONNECTION_Factory.COLS.INITIAL.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__CONNECTION_Factory.COLS.MAX._Mask1         & __Changes1) != 0L) TILDA__CONNECTION_Factory.COLS.MAX.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask1     & __Changes1) != 0L) TILDA__CONNECTION_Factory.COLS.SCHEMAS.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__REFILLPERF_Factory.COLS.SCHEMANAME._Mask1    & __Changes1) != 0L) TILDA__REFILLPERF_Factory.COLS.SCHEMANAME.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__REFILLPERF_Factory.COLS.OBJECTNAME._Mask1    & __Changes1) != 0L) TILDA__REFILLPERF_Factory.COLS.OBJECTNAME.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__REFILLPERF_Factory.COLS.STARTPERIODTZ._Mask1 & __Changes1) != 0L) TILDA__REFILLPERF_Factory.COLS.STARTPERIODTZ.getFullColumnVarForUpdate(C, S);
 
-          if ((TILDA__CONNECTION_Factory.COLS.CREATED._Mask1 & __Changes1) != 0L)
+          if ((TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask1 & __Changes1) != 0L)
            {
-             if ((TILDA__CONNECTION_Factory.COLS.CREATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true)
-              { TILDA__CONNECTION_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
+             if ((TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_startPeriod) == true)
+              { TILDA__REFILLPERF_Factory.COLS.STARTPERIOD.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
-              TILDA__CONNECTION_Factory.COLS.CREATED.getFullColumnVarForUpdate(C, S);
+              TILDA__REFILLPERF_Factory.COLS.STARTPERIOD.getFullColumnVarForUpdate(C, S);
+           }
+          if ((TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask1  & __Changes1) != 0L) TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask1   & __Changes1) != 0L) TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask1 & __Changes1) != 0L) TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask1   & __Changes1) != 0L) TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask1     & __Changes1) != 0L) TILDA__REFILLPERF_Factory.COLS.COLUMNSMS.getFullColumnVarForUpdate(C, S);
+
+          if ((TILDA__REFILLPERF_Factory.COLS.CREATED._Mask1 & __Changes1) != 0L)
+           {
+             if ((TILDA__REFILLPERF_Factory.COLS.CREATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true)
+              { TILDA__REFILLPERF_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
+             else
+              TILDA__REFILLPERF_Factory.COLS.CREATED.getFullColumnVarForUpdate(C, S);
            }
 
-          if ((TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask1 & __Changes1) != 0L)
+          if ((TILDA__REFILLPERF_Factory.COLS.LASTUPDATED._Mask1 & __Changes1) != 0L)
            {
-             if ((TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true)
-              { TILDA__CONNECTION_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
+             if ((TILDA__REFILLPERF_Factory.COLS.LASTUPDATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true)
+              { TILDA__REFILLPERF_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
-              TILDA__CONNECTION_Factory.COLS.LASTUPDATED.getFullColumnVarForUpdate(C, S);
+              TILDA__REFILLPERF_Factory.COLS.LASTUPDATED.getFullColumnVarForUpdate(C, S);
            }
           else 
            {
-             TILDA__CONNECTION_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp());
+             TILDA__REFILLPERF_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp());
              setLastUpdatedNow();
            }
 
-          if ((TILDA__CONNECTION_Factory.COLS.DELETED._Mask1 & __Changes1) != 0L)
+          if ((TILDA__REFILLPERF_Factory.COLS.DELETED._Mask1 & __Changes1) != 0L)
            {
-             if ((TILDA__CONNECTION_Factory.COLS.DELETED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true)
-              { TILDA__CONNECTION_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
+             if ((TILDA__REFILLPERF_Factory.COLS.DELETED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true)
+              { TILDA__REFILLPERF_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
-              TILDA__CONNECTION_Factory.COLS.DELETED.getFullColumnVarForUpdate(C, S);
+              TILDA__REFILLPERF_Factory.COLS.DELETED.getFullColumnVarForUpdate(C, S);
            }
 
           switch (__LookupId)
            {
              case 0:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "CONNECTION", "id"); S.append("=?)");
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "objectName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "startPeriod"); S.append("=?)");
                 break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
@@ -2169,68 +2048,69 @@ This is the hasChanged for:<BR>
        String Q = S.toString();
        S.setLength(0);
        S = null;
-       QueryDetails.setLastQuery(TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, Q);
-       QueryDetails.logQuery("TILDA.CONNECTION", Q, toString());
+       QueryDetails.setLastQuery(TILDA__REFILLPERF_Factory.SCHEMA_TABLENAME_LABEL, Q);
+       QueryDetails.logQuery("TILDA.REFILLPERF", Q, toString());
        java.sql.PreparedStatement PS = null;
        int count = 0;
-       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
        try
         {
           PS = C.prepareStatement(Q);
           int i = 0;
-               if ((TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask1      & __Changes1) != 0L) 
+               if ((TILDA__REFILLPERF_Factory.COLS.SCHEMANAME._Mask1    & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask1      & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BOOLEAN); else PS.setBoolean  (++i, _active);
+                  if ((TILDA__REFILLPERF_Factory.COLS.SCHEMANAME._Mask1    & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _schemaName);
                 } 
-               if ((TILDA__CONNECTION_Factory.COLS.ID._Mask1          & __Changes1) != 0L) 
+               if ((TILDA__REFILLPERF_Factory.COLS.OBJECTNAME._Mask1    & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__CONNECTION_Factory.COLS.ID._Mask1          & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _id);
+                  if ((TILDA__REFILLPERF_Factory.COLS.OBJECTNAME._Mask1    & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _objectName);
                 } 
-               if ((TILDA__CONNECTION_Factory.COLS.DRIVER._Mask1      & __Changes1) != 0L) 
+               if ((TILDA__REFILLPERF_Factory.COLS.STARTPERIODTZ._Mask1 & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__CONNECTION_Factory.COLS.DRIVER._Mask1      & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _driver);
+                  if ((TILDA__REFILLPERF_Factory.COLS.STARTPERIODTZ._Mask1 & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _startPeriodTZ);
                 } 
-               if ((TILDA__CONNECTION_Factory.COLS.DB._Mask1          & __Changes1) != 0L) 
+               if ((TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask1   & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__CONNECTION_Factory.COLS.DB._Mask1          & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _db);
+                  if ((TILDA__REFILLPERF_Factory.COLS.STARTPERIOD._Mask1   & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_startPeriod) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_startPeriod.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
-               if ((TILDA__CONNECTION_Factory.COLS.USER._Mask1        & __Changes1) != 0L) 
+               if ((TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask1  & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__CONNECTION_Factory.COLS.USER._Mask1        & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _user);
+                  if ((TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask1  & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _timeCreateMs);
                 } 
-               if ((TILDA__CONNECTION_Factory.COLS.PSWD._Mask1        & __Changes1) != 0L) 
+               if ((TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask1   & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__CONNECTION_Factory.COLS.PSWD._Mask1        & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _pswd);
+                  if ((TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask1   & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _timeIndexMs);
                 } 
-               if ((TILDA__CONNECTION_Factory.COLS.INITIAL._Mask1     & __Changes1) != 0L) 
+               if ((TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask1 & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__CONNECTION_Factory.COLS.INITIAL._Mask1     & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _initial);
+                  if ((TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask1 & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _timeAnalyzeMs);
                 } 
-               if ((TILDA__CONNECTION_Factory.COLS.MAX._Mask1         & __Changes1) != 0L) 
+               if ((TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask1   & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__CONNECTION_Factory.COLS.MAX._Mask1         & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _max);
+                  if ((TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask1   & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _timeTotalMs);
                 } 
-               if ((TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask1     & __Changes1) != 0L) 
+               if ((TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask1     & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask1     & __Nulls1  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__CONNECTION_Factory.COLS.SCHEMAS._Type, AllocatedArrays, _schemas);
+                  if ((TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask1     & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _columnsMs);
                 } 
-               if ((TILDA__CONNECTION_Factory.COLS.CREATED._Mask1     & __Changes1) != 0L) 
+               if ((TILDA__REFILLPERF_Factory.COLS.CREATED._Mask1       & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__CONNECTION_Factory.COLS.CREATED._Mask1     & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                  if ((TILDA__REFILLPERF_Factory.COLS.CREATED._Mask1       & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
-               if ((TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask1 & __Changes1) != 0L) 
+               if ((TILDA__REFILLPERF_Factory.COLS.LASTUPDATED._Mask1   & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask1 & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_lastUpdated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                  if ((TILDA__REFILLPERF_Factory.COLS.LASTUPDATED._Mask1   & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_lastUpdated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
-               if ((TILDA__CONNECTION_Factory.COLS.DELETED._Mask1     & __Changes1) != 0L) 
+               if ((TILDA__REFILLPERF_Factory.COLS.DELETED._Mask1       & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__CONNECTION_Factory.COLS.DELETED._Mask1     & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deleted.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                  if ((TILDA__REFILLPERF_Factory.COLS.DELETED._Mask1       & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deleted.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
 
           switch (__LookupId)
            {
              case 0:
-               PS.setString   (++i, _id         );
+               PS.setString   (++i, _schemaName   );
+               PS.setString   (++i, _objectName   );
+               PS.setTimestamp(++i, new java.sql.Timestamp(_startPeriod.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -2249,9 +2129,8 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__REFILLPERF_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, null);
           PS = null;
-          AllocatedArrays = null;
         }
 
        if (__Init == InitMode.CREATE)
@@ -2267,7 +2146,9 @@ This is the hasChanged for:<BR>
        switch (__LookupId)
         {
           case 0:
-             __Saved_id          = _id         ;
+             __Saved_schemaName    = _schemaName   ;
+             __Saved_objectName    = _objectName   ;
+             __Saved_startPeriod   = _startPeriod  ;
              break;
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -2298,32 +2179,32 @@ This is the hasChanged for:<BR>
      {
        long T0 = System.nanoTime();
        if (__Init == InitMode.CREATE)
-        throw new Exception("This TILDA.CONNECTION object is being Read() after a Create(), which doesn't make sense.");
+        throw new Exception("This TILDA.REFILLPERF object is being Read() after a Create(), which doesn't make sense.");
        if (__Init == InitMode.READ == true && Force == false && hasChanged()==false)
         {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.CONNECTION object has already been read.");
-          QueryDetails.setLastQuery(TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, "");
+          LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.REFILLPERF object has already been read.");
+          QueryDetails.setLastQuery(TILDA__REFILLPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
           return true;
         }
        StringBuilder S = new StringBuilder(1024);
        S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "CONNECTION", "active");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "CONNECTION", "id");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "CONNECTION", "driver");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "CONNECTION", "db");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "CONNECTION", "user");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "CONNECTION", "pswd");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "CONNECTION", "initial");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "CONNECTION", "max");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "CONNECTION", "schemas");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "CONNECTION", "created");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "CONNECTION", "lastUpdated");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "CONNECTION", "deleted");
-       S.append(" from "); C.getFullTableVar(S, "TILDA", "CONNECTION");
+       S.append(" "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "schemaName");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "objectName");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "startPeriodTZ");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "startPeriod");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "timeCreateMs");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "timeIndexMs");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "timeAnalyzeMs");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "timeTotalMs");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "columnsMs");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "created");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "lastUpdated");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "deleted");
+       S.append(" from "); C.getFullTableVar(S, "TILDA", "REFILLPERF");
        switch (__LookupId)
         {
           case 0:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "CONNECTION", "id"); S.append("=?)");
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "objectName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "startPeriod"); S.append("=?)");
              break;
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
@@ -2332,11 +2213,10 @@ This is the hasChanged for:<BR>
        String Q = S.toString();
        S.setLength(0);
        S = null;
-       QueryDetails.setLastQuery(TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, Q);
-       QueryDetails.logQuery("TILDA.CONNECTION", Q, toString());
+       QueryDetails.setLastQuery(TILDA__REFILLPERF_Factory.SCHEMA_TABLENAME_LABEL, Q);
+       QueryDetails.logQuery("TILDA.REFILLPERF", Q, toString());
        java.sql.PreparedStatement PS=null;
        java.sql.ResultSet RS=null;
-       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
        int count = 0;
 
        try
@@ -2346,7 +2226,9 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setString   (++i, _id         );
+               PS.setString   (++i, _schemaName   );
+               PS.setString   (++i, _objectName   );
+               PS.setTimestamp(++i, new java.sql.Timestamp(_startPeriod.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -2368,29 +2250,27 @@ This is the hasChanged for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__CONNECTION_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, AllocatedArrays);
+          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__REFILLPERF_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
-          AllocatedArrays = null;
         }
     }
 
-   @SuppressWarnings("unchecked")
    boolean Init(Connection C, java.sql.ResultSet RS) throws Exception
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-                            _active      =                              RS.getBoolean  (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask1     ;
-      __Saved_id          = _id          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__CONNECTION_Factory.COLS.ID._Mask1         ;
-                            _driver      = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__CONNECTION_Factory.COLS.DRIVER._Mask1     ;
-                            _db          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__CONNECTION_Factory.COLS.DB._Mask1         ;
-                            _user        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__CONNECTION_Factory.COLS.USER._Mask1       ;
-                            _pswd        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__CONNECTION_Factory.COLS.PSWD._Mask1       ;
-                            _initial     =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__CONNECTION_Factory.COLS.INITIAL._Mask1    ;
-                            _max         =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__CONNECTION_Factory.COLS.MAX._Mask1        ;
-                            _schemas = (List<String>) C.getArray(RS, ++i, TILDA__CONNECTION_Factory.COLS.SCHEMAS._Type, false); if (RS.wasNull() == true) __Nulls1 |= TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask1    ;
-                            _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
-                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
-                            _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
+      __Saved_schemaName    = _schemaName    = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__REFILLPERF_Factory.COLS.SCHEMANAME._Mask1   ;
+      __Saved_objectName    = _objectName    = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__REFILLPERF_Factory.COLS.OBJECTNAME._Mask1   ;
+                              _startPeriodTZ = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__REFILLPERF_Factory.COLS.STARTPERIODTZ._Mask1; else _startPeriodTZ = _startPeriodTZ.trim();
+      __Saved_startPeriod   = _startPeriod   = ProcessZDT(_startPeriodTZ  , "tilda.data.TILDA.REFILLPERF.startPeriod"  , RS, ++i, TILDA__REFILLPERF_Factory.COLS.STARTPERIOD  , TILDA__REFILLPERF_Factory.COLS.STARTPERIODTZ  );
+                              _timeCreateMs  =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__REFILLPERF_Factory.COLS.TIMECREATEMS._Mask1 ;
+                              _timeIndexMs   =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__REFILLPERF_Factory.COLS.TIMEINDEXMS._Mask1  ;
+                              _timeAnalyzeMs =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__REFILLPERF_Factory.COLS.TIMEANALYZEMS._Mask1;
+                              _timeTotalMs   =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__REFILLPERF_Factory.COLS.TIMETOTALMS._Mask1  ;
+                              _columnsMs     =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__REFILLPERF_Factory.COLS.COLUMNSMS._Mask1    ;
+                              _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
+                              _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
+                              _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes1  = 0L;
@@ -2400,21 +2280,53 @@ This is the hasChanged for:<BR>
      return AfterRead(C);
    }
 
+  private final ZonedDateTime ProcessZDT(String TimezoneId, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)
+  throws Exception
+   {
+     tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);
+     if (ZI == null && TextUtil.isNullOrEmpty(TimezoneId) == false)
+      throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + TimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+     ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(RS.getTimestamp(ColumnPos, DateTimeUtil._UTC_CALENDAR), ZI == null ? "null" : ZI.getValue());
+     if (RS.wasNull() == true)
+      if (DTField._MaskId == 1)
+       __Nulls1 |= DTField._Mask1;
+      else if (DTField._MaskId == 2)
+       __Nulls2 |= DTField._Mask2;
+      else if (DTField._MaskId == 3)
+       __Nulls3 |= DTField._Mask3;
+      else if (DTField._MaskId == 4)
+       __Nulls4 |= DTField._Mask4;
+      else
+       throw new Error("RUNTIME TILDA ERROR: Invalid MaskId="+DTField._MaskId+" for column "+DTFieldName+". Values should be between 1 and 4.");
+     boolean DTNull = DTField._MaskId == 1 ? (__Nulls1 & DTField._Mask1) != 0L
+                    : DTField._MaskId == 2 ? (__Nulls2 & DTField._Mask2) != 0L
+                    : DTField._MaskId == 3 ? (__Nulls3 & DTField._Mask3) != 0L
+                                           : (__Nulls4 & DTField._Mask4) != 0L
+                                           ;
+     boolean TZNull = TZField._MaskId == 1 ? (__Nulls1 & TZField._Mask1) != 0L
+                    : TZField._MaskId == 2 ? (__Nulls2 & TZField._Mask2) != 0L
+                    : TZField._MaskId == 3 ? (__Nulls3 & TZField._Mask3) != 0L
+                                           : (__Nulls4 & TZField._Mask4) != 0L
+                                           ;
+     if (DTNull == false && TZNull == true)
+      throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
+     return ZDT;
+   }
+
    protected abstract boolean AfterRead(Connection C) throws Exception;
 
    public String toString()
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "active"        + ((TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask1      & __Nulls1) != 0L ? ": NULL" : ": " +                                   getActive     () )
-               + "; id: "                                                                                                   + TextUtil.PrintVariableStr        (getId         ())
-               + "; driver: "                                                                                               + TextUtil.PrintVariableStr        (getDriver     ())
-               + "; db: "                                                                                                   + TextUtil.PrintVariableStr        (getDb         ())
-               + "; user: "                                                                                                 + TextUtil.PrintVariableStr        (getUser       ())
-               + "; pswd: "                                                                                                 + TextUtil.PrintVariableStr        (getPswd       ())
-               + "; initial: "                                                                                              +                                   getInitial    () 
-               + "; max: "                                                                                                  +                                   getMax        () 
-               + "; schemas: "                                                                                              + TextUtil.Print                   (getSchemas    ())
+                   "schemaName: "                                                                                               + TextUtil.PrintVariableStr        (getSchemaName   ())
+               + "; objectName: "                                                                                               + TextUtil.PrintVariableStr        (getObjectName   ())
+               + "; startPeriod: "                                                                                              + DateTimeUtil.printDateTimeForJSON(getStartPeriod  ())
+               + "; timeCreateMs: "                                                                                             +                                   getTimeCreateMs () 
+               + "; timeIndexMs: "                                                                                              +                                   getTimeIndexMs  () 
+               + "; timeAnalyzeMs: "                                                                                            +                                   getTimeAnalyzeMs() 
+               + "; timeTotalMs: "                                                                                              +                                   getTimeTotalMs  () 
+               + "; columnsMs: "                                                                                                +                                   getColumnsMs    () 
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;
