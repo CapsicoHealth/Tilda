@@ -126,6 +126,11 @@ public class View extends Base
      {
        return _Realize == null ? null : (includeSchemaName==true?_ParentSchema._Name+".":"")+_Name.substring(0, _Name.length() - (_Pivot != null ? "PivotView" : "View").length()) + "Realized";
      }
+    
+    public static String getRootViewName(String Name)
+     {
+       return Name.substring(0, Name.length() - (Name.endsWith("PivotView") ==true ? "PivotView" : "View").length());
+     }
 
     public boolean Validate(ParserSession PS, Schema ParentSchema)
       {
@@ -479,6 +484,8 @@ public class View extends Base
         if (_Joins != null)
           for (ViewJoin VJ : _Joins)
             {
+              if (VJ == null)
+                continue;
               VJ.Validate(PS, this);
               if (JoinObjectNames.add(VJ._ObjectObj.getShortName() + " on " + VJ.getQuery(DBType.Postgres)) == false)
                 PS.AddError("View '" + getFullName() + "' is defining a a duplicate join with object " + VJ._ObjectObj.getShortName() + ".");
@@ -666,7 +673,7 @@ public class View extends Base
       {
         if (_Formulas != null)
           for (Formula F : _Formulas)
-            if (F._Name.equalsIgnoreCase(FormulaName) == true)
+            if (F != null && F._Name.equalsIgnoreCase(FormulaName) == true)
               return F;
         return null;
       }

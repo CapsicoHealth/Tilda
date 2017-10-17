@@ -211,7 +211,28 @@
        ,"indices":[ 
         { "name":"Job_File_Id", "columns":["Id","Job_Id"] }
       ]         
-    }                 
+    }
+    
+    
+   ,{ "name": "RefillPerf", "occ": true,
+      "description": "Performance logs for the Tilda Refills",
+      "columns":[
+        { "name": "schemaName"   , "type": "STRING"  , "nullable": false, "size": 64, "invariant": true, "description":"The name of the schema tracked"                    },
+        { "name": "objectName"   , "type": "STRING"  , "nullable": false, "size": 64, "invariant": true, "description":"The name of the table/object tracked"              },
+        { "name": "startPeriod"  , "type": "DATETIME", "nullable": false,             "invariant": true, "description":"The timestamp for when the refill started."        },
+        { "name": "timeCreateMs" , "type": "LONG"    , "nullable": false,                                "description":"The time, in milliseconds, the create took."       },
+        { "name": "timeIndexMs"  , "type": "LONG"    , "nullable": false,                                "description":"The time, in milliseconds, the indexing took."     },
+        { "name": "timeAnalyzeMs", "type": "LONG"    , "nullable": false,                                "description":"The time, in milliseconds, the analyze took."      },
+        { "name": "timeTotalMs"  , "type": "LONG"    , "nullable": false,                                "description":"The time, in milliseconds, the whole refill took." },
+        { "name": "columnsMs"    , "type": "LONG"    , "nullable": false,                                "description":"The list of columns that were refilled."           },
+      ],
+      "primary": { "columns": ["schemaName", "objectName", "startPeriod"], "autogen": false },
+      "indices":[ 
+        { "name": "SchemaByObjectStart", "columns": ["schemaName"], "orderBy": ["objectName", "startPeriod desc"], "db": true },
+        { "name": "SchemaObjectByStart", "columns": ["schemaName", "objectName"], "orderBy": ["startPeriod desc"], "db": false }
+      ]
+    }
+                     
     
   ]
 }

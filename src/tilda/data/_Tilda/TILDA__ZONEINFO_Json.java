@@ -52,8 +52,7 @@ public class TILDA__ZONEINFO_Json
          Obj = tilda.data.ZoneInfo_Factory.LookupById(_id);
          if (Obj.Read(C) == false)
           throw new Exception("Cannot create the tilda.data.TILDA.ZONEINFO object.\n"+toString());
-         if (_value        .equals(Obj.getValue        ()) == false)
-          throw new Exception("Cannot update the invariant field 'tilda.data.TILDA.ZONEINFO.value': "+Obj.toString());
+         if (_value        != null) Obj.setValue        (_value        );
          if (_label        != null) Obj.setLabel        (_label        );
          if (_deactivated  != null) Obj.setDeactivated  (_deactivated  );
          if (Obj.Write(C) == false)
