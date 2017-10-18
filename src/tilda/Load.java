@@ -49,7 +49,10 @@ import tilda.loader.ui.ConnectionsTableModel;
 import tilda.loader.ui.DataImportTableModel;
 import tilda.utils.DurationUtil;
 import tilda.utils.TextUtil;
+import tilda.db.Connection;
 import tilda.db.ConnectionPool;
+import tilda.db.metadata.IndexMeta;
+import tilda.db.metadata.TableMeta;
 
 public class Load
   {
@@ -97,8 +100,29 @@ public class Load
        
         if (isSilentMode)
           {
-            
             LOG.debug("Starting the utility in silent mode.");
+            
+            // Validate Table indices
+            for(int i = 0; i < arguments.size() ; i += 6)
+              {
+                String ConfigFileName = arguments.get(i+1);
+                Conf = Config.fromFile(ConfigFileName);
+                LOG.debug("Validating file " + ConfigFileName);
+                List<String> selectedObjectsList = new ArrayList<>(Arrays.asList(arguments.get(i+3).split(",")));
+                List<String> connectionIdsList = new ArrayList<>(Arrays.asList(arguments.get(i+5).split(",")));
+                List<DataObject> filteredObjects = FilterObjects(selectedObjectsList, Conf._CmsData);
+                List<String> errors = ValidateDataObjects(connectionIdsList, filteredObjects);
+                if ( errors.size() > 0 )
+                  {
+                    for(String error: errors)
+                      LOG.error(error);
+                    LOG.error("File "+ ConfigFileName + " failed validation. Aborting !!");
+                    System.exit(1);
+                  }
+              }
+            LOG.debug("Validation Successful.");
+            
+            // Processing
             for(int i = 0; i < arguments.size() ; i += 6)
               {
                 String ConfigFileName = arguments.get(i+1);
@@ -161,6 +185,80 @@ public class Load
                   }
               });
           }
+      }
+    
+    private static List<String> ValidateDataObjects(List<String> connectionIdsList, List<DataObject> selectedDO)
+      {
+        List<String> errorMessages = new ArrayList<>();
+        Connection C = null;
+        try
+          {
+            for (String connectionId : connectionIdsList)
+              {
+                C = ConnectionPool.get(connectionId);
+                for(DataObject DO : selectedDO )
+                  {
+                    if ( DO.isUpserts() == DO.isInserts())
+                      {
+                        errorMessages.add("Both 'inserts' and 'upserts' keys cannot be of same value. Table: "+DO.getTableFullName());
+                        continue;
+                      }
+                      
+                    if(DO.isUpserts() == false)
+                      continue; // Skip uniqueColumns validation if not Upserts
+                    
+                    String[] uniqueColumns = DO.getUniqueColumnsList();
+                    if (uniqueColumns.length < 1)
+                      {
+                        errorMessages.add("'uniqueColumns' is not defined in JSON file for Table: "+DO.getTableFullName());
+                        continue;
+                      }
+                      
+                    TableMeta tableMeta = new TableMeta(DO._SchemaName, DO._TableName, "");
+                    tableMeta.load(C);
+                    boolean hasIndex = hasUniqueIndex(tableMeta, uniqueColumns);
+                    if( hasIndex == false )
+                      {
+                        errorMessages.add("Unique Index is not defined for Table: "+ DO.getTableFullName() + " in DB: "+ connectionId);
+                      }
+                  }            
+              }
+          }
+        catch (Throwable T)
+          {
+            LOG.error("Exception while validation.", T);
+            errorMessages.add("Exception in validation. "+T.getMessage());
+          }
+        finally
+          {
+            try 
+              {
+                if (C != null)
+                  C.close();
+              } 
+            catch (Throwable T)
+              {
+                LOG.error("Exception while closing DB Connection. ", T);
+                errorMessages.add("Failed to close DB Connection. "+T.getMessage());
+              }
+          }
+        return errorMessages;
+      }
+    
+    private static boolean hasUniqueIndex(TableMeta TM, String[] uniqueColumns)
+      {
+        List<IndexMeta> indices = new ArrayList<>(TM._Indices.values());
+        for(IndexMeta index : indices)
+          {
+            List<String> indexColumns = index.getColumnNames();
+            if ( (index._Unique == true) 
+              && (index._Columns.size() == uniqueColumns.length)
+              && (indexColumns.containsAll(Arrays.asList(uniqueColumns))) )
+              {
+                return true;
+              }
+          }
+        return false;
       }
 
     private static void StartImportProcessor(List<String> selectedObjectNames, List<String> connectionIdsList, Config conf, List<DataObject> _CmsData) 
@@ -245,16 +343,17 @@ public class Load
             
             for ( int i = 2; i < arguments.size(); i += 6)
               {
-                if ( !"-f".equals(arguments.get(i)) || TextUtil.isNullOrEmpty(arguments.get(i+1))
-                  || !"-o".equals(arguments.get(i+2)) || TextUtil.isNullOrEmpty(arguments.get(i+3))
-                  || !"-c".equals(arguments.get(i+4)) || TextUtil.isNullOrEmpty(arguments.get(i+5)) )
+                if ( !"-f".equalsIgnoreCase(arguments.get(i)) || TextUtil.isNullOrEmpty(arguments.get(i+1))
+                  || !"-o".equalsIgnoreCase(arguments.get(i+2)) || TextUtil.isNullOrEmpty(arguments.get(i+3))
+                  || !"-c".equalsIgnoreCase(arguments.get(i+4)) || TextUtil.isNullOrEmpty(arguments.get(i+5)) )
                   return false;
               }
           }
-        else if ( !"-f".equals(arguments.get(2)) || TextUtil.isNullOrEmpty(arguments.get(3)) ) 
-          {
-            return false;
-          }
+        else // UI Mode 
+          if ( !"-f".equalsIgnoreCase(arguments.get(2)) || TextUtil.isNullOrEmpty(arguments.get(3)) )
+            {
+              return false;
+            }
           
 
         return true;
@@ -320,8 +419,7 @@ public class Load
           {
             public void actionPerformed(ActionEvent e)
               {
-                int dialogButton = JOptionPane.YES_NO_OPTION;
-                int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to run the data import?", "Warning", dialogButton);
+                int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to run the data import?", "Warning", JOptionPane.YES_NO_OPTION);
                 if (dialogResult == 0)
                   {
                     // List<String> truncateTables = new ArrayList<String>();
@@ -347,6 +445,21 @@ public class Load
                                     if(connection == true)
                                       ConnectionIds.add((String) connections[i][0]);
                                   }
+
+                                // Validate Table indices
+                                List<DataObject> selectedDO = FilterObjects(ImportTables, Conf._CmsData);
+                                LOG.debug("Validating Selected Table Indices..");
+                                List<String> errors = ValidateDataObjects(ConnectionIds, selectedDO);
+                                if ( errors.size() > 0 )
+                                  {
+                                    String error = TextUtil.JoinTrim(errors.toArray(new String[errors.size()]), ", \n");
+                                    JOptionPane.showMessageDialog(null, error, "Validation Failed. Aborting !!", JOptionPane.ERROR_MESSAGE);
+                                    LOG.error("Validation Failed. Aborting !!");
+                                    System.exit(1);
+                                  }
+                                LOG.debug("Validation Successful.");
+                                
+                                // Processing
                                 StartImportProcessor(ImportTables, ConnectionIds, Conf,  Conf._CmsData);
                                 LOG.debug("Import Tables completed.");
                               }
