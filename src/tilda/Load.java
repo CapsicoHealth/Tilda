@@ -58,12 +58,12 @@ public class Load
   {
     protected static final Logger LOG               = LogManager.getLogger(Load.class.getName());
     Load                          app               = null;
-    
+
     private static int            threadsCount      = 1;
     private static Object[][]     data              = null;
     private static Object[][]     connections       = null;
     private static Config         Conf              = null;
-    
+
     private JFrame                frmDataImport;
 
     // UI
@@ -72,65 +72,65 @@ public class Load
     JButton                       btnCancel         = new JButton("Cancel");
     JButton                       btnAllTables      = new JButton("Select All Tables");
     JButton                       btnAllConnections = new JButton("Select All Connections");
-    
+
     // Main
     public static void main(String[] argsArray)
     throws Exception
       {
         List<String> arguments = new ArrayList<>(Arrays.asList(argsArray));
-        
-        if ( !isValidArguments(arguments) ) 
+
+        if (!isValidArguments(arguments))
           {
             PrintUsageHint();
             System.exit(-1);
           }
-        
+
         LOG.info("\n*************************************************************************************************************************************");
         ConnectionPool.autoInit();
         LOG.info("\n*************************************************************************************************************************************\n");
 
         String[] silentModePair = arguments.get(0).split("=");
         String[] threadsPair = arguments.get(1).split("=");
-        
+
         threadsCount = Integer.parseInt(threadsPair[1]);
         boolean isSilentMode = Integer.parseInt(silentModePair[1]) == 1;
-        
+
         arguments.remove(0);
         arguments.remove(0);
-       
+
         if (isSilentMode)
           {
             LOG.debug("Starting the utility in silent mode.");
-            
+
             // Validate Table indices
-            for(int i = 0; i < arguments.size() ; i += 6)
+            for (int i = 0; i < arguments.size(); i += 6)
               {
-                String ConfigFileName = arguments.get(i+1);
+                String ConfigFileName = arguments.get(i + 1);
                 Conf = Config.fromFile(ConfigFileName);
                 LOG.debug("Validating file " + ConfigFileName);
-                List<String> selectedObjectsList = new ArrayList<>(Arrays.asList(arguments.get(i+3).split(",")));
-                List<String> connectionIdsList = new ArrayList<>(Arrays.asList(arguments.get(i+5).split(",")));
+                List<String> selectedObjectsList = new ArrayList<>(Arrays.asList(arguments.get(i + 3).split(",")));
+                List<String> connectionIdsList = new ArrayList<>(Arrays.asList(arguments.get(i + 5).split(",")));
                 List<DataObject> filteredObjects = FilterObjects(selectedObjectsList, Conf._CmsData);
                 List<String> errors = ValidateDataObjects(connectionIdsList, filteredObjects);
-                if ( errors.size() > 0 )
+                if (errors.size() > 0)
                   {
-                    for(String error: errors)
+                    for (String error : errors)
                       LOG.error(error);
-                    LOG.error("File "+ ConfigFileName + " failed validation. Aborting !!");
+                    LOG.error("File " + ConfigFileName + " failed validation. Aborting !!");
                     System.exit(1);
                   }
               }
             LOG.debug("Validation Successful.");
-            
+
             // Processing
-            for(int i = 0; i < arguments.size() ; i += 6)
+            for (int i = 0; i < arguments.size(); i += 6)
               {
-                String ConfigFileName = arguments.get(i+1);
+                String ConfigFileName = arguments.get(i + 1);
                 Conf = Config.fromFile(ConfigFileName);
 
                 LOG.debug("Processing file " + ConfigFileName);
-                List<String> selectedObjectsList = new ArrayList<>(Arrays.asList(arguments.get(i+3).split(",")));
-                List<String> connectionIdsList = new ArrayList<>(Arrays.asList(arguments.get(i+5).split(",")));
+                List<String> selectedObjectsList = new ArrayList<>(Arrays.asList(arguments.get(i + 3).split(",")));
+                List<String> connectionIdsList = new ArrayList<>(Arrays.asList(arguments.get(i + 5).split(",")));
                 StartImportProcessor(selectedObjectsList, connectionIdsList, Conf, Conf._CmsData);
               }
             LOG.debug("Import Tables completed.");
@@ -139,7 +139,7 @@ public class Load
           {
             String ConfigFileName = arguments.get(1);
             Conf = Config.fromFile(ConfigFileName);
-            
+
             List<DataObject> list = Conf._CmsData;
             data = new Object[list.size()][2];
             for (int i = 0; i < list.size(); ++i)
@@ -153,13 +153,13 @@ public class Load
                 data[i][0] = schemaPlusTable.toUpperCase();
                 data[i][1] = new Boolean(false);
               }
-            
+
             // Multi-Tenancy Logic
             Map<String, String> allConnections = ConnectionPool.getAllDataSourceIds();
             Iterator<String> iterator = allConnections.keySet().iterator();
             connections = new Object[allConnections.size()][3];
             int i = 0;
-            while(iterator.hasNext())
+            while (iterator.hasNext())
               {
                 String id = iterator.next();
                 String url = allConnections.get(id);
@@ -167,8 +167,8 @@ public class Load
                 connections[i][1] = url;
                 connections[i][2] = new Boolean(false);
                 i++;
-              }              
-            
+              }
+
             EventQueue.invokeLater(new Runnable()
               {
                 public void run()
@@ -186,82 +186,65 @@ public class Load
               });
           }
       }
-    
+
     private static List<String> ValidateDataObjects(List<String> connectionIdsList, List<DataObject> selectedDO)
       {
         List<String> errorMessages = new ArrayList<>();
         Connection C = null;
-        try
+        for (String connectionId : connectionIdsList)
           {
-            for (String connectionId : connectionIdsList)
+            try
               {
                 C = ConnectionPool.get(connectionId);
-                for(DataObject DO : selectedDO )
+                for (DataObject DO : selectedDO)
                   {
-                    if ( DO.isUpserts() == DO.isInserts())
+                    if (DO.isUpserts() == DO.isInserts())
                       {
-                        errorMessages.add("Both 'inserts' and 'upserts' keys cannot be of same value. Table: "+DO.getTableFullName());
+                        errorMessages.add("Data definition for " + DO.getTableFullName() + " is invalid: one of 'inserts' or 'upserts' must be true. ");
                         continue;
                       }
-                      
-                    if(DO.isUpserts() == false)
+
+                    if (DO.isUpserts() == false)
                       continue; // Skip uniqueColumns validation if not Upserts
-                    
+
                     String[] uniqueColumns = DO.getUniqueColumnsList();
                     if (uniqueColumns.length < 1)
                       {
-                        errorMessages.add("'uniqueColumns' is not defined in JSON file for Table: "+DO.getTableFullName());
+                        errorMessages.add("Data definition for " + DO.getTableFullName() + " is invalid: upserts must also specify the object's identify in 'uniqueColumns'. ");
                         continue;
                       }
-                      
+
                     TableMeta tableMeta = new TableMeta(DO._SchemaName, DO._TableName, "");
                     tableMeta.load(C);
-                    boolean hasIndex = hasUniqueIndex(tableMeta, uniqueColumns);
-                    if( hasIndex == false )
+                    if (tableMeta.getIndex(uniqueColumns, true) == null)
                       {
-                        errorMessages.add("Unique Index is not defined for Table: "+ DO.getTableFullName() + " in DB: "+ connectionId);
+                        errorMessages.add("Data definition for " + DO.getTableFullName() + " is invalid: 'uniqueColumns' is listing columns which do not match any existing unique index in the database for connection "+connectionId+". ");
                       }
-                  }            
+                  }
               }
-          }
-        catch (Throwable T)
-          {
-            LOG.error("Exception while validation.", T);
-            errorMessages.add("Exception in validation. "+T.getMessage());
-          }
-        finally
-          {
-            try 
-              {
-                if (C != null)
-                  C.close();
-              } 
             catch (Throwable T)
               {
-                LOG.error("Exception while closing DB Connection. ", T);
-                errorMessages.add("Failed to close DB Connection. "+T.getMessage());
+                LOG.error("Exception while validation.", T);
+                errorMessages.add("Exception in validation. " + T.getMessage());
+              }
+            finally
+              {
+                try
+                  {
+                    if (C != null)
+                      C.close();
+                  }
+                catch (Throwable T)
+                  {
+                    LOG.error("Exception while closing DB Connection. ", T);
+                    errorMessages.add("Failed to close DB Connection. " + T.getMessage());
+                  }
               }
           }
         return errorMessages;
       }
-    
-    private static boolean hasUniqueIndex(TableMeta TM, String[] uniqueColumns)
-      {
-        List<IndexMeta> indices = new ArrayList<>(TM._Indices.values());
-        for(IndexMeta index : indices)
-          {
-            List<String> indexColumns = index.getColumnNames();
-            if ( (index._Unique == true) 
-              && (index._Columns.size() == uniqueColumns.length)
-              && (indexColumns.containsAll(Arrays.asList(uniqueColumns))) )
-              {
-                return true;
-              }
-          }
-        return false;
-      }
 
-    private static void StartImportProcessor(List<String> selectedObjectNames, List<String> connectionIdsList, Config conf, List<DataObject> _CmsData) 
+    private static void StartImportProcessor(List<String> selectedObjectNames, List<String> connectionIdsList, Config conf, List<DataObject> _CmsData)
     throws Exception
       {
         List<DataObject> filteredObjects = FilterObjects(selectedObjectNames, _CmsData);
@@ -272,14 +255,14 @@ public class Load
     private static List<DataObject> FilterObjects(List<String> selectedObjects, List<DataObject> AllDataObjects)
       {
         List<DataObject> filteredList = new ArrayList<>();
-        
+
         Iterator<DataObject> iterator = AllDataObjects.iterator();
-        while(iterator.hasNext())
+        while (iterator.hasNext())
           {
             DataObject dataObject = iterator.next();
             String tempObjectName = dataObject._SchemaName + "." + dataObject._TableName;
             tempObjectName = tempObjectName.toUpperCase();
-            if(selectedObjects.contains(tempObjectName) == true)
+            if (selectedObjects.contains(tempObjectName) == true)
               filteredList.add(dataObject);
           }
         return filteredList;
@@ -288,26 +271,26 @@ public class Load
     private static void RunImportProcessor(List<String> connectionIdsList, Config Conf, List<DataObject> dataObjects)
     throws Exception
       {
-        if ( "ALL".equals(connectionIdsList.get(0)) )
+        if ("ALL".equals(connectionIdsList.get(0)))
           {
             connectionIdsList = new ArrayList<>(ConnectionPool.getAllDataSourceIds().keySet());
-          }                      
-        else if ( "ALL_TENANTS".equals(connectionIdsList.get(0)) )
+          }
+        else if ("ALL_TENANTS".equals(connectionIdsList.get(0)))
           {
             connectionIdsList = new ArrayList<>(ConnectionPool.getAllTenantDataSourceIds().keySet());
           }
-        
+
         LOG.debug("Running ImportProcessor");
         long timeTaken = System.nanoTime();
         ImportProcessor.parallelProcess(connectionIdsList, Conf._RootFolder, threadsCount, dataObjects);
-        timeTaken = System.nanoTime() - timeTaken;        
-        LOG.debug("Time taken for ImportProcessor.process() = "+ DurationUtil.PrintDuration(timeTaken));
+        timeTaken = System.nanoTime() - timeTaken;
+        LOG.debug("Time taken for ImportProcessor.process() = " + DurationUtil.PrintDuration(timeTaken));
       }
 
     private static boolean isValidArguments(List<String> arguments)
       {
         if (arguments.size() < 4)
-            return false;
+          return false;
 
         String[] silentModePair = arguments.get(0).split("=");
         if (silentModePair != null && silentModePair.length != 2)
@@ -316,45 +299,51 @@ public class Load
           return false;
 
         int mode = -1;
-        try {
-          mode = Integer.parseInt(silentModePair[1]);
-        } catch (Exception E) {
-          return false;
-        }
-        
+        try
+          {
+            mode = Integer.parseInt(silentModePair[1]);
+          }
+        catch (Exception E)
+          {
+            return false;
+          }
+
         String[] threadsPair = arguments.get(1).split("=");
         if (threadsPair != null && threadsPair.length != 2)
           return false;
         if (threadsPair[0].equalsIgnoreCase("-threads") == false)
           return false;
 
-        try {
-          int threads = Integer.parseInt(threadsPair[1]);
-          if (threads < 1)
-            throw new Exception();
-        } catch (Exception E) {
-          return false;
-        }
-        
+        try
+          {
+            int threads = Integer.parseInt(threadsPair[1]);
+            if (threads < 1)
+              throw new Exception();
+          }
+        catch (Exception E)
+          {
+            return false;
+          }
+
         if (mode == 1)
           { // CLI Mode
-            if ( (arguments.size() % 6) != 2 )
+            if ((arguments.size() % 6) != 2)
               return false;
-            
-            for ( int i = 2; i < arguments.size(); i += 6)
+
+            for (int i = 2; i < arguments.size(); i += 6)
               {
-                if ( !"-f".equalsIgnoreCase(arguments.get(i)) || TextUtil.isNullOrEmpty(arguments.get(i+1))
-                  || !"-o".equalsIgnoreCase(arguments.get(i+2)) || TextUtil.isNullOrEmpty(arguments.get(i+3))
-                  || !"-c".equalsIgnoreCase(arguments.get(i+4)) || TextUtil.isNullOrEmpty(arguments.get(i+5)) )
+                if (!"-f".equalsIgnoreCase(arguments.get(i)) || TextUtil.isNullOrEmpty(arguments.get(i + 1))
+                || !"-o".equalsIgnoreCase(arguments.get(i + 2)) || TextUtil.isNullOrEmpty(arguments.get(i + 3))
+                || !"-c".equalsIgnoreCase(arguments.get(i + 4)) || TextUtil.isNullOrEmpty(arguments.get(i + 5)))
                   return false;
               }
           }
-        else // UI Mode 
-          if ( !"-f".equalsIgnoreCase(arguments.get(2)) || TextUtil.isNullOrEmpty(arguments.get(3)) )
-            {
-              return false;
-            }
-          
+        else // UI Mode
+        if (!"-f".equalsIgnoreCase(arguments.get(2)) || TextUtil.isNullOrEmpty(arguments.get(3)))
+          {
+            return false;
+          }
+
 
         return true;
       }
@@ -370,11 +359,11 @@ public class Load
         LOG.error("*** CLI Mode");
         LOG.error("    -silentMode=1 -threads=<No.of Threads> -f <filepath>                 -o <object_name>,<object_name>,..   -c <connection_id>,... ");
         LOG.error("ex: -silentMode=1 -threads=2               -f com/c/c/data/config.C.json -o CMS.HCPCS_CODES,CMS.CPT_CODES    -c MAIN,KEYS");
-        LOG.error("");        
+        LOG.error("");
         LOG.error("*** for Multi Tenant System.");
         LOG.error("    ALL           = All Connection Ids. Except 'KEYS'");
         LOG.error("    ALL_TENANTS   = All Connection Ids. Except 'MAIN' & 'KEYS'");
-        LOG.error("");        
+        LOG.error("");
       }
 
     // Constructor
@@ -386,6 +375,7 @@ public class Load
 
     /**
      * Initialize the contents of the frame.
+     * 
      * @wbp.parser.entryPoint
      */
     private void initialize()
@@ -394,17 +384,17 @@ public class Load
         try
           {
             UIManager.setLookAndFeel(
-              UIManager.getSystemLookAndFeelClassName());
+            UIManager.getSystemLookAndFeelClassName());
           }
         catch (Exception e)
           {
             e.printStackTrace();
           }
-        
-        JScrollPane                   scroller1, scroller2;
-        JTable                        table1,    table2;
-        DataImportTableModel          tableDataModel;
-        ConnectionsTableModel         connectionDataModel;
+
+        JScrollPane scroller1, scroller2;
+        JTable table1, table2;
+        DataImportTableModel tableDataModel;
+        ConnectionsTableModel connectionDataModel;
 
         frmDataImport = new JFrame();
         frmDataImport.setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
@@ -414,7 +404,7 @@ public class Load
         frmDataImport.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frmDataImport.getContentPane().setLayout(null);
         // frmDataImport.setResizable(false);
-        
+
         btnRun.addActionListener(new ActionListener()
           {
             public void actionPerformed(ActionEvent e)
@@ -439,10 +429,10 @@ public class Load
                                     if (ImportValue == true)
                                       ImportTables.add((String) data[i][0]);
                                   }
-                                for (int i = 0; i < connections.length ; i++)
+                                for (int i = 0; i < connections.length; i++)
                                   {
                                     Boolean connection = (Boolean) connections[i][2];
-                                    if(connection == true)
+                                    if (connection == true)
                                       ConnectionIds.add((String) connections[i][0]);
                                   }
 
@@ -450,7 +440,7 @@ public class Load
                                 List<DataObject> selectedDO = FilterObjects(ImportTables, Conf._CmsData);
                                 LOG.debug("Validating Selected Table Indices..");
                                 List<String> errors = ValidateDataObjects(ConnectionIds, selectedDO);
-                                if ( errors.size() > 0 )
+                                if (errors.size() > 0)
                                   {
                                     String error = TextUtil.JoinTrim(errors.toArray(new String[errors.size()]), ", \n");
                                     JOptionPane.showMessageDialog(null, error, "Validation Failed. Aborting !!", JOptionPane.ERROR_MESSAGE);
@@ -458,9 +448,9 @@ public class Load
                                     System.exit(1);
                                   }
                                 LOG.debug("Validation Successful.");
-                                
+
                                 // Processing
-                                StartImportProcessor(ImportTables, ConnectionIds, Conf,  Conf._CmsData);
+                                StartImportProcessor(ImportTables, ConnectionIds, Conf, Conf._CmsData);
                                 LOG.debug("Import Tables completed.");
                               }
                             catch (Exception e)
@@ -498,23 +488,23 @@ public class Load
         frmDataImport.getContentPane().add(scroller1);
 
         // Table1 Setup
-        tableDataModel = new DataImportTableModel(data); 
+        tableDataModel = new DataImportTableModel(data);
         table1 = new JTable(tableDataModel);
         table1.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 14));
         table1.getTableHeader().setReorderingAllowed(false);
         table1.setRowHeight(25);
         table1.getColumnModel().getColumn(0).setPreferredWidth(550);
         table1.getColumnModel().getColumn(1).setPreferredWidth(80);
-        table1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);        
+        table1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-                
-        
+
+
         // Scroller2 Setup
         scroller2 = new JScrollPane();
         scroller2.setBounds(34, 476, 852, 242);
         scroller2.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         frmDataImport.getContentPane().add(scroller2);
-        
+
         // Table2 Setup
         connectionDataModel = new ConnectionsTableModel(connections);
         table2 = new JTable(connectionDataModel);
@@ -524,32 +514,36 @@ public class Load
         table2.getColumnModel().getColumn(0).setPreferredWidth(200);
         table2.getColumnModel().getColumn(1).setPreferredWidth(350);
         table2.getColumnModel().getColumn(2).setPreferredWidth(80);
-        table2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);        
+        table2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-        
+
         scroller1.setViewportView(table1);
         scroller2.setViewportView(table2);
-        
-        btnAllTables.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            for(int i=0; i < data.length; i++)
-                data[i][1] = true;
-            tableDataModel.fireTableDataChanged();
-          }
-        });
+
+        btnAllTables.addActionListener(new ActionListener()
+          {
+            public void actionPerformed(ActionEvent e)
+              {
+                for (int i = 0; i < data.length; i++)
+                  data[i][1] = true;
+                tableDataModel.fireTableDataChanged();
+              }
+          });
         btnAllTables.setBounds(733, 21, 153, 23);
         frmDataImport.getContentPane().add(btnAllTables);
-        
-        btnAllConnections.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            for(int i=0; i < connections.length; i++)
-                connections[i][2] = true;
-            connectionDataModel.fireTableDataChanged();
-          }
-        });
+
+        btnAllConnections.addActionListener(new ActionListener()
+          {
+            public void actionPerformed(ActionEvent e)
+              {
+                for (int i = 0; i < connections.length; i++)
+                  connections[i][2] = true;
+                connectionDataModel.fireTableDataChanged();
+              }
+          });
         btnAllConnections.setBounds(695, 453, 191, 23);
         frmDataImport.getContentPane().add(btnAllConnections);
-        
+
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         frmDataImport.setLocation(dim.width / 2 - frmDataImport.getSize().width / 2, dim.height / 2 - frmDataImport.getSize().height / 2);
       }

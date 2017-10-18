@@ -37,8 +37,8 @@ public class DataObject
     @SerializedName("headersIncluded")      public boolean            _HeadersIncluded;
     @SerializedName("multiHeaderDelimeter") public String             _multiHeaderDelimeter;
     @SerializedName("uniqueColumns"  )      public List<String>       _uniqueColumnsList    = new ArrayList<String>();
-    @SerializedName("upserts"        )      public boolean            _upserts;
-    @SerializedName("inserts"        )      public boolean            _inserts;
+    @SerializedName("upserts"        )      public boolean            _upserts = false;
+    @SerializedName("inserts"        )      public boolean            _inserts = false;
     
     
     

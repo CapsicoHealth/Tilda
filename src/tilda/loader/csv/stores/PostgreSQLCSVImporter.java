@@ -403,6 +403,9 @@ public class PostgreSQLCSVImporter extends CSVImporter
             
             for (int i = 0; i < columns.length; ++i)
               {
+// LFH-Note: we have to measure the impact of updating indexed columns with the sanme value... Is the row re-indexed? What's the performance impact? 
+//                if (TextUtil.FindElement(uniqueColumns, columns[i], false, 0) != -1)
+//                 continue;
                 if (i != 0) {
                   Str.append(",");
                 }                  

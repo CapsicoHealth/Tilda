@@ -19,7 +19,10 @@ package tilda.db.metadata;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
@@ -41,9 +44,9 @@ public class TableMeta
     public final String            _SchemaName;
     public final String            _TableName;
     public final String            _Descr;
-    public Map<String, ColumnMeta> _Columns = new HashMap<String, ColumnMeta>();
-    public Map<String, IndexMeta>  _Indices = new HashMap<String, IndexMeta>();
-    public Map<String, FKMeta   >  _ForeignKeys = new HashMap<String, FKMeta>();
+    public Map<String, ColumnMeta> _Columns     = new HashMap<String, ColumnMeta>();
+    public Map<String, IndexMeta>  _Indices     = new HashMap<String, IndexMeta>();
+    public Map<String, FKMeta>     _ForeignKeys = new HashMap<String, FKMeta>();
 
     public void load(Connection C)
     throws Exception
@@ -91,7 +94,7 @@ public class TableMeta
             if (prevFKM == null)
               _ForeignKeys.put(FKM._Name, FKM);
             else
-             FKM = prevFKM;
+              FKM = prevFKM;
             FKM.addColumn(RS);
           }
       }
@@ -100,5 +103,22 @@ public class TableMeta
     public ColumnMeta getColumnMeta(String ColumnName)
       {
         return _Columns.get(ColumnName.toLowerCase());
+      }
+
+    public IndexMeta getIndex(String[] Columns, boolean Unique)
+      {
+        for (Map.Entry<String, IndexMeta> entry : _Indices.entrySet())
+          {
+            IndexMeta IM = entry.getValue();
+            if (IM._Columns.size() != Columns.length)
+              continue;
+
+            if (IM._Unique != Unique)
+              continue;
+
+            if (IM.getColumnNames().containsAll(Arrays.asList(Columns)) == true)
+              return IM;
+          }
+        return null;
       }
   }
