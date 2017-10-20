@@ -361,7 +361,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
         catch (SQLException E)
           {
             C.HandleCatch(E, "inserted");
-            return 0;
+            throw E;
           }
         catch (Exception E)
           {
