@@ -63,7 +63,7 @@ public abstract class CSVImporter
     protected abstract long insertData(boolean isUpsert, long t0, Map<String, ColumnMeta> DBColumns,
       boolean withHeader, Iterable<CSVRecord> records, StringBuilder Str, String schemaName, String tableName,
       String[] headers, String[] columns, Map<String, ColumnHeader> columnMap, String[] completeHeaders,
-      String DateTimePattern, String DateTimeZoneInfoId, String DatePattern) throws Exception;
+      String[] uniqueColumns, String DateTimePattern, String DateTimeZoneInfoId, String DatePattern) throws Exception;
 
     protected abstract StringBuilder GenerateSQL(boolean isUpsert, String schemaName, String tableName, String columns[],
       Map<String, ColumnMeta> DBColumns, String lookupColumns[]);
@@ -100,8 +100,8 @@ public abstract class CSVImporter
                 getHeader(completeHeaders, cmsDO._HeadersIncluded, records);
                 
                 NumOfRecs = insertData(cmsDO.isUpserts(), t0, DBColumns, cmsDO._HeadersIncluded, records, Str, cmsDO._SchemaName,
-                  cmsDO._TableName, headers, columns, cmsDO.getMultiHeaderColumnMap(), completeHeaders, cmsDO._dateTimePattern, 
-                  cmsDO._zoneId, cmsDO._datePattern);
+                  cmsDO._TableName, headers, columns, cmsDO.getMultiHeaderColumnMap(), completeHeaders, uniqueColumns, 
+                  cmsDO._dateTimePattern, cmsDO._zoneId, cmsDO._datePattern);
                 // C.setTableLogging(cmsDO._SchemaName, cmsDO._TableName, true);
                 
                 NumOfRecs = (cmsDO._HeadersIncluded == true) ? (NumOfRecs - 1) : NumOfRecs;
