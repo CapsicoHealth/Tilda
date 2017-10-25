@@ -585,7 +585,7 @@ public class PostgreSQL implements DBType
     throws Exception
       {        
         StringBuilder Str = new StringBuilder();
-        reCreateRole(Str, "tilda_app");
+        //reCreateRole(Str, "tilda_app");
         reCreateRole(Str, "tilda_read_only");
         reCreateRole(Str, "tilda_reporting");
 
