@@ -18,11 +18,11 @@ package tilda.utils;
 
 import java.security.MessageDigest;
 import java.security.SecureRandom;
+import java.util.Base64;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.tomcat.util.codec.binary.Base64;
 
 public class EncryptionUtil
   {
@@ -37,7 +37,7 @@ public class EncryptionUtil
           {
             MessageDigest md = MessageDigest.getInstance("SHA-512");
             md.update(plaintext.getBytes("UTF-8"));
-            return new String((new Base64()).encode(md.digest()));
+            return new String(Base64.getEncoder().encodeToString(md.digest()));
           }
         catch (Exception e)
           {
