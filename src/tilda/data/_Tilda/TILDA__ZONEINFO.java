@@ -285,7 +285,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Oct 16 2017, 23:24:53EDT
+ @generated Oct 27 2017, 15:55:16IST
 */
 public abstract class TILDA__ZONEINFO implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {

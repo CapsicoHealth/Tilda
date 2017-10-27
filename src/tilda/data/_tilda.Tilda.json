@@ -179,39 +179,46 @@
         }
       ]
       
+    },
+    { "name":"Job",
+       "description": "Kettle Jobs",
+       "columns": [
+        {"name": "name"                                 , "type": "STRING",   "size": 50,                      "description": "Job Name"  },
+        { "name":"startTime"                            , "type":"DATETIME", "nullable": true,                  "description":"StartTime" },
+        { "name":"endTime"                              , "type":"DATETIME", "nullable": true,                  "description":"EndTime"   },
+        { "name":"totalRecords"                         , "type":"INTEGER" , "nullable": true,                  "description":"TotalRecords" },
+        { "name":"status"                               , "type":"STRING"  , "nullable": true,  "size":   200,  "description":"Status" },
+        { "name":"error"                                , "type":"STRING"  , "nullable": true,  "size":   1000, "description":"Error" }
+      ],
+       "primary": { "autogen": true }
+    },
+    { "name":"JobFile",
+      "description":"Job File Info",
+      "columns":[
+        { "name":"jobRefnum"                            , "sameas": "Job.refnum"    , "nullable": false,                 "description":"Job Foreign key" },               
+        { "name":"fileName"                             , "type":"STRING"           , "nullable": false,  "size":   200,  "description":"FileName" },
+        { "name":"fileRecords"                          , "type":"INTEGER"          , "nullable": true,                  "description":"FileRecords" },
+        { "name":"fileProcessStartTime"                 , "type":"DATETIME"         , "nullable": true,                  "description":"FileProcessStartTime" },
+        { "name":"fileProcessEndTime"                   , "type":"DATETIME"         , "nullable": true,                  "description":"FileProcessEndTime" }
+       ]
+       ,"primary": { "autogen": true }
+       ,"indices":[
+        { "name":"Job_Refnum", "columns":["jobRefnum"] }
+      ]         
+    },
+    { "name":"Job_Message",
+      "description":"Job Messages",
+      "columns":[
+        { "name":"jobFileRefnum"                        , "sameas": "JobFile.refnum" , "nullable": false,                  "description":"JobFile Foreign key" },               
+        { "name":"message"                              , "type":"STRING"            , "nullable": false,  "size":   1000, "description":"Message" },
+        { "name":"isError"                              , "type":"BOOLEAN"           , "nullable": false                 , "description":"Boolean flag to identify message type -- error or success" }
+       ]
+       ,"primary": { "autogen": true }
+       ,"indices":[ 
+        { "name":"JobFile_Refnum", "columns":["refnum","jobFileRefnum"] }
+      ]         
     }
     
-   ,{ "name":"Jobs",
-      "description":"Kettle Jobs",
-      "columns":[
-        { "name":"Id"                                   , "type":"INTEGER" , "nullable": false,                 "description":"Id" },        
-        { "name":"Name"                                 , "type":"STRING"  , "nullable": true,  "size":   120,  "description":"Name" },
-        { "name":"StartTime"                            , "type":"DATETIME", "nullable": true,                  "description":"StartTime" },
-        { "name":"EndTime"                              , "type":"DATETIME", "nullable": true,                  "description":"EndTime" },
-        { "name":"TotalRecords"                         , "type":"INTEGER" , "nullable": true,                  "description":"TotalRecords" },
-        { "name":"Status"                               , "type":"STRING"  , "nullable": true,  "size":   200,  "description":"Status" },
-        { "name":"Error"                                , "type":"STRING"  , "nullable": true,  "size":   1000, "description":"Error" }
-       ]
-       ,"indices":[ 
-        { "name":"Job_Id", "columns":["Id"] }
-      ]         
-    }, 
-    { "name":"Job_Detail",
-      "description":"Job Detail",
-      "columns":[
-        { "name":"Id"                                   , "type":"INTEGER" , "nullable": false,                 "description":"Id" },        
-        { "name":"Job_Id"                               , "type":"INTEGER" , "nullable": false,                 "description":"Job Id" },       
-        { "name":"FileName"                             , "type":"STRING"  , "nullable": true,  "size":   200,  "description":"FileName" },
-        { "name":"FileRecords"                          , "type":"INTEGER" , "nullable": true,                  "description":"FileRecords" },
-        { "name":"FileProcessStartTime"                 , "type":"DATETIME", "nullable": true,                  "description":"FileProcessStartTime" },
-        { "name":"FileProcessEndTime"                   , "type":"DATETIME", "nullable": true,                  "description":"FileProcessEndTime" },
-        { "name":"Status"                               , "type":"STRING"  , "nullable": true,  "size":   200,  "description":"Status" },
-        { "name":"Error"                                , "type":"STRING"  , "nullable": true,  "size":   1000, "description":"Error" }
-       ]
-       ,"indices":[ 
-        { "name":"Job_File_Id", "columns":["Id","Job_Id"] }
-      ]         
-    }
     
     
    ,{ "name": "RefillPerf", "occ": true,

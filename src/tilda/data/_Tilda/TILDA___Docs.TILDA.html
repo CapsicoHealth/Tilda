@@ -3369,10 +3369,10 @@ It contains the following columns:<BR>
 </DIV>
 <BR><BR><BR><BR><BR><BR>
 <DIV>
-<DIV id='JOBS_DIV' class='tables'>
-<H2>JOBS&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 60%;"><A href="#">top</A></SUP></H2>
+<DIV id='JOB_DIV' class='tables'>
+<H2>JOB&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 60%;"><A href="#">top</A></SUP></H2>
 </DIV>
-The generated Java 8/PostgreSQL Tilda data class <B>Data_JOBS</B> is mapped to the Table <B>TILDA.JOBS</B>.
+The generated Java 8/PostgreSQL Tilda data class <B>Data_JOB</B> is mapped to the Table <B>TILDA.JOB</B>.
 <UL>
 
 <LI>The Table has normal <B>read/write</B> capabilities.</LI>
@@ -3387,40 +3387,40 @@ It contains the following columns:<BR>
 
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
-<TD align="right"><B id='JOBS-Id_DIV' class='columns'>Id</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;&nbsp;</TD>
-<TD>integer&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOB-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;&nbsp;</TD>
+<TD>bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Id</TD>
+<TD>The primary key for this record</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>2&nbsp;&nbsp;</TD>
-<TD align="right"><B id='JOBS-Name_DIV' class='columns'>Name</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOB-name_DIV' class='columns'>name</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;&nbsp;</TD>
-<TD>varchar(120)&nbsp;&nbsp;</TD>
+<TD>varchar(50)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Name</TD>
+<TD>Job Name</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>3&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('JOBS-StartTimeTZ')" align="right"><B id='JOBS-StartTimeTZ_DIV' class='columns dotted_underline cursor_pointer'>StartTimeTZ</B>&nbsp;&nbsp;</TD>
+<TD onclick="onModalShowClicked('JOB-startTimeTZ')" align="right"><B id='JOB-startTimeTZ_DIV' class='columns dotted_underline cursor_pointer'>startTimeTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;&nbsp;</TD>
 <TD>character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'StartTime'.</TD>
+<TD>Generated helper column to hold the time zone ID for 'startTime'.</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>4&nbsp;&nbsp;</TD>
-<TD align="right"><B id='JOBS-StartTime_DIV' class='columns'>StartTime</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOB-startTime_DIV' class='columns'>startTime</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -3431,18 +3431,18 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>5&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('JOBS-EndTimeTZ')" align="right"><B id='JOBS-EndTimeTZ_DIV' class='columns dotted_underline cursor_pointer'>EndTimeTZ</B>&nbsp;&nbsp;</TD>
+<TD onclick="onModalShowClicked('JOB-endTimeTZ')" align="right"><B id='JOB-endTimeTZ_DIV' class='columns dotted_underline cursor_pointer'>endTimeTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;&nbsp;</TD>
 <TD>character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'EndTime'.</TD>
+<TD>Generated helper column to hold the time zone ID for 'endTime'.</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>6&nbsp;&nbsp;</TD>
-<TD align="right"><B id='JOBS-EndTime_DIV' class='columns'>EndTime</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOB-endTime_DIV' class='columns'>endTime</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -3453,7 +3453,7 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>7&nbsp;&nbsp;</TD>
-<TD align="right"><B id='JOBS-TotalRecords_DIV' class='columns'>TotalRecords</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOB-totalRecords_DIV' class='columns'>totalRecords</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;&nbsp;</TD>
 <TD>integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -3464,7 +3464,7 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>8&nbsp;&nbsp;</TD>
-<TD align="right"><B id='JOBS-Status_DIV' class='columns'>Status</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOB-status_DIV' class='columns'>status</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;&nbsp;</TD>
 <TD>varchar(200)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -3475,7 +3475,7 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>9&nbsp;&nbsp;</TD>
-<TD align="right"><B id='JOBS-Error_DIV' class='columns'>Error</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOB-error_DIV' class='columns'>error</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;&nbsp;</TD>
 <TD>varchar(1000)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -3486,7 +3486,7 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>10&nbsp;&nbsp;</TD>
-<TD align="right"><B id='JOBS-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOB-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -3502,7 +3502,7 @@ It contains the following columns:<BR>
 </TD></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>11&nbsp;&nbsp;</TD>
-<TD align="right"><B id='JOBS-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOB-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -3518,7 +3518,7 @@ It contains the following columns:<BR>
 </TD></TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>12&nbsp;&nbsp;</TD>
-<TD align="right"><B id='JOBS-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOB-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -3528,9 +3528,9 @@ It contains the following columns:<BR>
 <TD>The timestamp for when the record was deleted.</TD>
 </TR>
 </TABLE>
-<DIV id='JOBS-Id_MODAL' class='modal'>
+<DIV id='JOB-refnum_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('JOBS-Id_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JOB-refnum_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3540,14 +3540,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOBS_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOBS-Id_DIV'>Id</a> -- INTEGER</td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB-refnum_DIV'>refnum</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='JOBS-Name_MODAL' class='modal'>
+<DIV id='JOB-name_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('JOBS-Name_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JOB-name_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3557,14 +3557,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOBS_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOBS-Name_DIV'>Name</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB-name_DIV'>name</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='JOBS-StartTimeTZ_MODAL' class='modal'>
+<DIV id='JOB-startTimeTZ_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('JOBS-StartTimeTZ_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JOB-startTimeTZ_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3574,8 +3574,8 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOBS_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOBS-StartTimeTZ_DIV'>StartTimeTZ</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB-startTimeTZ_DIV'>startTimeTZ</a></td>
 </tr>
 <tr><td>&nbsp;</td></tr>
 <tr bgcolor="#DFECF8">
@@ -3585,9 +3585,9 @@ It contains the following columns:<BR>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='JOBS-StartTime_MODAL' class='modal'>
+<DIV id='JOB-startTime_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('JOBS-StartTime_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JOB-startTime_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3597,14 +3597,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOBS_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOBS-StartTime_DIV'>StartTime</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB-startTime_DIV'>startTime</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='JOBS-EndTimeTZ_MODAL' class='modal'>
+<DIV id='JOB-endTimeTZ_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('JOBS-EndTimeTZ_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JOB-endTimeTZ_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3614,8 +3614,8 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOBS_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOBS-EndTimeTZ_DIV'>EndTimeTZ</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB-endTimeTZ_DIV'>endTimeTZ</a></td>
 </tr>
 <tr><td>&nbsp;</td></tr>
 <tr bgcolor="#DFECF8">
@@ -3625,9 +3625,9 @@ It contains the following columns:<BR>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='JOBS-EndTime_MODAL' class='modal'>
+<DIV id='JOB-endTime_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('JOBS-EndTime_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JOB-endTime_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3637,14 +3637,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOBS_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOBS-EndTime_DIV'>EndTime</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB-endTime_DIV'>endTime</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='JOBS-TotalRecords_MODAL' class='modal'>
+<DIV id='JOB-totalRecords_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('JOBS-TotalRecords_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JOB-totalRecords_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3654,14 +3654,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOBS_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOBS-TotalRecords_DIV'>TotalRecords</a> -- INTEGER</td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB-totalRecords_DIV'>totalRecords</a> -- INTEGER</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='JOBS-Status_MODAL' class='modal'>
+<DIV id='JOB-status_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('JOBS-Status_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JOB-status_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3671,14 +3671,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOBS_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOBS-Status_DIV'>Status</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB-status_DIV'>status</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='JOBS-Error_MODAL' class='modal'>
+<DIV id='JOB-error_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('JOBS-Error_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JOB-error_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3688,14 +3688,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOBS_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOBS-Error_DIV'>Error</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB-error_DIV'>error</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='JOBS-created_MODAL' class='modal'>
+<DIV id='JOB-created_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('JOBS-created_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JOB-created_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3705,14 +3705,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOBS_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOBS-created_DIV'>created</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB-created_DIV'>created</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='JOBS-lastUpdated_MODAL' class='modal'>
+<DIV id='JOB-lastUpdated_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('JOBS-lastUpdated_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JOB-lastUpdated_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3722,14 +3722,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOBS_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOBS-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='JOBS-deleted_MODAL' class='modal'>
+<DIV id='JOB-deleted_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('JOBS-deleted_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JOB-deleted_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3739,24 +3739,24 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOBS_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOBS-deleted_DIV'>deleted</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB-deleted_DIV'>deleted</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
 </DIV>
 <BR><BR><BR><BR><BR><BR>
 <DIV>
-<DIV id='JOB_DETAIL_DIV' class='tables'>
-<H2>JOB_DETAIL&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 60%;"><A href="#">top</A></SUP></H2>
+<DIV id='JOBFILE_DIV' class='tables'>
+<H2>JOBFILE&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 60%;"><A href="#">top</A></SUP></H2>
 </DIV>
-The generated Java 8/PostgreSQL Tilda data class <B>Data_JOB_DETAIL</B> is mapped to the Table <B>TILDA.JOB_DETAIL</B>.
+The generated Java 8/PostgreSQL Tilda data class <B>Data_JOBFILE</B> is mapped to the Table <B>TILDA.JOBFILE</B>.
 <UL>
 
 <LI>The Table has normal <B>read/write</B> capabilities.</LI>
 <LI>The Table is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
 </UL>
-<B>Description</B>: Job Detail<BR>
+<B>Description</B>: Job File Info<BR>
 <BR>
 
 It contains the following columns:<BR>
@@ -3765,32 +3765,32 @@ It contains the following columns:<BR>
 
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
-<TD align="right"><B id='JOB_DETAIL-Id_DIV' class='columns'>Id</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;&nbsp;</TD>
-<TD>integer&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOBFILE-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;&nbsp;</TD>
+<TD>bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Id</TD>
+<TD>The primary key for this record</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>2&nbsp;&nbsp;</TD>
-<TD align="right"><B id='JOB_DETAIL-Job_Id_DIV' class='columns'>Job_Id</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;&nbsp;</TD>
-<TD>integer&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOBFILE-jobRefnum_DIV' class='columns'>jobRefnum</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;&nbsp;</TD>
+<TD>bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Job Id</TD>
+<TD>Job Foreign key</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>3&nbsp;&nbsp;</TD>
-<TD align="right"><B id='JOB_DETAIL-FileName_DIV' class='columns'>FileName</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOBFILE-fileName_DIV' class='columns'>fileName</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;&nbsp;</TD>
 <TD>varchar(200)&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
@@ -3798,7 +3798,7 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>4&nbsp;&nbsp;</TD>
-<TD align="right"><B id='JOB_DETAIL-FileRecords_DIV' class='columns'>FileRecords</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOBFILE-fileRecords_DIV' class='columns'>fileRecords</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;&nbsp;</TD>
 <TD>integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -3809,18 +3809,18 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>5&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('JOB_DETAIL-FileProcessStartTimeTZ')" align="right"><B id='JOB_DETAIL-FileProcessStartTimeTZ_DIV' class='columns dotted_underline cursor_pointer'>FileProcessStartTimeTZ</B>&nbsp;&nbsp;</TD>
+<TD onclick="onModalShowClicked('JOBFILE-fileProcessStartTimeTZ')" align="right"><B id='JOBFILE-fileProcessStartTimeTZ_DIV' class='columns dotted_underline cursor_pointer'>fileProcessStartTimeTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;&nbsp;</TD>
 <TD>character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'FileProcessStartTime'.</TD>
+<TD>Generated helper column to hold the time zone ID for 'fileProcessStartTime'.</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>6&nbsp;&nbsp;</TD>
-<TD align="right"><B id='JOB_DETAIL-FileProcessStartTime_DIV' class='columns'>FileProcessStartTime</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOBFILE-fileProcessStartTime_DIV' class='columns'>fileProcessStartTime</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -3831,18 +3831,18 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>7&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('JOB_DETAIL-FileProcessEndTimeTZ')" align="right"><B id='JOB_DETAIL-FileProcessEndTimeTZ_DIV' class='columns dotted_underline cursor_pointer'>FileProcessEndTimeTZ</B>&nbsp;&nbsp;</TD>
+<TD onclick="onModalShowClicked('JOBFILE-fileProcessEndTimeTZ')" align="right"><B id='JOBFILE-fileProcessEndTimeTZ_DIV' class='columns dotted_underline cursor_pointer'>fileProcessEndTimeTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;&nbsp;</TD>
 <TD>character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'FileProcessEndTime'.</TD>
+<TD>Generated helper column to hold the time zone ID for 'fileProcessEndTime'.</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>8&nbsp;&nbsp;</TD>
-<TD align="right"><B id='JOB_DETAIL-FileProcessEndTime_DIV' class='columns'>FileProcessEndTime</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOBFILE-fileProcessEndTime_DIV' class='columns'>fileProcessEndTime</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -3853,29 +3853,7 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>9&nbsp;&nbsp;</TD>
-<TD align="right"><B id='JOB_DETAIL-Status_DIV' class='columns'>Status</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD>
-<TD>varchar(200)&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Status</TD>
-</TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>10&nbsp;&nbsp;</TD>
-<TD align="right"><B id='JOB_DETAIL-Error_DIV' class='columns'>Error</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD>
-<TD>varchar(1000)&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Error</TD>
-</TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>11&nbsp;&nbsp;</TD>
-<TD align="right"><B id='JOB_DETAIL-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOBFILE-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -3890,8 +3868,8 @@ It contains the following columns:<BR>
 </TABLE>
 </TD></TR>
   <TR valign="top" bgcolor="#FFFFFF">
-    <TD>12&nbsp;&nbsp;</TD>
-<TD align="right"><B id='JOB_DETAIL-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
+    <TD>10&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOBFILE-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -3906,8 +3884,8 @@ It contains the following columns:<BR>
 </TABLE>
 </TD></TR>
   <TR valign="top" bgcolor="#DFECF8">
-    <TD>13&nbsp;&nbsp;</TD>
-<TD align="right"><B id='JOB_DETAIL-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
+    <TD>11&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOBFILE-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -3917,9 +3895,9 @@ It contains the following columns:<BR>
 <TD>The timestamp for when the record was deleted.</TD>
 </TR>
 </TABLE>
-<DIV id='JOB_DETAIL-Id_MODAL' class='modal'>
+<DIV id='JOBFILE-refnum_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('JOB_DETAIL-Id_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JOBFILE-refnum_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3929,14 +3907,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOB_DETAIL_DIV'>Job_Detail</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOB_DETAIL-Id_DIV'>Id</a> -- INTEGER</td>
+<td><a href='TILDA___Docs.TILDA.html#JOBFILE_DIV'>JobFile</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOBFILE-refnum_DIV'>refnum</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='JOB_DETAIL-Job_Id_MODAL' class='modal'>
+<DIV id='JOBFILE-jobRefnum_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('JOB_DETAIL-Job_Id_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JOBFILE-jobRefnum_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3946,14 +3924,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOB_DETAIL_DIV'>Job_Detail</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOB_DETAIL-Job_Id_DIV'>Job_Id</a> -- INTEGER</td>
+<td><a href='TILDA___Docs.TILDA.html#JOBFILE_DIV'>JobFile</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOBFILE-jobRefnum_DIV'>jobRefnum</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='JOB_DETAIL-FileName_MODAL' class='modal'>
+<DIV id='JOBFILE-fileName_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('JOB_DETAIL-FileName_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JOBFILE-fileName_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3963,14 +3941,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOB_DETAIL_DIV'>Job_Detail</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOB_DETAIL-FileName_DIV'>FileName</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#JOBFILE_DIV'>JobFile</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOBFILE-fileName_DIV'>fileName</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='JOB_DETAIL-FileRecords_MODAL' class='modal'>
+<DIV id='JOBFILE-fileRecords_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('JOB_DETAIL-FileRecords_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JOBFILE-fileRecords_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3980,14 +3958,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOB_DETAIL_DIV'>Job_Detail</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOB_DETAIL-FileRecords_DIV'>FileRecords</a> -- INTEGER</td>
+<td><a href='TILDA___Docs.TILDA.html#JOBFILE_DIV'>JobFile</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOBFILE-fileRecords_DIV'>fileRecords</a> -- INTEGER</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='JOB_DETAIL-FileProcessStartTimeTZ_MODAL' class='modal'>
+<DIV id='JOBFILE-fileProcessStartTimeTZ_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('JOB_DETAIL-FileProcessStartTimeTZ_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JOBFILE-fileProcessStartTimeTZ_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3997,8 +3975,8 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOB_DETAIL_DIV'>Job_Detail</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOB_DETAIL-FileProcessStartTimeTZ_DIV'>FileProcessStartTimeTZ</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOBFILE_DIV'>JobFile</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOBFILE-fileProcessStartTimeTZ_DIV'>fileProcessStartTimeTZ</a></td>
 </tr>
 <tr><td>&nbsp;</td></tr>
 <tr bgcolor="#DFECF8">
@@ -4008,9 +3986,9 @@ It contains the following columns:<BR>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='JOB_DETAIL-FileProcessStartTime_MODAL' class='modal'>
+<DIV id='JOBFILE-fileProcessStartTime_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('JOB_DETAIL-FileProcessStartTime_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JOBFILE-fileProcessStartTime_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -4020,14 +3998,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOB_DETAIL_DIV'>Job_Detail</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOB_DETAIL-FileProcessStartTime_DIV'>FileProcessStartTime</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#JOBFILE_DIV'>JobFile</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOBFILE-fileProcessStartTime_DIV'>fileProcessStartTime</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='JOB_DETAIL-FileProcessEndTimeTZ_MODAL' class='modal'>
+<DIV id='JOBFILE-fileProcessEndTimeTZ_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('JOB_DETAIL-FileProcessEndTimeTZ_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JOBFILE-fileProcessEndTimeTZ_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -4037,8 +4015,8 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOB_DETAIL_DIV'>Job_Detail</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOB_DETAIL-FileProcessEndTimeTZ_DIV'>FileProcessEndTimeTZ</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOBFILE_DIV'>JobFile</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOBFILE-fileProcessEndTimeTZ_DIV'>fileProcessEndTimeTZ</a></td>
 </tr>
 <tr><td>&nbsp;</td></tr>
 <tr bgcolor="#DFECF8">
@@ -4048,9 +4026,9 @@ It contains the following columns:<BR>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='JOB_DETAIL-FileProcessEndTime_MODAL' class='modal'>
+<DIV id='JOBFILE-fileProcessEndTime_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('JOB_DETAIL-FileProcessEndTime_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JOBFILE-fileProcessEndTime_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -4060,14 +4038,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOB_DETAIL_DIV'>Job_Detail</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOB_DETAIL-FileProcessEndTime_DIV'>FileProcessEndTime</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#JOBFILE_DIV'>JobFile</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOBFILE-fileProcessEndTime_DIV'>fileProcessEndTime</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='JOB_DETAIL-Status_MODAL' class='modal'>
+<DIV id='JOBFILE-created_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('JOB_DETAIL-Status_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JOBFILE-created_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -4077,14 +4055,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOB_DETAIL_DIV'>Job_Detail</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOB_DETAIL-Status_DIV'>Status</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#JOBFILE_DIV'>JobFile</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOBFILE-created_DIV'>created</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='JOB_DETAIL-Error_MODAL' class='modal'>
+<DIV id='JOBFILE-lastUpdated_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('JOB_DETAIL-Error_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JOBFILE-lastUpdated_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -4094,14 +4072,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOB_DETAIL_DIV'>Job_Detail</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOB_DETAIL-Error_DIV'>Error</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#JOBFILE_DIV'>JobFile</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOBFILE-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='JOB_DETAIL-created_MODAL' class='modal'>
+<DIV id='JOBFILE-deleted_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('JOB_DETAIL-created_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JOBFILE-deleted_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -4111,14 +4089,121 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOB_DETAIL_DIV'>Job_Detail</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOB_DETAIL-created_DIV'>created</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#JOBFILE_DIV'>JobFile</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOBFILE-deleted_DIV'>deleted</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='JOB_DETAIL-lastUpdated_MODAL' class='modal'>
+</DIV>
+<BR><BR><BR><BR><BR><BR>
+<DIV>
+<DIV id='JOB_MESSAGE_DIV' class='tables'>
+<H2>JOB_MESSAGE&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 60%;"><A href="#">top</A></SUP></H2>
+</DIV>
+The generated Java 8/PostgreSQL Tilda data class <B>Data_JOB_MESSAGE</B> is mapped to the Table <B>TILDA.JOB_MESSAGE</B>.
+<UL>
+
+<LI>The Table has normal <B>read/write</B> capabilities.</LI>
+<LI>The Table is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
+</UL>
+<B>Description</B>: Job Messages<BR>
+<BR>
+
+It contains the following columns:<BR>
+ <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><!--TH align="left">Column</TH--><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>1&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOB_MESSAGE-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;&nbsp;</TD>
+<TD>bigint&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The primary key for this record</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>2&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOB_MESSAGE-jobFileRefnum_DIV' class='columns'>jobFileRefnum</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;&nbsp;</TD>
+<TD>bigint&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>JobFile Foreign key</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>3&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOB_MESSAGE-message_DIV' class='columns'>message</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;&nbsp;</TD>
+<TD>varchar(1000)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Message</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>4&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOB_MESSAGE-isError_DIV' class='columns'>isError</B>&nbsp;&nbsp;</TD>
+<TD>boolean&nbsp;&nbsp;</TD>
+<TD>boolean&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Boolean flag to identify message type -- error or success</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>5&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOB_MESSAGE-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;&nbsp;</TD>
+<TD>timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The timestamp for when the record was created.</TD>
+</TR>
+  <TR bgcolor="#DFECF8"><TD></TD><TD></TD><TD colspan="10" align="center">
+<TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFF2CC"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Creation</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Creation&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Creation time</TD></TR>
+</TABLE>
+</TD></TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>6&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOB_MESSAGE-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;&nbsp;</TD>
+<TD>timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The timestamp for when the record was last updated.</TD>
+</TR>
+  <TR bgcolor="#FFFFFF"><TD></TD><TD></TD><TD colspan="10" align="center">
+<TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFF2CC"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Update</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Update&nbsp;&nbsp;</TD><TD>ALWAYS&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Last updated time</TD></TR>
+</TABLE>
+</TD></TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>7&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOB_MESSAGE-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;&nbsp;</TD>
+<TD>timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The timestamp for when the record was deleted.</TD>
+</TR>
+</TABLE>
+<DIV id='JOB_MESSAGE-refnum_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('JOB_DETAIL-lastUpdated_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JOB_MESSAGE-refnum_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -4128,14 +4213,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOB_DETAIL_DIV'>Job_Detail</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOB_DETAIL-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_MESSAGE_DIV'>Job_Message</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_MESSAGE-refnum_DIV'>refnum</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='JOB_DETAIL-deleted_MODAL' class='modal'>
+<DIV id='JOB_MESSAGE-jobFileRefnum_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('JOB_DETAIL-deleted_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JOB_MESSAGE-jobFileRefnum_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -4145,8 +4230,93 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOB_DETAIL_DIV'>Job_Detail</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOB_DETAIL-deleted_DIV'>deleted</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_MESSAGE_DIV'>Job_Message</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_MESSAGE-jobFileRefnum_DIV'>jobFileRefnum</a> -- LONG</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='JOB_MESSAGE-message_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('JOB_MESSAGE-message_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_MESSAGE_DIV'>Job_Message</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_MESSAGE-message_DIV'>message</a> -- STRING</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='JOB_MESSAGE-isError_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('JOB_MESSAGE-isError_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_MESSAGE_DIV'>Job_Message</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_MESSAGE-isError_DIV'>isError</a> -- BOOLEAN</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='JOB_MESSAGE-created_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('JOB_MESSAGE-created_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_MESSAGE_DIV'>Job_Message</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_MESSAGE-created_DIV'>created</a> -- DATETIME</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='JOB_MESSAGE-lastUpdated_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('JOB_MESSAGE-lastUpdated_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_MESSAGE_DIV'>Job_Message</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_MESSAGE-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='JOB_MESSAGE-deleted_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('JOB_MESSAGE-deleted_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_MESSAGE_DIV'>Job_Message</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_MESSAGE-deleted_DIV'>deleted</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
