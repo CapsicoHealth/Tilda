@@ -282,7 +282,7 @@ public class Load
 
         LOG.debug("Running ImportProcessor");
         long timeTaken = System.nanoTime();
-        ImportProcessor.parallelProcess(connectionIdsList, Conf._RootFolder, threadsCount, dataObjects);
+        ImportProcessor.parallelProcess(connectionIdsList, Conf._RootFolder, threadsCount, dataObjects, -666);
         timeTaken = System.nanoTime() - timeTaken;
         LOG.debug("Time taken for ImportProcessor.process() = " + DurationUtil.PrintDuration(timeTaken));
       }

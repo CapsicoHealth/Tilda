@@ -47,16 +47,16 @@ public class UnZip
     	
      try{
     		
-    	//create output directory is not exists
-    	File folder = new File(OUTPUT_FOLDER);
+    	// create output directory is not exists
+    	File folder = new File(outputFolder);
     	if(!folder.exists()){
     		folder.mkdir();
     	}
     		
-    	//get the zip file content
+    	// get the zip file content
     	ZipInputStream zis = 
     		new ZipInputStream(new FileInputStream(zipFile));
-    	//get the zipped file list entry
+    	// get the zipped file list entry
     	ZipEntry ze = zis.getNextEntry();
     		
     	while(ze!=null){
@@ -66,15 +66,15 @@ public class UnZip
                 
            System.out.println("file unzip : "+ newFile.getAbsoluteFile());
                 
-            //create all non exists folders
-            //else you will hit FileNotFoundException for compressed folder
+            // create all non exists folders
+            // else you will hit FileNotFoundException for compressed folder
             new File(newFile.getParent()).mkdirs();
               
             FileOutputStream fos = new FileOutputStream(newFile);             
 
             int len;
             while ((len = zis.read(buffer)) > 0) {
-       		fos.write(buffer, 0, len);
+              fos.write(buffer, 0, len);
             }
         		
             fos.close();   
@@ -82,8 +82,7 @@ public class UnZip
     	}
     	
         zis.closeEntry();
-    	zis.close();
-    		
+    	zis.close();    		
     	System.out.println("Done");
     		
     }catch(IOException ex){

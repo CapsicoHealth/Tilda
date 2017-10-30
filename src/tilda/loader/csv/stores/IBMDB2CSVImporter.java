@@ -12,11 +12,13 @@ import tilda.loader.parser.DataObject;
 public class IBMDB2CSVImporter extends CSVImporter
   {
 
-    public IBMDB2CSVImporter(Connection C, String rootFolder, DataObject cmsDO)
+    public IBMDB2CSVImporter(Connection C, Connection main, String rootFolder, DataObject cmsDO, long jobRefnum)
       {
         this.C = C;
         this.rootFolder = rootFolder;
         this.cmsDO = cmsDO;
+        this.mainConnection = main;
+        this.jobRefnum = jobRefnum;
       }    
     
     @Override

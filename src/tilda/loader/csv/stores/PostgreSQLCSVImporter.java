@@ -33,11 +33,13 @@ public class PostgreSQLCSVImporter extends CSVImporter
   {
 
 
-    public PostgreSQLCSVImporter(Connection C, String rootFolder, DataObject cmsDO)
+    public PostgreSQLCSVImporter(Connection C, Connection main, String rootFolder, DataObject cmsDO, long jobRefnum)
       {
         this.C = C;
         this.rootFolder = rootFolder;
         this.cmsDO = cmsDO;
+        this.mainConnection = main;
+        this.jobRefnum = jobRefnum;
       }
 
     @Override
@@ -345,6 +347,11 @@ public class PostgreSQLCSVImporter extends CSVImporter
                     C.commit();
                     long t = System.nanoTime() - t0;
                     LOG.debug("Processed " + NumberFormatUtil.PrintWith000Sep(NumOfRecs) + " so far in " + DurationUtil.PrintDuration(t) + " (" + DurationUtil.PrintPerformancePerMinute(t, NumOfRecs) + " Records/min)");
+                    
+                    if (mainConnection != null && jobRefnum > 0)
+                      {
+                        // TODO-RPJ: Write Status to Job in 'MAIN'
+                      }                    
                   }
                 HandleFinally(AllocatedArrays);
               }

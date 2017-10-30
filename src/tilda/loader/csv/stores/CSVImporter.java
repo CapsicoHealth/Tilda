@@ -56,9 +56,11 @@ public abstract class CSVImporter
     protected static final Logger LOG                = LogManager.getLogger(CSVImporter.class.getName());
     protected static final int    PERFORMANCE_NUMBER = 50000;
     
-    protected Connection    C;
-    protected String        rootFolder;
-    protected DataObject    cmsDO;
+    protected Connection    C               = null;
+    protected Connection    mainConnection  = null;
+    protected String        rootFolder      = null;
+    protected DataObject    cmsDO           = null;
+    protected long          jobRefnum       = -666;
 
     protected abstract long insertData(boolean isUpsert, long t0, Map<String, ColumnMeta> DBColumns,
       boolean withHeader, Iterable<CSVRecord> records, StringBuilder Str, String schemaName, String tableName,

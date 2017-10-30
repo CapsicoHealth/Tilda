@@ -7,6 +7,8 @@ package tilda.data;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.capsico.people.data._Tilda.TILDA__TENANTUSER_Factory.COLS;
+
 import tilda.db.*;
 
 /**
@@ -29,5 +31,12 @@ public class JobFile_Factory extends tilda.data._Tilda.TILDA__JOBFILE_Factory
     {
       // Add logic to initialize your object, for example, caching some values, or validating some things.
     }
+   
+   public static ListResults<JobFile_Data> getJobFilesByJobRefnum(Connection C, long JobRefnum, int Start, int Size) throws Exception
+     {
+       SelectQuery Q = newWhereQuery(C);
+       Q.equals(COLS.JOBREFNUM, JobRefnum);
+       return runSelect(C, Q, Start, Size);
+     }
 
  }
