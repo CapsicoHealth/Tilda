@@ -141,6 +141,50 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>10&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOB-threadsCount_DIV' class='columns'>threadsCount</B>&nbsp;&nbsp;</TD>
+<TD>int&nbsp;&nbsp;</TD>
+<TD>integer&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Thread count</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>11&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOB-isInsert_DIV' class='columns'>isInsert</B>&nbsp;&nbsp;</TD>
+<TD>boolean&nbsp;&nbsp;</TD>
+<TD>boolean&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Insert or upsert?</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>12&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOB-truncateTable_DIV' class='columns'>truncateTable</B>&nbsp;&nbsp;</TD>
+<TD>boolean&nbsp;&nbsp;</TD>
+<TD>boolean&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Truncate table</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>13&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOB-connectionId_DIV' class='columns'>connectionId</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;&nbsp;</TD>
+<TD>character(15)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Connection Details</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>14&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOB-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
@@ -156,7 +200,7 @@ It contains the following columns:<BR>
 </TABLE>
 </TD></TR>
   <TR valign="top" bgcolor="#DFECF8">
-    <TD>11&nbsp;&nbsp;</TD>
+    <TD>15&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOB-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
@@ -172,7 +216,7 @@ It contains the following columns:<BR>
 </TABLE>
 </TD></TR>
   <TR valign="top" bgcolor="#FFFFFF">
-    <TD>12&nbsp;&nbsp;</TD>
+    <TD>16&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOB-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
@@ -348,6 +392,74 @@ It contains the following columns:<BR>
 </tr>
 </table>
 </DIV></DIV>
+<DIV id='JOB-threadsCount_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('JOB-threadsCount_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB-threadsCount_DIV'>threadsCount</a> -- INTEGER</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='JOB-isInsert_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('JOB-isInsert_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB-isInsert_DIV'>isInsert</a> -- BOOLEAN</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='JOB-truncateTable_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('JOB-truncateTable_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB-truncateTable_DIV'>truncateTable</a> -- BOOLEAN</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='JOB-connectionId_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('JOB-connectionId_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB-connectionId_DIV'>connectionId</a> -- STRING</td>
+</tr>
+</table>
+</DIV></DIV>
 <DIV id='JOB-created_MODAL' class='modal'>
 <DIV class='modal-content'>
 <SPAN onclick="onModalCloseClicked('JOB-created_MODAL')" class='close'>&times;</SPAN>
@@ -403,7 +515,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Oct 27 2017, 15:55:16IST
+ @generated Oct 30 2017, 11:42:02IST
 */
 public abstract class TILDA__JOB implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
@@ -1872,6 +1984,390 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOB.threadsCount -> TILDA.JOB."threadsCount"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.threadsCount of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.threadsCount of type integer</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Thread count</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   int _threadsCount= SystemValues.EVIL_VALUE;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOB.threadsCount -> TILDA.JOB."threadsCount"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.threadsCount of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.threadsCount of type integer</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Thread count</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final int getThreadsCount()
+      { return _threadsCount; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOB.threadsCount -> TILDA.JOB."threadsCount"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.threadsCount of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.threadsCount of type integer</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Thread count</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setThreadsCount(int v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (v != _threadsCount)
+        {
+          __Changes1 |= TILDA__JOB_Factory.COLS.THREADSCOUNT._Mask1;
+          __Nulls1   &= ~TILDA__JOB_Factory.COLS.THREADSCOUNT._Mask1;
+       _threadsCount = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOB.threadsCount -> TILDA.JOB."threadsCount"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the hasChanged for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.threadsCount of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.threadsCount of type integer</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Thread count</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public boolean hasChangedThreadsCount()
+     { return (TILDA__JOB_Factory.COLS.THREADSCOUNT._Mask1 & __Changes1) != 0L; }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOB.isInsert -> TILDA.JOB."isInsert"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.isInsert of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.isInsert of type boolean</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Insert or upsert?</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   boolean _isInsert;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOB.isInsert -> TILDA.JOB."isInsert"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.isInsert of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.isInsert of type boolean</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Insert or upsert?</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean getIsInsert()
+      { return _isInsert; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOB.isInsert -> TILDA.JOB."isInsert"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.isInsert of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.isInsert of type boolean</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Insert or upsert?</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setIsInsert(boolean v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (v != _isInsert)
+        {
+          __Changes1 |= TILDA__JOB_Factory.COLS.ISINSERT._Mask1;
+          __Nulls1   &= ~TILDA__JOB_Factory.COLS.ISINSERT._Mask1;
+       _isInsert = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOB.isInsert -> TILDA.JOB."isInsert"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the hasChanged for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.isInsert of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.isInsert of type boolean</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Insert or upsert?</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public boolean hasChangedIsInsert()
+     { return (TILDA__JOB_Factory.COLS.ISINSERT._Mask1 & __Changes1) != 0L; }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOB.truncateTable -> TILDA.JOB."truncateTable"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.truncateTable of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.truncateTable of type boolean</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Truncate table</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   boolean _truncateTable;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOB.truncateTable -> TILDA.JOB."truncateTable"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.truncateTable of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.truncateTable of type boolean</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Truncate table</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean getTruncateTable()
+      { return _truncateTable; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOB.truncateTable -> TILDA.JOB."truncateTable"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.truncateTable of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.truncateTable of type boolean</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Truncate table</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setTruncateTable(boolean v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (v != _truncateTable)
+        {
+          __Changes1 |= TILDA__JOB_Factory.COLS.TRUNCATETABLE._Mask1;
+          __Nulls1   &= ~TILDA__JOB_Factory.COLS.TRUNCATETABLE._Mask1;
+       _truncateTable = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOB.truncateTable -> TILDA.JOB."truncateTable"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the hasChanged for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.truncateTable of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.truncateTable of type boolean</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Truncate table</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public boolean hasChangedTruncateTable()
+     { return (TILDA__JOB_Factory.COLS.TRUNCATETABLE._Mask1 & __Changes1) != 0L; }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOB.connectionId -> TILDA.JOB."connectionId"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.connectionId of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.connectionId of type character(15)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>15</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Connection Details</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   String _connectionId;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOB.connectionId -> TILDA.JOB."connectionId"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.connectionId of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.connectionId of type character(15)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>15</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Connection Details</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final String getConnectionId()
+      { return _connectionId; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOB.connectionId -> TILDA.JOB."connectionId"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.connectionId of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.connectionId of type character(15)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>15</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Connection Details</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setConnectionId(String v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (v == null)
+        throw new Exception("Cannot set tilda.data.TILDA.JOB.connectionId to null: it's not nullable.");
+       else if (v.length() > 15)
+        throw new Exception("Cannot set tilda.data.TILDA.JOB.connectionId: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 15.");
+       else if (v.equals(_connectionId) == false)
+        {
+          __Changes1 |= TILDA__JOB_Factory.COLS.CONNECTIONID._Mask1;
+          __Nulls1   &= ~TILDA__JOB_Factory.COLS.CONNECTIONID._Mask1;
+       _connectionId = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOB.connectionId -> TILDA.JOB."connectionId"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the hasChanged for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.connectionId of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.connectionId of type character(15)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>15</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Connection Details</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public boolean hasChangedConnectionId()
+     { return (TILDA__JOB_Factory.COLS.CONNECTIONID._Mask1 & __Changes1) != 0L; }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JOB.created -> TILDA.JOB."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -2511,16 +3007,20 @@ This is the hasChanged for:<BR>
 */
    public void CopyTo(tilda.data._Tilda.TILDA__JOB Dst) throws Exception
      {
-       if ((TILDA__JOB_Factory.COLS.NAME._Mask1         & __Nulls1) != 0L) Dst.setNullName        (); else        Dst.setName        (_name        );
-       if ((TILDA__JOB_Factory.COLS.STARTTIMETZ._Mask1  & __Nulls1) != 0L) Dst.setNullStartTimeTZ (); else        Dst.setStartTimeTZ (_startTimeTZ );
-       if ((TILDA__JOB_Factory.COLS.STARTTIME._Mask1    & __Nulls1) != 0L) Dst.setNullStartTime   (); else        Dst.setStartTime   (_startTime   );
-       if ((TILDA__JOB_Factory.COLS.ENDTIMETZ._Mask1    & __Nulls1) != 0L) Dst.setNullEndTimeTZ   (); else        Dst.setEndTimeTZ   (_endTimeTZ   );
-       if ((TILDA__JOB_Factory.COLS.ENDTIME._Mask1      & __Nulls1) != 0L) Dst.setNullEndTime     (); else        Dst.setEndTime     (_endTime     );
-       if ((TILDA__JOB_Factory.COLS.TOTALRECORDS._Mask1 & __Nulls1) != 0L) Dst.setNullTotalRecords(); else        Dst.setTotalRecords(_totalRecords);
-       if ((TILDA__JOB_Factory.COLS.STATUS._Mask1       & __Nulls1) != 0L) Dst.setNullStatus      (); else        Dst.setStatus      (_status      );
-       if ((TILDA__JOB_Factory.COLS.ERROR._Mask1        & __Nulls1) != 0L) Dst.setNullError       (); else        Dst.setError       (_error       );
-       Dst.setLastUpdated (_lastUpdated );
-       if ((TILDA__JOB_Factory.COLS.DELETED._Mask1      & __Nulls1) != 0L) Dst.setNullDeleted     (); else        Dst.setDeleted     (_deleted     );
+       if ((TILDA__JOB_Factory.COLS.NAME._Mask1          & __Nulls1) != 0L) Dst.setNullName         (); else        Dst.setName         (_name         );
+       if ((TILDA__JOB_Factory.COLS.STARTTIMETZ._Mask1   & __Nulls1) != 0L) Dst.setNullStartTimeTZ  (); else        Dst.setStartTimeTZ  (_startTimeTZ  );
+       if ((TILDA__JOB_Factory.COLS.STARTTIME._Mask1     & __Nulls1) != 0L) Dst.setNullStartTime    (); else        Dst.setStartTime    (_startTime    );
+       if ((TILDA__JOB_Factory.COLS.ENDTIMETZ._Mask1     & __Nulls1) != 0L) Dst.setNullEndTimeTZ    (); else        Dst.setEndTimeTZ    (_endTimeTZ    );
+       if ((TILDA__JOB_Factory.COLS.ENDTIME._Mask1       & __Nulls1) != 0L) Dst.setNullEndTime      (); else        Dst.setEndTime      (_endTime      );
+       if ((TILDA__JOB_Factory.COLS.TOTALRECORDS._Mask1  & __Nulls1) != 0L) Dst.setNullTotalRecords (); else        Dst.setTotalRecords (_totalRecords );
+       if ((TILDA__JOB_Factory.COLS.STATUS._Mask1        & __Nulls1) != 0L) Dst.setNullStatus       (); else        Dst.setStatus       (_status       );
+       if ((TILDA__JOB_Factory.COLS.ERROR._Mask1         & __Nulls1) != 0L) Dst.setNullError        (); else        Dst.setError        (_error        );
+       Dst.setThreadsCount (_threadsCount );
+       Dst.setIsInsert     (_isInsert     );
+       Dst.setTruncateTable(_truncateTable);
+       Dst.setConnectionId (_connectionId );
+       Dst.setLastUpdated  (_lastUpdated  );
+       if ((TILDA__JOB_Factory.COLS.DELETED._Mask1       & __Nulls1) != 0L) Dst.setNullDeleted      (); else        Dst.setDeleted      (_deleted      );
      }
 
 /**
@@ -2560,31 +3060,35 @@ This is the hasChanged for:<BR>
           StringBuilder V = new StringBuilder(1024);
           S.append("insert into "); C.getFullTableVar(S, "TILDA", "JOB");
           int Pos = S.length();
-          if ((TILDA__JOB_Factory.COLS.REFNUM._Mask1       & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__JOB_Factory.COLS.NAME._Mask1         & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.NAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__JOB_Factory.COLS.STARTTIMETZ._Mask1  & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.STARTTIMETZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__JOB_Factory.COLS.REFNUM._Mask1        & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__JOB_Factory.COLS.NAME._Mask1          & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.NAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__JOB_Factory.COLS.STARTTIMETZ._Mask1   & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.STARTTIMETZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
-          if ((TILDA__JOB_Factory.COLS.STARTTIME._Mask1    & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.STARTTIME.getFullColumnVarForInsert(C, S);
+          if ((TILDA__JOB_Factory.COLS.STARTTIME._Mask1     & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.STARTTIME.getFullColumnVarForInsert(C, S);
              V.append((TILDA__JOB_Factory.COLS.STARTTIME._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_startTime) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          if ((TILDA__JOB_Factory.COLS.ENDTIMETZ._Mask1    & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.ENDTIMETZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__JOB_Factory.COLS.ENDTIMETZ._Mask1     & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.ENDTIMETZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
-          if ((TILDA__JOB_Factory.COLS.ENDTIME._Mask1      & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.ENDTIME.getFullColumnVarForInsert(C, S);
+          if ((TILDA__JOB_Factory.COLS.ENDTIME._Mask1       & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.ENDTIME.getFullColumnVarForInsert(C, S);
              V.append((TILDA__JOB_Factory.COLS.ENDTIME._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_endTime) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          if ((TILDA__JOB_Factory.COLS.TOTALRECORDS._Mask1 & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.TOTALRECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__JOB_Factory.COLS.STATUS._Mask1       & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.STATUS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__JOB_Factory.COLS.ERROR._Mask1        & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.ERROR.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__JOB_Factory.COLS.TOTALRECORDS._Mask1  & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.TOTALRECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__JOB_Factory.COLS.STATUS._Mask1        & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.STATUS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__JOB_Factory.COLS.ERROR._Mask1         & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.ERROR.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__JOB_Factory.COLS.THREADSCOUNT._Mask1  & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.THREADSCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__JOB_Factory.COLS.ISINSERT._Mask1      & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.ISINSERT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__JOB_Factory.COLS.TRUNCATETABLE._Mask1 & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.TRUNCATETABLE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__JOB_Factory.COLS.CONNECTIONID._Mask1  & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.CONNECTIONID.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
-          if ((TILDA__JOB_Factory.COLS.CREATED._Mask1      & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
+          if ((TILDA__JOB_Factory.COLS.CREATED._Mask1       & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
              V.append((TILDA__JOB_Factory.COLS.CREATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
           else { TILDA__JOB_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
-          if ((TILDA__JOB_Factory.COLS.LASTUPDATED._Mask1  & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
+          if ((TILDA__JOB_Factory.COLS.LASTUPDATED._Mask1   & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
              V.append((TILDA__JOB_Factory.COLS.LASTUPDATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
           else { TILDA__JOB_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
-          if ((TILDA__JOB_Factory.COLS.DELETED._Mask1      & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
+          if ((TILDA__JOB_Factory.COLS.DELETED._Mask1       & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
              V.append((TILDA__JOB_Factory.COLS.DELETED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
 
@@ -2598,9 +3102,9 @@ This is the hasChanged for:<BR>
         {
           S.append("update "); C.getFullTableVar(S, "TILDA", "JOB"); S.append(" set");
           int Pos = S.length();
-          if ((TILDA__JOB_Factory.COLS.REFNUM._Mask1       & __Changes1) != 0L) TILDA__JOB_Factory.COLS.REFNUM.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__JOB_Factory.COLS.NAME._Mask1         & __Changes1) != 0L) TILDA__JOB_Factory.COLS.NAME.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__JOB_Factory.COLS.STARTTIMETZ._Mask1  & __Changes1) != 0L) TILDA__JOB_Factory.COLS.STARTTIMETZ.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__JOB_Factory.COLS.REFNUM._Mask1        & __Changes1) != 0L) TILDA__JOB_Factory.COLS.REFNUM.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__JOB_Factory.COLS.NAME._Mask1          & __Changes1) != 0L) TILDA__JOB_Factory.COLS.NAME.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__JOB_Factory.COLS.STARTTIMETZ._Mask1   & __Changes1) != 0L) TILDA__JOB_Factory.COLS.STARTTIMETZ.getFullColumnVarForUpdate(C, S);
 
           if ((TILDA__JOB_Factory.COLS.STARTTIME._Mask1 & __Changes1) != 0L)
            {
@@ -2609,7 +3113,7 @@ This is the hasChanged for:<BR>
              else
               TILDA__JOB_Factory.COLS.STARTTIME.getFullColumnVarForUpdate(C, S);
            }
-          if ((TILDA__JOB_Factory.COLS.ENDTIMETZ._Mask1    & __Changes1) != 0L) TILDA__JOB_Factory.COLS.ENDTIMETZ.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__JOB_Factory.COLS.ENDTIMETZ._Mask1     & __Changes1) != 0L) TILDA__JOB_Factory.COLS.ENDTIMETZ.getFullColumnVarForUpdate(C, S);
 
           if ((TILDA__JOB_Factory.COLS.ENDTIME._Mask1 & __Changes1) != 0L)
            {
@@ -2618,9 +3122,13 @@ This is the hasChanged for:<BR>
              else
               TILDA__JOB_Factory.COLS.ENDTIME.getFullColumnVarForUpdate(C, S);
            }
-          if ((TILDA__JOB_Factory.COLS.TOTALRECORDS._Mask1 & __Changes1) != 0L) TILDA__JOB_Factory.COLS.TOTALRECORDS.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__JOB_Factory.COLS.STATUS._Mask1       & __Changes1) != 0L) TILDA__JOB_Factory.COLS.STATUS.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__JOB_Factory.COLS.ERROR._Mask1        & __Changes1) != 0L) TILDA__JOB_Factory.COLS.ERROR.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__JOB_Factory.COLS.TOTALRECORDS._Mask1  & __Changes1) != 0L) TILDA__JOB_Factory.COLS.TOTALRECORDS.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__JOB_Factory.COLS.STATUS._Mask1        & __Changes1) != 0L) TILDA__JOB_Factory.COLS.STATUS.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__JOB_Factory.COLS.ERROR._Mask1         & __Changes1) != 0L) TILDA__JOB_Factory.COLS.ERROR.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__JOB_Factory.COLS.THREADSCOUNT._Mask1  & __Changes1) != 0L) TILDA__JOB_Factory.COLS.THREADSCOUNT.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__JOB_Factory.COLS.ISINSERT._Mask1      & __Changes1) != 0L) TILDA__JOB_Factory.COLS.ISINSERT.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__JOB_Factory.COLS.TRUNCATETABLE._Mask1 & __Changes1) != 0L) TILDA__JOB_Factory.COLS.TRUNCATETABLE.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__JOB_Factory.COLS.CONNECTIONID._Mask1  & __Changes1) != 0L) TILDA__JOB_Factory.COLS.CONNECTIONID.getFullColumnVarForUpdate(C, S);
 
           if ((TILDA__JOB_Factory.COLS.CREATED._Mask1 & __Changes1) != 0L)
            {
@@ -2673,59 +3181,75 @@ This is the hasChanged for:<BR>
         {
           PS = C.prepareStatement(Q);
           int i = 0;
-               if ((TILDA__JOB_Factory.COLS.REFNUM._Mask1       & __Changes1) != 0L) 
+               if ((TILDA__JOB_Factory.COLS.REFNUM._Mask1        & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__JOB_Factory.COLS.REFNUM._Mask1       & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _refnum);
+                  if ((TILDA__JOB_Factory.COLS.REFNUM._Mask1        & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _refnum);
                 } 
-               if ((TILDA__JOB_Factory.COLS.NAME._Mask1         & __Changes1) != 0L) 
+               if ((TILDA__JOB_Factory.COLS.NAME._Mask1          & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__JOB_Factory.COLS.NAME._Mask1         & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _name);
+                  if ((TILDA__JOB_Factory.COLS.NAME._Mask1          & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _name);
                 } 
-               if ((TILDA__JOB_Factory.COLS.STARTTIMETZ._Mask1  & __Changes1) != 0L) 
+               if ((TILDA__JOB_Factory.COLS.STARTTIMETZ._Mask1   & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__JOB_Factory.COLS.STARTTIMETZ._Mask1  & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _startTimeTZ);
+                  if ((TILDA__JOB_Factory.COLS.STARTTIMETZ._Mask1   & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _startTimeTZ);
                 } 
-               if ((TILDA__JOB_Factory.COLS.STARTTIME._Mask1    & __Changes1) != 0L) 
+               if ((TILDA__JOB_Factory.COLS.STARTTIME._Mask1     & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__JOB_Factory.COLS.STARTTIME._Mask1    & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_startTime) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_startTime.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                  if ((TILDA__JOB_Factory.COLS.STARTTIME._Mask1     & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_startTime) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_startTime.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
-               if ((TILDA__JOB_Factory.COLS.ENDTIMETZ._Mask1    & __Changes1) != 0L) 
+               if ((TILDA__JOB_Factory.COLS.ENDTIMETZ._Mask1     & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__JOB_Factory.COLS.ENDTIMETZ._Mask1    & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _endTimeTZ);
+                  if ((TILDA__JOB_Factory.COLS.ENDTIMETZ._Mask1     & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _endTimeTZ);
                 } 
-               if ((TILDA__JOB_Factory.COLS.ENDTIME._Mask1      & __Changes1) != 0L) 
+               if ((TILDA__JOB_Factory.COLS.ENDTIME._Mask1       & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__JOB_Factory.COLS.ENDTIME._Mask1      & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_endTime) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_endTime.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                  if ((TILDA__JOB_Factory.COLS.ENDTIME._Mask1       & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_endTime) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_endTime.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
-               if ((TILDA__JOB_Factory.COLS.TOTALRECORDS._Mask1 & __Changes1) != 0L) 
+               if ((TILDA__JOB_Factory.COLS.TOTALRECORDS._Mask1  & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__JOB_Factory.COLS.TOTALRECORDS._Mask1 & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _totalRecords);
+                  if ((TILDA__JOB_Factory.COLS.TOTALRECORDS._Mask1  & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _totalRecords);
                 } 
-               if ((TILDA__JOB_Factory.COLS.STATUS._Mask1       & __Changes1) != 0L) 
+               if ((TILDA__JOB_Factory.COLS.STATUS._Mask1        & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__JOB_Factory.COLS.STATUS._Mask1       & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _status);
+                  if ((TILDA__JOB_Factory.COLS.STATUS._Mask1        & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _status);
                 } 
-               if ((TILDA__JOB_Factory.COLS.ERROR._Mask1        & __Changes1) != 0L) 
+               if ((TILDA__JOB_Factory.COLS.ERROR._Mask1         & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__JOB_Factory.COLS.ERROR._Mask1        & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _error);
+                  if ((TILDA__JOB_Factory.COLS.ERROR._Mask1         & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _error);
                 } 
-               if ((TILDA__JOB_Factory.COLS.CREATED._Mask1      & __Changes1) != 0L) 
+               if ((TILDA__JOB_Factory.COLS.THREADSCOUNT._Mask1  & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__JOB_Factory.COLS.CREATED._Mask1      & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                  if ((TILDA__JOB_Factory.COLS.THREADSCOUNT._Mask1  & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _threadsCount);
                 } 
-               if ((TILDA__JOB_Factory.COLS.LASTUPDATED._Mask1  & __Changes1) != 0L) 
+               if ((TILDA__JOB_Factory.COLS.ISINSERT._Mask1      & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__JOB_Factory.COLS.LASTUPDATED._Mask1  & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_lastUpdated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                  if ((TILDA__JOB_Factory.COLS.ISINSERT._Mask1      & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BOOLEAN); else PS.setBoolean  (++i, _isInsert);
                 } 
-               if ((TILDA__JOB_Factory.COLS.DELETED._Mask1      & __Changes1) != 0L) 
+               if ((TILDA__JOB_Factory.COLS.TRUNCATETABLE._Mask1 & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__JOB_Factory.COLS.DELETED._Mask1      & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deleted.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                  if ((TILDA__JOB_Factory.COLS.TRUNCATETABLE._Mask1 & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BOOLEAN); else PS.setBoolean  (++i, _truncateTable);
+                } 
+               if ((TILDA__JOB_Factory.COLS.CONNECTIONID._Mask1  & __Changes1) != 0L) 
+                { 
+                  if ((TILDA__JOB_Factory.COLS.CONNECTIONID._Mask1  & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _connectionId);
+                } 
+               if ((TILDA__JOB_Factory.COLS.CREATED._Mask1       & __Changes1) != 0L) 
+                { 
+                  if ((TILDA__JOB_Factory.COLS.CREATED._Mask1       & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                } 
+               if ((TILDA__JOB_Factory.COLS.LASTUPDATED._Mask1   & __Changes1) != 0L) 
+                { 
+                  if ((TILDA__JOB_Factory.COLS.LASTUPDATED._Mask1   & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_lastUpdated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                } 
+               if ((TILDA__JOB_Factory.COLS.DELETED._Mask1       & __Changes1) != 0L) 
+                { 
+                  if ((TILDA__JOB_Factory.COLS.DELETED._Mask1       & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deleted.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
 
           switch (__LookupId)
            {
              case 0:
-               PS.setLong     (++i, _refnum      );
+               PS.setLong     (++i, _refnum       );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -2761,7 +3285,7 @@ This is the hasChanged for:<BR>
        switch (__LookupId)
         {
           case 0:
-             __Saved_refnum       = _refnum      ;
+             __Saved_refnum        = _refnum       ;
              break;
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -2810,6 +3334,10 @@ This is the hasChanged for:<BR>
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "totalRecords");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "status");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "error");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "threadsCount");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "isInsert");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "truncateTable");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "connectionId");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "created");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "lastUpdated");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "deleted");
@@ -2839,7 +3367,7 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setLong     (++i, _refnum      );
+               PS.setLong     (++i, _refnum       );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -2870,18 +3398,22 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_refnum       = _refnum       =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.REFNUM._Mask1      ;
-                             _name         = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.NAME._Mask1        ;
-                             _startTimeTZ  = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.STARTTIMETZ._Mask1 ; else _startTimeTZ  = _startTimeTZ .trim();
-                             _startTime    = ProcessZDT(_startTimeTZ   , "tilda.data.TILDA.JOB.startTime"   , RS, ++i, TILDA__JOB_Factory.COLS.STARTTIME   , TILDA__JOB_Factory.COLS.STARTTIMETZ   );
-                             _endTimeTZ    = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.ENDTIMETZ._Mask1   ; else _endTimeTZ    = _endTimeTZ   .trim();
-                             _endTime      = ProcessZDT(_endTimeTZ     , "tilda.data.TILDA.JOB.endTime"     , RS, ++i, TILDA__JOB_Factory.COLS.ENDTIME     , TILDA__JOB_Factory.COLS.ENDTIMETZ     );
-                             _totalRecords =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.TOTALRECORDS._Mask1;
-                             _status       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.STATUS._Mask1      ;
-                             _error        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.ERROR._Mask1       ;
-                             _created      = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
-                             _lastUpdated  = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
-                             _deleted      = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
+      __Saved_refnum        = _refnum        =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.REFNUM._Mask1       ;
+                              _name          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.NAME._Mask1         ;
+                              _startTimeTZ   = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.STARTTIMETZ._Mask1  ; else _startTimeTZ   = _startTimeTZ  .trim();
+                              _startTime     = ProcessZDT(_startTimeTZ    , "tilda.data.TILDA.JOB.startTime"    , RS, ++i, TILDA__JOB_Factory.COLS.STARTTIME    , TILDA__JOB_Factory.COLS.STARTTIMETZ    );
+                              _endTimeTZ     = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.ENDTIMETZ._Mask1    ; else _endTimeTZ     = _endTimeTZ    .trim();
+                              _endTime       = ProcessZDT(_endTimeTZ      , "tilda.data.TILDA.JOB.endTime"      , RS, ++i, TILDA__JOB_Factory.COLS.ENDTIME      , TILDA__JOB_Factory.COLS.ENDTIMETZ      );
+                              _totalRecords  =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.TOTALRECORDS._Mask1 ;
+                              _status        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.STATUS._Mask1       ;
+                              _error         = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.ERROR._Mask1        ;
+                              _threadsCount  =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.THREADSCOUNT._Mask1 ;
+                              _isInsert      =                              RS.getBoolean  (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.ISINSERT._Mask1     ;
+                              _truncateTable =                              RS.getBoolean  (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.TRUNCATETABLE._Mask1;
+                              _connectionId  = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.CONNECTIONID._Mask1 ;
+                              _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
+                              _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
+                              _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes1  = 0L;
@@ -2930,13 +3462,17 @@ This is the hasChanged for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "refnum: "                                                                                          +                                   getRefnum      () 
-               + "; name"           + ((TILDA__JOB_Factory.COLS.NAME._Mask1         & __Nulls1) != 0L ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getName        ()))
-               + "; startTime"      + ((TILDA__JOB_Factory.COLS.STARTTIME._Mask1    & __Nulls1) != 0L ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getStartTime   ()))
-               + "; endTime"        + ((TILDA__JOB_Factory.COLS.ENDTIME._Mask1      & __Nulls1) != 0L ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getEndTime     ()))
-               + "; totalRecords"   + ((TILDA__JOB_Factory.COLS.TOTALRECORDS._Mask1 & __Nulls1) != 0L ? ": NULL" : ": " +                                   getTotalRecords() )
-               + "; status"         + ((TILDA__JOB_Factory.COLS.STATUS._Mask1       & __Nulls1) != 0L ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getStatus      ()))
-               + "; error"          + ((TILDA__JOB_Factory.COLS.ERROR._Mask1        & __Nulls1) != 0L ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getError       ()))
+                   "refnum: "                                                                                            +                                   getRefnum       () 
+               + "; name"            + ((TILDA__JOB_Factory.COLS.NAME._Mask1          & __Nulls1) != 0L ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getName         ()))
+               + "; startTime"       + ((TILDA__JOB_Factory.COLS.STARTTIME._Mask1     & __Nulls1) != 0L ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getStartTime    ()))
+               + "; endTime"         + ((TILDA__JOB_Factory.COLS.ENDTIME._Mask1       & __Nulls1) != 0L ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getEndTime      ()))
+               + "; totalRecords"    + ((TILDA__JOB_Factory.COLS.TOTALRECORDS._Mask1  & __Nulls1) != 0L ? ": NULL" : ": " +                                   getTotalRecords () )
+               + "; status"          + ((TILDA__JOB_Factory.COLS.STATUS._Mask1        & __Nulls1) != 0L ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getStatus       ()))
+               + "; error"           + ((TILDA__JOB_Factory.COLS.ERROR._Mask1         & __Nulls1) != 0L ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getError        ()))
+               + "; threadsCount: "                                                                                      +                                   getThreadsCount () 
+               + "; isInsert: "                                                                                          +                                   getIsInsert     () 
+               + "; truncateTable: "                                                                                     +                                   getTruncateTable() 
+               + "; connectionId: "                                                                                      + TextUtil.PrintVariableStr        (getConnectionId ())
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

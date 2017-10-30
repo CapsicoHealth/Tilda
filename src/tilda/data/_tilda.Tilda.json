@@ -153,7 +153,7 @@
       "name": "Connection",
       "description": "Tilda DB Connections Configurations",
       "columns": [
-		{ "name": "active",     "type": "BOOLEAN",    "nullable": true,                 "description": "Status Flag"                                },
+		    { "name": "active",     "type": "BOOLEAN",    "nullable": true,                 "description": "Status Flag"                                },
         { "name": "id",         "type": "STRING",     "nullable": false, "size": 15,    "description": "Connection ID",        "invariant": true    },
         { "name": "driver",     "type": "STRING",     "nullable": false, "size": 100,   "description": "DB Driver"                                  },
         { "name": "db",         "type": "STRING",     "nullable": false, "size": 200,   "description": "DB Url"                                     },
@@ -183,12 +183,16 @@
     { "name":"Job",
        "description": "Kettle Jobs",
        "columns": [
-        {"name": "name"                                 , "type": "STRING",   "size": 50,                      "description": "Job Name"  },
-        { "name":"startTime"                            , "type":"DATETIME", "nullable": true,                  "description":"StartTime" },
-        { "name":"endTime"                              , "type":"DATETIME", "nullable": true,                  "description":"EndTime"   },
-        { "name":"totalRecords"                         , "type":"INTEGER" , "nullable": true,                  "description":"TotalRecords" },
-        { "name":"status"                               , "type":"STRING"  , "nullable": true,  "size":   200,  "description":"Status" },
-        { "name":"error"                                , "type":"STRING"  , "nullable": true,  "size":   1000, "description":"Error" }
+        {"name": "name"          , "type": "STRING" , "size": 50                               , "description": "Job Name"        },
+        { "name":"startTime"     , "type":"DATETIME", "nullable": true                          , "description":"StartTime"        },
+        { "name":"endTime"       , "type":"DATETIME", "nullable": true                          , "description":"EndTime"          },
+        { "name":"totalRecords"  , "type":"INTEGER" , "nullable": true                          , "description":"TotalRecords"     },
+        { "name":"status"        , "type":"STRING"  , "nullable": true,  "size":   200          , "description":"Status"           },
+        { "name":"error"         , "type":"STRING"  , "nullable": true,  "size":   1000         , "description":"Error"            },
+        { "name": "threadsCount" , "type": "INTEGER", "nullable": false                         , "description": "Thread count"    },
+        { "name": "isInsert"     , "type": "BOOLEAN", "nullable": false                         , "description": "Insert or upsert?"   },
+        { "name": "truncateTable", "type": "BOOLEAN", "nullable": false                         , "description": "Truncate table"      },
+        {"name": "connectionId"  , "sameas": "tilda.data.tilda.connection.id", "nullable": false,  "description": "Connection Details" }
       ],
        "primary": { "autogen": true }
     },
@@ -196,15 +200,15 @@
       "description":"Job File Info",
       "columns":[
         { "name":"jobRefnum"                            , "sameas": "Job.refnum"    , "nullable": false,                 "description":"Job Foreign key" },               
-        { "name":"fileName"                             , "type":"STRING"           , "nullable": false,  "size":   200,  "description":"FileName" },
-        { "name":"fileRecords"                          , "type":"INTEGER"          , "nullable": true,                  "description":"FileRecords" },
+        { "name":"fileName"                             , "type":"STRING"           , "nullable": false,  "size":   200,  "description":"Zip FileName"   },
+        { "name":"fileRecords"                          , "type":"INTEGER"          , "nullable": true,                  "description":"Number of records loaded into DB" },
         { "name":"fileProcessStartTime"                 , "type":"DATETIME"         , "nullable": true,                  "description":"FileProcessStartTime" },
-        { "name":"fileProcessEndTime"                   , "type":"DATETIME"         , "nullable": true,                  "description":"FileProcessEndTime" }
+        { "name":"fileProcessEndTime"                   , "type":"DATETIME"         , "nullable": true,                  "description":"FileProcessEndTime"   }
        ]
        ,"primary": { "autogen": true }
        ,"indices":[
         { "name":"Job_Refnum", "columns":["jobRefnum"] }
-      ]         
+      ]
     },
     { "name":"Job_Message",
       "description":"Job Messages",
@@ -231,7 +235,7 @@
         { "name": "timeIndexMs"  , "type": "LONG"    , "nullable": false,                                "description":"The time, in milliseconds, the indexing took."     },
         { "name": "timeAnalyzeMs", "type": "LONG"    , "nullable": false,                                "description":"The time, in milliseconds, the analyze took."      },
         { "name": "timeTotalMs"  , "type": "LONG"    , "nullable": false,                                "description":"The time, in milliseconds, the whole refill took." },
-        { "name": "columnsMs"    , "type": "LONG"    , "nullable": false,                                "description":"The list of columns that were refilled."           },
+        { "name": "columnsMs"    , "type": "LONG"    , "nullable": false,                                "description":"The list of columns that were refilled."           }
       ],
       "primary": { "columns": ["schemaName", "objectName", "startPeriod"], "autogen": false },
       "indices":[ 

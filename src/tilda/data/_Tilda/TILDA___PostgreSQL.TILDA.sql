@@ -272,18 +272,22 @@ CREATE INDEX CONNECTION_AllById ON TILDA.CONNECTION ("id" ASC);
 
 
 create table if not exists TILDA.JOB -- Kettle Jobs
- (  "refnum"        bigint         not null   -- The primary key for this record
-  , "name"          varchar(50)               -- Job Name
-  , "startTimeTZ"   character(5)              -- Generated helper column to hold the time zone ID for 'startTime'.
-  , "startTime"     timestamptz               -- StartTime
-  , "endTimeTZ"     character(5)              -- Generated helper column to hold the time zone ID for 'endTime'.
-  , "endTime"       timestamptz               -- EndTime
-  , "totalRecords"  integer                   -- TotalRecords
-  , "status"        varchar(200)              -- Status
-  , "error"         varchar(1000)             -- Error
-  , "created"       timestamptz    not null   -- The timestamp for when the record was created.
-  , "lastUpdated"   timestamptz    not null   -- The timestamp for when the record was last updated.
-  , "deleted"       timestamptz               -- The timestamp for when the record was deleted.
+ (  "refnum"         bigint         not null   -- The primary key for this record
+  , "name"           varchar(50)               -- Job Name
+  , "startTimeTZ"    character(5)              -- Generated helper column to hold the time zone ID for 'startTime'.
+  , "startTime"      timestamptz               -- StartTime
+  , "endTimeTZ"      character(5)              -- Generated helper column to hold the time zone ID for 'endTime'.
+  , "endTime"        timestamptz               -- EndTime
+  , "totalRecords"   integer                   -- TotalRecords
+  , "status"         varchar(200)              -- Status
+  , "error"          varchar(1000)             -- Error
+  , "threadsCount"   integer        not null   -- Thread count
+  , "isInsert"       boolean        not null   -- Insert or upsert?
+  , "truncateTable"  boolean        not null   -- Truncate table
+  , "connectionId"   character(15)  not null   -- Connection Details
+  , "created"        timestamptz    not null   -- The timestamp for when the record was created.
+  , "lastUpdated"    timestamptz    not null   -- The timestamp for when the record was last updated.
+  , "deleted"        timestamptz               -- The timestamp for when the record was deleted.
   , PRIMARY KEY("refnum")
   , FOREIGN KEY ("startTimeTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
   , FOREIGN KEY ("endTimeTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
@@ -298,6 +302,10 @@ COMMENT ON COLUMN TILDA.JOB."endTime" IS E'EndTime';
 COMMENT ON COLUMN TILDA.JOB."totalRecords" IS E'TotalRecords';
 COMMENT ON COLUMN TILDA.JOB."status" IS E'Status';
 COMMENT ON COLUMN TILDA.JOB."error" IS E'Error';
+COMMENT ON COLUMN TILDA.JOB."threadsCount" IS E'Thread count';
+COMMENT ON COLUMN TILDA.JOB."isInsert" IS E'Insert or upsert?';
+COMMENT ON COLUMN TILDA.JOB."truncateTable" IS E'Truncate table';
+COMMENT ON COLUMN TILDA.JOB."connectionId" IS E'Connection Details';
 COMMENT ON COLUMN TILDA.JOB."created" IS E'The timestamp for when the record was created.';
 COMMENT ON COLUMN TILDA.JOB."lastUpdated" IS E'The timestamp for when the record was last updated.';
 COMMENT ON COLUMN TILDA.JOB."deleted" IS E'The timestamp for when the record was deleted.';
@@ -309,8 +317,8 @@ insert into TILDA.KEY ("refnum", "name", "max", "count", "created", "lastUpdated
 create table if not exists TILDA.JOBFILE -- Job File Info
  (  "refnum"                  bigint        not null   -- The primary key for this record
   , "jobRefnum"               bigint        not null   -- Job Foreign key
-  , "fileName"                varchar(200)  not null   -- FileName
-  , "fileRecords"             integer                  -- FileRecords
+  , "fileName"                varchar(200)  not null   -- Zip FileName
+  , "fileRecords"             integer                  -- Number of records loaded into DB
   , "fileProcessStartTimeTZ"  character(5)             -- Generated helper column to hold the time zone ID for 'fileProcessStartTime'.
   , "fileProcessStartTime"    timestamptz              -- FileProcessStartTime
   , "fileProcessEndTimeTZ"    character(5)             -- Generated helper column to hold the time zone ID for 'fileProcessEndTime'.
@@ -325,8 +333,8 @@ create table if not exists TILDA.JOBFILE -- Job File Info
 COMMENT ON TABLE TILDA.JOBFILE IS E'Job File Info';
 COMMENT ON COLUMN TILDA.JOBFILE."refnum" IS E'The primary key for this record';
 COMMENT ON COLUMN TILDA.JOBFILE."jobRefnum" IS E'Job Foreign key';
-COMMENT ON COLUMN TILDA.JOBFILE."fileName" IS E'FileName';
-COMMENT ON COLUMN TILDA.JOBFILE."fileRecords" IS E'FileRecords';
+COMMENT ON COLUMN TILDA.JOBFILE."fileName" IS E'Zip FileName';
+COMMENT ON COLUMN TILDA.JOBFILE."fileRecords" IS E'Number of records loaded into DB';
 COMMENT ON COLUMN TILDA.JOBFILE."fileProcessStartTimeTZ" IS E'Generated helper column to hold the time zone ID for ''fileProcessStartTime''.';
 COMMENT ON COLUMN TILDA.JOBFILE."fileProcessStartTime" IS E'FileProcessStartTime';
 COMMENT ON COLUMN TILDA.JOBFILE."fileProcessEndTimeTZ" IS E'Generated helper column to hold the time zone ID for ''fileProcessEndTime''.';

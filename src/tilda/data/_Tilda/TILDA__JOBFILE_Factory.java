@@ -79,13 +79,13 @@ This is the column definition for:<BR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>200</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileName</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Zip FileName</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        FILENAME              = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "fileName"              , 2/*2*/, "FileName");
+     public static Type_StringPrimitive        FILENAME              = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "fileName"              , 2/*2*/, "Zip FileName");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JOBFILE.fileRecords -> TILDA.JOBFILE."fileRecords"
@@ -97,13 +97,13 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.fileRecords of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileRecords</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Number of records loaded into DB</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull   FILERECORDS           = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "fileRecords"           , 3/*3*/, "FileRecords");
+     public static Type_IntegerPrimitiveNull   FILERECORDS           = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "fileRecords"           , 3/*3*/, "Number of records loaded into DB");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JOBFILE.fileProcessStartTimeTZ -> TILDA.JOBFILE."fileProcessStartTimeTZ"
@@ -364,7 +364,7 @@ This is the column definition for:<BR>
  Creates a new object in memory, which you can subsequently {@link #Write()} to the data store.
  current object to the destination. 
  @param jobRefnum              Job Foreign key
- @param fileName               (max size 200) FileName
+ @param fileName               (max size 200) Zip FileName
 */
    static public tilda.data.JobFile_Data Create(long jobRefnum, String fileName) throws Exception
      {
