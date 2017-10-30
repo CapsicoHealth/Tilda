@@ -415,6 +415,16 @@ This is the column definition for:<BR>
              String clause = ((SelectQuery)ExtraParams).getWhereClause();
              if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
              break;
+          case 1:
+             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "JOB", "created"); S.append(" DESC");
+             break;
+          case 2:
+             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "JOB", "lastUpdated"); S.append(" DESC");
+             break;
+          case 3:
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "JOB", "status"); S.append(" = 'enqueued')");
+             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "JOB", "created"); S.append(" DESC");
+             break;
           case -666: break;
           default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
         }
@@ -434,6 +444,15 @@ This is the column definition for:<BR>
            {
              case -7:
                 break;
+             case 1: {
+               break;
+             }
+             case 2: {
+               break;
+             }
+             case 3: {
+               break;
+             }
              case -666: break;
              default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot prepare statement.");
            }
@@ -530,6 +549,66 @@ This is the column definition for:<BR>
 
        return (tilda.data.Job_Data) Obj;
      }
+
+   static public ListResults<tilda.data.Job_Data> LookupWhereAllByCreated(Connection C, int Start, int Size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__JOB Obj = new tilda.data.Job_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
+       ReadMany(C, 1, RPI, Obj, null, Start, Size);
+       return RPI._L;
+     }
+
+   static public void LookupWhereAllByCreated(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Job_Data> OP, int Start, int Size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__JOB Obj = new tilda.data.Job_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
+       ReadMany(C, 1, RPI, Obj, null, Start, Size);
+     }
+
+
+   static public ListResults<tilda.data.Job_Data> LookupWhereAllByLastUpdated(Connection C, int Start, int Size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__JOB Obj = new tilda.data.Job_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
+       ReadMany(C, 2, RPI, Obj, null, Start, Size);
+       return RPI._L;
+     }
+
+   static public void LookupWhereAllByLastUpdated(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Job_Data> OP, int Start, int Size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__JOB Obj = new tilda.data.Job_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
+       ReadMany(C, 2, RPI, Obj, null, Start, Size);
+     }
+
+
+   static public ListResults<tilda.data.Job_Data> LookupWherePendingJobs(Connection C, int Start, int Size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__JOB Obj = new tilda.data.Job_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
+       ReadMany(C, 3, RPI, Obj, null, Start, Size);
+       return RPI._L;
+     }
+
 
 
 

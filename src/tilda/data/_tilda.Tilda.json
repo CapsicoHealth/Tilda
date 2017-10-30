@@ -194,6 +194,21 @@
         { "name": "truncateTable", "type": "BOOLEAN", "nullable": false                         , "description": "Truncate table"      },
         {"name": "connectionId"  , "sameas": "tilda.data.tilda.connection.id", "nullable": false,  "description": "Connection Details" }
       ],
+      "indices": [
+        { "name": "AllByCreated"    , "orderBy": ["created DESC"]    , "db": true },
+        { "name": "AllByLastUpdated", "orderBy": ["lastUpdated DESC"], "db": true }
+      ],
+      "queries": [
+        {
+          "name": "PendingJobs",
+          "description": "All Pending Jobs",
+          "from": [],
+          "wheres": [
+            { "db":"*", "clause":"status = 'enqueued'" }
+          ],
+          "orderBy": ["created DESC"]
+        }
+      ],
        "primary": { "autogen": true }
     },
     { "name":"JobFile",

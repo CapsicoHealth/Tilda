@@ -309,6 +309,8 @@ COMMENT ON COLUMN TILDA.JOB."connectionId" IS E'Connection Details';
 COMMENT ON COLUMN TILDA.JOB."created" IS E'The timestamp for when the record was created.';
 COMMENT ON COLUMN TILDA.JOB."lastUpdated" IS E'The timestamp for when the record was last updated.';
 COMMENT ON COLUMN TILDA.JOB."deleted" IS E'The timestamp for when the record was deleted.';
+CREATE INDEX JOB_AllByCreated ON TILDA.JOB ("created" DESC);
+CREATE INDEX JOB_AllByLastUpdated ON TILDA.JOB ("lastUpdated" DESC);
 delete from TILDA.KEY where "name" = 'TILDA.JOB';
 insert into TILDA.KEY ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.KEY), 'TILDA.JOB',(select COALESCE(max("refnum"),0)+1 from TILDA.JOB), 250, current_timestamp, current_timestamp);
 
