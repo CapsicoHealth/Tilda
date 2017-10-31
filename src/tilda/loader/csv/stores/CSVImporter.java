@@ -271,9 +271,46 @@ public abstract class CSVImporter
                 break;
               }
             String Headers[] = headerList.toArray(new String[headerList.size()]);
-
-            if (Arrays.equals(Headers, completeHeaders) == false)
+            
+            boolean Error = false;
+            
+            if (Headers.length != completeHeaders.length)
               {
+                Error = true;
+                LOG.error("The file header includes '"+Headers.length+"' columns while the configuration file defines "+completeHeaders.length+" columns in the header list.");
+              }
+            else
+              {
+                for (int i = 0; i < Headers.length; ++i)
+                  {
+                    if (Headers[i].equals(completeHeaders[i]) == false)
+                      {
+                        Error = true;
+                        LOG.error("File header column '"+Headers[i]+"' and configuration header '"+completeHeaders[i]+"' at position "+i+" don't match .");
+                      }
+                  }
+              }
+            for (int i = 0; i < Headers.length; ++i)
+              {
+                if (TextUtil.FindElement(completeHeaders, Headers[i], false, 0) == -1)
+                  {
+                    Error = true;
+                    LOG.error("File header column '"+Headers[i]+"' cannot be found in the header list in the configuration file.");
+                  }
+              }
+            for (int i = 0; i < completeHeaders.length; ++i)
+              {
+                if (TextUtil.FindElement(Headers, completeHeaders[i], false, 0) == -1)
+                  {
+                    Error = true;
+                    LOG.error("Configuration header column '"+completeHeaders[i]+"' cannot be found in the file's header columns.");
+                  }
+              }
+            
+            if (Error == true || Arrays.equals(Headers, completeHeaders) == false)
+              {
+                if (Error == false)
+                  LOG.error("Something weird... Arrays.equals reports the 2 lists don't match, yet the individual tests all passed.");
                 LOG.error("Headers do not match:");
                 LOG.error("   File Headers  : " + TextUtil.Print(Headers));
                 LOG.error("   Maping Headers: " + TextUtil.Print(completeHeaders));
