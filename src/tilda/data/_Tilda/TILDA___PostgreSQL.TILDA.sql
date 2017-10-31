@@ -309,6 +309,7 @@ COMMENT ON COLUMN TILDA.JOB."connectionId" IS E'Connection Details';
 COMMENT ON COLUMN TILDA.JOB."created" IS E'The timestamp for when the record was created.';
 COMMENT ON COLUMN TILDA.JOB."lastUpdated" IS E'The timestamp for when the record was last updated.';
 COMMENT ON COLUMN TILDA.JOB."deleted" IS E'The timestamp for when the record was deleted.';
+CREATE UNIQUE INDEX JOB_StatusIndex ON TILDA.JOB ("status");
 CREATE INDEX JOB_AllByCreated ON TILDA.JOB ("created" DESC);
 CREATE INDEX JOB_AllByLastUpdated ON TILDA.JOB ("lastUpdated" DESC);
 delete from TILDA.KEY where "name" = 'TILDA.JOB';

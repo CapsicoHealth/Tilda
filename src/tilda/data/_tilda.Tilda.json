@@ -187,7 +187,15 @@
         { "name":"startTime"     , "type":"DATETIME", "nullable": true                          , "description":"StartTime"        },
         { "name":"endTime"       , "type":"DATETIME", "nullable": true                          , "description":"EndTime"          },
         { "name":"totalRecords"  , "type":"INTEGER" , "nullable": true                          , "description":"TotalRecords"     },
-        { "name":"status"        , "type":"STRING"  , "nullable": true,  "size":   200          , "description":"Status"           },
+        { "name":"status"        , "type":"STRING"  , "nullable": true,  "size":   200          , "description":"Status"
+                                 , "values": [
+                                      {"name":"Enqueued", "value":"EQ", "description":"Jobs Status Enque"  , "label":"Enqueued", "default":"CREATE" }
+                                     ,{"name":"Started" , "value":"ST", "description":"Jobs Status Started", "label":"Started" } 
+                                     ,{"name":"Running" , "value":"RN", "description":"Jobs Status Running", "label":"Running" } 
+                                     ,{"name":"Failed"  , "value":"FA", "description":"Jobs Status Failed" , "label":"Failed"  } 
+                                     ,{"name":"Done"    , "value":"DO", "description":"Jobs Status Done"   , "label":"Done"    } 
+                                    ]
+        },
         { "name":"error"         , "type":"STRING"  , "nullable": true,  "size":   1000         , "description":"Error"            },
         { "name": "threadsCount" , "type": "INTEGER", "nullable": false                         , "description": "Thread count"    },
         { "name": "isInsert"     , "type": "BOOLEAN", "nullable": false                         , "description": "Insert or upsert?"   },
@@ -195,6 +203,7 @@
         {"name": "connectionId"  , "sameas": "tilda.data.tilda.connection.id", "nullable": false,  "description": "Connection Details" }
       ],
       "indices": [
+        { "name": "StatusIndex"     , "columns": ["status"]          , "db": true },
         { "name": "AllByCreated"    , "orderBy": ["created DESC"]    , "db": true },
         { "name": "AllByLastUpdated", "orderBy": ["lastUpdated DESC"], "db": true }
       ],
@@ -204,7 +213,7 @@
           "description": "All Pending Jobs",
           "from": [],
           "wheres": [
-            { "db":"*", "clause":"status = 'enqueued'" }
+            { "db":"*", "clause":"status = 'EQ'" }
           ],
           "orderBy": ["created DESC"]
         }

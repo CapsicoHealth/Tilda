@@ -6,9 +6,6 @@ package tilda.data;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import com.capsico.people.data._Tilda.TILDA__TENANTUSER_Factory.COLS;
-
 import tilda.db.*;
 
 /**

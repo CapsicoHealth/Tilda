@@ -64,7 +64,21 @@ public class TILDA__JOB_Json
       Update(Obj);
       if (Obj.Write(C) == false)
        {
-         throw new Exception("Cannot create the tilda.data.TILDA.JOB object.\n"+toString());
+         Obj = tilda.data.Job_Factory.LookupByStatusIndex(_status);
+         if (Obj.Read(C) == false)
+          throw new Exception("Cannot create the tilda.data.TILDA.JOB object.\n"+toString());
+         if (_name         != null) Obj.setName         (_name         );
+         if (_startTime    != null) Obj.setStartTime    (_startTime    );
+         if (_endTime      != null) Obj.setEndTime      (_endTime      );
+         if (_totalRecords != null) Obj.setTotalRecords (_totalRecords );
+         if (_error        != null) Obj.setError        (_error        );
+         if (_threadsCount != null) Obj.setThreadsCount (_threadsCount );
+         if (_isInsert     != null) Obj.setIsInsert     (_isInsert     );
+         if (_truncateTable!= null) Obj.setTruncateTable(_truncateTable);
+         if (_connectionId != null) Obj.setConnectionId (_connectionId );
+         if (Obj.Write(C) == false)
+          throw new Exception("Cannot update the tilda.data.TILDA.JOB object: "+Obj.toString());
+
        }
       return Obj;
    }

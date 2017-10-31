@@ -176,6 +176,17 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Enqueued</B>&nbsp;&nbsp;</TD><TD>EQ&nbsp;&nbsp;</TD><TD>Enqueued&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Enque</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Started</B>&nbsp;&nbsp;</TD><TD>ST&nbsp;&nbsp;</TD><TD>Started&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Started</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Running</B>&nbsp;&nbsp;</TD><TD>RN&nbsp;&nbsp;</TD><TD>Running&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Running</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Failed</B>&nbsp;&nbsp;</TD><TD>FA&nbsp;&nbsp;</TD><TD>Failed&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Failed</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>Done</B>&nbsp;&nbsp;</TD><TD>DO&nbsp;&nbsp;</TD><TD>Done&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Done</TD></TR>
+</TABLE>
+</TD></TR>
+
 </TABLE>
 */
      public static Type_StringPrimitiveNull    STATUS       = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "status"       , 7/*7*/, "Status");
@@ -415,14 +426,14 @@ This is the column definition for:<BR>
              String clause = ((SelectQuery)ExtraParams).getWhereClause();
              if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
              break;
-          case 1:
+          case 2:
              S.append(" order by "); C.getFullColumnVar(S, "TILDA", "JOB", "created"); S.append(" DESC");
              break;
-          case 2:
+          case 3:
              S.append(" order by "); C.getFullColumnVar(S, "TILDA", "JOB", "lastUpdated"); S.append(" DESC");
              break;
-          case 3:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "JOB", "status"); S.append(" = 'enqueued')");
+          case 4:
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "JOB", "status"); S.append(" = 'EQ')");
              S.append(" order by "); C.getFullColumnVar(S, "TILDA", "JOB", "created"); S.append(" DESC");
              break;
           case -666: break;
@@ -444,13 +455,13 @@ This is the column definition for:<BR>
            {
              case -7:
                 break;
-             case 1: {
-               break;
-             }
              case 2: {
                break;
              }
              case 3: {
+               break;
+             }
+             case 4: {
                break;
              }
              case -666: break;
@@ -501,6 +512,7 @@ This is the column definition for:<BR>
        Obj.setConnectionId (connectionId );
 
        // Default Create-time setters
+       Obj.setStatusEnqueued   ();
        Obj.setCreatedNow       ();
        Obj.setLastUpdatedNow   ();
 
@@ -550,6 +562,16 @@ This is the column definition for:<BR>
        return (tilda.data.Job_Data) Obj;
      }
 
+   static public tilda.data.Job_Data LookupByStatusIndex(String status) throws Exception
+     {
+       tilda.data._Tilda.TILDA__JOB Obj = new tilda.data.Job_Data();
+       Obj.initForLookup(1);
+
+       Obj.setStatus       (status       ); 
+
+       return (tilda.data.Job_Data) Obj;
+     }
+
    static public ListResults<tilda.data.Job_Data> LookupWhereAllByCreated(Connection C, int Start, int Size) throws Exception
      {
        tilda.data._Tilda.TILDA__JOB Obj = new tilda.data.Job_Data();
@@ -558,7 +580,7 @@ This is the column definition for:<BR>
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       ReadMany(C, 1, RPI, Obj, null, Start, Size);
+       ReadMany(C, 2, RPI, Obj, null, Start, Size);
        return RPI._L;
      }
 
@@ -570,7 +592,7 @@ This is the column definition for:<BR>
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       ReadMany(C, 1, RPI, Obj, null, Start, Size);
+       ReadMany(C, 2, RPI, Obj, null, Start, Size);
      }
 
 
@@ -582,7 +604,7 @@ This is the column definition for:<BR>
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       ReadMany(C, 2, RPI, Obj, null, Start, Size);
+       ReadMany(C, 3, RPI, Obj, null, Start, Size);
        return RPI._L;
      }
 
@@ -594,7 +616,7 @@ This is the column definition for:<BR>
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       ReadMany(C, 2, RPI, Obj, null, Start, Size);
+       ReadMany(C, 3, RPI, Obj, null, Start, Size);
      }
 
 
@@ -605,7 +627,7 @@ This is the column definition for:<BR>
 
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       ReadMany(C, 3, RPI, Obj, null, Start, Size);
+       ReadMany(C, 4, RPI, Obj, null, Start, Size);
        return RPI._L;
      }
 
