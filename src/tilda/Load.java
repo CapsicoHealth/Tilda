@@ -134,6 +134,7 @@ public class Load
                 StartImportProcessor(selectedObjectsList, connectionIdsList, Conf, Conf._CmsData);
               }
             LOG.debug("Import Tables completed.");
+            System.exit(1);
           }
         else
           {
