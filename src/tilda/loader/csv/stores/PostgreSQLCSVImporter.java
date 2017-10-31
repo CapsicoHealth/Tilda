@@ -140,17 +140,15 @@ public class PostgreSQLCSVImporter extends CSVImporter
                             String value = record.get(h);
                             if (TextUtil.isNullOrEmpty(value) == false)
                               {
-                                String[] colDataArray = value.split(multiValueDelim);
+                                // LDH-NOTE: Some CSV data files may encode multi-value columns as direct outputs from a database like Postgres, 
+                                //          meaning, the value straight into a CSV file will be "{x,y,z}". Therefore, to make exports of data files 
+                                //          easier, we have this logic here that needs to clean up those leading '{' and trailing '}' characters.
+                                value = value.trim();
+                                if (value.startsWith("{") == true && value.endsWith("}") == true)
+                                 value = value.substring(1, value.length()-1);
+                                String[] colDataArray = TextUtil.TrimSplit(value, multiValueDelim);
                                 if (colDataArray != null && colDataArray.length > 0)
                                   {
-                                    for (int z = 0; z < colDataArray.length; ++z)
-                                      {
-                                        if (z == 0)
-                                          colDataArray[z] = colDataArray[z].substring(1, colDataArray.length == 1 ? colDataArray[z].length() - 1 : colDataArray[z].length());
-                                        else if (z == colDataArray.length - 1)
-                                          colDataArray[z] = colDataArray[z].substring(0, colDataArray[z].length() - 1);
-                                      }
-  
                                     ColumnMeta CI = ColumnsMap.get(c.toLowerCase());
                                     if (cHeader._Index != -1 && cHeader._Index < colDataArray.length)
                                       {
