@@ -53,6 +53,9 @@ public class PostgreSQLCSVImporter extends CSVImporter
         int batchCount = 0;
   
         CSVRecord currentRecord = null;
+        String h = null;
+        String v = null;
+
         Map<String, GenericLoader> LoaderMap = initializeLoaders(C, columnMap);
         try
           {
@@ -94,14 +97,13 @@ public class PostgreSQLCSVImporter extends CSVImporter
                 for (int i = 0; i < columnsLength; ++i)
                   {
                     String c = columns[i];
-                    String h = headers[i];
+                    h = headers[i];
+                    v = record.get(h);
                     ColumnHeader cHeader = columnMap.get(c);
                     if (cHeader != null && cHeader._Multi == true)
                       {
-                        String multiHeaderDelim = TextUtil.isNullOrEmpty(cHeader._MultiHeaderDelimeter) ? null
-                        : cHeader._MultiHeaderDelimeter;
-                        String multiValueDelim = TextUtil.isNullOrEmpty(cHeader._MultiValueDelimeter) ? null
-                        : cHeader._MultiValueDelimeter;
+                        String multiHeaderDelim = TextUtil.isNullOrEmpty(cHeader._MultiHeaderDelimeter) ? null : cHeader._MultiHeaderDelimeter;
+                        String multiValueDelim = TextUtil.isNullOrEmpty(cHeader._MultiValueDelimeter) ? null : cHeader._MultiValueDelimeter;
                         if (multiHeaderDelim != null)
                           {
                             int j = 0;
@@ -142,11 +144,9 @@ public class PostgreSQLCSVImporter extends CSVImporter
                                     for (int z = 0; z < colDataArray.length; ++z)
                                       {
                                         if (z == 0)
-                                          colDataArray[z] = colDataArray[z].substring(1, colDataArray.length == 1
-                                          ? colDataArray[z].length() - 1 : colDataArray[z].length());
+                                          colDataArray[z] = colDataArray[z].substring(1, colDataArray.length == 1 ? colDataArray[z].length() - 1 : colDataArray[z].length());
                                         else if (z == colDataArray.length - 1)
-                                          colDataArray[z] = colDataArray[z].substring(0,
-                                          colDataArray[z].length() - 1);
+                                          colDataArray[z] = colDataArray[z].substring(0, colDataArray[z].length() - 1);
                                       }
   
                                     ColumnMeta CI = ColumnsMap.get(c.toLowerCase());
@@ -322,6 +322,8 @@ public class PostgreSQLCSVImporter extends CSVImporter
                           }
                       }
                   }
+                h = null;
+                v = null;
                 
                 QueryDetails.setLastQuery(TM._SchemaName + "." + TM._TableName, Str.toString());
                 if (NumOfRecs < 5)
@@ -353,11 +355,6 @@ public class PostgreSQLCSVImporter extends CSVImporter
                 Pst.executeBatch();
               }
           }
-        catch (DateTimeParseException E)
-          {
-            LOG.error("Cannot parse data with pattern "+DateTimePattern);
-            throw E;
-          }
         catch (SQLException E)
           {
             C.HandleCatch(E, "inserted");
@@ -367,7 +364,13 @@ public class PostgreSQLCSVImporter extends CSVImporter
           {
             if (currentRecord != null)
               {
-                LOG.error("An error occurred parsing record #" + currentRecord.getRecordNumber() + ":");
+                LOG.error("An error occurred parsing record #" + currentRecord.getRecordNumber()+".");
+                if (h != null)
+                 {
+                  LOG.error("An error occurred parsing column '" + h+"'='"+v+"'.");
+                  if (E instanceof DateTimeParseException == true)
+                    LOG.error("Cannot parse data with pattern "+DateTimePattern);
+                 }
                 for (Map.Entry<String, String> c : currentRecord.toMap().entrySet())
                   LOG.error("     " + c.getKey() + ": " + c.getValue());
               }
