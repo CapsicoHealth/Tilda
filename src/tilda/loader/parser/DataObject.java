@@ -40,6 +40,8 @@ public class DataObject
     @SerializedName("upserts"        )      public boolean            _upserts = false;
     @SerializedName("inserts"        )      public boolean            _inserts = false;
     
+    private transient boolean _truncate = false;
+    
     
     
     public  String[] getColumns(){
@@ -99,6 +101,37 @@ public class DataObject
     public String getTableFullName()
       {
         return this._SchemaName + "." + this._TableName;
+      }
+    
+    public void setIsUpserts()
+      {
+        this._upserts = true;
+        this._inserts = false;
+      }
+    
+    public void setIsInserts()
+      {
+        this._inserts = true;
+        this._upserts = false;
+      }
+    
+    public void setFilePath(String filePath)
+      {
+        if (this._FileList == null)
+          this._FileList = new ArrayList<String>();        
+        this._FileList.clear();
+        this._FileList.add(filePath);
+      }
+    
+    public boolean isShouldTruncate()
+      {
+        return this._truncate;
+      }
+    
+    public void setShouldTruncate()
+      {
+        if (isInserts() != isUpserts() && isInserts())
+          this._truncate = true;
       }
 
   }

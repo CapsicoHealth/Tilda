@@ -17,32 +17,32 @@ public class ImporterThread implements Callable<List<Results>>
   {
     protected static final Logger LOG                = LogManager.getLogger(ImporterThread.class.getName());
 
-    String connectionId, rootFolder;
+    String connectionId, statusConId, rootFolder;
     DataObject dataObject;
     long jobRefnum = -666;
     
-    public ImporterThread(String connectionId, String rootFolder, DataObject dataObject, long jobRefnum)
+    public ImporterThread(String connectionId, String rootFolder, DataObject dataObject, String statusConId, long jobRefnum)
       {
         this.connectionId = connectionId;
         this.rootFolder = rootFolder;
         this.dataObject = dataObject;
+        this.statusConId = statusConId;
         this.jobRefnum = jobRefnum;
-      }  
-    
+      }
     
     @Override
     public List<Results> call() throws Exception
       {
-        Connection C    = null;
-        Connection main = null;
-        List<Results> result = null;
+        Connection C            = null;
+        Connection statusCon    = null;
+        List<Results> result    = null;
         try
           {
             if(jobRefnum > 0)
-              main = ConnectionPool.get("MAIN");
+              statusCon = ConnectionPool.get(statusConId);
             
             C = ConnectionPool.get(this.connectionId);
-            CSVImporter importer = CSVImporterFactory.newInstance(C, main, this.rootFolder, this.dataObject, jobRefnum);            
+            CSVImporter importer = CSVImporterFactory.newInstance(C, this.rootFolder, this.dataObject, statusCon, jobRefnum);            
             result = importer.process();
           }
         catch(Throwable T) 
@@ -53,7 +53,7 @@ public class ImporterThread implements Callable<List<Results>>
         finally
           {
             closeDBConnection(C);
-            closeDBConnection(main);
+            closeDBConnection(statusCon);
           }
         return result;
       }

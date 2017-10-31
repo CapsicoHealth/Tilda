@@ -41,7 +41,7 @@ public class ImportProcessor
     /*
      * Launch and Shutdown threads
      */
-    public static void parallelProcess(List<String> connectionIds, String rootFolder, int threadsCount, List<DataObject> CMSDataList, long jobRefnum)
+    public static void parallelProcess(List<String> connectionIds, String rootFolder, int threadsCount, List<DataObject> CMSDataList, String statusConId, long jobRefnum)
       {
           ExecutorService pool = Executors.newFixedThreadPool(threadsCount);
           List<Future<List<Results>>> futures = new ArrayList<>();
@@ -52,7 +52,7 @@ public class ImportProcessor
               validate(Data);
               for(String connectionId : connectionIds)
                 {
-                  Callable<List<Results>> thread = new ImporterThread(connectionId, rootFolder, Data, jobRefnum);
+                  Callable<List<Results>> thread = new ImporterThread(connectionId, rootFolder, Data, statusConId, jobRefnum);
                   Future<List<Results>> future =  pool.submit(thread);
                   futures.add(future);
                 }
@@ -77,6 +77,8 @@ public class ImportProcessor
               Results.addAll(Res);
             }
 
+          pool.shutdownNow();
+
           long totalCount = 0;
           long totalNano = 0;
           for (Results R : Results)
@@ -87,7 +89,7 @@ public class ImportProcessor
               " (" + DurationUtil.PrintPerformancePerMinute(R._TimeNano, R._RecordsCount) + " Records/min)");
             }
           LOG.debug("--------------------------------------------------------------------------------------------------------------");
-          LOG.debug("In total, processed " + totalCount + " in " + DurationUtil.PrintDuration(totalNano) + " (" + DurationUtil.PrintPerformancePerMinute(totalNano, totalCount) + " Records/min)");
+          LOG.debug("In total, processed " + totalCount + " file in " + DurationUtil.PrintDuration(totalNano) + " (" + DurationUtil.PrintPerformancePerMinute(totalNano, totalCount) + " Records/min)");
       }
     
     
@@ -95,9 +97,11 @@ public class ImportProcessor
       {
         try
           {
+            LOG.debug("Truncating table: "+SchemaName+"."+TableName);
             C.truncateTable(SchemaName, TableName);
-//            C.setTableLogging(SchemaName, TableName, false);
+            // C.setTableLogging(SchemaName, TableName, false);
             C.commit();
+            LOG.debug("Table truncated successfully");
           }
         catch (Exception e)
           {

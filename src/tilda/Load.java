@@ -73,6 +73,45 @@ public class Load
     JButton                       btnAllTables      = new JButton("Select All Tables");
     JButton                       btnAllConnections = new JButton("Select All Connections");
 
+    public static void processLoadJob(String connectionId, int threads, String configPath, String csvPath, 
+      boolean isInserts, boolean shouldTruncate, String statusConId, long jobRefnum)
+      {
+        LOG.debug("Starting the utility in silent mode.");
+        Config conf = Config.fromFile(configPath);
+        
+        List<String> selectedConnectionIds = new ArrayList<>();
+        selectedConnectionIds.add(connectionId);
+        
+        // Apply override values to Config
+        for(DataObject DO : conf._CmsData)
+          {
+            DO.setFilePath(csvPath);
+            if(isInserts)
+              DO.setIsInserts();
+            else
+              DO.setIsUpserts();
+            
+            if(shouldTruncate)
+              DO.setShouldTruncate();
+          }
+        
+        List<String> errors = ValidateDataObjects(selectedConnectionIds,  conf._CmsData);
+        if (errors.size() > 0)
+          {
+            for (String error : errors)
+              LOG.error(error);
+            LOG.error("File " + configPath + " failed validation. Aborting !!");
+            System.exit(-1);
+          }
+        
+        LOG.debug("Running ImportProcessor");
+        long timeTaken = System.nanoTime();
+        ImportProcessor.parallelProcess(selectedConnectionIds, null, threads, conf._CmsData, statusConId, jobRefnum);
+        timeTaken = System.nanoTime() - timeTaken;
+        LOG.debug("Time taken for ImportProcessor.process() = " + DurationUtil.PrintDuration(timeTaken));
+        
+      }
+    
     // Main
     public static void main(String[] argsArray)
     throws Exception
@@ -117,7 +156,7 @@ public class Load
                     for (String error : errors)
                       LOG.error(error);
                     LOG.error("File " + ConfigFileName + " failed validation. Aborting !!");
-                    System.exit(1);
+                    System.exit(-1);
                   }
               }
             LOG.debug("Validation Successful.");
@@ -283,7 +322,7 @@ public class Load
 
         LOG.debug("Running ImportProcessor");
         long timeTaken = System.nanoTime();
-        ImportProcessor.parallelProcess(connectionIdsList, Conf._RootFolder, threadsCount, dataObjects, -666);
+        ImportProcessor.parallelProcess(connectionIdsList, Conf._RootFolder, threadsCount, dataObjects, null, -666);
         timeTaken = System.nanoTime() - timeTaken;
         LOG.debug("Time taken for ImportProcessor.process() = " + DurationUtil.PrintDuration(timeTaken));
       }
@@ -344,8 +383,7 @@ public class Load
           {
             return false;
           }
-
-
+        
         return true;
       }
 
@@ -553,4 +591,5 @@ public class Load
       {
         statusLabel.setText(text);
       }
+    
   }

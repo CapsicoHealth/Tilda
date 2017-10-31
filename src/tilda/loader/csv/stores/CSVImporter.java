@@ -36,6 +36,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.loader.GenericLoader;
+import tilda.loader.csv.ImportProcessor;
 import tilda.loader.parser.ColumnHeader;
 import tilda.loader.parser.DataObject;
 
@@ -56,11 +57,11 @@ public abstract class CSVImporter
     protected static final Logger LOG                = LogManager.getLogger(CSVImporter.class.getName());
     protected static final int    PERFORMANCE_NUMBER = 50000;
     
-    protected Connection    C               = null;
-    protected Connection    mainConnection  = null;
-    protected String        rootFolder      = null;
-    protected DataObject    cmsDO           = null;
-    protected long          jobRefnum       = -666;
+    protected Connection    C                   = null;
+    protected String        rootFolder          = null;
+    protected DataObject    cmsDO               = null;
+    protected Connection    statusConnection    = null;
+    protected long          jobRefnum           = -666;
 
     protected abstract long insertData(boolean isUpsert, long t0, Map<String, ColumnMeta> DBColumns,
       boolean withHeader, Iterable<CSVRecord> records, StringBuilder Str, String schemaName, String tableName,
@@ -91,20 +92,25 @@ public abstract class CSVImporter
             createSchemaAndTable(C, cmsDO._SchemaName, cmsDO._TableName, columns, 500);
             StringBuilder Str = GenerateSQL(cmsDO.isUpserts(), cmsDO._SchemaName, cmsDO._TableName, columns, DBColumns, uniqueColumns);
             
+            if (cmsDO.isShouldTruncate())
+              ImportProcessor.truncateTable(C, cmsDO._SchemaName, cmsDO._TableName);
+            
             for (String file : fileList)
               {
-                String absoluteFilePath = rootFolder + file;
+                String absoluteFilePath = (rootFolder != null) ? (rootFolder + file) : file;
                 LOG.debug("Looking for data file or resource " + absoluteFilePath + ".");
                 Reader R = FileUtil.getReaderFromFileOrResource(absoluteFilePath);
 
                 CSVFormat csvFormat = CSVFormat.DEFAULT.withHeader(completeHeaders);
                 Iterable<CSVRecord> records = csvFormat.parse(R);
                 getHeader(completeHeaders, cmsDO._HeadersIncluded, records);
-                
+                                
                 NumOfRecs = insertData(cmsDO.isUpserts(), t0, DBColumns, cmsDO._HeadersIncluded, records, Str, cmsDO._SchemaName,
                   cmsDO._TableName, headers, columns, cmsDO.getMultiHeaderColumnMap(), completeHeaders, cmsDO._dateTimePattern, 
                   cmsDO._zoneId, cmsDO._datePattern);
                 // C.setTableLogging(cmsDO._SchemaName, cmsDO._TableName, true);
+                
+                R.close();
                 
                 NumOfRecs = (cmsDO._HeadersIncluded == true) ? (NumOfRecs - 1) : NumOfRecs;
                 t0 = System.nanoTime() - t0;
@@ -112,6 +118,7 @@ public abstract class CSVImporter
                 
                 Results results = new Results(file, cmsDO._SchemaName, cmsDO._TableName, NumOfRecs, t0);
                 resultsList.add(results);
+
               }
             return resultsList;
 
@@ -274,6 +281,10 @@ public abstract class CSVImporter
               }
             String Headers[] = headerList.toArray(new String[headerList.size()]);
 
+            // TODO: print which header is missing in file
+            
+            // TODO: headers must not be in same order in file.
+            
             if (Arrays.equals(Headers, completeHeaders) == false)
               {
                 LOG.error("Headers do not match:");
