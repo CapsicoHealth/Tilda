@@ -32,6 +32,7 @@ import tilda.db.ConnectionPool;
 import tilda.db.KeysManager;
 import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.DatabaseMeta;
+import tilda.db.metadata.PKMeta;
 import tilda.db.metadata.TableMeta;
 import tilda.db.metadata.ViewMeta;
 import tilda.enums.ColumnMode;
@@ -48,6 +49,7 @@ import tilda.migration.actions.SchemaViewsDrop;
 import tilda.migration.actions.TableComment;
 import tilda.migration.actions.TableCreate;
 import tilda.migration.actions.TableKeyCreate;
+import tilda.migration.actions.TablePKReplace;
 import tilda.migration.actions.TildaAclAdd;
 import tilda.migration.actions.TildaHelpersAdd;
 import tilda.migration.actions.ViewCreate;
@@ -55,6 +57,7 @@ import tilda.migration.actions.ViewUpdate;
 import tilda.parsing.Parser;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
+import tilda.parsing.parts.PrimaryKey;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 import tilda.utils.MigrationDataModel;
@@ -296,8 +299,6 @@ public class Migrator
               {
                 if (Obj._Description.equalsIgnoreCase(TMeta._Descr) == false)
                   Actions.add(new TableComment(Obj));
-                if (Obj._PrimaryKey != null && Obj._PrimaryKey._Autogen == true && KeysManager.hasKey(Obj.getShortName()) == false)
-                  Actions.add(new TableKeyCreate(Obj));
                 for (Column Col : Obj._Columns)
                   {
                     if (Col == null || Col._Mode == ColumnMode.CALCULATED)
@@ -333,6 +334,10 @@ public class Migrator
                           Actions.add(new ColumnAlterStringSize(Col, CMeta._Size));
                       }
                   }
+                if (Obj._PrimaryKey != null && Obj._PrimaryKey._Autogen == true && KeysManager.hasKey(Obj.getShortName()) == false)
+                  Actions.add(new TableKeyCreate(Obj));
+                if (DifferentPrimaryKeys(Obj._PrimaryKey, TMeta._PrimaryKey) == true)
+                  Actions.add(new TablePKReplace(Obj, TMeta._PrimaryKey));
                 /*
                  * for (String c : Obj._DropOldColumns)
                  * {
@@ -367,5 +372,23 @@ public class Migrator
           }
 
         return Actions;
+      }
+
+    private static boolean DifferentPrimaryKeys(PrimaryKey PK1, PKMeta PK2)
+      {
+        if (PK1 == null && PK2 == null) // No PKs
+         return false;
+
+        if (PK1 == null || PK2 == null) // Adding or removing a PK
+         return true;
+        
+        if (PK1._Columns.length != PK2._Columns.size()) // Different size PKs
+         return true;
+        
+        for (int i = 0; i < PK1._Columns.length; ++i)
+         if (PK1._Columns[i].equals(PK2._Columns.get(i)) == false)
+          return true; // different column
+        
+        return false; // same PKs
       }
   }

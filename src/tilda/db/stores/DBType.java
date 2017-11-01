@@ -25,6 +25,7 @@ import java.util.List;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
+import tilda.db.metadata.PKMeta;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
@@ -64,6 +65,7 @@ public interface DBType
     public boolean alterTableAlterColumnComment   (Connection Con, Column Col) throws Exception;
     public boolean alterTableAlterColumnType      (Connection Con, ColumnType fromType, Column Col, ZoneInfo_Data defaultZI) throws Exception;
     public boolean alterTableAlterColumnStringSize(Connection Con, Column Col, int DBSize) throws Exception;
+    public boolean alterTableReplaceTablePK       (Connection connection, Object obj, PKMeta oldPK) throws Exception;
     public boolean addHelperFunctions             (Connection Con) throws Exception;    
     public boolean addAclRoles                    (Connection Con, List<Schema> TildaList) throws Exception;
 

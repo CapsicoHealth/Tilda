@@ -433,10 +433,15 @@ public class ConnectionPool
                           Found = true;
                           S._DependencySchemas.add(D);
                         }
+                      else if (DepdencySchemaName.equalsIgnoreCase(D._ResourceName) == true)
+                        throw new Exception("Schema " + S._Name + " depends on " + D._Name + " which has been compiled with improper casing. Can happen on Windows systems that are case insensitive at build time in an IDE, but case sensitive when deployed at runtime.");
+
                       PS.addDependencySchema(D);
                     }
                   if (Found == false)
-                    throw new Exception("Schema " + S._Name + " depends on " + DepdencySchemaName + " which hasn't been loaded.");
+                    {
+                      throw new Exception("Schema " + S._Name + " depends on " + DepdencySchemaName + " which hasn't been loaded.");
+                    }
                 }
             else
               {

@@ -47,6 +47,7 @@ public class TableMeta
     public Map<String, ColumnMeta> _Columns     = new HashMap<String, ColumnMeta>();
     public Map<String, IndexMeta>  _Indices     = new HashMap<String, IndexMeta>();
     public Map<String, FKMeta>     _ForeignKeys = new HashMap<String, FKMeta>();
+    public PKMeta                  _PrimaryKey;
 
     public void load(Connection C)
     throws Exception
@@ -66,7 +67,11 @@ public class TableMeta
 
         RS = meta.getImportedKeys(null, _SchemaName.toLowerCase(), _TableName.toLowerCase());
         loadForeignKeys(RS);
-      }
+        
+        RS = meta.getPrimaryKeys(null, _SchemaName.toLowerCase(), _TableName.toLowerCase());
+        if (RS.next() == true)
+         _PrimaryKey = new PKMeta(RS);
+     }
 
     private void loadIndices(ResultSet RS)
     throws SQLException, Exception
@@ -98,7 +103,6 @@ public class TableMeta
             FKM.addColumn(RS);
           }
       }
-
 
     public ColumnMeta getColumnMeta(String ColumnName)
       {
