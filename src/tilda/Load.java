@@ -39,9 +39,13 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.db.Connection;
+import tilda.db.ConnectionPool;
+import tilda.db.metadata.TableMeta;
 import tilda.loader.csv.ImportProcessor;
 import tilda.loader.parser.Config;
 import tilda.loader.parser.DataObject;
@@ -49,10 +53,6 @@ import tilda.loader.ui.ConnectionsTableModel;
 import tilda.loader.ui.DataImportTableModel;
 import tilda.utils.DurationUtil;
 import tilda.utils.TextUtil;
-import tilda.db.Connection;
-import tilda.db.ConnectionPool;
-import tilda.db.metadata.IndexMeta;
-import tilda.db.metadata.TableMeta;
 
 public class Load
   {
@@ -134,6 +134,7 @@ public class Load
                 StartImportProcessor(selectedObjectsList, connectionIdsList, Conf, Conf._CmsData);
               }
             LOG.debug("Import Tables completed.");
+            System.exit(1);
           }
         else
           {
