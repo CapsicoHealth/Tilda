@@ -72,18 +72,20 @@ public class PostgreSQLCSVImporter extends CSVImporter
   
                 ZonedDateTime Now = DateTimeUtil.NowUTC();
                 int x = 0;
-                if (DBColumns.get("refnum") != null && TextUtil.FindElement(columns, "refnum", false, 0) == -1)
+                if (DBColumns != null && DBColumns.get("refnum") != null 
+                  && TextUtil.FindElement(columns, "refnum", false, 0) == -1)
                   {
                     Pst.setLong(++x,
                     tilda.db.KeysManager.getKey(schemaName.toUpperCase() + "." + tableName.toUpperCase()));
                   }
-                if (DBColumns.get("lastupdated") != null
-                && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
+                if (DBColumns != null && DBColumns.get("lastupdated") != null 
+                  && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
                   {
                     Pst.setTimestamp(++x, new java.sql.Timestamp(Now.toInstant().toEpochMilli()),
                     DateTimeUtil._UTC_CALENDAR);
                   }
-                if (DBColumns.get("created") != null && TextUtil.FindElement(columns, "created", false, 0) == -1)
+                if (DBColumns != null && DBColumns.get("created") != null 
+                  && TextUtil.FindElement(columns, "created", false, 0) == -1)
                   {
                     Pst.setTimestamp(++x, new java.sql.Timestamp(Now.toInstant().toEpochMilli()),
                     DateTimeUtil._UTC_CALENDAR);
@@ -92,9 +94,9 @@ public class PostgreSQLCSVImporter extends CSVImporter
                 // columns: "ha, hb[], hc, hd"
                 // headers: "ha, hb_1, hb_2, hb_3, hc, hd"
   
-                int k = 0;
+                int i, k = 0;
                 int upsertOffset = columns.length;
-                for (int i = 0; i < columns.length; ++i)
+                for ( i = 0; i < columns.length; ++i)
                   {
                     boolean isUniqueColumn = false;
                     if (TextUtil.FindElement(uniqueColumns, columns[i], false, 0) != -1)
@@ -327,6 +329,15 @@ public class PostgreSQLCSVImporter extends CSVImporter
                           }
                       }
                   }
+                
+                // lastUpdated incase of Upsert
+                if (isUpsert && DBColumns != null && DBColumns.get("lastupdated") != null 
+                  && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
+                  {
+                    Pst.setTimestamp(i + x + upsertOffset, new java.sql.Timestamp(Now.toInstant().toEpochMilli()),
+                      DateTimeUtil._UTC_CALENDAR);
+                  }
+                
                 h = null;
                 v = null;
                 
@@ -421,7 +432,14 @@ public class PostgreSQLCSVImporter extends CSVImporter
                 }                  
                 Str.append(" \"").append(columns[i]).append("\"=?");
                 first = false;
-              }            
+              }
+            
+            if (DBColumns != null && DBColumns.get("lastupdated") != null && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
+              {
+                Str.append(",");
+                Str.append(" \"lastUpdated\"=?");
+              }
+
           }
         return Str;
       }

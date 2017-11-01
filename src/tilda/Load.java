@@ -134,7 +134,6 @@ public class Load
                 StartImportProcessor(selectedObjectsList, connectionIdsList, Conf, Conf._CmsData);
               }
             LOG.debug("Import Tables completed.");
-            System.exit(1);
           }
         else
           {
@@ -452,13 +451,14 @@ public class Load
 
                                 // Processing
                                 StartImportProcessor(ImportTables, ConnectionIds, Conf, Conf._CmsData);
+                                frmDataImport.dispose(); // Doesn't trigger listeners
                                 LOG.debug("Import Tables completed.");
                               }
                             catch (Exception e)
                               {
                                 LOG.error(e);
-                              }
-                            System.exit(1);
+                                System.exit(-1);
+                              }                            
                           }
                       });
                   }
@@ -525,8 +525,9 @@ public class Load
           {
             public void actionPerformed(ActionEvent e)
               {
+                boolean newValue = (data.length > 0) ? !((Boolean) data[0][1]) : true;
                 for (int i = 0; i < data.length; i++)
-                  data[i][1] = true;
+                  data[i][1] = newValue;
                 tableDataModel.fireTableDataChanged();
               }
           });
@@ -537,8 +538,9 @@ public class Load
           {
             public void actionPerformed(ActionEvent e)
               {
+                boolean newValue = (data.length > 0) ? !((Boolean) connections[0][2]) : true;
                 for (int i = 0; i < connections.length; i++)
-                  connections[i][2] = true;
+                  connections[i][2] = newValue;
                 connectionDataModel.fireTableDataChanged();
               }
           });

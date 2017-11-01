@@ -76,6 +76,8 @@ public class ImportProcessor
                 break;
               Results.addAll(Res);
             }
+          
+          pool.shutdownNow();
 
           long totalCount = 0;
           long totalNano = 0;
