@@ -168,10 +168,10 @@ This is the column definition for:<BR>
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.status of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.status of type varchar(200)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.status of type character(2)</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>200</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>2</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Status</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
@@ -189,7 +189,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    STATUS       = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "status"       , 7/*7*/, "Status");
+     public static Type_StringPrimitive        STATUS       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "status"       , 7/*7*/, "Status");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JOB.error -> TILDA.JOB."error"
@@ -224,6 +224,13 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>DefaultValue</B>&nbsp;&nbsp;</TD><TD>1&nbsp;&nbsp;</TD><TD>Default value&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Default value threads count</TD></TR>
+</TABLE>
+</TD></TR>
+
 </TABLE>
 */
      public static Type_IntegerPrimitive       THREADSCOUNT = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "threadsCount" , 9/*9*/, "Thread count");
@@ -491,12 +498,11 @@ This is the column definition for:<BR>
 /**
  Creates a new object in memory, which you can subsequently {@link #Write()} to the data store.
  current object to the destination. 
- @param threadsCount  Thread count
  @param isInsert      Insert or upsert?
  @param truncateTable Truncate table
  @param connectionId  (max size 15) Connection Details
 */
-   static public tilda.data.Job_Data Create(int threadsCount, boolean isInsert, boolean truncateTable, String connectionId) throws Exception
+   static public tilda.data.Job_Data Create(boolean isInsert, boolean truncateTable, String connectionId) throws Exception
      {
        tilda.data._Tilda.TILDA__JOB Obj = new tilda.data.Job_Data();
        Obj.initForCreate();
@@ -506,15 +512,15 @@ This is the column definition for:<BR>
        Obj.setRefnum(tilda.db.KeysManager.getKey("TILDA.JOB"));
 
        // Explicit setters
-       Obj.setThreadsCount (threadsCount );
        Obj.setIsInsert     (isInsert     );
        Obj.setTruncateTable(truncateTable);
        Obj.setConnectionId (connectionId );
 
        // Default Create-time setters
-       Obj.setStatusEnqueued   ();
-       Obj.setCreatedNow       ();
-       Obj.setLastUpdatedNow   ();
+       Obj.setStatusEnqueued          ();
+       Obj.setThreadsCountDefaultValue();
+       Obj.setCreatedNow              ();
+       Obj.setLastUpdatedNow          ();
 
        return (tilda.data.Job_Data) Obj;
      }
@@ -529,7 +535,7 @@ This is the column definition for:<BR>
        ZonedDateTime        _startTime     =                       ParseUtil.parseZonedDateTime("startTime"    , false, Values.get("startTime"    ), Errors );
        ZonedDateTime        _endTime       =                       ParseUtil.parseZonedDateTime("endTime"      , false, Values.get("endTime"      ), Errors );
        Integer        _totalRecords  =                       ParseUtil.parseInteger("totalRecords" , false, Values.get("totalRecords" ), Errors );
-       String        _status        =                       ParseUtil.parseString("status"       , false, Values.get("status"       ), Errors );
+       String        _status        =                       ParseUtil.parseString("status"       , true , Values.get("status"       ), Errors );
        String        _error         =                       ParseUtil.parseString("error"        , false, Values.get("error"        ), Errors );
        Integer        _threadsCount  =                       ParseUtil.parseInteger("threadsCount" , true , Values.get("threadsCount" ), Errors );
        Boolean        _isInsert      =                       ParseUtil.parseBoolean("isInsert"     , true , Values.get("isInsert"     ), Errors );
@@ -539,7 +545,7 @@ This is the column definition for:<BR>
        if (IncomingErrors != Errors.size())
         return null;
 
-      tilda.data.Job_Data Obj = tilda.data.Job_Factory.Create(_threadsCount, _isInsert, _truncateTable, _connectionId);
+      tilda.data.Job_Data Obj = tilda.data.Job_Factory.Create(_isInsert, _truncateTable, _connectionId);
 
       if (_refnum       != null) Obj.setRefnum       (_refnum       );
       if (_name         != null) Obj.setName         (_name         );
@@ -548,6 +554,7 @@ This is the column definition for:<BR>
       if (_totalRecords != null) Obj.setTotalRecords (_totalRecords );
       if (_status       != null) Obj.setStatus       (_status       );
       if (_error        != null) Obj.setError        (_error        );
+      if (_threadsCount != null) Obj.setThreadsCount (_threadsCount );
 
       return Obj;
      }

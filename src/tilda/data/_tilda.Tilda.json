@@ -181,13 +181,13 @@
       
     },
     { "name":"Job",
-       "description": "Kettle Jobs",
+       "description": "Jobs",
        "columns": [
-        {"name": "name"          , "type": "STRING" , "size": 50                               , "description": "Job Name"        },
-        { "name":"startTime"     , "type":"DATETIME", "nullable": true                          , "description":"StartTime"        },
-        { "name":"endTime"       , "type":"DATETIME", "nullable": true                          , "description":"EndTime"          },
-        { "name":"totalRecords"  , "type":"INTEGER" , "nullable": true                          , "description":"TotalRecords"     },
-        { "name":"status"        , "type":"STRING"  , "nullable": true,  "size":   200          , "description":"Status"
+        {"name": "name"          , "type": "STRING" , "size": 50                                , "description": "Job Name"        },
+        { "name":"startTime"     , "type":"DATETIME", "nullable": true                          , "description": "StartTime"        },
+        { "name":"endTime"       , "type":"DATETIME", "nullable": true                          , "description": "EndTime"          },
+        { "name":"totalRecords"  , "type":"INTEGER" , "nullable": true                          , "description": "TotalRecords"     },
+        { "name":"status"        , "type":"STRING"  , "nullable": false,  "size":   2           , "description": "Status"
                                  , "values": [
                                       {"name":"Enqueued", "value":"EQ", "description":"Jobs Status Enque"  , "label":"Enqueued", "default":"CREATE" }
                                      ,{"name":"Started" , "value":"ST", "description":"Jobs Status Started", "label":"Started" } 
@@ -197,7 +197,11 @@
                                     ]
         },
         { "name":"error"         , "type":"STRING"  , "nullable": true,  "size":   1000         , "description":"Error"            },
-        { "name": "threadsCount" , "type": "INTEGER", "nullable": false                         , "description": "Thread count"    },
+        { "name": "threadsCount" , "type": "INTEGER", "nullable": false                         , "description": "Thread count"
+                                   , "values": [
+                                      {"name":"DefaultValue", "value":"1", "description":"Default value threads count"  , "label":"Default value", "default":"CREATE" }
+                                    ]
+        },
         { "name": "isInsert"     , "type": "BOOLEAN", "nullable": false                         , "description": "Insert or upsert?"   },
         { "name": "truncateTable", "type": "BOOLEAN", "nullable": false                         , "description": "Truncate table"      },
         {"name": "connectionId"  , "sameas": "tilda.data.tilda.connection.id", "nullable": false,  "description": "Connection Details" }

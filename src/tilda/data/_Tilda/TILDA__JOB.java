@@ -33,7 +33,7 @@ The generated Java 8/PostgreSQL Tilda data class <B>Data_JOB</B> is mapped to th
 <LI>The Table has normal <B>read/write</B> capabilities.</LI>
 <LI>The Table is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
 </UL>
-<B>Description</B>: Kettle Jobs<BR>
+<B>Description</B>: Jobs<BR>
 <BR>
 
 It contains the following columns:<BR>
@@ -121,8 +121,8 @@ It contains the following columns:<BR>
     <TD>8&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOB-status_DIV' class='columns'>status</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;&nbsp;</TD>
-<TD>varchar(200)&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD>character(2)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
@@ -159,6 +159,11 @@ It contains the following columns:<BR>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Thread count</TD>
 </TR>
+  <TR bgcolor="#FFFFFF"><TD></TD><TD></TD><TD colspan="10" align="center">
+<TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFF2CC"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>DefaultValue</B>&nbsp;&nbsp;</TD><TD>1&nbsp;&nbsp;</TD><TD>Default value&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Default value threads count</TD></TR>
+</TABLE>
+</TD></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>11&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOB-isInsert_DIV' class='columns'>isInsert</B>&nbsp;&nbsp;</TD>
@@ -524,7 +529,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Oct 31 2017, 09:30:12IST
+ @generated Nov 1 2017, 21:34:41IST
 */
 public abstract class TILDA__JOB implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
@@ -1691,10 +1696,10 @@ This is the hasChanged for:<BR>
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.status of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.status of type varchar(200)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.status of type character(2)</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>200</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>2</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Status</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
@@ -1746,10 +1751,10 @@ These are the enumerated values for tilda.data.TILDA.JOB.status, which can be us
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.status of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.status of type varchar(200)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.status of type character(2)</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>200</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>2</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Status</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
@@ -1845,45 +1850,13 @@ This is the value is-a for tilda.data.TILDA.JOB.status:<BR>
 //   Field tilda.data.TILDA.JOB.status -> TILDA.JOB."status"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.status of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.status of type varchar(200)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>200</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Status</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
-
-<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Enqueued</B>&nbsp;&nbsp;</TD><TD>EQ&nbsp;&nbsp;</TD><TD>Enqueued&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Enque</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Started</B>&nbsp;&nbsp;</TD><TD>ST&nbsp;&nbsp;</TD><TD>Started&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Started</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Running</B>&nbsp;&nbsp;</TD><TD>RN&nbsp;&nbsp;</TD><TD>Running&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Running</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Failed</B>&nbsp;&nbsp;</TD><TD>FA&nbsp;&nbsp;</TD><TD>Failed&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Failed</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>Done</B>&nbsp;&nbsp;</TD><TD>DO&nbsp;&nbsp;</TD><TD>Done&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Done</TD></TR>
-</TABLE>
-</TD></TR>
-
-</TABLE>
-*/
-   public final boolean isNullStatus()
-     { return (TILDA__JOB_Factory.COLS.STATUS._Mask1 & __Nulls1) != 0L; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOB.status -> TILDA.JOB."status"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.status of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.status of type varchar(200)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.status of type character(2)</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>200</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>2</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Status</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
@@ -1905,57 +1878,15 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        {
-          setNullStatus();
-        }
-       else if (v.length() > 200)
-        throw new Exception("Cannot set tilda.data.TILDA.JOB.status: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 200.");
+        throw new Exception("Cannot set tilda.data.TILDA.JOB.status to null: it's not nullable.");
+       else if (v.length() > 2)
+        throw new Exception("Cannot set tilda.data.TILDA.JOB.status: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 2.");
        else if (v.equals(_status) == false)
         {
           __Changes1 |= TILDA__JOB_Factory.COLS.STATUS._Mask1;
           __Nulls1   &= ~TILDA__JOB_Factory.COLS.STATUS._Mask1;
        _status = v;
         }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOB.status -> TILDA.JOB."status"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.status of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.status of type varchar(200)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>200</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Status</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
-
-<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Enqueued</B>&nbsp;&nbsp;</TD><TD>EQ&nbsp;&nbsp;</TD><TD>Enqueued&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Enque</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Started</B>&nbsp;&nbsp;</TD><TD>ST&nbsp;&nbsp;</TD><TD>Started&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Started</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Running</B>&nbsp;&nbsp;</TD><TD>RN&nbsp;&nbsp;</TD><TD>Running&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Running</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Failed</B>&nbsp;&nbsp;</TD><TD>FA&nbsp;&nbsp;</TD><TD>Failed&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Failed</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>Done</B>&nbsp;&nbsp;</TD><TD>DO&nbsp;&nbsp;</TD><TD>Done&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Done</TD></TR>
-</TABLE>
-</TD></TR>
-
-</TABLE>
-*/
-   public void setNullStatus()
-     {
-       long T0 = System.nanoTime();
-       if ((TILDA__JOB_Factory.COLS.STATUS._Mask1 & __Nulls1) != 0L)
-        return;
-       __Changes1 |= TILDA__JOB_Factory.COLS.STATUS._Mask1;
-       __Nulls1   |= TILDA__JOB_Factory.COLS.STATUS._Mask1;
-       _status=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -2037,10 +1968,10 @@ This is the value setter-as for tilda.data.TILDA.JOB.status:<BR>
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.status of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.status of type varchar(200)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.status of type character(2)</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>200</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>2</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Status</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
@@ -2236,9 +2167,27 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>DefaultValue</B>&nbsp;&nbsp;</TD><TD>1&nbsp;&nbsp;</TD><TD>Default value&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Default value threads count</TD></TR>
+</TABLE>
+</TD></TR>
+
 </TABLE>
 */
    int _threadsCount= SystemValues.EVIL_VALUE;
+/**
+These are the enumerated values for tilda.data.TILDA.JOB.threadsCount, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>DefaultValue</B>&nbsp;&nbsp;</TD><TD>1&nbsp;&nbsp;</TD><TD>Default value&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Default value threads count</TD></TR>
+</TABLE>
+*/
+   public static final String[][] _threadsCount_Values = {
+                                               { "1", "Default value", "Default value threads count", "" }
+                                  };
+   public static final int _threadsCountDefaultValue = 1;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2255,10 +2204,31 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>DefaultValue</B>&nbsp;&nbsp;</TD><TD>1&nbsp;&nbsp;</TD><TD>Default value&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Default value threads count</TD></TR>
+</TABLE>
+</TD></TR>
+
 </TABLE>
 */
    public final int getThreadsCount()
       { return _threadsCount; }
+
+/**
+This is the value is-a for tilda.data.TILDA.JOB.threadsCount:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>DefaultValue</TD></TR>
+  <TR><TD align="right"><B>Value</B></TD><TD>1</TD></TR>
+  <TR><TD align="right"><B>Default</B></TD><TD>CREATE</TD></TR>
+  <TR><TD align="right"><B>Label</B></TD><TD>Default value</TD></TR>
+  <TR><TD align="right"><B>Groupings</B></TD><TD></TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Default value threads count</TD></TR>
+</TABLE>
+*/
+   public final boolean isThreadsCountDefaultValue()
+      { return _threadsCount == _threadsCountDefaultValue; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2275,6 +2245,13 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>DefaultValue</B>&nbsp;&nbsp;</TD><TD>1&nbsp;&nbsp;</TD><TD>Default value&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Default value threads count</TD></TR>
+</TABLE>
+</TD></TR>
+
 </TABLE>
 */
    public void setThreadsCount(int v) throws Exception
@@ -2288,6 +2265,20 @@ This is the setter for:<BR>
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
+
+/**
+This is the value setter-as for tilda.data.TILDA.JOB.threadsCount:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>DefaultValue</TD></TR>
+  <TR><TD align="right"><B>Value</B></TD><TD>1</TD></TR>
+  <TR><TD align="right"><B>Default</B></TD><TD>CREATE</TD></TR>
+  <TR><TD align="right"><B>Label</B></TD><TD>Default value</TD></TR>
+  <TR><TD align="right"><B>Groupings</B></TD><TD></TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Default value threads count</TD></TR>
+</TABLE>
+*/
+   public void setThreadsCountDefaultValue() throws Exception
+      { setThreadsCount(_threadsCountDefaultValue); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2304,6 +2295,13 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>DefaultValue</B>&nbsp;&nbsp;</TD><TD>1&nbsp;&nbsp;</TD><TD>Default value&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Default value threads count</TD></TR>
+</TABLE>
+</TD></TR>
+
 </TABLE>
 */
    public boolean hasChangedThreadsCount()
@@ -3252,7 +3250,7 @@ This is the hasChanged for:<BR>
        if ((TILDA__JOB_Factory.COLS.ENDTIMETZ._Mask1     & __Nulls1) != 0L) Dst.setNullEndTimeTZ    (); else        Dst.setEndTimeTZ    (_endTimeTZ    );
        if ((TILDA__JOB_Factory.COLS.ENDTIME._Mask1       & __Nulls1) != 0L) Dst.setNullEndTime      (); else        Dst.setEndTime      (_endTime      );
        if ((TILDA__JOB_Factory.COLS.TOTALRECORDS._Mask1  & __Nulls1) != 0L) Dst.setNullTotalRecords (); else        Dst.setTotalRecords (_totalRecords );
-       if ((TILDA__JOB_Factory.COLS.STATUS._Mask1        & __Nulls1) != 0L) Dst.setNullStatus       (); else        Dst.setStatus       (_status       );
+       Dst.setStatus       (_status       );
        if ((TILDA__JOB_Factory.COLS.ERROR._Mask1         & __Nulls1) != 0L) Dst.setNullError        (); else        Dst.setError        (_error        );
        Dst.setThreadsCount (_threadsCount );
        Dst.setIsInsert     (_isInsert     );
@@ -3494,7 +3492,7 @@ This is the hasChanged for:<BR>
                PS.setLong     (++i, _refnum       );
                break;
              case 1:
-               if (isNullStatus() == true) PS.setNull(++i, java.sql.Types.CHAR   );  else PS.setString   (++i, _status       );
+               PS.setString   (++i, _status       );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -3621,7 +3619,7 @@ This is the hasChanged for:<BR>
                PS.setLong     (++i, _refnum       );
                break;
              case 1:
-               if (isNullStatus() == true) PS.setNull(++i, java.sql.Types.CHAR   );  else PS.setString   (++i, _status       );
+               PS.setString   (++i, _status       );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -3659,7 +3657,7 @@ This is the hasChanged for:<BR>
                               _endTimeTZ     = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.ENDTIMETZ._Mask1    ; else _endTimeTZ     = _endTimeTZ    .trim();
                               _endTime       = ProcessZDT(_endTimeTZ      , "tilda.data.TILDA.JOB.endTime"      , RS, ++i, TILDA__JOB_Factory.COLS.ENDTIME      , TILDA__JOB_Factory.COLS.ENDTIMETZ      );
                               _totalRecords  =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.TOTALRECORDS._Mask1 ;
-      __Saved_status        = _status        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.STATUS._Mask1       ;
+      __Saved_status        = _status        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.STATUS._Mask1       ; else _status        = _status       .trim();
                               _error         = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.ERROR._Mask1        ;
                               _threadsCount  =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.THREADSCOUNT._Mask1 ;
                               _isInsert      =                              RS.getBoolean  (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.ISINSERT._Mask1     ;
@@ -3721,7 +3719,7 @@ This is the hasChanged for:<BR>
                + "; startTime"       + ((TILDA__JOB_Factory.COLS.STARTTIME._Mask1     & __Nulls1) != 0L ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getStartTime    ()))
                + "; endTime"         + ((TILDA__JOB_Factory.COLS.ENDTIME._Mask1       & __Nulls1) != 0L ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getEndTime      ()))
                + "; totalRecords"    + ((TILDA__JOB_Factory.COLS.TOTALRECORDS._Mask1  & __Nulls1) != 0L ? ": NULL" : ": " +                                   getTotalRecords () )
-               + "; status"          + ((TILDA__JOB_Factory.COLS.STATUS._Mask1        & __Nulls1) != 0L ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getStatus       ()))
+               + "; status: "                                                                                            + TextUtil.PrintVariableStr        (getStatus       ())
                + "; error"           + ((TILDA__JOB_Factory.COLS.ERROR._Mask1         & __Nulls1) != 0L ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getError        ()))
                + "; threadsCount: "                                                                                      +                                   getThreadsCount () 
                + "; isInsert: "                                                                                          +                                   getIsInsert     () 

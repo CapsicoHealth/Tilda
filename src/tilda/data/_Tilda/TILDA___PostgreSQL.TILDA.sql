@@ -271,7 +271,7 @@ CREATE INDEX CONNECTION_AllById ON TILDA.CONNECTION ("id" ASC);
 
 
 
-create table if not exists TILDA.JOB -- Kettle Jobs
+create table if not exists TILDA.JOB -- Jobs
  (  "refnum"         bigint         not null   -- The primary key for this record
   , "name"           varchar(50)               -- Job Name
   , "startTimeTZ"    character(5)              -- Generated helper column to hold the time zone ID for 'startTime'.
@@ -279,7 +279,7 @@ create table if not exists TILDA.JOB -- Kettle Jobs
   , "endTimeTZ"      character(5)              -- Generated helper column to hold the time zone ID for 'endTime'.
   , "endTime"        timestamptz               -- EndTime
   , "totalRecords"   integer                   -- TotalRecords
-  , "status"         varchar(200)              -- Status
+  , "status"         character(2)   not null   -- Status
   , "error"          varchar(1000)             -- Error
   , "threadsCount"   integer        not null   -- Thread count
   , "isInsert"       boolean        not null   -- Insert or upsert?
@@ -292,7 +292,7 @@ create table if not exists TILDA.JOB -- Kettle Jobs
   , FOREIGN KEY ("startTimeTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
   , FOREIGN KEY ("endTimeTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
  );
-COMMENT ON TABLE TILDA.JOB IS E'Kettle Jobs';
+COMMENT ON TABLE TILDA.JOB IS E'Jobs';
 COMMENT ON COLUMN TILDA.JOB."refnum" IS E'The primary key for this record';
 COMMENT ON COLUMN TILDA.JOB."name" IS E'Job Name';
 COMMENT ON COLUMN TILDA.JOB."startTimeTZ" IS E'Generated helper column to hold the time zone ID for ''startTime''.';

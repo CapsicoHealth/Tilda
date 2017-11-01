@@ -51,6 +51,8 @@ public class TILDA__JOB_Json
          if (   _endTime       == null)
           throw new Exception("Incoming value for 'tilda.data.TILDA.JOB.endTime' was not in the expected format. Dates should follow the ISO format.\n"+toString());
        }
+      if (TextUtil.isNullOrEmpty(_status       ) == true)
+       throw new Exception("Incoming value for 'tilda.data.TILDA.JOB.status' was null or empty. It's not nullable in the model.\n"+toString());
       if (_threadsCount  == null)
        throw new Exception("Incoming value for 'tilda.data.TILDA.JOB.threadsCount' was null or empty. It's not nullable in the model.\n"+toString());
       if (_isInsert      == null)
@@ -60,7 +62,7 @@ public class TILDA__JOB_Json
       if (TextUtil.isNullOrEmpty(_connectionId ) == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.JOB.connectionId' was null or empty. It's not nullable in the model.\n"+toString());
 
-      tilda.data.Job_Data Obj = tilda.data.Job_Factory.Create(_threadsCount, _isInsert, _truncateTable, _connectionId);
+      tilda.data.Job_Data Obj = tilda.data.Job_Factory.Create(_isInsert, _truncateTable, _connectionId);
       Update(Obj);
       if (Obj.Write(C) == false)
        {
@@ -104,7 +106,7 @@ public class TILDA__JOB_Json
          + "; startTime"    + (_startTime     == null ? ": NULL" : ": "+DateTimeUtil.printDateTimeForSQL(_startTime))
          + "; endTime"      + (_endTime       == null ? ": NULL" : ": "+DateTimeUtil.printDateTimeForSQL(_endTime))
          + "; totalRecords" + (_totalRecords  == null ? ": NULL" : ": " + _totalRecords )
-         + "; status"       + (_status        == null ? ": NULL" : "(" + (_status        == null ? 0 : _status       .length())+"): "+(_status        == null || _status       .length() < 100 ? _status        : _status       .substring(0, 100)+"..."))
+         + "; status"       + (_status        == null ? ": NULL" : "(" + (_status        == null ? 0 : _status       .length())+"): "+_status)
          + "; error"        + (_error         == null ? ": NULL" : "(" + (_error         == null ? 0 : _error        .length())+"): "+(_error         == null || _error        .length() < 100 ? _error         : _error        .substring(0, 100)+"..."))
          + "; threadsCount" + (_threadsCount  == null ? ": NULL" : ": " + _threadsCount )
          + "; isInsert"     + (_isInsert      == null ? ": NULL" : ": " + _isInsert     )
