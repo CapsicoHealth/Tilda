@@ -31,6 +31,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
+import tilda.db.metadata.PKMeta;
 import tilda.db.processors.ScalarRP;
 import tilda.db.processors.StringListRP;
 import tilda.enums.AggregateType;
@@ -60,7 +61,6 @@ public class PostgreSQL implements DBType
       {
         return "PostgreSQL";
       }
-
 
     @Override
     public boolean isErrNoData(String SQLState, int ErrorCode)
@@ -811,6 +811,41 @@ public class PostgreSQL implements DBType
         return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
       }
 
+    @Override
+    public boolean alterTableReplaceTablePK(Connection Con, Object Obj, PKMeta oldPK)
+    throws Exception
+      {
+        if (oldPK != null)
+          {
+            String Q = "ALTER TABLE " + Obj.getShortName() + " DROP CONSTRAINT " + oldPK._Name + ";";
+            if (Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q) == false)
+             return false;
+          }
+        if (Obj._PrimaryKey != null)
+         {
+           String Q = "ALTER TABLE " + Obj.getShortName() + " ADD PRIMARY KEY ("+PrintColumnList(Obj._PrimaryKey._ColumnObjs)+");";
+           return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
+         }
+        return true;
+      }
+    
+    private static String PrintColumnList(List<Column> Columns)
+      {
+        StringBuilder Str = new StringBuilder();
+        boolean First = true;
+        for (Column C : Columns)
+          {
+            if (C == null)
+              continue;
+            if (First == true)
+              First = false;
+            else
+              Str.append(", ");
+            Str.append("\"" + C.getName() + "\"");
+          }
+        return Str.toString();
+      }
+    
 
     @Override
     public void within(Connection C, StringBuilder Str, Type_DatetimePrimitive Col, Type_DatetimePrimitive ColStart, long DurationCount, IntervalEnum DurationType)

@@ -32,6 +32,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
+import tilda.db.metadata.FKMeta;
+import tilda.db.metadata.PKMeta;
 import tilda.db.processors.RecordProcessor;
 import tilda.db.stores.DBType;
 import tilda.enums.AggregateType;
@@ -580,6 +582,11 @@ public final class Connection
        LOG.catching(E);
        throw E;
      }
+
+  public boolean alterTableReplaceTablePK(Object Obj, PKMeta OldPK) throws Exception
+    {
+      return _DB.alterTableReplaceTablePK(this, Obj, OldPK);
+    }
   }
 
 

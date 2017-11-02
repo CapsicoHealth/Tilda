@@ -28,6 +28,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
+import tilda.db.metadata.FKMeta;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
@@ -339,6 +340,14 @@ public class IBMDB2 implements DBType
 
     @Override
     public boolean addAclRoles(Connection Con, List<Schema> TildaList)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+
+    @Override
+    public boolean alterTableReplaceTablePK(Connection connection, Object obj, FKMeta oldPK)
     throws Exception
       {
         throw new UnsupportedOperationException();
