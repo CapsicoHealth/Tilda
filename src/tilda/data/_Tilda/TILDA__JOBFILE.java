@@ -76,8 +76,8 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>4&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOBFILE-fileRecords_DIV' class='columns'>fileRecords</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;&nbsp;</TD>
-<TD>integer&nbsp;&nbsp;</TD>
+<TD>long&nbsp;&nbsp;</TD>
+<TD>bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -236,7 +236,7 @@ It contains the following columns:<BR>
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
 <td><a href='TILDA___Docs.TILDA.html#JOBFILE_DIV'>JobFile</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOBFILE-fileRecords_DIV'>fileRecords</a> -- INTEGER</td>
+<td><a href='TILDA___Docs.TILDA.html#JOBFILE-fileRecords_DIV'>fileRecords</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
@@ -375,7 +375,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Nov 1 2017, 21:34:41IST
+ @generated Nov 2 2017, 14:17:02IST
 */
 public abstract class TILDA__JOBFILE implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
@@ -700,8 +700,8 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBFILE.fileRecords of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.fileRecords of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBFILE.fileRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.fileRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Number of records loaded into DB</TD></TR>
@@ -710,7 +710,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   int _fileRecords= SystemValues.EVIL_VALUE;
+   long _fileRecords= SystemValues.EVIL_VALUE;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -719,8 +719,8 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBFILE.fileRecords of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.fileRecords of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBFILE.fileRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.fileRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Number of records loaded into DB</TD></TR>
@@ -729,7 +729,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final int getFileRecords()
+   public final long getFileRecords()
       { return _fileRecords; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -739,8 +739,8 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBFILE.fileRecords of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.fileRecords of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBFILE.fileRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.fileRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Number of records loaded into DB</TD></TR>
@@ -759,8 +759,8 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBFILE.fileRecords of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.fileRecords of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBFILE.fileRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.fileRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Number of records loaded into DB</TD></TR>
@@ -769,7 +769,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setFileRecords(int v) throws Exception
+   public void setFileRecords(long v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v != _fileRecords)
@@ -788,8 +788,8 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBFILE.fileRecords of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.fileRecords of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBFILE.fileRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.fileRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Number of records loaded into DB</TD></TR>
@@ -805,7 +805,7 @@ This is the null setter for:<BR>
         return;
        __Changes1 |= TILDA__JOBFILE_Factory.COLS.FILERECORDS._Mask1;
        __Nulls1   |= TILDA__JOBFILE_Factory.COLS.FILERECORDS._Mask1;
-       _fileRecords=0;
+       _fileRecords=0L;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -816,8 +816,8 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBFILE.fileRecords of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.fileRecords of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBFILE.fileRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.fileRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Number of records loaded into DB</TD></TR>
@@ -2394,7 +2394,7 @@ This is the hasChanged for:<BR>
                 } 
                if ((TILDA__JOBFILE_Factory.COLS.FILERECORDS._Mask1            & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__JOBFILE_Factory.COLS.FILERECORDS._Mask1            & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _fileRecords);
+                  if ((TILDA__JOBFILE_Factory.COLS.FILERECORDS._Mask1            & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _fileRecords);
                 } 
                if ((TILDA__JOBFILE_Factory.COLS.FILEPROCESSSTARTTIMETZ._Mask1 & __Changes1) != 0L) 
                 { 
@@ -2587,7 +2587,7 @@ This is the hasChanged for:<BR>
       __Saved_refnum                 = _refnum                 =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOBFILE_Factory.COLS.REFNUM._Mask1                ;
       __Saved_jobRefnum              = _jobRefnum              =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOBFILE_Factory.COLS.JOBREFNUM._Mask1             ;
                                        _fileName               = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOBFILE_Factory.COLS.FILENAME._Mask1              ;
-                                       _fileRecords            =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOBFILE_Factory.COLS.FILERECORDS._Mask1           ;
+                                       _fileRecords            =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOBFILE_Factory.COLS.FILERECORDS._Mask1           ;
                                        _fileProcessStartTimeTZ = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOBFILE_Factory.COLS.FILEPROCESSSTARTTIMETZ._Mask1; else _fileProcessStartTimeTZ = _fileProcessStartTimeTZ.trim();
                                        _fileProcessStartTime   = ProcessZDT(_fileProcessStartTimeTZ  , "tilda.data.TILDA.JOBFILE.fileProcessStartTime"  , RS, ++i, TILDA__JOBFILE_Factory.COLS.FILEPROCESSSTARTTIME  , TILDA__JOBFILE_Factory.COLS.FILEPROCESSSTARTTIMETZ  );
                                        _fileProcessEndTimeTZ   = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOBFILE_Factory.COLS.FILEPROCESSENDTIMETZ._Mask1  ; else _fileProcessEndTimeTZ   = _fileProcessEndTimeTZ  .trim();

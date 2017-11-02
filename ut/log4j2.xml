@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info">
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout>
+                <pattern>%highlight{%d{MMdd.HHmmss.SSS}#%-3t %level{length=1} %15.15c{1}|  %m%ex{20}%n}</pattern>
+			</PatternLayout>
+        </Console>
+	</Appenders>
+	<Loggers>
+		<Root level="debug">
+			<AppenderRef ref="Console" />
+		</Root>
+	</Loggers>
+</Configuration>

@@ -43,6 +43,7 @@ import javax.swing.border.EtchedBorder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.data.JobFile_Data;
 import tilda.db.Connection;
 import tilda.db.ConnectionPool;
 import tilda.db.metadata.TableMeta;
@@ -74,7 +75,7 @@ public class Load
     JButton                       btnAllConnections = new JButton("Select All Connections");
 
     public static void processLoadJob(String connectionId, int threads, String configPath, String csvPath, 
-      boolean isInserts, boolean shouldTruncate, String statusConId, long jobRefnum)
+      boolean isInserts, boolean shouldTruncate, String statusConId, JobFile_Data jobFile)
       {
         LOG.debug("Starting the utility in silent mode.");
         Config conf = Config.fromFile(configPath);
@@ -82,7 +83,7 @@ public class Load
         List<String> selectedConnectionIds = new ArrayList<>();
         selectedConnectionIds.add(connectionId);
         
-        // Apply override values to Config
+        // Apply override values to DataObject(s)
         for(DataObject DO : conf._CmsData)
           {
             DO.setFilePath(csvPath);
@@ -106,7 +107,7 @@ public class Load
         
         LOG.debug("Running ImportProcessor");
         long timeTaken = System.nanoTime();
-        ImportProcessor.parallelProcess(selectedConnectionIds, null, threads, conf._CmsData, statusConId, jobRefnum);
+        ImportProcessor.parallelProcess(selectedConnectionIds, null, threads, conf._CmsData, statusConId, jobFile.getRefnum());
         timeTaken = System.nanoTime() - timeTaken;
         LOG.debug("Time taken for ImportProcessor.process() = " + DurationUtil.PrintDuration(timeTaken));
         

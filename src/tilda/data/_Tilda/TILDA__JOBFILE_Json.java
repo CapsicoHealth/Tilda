@@ -25,7 +25,7 @@ public class TILDA__JOBFILE_Json
    /*@formatter:off*/
    @SerializedName("jobRefnum"             ) public Long  _jobRefnum             ;
    @SerializedName("fileName"              ) public String  _fileName              ;
-   @SerializedName("fileRecords"           ) public Integer  _fileRecords           ;
+   @SerializedName("fileRecords"           ) public Long  _fileRecords           ;
    @SerializedName("fileProcessStartTime"  ) public String  Str_fileProcessStartTime  ;
    transient                                 public ZonedDateTime  _fileProcessStartTime  ;
    @SerializedName("fileProcessEndTime"    ) public String  Str_fileProcessEndTime    ;

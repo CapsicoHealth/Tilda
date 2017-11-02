@@ -93,8 +93,8 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBFILE.fileRecords of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.fileRecords of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBFILE.fileRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.fileRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Number of records loaded into DB</TD></TR>
@@ -103,7 +103,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull   FILERECORDS           = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "fileRecords"           , 3/*3*/, "Number of records loaded into DB");
+     public static Type_LongPrimitiveNull      FILERECORDS           = new Type_LongPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "fileRecords"           , 3/*3*/, "Number of records loaded into DB");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JOBFILE.fileProcessStartTimeTZ -> TILDA.JOBFILE."fileProcessStartTimeTZ"
@@ -394,7 +394,7 @@ This is the column definition for:<BR>
        Long        _refnum                 =                       ParseUtil.parseLong("refnum"                , true , Values.get("refnum"                ), Errors );
        Long        _jobRefnum              =                       ParseUtil.parseLong("jobRefnum"             , true , Values.get("jobRefnum"             ), Errors );
        String        _fileName               =                       ParseUtil.parseString("fileName"              , true , Values.get("fileName"              ), Errors );
-       Integer        _fileRecords            =                       ParseUtil.parseInteger("fileRecords"           , false, Values.get("fileRecords"           ), Errors );
+       Long        _fileRecords            =                       ParseUtil.parseLong("fileRecords"           , false, Values.get("fileRecords"           ), Errors );
        ZonedDateTime        _fileProcessStartTime   =                       ParseUtil.parseZonedDateTime("fileProcessStartTime"  , false, Values.get("fileProcessStartTime"  ), Errors );
        ZonedDateTime        _fileProcessEndTime     =                       ParseUtil.parseZonedDateTime("fileProcessEndTime"    , false, Values.get("fileProcessEndTime"    ), Errors );
 

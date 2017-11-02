@@ -30,7 +30,7 @@ import org.apache.logging.log4j.Logger;
 import tilda.loader.csv.ImporterThread;
 import tilda.loader.csv.stores.CSVImporter.Results;
 import tilda.loader.parser.DataObject;
-
+import tilda.data.JobFile_Data;
 import tilda.db.Connection;
 import tilda.utils.DurationUtil;
 
@@ -41,7 +41,7 @@ public class ImportProcessor
     /*
      * Launch and Shutdown threads
      */
-    public static void parallelProcess(List<String> connectionIds, String rootFolder, int threadsCount, List<DataObject> CMSDataList, String statusConId, long jobRefnum)
+    public static void parallelProcess(List<String> connectionIds, String rootFolder, int threadsCount, List<DataObject> CMSDataList, String statusConId, long jobFileRefnum)
       {
           ExecutorService pool = Executors.newFixedThreadPool(threadsCount);
           List<Future<List<Results>>> futures = new ArrayList<>();
@@ -52,7 +52,7 @@ public class ImportProcessor
               validate(Data);
               for(String connectionId : connectionIds)
                 {
-                  Callable<List<Results>> thread = new ImporterThread(connectionId, rootFolder, Data, statusConId, jobRefnum);
+                  Callable<List<Results>> thread = new ImporterThread(connectionId, rootFolder, Data, statusConId, jobFileRefnum);
                   Future<List<Results>> future =  pool.submit(thread);
                   futures.add(future);
                 }

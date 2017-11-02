@@ -186,7 +186,7 @@
         {"name": "name"          , "type": "STRING" , "size": 50                                , "description": "Job Name"        },
         { "name":"startTime"     , "type":"DATETIME", "nullable": true                          , "description": "StartTime"        },
         { "name":"endTime"       , "type":"DATETIME", "nullable": true                          , "description": "EndTime"          },
-        { "name":"totalRecords"  , "type":"INTEGER" , "nullable": true                          , "description": "TotalRecords"     },
+        { "name":"totalRecords"  , "type":"LONG"    , "nullable": true                          , "description": "TotalRecords"     },
         { "name":"status"        , "type":"STRING"  , "nullable": false,  "size":   2           , "description": "Status"
                                  , "values": [
                                       {"name":"Enqueued", "value":"EQ", "description":"Jobs Status Enque"  , "label":"Enqueued", "default":"CREATE" }
@@ -229,7 +229,7 @@
       "columns":[
         { "name":"jobRefnum"                            , "sameas": "Job.refnum"    , "nullable": false,                 "description":"Job Foreign key" },               
         { "name":"fileName"                             , "type":"STRING"           , "nullable": false,  "size":   200,  "description":"Zip FileName"   },
-        { "name":"fileRecords"                          , "type":"INTEGER"          , "nullable": true,                  "description":"Number of records loaded into DB" },
+        { "name":"fileRecords"                          , "type":"LONG"          , "nullable": true,                  "description":"Number of records loaded into DB" },
         { "name":"fileProcessStartTime"                 , "type":"DATETIME"         , "nullable": true,                  "description":"FileProcessStartTime" },
         { "name":"fileProcessEndTime"                   , "type":"DATETIME"         , "nullable": true,                  "description":"FileProcessEndTime"   }
        ]
@@ -243,7 +243,7 @@
       "columns":[
         { "name":"jobFileRefnum"                        , "sameas": "JobFile.refnum" , "nullable": false,                  "description":"JobFile Foreign key" },               
         { "name":"message"                              , "type":"STRING"            , "nullable": false,  "size":   1000, "description":"Message" },
-        { "name":"isError"                              , "type":"BOOLEAN"           , "nullable": false                 , "description":"Boolean flag to identify message type -- error or success" }
+        { "name":"isError"                              , "type":"BOOLEAN"           ,                                     "description":"Boolean flag to identify message type -- error or success" }
        ]
        ,"primary": { "autogen": true }
        ,"indices":[ 

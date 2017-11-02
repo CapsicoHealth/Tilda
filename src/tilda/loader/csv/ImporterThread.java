@@ -7,6 +7,10 @@ import java.util.concurrent.Callable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.data.JobFile_Data;
+import tilda.data.JobFile_Factory;
+import tilda.data.Job_Message_Data;
+import tilda.data.Job_Message_Factory;
 import tilda.db.Connection;
 import tilda.db.ConnectionPool;
 import tilda.loader.csv.stores.CSVImporter;
@@ -19,15 +23,15 @@ public class ImporterThread implements Callable<List<Results>>
 
     String connectionId, statusConId, rootFolder;
     DataObject dataObject;
-    long jobRefnum = -666;
+    long jobFileRefnum = -666;
     
-    public ImporterThread(String connectionId, String rootFolder, DataObject dataObject, String statusConId, long jobRefnum)
+    public ImporterThread(String connectionId, String rootFolder, DataObject dataObject, String statusConId, long jobFileRefnum)
       {
         this.connectionId = connectionId;
         this.rootFolder = rootFolder;
         this.dataObject = dataObject;
         this.statusConId = statusConId;
-        this.jobRefnum = jobRefnum;
+        this.jobFileRefnum = jobFileRefnum;
       }
     
     @Override
@@ -35,19 +39,52 @@ public class ImporterThread implements Callable<List<Results>>
       {
         Connection C            = null;
         Connection statusCon    = null;
+        JobFile_Data jobFile    = null;
         List<Results> result    = null;
         try
           {
-            if(jobRefnum > 0)
-              statusCon = ConnectionPool.get(statusConId);
+            // If we are working on a Job, we need a connection to update status
+            if(jobFileRefnum > 0)
+              statusCon = ConnectionPool.get(statusConId);            
+            
+            if (statusCon != null)
+              {
+                jobFile = JobFile_Factory.LookupByPrimaryKey(jobFileRefnum);
+                jobFile.Read(statusCon);
+              }
             
             C = ConnectionPool.get(this.connectionId);
-            CSVImporter importer = CSVImporterFactory.newInstance(C, this.rootFolder, this.dataObject, statusCon, jobRefnum);            
+            CSVImporter importer = CSVImporterFactory.newInstance(C, this.rootFolder, this.dataObject, statusCon, jobFile);            
             result = importer.process();
           }
         catch(Throwable T) 
           {
-            LOG.error("Exception in one of ImporterThread execution.", T);
+            LOG.error("Error while importing CSV Data\n", T);            
+            if (C != null)
+              {
+                try
+                  {
+                    C.rollback();
+                  }
+                catch (Exception E)
+                  {
+                    LOG.error("Cannot rollback???\n", E);
+                  }
+              }
+            if (statusCon != null && jobFile != null)
+              {
+                try
+                  {
+                    Job_Message_Data jobMessage = Job_Message_Factory.Create(jobFile.getRefnum(), T.getMessage());
+                    jobMessage.setIsError(true);
+                    jobMessage.Write(statusCon);
+                    statusCon.commit();
+                  }
+                catch(Exception E)
+                  {
+                    LOG.error("Exception while copying Exception message to JobMessage", E);
+                  }
+              }
             result = null;
           }
         finally

@@ -33,10 +33,8 @@ public class TILDA__JOB_MESSAGE_Json
        throw new Exception("Incoming value for 'tilda.data.TILDA.JOB_MESSAGE.jobFileRefnum' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_message      ) == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.JOB_MESSAGE.message' was null or empty. It's not nullable in the model.\n"+toString());
-      if (_isError       == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.JOB_MESSAGE.isError' was null or empty. It's not nullable in the model.\n"+toString());
 
-      tilda.data.Job_Message_Data Obj = tilda.data.Job_Message_Factory.Create(_jobFileRefnum, _message, _isError);
+      tilda.data.Job_Message_Data Obj = tilda.data.Job_Message_Factory.Create(_jobFileRefnum, _message);
       Update(Obj);
       if (Obj.Write(C) == false)
        {

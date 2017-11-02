@@ -28,7 +28,7 @@ public class TILDA__JOB_Json
    transient                        public ZonedDateTime  _startTime    ;
    @SerializedName("endTime"      ) public String  Str_endTime      ;
    transient                        public ZonedDateTime  _endTime      ;
-   @SerializedName("totalRecords" ) public Integer  _totalRecords ;
+   @SerializedName("totalRecords" ) public Long  _totalRecords ;
    @SerializedName("status"       ) public String  _status       ;
    @SerializedName("error"        ) public String  _error        ;
    @SerializedName("threadsCount" ) public Integer  _threadsCount ;

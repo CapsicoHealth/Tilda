@@ -78,7 +78,7 @@ It contains the following columns:<BR>
 <TD align="right"><B id='JOB_MESSAGE-isError_DIV' class='columns'>isError</B>&nbsp;&nbsp;</TD>
 <TD>boolean&nbsp;&nbsp;</TD>
 <TD>boolean&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
@@ -251,7 +251,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Nov 1 2017, 21:34:41IST
+ @generated Nov 2 2017, 14:17:02IST
 */
 public abstract class TILDA__JOB_MESSAGE implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
@@ -579,7 +579,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB_MESSAGE.isError of type boolean</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB_MESSAGE.isError of type boolean</TD></TR>
 
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Boolean flag to identify message type -- error or success</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
@@ -598,7 +598,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB_MESSAGE.isError of type boolean</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB_MESSAGE.isError of type boolean</TD></TR>
 
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Boolean flag to identify message type -- error or success</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
@@ -613,12 +613,32 @@ This is the getter for:<BR>
 //   Field tilda.data.TILDA.JOB_MESSAGE.isError -> TILDA.JOB_MESSAGE."isError"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB_MESSAGE.isError of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB_MESSAGE.isError of type boolean</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Boolean flag to identify message type -- error or success</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isNullIsError()
+     { return (TILDA__JOB_MESSAGE_Factory.COLS.ISERROR._Mask1 & __Nulls1) != 0L; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOB_MESSAGE.isError -> TILDA.JOB_MESSAGE."isError"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB_MESSAGE.isError of type boolean</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB_MESSAGE.isError of type boolean</TD></TR>
 
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Boolean flag to identify message type -- error or success</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
@@ -642,12 +662,40 @@ This is the setter for:<BR>
 //   Field tilda.data.TILDA.JOB_MESSAGE.isError -> TILDA.JOB_MESSAGE."isError"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB_MESSAGE.isError of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB_MESSAGE.isError of type boolean</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Boolean flag to identify message type -- error or success</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setNullIsError()
+     {
+       long T0 = System.nanoTime();
+       if ((TILDA__JOB_MESSAGE_Factory.COLS.ISERROR._Mask1 & __Nulls1) != 0L)
+        return;
+       __Changes1 |= TILDA__JOB_MESSAGE_Factory.COLS.ISERROR._Mask1;
+       __Nulls1   |= TILDA__JOB_MESSAGE_Factory.COLS.ISERROR._Mask1;
+       _isError=false;
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOB_MESSAGE.isError -> TILDA.JOB_MESSAGE."isError"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB_MESSAGE.isError of type boolean</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB_MESSAGE.isError of type boolean</TD></TR>
 
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Boolean flag to identify message type -- error or success</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
@@ -1306,7 +1354,7 @@ This is the hasChanged for:<BR>
      {
        Dst.setJobFileRefnum(_jobFileRefnum);
        Dst.setMessage      (_message      );
-       Dst.setIsError      (_isError      );
+       if ((TILDA__JOB_MESSAGE_Factory.COLS.ISERROR._Mask1       & __Nulls1) != 0L) Dst.setNullIsError      (); else        Dst.setIsError      (_isError      );
        Dst.setLastUpdated  (_lastUpdated  );
        if ((TILDA__JOB_MESSAGE_Factory.COLS.DELETED._Mask1       & __Nulls1) != 0L) Dst.setNullDeleted      (); else        Dst.setDeleted      (_deleted      );
      }
@@ -1646,7 +1694,7 @@ This is the hasChanged for:<BR>
                    "refnum: "                                                                                                    +                                   getRefnum       () 
                + "; jobFileRefnum: "                                                                                             +                                   getJobFileRefnum() 
                + "; message: "                                                                                                   + TextUtil.PrintVariableStr        (getMessage      ())
-               + "; isError: "                                                                                                   +                                   getIsError      () 
+               + "; isError"         + ((TILDA__JOB_MESSAGE_Factory.COLS.ISERROR._Mask1       & __Nulls1) != 0L ? ": NULL" : ": " +                                   getIsError      () )
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

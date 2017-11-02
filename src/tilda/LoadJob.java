@@ -2,9 +2,7 @@ package tilda;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.sql.SQLException;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -15,9 +13,10 @@ import tilda.data.JobFile_Data;
 import tilda.data.JobFile_Factory;
 import tilda.data.Job_Data;
 import tilda.data.Job_Factory;
+import tilda.data.Job_Message_Data;
+import tilda.data.Job_Message_Factory;
 import tilda.db.Connection;
 import tilda.db.ConnectionPool;
-import tilda.db.ListResults;
 import tilda.loader.csv.UnZip;
 
 public class LoadJob
@@ -26,42 +25,47 @@ public class LoadJob
     
     public static void process(String statusConId, long jobRefnum)
       {
-        
-        // Get connectionId to pick jobs from instead of hardcoding 'MAIN'
-        Connection C = null;
-        String extractedPath = null;
+        Connection statusCon = null;
+        String extractedPath = null, processedPath = null;
+        File zipFile = null;
+        Job_Data job = null;
+        JobFile_Data jobFile = null;
         try
           {
-            C = ConnectionPool.get(statusConId);
-            Job_Data job = Job_Factory.LookupByPrimaryKey(jobRefnum);
-            if (job.Read(C) == false) 
+            statusCon = ConnectionPool.get(statusConId);
+            job = Job_Factory.LookupByPrimaryKey(jobRefnum);
+            if (job.Read(statusCon) == false) 
               {
                 throw new Exception("Unable to read JOB from database");
               }
             
-            JobFile_Data jobFile = JobFile_Factory.LookupByJob_Refnum(job.getRefnum());
-            if(jobFile.Read(C) == false)
+            jobFile = JobFile_Factory.LookupByJob_Refnum(job.getRefnum());
+            if(jobFile.Read(statusCon) == false)
               {
-                throw new Exception("Unable to read JOB File from database");
+                throw new Exception("Unable to read JobFile from database");
               }
 
-            String filePath = jobFile.getFileName();
-            File zipFile = new File(filePath);
+            jobFile.setFileProcessStartTimeNow();
+            if(jobFile.Write(statusCon) == false)
+              {
+                throw new Exception("Unable to write to startTime to JobFile");
+              }
+            
+            zipFile = new File(jobFile.getFileName());
             String zipFileName = FilenameUtils.getBaseName(zipFile.getName());
+            extractedPath = zipFile.getParent() + File.separator + zipFileName;
+            processedPath = zipFile.getParent() + File.separator + "processed";
             
             if ( (zipFile.exists() && zipFile.isFile()) == false )
               {
                 throw new Exception("Unable to find Zip file");
               }
             
-            
-            extractedPath = zipFile.getParent() + File.separator + zipFileName;
             String jsonFilePath = extractedPath + File.separator + zipFileName + ".json";
             String csvFilePath = extractedPath + File.separator + zipFileName + ".csv";
-            String processedPath = zipFile.getParent() + File.separator + "processed";
             
             UnZip unzipper = new UnZip();
-            unzipper.unZipIt(filePath, extractedPath);             
+            unzipper.unZipIt(jobFile.getFileName(), extractedPath);             
 
             File jsonFile = new File(jsonFilePath);
             if ( (jsonFile.exists() && jsonFile.isFile()) == false)
@@ -69,38 +73,79 @@ public class LoadJob
                 throw new Exception("Unable to read JSON File in zip");
               }
             
-            Load.processLoadJob(job.getConnectionId(), job.getThreadsCount(), jsonFilePath, csvFilePath, job.getIsInsert(), job.getTruncateTable(), statusConId, job.getRefnum());
-            FileUtils.moveFileToDirectory(zipFile, new File(processedPath), true);           
+            Load.processLoadJob(job.getConnectionId(), job.getThreadsCount(), jsonFilePath, csvFilePath, job.getIsInsert(), job.getTruncateTable(), statusConId, jobFile);
+            FileUtils.moveFileToDirectory(zipFile, new File(processedPath), true);
             
+            jobFile.setFileProcessEndTimeNow();
+            if (jobFile.Write(statusCon) == false)
+              {
+                throw new Exception("Unable to write to endTime to JobFile");
+              }
           }
         catch(Throwable T)
           {
             LOG.error("Exception while processing a Job", T);
+            if (statusCon != null && jobFile != null)
+              {
+                try
+                  {
+                    Job_Message_Data jobMessage = Job_Message_Factory.Create(jobFile.getRefnum(), T.getMessage());
+                    jobMessage.setIsError(true);
+                    jobMessage.Write(statusCon);
+                    statusCon.commit();
+                  }
+                catch(Exception E)
+                  {
+                    LOG.error("Exception while copying Exception message to JobMessage", E);
+                  }
+              }
           }
         finally
           {
-            if (extractedPath != null)
-                try
-                  {
-                    FileUtils.deleteDirectory(new File(extractedPath));
-                  }
-                catch (IOException e)
-                  {
-                    LOG.error("Failed to delete extracted folder: "+extractedPath, e);
-                  }
-            
-            if(C != null)
-              try 
-                {
-                  C.close();
-                } 
-              catch (Exception E) 
-                { 
-                  LOG.error("Failed to close DB Connection", E);
-                }
+            moveFileToProcessedFolder(zipFile, processedPath);
+            deleteExtractedFolder(extractedPath);
+            closeDBConnection(statusCon);
           }
         
-        
-        
       }
+
+    private static void moveFileToProcessedFolder(File zipFile, String processedPath)
+      {
+        try
+          {
+            if (zipFile != null && zipFile.exists() && zipFile.isFile())
+              FileUtils.moveFileToDirectory(zipFile, new File(processedPath), true);
+          }
+        catch (Exception e)
+          {
+            LOG.error("Failed to move zipFile "+zipFile.getName()+" to processed folder", e);
+          }
+      }
+
+    private static void deleteExtractedFolder(String extractedPath)
+      {
+        try
+          {
+            if (extractedPath != null)
+              FileUtils.deleteDirectory(new File(extractedPath));
+          }
+        catch (IOException e)
+          {
+            LOG.error("Failed to delete extracted folder: "+extractedPath, e);
+          }
+      }
+    
+    private static void closeDBConnection(Connection C)
+      {
+        try
+          {
+            if (C != null)
+              C.close();
+          }
+        catch (SQLException e)
+          {
+            LOG.error("Error in the closing db connection: ", e);
+          }
+      }
+    
   }

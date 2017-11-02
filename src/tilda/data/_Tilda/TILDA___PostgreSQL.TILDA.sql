@@ -278,7 +278,7 @@ create table if not exists TILDA.JOB -- Jobs
   , "startTime"      timestamptz               -- StartTime
   , "endTimeTZ"      character(5)              -- Generated helper column to hold the time zone ID for 'endTime'.
   , "endTime"        timestamptz               -- EndTime
-  , "totalRecords"   integer                   -- TotalRecords
+  , "totalRecords"   bigint                    -- TotalRecords
   , "status"         character(2)   not null   -- Status
   , "error"          varchar(1000)             -- Error
   , "threadsCount"   integer        not null   -- Thread count
@@ -321,7 +321,7 @@ create table if not exists TILDA.JOBFILE -- Job File Info
  (  "refnum"                  bigint        not null   -- The primary key for this record
   , "jobRefnum"               bigint        not null   -- Job Foreign key
   , "fileName"                varchar(200)  not null   -- Zip FileName
-  , "fileRecords"             integer                  -- Number of records loaded into DB
+  , "fileRecords"             bigint                   -- Number of records loaded into DB
   , "fileProcessStartTimeTZ"  character(5)             -- Generated helper column to hold the time zone ID for 'fileProcessStartTime'.
   , "fileProcessStartTime"    timestamptz              -- FileProcessStartTime
   , "fileProcessEndTimeTZ"    character(5)             -- Generated helper column to hold the time zone ID for 'fileProcessEndTime'.
@@ -355,7 +355,7 @@ create table if not exists TILDA.JOB_MESSAGE -- Job Messages
  (  "refnum"         bigint         not null   -- The primary key for this record
   , "jobFileRefnum"  bigint         not null   -- JobFile Foreign key
   , "message"        varchar(1000)  not null   -- Message
-  , "isError"        boolean        not null   -- Boolean flag to identify message type -- error or success
+  , "isError"        boolean                   -- Boolean flag to identify message type -- error or success
   , "created"        timestamptz    not null   -- The timestamp for when the record was created.
   , "lastUpdated"    timestamptz    not null   -- The timestamp for when the record was last updated.
   , "deleted"        timestamptz               -- The timestamp for when the record was deleted.

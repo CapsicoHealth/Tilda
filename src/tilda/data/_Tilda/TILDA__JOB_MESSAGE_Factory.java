@@ -96,14 +96,14 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB_MESSAGE.isError of type boolean</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB_MESSAGE.isError of type boolean</TD></TR>
 
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Boolean flag to identify message type -- error or success</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_BooleanPrimitive       ISERROR      = new Type_BooleanPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "isError"      , 3/*3*/, "Boolean flag to identify message type -- error or success");
+     public static Type_BooleanPrimitiveNull   ISERROR      = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "isError"      , 3/*3*/, "Boolean flag to identify message type -- error or success");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JOB_MESSAGE.created -> TILDA.JOB_MESSAGE."created"
@@ -287,9 +287,8 @@ This is the column definition for:<BR>
  current object to the destination. 
  @param jobFileRefnum JobFile Foreign key
  @param message       (max size 1000) Message
- @param isError       Boolean flag to identify message type -- error or success
 */
-   static public tilda.data.Job_Message_Data Create(long jobFileRefnum, String message, boolean isError) throws Exception
+   static public tilda.data.Job_Message_Data Create(long jobFileRefnum, String message) throws Exception
      {
        tilda.data._Tilda.TILDA__JOB_MESSAGE Obj = new tilda.data.Job_Message_Data();
        Obj.initForCreate();
@@ -301,7 +300,6 @@ This is the column definition for:<BR>
        // Explicit setters
        Obj.setJobFileRefnum(jobFileRefnum);
        Obj.setMessage      (message      );
-       Obj.setIsError      (isError      );
 
        // Default Create-time setters
        Obj.setCreatedNow       ();
@@ -318,14 +316,15 @@ This is the column definition for:<BR>
        Long        _refnum        =                       ParseUtil.parseLong("refnum"       , true , Values.get("refnum"       ), Errors );
        Long        _jobFileRefnum =                       ParseUtil.parseLong("jobFileRefnum", true , Values.get("jobFileRefnum"), Errors );
        String        _message       =                       ParseUtil.parseString("message"      , true , Values.get("message"      ), Errors );
-       Boolean        _isError       =                       ParseUtil.parseBoolean("isError"      , true , Values.get("isError"      ), Errors );
+       Boolean        _isError       =                       ParseUtil.parseBoolean("isError"      , false, Values.get("isError"      ), Errors );
 
        if (IncomingErrors != Errors.size())
         return null;
 
-      tilda.data.Job_Message_Data Obj = tilda.data.Job_Message_Factory.Create(_jobFileRefnum, _message, _isError);
+      tilda.data.Job_Message_Data Obj = tilda.data.Job_Message_Factory.Create(_jobFileRefnum, _message);
 
       if (_refnum       != null) Obj.setRefnum       (_refnum       );
+      if (_isError      != null) Obj.setIsError      (_isError      );
 
       return Obj;
      }

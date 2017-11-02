@@ -109,8 +109,8 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>7&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOB-totalRecords_DIV' class='columns'>totalRecords</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;&nbsp;</TD>
-<TD>integer&nbsp;&nbsp;</TD>
+<TD>long&nbsp;&nbsp;</TD>
+<TD>bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -368,7 +368,7 @@ It contains the following columns:<BR>
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
 <td><a href='TILDA___Docs.TILDA.html#JOB_DIV'>Job</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOB-totalRecords_DIV'>totalRecords</a> -- INTEGER</td>
+<td><a href='TILDA___Docs.TILDA.html#JOB-totalRecords_DIV'>totalRecords</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
@@ -529,7 +529,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Nov 1 2017, 21:34:41IST
+ @generated Nov 2 2017, 14:17:02IST
 */
 public abstract class TILDA__JOB implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
@@ -1553,8 +1553,8 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.totalRecords of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.totalRecords of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.totalRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.totalRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>TotalRecords</TD></TR>
@@ -1563,7 +1563,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   int _totalRecords= SystemValues.EVIL_VALUE;
+   long _totalRecords= SystemValues.EVIL_VALUE;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1572,8 +1572,8 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.totalRecords of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.totalRecords of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.totalRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.totalRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>TotalRecords</TD></TR>
@@ -1582,7 +1582,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final int getTotalRecords()
+   public final long getTotalRecords()
       { return _totalRecords; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1592,8 +1592,8 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.totalRecords of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.totalRecords of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.totalRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.totalRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>TotalRecords</TD></TR>
@@ -1612,8 +1612,8 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.totalRecords of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.totalRecords of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.totalRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.totalRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>TotalRecords</TD></TR>
@@ -1622,7 +1622,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setTotalRecords(int v) throws Exception
+   public void setTotalRecords(long v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v != _totalRecords)
@@ -1641,8 +1641,8 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.totalRecords of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.totalRecords of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.totalRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.totalRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>TotalRecords</TD></TR>
@@ -1658,7 +1658,7 @@ This is the null setter for:<BR>
         return;
        __Changes1 |= TILDA__JOB_Factory.COLS.TOTALRECORDS._Mask1;
        __Nulls1   |= TILDA__JOB_Factory.COLS.TOTALRECORDS._Mask1;
-       _totalRecords=0;
+       _totalRecords=0L;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -1669,8 +1669,8 @@ This is the null setter for:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.totalRecords of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.totalRecords of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.totalRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.totalRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>TotalRecords</TD></TR>
@@ -3447,7 +3447,7 @@ This is the hasChanged for:<BR>
                 } 
                if ((TILDA__JOB_Factory.COLS.TOTALRECORDS._Mask1  & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__JOB_Factory.COLS.TOTALRECORDS._Mask1  & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _totalRecords);
+                  if ((TILDA__JOB_Factory.COLS.TOTALRECORDS._Mask1  & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _totalRecords);
                 } 
                if ((TILDA__JOB_Factory.COLS.STATUS._Mask1        & __Changes1) != 0L) 
                 { 
@@ -3656,7 +3656,7 @@ This is the hasChanged for:<BR>
                               _startTime     = ProcessZDT(_startTimeTZ    , "tilda.data.TILDA.JOB.startTime"    , RS, ++i, TILDA__JOB_Factory.COLS.STARTTIME    , TILDA__JOB_Factory.COLS.STARTTIMETZ    );
                               _endTimeTZ     = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.ENDTIMETZ._Mask1    ; else _endTimeTZ     = _endTimeTZ    .trim();
                               _endTime       = ProcessZDT(_endTimeTZ      , "tilda.data.TILDA.JOB.endTime"      , RS, ++i, TILDA__JOB_Factory.COLS.ENDTIME      , TILDA__JOB_Factory.COLS.ENDTIMETZ      );
-                              _totalRecords  =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.TOTALRECORDS._Mask1 ;
+                              _totalRecords  =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.TOTALRECORDS._Mask1 ;
       __Saved_status        = _status        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.STATUS._Mask1       ; else _status        = _status       .trim();
                               _error         = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.ERROR._Mask1        ;
                               _threadsCount  =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.THREADSCOUNT._Mask1 ;

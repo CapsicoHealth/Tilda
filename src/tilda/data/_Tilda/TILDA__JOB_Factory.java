@@ -149,8 +149,8 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.totalRecords of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.totalRecords of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.totalRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.totalRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>TotalRecords</TD></TR>
@@ -159,7 +159,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull   TOTALRECORDS = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "totalRecords" , 6/*6*/, "TotalRecords");
+     public static Type_LongPrimitiveNull      TOTALRECORDS = new Type_LongPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "totalRecords" , 6/*6*/, "TotalRecords");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JOB.status -> TILDA.JOB."status"
@@ -534,7 +534,7 @@ This is the column definition for:<BR>
        String        _name          =                       ParseUtil.parseString("name"         , false, Values.get("name"         ), Errors );
        ZonedDateTime        _startTime     =                       ParseUtil.parseZonedDateTime("startTime"    , false, Values.get("startTime"    ), Errors );
        ZonedDateTime        _endTime       =                       ParseUtil.parseZonedDateTime("endTime"      , false, Values.get("endTime"      ), Errors );
-       Integer        _totalRecords  =                       ParseUtil.parseInteger("totalRecords" , false, Values.get("totalRecords" ), Errors );
+       Long        _totalRecords  =                       ParseUtil.parseLong("totalRecords" , false, Values.get("totalRecords" ), Errors );
        String        _status        =                       ParseUtil.parseString("status"       , true , Values.get("status"       ), Errors );
        String        _error         =                       ParseUtil.parseString("error"        , false, Values.get("error"        ), Errors );
        Integer        _threadsCount  =                       ParseUtil.parseInteger("threadsCount" , true , Values.get("threadsCount" ), Errors );
