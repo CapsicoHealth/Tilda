@@ -93,7 +93,7 @@ isnull_expr
  ;
 
 isnull_op
- : K_IS K_NOT? K_NULL (K_OR K_EMPTY)?
+ : K_IS K_NOT? (K_NULL|K_NULL_OR_EMPTY)
  ;
 
 between_expr
@@ -169,8 +169,8 @@ K_IS : I S;
 K_LIKE : L I K E;
 K_NOT : N O T;
 K_NULL : N U L L;
-K_EMPTY : E M P T Y;
 K_OR : O R;
+K_NULL_OR_EMPTY : N O E;
 K_REGEXP : R E G E X P;
 K_LT: '<';
 K_LTE: '<=';

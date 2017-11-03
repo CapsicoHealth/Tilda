@@ -32,6 +32,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
+import tilda.db.metadata.FKMeta;
+import tilda.db.metadata.PKMeta;
 import tilda.db.processors.RecordProcessor;
 import tilda.db.stores.DBType;
 import tilda.enums.AggregateType;
@@ -40,6 +42,7 @@ import tilda.enums.ColumnType;
 import tilda.enums.TransactionType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
+import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
@@ -69,7 +72,7 @@ public final class Connection
         : null;
         if (_DB == null)
           throw new Exception("Can't find the DBType based on URL " + _Url);
-        _PoolId = _C.toString() +", "+getDatabaseProductName()+" V"+getDatabaseProductVersion();
+        _PoolId = _C.toString() + ", " + getDatabaseProductName() + " V" + getDatabaseProductVersion();
       }
 
     public Connection(java.sql.Connection C, String PoolId)
@@ -89,21 +92,23 @@ public final class Connection
       {
         return _Url;
       }
-    
-    public final String getDatabaseProductName() throws SQLException
+
+    public final String getDatabaseProductName()
+    throws SQLException
       {
         return _C.getMetaData().getDatabaseProductName();
       }
-    
-    public final String getDatabaseProductVersion() throws SQLException
+
+    public final String getDatabaseProductVersion()
+    throws SQLException
       {
         return _C.getMetaData().getDatabaseProductVersion();
       }
-    
+
     public final String getDBTypeName()
-    {
-      return _DB.getName();
-    }
+      {
+        return _DB.getName();
+      }
 
     /**
      * Wrapper to {@link java.sql.Connection#commit()} with extra logging and performance tracking
@@ -298,6 +303,7 @@ public final class Connection
       {
         return ExecuteSelect(SchemaName, TableName, Query, RP, Start, Offsetted, Size, Limited, false);
       }
+
     /**
      * Executes a query with a record processor, starting at Start (0 is beginning), and for Size records.
      */
@@ -307,20 +313,20 @@ public final class Connection
         return JDBCHelper.ExecuteSelect(_C, SchemaName, TableName, Query, RP, Start, Offsetted, Size, Limited, CountAll);
       }
 
-    
+
     public int ExecuteUpdate(String SchemaName, String TableName, String Query)
     throws Exception
       {
         return JDBCHelper.ExecuteUpdate(_C, SchemaName, TableName, Query);
       }
-    
+
     public int ExecuteInsert(String SchemaName, String TableName, String Query)
     throws Exception
       {
         return JDBCHelper.ExecuteInsert(_C, SchemaName, TableName, Query);
       }
-    
-    
+
+
     public boolean ExecuteDDL(String SchemaName, String TableName, String Query)
     throws Exception
       {
@@ -332,14 +338,14 @@ public final class Connection
       {
         return _C.createArrayOf(TypeName, A);
       }
-    
+
     Deque<Savepoint> _SavePoints = new ArrayDeque<Savepoint>();
 
     public void setSavepoint()
     throws SQLException
       {
         if (_DB.needsSavepoint() == false)
-         return;
+          return;
         long T0 = System.nanoTime();
         _SavePoints.add(_C.setSavepoint());
         PerfTracker.add(TransactionType.SAVEPOINT_SET, System.nanoTime() - T0);
@@ -427,15 +433,17 @@ public final class Connection
       {
         return _DB.getAggregateStr(Agg);
       }
-    
+
     public boolean supportsSelectLimit()
       {
         return _DB.supportsSelectLimit();
       }
+
     public boolean supportsSelectOffset()
       {
         return _DB.supportsSelectLimit();
       }
+
     public String getSelectLimitClause(int Start, int Size)
       {
         return _DB.getSelectLimitClause(Start, Size);
@@ -452,21 +460,24 @@ public final class Connection
         return _DB.alterTableAlterColumnStringSize(this, Col, DBSize);
       }
 
-    public boolean alterTableAlterColumnType(ColumnType FromType, Column Col, ZoneInfo_Data defaultZI) throws Exception
+    public boolean alterTableAlterColumnType(ColumnType FromType, Column Col, ZoneInfo_Data defaultZI)
+    throws Exception
       {
         return _DB.alterTableAlterColumnType(this, FromType, Col, defaultZI);
       }
 
-    public boolean addHelperFunctions() throws Exception
+    public boolean addHelperFunctions()
+    throws Exception
       {
         return _DB.addHelperFunctions(this);
       }
 
-    public boolean addAclRoles(List<Schema> TildaList) throws Exception
+    public boolean addAclRoles(List<Schema> TildaList)
+    throws Exception
       {
         return _DB.addAclRoles(this, TildaList);
-      }    
-    
+      }
+
     public StringStringPair getTypeMapping(int Type, String Name, int Size, String TypeName)
     throws Exception
       {
@@ -480,41 +491,44 @@ public final class Connection
 
     public java.lang.Object getEqualCurrentTimestamp()
       {
-        return "="+_DB.getCurrentTimestampStr();
+        return "=" + _DB.getCurrentTimestampStr();
       }
 
     public java.lang.Object getCommaCurrentTimestamp()
       {
-        return ", "+_DB.getCurrentTimestampStr();
+        return ", " + _DB.getCurrentTimestampStr();
       }
 
     public void getFullColumnVar(StringBuilder Str, String SchemaName, String TableName, String ColumnName)
       {
         _DB.getFullColumnVar(Str, SchemaName, TableName, ColumnName);
       }
-    
+
     public void getColumnType(StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection)
       {
         _DB.getColumnType(Str, T, S, M, Collection);
       }
-    
+
 
     public void getFullTableVar(StringBuilder Str, String SchemaName, String TableName)
       {
         _DB.getFullTableVar(Str, SchemaName, TableName);
       }
 
-    public void setArray(PreparedStatement PS, int i, ColumnType Type, List<java.sql.Array> allocatedArrays, String[] val) throws Exception
+    public void setArray(PreparedStatement PS, int i, ColumnType Type, List<java.sql.Array> allocatedArrays, String[] val)
+    throws Exception
       {
         _DB.setArray(this, PS, i, Type, allocatedArrays, CollectionUtil.toList(val));
       }
-    
-    public void setArray(PreparedStatement PS, int i, ColumnType Type, List<java.sql.Array> allocatedArrays, Collection<?> val) throws Exception
+
+    public void setArray(PreparedStatement PS, int i, ColumnType Type, List<java.sql.Array> allocatedArrays, Collection<?> val)
+    throws Exception
       {
         _DB.setArray(this, PS, i, Type, allocatedArrays, val);
       }
 
-    public Collection<?> getArray(ResultSet RS, int i, ColumnType Type, boolean isSet) throws Exception
+    public Collection<?> getArray(ResultSet RS, int i, ColumnType Type, boolean isSet)
+    throws Exception
       {
         return _DB.getArray(RS, i, Type, isSet);
       }
@@ -529,27 +543,30 @@ public final class Connection
         _DB.setOrderByWithNullsOrdering(this, Str, Col, Asc, NullsLast);
       }
 
-    public void truncateTable(String SchemaName, String TableName) throws Exception
+    public void truncateTable(String SchemaName, String TableName)
+    throws Exception
       {
         _DB.truncateTable(this, SchemaName, TableName);
       }
 
-//    public void setTableLogging(String SchemaName, String TableName, boolean Logged) throws Exception
-//      {
-//        _DB.setTableLogging(this, SchemaName, TableName, Logged);
-//      }
-    
+    // public void setTableLogging(String SchemaName, String TableName, boolean Logged) throws Exception
+    // {
+    // _DB.setTableLogging(this, SchemaName, TableName, Logged);
+    // }
+
     public void age(StringBuilder Str, Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count, String Operator)
       {
         _DB.age(this, Str, ColStart, ColEnd, Type, Count, Operator);
       }
 
-    public boolean alterTableComment(Object Obj) throws Exception
+    public boolean alterTableComment(Object Obj)
+    throws Exception
       {
         return _DB.alterTableComment(this, Obj);
       }
 
-    public boolean alterTableAlterColumnComment(Column Col) throws Exception
+    public boolean alterTableAlterColumnComment(Column Col)
+    throws Exception
       {
         return _DB.alterTableAlterColumnComment(this, Col);
       }
@@ -558,28 +575,47 @@ public final class Connection
       {
         _DB.within(this, Str, Col, ColStart, DurationCount, DurationType);
       }
-    
-    
-   public boolean HandleCatch(java.sql.SQLException E, String OperationDebugStr) throws java.sql.SQLException
-     {
-       if (isLockOrConnectionError(E) == true)
-        QueryDetails.setLastQueryDeadlocked();
-       else if (E.getSQLState() == null)
-        {
-          LOG.warn("JDBC Error: No row "+OperationDebugStr+": SQLState is null, ErrorCode="+E.getErrorCode());
-          LOG.warn("JDBC Message: "+E.getMessage());
-          return false;
-        }
-       else if (isErrNoData(E.getSQLState(), E.getErrorCode()) == true)
-        {
-          LOG.warn("JDBC Error: No row "+OperationDebugStr+": SQLState="+E.getSQLState()+", ErrorCode="+E.getErrorCode());
-          LOG.warn("JDBC Message: "+E.getMessage());
-          return false;
-        }
-       LOG.error("JDBC Error: Fatal sql error: SQLState="+E.getSQLState()+", ErrorCode="+E.getErrorCode());
-       LOG.catching(E);
-       throw E;
-     }
+
+
+    public boolean HandleCatch(java.sql.SQLException E, String OperationDebugStr)
+    throws java.sql.SQLException
+      {
+        if (isLockOrConnectionError(E) == true)
+          QueryDetails.setLastQueryDeadlocked();
+        else if (E.getSQLState() == null)
+          {
+            LOG.warn("JDBC Error: No row " + OperationDebugStr + ": SQLState is null, ErrorCode=" + E.getErrorCode());
+            LOG.warn("JDBC Message: " + E.getMessage());
+            return false;
+          }
+        else if (isErrNoData(E.getSQLState(), E.getErrorCode()) == true)
+          {
+            LOG.warn("JDBC Error: No row " + OperationDebugStr + ": SQLState=" + E.getSQLState() + ", ErrorCode=" + E.getErrorCode());
+            LOG.warn("JDBC Message: " + E.getMessage());
+            return false;
+          }
+        LOG.error("JDBC Error: Fatal sql error: SQLState=" + E.getSQLState() + ", ErrorCode=" + E.getErrorCode());
+        LOG.catching(E);
+        throw E;
+      }
+
+    public boolean alterTableReplaceTablePK(Object Obj, PKMeta OldPK)
+    throws Exception
+      {
+        return _DB.alterTableReplaceTablePK(this, Obj, OldPK);
+      }
+
+    public boolean alterTableDropFK(Object Obj, FKMeta FK)
+    throws Exception
+      {
+        return _DB.alterTableDropFK(this, Obj, FK);
+      }
+
+    public boolean alterTableAddFK(ForeignKey FK)
+    throws Exception
+      {
+        return _DB.alterTableAddFK(this, FK);
+      }
   }
 
 

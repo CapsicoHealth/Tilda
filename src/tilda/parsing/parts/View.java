@@ -72,7 +72,7 @@ public class View extends Base
     public Column getColumn(String name)
       {
         for (ViewColumn C : _ViewColumns)
-          if (C != null && C._Name != null && C._Name.equalsIgnoreCase(name) == true)
+          if (C != null && C._Name != null && C._Name.equals(name) == true)
             return C._SameAsObj;
         return null;
       }

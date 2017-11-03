@@ -31,6 +31,8 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
+import tilda.db.metadata.FKMeta;
+import tilda.db.metadata.PKMeta;
 import tilda.db.processors.ScalarRP;
 import tilda.db.processors.StringListRP;
 import tilda.enums.AggregateType;
@@ -40,6 +42,7 @@ import tilda.generation.Generator;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.generation.postgres9.PostgresType;
 import tilda.parsing.parts.Column;
+import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
@@ -60,7 +63,6 @@ public class PostgreSQL implements DBType
       {
         return "PostgreSQL";
       }
-
 
     @Override
     public boolean isErrNoData(String SQLState, int ErrorCode)
@@ -811,6 +813,60 @@ public class PostgreSQL implements DBType
         return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
       }
 
+    @Override
+    public boolean alterTableReplaceTablePK(Connection Con, Object Obj, PKMeta oldPK)
+    throws Exception
+      {
+        if (oldPK != null)
+          {
+            String Q = "ALTER TABLE " + Obj.getShortName() + " DROP CONSTRAINT \"" + oldPK._Name + "\";";
+            if (Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q) == false)
+             return false;
+          }
+        if (Obj._PrimaryKey != null)
+         {
+           String Q = "ALTER TABLE " + Obj.getShortName() + " ADD PRIMARY KEY ("+PrintColumnList(Obj._PrimaryKey._ColumnObjs)+");";
+           return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
+         }
+        return true;
+      }
+
+    @Override
+    public boolean alterTableDropFK(Connection Con, Object Obj, FKMeta FK)
+    throws Exception
+      {
+        String Q = "ALTER TABLE " + Obj.getShortName() + " DROP CONSTRAINT \"" + FK._Name + "\";";
+        return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
+      }
+
+    @Override
+    public boolean alterTableAddFK(Connection Con, ForeignKey FK)
+    throws Exception
+      {
+        String Q = "ALTER TABLE " + FK._ParentObject.getShortName() + " ADD CONSTRAINT \"" + FK._Name + "\"" 
+                 + " FOREIGN KEY ("+PrintColumnList(FK._SrcColumnObjs)+") REFERENCES " + FK._DestObjectObj._ParentSchema._Name + "." + FK._DestObjectObj._Name
+                 + " ON DELETE restrict ON UPDATE cascade";
+        return Con.ExecuteDDL(FK._ParentObject._ParentSchema._Name, FK._ParentObject.getBaseName(), Q);
+      }
+    
+    
+    private static String PrintColumnList(List<Column> Columns)
+      {
+        StringBuilder Str = new StringBuilder();
+        boolean First = true;
+        for (Column C : Columns)
+          {
+            if (C == null)
+              continue;
+            if (First == true)
+              First = false;
+            else
+              Str.append(", ");
+            Str.append("\"" + C.getName() + "\"");
+          }
+        return Str.toString();
+      }
+    
 
     @Override
     public void within(Connection C, StringBuilder Str, Type_DatetimePrimitive Col, Type_DatetimePrimitive ColStart, long DurationCount, IntervalEnum DurationType)
@@ -843,17 +899,5 @@ public class PostgreSQL implements DBType
             Str.append(")");
           }
       }
-
-    /*
-     * @Override
-     * public boolean setTableLogging(Connection Con, String schemaName, String tableName, boolean logged) throws Exception
-     * {
-     * StringBuilder Str = new StringBuilder();
-     * Str.append("ALTER TABLE ");
-     * getFullTableVar(Str, schemaName, tableName);
-     * Str.append(" SET ").append(logged==true ? "LOGGED" : "UNLOGGED");
-     * return Con.ExecuteDDL(schemaName, tableName, Str.toString());
-     * }
-     */
 
   }

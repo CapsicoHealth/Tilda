@@ -44,9 +44,11 @@ public class TableMeta
     public final String            _SchemaName;
     public final String            _TableName;
     public final String            _Descr;
-    public Map<String, ColumnMeta> _Columns     = new HashMap<String, ColumnMeta>();
-    public Map<String, IndexMeta>  _Indices     = new HashMap<String, IndexMeta>();
-    public Map<String, FKMeta>     _ForeignKeys = new HashMap<String, FKMeta>();
+    public Map<String, ColumnMeta> _Columns        = new HashMap<String, ColumnMeta>();
+    public Map<String, IndexMeta>  _Indices        = new HashMap<String, IndexMeta>();
+    public Map<String, FKMeta>     _ForeignKeysOut = new HashMap<String, FKMeta>();
+    public Map<String, FKMeta>     _ForeignKeysIn  = new HashMap<String, FKMeta>();
+    public PKMeta                  _PrimaryKey;
 
     public void load(Connection C)
     throws Exception
@@ -65,8 +67,15 @@ public class TableMeta
         loadIndices(RS);
 
         RS = meta.getImportedKeys(null, _SchemaName.toLowerCase(), _TableName.toLowerCase());
-        loadForeignKeys(RS);
-      }
+        loadForeignKeys(RS, _ForeignKeysOut, true);
+        
+        RS = meta.getExportedKeys(null, _SchemaName.toLowerCase(), _TableName.toLowerCase());
+        loadForeignKeys(RS, _ForeignKeysIn, false);
+
+        RS = meta.getPrimaryKeys(null, _SchemaName.toLowerCase(), _TableName.toLowerCase());
+        if (RS.next() == true)
+         _PrimaryKey = new PKMeta(RS);
+     }
 
     private void loadIndices(ResultSet RS)
     throws SQLException, Exception
@@ -84,27 +93,28 @@ public class TableMeta
       }
 
 
-    private void loadForeignKeys(ResultSet RS)
+    private static void loadForeignKeys(ResultSet RS, Map<String, FKMeta> FKKeyList, boolean Outgoing)
     throws SQLException, Exception
       {
         while (RS.next() != false)
           {
-            FKMeta FKM = new FKMeta(RS);
-            FKMeta prevFKM = _ForeignKeys.get(FKM._Name);
+            FKMeta FKM = new FKMeta(RS, Outgoing);
+            FKMeta prevFKM = FKKeyList.get(FKM._Name);
             if (prevFKM == null)
-              _ForeignKeys.put(FKM._Name, FKM);
+              FKKeyList.put(FKM._Name, FKM);
             else
               FKM = prevFKM;
             FKM.addColumn(RS);
           }
       }
 
-
+    
     public ColumnMeta getColumnMeta(String ColumnName)
       {
         return _Columns.get(ColumnName.toLowerCase());
       }
 
+    
     public IndexMeta getIndex(String[] Columns, boolean Unique)
       {
         for (Map.Entry<String, IndexMeta> entry : _Indices.entrySet())

@@ -28,11 +28,14 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
+import tilda.db.metadata.FKMeta;
+import tilda.db.metadata.PKMeta;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
+import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
@@ -344,4 +347,25 @@ public class IBMDB2 implements DBType
         throw new UnsupportedOperationException();
       }
 
+
+    @Override
+    public boolean alterTableReplaceTablePK(Connection Con, Object Obj, PKMeta oldPK)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public boolean alterTableDropFK(Connection Con, Object Obj, FKMeta FK)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public boolean alterTableAddFK(Connection Con, ForeignKey FK)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
   }
