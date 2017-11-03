@@ -41,7 +41,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
       }
 
     @Override
-    protected long insertData(boolean isUpsert, long t0, Map<String, ColumnMeta> DBColumns, boolean withHeader, Iterable<CSVRecord> records, StringBuilder Str, String schemaName, String tableName, String[] headers, String[] columns, Map<String, ColumnHeader> columnMap, String[] completeHeaders, String DateTimePattern, String DateTimeZoneInfoId, String DatePattern) 
+    protected long insertData(boolean isUpsert, long t0, Map<String, ColumnMeta> DBColumns, boolean withHeader, Iterable<CSVRecord> records, StringBuilder Str, String schemaName, String tableName, String[] headers, String[] columns, Map<String, ColumnHeader> columnMap, String[] completeHeaders, String[] uniqueColumns, String DateTimePattern, String DateTimeZoneInfoId, String DatePattern) 
     throws Exception
       {
         TableMeta TM = new TableMeta(schemaName, tableName, "");
@@ -53,6 +53,9 @@ public class PostgreSQLCSVImporter extends CSVImporter
         int batchCount = 0;
   
         CSVRecord currentRecord = null;
+        String h = null;
+        String v = null;
+
         Map<String, GenericLoader> LoaderMap = initializeLoaders(C, columnMap);
         try
           {
@@ -69,18 +72,20 @@ public class PostgreSQLCSVImporter extends CSVImporter
   
                 ZonedDateTime Now = DateTimeUtil.NowUTC();
                 int x = 0;
-                if (DBColumns.get("refnum") != null && TextUtil.FindElement(columns, "refnum", false, 0) == -1)
+                if (DBColumns != null && DBColumns.get("refnum") != null 
+                  && TextUtil.FindElement(columns, "refnum", false, 0) == -1)
                   {
                     Pst.setLong(++x,
                     tilda.db.KeysManager.getKey(schemaName.toUpperCase() + "." + tableName.toUpperCase()));
                   }
-                if (DBColumns.get("lastupdated") != null
-                && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
+                if (DBColumns != null && DBColumns.get("lastupdated") != null 
+                  && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
                   {
                     Pst.setTimestamp(++x, new java.sql.Timestamp(Now.toInstant().toEpochMilli()),
                     DateTimeUtil._UTC_CALENDAR);
                   }
-                if (DBColumns.get("created") != null && TextUtil.FindElement(columns, "created", false, 0) == -1)
+                if (DBColumns != null && DBColumns.get("created") != null 
+                  && TextUtil.FindElement(columns, "created", false, 0) == -1)
                   {
                     Pst.setTimestamp(++x, new java.sql.Timestamp(Now.toInstant().toEpochMilli()),
                     DateTimeUtil._UTC_CALENDAR);
@@ -89,19 +94,25 @@ public class PostgreSQLCSVImporter extends CSVImporter
                 // columns: "ha, hb[], hc, hd"
                 // headers: "ha, hb_1, hb_2, hb_3, hc, hd"
   
-                int k = 0;
-                int columnsLength = columns.length;
-                for (int i = 0; i < columnsLength; ++i)
+                int i, k = 0;
+                int upsertOffset = columns.length;
+                for ( i = 0; i < columns.length; ++i)
                   {
+                    boolean isUniqueColumn = false;
+                    if (TextUtil.FindElement(uniqueColumns, columns[i], false, 0) != -1)
+                      {
+                        isUniqueColumn = true;
+                        upsertOffset--;
+                      }                     
+
                     String c = columns[i];
-                    String h = headers[i];
+                    h = headers[i];
+                    v = record.get(h);
                     ColumnHeader cHeader = columnMap.get(c);
                     if (cHeader != null && cHeader._Multi == true)
                       {
-                        String multiHeaderDelim = TextUtil.isNullOrEmpty(cHeader._MultiHeaderDelimeter) ? null
-                        : cHeader._MultiHeaderDelimeter;
-                        String multiValueDelim = TextUtil.isNullOrEmpty(cHeader._MultiValueDelimeter) ? null
-                        : cHeader._MultiValueDelimeter;
+                        String multiHeaderDelim = TextUtil.isNullOrEmpty(cHeader._MultiHeaderDelimeter) ? null : cHeader._MultiHeaderDelimeter;
+                        String multiValueDelim = TextUtil.isNullOrEmpty(cHeader._MultiValueDelimeter) ? null : cHeader._MultiValueDelimeter;
                         if (multiHeaderDelim != null)
                           {
                             int j = 0;
@@ -121,14 +132,14 @@ public class PostgreSQLCSVImporter extends CSVImporter
                               {
                                 ColumnMeta CI = ColumnsMap.get(c.toLowerCase());
                                 C.setArray(Pst, i + x, CI._TildaType, AllocatedArrays, Values);
-                                if(isUpsert)
-                                  C.setArray(Pst, i + x + columnsLength, CI._TildaType, AllocatedArrays, Values);
+                                if(isUpsert && !isUniqueColumn)
+                                  C.setArray(Pst, i + x + upsertOffset, CI._TildaType, AllocatedArrays, Values);
                               }
                             else
                               {
                                 Pst.setNull(i + x, java.sql.Types.ARRAY);
-                                if(isUpsert)
-                                  Pst.setNull(i + x + columnsLength, java.sql.Types.ARRAY);
+                                if(isUpsert && !isUniqueColumn)
+                                  Pst.setNull(i + x + upsertOffset, java.sql.Types.ARRAY);
                               }
                           }
                         else if (multiValueDelim != null)
@@ -136,25 +147,21 @@ public class PostgreSQLCSVImporter extends CSVImporter
                             String value = record.get(h);
                             if (TextUtil.isNullOrEmpty(value) == false)
                               {
-                                String[] colDataArray = value.split(multiValueDelim);
+                                // LDH-NOTE: Some CSV data files may encode multi-value columns as direct outputs from a database like Postgres, 
+                                //          meaning, the value straight into a CSV file will be "{x,y,z}". Therefore, to make exports of data files 
+                                //          easier, we have this logic here that needs to clean up those leading '{' and trailing '}' characters.
+                                value = value.trim();
+                                if (value.startsWith("{") == true && value.endsWith("}") == true)
+                                 value = value.substring(1, value.length()-1);
+                                String[] colDataArray = TextUtil.TrimSplit(value, multiValueDelim);
                                 if (colDataArray != null && colDataArray.length > 0)
                                   {
-                                    for (int z = 0; z < colDataArray.length; ++z)
-                                      {
-                                        if (z == 0)
-                                          colDataArray[z] = colDataArray[z].substring(1, colDataArray.length == 1
-                                          ? colDataArray[z].length() - 1 : colDataArray[z].length());
-                                        else if (z == colDataArray.length - 1)
-                                          colDataArray[z] = colDataArray[z].substring(0,
-                                          colDataArray[z].length() - 1);
-                                      }
-  
                                     ColumnMeta CI = ColumnsMap.get(c.toLowerCase());
                                     if (cHeader._Index != -1 && cHeader._Index < colDataArray.length)
                                       {
                                         Pst.setString(i + x, colDataArray[cHeader._Index]);
-                                        if(isUpsert)
-                                          Pst.setString(i + x + columnsLength, colDataArray[cHeader._Index]);
+                                        if(isUpsert && !isUniqueColumn)
+                                          Pst.setString(i + x + upsertOffset, colDataArray[cHeader._Index]);
                                       }
                                       
                                     else if (cHeader._Start != -1 && cHeader._Start < colDataArray.length)
@@ -166,8 +173,8 @@ public class PostgreSQLCSVImporter extends CSVImporter
                                         if (Values != null && Values.size() > 0)
                                           {
                                             C.setArray(Pst, i + x, CI._TildaType, AllocatedArrays, Values);
-                                            if(isUpsert)
-                                              C.setArray(Pst, i + x + columnsLength, CI._TildaType, AllocatedArrays, Values);
+                                            if(isUpsert && !isUniqueColumn)
+                                              C.setArray(Pst, i + x + upsertOffset, CI._TildaType, AllocatedArrays, Values);
                                           }
                                       }
                                     else if (cHeader._Index == -1 && cHeader._Start == -1)
@@ -182,8 +189,8 @@ public class PostgreSQLCSVImporter extends CSVImporter
                                                   totalValue += Float.parseFloat(eValue);
                                               }
                                             Pst.setDouble(i + x, totalValue);
-                                            if(isUpsert)
-                                              Pst.setDouble(i + x + columnsLength, totalValue);
+                                            if(isUpsert && !isUniqueColumn)
+                                              Pst.setDouble(i + x + upsertOffset, totalValue);
                                           }
                                         else
                                           {
@@ -191,24 +198,24 @@ public class PostgreSQLCSVImporter extends CSVImporter
                                             if (Values != null && Values.size() > 0)
                                               {
                                                 C.setArray(Pst, i + x, CI._TildaType, AllocatedArrays, Values);
-                                                if(isUpsert)
-                                                  C.setArray(Pst, i + x + columnsLength, CI._TildaType, AllocatedArrays, Values);
+                                                if(isUpsert && !isUniqueColumn)
+                                                  C.setArray(Pst, i + x + upsertOffset, CI._TildaType, AllocatedArrays, Values);
                                               }
                                           }
                                       }
                                     else
                                       {
                                         Pst.setNull(i + x, java.sql.Types.ARRAY);
-                                        if(isUpsert)
-                                          Pst.setNull(i + x + columnsLength, java.sql.Types.ARRAY);
+                                        if(isUpsert && !isUniqueColumn)
+                                          Pst.setNull(i + x + upsertOffset, java.sql.Types.ARRAY);
                                       }
                                   }
                               }
                             else
                               {
                                 Pst.setNull(i + x, java.sql.Types.ARRAY);
-                                if(isUpsert)
-                                  Pst.setNull(i + x + columnsLength, java.sql.Types.ARRAY);
+                                if(isUpsert && !isUniqueColumn)
+                                  Pst.setNull(i + x + upsertOffset, java.sql.Types.ARRAY);
                               }
                           }
                       }
@@ -240,26 +247,26 @@ public class PostgreSQLCSVImporter extends CSVImporter
                                 if (CI._TildaType == ColumnType.INTEGER)
                                   {
                                     Pst.setInt(i + x, Integer.parseInt(value));
-                                    if(isUpsert)
-                                      Pst.setInt(i + x + columnsLength, Integer.parseInt(value));
+                                    if(isUpsert && !isUniqueColumn)
+                                      Pst.setInt(i + x + upsertOffset, Integer.parseInt(value));
                                   }                                  
                                 else if (CI._TildaType == ColumnType.LONG)
                                   {
                                     Pst.setLong(i + x, Long.parseLong(value));
-                                    if(isUpsert)
-                                      Pst.setLong(i + x + columnsLength, Long.parseLong(value));
+                                    if(isUpsert && !isUniqueColumn)
+                                      Pst.setLong(i + x + upsertOffset, Long.parseLong(value));
                                   }                                  
                                 else if (CI._TildaType == ColumnType.FLOAT)
                                   {
                                     Pst.setFloat(i + x, Float.parseFloat(value));
-                                    if(isUpsert)
-                                      Pst.setFloat(i + x + columnsLength, Float.parseFloat(value));
+                                    if(isUpsert && !isUniqueColumn)
+                                      Pst.setFloat(i + x + upsertOffset, Float.parseFloat(value));
                                   }                                  
                                 else if (CI._TildaType == ColumnType.DOUBLE)
                                   {
                                     Pst.setDouble(i + x, Double.parseDouble(value));
-                                    if(isUpsert)
-                                      Pst.setDouble(i + x + columnsLength, Double.parseDouble(value));
+                                    if(isUpsert && !isUniqueColumn)
+                                      Pst.setDouble(i + x + upsertOffset, Double.parseDouble(value));
                                   }                                  
                                 else if (CI._TildaType == ColumnType.DATETIME)
                                   {
@@ -268,8 +275,8 @@ public class PostgreSQLCSVImporter extends CSVImporter
                                     ZonedDateTime valueTime = date.atStartOfDay(ZoneId.systemDefault());
                                     java.sql.Timestamp xt = new java.sql.Timestamp(valueTime.toInstant().toEpochMilli());
                                     Pst.setTimestamp(i + x, xt, ZoneInfo_Factory.nowAsCalendar(DateTimeZoneInfoId));
-                                    if(isUpsert)
-                                      Pst.setTimestamp(i + x + columnsLength, xt, ZoneInfo_Factory.nowAsCalendar(DateTimeZoneInfoId));
+                                    if(isUpsert && !isUniqueColumn)
+                                      Pst.setTimestamp(i + x + upsertOffset, xt, ZoneInfo_Factory.nowAsCalendar(DateTimeZoneInfoId));
                                   }
                                 else if (CI._TildaType == ColumnType.DATE)
                                   {
@@ -278,27 +285,27 @@ public class PostgreSQLCSVImporter extends CSVImporter
                                     ZonedDateTime valueTime = date.atStartOfDay(ZoneId.systemDefault());
                                     java.sql.Date xt = new java.sql.Date(valueTime.toInstant().toEpochMilli());
                                     Pst.setDate(i + x, xt);
-                                    if(isUpsert)
-                                      Pst.setDate(i + x + columnsLength, xt);
+                                    if(isUpsert && !isUniqueColumn)
+                                      Pst.setDate(i + x + upsertOffset, xt);
                                   }
                                 else if (CI._TildaType == ColumnType.BOOLEAN)
                                   {
                                     Pst.setBoolean(i + x, ParseUtil.parseBoolean(value));
-                                    if(isUpsert)
-                                      Pst.setBoolean(i + x + columnsLength, ParseUtil.parseBoolean(value));
+                                    if(isUpsert && !isUniqueColumn)
+                                      Pst.setBoolean(i + x + upsertOffset, ParseUtil.parseBoolean(value));
                                   }                                  
                                 else
                                   {
                                     Pst.setString(i + x, value);
-                                    if(isUpsert)
-                                      Pst.setString(i + x + columnsLength, value);
+                                    if(isUpsert && !isUniqueColumn)
+                                      Pst.setString(i + x + upsertOffset, value);
                                   }                                  
                               }
                             else
                               {
                                 Pst.setString(i + x, value);
-                                if(isUpsert)
-                                  Pst.setString(i + x + columnsLength, value);
+                                if(isUpsert && !isUniqueColumn)
+                                  Pst.setString(i + x + upsertOffset, value);
                               }
                           }
                         else
@@ -317,11 +324,22 @@ public class PostgreSQLCSVImporter extends CSVImporter
                             else if (CI._TildaType == ColumnType.BOOLEAN)
                               DataType = java.sql.Types.BOOLEAN;
                             Pst.setNull(i + x, DataType);
-                            if(isUpsert)
-                              Pst.setNull(i + x + columnsLength, DataType);
+                            if(isUpsert && !isUniqueColumn)
+                              Pst.setNull(i + x + upsertOffset, DataType);
                           }
                       }
                   }
+                
+                // lastUpdated incase of Upsert
+                if (isUpsert && DBColumns != null && DBColumns.get("lastupdated") != null 
+                  && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
+                  {
+                    Pst.setTimestamp(i + x + upsertOffset, new java.sql.Timestamp(Now.toInstant().toEpochMilli()),
+                      DateTimeUtil._UTC_CALENDAR);
+                  }
+                
+                h = null;
+                v = null;
                 
                 QueryDetails.setLastQuery(TM._SchemaName + "." + TM._TableName, Str.toString());
                 if (NumOfRecs < 5)
@@ -353,21 +371,22 @@ public class PostgreSQLCSVImporter extends CSVImporter
                 Pst.executeBatch();
               }
           }
-        catch (DateTimeParseException E)
-          {
-            LOG.error("Cannot parse data with pattern "+DateTimePattern);
-            throw E;
-          }
         catch (SQLException E)
           {
             C.HandleCatch(E, "inserted");
-            return 0;
+            throw E;
           }
         catch (Exception E)
           {
             if (currentRecord != null)
               {
-                LOG.error("An error occurred parsing record #" + currentRecord.getRecordNumber() + ":");
+                LOG.error("An error occurred parsing record #" + currentRecord.getRecordNumber()+".");
+                if (h != null)
+                 {
+                  LOG.error("An error occurred parsing column '" + h+"'='"+v+"'.");
+                  if (E instanceof DateTimeParseException == true)
+                    LOG.error("Cannot parse data with pattern "+DateTimePattern);
+                 }
                 for (Map.Entry<String, String> c : currentRecord.toMap().entrySet())
                   LOG.error("     " + c.getKey() + ": " + c.getValue());
               }
@@ -392,25 +411,35 @@ public class PostgreSQLCSVImporter extends CSVImporter
         if (isUpsert)
           {
             Str.append(" ON CONFLICT(");
+            boolean first = true;
             for (int i = 0; i < uniqueColumns.length; ++i)
               {
-                if (i != 0) {
+                if (first == false) {
                   Str.append(",");
                 }                  
                 Str.append("\"").append(uniqueColumns[i]).append("\"");
+                first = false;
               }
             Str.append(") DO UPDATE SET ");
             
+            first = true;
             for (int i = 0; i < columns.length; ++i)
               {
-// LFH-Note: we have to measure the impact of updating indexed columns with the sanme value... Is the row re-indexed? What's the performance impact? 
-//                if (TextUtil.FindElement(uniqueColumns, columns[i], false, 0) != -1)
-//                 continue;
-                if (i != 0) {
+                if (TextUtil.FindElement(uniqueColumns, columns[i], false, 0) != -1)
+                 continue;
+                if (first == false) {
                   Str.append(",");
                 }                  
                 Str.append(" \"").append(columns[i]).append("\"=?");
-              }            
+                first = false;
+              }
+            
+            if (DBColumns != null && DBColumns.get("lastupdated") != null && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
+              {
+                Str.append(",");
+                Str.append(" \"lastUpdated\"=?");
+              }
+
           }
         return Str;
       }

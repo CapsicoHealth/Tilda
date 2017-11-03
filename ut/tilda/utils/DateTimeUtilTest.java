@@ -43,9 +43,13 @@ public class DateTimeUtilTest
       {
         try
           {
-            String TS = "2017-07-31 14:25:11.873-04";
-            DateTimeUtil.parse(TS, "yyyy-MM-dd HH:mm:ss.SSSX");
-            
+            String TS = "2017-07-31 14:25:11.873-1000";
+            LOG.debug(DateTimeUtil.parse(TS, "yyyy-MM-dd HH:mm:ss.SSSZ"));
+
+//            TS = "2017-10-25 11:04:12.597";            
+//            DateTimeUtil.parse(TS, "yyyy-MM-dd HH:mm:ss.SSS");
+
+                        
 //            Test0();
             
 //            Test1();

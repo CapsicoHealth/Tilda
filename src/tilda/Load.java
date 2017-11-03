@@ -39,9 +39,13 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.db.Connection;
+import tilda.db.ConnectionPool;
+import tilda.db.metadata.TableMeta;
 import tilda.loader.csv.ImportProcessor;
 import tilda.loader.parser.Config;
 import tilda.loader.parser.DataObject;
@@ -49,10 +53,6 @@ import tilda.loader.ui.ConnectionsTableModel;
 import tilda.loader.ui.DataImportTableModel;
 import tilda.utils.DurationUtil;
 import tilda.utils.TextUtil;
-import tilda.db.Connection;
-import tilda.db.ConnectionPool;
-import tilda.db.metadata.IndexMeta;
-import tilda.db.metadata.TableMeta;
 
 public class Load
   {
@@ -451,13 +451,14 @@ public class Load
 
                                 // Processing
                                 StartImportProcessor(ImportTables, ConnectionIds, Conf, Conf._CmsData);
+                                frmDataImport.dispose(); // Doesn't trigger listeners
                                 LOG.debug("Import Tables completed.");
                               }
                             catch (Exception e)
                               {
                                 LOG.error(e);
-                              }
-                            System.exit(1);
+                                System.exit(-1);
+                              }                            
                           }
                       });
                   }
@@ -524,8 +525,9 @@ public class Load
           {
             public void actionPerformed(ActionEvent e)
               {
+                boolean newValue = (data.length > 0) ? !((Boolean) data[0][1]) : true;
                 for (int i = 0; i < data.length; i++)
-                  data[i][1] = true;
+                  data[i][1] = newValue;
                 tableDataModel.fireTableDataChanged();
               }
           });
@@ -536,8 +538,9 @@ public class Load
           {
             public void actionPerformed(ActionEvent e)
               {
+                boolean newValue = (data.length > 0) ? !((Boolean) connections[0][2]) : true;
                 for (int i = 0; i < connections.length; i++)
-                  connections[i][2] = true;
+                  connections[i][2] = newValue;
                 connectionDataModel.fireTableDataChanged();
               }
           });

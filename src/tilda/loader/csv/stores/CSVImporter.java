@@ -41,6 +41,7 @@ import tilda.loader.parser.DataObject;
 
 import tilda.db.Connection;
 import tilda.db.metadata.ColumnMeta;
+import tilda.db.metadata.DatabaseMeta;
 import tilda.db.metadata.TableMeta;
 import tilda.enums.ColumnType;
 import tilda.parsing.parts.Column;
@@ -63,7 +64,7 @@ public abstract class CSVImporter
     protected abstract long insertData(boolean isUpsert, long t0, Map<String, ColumnMeta> DBColumns,
       boolean withHeader, Iterable<CSVRecord> records, StringBuilder Str, String schemaName, String tableName,
       String[] headers, String[] columns, Map<String, ColumnHeader> columnMap, String[] completeHeaders,
-      String DateTimePattern, String DateTimeZoneInfoId, String DatePattern) throws Exception;
+      String[] uniqueColumns, String DateTimePattern, String DateTimeZoneInfoId, String DatePattern) throws Exception;
 
     protected abstract StringBuilder GenerateSQL(boolean isUpsert, String schemaName, String tableName, String columns[],
       Map<String, ColumnMeta> DBColumns, String lookupColumns[]);
@@ -82,11 +83,15 @@ public abstract class CSVImporter
             List<String> fileList = cmsDO._FileList;
             ArrayList<Results> resultsList = new ArrayList<Results>();
             
-            TableMeta TM = new TableMeta(cmsDO._SchemaName, cmsDO._TableName, "");
-            TM.load(C);
-            Map<String, ColumnMeta> DBColumns = TM._Columns;
-
-            createSchemaAndTable(C, cmsDO._SchemaName, cmsDO._TableName, columns, 500);
+            DatabaseMeta DBMeta = new DatabaseMeta();
+            DBMeta.load(C, cmsDO._SchemaName, cmsDO._TableName);
+            TableMeta TM = DBMeta.getTableMeta(cmsDO._SchemaName, cmsDO._TableName);
+            Map<String, ColumnMeta> DBColumns = null;
+            
+            if(TM == null)
+              createSchemaAndTable(C, cmsDO._SchemaName, cmsDO._TableName, columns, 500);
+            else
+               DBColumns = TM._Columns;            
             StringBuilder Str = GenerateSQL(cmsDO.isUpserts(), cmsDO._SchemaName, cmsDO._TableName, columns, DBColumns, uniqueColumns);
             
             for (String file : fileList)
@@ -100,9 +105,11 @@ public abstract class CSVImporter
                 getHeader(completeHeaders, cmsDO._HeadersIncluded, records);
                 
                 NumOfRecs = insertData(cmsDO.isUpserts(), t0, DBColumns, cmsDO._HeadersIncluded, records, Str, cmsDO._SchemaName,
-                  cmsDO._TableName, headers, columns, cmsDO.getMultiHeaderColumnMap(), completeHeaders, cmsDO._dateTimePattern, 
-                  cmsDO._zoneId, cmsDO._datePattern);
+                  cmsDO._TableName, headers, columns, cmsDO.getMultiHeaderColumnMap(), completeHeaders, uniqueColumns, 
+                  cmsDO._dateTimePattern, cmsDO._zoneId, cmsDO._datePattern);
                 // C.setTableLogging(cmsDO._SchemaName, cmsDO._TableName, true);
+                
+                R.close();
                 
                 NumOfRecs = (cmsDO._HeadersIncluded == true) ? (NumOfRecs - 1) : NumOfRecs;
                 t0 = System.nanoTime() - t0;
@@ -150,19 +157,19 @@ public abstract class CSVImporter
         Str.append("INSERT INTO ").append(schemaName).append(".").append(tableName).append("(");
   
         boolean occ = false;
-        if (DBColumns.get("refnum") != null && TextUtil.FindElement(columns, "refnum", false, 0) == -1)
+        if (DBColumns != null && DBColumns.get("refnum") != null && TextUtil.FindElement(columns, "refnum", false, 0) == -1)
           {
             Str.append("\"refnum\"");
             occ = true;
           }
-        if (DBColumns.get("lastupdated") != null && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
+        if (DBColumns != null && DBColumns.get("lastupdated") != null && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
           {
             if (occ == true)
               Str.append(",");
             Str.append("\"lastUpdated\"");
             occ = true;
           }
-        if (DBColumns.get("created") != null && TextUtil.FindElement(columns, "created", false, 0) == -1)
+        if (DBColumns != null && DBColumns.get("created") != null && TextUtil.FindElement(columns, "created", false, 0) == -1)
           {
             if (occ == true)
               Str.append(",");
@@ -185,12 +192,12 @@ public abstract class CSVImporter
         Str.append(") ");
         Str.append(" Values (");
   
-        if (DBColumns.get("refnum") != null && TextUtil.FindElement(columns, "refnum", false, 0) == -1)
+        if (DBColumns != null && DBColumns.get("refnum") != null && TextUtil.FindElement(columns, "refnum", false, 0) == -1)
           {
             Str.append("?");
             occ = true;
           }
-        if (DBColumns.get("lastupdated") != null && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
+        if (DBColumns != null && DBColumns.get("lastupdated") != null && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
           {
             if (occ == true)
               Str.append(",");
@@ -198,7 +205,7 @@ public abstract class CSVImporter
             Str.append("?");
             occ = true;
           }
-        if (DBColumns.get("created") != null && TextUtil.FindElement(columns, "created", false, 0) == -1)
+        if (DBColumns != null && DBColumns.get("created") != null && TextUtil.FindElement(columns, "created", false, 0) == -1)
           {
             if (occ == true)
               Str.append(",");
@@ -271,9 +278,46 @@ public abstract class CSVImporter
                 break;
               }
             String Headers[] = headerList.toArray(new String[headerList.size()]);
-
-            if (Arrays.equals(Headers, completeHeaders) == false)
+            
+            boolean Error = false;
+            
+            if (Headers.length != completeHeaders.length)
               {
+                Error = true;
+                LOG.error("The file header includes '"+Headers.length+"' columns while the configuration file defines "+completeHeaders.length+" columns in the header list.");
+              }
+            else
+              {
+                for (int i = 0; i < Headers.length; ++i)
+                  {
+                    if (Headers[i].equals(completeHeaders[i]) == false)
+                      {
+                        Error = true;
+                        LOG.error("File header column '"+Headers[i]+"' and configuration header '"+completeHeaders[i]+"' at position "+i+" don't match .");
+                      }
+                  }
+              }
+            for (int i = 0; i < Headers.length; ++i)
+              {
+                if (TextUtil.FindElement(completeHeaders, Headers[i], false, 0) == -1)
+                  {
+                    Error = true;
+                    LOG.error("File header column '"+Headers[i]+"' cannot be found in the header list in the configuration file.");
+                  }
+              }
+            for (int i = 0; i < completeHeaders.length; ++i)
+              {
+                if (TextUtil.FindElement(Headers, completeHeaders[i], false, 0) == -1)
+                  {
+                    Error = true;
+                    LOG.error("Configuration header column '"+completeHeaders[i]+"' cannot be found in the file's header columns.");
+                  }
+              }
+            
+            if (Error == true || Arrays.equals(Headers, completeHeaders) == false)
+              {
+                if (Error == false)
+                  LOG.error("Something weird... Arrays.equals reports the 2 lists don't match, yet the individual tests all passed.");
                 LOG.error("Headers do not match:");
                 LOG.error("   File Headers  : " + TextUtil.Print(Headers));
                 LOG.error("   Maping Headers: " + TextUtil.Print(completeHeaders));
