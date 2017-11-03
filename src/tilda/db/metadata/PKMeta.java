@@ -15,7 +15,7 @@ public class PKMeta
     throws Exception
       {
 //         LOG.debug(JDBCHelper.PrintResultSet(RS));
-         _Name   = RS.getString("PK_NAME" ).toLowerCase();
+         _Name   = RS.getString("PK_NAME" );
          _Columns.add(RS.getString("COLUMN_NAME"));
          while (RS.next() == true)
           _Columns.add(RS.getString("COLUMN_NAME"));           

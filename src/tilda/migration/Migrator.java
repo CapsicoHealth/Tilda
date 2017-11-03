@@ -18,9 +18,11 @@ package tilda.migration;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.logging.log4j.LogManager;
@@ -32,6 +34,7 @@ import tilda.db.ConnectionPool;
 import tilda.db.KeysManager;
 import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.DatabaseMeta;
+import tilda.db.metadata.FKMeta;
 import tilda.db.metadata.PKMeta;
 import tilda.db.metadata.TableMeta;
 import tilda.db.metadata.ViewMeta;
@@ -48,6 +51,8 @@ import tilda.migration.actions.SchemaCreate;
 import tilda.migration.actions.SchemaViewsDrop;
 import tilda.migration.actions.TableComment;
 import tilda.migration.actions.TableCreate;
+import tilda.migration.actions.TableFKAdd;
+import tilda.migration.actions.TableFKDrop;
 import tilda.migration.actions.TableKeyCreate;
 import tilda.migration.actions.TablePKReplace;
 import tilda.migration.actions.TildaAclAdd;
@@ -56,6 +61,7 @@ import tilda.migration.actions.ViewCreate;
 import tilda.migration.actions.ViewUpdate;
 import tilda.parsing.Parser;
 import tilda.parsing.parts.Column;
+import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.PrimaryKey;
 import tilda.parsing.parts.Schema;
@@ -191,7 +197,7 @@ public class Migrator
         Scripts.add(InitScript);
         for (Schema S : TildaList)
           {
-            List<MigrationAction> L = Migrator.getMigrationActions(C.getSQlCodeGen(), S, DBMeta);
+            List<MigrationAction> L = Migrator.getMigrationActions(C.getSQlCodeGen(), S, TildaList, DBMeta);
             for (MigrationAction MA : L)
               if (MA._isDependency == false)
                 ++ActionCount;
@@ -276,12 +282,13 @@ public class Migrator
      * C.commit();
      * }
      */
-    protected static List<MigrationAction> getMigrationActions(CodeGenSql CGSQL, Schema S, DatabaseMeta DBMeta)
+    protected static List<MigrationAction> getMigrationActions(CodeGenSql CGSQL, Schema S, List<Schema> TildaList, DatabaseMeta DBMeta)
     throws Exception
       {
         LOG.info("Comparing the application's data model with the database's for " + S.getFullName());
 
         List<MigrationAction> Actions = new ArrayList<MigrationAction>();
+        List<String> Errors = new ArrayList<String>();
 
         if (DBMeta.getSchemaMeta(S._Name) == null)
           Actions.add(new SchemaCreate(S));
@@ -314,13 +321,8 @@ public class Migrator
                         if (CMeta._Nullable == 1 && Col._Nullable == false || CMeta._Nullable == 0 && Col._Nullable == true)
                           Actions.add(new ColumnAlterNull(Col));
 
-                        if (DBMeta.supportsArrays() == true)
-                          {
-                            if (CMeta.isArray() == false && Col.isCollection() == true && Col.getType() != ColumnType.JSON)
-                              throw new Exception("The application's data model defines the column '" + Col.getShortName() + "' as an array, but it's not an array in the DB. The database needs to be migrated manually.");
-                            else if (CMeta.isArray() == true && (Col.isCollection() == false || Col.getType() == ColumnType.JSON))
-                              throw new Exception("The application's data model defines the column '" + Col.getShortName() + "' as an base type, but it's an array in the DB. The database needs to be migrated manually.");
-                          }
+                        if (CheckArrays(DBMeta, Errors, Col, CMeta) == false)
+                          continue;
 
                         if (Col.isCollection() == false
                         && (Col.getType() == ColumnType.BITFIELD && CMeta._TildaType != ColumnType.INTEGER
@@ -336,8 +338,53 @@ public class Migrator
                   }
                 if (Obj._PrimaryKey != null && Obj._PrimaryKey._Autogen == true && KeysManager.hasKey(Obj.getShortName()) == false)
                   Actions.add(new TableKeyCreate(Obj));
+                Set<String> DroppedFKs = new HashSet<String>();                
                 if (DifferentPrimaryKeys(Obj._PrimaryKey, TMeta._PrimaryKey) == true)
-                  Actions.add(new TablePKReplace(Obj, TMeta._PrimaryKey));
+                  {
+                    for (FKMeta fk : TMeta._ForeignKeysIn.values())
+                      {
+                        Object OtherObj = CheckForeignKeys(TildaList, Errors, Obj, fk);
+                        if (OtherObj == null)
+                         continue;
+                        Actions.add(new TableFKDrop(OtherObj, Obj, fk));
+                        DroppedFKs.add(fk.getSignature());
+                      }
+                    Actions.add(new TablePKReplace(Obj, TMeta));
+                  }
+                
+                // Checking any FK defined in the DB which are not in the Model, so they can be dropped.
+                for (FKMeta fk : TMeta._ForeignKeysOut.values())
+                  {
+                    boolean Found = false;
+                    String Sig = fk.getSignature();
+                    LOG.debug("Checking db FK "+Sig+".");
+                    for (ForeignKey FK : Obj._ForeignKeys)
+                      {
+                        LOG.debug("Checking model FK "+FK.getSignature()+".");
+                        if (Sig.equals(FK.getSignature()) == true)
+                          {
+                            Found = true;
+                            break;
+                          }
+                      }
+                    if (Found == false && DroppedFKs.contains(fk.getSignature()) == false)
+                     Actions.add(new TableFKDrop(Obj, null, fk));
+                  }
+                // Checking any FK defined in the Model which are not in the DB, so they can be added.
+                for (ForeignKey FK : Obj._ForeignKeys)
+                  {
+                    boolean Found = false;
+                    String Sig = FK.getSignature();
+                    for (FKMeta fk : TMeta._ForeignKeysOut.values())
+                      if (Sig.equals(fk.getSignature()) == true)
+                        {
+                          Found = true;
+                          break;
+                        }
+                    if (Found == false)
+                     Actions.add(new TableFKAdd(FK));
+                  }
+                
                 /*
                  * for (String c : Obj._DropOldColumns)
                  * {
@@ -371,7 +418,43 @@ public class Migrator
               }
           }
 
+        if (Errors.isEmpty() == false)
+          {
+            LOG.error("Errors were found when putting together a migration script:");
+            for (int i = 0; i < Errors.size(); ++i)
+              LOG.error("   "+(i+1)+": "+Errors.get(i)+".");
+            throw new Exception("Database couldn't be migrated.");
+          }
         return Actions;
+      }
+
+    private static Object CheckForeignKeys(List<Schema> TildaList, List<String> Errors, Object Obj, FKMeta fk)
+      {
+        Object OtherObj = Schema.getObject(TildaList, fk._OtherSchema, fk._OtherTable);
+        if (OtherObj == null)
+         {
+           Errors.add("The table "+Obj.getFullName()+" is changing its primary key, and a dependent table " + fk._OtherSchema+"." + fk._OtherTable + " seems to exist in the database outside of the application's data model. As a reult, migration cannot happen automatically for that dependent table.");
+           return null;
+         }
+        return OtherObj;
+      }
+
+    private static boolean CheckArrays(DatabaseMeta DBMeta, List<String> Errors, Column Col, ColumnMeta CMeta)
+      {
+        if (DBMeta.supportsArrays() == true)
+          {
+            if (CMeta.isArray() == false && Col.isCollection() == true && Col.getType() != ColumnType.JSON)
+             {
+               Errors.add("The application's data model defines the column '" + Col.getShortName() + "' as an array, but it's not an array in the DB. The database needs to be migrated manually.");
+               return false;
+             }
+            else if (CMeta.isArray() == true && (Col.isCollection() == false || Col.getType() == ColumnType.JSON))
+              {
+                Errors.add("The application's data model defines the column '" + Col.getShortName() + "' as an base type, but it's an array in the DB. The database needs to be migrated manually.");
+                return false;
+              }
+          }
+        return true;
       }
 
     private static boolean DifferentPrimaryKeys(PrimaryKey PK1, PKMeta PK2)

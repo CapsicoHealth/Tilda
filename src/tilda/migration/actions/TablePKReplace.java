@@ -16,43 +16,55 @@
 
 package tilda.migration.actions;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import tilda.db.Connection;
-import tilda.db.metadata.PKMeta;
+import tilda.db.metadata.TableMeta;
 import tilda.migration.MigrationAction;
 import tilda.utils.TextUtil;
 
 public class TablePKReplace extends MigrationAction
   {
-    public TablePKReplace(tilda.parsing.parts.Object O, PKMeta OldPK)
+    protected static final Logger LOG = LogManager.getLogger(TablePKReplace.class.getName());
+
+    public TablePKReplace(tilda.parsing.parts.Object O, TableMeta TMeta)
       {
         super(false);
         _O = O;
-        _OldPK = OldPK;
+        _TMeta = TMeta;
+        // LOG.debug("FK Out");
+        // for (FKMeta fk : _TMeta._ForeignKeysOut.values())
+        // LOG.debug(" "+fk.toString());
+        // LOG.debug("FK In");
+        // for (FKMeta fk : _TMeta._ForeignKeysIn.values())
+        // LOG.debug(" "+fk.toString());
+        // LOG.debug("xxx");
       }
 
     protected tilda.parsing.parts.Object _O;
-    protected PKMeta _OldPK;
+    protected TableMeta                  _TMeta;
 
     public boolean process(Connection C)
     throws Exception
       {
-        return C.alterTableReplaceTablePK(_O, _OldPK);
+        return C.alterTableReplaceTablePK(_O, _TMeta._PrimaryKey);
       }
 
     @Override
     public String getDescription()
       {
-        if (_OldPK != null)
-         {
-           if (_O._PrimaryKey == null)
-            return "Dropping Table "+_O.getFullName()+"'s Primary Key "+_OldPK.toString();
-           return "Updating Table "+_O.getFullName()+"'s Primary Key from "+_OldPK.toString()+" to ("+TextUtil.Print(_O._PrimaryKey._Columns)+")";
-         }
- 
+        if (_TMeta._PrimaryKey != null)
+          {
+            if (_O._PrimaryKey == null)
+              return "Dropping Table " + _O.getFullName() + "'s Primary Key " + _TMeta._PrimaryKey.toString();
+            return "Updating Table " + _O.getFullName() + "'s Primary Key from " + _TMeta._PrimaryKey.toString() + " to (" + TextUtil.Print(_O._PrimaryKey._Columns) + ")";
+          }
+
         if (_O._PrimaryKey == null)
-         return "Not doing anything to Table "+_O.getFullName()+"'s Primary Key. Why is this being called?";
-        return "Adding Table "+_O.getFullName()+"'s Primary Key ("+TextUtil.Print(_O._PrimaryKey._Columns)+")";
+          return "Not doing anything to Table " + _O.getFullName() + "'s Primary Key. Why is this being called?";
+        return "Adding Table " + _O.getFullName() + "'s Primary Key (" + TextUtil.Print(_O._PrimaryKey._Columns) + ")";
       }
-    
-    
+
+
   }
