@@ -102,7 +102,7 @@ public class Load
             for (String error : errors)
               LOG.error(error);
             LOG.error("File " + configPath + " failed validation. Aborting !!");
-            System.exit(-1);
+            // TODO: Write error to jobFile
           }
         
         LOG.debug("Running ImportProcessor");
