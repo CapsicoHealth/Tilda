@@ -125,15 +125,21 @@ public class Schema
 
     public Object getObject(String SchemaName, String ObjectName)
       {
-        if (_Name.equals(SchemaName) == true)
+        if (_Name.equalsIgnoreCase(SchemaName) == true)
          return getObject(ObjectName);
-        for (Schema S : _DependencySchemas)
+        return getObject(_DependencySchemas, SchemaName, ObjectName);
+      }
+    
+    public static Object getObject(List<Schema> SchemaList, String SchemaName, String ObjectName)
+      {
+        for (Schema S : SchemaList)
           {
-            if (S._Name.equals(SchemaName) == true)
+            if (S._Name.equalsIgnoreCase(SchemaName) == true)
              return S.getObject(ObjectName);
           }
         return null;
       }
+    
     
     public boolean isDefinedInOrder(Object FirstObj, Object SecondObj)
       {
