@@ -45,7 +45,6 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.db.Connection;
 import tilda.db.ConnectionPool;
-import tilda.db.metadata.TableMeta;
 import tilda.loader.csv.ImportProcessor;
 import tilda.loader.parser.Config;
 import tilda.loader.parser.DataObject;
@@ -198,28 +197,7 @@ public class Load
                 C = ConnectionPool.get(connectionId);
                 for (DataObject DO : selectedDO)
                   {
-                    if (DO.isUpserts() == DO.isInserts())
-                      {
-                        errorMessages.add("Data definition for " + DO.getTableFullName() + " is invalid: one of 'inserts' or 'upserts' must be true. ");
-                        continue;
-                      }
-
-                    if (DO.isUpserts() == false)
-                      continue; // Skip uniqueColumns validation if not Upserts
-
-                    String[] uniqueColumns = DO.getUniqueColumnsList();
-                    if (uniqueColumns.length < 1)
-                      {
-                        errorMessages.add("Data definition for " + DO.getTableFullName() + " is invalid: upserts must also specify the object's identify in 'uniqueColumns'. ");
-                        continue;
-                      }
-
-                    TableMeta tableMeta = new TableMeta(DO._SchemaName, DO._TableName, "");
-                    tableMeta.load(C);
-                    if (tableMeta.getIndex(uniqueColumns, true) == null)
-                      {
-                        errorMessages.add("Data definition for " + DO.getTableFullName() + " is invalid: 'uniqueColumns' is listing columns which do not match any existing unique index in the database for connection "+connectionId+". ");
-                      }
+                    DO.validate(C, errorMessages);
                   }
               }
             catch (Throwable T)
@@ -412,7 +390,6 @@ public class Load
                 int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to run the data import?", "Warning", JOptionPane.YES_NO_OPTION);
                 if (dialogResult == 0)
                   {
-                    // List<String> truncateTables = new ArrayList<String>();
                     List<String> ImportTables = new ArrayList<String>();
                     List<String> ConnectionIds = new ArrayList<String>();
 

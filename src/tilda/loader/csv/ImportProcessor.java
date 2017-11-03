@@ -98,7 +98,6 @@ public class ImportProcessor
         try
           {
             C.truncateTable(SchemaName, TableName);
-//            C.setTableLogging(SchemaName, TableName, false);
             C.commit();
           }
         catch (Exception e)

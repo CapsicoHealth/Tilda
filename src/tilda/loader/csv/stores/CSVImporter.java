@@ -36,6 +36,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.loader.GenericLoader;
+import tilda.loader.csv.ImportProcessor;
 import tilda.loader.parser.ColumnHeader;
 import tilda.loader.parser.DataObject;
 
@@ -104,10 +105,12 @@ public abstract class CSVImporter
                 Iterable<CSVRecord> records = csvFormat.parse(R);
                 getHeader(completeHeaders, cmsDO._HeadersIncluded, records);
                 
+                if (cmsDO.isInserts() == true && cmsDO.isTruncateFirst() == true)
+                 ImportProcessor.truncateTable(C, cmsDO._SchemaName, cmsDO._TableName);
+                
                 NumOfRecs = insertData(cmsDO.isUpserts(), t0, DBColumns, cmsDO._HeadersIncluded, records, Str, cmsDO._SchemaName,
                   cmsDO._TableName, headers, columns, cmsDO.getMultiHeaderColumnMap(), completeHeaders, uniqueColumns, 
                   cmsDO._dateTimePattern, cmsDO._zoneId, cmsDO._datePattern);
-                // C.setTableLogging(cmsDO._SchemaName, cmsDO._TableName, true);
                 
                 R.close();
                 
