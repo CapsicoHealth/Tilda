@@ -30,6 +30,7 @@ public class TILDA__JOBFILE_Json
    transient                                 public ZonedDateTime  _fileProcessStartTime  ;
    @SerializedName("fileProcessEndTime"    ) public String  Str_fileProcessEndTime    ;
    transient                                 public ZonedDateTime  _fileProcessEndTime    ;
+   @SerializedName("status"                ) public Integer  _status                ;
    /*@formatter:on*/
 
    public tilda.data.JobFile_Data Write(Connection C) throws Exception
@@ -50,18 +51,21 @@ public class TILDA__JOBFILE_Json
          if (   _fileProcessEndTime     == null)
           throw new Exception("Incoming value for 'tilda.data.TILDA.JOBFILE.fileProcessEndTime' was not in the expected format. Dates should follow the ISO format.\n"+toString());
        }
+      if (_status                 == null)
+       throw new Exception("Incoming value for 'tilda.data.TILDA.JOBFILE.status' was null or empty. It's not nullable in the model.\n"+toString());
 
-      tilda.data.JobFile_Data Obj = tilda.data.JobFile_Factory.Create(_jobRefnum, _fileName);
+      tilda.data.JobFile_Data Obj = tilda.data.JobFile_Factory.Create(_jobRefnum, _fileName, _status);
       Update(Obj);
       if (Obj.Write(C) == false)
        {
-         Obj = tilda.data.JobFile_Factory.LookupByJob_Refnum(_jobRefnum);
+         Obj = tilda.data.JobFile_Factory.LookupByJobFile_Job_Refnum(_jobRefnum);
          if (Obj.Read(C) == false)
           throw new Exception("Cannot create the tilda.data.TILDA.JOBFILE object.\n"+toString());
          if (_fileName              != null) Obj.setFileName              (_fileName              );
          if (_fileRecords           != null) Obj.setFileRecords           (_fileRecords           );
          if (_fileProcessStartTime  != null) Obj.setFileProcessStartTime  (_fileProcessStartTime  );
          if (_fileProcessEndTime    != null) Obj.setFileProcessEndTime    (_fileProcessEndTime    );
+         if (_status                != null) Obj.setStatus                (_status                );
          if (Obj.Write(C) == false)
           throw new Exception("Cannot update the tilda.data.TILDA.JOBFILE object: "+Obj.toString());
 
@@ -76,6 +80,7 @@ public class TILDA__JOBFILE_Json
       if (_fileRecords           != null) Obj.setFileRecords           (_fileRecords           );
       if (_fileProcessStartTime  != null) Obj.setFileProcessStartTime  (_fileProcessStartTime  );
       if (_fileProcessEndTime    != null) Obj.setFileProcessEndTime    (_fileProcessEndTime    );
+      if (_status                != null) Obj.setStatus                (_status                );
     }
 
    public String toString()
@@ -86,6 +91,7 @@ public class TILDA__JOBFILE_Json
          + "; fileRecords"           + (_fileRecords            == null ? ": NULL" : ": " + _fileRecords           )
          + "; fileProcessStartTime"  + (_fileProcessStartTime   == null ? ": NULL" : ": "+DateTimeUtil.printDateTimeForSQL(_fileProcessStartTime))
          + "; fileProcessEndTime"    + (_fileProcessEndTime     == null ? ": NULL" : ": "+DateTimeUtil.printDateTimeForSQL(_fileProcessEndTime))
+         + "; status"                + (_status                 == null ? ": NULL" : ": " + _status                )
          + ";";
     }
 

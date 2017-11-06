@@ -16,10 +16,10 @@ import org.apache.commons.csv.CSVRecord;
 
 import tilda.data.JobFile_Data;
 import tilda.data.JobFile_Factory;
+import tilda.data.JobMessage_Data;
+import tilda.data.JobMessage_Factory;
 import tilda.data.Job_Data;
 import tilda.data.Job_Factory;
-import tilda.data.Job_Message_Data;
-import tilda.data.Job_Message_Factory;
 import tilda.data.ZoneInfo_Factory;
 import tilda.db.Connection;
 import tilda.db.QueryDetails;
@@ -76,7 +76,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
                     LOG.debug(jobMessageLog);
                     if(statusConnection != null && jobFile != null)
                       {
-                        Job_Message_Data jobMessage = Job_Message_Factory.Create(jobFile.getRefnum(), jobMessageLog); 
+                        JobMessage_Data jobMessage = JobMessage_Factory.Create(jobFile.getRefnum(), jobMessageLog, false); 
                         jobMessage.Write(statusConnection);
                       }
                     continue;
@@ -366,7 +366,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
                         jobFile.Write(statusConnection);
 
                         // set JobMessage
-                        Job_Message_Data jobMessage = Job_Message_Factory.Create(jobFile.getRefnum(), jobMessageLog);
+                        JobMessage_Data jobMessage = JobMessage_Factory.Create(jobFile.getRefnum(), jobMessageLog, false);
                         jobMessage.Write(statusConnection);
                         statusConnection.commit();
                       }                    

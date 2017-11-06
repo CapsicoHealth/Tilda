@@ -130,6 +130,24 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>9&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOBFILE-status_DIV' class='columns'>status</B>&nbsp;&nbsp;</TD>
+<TD>int&nbsp;&nbsp;</TD>
+<TD>integer&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>JobFile status pending, success failure</TD>
+</TR>
+  <TR bgcolor="#DFECF8"><TD></TD><TD></TD><TD colspan="10" align="center">
+<TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFF2CC"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Running</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>Running&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Running</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Success</B>&nbsp;&nbsp;</TD><TD>1&nbsp;&nbsp;</TD><TD>Success&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Success</TD></TR>
+  <TR bgcolor="#FFF2CC"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Failure</B>&nbsp;&nbsp;</TD><TD>2&nbsp;&nbsp;</TD><TD>Failure&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Failure</TD></TR>
+</TABLE>
+</TD></TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>10&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOBFILE-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
@@ -139,13 +157,13 @@ It contains the following columns:<BR>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created.</TD>
 </TR>
-  <TR bgcolor="#DFECF8"><TD></TD><TD></TD><TD colspan="10" align="center">
+  <TR bgcolor="#FFFFFF"><TD></TD><TD></TD><TD colspan="10" align="center">
 <TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
   <TR bgcolor="#FFF2CC"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Creation</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Creation&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Creation time</TD></TR>
 </TABLE>
 </TD></TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>10&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>11&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOBFILE-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
@@ -155,13 +173,13 @@ It contains the following columns:<BR>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated.</TD>
 </TR>
-  <TR bgcolor="#FFFFFF"><TD></TD><TD></TD><TD colspan="10" align="center">
+  <TR bgcolor="#DFECF8"><TD></TD><TD></TD><TD colspan="10" align="center">
 <TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
   <TR bgcolor="#FFF2CC"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Update</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Update&nbsp;&nbsp;</TD><TD>ALWAYS&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Last updated time</TD></TR>
 </TABLE>
 </TD></TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>11&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>12&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOBFILE-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
@@ -320,6 +338,23 @@ It contains the following columns:<BR>
 </tr>
 </table>
 </DIV></DIV>
+<DIV id='JOBFILE-status_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('JOBFILE-status_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOBFILE_DIV'>JobFile</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOBFILE-status_DIV'>status</a> -- INTEGER</td>
+</tr>
+</table>
+</DIV></DIV>
 <DIV id='JOBFILE-created_MODAL' class='modal'>
 <DIV class='modal-content'>
 <SPAN onclick="onModalCloseClicked('JOBFILE-created_MODAL')" class='close'>&times;</SPAN>
@@ -375,7 +410,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Nov 2 2017, 14:17:02IST
+ @generated Nov 6 2017, 10:38:50IST
 */
 public abstract class TILDA__JOBFILE implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
@@ -1579,6 +1614,237 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOBFILE.status -> TILDA.JOBFILE."status"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBFILE.status of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.status of type integer</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>JobFile status pending, success failure</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Running</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>Running&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Running</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Success</B>&nbsp;&nbsp;</TD><TD>1&nbsp;&nbsp;</TD><TD>Success&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Success</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Failure</B>&nbsp;&nbsp;</TD><TD>2&nbsp;&nbsp;</TD><TD>Failure&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Failure</TD></TR>
+</TABLE>
+</TD></TR>
+
+</TABLE>
+*/
+   int _status= SystemValues.EVIL_VALUE;
+/**
+These are the enumerated values for tilda.data.TILDA.JOBFILE.status, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Running</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>Running&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Running</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Success</B>&nbsp;&nbsp;</TD><TD>1&nbsp;&nbsp;</TD><TD>Success&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Success</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Failure</B>&nbsp;&nbsp;</TD><TD>2&nbsp;&nbsp;</TD><TD>Failure&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Failure</TD></TR>
+</TABLE>
+*/
+   public static final String[][] _status_Values = {
+                                               { "0", "Running", "JobFile Status Running", "" }
+                                             , { "1", "Success", "JobFile Status Success", "" }
+                                             , { "2", "Failure", "JobFile Status Failure", "" }
+                                  };
+   public static final int _statusRunning = 0;
+   public static final int _statusSuccess = 1;
+   public static final int _statusFailure = 2;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOBFILE.status -> TILDA.JOBFILE."status"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBFILE.status of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.status of type integer</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>JobFile status pending, success failure</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Running</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>Running&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Running</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Success</B>&nbsp;&nbsp;</TD><TD>1&nbsp;&nbsp;</TD><TD>Success&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Success</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Failure</B>&nbsp;&nbsp;</TD><TD>2&nbsp;&nbsp;</TD><TD>Failure&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Failure</TD></TR>
+</TABLE>
+</TD></TR>
+
+</TABLE>
+*/
+   public final int getStatus()
+      { return _status; }
+
+/**
+This is the value is-a for tilda.data.TILDA.JOBFILE.status:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>Running</TD></TR>
+  <TR><TD align="right"><B>Value</B></TD><TD>0</TD></TR>
+  <TR><TD align="right"><B>Default</B></TD><TD>NONE</TD></TR>
+  <TR><TD align="right"><B>Label</B></TD><TD>Running</TD></TR>
+  <TR><TD align="right"><B>Groupings</B></TD><TD></TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>JobFile Status Running</TD></TR>
+</TABLE>
+*/
+   public final boolean isStatusRunning()
+      { return _status == _statusRunning; }
+
+/**
+This is the value is-a for tilda.data.TILDA.JOBFILE.status:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>Success</TD></TR>
+  <TR><TD align="right"><B>Value</B></TD><TD>1</TD></TR>
+  <TR><TD align="right"><B>Default</B></TD><TD>NONE</TD></TR>
+  <TR><TD align="right"><B>Label</B></TD><TD>Success</TD></TR>
+  <TR><TD align="right"><B>Groupings</B></TD><TD></TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>JobFile Status Success</TD></TR>
+</TABLE>
+*/
+   public final boolean isStatusSuccess()
+      { return _status == _statusSuccess; }
+
+/**
+This is the value is-a for tilda.data.TILDA.JOBFILE.status:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>Failure</TD></TR>
+  <TR><TD align="right"><B>Value</B></TD><TD>2</TD></TR>
+  <TR><TD align="right"><B>Default</B></TD><TD>NONE</TD></TR>
+  <TR><TD align="right"><B>Label</B></TD><TD>Failure</TD></TR>
+  <TR><TD align="right"><B>Groupings</B></TD><TD></TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>JobFile Status Failure</TD></TR>
+</TABLE>
+*/
+   public final boolean isStatusFailure()
+      { return _status == _statusFailure; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOBFILE.status -> TILDA.JOBFILE."status"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBFILE.status of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.status of type integer</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>JobFile status pending, success failure</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Running</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>Running&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Running</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Success</B>&nbsp;&nbsp;</TD><TD>1&nbsp;&nbsp;</TD><TD>Success&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Success</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Failure</B>&nbsp;&nbsp;</TD><TD>2&nbsp;&nbsp;</TD><TD>Failure&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Failure</TD></TR>
+</TABLE>
+</TD></TR>
+
+</TABLE>
+*/
+   public void setStatus(int v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (v != _status)
+        {
+          __Changes1 |= TILDA__JOBFILE_Factory.COLS.STATUS._Mask1;
+          __Nulls1   &= ~TILDA__JOBFILE_Factory.COLS.STATUS._Mask1;
+       _status = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/**
+This is the value setter-as for tilda.data.TILDA.JOBFILE.status:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>Running</TD></TR>
+  <TR><TD align="right"><B>Value</B></TD><TD>0</TD></TR>
+  <TR><TD align="right"><B>Default</B></TD><TD>NONE</TD></TR>
+  <TR><TD align="right"><B>Label</B></TD><TD>Running</TD></TR>
+  <TR><TD align="right"><B>Groupings</B></TD><TD></TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>JobFile Status Running</TD></TR>
+</TABLE>
+*/
+   public void setStatusRunning() throws Exception
+      { setStatus(_statusRunning); }
+
+/**
+This is the value setter-as for tilda.data.TILDA.JOBFILE.status:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>Success</TD></TR>
+  <TR><TD align="right"><B>Value</B></TD><TD>1</TD></TR>
+  <TR><TD align="right"><B>Default</B></TD><TD>NONE</TD></TR>
+  <TR><TD align="right"><B>Label</B></TD><TD>Success</TD></TR>
+  <TR><TD align="right"><B>Groupings</B></TD><TD></TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>JobFile Status Success</TD></TR>
+</TABLE>
+*/
+   public void setStatusSuccess() throws Exception
+      { setStatus(_statusSuccess); }
+
+/**
+This is the value setter-as for tilda.data.TILDA.JOBFILE.status:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>Failure</TD></TR>
+  <TR><TD align="right"><B>Value</B></TD><TD>2</TD></TR>
+  <TR><TD align="right"><B>Default</B></TD><TD>NONE</TD></TR>
+  <TR><TD align="right"><B>Label</B></TD><TD>Failure</TD></TR>
+  <TR><TD align="right"><B>Groupings</B></TD><TD></TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>JobFile Status Failure</TD></TR>
+</TABLE>
+*/
+   public void setStatusFailure() throws Exception
+      { setStatus(_statusFailure); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOBFILE.status -> TILDA.JOBFILE."status"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the hasChanged for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBFILE.status of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.status of type integer</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>JobFile status pending, success failure</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Running</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>Running&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Running</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Success</B>&nbsp;&nbsp;</TD><TD>1&nbsp;&nbsp;</TD><TD>Success&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Success</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Failure</B>&nbsp;&nbsp;</TD><TD>2&nbsp;&nbsp;</TD><TD>Failure&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Failure</TD></TR>
+</TABLE>
+</TD></TR>
+
+</TABLE>
+*/
+   public boolean hasChangedStatus()
+     { return (TILDA__JOBFILE_Factory.COLS.STATUS._Mask1 & __Changes1) != 0L; }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JOBFILE.created -> TILDA.JOBFILE."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -2225,6 +2491,7 @@ This is the hasChanged for:<BR>
        if ((TILDA__JOBFILE_Factory.COLS.FILEPROCESSSTARTTIME._Mask1   & __Nulls1) != 0L) Dst.setNullFileProcessStartTime  (); else        Dst.setFileProcessStartTime  (_fileProcessStartTime  );
        if ((TILDA__JOBFILE_Factory.COLS.FILEPROCESSENDTIMETZ._Mask1   & __Nulls1) != 0L) Dst.setNullFileProcessEndTimeTZ  (); else        Dst.setFileProcessEndTimeTZ  (_fileProcessEndTimeTZ  );
        if ((TILDA__JOBFILE_Factory.COLS.FILEPROCESSENDTIME._Mask1     & __Nulls1) != 0L) Dst.setNullFileProcessEndTime    (); else        Dst.setFileProcessEndTime    (_fileProcessEndTime    );
+       Dst.setStatus                (_status                );
        Dst.setLastUpdated           (_lastUpdated           );
        if ((TILDA__JOBFILE_Factory.COLS.DELETED._Mask1                & __Nulls1) != 0L) Dst.setNullDeleted               (); else        Dst.setDeleted               (_deleted               );
      }
@@ -2280,6 +2547,7 @@ This is the hasChanged for:<BR>
           if ((TILDA__JOBFILE_Factory.COLS.FILEPROCESSENDTIME._Mask1     & __Changes1) != 0L) { TILDA__JOBFILE_Factory.COLS.FILEPROCESSENDTIME.getFullColumnVarForInsert(C, S);
              V.append((TILDA__JOBFILE_Factory.COLS.FILEPROCESSENDTIME._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_fileProcessEndTime) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
+          if ((TILDA__JOBFILE_Factory.COLS.STATUS._Mask1                 & __Changes1) != 0L) { TILDA__JOBFILE_Factory.COLS.STATUS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
           if ((TILDA__JOBFILE_Factory.COLS.CREATED._Mask1                & __Changes1) != 0L) { TILDA__JOBFILE_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
              V.append((TILDA__JOBFILE_Factory.COLS.CREATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
@@ -2325,6 +2593,7 @@ This is the hasChanged for:<BR>
              else
               TILDA__JOBFILE_Factory.COLS.FILEPROCESSENDTIME.getFullColumnVarForUpdate(C, S);
            }
+          if ((TILDA__JOBFILE_Factory.COLS.STATUS._Mask1                 & __Changes1) != 0L) TILDA__JOBFILE_Factory.COLS.STATUS.getFullColumnVarForUpdate(C, S);
 
           if ((TILDA__JOBFILE_Factory.COLS.CREATED._Mask1 & __Changes1) != 0L)
            {
@@ -2411,6 +2680,10 @@ This is the hasChanged for:<BR>
                if ((TILDA__JOBFILE_Factory.COLS.FILEPROCESSENDTIME._Mask1     & __Changes1) != 0L) 
                 { 
                   if ((TILDA__JOBFILE_Factory.COLS.FILEPROCESSENDTIME._Mask1     & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_fileProcessEndTime) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_fileProcessEndTime.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                } 
+               if ((TILDA__JOBFILE_Factory.COLS.STATUS._Mask1                 & __Changes1) != 0L) 
+                { 
+                  if ((TILDA__JOBFILE_Factory.COLS.STATUS._Mask1                 & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _status);
                 } 
                if ((TILDA__JOBFILE_Factory.COLS.CREATED._Mask1                & __Changes1) != 0L) 
                 { 
@@ -2518,6 +2791,7 @@ This is the hasChanged for:<BR>
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBFILE", "fileProcessStartTime");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBFILE", "fileProcessEndTimeTZ");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBFILE", "fileProcessEndTime");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBFILE", "status");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBFILE", "created");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBFILE", "lastUpdated");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBFILE", "deleted");
@@ -2592,6 +2866,7 @@ This is the hasChanged for:<BR>
                                        _fileProcessStartTime   = ProcessZDT(_fileProcessStartTimeTZ  , "tilda.data.TILDA.JOBFILE.fileProcessStartTime"  , RS, ++i, TILDA__JOBFILE_Factory.COLS.FILEPROCESSSTARTTIME  , TILDA__JOBFILE_Factory.COLS.FILEPROCESSSTARTTIMETZ  );
                                        _fileProcessEndTimeTZ   = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOBFILE_Factory.COLS.FILEPROCESSENDTIMETZ._Mask1  ; else _fileProcessEndTimeTZ   = _fileProcessEndTimeTZ  .trim();
                                        _fileProcessEndTime     = ProcessZDT(_fileProcessEndTimeTZ    , "tilda.data.TILDA.JOBFILE.fileProcessEndTime"    , RS, ++i, TILDA__JOBFILE_Factory.COLS.FILEPROCESSENDTIME    , TILDA__JOBFILE_Factory.COLS.FILEPROCESSENDTIMETZ    );
+                                       _status                 =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOBFILE_Factory.COLS.STATUS._Mask1                ;
                                        _created                = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
                                        _lastUpdated            = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
                                        _deleted                = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
@@ -2649,6 +2924,7 @@ This is the hasChanged for:<BR>
                + "; fileRecords"              + ((TILDA__JOBFILE_Factory.COLS.FILERECORDS._Mask1            & __Nulls1) != 0L ? ": NULL" : ": " +                                   getFileRecords           () )
                + "; fileProcessStartTime"     + ((TILDA__JOBFILE_Factory.COLS.FILEPROCESSSTARTTIME._Mask1   & __Nulls1) != 0L ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getFileProcessStartTime  ()))
                + "; fileProcessEndTime"       + ((TILDA__JOBFILE_Factory.COLS.FILEPROCESSENDTIME._Mask1     & __Nulls1) != 0L ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getFileProcessEndTime    ()))
+               + "; status: "                                                                                                                  +                                   getStatus                () 
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

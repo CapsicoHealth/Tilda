@@ -180,6 +180,33 @@ This is the column definition for:<BR>
      public static Type_DatetimePrimitiveNull  FILEPROCESSENDTIME    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "fileProcessEndTime"    , 7/*7*/, "FileProcessEndTime");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOBFILE.status -> TILDA.JOBFILE."status"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBFILE.status of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.status of type integer</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>JobFile status pending, success failure</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Running</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>Running&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Running</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Success</B>&nbsp;&nbsp;</TD><TD>1&nbsp;&nbsp;</TD><TD>Success&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Success</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Failure</B>&nbsp;&nbsp;</TD><TD>2&nbsp;&nbsp;</TD><TD>Failure&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Failure</TD></TR>
+</TABLE>
+</TD></TR>
+
+</TABLE>
+*/
+     public static Type_IntegerPrimitive       STATUS                = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "status"                , 8/*8*/, "JobFile status pending, success failure");
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JOBFILE.created -> TILDA.JOBFILE."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -202,7 +229,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED               = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"               , 8/*8*/, "The timestamp for when the record was created.");
+     public static Type_DatetimePrimitive      CREATED               = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"               , 9/*9*/, "The timestamp for when the record was created.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JOBFILE.lastUpdated -> TILDA.JOBFILE."lastUpdated"
@@ -227,7 +254,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED           = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"           , 9/*9*/, "The timestamp for when the record was last updated.");
+     public static Type_DatetimePrimitive      LASTUPDATED           = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"           , 10/*10*/, "The timestamp for when the record was last updated.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JOBFILE.deleted -> TILDA.JOBFILE."deleted"
@@ -245,7 +272,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED               = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"               , 10/*10*/, "The timestamp for when the record was deleted.");
+     public static Type_DatetimePrimitiveNull  DELETED               = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"               , 11/*11*/, "The timestamp for when the record was deleted.");
 ;
    }
 
@@ -307,6 +334,7 @@ This is the column definition for:<BR>
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBFILE", "fileProcessStartTime");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBFILE", "fileProcessEndTimeTZ");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBFILE", "fileProcessEndTime");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBFILE", "status");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBFILE", "created");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBFILE", "lastUpdated");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBFILE", "deleted");
@@ -365,8 +393,9 @@ This is the column definition for:<BR>
  current object to the destination. 
  @param jobRefnum              Job Foreign key
  @param fileName               (max size 200) Zip FileName
+ @param status                 JobFile status pending, success failure
 */
-   static public tilda.data.JobFile_Data Create(long jobRefnum, String fileName) throws Exception
+   static public tilda.data.JobFile_Data Create(long jobRefnum, String fileName, int status) throws Exception
      {
        tilda.data._Tilda.TILDA__JOBFILE Obj = new tilda.data.JobFile_Data();
        Obj.initForCreate();
@@ -378,6 +407,7 @@ This is the column definition for:<BR>
        // Explicit setters
        Obj.setJobRefnum             (jobRefnum             );
        Obj.setFileName              (fileName              );
+       Obj.setStatus                (status                );
 
        // Default Create-time setters
        Obj.setCreatedNow       ();
@@ -397,11 +427,12 @@ This is the column definition for:<BR>
        Long        _fileRecords            =                       ParseUtil.parseLong("fileRecords"           , false, Values.get("fileRecords"           ), Errors );
        ZonedDateTime        _fileProcessStartTime   =                       ParseUtil.parseZonedDateTime("fileProcessStartTime"  , false, Values.get("fileProcessStartTime"  ), Errors );
        ZonedDateTime        _fileProcessEndTime     =                       ParseUtil.parseZonedDateTime("fileProcessEndTime"    , false, Values.get("fileProcessEndTime"    ), Errors );
+       Integer        _status                 =                       ParseUtil.parseInteger("status"                , true , Values.get("status"                ), Errors );
 
        if (IncomingErrors != Errors.size())
         return null;
 
-      tilda.data.JobFile_Data Obj = tilda.data.JobFile_Factory.Create(_jobRefnum, _fileName);
+      tilda.data.JobFile_Data Obj = tilda.data.JobFile_Factory.Create(_jobRefnum, _fileName, _status);
 
       if (_refnum                != null) Obj.setRefnum                (_refnum                );
       if (_fileRecords           != null) Obj.setFileRecords           (_fileRecords           );
@@ -421,7 +452,7 @@ This is the column definition for:<BR>
        return (tilda.data.JobFile_Data) Obj;
      }
 
-   static public tilda.data.JobFile_Data LookupByJob_Refnum(long jobRefnum) throws Exception
+   static public tilda.data.JobFile_Data LookupByJobFile_Job_Refnum(long jobRefnum) throws Exception
      {
        tilda.data._Tilda.TILDA__JOBFILE Obj = new tilda.data.JobFile_Data();
        Obj.initForLookup(1);

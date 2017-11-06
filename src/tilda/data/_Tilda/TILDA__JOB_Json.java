@@ -35,6 +35,7 @@ public class TILDA__JOB_Json
    @SerializedName("isInsert"     ) public Boolean  _isInsert     ;
    @SerializedName("truncateTable") public Boolean  _truncateTable;
    @SerializedName("connectionId" ) public String  _connectionId ;
+   @SerializedName("zipFile"      ) public String  _zipFile      ;
    /*@formatter:on*/
 
    public tilda.data.Job_Data Write(Connection C) throws Exception
@@ -61,8 +62,10 @@ public class TILDA__JOB_Json
        throw new Exception("Incoming value for 'tilda.data.TILDA.JOB.truncateTable' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_connectionId ) == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.JOB.connectionId' was null or empty. It's not nullable in the model.\n"+toString());
+      if (TextUtil.isNullOrEmpty(_zipFile      ) == true)
+       throw new Exception("Incoming value for 'tilda.data.TILDA.JOB.zipFile' was null or empty. It's not nullable in the model.\n"+toString());
 
-      tilda.data.Job_Data Obj = tilda.data.Job_Factory.Create(_isInsert, _truncateTable, _connectionId);
+      tilda.data.Job_Data Obj = tilda.data.Job_Factory.Create(_isInsert, _truncateTable, _connectionId, _zipFile);
       Update(Obj);
       if (Obj.Write(C) == false)
        {
@@ -78,6 +81,7 @@ public class TILDA__JOB_Json
          if (_isInsert     != null) Obj.setIsInsert     (_isInsert     );
          if (_truncateTable!= null) Obj.setTruncateTable(_truncateTable);
          if (_connectionId != null) Obj.setConnectionId (_connectionId );
+         if (_zipFile      != null) Obj.setZipFile      (_zipFile      );
          if (Obj.Write(C) == false)
           throw new Exception("Cannot update the tilda.data.TILDA.JOB object: "+Obj.toString());
 
@@ -97,6 +101,7 @@ public class TILDA__JOB_Json
       if (_isInsert     != null) Obj.setIsInsert     (_isInsert     );
       if (_truncateTable!= null) Obj.setTruncateTable(_truncateTable);
       if (_connectionId != null) Obj.setConnectionId (_connectionId );
+      if (_zipFile      != null) Obj.setZipFile      (_zipFile      );
     }
 
    public String toString()
@@ -112,6 +117,7 @@ public class TILDA__JOB_Json
          + "; isInsert"     + (_isInsert      == null ? ": NULL" : ": " + _isInsert     )
          + "; truncateTable"+ (_truncateTable == null ? ": NULL" : ": " + _truncateTable)
          + "; connectionId" + (_connectionId  == null ? ": NULL" : "(" + (_connectionId  == null ? 0 : _connectionId .length())+"): "+_connectionId)
+         + "; zipFile"      + (_zipFile       == null ? ": NULL" : "(" + (_zipFile       == null ? 0 : _zipFile      .length())+"): "+(_zipFile       == null || _zipFile      .length() < 100 ? _zipFile       : _zipFile      .substring(0, 100)+"..."))
          + ";";
     }
 

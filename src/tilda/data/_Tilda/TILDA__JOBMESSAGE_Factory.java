@@ -18,28 +18,28 @@ import org.apache.logging.log4j.Logger;
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-public class TILDA__JOB_MESSAGE_Factory
+public class TILDA__JOBMESSAGE_Factory
  {
-   protected static final Logger LOG = LogManager.getLogger(TILDA__JOB_MESSAGE_Factory.class.getName());
+   protected static final Logger LOG = LogManager.getLogger(TILDA__JOBMESSAGE_Factory.class.getName());
 
-   protected TILDA__JOB_MESSAGE_Factory() { }
+   protected TILDA__JOBMESSAGE_Factory() { }
 
-   public static final Class<TILDA__JOB_MESSAGE> DATA_CLASS= TILDA__JOB_MESSAGE.class;
+   public static final Class<TILDA__JOBMESSAGE> DATA_CLASS= TILDA__JOBMESSAGE.class;
    public static final String SCHEMA_LABEL = TextUtil.Print("TILDA", "");
-   public static final String TABLENAME_LABEL = TextUtil.Print("JOB_MESSAGE", "");
-   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.JOB_MESSAGE", "");
-   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "JOB_MESSAGE"); }
+   public static final String TABLENAME_LABEL = TextUtil.Print("JOBMESSAGE", "");
+   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.JOBMESSAGE", "");
+   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "JOBMESSAGE"); }
 
    public static abstract class COLS {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOB_MESSAGE.refnum -> TILDA.JOB_MESSAGE."refnum"
+//   Field tilda.data.TILDA.JOBMESSAGE.refnum -> TILDA.JOBMESSAGE."refnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB_MESSAGE.refnum of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB_MESSAGE.refnum of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBMESSAGE.refnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.refnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
@@ -51,13 +51,13 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          REFNUM       = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"       , 0/*0*/, "The primary key for this record");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOB_MESSAGE.jobFileRefnum -> TILDA.JOB_MESSAGE."jobFileRefnum"
+//   Field tilda.data.TILDA.JOBMESSAGE.jobFileRefnum -> TILDA.JOBMESSAGE."jobFileRefnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB_MESSAGE.jobFileRefnum of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB_MESSAGE.jobFileRefnum of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBMESSAGE.jobFileRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.jobFileRefnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>JobFile Foreign key</TD></TR>
@@ -69,13 +69,13 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          JOBFILEREFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "jobFileRefnum", 1/*1*/, "JobFile Foreign key");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOB_MESSAGE.message -> TILDA.JOB_MESSAGE."message"
+//   Field tilda.data.TILDA.JOBMESSAGE.message -> TILDA.JOBMESSAGE."message"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB_MESSAGE.message of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB_MESSAGE.message of type varchar(1000)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBMESSAGE.message of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.message of type varchar(1000)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>1000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -88,31 +88,31 @@ This is the column definition for:<BR>
      public static Type_StringPrimitive        MESSAGE      = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "message"      , 2/*2*/, "Message");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOB_MESSAGE.isError -> TILDA.JOB_MESSAGE."isError"
+//   Field tilda.data.TILDA.JOBMESSAGE.isError -> TILDA.JOBMESSAGE."isError"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB_MESSAGE.isError of type boolean</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB_MESSAGE.isError of type boolean</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBMESSAGE.isError of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.isError of type boolean</TD></TR>
 
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Boolean flag to identify message type -- error or success</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_BooleanPrimitiveNull   ISERROR      = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "isError"      , 3/*3*/, "Boolean flag to identify message type -- error or success");
+     public static Type_BooleanPrimitive       ISERROR      = new Type_BooleanPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "isError"      , 3/*3*/, "Boolean flag to identify message type -- error or success");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOB_MESSAGE.created -> TILDA.JOB_MESSAGE."created"
+//   Field tilda.data.TILDA.JOBMESSAGE.created -> TILDA.JOBMESSAGE."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB_MESSAGE.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB_MESSAGE.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBMESSAGE.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -131,13 +131,13 @@ This is the column definition for:<BR>
      public static Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 4/*4*/, "The timestamp for when the record was created.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOB_MESSAGE.lastUpdated -> TILDA.JOB_MESSAGE."lastUpdated"
+//   Field tilda.data.TILDA.JOBMESSAGE.lastUpdated -> TILDA.JOBMESSAGE."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB_MESSAGE.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB_MESSAGE.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBMESSAGE.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
@@ -156,13 +156,13 @@ This is the column definition for:<BR>
      public static Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 5/*5*/, "The timestamp for when the record was last updated.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOB_MESSAGE.deleted -> TILDA.JOB_MESSAGE."deleted"
+//   Field tilda.data.TILDA.JOBMESSAGE.deleted -> TILDA.JOBMESSAGE."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB_MESSAGE.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB_MESSAGE.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBMESSAGE.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
@@ -183,7 +183,7 @@ This is the column definition for:<BR>
          {
            if (__INITIALIZED == false)
             {
-              tilda.data.Job_Message_Factory.init(C);
+              tilda.data.JobMessage_Factory.init(C);
               __INITIALIZED = true;
             }
          }
@@ -193,22 +193,22 @@ This is the column definition for:<BR>
        public RecordProcessorInternal(Connection C, int Start)
          {
            _C = C;
-           _L = new ArrayListResults<tilda.data.Job_Message_Data>(Start);
+           _L = new ArrayListResults<tilda.data.JobMessage_Data>(Start);
          }
-       public RecordProcessorInternal(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Job_Message_Data> OP)
+       public RecordProcessorInternal(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.JobMessage_Data> OP)
          {
            _C = C;
            _OP = OP;
          }
        protected Connection _C = null;
-       protected tilda.db.processors.ObjectProcessor<tilda.data.Job_Message_Data> _OP;
-       protected ArrayListResults<tilda.data.Job_Message_Data> _L = null;
+       protected tilda.db.processors.ObjectProcessor<tilda.data.JobMessage_Data> _OP;
+       protected ArrayListResults<tilda.data.JobMessage_Data> _L = null;
        public void    Start  () { }
        public void    End    (boolean HasMore, int Max) { if (_OP == null) _L.wrapup(HasMore, Max); }
        public boolean Process(int Index, java.sql.ResultSet RS) throws Exception
         {
-          tilda.data.Job_Message_Data Obj = new tilda.data.Job_Message_Data();
-          boolean OK = ((tilda.data._Tilda.TILDA__JOB_MESSAGE)Obj).Init(_C, RS);
+          tilda.data.JobMessage_Data Obj = new tilda.data.JobMessage_Data();
+          boolean OK = ((tilda.data._Tilda.TILDA__JOBMESSAGE)Obj).Init(_C, RS);
           if (OK == true)
            {
              if (_OP == null)
@@ -220,19 +220,19 @@ This is the column definition for:<BR>
         }
      }
 
-   private static final void ReadMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__JOB_MESSAGE Obj, Object ExtraParams, int Start, int Size) throws Exception
+   private static final void ReadMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__JOBMESSAGE Obj, Object ExtraParams, int Start, int Size) throws Exception
      {
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
        S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "JOB_MESSAGE", "refnum");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB_MESSAGE", "jobFileRefnum");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB_MESSAGE", "message");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB_MESSAGE", "isError");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB_MESSAGE", "created");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB_MESSAGE", "lastUpdated");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB_MESSAGE", "deleted");
-       S.append(" from "); C.getFullTableVar(S, "TILDA", "JOB_MESSAGE");
+       S.append(" "); C.getFullColumnVar(S, "TILDA", "JOBMESSAGE", "refnum");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBMESSAGE", "jobFileRefnum");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBMESSAGE", "message");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBMESSAGE", "isError");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBMESSAGE", "created");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBMESSAGE", "lastUpdated");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBMESSAGE", "deleted");
+       S.append(" from "); C.getFullTableVar(S, "TILDA", "JOBMESSAGE");
        switch (LookupId)
         {
           case -7:
@@ -248,7 +248,7 @@ This is the column definition for:<BR>
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(SCHEMA_TABLENAME_LABEL, Q);
-       QueryDetails.logQuery("TILDA.JOB_MESSAGE", Q, null);
+       QueryDetails.logQuery("TILDA.JOBMESSAGE", Q, null);
        java.sql.PreparedStatement PS=null;
        int count = 0;
        try
@@ -271,7 +271,7 @@ This is the column definition for:<BR>
         }
        finally
         {
-          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__JOB_MESSAGE_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
+          tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__JOBMESSAGE_Factory.SCHEMA_TABLENAME_LABEL, StatementType.SELECT, count, null);
           PS = null;
         }
 
@@ -287,28 +287,30 @@ This is the column definition for:<BR>
  current object to the destination. 
  @param jobFileRefnum JobFile Foreign key
  @param message       (max size 1000) Message
+ @param isError       Boolean flag to identify message type -- error or success
 */
-   static public tilda.data.Job_Message_Data Create(long jobFileRefnum, String message) throws Exception
+   static public tilda.data.JobMessage_Data Create(long jobFileRefnum, String message, boolean isError) throws Exception
      {
-       tilda.data._Tilda.TILDA__JOB_MESSAGE Obj = new tilda.data.Job_Message_Data();
+       tilda.data._Tilda.TILDA__JOBMESSAGE Obj = new tilda.data.JobMessage_Data();
        Obj.initForCreate();
 
 
        // Auto PK
-       Obj.setRefnum(tilda.db.KeysManager.getKey("TILDA.JOB_MESSAGE"));
+       Obj.setRefnum(tilda.db.KeysManager.getKey("TILDA.JOBMESSAGE"));
 
        // Explicit setters
        Obj.setJobFileRefnum(jobFileRefnum);
        Obj.setMessage      (message      );
+       Obj.setIsError      (isError      );
 
        // Default Create-time setters
        Obj.setCreatedNow       ();
        Obj.setLastUpdatedNow   ();
 
-       return (tilda.data.Job_Message_Data) Obj;
+       return (tilda.data.JobMessage_Data) Obj;
      }
 
-   static public tilda.data.Job_Message_Data Create(Map<String, String> Values, List<StringStringPair> Errors)
+   static public tilda.data.JobMessage_Data Create(Map<String, String> Values, List<StringStringPair> Errors)
    throws Exception
      {
        int IncomingErrors = Errors.size();
@@ -316,49 +318,48 @@ This is the column definition for:<BR>
        Long        _refnum        =                       ParseUtil.parseLong("refnum"       , true , Values.get("refnum"       ), Errors );
        Long        _jobFileRefnum =                       ParseUtil.parseLong("jobFileRefnum", true , Values.get("jobFileRefnum"), Errors );
        String        _message       =                       ParseUtil.parseString("message"      , true , Values.get("message"      ), Errors );
-       Boolean        _isError       =                       ParseUtil.parseBoolean("isError"      , false, Values.get("isError"      ), Errors );
+       Boolean        _isError       =                       ParseUtil.parseBoolean("isError"      , true , Values.get("isError"      ), Errors );
 
        if (IncomingErrors != Errors.size())
         return null;
 
-      tilda.data.Job_Message_Data Obj = tilda.data.Job_Message_Factory.Create(_jobFileRefnum, _message);
+      tilda.data.JobMessage_Data Obj = tilda.data.JobMessage_Factory.Create(_jobFileRefnum, _message, _isError);
 
       if (_refnum       != null) Obj.setRefnum       (_refnum       );
-      if (_isError      != null) Obj.setIsError      (_isError      );
 
       return Obj;
      }
 
-   static public tilda.data.Job_Message_Data LookupByPrimaryKey(long refnum) throws Exception
+   static public tilda.data.JobMessage_Data LookupByPrimaryKey(long refnum) throws Exception
      {
-       tilda.data._Tilda.TILDA__JOB_MESSAGE Obj = new tilda.data.Job_Message_Data();
+       tilda.data._Tilda.TILDA__JOBMESSAGE Obj = new tilda.data.JobMessage_Data();
        Obj.initForLookup(0);
 
        Obj.setRefnum       (refnum       ); Obj.__Saved_refnum        = Obj._refnum       ;
 
-       return (tilda.data.Job_Message_Data) Obj;
+       return (tilda.data.JobMessage_Data) Obj;
      }
 
-   static public tilda.data.Job_Message_Data LookupByJobFile_Refnum(long refnum, long jobFileRefnum) throws Exception
+   static public tilda.data.JobMessage_Data LookupByJobFile_Refnum(long refnum, long jobFileRefnum) throws Exception
      {
-       tilda.data._Tilda.TILDA__JOB_MESSAGE Obj = new tilda.data.Job_Message_Data();
+       tilda.data._Tilda.TILDA__JOBMESSAGE Obj = new tilda.data.JobMessage_Data();
        Obj.initForLookup(1);
 
        Obj.setRefnum       (refnum       ); Obj.__Saved_refnum        = Obj._refnum       ;
        Obj.setJobFileRefnum(jobFileRefnum); 
 
-       return (tilda.data.Job_Message_Data) Obj;
+       return (tilda.data.JobMessage_Data) Obj;
      }
 
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }
    public static SelectQuery newWhereQuery (Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, false); }
-   public static ListResults<tilda.data.Job_Message_Data> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception
+   public static ListResults<tilda.data.JobMessage_Data> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
        ReadMany(C, -7, RPI, null, Q, Start, Size);
        return RPI._L;
      }
-   public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.Job_Message_Data> OP, int Start, int Size) throws Exception
+   public static void runSelect(Connection C, SelectQuery Q, tilda.db.processors.ObjectProcessor<tilda.data.JobMessage_Data> OP, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
        ReadMany(C, -7, RPI, null, Q, Start, Size);

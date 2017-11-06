@@ -40,8 +40,8 @@ import tilda.loader.csv.ImportProcessor;
 import tilda.loader.parser.ColumnHeader;
 import tilda.loader.parser.DataObject;
 import tilda.data.JobFile_Data;
-import tilda.data.Job_Message_Data;
-import tilda.data.Job_Message_Factory;
+import tilda.data.JobMessage_Data;
+import tilda.data.JobMessage_Factory;
 import tilda.db.Connection;
 import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.TableMeta;
@@ -128,7 +128,7 @@ public abstract class CSVImporter
                     jobFile.setFileRecords(NumOfRecs);
 
                     // set JobMessage
-                    Job_Message_Data jobMessage = Job_Message_Factory.Create(jobFile.getRefnum(), jobMessageLog);
+                    JobMessage_Data jobMessage = JobMessage_Factory.Create(jobFile.getRefnum(), jobMessageLog, false);
                     jobMessage.Write(statusConnection);
                     statusConnection.commit();
                   }

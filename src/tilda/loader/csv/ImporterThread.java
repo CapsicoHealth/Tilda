@@ -9,8 +9,8 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.JobFile_Data;
 import tilda.data.JobFile_Factory;
-import tilda.data.Job_Message_Data;
-import tilda.data.Job_Message_Factory;
+import tilda.data.JobMessage_Data;
+import tilda.data.JobMessage_Factory;
 import tilda.db.Connection;
 import tilda.db.ConnectionPool;
 import tilda.loader.csv.stores.CSVImporter;
@@ -75,8 +75,7 @@ public class ImporterThread implements Callable<List<Results>>
               {
                 try
                   {
-                    Job_Message_Data jobMessage = Job_Message_Factory.Create(jobFile.getRefnum(), T.getMessage());
-                    jobMessage.setIsError(true);
+                    JobMessage_Data jobMessage = JobMessage_Factory.Create(jobFile.getRefnum(), T.getMessage(), true);
                     jobMessage.Write(statusCon);
                     statusCon.commit();
                   }

@@ -182,8 +182,7 @@ This is the column definition for:<BR>
   <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Enqueued</B>&nbsp;&nbsp;</TD><TD>EQ&nbsp;&nbsp;</TD><TD>Enqueued&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Enque</TD></TR>
   <TR bgcolor="#EEEEEE"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Started</B>&nbsp;&nbsp;</TD><TD>ST&nbsp;&nbsp;</TD><TD>Started&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Started</TD></TR>
   <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Running</B>&nbsp;&nbsp;</TD><TD>RN&nbsp;&nbsp;</TD><TD>Running&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Running</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Failed</B>&nbsp;&nbsp;</TD><TD>FA&nbsp;&nbsp;</TD><TD>Failed&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Failed</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>Done</B>&nbsp;&nbsp;</TD><TD>DO&nbsp;&nbsp;</TD><TD>Done&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Done</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Done</B>&nbsp;&nbsp;</TD><TD>DO&nbsp;&nbsp;</TD><TD>Done&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Done</TD></TR>
 </TABLE>
 </TD></TR>
 
@@ -291,6 +290,25 @@ This is the column definition for:<BR>
      public static Type_StringPrimitive        CONNECTIONID = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "connectionId" , 12/*12*/, "Connection Details");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOB.zipFile -> TILDA.JOB."zipFile"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.zipFile of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.zipFile of type varchar(1000)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>1000</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ZipFile Absolute Path</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public static Type_StringPrimitive        ZIPFILE      = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "zipFile"      , 13/*13*/, "ZipFile Absolute Path");
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JOB.created -> TILDA.JOB."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -313,7 +331,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 13/*13*/, "The timestamp for when the record was created.");
+     public static Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 14/*14*/, "The timestamp for when the record was created.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JOB.lastUpdated -> TILDA.JOB."lastUpdated"
@@ -338,7 +356,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 14/*14*/, "The timestamp for when the record was last updated.");
+     public static Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 15/*15*/, "The timestamp for when the record was last updated.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JOB.deleted -> TILDA.JOB."deleted"
@@ -356,7 +374,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED      = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 15/*15*/, "The timestamp for when the record was deleted.");
+     public static Type_DatetimePrimitiveNull  DELETED      = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 16/*16*/, "The timestamp for when the record was deleted.");
 ;
    }
 
@@ -423,6 +441,7 @@ This is the column definition for:<BR>
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "isInsert");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "truncateTable");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "connectionId");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "zipFile");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "created");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "lastUpdated");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "deleted");
@@ -501,8 +520,9 @@ This is the column definition for:<BR>
  @param isInsert      Insert or upsert?
  @param truncateTable Truncate table
  @param connectionId  (max size 15) Connection Details
+ @param zipFile       (max size 1000) ZipFile Absolute Path
 */
-   static public tilda.data.Job_Data Create(boolean isInsert, boolean truncateTable, String connectionId) throws Exception
+   static public tilda.data.Job_Data Create(boolean isInsert, boolean truncateTable, String connectionId, String zipFile) throws Exception
      {
        tilda.data._Tilda.TILDA__JOB Obj = new tilda.data.Job_Data();
        Obj.initForCreate();
@@ -515,6 +535,7 @@ This is the column definition for:<BR>
        Obj.setIsInsert     (isInsert     );
        Obj.setTruncateTable(truncateTable);
        Obj.setConnectionId (connectionId );
+       Obj.setZipFile      (zipFile      );
 
        // Default Create-time setters
        Obj.setStatusEnqueued          ();
@@ -541,11 +562,12 @@ This is the column definition for:<BR>
        Boolean        _isInsert      =                       ParseUtil.parseBoolean("isInsert"     , true , Values.get("isInsert"     ), Errors );
        Boolean        _truncateTable =                       ParseUtil.parseBoolean("truncateTable", true , Values.get("truncateTable"), Errors );
        String        _connectionId  =                       ParseUtil.parseString("connectionId" , true , Values.get("connectionId" ), Errors );
+       String        _zipFile       =                       ParseUtil.parseString("zipFile"      , true , Values.get("zipFile"      ), Errors );
 
        if (IncomingErrors != Errors.size())
         return null;
 
-      tilda.data.Job_Data Obj = tilda.data.Job_Factory.Create(_isInsert, _truncateTable, _connectionId);
+      tilda.data.Job_Data Obj = tilda.data.Job_Factory.Create(_isInsert, _truncateTable, _connectionId, _zipFile);
 
       if (_refnum       != null) Obj.setRefnum       (_refnum       );
       if (_name         != null) Obj.setName         (_name         );

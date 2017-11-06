@@ -11,10 +11,10 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.JobFile_Data;
 import tilda.data.JobFile_Factory;
+import tilda.data.JobMessage_Data;
+import tilda.data.JobMessage_Factory;
 import tilda.data.Job_Data;
 import tilda.data.Job_Factory;
-import tilda.data.Job_Message_Data;
-import tilda.data.Job_Message_Factory;
 import tilda.db.Connection;
 import tilda.db.ConnectionPool;
 import tilda.loader.csv.UnZip;
@@ -39,7 +39,7 @@ public class LoadJob
                 throw new Exception("Unable to read JOB from database");
               }
             
-            jobFile = JobFile_Factory.LookupByJob_Refnum(job.getRefnum());
+            jobFile = JobFile_Factory.LookupByJobFile_Job_Refnum(job.getRefnum());
             if(jobFile.Read(statusCon) == false)
               {
                 throw new Exception("Unable to read JobFile from database");
@@ -89,8 +89,7 @@ public class LoadJob
               {
                 try
                   {
-                    Job_Message_Data jobMessage = Job_Message_Factory.Create(jobFile.getRefnum(), T.getMessage());
-                    jobMessage.setIsError(true);
+                    JobMessage_Data jobMessage = JobMessage_Factory.Create(jobFile.getRefnum(), T.getMessage(), true);
                     jobMessage.Write(statusCon);
                     statusCon.commit();
                   }

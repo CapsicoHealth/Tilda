@@ -192,19 +192,19 @@
                                       {"name":"Enqueued", "value":"EQ", "description":"Jobs Status Enque"  , "label":"Enqueued", "default":"CREATE" }
                                      ,{"name":"Started" , "value":"ST", "description":"Jobs Status Started", "label":"Started" } 
                                      ,{"name":"Running" , "value":"RN", "description":"Jobs Status Running", "label":"Running" } 
-                                     ,{"name":"Failed"  , "value":"FA", "description":"Jobs Status Failed" , "label":"Failed"  } 
                                      ,{"name":"Done"    , "value":"DO", "description":"Jobs Status Done"   , "label":"Done"    } 
                                     ]
         },
         { "name":"error"         , "type":"STRING"  , "nullable": true,  "size":   1000         , "description":"Error"            },
         { "name": "threadsCount" , "type": "INTEGER", "nullable": false                         , "description": "Thread count"
-                                   , "values": [
+                                 , "values": [
                                       {"name":"DefaultValue", "value":"1", "description":"Default value threads count"  , "label":"Default value", "default":"CREATE" }
-                                    ]
+                                  ]
         },
         { "name": "isInsert"     , "type": "BOOLEAN", "nullable": false                         , "description": "Insert or upsert?"   },
         { "name": "truncateTable", "type": "BOOLEAN", "nullable": false                         , "description": "Truncate table"      },
-        {"name": "connectionId"  , "sameas": "tilda.data.tilda.connection.id", "nullable": false,  "description": "Connection Details" }
+        { "name": "connectionId" , "sameas": "tilda.data.tilda.connection.id", "nullable": false,  "description": "Connection Details" },
+        { "name": "zipFile"      , "type": "STRING", "nullable": false, "size":   1000, "description": "ZipFile Absolute Path" }
       ],
       "indices": [
         { "name": "StatusIndex"     , "columns": ["status"]          , "db": true },
@@ -227,23 +227,30 @@
     { "name":"JobFile",
       "description":"Job File Info",
       "columns":[
-        { "name":"jobRefnum"                            , "sameas": "Job.refnum"    , "nullable": false,                 "description":"Job Foreign key" },               
-        { "name":"fileName"                             , "type":"STRING"           , "nullable": false,  "size":   200,  "description":"Zip FileName"   },
-        { "name":"fileRecords"                          , "type":"LONG"          , "nullable": true,                  "description":"Number of records loaded into DB" },
-        { "name":"fileProcessStartTime"                 , "type":"DATETIME"         , "nullable": true,                  "description":"FileProcessStartTime" },
-        { "name":"fileProcessEndTime"                   , "type":"DATETIME"         , "nullable": true,                  "description":"FileProcessEndTime"   }
+        { "name":"jobRefnum"            , "sameas": "Job.refnum", "nullable": false,                 "description":"Job Foreign key" },               
+        { "name":"fileName"             , "type": "STRING"      , "nullable": false, "size":   200,  "description":"Zip FileName"   },
+        { "name":"fileRecords"          , "type": "LONG"        , "nullable": true ,                 "description":"Number of records loaded into DB" },
+        { "name":"fileProcessStartTime" , "type": "DATETIME"    , "nullable": true ,                 "description":"FileProcessStartTime" },
+        { "name":"fileProcessEndTime"   , "type": "DATETIME"    , "nullable": true ,                 "description":"FileProcessEndTime"   },
+        { "name": "status"              , "type": "INTEGER"     , "nullable": false,                 "description":"JobFile status pending, success failure"
+                                        , "values": [
+                                           {"name":"Running" , "value":"0", "description":"JobFile Status Running", "label":"Running" } 
+                                          ,{"name":"Success" , "value":"1", "description":"JobFile Status Success", "label":"Success" }
+                                          ,{"name":"Failure" , "value":"2", "description":"JobFile Status Failure", "label":"Failure" }
+                                        ]
+        }
        ]
        ,"primary": { "autogen": true }
        ,"indices":[
-        { "name":"Job_Refnum", "columns":["jobRefnum"] }
+        { "name":"JobFile_Job_Refnum", "columns":["jobRefnum"] }
       ]
     },
-    { "name":"Job_Message",
+    { "name":"JobMessage",
       "description":"Job Messages",
       "columns":[
         { "name":"jobFileRefnum"                        , "sameas": "JobFile.refnum" , "nullable": false,                  "description":"JobFile Foreign key" },               
         { "name":"message"                              , "type":"STRING"            , "nullable": false,  "size":   1000, "description":"Message" },
-        { "name":"isError"                              , "type":"BOOLEAN"           ,                                     "description":"Boolean flag to identify message type -- error or success" }
+        { "name":"isError"                              , "type":"BOOLEAN"           ,  "nullable": false                , "description":"Boolean flag to identify message type -- error or success" }
        ]
        ,"primary": { "autogen": true }
        ,"indices":[ 
