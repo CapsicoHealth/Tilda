@@ -76,6 +76,8 @@ public class ImportProcessor
                 break;
               Results.addAll(Res);
             }
+          
+          pool.shutdownNow();
 
           pool.shutdownNow();
 
@@ -99,7 +101,6 @@ public class ImportProcessor
           {
             LOG.debug("Truncating table: "+SchemaName+"."+TableName);
             C.truncateTable(SchemaName, TableName);
-            // C.setTableLogging(SchemaName, TableName, false);
             C.commit();
             LOG.debug("Table truncated successfully");
           }

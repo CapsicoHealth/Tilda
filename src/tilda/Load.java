@@ -46,7 +46,6 @@ import org.apache.logging.log4j.Logger;
 import tilda.data.JobFile_Data;
 import tilda.db.Connection;
 import tilda.db.ConnectionPool;
-import tilda.db.metadata.TableMeta;
 import tilda.loader.csv.ImportProcessor;
 import tilda.loader.parser.Config;
 import tilda.loader.parser.DataObject;
@@ -174,7 +173,6 @@ public class Load
                 StartImportProcessor(selectedObjectsList, connectionIdsList, Conf, Conf._CmsData);
               }
             LOG.debug("Import Tables completed.");
-            System.exit(1);
           }
         else
           {
@@ -239,28 +237,7 @@ public class Load
                 C = ConnectionPool.get(connectionId);
                 for (DataObject DO : selectedDO)
                   {
-                    if (DO.isUpserts() == DO.isInserts())
-                      {
-                        errorMessages.add("Data definition for " + DO.getTableFullName() + " is invalid: one of 'inserts' or 'upserts' must be true. ");
-                        continue;
-                      }
-
-                    if (DO.isUpserts() == false)
-                      continue; // Skip uniqueColumns validation if not Upserts
-
-                    String[] uniqueColumns = DO.getUniqueColumnsList();
-                    if (uniqueColumns.length < 1)
-                      {
-                        errorMessages.add("Data definition for " + DO.getTableFullName() + " is invalid: upserts must also specify the object's identify in 'uniqueColumns'. ");
-                        continue;
-                      }
-
-                    TableMeta tableMeta = new TableMeta(DO._SchemaName, DO._TableName, "");
-                    tableMeta.load(C);
-                    if (tableMeta.getIndex(uniqueColumns, true) == null)
-                      {
-                        errorMessages.add("Data definition for " + DO.getTableFullName() + " is invalid: 'uniqueColumns' is listing columns which do not match any existing unique index in the database for connection "+connectionId+". ");
-                      }
+                    DO.validate(C, errorMessages);
                   }
               }
             catch (Throwable T)
@@ -452,7 +429,6 @@ public class Load
                 int dialogResult = JOptionPane.showConfirmDialog(null, "Do you want to run the data import?", "Warning", JOptionPane.YES_NO_OPTION);
                 if (dialogResult == 0)
                   {
-                    // List<String> truncateTables = new ArrayList<String>();
                     List<String> ImportTables = new ArrayList<String>();
                     List<String> ConnectionIds = new ArrayList<String>();
 
@@ -491,13 +467,14 @@ public class Load
 
                                 // Processing
                                 StartImportProcessor(ImportTables, ConnectionIds, Conf, Conf._CmsData);
+                                frmDataImport.dispose(); // Doesn't trigger listeners
                                 LOG.debug("Import Tables completed.");
                               }
                             catch (Exception e)
                               {
                                 LOG.error(e);
-                              }
-                            System.exit(1);
+                                System.exit(-1);
+                              }                            
                           }
                       });
                   }
@@ -564,8 +541,9 @@ public class Load
           {
             public void actionPerformed(ActionEvent e)
               {
+                boolean newValue = (data.length > 0) ? !((Boolean) data[0][1]) : true;
                 for (int i = 0; i < data.length; i++)
-                  data[i][1] = true;
+                  data[i][1] = newValue;
                 tableDataModel.fireTableDataChanged();
               }
           });
@@ -576,8 +554,9 @@ public class Load
           {
             public void actionPerformed(ActionEvent e)
               {
+                boolean newValue = (data.length > 0) ? !((Boolean) connections[0][2]) : true;
                 for (int i = 0; i < connections.length; i++)
-                  connections[i][2] = true;
+                  connections[i][2] = newValue;
                 connectionDataModel.fireTableDataChanged();
               }
           });

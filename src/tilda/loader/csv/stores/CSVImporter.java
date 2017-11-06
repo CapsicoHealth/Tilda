@@ -44,6 +44,7 @@ import tilda.data.JobMessage_Data;
 import tilda.data.JobMessage_Factory;
 import tilda.db.Connection;
 import tilda.db.metadata.ColumnMeta;
+import tilda.db.metadata.DatabaseMeta;
 import tilda.db.metadata.TableMeta;
 import tilda.enums.ColumnType;
 import tilda.parsing.parts.Column;
@@ -68,7 +69,7 @@ public abstract class CSVImporter
     protected abstract long insertData(boolean isUpsert, long t0, Map<String, ColumnMeta> DBColumns,
       boolean withHeader, Iterable<CSVRecord> records, StringBuilder Str, String schemaName, String tableName,
       String[] headers, String[] columns, Map<String, ColumnHeader> columnMap, String[] completeHeaders,
-      String DateTimePattern, String DateTimeZoneInfoId, String DatePattern) throws Exception;
+      String[] uniqueColumns, String DateTimePattern, String DateTimeZoneInfoId, String DatePattern) throws Exception;
 
     protected abstract StringBuilder GenerateSQL(boolean isUpsert, String schemaName, String tableName, String columns[],
       Map<String, ColumnMeta> DBColumns, String lookupColumns[]);
@@ -88,14 +89,18 @@ public abstract class CSVImporter
             List<String> fileList = cmsDO._FileList;
             ArrayList<Results> resultsList = new ArrayList<Results>();
             
-            TableMeta TM = new TableMeta(cmsDO._SchemaName, cmsDO._TableName, "");
-            TM.load(C);
-            Map<String, ColumnMeta> DBColumns = TM._Columns;
-
-            createSchemaAndTable(C, cmsDO._SchemaName, cmsDO._TableName, columns, 500);
+            DatabaseMeta DBMeta = new DatabaseMeta();
+            DBMeta.load(C, cmsDO._SchemaName, cmsDO._TableName);
+            TableMeta TM = DBMeta.getTableMeta(cmsDO._SchemaName, cmsDO._TableName);
+            Map<String, ColumnMeta> DBColumns = null;
+            
+            if(TM == null)
+              createSchemaAndTable(C, cmsDO._SchemaName, cmsDO._TableName, columns, 500);
+            else
+               DBColumns = TM._Columns;            
             StringBuilder Str = GenerateSQL(cmsDO.isUpserts(), cmsDO._SchemaName, cmsDO._TableName, columns, DBColumns, uniqueColumns);
             
-            if (cmsDO.isShouldTruncate())
+            if (cmsDO.isInserts() == true && cmsDO.isTruncateFirst() == true)
               ImportProcessor.truncateTable(C, cmsDO._SchemaName, cmsDO._TableName);
             
             for (String file : fileList)
@@ -107,11 +112,13 @@ public abstract class CSVImporter
                 CSVFormat csvFormat = CSVFormat.DEFAULT.withHeader(completeHeaders);
                 Iterable<CSVRecord> records = csvFormat.parse(fileReader);
                 getHeader(completeHeaders, cmsDO._HeadersIncluded, records);
-                                
+
+                
                 NumOfRecs = insertData(cmsDO.isUpserts(), t0, DBColumns, cmsDO._HeadersIncluded, records, Str, cmsDO._SchemaName,
-                  cmsDO._TableName, headers, columns, cmsDO.getMultiHeaderColumnMap(), completeHeaders, cmsDO._dateTimePattern, 
-                  cmsDO._zoneId, cmsDO._datePattern);
-                // C.setTableLogging(cmsDO._SchemaName, cmsDO._TableName, true);
+                  cmsDO._TableName, headers, columns, cmsDO.getMultiHeaderColumnMap(), completeHeaders, uniqueColumns, 
+                  cmsDO._dateTimePattern, cmsDO._zoneId, cmsDO._datePattern);
+                
+                fileReader.close();
                 
                 fileReader.close();
                 fileReader = null;
@@ -155,19 +162,19 @@ public abstract class CSVImporter
         Str.append("INSERT INTO ").append(schemaName).append(".").append(tableName).append("(");
   
         boolean occ = false;
-        if (DBColumns.get("refnum") != null && TextUtil.FindElement(columns, "refnum", false, 0) == -1)
+        if (DBColumns != null && DBColumns.get("refnum") != null && TextUtil.FindElement(columns, "refnum", false, 0) == -1)
           {
             Str.append("\"refnum\"");
             occ = true;
           }
-        if (DBColumns.get("lastupdated") != null && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
+        if (DBColumns != null && DBColumns.get("lastupdated") != null && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
           {
             if (occ == true)
               Str.append(",");
             Str.append("\"lastUpdated\"");
             occ = true;
           }
-        if (DBColumns.get("created") != null && TextUtil.FindElement(columns, "created", false, 0) == -1)
+        if (DBColumns != null && DBColumns.get("created") != null && TextUtil.FindElement(columns, "created", false, 0) == -1)
           {
             if (occ == true)
               Str.append(",");
@@ -190,12 +197,12 @@ public abstract class CSVImporter
         Str.append(") ");
         Str.append(" Values (");
   
-        if (DBColumns.get("refnum") != null && TextUtil.FindElement(columns, "refnum", false, 0) == -1)
+        if (DBColumns != null && DBColumns.get("refnum") != null && TextUtil.FindElement(columns, "refnum", false, 0) == -1)
           {
             Str.append("?");
             occ = true;
           }
-        if (DBColumns.get("lastupdated") != null && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
+        if (DBColumns != null && DBColumns.get("lastupdated") != null && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
           {
             if (occ == true)
               Str.append(",");
@@ -203,7 +210,7 @@ public abstract class CSVImporter
             Str.append("?");
             occ = true;
           }
-        if (DBColumns.get("created") != null && TextUtil.FindElement(columns, "created", false, 0) == -1)
+        if (DBColumns != null && DBColumns.get("created") != null && TextUtil.FindElement(columns, "created", false, 0) == -1)
           {
             if (occ == true)
               Str.append(",");

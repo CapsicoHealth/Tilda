@@ -23,6 +23,11 @@ import java.util.Map;
 import java.util.HashMap;
 import com.google.gson.annotations.SerializedName;
 
+import tilda.db.Connection;
+import tilda.db.metadata.SchemaMeta;
+import tilda.db.metadata.TableMeta;
+import tilda.utils.TextUtil;
+
 public class DataObject
   {
 
@@ -37,12 +42,63 @@ public class DataObject
     @SerializedName("headersIncluded")      public boolean            _HeadersIncluded;
     @SerializedName("multiHeaderDelimeter") public String             _multiHeaderDelimeter;
     @SerializedName("uniqueColumns"  )      public List<String>       _uniqueColumnsList    = new ArrayList<String>();
-    @SerializedName("upserts"        )      public boolean            _upserts = false;
-    @SerializedName("inserts"        )      public boolean            _inserts = false;
+    @SerializedName("mode"           )      public String             _mode = null;
+
+    transient boolean _Upserts;
+    transient boolean _Inserts;
+    transient boolean _TruncateFirst;
     
-    private transient boolean _truncate = false;
-    
-    
+    public boolean validate(Connection C, List<String> errorMessages) throws Exception
+     {
+       SchemaMeta sMeta = new SchemaMeta(_SchemaName);
+       sMeta.load(C, _TableName);
+       TableMeta tableMeta = sMeta.getTableMeta(_TableName);
+       if (tableMeta == null)
+         {
+           errorMessages.add("Table " + getTableFullName() + " cannot be found. ");
+           return false;
+         }
+        for (ColumnHeader CH : _ColumnHeaderList)
+         if (CH != null)
+          CH.validate();
+       
+       if (TextUtil.isNullOrEmpty(_mode) == true)
+         {
+           errorMessages.add("Data definition for " + getTableFullName() + " is not defining the 'mode' property, which is mandatory. ");
+           return false;
+         }
+       else if (_mode.equals("INSERT") == true)
+         {
+           _Inserts = true;
+         }
+       else if  (_mode.equals("TRUNCATE_INSERT") == true)
+         {
+           _Inserts = true;
+           _TruncateFirst = true;
+         }
+       else if (_mode.equals("UPSERT") == true)
+         {
+           _Upserts = true;
+           String[] uniqueColumns = getUniqueColumnsList();
+           if (uniqueColumns.length < 1)
+             {
+               errorMessages.add("Data definition for " + getTableFullName() + " is invalid: upserts must also specify the object's identify in 'uniqueColumns'. ");
+               return false;
+             }
+           if (tableMeta.getIndex(uniqueColumns, true) == null)
+             {
+               errorMessages.add("Data definition for " + getTableFullName() + " is invalid: 'uniqueColumns' is listing columns which do not match any existing unique index in the database.");
+               return false;
+             }
+         }
+       else
+         {
+           errorMessages.add("Data definition for " + getTableFullName() + " is defining a mode='"+_mode+"' which is invalid. Must be one of 'INSERT', 'TRUNCATE_INSERT', 'UPSERT'. ");
+           return false;
+         }
+
+       return true;
+     }
     
     public  String[] getColumns(){
       List<String> Cols = new LinkedList<String>();
@@ -75,13 +131,6 @@ public class DataObject
     public String[] getHeadersList(){
       return _HeaderList.toArray(new String[_HeaderList.size()]);
     }
-    public void validate() throws Exception
-      {
-        for (ColumnHeader CH : _ColumnHeaderList)
-          if (CH != null)
-            CH.validate();
-        
-      }
     
     public String[] getUniqueColumnsList()
       {
@@ -90,12 +139,17 @@ public class DataObject
       
     public boolean isUpserts()
       {
-        return this._upserts;
+        return _Upserts;
       }
     
     public boolean isInserts()
       {
-        return this._inserts;
+        return _Inserts;
+      }
+    
+    public boolean isTruncateFirst()
+      {
+        return _TruncateFirst;
       }
 
     public String getTableFullName()
@@ -105,14 +159,14 @@ public class DataObject
     
     public void setIsUpserts()
       {
-        this._upserts = true;
-        this._inserts = false;
+        this._Upserts = true;
+        this._Inserts = false;
       }
     
     public void setIsInserts()
       {
-        this._inserts = true;
-        this._upserts = false;
+        this._Inserts = true;
+        this._Upserts = false;
       }
     
     public void setFilePath(String filePath)
@@ -125,13 +179,13 @@ public class DataObject
     
     public boolean isShouldTruncate()
       {
-        return this._truncate;
+        return this._TruncateFirst;
       }
     
     public void setShouldTruncate()
       {
         if (isInserts() != isUpserts() && isInserts())
-          this._truncate = true;
+          this._TruncateFirst = true;
       }
 
   }

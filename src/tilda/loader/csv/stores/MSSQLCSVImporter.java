@@ -23,7 +23,7 @@ public class MSSQLCSVImporter extends CSVImporter
       }
     
     @Override
-    protected long insertData(boolean isUpsert, long t0, Map<String, ColumnMeta> DBColumns, boolean withHeader, Iterable<CSVRecord> records, StringBuilder Str, String schemaName, String tableName, String[] headers, String[] columns, Map<String, ColumnHeader> columnMap, String[] completeHeaders, String DateTimePattern, String DateTimeZoneInfoId, String DatePattern)
+    protected long insertData(boolean isUpsert, long t0, Map<String, ColumnMeta> DBColumns, boolean withHeader, Iterable<CSVRecord> records, StringBuilder Str, String schemaName, String tableName, String[] headers, String[] columns, Map<String, ColumnHeader> columnMap, String[] completeHeaders, String[] uniqueColumns, String DateTimePattern, String DateTimeZoneInfoId, String DatePattern) 
       {
         return 0;
       }
