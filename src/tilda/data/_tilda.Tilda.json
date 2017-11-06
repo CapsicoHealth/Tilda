@@ -234,23 +234,21 @@
         { "name":"fileProcessEndTime"   , "type": "DATETIME"    , "nullable": true ,                 "description":"FileProcessEndTime"   },
         { "name": "status"              , "type": "INTEGER"     , "nullable": false,                 "description":"JobFile status pending, success failure"
                                         , "values": [
-                                           {"name":"Running" , "value":"0", "description":"JobFile Status Running", "label":"Running" } 
-                                          ,{"name":"Success" , "value":"1", "description":"JobFile Status Success", "label":"Success" }
-                                          ,{"name":"Failure" , "value":"2", "description":"JobFile Status Failure", "label":"Failure" }
+                                           {"name":"Enqueued", "value":"0", "description":"Jobs Status Enque"  , "label":"Enqueued", "default":"CREATE" }
+                                          ,{"name":"Running" , "value":"1", "description":"JobFile Status Running", "label":"Running" } 
+                                          ,{"name":"Success" , "value":"2", "description":"JobFile Status Success", "label":"Success" }
+                                          ,{"name":"Failure" , "value":"3", "description":"JobFile Status Failure", "label":"Failure" }
                                         ]
         }
        ]
        ,"primary": { "autogen": true }
-       ,"indices":[
-        { "name":"JobFile_Job_Refnum", "columns":["jobRefnum"] }
-      ]
     },
     { "name":"JobMessage",
       "description":"Job Messages",
       "columns":[
         { "name":"jobFileRefnum"                        , "sameas": "JobFile.refnum" , "nullable": false,                  "description":"JobFile Foreign key" },               
         { "name":"message"                              , "type":"STRING"            , "nullable": false,  "size":   1000, "description":"Message" },
-        { "name":"isError"                              , "type":"BOOLEAN"           ,  "nullable": false                , "description":"Boolean flag to identify message type -- error or success" }
+        { "name":"isError"                              , "type":"BOOLEAN"                                               , "description":"Boolean flag to identify message type -- error or success" }
        ]
        ,"primary": { "autogen": true }
        ,"indices":[ 

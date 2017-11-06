@@ -349,7 +349,6 @@ COMMENT ON COLUMN TILDA.JOBFILE."status" IS E'JobFile status pending, success fa
 COMMENT ON COLUMN TILDA.JOBFILE."created" IS E'The timestamp for when the record was created.';
 COMMENT ON COLUMN TILDA.JOBFILE."lastUpdated" IS E'The timestamp for when the record was last updated.';
 COMMENT ON COLUMN TILDA.JOBFILE."deleted" IS E'The timestamp for when the record was deleted.';
-CREATE UNIQUE INDEX JOBFILE_JobFile_Job_Refnum ON TILDA.JOBFILE ("jobRefnum");
 delete from TILDA.KEY where "name" = 'TILDA.JOBFILE';
 insert into TILDA.KEY ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.KEY), 'TILDA.JOBFILE',(select COALESCE(max("refnum"),0)+1 from TILDA.JOBFILE), 250, current_timestamp, current_timestamp);
 
@@ -359,7 +358,7 @@ create table if not exists TILDA.JOBMESSAGE -- Job Messages
  (  "refnum"         bigint         not null   -- The primary key for this record
   , "jobFileRefnum"  bigint         not null   -- JobFile Foreign key
   , "message"        varchar(1000)  not null   -- Message
-  , "isError"        boolean        not null   -- Boolean flag to identify message type -- error or success
+  , "isError"        boolean                   -- Boolean flag to identify message type -- error or success
   , "created"        timestamptz    not null   -- The timestamp for when the record was created.
   , "lastUpdated"    timestamptz    not null   -- The timestamp for when the record was last updated.
   , "deleted"        timestamptz               -- The timestamp for when the record was deleted.

@@ -43,7 +43,11 @@ import javax.swing.border.EtchedBorder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.sun.istack.internal.NotNull;
+
 import tilda.data.JobFile_Data;
+import tilda.data.JobMessage_Data;
+import tilda.data.JobMessage_Factory;
 import tilda.db.Connection;
 import tilda.db.ConnectionPool;
 import tilda.loader.csv.ImportProcessor;
@@ -73,15 +77,21 @@ public class Load
     JButton                       btnAllTables      = new JButton("Select All Tables");
     JButton                       btnAllConnections = new JButton("Select All Connections");
 
-    public static void processLoadJob(String connectionId, int threads, String configPath, String csvPath, 
-      boolean isInserts, boolean shouldTruncate, String statusConId, JobFile_Data jobFile)
+    public static void processLoadJob(String connectionId, int threads, String configPath, String schema, String table, 
+      String csvPath, boolean isInserts, boolean shouldTruncate, String statusConId, JobFile_Data jobFile)
+    throws Exception
       {
         LOG.debug("Starting the utility in silent mode.");
         Config conf = Config.fromFile(configPath);
         
+        List<String> selectedNames = new ArrayList<>();
+        selectedNames.add((schema+"."+table).toUpperCase());
+ 
         List<String> selectedConnectionIds = new ArrayList<>();
         selectedConnectionIds.add(connectionId);
-        
+ 
+        List<DataObject> filteredObjects = FilterObjects(selectedNames, conf._CmsData);
+
         // Apply override values to DataObject(s)
         for(DataObject DO : conf._CmsData)
           {
@@ -95,13 +105,17 @@ public class Load
               DO.setShouldTruncate();
           }
         
-        List<String> errors = ValidateDataObjects(selectedConnectionIds,  conf._CmsData);
+        List<String> errors = ValidateDataObjects(selectedConnectionIds,  filteredObjects);
         if (errors.size() > 0)
           {
             for (String error : errors)
               LOG.error(error);
             LOG.error("File " + configPath + " failed validation. Aborting !!");
-            // TODO: Write error to jobFile
+            Connection statusCon = ConnectionPool.get(statusConId);
+            JobMessage_Data jobMessage = JobMessage_Factory.Create(jobFile.getRefnum(), "Validation Failed.");
+            jobMessage.setIsError(true);
+            jobMessage.Write(statusCon);
+            statusCon.commit();
           }
         
         LOG.debug("Running ImportProcessor");

@@ -196,9 +196,10 @@ This is the column definition for:<BR>
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Running</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>Running&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Running</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Success</B>&nbsp;&nbsp;</TD><TD>1&nbsp;&nbsp;</TD><TD>Success&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Success</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Failure</B>&nbsp;&nbsp;</TD><TD>2&nbsp;&nbsp;</TD><TD>Failure&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Failure</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Enqueued</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>Enqueued&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Enque</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Running</B>&nbsp;&nbsp;</TD><TD>1&nbsp;&nbsp;</TD><TD>Running&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Running</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Success</B>&nbsp;&nbsp;</TD><TD>2&nbsp;&nbsp;</TD><TD>Success&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Success</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Failure</B>&nbsp;&nbsp;</TD><TD>3&nbsp;&nbsp;</TD><TD>Failure&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Failure</TD></TR>
 </TABLE>
 </TD></TR>
 
@@ -393,9 +394,8 @@ This is the column definition for:<BR>
  current object to the destination. 
  @param jobRefnum              Job Foreign key
  @param fileName               (max size 200) Zip FileName
- @param status                 JobFile status pending, success failure
 */
-   static public tilda.data.JobFile_Data Create(long jobRefnum, String fileName, int status) throws Exception
+   static public tilda.data.JobFile_Data Create(long jobRefnum, String fileName) throws Exception
      {
        tilda.data._Tilda.TILDA__JOBFILE Obj = new tilda.data.JobFile_Data();
        Obj.initForCreate();
@@ -407,9 +407,9 @@ This is the column definition for:<BR>
        // Explicit setters
        Obj.setJobRefnum             (jobRefnum             );
        Obj.setFileName              (fileName              );
-       Obj.setStatus                (status                );
 
        // Default Create-time setters
+       Obj.setStatusEnqueued   ();
        Obj.setCreatedNow       ();
        Obj.setLastUpdatedNow   ();
 
@@ -432,12 +432,13 @@ This is the column definition for:<BR>
        if (IncomingErrors != Errors.size())
         return null;
 
-      tilda.data.JobFile_Data Obj = tilda.data.JobFile_Factory.Create(_jobRefnum, _fileName, _status);
+      tilda.data.JobFile_Data Obj = tilda.data.JobFile_Factory.Create(_jobRefnum, _fileName);
 
       if (_refnum                != null) Obj.setRefnum                (_refnum                );
       if (_fileRecords           != null) Obj.setFileRecords           (_fileRecords           );
       if (_fileProcessStartTime  != null) Obj.setFileProcessStartTime  (_fileProcessStartTime  );
       if (_fileProcessEndTime    != null) Obj.setFileProcessEndTime    (_fileProcessEndTime    );
+      if (_status                != null) Obj.setStatus                (_status                );
 
       return Obj;
      }
@@ -448,16 +449,6 @@ This is the column definition for:<BR>
        Obj.initForLookup(0);
 
        Obj.setRefnum                (refnum                ); Obj.__Saved_refnum                 = Obj._refnum                ;
-
-       return (tilda.data.JobFile_Data) Obj;
-     }
-
-   static public tilda.data.JobFile_Data LookupByJobFile_Job_Refnum(long jobRefnum) throws Exception
-     {
-       tilda.data._Tilda.TILDA__JOBFILE Obj = new tilda.data.JobFile_Data();
-       Obj.initForLookup(1);
-
-       Obj.setJobRefnum             (jobRefnum             ); 
 
        return (tilda.data.JobFile_Data) Obj;
      }

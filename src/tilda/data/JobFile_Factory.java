@@ -36,5 +36,15 @@ public class JobFile_Factory extends tilda.data._Tilda.TILDA__JOBFILE_Factory
        Q.equals(COLS.JOBREFNUM, JobRefnum);
        return runSelect(C, Q, Start, Size);
      }
+   
+   public static ListResults<JobFile_Data> getJobFilesLikeName(Connection C, long JobRefnum, String query, int Start, int Size) 
+   throws Exception
+     {
+       SelectQuery Q = newWhereQuery(C);
+       Q.equals(COLS.JOBREFNUM, JobRefnum)
+         .and()
+         .like(COLS.FILENAME, "%"+query+"%", true);         
+       return runSelect(C, Q, Start, Size);
+     }
 
  }

@@ -75,7 +75,8 @@ public class ImporterThread implements Callable<List<Results>>
               {
                 try
                   {
-                    JobMessage_Data jobMessage = JobMessage_Factory.Create(jobFile.getRefnum(), T.getMessage(), true);
+                    JobMessage_Data jobMessage = JobMessage_Factory.Create(jobFile.getRefnum(), T.getMessage());
+                    jobMessage.setIsError(true);
                     jobMessage.Write(statusCon);
                     statusCon.commit();
                   }

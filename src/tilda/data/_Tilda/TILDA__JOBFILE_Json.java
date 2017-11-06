@@ -54,21 +54,11 @@ public class TILDA__JOBFILE_Json
       if (_status                 == null)
        throw new Exception("Incoming value for 'tilda.data.TILDA.JOBFILE.status' was null or empty. It's not nullable in the model.\n"+toString());
 
-      tilda.data.JobFile_Data Obj = tilda.data.JobFile_Factory.Create(_jobRefnum, _fileName, _status);
+      tilda.data.JobFile_Data Obj = tilda.data.JobFile_Factory.Create(_jobRefnum, _fileName);
       Update(Obj);
       if (Obj.Write(C) == false)
        {
-         Obj = tilda.data.JobFile_Factory.LookupByJobFile_Job_Refnum(_jobRefnum);
-         if (Obj.Read(C) == false)
-          throw new Exception("Cannot create the tilda.data.TILDA.JOBFILE object.\n"+toString());
-         if (_fileName              != null) Obj.setFileName              (_fileName              );
-         if (_fileRecords           != null) Obj.setFileRecords           (_fileRecords           );
-         if (_fileProcessStartTime  != null) Obj.setFileProcessStartTime  (_fileProcessStartTime  );
-         if (_fileProcessEndTime    != null) Obj.setFileProcessEndTime    (_fileProcessEndTime    );
-         if (_status                != null) Obj.setStatus                (_status                );
-         if (Obj.Write(C) == false)
-          throw new Exception("Cannot update the tilda.data.TILDA.JOBFILE object: "+Obj.toString());
-
+         throw new Exception("Cannot create the tilda.data.TILDA.JOBFILE object.\n"+toString());
        }
       return Obj;
    }

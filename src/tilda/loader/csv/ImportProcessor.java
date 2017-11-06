@@ -30,7 +30,6 @@ import org.apache.logging.log4j.Logger;
 import tilda.loader.csv.ImporterThread;
 import tilda.loader.csv.stores.CSVImporter.Results;
 import tilda.loader.parser.DataObject;
-import tilda.data.JobFile_Data;
 import tilda.db.Connection;
 import tilda.utils.DurationUtil;
 

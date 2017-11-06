@@ -3,7 +3,7 @@ package tilda;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-
+import java.util.Iterator;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
@@ -17,7 +17,9 @@ import tilda.data.Job_Data;
 import tilda.data.Job_Factory;
 import tilda.db.Connection;
 import tilda.db.ConnectionPool;
+import tilda.db.ListResults;
 import tilda.loader.csv.UnZip;
+import tilda.utils.TextUtil;
 
 public class LoadJob
   {
@@ -39,19 +41,7 @@ public class LoadJob
                 throw new Exception("Unable to read JOB from database");
               }
             
-            jobFile = JobFile_Factory.LookupByJobFile_Job_Refnum(job.getRefnum());
-            if(jobFile.Read(statusCon) == false)
-              {
-                throw new Exception("Unable to read JobFile from database");
-              }
-
-            jobFile.setFileProcessStartTimeNow();
-            if(jobFile.Write(statusCon) == false)
-              {
-                throw new Exception("Unable to write to startTime to JobFile");
-              }
-            
-            zipFile = new File(jobFile.getFileName());
+            zipFile = new File(job.getZipFile());
             String zipFileName = FilenameUtils.getBaseName(zipFile.getName());
             extractedPath = zipFile.getParent() + File.separator + zipFileName;
             processedPath = zipFile.getParent() + File.separator + "processed";
@@ -61,26 +51,46 @@ public class LoadJob
                 throw new Exception("Unable to find Zip file");
               }
             
-            String jsonFilePath = extractedPath + File.separator + zipFileName + ".json";
-            String csvFilePath = extractedPath + File.separator + zipFileName + ".csv";
-            
-            UnZip unzipper = new UnZip();
-            unzipper.unZipIt(jobFile.getFileName(), extractedPath);             
-
+            String jsonFilePath = zipFile.getParent() + File.separator + "config.UnifiedClaims.json";
+            // TODO: Remove JSON file hard code.
             File jsonFile = new File(jsonFilePath);
             if ( (jsonFile.exists() && jsonFile.isFile()) == false)
               {
-                throw new Exception("Unable to read JSON File in zip");
+                throw new Exception("Unable to read JSON Config file");
               }
             
-            Load.processLoadJob(job.getConnectionId(), job.getThreadsCount(), jsonFilePath, csvFilePath, job.getIsInsert(), job.getTruncateTable(), statusConId, jobFile);
-            FileUtils.moveFileToDirectory(zipFile, new File(processedPath), true);
-            
-            jobFile.setFileProcessEndTimeNow();
-            if (jobFile.Write(statusCon) == false)
+            UnZip unzipper = new UnZip();
+            unzipper.unZipIt(job.getZipFile(), extractedPath);             
+
+            ListResults<JobFile_Data> jobFiles = JobFile_Factory.getJobFilesByJobRefnum(statusCon, job.getRefnum(), 0, 100);
+            Iterator<JobFile_Data> filesIterator = jobFiles.iterator();
+            while (filesIterator.hasNext())
               {
-                throw new Exception("Unable to write to endTime to JobFile");
+                jobFile = filesIterator.next();
+                if (jobFile.Read(statusCon) == false) 
+                  {
+                    throw new Exception("Unable to read Job file from Database");
+                  }
+                
+                String csvFilePath = extractedPath + File.separator + jobFile.getFileName();
+                
+                jobFile.setStatusRunning();
+                jobFile.setFileProcessStartTimeNow();
+                jobFile.Write(statusCon);
+                statusCon.commit();
+                
+                String filename = jobFile.getFileName();
+                String[] values = TextUtil.Split(filename, "\\.");
+
+                Load.processLoadJob(job.getConnectionId(), job.getThreadsCount(), jsonFilePath, values[0], values[1], csvFilePath, job.getIsInsert(), job.getTruncateTable(), statusConId, jobFile);
+            
+                jobFile.setStatusSuccess();
+                jobFile.setFileProcessEndTimeNow();
+                jobFile.Write(statusCon);
+                statusCon.commit();
               }
+            
+            FileUtils.moveFileToDirectory(zipFile, new File(processedPath), true);
           }
         catch(Throwable T)
           {
@@ -89,7 +99,11 @@ public class LoadJob
               {
                 try
                   {
-                    JobMessage_Data jobMessage = JobMessage_Factory.Create(jobFile.getRefnum(), T.getMessage(), true);
+                    jobFile.setStatusFailure();
+                    jobFile.Write(statusCon);
+                    
+                    JobMessage_Data jobMessage = JobMessage_Factory.Create(jobFile.getRefnum(), T.getMessage());
+                    jobMessage.setIsError(true);
                     jobMessage.Write(statusCon);
                     statusCon.commit();
                   }
