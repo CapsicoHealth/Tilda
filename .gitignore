@@ -6,3 +6,8 @@
 /ut/log4j2.xml
 /ut/tilda.config.json
 /ut/WebBasics.config.json
+/ut/config.Load.json
+
+/ut/tilda/load/*.zip
+/ut/tilda/load/*.csv
+/ut/tilda/load/*.json

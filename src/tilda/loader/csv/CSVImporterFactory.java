@@ -11,17 +11,17 @@ import tilda.loader.parser.DataObject;
 public class CSVImporterFactory
   {
     
-    public static CSVImporter newInstance(Connection C, String rootFolder, DataObject cmsDO, Connection status, JobFile_Data jobFile) 
+    public static CSVImporter newInstance(Connection C, DataObject cmsDO, Connection status, JobFile_Data jobFile) 
     throws Exception
       {
         switch(C.getDBTypeName())
         {
           case "PostgreSQL":
-            return new PostgreSQLCSVImporter(C, rootFolder, cmsDO, status, jobFile);
+            return new PostgreSQLCSVImporter(C, cmsDO, status, jobFile);
           case "IBMDB2":
-            return new IBMDB2CSVImporter(C, rootFolder, cmsDO, status, jobFile);
+            return new IBMDB2CSVImporter(C, cmsDO, status, jobFile);
           case "MSSQL":
-            return new MSSQLCSVImporter(C, rootFolder, cmsDO, status, jobFile);
+            return new MSSQLCSVImporter(C, cmsDO, status, jobFile);
         }
         throw new Exception("CSVImporter is not defined for DB Type: "+C.getDBTypeName());
       }

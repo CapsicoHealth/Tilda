@@ -78,7 +78,7 @@ public class Load
     JButton                       btnAllConnections = new JButton("Select All Connections");
 
     public static void processLoadJob(String connectionId, int threads, String configPath, String schema, String table, 
-      String csvPath, boolean isInserts, boolean shouldTruncate, String statusConId, JobFile_Data jobFile)
+      String zipFilePath, String csvFilename, boolean isInserts, boolean shouldTruncate, String statusConId, JobFile_Data jobFile)
     throws Exception
       {
         LOG.debug("Starting the utility in silent mode.");
@@ -95,7 +95,8 @@ public class Load
         // Apply override values to DataObject(s)
         for(DataObject DO : conf._CmsData)
           {
-            DO.setFilePath(csvPath);
+            DO.setFilePath(csvFilename);
+            DO.setZipFilePath(zipFilePath);
             if(isInserts)
               DO.setIsInserts();
             else
@@ -105,22 +106,19 @@ public class Load
               DO.setShouldTruncate();
           }
         
-        List<String> errors = ValidateDataObjects(selectedConnectionIds,  filteredObjects);
+        List<String> errors = ValidateDataObjects(selectedConnectionIds,  filteredObjects, null);
         if (errors.size() > 0)
           {
             for (String error : errors)
               LOG.error(error);
             LOG.error("File " + configPath + " failed validation. Aborting !!");
-            Connection statusCon = ConnectionPool.get(statusConId);
-            JobMessage_Data jobMessage = JobMessage_Factory.Create(jobFile.getRefnum(), "Validation Failed.");
-            jobMessage.setIsError(true);
-            jobMessage.Write(statusCon);
-            statusCon.commit();
+            
+            throw new Exception(TextUtil.JoinTrim(errors.toArray(new String[errors.size()]), ";"));
           }
         
         LOG.debug("Running ImportProcessor");
         long timeTaken = System.nanoTime();
-        ImportProcessor.parallelProcess(selectedConnectionIds, null, threads, conf._CmsData, statusConId, jobFile.getRefnum());
+        ImportProcessor.parallelProcess(selectedConnectionIds, threads, conf._CmsData, statusConId, jobFile.getRefnum());
         timeTaken = System.nanoTime() - timeTaken;
         LOG.debug("Time taken for ImportProcessor.process() = " + DurationUtil.PrintDuration(timeTaken));
         
@@ -164,7 +162,7 @@ public class Load
                 List<String> selectedObjectsList = new ArrayList<>(Arrays.asList(arguments.get(i + 3).split(",")));
                 List<String> connectionIdsList = new ArrayList<>(Arrays.asList(arguments.get(i + 5).split(",")));
                 List<DataObject> filteredObjects = FilterObjects(selectedObjectsList, Conf._CmsData);
-                List<String> errors = ValidateDataObjects(connectionIdsList, filteredObjects);
+                List<String> errors = ValidateDataObjects(connectionIdsList, filteredObjects, Conf._RootFolder);
                 if (errors.size() > 0)
                   {
                     for (String error : errors)
@@ -240,7 +238,7 @@ public class Load
           }
       }
 
-    private static List<String> ValidateDataObjects(List<String> connectionIdsList, List<DataObject> selectedDO)
+    private static List<String> ValidateDataObjects(List<String> connectionIdsList, List<DataObject> selectedDO, String rootFolder)
       {
         List<String> errorMessages = new ArrayList<>();
         Connection C = null;
@@ -251,7 +249,7 @@ public class Load
                 C = ConnectionPool.get(connectionId);
                 for (DataObject DO : selectedDO)
                   {
-                    DO.validate(C, errorMessages);
+                    DO.validate(C, rootFolder, errorMessages);
                   }
               }
             catch (Throwable T)
@@ -314,7 +312,7 @@ public class Load
 
         LOG.debug("Running ImportProcessor");
         long timeTaken = System.nanoTime();
-        ImportProcessor.parallelProcess(connectionIdsList, Conf._RootFolder, threadsCount, dataObjects, null, -666);
+        ImportProcessor.parallelProcess(connectionIdsList, threadsCount, dataObjects, null, -666);
         timeTaken = System.nanoTime() - timeTaken;
         LOG.debug("Time taken for ImportProcessor.process() = " + DurationUtil.PrintDuration(timeTaken));
       }
@@ -469,7 +467,7 @@ public class Load
                                 // Validate Table indices
                                 List<DataObject> selectedDO = FilterObjects(ImportTables, Conf._CmsData);
                                 LOG.debug("Validating Selected Table Indices..");
-                                List<String> errors = ValidateDataObjects(ConnectionIds, selectedDO);
+                                List<String> errors = ValidateDataObjects(ConnectionIds, selectedDO, Conf._RootFolder);
                                 if (errors.size() > 0)
                                   {
                                     String error = TextUtil.JoinTrim(errors.toArray(new String[errors.size()]), ", \n");

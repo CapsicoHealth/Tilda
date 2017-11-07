@@ -40,7 +40,7 @@ public class ImportProcessor
     /*
      * Launch and Shutdown threads
      */
-    public static void parallelProcess(List<String> connectionIds, String rootFolder, int threadsCount, List<DataObject> CMSDataList, String statusConId, long jobFileRefnum)
+    public static void parallelProcess(List<String> connectionIds, int threadsCount, List<DataObject> CMSDataList, String statusConId, long jobFileRefnum)
       {
           ExecutorService pool = Executors.newFixedThreadPool(threadsCount);
           List<Future<List<Results>>> futures = new ArrayList<>();
@@ -51,7 +51,7 @@ public class ImportProcessor
               validate(Data);
               for(String connectionId : connectionIds)
                 {
-                  Callable<List<Results>> thread = new ImporterThread(connectionId, rootFolder, Data, statusConId, jobFileRefnum);
+                  Callable<List<Results>> thread = new ImporterThread(connectionId, Data, statusConId, jobFileRefnum);
                   Future<List<Results>> future =  pool.submit(thread);
                   futures.add(future);
                 }

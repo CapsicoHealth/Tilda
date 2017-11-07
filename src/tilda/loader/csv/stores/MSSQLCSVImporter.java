@@ -13,10 +13,9 @@ import tilda.loader.parser.DataObject;
 public class MSSQLCSVImporter extends CSVImporter
   {
 
-    public MSSQLCSVImporter(Connection C, String rootFolder, DataObject cmsDO, Connection status, JobFile_Data jobFile)
+    public MSSQLCSVImporter(Connection C, DataObject cmsDO, Connection status, JobFile_Data jobFile)
       {
         this.C = C;
-        this.rootFolder = rootFolder;
         this.cmsDO = cmsDO;
         this.statusConnection = status;
         this.jobFile = jobFile;

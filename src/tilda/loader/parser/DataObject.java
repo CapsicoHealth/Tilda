@@ -16,11 +16,15 @@
 
 package tilda.loader.parser;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Iterator;
+
 import com.google.gson.annotations.SerializedName;
 
 import tilda.db.Connection;
@@ -47,8 +51,9 @@ public class DataObject
     transient boolean _Upserts;
     transient boolean _Inserts;
     transient boolean _TruncateFirst;
+    transient String  _ZipFilePath      = null;
     
-    public boolean validate(Connection C, List<String> errorMessages) throws Exception
+    public boolean validate(Connection C, String rootFolder, List<String> errorMessages) throws Exception
      {
        SchemaMeta sMeta = new SchemaMeta(_SchemaName);
        sMeta.load(C, _TableName);
@@ -61,6 +66,15 @@ public class DataObject
         for (ColumnHeader CH : _ColumnHeaderList)
          if (CH != null)
           CH.validate();
+
+       if (TextUtil.isNullOrEmpty(rootFolder) == false)
+         {
+           ListIterator<String> filesIterator = _FileList.listIterator();
+           while(filesIterator.hasNext())
+             {
+               filesIterator.set(rootFolder + File.separator + filesIterator.next());
+             }
+         }
        
        if (TextUtil.isNullOrEmpty(_mode) == true)
          {
@@ -96,7 +110,6 @@ public class DataObject
            errorMessages.add("Data definition for " + getTableFullName() + " is defining a mode='"+_mode+"' which is invalid. Must be one of 'INSERT', 'TRUNCATE_INSERT', 'UPSERT'. ");
            return false;
          }
-
        return true;
      }
     
@@ -186,6 +199,16 @@ public class DataObject
       {
         if (isInserts() != isUpserts() && isInserts())
           this._TruncateFirst = true;
+      }
+    
+    public void setZipFilePath(String value)
+      {
+        this._ZipFilePath = value;
+      }
+    
+    public String getZipFilePath()
+      {
+        return this._ZipFilePath;
       }
 
   }

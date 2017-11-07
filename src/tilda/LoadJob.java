@@ -1,11 +1,9 @@
 package tilda;
 
 import java.io.File;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Iterator;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,7 +16,7 @@ import tilda.data.Job_Factory;
 import tilda.db.Connection;
 import tilda.db.ConnectionPool;
 import tilda.db.ListResults;
-import tilda.loader.csv.UnZip;
+import tilda.utils.FileUtil;
 import tilda.utils.TextUtil;
 
 public class LoadJob
@@ -28,7 +26,7 @@ public class LoadJob
     public static void process(String statusConId, long jobRefnum)
       {
         Connection statusCon = null;
-        String extractedPath = null, processedPath = null;
+        String processedPath = null;
         File zipFile = null;
         Job_Data job = null;
         JobFile_Data jobFile = null;
@@ -41,9 +39,7 @@ public class LoadJob
                 throw new Exception("Unable to read JOB from database");
               }
             
-            zipFile = new File(job.getZipFile());
-            String zipFileName = FilenameUtils.getBaseName(zipFile.getName());
-            extractedPath = zipFile.getParent() + File.separator + zipFileName;
+            zipFile = FileUtil.getFileOrResource(job.getZipFile());
             processedPath = zipFile.getParent() + File.separator + "processed";
             
             if ( (zipFile.exists() && zipFile.isFile()) == false )
@@ -51,17 +47,13 @@ public class LoadJob
                 throw new Exception("Unable to find Zip file");
               }
             
-            String jsonFilePath = zipFile.getParent() + File.separator + "config.UnifiedClaims.json";
             // TODO: Remove JSON file hard code.
-            File jsonFile = new File(jsonFilePath);
+            File jsonFile = FileUtil.getFileOrResource("config.Load.json");
             if ( (jsonFile.exists() && jsonFile.isFile()) == false)
               {
                 throw new Exception("Unable to read JSON Config file");
               }
-            
-            UnZip unzipper = new UnZip();
-            unzipper.unZipIt(job.getZipFile(), extractedPath);             
-
+           
             ListResults<JobFile_Data> jobFiles = JobFile_Factory.getJobFilesByJobRefnum(statusCon, job.getRefnum(), 0, 100);
             Iterator<JobFile_Data> filesIterator = jobFiles.iterator();
             while (filesIterator.hasNext())
@@ -72,8 +64,6 @@ public class LoadJob
                     throw new Exception("Unable to read Job file from Database");
                   }
                 
-                String csvFilePath = extractedPath + File.separator + jobFile.getFileName();
-                
                 jobFile.setStatusRunning();
                 jobFile.setFileProcessStartTimeNow();
                 jobFile.Write(statusCon);
@@ -82,15 +72,19 @@ public class LoadJob
                 String filename = jobFile.getFileName();
                 String[] values = TextUtil.Split(filename, "\\.");
 
-                Load.processLoadJob(job.getConnectionId(), job.getThreadsCount(), jsonFilePath, values[0], values[1], csvFilePath, job.getIsInsert(), job.getTruncateTable(), statusConId, jobFile);
+                Load.processLoadJob(job.getConnectionId(), job.getThreadsCount(), jsonFile.getAbsolutePath(), values[0], values[1], job.getZipFile(), filename, job.getIsInsert(), job.getTruncateTable(), statusConId, jobFile);
+                
+                jobFile.Refresh(statusCon);
+                if(jobFile.isStatusFailure() == true)
+                  {
+                    throw new Exception("Failed to process JobFile: "+jobFile.getRefnum());
+                  }
             
                 jobFile.setStatusSuccess();
                 jobFile.setFileProcessEndTimeNow();
                 jobFile.Write(statusCon);
                 statusCon.commit();
               }
-            
-            FileUtils.moveFileToDirectory(zipFile, new File(processedPath), true);
           }
         catch(Throwable T)
           {
@@ -116,7 +110,6 @@ public class LoadJob
         finally
           {
             moveFileToProcessedFolder(zipFile, processedPath);
-            deleteExtractedFolder(extractedPath);
             closeDBConnection(statusCon);
           }
         
@@ -135,19 +128,6 @@ public class LoadJob
           }
       }
 
-    private static void deleteExtractedFolder(String extractedPath)
-      {
-        try
-          {
-            if (extractedPath != null)
-              FileUtils.deleteDirectory(new File(extractedPath));
-          }
-        catch (IOException e)
-          {
-            LOG.error("Failed to delete extracted folder: "+extractedPath, e);
-          }
-      }
-    
     private static void closeDBConnection(Connection C)
       {
         try

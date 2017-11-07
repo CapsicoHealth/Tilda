@@ -25,10 +25,9 @@ public class ImporterThread implements Callable<List<Results>>
     DataObject dataObject;
     long jobFileRefnum = -666;
     
-    public ImporterThread(String connectionId, String rootFolder, DataObject dataObject, String statusConId, long jobFileRefnum)
+    public ImporterThread(String connectionId, DataObject dataObject, String statusConId, long jobFileRefnum)
       {
         this.connectionId = connectionId;
-        this.rootFolder = rootFolder;
         this.dataObject = dataObject;
         this.statusConId = statusConId;
         this.jobFileRefnum = jobFileRefnum;
@@ -54,7 +53,7 @@ public class ImporterThread implements Callable<List<Results>>
               }
             
             C = ConnectionPool.get(this.connectionId);
-            CSVImporter importer = CSVImporterFactory.newInstance(C, this.rootFolder, this.dataObject, statusCon, jobFile);            
+            CSVImporter importer = CSVImporterFactory.newInstance(C, this.dataObject, statusCon, jobFile);            
             result = importer.process();
           }
         catch(Throwable T) 
@@ -75,6 +74,9 @@ public class ImporterThread implements Callable<List<Results>>
               {
                 try
                   {
+                    jobFile.setStatusFailure();
+                    jobFile.Write(statusCon);
+                    
                     JobMessage_Data jobMessage = JobMessage_Factory.Create(jobFile.getRefnum(), T.getMessage());
                     jobMessage.setIsError(true);
                     jobMessage.Write(statusCon);

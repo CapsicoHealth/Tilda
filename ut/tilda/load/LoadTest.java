@@ -19,9 +19,7 @@ public class LoadTest
         LOG.info("\n*************************************************************************************************************************************\n");
 
         long JOBREFNUM = 123;
-        String statusConId = "JOBS";
-        
-        LoadJob.process(statusConId, JOBREFNUM);
-      
+        String statusConId = "JOBS";        
+        LoadJob.process(statusConId, JOBREFNUM);      
       }
   }

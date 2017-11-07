@@ -16,6 +16,9 @@
 
 package tilda.loader.csv.stores;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -29,6 +32,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
@@ -61,7 +67,6 @@ public abstract class CSVImporter
     protected static final int    PERFORMANCE_NUMBER = 50000;
     
     protected Connection    C                   = null;
-    protected String        rootFolder          = null;
     protected DataObject    cmsDO               = null;
     protected Connection    statusConnection    = null;
     protected JobFile_Data  jobFile             = null;
@@ -79,6 +84,7 @@ public abstract class CSVImporter
         long t0 = System.nanoTime();
         long NumOfRecs = 0;
         Reader fileReader = null;
+        ZipFile zipFile = null;
         try
           {
             String columns[] = cmsDO.getColumns();
@@ -105,23 +111,31 @@ public abstract class CSVImporter
             
             for (String file : fileList)
               {
-                String absoluteFilePath = (rootFolder != null) ? (rootFolder + file) : file;
-                LOG.debug("Looking for data file or resource " + absoluteFilePath + ".");
-                fileReader = FileUtil.getReaderFromFileOrResource(absoluteFilePath);
+                if(cmsDO.getZipFilePath() != null && this.jobFile != null)
+                  {
+                    LOG.debug("Looking for data file or resource " + file + " in Zip "+cmsDO.getZipFilePath());
+                    zipFile = new ZipFile(FileUtil.getFileOrResource(cmsDO.getZipFilePath()));
+                    ZipEntry entry = zipFile.getEntry(file);
+                    fileReader = new BufferedReader(new InputStreamReader(zipFile.getInputStream(entry)));
+                  }
+                else
+                  {
+                    LOG.debug("Looking for data file or resource " + file + ".");
+                    fileReader = FileUtil.getReaderFromFileOrResource(file);
+                  }
 
                 CSVFormat csvFormat = CSVFormat.DEFAULT.withHeader(completeHeaders);
                 Iterable<CSVRecord> records = csvFormat.parse(fileReader);
                 getHeader(completeHeaders, cmsDO._HeadersIncluded, records);
-
-                
+               
                 NumOfRecs = insertData(cmsDO.isUpserts(), t0, DBColumns, cmsDO._HeadersIncluded, records, Str, cmsDO._SchemaName,
                   cmsDO._TableName, headers, columns, cmsDO.getMultiHeaderColumnMap(), completeHeaders, uniqueColumns, 
                   cmsDO._dateTimePattern, cmsDO._zoneId, cmsDO._datePattern);
                 
                 fileReader.close();
-                
-                fileReader.close();
-                fileReader = null;
+                fileReader = null;                
+                zipFile.close();
+                zipFile = null;
                 
                 NumOfRecs = (cmsDO._HeadersIncluded == true) ? (NumOfRecs - 1) : NumOfRecs;
                 t0 = System.nanoTime() - t0;
@@ -150,6 +164,8 @@ public abstract class CSVImporter
           {
             if (fileReader != null)
               fileReader.close();
+            if (zipFile != null)
+              zipFile.close();
             throw e;
           }
       }

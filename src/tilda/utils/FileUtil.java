@@ -26,8 +26,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.Reader;
+import java.net.URL;
 import java.util.Arrays;
-
 import tilda.utils.comparators.FileNameComparator;
 
 public class FileUtil
@@ -36,7 +36,7 @@ public class FileUtil
       {
         return FileUtil.class.getClassLoader().getResourceAsStream(ResourceName);
       }
-
+    
     public static interface FileProcessor
       {
         public void startFolder(File D)
@@ -154,6 +154,18 @@ public class FileUtil
         
         return Name.substring(0, Math.max(i1,  i2)+1);
       }
-
+    
+    public static File getFileOrResource(String name)
+    throws Exception
+      {
+        if (new File(name).exists() == true)
+           return new File(name);
+        
+        URL resource = FileUtil.class.getClassLoader().getResource(name);
+        if (resource != null)
+          return new File(resource.getPath());
+        
+        throw new Exception("Cannot find file/resource '"+name+"'.");
+      }
 
   }

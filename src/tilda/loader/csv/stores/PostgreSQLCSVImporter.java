@@ -37,10 +37,9 @@ import tilda.utils.TextUtil;
 
 public class PostgreSQLCSVImporter extends CSVImporter
   {
-    public PostgreSQLCSVImporter(Connection C, String rootFolder, DataObject cmsDO, Connection status, JobFile_Data jobFile)
+    public PostgreSQLCSVImporter(Connection C, DataObject cmsDO, Connection status, JobFile_Data jobFile)
       {
         this.C = C;
-        this.rootFolder = rootFolder;
         this.cmsDO = cmsDO;
         this.statusConnection = status;
         this.jobFile = jobFile;
