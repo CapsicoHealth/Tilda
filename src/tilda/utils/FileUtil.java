@@ -154,6 +154,14 @@ public class FileUtil
         
         return Name.substring(0, Math.max(i1,  i2)+1);
       }
+
+    public static boolean isResource(String name)
+      {
+        URL resource = FileUtil.class.getClassLoader().getResource(name);
+        if (resource != null)
+          return true;        
+        return false;
+      }
     
     public static File getFileOrResource(String name)
     throws Exception

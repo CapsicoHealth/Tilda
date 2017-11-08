@@ -35,6 +35,12 @@ import tilda.utils.TextUtil;
 public class DataObject
   {
 
+    public static enum MODE
+      {
+        INSERT, UPSERT, INSERT_TRUNCATE;
+      }
+
+    
     @SerializedName("filepath"       )      public List<String>       _FileList = new ArrayList<String>();
     @SerializedName("schemaName"     )      public String             _SchemaName;
     @SerializedName("tableName"      )      public String             _TableName;
@@ -81,16 +87,16 @@ public class DataObject
            errorMessages.add("Data definition for " + getTableFullName() + " is not defining the 'mode' property, which is mandatory. ");
            return false;
          }
-       else if (_mode.equals("INSERT") == true)
+       else if (_mode.equals(MODE.INSERT.toString()) == true)
          {
            _Inserts = true;
          }
-       else if  (_mode.equals("TRUNCATE_INSERT") == true)
+       else if  (_mode.equals(MODE.INSERT_TRUNCATE.toString()) == true)
          {
            _Inserts = true;
            _TruncateFirst = true;
          }
-       else if (_mode.equals("UPSERT") == true)
+       else if (_mode.equals(MODE.UPSERT.toString()) == true)
          {
            _Upserts = true;
            String[] uniqueColumns = getUniqueColumnsList();
@@ -169,17 +175,15 @@ public class DataObject
       {
         return this._SchemaName + "." + this._TableName;
       }
-    
-    public void setIsUpserts()
+
+    public void setInsertMode()
       {
-        this._Upserts = true;
-        this._Inserts = false;
+        this._mode = MODE.INSERT.toString();
       }
     
-    public void setIsInserts()
+    public void setUpsertMode()
       {
-        this._Inserts = true;
-        this._Upserts = false;
+        this._mode = MODE.UPSERT.toString();
       }
     
     public void setFilePath(String filePath)

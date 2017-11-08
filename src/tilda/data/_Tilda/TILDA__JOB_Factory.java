@@ -582,7 +582,7 @@ This is the column definition for:<BR>
        tilda.data._Tilda.TILDA__JOB Obj = new tilda.data.Job_Data();
        Obj.initForLookup(1);
 
-       Obj.setStatus      (status      );
+       Obj.setStatus      (status      ); 
 
        return (tilda.data.Job_Data) Obj;
      }

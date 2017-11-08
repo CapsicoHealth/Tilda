@@ -534,7 +534,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Nov 8 2017, 12:30:19IST
+ @generated Nov 8 2017, 13:07:16IST
 */
 public abstract class TILDA__JOB implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
@@ -3501,67 +3501,67 @@ This is the hasChanged for:<BR>
         {
           PS = C.prepareStatement(Q);
           int i = 0;
-               if ((TILDA__JOB_Factory.COLS.REFNUM._Mask1       & __Changes1) != 0L)
+               if ((TILDA__JOB_Factory.COLS.REFNUM._Mask1       & __Changes1) != 0L) 
                 { 
                   if ((TILDA__JOB_Factory.COLS.REFNUM._Mask1       & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _refnum);
                 } 
-               if ((TILDA__JOB_Factory.COLS.NAME._Mask1         & __Changes1) != 0L)
+               if ((TILDA__JOB_Factory.COLS.NAME._Mask1         & __Changes1) != 0L) 
                 { 
                   if ((TILDA__JOB_Factory.COLS.NAME._Mask1         & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _name);
                 } 
-               if ((TILDA__JOB_Factory.COLS.STARTTIMETZ._Mask1  & __Changes1) != 0L)
+               if ((TILDA__JOB_Factory.COLS.STARTTIMETZ._Mask1  & __Changes1) != 0L) 
                 { 
                   if ((TILDA__JOB_Factory.COLS.STARTTIMETZ._Mask1  & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _startTimeTZ);
                 } 
-               if ((TILDA__JOB_Factory.COLS.STARTTIME._Mask1    & __Changes1) != 0L)
+               if ((TILDA__JOB_Factory.COLS.STARTTIME._Mask1    & __Changes1) != 0L) 
                 { 
                   if ((TILDA__JOB_Factory.COLS.STARTTIME._Mask1    & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_startTime) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_startTime.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
-               if ((TILDA__JOB_Factory.COLS.ENDTIMETZ._Mask1    & __Changes1) != 0L)
+               if ((TILDA__JOB_Factory.COLS.ENDTIMETZ._Mask1    & __Changes1) != 0L) 
                 { 
                   if ((TILDA__JOB_Factory.COLS.ENDTIMETZ._Mask1    & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _endTimeTZ);
                 } 
-               if ((TILDA__JOB_Factory.COLS.ENDTIME._Mask1      & __Changes1) != 0L)
+               if ((TILDA__JOB_Factory.COLS.ENDTIME._Mask1      & __Changes1) != 0L) 
                 { 
                   if ((TILDA__JOB_Factory.COLS.ENDTIME._Mask1      & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_endTime) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_endTime.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
-               if ((TILDA__JOB_Factory.COLS.TOTALRECORDS._Mask1 & __Changes1) != 0L)
+               if ((TILDA__JOB_Factory.COLS.TOTALRECORDS._Mask1 & __Changes1) != 0L) 
                 { 
                   if ((TILDA__JOB_Factory.COLS.TOTALRECORDS._Mask1 & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _totalRecords);
                 } 
-               if ((TILDA__JOB_Factory.COLS.STATUS._Mask1       & __Changes1) != 0L)
+               if ((TILDA__JOB_Factory.COLS.STATUS._Mask1       & __Changes1) != 0L) 
                 { 
                   if ((TILDA__JOB_Factory.COLS.STATUS._Mask1       & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _status);
                 } 
-               if ((TILDA__JOB_Factory.COLS.ERROR._Mask1        & __Changes1) != 0L)
+               if ((TILDA__JOB_Factory.COLS.ERROR._Mask1        & __Changes1) != 0L) 
                 { 
                   if ((TILDA__JOB_Factory.COLS.ERROR._Mask1        & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _error);
                 } 
-               if ((TILDA__JOB_Factory.COLS.THREADSCOUNT._Mask1 & __Changes1) != 0L)
+               if ((TILDA__JOB_Factory.COLS.THREADSCOUNT._Mask1 & __Changes1) != 0L) 
                 { 
                   if ((TILDA__JOB_Factory.COLS.THREADSCOUNT._Mask1 & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _threadsCount);
                 } 
-               if ((TILDA__JOB_Factory.COLS.LOADMODE._Mask1     & __Changes1) != 0L)
+               if ((TILDA__JOB_Factory.COLS.LOADMODE._Mask1     & __Changes1) != 0L) 
                 { 
                   if ((TILDA__JOB_Factory.COLS.LOADMODE._Mask1     & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, ""+_loadMode);
                 } 
-               if ((TILDA__JOB_Factory.COLS.CONNECTIONID._Mask1 & __Changes1) != 0L)
+               if ((TILDA__JOB_Factory.COLS.CONNECTIONID._Mask1 & __Changes1) != 0L) 
                 { 
                   if ((TILDA__JOB_Factory.COLS.CONNECTIONID._Mask1 & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _connectionId);
                 } 
-               if ((TILDA__JOB_Factory.COLS.ZIPFILE._Mask1      & __Changes1) != 0L)
+               if ((TILDA__JOB_Factory.COLS.ZIPFILE._Mask1      & __Changes1) != 0L) 
                 { 
                   if ((TILDA__JOB_Factory.COLS.ZIPFILE._Mask1      & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _zipFile);
                 } 
-               if ((TILDA__JOB_Factory.COLS.CREATED._Mask1      & __Changes1) != 0L)
+               if ((TILDA__JOB_Factory.COLS.CREATED._Mask1      & __Changes1) != 0L) 
                 { 
                   if ((TILDA__JOB_Factory.COLS.CREATED._Mask1      & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
-               if ((TILDA__JOB_Factory.COLS.LASTUPDATED._Mask1  & __Changes1) != 0L)
+               if ((TILDA__JOB_Factory.COLS.LASTUPDATED._Mask1  & __Changes1) != 0L) 
                 { 
                   if ((TILDA__JOB_Factory.COLS.LASTUPDATED._Mask1  & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_lastUpdated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
-               if ((TILDA__JOB_Factory.COLS.DELETED._Mask1      & __Changes1) != 0L)
+               if ((TILDA__JOB_Factory.COLS.DELETED._Mask1      & __Changes1) != 0L) 
                 { 
                   if ((TILDA__JOB_Factory.COLS.DELETED._Mask1      & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deleted.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
@@ -3794,15 +3794,15 @@ This is the hasChanged for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "refnum: "                                                                                          +                                   getRefnum      ()
+                   "refnum: "                                                                                          +                                   getRefnum      () 
                + "; name"           + ((TILDA__JOB_Factory.COLS.NAME._Mask1         & __Nulls1) != 0L ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getName        ()))
                + "; startTime"      + ((TILDA__JOB_Factory.COLS.STARTTIME._Mask1    & __Nulls1) != 0L ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getStartTime   ()))
                + "; endTime"        + ((TILDA__JOB_Factory.COLS.ENDTIME._Mask1      & __Nulls1) != 0L ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getEndTime     ()))
                + "; totalRecords"   + ((TILDA__JOB_Factory.COLS.TOTALRECORDS._Mask1 & __Nulls1) != 0L ? ": NULL" : ": " +                                   getTotalRecords() )
                + "; status: "                                                                                          + TextUtil.PrintVariableStr        (getStatus      ())
                + "; error"          + ((TILDA__JOB_Factory.COLS.ERROR._Mask1        & __Nulls1) != 0L ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getError       ()))
-               + "; threadsCount: "                                                                                    +                                   getThreadsCount()
-               + "; loadMode: "                                                                                        +                                   getLoadMode    ()
+               + "; threadsCount: "                                                                                    +                                   getThreadsCount() 
+               + "; loadMode: "                                                                                        +                                   getLoadMode    () 
                + "; connectionId: "                                                                                    + TextUtil.PrintVariableStr        (getConnectionId())
                + "; zipFile: "                                                                                         + TextUtil.PrintVariableStr        (getZipFile     ())
          + ";";

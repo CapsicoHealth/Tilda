@@ -48,6 +48,7 @@ import com.sun.istack.internal.NotNull;
 import tilda.data.JobFile_Data;
 import tilda.data.JobMessage_Data;
 import tilda.data.JobMessage_Factory;
+import tilda.data.Job_Data;
 import tilda.db.Connection;
 import tilda.db.ConnectionPool;
 import tilda.loader.csv.ImportProcessor;
@@ -78,7 +79,7 @@ public class Load
     JButton                       btnAllConnections = new JButton("Select All Connections");
 
     public static void processLoadJob(String connectionId, int threads, String configPath, String schema, String table, 
-      String zipFilePath, String csvFilename, boolean isInserts, boolean shouldTruncate, String statusConId, JobFile_Data jobFile)
+      String zipFilePath, String csvFilename, char mode, boolean shouldTruncate, String statusConId, JobFile_Data jobFile)
     throws Exception
       {
         LOG.debug("Starting the utility in silent mode.");
@@ -97,10 +98,13 @@ public class Load
           {
             DO.setFilePath(csvFilename);
             DO.setZipFilePath(zipFilePath);
-            if(isInserts)
-              DO.setIsInserts();
-            else
-              DO.setIsUpserts();
+            if (Character.isLetter(mode))
+              {
+                if (mode == Job_Data._loadModeInsert)
+                  DO.setInsertMode();
+                else if (mode == Job_Data._loadModeUpsert)
+                  DO.setUpsertMode();
+              }
             
             if(shouldTruncate)
               DO.setShouldTruncate();
