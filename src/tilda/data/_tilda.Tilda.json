@@ -201,8 +201,12 @@
                                       {"name":"DefaultValue", "value":"1", "description":"Default value threads count"  , "label":"Default value", "default":"CREATE" }
                                   ]
         },
-        { "name": "isInsert"     , "type": "BOOLEAN", "nullable": false                         , "description": "Insert or upsert?"   },
-        { "name": "truncateTable", "type": "BOOLEAN", "nullable": false                         , "description": "Truncate table"      },
+        { "name": "loadMode"     , "type": "CHAR", "nullable": false                         , "description": "Insert or upsert?"
+                                 , "values":[
+                                    {"name": "Upsert", "value": "U", "description": "Upsert mode", "label": "Upsert Mode"}
+                                   ,{"name": "Insert", "value": "I", "description": "Insert mode", "label": "Insert Mode", "default":"CREATE" }
+                                 ]
+        },
         { "name": "connectionId" , "sameas": "tilda.data.tilda.connection.id", "nullable": false,  "description": "Connection Details" },
         { "name": "zipFile"      , "type": "STRING", "nullable": false, "size":   1000, "description": "ZipFile Absolute Path" }
       ],

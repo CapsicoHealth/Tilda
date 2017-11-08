@@ -72,7 +72,7 @@ public class LoadJob
                 String filename = jobFile.getFileName();
                 String[] values = TextUtil.Split(filename, "\\.");
 
-                Load.processLoadJob(job.getConnectionId(), job.getThreadsCount(), jsonFile.getAbsolutePath(), values[0], values[1], job.getZipFile(), filename, job.getIsInsert(), job.getTruncateTable(), statusConId, jobFile);
+                Load.processLoadJob(job.getConnectionId(), job.getThreadsCount(), jsonFile.getAbsolutePath(), values[0], values[1], job.getZipFile(), filename, job.isLoadModeInsert(), false, statusConId, jobFile);
                 
                 jobFile.Refresh(statusCon);
                 if(jobFile.isStatusFailure() == true)

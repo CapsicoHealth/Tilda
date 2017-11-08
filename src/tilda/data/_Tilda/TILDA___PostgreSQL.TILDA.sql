@@ -272,23 +272,22 @@ CREATE INDEX CONNECTION_AllById ON TILDA.CONNECTION ("id" ASC);
 
 
 create table if not exists TILDA.JOB -- Jobs
- (  "refnum"         bigint         not null   -- The primary key for this record
-  , "name"           varchar(50)               -- Job Name
-  , "startTimeTZ"    character(5)              -- Generated helper column to hold the time zone ID for 'startTime'.
-  , "startTime"      timestamptz               -- StartTime
-  , "endTimeTZ"      character(5)              -- Generated helper column to hold the time zone ID for 'endTime'.
-  , "endTime"        timestamptz               -- EndTime
-  , "totalRecords"   bigint                    -- TotalRecords
-  , "status"         character(2)   not null   -- Status
-  , "error"          varchar(1000)             -- Error
-  , "threadsCount"   integer        not null   -- Thread count
-  , "isInsert"       boolean        not null   -- Insert or upsert?
-  , "truncateTable"  boolean        not null   -- Truncate table
-  , "connectionId"   character(15)  not null   -- Connection Details
-  , "zipFile"        varchar(1000)  not null   -- ZipFile Absolute Path
-  , "created"        timestamptz    not null   -- The timestamp for when the record was created.
-  , "lastUpdated"    timestamptz    not null   -- The timestamp for when the record was last updated.
-  , "deleted"        timestamptz               -- The timestamp for when the record was deleted.
+ (  "refnum"        bigint         not null   -- The primary key for this record
+  , "name"          varchar(50)               -- Job Name
+  , "startTimeTZ"   character(5)              -- Generated helper column to hold the time zone ID for 'startTime'.
+  , "startTime"     timestamptz               -- StartTime
+  , "endTimeTZ"     character(5)              -- Generated helper column to hold the time zone ID for 'endTime'.
+  , "endTime"       timestamptz               -- EndTime
+  , "totalRecords"  bigint                    -- TotalRecords
+  , "status"        character(2)   not null   -- Status
+  , "error"         varchar(1000)             -- Error
+  , "threadsCount"  integer        not null   -- Thread count
+  , "loadMode"      character      not null   -- Insert or upsert?
+  , "connectionId"  character(15)  not null   -- Connection Details
+  , "zipFile"       varchar(1000)  not null   -- ZipFile Absolute Path
+  , "created"       timestamptz    not null   -- The timestamp for when the record was created.
+  , "lastUpdated"   timestamptz    not null   -- The timestamp for when the record was last updated.
+  , "deleted"       timestamptz               -- The timestamp for when the record was deleted.
   , PRIMARY KEY("refnum")
   , CONSTRAINT fk_JOB_startTime FOREIGN KEY ("startTimeTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
   , CONSTRAINT fk_JOB_endTime FOREIGN KEY ("endTimeTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
@@ -304,8 +303,7 @@ COMMENT ON COLUMN TILDA.JOB."totalRecords" IS E'TotalRecords';
 COMMENT ON COLUMN TILDA.JOB."status" IS E'Status';
 COMMENT ON COLUMN TILDA.JOB."error" IS E'Error';
 COMMENT ON COLUMN TILDA.JOB."threadsCount" IS E'Thread count';
-COMMENT ON COLUMN TILDA.JOB."isInsert" IS E'Insert or upsert?';
-COMMENT ON COLUMN TILDA.JOB."truncateTable" IS E'Truncate table';
+COMMENT ON COLUMN TILDA.JOB."loadMode" IS E'Insert or upsert?';
 COMMENT ON COLUMN TILDA.JOB."connectionId" IS E'Connection Details';
 COMMENT ON COLUMN TILDA.JOB."zipFile" IS E'ZipFile Absolute Path';
 COMMENT ON COLUMN TILDA.JOB."created" IS E'The timestamp for when the record was created.';
