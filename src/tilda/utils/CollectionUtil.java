@@ -580,4 +580,12 @@ public class CollectionUtil
       {
         return L.toArray(new String[L.size()]);
       }
+    
+    public static void append(List<String> L, Iterator<String> I)
+      {
+        if (I == null)
+         return;
+        while (I.hasNext() == true)
+          L.add(I.next());
+      }
   }
