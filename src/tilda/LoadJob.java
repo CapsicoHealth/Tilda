@@ -89,16 +89,24 @@ public class LoadJob
         catch(Throwable T)
           {
             LOG.error("Exception while processing a Job", T);
-            if (statusCon != null && jobFile != null)
+            if(statusCon != null)
               {
                 try
                   {
-                    jobFile.setStatusFailure();
-                    jobFile.Write(statusCon);
-                    
-                    JobMessage_Data jobMessage = JobMessage_Factory.Create(jobFile.getRefnum(), T.getMessage());
-                    jobMessage.setIsError(true);
-                    jobMessage.Write(statusCon);
+                    if (jobFile != null)
+                      {
+                        jobFile.setStatusFailure();
+                        jobFile.Write(statusCon);
+                        
+                        JobMessage_Data jobMessage = JobMessage_Factory.Create(jobFile.getRefnum(), T.getMessage());
+                        jobMessage.setIsError(true);
+                        jobMessage.Write(statusCon);                        
+                      }
+//                    if(job != null)
+//                      {
+//                        job.setError(T.getMessage());
+//                        job.Write(statusCon);
+//                      }
                     statusCon.commit();
                   }
                 catch(Exception E)
