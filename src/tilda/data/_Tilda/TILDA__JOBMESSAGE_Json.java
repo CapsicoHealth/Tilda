@@ -59,4 +59,46 @@ public class TILDA__JOBMESSAGE_Json
          + ";";
     }
 
+   public static void toJSON(Writer Out, List<tilda.data.JobMessage_Data> L, String Lead, boolean FullList) throws IOException
+    {
+      if (L == null || L.size() == 0) return;
+      if (FullList == true)
+       Out.write("[\n");
+      boolean First = true;
+      for (tilda.data.JobMessage_Data O : L)
+       if (O!=null)
+        {
+          Out.write(Lead);
+          if (First == false) Out.write(","); else { Out.write(" "); First = false; }
+          toJSON(Out, O, true);
+          Out.write("\n");
+        }
+      if (FullList == true)
+       { 
+          Out.write(Lead);
+          Out.write("]\n");
+       } 
+    }
+
+   public static void toJSON(Writer Out, tilda.data.JobMessage_Data ObjApp, boolean FullObject) throws IOException
+    {
+      long T0 = System.nanoTime();
+      tilda.data._Tilda.TILDA__JOBMESSAGE Obj = (tilda.data._Tilda.TILDA__JOBMESSAGE) ObjApp;
+      if (FullObject == true)
+       Out.write("{");
+
+        JSONUtil.Print(Out, "jobFileRefnum", true, Obj.getJobFileRefnum());
+
+        JSONUtil.Print(Out, "message", false, Obj.getMessage());
+
+        JSONUtil.Print(Out, "created", false, Obj.getCreated());
+
+      if (Obj.isNullIsError() == false)
+        JSONUtil.Print(Out, "isError", false, Obj.getIsError());
+
+      if (FullObject == true)
+       Out.write(" }");
+      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
+    }
+
  }

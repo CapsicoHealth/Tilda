@@ -226,7 +226,7 @@
           "orderBy": ["created DESC"]
         }
       ],
-       "primary": { "autogen": true }
+      "primary": { "autogen": true }
     },
     { "name":"JobFile",
       "description":"Job File Info",
@@ -236,16 +236,30 @@
         { "name":"fileRecords"          , "type": "LONG"        , "nullable": true ,                 "description":"Number of records loaded into DB" },
         { "name":"fileProcessStartTime" , "type": "DATETIME"    , "nullable": true ,                 "description":"FileProcessStartTime" },
         { "name":"fileProcessEndTime"   , "type": "DATETIME"    , "nullable": true ,                 "description":"FileProcessEndTime"   },
-        { "name": "status"              , "type": "INTEGER"     , "nullable": false,                 "description":"JobFile status pending, success failure"
+        { "name": "status"              , "type": "char"        , "nullable": false,                 "description":"JobFile status pending, success failure"
                                         , "values": [
-                                           {"name":"Enqueued", "value":"0", "description":"Jobs Status Enque"  , "label":"Enqueued", "default":"CREATE" }
-                                          ,{"name":"Running" , "value":"1", "description":"JobFile Status Running", "label":"Running" } 
-                                          ,{"name":"Success" , "value":"2", "description":"JobFile Status Success", "label":"Success" }
-                                          ,{"name":"Failure" , "value":"3", "description":"JobFile Status Failure", "label":"Failure" }
+                                           {"name":"Enqueued", "value":"E", "description":"Jobs Status Enque"     , "label":"Enqueued", "default":"CREATE" }
+                                          ,{"name":"Running" , "value":"R", "description":"JobFile Status Running", "label":"Running" } 
+                                          ,{"name":"Success" , "value":"S", "description":"JobFile Status Success", "label":"Success" }
+                                          ,{"name":"Failure" , "value":"F", "description":"JobFile Status Failure", "label":"Failure" }
                                         ]
         }
-       ]
-       ,"primary": { "autogen": true }
+       ],
+      "queries": [
+        {
+          "name": "ByJobRefnum",
+          "description": "All JobFile(s) by Job Refnum",
+          "from": [],
+          "wheres": [
+            { "db":"*", "clause":"jobRefnum = ?()" }
+          ],
+          "orderBy": ["created DESC"]
+        }
+      ],
+      "primary": { "autogen": true },
+      "json":[
+        { "name": "", "columns": ["refnum", "jobRefnum", "fileName", "fileRecords", "fileProcessStartTime", "status"] }
+      ]
     },
     { "name":"JobMessage",
       "description":"Job Messages",
@@ -253,11 +267,25 @@
         { "name":"jobFileRefnum"                        , "sameas": "JobFile.refnum" , "nullable": false,                  "description":"JobFile Foreign key" },               
         { "name":"message"                              , "type":"STRING"            , "nullable": false,  "size":   1000, "description":"Message" },
         { "name":"isError"                              , "type":"BOOLEAN"                                               , "description":"Boolean flag to identify message type -- error or success" }
-       ]
-       ,"primary": { "autogen": true }
-       ,"indices":[ 
+       ],
+      "queries": [
+        {
+          "name": "ByJobFileRefnum",
+          "description": "All JobMessage(s) by JobFile Refnum",
+          "from": [],
+          "wheres": [
+            { "db":"*", "clause":"jobFileRefnum = ?()" }
+          ],
+          "orderBy": ["created DESC"]
+        }
+      ],
+     "primary": { "autogen": true },
+     "indices":[ 
         { "name":"JobFile_Refnum", "columns":["refnum","jobFileRefnum"] }
-      ]         
+      ],
+      "json":[
+        { "name": "", "columns": ["jobFileRefnum", "message", "created", "isError"] }
+      ]
     }
     
     

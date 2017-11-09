@@ -30,7 +30,7 @@ public class TILDA__JOBFILE_Json
    transient                                 public ZonedDateTime  _fileProcessStartTime  ;
    @SerializedName("fileProcessEndTime"    ) public String  Str_fileProcessEndTime    ;
    transient                                 public ZonedDateTime  _fileProcessEndTime    ;
-   @SerializedName("status"                ) public Integer  _status                ;
+   @SerializedName("status"                ) public Character  _status                ;
    /*@formatter:on*/
 
    public tilda.data.JobFile_Data Write(Connection C) throws Exception
@@ -83,6 +83,53 @@ public class TILDA__JOBFILE_Json
          + "; fileProcessEndTime"    + (_fileProcessEndTime     == null ? ": NULL" : ": "+DateTimeUtil.printDateTimeForSQL(_fileProcessEndTime))
          + "; status"                + (_status                 == null ? ": NULL" : ": " + _status                )
          + ";";
+    }
+
+   public static void toJSON(Writer Out, List<tilda.data.JobFile_Data> L, String Lead, boolean FullList) throws IOException
+    {
+      if (L == null || L.size() == 0) return;
+      if (FullList == true)
+       Out.write("[\n");
+      boolean First = true;
+      for (tilda.data.JobFile_Data O : L)
+       if (O!=null)
+        {
+          Out.write(Lead);
+          if (First == false) Out.write(","); else { Out.write(" "); First = false; }
+          toJSON(Out, O, true);
+          Out.write("\n");
+        }
+      if (FullList == true)
+       { 
+          Out.write(Lead);
+          Out.write("]\n");
+       } 
+    }
+
+   public static void toJSON(Writer Out, tilda.data.JobFile_Data ObjApp, boolean FullObject) throws IOException
+    {
+      long T0 = System.nanoTime();
+      tilda.data._Tilda.TILDA__JOBFILE Obj = (tilda.data._Tilda.TILDA__JOBFILE) ObjApp;
+      if (FullObject == true)
+       Out.write("{");
+
+        JSONUtil.Print(Out, "refnum", true, Obj.getRefnum());
+
+        JSONUtil.Print(Out, "jobRefnum", false, Obj.getJobRefnum());
+
+        JSONUtil.Print(Out, "fileName", false, Obj.getFileName());
+
+      if (Obj.isNullFileRecords() == false)
+        JSONUtil.Print(Out, "fileRecords", false, Obj.getFileRecords());
+
+      if (Obj.isNullFileProcessStartTime() == false && Obj.getFileProcessStartTime() != null)
+        JSONUtil.Print(Out, "fileProcessStartTime", false, Obj.getFileProcessStartTime());
+
+        JSONUtil.Print(Out, "status", false, Obj.getStatus());
+
+      if (FullObject == true)
+       Out.write(" }");
+      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
     }
 
  }

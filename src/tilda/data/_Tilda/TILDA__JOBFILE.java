@@ -131,8 +131,8 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>9&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOBFILE-status_DIV' class='columns'>status</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;&nbsp;</TD>
-<TD>integer&nbsp;&nbsp;</TD>
+<TD>char&nbsp;&nbsp;</TD>
+<TD>character&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -141,10 +141,10 @@ It contains the following columns:<BR>
 </TR>
   <TR bgcolor="#DFECF8"><TD></TD><TD></TD><TD colspan="10" align="center">
 <TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFF2CC"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Enqueued</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>Enqueued&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Enque</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Running</B>&nbsp;&nbsp;</TD><TD>1&nbsp;&nbsp;</TD><TD>Running&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Running</TD></TR>
-  <TR bgcolor="#FFF2CC"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Success</B>&nbsp;&nbsp;</TD><TD>2&nbsp;&nbsp;</TD><TD>Success&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Success</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>Failure</B>&nbsp;&nbsp;</TD><TD>3&nbsp;&nbsp;</TD><TD>Failure&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Failure</TD></TR>
+  <TR bgcolor="#FFF2CC"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Enqueued</B>&nbsp;&nbsp;</TD><TD>E&nbsp;&nbsp;</TD><TD>Enqueued&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Enque</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Running</B>&nbsp;&nbsp;</TD><TD>R&nbsp;&nbsp;</TD><TD>Running&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Running</TD></TR>
+  <TR bgcolor="#FFF2CC"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Success</B>&nbsp;&nbsp;</TD><TD>S&nbsp;&nbsp;</TD><TD>Success&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Success</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>Failure</B>&nbsp;&nbsp;</TD><TD>F&nbsp;&nbsp;</TD><TD>Failure&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Failure</TD></TR>
 </TABLE>
 </TD></TR>
   <TR valign="top" bgcolor="#FFFFFF">
@@ -352,7 +352,7 @@ It contains the following columns:<BR>
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
 <td><a href='TILDA___Docs.TILDA.html#JOBFILE_DIV'>JobFile</a></td>
-<td><a href='TILDA___Docs.TILDA.html#JOBFILE-status_DIV'>status</a> -- INTEGER</td>
+<td><a href='TILDA___Docs.TILDA.html#JOBFILE-status_DIV'>status</a> -- char</td>
 </tr>
 </table>
 </DIV></DIV>
@@ -411,9 +411,9 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Nov 8 2017, 13:07:16IST
+ @generated Nov 9 2017, 11:58:49IST
 */
-public abstract class TILDA__JOBFILE implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
+public abstract class TILDA__JOBFILE implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject, tilda.interfaces.JSONable
  {
    protected static final Logger LOG = LogManager.getLogger(TILDA__JOBFILE.class.getName());
 
@@ -1619,8 +1619,8 @@ This is the hasChanged for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBFILE.status of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.status of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBFILE.status of type char</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.status of type character</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>JobFile status pending, success failure</TD></TR>
@@ -1630,36 +1630,36 @@ This is the definition for:<BR>
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Enqueued</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>Enqueued&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Enque</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Running</B>&nbsp;&nbsp;</TD><TD>1&nbsp;&nbsp;</TD><TD>Running&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Running</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Success</B>&nbsp;&nbsp;</TD><TD>2&nbsp;&nbsp;</TD><TD>Success&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Success</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Failure</B>&nbsp;&nbsp;</TD><TD>3&nbsp;&nbsp;</TD><TD>Failure&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Failure</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Enqueued</B>&nbsp;&nbsp;</TD><TD>E&nbsp;&nbsp;</TD><TD>Enqueued&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Enque</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Running</B>&nbsp;&nbsp;</TD><TD>R&nbsp;&nbsp;</TD><TD>Running&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Running</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Success</B>&nbsp;&nbsp;</TD><TD>S&nbsp;&nbsp;</TD><TD>Success&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Success</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Failure</B>&nbsp;&nbsp;</TD><TD>F&nbsp;&nbsp;</TD><TD>Failure&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Failure</TD></TR>
 </TABLE>
 </TD></TR>
 
 </TABLE>
 */
-   int _status= SystemValues.EVIL_VALUE;
+   char _status= Character.UNASSIGNED;
 /**
 These are the enumerated values for tilda.data.TILDA.JOBFILE.status, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Enqueued</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>Enqueued&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Enque</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Running</B>&nbsp;&nbsp;</TD><TD>1&nbsp;&nbsp;</TD><TD>Running&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Running</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Success</B>&nbsp;&nbsp;</TD><TD>2&nbsp;&nbsp;</TD><TD>Success&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Success</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Failure</B>&nbsp;&nbsp;</TD><TD>3&nbsp;&nbsp;</TD><TD>Failure&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Failure</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Enqueued</B>&nbsp;&nbsp;</TD><TD>E&nbsp;&nbsp;</TD><TD>Enqueued&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Enque</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Running</B>&nbsp;&nbsp;</TD><TD>R&nbsp;&nbsp;</TD><TD>Running&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Running</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Success</B>&nbsp;&nbsp;</TD><TD>S&nbsp;&nbsp;</TD><TD>Success&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Success</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Failure</B>&nbsp;&nbsp;</TD><TD>F&nbsp;&nbsp;</TD><TD>Failure&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Failure</TD></TR>
 </TABLE>
 */
    public static final String[][] _status_Values = {
-                                               { "0", "Enqueued", "Jobs Status Enque", "" }
-                                             , { "1", "Running", "JobFile Status Running", "" }
-                                             , { "2", "Success", "JobFile Status Success", "" }
-                                             , { "3", "Failure", "JobFile Status Failure", "" }
+                                               { "E", "Enqueued", "Jobs Status Enque", "" }
+                                             , { "R", "Running", "JobFile Status Running", "" }
+                                             , { "S", "Success", "JobFile Status Success", "" }
+                                             , { "F", "Failure", "JobFile Status Failure", "" }
                                   };
-   public static final int _statusEnqueued = 0;
-   public static final int _statusRunning  = 1;
-   public static final int _statusSuccess  = 2;
-   public static final int _statusFailure  = 3;
+   public static final char _statusEnqueued = 'E';
+   public static final char _statusRunning  = 'R';
+   public static final char _statusSuccess  = 'S';
+   public static final char _statusFailure  = 'F';
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1668,8 +1668,8 @@ These are the enumerated values for tilda.data.TILDA.JOBFILE.status, which can b
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBFILE.status of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.status of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBFILE.status of type char</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.status of type character</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>JobFile status pending, success failure</TD></TR>
@@ -1679,23 +1679,23 @@ This is the getter for:<BR>
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Enqueued</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>Enqueued&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Enque</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Running</B>&nbsp;&nbsp;</TD><TD>1&nbsp;&nbsp;</TD><TD>Running&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Running</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Success</B>&nbsp;&nbsp;</TD><TD>2&nbsp;&nbsp;</TD><TD>Success&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Success</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Failure</B>&nbsp;&nbsp;</TD><TD>3&nbsp;&nbsp;</TD><TD>Failure&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Failure</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Enqueued</B>&nbsp;&nbsp;</TD><TD>E&nbsp;&nbsp;</TD><TD>Enqueued&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Enque</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Running</B>&nbsp;&nbsp;</TD><TD>R&nbsp;&nbsp;</TD><TD>Running&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Running</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Success</B>&nbsp;&nbsp;</TD><TD>S&nbsp;&nbsp;</TD><TD>Success&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Success</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Failure</B>&nbsp;&nbsp;</TD><TD>F&nbsp;&nbsp;</TD><TD>Failure&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Failure</TD></TR>
 </TABLE>
 </TD></TR>
 
 </TABLE>
 */
-   public final int getStatus()
+   public final char getStatus()
       { return _status; }
 
 /**
 This is the value is-a for tilda.data.TILDA.JOBFILE.status:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>Enqueued</TD></TR>
-  <TR><TD align="right"><B>Value</B></TD><TD>0</TD></TR>
+  <TR><TD align="right"><B>Value</B></TD><TD>E</TD></TR>
   <TR><TD align="right"><B>Default</B></TD><TD>CREATE</TD></TR>
   <TR><TD align="right"><B>Label</B></TD><TD>Enqueued</TD></TR>
   <TR><TD align="right"><B>Groupings</B></TD><TD></TD></TR>
@@ -1709,7 +1709,7 @@ This is the value is-a for tilda.data.TILDA.JOBFILE.status:<BR>
 This is the value is-a for tilda.data.TILDA.JOBFILE.status:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>Running</TD></TR>
-  <TR><TD align="right"><B>Value</B></TD><TD>1</TD></TR>
+  <TR><TD align="right"><B>Value</B></TD><TD>R</TD></TR>
   <TR><TD align="right"><B>Default</B></TD><TD>NONE</TD></TR>
   <TR><TD align="right"><B>Label</B></TD><TD>Running</TD></TR>
   <TR><TD align="right"><B>Groupings</B></TD><TD></TD></TR>
@@ -1723,7 +1723,7 @@ This is the value is-a for tilda.data.TILDA.JOBFILE.status:<BR>
 This is the value is-a for tilda.data.TILDA.JOBFILE.status:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>Success</TD></TR>
-  <TR><TD align="right"><B>Value</B></TD><TD>2</TD></TR>
+  <TR><TD align="right"><B>Value</B></TD><TD>S</TD></TR>
   <TR><TD align="right"><B>Default</B></TD><TD>NONE</TD></TR>
   <TR><TD align="right"><B>Label</B></TD><TD>Success</TD></TR>
   <TR><TD align="right"><B>Groupings</B></TD><TD></TD></TR>
@@ -1737,7 +1737,7 @@ This is the value is-a for tilda.data.TILDA.JOBFILE.status:<BR>
 This is the value is-a for tilda.data.TILDA.JOBFILE.status:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>Failure</TD></TR>
-  <TR><TD align="right"><B>Value</B></TD><TD>3</TD></TR>
+  <TR><TD align="right"><B>Value</B></TD><TD>F</TD></TR>
   <TR><TD align="right"><B>Default</B></TD><TD>NONE</TD></TR>
   <TR><TD align="right"><B>Label</B></TD><TD>Failure</TD></TR>
   <TR><TD align="right"><B>Groupings</B></TD><TD></TD></TR>
@@ -1754,8 +1754,8 @@ This is the value is-a for tilda.data.TILDA.JOBFILE.status:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBFILE.status of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.status of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBFILE.status of type char</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.status of type character</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>JobFile status pending, success failure</TD></TR>
@@ -1765,16 +1765,16 @@ This is the setter for:<BR>
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Enqueued</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>Enqueued&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Enque</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Running</B>&nbsp;&nbsp;</TD><TD>1&nbsp;&nbsp;</TD><TD>Running&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Running</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Success</B>&nbsp;&nbsp;</TD><TD>2&nbsp;&nbsp;</TD><TD>Success&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Success</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Failure</B>&nbsp;&nbsp;</TD><TD>3&nbsp;&nbsp;</TD><TD>Failure&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Failure</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Enqueued</B>&nbsp;&nbsp;</TD><TD>E&nbsp;&nbsp;</TD><TD>Enqueued&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Enque</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Running</B>&nbsp;&nbsp;</TD><TD>R&nbsp;&nbsp;</TD><TD>Running&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Running</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Success</B>&nbsp;&nbsp;</TD><TD>S&nbsp;&nbsp;</TD><TD>Success&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Success</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Failure</B>&nbsp;&nbsp;</TD><TD>F&nbsp;&nbsp;</TD><TD>Failure&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Failure</TD></TR>
 </TABLE>
 </TD></TR>
 
 </TABLE>
 */
-   public void setStatus(int v) throws Exception
+   public void setStatus(char v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v != _status)
@@ -1790,7 +1790,7 @@ This is the setter for:<BR>
 This is the value setter-as for tilda.data.TILDA.JOBFILE.status:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>Enqueued</TD></TR>
-  <TR><TD align="right"><B>Value</B></TD><TD>0</TD></TR>
+  <TR><TD align="right"><B>Value</B></TD><TD>E</TD></TR>
   <TR><TD align="right"><B>Default</B></TD><TD>CREATE</TD></TR>
   <TR><TD align="right"><B>Label</B></TD><TD>Enqueued</TD></TR>
   <TR><TD align="right"><B>Groupings</B></TD><TD></TD></TR>
@@ -1804,7 +1804,7 @@ This is the value setter-as for tilda.data.TILDA.JOBFILE.status:<BR>
 This is the value setter-as for tilda.data.TILDA.JOBFILE.status:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>Running</TD></TR>
-  <TR><TD align="right"><B>Value</B></TD><TD>1</TD></TR>
+  <TR><TD align="right"><B>Value</B></TD><TD>R</TD></TR>
   <TR><TD align="right"><B>Default</B></TD><TD>NONE</TD></TR>
   <TR><TD align="right"><B>Label</B></TD><TD>Running</TD></TR>
   <TR><TD align="right"><B>Groupings</B></TD><TD></TD></TR>
@@ -1818,7 +1818,7 @@ This is the value setter-as for tilda.data.TILDA.JOBFILE.status:<BR>
 This is the value setter-as for tilda.data.TILDA.JOBFILE.status:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>Success</TD></TR>
-  <TR><TD align="right"><B>Value</B></TD><TD>2</TD></TR>
+  <TR><TD align="right"><B>Value</B></TD><TD>S</TD></TR>
   <TR><TD align="right"><B>Default</B></TD><TD>NONE</TD></TR>
   <TR><TD align="right"><B>Label</B></TD><TD>Success</TD></TR>
   <TR><TD align="right"><B>Groupings</B></TD><TD></TD></TR>
@@ -1832,7 +1832,7 @@ This is the value setter-as for tilda.data.TILDA.JOBFILE.status:<BR>
 This is the value setter-as for tilda.data.TILDA.JOBFILE.status:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>Failure</TD></TR>
-  <TR><TD align="right"><B>Value</B></TD><TD>3</TD></TR>
+  <TR><TD align="right"><B>Value</B></TD><TD>F</TD></TR>
   <TR><TD align="right"><B>Default</B></TD><TD>NONE</TD></TR>
   <TR><TD align="right"><B>Label</B></TD><TD>Failure</TD></TR>
   <TR><TD align="right"><B>Groupings</B></TD><TD></TD></TR>
@@ -1849,8 +1849,8 @@ This is the value setter-as for tilda.data.TILDA.JOBFILE.status:<BR>
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBFILE.status of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.status of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBFILE.status of type char</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.status of type character</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>JobFile status pending, success failure</TD></TR>
@@ -1860,10 +1860,10 @@ This is the hasChanged for:<BR>
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Enqueued</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>Enqueued&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Enque</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Running</B>&nbsp;&nbsp;</TD><TD>1&nbsp;&nbsp;</TD><TD>Running&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Running</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Success</B>&nbsp;&nbsp;</TD><TD>2&nbsp;&nbsp;</TD><TD>Success&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Success</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Failure</B>&nbsp;&nbsp;</TD><TD>3&nbsp;&nbsp;</TD><TD>Failure&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Failure</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Enqueued</B>&nbsp;&nbsp;</TD><TD>E&nbsp;&nbsp;</TD><TD>Enqueued&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Enque</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Running</B>&nbsp;&nbsp;</TD><TD>R&nbsp;&nbsp;</TD><TD>Running&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Running</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Success</B>&nbsp;&nbsp;</TD><TD>S&nbsp;&nbsp;</TD><TD>Success&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Success</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Failure</B>&nbsp;&nbsp;</TD><TD>F&nbsp;&nbsp;</TD><TD>Failure&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Failure</TD></TR>
 </TABLE>
 </TD></TR>
 
@@ -2715,7 +2715,7 @@ This is the hasChanged for:<BR>
                 } 
                if ((TILDA__JOBFILE_Factory.COLS.STATUS._Mask1                 & __Changes1) != 0L) 
                 { 
-                  if ((TILDA__JOBFILE_Factory.COLS.STATUS._Mask1                 & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _status);
+                  if ((TILDA__JOBFILE_Factory.COLS.STATUS._Mask1                 & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, ""+_status);
                 } 
                if ((TILDA__JOBFILE_Factory.COLS.CREATED._Mask1                & __Changes1) != 0L) 
                 { 
@@ -2886,7 +2886,7 @@ This is the hasChanged for:<BR>
                                        _fileProcessStartTime   = ProcessZDT(_fileProcessStartTimeTZ  , "tilda.data.TILDA.JOBFILE.fileProcessStartTime"  , RS, ++i, TILDA__JOBFILE_Factory.COLS.FILEPROCESSSTARTTIME  , TILDA__JOBFILE_Factory.COLS.FILEPROCESSSTARTTIMETZ  );
                                        _fileProcessEndTimeTZ   = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOBFILE_Factory.COLS.FILEPROCESSENDTIMETZ._Mask1  ; else _fileProcessEndTimeTZ   = _fileProcessEndTimeTZ  .trim();
                                        _fileProcessEndTime     = ProcessZDT(_fileProcessEndTimeTZ    , "tilda.data.TILDA.JOBFILE.fileProcessEndTime"    , RS, ++i, TILDA__JOBFILE_Factory.COLS.FILEPROCESSENDTIME    , TILDA__JOBFILE_Factory.COLS.FILEPROCESSENDTIMETZ    );
-                                       _status                 =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOBFILE_Factory.COLS.STATUS._Mask1                ;
+                                       _status                 = ParseUtil.parseCharacter    (RS.getString   (++i));  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOBFILE_Factory.COLS.STATUS._Mask1                ;
                                        _created                = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
                                        _lastUpdated            = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
                                        _deleted                = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
@@ -2948,5 +2948,14 @@ This is the hasChanged for:<BR>
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;
+    }
+
+   public void toJSON(Writer Out, String JsonExportName, boolean FullObject) throws Exception
+    {
+      switch (JsonExportName)
+        { 
+          case "": tilda.data.JobFile_Json.toJSON(Out, (tilda.data.JobFile_Data) this, FullObject); break;
+          default: throw new Exception("Unknown JSON exporter '"+JsonExportName+"' for tilda.data.JobFile_Json");
+        } 
     }
  }

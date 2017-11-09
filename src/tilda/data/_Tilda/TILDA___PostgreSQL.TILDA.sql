@@ -326,7 +326,7 @@ create table if not exists TILDA.JOBFILE -- Job File Info
   , "fileProcessStartTime"    timestamptz              -- FileProcessStartTime
   , "fileProcessEndTimeTZ"    character(5)             -- Generated helper column to hold the time zone ID for 'fileProcessEndTime'.
   , "fileProcessEndTime"      timestamptz              -- FileProcessEndTime
-  , "status"                  integer       not null   -- JobFile status pending, success failure
+  , "status"                  character     not null   -- JobFile status pending, success failure
   , "created"                 timestamptz   not null   -- The timestamp for when the record was created.
   , "lastUpdated"             timestamptz   not null   -- The timestamp for when the record was last updated.
   , "deleted"                 timestamptz              -- The timestamp for when the record was deleted.

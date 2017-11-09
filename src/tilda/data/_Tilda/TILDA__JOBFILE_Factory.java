@@ -185,8 +185,8 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBFILE.status of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.status of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBFILE.status of type char</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBFILE.status of type character</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>JobFile status pending, success failure</TD></TR>
@@ -196,16 +196,16 @@ This is the column definition for:<BR>
   <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Enqueued</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>Enqueued&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Enque</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Running</B>&nbsp;&nbsp;</TD><TD>1&nbsp;&nbsp;</TD><TD>Running&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Running</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Success</B>&nbsp;&nbsp;</TD><TD>2&nbsp;&nbsp;</TD><TD>Success&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Success</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Failure</B>&nbsp;&nbsp;</TD><TD>3&nbsp;&nbsp;</TD><TD>Failure&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Failure</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Enqueued</B>&nbsp;&nbsp;</TD><TD>E&nbsp;&nbsp;</TD><TD>Enqueued&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Enque</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Running</B>&nbsp;&nbsp;</TD><TD>R&nbsp;&nbsp;</TD><TD>Running&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Running</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Success</B>&nbsp;&nbsp;</TD><TD>S&nbsp;&nbsp;</TD><TD>Success&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Success</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Failure</B>&nbsp;&nbsp;</TD><TD>F&nbsp;&nbsp;</TD><TD>Failure&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Failure</TD></TR>
 </TABLE>
 </TD></TR>
 
 </TABLE>
 */
-     public static Type_IntegerPrimitive       STATUS                = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "status"                , 8/*8*/, "JobFile status pending, success failure");
+     public static Type_CharPrimitive          STATUS                = new Type_CharPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "status"                , 8/*8*/, "JobFile status pending, success failure");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JOBFILE.created -> TILDA.JOBFILE."created"
@@ -346,6 +346,10 @@ This is the column definition for:<BR>
              String clause = ((SelectQuery)ExtraParams).getWhereClause();
              if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
              break;
+          case 1:
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "JOBFILE", "jobRefnum"); S.append(" = ").append("?").append(")");
+             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "JOBFILE", "created"); S.append(" DESC");
+             break;
           case -666: break;
           default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
         }
@@ -361,10 +365,17 @@ This is the column definition for:<BR>
        try
         {
           PS = C.prepareStatement(Q);
+          int i = 0;
           switch (LookupId)
            {
              case -7:
                 break;
+             case 1: {
+               LookupWhereByJobRefnumParams P = (LookupWhereByJobRefnumParams) ExtraParams;
+               LOG.debug(QueryDetails._LOGGING_HEADER + "  " + P.toString());
+               PS.setLong     (++i, P._jobRefnum             );
+               break;
+             }
              case -666: break;
              default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot prepare statement.");
            }
@@ -427,7 +438,7 @@ This is the column definition for:<BR>
        Long        _fileRecords            =                       ParseUtil.parseLong("fileRecords"           , false, Values.get("fileRecords"           ), Errors );
        ZonedDateTime        _fileProcessStartTime   =                       ParseUtil.parseZonedDateTime("fileProcessStartTime"  , false, Values.get("fileProcessStartTime"  ), Errors );
        ZonedDateTime        _fileProcessEndTime     =                       ParseUtil.parseZonedDateTime("fileProcessEndTime"    , false, Values.get("fileProcessEndTime"    ), Errors );
-       Integer        _status                 =                       ParseUtil.parseInteger("status"                , true , Values.get("status"                ), Errors );
+       Character        _status                 =                       ParseUtil.parseCharacter("status"                , true , Values.get("status"                ), Errors );
 
        if (IncomingErrors != Errors.size())
         return null;
@@ -451,6 +462,36 @@ This is the column definition for:<BR>
        Obj.setRefnum                (refnum                ); Obj.__Saved_refnum                 = Obj._refnum                ;
 
        return (tilda.data.JobFile_Data) Obj;
+     }
+
+   static public ListResults<tilda.data.JobFile_Data> LookupWhereByJobRefnum(Connection C, long jobRefnum, int Start, int Size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__JOBFILE Obj = new tilda.data.JobFile_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+       LookupWhereByJobRefnumParams P = new LookupWhereByJobRefnumParams(jobRefnum);
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
+       ReadMany(C, 1, RPI, Obj, P, Start, Size);
+       return RPI._L;
+     }
+
+    private static class LookupWhereByJobRefnumParams
+     {
+       protected LookupWhereByJobRefnumParams(long jobRefnum)
+         {
+           _jobRefnum = jobRefnum;
+         }
+        protected final long _jobRefnum;
+       public String toString()
+        {
+          long T0 = System.nanoTime();
+          String Str = ""
+                  + "jobRefnum: " + _jobRefnum + ";"
+                 ; 
+          tilda.performance.PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
+          return Str;
+        }
      }
 
 

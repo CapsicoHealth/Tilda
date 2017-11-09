@@ -239,6 +239,10 @@ This is the column definition for:<BR>
              String clause = ((SelectQuery)ExtraParams).getWhereClause();
              if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
              break;
+          case 2:
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "JOBMESSAGE", "jobFileRefnum"); S.append(" = ").append("?").append(")");
+             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "JOBMESSAGE", "created"); S.append(" DESC");
+             break;
           case -666: break;
           default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
         }
@@ -254,10 +258,17 @@ This is the column definition for:<BR>
        try
         {
           PS = C.prepareStatement(Q);
+          int i = 0;
           switch (LookupId)
            {
              case -7:
                 break;
+             case 2: {
+               LookupWhereByJobFileRefnumParams P = (LookupWhereByJobFileRefnumParams) ExtraParams;
+               LOG.debug(QueryDetails._LOGGING_HEADER + "  " + P.toString());
+               PS.setLong     (++i, P._jobFileRefnum);
+               break;
+             }
              case -666: break;
              default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot prepare statement.");
            }
@@ -348,6 +359,36 @@ This is the column definition for:<BR>
        Obj.setJobFileRefnum(jobFileRefnum); 
 
        return (tilda.data.JobMessage_Data) Obj;
+     }
+
+   static public ListResults<tilda.data.JobMessage_Data> LookupWhereByJobFileRefnum(Connection C, long jobFileRefnum, int Start, int Size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__JOBMESSAGE Obj = new tilda.data.JobMessage_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+       LookupWhereByJobFileRefnumParams P = new LookupWhereByJobFileRefnumParams(jobFileRefnum);
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
+       ReadMany(C, 2, RPI, Obj, P, Start, Size);
+       return RPI._L;
+     }
+
+    private static class LookupWhereByJobFileRefnumParams
+     {
+       protected LookupWhereByJobFileRefnumParams(long jobFileRefnum)
+         {
+           _jobFileRefnum = jobFileRefnum;
+         }
+        protected final long _jobFileRefnum;
+       public String toString()
+        {
+          long T0 = System.nanoTime();
+          String Str = ""
+                  + "jobFileRefnum: " + _jobFileRefnum + ";"
+                 ; 
+          tilda.performance.PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
+          return Str;
+        }
      }
 
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }

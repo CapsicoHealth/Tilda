@@ -251,9 +251,9 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Nov 8 2017, 13:07:16IST
+ @generated Nov 9 2017, 11:58:49IST
 */
-public abstract class TILDA__JOBMESSAGE implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
+public abstract class TILDA__JOBMESSAGE implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject, tilda.interfaces.JSONable
  {
    protected static final Logger LOG = LogManager.getLogger(TILDA__JOBMESSAGE.class.getName());
 
@@ -1698,5 +1698,14 @@ This is the hasChanged for:<BR>
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;
+    }
+
+   public void toJSON(Writer Out, String JsonExportName, boolean FullObject) throws Exception
+    {
+      switch (JsonExportName)
+        { 
+          case "": tilda.data.JobMessage_Json.toJSON(Out, (tilda.data.JobMessage_Data) this, FullObject); break;
+          default: throw new Exception("Unknown JSON exporter '"+JsonExportName+"' for tilda.data.JobMessage_Json");
+        } 
     }
  }
