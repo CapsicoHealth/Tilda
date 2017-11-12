@@ -33,6 +33,8 @@ import tilda.loader.parser.DataObject;
 
 import tilda.db.Connection;
 import tilda.utils.DurationUtil;
+import tilda.utils.NumberFormatUtil;
+import tilda.utils.TextUtil;
 
 public class ImportProcessor
   {
@@ -85,11 +87,11 @@ public class ImportProcessor
             {
               totalCount += R._RecordsCount;
               totalNano += R._TimeNano;
-              LOG.debug("Processed file " + R._FileName + " into table " + R._TableName + " in " + DurationUtil.PrintDurationSeconds(R._TimeNano) +
+              LOG.debug("Processed file " + R._FileName + " into table " + R._TableName + " in " + DurationUtil.PrintDuration(R._TimeNano) +
               " (" + DurationUtil.PrintPerformancePerMinute(R._TimeNano, R._RecordsCount) + " Records/min)");
             }
           LOG.debug("--------------------------------------------------------------------------------------------------------------");
-          LOG.debug("In total, processed " + totalCount + " in " + DurationUtil.PrintDuration(totalNano) + " (" + DurationUtil.PrintPerformancePerMinute(totalNano, totalCount) + " Records/min)");
+          LOG.debug("In total, processed " + NumberFormatUtil.PrintWith000Sep(totalCount) + " records in " + DurationUtil.PrintDuration(totalNano) + " (" + DurationUtil.PrintPerformancePerMinute(totalNano, totalCount) + " Records/min)");
       }
     
     

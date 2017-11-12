@@ -130,6 +130,7 @@ public class Load
                 LOG.debug("Processing file " + ConfigFileName);
                 List<String> selectedObjectsList = new ArrayList<>(Arrays.asList(arguments.get(i + 3).split(",")));
                 List<String> connectionIdsList = new ArrayList<>(Arrays.asList(arguments.get(i + 5).split(",")));
+                ValidateDataObjects(connectionIdsList, Conf._CmsData);
                 StartImportProcessor(selectedObjectsList, connectionIdsList, Conf, Conf._CmsData);
               }
             LOG.debug("Import Tables completed.");
@@ -138,7 +139,6 @@ public class Load
           {
             String ConfigFileName = arguments.get(1);
             Conf = Config.fromFile(ConfigFileName);
-
             List<DataObject> list = Conf._CmsData;
             data = new Object[list.size()][2];
             for (int i = 0; i < list.size(); ++i)
@@ -241,7 +241,9 @@ public class Load
             String tempObjectName = dataObject._SchemaName + "." + dataObject._TableName;
             tempObjectName = tempObjectName.toUpperCase();
             if (selectedObjects.contains(tempObjectName) == true)
-              filteredList.add(dataObject);
+              {
+                filteredList.add(dataObject);
+              }
           }
         return filteredList;
       }

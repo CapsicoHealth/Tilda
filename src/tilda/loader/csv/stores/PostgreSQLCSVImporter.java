@@ -331,11 +331,9 @@ public class PostgreSQLCSVImporter extends CSVImporter
                   }
                 
                 // lastUpdated incase of Upsert
-                if (isUpsert && DBColumns != null && DBColumns.get("lastupdated") != null 
-                  && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
+                if (isUpsert && DBColumns != null && DBColumns.get("lastupdated") != null && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
                   {
-                    Pst.setTimestamp(i + x + upsertOffset, new java.sql.Timestamp(Now.toInstant().toEpochMilli()),
-                      DateTimeUtil._UTC_CALENDAR);
+                    Pst.setTimestamp(i + x + upsertOffset, new java.sql.Timestamp(Now.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                   }
                 
                 h = null;
@@ -362,7 +360,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
                   {
                     C.commit();
                     long t = System.nanoTime() - t0;
-                    LOG.debug("Processed " + NumberFormatUtil.PrintWith000Sep(NumOfRecs) + " so far in " + DurationUtil.PrintDuration(t) + " (" + DurationUtil.PrintPerformancePerMinute(t, NumOfRecs) + " Records/min)");
+                    LOG.debug("Processed " + NumberFormatUtil.PrintWith000Sep(NumOfRecs) + " records so far in " + DurationUtil.PrintDuration(t) + " (" + DurationUtil.PrintPerformancePerMinute(t, NumOfRecs) + " Records/min)");
                   }
                 HandleFinally(AllocatedArrays);
               }
