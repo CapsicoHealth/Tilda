@@ -264,7 +264,7 @@ public class Load
         long timeTaken = System.nanoTime();
         ImportProcessor.parallelProcess(connectionIdsList, Conf._RootFolder, threadsCount, dataObjects);
         timeTaken = System.nanoTime() - timeTaken;
-        LOG.debug("Time taken for ImportProcessor.process() = " + DurationUtil.PrintDuration(timeTaken));
+        LOG.debug("Total time taken for ImportProcessor.process() = " + DurationUtil.PrintDuration(timeTaken));
       }
 
     private static boolean isValidArguments(List<String> arguments)

@@ -87,7 +87,7 @@ public class ImportProcessor
             {
               totalCount += R._RecordsCount;
               totalNano += R._TimeNano;
-              LOG.debug("Processed file " + R._FileName + " into table " + R._TableName + " in " + DurationUtil.PrintDuration(R._TimeNano) +
+              LOG.debug("Processed file " + R._FileName + " into table " + R._TableName + " with "+NumberFormatUtil.PrintWith000Sep(R._RecordsCount)+" records in " + DurationUtil.PrintDuration(R._TimeNano) +
               " (" + DurationUtil.PrintPerformancePerMinute(R._TimeNano, R._RecordsCount) + " Records/min)");
             }
           LOG.debug("--------------------------------------------------------------------------------------------------------------");
