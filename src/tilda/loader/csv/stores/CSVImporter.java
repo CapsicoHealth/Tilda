@@ -101,6 +101,9 @@ public abstract class CSVImporter
                 Reader R = FileUtil.getReaderFromFileOrResource(rootFolder + file);
               }
             
+            if (cmsDO.isInserts() == true && cmsDO.isTruncateFirst() == true)
+              ImportProcessor.truncateTable(C, cmsDO._SchemaName, cmsDO._TableName);
+
             for (String file : fileList)
               {
                 long t0 = System.nanoTime();
@@ -111,9 +114,6 @@ public abstract class CSVImporter
                 CSVFormat csvFormat = CSVFormat.DEFAULT.withHeader(completeHeaders);
                 Iterable<CSVRecord> records = csvFormat.parse(R);
                 getHeader(completeHeaders, cmsDO._HeadersIncluded, records);
-                
-                if (cmsDO.isInserts() == true && cmsDO.isTruncateFirst() == true)
-                 ImportProcessor.truncateTable(C, cmsDO._SchemaName, cmsDO._TableName);
                 
                 NumOfRecs = insertData(cmsDO.isUpserts(), t0, DBColumns, cmsDO._HeadersIncluded, records, Str, cmsDO._SchemaName,
                   cmsDO._TableName, headers, columns, cmsDO.getMultiHeaderColumnMap(), completeHeaders, uniqueColumns, 
