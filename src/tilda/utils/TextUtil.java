@@ -214,10 +214,16 @@ public class TextUtil
     public static final String EscapeDoubleQuoteForCSV(String S)
       {
         StringBuilder X = new StringBuilder();
-        EscapeSomethingWithSomething(X, '"', "\"", S, "\"", "\"");
+        EscapeDoubleQuoteForCSV(X, S);
         return X.toString();
       }
 
+    public static final void EscapeDoubleQuoteForCSV(StringBuilder X, String S)
+      {
+        EscapeSomethingWithSomething(X, '"', "\"", S, "\"", "\"");
+      }
+    
+    
     public static final String EscapeSingleQuoteWithSlashDouble(String S)
       {
         StringBuilder X = new StringBuilder();
