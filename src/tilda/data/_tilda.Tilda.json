@@ -208,10 +208,11 @@
                                  ]
         },
         { "name": "connectionId" , "sameas": "tilda.data.tilda.connection.id", "nullable": false,  "description": "Connection Details" },
-        { "name": "zipFile"      , "type": "STRING", "nullable": false, "size":   1000, "description": "ZipFile Absolute Path" }
+        { "name": "zipFile"      , "type": "STRING", "nullable": false, "size":   1000, "description": "ZipFile Absolute Path" },
+        { "name": "zipFileName"  , "type": "STRING", "nullable": false, "size":   100 , "description": "ZipFile Name" 		   }
       ],
       "indices": [
-        { "name": "StatusIndex"     , "columns": ["status"]          , "db": true },
+        { "name": "StatusIndex"     , "columns": ["status"]          , "db": true, "orderBy": ["created DESC"] },
         { "name": "AllByCreated"    , "orderBy": ["created DESC"]    , "db": true },
         { "name": "AllByLastUpdated", "orderBy": ["lastUpdated DESC"], "db": true }
       ],

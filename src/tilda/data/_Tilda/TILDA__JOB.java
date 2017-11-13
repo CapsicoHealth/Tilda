@@ -204,6 +204,17 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>14&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOB-zipFileName_DIV' class='columns'>zipFileName</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;&nbsp;</TD>
+<TD>varchar(100)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>ZipFile Name</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>15&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOB-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
@@ -213,13 +224,13 @@ It contains the following columns:<BR>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created.</TD>
 </TR>
-  <TR bgcolor="#FFFFFF"><TD></TD><TD></TD><TD colspan="10" align="center">
+  <TR bgcolor="#DFECF8"><TD></TD><TD></TD><TD colspan="10" align="center">
 <TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
   <TR bgcolor="#FFF2CC"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Creation</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Creation&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Creation time</TD></TR>
 </TABLE>
 </TD></TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>15&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>16&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOB-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
@@ -229,13 +240,13 @@ It contains the following columns:<BR>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated.</TD>
 </TR>
-  <TR bgcolor="#DFECF8"><TD></TD><TD></TD><TD colspan="10" align="center">
+  <TR bgcolor="#FFFFFF"><TD></TD><TD></TD><TD colspan="10" align="center">
 <TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
   <TR bgcolor="#FFF2CC"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Update</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Update&nbsp;&nbsp;</TD><TD>ALWAYS&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Last updated time</TD></TR>
 </TABLE>
 </TD></TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>16&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>17&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOB-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
@@ -479,6 +490,23 @@ It contains the following columns:<BR>
 </tr>
 </table>
 </DIV></DIV>
+<DIV id='JOB-zipFileName_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('JOB-zipFileName_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOB-zipFileName_DIV'>zipFileName</a> -- STRING</td>
+</tr>
+</table>
+</DIV></DIV>
 <DIV id='JOB-created_MODAL' class='modal'>
 <DIV class='modal-content'>
 <SPAN onclick="onModalCloseClicked('JOB-created_MODAL')" class='close'>&times;</SPAN>
@@ -534,7 +562,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Nov 9 2017, 11:58:49IST
+ @generated Nov 13 2017, 15:08:50IST
 */
 public abstract class TILDA__JOB implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
@@ -1722,7 +1750,6 @@ This is the definition for:<BR>
 </TABLE>
 */
    String _status;
-   protected String __Saved_status;
 /**
 These are the enumerated values for tilda.data.TILDA.JOB.status, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
@@ -2685,6 +2712,108 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOB.zipFileName -> TILDA.JOB."zipFileName"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.zipFileName of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.zipFileName of type varchar(100)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>100</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ZipFile Name</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   String _zipFileName;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOB.zipFileName -> TILDA.JOB."zipFileName"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.zipFileName of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.zipFileName of type varchar(100)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>100</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ZipFile Name</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final String getZipFileName()
+      { return _zipFileName; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOB.zipFileName -> TILDA.JOB."zipFileName"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.zipFileName of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.zipFileName of type varchar(100)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>100</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ZipFile Name</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setZipFileName(String v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (v == null)
+        throw new Exception("Cannot set tilda.data.TILDA.JOB.zipFileName to null: it's not nullable.");
+       else if (v.length() > 100)
+        throw new Exception("Cannot set tilda.data.TILDA.JOB.zipFileName: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 100.");
+       else if (v.equals(_zipFileName) == false)
+        {
+          __Changes1 |= TILDA__JOB_Factory.COLS.ZIPFILENAME._Mask1;
+          __Nulls1   &= ~TILDA__JOB_Factory.COLS.ZIPFILENAME._Mask1;
+       _zipFileName = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOB.zipFileName -> TILDA.JOB."zipFileName"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the hasChanged for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.zipFileName of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.zipFileName of type varchar(100)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>100</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ZipFile Name</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public boolean hasChangedZipFileName()
+     { return (TILDA__JOB_Factory.COLS.ZIPFILENAME._Mask1 & __Changes1) != 0L; }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JOB.created -> TILDA.JOB."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -3336,6 +3465,7 @@ This is the hasChanged for:<BR>
        Dst.setLoadMode    (_loadMode    );
        Dst.setConnectionId(_connectionId);
        Dst.setZipFile     (_zipFile     );
+       Dst.setZipFileName (_zipFileName );
        Dst.setLastUpdated (_lastUpdated );
        if ((TILDA__JOB_Factory.COLS.DELETED._Mask1      & __Nulls1) != 0L) Dst.setNullDeleted     (); else        Dst.setDeleted     (_deleted     );
      }
@@ -3396,6 +3526,7 @@ This is the hasChanged for:<BR>
           if ((TILDA__JOB_Factory.COLS.LOADMODE._Mask1     & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.LOADMODE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if ((TILDA__JOB_Factory.COLS.CONNECTIONID._Mask1 & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.CONNECTIONID.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if ((TILDA__JOB_Factory.COLS.ZIPFILE._Mask1      & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.ZIPFILE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__JOB_Factory.COLS.ZIPFILENAME._Mask1  & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.ZIPFILENAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
           if ((TILDA__JOB_Factory.COLS.CREATED._Mask1      & __Changes1) != 0L) { TILDA__JOB_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
              V.append((TILDA__JOB_Factory.COLS.CREATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
@@ -3446,6 +3577,7 @@ This is the hasChanged for:<BR>
           if ((TILDA__JOB_Factory.COLS.LOADMODE._Mask1     & __Changes1) != 0L) TILDA__JOB_Factory.COLS.LOADMODE.getFullColumnVarForUpdate(C, S);
           if ((TILDA__JOB_Factory.COLS.CONNECTIONID._Mask1 & __Changes1) != 0L) TILDA__JOB_Factory.COLS.CONNECTIONID.getFullColumnVarForUpdate(C, S);
           if ((TILDA__JOB_Factory.COLS.ZIPFILE._Mask1      & __Changes1) != 0L) TILDA__JOB_Factory.COLS.ZIPFILE.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__JOB_Factory.COLS.ZIPFILENAME._Mask1  & __Changes1) != 0L) TILDA__JOB_Factory.COLS.ZIPFILENAME.getFullColumnVarForUpdate(C, S);
 
           if ((TILDA__JOB_Factory.COLS.CREATED._Mask1 & __Changes1) != 0L)
            {
@@ -3480,9 +3612,6 @@ This is the hasChanged for:<BR>
            {
              case 0:
                 S.append(" where ("); C.getFullColumnVar(S, "TILDA", "JOB", "refnum"); S.append("=?)");
-                break;
-             case 1:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "JOB", "status"); S.append("=?)");
                 break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
@@ -3553,6 +3682,10 @@ This is the hasChanged for:<BR>
                 { 
                   if ((TILDA__JOB_Factory.COLS.ZIPFILE._Mask1      & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _zipFile);
                 } 
+               if ((TILDA__JOB_Factory.COLS.ZIPFILENAME._Mask1  & __Changes1) != 0L) 
+                { 
+                  if ((TILDA__JOB_Factory.COLS.ZIPFILENAME._Mask1  & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _zipFileName);
+                } 
                if ((TILDA__JOB_Factory.COLS.CREATED._Mask1      & __Changes1) != 0L) 
                 { 
                   if ((TILDA__JOB_Factory.COLS.CREATED._Mask1      & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
@@ -3570,9 +3703,6 @@ This is the hasChanged for:<BR>
            {
              case 0:
                PS.setLong     (++i, _refnum      );
-               break;
-             case 1:
-               PS.setString   (++i, _status      );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -3609,9 +3739,6 @@ This is the hasChanged for:<BR>
         {
           case 0:
              __Saved_refnum       = _refnum      ;
-             break;
-          case 1:
-             __Saved_status       = _status      ;
              break;
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -3664,6 +3791,7 @@ This is the hasChanged for:<BR>
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "loadMode");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "connectionId");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "zipFile");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "zipFileName");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "created");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "lastUpdated");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "deleted");
@@ -3672,9 +3800,6 @@ This is the hasChanged for:<BR>
         {
           case 0:
              S.append(" where ("); C.getFullColumnVar(S, "TILDA", "JOB", "refnum"); S.append("=?)");
-             break;
-          case 1:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "JOB", "status"); S.append("=?)");
              break;
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
@@ -3697,9 +3822,6 @@ This is the hasChanged for:<BR>
            {
              case 0:
                PS.setLong     (++i, _refnum      );
-               break;
-             case 1:
-               PS.setString   (++i, _status      );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -3737,12 +3859,13 @@ This is the hasChanged for:<BR>
                              _endTimeTZ    = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.ENDTIMETZ._Mask1   ; else _endTimeTZ    = _endTimeTZ   .trim();
                              _endTime      = ProcessZDT(_endTimeTZ     , "tilda.data.TILDA.JOB.endTime"     , RS, ++i, TILDA__JOB_Factory.COLS.ENDTIME     , TILDA__JOB_Factory.COLS.ENDTIMETZ     );
                              _totalRecords =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.TOTALRECORDS._Mask1;
-      __Saved_status       = _status       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.STATUS._Mask1      ; else _status       = _status      .trim();
+                             _status       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.STATUS._Mask1      ; else _status       = _status      .trim();
                              _error        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.ERROR._Mask1       ;
                              _threadsCount =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.THREADSCOUNT._Mask1;
                              _loadMode     = ParseUtil.parseCharacter    (RS.getString   (++i));  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.LOADMODE._Mask1    ;
                              _connectionId = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.CONNECTIONID._Mask1;
                              _zipFile      = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.ZIPFILE._Mask1     ;
+                             _zipFileName  = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOB_Factory.COLS.ZIPFILENAME._Mask1 ;
                              _created      = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
                              _lastUpdated  = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
                              _deleted      = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
@@ -3805,6 +3928,7 @@ This is the hasChanged for:<BR>
                + "; loadMode: "                                                                                        +                                   getLoadMode    () 
                + "; connectionId: "                                                                                    + TextUtil.PrintVariableStr        (getConnectionId())
                + "; zipFile: "                                                                                         + TextUtil.PrintVariableStr        (getZipFile     ())
+               + "; zipFileName: "                                                                                     + TextUtil.PrintVariableStr        (getZipFileName ())
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

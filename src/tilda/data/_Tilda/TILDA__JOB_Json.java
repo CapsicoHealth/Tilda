@@ -35,6 +35,7 @@ public class TILDA__JOB_Json
    @SerializedName("loadMode"    ) public Character  _loadMode    ;
    @SerializedName("connectionId") public String  _connectionId;
    @SerializedName("zipFile"     ) public String  _zipFile     ;
+   @SerializedName("zipFileName" ) public String  _zipFileName ;
    /*@formatter:on*/
 
    public tilda.data.Job_Data Write(Connection C) throws Exception
@@ -61,26 +62,14 @@ public class TILDA__JOB_Json
        throw new Exception("Incoming value for 'tilda.data.TILDA.JOB.connectionId' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_zipFile     ) == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.JOB.zipFile' was null or empty. It's not nullable in the model.\n"+toString());
+      if (TextUtil.isNullOrEmpty(_zipFileName ) == true)
+       throw new Exception("Incoming value for 'tilda.data.TILDA.JOB.zipFileName' was null or empty. It's not nullable in the model.\n"+toString());
 
-      tilda.data.Job_Data Obj = tilda.data.Job_Factory.Create(_connectionId, _zipFile);
+      tilda.data.Job_Data Obj = tilda.data.Job_Factory.Create(_connectionId, _zipFile, _zipFileName);
       Update(Obj);
       if (Obj.Write(C) == false)
        {
-         Obj = tilda.data.Job_Factory.LookupByStatusIndex(_status);
-         if (Obj.Read(C) == false)
-          throw new Exception("Cannot create the tilda.data.TILDA.JOB object.\n"+toString());
-         if (_name        != null) Obj.setName        (_name        );
-         if (_startTime   != null) Obj.setStartTime   (_startTime   );
-         if (_endTime     != null) Obj.setEndTime     (_endTime     );
-         if (_totalRecords!= null) Obj.setTotalRecords(_totalRecords);
-         if (_error       != null) Obj.setError       (_error       );
-         if (_threadsCount!= null) Obj.setThreadsCount(_threadsCount);
-         if (_loadMode    != null) Obj.setLoadMode    (_loadMode    );
-         if (_connectionId!= null) Obj.setConnectionId(_connectionId);
-         if (_zipFile     != null) Obj.setZipFile     (_zipFile     );
-         if (Obj.Write(C) == false)
-          throw new Exception("Cannot update the tilda.data.TILDA.JOB object: "+Obj.toString());
-
+         throw new Exception("Cannot create the tilda.data.TILDA.JOB object.\n"+toString());
        }
       return Obj;
    }
@@ -97,6 +86,7 @@ public class TILDA__JOB_Json
       if (_loadMode    != null) Obj.setLoadMode    (_loadMode    );
       if (_connectionId!= null) Obj.setConnectionId(_connectionId);
       if (_zipFile     != null) Obj.setZipFile     (_zipFile     );
+      if (_zipFileName != null) Obj.setZipFileName (_zipFileName );
     }
 
    public String toString()
@@ -112,6 +102,7 @@ public class TILDA__JOB_Json
          + "; loadMode"    + (_loadMode     == null ? ": NULL" : ": " + _loadMode    )
          + "; connectionId"+ (_connectionId == null ? ": NULL" : "(" + (_connectionId == null ? 0 : _connectionId.length())+"): "+_connectionId)
          + "; zipFile"     + (_zipFile      == null ? ": NULL" : "(" + (_zipFile      == null ? 0 : _zipFile     .length())+"): "+(_zipFile      == null || _zipFile     .length() < 100 ? _zipFile      : _zipFile     .substring(0, 100)+"..."))
+         + "; zipFileName" + (_zipFileName  == null ? ": NULL" : "(" + (_zipFileName  == null ? 0 : _zipFileName .length())+"): "+_zipFileName)
          + ";";
     }
 

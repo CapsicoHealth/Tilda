@@ -299,6 +299,25 @@ This is the column definition for:<BR>
      public static Type_StringPrimitive        ZIPFILE     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "zipFile"     , 12/*12*/, "ZipFile Absolute Path");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOB.zipFileName -> TILDA.JOB."zipFileName"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB.zipFileName of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB.zipFileName of type varchar(100)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>100</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>ZipFile Name</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public static Type_StringPrimitive        ZIPFILENAME = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "zipFileName" , 13/*13*/, "ZipFile Name");
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JOB.created -> TILDA.JOB."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -321,7 +340,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED     = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"     , 13/*13*/, "The timestamp for when the record was created.");
+     public static Type_DatetimePrimitive      CREATED     = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"     , 14/*14*/, "The timestamp for when the record was created.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JOB.lastUpdated -> TILDA.JOB."lastUpdated"
@@ -346,7 +365,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated" , 14/*14*/, "The timestamp for when the record was last updated.");
+     public static Type_DatetimePrimitive      LASTUPDATED = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated" , 15/*15*/, "The timestamp for when the record was last updated.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JOB.deleted -> TILDA.JOB."deleted"
@@ -364,7 +383,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED     = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"     , 15/*15*/, "The timestamp for when the record was deleted.");
+     public static Type_DatetimePrimitiveNull  DELETED     = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"     , 16/*16*/, "The timestamp for when the record was deleted.");
 ;
    }
 
@@ -431,6 +450,7 @@ This is the column definition for:<BR>
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "loadMode");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "connectionId");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "zipFile");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "zipFileName");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "created");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "lastUpdated");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB", "deleted");
@@ -440,6 +460,10 @@ This is the column definition for:<BR>
           case -7:
              String clause = ((SelectQuery)ExtraParams).getWhereClause();
              if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
+             break;
+          case 1:
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "JOB", "status"); S.append("=?)");
+             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "JOB", "created"); S.append(" DESC");
              break;
           case 2:
              S.append(" order by "); C.getFullColumnVar(S, "TILDA", "JOB", "created"); S.append(" DESC");
@@ -466,10 +490,15 @@ This is the column definition for:<BR>
        try
         {
           PS = C.prepareStatement(Q);
+          int i = 0;
           switch (LookupId)
            {
              case -7:
                 break;
+             case 1: {
+               PS.setString   (++i, Obj._status      );
+               break;
+             }
              case 2: {
                break;
              }
@@ -508,8 +537,9 @@ This is the column definition for:<BR>
  current object to the destination. 
  @param connectionId (max size 15) Connection Details
  @param zipFile      (max size 1000) ZipFile Absolute Path
+ @param zipFileName  (max size 100) ZipFile Name
 */
-   static public tilda.data.Job_Data Create(String connectionId, String zipFile) throws Exception
+   static public tilda.data.Job_Data Create(String connectionId, String zipFile, String zipFileName) throws Exception
      {
        tilda.data._Tilda.TILDA__JOB Obj = new tilda.data.Job_Data();
        Obj.initForCreate();
@@ -521,6 +551,7 @@ This is the column definition for:<BR>
        // Explicit setters
        Obj.setConnectionId(connectionId);
        Obj.setZipFile     (zipFile     );
+       Obj.setZipFileName (zipFileName );
 
        // Default Create-time setters
        Obj.setStatusEnqueued          ();
@@ -548,11 +579,12 @@ This is the column definition for:<BR>
        Character        _loadMode     =                       ParseUtil.parseCharacter("loadMode"    , true , Values.get("loadMode"    ), Errors );
        String        _connectionId =                       ParseUtil.parseString("connectionId", true , Values.get("connectionId"), Errors );
        String        _zipFile      =                       ParseUtil.parseString("zipFile"     , true , Values.get("zipFile"     ), Errors );
+       String        _zipFileName  =                       ParseUtil.parseString("zipFileName" , true , Values.get("zipFileName" ), Errors );
 
        if (IncomingErrors != Errors.size())
         return null;
 
-      tilda.data.Job_Data Obj = tilda.data.Job_Factory.Create(_connectionId, _zipFile);
+      tilda.data.Job_Data Obj = tilda.data.Job_Factory.Create(_connectionId, _zipFile, _zipFileName);
 
       if (_refnum      != null) Obj.setRefnum      (_refnum      );
       if (_name        != null) Obj.setName        (_name        );
@@ -577,15 +609,31 @@ This is the column definition for:<BR>
        return (tilda.data.Job_Data) Obj;
      }
 
-   static public tilda.data.Job_Data LookupByStatusIndex(String status) throws Exception
+   static public ListResults<tilda.data.Job_Data> LookupWhereStatusIndex(Connection C, String status, int Start, int Size) throws Exception
      {
        tilda.data._Tilda.TILDA__JOB Obj = new tilda.data.Job_Data();
-       Obj.initForLookup(1);
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
 
-       Obj.setStatus      (status      ); 
+       Obj.setStatus      (status      );
 
-       return (tilda.data.Job_Data) Obj;
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
+       ReadMany(C, 1, RPI, Obj, null, Start, Size);
+       return RPI._L;
      }
+
+   static public void LookupWhereStatusIndex(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Job_Data> OP, String status, int Start, int Size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__JOB Obj = new tilda.data.Job_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+       Obj.setStatus      (status      );
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
+       ReadMany(C, 1, RPI, Obj, null, Start, Size);
+     }
+
 
    static public ListResults<tilda.data.Job_Data> LookupWhereAllByCreated(Connection C, int Start, int Size) throws Exception
      {

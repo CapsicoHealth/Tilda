@@ -285,6 +285,7 @@ create table if not exists TILDA.JOB -- Jobs
   , "loadMode"      character      not null   -- Insert or upsert?
   , "connectionId"  character(15)  not null   -- Connection Details
   , "zipFile"       varchar(1000)  not null   -- ZipFile Absolute Path
+  , "zipFileName"   varchar(100)   not null   -- ZipFile Name
   , "created"       timestamptz    not null   -- The timestamp for when the record was created.
   , "lastUpdated"   timestamptz    not null   -- The timestamp for when the record was last updated.
   , "deleted"       timestamptz               -- The timestamp for when the record was deleted.
@@ -306,10 +307,11 @@ COMMENT ON COLUMN TILDA.JOB."threadsCount" IS E'Thread count';
 COMMENT ON COLUMN TILDA.JOB."loadMode" IS E'Insert or upsert?';
 COMMENT ON COLUMN TILDA.JOB."connectionId" IS E'Connection Details';
 COMMENT ON COLUMN TILDA.JOB."zipFile" IS E'ZipFile Absolute Path';
+COMMENT ON COLUMN TILDA.JOB."zipFileName" IS E'ZipFile Name';
 COMMENT ON COLUMN TILDA.JOB."created" IS E'The timestamp for when the record was created.';
 COMMENT ON COLUMN TILDA.JOB."lastUpdated" IS E'The timestamp for when the record was last updated.';
 COMMENT ON COLUMN TILDA.JOB."deleted" IS E'The timestamp for when the record was deleted.';
-CREATE UNIQUE INDEX JOB_StatusIndex ON TILDA.JOB ("status");
+CREATE INDEX JOB_StatusIndex ON TILDA.JOB ("status", "created" DESC);
 CREATE INDEX JOB_AllByCreated ON TILDA.JOB ("created" DESC);
 CREATE INDEX JOB_AllByLastUpdated ON TILDA.JOB ("lastUpdated" DESC);
 delete from TILDA.KEY where "name" = 'TILDA.JOB';
