@@ -258,7 +258,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
                                     long V = ParseUtil.parseLongFlexible(value, SystemValues.EVIL_VALUE);
                                     if (V == SystemValues.EVIL_VALUE)
                                      throw new Exception("Couldn't parse '"+value+"' as a Long.");
-                                    Pst.setLong(i + x, Long.parseLong(value));
+                                    Pst.setLong(i + x, V);
                                     if(isUpsert && !isUniqueColumn)
                                       Pst.setLong(i + x + upsertOffset, V);
                                   }                                  
