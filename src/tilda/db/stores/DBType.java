@@ -73,7 +73,7 @@ public interface DBType
     public boolean addHelperFunctions             (Connection Con) throws Exception;    
     public boolean addAclRoles                    (Connection Con, List<Schema> TildaList) throws Exception;
 
-    public void   truncateTable(Connection C, String schemaName, String tableName) throws Exception;
+    public void   truncateTable(Connection C, String schemaName, String tableName, boolean cascade) throws Exception;
 
     public static DBType DB2       = new IBMDB2    ();
     public static DBType SQLServer = new MSSQL     ();

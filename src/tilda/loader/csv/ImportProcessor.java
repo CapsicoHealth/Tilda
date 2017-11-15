@@ -94,11 +94,11 @@ public class ImportProcessor
       }
 
 
-    public static boolean truncateTable(Connection C, String SchemaName, String TableName)
+    public static boolean truncateTable(Connection C, String SchemaName, String TableName, boolean Cascade)
       {
         try
           {
-            C.truncateTable(SchemaName, TableName);
+            C.truncateTable(SchemaName, TableName, Cascade);
             C.commit();
           }
         catch (Exception e)

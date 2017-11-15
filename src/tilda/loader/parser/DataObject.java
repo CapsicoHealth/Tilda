@@ -26,7 +26,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
-import tilda.Load;
 import tilda.db.Connection;
 import tilda.db.metadata.SchemaMeta;
 import tilda.db.metadata.TableMeta;
@@ -54,6 +53,7 @@ public class DataObject
     transient boolean         _Upserts;
     transient boolean         _Inserts;
     transient boolean         _TruncateFirst;
+    transient boolean         _TruncateCascade;
 
     public boolean validate(Connection C, List<String> errorMessages)
     throws Exception
@@ -78,11 +78,20 @@ public class DataObject
         else if (_mode.equals("INSERT") == true)
           {
             _Inserts = true;
+            _TruncateFirst = false;
+            _TruncateCascade = false;
           }
         else if (_mode.equals("TRUNCATE_INSERT") == true)
           {
             _Inserts = true;
             _TruncateFirst = true;
+            _TruncateCascade = false;
+          }
+        else if (_mode.equals("TRUNCATE_CASCADE_INSERT") == true)
+          {
+            _Inserts = true;
+            _TruncateFirst = true;
+            _TruncateCascade = true;
           }
         else if (_mode.equals("UPSERT") == true)
           {
@@ -164,6 +173,11 @@ public class DataObject
     public boolean isTruncateFirst()
       {
         return _TruncateFirst;
+      }
+
+    public boolean isTruncateCascade()
+      {
+        return _TruncateCascade;
       }
 
     public String getTableFullName()

@@ -102,7 +102,7 @@ public abstract class CSVImporter
               }
             
             if (cmsDO.isInserts() == true && cmsDO.isTruncateFirst() == true)
-              ImportProcessor.truncateTable(C, cmsDO._SchemaName, cmsDO._TableName);
+              ImportProcessor.truncateTable(C, cmsDO._SchemaName, cmsDO._TableName, cmsDO.isTruncateCascade());
 
             for (String file : fileList)
               {
