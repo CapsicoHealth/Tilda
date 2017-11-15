@@ -43,11 +43,7 @@ import javax.swing.border.EtchedBorder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.sun.istack.internal.NotNull;
-
 import tilda.data.JobFile_Data;
-import tilda.data.JobMessage_Data;
-import tilda.data.JobMessage_Factory;
 import tilda.data.Job_Data;
 import tilda.db.Connection;
 import tilda.db.ConnectionPool;
@@ -122,7 +118,7 @@ public class Load
         
         LOG.debug("Running ImportProcessor");
         long timeTaken = System.nanoTime();
-        ImportProcessor.parallelProcess(selectedConnectionIds, threads, conf._CmsData, statusConId, jobFile.getRefnum());
+        ImportProcessor.parallelProcess(selectedConnectionIds, threads, filteredObjects, statusConId, jobFile.getRefnum());
         timeTaken = System.nanoTime() - timeTaken;
         LOG.debug("Time taken for ImportProcessor.process() = " + DurationUtil.PrintDuration(timeTaken));
         
@@ -433,7 +429,7 @@ public class Load
         frmDataImport.setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
         frmDataImport.setTitle("CapsicoHealth Data Import");
         frmDataImport.setType(Type.POPUP);
-        frmDataImport.setBounds(100, 100, 938, 828);
+        frmDataImport.setBounds(100, 100, 938, 700);
         frmDataImport.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frmDataImport.getContentPane().setLayout(null);
         // frmDataImport.setResizable(false);
@@ -496,7 +492,7 @@ public class Load
                   }
               }
           });
-        btnRun.setBounds(351, 736, 97, 25);
+        btnRun.setBounds(351, 610, 97, 25);
         frmDataImport.getContentPane().add(btnRun);
 
         btnCancel.addActionListener(new ActionListener()
@@ -511,12 +507,12 @@ public class Load
                   }
               }
           });
-        btnCancel.setBounds(458, 736, 97, 25);
+        btnCancel.setBounds(458, 610, 97, 25);
         frmDataImport.getContentPane().add(btnCancel);
 
         // Scroller1 setup
         scroller1 = new JScrollPane();
-        scroller1.setBounds(34, 44, 852, 387);
+        scroller1.setBounds(34, 44, 852, 300);
         scroller1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         frmDataImport.getContentPane().add(scroller1);
 
@@ -534,7 +530,7 @@ public class Load
 
         // Scroller2 Setup
         scroller2 = new JScrollPane();
-        scroller2.setBounds(34, 476, 852, 242);
+        scroller2.setBounds(34, 390, 852, 200);
         scroller2.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         frmDataImport.getContentPane().add(scroller2);
 
@@ -576,7 +572,7 @@ public class Load
                 connectionDataModel.fireTableDataChanged();
               }
           });
-        btnAllConnections.setBounds(695, 453, 191, 23);
+        btnAllConnections.setBounds(695, 367, 191, 23);
         frmDataImport.getContentPane().add(btnAllConnections);
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();

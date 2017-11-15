@@ -85,6 +85,7 @@ public class LoadJob
                 jobFile.Write(statusCon);
                 statusCon.commit();
               }
+            moveFileToProcessedFolder(zipFile, processedPath);
           }
         catch(Throwable T)
           {
@@ -117,7 +118,6 @@ public class LoadJob
           }
         finally
           {
-            moveFileToProcessedFolder(zipFile, processedPath);
             closeDBConnection(statusCon);
           }
         
