@@ -439,7 +439,7 @@ public class MSSQL implements DBType
       }
 
     @Override
-    public void truncateTable(Connection C, String schemaName, String tableName)
+    public void truncateTable(Connection C, String schemaName, String tableName, boolean cascade)
     throws Exception
       {
         StringBuilder Str = new StringBuilder();

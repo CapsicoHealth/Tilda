@@ -18,12 +18,12 @@ package tilda.loader.parser;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
-import java.util.HashMap;
-import java.util.Iterator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -34,13 +34,14 @@ import tilda.utils.TextUtil;
 
 public class DataObject
   {
+    protected static final Logger LOG               = LogManager.getLogger(DataObject.class);
 
     public static enum MODE
       {
-        INSERT, UPSERT, INSERT_TRUNCATE;
+        INSERT, UPSERT, TRUNCATE_INSERT, TRUNCATE_CASCADE_INSERT;
       }
-
     
+    /*@formatter:off*/
     @SerializedName("filepath"       )      public List<String>       _FileList = new ArrayList<String>();
     @SerializedName("schemaName"     )      public String             _SchemaName;
     @SerializedName("tableName"      )      public String             _TableName;
@@ -53,10 +54,12 @@ public class DataObject
     @SerializedName("multiHeaderDelimeter") public String             _multiHeaderDelimeter;
     @SerializedName("uniqueColumns"  )      public List<String>       _uniqueColumnsList    = new ArrayList<String>();
     @SerializedName("mode"           )      public String             _mode = null;
+    /*@formatter:on*/
 
     transient boolean _Upserts;
     transient boolean _Inserts;
     transient boolean _TruncateFirst;
+    transient boolean         _TruncateCascade;
     transient String  _ZipFilePath      = null;
     
     public boolean validate(Connection C, String rootFolder, List<String> errorMessages) throws Exception
@@ -90,11 +93,20 @@ public class DataObject
        else if (_mode.equals(MODE.INSERT.toString()) == true)
          {
            _Inserts = true;
+           _TruncateFirst = false;
+           _TruncateCascade = false;
          }
-       else if  (_mode.equals(MODE.INSERT_TRUNCATE.toString()) == true)
+       else if  (_mode.equals(MODE.TRUNCATE_INSERT.toString()) == true)
          {
            _Inserts = true;
            _TruncateFirst = true;
+           _TruncateCascade = false;
+         }
+       else if (_mode.equals(MODE.TRUNCATE_CASCADE_INSERT.toString()) == true)
+         {
+           _Inserts = true;
+           _TruncateFirst = true;
+           _TruncateCascade = true;
          }
        else if (_mode.equals(MODE.UPSERT.toString()) == true)
          {
@@ -119,56 +131,67 @@ public class DataObject
        return true;
      }
     
-    public  String[] getColumns(){
-      List<String> Cols = new LinkedList<String>();
-      for(ColumnHeader ColumnHeader : _ColumnHeaderList)
-        {
-          if(ColumnHeader != null)
-            Cols.add(ColumnHeader._Column);
-        }
-      
-      return Cols.toArray(new String[Cols.size()]);
-    }
-    public  String[] getHeaders(){
-      List<String> Headers = new LinkedList<String>();
-      for(ColumnHeader ColumnHeader : _ColumnHeaderList)
-        {
-          Headers.add(ColumnHeader._Header);
-        }
-      
-      return Headers.toArray(new String[Headers.size()]);
-    }  
-    public Map<String,ColumnHeader> getMultiHeaderColumnMap()
-    {
-      Map<String,ColumnHeader> MultiHeaderColMap = new HashMap<String,ColumnHeader>();
-      for(ColumnHeader ColumnHeader : _ColumnHeaderList)
-        {
-          MultiHeaderColMap.put(ColumnHeader._Column, ColumnHeader);
-        }
-      return MultiHeaderColMap;
-    }
-    public String[] getHeadersList(){
-      return _HeaderList.toArray(new String[_HeaderList.size()]);
-    }
-    
+    public String[] getColumns()
+      {
+        List<String> Cols = new ArrayList<String>();
+        for (ColumnHeader ColumnHeader : _ColumnHeaderList)
+          {
+            if (ColumnHeader != null)
+              Cols.add(ColumnHeader._Column);
+          }
+
+        return Cols.toArray(new String[Cols.size()]);
+      }
+
+    public String[] getHeaders()
+      {
+        List<String> Headers = new ArrayList<String>();
+        for (ColumnHeader ColumnHeader : _ColumnHeaderList)
+          {
+            Headers.add(ColumnHeader._Header);
+          }
+
+        return Headers.toArray(new String[Headers.size()]);
+      }
+
+    public Map<String, ColumnHeader> getMultiHeaderColumnMap()
+      {
+        Map<String, ColumnHeader> MultiHeaderColMap = new HashMap<String, ColumnHeader>();
+        for (ColumnHeader ColumnHeader : _ColumnHeaderList)
+          {
+            MultiHeaderColMap.put(ColumnHeader._Column, ColumnHeader);
+          }
+        return MultiHeaderColMap;
+      }
+
+    public String[] getHeadersList()
+      {
+        return _HeaderList.toArray(new String[_HeaderList.size()]);
+      }
+
     public String[] getUniqueColumnsList()
       {
         return _uniqueColumnsList.toArray(new String[_uniqueColumnsList.size()]);
       }
-      
+
     public boolean isUpserts()
       {
         return _Upserts;
       }
-    
+
     public boolean isInserts()
       {
         return _Inserts;
       }
-    
+
     public boolean isTruncateFirst()
       {
         return _TruncateFirst;
+      }
+
+    public boolean isTruncateCascade()
+      {
+        return _TruncateCascade;
       }
 
     public String getTableFullName()

@@ -132,7 +132,7 @@ public class FileUtil
         return false;
       }
 
-    public static Reader getReaderFromFileOrResource(String Name)
+    public static BufferedReader getReaderFromFileOrResource(String Name)
     throws IOException
       {
         if (new File(Name).exists() == true)

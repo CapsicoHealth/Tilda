@@ -15,11 +15,8 @@ import java.util.Map;
 import org.apache.commons.csv.CSVRecord;
 
 import tilda.data.JobFile_Data;
-import tilda.data.JobFile_Factory;
 import tilda.data.JobMessage_Data;
 import tilda.data.JobMessage_Factory;
-import tilda.data.Job_Data;
-import tilda.data.Job_Factory;
 import tilda.data.ZoneInfo_Factory;
 import tilda.db.Connection;
 import tilda.db.QueryDetails;
@@ -33,6 +30,7 @@ import tilda.utils.DateTimeUtil;
 import tilda.utils.DurationUtil;
 import tilda.utils.NumberFormatUtil;
 import tilda.utils.ParseUtil;
+import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
 
 public class PostgreSQLCSVImporter extends CSVImporter
@@ -86,8 +84,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
                 if (DBColumns != null && DBColumns.get("refnum") != null 
                   && TextUtil.FindElement(columns, "refnum", false, 0) == -1)
                   {
-                    Pst.setLong(++x,
-                    tilda.db.KeysManager.getKey(schemaName.toUpperCase() + "." + tableName.toUpperCase()));
+                    Pst.setLong(++x, tilda.db.KeysManager.getKey(schemaName.toUpperCase() + "." + tableName.toUpperCase()));
                   }
                 if (DBColumns != null && DBColumns.get("lastupdated") != null 
                   && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
@@ -257,15 +254,21 @@ public class PostgreSQLCSVImporter extends CSVImporter
                               {
                                 if (CI._TildaType == ColumnType.INTEGER)
                                   {
-                                    Pst.setInt(i + x, Integer.parseInt(value));
+                                    int V = ParseUtil.parseIntegerFlexible(value, SystemValues.EVIL_VALUE);
+                                    if (V == SystemValues.EVIL_VALUE)
+                                     throw new Exception("Couldn't parse '"+value+"' as an Integer.");
+                                    Pst.setInt(i + x, V);
                                     if(isUpsert && !isUniqueColumn)
-                                      Pst.setInt(i + x + upsertOffset, Integer.parseInt(value));
+                                      Pst.setInt(i + x + upsertOffset, V);
                                   }                                  
                                 else if (CI._TildaType == ColumnType.LONG)
                                   {
-                                    Pst.setLong(i + x, Long.parseLong(value));
+                                    long V = ParseUtil.parseLongFlexible(value, SystemValues.EVIL_VALUE);
+                                    if (V == SystemValues.EVIL_VALUE)
+                                     throw new Exception("Couldn't parse '"+value+"' as a Long.");
+                                    Pst.setLong(i + x, V);
                                     if(isUpsert && !isUniqueColumn)
-                                      Pst.setLong(i + x + upsertOffset, Long.parseLong(value));
+                                      Pst.setLong(i + x + upsertOffset, V);
                                   }                                  
                                 else if (CI._TildaType == ColumnType.FLOAT)
                                   {
@@ -342,11 +345,9 @@ public class PostgreSQLCSVImporter extends CSVImporter
                   }
                 
                 // lastUpdated incase of Upsert
-                if (isUpsert && DBColumns != null && DBColumns.get("lastupdated") != null 
-                  && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
+                if (isUpsert && DBColumns != null && DBColumns.get("lastupdated") != null && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
                   {
-                    Pst.setTimestamp(i + x + upsertOffset, new java.sql.Timestamp(Now.toInstant().toEpochMilli()),
-                      DateTimeUtil._UTC_CALENDAR);
+                    Pst.setTimestamp(i + x + upsertOffset, new java.sql.Timestamp(Now.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                   }
                 
                 h = null;
@@ -373,7 +374,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
                   {
                     C.commit();
                     long t = System.nanoTime() - t0;
-                    String jobMessageLog = "Processed " + NumberFormatUtil.PrintWith000Sep(NumOfRecs) + " so far in " + DurationUtil.PrintDuration(t) + " (" + DurationUtil.PrintPerformancePerMinute(t, NumOfRecs) + " Records/min)"; 
+                    String jobMessageLog = "Processed " + NumberFormatUtil.PrintWith000Sep(NumOfRecs) + " records so far in " + DurationUtil.PrintDuration(t) + " (" + DurationUtil.PrintPerformancePerMinute(t, NumOfRecs) + " Records/min)"; 
                     
                     LOG.debug(jobMessageLog);
                     if (statusConnection != null && jobFile != null)

@@ -55,6 +55,7 @@ import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.utils.DurationUtil;
 import tilda.utils.FileUtil;
+import tilda.utils.NumberFormatUtil;
 import tilda.utils.TextUtil;
 
 public abstract class CSVImporter
@@ -78,7 +79,6 @@ public abstract class CSVImporter
         
     public List<Results> process() throws Exception
       {
-        long t0 = System.nanoTime();
         long NumOfRecs = 0;
         Reader fileReader = null;
         ZipFile zipFile = null;
@@ -86,6 +86,7 @@ public abstract class CSVImporter
           {
             String columns[] = cmsDO.getColumns();
             String headers[] = cmsDO.getHeaders();
+            
             String completeHeaders[] = cmsDO.getHeadersList();
             String uniqueColumns[] = cmsDO.getUniqueColumnsList();
 
@@ -104,10 +105,12 @@ public abstract class CSVImporter
             StringBuilder Str = GenerateSQL(cmsDO.isUpserts(), cmsDO._SchemaName, cmsDO._TableName, columns, DBColumns, uniqueColumns);
             
             if (cmsDO.isInserts() == true && cmsDO.isTruncateFirst() == true)
-              ImportProcessor.truncateTable(C, cmsDO._SchemaName, cmsDO._TableName);
+              ImportProcessor.truncateTable(C, cmsDO._SchemaName, cmsDO._TableName, cmsDO.isTruncateCascade());
             
             for (String file : fileList)
               {
+                long t0 = System.nanoTime();
+                
                 if(cmsDO.getZipFilePath() != null && this.jobFile != null)
                   {
                     LOG.debug("Looking for data file or resource " + file + " in Zip "+cmsDO.getZipFilePath());
@@ -124,7 +127,7 @@ public abstract class CSVImporter
                 CSVFormat csvFormat = CSVFormat.DEFAULT.withHeader(completeHeaders);
                 Iterable<CSVRecord> records = csvFormat.parse(fileReader);
                 getHeader(completeHeaders, cmsDO._HeadersIncluded, records);
-               
+
                 NumOfRecs = insertData(cmsDO.isUpserts(), t0, DBColumns, cmsDO._HeadersIncluded, records, Str, cmsDO._SchemaName,
                   cmsDO._TableName, headers, columns, cmsDO.getMultiHeaderColumnMap(), completeHeaders, uniqueColumns, 
                   cmsDO._dateTimePattern, cmsDO._zoneId, cmsDO._datePattern);
@@ -136,7 +139,7 @@ public abstract class CSVImporter
                 
                 NumOfRecs = (cmsDO._HeadersIncluded == true) ? (NumOfRecs - 1) : NumOfRecs;
                 t0 = System.nanoTime() - t0;
-                String jobMessageLog = "Processed " + NumOfRecs + " in " + DurationUtil.PrintDurationSeconds(t0) + " (" + DurationUtil.PrintPerformancePerMinute(t0, NumOfRecs) + " Records/min)";
+                String jobMessageLog = "Processed a total of " + NumberFormatUtil.PrintWith000Sep(NumOfRecs) + " records in " + DurationUtil.PrintDuration(t0) + " (" + DurationUtil.PrintPerformancePerMinute(t0, NumOfRecs) + " Records/min)";
                 LOG.debug(jobMessageLog);
                 
                 if ( jobFile != null && statusConnection != null)
@@ -153,7 +156,6 @@ public abstract class CSVImporter
                 
                 Results results = new Results(file, cmsDO._SchemaName, cmsDO._TableName, NumOfRecs, t0);
                 resultsList.add(results);
-
               }
             return resultsList;
           }

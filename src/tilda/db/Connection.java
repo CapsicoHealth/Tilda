@@ -543,10 +543,10 @@ public final class Connection
         _DB.setOrderByWithNullsOrdering(this, Str, Col, Asc, NullsLast);
       }
 
-    public void truncateTable(String SchemaName, String TableName)
+    public void truncateTable(String SchemaName, String TableName, boolean cascade)
     throws Exception
       {
-        _DB.truncateTable(this, SchemaName, TableName);
+        _DB.truncateTable(this, SchemaName, TableName, cascade);
       }
 
     // public void setTableLogging(String SchemaName, String TableName, boolean Logged) throws Exception
