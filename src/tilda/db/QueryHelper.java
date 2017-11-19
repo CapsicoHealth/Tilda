@@ -42,6 +42,7 @@ import tilda.types.Type_IntegerPrimitive;
 import tilda.types.Type_LongPrimitive;
 import tilda.types.Type_StringCollection;
 import tilda.types.Type_StringPrimitive;
+import tilda.utils.CollectionUtil;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.DurationUtil.IntervalEnum;
 import tilda.utils.TextUtil;
@@ -138,6 +139,11 @@ public abstract class QueryHelper
       {
         init();
       }
+    
+    public boolean isWhereClauseEmpty()
+    {
+      return _QueryStr.length() == _WherePos;
+    }
 
     public int getCardinality()
       {
@@ -619,10 +625,16 @@ public abstract class QueryHelper
     public String getWhereClause()
     throws Exception
       {
+        return getWhereClause(true);
+      }
+
+    public String getWhereClause(boolean withWhere)
+    throws Exception
+      {
         if (_ST == StatementType.SELECT && _FullSelect == false)
           {
             String Str = _QueryStr.toString();
-            if (_Where == false)
+            if (_Where == false && withWhere == true)
               Str = " where " + Str;
             return Str;
           }
@@ -969,7 +981,7 @@ public abstract class QueryHelper
         for (int i = 0; i < V.length; ++i)
           {
             if (i != 0)
-              _QueryStr.append(", ");
+              _QueryStr.append(",");
             _QueryStr.append(V[i]);
           }
         _QueryStr.append(")");
@@ -997,7 +1009,7 @@ public abstract class QueryHelper
         for (int i = 0; i < V.length; ++i)
           {
             if (i != 0)
-              _QueryStr.append(", ");
+              _QueryStr.append(",");
             _QueryStr.append(V[i]);
           }
         _QueryStr.append(")");
@@ -1025,7 +1037,7 @@ public abstract class QueryHelper
         for (int i = 0; i < V.length; ++i)
           {
             if (i != 0)
-              _QueryStr.append(", ");
+              _QueryStr.append(",");
             _QueryStr.append(V[i]);
           }
         _QueryStr.append(")");
@@ -1053,7 +1065,7 @@ public abstract class QueryHelper
         for (int i = 0; i < V.length; ++i)
           {
             if (i != 0)
-              _QueryStr.append(", ");
+              _QueryStr.append(",");
             _QueryStr.append(V[i]);
           }
         _QueryStr.append(")");
@@ -1081,7 +1093,7 @@ public abstract class QueryHelper
         for (int i = 0; i < V.length; ++i)
           {
             if (i != 0)
-              _QueryStr.append(", ");
+              _QueryStr.append(",");
             if (DateTimeUtil.isNowPlaceholder(V[i]) == true)
               _QueryStr.append(_C.getCurrentTimestampStr());
             else if (V[i] == null)
@@ -1118,7 +1130,7 @@ public abstract class QueryHelper
             if (first == true)
               first = false;
             else
-              _QueryStr.append(", ");
+              _QueryStr.append(",");
             ZonedDateTime val = I.next();
             if (DateTimeUtil.isNowPlaceholder(val) == true)
               _QueryStr.append(_C.getCurrentTimestampStr());
@@ -2424,13 +2436,20 @@ public abstract class QueryHelper
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'like' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
 
+        if (or == true)
+          {
+            Col.getFullColumnVarForSelect(_C, _QueryStr);
+            _QueryStr.append(caseInsensitive == true ? " ilike" : " like").append(" ANY(");
+            Array(_QueryStr, V);
+            _QueryStr.append(")");
+            return this;
+          }
+        
         boolean First = true;
         for (String v : V)
           {
             if (First == true)
               First = false;
-            else if (or == true)
-              or();
             else
               and();
             like(Col, v, caseInsensitive);
@@ -2460,6 +2479,22 @@ public abstract class QueryHelper
         return this;
       }
 
+    
+
+    protected static void Array(StringBuilder Str, String[] V)
+      {
+        Str.append("ARRAY[");
+        boolean First = true;
+        for (String v : V)
+          {
+            if (First == true)
+              First = false;
+            else
+              Str.append(",");
+            TextUtil.EscapeSingleQuoteForSQL(Str, v);
+          }
+        Str.append("]");
+      }
 
 
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2480,17 +2515,8 @@ public abstract class QueryHelper
         if (V == null || V.length == 0)
           throw new Exception("Invalid query syntax: Calling the operator 'like' with a null or empty array/list.");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        _QueryStr.append(" && ARRAY[");
-        boolean First = true;
-        for (String v : V)
-          {
-            if (First == true)
-              First = false;
-            else
-              _QueryStr.append(", ");
-            TextUtil.EscapeSingleQuoteForSQL(_QueryStr, v);
-          }
-        _QueryStr.append("]");
+        _QueryStr.append(" && ");
+        Array(_QueryStr, V);
         return this;
       }
 
@@ -2499,17 +2525,8 @@ public abstract class QueryHelper
         if (Vals == null)
           return this;
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        _QueryStr.append(" && ARRAY[");
-        boolean First = true;
-        for (String v : Vals)
-          {
-            if (First == true)
-              First = false;
-            else
-              _QueryStr.append(", ");
-            TextUtil.EscapeSingleQuoteForSQL(_QueryStr, v);
-          }
-        _QueryStr.append("]");
+        _QueryStr.append(" && ");
+        Array(_QueryStr, CollectionUtil.toStringArray(Vals));
         return this;
       }
 
@@ -2535,7 +2552,7 @@ public abstract class QueryHelper
             if (First == true)
               First = false;
             else
-              _QueryStr.append(", ");
+              _QueryStr.append(",");
             _QueryStr.append(v);
           }
         _QueryStr.append("]");
@@ -2563,7 +2580,7 @@ public abstract class QueryHelper
             if (First == true)
               First = false;
             else
-              _QueryStr.append(", ");
+              _QueryStr.append(",");
             _QueryStr.append("'").append(v).append("'");
           }
         _QueryStr.append("]");
@@ -2576,7 +2593,7 @@ public abstract class QueryHelper
         if (_Section != S.WHERE && _Section != S.GROUPBY || _ST != StatementType.SELECT)
           throw new Exception("Invalid query syntax: GroupBy after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
         if (_Section == S.GROUPBY)
-          _QueryStr.append(", ");
+          _QueryStr.append(",");
         else
           _QueryStr.append(" group by ");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
@@ -2590,7 +2607,7 @@ public abstract class QueryHelper
         if (_Section != S.WHERE && _Section != S.GROUPBY || _ST != StatementType.SELECT)
           throw new Exception("Invalid query syntax: GroupBy after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
         if (_Section == S.GROUPBY)
-          _QueryStr.append(", ");
+          _QueryStr.append(",");
         else
           _QueryStr.append(" group by ");
         _QueryStr.append("\"").append(clause._Col.getName()).append("\"");
@@ -2604,7 +2621,7 @@ public abstract class QueryHelper
         if (_Section != S.WHERE && _Section != S.GROUPBY && _Section != S.ORDERBY || _ST != StatementType.SELECT)
           throw new Exception("Invalid query syntax: OrderBy after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
         if (_Section == S.ORDERBY)
-          _QueryStr.append(", ");
+          _QueryStr.append(",");
         else
           _QueryStr.append(" order by ");
         _Section = S.ORDERBY;
