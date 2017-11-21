@@ -485,11 +485,11 @@ public class Sql extends PostgreSQL implements CodeGenSql
               Str.append(" where ");
             else
               Str.append("   and ");
-            if (V._Pivot._VC._SameAsObj.getType() == ColumnType.STRING)
-              Str.append("trim(");
+//            if (V._Pivot._VC._SameAsObj.getType() == ColumnType.STRING)
+//              Str.append("trim(");
             Str.append(getFullColumnVar(V._Pivot._VC._SameAsObj));
-            if (V._Pivot._VC._SameAsObj.getType() == ColumnType.STRING)
-              Str.append(")");
+//            if (V._Pivot._VC._SameAsObj.getType() == ColumnType.STRING)
+//              Str.append(")");
             Str.append(" in (").append(PrintValueList(V._Pivot)).append(")\n");
 
           }

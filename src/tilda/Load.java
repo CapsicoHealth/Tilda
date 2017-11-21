@@ -26,9 +26,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -102,6 +105,7 @@ public class Load
             LOG.debug("Starting the utility in silent mode.");
 
             // Validate Table indices
+            Set<String> truncatedTables = new HashSet<String>();
             for (int i = 0; i < arguments.size(); i += 6)
               {
                 String ConfigFileName = arguments.get(i + 1);
@@ -118,8 +122,13 @@ public class Load
                     LOG.error("File " + ConfigFileName + " failed validation. Aborting !!");
                     System.exit(1);
                   }
+                
+                for (DataObject DO : filteredObjects)
+                  if (DO.isTruncateFirst() == true)
+                    truncatedTables.add(DO.getTableFullName());
               }
             LOG.debug("Validation Successful.");
+            CheckTruncates(truncatedTables);
 
             // Processing
             for (int i = 0; i < arguments.size(); i += 6)
@@ -130,6 +139,7 @@ public class Load
                 LOG.debug("Processing file " + ConfigFileName);
                 List<String> selectedObjectsList = new ArrayList<>(Arrays.asList(arguments.get(i + 3).split(",")));
                 List<String> connectionIdsList = new ArrayList<>(Arrays.asList(arguments.get(i + 5).split(",")));
+                ValidateDataObjects(connectionIdsList, Conf._CmsData);
                 StartImportProcessor(selectedObjectsList, connectionIdsList, Conf, Conf._CmsData);
               }
             LOG.debug("Import Tables completed.");
@@ -138,7 +148,6 @@ public class Load
           {
             String ConfigFileName = arguments.get(1);
             Conf = Config.fromFile(ConfigFileName);
-
             List<DataObject> list = Conf._CmsData;
             data = new Object[list.size()][2];
             for (int i = 0; i < list.size(); ++i)
@@ -183,6 +192,22 @@ public class Load
                       }
                   }
               });
+          }
+      }
+
+    private static void CheckTruncates(Set<String> truncatedTables)
+    throws Exception
+      {
+        if (truncatedTables.isEmpty() == false)
+          {
+            LOG.info("Your load file includes "+truncatedTables.size()+" truncate operations: "+TextUtil.Print(truncatedTables.iterator())+".");
+            LOG.info("Press 'y' followed by enter to continue, or anything else to abort.");
+            try (Scanner scanner = new Scanner(System.in))
+              {
+                String answer = scanner.next();
+                if (answer.toLowerCase().equals("y") == false)
+                  throw new Exception("User asked to exit.");
+              }
           }
       }
 
@@ -241,7 +266,9 @@ public class Load
             String tempObjectName = dataObject._SchemaName + "." + dataObject._TableName;
             tempObjectName = tempObjectName.toUpperCase();
             if (selectedObjects.contains(tempObjectName) == true)
-              filteredList.add(dataObject);
+              {
+                filteredList.add(dataObject);
+              }
           }
         return filteredList;
       }
@@ -260,9 +287,9 @@ public class Load
 
         LOG.debug("Running ImportProcessor");
         long timeTaken = System.nanoTime();
-        ImportProcessor.parallelProcess(connectionIdsList, Conf._RootFolder, threadsCount, dataObjects);
+        long TotalRowCount = ImportProcessor.parallelProcess(connectionIdsList, Conf._RootFolder, threadsCount, dataObjects);
         timeTaken = System.nanoTime() - timeTaken;
-        LOG.debug("Time taken for ImportProcessor.process() = " + DurationUtil.PrintDuration(timeTaken));
+        LOG.debug("Total time taken for ImportProcessor.process() = " + DurationUtil.PrintDuration(timeTaken) + " with a combined throughput of "+DurationUtil.PrintPerformancePerMinute(timeTaken, TotalRowCount) + " Records/min)");
       }
 
     private static boolean isValidArguments(List<String> arguments)
@@ -378,7 +405,7 @@ public class Load
         frmDataImport.setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
         frmDataImport.setTitle("CapsicoHealth Data Import");
         frmDataImport.setType(Type.POPUP);
-        frmDataImport.setBounds(100, 100, 938, 828);
+        frmDataImport.setBounds(100, 100, 938, 700);
         frmDataImport.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frmDataImport.getContentPane().setLayout(null);
         // frmDataImport.setResizable(false);
@@ -413,7 +440,7 @@ public class Load
                                       ConnectionIds.add((String) connections[i][0]);
                                   }
 
-                                // Validate Table indices
+                                // Validate configurations
                                 List<DataObject> selectedDO = FilterObjects(ImportTables, Conf._CmsData);
                                 LOG.debug("Validating Selected Table Indices..");
                                 List<String> errors = ValidateDataObjects(ConnectionIds, selectedDO);
@@ -425,6 +452,11 @@ public class Load
                                     System.exit(1);
                                   }
                                 LOG.debug("Validation Successful.");
+                                Set<String> truncatedTables = new HashSet<String>();
+                                for (DataObject DO : selectedDO)
+                                  if (DO.isTruncateFirst() == true)
+                                    truncatedTables.add(DO.getTableFullName());
+                                CheckTruncates(truncatedTables);
 
                                 // Processing
                                 StartImportProcessor(ImportTables, ConnectionIds, Conf, Conf._CmsData);
@@ -441,7 +473,7 @@ public class Load
                   }
               }
           });
-        btnRun.setBounds(351, 736, 97, 25);
+        btnRun.setBounds(351, 610, 97, 25);
         frmDataImport.getContentPane().add(btnRun);
 
         btnCancel.addActionListener(new ActionListener()
@@ -456,12 +488,12 @@ public class Load
                   }
               }
           });
-        btnCancel.setBounds(458, 736, 97, 25);
+        btnCancel.setBounds(458, 610, 97, 25);
         frmDataImport.getContentPane().add(btnCancel);
 
         // Scroller1 setup
         scroller1 = new JScrollPane();
-        scroller1.setBounds(34, 44, 852, 387);
+        scroller1.setBounds(34, 44, 852, 300);
         scroller1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         frmDataImport.getContentPane().add(scroller1);
 
@@ -479,7 +511,7 @@ public class Load
 
         // Scroller2 Setup
         scroller2 = new JScrollPane();
-        scroller2.setBounds(34, 476, 852, 242);
+        scroller2.setBounds(34, 390, 852, 200);
         scroller2.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         frmDataImport.getContentPane().add(scroller2);
 
@@ -521,7 +553,7 @@ public class Load
                 connectionDataModel.fireTableDataChanged();
               }
           });
-        btnAllConnections.setBounds(695, 453, 191, 23);
+        btnAllConnections.setBounds(695, 367, 191, 23);
         frmDataImport.getContentPane().add(btnAllConnections);
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();

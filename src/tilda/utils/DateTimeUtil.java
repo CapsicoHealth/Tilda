@@ -101,6 +101,11 @@ public class DateTimeUtil
         return ZonedDateTime.now().getOffset().getId();
       }
 
+    public static ZonedDateTime NowLocal()
+      {
+        return ZonedDateTime.now();
+      }
+
     public static ZonedDateTime NowUTC()
       {
         return ZonedDateTime.now(_UTC);

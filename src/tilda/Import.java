@@ -184,10 +184,10 @@ public class Import
         LOG.info("=======================================================================================================================");
         Reader R = FileUtil.getReaderFromFileOrResource(ImportFileName);
 
-        Pattern P = Pattern.compile("\\.*\\_tilda\\.([^\\.]+)\\.(sampledata|initdata)\\.([^\\.]+)\\.json\\z");
+        Pattern P = Pattern.compile("\\.*\\_tilda\\.([^\\.]+)\\.([a-zA-Z][a-zA-Z0-9]*)\\.([^\\.]+)\\.json\\z");
         Matcher M = P.matcher(ImportFileName);
         if (M.find() == false)
-          throw new Exception("The argument '" + ImportFileName + "' is invalid: it should match the format '_tilda.'+<SchemaName>+'.sampledata.'+<samplesPackage>+'.json'.");
+          throw new Exception("The argument '" + ImportFileName + "' is invalid: it should match the format '_tilda.'+<SchemaName>+'.<identifier>.'+<samplesPackage>+'.json'.");
         String SchemaName = M.group(1);
         String SamplePackageName = OverridePackageName == null ? M.group(3) : OverridePackageName;
 

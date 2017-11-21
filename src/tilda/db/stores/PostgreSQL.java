@@ -784,12 +784,14 @@ public class PostgreSQL implements DBType
 
 
     @Override
-    public void truncateTable(Connection C, String schemaName, String tableName)
+    public void truncateTable(Connection C, String schemaName, String tableName, boolean cascade)
     throws Exception
       {
         StringBuilder Str = new StringBuilder();
         Str.append("TRUNCATE ");
         getFullTableVar(Str, schemaName, tableName);
+        if (cascade == true)
+          Str.append(" CASCADE");
         C.ExecuteUpdate(schemaName, tableName, Str.toString());
       }
 

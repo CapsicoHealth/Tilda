@@ -307,7 +307,7 @@ public class IBMDB2 implements DBType
 
 
     @Override
-    public void truncateTable(Connection C, String schemaName, String tableName)
+    public void truncateTable(Connection C, String schemaName, String tableName, boolean cascade)
     throws Exception
       {
         throw new UnsupportedOperationException();
