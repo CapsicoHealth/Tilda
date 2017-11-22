@@ -578,26 +578,36 @@ public class PostgreSQL implements DBType
     throws Exception
       { 
         Role = Role.toLowerCase();
-        Str.append("DELETE FROM pg_catalog.pg_authid WHERE rolname='"+Role+"';\n");
-        Str.append("CREATE ROLE "+Role+";\n");
+        Str.append("DO $body$\n");
+        Str.append("BEGIN\n");
+        Str.append("   IF NOT EXISTS (SELECT FROM pg_catalog.pg_authid WHERE rolname = "+TextUtil.EscapeSingleQuoteForSQL(Role)+")\n");
+        Str.append("   THEN\n");
+        Str.append("      CREATE ROLE "+Role+";\n");
+        Str.append("   END IF;\n");
+        Str.append("END $body$;\n");
+//        Str.append("DELETE FROM pg_catalog.pg_authid WHERE rolname='"+Role+"';\n");
+//        Str.append("CREATE ROLE "+Role+";\n");
       }
     
     @Override
     public boolean addAclRoles(Connection Con, List<Schema> TildaList)
     throws Exception
-      {        
+      {
         StringBuilder Str = new StringBuilder();
-        //reCreateRole(Str, "tilda_app");
+        reCreateRole(Str, "tilda_app");
         reCreateRole(Str, "tilda_read_only");
         reCreateRole(Str, "tilda_reporting");
 
+        if (Con.ExecuteDDL("TILDA", "ACL_ROLES", Str.toString()) == false)
+         return false;
+        
+        Str.setLength(0);
         for (Schema S : TildaList)
           {
             Str.append("GRANT USAGE ON SCHEMA ").append(S.getShortName()).append(" TO tilda_app;\n");
             Str.append("GRANT ALL ON ALL TABLES IN SCHEMA ").append(S.getShortName()).append(" TO tilda_app;\n");
             Str.append("GRANT ALL ON ALL FUNCTIONS IN SCHEMA ").append(S.getShortName()).append(" TO tilda_app;\n");
             Str.append("GRANT ALL ON ALL SEQUENCES IN SCHEMA ").append(S.getShortName()).append(" TO tilda_app;\n");
-            
             Str.append("GRANT USAGE ON SCHEMA ").append(S.getShortName()).append(" TO tilda_read_only;\n");
             Str.append("GRANT SELECT ON ALL TABLES IN SCHEMA ").append(S.getShortName()).append(" TO tilda_read_only;\n");
             Str.append("GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA ").append(S.getShortName()).append(" TO tilda_read_only;\n");

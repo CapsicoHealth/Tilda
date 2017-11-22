@@ -25,9 +25,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.io.Reader;
 import java.util.Arrays;
+import java.util.Scanner;
 
+import tilda.db.ConnectionPool;
 import tilda.utils.comparators.FileNameComparator;
 
 public class FileUtil
@@ -150,9 +151,17 @@ public class FileUtil
         int i1 = Name.lastIndexOf('/');
         int i2 = Name.lastIndexOf('\\');
         if (i1 == -1 && i2 == -1)
-         throw new Exception("Cannot find a path in '" + Name + "'. Looked for '/' and '\\'.");
-        
-        return Name.substring(0, Math.max(i1,  i2)+1);
+          throw new Exception("Cannot find a path in '" + Name + "'. Looked for '/' and '\\'.");
+
+        return Name.substring(0, Math.max(i1, i2) + 1);
+      }
+
+    static Scanner _SCANNER = new Scanner(System.in);
+    public static String readlnFromStdIn(boolean secure)
+      {
+        if (secure == true && System.console() != null)
+         return new String(System.console().readPassword());
+        return _SCANNER.next();
       }
 
 
