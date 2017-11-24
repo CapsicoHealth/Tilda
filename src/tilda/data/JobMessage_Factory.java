@@ -29,5 +29,19 @@ public class JobMessage_Factory extends tilda.data._Tilda.TILDA__JOBMESSAGE_Fact
     {
       // Add logic to initialize your object, for example, caching some values, or validating some things.
     }
+   
+   public static ListResults<JobMessage_Data> LookupWhereByJobFileRefnums(Connection C, long[] JobFileRefnums, int Start, int Size)
+   throws Exception
+     {
+       SelectQuery Q = newWhereQuery(C);
+       for (int i=0; i < JobFileRefnums.length; i++)
+         {
+           if (i > 0)
+             Q.or();
+           Q.equals(COLS.JOBFILEREFNUM, JobFileRefnums[i]);
+         }
+       Q.orderBy(COLS.CREATED, false);
+       return runSelect(C, Q, Start, Size);
+     }
 
  }
