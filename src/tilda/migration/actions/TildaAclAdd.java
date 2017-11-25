@@ -56,7 +56,9 @@ public class TildaAclAdd extends MigrationAction
             if (isSuperUser == false)
              {
                LOG.warn("");
-               LOG.warn("-----------------------------------------------------------------------------------------------------");
+               LOG.warn("");
+               LOG.warn("=====================================================================================================");
+               LOG.warn("=====================================================================================================");
                LOG.warn("The migration utility manages access control and roles for the database " + C.getPoolId() + ".");
                LOG.warn("To do that, it needs a superuser id and password:");
                LOG.info("Enter a superuser id:");
