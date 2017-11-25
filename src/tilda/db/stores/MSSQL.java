@@ -267,10 +267,10 @@ public class MSSQL implements DBType
       }
 
     @Override
-    public boolean addHelperFunctions(Connection Con)
+    public String getHelperFunctionsScript(Connection Con)
     throws Exception
       {
-        return true;
+        throw new UnsupportedOperationException();
       }
 
 
@@ -473,7 +473,7 @@ public class MSSQL implements DBType
       }
 
     @Override
-    public boolean addAclRoles(Connection Con, List<Schema> TildaList)
+    public String getAclRolesScript(Connection Con, List<Schema> TildaList)
     throws Exception
       {
         throw new UnsupportedOperationException();
@@ -495,6 +495,13 @@ public class MSSQL implements DBType
 
     @Override
     public boolean alterTableAddFK(Connection Con, ForeignKey FK)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public boolean isSuperUser(Connection C)
     throws Exception
       {
         throw new UnsupportedOperationException();

@@ -224,15 +224,26 @@
         { "name": "timeIndexMs"  , "type": "LONG"    , "nullable": false,                                "description":"The time, in milliseconds, the indexing took."     },
         { "name": "timeAnalyzeMs", "type": "LONG"    , "nullable": false,                                "description":"The time, in milliseconds, the analyze took."      },
         { "name": "timeTotalMs"  , "type": "LONG"    , "nullable": false,                                "description":"The time, in milliseconds, the whole refill took." },
-        { "name": "columnsMs"    , "type": "LONG"    , "nullable": false,                                "description":"The list of columns that were refilled."           },
-      ],
-      "primary": { "columns": ["schemaName", "objectName", "startPeriod"], "autogen": false },
-      "indices":[ 
+        { "name": "columnsMs"    , "type": "LONG"    , "nullable": false,                                "description":"The list of columns that were refilled."           }
+      ]
+     ,"primary": { "columns": ["schemaName", "objectName", "startPeriod"], "autogen": false }
+     ,"indices":[ 
         { "name": "SchemaByObjectStart", "columns": ["schemaName"], "orderBy": ["objectName", "startPeriod desc"], "db": true },
         { "name": "SchemaObjectByStart", "columns": ["schemaName", "objectName"], "orderBy": ["startPeriod desc"], "db": false }
       ]
     }
                      
+   ,{ "name": "Maintenance", "occ": true,
+      "description": "Maintenance information",
+      "columns":[
+        { "name": "type" , "type": "STRING", "nullable": false, "size":    64, "invariant": true, "description":"The type of maintenance resource to track"        }
+       ,{ "name": "name" , "type": "STRING", "nullable": false, "size":   512, "invariant": true, "description":"The name of the maintenance resource to track."   }
+       ,{ "name": "value", "type": "STRING", "nullable": true , "size":500000,                    "description":"The value of the maintenance resource to track."  }
+      ]
+     ,"primary": { "columns": ["type", "name"], "autogen": false }
+     ,"indices":[
+      ]
+    }
     
   ]
 }

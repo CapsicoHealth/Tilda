@@ -958,7 +958,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Oct 16 2017, 23:24:53EDT
+ @generated Nov 25 2017, 01:13:09EST
 */
 public abstract class TILDA__TESTING implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject, tilda.interfaces.JSONable
  {
@@ -1115,6 +1115,8 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
+   public final Long[] getRefnum2AsArray()
+      { return _refnum2==null? null : _refnum2.toArray(new Long[_refnum2.size()]); }
    public final Iterator<Long> getRefnum2()
       { return _refnum2==null? null : _refnum2.iterator(); }
    public final boolean hasRefnum2(long v)
@@ -2277,6 +2279,8 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
+   public final String[] getTopsAsArray()
+      { return _tops==null? null : _tops.toArray(new String[_tops.size()]); }
    public final Iterator<String> getTops()
       { return _tops==null? null : _tops.iterator(); }
    public final boolean hasTops(String v)
@@ -2465,6 +2469,8 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
+   public final String[] getTops2AsArray()
+      { return _tops2==null? null : _tops2.toArray(new String[_tops2.size()]); }
    public final Iterator<String> getTops2()
       { return _tops2==null? null : _tops2.iterator(); }
    public final boolean hasTops2(String v)
@@ -2928,6 +2934,8 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
+   public final Character[] getA2bAsArray()
+      { return _a2b==null? null : _a2b.toArray(new Character[_a2b.size()]); }
    public final Iterator<Character> getA2b()
       { return _a2b==null? null : _a2b.iterator(); }
    public final boolean hasA2b(char v)
@@ -3106,6 +3114,8 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
+   public final Character[] getA2cAsArray()
+      { return _a2c==null? null : _a2c.toArray(new Character[_a2c.size()]); }
    public final Iterator<Character> getA2c()
       { return _a2c==null? null : _a2c.iterator(); }
    public final boolean hasA2c(char v)
@@ -3419,6 +3429,8 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
+   public final Boolean[] getA3bAsArray()
+      { return _a3b==null? null : _a3b.toArray(new Boolean[_a3b.size()]); }
    public final Iterator<Boolean> getA3b()
       { return _a3b==null? null : _a3b.iterator(); }
    public final boolean hasA3b(boolean v)
@@ -3739,6 +3751,8 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
+   public final Double[] getA4bAsArray()
+      { return _a4b==null? null : _a4b.toArray(new Double[_a4b.size()]); }
    public final Iterator<Double> getA4b()
       { return _a4b==null? null : _a4b.iterator(); }
    public final boolean hasA4b(double v)
@@ -4059,6 +4073,8 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
+   public final Float[] getA5bAsArray()
+      { return _a5b==null? null : _a5b.toArray(new Float[_a5b.size()]); }
    public final Iterator<Float> getA5b()
       { return _a5b==null? null : _a5b.iterator(); }
    public final boolean hasA5b(float v)
@@ -4379,6 +4395,8 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
+   public final Long[] getA6bAsArray()
+      { return _a6b==null? null : _a6b.toArray(new Long[_a6b.size()]); }
    public final Iterator<Long> getA6b()
       { return _a6b==null? null : _a6b.iterator(); }
    public final boolean hasA6b(long v)
@@ -4557,6 +4575,8 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
+   public final Long[] getA6cAsArray()
+      { return _a6c==null? null : _a6c.toArray(new Long[_a6c.size()]); }
    public final Iterator<Long> getA6c()
       { return _a6c==null? null : _a6c.iterator(); }
    public final boolean hasA6c(long v)
@@ -4870,6 +4890,8 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
+   public final Integer[] getA7bAsArray()
+      { return _a7b==null? null : _a7b.toArray(new Integer[_a7b.size()]); }
    public final Iterator<Integer> getA7b()
       { return _a7b==null? null : _a7b.iterator(); }
    public final boolean hasA7b(int v)

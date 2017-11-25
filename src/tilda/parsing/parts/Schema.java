@@ -41,6 +41,7 @@ public class Schema
     /*@formatter:off*/
     @SerializedName("package"      ) public String            _Package;
     @SerializedName("documentation") public Documentation     _Documentation = new Documentation();
+    @SerializedName("extraDDL"     ) public ExtraDDL          _ExtraDDL      = new ExtraDDL();
     @SerializedName("dependencies" ) public String[]          _Dependencies;
     @SerializedName("interfaces"   ) public List<Interface  > _Interfaces  = new ArrayList<Interface  >();
     @SerializedName("enumerations" ) public List<Enumeration> _Enumerations= new ArrayList<Enumeration>();

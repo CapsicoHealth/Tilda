@@ -28,7 +28,6 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import tilda.db.ConnectionPool;
 import tilda.utils.comparators.FileNameComparator;
 
 public class FileUtil
@@ -143,6 +142,22 @@ public class FileUtil
         if (In == null)
           throw new IOException("Cannot find import file/resource '" + Name + "'.");
         return new BufferedReader(new InputStreamReader(In));
+      }
+    
+    public static String getFileOfResourceContents(String Name)
+    throws IOException
+      {
+        BufferedReader R = getReaderFromFileOrResource(Name);
+        if (R == null)
+          return null;
+        StringBuilder Str = new StringBuilder();
+        String L = R.readLine();
+        while (L != null)
+          {
+            Str.append(L).append("\n");
+            L = R.readLine();
+          }
+        return Str.toString();
       }
 
     public static String getBasePathFromFileOrResource(String Name)

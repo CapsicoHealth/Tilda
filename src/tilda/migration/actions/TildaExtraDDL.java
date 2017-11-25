@@ -16,38 +16,51 @@
 
 package tilda.migration.actions;
 
+import java.sql.SQLException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.data.Maintenance_Data;
 import tilda.data.Maintenance_Factory;
-import tilda.data._Tilda.TILDA__KEY_Factory;
 import tilda.db.Connection;
 import tilda.db.metadata.DatabaseMeta;
 import tilda.migration.MigrationAction;
+import tilda.parsing.parts.Schema;
+import tilda.utils.FileUtil;
+import tilda.utils.TextUtil;
 
-public class TildaHelpersAdd extends MigrationAction
+public class TildaExtraDDL extends MigrationAction
   {
 
-    static final Logger LOG = LogManager.getLogger(TildaHelpersAdd.class.getName());
+    static final Logger LOG = LogManager.getLogger(TildaExtraDDL.class.getName());
 
-    public TildaHelpersAdd()
+    public TildaExtraDDL(Schema S, String ResourceName)
+      throws Exception
       {
         super(false);
+        _ResourceName = FileUtil.getBasePathFromFileOrResource(S._ResourceName) + ResourceName;
+        _SchemaName = S._Name;
       }
+
+    protected String _ResourceName;
+    protected String _SchemaName;
 
     public boolean process(Connection C)
     throws Exception
       {
         LOG.debug(getDescription());
 
-        String Str = C.getHelperFunctionsScript();
-        if (C.ExecuteDDL(TILDA__KEY_Factory.SCHEMA_LABEL, "*", Str) == false)
+        String Str = FileUtil.getFileOfResourceContents(_ResourceName);
+        if (TextUtil.isNullOrEmpty(Str) == true)
           return false;
 
-        Maintenance_Data M = Maintenance_Factory.LookupByPrimaryKey("TILDA_HELPERS", "TILDA_HELPERS");
+        if (C.ExecuteDDL(_SchemaName, "*", Str) == false)
+          return false;
+
+        Maintenance_Data M = Maintenance_Factory.LookupByPrimaryKey("EXTERNAL_DDL", _ResourceName);
         if (M.Read(C) == false)
-          M = Maintenance_Factory.Create("TILDA_HELPERS", "TILDA_HELPERS");
+          M = Maintenance_Factory.Create("EXTERNAL_DDL", _ResourceName);
         M.setValue(Str);
         return M.Write(C);
       }
@@ -55,7 +68,7 @@ public class TildaHelpersAdd extends MigrationAction
     @Override
     public String getDescription()
       {
-        return "Adding Tilda helper stored procedures";
+        return "Running an extra external DDL script '" + _ResourceName + "' on schema '" + _SchemaName + "'";
       }
 
     @Override
@@ -64,11 +77,10 @@ public class TildaHelpersAdd extends MigrationAction
       {
         if (DBMeta.getTableMeta(Maintenance_Factory.SCHEMA_LABEL, Maintenance_Factory.TABLENAME_LABEL) == null)
           return true;
-        String Str = C.getHelperFunctionsScript();
+        String Str = FileUtil.getFileOfResourceContents(_ResourceName);
         if (Str == null)
           return false;
-        Maintenance_Data M = Maintenance_Factory.LookupByPrimaryKey("TILDA_HELPERS", "TILDA_HELPERS");
+        Maintenance_Data M = Maintenance_Factory.LookupByPrimaryKey("EXTERNAL_DDL", _ResourceName);
         return M.Read(C) == false || M.getValue().equals(Str.trim()) == false;
       }
-
   }

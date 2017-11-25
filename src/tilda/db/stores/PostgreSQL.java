@@ -35,6 +35,7 @@ import tilda.db.metadata.FKMeta;
 import tilda.db.metadata.PKMeta;
 import tilda.db.processors.ScalarRP;
 import tilda.db.processors.StringListRP;
+import tilda.db.processors.StringRP;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
@@ -388,7 +389,7 @@ public class PostgreSQL implements DBType
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
         + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + ";";
         return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
-      }
+      }    
 
     protected static void PrintFunctionIn(StringBuilder Str, String Type)
       {
@@ -449,7 +450,7 @@ public class PostgreSQL implements DBType
       }
 
     @Override
-    public boolean addHelperFunctions(Connection Con)
+    public String getHelperFunctionsScript(Connection Con)
     throws Exception
       {
         StringBuilder Str = new StringBuilder();
@@ -567,11 +568,10 @@ public class PostgreSQL implements DBType
         .append("\n")
         .append("\n")
         .append("CREATE extension if not exists tablefunc;\n");
-
-        return Con.ExecuteDDL("TILDA", "FUNCTIONS", Str.toString());
+        
+        return Str.toString();
       }
-
-    
+   
     
     
     public void reCreateRole(StringBuilder Str, String Role)
@@ -590,7 +590,7 @@ public class PostgreSQL implements DBType
       }
     
     @Override
-    public boolean addAclRoles(Connection Con, List<Schema> TildaList)
+    public String getAclRolesScript(Connection Con, List<Schema> TildaList)
     throws Exception
       {
         StringBuilder Str = new StringBuilder();
@@ -598,10 +598,6 @@ public class PostgreSQL implements DBType
         reCreateRole(Str, "tilda_read_only");
         reCreateRole(Str, "tilda_reporting");
 
-        if (Con.ExecuteDDL("TILDA", "ACL_ROLES", Str.toString()) == false)
-         return false;
-        
-        Str.setLength(0);
         for (Schema S : TildaList)
           {
             Str.append("GRANT USAGE ON SCHEMA ").append(S.getShortName()).append(" TO tilda_app;\n");
@@ -614,7 +610,7 @@ public class PostgreSQL implements DBType
             Str.append("GRANT SELECT ON ALL SEQUENCES IN SCHEMA ").append(S.getShortName()).append(" TO tilda_read_only;\n");
           }
 
-        return Con.ExecuteDDL("TILDA", "ACL_ROLES", Str.toString());
+        return Str.toString();
      }
     
     @Override
@@ -911,5 +907,14 @@ public class PostgreSQL implements DBType
             Str.append(")");
           }
       }
+    
+    @Override
+    public boolean isSuperUser(Connection C) throws Exception
+     {
+       String Q = "select current_setting('is_superuser');";
+       StringRP RP = new StringRP();
+       C.ExecuteSelect("SYSTEM", "CURRENT_SETTING", Q, RP);
+       return "on".equals(RP.getResult()) == true;
+     }
 
   }

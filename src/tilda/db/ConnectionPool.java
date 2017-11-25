@@ -186,9 +186,24 @@ public class ConnectionPool
                     C = get(connectionId);
                     if (TildaList == null)
                       TildaList = LoadTildaResources(C);
+                    if (C.isSuperUser() == true)
+                      {
+                        LOG.warn("#########################################################################################################################");
+                        LOG.warn("###                                                                                                                   ###");
+                        LOG.warn("###    W A R N I N G :   T H I S   C O N N E C T I O N   U S E S   A   S U P E R U S E R   A C C O U N T   ! ! !      ###");
+                        LOG.warn("###    =========================================================================================================      ###");
+                        LOG.warn("###                                                                                                                   ###");
+                        LOG.warn("###    _|    _|    _|    _|_|_|       _|         _|_|    _|      _|    _|_|       _|_|_|  _|_|    _|_|_|    _|        ###");
+                        LOG.warn("###    _|_|  _|  _|  _|    _|       _|  _|     _|      _|  _|  _|  _|  _|  _|       _|    _|  _|  _|      _|  _|      ###");
+                        LOG.warn("###    _|  _|_|  _|  _|    _|       _|_|_|     _|  _|  _|  _|  _|  _|  _|  _|       _|    _|  _|  _|_|    _|_|_|      ###");
+                        LOG.warn("###    _|    _|  _|  _|    _|       _|  _|     _|  _|  _|  _|  _|  _|  _|  _|       _|    _|  _|  _|      _|  _|      ###");
+                        LOG.warn("###    _|    _|    _|      _|       _|  _|       _|_|    _|      _|    _|_|       _|_|_|  _|_|    _|_|_|  _|  _|      ###");
+                        LOG.warn("###                                                                                                                   ###");
+                        LOG.warn("#########################################################################################################################");
+                      }
                     DatabaseMeta DBMeta = LoadDatabaseMetaData(C, TildaList);
 
-                    Migrator.MigrateDatabase(C, Migrate.isMigrationActive() == false, TildaList, DBMeta, first, connectionUrls, connectionId);
+                    Migrator.MigrateDatabase(C, Migrate.isMigrationActive() == false, TildaList, DBMeta, first, connectionUrls);
                     if (first == true && Migrate.isMigrationActive() == false)
                       {
                         LOG.info("Initializing Schemas.");
@@ -510,7 +525,11 @@ public class ConnectionPool
               {
                 LOG.error("   - Attempt #" + i + " failed to obtain a connection: " + E.getMessage());
                 if (Migrate.isTesting() == true)
-                  throw E;
+                  {
+                    if (C != null)
+                      C.close();
+                    throw E;
+                  }
                 if (i == 1)
                   LOG.error("     (Sleeping for 30 seconds, and will re-try again, for a max of 100 times)");
                 Thread.sleep(1000 * 30);

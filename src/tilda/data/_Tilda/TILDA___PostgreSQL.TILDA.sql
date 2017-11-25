@@ -13,7 +13,7 @@ create table if not exists TILDA.ZONEINFO -- blah blah
   , "lastUpdated"    timestamptz   not null   -- The timestamp for when the record was last updated.
   , "deleted"        timestamptz              -- The timestamp for when the record was deleted.
   , PRIMARY KEY("id")
-  , FOREIGN KEY ("deactivatedTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_ZONEINFO_deactivated FOREIGN KEY ("deactivatedTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
  );
 COMMENT ON TABLE TILDA.ZONEINFO IS E'blah blah';
 COMMENT ON COLUMN TILDA.ZONEINFO."id" IS E'The id for this enumeration.';
@@ -95,8 +95,8 @@ create table if not exists TILDA.OBJECTPERF -- Performance logs for the Tilda fr
   , "lastUpdated"    timestamptz   not null   -- The timestamp for when the record was last updated.
   , "deleted"        timestamptz              -- The timestamp for when the record was deleted.
   , PRIMARY KEY("schemaName", "objectName", "startPeriod")
-  , FOREIGN KEY ("startPeriodTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
-  , FOREIGN KEY ("endPeriodTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_OBJECTPERF_startPeriod FOREIGN KEY ("startPeriodTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_OBJECTPERF_endPeriod FOREIGN KEY ("endPeriodTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
  );
 COMMENT ON TABLE TILDA.OBJECTPERF IS E'Performance logs for the Tilda framework';
 COMMENT ON COLUMN TILDA.OBJECTPERF."schemaName" IS E'The name of the schema tracked';
@@ -140,8 +140,8 @@ create table if not exists TILDA.TRANSPERF -- Performance logs for the Tilda fra
   , "lastUpdated"    timestamptz   not null   -- The timestamp for when the record was last updated.
   , "deleted"        timestamptz              -- The timestamp for when the record was deleted.
   , PRIMARY KEY("schemaName", "objectName", "startPeriod")
-  , FOREIGN KEY ("startPeriodTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
-  , FOREIGN KEY ("endPeriodTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_TRANSPERF_startPeriod FOREIGN KEY ("startPeriodTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_TRANSPERF_endPeriod FOREIGN KEY ("endPeriodTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
  );
 COMMENT ON TABLE TILDA.TRANSPERF IS E'Performance logs for the Tilda framework';
 COMMENT ON COLUMN TILDA.TRANSPERF."schemaName" IS E'The name of the schema tracked';
@@ -196,7 +196,7 @@ create table if not exists TILDA.TESTING -- blah blah
   , "lastUpdated"  timestamptz         not null   -- The timestamp for when the record was last updated.
   , "deleted"      timestamptz                    -- The timestamp for when the record was deleted.
   , PRIMARY KEY("refnum")
-  , FOREIGN KEY ("a9TZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_TESTING_a9 FOREIGN KEY ("a9TZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
  );
 COMMENT ON TABLE TILDA.TESTING IS E'blah blah';
 COMMENT ON COLUMN TILDA.TESTING."refnum" IS E'The primary key for this record';
@@ -284,8 +284,8 @@ create table if not exists TILDA.JOBS -- Kettle Jobs
   , "created"       timestamptz    not null   -- The timestamp for when the record was created.
   , "lastUpdated"   timestamptz    not null   -- The timestamp for when the record was last updated.
   , "deleted"       timestamptz               -- The timestamp for when the record was deleted.
-  , FOREIGN KEY ("StartTimeTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
-  , FOREIGN KEY ("EndTimeTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_JOBS_StartTime FOREIGN KEY ("StartTimeTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_JOBS_EndTime FOREIGN KEY ("EndTimeTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
  );
 COMMENT ON TABLE TILDA.JOBS IS E'Kettle Jobs';
 COMMENT ON COLUMN TILDA.JOBS."Id" IS E'Id';
@@ -318,8 +318,8 @@ create table if not exists TILDA.JOB_DETAIL -- Job Detail
   , "created"                 timestamptz    not null   -- The timestamp for when the record was created.
   , "lastUpdated"             timestamptz    not null   -- The timestamp for when the record was last updated.
   , "deleted"                 timestamptz               -- The timestamp for when the record was deleted.
-  , FOREIGN KEY ("FileProcessStartTimeTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
-  , FOREIGN KEY ("FileProcessEndTimeTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_JOB_DETAIL_FileProcessStartTime FOREIGN KEY ("FileProcessStartTimeTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_JOB_DETAIL_FileProcessEndTime FOREIGN KEY ("FileProcessEndTimeTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
  );
 COMMENT ON TABLE TILDA.JOB_DETAIL IS E'Job Detail';
 COMMENT ON COLUMN TILDA.JOB_DETAIL."Id" IS E'Id';
@@ -353,7 +353,7 @@ create table if not exists TILDA.REFILLPERF -- Performance logs for the Tilda Re
   , "lastUpdated"    timestamptz   not null   -- The timestamp for when the record was last updated.
   , "deleted"        timestamptz              -- The timestamp for when the record was deleted.
   , PRIMARY KEY("schemaName", "objectName", "startPeriod")
-  , FOREIGN KEY ("startPeriodTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_REFILLPERF_startPeriod FOREIGN KEY ("startPeriodTZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
  );
 COMMENT ON TABLE TILDA.REFILLPERF IS E'Performance logs for the Tilda Refills';
 COMMENT ON COLUMN TILDA.REFILLPERF."schemaName" IS E'The name of the schema tracked';
@@ -370,5 +370,24 @@ COMMENT ON COLUMN TILDA.REFILLPERF."lastUpdated" IS E'The timestamp for when the
 COMMENT ON COLUMN TILDA.REFILLPERF."deleted" IS E'The timestamp for when the record was deleted.';
 CREATE INDEX REFILLPERF_SchemaByObjectStart ON TILDA.REFILLPERF ("schemaName", "objectName" ASC, "startPeriod" DESC);
 -- app-level index only -- CREATE INDEX REFILLPERF_SchemaObjectByStart ON TILDA.REFILLPERF ("schemaName", "objectName", "startPeriod" DESC);
+
+
+
+create table if not exists TILDA.MAINTENANCE -- Maintenance information
+ (  "type"         varchar(64)   not null   -- The type of maintenance resource to track
+  , "name"         varchar(512)  not null   -- The name of the maintenance resource to track.
+  , "value"        text                     -- The value of the maintenance resource to track.
+  , "created"      timestamptz   not null   -- The timestamp for when the record was created.
+  , "lastUpdated"  timestamptz   not null   -- The timestamp for when the record was last updated.
+  , "deleted"      timestamptz              -- The timestamp for when the record was deleted.
+  , PRIMARY KEY("type", "name")
+ );
+COMMENT ON TABLE TILDA.MAINTENANCE IS E'Maintenance information';
+COMMENT ON COLUMN TILDA.MAINTENANCE."type" IS E'The type of maintenance resource to track';
+COMMENT ON COLUMN TILDA.MAINTENANCE."name" IS E'The name of the maintenance resource to track.';
+COMMENT ON COLUMN TILDA.MAINTENANCE."value" IS E'The value of the maintenance resource to track.';
+COMMENT ON COLUMN TILDA.MAINTENANCE."created" IS E'The timestamp for when the record was created.';
+COMMENT ON COLUMN TILDA.MAINTENANCE."lastUpdated" IS E'The timestamp for when the record was last updated.';
+COMMENT ON COLUMN TILDA.MAINTENANCE."deleted" IS E'The timestamp for when the record was deleted.';
 
 

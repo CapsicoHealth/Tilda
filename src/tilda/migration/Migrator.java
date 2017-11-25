@@ -29,7 +29,6 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.Migrate;
 import tilda.db.Connection;
-import tilda.db.ConnectionPool;
 import tilda.db.KeysManager;
 import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.DatabaseMeta;
@@ -55,6 +54,7 @@ import tilda.migration.actions.TableFKDrop;
 import tilda.migration.actions.TableKeyCreate;
 import tilda.migration.actions.TablePKReplace;
 import tilda.migration.actions.TildaAclAdd;
+import tilda.migration.actions.TildaExtraDDL;
 import tilda.migration.actions.TildaHelpersAdd;
 import tilda.migration.actions.ViewCreate;
 import tilda.migration.actions.ViewUpdate;
@@ -74,7 +74,7 @@ public class Migrator
     public static final String    TILDA_VERSION       = "1.0";
     public static final String    TILDA_VERSION_VAROK = "1_0";
 
-    public static void MigrateDatabase(Connection C, boolean CheckOnly, List<Schema> TildaList, DatabaseMeta DBMeta, boolean first, List<String> connectionUrls, String connectionId)
+    public static void MigrateDatabase(Connection C, boolean CheckOnly, List<Schema> TildaList, DatabaseMeta DBMeta, boolean first, List<String> connectionUrls)
     throws Exception
       {
         MigrationDataModel migrationData = Migrator.AnalyzeDatabase(C, CheckOnly, TildaList, DBMeta);
@@ -109,9 +109,13 @@ public class Migrator
           {
             if (CheckOnly == false)
               {
-                new TildaHelpersAdd().process(C);
-                C.commit();
-                doAcl(connectionId, TildaList);
+                MigrationAction A = new TildaHelpersAdd();
+                if (A.isNeeded(C, DBMeta) == true)
+                  {
+                    A.process(C);
+                    C.commit();
+                  }
+                doAcl(C, TildaList, DBMeta);
               }
             LOG.info("");
             LOG.info("");
@@ -131,9 +135,9 @@ public class Migrator
           {
             PrintDiscrepancies(migrationData);
             if (first)
-             confirmMigration(connectionUrls);
+              confirmMigration(connectionUrls);
             applyMigration(C, migrationData);
-            doAcl(connectionId, TildaList);
+            doAcl(C, TildaList, DBMeta);
             if (Migrate.isTesting() == false)
               KeysManager.reloadAll();
             LOG.info("");
@@ -169,29 +173,12 @@ public class Migrator
           }
       }
 
-    private static void doAcl(String connectionId, List<Schema> TildaList)
+    private static void doAcl(Connection C, List<Schema> TildaList, DatabaseMeta DBMeta)
     throws Exception
       {
-        Connection C = null;
-        try
-          {
-            LOG.warn("");            
-            LOG.warn("-----------------------------------------------------------------------------------------------------");            
-            LOG.warn("The migration utility manages access control and roles for the database "+connectionId+".");
-            LOG.warn("To do that, it needs a superuser id and password:");            
-            LOG.info("Enter a superuser id:");
-            String userId = FileUtil.readlnFromStdIn(false);
-            LOG.info("Enter the password:");
-            String userPswd = FileUtil.readlnFromStdIn(true);
-            C = ConnectionPool.get(connectionId, userId, userPswd);
-            new TildaAclAdd(TildaList).process(C);
-            C.commit();
-          }
-        finally
-          {
-            if (C != null)
-              C.close();
-          }
+        MigrationAction A = new TildaAclAdd(TildaList);
+        if (A.isNeeded(C, DBMeta) == true)
+          A.process(C);
       }
 
     public static void PrintDiscrepancies(MigrationDataModel migrationData)
@@ -228,12 +215,25 @@ public class Migrator
         Scripts.add(InitScript);
         for (Schema S : TildaList)
           {
-            List<MigrationAction> L = Migrator.getMigrationActions(C.getSQlCodeGen(), S, TildaList, DBMeta);
+            if (S.getShortName().contentEquals("PATIENTS") == true)
+              LOG.debug("xxx");
+            List<MigrationAction> L = Migrator.getMigrationActions(C, C.getSQlCodeGen(), S, TildaList, DBMeta);
             for (MigrationAction MA : L)
               if (MA._isDependency == false)
                 ++ActionCount;
             if (S._Name.equalsIgnoreCase("TILDA") == true)
-              L.add(new TildaHelpersAdd());
+              {
+                MigrationAction A = new TildaHelpersAdd();
+                if (A.isNeeded(C, DBMeta) == true)
+                  L.add(A);
+              }
+            if (S._ExtraDDL != null && S._ExtraDDL._After != null)
+              for (String ddl : S._ExtraDDL._After)
+                {
+                  MigrationAction A = new TildaExtraDDL(S, ddl);
+                  if (A.isNeeded(C, DBMeta) == true)
+                    L.add(A);
+                }
             Scripts.add(new MigrationScript(S, L));
           }
         return new MigrationDataModel(ActionCount, Scripts);
@@ -285,7 +285,7 @@ public class Migrator
           }
       }
 
-    protected static List<MigrationAction> getMigrationActions(CodeGenSql CGSQL, Schema S, List<Schema> TildaList, DatabaseMeta DBMeta)
+    protected static List<MigrationAction> getMigrationActions(Connection C, CodeGenSql CGSQL, Schema S, List<Schema> TildaList, DatabaseMeta DBMeta)
     throws Exception
       {
         LOG.info("Comparing the application's data model with the database's for " + S.getFullName());
@@ -295,6 +295,14 @@ public class Migrator
 
         if (DBMeta.getSchemaMeta(S._Name) == null)
           Actions.add(new SchemaCreate(S));
+
+        if (S._ExtraDDL != null && S._ExtraDDL._Before != null)
+          for (String ddl : S._ExtraDDL._Before)
+            {
+              TildaExtraDDL A = new TildaExtraDDL(S, ddl);
+              if (A.isNeeded(C, DBMeta) == true)
+                Actions.add(A);
+            }
 
         for (Object Obj : S._Objects)
           {
