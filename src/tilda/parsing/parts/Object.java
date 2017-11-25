@@ -336,6 +336,14 @@ public class Object extends Base
       {
         return C.isOCCGenerated();
       }
+    public static boolean isOCCLastUpdated(Column C)
+      {
+        return C.isOCCLastUpdated();
+      }
+    public static boolean isOCCDeleted(Column C)
+      {
+        return C.isOCCDeleted();
+      }
 
     public void AddColumnAfter(Column SiblingCol, Column NewCol)
       {
