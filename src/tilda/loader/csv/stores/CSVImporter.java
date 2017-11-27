@@ -149,7 +149,7 @@ public abstract class CSVImporter
                     jobFile.setFileRecords(NumOfRecs);
 
                     // set JobMessage
-                    JobMessage_Data jobMessage = JobMessage_Factory.Create(jobFile.getRefnum(), jobMessageLog);
+                    JobMessage_Data jobMessage = JobMessage_Factory.Create(jobFile.getJobRefnum(), jobFile.getRefnum(), jobMessageLog);
                     jobMessage.Write(statusConnection);
                     statusConnection.commit();
                   }

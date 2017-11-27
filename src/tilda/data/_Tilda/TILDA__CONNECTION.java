@@ -392,7 +392,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Nov 13 2017, 15:08:50IST
+ @generated Nov 27 2017, 17:20:17IST
 */
 public abstract class TILDA__CONNECTION implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
@@ -1296,6 +1296,8 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
+   public final String[] getSchemasAsArray()
+      { return _schemas==null? null : _schemas.toArray(new String[_schemas.size()]); }
    public final Iterator<String> getSchemas()
       { return _schemas==null? null : _schemas.iterator(); }
    public final boolean hasSchemas(String v)

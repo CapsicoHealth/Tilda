@@ -22,6 +22,7 @@ public class TILDA__JOBMESSAGE_Json
    protected TILDA__JOBMESSAGE_Json() { }
 
    /*@formatter:off*/
+   @SerializedName("jobRefnum"    ) public Long  _jobRefnum    ;
    @SerializedName("jobFileRefnum") public Long  _jobFileRefnum;
    @SerializedName("message"      ) public String  _message      ;
    @SerializedName("isError"      ) public Boolean  _isError      ;
@@ -29,12 +30,14 @@ public class TILDA__JOBMESSAGE_Json
 
    public tilda.data.JobMessage_Data Write(Connection C) throws Exception
     {
+      if (_jobRefnum     == null)
+       throw new Exception("Incoming value for 'tilda.data.TILDA.JOBMESSAGE.jobRefnum' was null or empty. It's not nullable in the model.\n"+toString());
       if (_jobFileRefnum == null)
        throw new Exception("Incoming value for 'tilda.data.TILDA.JOBMESSAGE.jobFileRefnum' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_message      ) == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.JOBMESSAGE.message' was null or empty. It's not nullable in the model.\n"+toString());
 
-      tilda.data.JobMessage_Data Obj = tilda.data.JobMessage_Factory.Create(_jobFileRefnum, _message);
+      tilda.data.JobMessage_Data Obj = tilda.data.JobMessage_Factory.Create(_jobRefnum, _jobFileRefnum, _message);
       Update(Obj);
       if (Obj.Write(C) == false)
        {
@@ -45,6 +48,7 @@ public class TILDA__JOBMESSAGE_Json
 
    public void Update(tilda.data.JobMessage_Data Obj) throws Exception
     {
+      if (_jobRefnum    != null) Obj.setJobRefnum    (_jobRefnum    );
       if (_jobFileRefnum!= null) Obj.setJobFileRefnum(_jobFileRefnum);
       if (_message      != null) Obj.setMessage      (_message      );
       if (_isError      != null) Obj.setIsError      (_isError      );
@@ -53,7 +57,8 @@ public class TILDA__JOBMESSAGE_Json
    public String toString()
     {
       return
-             "jobFileRefnum"+ (_jobFileRefnum == null ? ": NULL" : ": " + _jobFileRefnum)
+             "jobRefnum"    + (_jobRefnum     == null ? ": NULL" : ": " + _jobRefnum    )
+         + "; jobFileRefnum"+ (_jobFileRefnum == null ? ": NULL" : ": " + _jobFileRefnum)
          + "; message"      + (_message       == null ? ": NULL" : "(" + (_message       == null ? 0 : _message      .length())+"): "+(_message       == null || _message      .length() < 100 ? _message       : _message      .substring(0, 100)+"..."))
          + "; isError"      + (_isError       == null ? ": NULL" : ": " + _isError      )
          + ";";

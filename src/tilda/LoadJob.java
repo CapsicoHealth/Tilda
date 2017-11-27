@@ -99,7 +99,7 @@ public class LoadJob
                         jobFile.setStatusFailure();
                         jobFile.Write(statusCon);
                         
-                        JobMessage_Data jobMessage = JobMessage_Factory.Create(jobFile.getRefnum(), T.getMessage());
+                        JobMessage_Data jobMessage = JobMessage_Factory.Create(jobFile.getJobRefnum(), jobFile.getRefnum(), T.getMessage());
                         jobMessage.setIsError(true);
                         jobMessage.Write(statusCon);                        
                       }

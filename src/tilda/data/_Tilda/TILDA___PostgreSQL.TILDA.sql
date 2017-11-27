@@ -356,6 +356,7 @@ insert into TILDA.KEY ("refnum", "name", "max", "count", "created", "lastUpdated
 
 create table if not exists TILDA.JOBMESSAGE -- Job Messages
  (  "refnum"         bigint         not null   -- The primary key for this record
+  , "jobRefnum"      bigint         not null   -- Job Foreign key
   , "jobFileRefnum"  bigint         not null   -- JobFile Foreign key
   , "message"        varchar(1000)  not null   -- Message
   , "isError"        boolean                   -- Boolean flag to identify message type -- error or success
@@ -366,6 +367,7 @@ create table if not exists TILDA.JOBMESSAGE -- Job Messages
  );
 COMMENT ON TABLE TILDA.JOBMESSAGE IS E'Job Messages';
 COMMENT ON COLUMN TILDA.JOBMESSAGE."refnum" IS E'The primary key for this record';
+COMMENT ON COLUMN TILDA.JOBMESSAGE."jobRefnum" IS E'Job Foreign key';
 COMMENT ON COLUMN TILDA.JOBMESSAGE."jobFileRefnum" IS E'JobFile Foreign key';
 COMMENT ON COLUMN TILDA.JOBMESSAGE."message" IS E'Message';
 COMMENT ON COLUMN TILDA.JOBMESSAGE."isError" IS E'Boolean flag to identify message type -- error or success';

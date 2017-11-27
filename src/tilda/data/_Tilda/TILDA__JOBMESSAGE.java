@@ -53,6 +53,17 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>2&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JOBMESSAGE-jobRefnum_DIV' class='columns'>jobRefnum</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;&nbsp;</TD>
+<TD>bigint&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Job Foreign key</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>3&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOBMESSAGE-jobFileRefnum_DIV' class='columns'>jobFileRefnum</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;&nbsp;</TD>
 <TD>bigint&nbsp;&nbsp;</TD>
@@ -62,8 +73,8 @@ It contains the following columns:<BR>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>JobFile Foreign key</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>3&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>4&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOBMESSAGE-message_DIV' class='columns'>message</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;&nbsp;</TD>
 <TD>varchar(1000)&nbsp;&nbsp;</TD>
@@ -73,8 +84,8 @@ It contains the following columns:<BR>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Message</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>4&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>5&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOBMESSAGE-isError_DIV' class='columns'>isError</B>&nbsp;&nbsp;</TD>
 <TD>boolean&nbsp;&nbsp;</TD>
 <TD>boolean&nbsp;&nbsp;</TD>
@@ -84,8 +95,8 @@ It contains the following columns:<BR>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Boolean flag to identify message type -- error or success</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>5&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>6&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOBMESSAGE-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
@@ -95,13 +106,13 @@ It contains the following columns:<BR>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created.</TD>
 </TR>
-  <TR bgcolor="#DFECF8"><TD></TD><TD></TD><TD colspan="10" align="center">
+  <TR bgcolor="#FFFFFF"><TD></TD><TD></TD><TD colspan="10" align="center">
 <TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
   <TR bgcolor="#FFF2CC"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Creation</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Creation&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Creation time</TD></TR>
 </TABLE>
 </TD></TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>6&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>7&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOBMESSAGE-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
@@ -111,13 +122,13 @@ It contains the following columns:<BR>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated.</TD>
 </TR>
-  <TR bgcolor="#FFFFFF"><TD></TD><TD></TD><TD colspan="10" align="center">
+  <TR bgcolor="#DFECF8"><TD></TD><TD></TD><TD colspan="10" align="center">
 <TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
   <TR bgcolor="#FFF2CC"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Update</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Update&nbsp;&nbsp;</TD><TD>ALWAYS&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Last updated time</TD></TR>
 </TABLE>
 </TD></TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>7&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>8&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOBMESSAGE-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
@@ -142,6 +153,23 @@ It contains the following columns:<BR>
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
 <td><a href='TILDA___Docs.TILDA.html#JOBMESSAGE_DIV'>JobMessage</a></td>
 <td><a href='TILDA___Docs.TILDA.html#JOBMESSAGE-refnum_DIV'>refnum</a> -- LONG</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='JOBMESSAGE-jobRefnum_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('JOBMESSAGE-jobRefnum_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOBMESSAGE_DIV'>JobMessage</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JOBMESSAGE-jobRefnum_DIV'>jobRefnum</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
@@ -251,7 +279,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Nov 13 2017, 15:08:50IST
+ @generated Nov 27 2017, 17:20:17IST
 */
 public abstract class TILDA__JOBMESSAGE implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject, tilda.interfaces.JSONable
  {
@@ -365,6 +393,100 @@ This is the setter for:<BR>
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOBMESSAGE.jobRefnum -> TILDA.JOBMESSAGE."jobRefnum"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBMESSAGE.jobRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.jobRefnum of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job Foreign key</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   long _jobRefnum= SystemValues.EVIL_VALUE;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOBMESSAGE.jobRefnum -> TILDA.JOBMESSAGE."jobRefnum"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBMESSAGE.jobRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.jobRefnum of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job Foreign key</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final long getJobRefnum()
+      { return _jobRefnum; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOBMESSAGE.jobRefnum -> TILDA.JOBMESSAGE."jobRefnum"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBMESSAGE.jobRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.jobRefnum of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job Foreign key</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setJobRefnum(long v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (v != _jobRefnum)
+        {
+          __Changes1 |= TILDA__JOBMESSAGE_Factory.COLS.JOBREFNUM._Mask1;
+          __Nulls1   &= ~TILDA__JOBMESSAGE_Factory.COLS.JOBREFNUM._Mask1;
+       _jobRefnum = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOBMESSAGE.jobRefnum -> TILDA.JOBMESSAGE."jobRefnum"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the hasChanged for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBMESSAGE.jobRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.jobRefnum of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job Foreign key</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public boolean hasChangedJobRefnum()
+     { return (TILDA__JOBMESSAGE_Factory.COLS.JOBREFNUM._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -1352,6 +1474,7 @@ This is the hasChanged for:<BR>
 */
    public void CopyTo(tilda.data._Tilda.TILDA__JOBMESSAGE Dst) throws Exception
      {
+       Dst.setJobRefnum    (_jobRefnum    );
        Dst.setJobFileRefnum(_jobFileRefnum);
        Dst.setMessage      (_message      );
        if ((TILDA__JOBMESSAGE_Factory.COLS.ISERROR._Mask1       & __Nulls1) != 0L) Dst.setNullIsError      (); else        Dst.setIsError      (_isError      );
@@ -1397,6 +1520,7 @@ This is the hasChanged for:<BR>
           S.append("insert into "); C.getFullTableVar(S, "TILDA", "JOBMESSAGE");
           int Pos = S.length();
           if ((TILDA__JOBMESSAGE_Factory.COLS.REFNUM._Mask1        & __Changes1) != 0L) { TILDA__JOBMESSAGE_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if ((TILDA__JOBMESSAGE_Factory.COLS.JOBREFNUM._Mask1     & __Changes1) != 0L) { TILDA__JOBMESSAGE_Factory.COLS.JOBREFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if ((TILDA__JOBMESSAGE_Factory.COLS.JOBFILEREFNUM._Mask1 & __Changes1) != 0L) { TILDA__JOBMESSAGE_Factory.COLS.JOBFILEREFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if ((TILDA__JOBMESSAGE_Factory.COLS.MESSAGE._Mask1       & __Changes1) != 0L) { TILDA__JOBMESSAGE_Factory.COLS.MESSAGE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if ((TILDA__JOBMESSAGE_Factory.COLS.ISERROR._Mask1       & __Changes1) != 0L) { TILDA__JOBMESSAGE_Factory.COLS.ISERROR.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
@@ -1424,6 +1548,7 @@ This is the hasChanged for:<BR>
           S.append("update "); C.getFullTableVar(S, "TILDA", "JOBMESSAGE"); S.append(" set");
           int Pos = S.length();
           if ((TILDA__JOBMESSAGE_Factory.COLS.REFNUM._Mask1        & __Changes1) != 0L) TILDA__JOBMESSAGE_Factory.COLS.REFNUM.getFullColumnVarForUpdate(C, S);
+          if ((TILDA__JOBMESSAGE_Factory.COLS.JOBREFNUM._Mask1     & __Changes1) != 0L) TILDA__JOBMESSAGE_Factory.COLS.JOBREFNUM.getFullColumnVarForUpdate(C, S);
           if ((TILDA__JOBMESSAGE_Factory.COLS.JOBFILEREFNUM._Mask1 & __Changes1) != 0L) TILDA__JOBMESSAGE_Factory.COLS.JOBFILEREFNUM.getFullColumnVarForUpdate(C, S);
           if ((TILDA__JOBMESSAGE_Factory.COLS.MESSAGE._Mask1       & __Changes1) != 0L) TILDA__JOBMESSAGE_Factory.COLS.MESSAGE.getFullColumnVarForUpdate(C, S);
           if ((TILDA__JOBMESSAGE_Factory.COLS.ISERROR._Mask1       & __Changes1) != 0L) TILDA__JOBMESSAGE_Factory.COLS.ISERROR.getFullColumnVarForUpdate(C, S);
@@ -1485,6 +1610,10 @@ This is the hasChanged for:<BR>
                if ((TILDA__JOBMESSAGE_Factory.COLS.REFNUM._Mask1        & __Changes1) != 0L) 
                 { 
                   if ((TILDA__JOBMESSAGE_Factory.COLS.REFNUM._Mask1        & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _refnum);
+                } 
+               if ((TILDA__JOBMESSAGE_Factory.COLS.JOBREFNUM._Mask1     & __Changes1) != 0L) 
+                { 
+                  if ((TILDA__JOBMESSAGE_Factory.COLS.JOBREFNUM._Mask1     & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _jobRefnum);
                 } 
                if ((TILDA__JOBMESSAGE_Factory.COLS.JOBFILEREFNUM._Mask1 & __Changes1) != 0L) 
                 { 
@@ -1599,6 +1728,7 @@ This is the hasChanged for:<BR>
        StringBuilder S = new StringBuilder(1024);
        S.append("select ");
        S.append(" "); C.getFullColumnVar(S, "TILDA", "JOBMESSAGE", "refnum");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBMESSAGE", "jobRefnum");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBMESSAGE", "jobFileRefnum");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBMESSAGE", "message");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBMESSAGE", "isError");
@@ -1670,6 +1800,7 @@ This is the hasChanged for:<BR>
       int i = 0;
      __Init = InitMode.LOOKUP;
       __Saved_refnum        = _refnum        =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOBMESSAGE_Factory.COLS.REFNUM._Mask1       ;
+                              _jobRefnum     =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOBMESSAGE_Factory.COLS.JOBREFNUM._Mask1    ;
       __Saved_jobFileRefnum = _jobFileRefnum =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOBMESSAGE_Factory.COLS.JOBFILEREFNUM._Mask1;
                               _message       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOBMESSAGE_Factory.COLS.MESSAGE._Mask1      ;
                               _isError       =                              RS.getBoolean  (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__JOBMESSAGE_Factory.COLS.ISERROR._Mask1      ;
@@ -1692,6 +1823,7 @@ This is the hasChanged for:<BR>
       long T0 = System.nanoTime();
       String Str = 
                    "refnum: "                                                                                                   +                                   getRefnum       () 
+               + "; jobRefnum: "                                                                                                +                                   getJobRefnum    () 
                + "; jobFileRefnum: "                                                                                            +                                   getJobFileRefnum() 
                + "; message: "                                                                                                  + TextUtil.PrintVariableStr        (getMessage      ())
                + "; isError"         + ((TILDA__JOBMESSAGE_Factory.COLS.ISERROR._Mask1       & __Nulls1) != 0L ? ": NULL" : ": " +                                   getIsError      () )

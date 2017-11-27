@@ -51,6 +51,24 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          REFNUM       = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"       , 0/*0*/, "The primary key for this record");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.JOBMESSAGE.jobRefnum -> TILDA.JOBMESSAGE."jobRefnum"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBMESSAGE.jobRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.jobRefnum of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job Foreign key</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public static Type_LongPrimitive          JOBREFNUM    = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "jobRefnum"    , 1/*1*/, "Job Foreign key");
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JOBMESSAGE.jobFileRefnum -> TILDA.JOBMESSAGE."jobFileRefnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -66,7 +84,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          JOBFILEREFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "jobFileRefnum", 1/*1*/, "JobFile Foreign key");
+     public static Type_LongPrimitive          JOBFILEREFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "jobFileRefnum", 2/*2*/, "JobFile Foreign key");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JOBMESSAGE.message -> TILDA.JOBMESSAGE."message"
@@ -85,7 +103,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        MESSAGE      = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "message"      , 2/*2*/, "Message");
+     public static Type_StringPrimitive        MESSAGE      = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "message"      , 3/*3*/, "Message");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JOBMESSAGE.isError -> TILDA.JOBMESSAGE."isError"
@@ -103,7 +121,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_BooleanPrimitiveNull   ISERROR      = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "isError"      , 3/*3*/, "Boolean flag to identify message type -- error or success");
+     public static Type_BooleanPrimitiveNull   ISERROR      = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "isError"      , 4/*4*/, "Boolean flag to identify message type -- error or success");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JOBMESSAGE.created -> TILDA.JOBMESSAGE."created"
@@ -128,7 +146,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 4/*4*/, "The timestamp for when the record was created.");
+     public static Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 5/*5*/, "The timestamp for when the record was created.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JOBMESSAGE.lastUpdated -> TILDA.JOBMESSAGE."lastUpdated"
@@ -153,7 +171,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 5/*5*/, "The timestamp for when the record was last updated.");
+     public static Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 6/*6*/, "The timestamp for when the record was last updated.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.JOBMESSAGE.deleted -> TILDA.JOBMESSAGE."deleted"
@@ -171,7 +189,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED      = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 6/*6*/, "The timestamp for when the record was deleted.");
+     public static Type_DatetimePrimitiveNull  DELETED      = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 7/*7*/, "The timestamp for when the record was deleted.");
 ;
    }
 
@@ -226,6 +244,7 @@ This is the column definition for:<BR>
        StringBuilder S = new StringBuilder(1024);
        S.append("select ");
        S.append(" "); C.getFullColumnVar(S, "TILDA", "JOBMESSAGE", "refnum");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBMESSAGE", "jobRefnum");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBMESSAGE", "jobFileRefnum");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBMESSAGE", "message");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBMESSAGE", "isError");
@@ -296,10 +315,11 @@ This is the column definition for:<BR>
 /**
  Creates a new object in memory, which you can subsequently {@link #Write()} to the data store.
  current object to the destination. 
+ @param jobRefnum     Job Foreign key
  @param jobFileRefnum JobFile Foreign key
  @param message       (max size 1000) Message
 */
-   static public tilda.data.JobMessage_Data Create(long jobFileRefnum, String message) throws Exception
+   static public tilda.data.JobMessage_Data Create(long jobRefnum, long jobFileRefnum, String message) throws Exception
      {
        tilda.data._Tilda.TILDA__JOBMESSAGE Obj = new tilda.data.JobMessage_Data();
        Obj.initForCreate();
@@ -309,6 +329,7 @@ This is the column definition for:<BR>
        Obj.setRefnum(tilda.db.KeysManager.getKey("TILDA.JOBMESSAGE"));
 
        // Explicit setters
+       Obj.setJobRefnum    (jobRefnum    );
        Obj.setJobFileRefnum(jobFileRefnum);
        Obj.setMessage      (message      );
 
@@ -325,6 +346,7 @@ This is the column definition for:<BR>
        int IncomingErrors = Errors.size();
 
        Long        _refnum        =                       ParseUtil.parseLong("refnum"       , true , Values.get("refnum"       ), Errors );
+       Long        _jobRefnum     =                       ParseUtil.parseLong("jobRefnum"    , true , Values.get("jobRefnum"    ), Errors );
        Long        _jobFileRefnum =                       ParseUtil.parseLong("jobFileRefnum", true , Values.get("jobFileRefnum"), Errors );
        String        _message       =                       ParseUtil.parseString("message"      , true , Values.get("message"      ), Errors );
        Boolean        _isError       =                       ParseUtil.parseBoolean("isError"      , false, Values.get("isError"      ), Errors );
@@ -332,7 +354,7 @@ This is the column definition for:<BR>
        if (IncomingErrors != Errors.size())
         return null;
 
-      tilda.data.JobMessage_Data Obj = tilda.data.JobMessage_Factory.Create(_jobFileRefnum, _message);
+      tilda.data.JobMessage_Data Obj = tilda.data.JobMessage_Factory.Create(_jobRefnum, _jobFileRefnum, _message);
 
       if (_refnum       != null) Obj.setRefnum       (_refnum       );
       if (_isError      != null) Obj.setIsError      (_isError      );

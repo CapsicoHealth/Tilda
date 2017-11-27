@@ -73,7 +73,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
                     LOG.debug(jobMessageLog);
                     if(statusConnection != null && jobFile != null)
                       {
-                        JobMessage_Data jobMessage = JobMessage_Factory.Create(jobFile.getRefnum(), jobMessageLog); 
+                        JobMessage_Data jobMessage = JobMessage_Factory.Create(jobFile.getJobRefnum(), jobFile.getRefnum(), jobMessageLog); 
                         jobMessage.Write(statusConnection);
                       }
                     continue;
@@ -384,7 +384,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
                         jobFile.Write(statusConnection);
 
                         // set JobMessage
-                        JobMessage_Data jobMessage = JobMessage_Factory.Create(jobFile.getRefnum(), jobMessageLog);
+                        JobMessage_Data jobMessage = JobMessage_Factory.Create(jobFile.getJobRefnum(), jobFile.getRefnum(), jobMessageLog);
                         jobMessage.Write(statusConnection);
                         statusConnection.commit();
                       }                    
