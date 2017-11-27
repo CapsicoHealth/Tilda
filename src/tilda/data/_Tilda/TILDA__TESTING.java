@@ -958,7 +958,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Nov 25 2017, 01:13:09EST
+ @generated Nov 25 2017, 15:02:16EST
 */
 public abstract class TILDA__TESTING implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject, tilda.interfaces.JSONable
  {
@@ -5834,7 +5834,7 @@ This is the setter for:<BR>
 
 </TABLE>
 */
-    void setLastUpdated(ZonedDateTime v) throws Exception
+   public final void setLastUpdated(ZonedDateTime v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
@@ -5872,7 +5872,7 @@ This is the NOW setter for:<BR>
 
 </TABLE>
 */
-    final void setLastUpdatedNow() throws Exception
+   public final void setLastUpdatedNow() throws Exception
     {
       setLastUpdated(DateTimeUtil.NOW_PLACEHOLDER_ZDT);
     }
@@ -5901,7 +5901,7 @@ This is the UNDEFINED setter for:<BR>
 
 </TABLE>
 */
-    final void setLastUpdatedUndefined() throws Exception
+   public final void setLastUpdatedUndefined() throws Exception
     {
       setLastUpdated(DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT);
     }
@@ -5930,7 +5930,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 
 </TABLE>
 */
-    final void setLastUpdated(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
+   public final void setLastUpdated(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
       setLastUpdated(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
     }
@@ -6044,7 +6044,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setDeleted(ZonedDateTime v) throws Exception
+   public final void setDeleted(ZonedDateTime v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
@@ -6077,7 +6077,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setNullDeleted()
+   public final void setNullDeleted()
      {
        long T0 = System.nanoTime();
        if ((TILDA__TESTING_Factory.COLS.DELETED._Mask1 & __Nulls1) != 0L)
@@ -6105,7 +6105,7 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    final void setDeletedNow() throws Exception
+   public final void setDeletedNow() throws Exception
     {
       setDeleted(DateTimeUtil.NOW_PLACEHOLDER_ZDT);
     }
@@ -6127,7 +6127,7 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    final void setDeletedUndefined() throws Exception
+   public final void setDeletedUndefined() throws Exception
     {
       setDeleted(DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT);
     }
@@ -6149,7 +6149,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    final void setDeleted(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
+   public final void setDeleted(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
       setDeleted(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
     }
