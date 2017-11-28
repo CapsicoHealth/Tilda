@@ -19,10 +19,8 @@ package tilda;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.utils.AnsiUtil;
 import tilda.utils.DurationUtil;
 import tilda.utils.NumberFormatUtil;
-import tilda.utils.SystemValues;
 
 public class Log4JTest
   {
