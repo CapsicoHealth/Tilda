@@ -21,16 +21,17 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.utils.DurationUtil;
 import tilda.utils.NumberFormatUtil;
+import tilda.utils.SystemValues;
 
 public class Log4JTest
   {
     protected static final Logger Log = LogManager.getLogger(Log4JTest.class.getName());
     
-    protected static final int MAX = 300;
+    protected static final int MAX = 250;
 
     public static void main(String[] args)
       {
-        //SystemValues.autoInit(); // Important to initialize several pieces of infrastructure, including logging
+        SystemValues.autoInit(); // Important to initialize several pieces of infrastructure, including logging
         long T0 = System.nanoTime();
         long count = 0;
         for (int i = 0; i < MAX; ++i)
@@ -51,6 +52,7 @@ public class Log4JTest
             + " records to the log file in " + DurationUtil.PrintDuration(T0) 
             + " ("+DurationUtil.PrintPerformancePerSecond(T0, count)+" msg/s).");
       }
+  }
     
 /*
 CONSOLE: <pattern>%d{MMdd.HHmmss.SSS}#%-3t %level{length=1} %15.15c{1}|  %m%ex{20}%n</pattern>
@@ -101,4 +103,3 @@ CONSOLE: <pattern>%highlight{%d{MMdd.HHmmss.SSS}#%-3t %level{length=1} %15.15c{1
 </Configuration>
     
 */
-  }
