@@ -19,7 +19,6 @@ package tilda.migration;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -78,33 +77,7 @@ public class Migrator
     throws Exception
       {
         MigrationDataModel migrationData = Migrator.AnalyzeDatabase(C, CheckOnly, TildaList, DBMeta);
-
-        /*
-         * if (ConnectionPool.isMultiTenant() == true)
-         * {
-         * PrintDiscrepancies(migrationData);
-         * if (CheckOnly == false)
-         * {
-         * if (first)
-         * confirmMigration(connectionUrls);
-         * applyMigration(C, migrationData);
-         * }
-         * }
-         * else
-         * {
-         * if (migrationData.getActionCount() > 0)
-         * {
-         * PrintDiscrepancies(migrationData);
-         * if (CheckOnly == false)
-         * {
-         * if (first)
-         * confirmMigration(connectionUrls);
-         * applyMigration(C, migrationData);
-         * }
-         * }
-         * }
-         */
-
+        
         if (migrationData.getActionCount() == 0)
           {
             if (CheckOnly == false)
@@ -133,9 +106,9 @@ public class Migrator
           }
         else if (CheckOnly == false)
           {
-            PrintDiscrepancies(migrationData);
-            if (first)
-              confirmMigration(connectionUrls);
+            PrintDiscrepancies(C, migrationData);
+//            if (first)
+            confirmMigration(C);
             applyMigration(C, migrationData);
             doAcl(C, TildaList, DBMeta);
             if (Migrate.isTesting() == false)
@@ -151,6 +124,7 @@ public class Migrator
             LOG.info("");
             LOG.info("    The database was automatically migrated to match the Application's data model.    ");
             LOG.info("======================================================================================");
+            LOG.info("");
             LOG.info("");
           }
         else
@@ -170,6 +144,7 @@ public class Migrator
             LOG.warn("       The database DOES NOT match the Application's data model. The application may NOT run properly!       ");
             LOG.warn("=============================================================================================================");
             LOG.warn("");
+            LOG.info("");
           }
       }
 
@@ -181,10 +156,10 @@ public class Migrator
           A.process(C);
       }
 
-    public static void PrintDiscrepancies(MigrationDataModel migrationData)
+    public static void PrintDiscrepancies(Connection C, MigrationDataModel migrationData)
       {
         LOG.info("");
-        LOG.warn("There were " + migrationData.getActionCount() + " discrepencies found in the database Vs. the application's required data model:");
+        LOG.warn("There were " + migrationData.getActionCount() + " discrepencies found between the application's required data model and the database "+C.getPoolName()+".");
         LOG.info("");
         int counter = 0;
         for (MigrationScript S : migrationData.getMigrationScripts())
@@ -206,7 +181,7 @@ public class Migrator
         // if (CheckOnly == false && Migrate.isTesting() == false)
         // AddTildaHelpers(C, TildaList, DBMeta);
 
-        LOG.info("===> Analyzing DB ( Url: " + C.getURL() + " )");
+        LOG.info("===> Analyzing DB ( Url: " + C.getPoolName() + " )");
         LOG.info("Analyzing differences between the database and the application's expected data model...");
         MigrationScript InitScript = new MigrationScript(null, new ArrayList<MigrationAction>());
         for (Schema S : TildaList)
@@ -239,17 +214,21 @@ public class Migrator
         return new MigrationDataModel(ActionCount, Scripts);
       }
 
-    protected static void confirmMigration(List<String> connectionUrls)
+    protected static void confirmMigration(Connection C)
     throws Exception
       {
-        LOG.info("");
-        LOG.info("!!! THIS UTILITY IS ABOUT TO CHANGE DATA IN FOLLOWING DATABASE(S). MAKE SURE YOU HAVE A BACKUP. !!!");
-        Iterator<String> iterator = connectionUrls.iterator();
-        while (iterator.hasNext())
-          {
-            LOG.info(" ===> " + iterator.next());
-          }
-        LOG.info("");
+        LOG.info("\n");
+        LOG.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        LOG.info("!!! THE FOLLOWING DATABASE WILL NOW BE MIGRATED:");
+        LOG.info("!!!    ==> "+C.getPoolName());
+        LOG.info("!!!     ______ ____  ______   ____   ___    ______ __ __ __  __ ____  _____    ___   ");
+        LOG.info("!!!    / ____// __ \\/_  __/  / __ ) /   |  / ____// //_// / / // __ \\/ ___/   /__ \\ ");
+        LOG.info("!!!   / / __ / / / / / /    / __  |/ /| | / /    / ,<  / / / // /_/ /\\__ \\     / _/ ");
+        LOG.info("!!!  / /_/ // /_/ / / /    / /_/ // ___ |/ /___ / /| |/ /_/ // ____/___/ /    /_/   ");
+        LOG.info("!!!  \\____/ \\____/ /_/    /_____//_/  |_|\\____//_/ |_|\\____//_/    /____/    (_)    ");
+        LOG.info("!!!");
+        LOG.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        LOG.info("\n");
         try
           {
             LOG.info("Press 'yes' followed by enter to continue.");
@@ -368,10 +347,10 @@ public class Migrator
                   {
                     boolean Found = false;
                     String Sig = fk.getSignature();
-                    LOG.debug("Checking db FK " + Sig + ".");
+//                    LOG.debug("Checking db FK " + Sig + ".");
                     for (ForeignKey FK : Obj._ForeignKeys)
                       {
-                        LOG.debug("Checking model FK " + FK.getSignature() + ".");
+//                        LOG.debug("Checking model FK " + FK.getSignature() + ".");
                         if (Sig.equals(FK.getSignature()) == true)
                           {
                             Found = true;

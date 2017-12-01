@@ -75,6 +75,7 @@ public class ConnectionPool
        @SerializedName("connections"   ) public Conn[]      _Conns       = new Conn[0];
        @SerializedName("email"         ) public EmailConfig _EmailConfig;
        @SerializedName("initDebug"     ) public boolean     _InitDebug = false;
+       @SerializedName("skipValidation") public boolean     _SkipValidation = false;
        /*@formatter:on*/
 
         public boolean validate()
@@ -151,6 +152,7 @@ public class ConnectionPool
     protected static Map<String, String>          _SchemaPackage       = new HashMap<String, String>();
     protected static Map<String, String>          _EmailConfigDetails  = null;
     protected static boolean                      _InitDebug           = false;
+    protected static boolean                      _SkipValidation      = false;
 
     public static void autoInit()
       {
@@ -175,11 +177,41 @@ public class ConnectionPool
                 Keys = get("KEYS");
                 ReadConnections(Keys);
 
+                if (Migrate.isMigrationActive() == true)
+                  {
+                    LOG.info("\n");
+                    LOG.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    LOG.info("!!! A MIGRATION HAS BEEN REQUESTED. AS A RESULT, DATA IN YOUR DATABASE MAY BE CHANGED.");
+                    LOG.info("!!!     ______ ____  ______   ____   ___    ______ __ __ __  __ ____  _____    ___   ");
+                    LOG.info("!!!    / ____// __ \\/_  __/  / __ ) /   |  / ____// //_// / / // __ \\/ ___/   /__ \\ ");
+                    LOG.info("!!!   / / __ / / / / / /    / __  |/ /| | / /    / ,<  / / / // /_/ /\\__ \\     / _/ ");
+                    LOG.info("!!!  / /_/ // /_/ / / /    / /_/ // ___ |/ /___ / /| |/ /_/ // ____/___/ /    /_/   ");
+                    LOG.info("!!!  \\____/ \\____/ /_/    /_____//_/  |_|\\____//_/ |_|\\____//_/    /____/    (_)    ");
+                    LOG.info("!!!");
+                    LOG.info("!!! THE FOLLOWING DATABASE(S) WILL BE ANALYZED:");
+                    Iterator<String> I = getUniqueDataSourceIds().keySet().iterator();
+                    while (I.hasNext())
+                      {
+                        String Id = I.next();
+                        BasicDataSource BDS = _DataSourcesById.get(Id);
+                        LOG.info("!!!     ===> " + Id + ": " + BDS.getUrl() + "USER=" + BDS.getUsername());
+                      }
+                    LOG.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    LOG.info("\n");
+                    LOG.info("Press 'y' followed by enter to continue.");
+                    String answer = FileUtil.readlnFromStdIn(false);
+                    if (answer.toLowerCase().equals("y") == false)
+                      throw new Exception("User asked to exit.");
+                    LOG.info("OK! Starting the database analysis...");
+                    LOG.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    LOG.info("\n");
+                  }
+
+
                 boolean first = true;
                 List<Schema> TildaList = null;
                 Iterator<String> connectionIds = getUniqueDataSourceIds().keySet().iterator();
                 List<String> connectionUrls = new ArrayList<>(getUniqueDataSourceIds().values());
-
                 while (connectionIds.hasNext())
                   {
                     String connectionId = connectionIds.next();
@@ -188,22 +220,25 @@ public class ConnectionPool
                       TildaList = LoadTildaResources(C);
                     if (C.isSuperUser() == true)
                       {
-                        LOG.warn("#########################################################################################################################");
-                        LOG.warn("###                                                                                                                   ###");
-                        LOG.warn("###    W A R N I N G :   T H I S   C O N N E C T I O N   U S E S   A   S U P E R U S E R   A C C O U N T   ! ! !      ###");
-                        LOG.warn("###    =========================================================================================================      ###");
-                        LOG.warn("###                                                                                                                   ###");
-                        LOG.warn("###    _|    _|    _|    _|_|_|       _|         _|_|    _|      _|    _|_|       _|_|_|  _|_|    _|_|_|    _|        ###");
-                        LOG.warn("###    _|_|  _|  _|  _|    _|       _|  _|     _|      _|  _|  _|  _|  _|  _|       _|    _|  _|  _|      _|  _|      ###");
-                        LOG.warn("###    _|  _|_|  _|  _|    _|       _|_|_|     _|  _|  _|  _|  _|  _|  _|  _|       _|    _|  _|  _|_|    _|_|_|      ###");
-                        LOG.warn("###    _|    _|  _|  _|    _|       _|  _|     _|  _|  _|  _|  _|  _|  _|  _|       _|    _|  _|  _|      _|  _|      ###");
-                        LOG.warn("###    _|    _|    _|      _|       _|  _|       _|_|    _|      _|    _|_|       _|_|_|  _|_|    _|_|_|  _|  _|      ###");
-                        LOG.warn("###                                                                                                                   ###");
-                        LOG.warn("#########################################################################################################################");
+                        LOG.warn("###################################################################################################################");
+                        LOG.warn("###                                                                                                             ###");
+                        LOG.warn("###  W A R N I N G :   T H I S   C O N N E C T I O N   U S E S   A   S U P E R U S E R   A C C O U N T   ! ! !  ###");
+                        LOG.warn("###  =========================================================================================================  ###");
+                        LOG.warn("###                                                                                                             ###");
+                        LOG.warn("###  _|    _|    _|    _|_|_|       _|         _|_|    _|      _|    _|_|       _|_|_|  _|_|    _|_|_|    _|    ###");
+                        LOG.warn("###  _|_|  _|  _|  _|    _|       _|  _|     _|      _|  _|  _|  _|  _|  _|       _|    _|  _|  _|      _|  _|  ###");
+                        LOG.warn("###  _|  _|_|  _|  _|    _|       _|_|_|     _|  _|  _|  _|  _|  _|  _|  _|       _|    _|  _|  _|_|    _|_|_|  ###");
+                        LOG.warn("###  _|    _|  _|  _|    _|       _|  _|     _|  _|  _|  _|  _|  _|  _|  _|       _|    _|  _|  _|      _|  _|  ###");
+                        LOG.warn("###  _|    _|    _|      _|       _|  _|       _|_|    _|      _|    _|_|       _|_|_|  _|_|    _|_|_|  _|  _|  ###");
+                        LOG.warn("###                                                                                                             ###");
+                        LOG.warn("###################################################################################################################");
                       }
-                    DatabaseMeta DBMeta = LoadDatabaseMetaData(C, TildaList);
 
-                    Migrator.MigrateDatabase(C, Migrate.isMigrationActive() == false, TildaList, DBMeta, first, connectionUrls);
+                    if (Migrate.isMigrationActive() == true || _SkipValidation == false)
+                      {
+                        DatabaseMeta DBMeta = LoadDatabaseMetaData(C, TildaList);
+                        Migrator.MigrateDatabase(C, Migrate.isMigrationActive() == false, TildaList, DBMeta, first, connectionUrls);
+                      }
                     if (first == true && Migrate.isMigrationActive() == false)
                       {
                         LOG.info("Initializing Schemas.");
@@ -220,6 +255,7 @@ public class ConnectionPool
                       C.commit();
                     C.close();
                     C = null;
+                    LOG.info("\n\n\n\n\n\n\n");
                   }
               }
           }
@@ -304,6 +340,7 @@ public class ConnectionPool
             if (Defs.validate() == true)
               {
                 _InitDebug = Defs._InitDebug;
+                _SkipValidation = Defs._SkipValidation;
                 for (Conn Co : Defs._Conns)
                   {
                     AddDatasource(Co._Id, Co._Driver, Co._DB, Co._User, Co._Pswd, Co._Initial, Co._Max);
@@ -421,7 +458,7 @@ public class ConnectionPool
     throws Exception
       {
         DatabaseMeta DBMeta = new DatabaseMeta();
-        LOG.info("Loading database metadata for found Schemas.");
+        LOG.info("Loading database metadata for found Schemas from " + C.getPoolName() + ".");
         for (Schema S : TildaList)
           {
             LOG.debug("  " + S._Name);

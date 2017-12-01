@@ -80,7 +80,7 @@ public final class Connection
         if (_DB == null)
           throw new Exception("Can't find the DBType based on URL " + _Url);
         _PoolId = PoolId;
-        _PoolName = PoolId + ": #" + _C.toString() + ", " + getDatabaseProductName() + " V" + getDatabaseProductVersion();
+        _PoolName = PoolId + ": " + getURL() + "USER="+_C.getMetaData().getUserName()+", " + getDatabaseProductName() + " V" + getDatabaseProductVersion();
       }
 
 
@@ -93,6 +93,11 @@ public final class Connection
     public final String getPoolId()
       {
         return _PoolId;
+      }
+
+    public final String getPoolName()
+      {
+        return _PoolName;
       }
 
     public final String getURL()
