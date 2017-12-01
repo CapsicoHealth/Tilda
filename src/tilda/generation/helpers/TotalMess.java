@@ -66,10 +66,6 @@ public class TotalMess
             if (C == null || C._FrameworkManaged == true || C._Mode == ColumnMode.CALCULATED) // for counts and calculated fields where there is no mapping to an actual column.
               continue;
             // LOG.debug(" - " + VC.getShortName() + " as " + VC._SameAsObj.getShortName());
-            if (VC.getShortName().equalsIgnoreCase("patients.score.name") == true)
-              {
-                LOG.debug("xxx");
-              }
             TotalMess FT = new TotalMess(VC, C, i, false);
             if (FT._PK != null)
               TableNames.add(VC._SameAsObj._ParentObject.getShortName());
@@ -112,10 +108,6 @@ public class TotalMess
     public static ForeignKey getClosestFKTable(List<TotalMess> FuckList, View V, Object T, int columnSequenceOrder)
       {
         LOG.debug("Searching for FK to/from " + T.getShortName() + " from view column #" + columnSequenceOrder);
-        if (T.getShortName().equals("PATIENTS.PATIENTVIEW") == true)
-          {
-            LOG.debug("xxx");
-          }
         int i = FuckList.size() - 1;
         while (i >= 0 && FuckList.get(i)._SequenceOrder >= columnSequenceOrder)
           --i;
@@ -124,16 +116,12 @@ public class TotalMess
             TotalMess FT = FuckList.get(i--);
             if (FT.isBoring() == true)
               continue;
-            LOG.debug("   Examining info from " + FT._VC.getShortName() + " as " + FT._C.getShortName() + " (" + FT._SequenceOrder + ")");
-            if (FT._VC.getShortName().equalsIgnoreCase("DATAMART.HISANSWERPIVOTVIEW.assessmentRefnum") == true)
-              {
-                LOG.debug("xxx");
-              }
+//            LOG.debug("   Examining info from " + FT._VC.getShortName() + " as " + FT._C.getShortName() + " (" + FT._SequenceOrder + ")");
 
             List<ForeignKey> PotentialFKs = new ArrayList<ForeignKey>();
             for (ForeignKey FK : FT._C._ParentObject._ForeignKeys)
               {
-                LOG.debug("      Looking at FK " + FK._Name + " from " + FK._ParentObject.getFullName() + " to " + FK._DestObjectObj.getFullName() + " (->" + T.getFullName() + ")");
+//                LOG.debug("      Looking at FK " + FK._Name + " from " + FK._ParentObject.getFullName() + " to " + FK._DestObjectObj.getFullName() + " (->" + T.getFullName() + ")");
                 if (FK._DestObjectObj.getFullName().equals(T.getFullName()) == true)
                   PotentialFKs.add(FK);
               }
@@ -142,7 +130,7 @@ public class TotalMess
                 ForeignKey FK = TotalMess.pickMostRecentFKPart1(PotentialFKs, V, columnSequenceOrder);
                 if (FK != null)
                   {
-                    LOG.debug("WOOHOO! Picked " + FK._Name);
+//                    LOG.debug("WOOHOO! Picked " + FK._Name);
                     return FK;
                   }
                 return null;
@@ -153,7 +141,7 @@ public class TotalMess
                 PotentialFKs.clear();
                 for (ForeignKey FK : T._ForeignKeys)
                   {
-                    LOG.debug("      Looking at FK " + FK._Name + " to " + FK._DestObjectObj.getShortName() + " from " + FK._ParentObject.getShortName());
+//                    LOG.debug("      Looking at FK " + FK._Name + " to " + FK._DestObjectObj.getShortName() + " from " + FK._ParentObject.getShortName());
                     if (FK._DestObjectObj.getFullName().equals(FT._C._ParentObject.getFullName()) == true)
                       PotentialFKs.add(FK);
                   }
@@ -162,7 +150,7 @@ public class TotalMess
                     ForeignKey FK = TotalMess.pickMostRecentFKPart2(PotentialFKs, columnSequenceOrder);
                     if (FK == null)
                       throw new Error("FK could not be resolved!");
-                    LOG.debug("WOOHOO! Picked " + FK._Name);
+//                    LOG.debug("WOOHOO! Picked " + FK._Name);
                     return FK;
                   }
               }
@@ -180,7 +168,7 @@ public class TotalMess
           {
             for (Column C : FK._SrcColumnObjs)
               {
-                LOG.debug("      FK " + FK._Name + ": " + C.getShortName() + "(" + C.getSequenceOrder() + ")");
+//                LOG.debug("      FK " + FK._Name + ": " + C.getShortName() + "(" + C.getSequenceOrder() + ")");
                 int i = -1;
                 for (ViewColumn VC : V._ViewColumns)
                   {
@@ -192,7 +180,7 @@ public class TotalMess
                           {
                             MostRecentSequenceOrder = i;
                             MostRecentFK = FK;
-                            LOG.debug("            --> Original sequence order:" + i);
+//                            LOG.debug("            --> Original sequence order:" + i);
                           }
                       }
                   }
