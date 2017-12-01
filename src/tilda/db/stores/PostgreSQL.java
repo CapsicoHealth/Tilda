@@ -600,7 +600,7 @@ public class PostgreSQL implements DBType
 
         for (Schema S : TildaList)
           {
-            Str.append("GRANT USAGE ON SCHEMA ").append(S.getShortName()).append(" TO tilda_app;\n");
+            Str.append("GRANT ALL ON SCHEMA ").append(S.getShortName()).append(" TO tilda_app;\n");
             Str.append("GRANT ALL ON ALL TABLES IN SCHEMA ").append(S.getShortName()).append(" TO tilda_app;\n");
             Str.append("GRANT ALL ON ALL FUNCTIONS IN SCHEMA ").append(S.getShortName()).append(" TO tilda_app;\n");
             Str.append("GRANT ALL ON ALL SEQUENCES IN SCHEMA ").append(S.getShortName()).append(" TO tilda_app;\n");
