@@ -184,7 +184,7 @@ public class Import
         LOG.info("=======================================================================================================================");
         Reader R = FileUtil.getReaderFromFileOrResource(ImportFileName);
 
-        Pattern P = Pattern.compile("\\.*\\_tilda\\.([^\\.]+)\\.([a-zA-Z][a-zA-Z0-9]*)\\.([^\\.]+)\\.json\\z");
+        Pattern P = Pattern.compile("\\.*\\_tilda\\.([^\\.]+)\\.([a-zA-Z][_\\-a-zA-Z0-9]*)\\.([^\\.]+)\\.json\\z");
         Matcher M = P.matcher(ImportFileName);
         if (M.find() == false)
           throw new Exception("The argument '" + ImportFileName + "' is invalid: it should match the format '_tilda.'+<SchemaName>+'.<identifier>.'+<samplesPackage>+'.json'.");
