@@ -143,7 +143,7 @@ public class FileUtil
           throw new IOException("Cannot find import file/resource '" + Name + "'.");
         return new BufferedReader(new InputStreamReader(In));
       }
-    
+
     public static String getFileOfResourceContents(String Name)
     throws IOException
       {
@@ -172,12 +172,17 @@ public class FileUtil
       }
 
     static Scanner _SCANNER = new Scanner(System.in);
+
     public static String readlnFromStdIn(boolean secure)
       {
         if (secure == true && System.console() != null)
-         return new String(System.console().readPassword());
+          return new String(System.console().readPassword());
         return _SCANNER.next();
       }
 
+    public static String getUserHome()
+      {
+        return System.getProperty("user.home");
+      }
 
   }
