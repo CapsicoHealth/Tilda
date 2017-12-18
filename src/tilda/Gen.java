@@ -28,6 +28,7 @@ import tilda.generation.html.DocGen;
 import tilda.parsing.Parser;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Schema;
+import tilda.utils.AsciiArt;
 import tilda.utils.SystemValues;
 
 public class Gen
@@ -75,9 +76,27 @@ public class Gen
               }
             catch (Throwable T)
               {
-                LOG.error("Couldn't load the schema '" + path + "'.\n", T);
+                LOG.info("\n"
+                        +"\n"
+                        +"          ======================================================================================\n"
+                        +AsciiArt.Error("               ")
+                        +"\n"
+                        +"                Couldn't load the Tilda definition file " + path + ".\n"
+                        +"          ======================================================================================\n"
+                        +"\n"
+                        );
                 System.exit(-1);
               }
           }
+        
+        LOG.info("\n"
+                +"\n"
+                +"          ======================================================================================\n"
+                +AsciiArt.Woohoo("                       ")
+                +"\n"
+                +"              All Tilda code, migration scripts and documentation was generated succesfully.    \n"
+                +"          ======================================================================================\n"
+                +"\n"
+                );
       }
   }

@@ -64,6 +64,7 @@ import tilda.parsing.parts.Object;
 import tilda.parsing.parts.PrimaryKey;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
+import tilda.utils.AsciiArt;
 import tilda.utils.FileUtil;
 
 public class Migrator
@@ -90,61 +91,45 @@ public class Migrator
                   }
                 doAcl(C, TildaList, DBMeta);
               }
-            LOG.info("");
-            LOG.info("");
-            LOG.info("====================================================================");
-            LOG.info("                         ____     __ __    __                   ");
-            LOG.info("                        / __ \\   / //_/   / /                  ");
-            LOG.info("                       / / / /  / ,<     / /                    ");
-            LOG.info("                      / /_/ /  / /| |   /_/                     ");
-            LOG.info("                      \\____/  /_/ |_|  (_)                     ");
-            LOG.info("");
-            LOG.info("     The database already matched the Application's data model.     ");
-            LOG.info("====================================================================");
-            LOG.info("");
-            LOG.info("");
+            LOG.info("\n"
+                    +"\n"
+                    +"          ==============================================================================\n"
+                    +AsciiArt.OK("                                    ")
+                    +"\n"
+                    +"                    The database already matched the Application's data model.          \n"
+                    +"          ==============================================================================\n"
+                    +"\n"
+                    );
           }
         else if (CheckOnly == false)
           {
             PrintDiscrepancies(C, migrationData);
-//            if (first)
             confirmMigration(C);
             applyMigration(C, migrationData);
             doAcl(C, TildaList, DBMeta);
             if (Migrate.isTesting() == false)
               KeysManager.reloadAll();
-            LOG.info("");
-            LOG.info("");
-            LOG.info("======================================================================================");
-            LOG.info("              __    __                  _                          _   ");
-            LOG.info("             / / /\\ \\ \\  ___     ___   | |__     ___     ___      / \\  ");
-            LOG.info("             \\ \\/  \\/ / / _ \\   / _ \\  | '_ \\   / _ \\   / _ \\    /  /  ");
-            LOG.info("              \\  /\\  / | (_) | | (_) | | | | | | (_) | | (_) |  /\\_/   ");
-            LOG.info("               \\/  \\/   \\___/   \\___/  |_| |_|  \\___/   \\___/   \\/     ");
-            LOG.info("");
-            LOG.info("    The database was automatically migrated to match the Application's data model.    ");
-            LOG.info("======================================================================================");
-            LOG.info("");
-            LOG.info("");
+            LOG.info("\n"
+                    +"\n"
+                    +"          ======================================================================================\n"
+                    +AsciiArt.Woohoo("                       ")
+                    +"\n"
+                    +"              The database was automatically migrated to match the Application's data model.    \n"
+                    +"          ======================================================================================\n"
+                    +"\n"
+                    );
           }
         else
           {
-            LOG.warn("");
-            LOG.warn("");
-            LOG.warn("=============================================================================================================");
-            LOG.warn(" _             _          _          _  _  _       _         _    _  _  _    _         _       _  _        _ ");
-            LOG.warn("(_)           (_)       _(_)_       (_)(_)(_) _   (_) _     (_)  (_)(_)(_)  (_) _     (_)   _ (_)(_) _    (_)");
-            LOG.warn("(_)           (_)     _(_) (_)_     (_)      (_)  (_)(_)_   (_)     (_)     (_)(_)_   (_)  (_)      (_)   (_)");
-            LOG.warn("(_)     _     (_)   _(_)     (_)_   (_) _  _ (_)  (_)  (_)_ (_)     (_)     (_)  (_)_ (_)  (_)    _  _    (_)");
-            LOG.warn("(_)   _(_)_   (_)  (_) _  _  _ (_)  (_)(_)(_)     (_)    (_)(_)     (_)     (_)    (_)(_)  (_)   (_)(_)   (_)");
-            LOG.warn("(_)  (_) (_)  (_)  (_)(_)(_)(_)(_)  (_)(_) _      (_)       (_)     (_)     (_)       (_)  (_)      (_)      ");
-            LOG.warn("(_)_(_)   (_)_(_)  (_)         (_)  (_)   (_) _   (_)       (_)   _ (_) _   (_)       (_)  (_) _  _ (_)    _ ");
-            LOG.warn("  (_)       (_)    (_)         (_)  (_)      (_)  (_)       (_)  (_)(_)(_)  (_)       (_)     (_)(_)(_)   (_)");
-            LOG.warn("");
-            LOG.warn("       The database DOES NOT match the Application's data model. The application may NOT run properly!       ");
-            LOG.warn("=============================================================================================================");
-            LOG.warn("");
-            LOG.info("");
+            LOG.warn("\n"
+                    +"\n"
+                    +"          =============================================================================================================\n"
+                    +AsciiArt.Warning("          ")
+                    +"\n"
+                    +"                 The database DOES NOT match the Application's data model. The application may NOT run properly!       \n"
+                    +"          =============================================================================================================\n"
+                    +"\n"
+                    );
           }
       }
 
