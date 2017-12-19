@@ -339,6 +339,8 @@ public class TildaData implements CodeGenTildaData
           }
         else
           {
+            Out.println("   public final " + JavaJDBCType.getFieldTypeBaseClass(C) + "[] get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "AsArray()");
+            Out.println("      { return _" + C.getName() + "==null? null : _" + C.getName() + ".toArray(new " + JavaJDBCType.getFieldTypeBaseClass(C) + "[_" + C.getName() + ".size()]); }");
             Out.println("   public final Iterator<" + JavaJDBCType.getFieldTypeBaseClass(C) + "> get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()");
             Out.println("      { return _" + C.getName() + "==null? null : _" + C.getName() + ".iterator(); }");
             Out.println("   public final boolean has" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldTypeBase(C) + " v)");
@@ -517,7 +519,7 @@ public class TildaData implements CodeGenTildaData
             else if (C.isSet() == true)
               Out.println("   " + Visibility + " void addTo" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldTypeBase(C) + " v) throws Exception");
             else
-              Out.println("   " + Visibility + " void set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldType(C) + " v) throws Exception");
+              Out.println("   " + Visibility + (C.isOCCDeleted() || C.isOCCLastUpdated() ? " final":"") + " void set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldType(C) + " v) throws Exception");
             Out.println("     {");
             Out.println("       long T0 = System.nanoTime();");
             if (C.isCollection() == true)
@@ -776,7 +778,7 @@ public class TildaData implements CodeGenTildaData
         String Mask = Helper.getRuntimeMask(C) + BitFieldId;
         String Visibility = Helper.getVisibility(C, true);
 
-        Out.println("   " + Visibility + " void setNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()");
+        Out.println("   " + Visibility + (C.isOCCDeleted() || C.isOCCLastUpdated() ? " final":"") + " void setNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()");
         Out.println("     {");
         Out.println("       long T0 = System.nanoTime();");
         if (C._Mode != ColumnMode.CALCULATED)

@@ -1,8 +1,6 @@
-package tilda.utils;
+package tilda.migration;
 
 import java.util.List;
-
-import tilda.migration.MigrationScript;
 
 public class MigrationDataModel
   {

@@ -25,11 +25,14 @@ import java.util.List;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
+import tilda.db.metadata.FKMeta;
+import tilda.db.metadata.PKMeta;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
+import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
@@ -64,10 +67,15 @@ public interface DBType
     public boolean alterTableAlterColumnComment   (Connection Con, Column Col) throws Exception;
     public boolean alterTableAlterColumnType      (Connection Con, ColumnType fromType, Column Col, ZoneInfo_Data defaultZI) throws Exception;
     public boolean alterTableAlterColumnStringSize(Connection Con, Column Col, int DBSize) throws Exception;
-    public boolean addHelperFunctions             (Connection Con) throws Exception;    
-    public boolean addAclRoles                    (Connection Con, List<Schema> TildaList) throws Exception;
+    public boolean alterTableReplaceTablePK       (Connection Con, Object Obj, PKMeta oldPK) throws Exception;
+    public boolean alterTableDropFK               (Connection Con, Object Obj, FKMeta FK) throws Exception;
+    public boolean alterTableAddFK                (Connection Con, ForeignKey FK) throws Exception;
+    public String  getHelperFunctionsScript       (Connection Con) throws Exception;    
+    public String  getAclRolesScript              (Connection Con, List<Schema> TildaList) throws Exception;
+    public boolean isSuperUser                    (Connection C) throws Exception;
 
-    public void   truncateTable(Connection C, String schemaName, String tableName) throws Exception;
+
+    public void   truncateTable(Connection C, String schemaName, String tableName, boolean cascade) throws Exception;
 
     public static DBType DB2       = new IBMDB2    ();
     public static DBType SQLServer = new MSSQL     ();

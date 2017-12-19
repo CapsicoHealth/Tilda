@@ -410,8 +410,8 @@ public class Column extends TypeDef
 
     public VisibilityType getVisibility()
       {
-        return _ParentObject.getLifecycle() == ObjectLifecycle.READONLY || _MapperDef != null || _FrameworkManaged == true ? VisibilityType.PRIVATE
-        : _Invariant == true || _PrimaryKey == true || _Mode == ColumnMode.AUTO ? VisibilityType.PROTECTED
+        return _ParentObject.getLifecycle() == ObjectLifecycle.READONLY || _MapperDef != null || (_FrameworkManaged == true && isOCCLastUpdated()==false && isOCCDeleted()==false) ? VisibilityType.PRIVATE
+        : _Invariant == true || _PrimaryKey == true || (_Mode == ColumnMode.AUTO && isOCCLastUpdated()==false && isOCCDeleted()==false) ? VisibilityType.PROTECTED
         : VisibilityType.PUBLIC;
       }
 
@@ -428,6 +428,14 @@ public class Column extends TypeDef
     public boolean isOCCGenerated()
       {
         return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && (_Name.equals("created") == true || _Name.equals("lastUpdated") == true || _Name.equals("createdETL") == true || _Name.equals("lastUpdatedETL") == true || _Name.equals("deleted") == true);
+      }
+    public boolean isOCCLastUpdated()
+      {
+        return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && _Name.equals("lastUpdated") == true;
+      }
+    public boolean isOCCDeleted()
+      {
+        return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && _Name.equals("deleted") == true;
       }
 
     public boolean isJSONColumn()

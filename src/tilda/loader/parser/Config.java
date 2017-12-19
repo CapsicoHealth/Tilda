@@ -38,27 +38,18 @@ public class Config
     
     public transient String _RootFolder = null;
     
-    public void validate() throws Exception
-      {
-        for (DataObject DO : _CmsData)
-          if (DO != null)
-            DO.validate();
-      }
-
     public static Config fromFile(String FilePath)
       {
-        Reader R = null;
+        Reader R = null;        
         try
           {
             LOG.debug("Looking for data definition file or resource "+FilePath+".");
             R = FileUtil.getReaderFromFileOrResource(FilePath);
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            Config C = gson.fromJson(R, Config.class);
-            C._RootFolder = FileUtil.getBasePathFromFileOrResource(FilePath);
+            Config Cfg = gson.fromJson(R, Config.class);
+            Cfg._RootFolder = FileUtil.getBasePathFromFileOrResource(FilePath);
             //  -silentMode=0 ${project_loc:CMSData}/config.CMS.json
-            C.validate();
-            
-            return C;
+            return Cfg;
           }
         catch (Throwable T)
           {

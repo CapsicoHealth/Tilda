@@ -67,6 +67,11 @@ public class DurationUtil
         return 1.0 * NanoSeconds / NANOSECS_PER_SECOND;
       }
 
+    public static double getDurationMinutes(long NanoSeconds)
+      {
+        return 1.0 * NanoSeconds / NANOSECS_PER_MINUTE;
+      }
+
     public static String PrintDuration(long NanoSeconds)
       {
         long d = (long) Math.floor(NanoSeconds / (24 * 60 * 60 * 1000000000.0));

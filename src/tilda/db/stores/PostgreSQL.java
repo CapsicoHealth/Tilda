@@ -31,8 +31,11 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
+import tilda.db.metadata.FKMeta;
+import tilda.db.metadata.PKMeta;
 import tilda.db.processors.ScalarRP;
 import tilda.db.processors.StringListRP;
+import tilda.db.processors.StringRP;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
@@ -40,6 +43,7 @@ import tilda.generation.Generator;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.generation.postgres9.PostgresType;
 import tilda.parsing.parts.Column;
+import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
@@ -60,7 +64,6 @@ public class PostgreSQL implements DBType
       {
         return "PostgreSQL";
       }
-
 
     @Override
     public boolean isErrNoData(String SQLState, int ErrorCode)
@@ -386,7 +389,7 @@ public class PostgreSQL implements DBType
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
         + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + ";";
         return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
-      }
+      }    
 
     protected static void PrintFunctionIn(StringBuilder Str, String Type)
       {
@@ -447,7 +450,7 @@ public class PostgreSQL implements DBType
       }
 
     @Override
-    public boolean addHelperFunctions(Connection Con)
+    public String getHelperFunctionsScript(Connection Con)
     throws Exception
       {
         StringBuilder Str = new StringBuilder();
@@ -565,25 +568,31 @@ public class PostgreSQL implements DBType
         .append("\n")
         .append("\n")
         .append("CREATE extension if not exists tablefunc;\n");
-
-        return Con.ExecuteDDL("TILDA", "FUNCTIONS", Str.toString());
+        
+        return Str.toString();
       }
-
-    
+   
     
     
     public void reCreateRole(StringBuilder Str, String Role)
     throws Exception
       { 
         Role = Role.toLowerCase();
-        Str.append("DELETE FROM pg_catalog.pg_authid WHERE rolname='"+Role+"';\n");
-        Str.append("CREATE ROLE "+Role+";\n");
+        Str.append("DO $body$\n");
+        Str.append("BEGIN\n");
+        Str.append("   IF NOT EXISTS (SELECT FROM pg_catalog.pg_authid WHERE rolname = "+TextUtil.EscapeSingleQuoteForSQL(Role)+")\n");
+        Str.append("   THEN\n");
+        Str.append("      CREATE ROLE "+Role+";\n");
+        Str.append("   END IF;\n");
+        Str.append("END $body$;\n");
+//        Str.append("DELETE FROM pg_catalog.pg_authid WHERE rolname='"+Role+"';\n");
+//        Str.append("CREATE ROLE "+Role+";\n");
       }
     
     @Override
-    public boolean addAclRoles(Connection Con, List<Schema> TildaList)
+    public String getAclRolesScript(Connection Con, List<Schema> TildaList)
     throws Exception
-      {        
+      {
         StringBuilder Str = new StringBuilder();
         reCreateRole(Str, "tilda_app");
         reCreateRole(Str, "tilda_read_only");
@@ -591,18 +600,17 @@ public class PostgreSQL implements DBType
 
         for (Schema S : TildaList)
           {
-            Str.append("GRANT USAGE ON SCHEMA ").append(S.getShortName()).append(" TO tilda_app;\n");
+            Str.append("GRANT ALL ON SCHEMA ").append(S.getShortName()).append(" TO tilda_app;\n");
             Str.append("GRANT ALL ON ALL TABLES IN SCHEMA ").append(S.getShortName()).append(" TO tilda_app;\n");
             Str.append("GRANT ALL ON ALL FUNCTIONS IN SCHEMA ").append(S.getShortName()).append(" TO tilda_app;\n");
             Str.append("GRANT ALL ON ALL SEQUENCES IN SCHEMA ").append(S.getShortName()).append(" TO tilda_app;\n");
-            
             Str.append("GRANT USAGE ON SCHEMA ").append(S.getShortName()).append(" TO tilda_read_only;\n");
             Str.append("GRANT SELECT ON ALL TABLES IN SCHEMA ").append(S.getShortName()).append(" TO tilda_read_only;\n");
             Str.append("GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA ").append(S.getShortName()).append(" TO tilda_read_only;\n");
             Str.append("GRANT SELECT ON ALL SEQUENCES IN SCHEMA ").append(S.getShortName()).append(" TO tilda_read_only;\n");
           }
 
-        return Con.ExecuteDDL("TILDA", "ACL_ROLES", Str.toString());
+        return Str.toString();
      }
     
     @Override
@@ -782,12 +790,14 @@ public class PostgreSQL implements DBType
 
 
     @Override
-    public void truncateTable(Connection C, String schemaName, String tableName)
+    public void truncateTable(Connection C, String schemaName, String tableName, boolean cascade)
     throws Exception
       {
         StringBuilder Str = new StringBuilder();
         Str.append("TRUNCATE ");
         getFullTableVar(Str, schemaName, tableName);
+        if (cascade == true)
+          Str.append(" CASCADE");
         C.ExecuteUpdate(schemaName, tableName, Str.toString());
       }
 
@@ -811,6 +821,60 @@ public class PostgreSQL implements DBType
         return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
       }
 
+    @Override
+    public boolean alterTableReplaceTablePK(Connection Con, Object Obj, PKMeta oldPK)
+    throws Exception
+      {
+        if (oldPK != null)
+          {
+            String Q = "ALTER TABLE " + Obj.getShortName() + " DROP CONSTRAINT \"" + oldPK._Name + "\";";
+            if (Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q) == false)
+             return false;
+          }
+        if (Obj._PrimaryKey != null)
+         {
+           String Q = "ALTER TABLE " + Obj.getShortName() + " ADD PRIMARY KEY ("+PrintColumnList(Obj._PrimaryKey._ColumnObjs)+");";
+           return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
+         }
+        return true;
+      }
+
+    @Override
+    public boolean alterTableDropFK(Connection Con, Object Obj, FKMeta FK)
+    throws Exception
+      {
+        String Q = "ALTER TABLE " + Obj.getShortName() + " DROP CONSTRAINT \"" + FK._Name + "\";";
+        return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
+      }
+
+    @Override
+    public boolean alterTableAddFK(Connection Con, ForeignKey FK)
+    throws Exception
+      {
+        String Q = "ALTER TABLE " + FK._ParentObject.getShortName() + " ADD CONSTRAINT \"" + FK._Name + "\"" 
+                 + " FOREIGN KEY ("+PrintColumnList(FK._SrcColumnObjs)+") REFERENCES " + FK._DestObjectObj._ParentSchema._Name + "." + FK._DestObjectObj._Name
+                 + " ON DELETE restrict ON UPDATE cascade";
+        return Con.ExecuteDDL(FK._ParentObject._ParentSchema._Name, FK._ParentObject.getBaseName(), Q);
+      }
+    
+    
+    private static String PrintColumnList(List<Column> Columns)
+      {
+        StringBuilder Str = new StringBuilder();
+        boolean First = true;
+        for (Column C : Columns)
+          {
+            if (C == null)
+              continue;
+            if (First == true)
+              First = false;
+            else
+              Str.append(", ");
+            Str.append("\"" + C.getName() + "\"");
+          }
+        return Str.toString();
+      }
+    
 
     @Override
     public void within(Connection C, StringBuilder Str, Type_DatetimePrimitive Col, Type_DatetimePrimitive ColStart, long DurationCount, IntervalEnum DurationType)
@@ -843,17 +907,14 @@ public class PostgreSQL implements DBType
             Str.append(")");
           }
       }
-
-    /*
-     * @Override
-     * public boolean setTableLogging(Connection Con, String schemaName, String tableName, boolean logged) throws Exception
-     * {
-     * StringBuilder Str = new StringBuilder();
-     * Str.append("ALTER TABLE ");
-     * getFullTableVar(Str, schemaName, tableName);
-     * Str.append(" SET ").append(logged==true ? "LOGGED" : "UNLOGGED");
-     * return Con.ExecuteDDL(schemaName, tableName, Str.toString());
-     * }
-     */
+    
+    @Override
+    public boolean isSuperUser(Connection C) throws Exception
+     {
+       String Q = "select current_setting('is_superuser');";
+       StringRP RP = new StringRP();
+       C.ExecuteSelect("SYSTEM", "CURRENT_SETTING", Q, RP);
+       return "on".equals(RP.getResult()) == true;
+     }
 
   }

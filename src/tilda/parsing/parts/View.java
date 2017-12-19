@@ -72,7 +72,7 @@ public class View extends Base
     public Column getColumn(String name)
       {
         for (ViewColumn C : _ViewColumns)
-          if (C != null && C._Name != null && C._Name.equalsIgnoreCase(name) == true)
+          if (C != null && C._Name != null && C._Name.equals(name) == true)
             return C._SameAsObj;
         return null;
       }
@@ -112,11 +112,12 @@ public class View extends Base
         return "View";
       }
 
-    public ViewJoin getViewjoin(String ObjectName)
+    public ViewJoin getViewjoin(String ObjectName, String As)
       {
         if (_Joins != null)
           for (ViewJoin vj : _Joins)
-            if (vj != null && vj._ObjectObj.getBaseName().equals(ObjectName) == true)
+            if (vj != null && vj._ObjectObj.getBaseName().equals(ObjectName) == true 
+                           && (TextUtil.isNullOrEmpty(As)==true || As.equals(vj._As) == true))
               return vj;
         return null;
       }
@@ -124,6 +125,11 @@ public class View extends Base
     public String getRealizedTableName(boolean includeSchemaName)
      {
        return _Realize == null ? null : (includeSchemaName==true?_ParentSchema._Name+".":"")+_Name.substring(0, _Name.length() - (_Pivot != null ? "PivotView" : "View").length()) + "Realized";
+     }
+    
+    public static String getRootViewName(String Name)
+     {
+       return Name.substring(0, Name.length() - (Name.endsWith("PivotView") ==true ? "PivotView" : "View").length());
      }
 
     public boolean Validate(ParserSession PS, Schema ParentSchema)
@@ -189,6 +195,7 @@ public class View extends Base
                               break;
                             ViewColumn NewVC = new ViewColumn();
                             NewVC._SameAs = col.getFullName();
+                            NewVC._As = VC._As;
                             NewVC._Name = Prefix + col._Name;
                             NewVC._FrameworkGenerated = col._FrameworkGenerated;
                             _ViewColumns.add(i + j, NewVC);
@@ -203,6 +210,7 @@ public class View extends Base
                                   continue;
                                 ViewColumn NewVC = new ViewColumn();
                                 NewVC._SameAs = V.getShortName() + "." + TextUtil.Print(VPV._Name, VPV._Value);
+                                NewVC._As = VC._As;
                                 NewVC._Name = Prefix + TextUtil.Print(VPV._Name, VPV._Value);
                                 _ViewColumns.add(i + j, NewVC);
                                 _PadderColumnNames.track(NewVC.getName());
@@ -216,6 +224,7 @@ public class View extends Base
                             ViewColumn NewVC = new ViewColumn();
                             NewVC._SameAs = V.getFullName() + "." + F._Name;
                             NewVC._Name = Prefix + F._Name;
+                            NewVC._As = VC._As;
                             _ViewColumns.add(i + j, NewVC);
                             _PadderColumnNames.track(NewVC.getName());
                             ++j;
@@ -224,6 +233,7 @@ public class View extends Base
                           {
                             ViewColumn NewVC = new ViewColumn();
                             NewVC._SameAs = V.getFullName() + "." + V._CountStar;
+                            NewVC._As = VC._As;
                             NewVC._Name = Prefix + V._CountStar;
                             NewVC._Aggregate = AggregateType.COUNT;
                             _ViewColumns.add(i + j, NewVC);
@@ -474,6 +484,8 @@ public class View extends Base
         if (_Joins != null)
           for (ViewJoin VJ : _Joins)
             {
+              if (VJ == null)
+                continue;
               VJ.Validate(PS, this);
               if (JoinObjectNames.add(VJ._ObjectObj.getShortName() + " on " + VJ.getQuery(DBType.Postgres)) == false)
                 PS.AddError("View '" + getFullName() + "' is defining a a duplicate join with object " + VJ._ObjectObj.getShortName() + ".");
@@ -661,7 +673,7 @@ public class View extends Base
       {
         if (_Formulas != null)
           for (Formula F : _Formulas)
-            if (F._Name.equalsIgnoreCase(FormulaName) == true)
+            if (F != null && F._Name.equalsIgnoreCase(FormulaName) == true)
               return F;
         return null;
       }

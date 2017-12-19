@@ -17,6 +17,7 @@
 package tilda.migration;
 
 import tilda.db.Connection;
+import tilda.db.metadata.DatabaseMeta;
 
 public abstract class MigrationAction
   {
@@ -24,15 +25,21 @@ public abstract class MigrationAction
       {
         _isDependency = false;
       }
+
     protected MigrationAction(boolean isDependency)
       {
         _isDependency = isDependency;
       }
-    
-    public final boolean _isDependency; 
+
+    public final boolean _isDependency;
 
     public abstract boolean process(Connection C)
     throws Exception;
 
     public abstract String getDescription();
+
+    public boolean isNeeded(Connection C, DatabaseMeta DBMeta) throws Exception
+      {
+        return true;
+      }
   }

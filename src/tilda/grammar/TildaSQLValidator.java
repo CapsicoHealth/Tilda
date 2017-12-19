@@ -517,7 +517,7 @@ public class TildaSQLValidator extends TildaSQLBaseListener
             _Errors.addError(_TypeManager.getLastError(), ctx);
             Err = true;
           }
-        else if (ctx.isnull_op().K_EMPTY() != null)
+        else if (ctx.isnull_op().K_NULL_OR_EMPTY() != null)
           {
             if (CD._Type != ColumnType.STRING && CD._Collection != true)
               {
@@ -527,7 +527,7 @@ public class TildaSQLValidator extends TildaSQLBaseListener
           }
 
         if (Err == false && _CG != null)
-          _CG.isNull(CD, ctx.isnull_op().K_NOT() != null, ctx.isnull_op().K_EMPTY() != null);
+          _CG.isNull(CD, ctx.isnull_op().K_NOT() != null, ctx.isnull_op().K_NULL_OR_EMPTY() != null);
 
         super.enterIsnull_expr(ctx);
       }

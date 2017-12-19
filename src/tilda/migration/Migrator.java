@@ -18,9 +18,9 @@ package tilda.migration;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Scanner;
+import java.util.Set;
 
 import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.logging.log4j.LogManager;
@@ -28,10 +28,11 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.Migrate;
 import tilda.db.Connection;
-import tilda.db.ConnectionPool;
 import tilda.db.KeysManager;
 import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.DatabaseMeta;
+import tilda.db.metadata.FKMeta;
+import tilda.db.metadata.PKMeta;
 import tilda.db.metadata.TableMeta;
 import tilda.db.metadata.ViewMeta;
 import tilda.enums.ColumnMode;
@@ -47,17 +48,23 @@ import tilda.migration.actions.SchemaCreate;
 import tilda.migration.actions.SchemaViewsDrop;
 import tilda.migration.actions.TableComment;
 import tilda.migration.actions.TableCreate;
+import tilda.migration.actions.TableFKAdd;
+import tilda.migration.actions.TableFKDrop;
 import tilda.migration.actions.TableKeyCreate;
+import tilda.migration.actions.TablePKReplace;
 import tilda.migration.actions.TildaAclAdd;
+import tilda.migration.actions.TildaExtraDDL;
 import tilda.migration.actions.TildaHelpersAdd;
 import tilda.migration.actions.ViewCreate;
 import tilda.migration.actions.ViewUpdate;
 import tilda.parsing.Parser;
 import tilda.parsing.parts.Column;
+import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Object;
+import tilda.parsing.parts.PrimaryKey;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
-import tilda.utils.MigrationDataModel;
+import tilda.utils.FileUtil;
 
 public class Migrator
   {
@@ -70,38 +77,18 @@ public class Migrator
     throws Exception
       {
         MigrationDataModel migrationData = Migrator.AnalyzeDatabase(C, CheckOnly, TildaList, DBMeta);
-
-        // RPJ-TODO: Simplify if-else logic
-        if (ConnectionPool.isMultiTenant())
-          {
-            PrintDiscrepancies(migrationData);
-            if (CheckOnly == false)
-              {
-                if (first)
-                  confirmMigration(connectionUrls);
-                applyMigration(C, migrationData);
-              }
-          }
-        else
-          {
-            if (migrationData.getActionCount() > 0)
-              {
-                PrintDiscrepancies(migrationData);
-                if (CheckOnly == false)
-                  {
-                    if (first)
-                      confirmMigration(connectionUrls);
-                    applyMigration(C, migrationData);
-                  }
-              }
-          }
-
+        
         if (migrationData.getActionCount() == 0)
           {
             if (CheckOnly == false)
               {
-                new TildaHelpersAdd().process(C);
-                new TildaAclAdd(TildaList).process(C);
+                MigrationAction A = new TildaHelpersAdd();
+                if (A.isNeeded(C, DBMeta) == true)
+                  {
+                    A.process(C);
+                    C.commit();
+                  }
+                doAcl(C, TildaList, DBMeta);
               }
             LOG.info("");
             LOG.info("");
@@ -119,6 +106,11 @@ public class Migrator
           }
         else if (CheckOnly == false)
           {
+            PrintDiscrepancies(C, migrationData);
+//            if (first)
+            confirmMigration(C);
+            applyMigration(C, migrationData);
+            doAcl(C, TildaList, DBMeta);
             if (Migrate.isTesting() == false)
               KeysManager.reloadAll();
             LOG.info("");
@@ -132,6 +124,7 @@ public class Migrator
             LOG.info("");
             LOG.info("    The database was automatically migrated to match the Application's data model.    ");
             LOG.info("======================================================================================");
+            LOG.info("");
             LOG.info("");
           }
         else
@@ -151,13 +144,22 @@ public class Migrator
             LOG.warn("       The database DOES NOT match the Application's data model. The application may NOT run properly!       ");
             LOG.warn("=============================================================================================================");
             LOG.warn("");
+            LOG.info("");
           }
       }
 
-    public static void PrintDiscrepancies(MigrationDataModel migrationData)
+    private static void doAcl(Connection C, List<Schema> TildaList, DatabaseMeta DBMeta)
+    throws Exception
+      {
+        MigrationAction A = new TildaAclAdd(TildaList);
+        if (A.isNeeded(C, DBMeta) == true)
+          A.process(C);
+      }
+
+    public static void PrintDiscrepancies(Connection C, MigrationDataModel migrationData)
       {
         LOG.info("");
-        LOG.warn("There were " + migrationData.getActionCount() + " discrepencies found in the database Vs. the application's required data model:");
+        LOG.warn("There were " + migrationData.getActionCount() + " discrepencies found between the application's required data model and the database "+C.getPoolName()+".");
         LOG.info("");
         int counter = 0;
         for (MigrationScript S : migrationData.getMigrationScripts())
@@ -179,7 +181,7 @@ public class Migrator
         // if (CheckOnly == false && Migrate.isTesting() == false)
         // AddTildaHelpers(C, TildaList, DBMeta);
 
-        LOG.info("===> Analyzing DB ( Url: " + C.getURL() + " )");
+        LOG.info("===> Analyzing DB ( Url: " + C.getPoolName() + " )");
         LOG.info("Analyzing differences between the database and the application's expected data model...");
         MigrationScript InitScript = new MigrationScript(null, new ArrayList<MigrationAction>());
         for (Schema S : TildaList)
@@ -188,37 +190,49 @@ public class Migrator
         Scripts.add(InitScript);
         for (Schema S : TildaList)
           {
-            List<MigrationAction> L = Migrator.getMigrationActions(C.getSQlCodeGen(), S, DBMeta);
+            if (S.getShortName().contentEquals("PATIENTS") == true)
+              LOG.debug("xxx");
+            List<MigrationAction> L = Migrator.getMigrationActions(C, C.getSQlCodeGen(), S, TildaList, DBMeta);
             for (MigrationAction MA : L)
               if (MA._isDependency == false)
                 ++ActionCount;
             if (S._Name.equalsIgnoreCase("TILDA") == true)
-              L.add(new TildaHelpersAdd());
+              {
+                MigrationAction A = new TildaHelpersAdd();
+                if (A.isNeeded(C, DBMeta) == true)
+                  L.add(A);
+              }
+            if (S._ExtraDDL != null && S._ExtraDDL._After != null)
+              for (String ddl : S._ExtraDDL._After)
+                {
+                  MigrationAction A = new TildaExtraDDL(S, ddl);
+                  if (A.isNeeded(C, DBMeta) == true)
+                    L.add(A);
+                }
             Scripts.add(new MigrationScript(S, L));
           }
-        List<MigrationAction> L = new ArrayList<MigrationAction>();
-        L.add(new TildaAclAdd(TildaList));
-        Scripts.add(new MigrationScript(null, L));
         return new MigrationDataModel(ActionCount, Scripts);
       }
 
-    protected static void confirmMigration(List<String> connectionUrls)
+    protected static void confirmMigration(Connection C)
     throws Exception
       {
-        LOG.info("");
-        LOG.info("!!! THIS UTILITY IS ABOUT TO CHANGE DATA IN FOLLOWING DATABASE(S). MAKE SURE YOU HAVE A BACKUP. !!!");
-        Iterator<String> iterator = connectionUrls.iterator();
-        while (iterator.hasNext())
-          {
-            LOG.info(" ===> " + iterator.next());
-          }
-        LOG.info("");
-        LOG.info("Press 'yes' followed by enter to continue.");
-        Scanner scanner = null;
+        LOG.info("\n");
+        LOG.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        LOG.info("!!! THE FOLLOWING DATABASE WILL NOW BE MIGRATED:");
+        LOG.info("!!!    ==> "+C.getPoolName());
+        LOG.info("!!!     ______ ____  ______   ____   ___    ______ __ __ __  __ ____  _____    ___   ");
+        LOG.info("!!!    / ____// __ \\/_  __/  / __ ) /   |  / ____// //_// / / // __ \\/ ___/   /__ \\ ");
+        LOG.info("!!!   / / __ / / / / / /    / __  |/ /| | / /    / ,<  / / / // /_/ /\\__ \\     / _/ ");
+        LOG.info("!!!  / /_/ // /_/ / / /    / /_/ // ___ |/ /___ / /| |/ /_/ // ____/___/ /    /_/   ");
+        LOG.info("!!!  \\____/ \\____/ /_/    /_____//_/  |_|\\____//_/ |_|\\____//_/    /____/    (_)    ");
+        LOG.info("!!!");
+        LOG.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        LOG.info("\n");
         try
           {
-            scanner = new Scanner(System.in);
-            String answer = scanner.next();
+            LOG.info("Press 'yes' followed by enter to continue.");
+            String answer = FileUtil.readlnFromStdIn(false);
             if (answer.toLowerCase().equals("yes") == false)
               throw new Exception("User asked to exit.");
             LOG.info("");
@@ -228,11 +242,6 @@ public class Migrator
         catch (Exception E)
           {
             throw E;
-          }
-        finally
-          {
-            if (scanner != null)
-              scanner.close();
           }
       }
 
@@ -255,33 +264,24 @@ public class Migrator
           }
       }
 
-    /*
-     * public static void AddTildaHelpers(Connection C, List<Schema> TildaList, DatabaseMeta DBMeta)
-     * throws Exception
-     * {
-     * if (DBMeta.getSchemaMeta("TILDA") == null)
-     * {
-     * for (Schema S : TildaList)
-     * if (S._Name.equalsIgnoreCase("TILDA") == true)
-     * {
-     * new SchemaCreate(S).process(C);
-     * break;
-     * }
-     * DBMeta.load(C, "TILDA");
-     * }
-     * new TildaHelpersAdd().process(C);
-     * C.commit();
-     * }
-     */
-    protected static List<MigrationAction> getMigrationActions(CodeGenSql CGSQL, Schema S, DatabaseMeta DBMeta)
+    protected static List<MigrationAction> getMigrationActions(Connection C, CodeGenSql CGSQL, Schema S, List<Schema> TildaList, DatabaseMeta DBMeta)
     throws Exception
       {
         LOG.info("Comparing the application's data model with the database's for " + S.getFullName());
 
         List<MigrationAction> Actions = new ArrayList<MigrationAction>();
+        List<String> Errors = new ArrayList<String>();
 
         if (DBMeta.getSchemaMeta(S._Name) == null)
           Actions.add(new SchemaCreate(S));
+
+        if (S._ExtraDDL != null && S._ExtraDDL._Before != null)
+          for (String ddl : S._ExtraDDL._Before)
+            {
+              TildaExtraDDL A = new TildaExtraDDL(S, ddl);
+              if (A.isNeeded(C, DBMeta) == true)
+                Actions.add(A);
+            }
 
         for (Object Obj : S._Objects)
           {
@@ -296,8 +296,6 @@ public class Migrator
               {
                 if (Obj._Description.equalsIgnoreCase(TMeta._Descr) == false)
                   Actions.add(new TableComment(Obj));
-                if (Obj._PrimaryKey != null && Obj._PrimaryKey._Autogen == true && KeysManager.hasKey(Obj.getShortName()) == false)
-                  Actions.add(new TableKeyCreate(Obj));
                 for (Column Col : Obj._Columns)
                   {
                     if (Col == null || Col._Mode == ColumnMode.CALCULATED)
@@ -313,13 +311,8 @@ public class Migrator
                         if (CMeta._Nullable == 1 && Col._Nullable == false || CMeta._Nullable == 0 && Col._Nullable == true)
                           Actions.add(new ColumnAlterNull(Col));
 
-                        if (DBMeta.supportsArrays() == true)
-                          {
-                            if (CMeta.isArray() == false && Col.isCollection() == true && Col.getType() != ColumnType.JSON)
-                              throw new Exception("The application's data model defines the column '" + Col.getShortName() + "' as an array, but it's not an array in the DB. The database needs to be migrated manually.");
-                            else if (CMeta.isArray() == true && (Col.isCollection() == false || Col.getType() == ColumnType.JSON))
-                              throw new Exception("The application's data model defines the column '" + Col.getShortName() + "' as an base type, but it's an array in the DB. The database needs to be migrated manually.");
-                          }
+                        if (CheckArrays(DBMeta, Errors, Col, CMeta) == false)
+                          continue;
 
                         if (Col.isCollection() == false
                         && (Col.getType() == ColumnType.BITFIELD && CMeta._TildaType != ColumnType.INTEGER
@@ -333,6 +326,55 @@ public class Migrator
                           Actions.add(new ColumnAlterStringSize(Col, CMeta._Size));
                       }
                   }
+                if (Obj._PrimaryKey != null && Obj._PrimaryKey._Autogen == true && KeysManager.hasKey(Obj.getShortName()) == false)
+                  Actions.add(new TableKeyCreate(Obj));
+                Set<String> DroppedFKs = new HashSet<String>();
+                if (DifferentPrimaryKeys(Obj._PrimaryKey, TMeta._PrimaryKey) == true)
+                  {
+                    for (FKMeta fk : TMeta._ForeignKeysIn.values())
+                      {
+                        Object OtherObj = CheckForeignKeys(TildaList, Errors, Obj, fk);
+                        if (OtherObj == null)
+                          continue;
+                        Actions.add(new TableFKDrop(OtherObj, Obj, fk));
+                        DroppedFKs.add(fk.getSignature());
+                      }
+                    Actions.add(new TablePKReplace(Obj, TMeta));
+                  }
+
+                // Checking any FK defined in the DB which are not in the Model, so they can be dropped.
+                for (FKMeta fk : TMeta._ForeignKeysOut.values())
+                  {
+                    boolean Found = false;
+                    String Sig = fk.getSignature();
+//                    LOG.debug("Checking db FK " + Sig + ".");
+                    for (ForeignKey FK : Obj._ForeignKeys)
+                      {
+//                        LOG.debug("Checking model FK " + FK.getSignature() + ".");
+                        if (Sig.equals(FK.getSignature()) == true)
+                          {
+                            Found = true;
+                            break;
+                          }
+                      }
+                    if (Found == false && DroppedFKs.contains(fk.getSignature()) == false)
+                      Actions.add(new TableFKDrop(Obj, null, fk));
+                  }
+                // Checking any FK defined in the Model which are not in the DB, so they can be added.
+                for (ForeignKey FK : Obj._ForeignKeys)
+                  {
+                    boolean Found = false;
+                    String Sig = FK.getSignature();
+                    for (FKMeta fk : TMeta._ForeignKeysOut.values())
+                      if (Sig.equals(fk.getSignature()) == true)
+                        {
+                          Found = true;
+                          break;
+                        }
+                    if (Found == false)
+                      Actions.add(new TableFKAdd(FK));
+                  }
+
                 /*
                  * for (String c : Obj._DropOldColumns)
                  * {
@@ -366,6 +408,60 @@ public class Migrator
               }
           }
 
+        if (Errors.isEmpty() == false)
+          {
+            LOG.error("Errors were found when putting together a migration script:");
+            for (int i = 0; i < Errors.size(); ++i)
+              LOG.error("   " + (i + 1) + ": " + Errors.get(i) + ".");
+            throw new Exception("Database couldn't be migrated.");
+          }
         return Actions;
+      }
+
+    private static Object CheckForeignKeys(List<Schema> TildaList, List<String> Errors, Object Obj, FKMeta fk)
+      {
+        Object OtherObj = Schema.getObject(TildaList, fk._OtherSchema, fk._OtherTable);
+        if (OtherObj == null)
+          {
+            Errors.add("The table " + Obj.getFullName() + " is changing its primary key, and a dependent table " + fk._OtherSchema + "." + fk._OtherTable + " seems to exist in the database outside of the application's data model. As a reult, migration cannot happen automatically for that dependent table.");
+            return null;
+          }
+        return OtherObj;
+      }
+
+    private static boolean CheckArrays(DatabaseMeta DBMeta, List<String> Errors, Column Col, ColumnMeta CMeta)
+      {
+        if (DBMeta.supportsArrays() == true)
+          {
+            if (CMeta.isArray() == false && Col.isCollection() == true && Col.getType() != ColumnType.JSON)
+              {
+                Errors.add("The application's data model defines the column '" + Col.getShortName() + "' as an array, but it's not an array in the DB. The database needs to be migrated manually.");
+                return false;
+              }
+            else if (CMeta.isArray() == true && (Col.isCollection() == false || Col.getType() == ColumnType.JSON))
+              {
+                Errors.add("The application's data model defines the column '" + Col.getShortName() + "' as an base type, but it's an array in the DB. The database needs to be migrated manually.");
+                return false;
+              }
+          }
+        return true;
+      }
+
+    private static boolean DifferentPrimaryKeys(PrimaryKey PK1, PKMeta PK2)
+      {
+        if (PK1 == null && PK2 == null) // No PKs
+          return false;
+
+        if (PK1 == null || PK2 == null) // Adding or removing a PK
+          return true;
+
+        if (PK1._Columns.length != PK2._Columns.size()) // Different size PKs
+          return true;
+
+        for (int i = 0; i < PK1._Columns.length; ++i)
+          if (PK1._Columns[i].equals(PK2._Columns.get(i)) == false)
+            return true; // different column
+
+        return false; // same PKs
       }
   }

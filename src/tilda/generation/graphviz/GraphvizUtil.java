@@ -618,6 +618,9 @@ public class GraphvizUtil
 
         for (Object obj : objects)
           {
+            if (obj == null)
+              continue;
+            
             String _Name = obj._Name.toUpperCase();
             if (obj._FST == FrameworkSourcedType.NONE)
               {

@@ -28,11 +28,14 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
+import tilda.db.metadata.FKMeta;
+import tilda.db.metadata.PKMeta;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
+import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
@@ -217,7 +220,7 @@ public class IBMDB2 implements DBType
       }
 
     @Override
-    public boolean addHelperFunctions(Connection Con)
+    public String getHelperFunctionsScript(Connection Con)
     throws Exception
       {
         throw new UnsupportedOperationException();
@@ -304,7 +307,7 @@ public class IBMDB2 implements DBType
 
 
     @Override
-    public void truncateTable(Connection C, String schemaName, String tableName)
+    public void truncateTable(Connection C, String schemaName, String tableName, boolean cascade)
     throws Exception
       {
         throw new UnsupportedOperationException();
@@ -338,10 +341,39 @@ public class IBMDB2 implements DBType
 
 
     @Override
-    public boolean addAclRoles(Connection Con, List<Schema> TildaList)
+    public String getAclRolesScript(Connection Con, List<Schema> TildaList)
     throws Exception
       {
         throw new UnsupportedOperationException();
       }
 
+
+    @Override
+    public boolean alterTableReplaceTablePK(Connection Con, Object Obj, PKMeta oldPK)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public boolean alterTableDropFK(Connection Con, Object Obj, FKMeta FK)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public boolean alterTableAddFK(Connection Con, ForeignKey FK)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+
+    @Override
+    public boolean isSuperUser(Connection C)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
   }

@@ -41,6 +41,15 @@ public class ParseUtilTest
         
         i = ParseUtil.parseInteger("123", SystemValues.EVIL_VALUE);
         LOG.debug("'123' -> "+i);
+        
+        double f = ParseUtil.parseDouble("1e+05", SystemValues.EVIL_VALUE);
+        LOG.debug("(double)'1e+05' -> "+f);
+        
+        i = ParseUtil.parseIntegerFlexible("1e+05", SystemValues.EVIL_VALUE);
+        LOG.debug("(int)'1e+05' -> "+i);
+        
+        long l = ParseUtil.parseLongFlexible("92233720368547758e+02", SystemValues.EVIL_VALUE);
+        LOG.debug("(long)'1e+10' -> "+l);
       }
 
   }

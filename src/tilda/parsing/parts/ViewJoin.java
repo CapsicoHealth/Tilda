@@ -33,6 +33,7 @@ public class ViewJoin
 
     /*@formatter:off*/
 	@SerializedName("object"     ) public String  _Object ;
+    @SerializedName("as"         ) public String  _As     ;
 	@SerializedName("on"         ) public Query[] _Ons    ;
     @SerializedName("joinType"   ) public String  _JoinStr;
     /*@formatter:on*/

@@ -65,7 +65,7 @@ public class Object extends Base
     public Column getColumn(String name)
       {
         for (Column C : _Columns)
-          if (C != null && C.getName() != null && C.getName().equalsIgnoreCase(name) == true)
+          if (C != null && C.getName() != null && C.getName().equals(name) == true)
             return C;
         return null;
       }
@@ -336,6 +336,14 @@ public class Object extends Base
       {
         return C.isOCCGenerated();
       }
+    public static boolean isOCCLastUpdated(Column C)
+      {
+        return C.isOCCLastUpdated();
+      }
+    public static boolean isOCCDeleted(Column C)
+      {
+        return C.isOCCDeleted();
+      }
 
     public void AddColumnAfter(Column SiblingCol, Column NewCol)
       {
@@ -415,5 +423,14 @@ public class Object extends Base
                 }
           }
         return false;
+      }
+
+    public List<ForeignKey> getForeignKeys(String targetSchema, String TargetObject)
+      {
+        List<ForeignKey> FKs = new ArrayList<ForeignKey>();
+        for (ForeignKey FK : _ForeignKeys)
+          if (FK._ParentObject.getShortName().equalsIgnoreCase(targetSchema+"."+TargetObject) == true)
+           FKs.add(FK);
+        return FKs;
       }
   }

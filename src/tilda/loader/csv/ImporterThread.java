@@ -9,8 +9,8 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.db.Connection;
 import tilda.db.ConnectionPool;
-import tilda.loader.csv.CSVImporter;
-import tilda.loader.csv.CSVImporter.Results;
+import tilda.loader.csv.stores.CSVImporter;
+import tilda.loader.csv.stores.CSVImporter.Results;
 import tilda.loader.parser.DataObject;
 
 public class ImporterThread implements Callable<List<Results>>
@@ -35,7 +35,8 @@ public class ImporterThread implements Callable<List<Results>>
         try
           {
             C = ConnectionPool.get(this.connectionId);
-            result = CSVImporter.process(C, rootFolder, this.dataObject);
+            CSVImporter importer = CSVImporterFactory.newInstance(C, this.rootFolder, this.dataObject);            
+            result = importer.process();
           }
         catch(Throwable T) 
           {

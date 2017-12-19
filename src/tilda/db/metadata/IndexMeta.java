@@ -42,4 +42,12 @@ public class IndexMeta
           }
         return "Name: " + _Name + "; Unique: " + _Unique + "; Columns: ["+Str.toString()+"];";
       }
+    
+    public List<String> getColumnNames()
+      {
+        List<String> columnNames = new ArrayList<>();
+        for(IndexColumnMeta icm : _Columns)
+          columnNames.add(icm._Col);
+        return columnNames;
+      }
   }

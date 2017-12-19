@@ -19,13 +19,13 @@ package tilda.parsing.parts;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
+
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.parsing.parts.helpers.SameAsHelper;
 import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.TextUtil;
-
-import com.google.gson.annotations.SerializedName;
 
 public class ForeignKey
   {
@@ -40,6 +40,10 @@ public class ForeignKey
 
     public transient Object       _ParentObject;
 
+    public String getName()
+     {
+       return "fk_"+_ParentObject.getBaseName()+"_"+_Name;
+     }
     public boolean Validate(ParserSession PS, Object O)
       {
         int Errs = PS.getErrorCount();
@@ -116,5 +120,13 @@ public class ForeignKey
         _SrcColumnObjs = ValidationHelper.ProcessColumn(PS, _ParentObject, "foreign key '" + _Name + "'", _SrcColumns, null);
 
         return true;
+      }
+    public String getColumnList()
+      {
+        return TextUtil.Print(_SrcColumns);
+      }
+    public String getSignature()
+      {
+        return _DestObjectObj.getShortName().toUpperCase()+"("+getColumnList()+")";
       }
   }
