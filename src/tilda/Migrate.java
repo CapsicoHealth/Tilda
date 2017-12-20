@@ -16,34 +16,48 @@
 
 package tilda;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.db.ConnectionPool;
+import tilda.utils.AsciiArt;
+import tilda.utils.FileUtil;
+import tilda.utils.TextUtil;
 
 public class Migrate
   {
-    static final Logger    LOG               = LogManager.getLogger(Migrate.class.getName());
+    static final Logger         LOG               = LogManager.getLogger(Migrate.class.getName());
 
-    static private boolean _MIGRATION_START_  = false;
-    static private boolean _IS_TESTING_       = false;
+    static private boolean      _MIGRATION_START_ = false;
+    static private boolean      _IS_TESTING_      = false;
+    static private List<String> _OverrideFiles    = new ArrayList<String>();
 
     static public boolean isMigrationActive()
       {
         return _MIGRATION_START_;
       }
-    
+
     static public boolean isTesting()
       {
         return _IS_TESTING_;
-      }    
-    
+      }
+
     public static void setIsTesting(boolean isTesting)
       {
         _IS_TESTING_ = isTesting;
       }
 
+    public static List<String> getOverrideFiles()
+      {
+        return _OverrideFiles;
+      }
+
     public static void main(String[] Args)
+    throws IOException
       {
         LOG.info("");
         LOG.info("Tilda migration utility");
@@ -54,6 +68,34 @@ public class Migrate
         LOG.info("##  JARs in the classpath.                                                                       ##");
         LOG.info("###################################################################################################");
         LOG.info("");
+        if (Args != null)
+          for (int i = 0; i < Args.length; ++i)
+            {
+              String FileName = Args[i];
+              boolean Error = false;
+              if (TextUtil.isNullOrEmpty(FileName) == false)
+                {
+                  if (FileUtil.existsFileOrResource(FileName) == false)
+                    {
+                      LOG.error("Cannot locate Override Model file/resource '" + FileName + "'. Check your file path if it's a file, or classpath if it's a resource.");
+                      Error = true;
+                    }
+                  else
+                    _OverrideFiles.add(FileName);
+                }
+              if (Error == true)
+                {
+                  LOG.info("\n"
+                  + "\n"
+                  + "          ======================================================================================\n"
+                  + AsciiArt.Error("               ")
+                  + "\n"
+                  + "                Some error(s) occurred while trying to locate Tilda Override Model files.\n"
+                  + "          ======================================================================================\n"
+                  + "\n");
+                  System.exit(-1);
+                }
+            }
         try
           {
             _MIGRATION_START_ = true;

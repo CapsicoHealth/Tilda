@@ -144,6 +144,21 @@ public class FileUtil
         return new BufferedReader(new InputStreamReader(In));
       }
 
+    public static boolean existsFileOrResource(String Name)
+    throws IOException
+      {
+        if (new File(Name).exists() == true)
+          return true;
+
+        InputStream In = FileUtil.getResourceAsStream(Name);
+        if (In != null)
+          {
+            In.close();
+            return true;
+          }
+        return false;
+      }
+
     public static String getFileOfResourceContents(String Name)
     throws IOException
       {

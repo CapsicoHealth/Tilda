@@ -218,8 +218,12 @@ public class Migrator
           {
             LOG.info("Press 'yes' followed by enter to continue.");
             String answer = FileUtil.readlnFromStdIn(false);
-            if (answer.toLowerCase().equals("yes") == false)
-              throw new Exception("User asked to exit.");
+            if (answer.toLowerCase().equalsIgnoreCase("yes") == false)
+              {
+                if (answer.equalsIgnoreCase("y") == true)
+                 LOG.error("Did you pay attention to the instructions? We asked that you type 'yes', and mot 'y', as a precaution measure :)");
+                throw new Exception("User asked to exit.");
+              }
             LOG.info("");
             LOG.info("OK! Starting the migration...");
             LOG.info("------------------------------------");
