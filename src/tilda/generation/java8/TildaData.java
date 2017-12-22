@@ -599,7 +599,7 @@ public class TildaData implements CodeGenTildaData
                       if (C._Protect == ProtectionType.ABSOLUTE)
                         Out.println("          v = HTMLFilter.CleanAbsolute(v);");
                       else if (C._Protect == ProtectionType.SMART)
-                        Out.println("          v = HTMLFilter.CleanSmart(v);");
+                        Out.println("          v = HTMLFilter.CleanSmart("+TextUtil.EscapeDoubleQuoteWithSlash(C.getFullName())+",v);");
                     }
                   break;
                 case BINARY:
