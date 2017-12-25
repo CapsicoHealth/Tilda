@@ -389,6 +389,8 @@ public class View extends Base
 
         if (_PivotColumns != null)
           {
+            PS.AddError("View '" + getFullName() + "' is defining a pivotColumns element which is obsolete. Use standard view composition instead.");
+/*            
             Set<String> PivotNames = new HashSet<String>();
             for (ViewPivotColumn PVC : _PivotColumns)
               {
@@ -429,7 +431,9 @@ public class View extends Base
                       }
                   }
               }
+*/
           }
+
         if (TextUtil.isNullOrEmpty(_CountStar) == false)
           {
             ViewColumn CountCol = new ViewColumn();
