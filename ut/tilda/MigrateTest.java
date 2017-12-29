@@ -1,6 +1,7 @@
 package tilda;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,20 +12,21 @@ public class MigrateTest
     protected static final Logger LOG = LogManager.getLogger(MigrateTest.class.getName());
     
     public static void main(String[] args)
+    throws Exception
       {
         testMigrate();
         //testMigrateCancel();
       }
     
     
-    public static void testMigrate()
+    public static void testMigrate() throws IOException
       {
         LOG.warn("===> Testing Migrate Utility Launcher");
         Migrate.setIsTesting(true);
         Migrate.main(null);        
       }
 
-    public static void testMigrateCancel()
+    public static void testMigrateCancel() throws IOException
       {
         LOG.warn("===> Testing Migrate Utility Launcher with Input = 'no'");
         Migrate.setIsTesting(true);

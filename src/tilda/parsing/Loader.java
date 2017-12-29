@@ -36,6 +36,7 @@ import com.google.gson.GsonBuilder;
 
 import tilda.db.ConnectionPool;
 import tilda.parsing.parts.Schema;
+import tilda.parsing.parts.SchemaOverride;
 import tilda.utils.FileUtil;
 import tilda.utils.TextUtil;
 
@@ -96,4 +97,12 @@ public class Loader
           }
         return TildaList;
       }
+    
+    
+    public static List<SchemaOverride> LoadTildaOverrideResources()
+    throws IOException, Exception
+      {
+        List<SchemaOverride> TildaList = new ArrayList<SchemaOverride>();
+        return TildaList;
+      }    
   }

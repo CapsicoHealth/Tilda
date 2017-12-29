@@ -55,6 +55,7 @@ import tilda.parsing.Loader;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
+import tilda.parsing.parts.SchemaOverride;
 import tilda.performance.PerfTracker;
 import tilda.utils.ClassStaticInit;
 import tilda.utils.FileUtil;
@@ -473,6 +474,9 @@ public class ConnectionPool
         List<Schema> TildaList = Loader.LoadTildaResources();
         if (TildaList == null)
           throw new Exception("Tilda cannot start as we didn't find the necessary Tilda resources.");
+        
+        List<SchemaOverride> TildaOverrideList = Loader.LoadTildaOverrideResources();
+        
 
         for (Schema S : TildaList)
           {
