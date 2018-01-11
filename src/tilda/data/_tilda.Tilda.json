@@ -1,17 +1,22 @@
 {
-  "package": "tilda.data",
-  "dependencies": null,
+  "package": "tilda.data"
+ ,"dependencies": null
 
-  "enumerations": [
+ ,"extraDDL":{
+     "before":["_tilda.Tilda.postgres.procedures.sql"]
+    ,"after":[]
+   } 
+
+ ,"enumerations": [
 
     { "name": "ZoneInfo",
       "description": "blah blah",
       "id"    : { "type": "STRING", "size":  5  },
       "value" : { "type": "STRING", "size":  50 }
     }
-   ],
+   ]
 
-  "objects":[
+ ,"objects":[
     { "name": "Key", "occ": false,
       "description": "The table to keep track of unique keys across distributed objects/tables",
       "columns":[
