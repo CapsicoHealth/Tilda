@@ -567,6 +567,12 @@ public class PostgreSQL implements DBType
         .append("'SELECT dst from TILDA.MAPPING where type=$1 and src=upper($2)';\n")
         .append("\n")
         .append("\n")
+        .append("CREATE OR REPLACE FUNCTION TILDA.map(varchar, varchar, varchar)\n")
+        .append("  RETURNS varchar\n")
+        .append("  IMMUTABLE LANGUAGE SQL AS\n")
+        .append("'SELECT coalesce(TILDA.map($1, $2), $3');\n")
+        .append("\n")
+        .append("\n")
         .append("CREATE extension if not exists tablefunc;\n");
         
         return Str.toString();
