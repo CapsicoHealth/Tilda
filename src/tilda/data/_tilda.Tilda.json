@@ -97,58 +97,6 @@
       	{ "name": "AllByObjectName", "columns": ["schemaName", "objectName"], "orderBy": ["startPeriod desc"], "db": false }
       ]
     },
-    
-    
-    { "name": "Testing",
-      "description": "blah blah",
-      "columns":[
-        { "name": "refnum2"      , "type": "LONG[]"     , "nullable": false,                "invariant": true , "description": "The person's primary key" },
-        { "name": "name"         , "type": "STRING"     , "nullable": false, "size":    10,                     "description": "Medical system unique enterprise id" },
-        { "name": "description"  , "type": "STRING"     ,                    "size":   250,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
-        { "name": "desc2"        , "type": "STRING"     ,                    "size":  3000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
-        { "name": "desc3"        , "type": "STRING"     ,                    "size":  5000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
-        { "name": "desc4"        , "type": "STRING"     ,                    "size":  9000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
-        { "name": "desc5"        , "type": "STRING"     ,                    "size": 17000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
-        { "name": "desc6"        , "type": "STRING"     ,                    "size": 33000, "protect":"SMART",  "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
-        { "name": "tops"         , "type": "STRING[]"   ,                                                       "description": "The blah"},
-        { "name": "tops2"        , "type": "STRING{}"   ,                                                       "description": "The blah"},
-        { "name": "a1"           , "type": "BITFIELD"   ,                                                       "description": "The blah"},
-        { "name": "a2"           , "type": "CHAR"       ,                                                       "description": "The blah"},
-        { "name": "a2b"          , "type": "CHAR[]"     ,                                                       "description": "The blah"},
-        { "name": "a2c"          , "type": "CHAR{}"     ,                                                       "description": "The blah"},
-        { "name": "a3"           , "type": "BOOLEAN"    ,                                                       "description": "The blah"},
-        { "name": "a3b"          , "type": "BOOLEAN[]"  ,                                                       "description": "The blah"},
-        { "name": "a4"           , "type": "DOUBLE"     ,                                                       "description": "The blah"},
-        { "name": "a4b"          , "type": "DOUBLE[]"   ,                                                       "description": "The blah"},
-        { "name": "a5"           , "type": "FLOAT"      ,                                                       "description": "The blah"},
-        { "name": "a5b"          , "type": "FLOAT[]"    ,                                                       "description": "The blah"},
-        { "name": "a6"           , "type": "LONG"       ,                                                       "description": "The blah"},
-        { "name": "a6b"          , "type": "LONG[]"     ,                                                       "description": "The blah"},
-        { "name": "a6c"          , "type": "LONG{}"     ,                                                       "description": "The blah"},
-        { "name": "a7"           , "type": "INTEGER"    ,                                                       "description": "The blah"},
-        { "name": "a7b"          , "type": "INTEGER[]"  ,                                                       "description": "The blah"},
-        { "name": "a8"           , "type": "BINARY"     ,                                                       "description": "The blah"},
-        { "name": "a9"           , "type": "DATETIME"   ,                                                       "description": "The blah"}
-      ],
-      "primary": { "autogen": true },
-      "indices":[ 
-      	{ "name": "AllByName" , "orderBy": ["name asc"], "db": false 
-      	},
-      	{ "name": "AllByName2", "orderBy": ["name asc"], "db": true, "subQuery": { "from"  : ["ObjectPerf"], 
-      	                                                                           "wheres": [ { "db": "*", "clause": "deleted is null and desc2 >= ?(Lower) and a5 < ?(Upper) or name = ?() and created > ?()" } 
-      	                                                                                     ] 
-      	                                                                         }
-      	},
-      	{ "name": "AllByName3", "orderBy": ["name asc"], "db": true, "subWhere": "deleted is null and name = ?() and created > ?()" }
-      ],
-      "json":[
-        { "name": "AAA", "columns": ["refnum", "refnum2", "name", "description", "desc2", "desc3", "desc4", "desc5", "desc6", "tops", "tops2", "a1", "a2", "a2b", "a2c", "a3", "a3b", "a4", "a4b", "a5", "a5b", "a6", "a6b", "a6c", "a7", "a7b", "a9", "created", "lastUpdated"] }
-       ,{ "name": "BBB", "columns": ["refnum", "refnum2", "name", "description", "desc2", "desc3"] }
-      ],
-      "http":[
-        { "name": "", "mandatories": ["refnum", "name", "description"] }
-      ]
-    },
     {
       "name": "Connection",
       "description": "Tilda DB Connections Configurations",
@@ -244,6 +192,69 @@
      ,"indices":[
       ]
     }
+
+   ,{ "name": "Testing",
+      "description": "blah blah",
+      "columns":[
+        { "name": "refnum2"      , "type": "LONG[]"     , "nullable": false,                "invariant": true , "description": "The person's primary key" },
+        { "name": "name"         , "type": "STRING"     , "nullable": false, "size":    10,                     "description": "Medical system unique enterprise id" },
+        { "name": "description"  , "type": "STRING"     ,                    "size":   250,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
+        { "name": "desc2"        , "type": "STRING"     ,                    "size":  3000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
+        { "name": "desc3"        , "type": "STRING"     ,                    "size":  5000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
+        { "name": "desc4"        , "type": "STRING"     ,                    "size":  9000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
+        { "name": "desc5"        , "type": "STRING"     ,                    "size": 17000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
+        { "name": "desc6"        , "type": "STRING"     ,                    "size": 33000, "protect":"SMART",  "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
+        { "name": "tops"         , "type": "STRING[]"   ,                                                       "description": "The blah"},
+        { "name": "tops2"        , "type": "STRING{}"   ,                                                       "description": "The blah"},
+        { "name": "a1"           , "type": "BITFIELD"   ,                                                       "description": "The blah"},
+        { "name": "a2"           , "type": "CHAR"       ,                                                       "description": "The blah"},
+        { "name": "a2b"          , "type": "CHAR[]"     ,                                                       "description": "The blah"},
+        { "name": "a2c"          , "type": "CHAR{}"     ,                                                       "description": "The blah"},
+        { "name": "a3"           , "type": "BOOLEAN"    ,                                                       "description": "The blah"},
+        { "name": "a3b"          , "type": "BOOLEAN[]"  ,                                                       "description": "The blah"},
+        { "name": "a4"           , "type": "DOUBLE"     ,                                                       "description": "The blah"},
+        { "name": "a4b"          , "type": "DOUBLE[]"   ,                                                       "description": "The blah"},
+        { "name": "a5"           , "type": "FLOAT"      ,                                                       "description": "The blah"},
+        { "name": "a5b"          , "type": "FLOAT[]"    ,                                                       "description": "The blah"},
+        { "name": "a6"           , "type": "LONG"       ,                                                       "description": "The blah"},
+        { "name": "a6b"          , "type": "LONG[]"     ,                                                       "description": "The blah"},
+        { "name": "a6c"          , "type": "LONG{}"     ,                                                       "description": "The blah"},
+        { "name": "a7"           , "type": "INTEGER"    ,                                                       "description": "The blah"},
+        { "name": "a7b"          , "type": "INTEGER[]"  ,                                                       "description": "The blah"},
+        { "name": "a8"           , "type": "BINARY"     ,                                                       "description": "The blah"},
+        { "name": "a9"           , "type": "DATETIME"   ,                                                       "description": "The blah"}
+      ],
+      "primary": { "autogen": true },
+      "indices":[ 
+        { "name": "AllByName" , "orderBy": ["name asc"], "db": false 
+        },
+        { "name": "AllByName2", "orderBy": ["name asc"], "db": true, "subQuery": { "from"  : ["ObjectPerf"], 
+                                                                                   "wheres": [ { "db": "*", "clause": "deleted is null and desc2 >= ?(Lower) and a5 < ?(Upper) or name = ?() and created > ?()" } 
+                                                                                             ] 
+                                                                                 }
+        },
+        { "name": "AllByName3", "orderBy": ["name asc"], "db": true, "subWhere": "deleted is null and name = ?() and created > ?()" }
+      ],
+      "json":[
+        { "name": "AAA", "columns": ["refnum", "refnum2", "name", "description", "desc2", "desc3", "desc4", "desc5", "desc6", "tops", "tops2", "a1", "a2", "a2b", "a2c", "a3", "a3b", "a4", "a4b", "a5", "a5b", "a6", "a6b", "a6c", "a7", "a7b", "a9", "created", "lastUpdated"] }
+       ,{ "name": "BBB", "columns": ["refnum", "refnum2", "name", "description", "desc2", "desc3"] }
+      ],
+      "http":[
+        { "name": "", "mandatories": ["refnum", "name", "description"] }
+      ]
+    }
     
+   ,{ "name":"Testing2",
+      "lc": "READONLY",
+      "dbOnly":true,
+      "description":"Testing",
+      "columns":[
+         { "name":"t1"  , "type":"STRING"  , "nullable": false, "size":   2, "description":"State code" }
+        ,{ "name":"t2"  , "type":"STRING"  , "nullable": false, "size":  60, "description":"State name" }
+       ]
+     ,"indices":[ 
+         { "name":"T1"   , "columns":["t1"] }
+       ]
+    }
   ]
 }

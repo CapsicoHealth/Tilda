@@ -162,83 +162,6 @@ CREATE INDEX TRANSPERF_AllBySchemaName ON TILDA.TRANSPERF ("schemaName", "object
 
 
 
-create table if not exists TILDA.TESTING -- blah blah
- (  "refnum"       bigint              not null   -- The primary key for this record
-  , "refnum2"      bigint[]            not null   -- The person's primary key
-  , "name"         character(10)       not null   -- Medical system unique enterprise id
-  , "description"  varchar(250)                   -- The title for a person, i.e., Mr, Miss, Mrs...
-  , "desc2"        varchar(3000)                  -- The title for a person, i.e., Mr, Miss, Mrs...
-  , "desc3"        text                           -- The title for a person, i.e., Mr, Miss, Mrs...
-  , "desc4"        text                           -- The title for a person, i.e., Mr, Miss, Mrs...
-  , "desc5"        text                           -- The title for a person, i.e., Mr, Miss, Mrs...
-  , "desc6"        text                           -- The title for a person, i.e., Mr, Miss, Mrs...
-  , "tops"         text[]                         -- The blah
-  , "tops2"        text[]                         -- The blah
-  , "a1"           INTEGER                        -- The blah
-  , "a2"           character                      -- The blah
-  , "a2b"          character[]                    -- The blah
-  , "a2c"          character[]                    -- The blah
-  , "a3"           boolean                        -- The blah
-  , "a3b"          boolean[]                      -- The blah
-  , "a4"           double precision               -- The blah
-  , "a4b"          double precision[]             -- The blah
-  , "a5"           real                           -- The blah
-  , "a5b"          real[]                         -- The blah
-  , "a6"           bigint                         -- The blah
-  , "a6b"          bigint[]                       -- The blah
-  , "a6c"          bigint[]                       -- The blah
-  , "a7"           integer                        -- The blah
-  , "a7b"          integer[]                      -- The blah
-  , "a8"           BYTEA                          -- The blah
-  , "a9TZ"         character(5)                   -- Generated helper column to hold the time zone ID for 'a9'.
-  , "a9"           timestamptz                    -- The blah
-  , "created"      timestamptz         not null   -- The timestamp for when the record was created.
-  , "lastUpdated"  timestamptz         not null   -- The timestamp for when the record was last updated.
-  , "deleted"      timestamptz                    -- The timestamp for when the record was deleted.
-  , PRIMARY KEY("refnum")
-  , CONSTRAINT fk_TESTING_a9 FOREIGN KEY ("a9TZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
- );
-COMMENT ON TABLE TILDA.TESTING IS E'blah blah';
-COMMENT ON COLUMN TILDA.TESTING."refnum" IS E'The primary key for this record';
-COMMENT ON COLUMN TILDA.TESTING."refnum2" IS E'The person''s primary key';
-COMMENT ON COLUMN TILDA.TESTING."name" IS E'Medical system unique enterprise id';
-COMMENT ON COLUMN TILDA.TESTING."description" IS E'The title for a person, i.e., Mr, Miss, Mrs...';
-COMMENT ON COLUMN TILDA.TESTING."desc2" IS E'The title for a person, i.e., Mr, Miss, Mrs...';
-COMMENT ON COLUMN TILDA.TESTING."desc3" IS E'The title for a person, i.e., Mr, Miss, Mrs...';
-COMMENT ON COLUMN TILDA.TESTING."desc4" IS E'The title for a person, i.e., Mr, Miss, Mrs...';
-COMMENT ON COLUMN TILDA.TESTING."desc5" IS E'The title for a person, i.e., Mr, Miss, Mrs...';
-COMMENT ON COLUMN TILDA.TESTING."desc6" IS E'The title for a person, i.e., Mr, Miss, Mrs...';
-COMMENT ON COLUMN TILDA.TESTING."tops" IS E'The blah';
-COMMENT ON COLUMN TILDA.TESTING."tops2" IS E'The blah';
-COMMENT ON COLUMN TILDA.TESTING."a1" IS E'The blah';
-COMMENT ON COLUMN TILDA.TESTING."a2" IS E'The blah';
-COMMENT ON COLUMN TILDA.TESTING."a2b" IS E'The blah';
-COMMENT ON COLUMN TILDA.TESTING."a2c" IS E'The blah';
-COMMENT ON COLUMN TILDA.TESTING."a3" IS E'The blah';
-COMMENT ON COLUMN TILDA.TESTING."a3b" IS E'The blah';
-COMMENT ON COLUMN TILDA.TESTING."a4" IS E'The blah';
-COMMENT ON COLUMN TILDA.TESTING."a4b" IS E'The blah';
-COMMENT ON COLUMN TILDA.TESTING."a5" IS E'The blah';
-COMMENT ON COLUMN TILDA.TESTING."a5b" IS E'The blah';
-COMMENT ON COLUMN TILDA.TESTING."a6" IS E'The blah';
-COMMENT ON COLUMN TILDA.TESTING."a6b" IS E'The blah';
-COMMENT ON COLUMN TILDA.TESTING."a6c" IS E'The blah';
-COMMENT ON COLUMN TILDA.TESTING."a7" IS E'The blah';
-COMMENT ON COLUMN TILDA.TESTING."a7b" IS E'The blah';
-COMMENT ON COLUMN TILDA.TESTING."a8" IS E'The blah';
-COMMENT ON COLUMN TILDA.TESTING."a9TZ" IS E'Generated helper column to hold the time zone ID for ''a9''.';
-COMMENT ON COLUMN TILDA.TESTING."a9" IS E'The blah';
-COMMENT ON COLUMN TILDA.TESTING."created" IS E'The timestamp for when the record was created.';
-COMMENT ON COLUMN TILDA.TESTING."lastUpdated" IS E'The timestamp for when the record was last updated.';
-COMMENT ON COLUMN TILDA.TESTING."deleted" IS E'The timestamp for when the record was deleted.';
--- app-level index only -- CREATE INDEX TESTING_AllByName ON TILDA.TESTING ("name" ASC);
-CREATE INDEX TESTING_AllByName2 ON TILDA.TESTING ("name" ASC);
-CREATE INDEX TESTING_AllByName3 ON TILDA.TESTING ("name" ASC);
-delete from TILDA.KEY where "name" = 'TILDA.TESTING';
-insert into TILDA.KEY ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.KEY), 'TILDA.TESTING',(select COALESCE(max("refnum"),0)+1 from TILDA.TESTING), 250, current_timestamp, current_timestamp);
-
-
-
 create table if not exists TILDA.CONNECTION -- Tilda DB Connections Configurations
  (  "active"       boolean                   -- Status Flag
   , "id"           character(15)  not null   -- Connection ID
@@ -389,5 +312,99 @@ COMMENT ON COLUMN TILDA.MAINTENANCE."value" IS E'The value of the maintenance re
 COMMENT ON COLUMN TILDA.MAINTENANCE."created" IS E'The timestamp for when the record was created.';
 COMMENT ON COLUMN TILDA.MAINTENANCE."lastUpdated" IS E'The timestamp for when the record was last updated.';
 COMMENT ON COLUMN TILDA.MAINTENANCE."deleted" IS E'The timestamp for when the record was deleted.';
+
+
+
+create table if not exists TILDA.TESTING -- blah blah
+ (  "refnum"       bigint              not null   -- The primary key for this record
+  , "refnum2"      bigint[]            not null   -- The person's primary key
+  , "name"         character(10)       not null   -- Medical system unique enterprise id
+  , "description"  varchar(250)                   -- The title for a person, i.e., Mr, Miss, Mrs...
+  , "desc2"        varchar(3000)                  -- The title for a person, i.e., Mr, Miss, Mrs...
+  , "desc3"        text                           -- The title for a person, i.e., Mr, Miss, Mrs...
+  , "desc4"        text                           -- The title for a person, i.e., Mr, Miss, Mrs...
+  , "desc5"        text                           -- The title for a person, i.e., Mr, Miss, Mrs...
+  , "desc6"        text                           -- The title for a person, i.e., Mr, Miss, Mrs...
+  , "tops"         text[]                         -- The blah
+  , "tops2"        text[]                         -- The blah
+  , "a1"           INTEGER                        -- The blah
+  , "a2"           character                      -- The blah
+  , "a2b"          character[]                    -- The blah
+  , "a2c"          character[]                    -- The blah
+  , "a3"           boolean                        -- The blah
+  , "a3b"          boolean[]                      -- The blah
+  , "a4"           double precision               -- The blah
+  , "a4b"          double precision[]             -- The blah
+  , "a5"           real                           -- The blah
+  , "a5b"          real[]                         -- The blah
+  , "a6"           bigint                         -- The blah
+  , "a6b"          bigint[]                       -- The blah
+  , "a6c"          bigint[]                       -- The blah
+  , "a7"           integer                        -- The blah
+  , "a7b"          integer[]                      -- The blah
+  , "a8"           BYTEA                          -- The blah
+  , "a9TZ"         character(5)                   -- Generated helper column to hold the time zone ID for 'a9'.
+  , "a9"           timestamptz                    -- The blah
+  , "created"      timestamptz         not null   -- The timestamp for when the record was created.
+  , "lastUpdated"  timestamptz         not null   -- The timestamp for when the record was last updated.
+  , "deleted"      timestamptz                    -- The timestamp for when the record was deleted.
+  , PRIMARY KEY("refnum")
+  , CONSTRAINT fk_TESTING_a9 FOREIGN KEY ("a9TZ") REFERENCES TILDA.ZONEINFO ON DELETE restrict ON UPDATE cascade
+ );
+COMMENT ON TABLE TILDA.TESTING IS E'blah blah';
+COMMENT ON COLUMN TILDA.TESTING."refnum" IS E'The primary key for this record';
+COMMENT ON COLUMN TILDA.TESTING."refnum2" IS E'The person''s primary key';
+COMMENT ON COLUMN TILDA.TESTING."name" IS E'Medical system unique enterprise id';
+COMMENT ON COLUMN TILDA.TESTING."description" IS E'The title for a person, i.e., Mr, Miss, Mrs...';
+COMMENT ON COLUMN TILDA.TESTING."desc2" IS E'The title for a person, i.e., Mr, Miss, Mrs...';
+COMMENT ON COLUMN TILDA.TESTING."desc3" IS E'The title for a person, i.e., Mr, Miss, Mrs...';
+COMMENT ON COLUMN TILDA.TESTING."desc4" IS E'The title for a person, i.e., Mr, Miss, Mrs...';
+COMMENT ON COLUMN TILDA.TESTING."desc5" IS E'The title for a person, i.e., Mr, Miss, Mrs...';
+COMMENT ON COLUMN TILDA.TESTING."desc6" IS E'The title for a person, i.e., Mr, Miss, Mrs...';
+COMMENT ON COLUMN TILDA.TESTING."tops" IS E'The blah';
+COMMENT ON COLUMN TILDA.TESTING."tops2" IS E'The blah';
+COMMENT ON COLUMN TILDA.TESTING."a1" IS E'The blah';
+COMMENT ON COLUMN TILDA.TESTING."a2" IS E'The blah';
+COMMENT ON COLUMN TILDA.TESTING."a2b" IS E'The blah';
+COMMENT ON COLUMN TILDA.TESTING."a2c" IS E'The blah';
+COMMENT ON COLUMN TILDA.TESTING."a3" IS E'The blah';
+COMMENT ON COLUMN TILDA.TESTING."a3b" IS E'The blah';
+COMMENT ON COLUMN TILDA.TESTING."a4" IS E'The blah';
+COMMENT ON COLUMN TILDA.TESTING."a4b" IS E'The blah';
+COMMENT ON COLUMN TILDA.TESTING."a5" IS E'The blah';
+COMMENT ON COLUMN TILDA.TESTING."a5b" IS E'The blah';
+COMMENT ON COLUMN TILDA.TESTING."a6" IS E'The blah';
+COMMENT ON COLUMN TILDA.TESTING."a6b" IS E'The blah';
+COMMENT ON COLUMN TILDA.TESTING."a6c" IS E'The blah';
+COMMENT ON COLUMN TILDA.TESTING."a7" IS E'The blah';
+COMMENT ON COLUMN TILDA.TESTING."a7b" IS E'The blah';
+COMMENT ON COLUMN TILDA.TESTING."a8" IS E'The blah';
+COMMENT ON COLUMN TILDA.TESTING."a9TZ" IS E'Generated helper column to hold the time zone ID for ''a9''.';
+COMMENT ON COLUMN TILDA.TESTING."a9" IS E'The blah';
+COMMENT ON COLUMN TILDA.TESTING."created" IS E'The timestamp for when the record was created.';
+COMMENT ON COLUMN TILDA.TESTING."lastUpdated" IS E'The timestamp for when the record was last updated.';
+COMMENT ON COLUMN TILDA.TESTING."deleted" IS E'The timestamp for when the record was deleted.';
+-- app-level index only -- CREATE INDEX TESTING_AllByName ON TILDA.TESTING ("name" ASC);
+CREATE INDEX TESTING_AllByName2 ON TILDA.TESTING ("name" ASC);
+CREATE INDEX TESTING_AllByName3 ON TILDA.TESTING ("name" ASC);
+delete from TILDA.KEY where "name" = 'TILDA.TESTING';
+insert into TILDA.KEY ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.KEY), 'TILDA.TESTING',(select COALESCE(max("refnum"),0)+1 from TILDA.TESTING), 250, current_timestamp, current_timestamp);
+
+
+
+create table if not exists TILDA.TESTING2 -- Testing
+ (  "t1"           character(2)  not null   -- State code
+  , "t2"           varchar(60)   not null   -- State name
+  , "created"      timestamptz   not null   -- The timestamp for when the record was created.
+  , "lastUpdated"  timestamptz   not null   -- The timestamp for when the record was last updated.
+  , "deleted"      timestamptz              -- The timestamp for when the record was deleted.
+ );
+COMMENT ON TABLE TILDA.TESTING2 IS E'Testing';
+COMMENT ON COLUMN TILDA.TESTING2."t1" IS E'State code';
+COMMENT ON COLUMN TILDA.TESTING2."t2" IS E'State name';
+COMMENT ON COLUMN TILDA.TESTING2."created" IS E'The timestamp for when the record was created.';
+COMMENT ON COLUMN TILDA.TESTING2."lastUpdated" IS E'The timestamp for when the record was last updated.';
+COMMENT ON COLUMN TILDA.TESTING2."deleted" IS E'The timestamp for when the record was deleted.';
+CREATE UNIQUE INDEX TESTING2_T1 ON TILDA.TESTING2 ("t1");
 
 
