@@ -54,8 +54,7 @@ public class Gen
                 ParserSession PS = Parser.parse(path, G.getSql());
                 if (PS == null)
                   {
-                    LOG.error("An error occurred trying to process Tilda file '" + path + "'.");
-                    break;
+                    throw new Exception("An error occurred trying to process Tilda file '" + path + "'.");
                   }
                 else
                   {
