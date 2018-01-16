@@ -39,6 +39,7 @@ public class Object extends Base
 
     /*@formatter:off*/
     @SerializedName("occ"           ) public boolean              _OCC        = true ;
+    @SerializedName("dbOnly"        ) public boolean              _DBOnly     = false;
     @SerializedName("etl"           ) public boolean              _ETL        = false;
     @SerializedName("lc"            ) public String               _LCStr      = ObjectLifecycle.NORMAL.toString();
 
@@ -58,8 +59,6 @@ public class Object extends Base
     public transient boolean              _HasUniqueQuery;
     public transient FrameworkSourcedType _FST         = FrameworkSourcedType.NONE;
     public transient ObjectLifecycle      _LC;
-    public transient boolean              _DBOnly;
-
 
     @Override
     public Column getColumn(String name)
