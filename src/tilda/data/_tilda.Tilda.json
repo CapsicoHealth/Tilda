@@ -40,7 +40,7 @@
 
 
     { "name": "Mapping",
-      "description": "Performance logs for the Tilda framework",
+      "description": "Generalized Mapping table",
       "columns":[
          { "name": "type"       , "type": "STRING", "nullable": false, "size":   10, "invariant": true, "description": "The type this mapping is for" }
         ,{ "name": "src"        , "type": "STRING", "nullable": false, "size": 1024, "invariant": true, "description": "The source value for this mapping" }
@@ -190,6 +190,65 @@
       ]
      ,"primary": { "columns": ["type", "name"], "autogen": false }
      ,"indices":[
+      ]
+    }
+    
+    
+   ,{ "name":"Formula"
+     ,"occ":true
+     ,"description":"Formula information"
+     ,"columns":[
+         { "name":"location"   , "type":"STRING" , "nullable":false, "size":   64, "invariant":true, "description":"The name of the primary table/view this formula is defined in."  }
+        ,{ "name":"location2"  , "type":"STRING" , "nullable":false, "size":   64, "invariant":true, "description":"The name of the secondary table/view (a derived view, a realized table), if appropriate."   }
+        ,{ "name":"name"       , "type":"STRING" , "nullable":false, "size":   64,                   "description":"The name of the formula/column."  }
+        ,{ "name":"type"       , "type":"STRING" , "nullable":false, "size":    3,                   "description":"The type of the formula/column value/outcome."
+                               , "values": [ { "name":"String"   , "value":"STR", "description": "String"    }
+                                            ,{ "name":"Character", "value":"CHR", "description": "Character" }
+                                            ,{ "name":"Boolean"  , "value":"BOL", "description": "Boolean"   }
+                                            ,{ "name":"Integer"  , "value":"INT", "description": "Integer"   }
+                                            ,{ "name":"Long"     , "value":"LNG", "description": "Long"      }
+                                            ,{ "name":"Float"    , "value":"FLT", "description": "Float"     }
+                                            ,{ "name":"Double"   , "value":"DBL", "description": "Double"    }
+                                            ,{ "name":"Date"     , "value":"D"  , "description": "Date"      }
+                                            ,{ "name":"DateTime" , "value":"DT" , "description": "DateTime"  }
+                                           ]
+         }
+        ,{ "name":"primary"    , "type":"BOOLEAN", "nullable":false,                                 "description":"Whether this is a primary formula or a lower-level formula component."  }
+        ,{ "name":"title"      , "type":"STRING" , "nullable":false, "size":  128,                   "description":"The title of the formula/column."  }
+        ,{ "name":"description", "type":"STRING" , "nullable":false, "size":32000,                   "description":"The description of the formula/column."  }
+        ,{ "name":"formula"    , "type":"STRING" , "nullable":true , "size":32000,                   "description":"The formula."  }
+        ,{ "name":"htmlDoc"    , "type":"STRING" , "nullable":true , "size":32000,                   "description":"Pre-rendered html fragment with the full documentation for this formula."  }
+       ]
+     ,"primary": { "autogen": true }
+     ,"indices":[
+         { "name": "Formula", "columns": ["location" , "name"], "db": true }
+      ]
+    }
+    
+   ,{ "name":"FormulaDependency"
+     ,"occ":true
+     ,"description":"Formula dependency information"
+     ,"columns":[
+         { "name":"formulaRefnum"   , "sameas":"Formula.refnum",                 "description":"The parent formula."  }
+        ,{ "name":"dependencyRefnum", "sameas":"Formula.refnum",                 "description":"The dependent formula."   }
+       ]
+     ,"primary": { "autogen": true }
+     ,"indices":[
+         { "name": "Dependency", "columns": ["formulaRefnum" , "dependencyRefnum"], "db": true }
+      ]
+    }
+
+   ,{ "name":"FormulaResult"
+     ,"occ":true
+     ,"description":"Formula result information, if applicable. Some formulas may not yield an enumeratable value (e.g., returning a date)"
+     ,"columns":[
+         { "name":"formulaRefnum", "sameas":"Formula.refnum",                           "description":"The parent formula."  }
+        ,{ "name":"value"        , "type":"STRING" , "nullable":false, "size":  100,    "description":"The result value."  }
+        ,{ "name":"description"  , "type":"STRING" , "nullable":false, "size":32000,    "description":"The description of the result value."  }
+       ]
+     ,"primary": { "autogen": true }
+     ,"indices":[
+         { "name": "Value", "columns": ["formulaRefnum" , "value"], "db": true }
       ]
     }
 

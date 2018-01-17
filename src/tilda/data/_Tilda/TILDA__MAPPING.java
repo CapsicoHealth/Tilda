@@ -33,7 +33,7 @@ The generated Java 8/PostgreSQL Tilda data class <B>Data_MAPPING</B> is mapped t
 <LI>The Table has normal <B>read/write</B> capabilities.</LI>
 <LI>The Table is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
 </UL>
-<B>Description</B>: Performance logs for the Tilda framework<BR>
+<B>Description</B>: Generalized Mapping table<BR>
 <BR>
 
 It contains the following columns:<BR>
@@ -223,7 +223,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jan 16 2018, 17:57:32COT
+ @generated Jan 16 2018, 20:39:33COT
 */
 public abstract class TILDA__MAPPING implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {

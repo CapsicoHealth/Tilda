@@ -53,7 +53,7 @@ CREATE UNIQUE INDEX KEY_Name ON TILDA.KEY ("name");
 
 
 
-create table if not exists TILDA.MAPPING -- Performance logs for the Tilda framework
+create table if not exists TILDA.MAPPING -- Generalized Mapping table
  (  "type"         character(10)  not null   -- The type this mapping is for
   , "src"          varchar(1024)  not null   -- The source value for this mapping
   , "dst"          varchar(1024)  not null   -- The the destination (mapped) value for this mapping.
@@ -61,7 +61,7 @@ create table if not exists TILDA.MAPPING -- Performance logs for the Tilda frame
   , "lastUpdated"  timestamptz    not null   -- The timestamp for when the record was last updated.
   , "deleted"      timestamptz               -- The timestamp for when the record was deleted.
  );
-COMMENT ON TABLE TILDA.MAPPING IS E'Performance logs for the Tilda framework';
+COMMENT ON TABLE TILDA.MAPPING IS E'Generalized Mapping table';
 COMMENT ON COLUMN TILDA.MAPPING."type" IS E'The type this mapping is for';
 COMMENT ON COLUMN TILDA.MAPPING."src" IS E'The source value for this mapping';
 COMMENT ON COLUMN TILDA.MAPPING."dst" IS E'The the destination (mapped) value for this mapping.';
@@ -312,6 +312,88 @@ COMMENT ON COLUMN TILDA.MAINTENANCE."value" IS E'The value of the maintenance re
 COMMENT ON COLUMN TILDA.MAINTENANCE."created" IS E'The timestamp for when the record was created.';
 COMMENT ON COLUMN TILDA.MAINTENANCE."lastUpdated" IS E'The timestamp for when the record was last updated.';
 COMMENT ON COLUMN TILDA.MAINTENANCE."deleted" IS E'The timestamp for when the record was deleted.';
+
+
+
+create table if not exists TILDA.FORMULA -- Formula information
+ (  "refnum"       bigint        not null   -- The primary key for this record
+  , "location"     varchar(64)   not null   -- The name of the primary table/view this formula is defined in.
+  , "location2"    varchar(64)   not null   -- The name of the secondary table/view (a derived view, a realized table), if appropriate.
+  , "name"         varchar(64)   not null   -- The name of the formula/column.
+  , "type"         character(3)  not null   -- The type of the formula/column value/outcome.
+  , "primary"      boolean       not null   -- Whether this is a primary formula or a lower-level formula component.
+  , "title"        varchar(128)  not null   -- The title of the formula/column.
+  , "description"  text          not null   -- The description of the formula/column.
+  , "formula"      text                     -- The formula.
+  , "htmlDoc"      text                     -- Pre-rendered html fragment with the full documentation for this formula.
+  , "created"      timestamptz   not null   -- The timestamp for when the record was created.
+  , "lastUpdated"  timestamptz   not null   -- The timestamp for when the record was last updated.
+  , "deleted"      timestamptz              -- The timestamp for when the record was deleted.
+  , PRIMARY KEY("refnum")
+ );
+COMMENT ON TABLE TILDA.FORMULA IS E'Formula information';
+COMMENT ON COLUMN TILDA.FORMULA."refnum" IS E'The primary key for this record';
+COMMENT ON COLUMN TILDA.FORMULA."location" IS E'The name of the primary table/view this formula is defined in.';
+COMMENT ON COLUMN TILDA.FORMULA."location2" IS E'The name of the secondary table/view (a derived view, a realized table), if appropriate.';
+COMMENT ON COLUMN TILDA.FORMULA."name" IS E'The name of the formula/column.';
+COMMENT ON COLUMN TILDA.FORMULA."type" IS E'The type of the formula/column value/outcome.';
+COMMENT ON COLUMN TILDA.FORMULA."primary" IS E'Whether this is a primary formula or a lower-level formula component.';
+COMMENT ON COLUMN TILDA.FORMULA."title" IS E'The title of the formula/column.';
+COMMENT ON COLUMN TILDA.FORMULA."description" IS E'The description of the formula/column.';
+COMMENT ON COLUMN TILDA.FORMULA."formula" IS E'The formula.';
+COMMENT ON COLUMN TILDA.FORMULA."htmlDoc" IS E'Pre-rendered html fragment with the full documentation for this formula.';
+COMMENT ON COLUMN TILDA.FORMULA."created" IS E'The timestamp for when the record was created.';
+COMMENT ON COLUMN TILDA.FORMULA."lastUpdated" IS E'The timestamp for when the record was last updated.';
+COMMENT ON COLUMN TILDA.FORMULA."deleted" IS E'The timestamp for when the record was deleted.';
+CREATE UNIQUE INDEX FORMULA_Formula ON TILDA.FORMULA ("location", "name");
+delete from TILDA.KEY where "name" = 'TILDA.FORMULA';
+insert into TILDA.KEY ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.KEY), 'TILDA.FORMULA',(select COALESCE(max("refnum"),0)+1 from TILDA.FORMULA), 250, current_timestamp, current_timestamp);
+
+
+
+create table if not exists TILDA.FORMULADEPENDENCY -- Formula dependency information
+ (  "refnum"            bigint       not null   -- The primary key for this record
+  , "formulaRefnum"     bigint       not null   -- The parent formula.
+  , "dependencyRefnum"  bigint       not null   -- The dependent formula.
+  , "created"           timestamptz  not null   -- The timestamp for when the record was created.
+  , "lastUpdated"       timestamptz  not null   -- The timestamp for when the record was last updated.
+  , "deleted"           timestamptz             -- The timestamp for when the record was deleted.
+  , PRIMARY KEY("refnum")
+ );
+COMMENT ON TABLE TILDA.FORMULADEPENDENCY IS E'Formula dependency information';
+COMMENT ON COLUMN TILDA.FORMULADEPENDENCY."refnum" IS E'The primary key for this record';
+COMMENT ON COLUMN TILDA.FORMULADEPENDENCY."formulaRefnum" IS E'The parent formula.';
+COMMENT ON COLUMN TILDA.FORMULADEPENDENCY."dependencyRefnum" IS E'The dependent formula.';
+COMMENT ON COLUMN TILDA.FORMULADEPENDENCY."created" IS E'The timestamp for when the record was created.';
+COMMENT ON COLUMN TILDA.FORMULADEPENDENCY."lastUpdated" IS E'The timestamp for when the record was last updated.';
+COMMENT ON COLUMN TILDA.FORMULADEPENDENCY."deleted" IS E'The timestamp for when the record was deleted.';
+CREATE UNIQUE INDEX FORMULADEPENDENCY_Dependency ON TILDA.FORMULADEPENDENCY ("formulaRefnum", "dependencyRefnum");
+delete from TILDA.KEY where "name" = 'TILDA.FORMULADEPENDENCY';
+insert into TILDA.KEY ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.KEY), 'TILDA.FORMULADEPENDENCY',(select COALESCE(max("refnum"),0)+1 from TILDA.FORMULADEPENDENCY), 250, current_timestamp, current_timestamp);
+
+
+
+create table if not exists TILDA.FORMULARESULT -- Formula result information, if applicable. Some formulas may not yield an enumeratable value (e.g., returning a date)
+ (  "refnum"         bigint        not null   -- The primary key for this record
+  , "formulaRefnum"  bigint        not null   -- The parent formula.
+  , "value"          varchar(100)  not null   -- The result value.
+  , "description"    text          not null   -- The description of the result value.
+  , "created"        timestamptz   not null   -- The timestamp for when the record was created.
+  , "lastUpdated"    timestamptz   not null   -- The timestamp for when the record was last updated.
+  , "deleted"        timestamptz              -- The timestamp for when the record was deleted.
+  , PRIMARY KEY("refnum")
+ );
+COMMENT ON TABLE TILDA.FORMULARESULT IS E'Formula result information, if applicable. Some formulas may not yield an enumeratable value (e.g., returning a date)';
+COMMENT ON COLUMN TILDA.FORMULARESULT."refnum" IS E'The primary key for this record';
+COMMENT ON COLUMN TILDA.FORMULARESULT."formulaRefnum" IS E'The parent formula.';
+COMMENT ON COLUMN TILDA.FORMULARESULT."value" IS E'The result value.';
+COMMENT ON COLUMN TILDA.FORMULARESULT."description" IS E'The description of the result value.';
+COMMENT ON COLUMN TILDA.FORMULARESULT."created" IS E'The timestamp for when the record was created.';
+COMMENT ON COLUMN TILDA.FORMULARESULT."lastUpdated" IS E'The timestamp for when the record was last updated.';
+COMMENT ON COLUMN TILDA.FORMULARESULT."deleted" IS E'The timestamp for when the record was deleted.';
+CREATE UNIQUE INDEX FORMULARESULT_Value ON TILDA.FORMULARESULT ("formulaRefnum", "value");
+delete from TILDA.KEY where "name" = 'TILDA.FORMULARESULT';
+insert into TILDA.KEY ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.KEY), 'TILDA.FORMULARESULT',(select COALESCE(max("refnum"),0)+1 from TILDA.FORMULARESULT), 250, current_timestamp, current_timestamp);
 
 
 

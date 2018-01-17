@@ -877,6 +877,41 @@ public class Sql extends PostgreSQL implements CodeGenSql
         if (V._Formulas == null || V._Formulas.isEmpty() == true)
           return;
 
+/*
+
+DO $$ 
+-- declare
+BEGIN
+-- pl/pgsql here
+END $$;
+
+create or replace function tilda.makeFormulas() returns boolean as $$
+DECLARE
+  k bigint;
+BEGIN
+  select into k TILDA.getKeyBatchAsMaxExclusive('TILDA.FORMULA', 10)-10;
+
+  insert into tilda.formula ("refnum", "location", "location2", "name", "type", "primary", "title", "description", "formula", "htmlDoc", "created", "lastUpdated", "deleted")
+   values (k+1, 'DATAMART.Blah', 'DATAMART.BlahRealized', 'Formula1', 'INT', true, 'Formula One', 'Blah blah blah', '1+1', 'blah blah', current_timestamp, current_timestamp, null)
+         ,(k+2, 'DATAMART.Blah', 'DATAMART.BlahRealized', 'Formula2', 'INT', true, 'Formula Two', 'Blah blah blah', '1+2', 'blah blah', current_timestamp, current_timestamp, null)
+  ON CONFLICT("location", "name") DO UPDATE
+    SET "location2" = EXCLUDED."location2" 
+      , "name" = EXCLUDED."name"
+      , "type" = EXCLUDED."type"
+      , "primary" = EXCLUDED."primary"
+      , "title" = EXCLUDED."title"
+      , "description" = EXCLUDED."description"
+      , "formula" = EXCLUDED."formula"
+      , "htmlDoc" = EXCLUDED."htmlDoc"
+      , "lastUpdated" = current_timestamp
+      , "deleted" = EXCLUDED."deleted"
+   ;
+   return true;
+END; $$
+LANGUAGE PLPGSQL;
+
+select tilda.makeFormulas();
+*/
         OutFinal.println("DELETE FROM " + V._ParentSchema._Name + ".TildaFormulaValue where \"viewName\"=" + TextUtil.EscapeSingleQuoteForSQL(V._Name) + ";");
         OutFinal.println("DELETE FROM " + V._ParentSchema._Name + ".TildaFormulaReference where \"viewName\"=" + TextUtil.EscapeSingleQuoteForSQL(V._Name) + ";");
         OutFinal.println("DELETE FROM " + V._ParentSchema._Name + ".TildaFormula where \"viewName\"=" + TextUtil.EscapeSingleQuoteForSQL(V._Name) + ";");

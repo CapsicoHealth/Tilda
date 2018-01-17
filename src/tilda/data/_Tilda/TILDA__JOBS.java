@@ -403,7 +403,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jan 16 2018, 17:57:32COT
+ @generated Jan 16 2018, 20:39:33COT
 */
 public abstract class TILDA__JOBS implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
