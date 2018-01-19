@@ -39,76 +39,79 @@ public class MailUtil
      * @return
      */
     public static boolean send(String SmtpInfo, String From, String Password, String[] To, String[] Cc, String[] Bcc, String Subject, String Message, boolean Urgent)
-     {
-      String LastAddress = null;
-      try
-       {
-         HtmlEmail email = new HtmlEmail();
-         
-         String[] parts = SmtpInfo.split(":");
-         email.setHostName(parts[0]);
-         if (parts.length > 1)
+      {
+        String LastAddress = null;
+        try
           {
-            if (parts.length > 2 && parts[2].equalsIgnoreCase("ssl") == true)
-             {
-               email.setSslSmtpPort(parts[1]);
-               email.setSSLOnConnect(true);
-             }
-            else
-             {
-               email.setSmtpPort(Integer.parseInt(parts[1]));
-             }              
-          }
+            HtmlEmail email = new HtmlEmail();
 
-         email.setAuthentication(From, Password);
-         email.setSubject(Subject);
+            String[] parts = SmtpInfo.split(":");
+            email.setHostName(parts[0]);
+            if (parts.length > 1)
+              {
+                if (parts.length > 2)
+                  {
+                    email.setSslSmtpPort(parts[1]);
+                    if (parts[2].equalsIgnoreCase("ssl") == true)
+                     email.setSSLOnConnect(true);
+                    else if (parts[2].equalsIgnoreCase("starttls") == true)
+                     email.setStartTLSEnabled(true);
+                  }
+                else
+                  {
+                    email.setSmtpPort(Integer.parseInt(parts[1]));
+                  }
+              }
 
-         LOG.debug("Sending an email '"+email.getSubject()+"'.");
-         if (To != null)
-          for (String s : To)
-           {
-             if (TextUtil.isNullOrEmpty(s) == true)
-              continue;
-             LastAddress = s;
-             email.addTo(s);
-           }
-         if (Cc != null)
-          for (String s : Cc)
-           {
-             if (TextUtil.isNullOrEmpty(s) == true)
-              continue;
-             LastAddress = s;
-             email.addCc(s);
-           }
-         if (Bcc != null)
-          for (String s : Bcc)
-           {
-             if (TextUtil.isNullOrEmpty(s) == true)
-              continue;
-             LastAddress = s;
-             email.addBcc(s);
-           }
-         if (LastAddress == null)
-          {
-            LOG.debug("No recipient. Not sending anything.");
+            email.setAuthentication(From, Password);
+            email.setSubject(Subject);
+
+            LOG.debug("Sending an email '" + email.getSubject() + "'.");
+            if (To != null)
+              for (String s : To)
+                {
+                  if (TextUtil.isNullOrEmpty(s) == true)
+                    continue;
+                  LastAddress = s;
+                  email.addTo(s);
+                }
+            if (Cc != null)
+              for (String s : Cc)
+                {
+                  if (TextUtil.isNullOrEmpty(s) == true)
+                    continue;
+                  LastAddress = s;
+                  email.addCc(s);
+                }
+            if (Bcc != null)
+              for (String s : Bcc)
+                {
+                  if (TextUtil.isNullOrEmpty(s) == true)
+                    continue;
+                  LastAddress = s;
+                  email.addBcc(s);
+                }
+            if (LastAddress == null)
+              {
+                LOG.debug("No recipient. Not sending anything.");
+                return true;
+              }
+            email.setFrom(From);
+            LastAddress = From;
+            email.setHtmlMsg(Message);
+            if (Urgent == true)
+              email.addHeader("X-Priority", "1");
+            LastAddress = null;
+            email.send();
             return true;
           }
-         email.setFrom(From);
-         LastAddress = From;
-         email.setHtmlMsg(Message);
-         if (Urgent == true)
-          email.addHeader("X-Priority", "1") ;
-         LastAddress = null;
-         email.send();
-         return true;
-       }
-      catch (EmailException E)
-       {
-         if (LastAddress != null)
-           LOG.debug("Email address '"+LastAddress+"' seems to be invalid.");
-         LOG.error(E);
-         return false;
-       }
-    }
-   
+        catch (EmailException E)
+          {
+            if (LastAddress != null)
+              LOG.debug("Email address '" + LastAddress + "' seems to be invalid.");
+            LOG.error("Cannot send email", E);
+            return false;
+          }
+      }
+
   }
