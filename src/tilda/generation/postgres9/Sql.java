@@ -20,17 +20,14 @@ import java.io.PrintWriter;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.regex.Matcher;
 
 import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import sun.management.snmp.jvmmib.EnumJvmMemPoolType;
 import tilda.db.stores.PostgreSQL;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
@@ -38,8 +35,8 @@ import tilda.enums.ColumnType;
 import tilda.enums.JoinType;
 import tilda.enums.TimeSeriesType;
 import tilda.generation.GeneratorSession;
-import tilda.generation.helpers.TotalMess;
 import tilda.generation.helpers.TableRankTracker;
+import tilda.generation.helpers.TotalMess;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
@@ -915,6 +912,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL("<B>N/A</B>"));
             OutFinal.println(", current_timestamp, current_timestamp, null)");
           }
+/*
         for (ViewColumn VC : V._ViewColumns)
           {
             if (V._Realize != null && TextUtil.FindElement(V._Realize._Excludes, VC.getName(), true, 0) != -1)
@@ -941,6 +939,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             OutFinal.println(", current_timestamp, current_timestamp, null)");
 
           }
+*/
         if (count >= 0)
           {
             OutFinal.println("  ON CONFLICT(\"location\", \"name\") DO UPDATE");

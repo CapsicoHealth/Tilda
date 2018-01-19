@@ -223,7 +223,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jan 18 2018, 22:50:51EST
+ @generated Jan 19 2018, 14:26:21EST
 */
 public abstract class TILDA__MAPPING implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
