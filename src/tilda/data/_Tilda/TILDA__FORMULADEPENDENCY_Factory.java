@@ -33,24 +33,6 @@ public class TILDA__FORMULADEPENDENCY_Factory
    public static abstract class COLS {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULADEPENDENCY.refnum -> TILDA.FORMULADEPENDENCY."refnum"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULADEPENDENCY.refnum of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULADEPENDENCY.refnum of type bigint</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_LongPrimitive          REFNUM          = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"          , 0/*0*/, "The primary key for this record");
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FORMULADEPENDENCY.formulaRefnum -> TILDA.FORMULADEPENDENCY."formulaRefnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -62,11 +44,11 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The parent formula.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          FORMULAREFNUM   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formulaRefnum"   , 1/*1*/, "The parent formula.");
+     public static Type_LongPrimitive          FORMULAREFNUM   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formulaRefnum"   , 0/*0*/, "The parent formula.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FORMULADEPENDENCY.dependencyRefnum -> TILDA.FORMULADEPENDENCY."dependencyRefnum"
@@ -80,11 +62,11 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The dependent formula.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          DEPENDENCYREFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "dependencyRefnum", 2/*2*/, "The dependent formula.");
+     public static Type_LongPrimitive          DEPENDENCYREFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "dependencyRefnum", 1/*1*/, "The dependent formula.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FORMULADEPENDENCY.created -> TILDA.FORMULADEPENDENCY."created"
@@ -109,7 +91,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED         = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"         , 3/*3*/, "The timestamp for when the record was created.");
+     public static Type_DatetimePrimitive      CREATED         = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"         , 2/*2*/, "The timestamp for when the record was created.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FORMULADEPENDENCY.lastUpdated -> TILDA.FORMULADEPENDENCY."lastUpdated"
@@ -134,7 +116,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED     = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"     , 4/*4*/, "The timestamp for when the record was last updated.");
+     public static Type_DatetimePrimitive      LASTUPDATED     = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"     , 3/*3*/, "The timestamp for when the record was last updated.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FORMULADEPENDENCY.deleted -> TILDA.FORMULADEPENDENCY."deleted"
@@ -152,7 +134,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED         = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"         , 5/*5*/, "The timestamp for when the record was deleted.");
+     public static Type_DatetimePrimitiveNull  DELETED         = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"         , 4/*4*/, "The timestamp for when the record was deleted.");
 ;
    }
 
@@ -206,8 +188,7 @@ This is the column definition for:<BR>
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
        S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "FORMULADEPENDENCY", "refnum");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULADEPENDENCY", "formulaRefnum");
+       S.append(" "); C.getFullColumnVar(S, "TILDA", "FORMULADEPENDENCY", "formulaRefnum");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULADEPENDENCY", "dependencyRefnum");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULADEPENDENCY", "created");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULADEPENDENCY", "lastUpdated");
@@ -274,9 +255,6 @@ This is the column definition for:<BR>
        Obj.initForCreate();
 
 
-       // Auto PK
-       Obj.setRefnum(tilda.db.KeysManager.getKey("TILDA.FORMULADEPENDENCY"));
-
        // Explicit setters
        Obj.setFormulaRefnum   (formulaRefnum   );
        Obj.setDependencyRefnum(dependencyRefnum);
@@ -293,7 +271,6 @@ This is the column definition for:<BR>
      {
        int IncomingErrors = Errors.size();
 
-       Long        _refnum           =                       ParseUtil.parseLong("refnum"          , true , Values.get("refnum"          ), Errors );
        Long        _formulaRefnum    =                       ParseUtil.parseLong("formulaRefnum"   , true , Values.get("formulaRefnum"   ), Errors );
        Long        _dependencyRefnum =                       ParseUtil.parseLong("dependencyRefnum", true , Values.get("dependencyRefnum"), Errors );
 
@@ -302,28 +279,17 @@ This is the column definition for:<BR>
 
       tilda.data.FormulaDependency_Data Obj = tilda.data.FormulaDependency_Factory.Create(_formulaRefnum, _dependencyRefnum);
 
-      if (_refnum          != null) Obj.setRefnum          (_refnum          );
 
       return Obj;
      }
 
-   static public tilda.data.FormulaDependency_Data LookupByPrimaryKey(long refnum) throws Exception
+   static public tilda.data.FormulaDependency_Data LookupByPrimaryKey(long formulaRefnum, long dependencyRefnum) throws Exception
      {
        tilda.data._Tilda.TILDA__FORMULADEPENDENCY Obj = new tilda.data.FormulaDependency_Data();
        Obj.initForLookup(0);
 
-       Obj.setRefnum          (refnum          ); Obj.__Saved_refnum           = Obj._refnum          ;
-
-       return (tilda.data.FormulaDependency_Data) Obj;
-     }
-
-   static public tilda.data.FormulaDependency_Data LookupByDependency(long formulaRefnum, long dependencyRefnum) throws Exception
-     {
-       tilda.data._Tilda.TILDA__FORMULADEPENDENCY Obj = new tilda.data.FormulaDependency_Data();
-       Obj.initForLookup(1);
-
-       Obj.setFormulaRefnum   (formulaRefnum   ); 
-       Obj.setDependencyRefnum(dependencyRefnum); 
+       Obj.setFormulaRefnum   (formulaRefnum   ); Obj.__Saved_formulaRefnum    = Obj._formulaRefnum   ;
+       Obj.setDependencyRefnum(dependencyRefnum); Obj.__Saved_dependencyRefnum = Obj._dependencyRefnum;
 
        return (tilda.data.FormulaDependency_Data) Obj;
      }

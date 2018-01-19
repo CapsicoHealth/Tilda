@@ -33,7 +33,7 @@ The generated Java 8/PostgreSQL Tilda data class <B>Data_FORMULADEPENDENCY</B> i
 <LI>The Table has normal <B>read/write</B> capabilities.</LI>
 <LI>The Table is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
 </UL>
-<B>Description</B>: Formula dependency information<BR>
+<B>Description</B>: Master formula dependency information<BR>
 <BR>
 
 It contains the following columns:<BR>
@@ -42,39 +42,28 @@ It contains the following columns:<BR>
 
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
-<TD align="right"><B id='FORMULADEPENDENCY-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='FORMULADEPENDENCY-formulaRefnum_DIV' class='columns'>formulaRefnum</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;&nbsp;</TD>
 <TD>bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The primary key for this record</TD>
+<TD>The parent formula.</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>2&nbsp;&nbsp;</TD>
-<TD align="right"><B id='FORMULADEPENDENCY-formulaRefnum_DIV' class='columns'>formulaRefnum</B>&nbsp;&nbsp;</TD>
-<TD>long&nbsp;&nbsp;</TD>
-<TD>bigint&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The parent formula.</TD>
-</TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>3&nbsp;&nbsp;</TD>
 <TD align="right"><B id='FORMULADEPENDENCY-dependencyRefnum_DIV' class='columns'>dependencyRefnum</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;&nbsp;</TD>
 <TD>bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The dependent formula.</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>4&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>3&nbsp;&nbsp;</TD>
 <TD align="right"><B id='FORMULADEPENDENCY-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
@@ -84,13 +73,13 @@ It contains the following columns:<BR>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created.</TD>
 </TR>
-  <TR bgcolor="#FFFFFF"><TD></TD><TD></TD><TD colspan="10" align="center">
+  <TR bgcolor="#DFECF8"><TD></TD><TD></TD><TD colspan="10" align="center">
 <TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
   <TR bgcolor="#FFF2CC"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Creation</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Creation&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Creation time</TD></TR>
 </TABLE>
 </TD></TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>5&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>4&nbsp;&nbsp;</TD>
 <TD align="right"><B id='FORMULADEPENDENCY-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
@@ -100,13 +89,13 @@ It contains the following columns:<BR>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated.</TD>
 </TR>
-  <TR bgcolor="#DFECF8"><TD></TD><TD></TD><TD colspan="10" align="center">
+  <TR bgcolor="#FFFFFF"><TD></TD><TD></TD><TD colspan="10" align="center">
 <TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
   <TR bgcolor="#FFF2CC"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Update</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Update&nbsp;&nbsp;</TD><TD>ALWAYS&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Last updated time</TD></TR>
 </TABLE>
 </TD></TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>6&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>5&nbsp;&nbsp;</TD>
 <TD align="right"><B id='FORMULADEPENDENCY-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
@@ -117,23 +106,6 @@ It contains the following columns:<BR>
 <TD>The timestamp for when the record was deleted.</TD>
 </TR>
 </TABLE>
-<DIV id='FORMULADEPENDENCY-refnum_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('FORMULADEPENDENCY-refnum_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULADEPENDENCY_DIV'>FormulaDependency</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULADEPENDENCY-refnum_DIV'>refnum</a> -- LONG</td>
-</tr>
-</table>
-</DIV></DIV>
 <DIV id='FORMULADEPENDENCY-formulaRefnum_MODAL' class='modal'>
 <DIV class='modal-content'>
 <SPAN onclick="onModalCloseClicked('FORMULADEPENDENCY-formulaRefnum_MODAL')" class='close'>&times;</SPAN>
@@ -223,7 +195,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jan 16 2018, 20:39:33COT
+ @generated Jan 18 2018, 22:50:51EST
 */
 public abstract class TILDA__FORMULADEPENDENCY implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
@@ -273,83 +245,6 @@ public abstract class TILDA__FORMULADEPENDENCY implements tilda.interfaces.Write
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULADEPENDENCY.refnum -> TILDA.FORMULADEPENDENCY."refnum"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULADEPENDENCY.refnum of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULADEPENDENCY.refnum of type bigint</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   long _refnum= SystemValues.EVIL_VALUE;
-   protected long __Saved_refnum;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULADEPENDENCY.refnum -> TILDA.FORMULADEPENDENCY."refnum"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULADEPENDENCY.refnum of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULADEPENDENCY.refnum of type bigint</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final long getRefnum()
-      { return _refnum; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULADEPENDENCY.refnum -> TILDA.FORMULADEPENDENCY."refnum"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULADEPENDENCY.refnum of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULADEPENDENCY.refnum of type bigint</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   protected void setRefnum(long v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (v != _refnum)
-        {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.FORMULADEPENDENCY.refnum' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes1 |= TILDA__FORMULADEPENDENCY_Factory.COLS.REFNUM._Mask1;
-          __Nulls1   &= ~TILDA__FORMULADEPENDENCY_Factory.COLS.REFNUM._Mask1;
-       _refnum = v;
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FORMULADEPENDENCY.formulaRefnum -> TILDA.FORMULADEPENDENCY."formulaRefnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -361,7 +256,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The parent formula.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
@@ -381,7 +276,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The parent formula.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
@@ -401,41 +296,23 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The parent formula.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setFormulaRefnum(long v) throws Exception
+   protected void setFormulaRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v != _formulaRefnum)
         {
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.FORMULADEPENDENCY.formulaRefnum' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes1 |= TILDA__FORMULADEPENDENCY_Factory.COLS.FORMULAREFNUM._Mask1;
           __Nulls1   &= ~TILDA__FORMULADEPENDENCY_Factory.COLS.FORMULAREFNUM._Mask1;
        _formulaRefnum = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULADEPENDENCY.formulaRefnum -> TILDA.FORMULADEPENDENCY."formulaRefnum"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULADEPENDENCY.formulaRefnum of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULADEPENDENCY.formulaRefnum of type bigint</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The parent formula.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedFormulaRefnum()
-     { return (TILDA__FORMULADEPENDENCY_Factory.COLS.FORMULAREFNUM._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -456,7 +333,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The dependent formula.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
@@ -476,7 +353,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The dependent formula.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
@@ -496,41 +373,23 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The dependent formula.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public void setDependencyRefnum(long v) throws Exception
+   protected void setDependencyRefnum(long v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v != _dependencyRefnum)
         {
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.FORMULADEPENDENCY.dependencyRefnum' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes1 |= TILDA__FORMULADEPENDENCY_Factory.COLS.DEPENDENCYREFNUM._Mask1;
           __Nulls1   &= ~TILDA__FORMULADEPENDENCY_Factory.COLS.DEPENDENCYREFNUM._Mask1;
        _dependencyRefnum = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULADEPENDENCY.dependencyRefnum -> TILDA.FORMULADEPENDENCY."dependencyRefnum"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULADEPENDENCY.dependencyRefnum of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULADEPENDENCY.dependencyRefnum of type bigint</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The dependent formula.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedDependencyRefnum()
-     { return (TILDA__FORMULADEPENDENCY_Factory.COLS.DEPENDENCYREFNUM._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -1179,8 +1038,6 @@ This is the hasChanged for:<BR>
 */
    public void CopyTo(tilda.data._Tilda.TILDA__FORMULADEPENDENCY Dst) throws Exception
      {
-       Dst.setFormulaRefnum   (_formulaRefnum   );
-       Dst.setDependencyRefnum(_dependencyRefnum);
        Dst.setLastUpdated     (_lastUpdated     );
        if ((TILDA__FORMULADEPENDENCY_Factory.COLS.DELETED._Mask1          & __Nulls1) != 0L) Dst.setNullDeleted         (); else        Dst.setDeleted         (_deleted         );
      }
@@ -1222,7 +1079,6 @@ This is the hasChanged for:<BR>
           StringBuilder V = new StringBuilder(1024);
           S.append("insert into "); C.getFullTableVar(S, "TILDA", "FORMULADEPENDENCY");
           int Pos = S.length();
-          if ((TILDA__FORMULADEPENDENCY_Factory.COLS.REFNUM._Mask1           & __Changes1) != 0L) { TILDA__FORMULADEPENDENCY_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if ((TILDA__FORMULADEPENDENCY_Factory.COLS.FORMULAREFNUM._Mask1    & __Changes1) != 0L) { TILDA__FORMULADEPENDENCY_Factory.COLS.FORMULAREFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if ((TILDA__FORMULADEPENDENCY_Factory.COLS.DEPENDENCYREFNUM._Mask1 & __Changes1) != 0L) { TILDA__FORMULADEPENDENCY_Factory.COLS.DEPENDENCYREFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
@@ -1248,7 +1104,6 @@ This is the hasChanged for:<BR>
         {
           S.append("update "); C.getFullTableVar(S, "TILDA", "FORMULADEPENDENCY"); S.append(" set");
           int Pos = S.length();
-          if ((TILDA__FORMULADEPENDENCY_Factory.COLS.REFNUM._Mask1           & __Changes1) != 0L) TILDA__FORMULADEPENDENCY_Factory.COLS.REFNUM.getFullColumnVarForUpdate(C, S);
           if ((TILDA__FORMULADEPENDENCY_Factory.COLS.FORMULAREFNUM._Mask1    & __Changes1) != 0L) TILDA__FORMULADEPENDENCY_Factory.COLS.FORMULAREFNUM.getFullColumnVarForUpdate(C, S);
           if ((TILDA__FORMULADEPENDENCY_Factory.COLS.DEPENDENCYREFNUM._Mask1 & __Changes1) != 0L) TILDA__FORMULADEPENDENCY_Factory.COLS.DEPENDENCYREFNUM.getFullColumnVarForUpdate(C, S);
 
@@ -1284,9 +1139,6 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "FORMULADEPENDENCY", "refnum"); S.append("=?)");
-                break;
-             case 1:
                 S.append(" where ("); C.getFullColumnVar(S, "TILDA", "FORMULADEPENDENCY", "formulaRefnum"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "FORMULADEPENDENCY", "dependencyRefnum"); S.append("=?)");
                 break;
              case -666: if (__Init == InitMode.CREATE) break;
@@ -1306,10 +1158,6 @@ This is the hasChanged for:<BR>
         {
           PS = C.prepareStatement(Q);
           int i = 0;
-               if ((TILDA__FORMULADEPENDENCY_Factory.COLS.REFNUM._Mask1           & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__FORMULADEPENDENCY_Factory.COLS.REFNUM._Mask1           & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _refnum);
-                } 
                if ((TILDA__FORMULADEPENDENCY_Factory.COLS.FORMULAREFNUM._Mask1    & __Changes1) != 0L) 
                 { 
                   if ((TILDA__FORMULADEPENDENCY_Factory.COLS.FORMULAREFNUM._Mask1    & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _formulaRefnum);
@@ -1334,9 +1182,6 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setLong     (++i, _refnum          );
-               break;
-             case 1:
                PS.setLong     (++i, _formulaRefnum   );
                PS.setLong     (++i, _dependencyRefnum);
                break;
@@ -1374,9 +1219,6 @@ This is the hasChanged for:<BR>
        switch (__LookupId)
         {
           case 0:
-             __Saved_refnum           = _refnum          ;
-             break;
-          case 1:
              __Saved_formulaRefnum    = _formulaRefnum   ;
              __Saved_dependencyRefnum = _dependencyRefnum;
              break;
@@ -1418,8 +1260,7 @@ This is the hasChanged for:<BR>
         }
        StringBuilder S = new StringBuilder(1024);
        S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "FORMULADEPENDENCY", "refnum");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULADEPENDENCY", "formulaRefnum");
+       S.append(" "); C.getFullColumnVar(S, "TILDA", "FORMULADEPENDENCY", "formulaRefnum");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULADEPENDENCY", "dependencyRefnum");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULADEPENDENCY", "created");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULADEPENDENCY", "lastUpdated");
@@ -1428,9 +1269,6 @@ This is the hasChanged for:<BR>
        switch (__LookupId)
         {
           case 0:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "FORMULADEPENDENCY", "refnum"); S.append("=?)");
-             break;
-          case 1:
              S.append(" where ("); C.getFullColumnVar(S, "TILDA", "FORMULADEPENDENCY", "formulaRefnum"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "FORMULADEPENDENCY", "dependencyRefnum"); S.append("=?)");
              break;
           case -666: if (__Init == InitMode.CREATE) break;
@@ -1453,9 +1291,6 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setLong     (++i, _refnum          );
-               break;
-             case 1:
                PS.setLong     (++i, _formulaRefnum   );
                PS.setLong     (++i, _dependencyRefnum);
                break;
@@ -1488,7 +1323,6 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_refnum           = _refnum           =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__FORMULADEPENDENCY_Factory.COLS.REFNUM._Mask1          ;
       __Saved_formulaRefnum    = _formulaRefnum    =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__FORMULADEPENDENCY_Factory.COLS.FORMULAREFNUM._Mask1   ;
       __Saved_dependencyRefnum = _dependencyRefnum =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__FORMULADEPENDENCY_Factory.COLS.DEPENDENCYREFNUM._Mask1;
                                  _created          = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
@@ -1506,8 +1340,7 @@ This is the hasChanged for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "refnum: "                                                                                                                +                                   getRefnum          () 
-               + "; formulaRefnum: "                                                                                                         +                                   getFormulaRefnum   () 
+                   "formulaRefnum: "                                                                                                         +                                   getFormulaRefnum   () 
                + "; dependencyRefnum: "                                                                                                      +                                   getDependencyRefnum() 
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);

@@ -33,7 +33,7 @@ The generated Java 8/PostgreSQL Tilda data class <B>Data_FORMULA</B> is mapped t
 <LI>The Table has normal <B>read/write</B> capabilities.</LI>
 <LI>The Table is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
 </UL>
-<B>Description</B>: Formula information<BR>
+<B>Description</B>: Master formula information<BR>
 <BR>
 
 It contains the following columns:<BR>
@@ -104,8 +104,8 @@ It contains the following columns:<BR>
   <TR bgcolor="#FFF2CC"><TD>5&nbsp;&nbsp;</TD><TD align="right"><B>Long</B>&nbsp;&nbsp;</TD><TD>LNG&nbsp;&nbsp;</TD><TD>Long&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Long</TD></TR>
   <TR bgcolor="#FFFFFF"><TD>6&nbsp;&nbsp;</TD><TD align="right"><B>Float</B>&nbsp;&nbsp;</TD><TD>FLT&nbsp;&nbsp;</TD><TD>Float&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Float</TD></TR>
   <TR bgcolor="#FFF2CC"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>Double</B>&nbsp;&nbsp;</TD><TD>DBL&nbsp;&nbsp;</TD><TD>Double&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Double</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>Date</B>&nbsp;&nbsp;</TD><TD>D&nbsp;&nbsp;</TD><TD>Date&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Date</TD></TR>
-  <TR bgcolor="#FFF2CC"><TD>9&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DT&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>Date</B>&nbsp;&nbsp;</TD><TD>DT&nbsp;&nbsp;</TD><TD>Date&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Date</TD></TR>
+  <TR bgcolor="#FFF2CC"><TD>9&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DTM&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
 </TABLE>
 </TD></TR>
   <TR valign="top" bgcolor="#FFFFFF">
@@ -113,7 +113,7 @@ It contains the following columns:<BR>
 <TD align="right"><B id='FORMULA-primary_DIV' class='columns'>primary</B>&nbsp;&nbsp;</TD>
 <TD>boolean&nbsp;&nbsp;</TD>
 <TD>boolean&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
@@ -432,7 +432,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jan 16 2018, 20:39:33COT
+ @generated Jan 18 2018, 22:50:51EST
 */
 public abstract class TILDA__FORMULA implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
@@ -895,8 +895,8 @@ This is the definition for:<BR>
   <TR bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>Long</B>&nbsp;&nbsp;</TD><TD>LNG&nbsp;&nbsp;</TD><TD>Long&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Long</TD></TR>
   <TR bgcolor="#EEEEEE"><TD>5&nbsp;&nbsp;</TD><TD align="right"><B>Float</B>&nbsp;&nbsp;</TD><TD>FLT&nbsp;&nbsp;</TD><TD>Float&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Float</TD></TR>
   <TR bgcolor="#FFFFFF"><TD>6&nbsp;&nbsp;</TD><TD align="right"><B>Double</B>&nbsp;&nbsp;</TD><TD>DBL&nbsp;&nbsp;</TD><TD>Double&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Double</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>Date</B>&nbsp;&nbsp;</TD><TD>D&nbsp;&nbsp;</TD><TD>Date&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Date</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DT&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>Date</B>&nbsp;&nbsp;</TD><TD>DT&nbsp;&nbsp;</TD><TD>Date&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Date</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DTM&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
 </TABLE>
 </TD></TR>
 
@@ -914,8 +914,8 @@ These are the enumerated values for tilda.data.TILDA.FORMULA.type, which can be 
   <TR bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>Long</B>&nbsp;&nbsp;</TD><TD>LNG&nbsp;&nbsp;</TD><TD>Long&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Long</TD></TR>
   <TR bgcolor="#EEEEEE"><TD>5&nbsp;&nbsp;</TD><TD align="right"><B>Float</B>&nbsp;&nbsp;</TD><TD>FLT&nbsp;&nbsp;</TD><TD>Float&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Float</TD></TR>
   <TR bgcolor="#FFFFFF"><TD>6&nbsp;&nbsp;</TD><TD align="right"><B>Double</B>&nbsp;&nbsp;</TD><TD>DBL&nbsp;&nbsp;</TD><TD>Double&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Double</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>Date</B>&nbsp;&nbsp;</TD><TD>D&nbsp;&nbsp;</TD><TD>Date&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Date</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DT&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>Date</B>&nbsp;&nbsp;</TD><TD>DT&nbsp;&nbsp;</TD><TD>Date&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Date</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DTM&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
 </TABLE>
 */
    public static final String[][] _type_Values = {
@@ -926,8 +926,8 @@ These are the enumerated values for tilda.data.TILDA.FORMULA.type, which can be 
                                              , { "LNG", "Long", "Long", "" }
                                              , { "FLT", "Float", "Float", "" }
                                              , { "DBL", "Double", "Double", "" }
-                                             , { "D"  , "Date", "Date", "" }
-                                             , { "DT" , "DateTime", "DateTime", "" }
+                                             , { "DT" , "Date", "Date", "" }
+                                             , { "DTM", "DateTime", "DateTime", "" }
                                   };
    public static final String _typeString    = "STR";
    public static final String _typeCharacter = "CHR";
@@ -936,8 +936,8 @@ These are the enumerated values for tilda.data.TILDA.FORMULA.type, which can be 
    public static final String _typeLong      = "LNG";
    public static final String _typeFloat     = "FLT";
    public static final String _typeDouble    = "DBL";
-   public static final String _typeDate      = "D";
-   public static final String _typeDateTime  = "DT";
+   public static final String _typeDate      = "DT";
+   public static final String _typeDateTime  = "DTM";
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -965,8 +965,8 @@ This is the getter for:<BR>
   <TR bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>Long</B>&nbsp;&nbsp;</TD><TD>LNG&nbsp;&nbsp;</TD><TD>Long&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Long</TD></TR>
   <TR bgcolor="#EEEEEE"><TD>5&nbsp;&nbsp;</TD><TD align="right"><B>Float</B>&nbsp;&nbsp;</TD><TD>FLT&nbsp;&nbsp;</TD><TD>Float&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Float</TD></TR>
   <TR bgcolor="#FFFFFF"><TD>6&nbsp;&nbsp;</TD><TD align="right"><B>Double</B>&nbsp;&nbsp;</TD><TD>DBL&nbsp;&nbsp;</TD><TD>Double&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Double</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>Date</B>&nbsp;&nbsp;</TD><TD>D&nbsp;&nbsp;</TD><TD>Date&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Date</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DT&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>Date</B>&nbsp;&nbsp;</TD><TD>DT&nbsp;&nbsp;</TD><TD>Date&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Date</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DTM&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
 </TABLE>
 </TD></TR>
 
@@ -1077,7 +1077,7 @@ This is the value is-a for tilda.data.TILDA.FORMULA.type:<BR>
 This is the value is-a for tilda.data.TILDA.FORMULA.type:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>Date</TD></TR>
-  <TR><TD align="right"><B>Value</B></TD><TD>D</TD></TR>
+  <TR><TD align="right"><B>Value</B></TD><TD>DT</TD></TR>
   <TR><TD align="right"><B>Default</B></TD><TD>NONE</TD></TR>
   <TR><TD align="right"><B>Label</B></TD><TD>Date</TD></TR>
   <TR><TD align="right"><B>Groupings</B></TD><TD></TD></TR>
@@ -1091,7 +1091,7 @@ This is the value is-a for tilda.data.TILDA.FORMULA.type:<BR>
 This is the value is-a for tilda.data.TILDA.FORMULA.type:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>DateTime</TD></TR>
-  <TR><TD align="right"><B>Value</B></TD><TD>DT</TD></TR>
+  <TR><TD align="right"><B>Value</B></TD><TD>DTM</TD></TR>
   <TR><TD align="right"><B>Default</B></TD><TD>NONE</TD></TR>
   <TR><TD align="right"><B>Label</B></TD><TD>DateTime</TD></TR>
   <TR><TD align="right"><B>Groupings</B></TD><TD></TD></TR>
@@ -1127,8 +1127,8 @@ This is the setter for:<BR>
   <TR bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>Long</B>&nbsp;&nbsp;</TD><TD>LNG&nbsp;&nbsp;</TD><TD>Long&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Long</TD></TR>
   <TR bgcolor="#EEEEEE"><TD>5&nbsp;&nbsp;</TD><TD align="right"><B>Float</B>&nbsp;&nbsp;</TD><TD>FLT&nbsp;&nbsp;</TD><TD>Float&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Float</TD></TR>
   <TR bgcolor="#FFFFFF"><TD>6&nbsp;&nbsp;</TD><TD align="right"><B>Double</B>&nbsp;&nbsp;</TD><TD>DBL&nbsp;&nbsp;</TD><TD>Double&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Double</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>Date</B>&nbsp;&nbsp;</TD><TD>D&nbsp;&nbsp;</TD><TD>Date&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Date</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DT&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>Date</B>&nbsp;&nbsp;</TD><TD>DT&nbsp;&nbsp;</TD><TD>Date&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Date</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DTM&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
 </TABLE>
 </TD></TR>
 
@@ -1252,7 +1252,7 @@ This is the value setter-as for tilda.data.TILDA.FORMULA.type:<BR>
 This is the value setter-as for tilda.data.TILDA.FORMULA.type:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>Date</TD></TR>
-  <TR><TD align="right"><B>Value</B></TD><TD>D</TD></TR>
+  <TR><TD align="right"><B>Value</B></TD><TD>DT</TD></TR>
   <TR><TD align="right"><B>Default</B></TD><TD>NONE</TD></TR>
   <TR><TD align="right"><B>Label</B></TD><TD>Date</TD></TR>
   <TR><TD align="right"><B>Groupings</B></TD><TD></TD></TR>
@@ -1266,7 +1266,7 @@ This is the value setter-as for tilda.data.TILDA.FORMULA.type:<BR>
 This is the value setter-as for tilda.data.TILDA.FORMULA.type:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>DateTime</TD></TR>
-  <TR><TD align="right"><B>Value</B></TD><TD>DT</TD></TR>
+  <TR><TD align="right"><B>Value</B></TD><TD>DTM</TD></TR>
   <TR><TD align="right"><B>Default</B></TD><TD>NONE</TD></TR>
   <TR><TD align="right"><B>Label</B></TD><TD>DateTime</TD></TR>
   <TR><TD align="right"><B>Groupings</B></TD><TD></TD></TR>
@@ -1302,8 +1302,8 @@ This is the hasChanged for:<BR>
   <TR bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>Long</B>&nbsp;&nbsp;</TD><TD>LNG&nbsp;&nbsp;</TD><TD>Long&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Long</TD></TR>
   <TR bgcolor="#EEEEEE"><TD>5&nbsp;&nbsp;</TD><TD align="right"><B>Float</B>&nbsp;&nbsp;</TD><TD>FLT&nbsp;&nbsp;</TD><TD>Float&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Float</TD></TR>
   <TR bgcolor="#FFFFFF"><TD>6&nbsp;&nbsp;</TD><TD align="right"><B>Double</B>&nbsp;&nbsp;</TD><TD>DBL&nbsp;&nbsp;</TD><TD>Double&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Double</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>Date</B>&nbsp;&nbsp;</TD><TD>D&nbsp;&nbsp;</TD><TD>Date&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Date</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DT&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>Date</B>&nbsp;&nbsp;</TD><TD>DT&nbsp;&nbsp;</TD><TD>Date&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Date</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DTM&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
 </TABLE>
 </TD></TR>
 
@@ -1328,7 +1328,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.primary of type boolean</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.primary of type boolean</TD></TR>
 
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether this is a primary formula or a lower-level formula component.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
@@ -1347,7 +1347,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.primary of type boolean</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.primary of type boolean</TD></TR>
 
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether this is a primary formula or a lower-level formula component.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
@@ -1362,12 +1362,32 @@ This is the getter for:<BR>
 //   Field tilda.data.TILDA.FORMULA.primary -> TILDA.FORMULA."primary"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.primary of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.primary of type boolean</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether this is a primary formula or a lower-level formula component.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isNullPrimary()
+     { return (TILDA__FORMULA_Factory.COLS.PRIMARY._Mask1 & __Nulls1) != 0L; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.FORMULA.primary -> TILDA.FORMULA."primary"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.primary of type boolean</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.primary of type boolean</TD></TR>
 
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether this is a primary formula or a lower-level formula component.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
@@ -1391,12 +1411,40 @@ This is the setter for:<BR>
 //   Field tilda.data.TILDA.FORMULA.primary -> TILDA.FORMULA."primary"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.primary of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.primary of type boolean</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether this is a primary formula or a lower-level formula component.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setNullPrimary()
+     {
+       long T0 = System.nanoTime();
+       if ((TILDA__FORMULA_Factory.COLS.PRIMARY._Mask1 & __Nulls1) != 0L)
+        return;
+       __Changes1 |= TILDA__FORMULA_Factory.COLS.PRIMARY._Mask1;
+       __Nulls1   |= TILDA__FORMULA_Factory.COLS.PRIMARY._Mask1;
+       _primary=false;
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.FORMULA.primary -> TILDA.FORMULA."primary"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.primary of type boolean</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.primary of type boolean</TD></TR>
 
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether this is a primary formula or a lower-level formula component.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
@@ -2567,7 +2615,7 @@ This is the hasChanged for:<BR>
      {
        Dst.setName       (_name       );
        Dst.setType       (_type       );
-       Dst.setPrimary    (_primary    );
+       if ((TILDA__FORMULA_Factory.COLS.PRIMARY._Mask1     & __Nulls1) != 0L) Dst.setNullPrimary    (); else        Dst.setPrimary    (_primary    );
        Dst.setTitle      (_title      );
        Dst.setDescription(_description);
        if ((TILDA__FORMULA_Factory.COLS.FORMULA._Mask1     & __Nulls1) != 0L) Dst.setNullFormula    (); else        Dst.setFormula    (_formula    );
@@ -2958,7 +3006,7 @@ This is the hasChanged for:<BR>
                + "; location2: "                                                                                         + TextUtil.PrintVariableStr        (getLocation2  ())
                + "; name: "                                                                                              + TextUtil.PrintVariableStr        (getName       ())
                + "; type: "                                                                                              + TextUtil.PrintVariableStr        (getType       ())
-               + "; primary: "                                                                                           +                                   getPrimary    () 
+               + "; primary"       + ((TILDA__FORMULA_Factory.COLS.PRIMARY._Mask1     & __Nulls1) != 0L ? ": NULL" : ": " +                                   getPrimary    () )
                + "; title: "                                                                                             + TextUtil.PrintVariableStr        (getTitle      ())
                + "; description: "                                                                                       + TextUtil.PrintVariableStr        (getDescription())
                + "; formula"       + ((TILDA__FORMULA_Factory.COLS.FORMULA._Mask1     & __Nulls1) != 0L ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getFormula    ()))

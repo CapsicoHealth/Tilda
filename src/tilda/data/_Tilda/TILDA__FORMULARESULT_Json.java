@@ -40,7 +40,7 @@ public class TILDA__FORMULARESULT_Json
       Update(Obj);
       if (Obj.Write(C) == false)
        {
-         Obj = tilda.data.FormulaResult_Factory.LookupByValue(_formulaRefnum, _value);
+         Obj = tilda.data.FormulaResult_Factory.LookupByPrimaryKey(_formulaRefnum, _value);
          if (Obj.Read(C) == false)
           throw new Exception("Cannot create the tilda.data.TILDA.FORMULARESULT object.\n"+toString());
          if (_description  != null) Obj.setDescription  (_description  );

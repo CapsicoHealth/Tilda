@@ -16,6 +16,12 @@
 
 package tilda.parsing.parts;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.regex.Matcher;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -60,14 +66,16 @@ public class Formula extends TypeDef
           }
       }
 
-    public View getParentView() {
-    	return this._ParentView;
-    }
-    
-    public String getShortName() {
-    	return this._ParentView.getShortName()+"."+this._Name; 
-    }
-    
+    public View getParentView()
+      {
+        return this._ParentView;
+      }
+
+    public String getShortName()
+      {
+        return this._ParentView.getShortName() + "." + this._Name;
+      }
+
     public boolean Validate(ParserSession PS, View ParentView)
       {
         int Errs = PS.getErrorCount();
@@ -87,7 +95,7 @@ public class Formula extends TypeDef
 
         if (TextUtil.isNullOrEmpty(_Title) == true)
           PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' without a title.");
-        
+
         else if (_Title.length() > 128)
           PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' with a title that is too long. 128 characters maximum.");
 
@@ -103,4 +111,33 @@ public class Formula extends TypeDef
         return PS.getErrorCount() == Errs;
       }
 
+    public List<ViewColumn> getDependencyColumns()
+      {
+        List<ViewColumn> L = new ArrayList<ViewColumn>();
+        Matcher M = getParentView()._ViewColumnsRegEx.matcher(String.join("\n", _FormulaStrs));
+        Set<String> Names = new HashSet<String>();
+        while (M.find() == true)
+          {
+            String s = M.group(1);
+            if (Names.add(s) == false)
+              continue;
+            L.add(getParentView().getViewColumn(s));
+          }
+        return L;
+      }
+
+    public List<Formula> getDependencyFormulas()
+      {
+        List<Formula> L = new ArrayList<Formula>();
+        Matcher M = getParentView()._FormulasRegEx.matcher(String.join("\n", _FormulaStrs));
+        Set<String> Names = new HashSet<String>();
+        while (M.find() == true)
+          {
+            String s = M.group(1);
+            if (Names.add(s) == false)
+              continue;
+            L.add(getParentView().getFormula(s));
+          }
+        return L;
+      }
   }

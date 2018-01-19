@@ -196,7 +196,7 @@
     
    ,{ "name":"Formula"
      ,"occ":true
-     ,"description":"Formula information"
+     ,"description":"Master formula information"
      ,"columns":[
          { "name":"location"   , "type":"STRING" , "nullable":false, "size":   64, "invariant":true, "description":"The name of the primary table/view this formula is defined in."  }
         ,{ "name":"location2"  , "type":"STRING" , "nullable":false, "size":   64, "invariant":true, "description":"The name of the secondary table/view (a derived view, a realized table), if appropriate."   }
@@ -209,11 +209,11 @@
                                             ,{ "name":"Long"     , "value":"LNG", "description": "Long"      }
                                             ,{ "name":"Float"    , "value":"FLT", "description": "Float"     }
                                             ,{ "name":"Double"   , "value":"DBL", "description": "Double"    }
-                                            ,{ "name":"Date"     , "value":"D"  , "description": "Date"      }
-                                            ,{ "name":"DateTime" , "value":"DT" , "description": "DateTime"  }
+                                            ,{ "name":"Date"     , "value":"DT" , "description": "Date"      }
+                                            ,{ "name":"DateTime" , "value":"DTM", "description": "DateTime"  }
                                            ]
          }
-        ,{ "name":"primary"    , "type":"BOOLEAN", "nullable":false,                                 "description":"Whether this is a primary formula or a lower-level formula component."  }
+        ,{ "name":"primary"    , "type":"BOOLEAN", "nullable":true ,                                 "description":"Whether this is a primary formula or a lower-level formula component."  }
         ,{ "name":"title"      , "type":"STRING" , "nullable":false, "size":  128,                   "description":"The title of the formula/column."  }
         ,{ "name":"description", "type":"STRING" , "nullable":false, "size":32000,                   "description":"The description of the formula/column."  }
         ,{ "name":"formula"    , "type":"STRING" , "nullable":true , "size":32000,                   "description":"The formula."  }
@@ -227,29 +227,27 @@
     
    ,{ "name":"FormulaDependency"
      ,"occ":true
-     ,"description":"Formula dependency information"
+     ,"description":"Master formula dependency information"
      ,"columns":[
-         { "name":"formulaRefnum"   , "sameas":"Formula.refnum",                 "description":"The parent formula."  }
-        ,{ "name":"dependencyRefnum", "sameas":"Formula.refnum",                 "description":"The dependent formula."   }
+         { "name":"formulaRefnum"   , "sameas":"Formula.refnum", "invariant": true, "description":"The parent formula."  }
+        ,{ "name":"dependencyRefnum", "sameas":"Formula.refnum", "invariant": true, "description":"The dependent formula."   }
        ]
-     ,"primary": { "autogen": true }
+     ,"primary": { "autogen":  false, "columns":["formulaRefnum" , "dependencyRefnum"] }
      ,"indices":[
-         { "name": "Dependency", "columns": ["formulaRefnum" , "dependencyRefnum"], "db": true }
-      ]
+       ]
     }
 
    ,{ "name":"FormulaResult"
      ,"occ":true
-     ,"description":"Formula result information, if applicable. Some formulas may not yield an enumeratable value (e.g., returning a date)"
+     ,"description":"Master formula result information, if applicable. Some formulas may not yield an enumeratable value (e.g., returning a date)"
      ,"columns":[
-         { "name":"formulaRefnum", "sameas":"Formula.refnum",                           "description":"The parent formula."  }
-        ,{ "name":"value"        , "type":"STRING" , "nullable":false, "size":  100,    "description":"The result value."  }
-        ,{ "name":"description"  , "type":"STRING" , "nullable":false, "size":32000,    "description":"The description of the result value."  }
+         { "name":"formulaRefnum", "sameas":"Formula.refnum",                        "invariant": true, "description":"The parent formula."  }
+        ,{ "name":"value"        , "type":"STRING" , "nullable":false, "size":  100, "invariant": true, "description":"The result value."  }
+        ,{ "name":"description"  , "type":"STRING" , "nullable":false, "size":32000,                    "description":"The description of the result value."  }
        ]
-     ,"primary": { "autogen": true }
+     ,"primary": { "autogen": false, "columns":["formulaRefnum" , "value"] }
      ,"indices":[
-         { "name": "Value", "columns": ["formulaRefnum" , "value"], "db": true }
-      ]
+       ]
     }
 
    ,{ "name": "Testing",

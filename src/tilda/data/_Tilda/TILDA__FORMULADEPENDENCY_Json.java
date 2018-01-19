@@ -37,7 +37,7 @@ public class TILDA__FORMULADEPENDENCY_Json
       Update(Obj);
       if (Obj.Write(C) == false)
        {
-         Obj = tilda.data.FormulaDependency_Factory.LookupByDependency(_formulaRefnum, _dependencyRefnum);
+         Obj = tilda.data.FormulaDependency_Factory.LookupByPrimaryKey(_formulaRefnum, _dependencyRefnum);
          if (Obj.Read(C) == false)
           throw new Exception("Cannot create the tilda.data.TILDA.FORMULADEPENDENCY object.\n"+toString());
          LOG.debug("Nothing has changed in the object, so no update necessary.");

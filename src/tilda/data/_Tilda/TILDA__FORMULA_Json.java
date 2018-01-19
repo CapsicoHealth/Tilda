@@ -43,14 +43,12 @@ public class TILDA__FORMULA_Json
        throw new Exception("Incoming value for 'tilda.data.TILDA.FORMULA.name' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_type       ) == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.FORMULA.type' was null or empty. It's not nullable in the model.\n"+toString());
-      if (_primary     == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.FORMULA.primary' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_title      ) == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.FORMULA.title' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_description) == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.FORMULA.description' was null or empty. It's not nullable in the model.\n"+toString());
 
-      tilda.data.Formula_Data Obj = tilda.data.Formula_Factory.Create(_location, _location2, _name, _type, _primary, _title, _description);
+      tilda.data.Formula_Data Obj = tilda.data.Formula_Factory.Create(_location, _location2, _name, _type, _title, _description);
       Update(Obj);
       if (Obj.Write(C) == false)
        {

@@ -33,24 +33,6 @@ public class TILDA__FORMULARESULT_Factory
    public static abstract class COLS {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULARESULT.refnum -> TILDA.FORMULARESULT."refnum"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULARESULT.refnum of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULARESULT.refnum of type bigint</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_LongPrimitive          REFNUM       = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"       , 0/*0*/, "The primary key for this record");
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FORMULARESULT.formulaRefnum -> TILDA.FORMULARESULT."formulaRefnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -62,11 +44,11 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The parent formula.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          FORMULAREFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formulaRefnum", 1/*1*/, "The parent formula.");
+     public static Type_LongPrimitive          FORMULAREFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formulaRefnum", 0/*0*/, "The parent formula.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FORMULARESULT.value -> TILDA.FORMULARESULT."value"
@@ -81,11 +63,11 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The result value.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        VALUE        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "value"        , 2/*2*/, "The result value.");
+     public static Type_StringPrimitive        VALUE        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "value"        , 1/*1*/, "The result value.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FORMULARESULT.description -> TILDA.FORMULARESULT."description"
@@ -104,7 +86,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        DESCRIPTION  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "description"  , 3/*3*/, "The description of the result value.");
+     public static Type_StringPrimitive        DESCRIPTION  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "description"  , 2/*2*/, "The description of the result value.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FORMULARESULT.created -> TILDA.FORMULARESULT."created"
@@ -129,7 +111,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 4/*4*/, "The timestamp for when the record was created.");
+     public static Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 3/*3*/, "The timestamp for when the record was created.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FORMULARESULT.lastUpdated -> TILDA.FORMULARESULT."lastUpdated"
@@ -154,7 +136,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 5/*5*/, "The timestamp for when the record was last updated.");
+     public static Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 4/*4*/, "The timestamp for when the record was last updated.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FORMULARESULT.deleted -> TILDA.FORMULARESULT."deleted"
@@ -172,7 +154,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED      = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 6/*6*/, "The timestamp for when the record was deleted.");
+     public static Type_DatetimePrimitiveNull  DELETED      = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 5/*5*/, "The timestamp for when the record was deleted.");
 ;
    }
 
@@ -226,8 +208,7 @@ This is the column definition for:<BR>
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
        S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "FORMULARESULT", "refnum");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULARESULT", "formulaRefnum");
+       S.append(" "); C.getFullColumnVar(S, "TILDA", "FORMULARESULT", "formulaRefnum");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULARESULT", "value");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULARESULT", "description");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULARESULT", "created");
@@ -296,9 +277,6 @@ This is the column definition for:<BR>
        Obj.initForCreate();
 
 
-       // Auto PK
-       Obj.setRefnum(tilda.db.KeysManager.getKey("TILDA.FORMULARESULT"));
-
        // Explicit setters
        Obj.setFormulaRefnum(formulaRefnum);
        Obj.setValue        (value        );
@@ -316,7 +294,6 @@ This is the column definition for:<BR>
      {
        int IncomingErrors = Errors.size();
 
-       Long        _refnum        =                       ParseUtil.parseLong("refnum"       , true , Values.get("refnum"       ), Errors );
        Long        _formulaRefnum =                       ParseUtil.parseLong("formulaRefnum", true , Values.get("formulaRefnum"), Errors );
        String        _value         =                       ParseUtil.parseString("value"        , true , Values.get("value"        ), Errors );
        String        _description   =                       ParseUtil.parseString("description"  , true , Values.get("description"  ), Errors );
@@ -326,28 +303,17 @@ This is the column definition for:<BR>
 
       tilda.data.FormulaResult_Data Obj = tilda.data.FormulaResult_Factory.Create(_formulaRefnum, _value, _description);
 
-      if (_refnum       != null) Obj.setRefnum       (_refnum       );
 
       return Obj;
      }
 
-   static public tilda.data.FormulaResult_Data LookupByPrimaryKey(long refnum) throws Exception
+   static public tilda.data.FormulaResult_Data LookupByPrimaryKey(long formulaRefnum, String value) throws Exception
      {
        tilda.data._Tilda.TILDA__FORMULARESULT Obj = new tilda.data.FormulaResult_Data();
        Obj.initForLookup(0);
 
-       Obj.setRefnum       (refnum       ); Obj.__Saved_refnum        = Obj._refnum       ;
-
-       return (tilda.data.FormulaResult_Data) Obj;
-     }
-
-   static public tilda.data.FormulaResult_Data LookupByValue(long formulaRefnum, String value) throws Exception
-     {
-       tilda.data._Tilda.TILDA__FORMULARESULT Obj = new tilda.data.FormulaResult_Data();
-       Obj.initForLookup(1);
-
-       Obj.setFormulaRefnum(formulaRefnum); 
-       Obj.setValue        (value        ); 
+       Obj.setFormulaRefnum(formulaRefnum); Obj.__Saved_formulaRefnum = Obj._formulaRefnum;
+       Obj.setValue        (value        ); Obj.__Saved_value         = Obj._value        ;
 
        return (tilda.data.FormulaResult_Data) Obj;
      }

@@ -132,8 +132,8 @@ This is the column definition for:<BR>
   <TR bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>Long</B>&nbsp;&nbsp;</TD><TD>LNG&nbsp;&nbsp;</TD><TD>Long&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Long</TD></TR>
   <TR bgcolor="#EEEEEE"><TD>5&nbsp;&nbsp;</TD><TD align="right"><B>Float</B>&nbsp;&nbsp;</TD><TD>FLT&nbsp;&nbsp;</TD><TD>Float&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Float</TD></TR>
   <TR bgcolor="#FFFFFF"><TD>6&nbsp;&nbsp;</TD><TD align="right"><B>Double</B>&nbsp;&nbsp;</TD><TD>DBL&nbsp;&nbsp;</TD><TD>Double&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Double</TD></TR>
-  <TR bgcolor="#EEEEEE"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>Date</B>&nbsp;&nbsp;</TD><TD>D&nbsp;&nbsp;</TD><TD>Date&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Date</TD></TR>
-  <TR bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DT&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
+  <TR bgcolor="#EEEEEE"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>Date</B>&nbsp;&nbsp;</TD><TD>DT&nbsp;&nbsp;</TD><TD>Date&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Date</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DTM&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
 </TABLE>
 </TD></TR>
 
@@ -150,14 +150,14 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.primary of type boolean</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.primary of type boolean</TD></TR>
 
-  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether this is a primary formula or a lower-level formula component.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_BooleanPrimitive       PRIMARY    = new Type_BooleanPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "primary"    , 5/*5*/, "Whether this is a primary formula or a lower-level formula component.");
+     public static Type_BooleanPrimitiveNull   PRIMARY    = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "primary"    , 5/*5*/, "Whether this is a primary formula or a lower-level formula component.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.FORMULA.title -> TILDA.FORMULA."title"
@@ -425,11 +425,10 @@ This is the column definition for:<BR>
  @param location2   (max size 64) The name of the secondary table/view (a derived view, a realized table), if appropriate.
  @param name        (max size 64) The name of the formula/column.
  @param type        (max size 3) The type of the formula/column value/outcome.
- @param primary     Whether this is a primary formula or a lower-level formula component.
  @param title       (max size 128) The title of the formula/column.
  @param description (max size 32000) The description of the formula/column.
 */
-   static public tilda.data.Formula_Data Create(String location, String location2, String name, String type, boolean primary, String title, String description) throws Exception
+   static public tilda.data.Formula_Data Create(String location, String location2, String name, String type, String title, String description) throws Exception
      {
        tilda.data._Tilda.TILDA__FORMULA Obj = new tilda.data.Formula_Data();
        Obj.initForCreate();
@@ -443,7 +442,6 @@ This is the column definition for:<BR>
        Obj.setLocation2  (location2  );
        Obj.setName       (name       );
        Obj.setType       (type       );
-       Obj.setPrimary    (primary    );
        Obj.setTitle      (title      );
        Obj.setDescription(description);
 
@@ -464,7 +462,7 @@ This is the column definition for:<BR>
        String        _location2   =                       ParseUtil.parseString("location2"  , true , Values.get("location2"  ), Errors );
        String        _name        =                       ParseUtil.parseString("name"       , true , Values.get("name"       ), Errors );
        String        _type        =                       ParseUtil.parseString("type"       , true , Values.get("type"       ), Errors );
-       Boolean        _primary     =                       ParseUtil.parseBoolean("primary"    , true , Values.get("primary"    ), Errors );
+       Boolean        _primary     =                       ParseUtil.parseBoolean("primary"    , false, Values.get("primary"    ), Errors );
        String        _title       =                       ParseUtil.parseString("title"      , true , Values.get("title"      ), Errors );
        String        _description =                       ParseUtil.parseString("description", true , Values.get("description"), Errors );
        String        _formula     =                       ParseUtil.parseString("formula"    , false, Values.get("formula"    ), Errors );
@@ -473,9 +471,10 @@ This is the column definition for:<BR>
        if (IncomingErrors != Errors.size())
         return null;
 
-      tilda.data.Formula_Data Obj = tilda.data.Formula_Factory.Create(_location, _location2, _name, _type, _primary, _title, _description);
+      tilda.data.Formula_Data Obj = tilda.data.Formula_Factory.Create(_location, _location2, _name, _type, _title, _description);
 
       if (_refnum     != null) Obj.setRefnum     (_refnum     );
+      if (_primary    != null) Obj.setPrimary    (_primary    );
       if (_formula    != null) Obj.setFormula    (_formula    );
       if (_htmlDoc    != null) Obj.setHtmlDoc    (_htmlDoc    );
 
