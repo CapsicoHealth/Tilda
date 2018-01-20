@@ -220,13 +220,14 @@ public class Schema
               if (V._Realize != null)
                hasDataMarts = true;
             }
-        if (hasFormulas == true)
-         CreateFormulaDocumentationTables(PS);
+//        if (hasFormulas == true)
+//         CreateFormulaDocumentationTables(PS);
         
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
       }
 
+/*
     private void CreateFormulaDocumentationTables(ParserSession PS)
       {
         Object O = new Object();
@@ -364,7 +365,7 @@ public class Schema
         _Objects.add(O);
         O.Validate(PS, this);
       }
-    
+*/
     public Documentation getDocumentation(){
     	if(_Documentation == null){
     		_Documentation = new Documentation();

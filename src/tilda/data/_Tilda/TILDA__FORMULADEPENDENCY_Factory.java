@@ -294,6 +294,8 @@ This is the column definition for:<BR>
        return (tilda.data.FormulaDependency_Data) Obj;
      }
 
+
+
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }
    public static SelectQuery newWhereQuery (Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, false); }
    public static ListResults<tilda.data.FormulaDependency_Data> runSelect(Connection C, SelectQuery Q, int Start, int Size) throws Exception

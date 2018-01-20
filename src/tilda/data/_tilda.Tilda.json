@@ -233,6 +233,10 @@
         ,{ "name":"dependencyRefnum", "sameas":"Formula.refnum", "invariant": true, "description":"The dependent formula."   }
        ]
      ,"primary": { "autogen":  false, "columns":["formulaRefnum" , "dependencyRefnum"] }
+     ,"foreign": [
+         { "name":"Formula1",  "srcColumns":["formulaRefnum"   ], "destObject": "Formula" }
+        ,{ "name":"Formula2",  "srcColumns":["dependencyRefnum"], "destObject": "Formula" }
+       ]
      ,"indices":[
        ]
     }
@@ -246,6 +250,9 @@
         ,{ "name":"description"  , "type":"STRING" , "nullable":false, "size":32000,                    "description":"The description of the result value."  }
        ]
      ,"primary": { "autogen": false, "columns":["formulaRefnum" , "value"] }
+     ,"foreign": [
+         { "name":"Formula",  "srcColumns":["formulaRefnum"   ], "destObject": "Formula" }
+       ]
      ,"indices":[
        ]
     }
@@ -314,4 +321,39 @@
        ]
     }
   ]
+    
+    
+ ,"views": [
+     { "name": "FormulaResultView"
+      ,"description": "A view of formulas and their values."
+      ,"columns":[
+          { "sameas": "FormulaResult.formulaRefnum"}
+         ,{ "sameas": "FormulaResult.value"        }
+         ,{ "sameas": "FormulaResult.description"  }
+         ,{ "sameas": "Formula.location"           }
+         ,{ "sameas": "Formula.name"               }
+        ]
+      ,"subWhereX":{
+          "clause":["Formula.deleted is null"
+                   ]
+         ,"description":["Active formulas and their result values"]
+        }
+     }    
+
+    ,{ "name": "FormulaDependencyView"
+      ,"description": "A view of formulas and their dependencies."
+      ,"columns":[
+          { "sameas": "FormulaDependency.formulaRefnum"    }
+         ,{ "sameas": "Formula.location"                   }
+         ,{ "sameas": "Formula.name"                       }
+         ,{ "sameas": "FormulaDependency.dependencyRefnum" }
+         ,{ "sameas": "Formula.name"                       , "name":"dependentFormulaName"}
+        ]
+      ,"subWhereX":{
+          "clause":["Formula.deleted is null"
+                   ]
+         ,"description":["Active formulas and their sub-formulas"]
+        }
+     }    
+   ]
 }

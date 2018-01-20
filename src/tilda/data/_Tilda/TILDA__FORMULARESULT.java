@@ -42,7 +42,7 @@ It contains the following columns:<BR>
 
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
-<TD align="right"><B id='FORMULARESULT-formulaRefnum_DIV' class='columns'>formulaRefnum</B>&nbsp;&nbsp;</TD>
+<TD onclick="onModalShowClicked('FORMULARESULT-formulaRefnum')" align="right"><B id='FORMULARESULT-formulaRefnum_DIV' class='columns dotted_underline cursor_pointer'>formulaRefnum</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;&nbsp;</TD>
 <TD>bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -130,7 +130,13 @@ It contains the following columns:<BR>
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
 <td><a href='TILDA___Docs.TILDA.html#FORMULARESULT_DIV'>FormulaResult</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULARESULT-formulaRefnum_DIV'>formulaRefnum</a> -- LONG</td>
+<td><a href='TILDA___Docs.TILDA.html#FORMULARESULT-formulaRefnum_DIV'>formulaRefnum</a></td>
+</tr>
+<tr><td>&nbsp;</td></tr>
+<tr bgcolor="#DFECF8">
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#FORMULA_DIV'>Formula</a></td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#FORMULA-refnum_DIV'>refnum</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
@@ -223,7 +229,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jan 19 2018, 14:26:21EST
+ @generated Jan 19 2018, 23:09:40EST
 */
 public abstract class TILDA__FORMULARESULT implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {

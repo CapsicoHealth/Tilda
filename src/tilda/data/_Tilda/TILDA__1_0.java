@@ -68,6 +68,8 @@ public final class TILDA__1_0
       tilda.data._Tilda.TILDA__FORMULADEPENDENCY_Factory.initObject(C);
       tilda.data._Tilda.TILDA__FORMULARESULT_Factory.initObject(C);
       tilda.data._Tilda.TILDA__TESTING_Factory.initObject(C);
+      tilda.data._Tilda.TILDA__FORMULARESULTVIEW_Factory.initObject(C);
+      tilda.data._Tilda.TILDA__FORMULADEPENDENCYVIEW_Factory.initObject(C);
     }
 
  }

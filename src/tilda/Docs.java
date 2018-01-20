@@ -70,8 +70,8 @@ public class Docs
                      +AsciiArt.Error("               ")
                      +"\n"
                      +"               Cannot extract documentation from active Tilda definitions in the classpath.\n"
-                     +"          ======================================================================================"
-                     );
+                     +"          ======================================================================================\n"
+                     , E);
             System.exit(-1);
           }
 

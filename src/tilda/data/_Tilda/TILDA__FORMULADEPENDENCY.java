@@ -42,7 +42,7 @@ It contains the following columns:<BR>
 
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
-<TD align="right"><B id='FORMULADEPENDENCY-formulaRefnum_DIV' class='columns'>formulaRefnum</B>&nbsp;&nbsp;</TD>
+<TD onclick="onModalShowClicked('FORMULADEPENDENCY-formulaRefnum')" align="right"><B id='FORMULADEPENDENCY-formulaRefnum_DIV' class='columns dotted_underline cursor_pointer'>formulaRefnum</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;&nbsp;</TD>
 <TD>bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -53,7 +53,7 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>2&nbsp;&nbsp;</TD>
-<TD align="right"><B id='FORMULADEPENDENCY-dependencyRefnum_DIV' class='columns'>dependencyRefnum</B>&nbsp;&nbsp;</TD>
+<TD onclick="onModalShowClicked('FORMULADEPENDENCY-dependencyRefnum')" align="right"><B id='FORMULADEPENDENCY-dependencyRefnum_DIV' class='columns dotted_underline cursor_pointer'>dependencyRefnum</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;&nbsp;</TD>
 <TD>bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -119,7 +119,13 @@ It contains the following columns:<BR>
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
 <td><a href='TILDA___Docs.TILDA.html#FORMULADEPENDENCY_DIV'>FormulaDependency</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULADEPENDENCY-formulaRefnum_DIV'>formulaRefnum</a> -- LONG</td>
+<td><a href='TILDA___Docs.TILDA.html#FORMULADEPENDENCY-formulaRefnum_DIV'>formulaRefnum</a></td>
+</tr>
+<tr><td>&nbsp;</td></tr>
+<tr bgcolor="#DFECF8">
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#FORMULA_DIV'>Formula</a></td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#FORMULA-refnum_DIV'>refnum</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
@@ -136,7 +142,13 @@ It contains the following columns:<BR>
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
 <td><a href='TILDA___Docs.TILDA.html#FORMULADEPENDENCY_DIV'>FormulaDependency</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULADEPENDENCY-dependencyRefnum_DIV'>dependencyRefnum</a> -- LONG</td>
+<td><a href='TILDA___Docs.TILDA.html#FORMULADEPENDENCY-dependencyRefnum_DIV'>dependencyRefnum</a></td>
+</tr>
+<tr><td>&nbsp;</td></tr>
+<tr bgcolor="#DFECF8">
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#FORMULA_DIV'>Formula</a></td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#FORMULA-refnum_DIV'>refnum</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
@@ -195,7 +207,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jan 19 2018, 14:26:21EST
+ @generated Jan 19 2018, 23:09:40EST
 */
 public abstract class TILDA__FORMULADEPENDENCY implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {

@@ -358,6 +358,8 @@ create table if not exists TILDA.FORMULADEPENDENCY -- Master formula dependency 
   , "lastUpdated"       timestamptz  not null   -- The timestamp for when the record was last updated.
   , "deleted"           timestamptz             -- The timestamp for when the record was deleted.
   , PRIMARY KEY("formulaRefnum", "dependencyRefnum")
+  , CONSTRAINT fk_FORMULADEPENDENCY_Formula1 FOREIGN KEY ("formulaRefnum") REFERENCES TILDA.FORMULA ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_FORMULADEPENDENCY_Formula2 FOREIGN KEY ("dependencyRefnum") REFERENCES TILDA.FORMULA ON DELETE restrict ON UPDATE cascade
  );
 COMMENT ON TABLE TILDA.FORMULADEPENDENCY IS E'Master formula dependency information';
 COMMENT ON COLUMN TILDA.FORMULADEPENDENCY."formulaRefnum" IS E'The parent formula.';
@@ -376,6 +378,7 @@ create table if not exists TILDA.FORMULARESULT -- Master formula result informat
   , "lastUpdated"    timestamptz   not null   -- The timestamp for when the record was last updated.
   , "deleted"        timestamptz              -- The timestamp for when the record was deleted.
   , PRIMARY KEY("formulaRefnum", "value")
+  , CONSTRAINT fk_FORMULARESULT_Formula FOREIGN KEY ("formulaRefnum") REFERENCES TILDA.FORMULA ON DELETE restrict ON UPDATE cascade
  );
 COMMENT ON TABLE TILDA.FORMULARESULT IS E'Master formula result information, if applicable. Some formulas may not yield an enumeratable value (e.g., returning a date)';
 COMMENT ON COLUMN TILDA.FORMULARESULT."formulaRefnum" IS E'The parent formula.';
@@ -478,5 +481,52 @@ COMMENT ON COLUMN TILDA.TESTING2."created" IS E'The timestamp for when the recor
 COMMENT ON COLUMN TILDA.TESTING2."lastUpdated" IS E'The timestamp for when the record was last updated.';
 COMMENT ON COLUMN TILDA.TESTING2."deleted" IS E'The timestamp for when the record was deleted.';
 CREATE UNIQUE INDEX TESTING2_T1 ON TILDA.TESTING2 ("t1");
+
+
+
+
+create or replace view TILDA.FORMULARESULTVIEW as 
+-- 'A view of formulas and their values.'
+select TILDA.FORMULARESULT."formulaRefnum" as "formulaRefnum" -- The parent formula.
+     , TILDA.FORMULARESULT."value" as "value" -- The result value.
+     , TILDA.FORMULARESULT."description" as "description" -- The description of the result value.
+     , TILDA.FORMULA."location" as "location" -- The name of the primary table/view this formula is defined in.
+     , TILDA.FORMULA."name" as "name" -- The name of the formula/column.
+  from TILDA.FORMULARESULT
+     inner join TILDA.FORMULA on TILDA.FORMULARESULT."formulaRefnum" = TILDA.FORMULA."refnum"
+ where (TILDA.FORMULA."deleted" is null)
+;
+
+COMMENT ON VIEW TILDA.FORMULARESULTVIEW IS E'create or replace view TILDA.FORMULARESULTVIEW as \n-- ''A view of formulas and their values.''\nselect TILDA.FORMULARESULT."formulaRefnum" as "formulaRefnum" -- The parent formula.\n     , TILDA.FORMULARESULT."value" as "value" -- The result value.\n     , TILDA.FORMULARESULT."description" as "description" -- The description of the result value.\n     , TILDA.FORMULA."location" as "location" -- The name of the primary table/view this formula is defined in.\n     , TILDA.FORMULA."name" as "name" -- The name of the formula/column.\n  from TILDA.FORMULARESULT\n     inner join TILDA.FORMULA on TILDA.FORMULARESULT."formulaRefnum" = TILDA.FORMULA."refnum"\n where (TILDA.FORMULA."deleted" is null)\n;\n';
+
+COMMENT ON COLUMN TILDA.FORMULARESULTVIEW."formulaRefnum" IS E'The parent formula.';
+COMMENT ON COLUMN TILDA.FORMULARESULTVIEW."value" IS E'The result value.';
+COMMENT ON COLUMN TILDA.FORMULARESULTVIEW."description" IS E'The description of the result value.';
+COMMENT ON COLUMN TILDA.FORMULARESULTVIEW."location" IS E'The name of the primary table/view this formula is defined in.';
+COMMENT ON COLUMN TILDA.FORMULARESULTVIEW."name" IS E'The name of the formula/column.';
+
+
+
+
+create or replace view TILDA.FORMULADEPENDENCYVIEW as 
+-- 'A view of formulas and their dependencies.'
+select TILDA.FORMULADEPENDENCY."formulaRefnum" as "formulaRefnum" -- The parent formula.
+     , TILDA.FORMULA."location" as "location" -- The name of the primary table/view this formula is defined in.
+     , TILDA.FORMULA."name" as "name" -- The name of the formula/column.
+     , TILDA.FORMULADEPENDENCY."dependencyRefnum" as "dependencyRefnum" -- The dependent formula.
+     , TILDA_FORMULA_2."name" as "dependentFormulaName" -- The name of the formula/column.
+  from TILDA.FORMULADEPENDENCY
+     inner join TILDA.FORMULA on TILDA.FORMULADEPENDENCY."formulaRefnum" = TILDA.FORMULA."refnum"
+     inner join TILDA.FORMULA as TILDA_FORMULA_2 on TILDA.FORMULADEPENDENCY."dependencyRefnum" = TILDA_FORMULA_2."refnum"
+ where (TILDA.FORMULA."deleted" is null)
+;
+
+COMMENT ON VIEW TILDA.FORMULADEPENDENCYVIEW IS E'create or replace view TILDA.FORMULADEPENDENCYVIEW as \n-- ''A view of formulas and their dependencies.''\nselect TILDA.FORMULADEPENDENCY."formulaRefnum" as "formulaRefnum" -- The parent formula.\n     , TILDA.FORMULA."location" as "location" -- The name of the primary table/view this formula is defined in.\n     , TILDA.FORMULA."name" as "name" -- The name of the formula/column.\n     , TILDA.FORMULADEPENDENCY."dependencyRefnum" as "dependencyRefnum" -- The dependent formula.\n     , TILDA_FORMULA_2."name" as "dependentFormulaName" -- The name of the formula/column.\n  from TILDA.FORMULADEPENDENCY\n     inner join TILDA.FORMULA on TILDA.FORMULADEPENDENCY."formulaRefnum" = TILDA.FORMULA."refnum"\n     inner join TILDA.FORMULA as TILDA_FORMULA_2 on TILDA.FORMULADEPENDENCY."dependencyRefnum" = TILDA_FORMULA_2."refnum"\n where (TILDA.FORMULA."deleted" is null)\n;\n';
+
+COMMENT ON COLUMN TILDA.FORMULADEPENDENCYVIEW."formulaRefnum" IS E'The parent formula.';
+COMMENT ON COLUMN TILDA.FORMULADEPENDENCYVIEW."location" IS E'The name of the primary table/view this formula is defined in.';
+COMMENT ON COLUMN TILDA.FORMULADEPENDENCYVIEW."name" IS E'The name of the formula/column.';
+COMMENT ON COLUMN TILDA.FORMULADEPENDENCYVIEW."dependencyRefnum" IS E'The dependent formula.';
+COMMENT ON COLUMN TILDA.FORMULADEPENDENCYVIEW."dependentFormulaName" IS E'The name of the formula/column.';
 
 

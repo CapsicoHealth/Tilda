@@ -874,6 +874,11 @@ public class Sql extends PostgreSQL implements CodeGenSql
       {
         if (V._Formulas == null || V._Formulas.isEmpty() == true)
           return;
+        
+        OutFinal.println("DROP TABLE IF EXISTS " + V._ParentSchema._Name + ".TildaFormulaValue;");
+        OutFinal.println("DROP TABLE IF EXISTS " + V._ParentSchema._Name + ".TildaFormulaReference;");
+        OutFinal.println("DROP TABLE IF EXISTS " + V._ParentSchema._Name + ".TildaFormula;");
+        
 
         OutFinal.println("DO $$");
         OutFinal.println("DECLARE");
@@ -884,7 +889,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         OutFinal.println("  select into ts current_timestamp;");
         OutFinal.println();
 
-        String RealizedTable = V._Realize == null ? null : V._Name.substring(0, V._Name.length() - (V._Pivot != null ? "PivotView" : "View").length()) + "Realized";
+        String RealizedTable = V._Realize == null ? null : V._ParentSchema._Name+"."+V._Name.substring(0, V._Name.length() - (V._Pivot != null ? "PivotView" : "View").length()) + "Realized";
         int count = -1;
         for (Formula F : V._Formulas)
           {
@@ -901,7 +906,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 OutFinal.print("          ,(");
               }
             OutFinal.print("k+" + count);
-            OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(V._Name));
+            OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()));
             OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(RealizedTable));
             OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Name));
             OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(F.getType()._ShortName));
@@ -972,7 +977,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                     {
                       OutFinal.print("          ,(");
                     }
-                  OutFinal.print("(select refnum from TILDA.Formula where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V._Name) + " AND \"name\" = " + TextUtil.EscapeSingleQuoteForSQL(F._Name) + ")");
+                  OutFinal.print("(select refnum from TILDA.Formula where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()) + " AND \"name\" = " + TextUtil.EscapeSingleQuoteForSQL(F._Name) + ")");
                   OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(Val._Value));
                   OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(Val._Description));
                   OutFinal.println(", current_timestamp, current_timestamp, null)");
@@ -990,7 +995,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         OutFinal.println("   set deleted = current_timestamp");
         OutFinal.println(" where \"formulaRefnum\" in (select refnum");
         OutFinal.println("                               from TILDA.Formula");
-        OutFinal.println("                              where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V._Name));
+        OutFinal.println("                              where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()));
         OutFinal.println("                                and \"deleted\" is not null");
         OutFinal.println("                            );");
         OutFinal.println();
@@ -1031,8 +1036,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
                     {
                       OutFinal.print("          ,(");
                     }
-                  OutFinal.println(" (select refnum from TILDA.Formula where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V._Name) + " AND \"name\" = " + TextUtil.EscapeSingleQuoteForSQL(F._Name) + ")");
-                  OutFinal.println("            ,(select refnum from TILDA.Formula where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V._Name) + " AND \"name\" = " + TextUtil.EscapeSingleQuoteForSQL(F2._Name) + ")");
+                  OutFinal.println(" (select refnum from TILDA.Formula where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()) + " AND \"name\" = " + TextUtil.EscapeSingleQuoteForSQL(F._Name) + ")");
+                  OutFinal.println("            ,(select refnum from TILDA.Formula where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()) + " AND \"name\" = " + TextUtil.EscapeSingleQuoteForSQL(F2._Name) + ")");
                   OutFinal.println("            ,current_timestamp, current_timestamp, null");
                   OutFinal.println("           )");
                 }
@@ -1048,7 +1053,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         OutFinal.println("   set deleted = current_timestamp");
         OutFinal.println(" where \"formulaRefnum\" in (select refnum");
         OutFinal.println("                               from TILDA.Formula");
-        OutFinal.println("                              where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V._Name));
+        OutFinal.println("                              where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()));
         OutFinal.println("                                and \"deleted\" is not null");
         OutFinal.println("                            );");
         OutFinal.println();
