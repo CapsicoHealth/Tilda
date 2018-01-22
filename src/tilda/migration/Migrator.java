@@ -107,13 +107,6 @@ public class Migrator
             doAcl(C, TildaList, DBMeta);
             if (Migrate.isTesting() == false)
               KeysManager.reloadAll();
-            LOG.info("\n"
-                    +"          ======================================================================================\n"
-                    +AsciiArt.Woohoo("                       ")
-                    +"\n"
-                    +"              The database was automatically migrated to match the Application's data model.    \n"
-                    +"          ======================================================================================\n"
-                    );
           }
         else
           {

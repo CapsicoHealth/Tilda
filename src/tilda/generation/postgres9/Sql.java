@@ -875,9 +875,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
         if (V._Formulas == null || V._Formulas.isEmpty() == true)
           return;
 
-        OutFinal.println("DROP TABLE IF EXISTS " + V._ParentSchema._Name + ".TildaFormulaValue;");
-        OutFinal.println("DROP TABLE IF EXISTS " + V._ParentSchema._Name + ".TildaFormulaReference;");
-        OutFinal.println("DROP TABLE IF EXISTS " + V._ParentSchema._Name + ".TildaFormula;");
+//        OutFinal.println("DROP TABLE IF EXISTS " + V._ParentSchema._Name + ".TildaFormulaValue;");
+//        OutFinal.println("DROP TABLE IF EXISTS " + V._ParentSchema._Name + ".TildaFormulaReference;");
+//        OutFinal.println("DROP TABLE IF EXISTS " + V._ParentSchema._Name + ".TildaFormula;");
 
 
         OutFinal.println("DO $$");
@@ -902,7 +902,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
             if (++count == 0)
               {
-                OutFinal.println("INSERT INTO TILDA.Formula (\"refnum\", \"location\", \"location2\", \"name\", \"type\", \"primary\", \"title\", \"description\", \"formula\", \"htmlDoc\", \"created\", \"lastUpdated\", \"deleted\")");
+                OutFinal.println("INSERT INTO TILDA.Formula (\"refnum\", \"location\", \"location2\", \"name\", \"type\", \"title\", \"description\", \"formula\", \"htmlDoc\", \"created\", \"lastUpdated\", \"deleted\")");
                 OutFinal.print("    VALUES (");
               }
             else
@@ -916,7 +916,6 @@ public class Sql extends PostgreSQL implements CodeGenSql
             OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(RealizedTable));
             OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Name));
             OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(F.getType()._ShortName));
-            OutFinal.print(", null");
             OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Title));
             OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(String.join("\n", F._Description)));
             OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(String.join("\n", F._FormulaStrs)));
@@ -958,7 +957,6 @@ public class Sql extends PostgreSQL implements CodeGenSql
             OutFinal.println("  ON CONFLICT(\"location\", \"name\") DO UPDATE");
             OutFinal.println("    SET \"location2\" = EXCLUDED.\"location2\"");
             OutFinal.println("      , \"type\" = EXCLUDED.\"type\"");
-            OutFinal.println("      , \"primary\" = EXCLUDED.\"primary\"");
             OutFinal.println("      , \"title\" = EXCLUDED.\"title\"");
             OutFinal.println("      , \"description\" = EXCLUDED.\"description\"");
             OutFinal.println("      , \"formula\" = EXCLUDED.\"formula\"");
@@ -1122,7 +1120,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 {
                   OutFinal.print("          ,(");
                 }
-              OutFinal.println(" (select refnum from TILDA.Measure where \"name\" = " + TextUtil.EscapeSingleQuoteForSQL(F._Title) + ")");
+              OutFinal.println(" (select refnum from TILDA.Measure where \"name\" = " + TextUtil.EscapeSingleQuoteForSQL(F._Title) + " and \"schema\" = " + TextUtil.EscapeSingleQuoteForSQL(V._ParentSchema._Name) + ")");
               OutFinal.println("            ,(select refnum from TILDA.Formula where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()) + " AND \"name\" = " + TextUtil.EscapeSingleQuoteForSQL(F._Name) + ")");
               OutFinal.println(", current_timestamp, current_timestamp, null)");
             }

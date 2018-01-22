@@ -228,8 +228,8 @@
      ,"occ":true
      ,"description":"Master Measure information"
      ,"columns":[
-         { "name":"schema"  , "type":"STRING" , "nullable":false, "size":   64, "invariant":true, "description":"The Schema wher ethe measure is defined."  }
-        ,{ "name":"name"    , "type":"STRING" , "nullable":false, "size":   64, "invariant":true, "description":"The name of the measure."  }
+         { "name":"schema"  , "type":"STRING" , "nullable":false, "size":   64,  "description":"The Schema wher ethe measure is defined."  }
+        ,{ "name":"name"    , "type":"STRING" , "nullable":false, "size":   64,  "description":"The name of the measure."  }
        ]
      ,"primary": { "autogen": true }
      ,"indices":[
@@ -362,7 +362,7 @@
          ,{ "sameas": "Formula.name"               }
         ]
       ,"subWhereX":{
-          "clause":["Formula.deleted is null"
+          "clause":["Formula.deleted is null and FormulaResult.deleted is null"
                    ]
          ,"description":["Active formulas and their result values"]
         }
@@ -396,11 +396,11 @@
          ,{ "sameas": "Formula.name"        , "name":"formulaName"      }
          ,{ "sameas": "Formula.title"              }
          ,{ "sameas": "Formula.description"        }
-         ,{ "sameas": "Formula.type"              }
+         ,{ "sameas": "Formula.type"               }
          ,{ "sameas": "Formula.formula"            }
         ]
       ,"subWhereX":{
-          "clause":["Formula.deleted is null"
+          "clause":["Formula.deleted is null and Measure.deleted is null"
                    ]
          ,"description":["Active formulas and their sub-formulas"]
         }

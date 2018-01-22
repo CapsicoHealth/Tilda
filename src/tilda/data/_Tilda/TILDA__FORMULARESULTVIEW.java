@@ -34,7 +34,7 @@ The generated Java 8/PostgreSQL Tilda data class <B>Data_FORMULARESULTVIEW</B> i
 <B>Description</B>: A view of formulas and their values.<BR>
 <BR>
 
-<BLOCKQUOTE>That view is filtered: <BLOCKQUOTE><PRE>Formula.deleted is null</PRE>Active formulas and their result values</BLOCKQUOTE>
+<BLOCKQUOTE>That view is filtered: <BLOCKQUOTE><PRE>Formula.deleted is null and FormulaResult.deleted is null</PRE>Active formulas and their result values</BLOCKQUOTE>
 It contains the following columns:<BR>
  <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
    <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><!--TH align="left">Column</TH--><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
@@ -219,7 +219,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jan 21 2018, 19:00:17EST
+ @generated Jan 22 2018, 15:28:02EST
 */
 public abstract class TILDA__FORMULARESULTVIEW implements tilda.interfaces.ReaderObject
  {
