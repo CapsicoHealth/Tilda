@@ -213,7 +213,6 @@
                                             ,{ "name":"DateTime" , "value":"DTM", "description": "DateTime"  }
                                            ]
          }
-        ,{ "name":"primary"    , "type":"BOOLEAN", "nullable":true ,                                 "description":"Whether this is a primary formula or a lower-level formula component."  }
         ,{ "name":"title"      , "type":"STRING" , "nullable":false, "size":  128,                   "description":"The title of the formula/column."  }
         ,{ "name":"description", "type":"STRING" , "nullable":false, "size":32000,                   "description":"The description of the formula/column."  }
         ,{ "name":"formula"    , "type":"STRING" , "nullable":true , "size":32000,                   "description":"The formula."  }
@@ -225,6 +224,35 @@
       ]
     }
     
+   ,{ "name":"Measure"
+     ,"occ":true
+     ,"description":"Master Measure information"
+     ,"columns":[
+         { "name":"schema"  , "type":"STRING" , "nullable":false, "size":   64, "invariant":true, "description":"The Schema wher ethe measure is defined."  }
+        ,{ "name":"name"    , "type":"STRING" , "nullable":false, "size":   64, "invariant":true, "description":"The name of the measure."  }
+       ]
+     ,"primary": { "autogen": true }
+     ,"indices":[
+         { "name": "Measure", "columns": ["schema", "name"], "db": true }
+      ]
+    }
+
+   ,{ "name":"MeasureFormula"
+     ,"occ":true
+     ,"description":"Master Measure information"
+     ,"columns":[
+         { "name":"measureRefnum"   , "sameas":"Measure.refnum", "invariant":true , "description":"The measure."         }
+        ,{ "name":"formulaRefnum"   , "sameas":"Formula.refnum", "invariant": true, "description":"The parent formula."  }
+       ]
+     ,"primary": { "autogen": false, "columns": ["measureRefnum", "formulaRefnum"] }
+     ,"foreign": [
+         { "name":"Measure",  "srcColumns":["measureRefnum"], "destObject": "Measure" }
+        ,{ "name":"Formula",  "srcColumns":["formulaRefnum"], "destObject": "Formula" }
+       ]
+     ,"indices":[
+      ]
+    }
+
    ,{ "name":"FormulaDependency"
      ,"occ":true
      ,"description":"Master formula dependency information"
@@ -348,6 +376,28 @@
          ,{ "sameas": "Formula.name"                       }
          ,{ "sameas": "FormulaDependency.dependencyRefnum" }
          ,{ "sameas": "Formula.name"                       , "name":"dependentFormulaName"}
+        ]
+      ,"subWhereX":{
+          "clause":["Formula.deleted is null"
+                   ]
+         ,"description":["Active formulas and their sub-formulas"]
+        }
+     }    
+
+    ,{ "name": "MeasureFormulaView"
+      ,"description": "A view of formulas and their dependencies."
+      ,"columns":[
+          { "sameas": "MeasureFormula.measureRefnum"                    }
+         ,{ "sameas": "Measure.schema"      , "name":"measureSchema"    }
+         ,{ "sameas": "Measure.name"        , "name":"measureName"      }
+         ,{ "sameas": "Formula.refnum"      , "name":"formulaRefnum"    }
+         ,{ "sameas": "Formula.location"    , "name":"formulaLocation"  }
+         ,{ "sameas": "Formula.location2"   , "name":"formulaLocation2" }
+         ,{ "sameas": "Formula.name"        , "name":"formulaName"      }
+         ,{ "sameas": "Formula.title"              }
+         ,{ "sameas": "Formula.description"        }
+         ,{ "sameas": "Formula.type"              }
+         ,{ "sameas": "Formula.formula"            }
         ]
       ,"subWhereX":{
           "clause":["Formula.deleted is null"

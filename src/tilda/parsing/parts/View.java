@@ -566,13 +566,19 @@ public class View extends Base
                 }
             }
 
+        Set<String> Formulas = new HashSet<String>();
         if (_Formulas != null)
           for (Formula F : _Formulas)
             if (F != null)
               {
-                F.Validate(PS, this);
-                Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "Formula column: " + F._Title);
-                O._Columns.add(C);
+                if (Formulas.add(F._Name) == false)
+                  PS.AddError("View '" + getFullName() + "' is defining formula '" + F._Name + "' more than once.");
+                else
+                  {
+                    F.Validate(PS, this);
+                    Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "Formula column: " + F._Title);
+                    O._Columns.add(C);
+                  }
               }
 
         // Preparing regexes for anything that needs to do search and replace.

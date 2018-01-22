@@ -110,17 +110,6 @@ It contains the following columns:<BR>
 </TD></TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>6&nbsp;&nbsp;</TD>
-<TD align="right"><B id='FORMULA-primary_DIV' class='columns'>primary</B>&nbsp;&nbsp;</TD>
-<TD>boolean&nbsp;&nbsp;</TD>
-<TD>boolean&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Whether this is a primary formula or a lower-level formula component.</TD>
-</TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>7&nbsp;&nbsp;</TD>
 <TD align="right"><B id='FORMULA-title_DIV' class='columns'>title</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;&nbsp;</TD>
 <TD>varchar(128)&nbsp;&nbsp;</TD>
@@ -130,8 +119,8 @@ It contains the following columns:<BR>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The title of the formula/column.</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>8&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>7&nbsp;&nbsp;</TD>
 <TD align="right"><B id='FORMULA-description_DIV' class='columns'>description</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;&nbsp;</TD>
 <TD>text&nbsp;&nbsp;</TD>
@@ -141,8 +130,8 @@ It contains the following columns:<BR>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The description of the formula/column.</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>9&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>8&nbsp;&nbsp;</TD>
 <TD align="right"><B id='FORMULA-formula_DIV' class='columns'>formula</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;&nbsp;</TD>
 <TD>text&nbsp;&nbsp;</TD>
@@ -152,8 +141,8 @@ It contains the following columns:<BR>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The formula.</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>10&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>9&nbsp;&nbsp;</TD>
 <TD align="right"><B id='FORMULA-htmlDoc_DIV' class='columns'>htmlDoc</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;&nbsp;</TD>
 <TD>text&nbsp;&nbsp;</TD>
@@ -163,8 +152,8 @@ It contains the following columns:<BR>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Pre-rendered html fragment with the full documentation for this formula.</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>11&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>10&nbsp;&nbsp;</TD>
 <TD align="right"><B id='FORMULA-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
@@ -174,13 +163,13 @@ It contains the following columns:<BR>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created.</TD>
 </TR>
-  <TR bgcolor="#DFECF8"><TD></TD><TD></TD><TD colspan="10" align="center">
+  <TR bgcolor="#FFFFFF"><TD></TD><TD></TD><TD colspan="10" align="center">
 <TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
   <TR bgcolor="#FFF2CC"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Creation</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Creation&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Creation time</TD></TR>
 </TABLE>
 </TD></TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>12&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>11&nbsp;&nbsp;</TD>
 <TD align="right"><B id='FORMULA-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
@@ -190,13 +179,13 @@ It contains the following columns:<BR>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated.</TD>
 </TR>
-  <TR bgcolor="#FFFFFF"><TD></TD><TD></TD><TD colspan="10" align="center">
+  <TR bgcolor="#DFECF8"><TD></TD><TD></TD><TD colspan="10" align="center">
 <TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
   <TR bgcolor="#FFF2CC"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Update</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Update&nbsp;&nbsp;</TD><TD>ALWAYS&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Last updated time</TD></TR>
 </TABLE>
 </TD></TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>13&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>12&nbsp;&nbsp;</TD>
 <TD align="right"><B id='FORMULA-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;&nbsp;</TD>
 <TD>timestamptz&nbsp;&nbsp;</TD>
@@ -289,23 +278,6 @@ It contains the following columns:<BR>
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
 <td><a href='TILDA___Docs.TILDA.html#FORMULA_DIV'>Formula</a></td>
 <td><a href='TILDA___Docs.TILDA.html#FORMULA-type_DIV'>type</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='FORMULA-primary_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('FORMULA-primary_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULA_DIV'>Formula</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULA-primary_DIV'>primary</a> -- BOOLEAN</td>
 </tr>
 </table>
 </DIV></DIV>
@@ -432,7 +404,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jan 19 2018, 23:09:40EST
+ @generated Jan 21 2018, 19:00:17EST
 */
 public abstract class TILDA__FORMULA implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
@@ -1311,148 +1283,6 @@ This is the hasChanged for:<BR>
 */
    public boolean hasChangedType()
      { return (TILDA__FORMULA_Factory.COLS.TYPE._Mask1 & __Changes1) != 0L; }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.primary -> TILDA.FORMULA."primary"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.primary of type boolean</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.primary of type boolean</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether this is a primary formula or a lower-level formula component.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   boolean _primary;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.primary -> TILDA.FORMULA."primary"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.primary of type boolean</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.primary of type boolean</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether this is a primary formula or a lower-level formula component.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean getPrimary()
-      { return _primary; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.primary -> TILDA.FORMULA."primary"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.primary of type boolean</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.primary of type boolean</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether this is a primary formula or a lower-level formula component.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isNullPrimary()
-     { return (TILDA__FORMULA_Factory.COLS.PRIMARY._Mask1 & __Nulls1) != 0L; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.primary -> TILDA.FORMULA."primary"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.primary of type boolean</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.primary of type boolean</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether this is a primary formula or a lower-level formula component.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setPrimary(boolean v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (v != _primary)
-        {
-          __Changes1 |= TILDA__FORMULA_Factory.COLS.PRIMARY._Mask1;
-          __Nulls1   &= ~TILDA__FORMULA_Factory.COLS.PRIMARY._Mask1;
-       _primary = v;
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.primary -> TILDA.FORMULA."primary"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.primary of type boolean</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.primary of type boolean</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether this is a primary formula or a lower-level formula component.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public void setNullPrimary()
-     {
-       long T0 = System.nanoTime();
-       if ((TILDA__FORMULA_Factory.COLS.PRIMARY._Mask1 & __Nulls1) != 0L)
-        return;
-       __Changes1 |= TILDA__FORMULA_Factory.COLS.PRIMARY._Mask1;
-       __Nulls1   |= TILDA__FORMULA_Factory.COLS.PRIMARY._Mask1;
-       _primary=false;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.primary -> TILDA.FORMULA."primary"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the hasChanged for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.primary of type boolean</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.primary of type boolean</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Whether this is a primary formula or a lower-level formula component.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public boolean hasChangedPrimary()
-     { return (TILDA__FORMULA_Factory.COLS.PRIMARY._Mask1 & __Changes1) != 0L; }
 
 
 
@@ -2615,7 +2445,6 @@ This is the hasChanged for:<BR>
      {
        Dst.setName       (_name       );
        Dst.setType       (_type       );
-       if ((TILDA__FORMULA_Factory.COLS.PRIMARY._Mask1     & __Nulls1) != 0L) Dst.setNullPrimary    (); else        Dst.setPrimary    (_primary    );
        Dst.setTitle      (_title      );
        Dst.setDescription(_description);
        if ((TILDA__FORMULA_Factory.COLS.FORMULA._Mask1     & __Nulls1) != 0L) Dst.setNullFormula    (); else        Dst.setFormula    (_formula    );
@@ -2666,7 +2495,6 @@ This is the hasChanged for:<BR>
           if ((TILDA__FORMULA_Factory.COLS.LOCATION2._Mask1   & __Changes1) != 0L) { TILDA__FORMULA_Factory.COLS.LOCATION2.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if ((TILDA__FORMULA_Factory.COLS.NAME._Mask1        & __Changes1) != 0L) { TILDA__FORMULA_Factory.COLS.NAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if ((TILDA__FORMULA_Factory.COLS.TYPE._Mask1        & __Changes1) != 0L) { TILDA__FORMULA_Factory.COLS.TYPE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__FORMULA_Factory.COLS.PRIMARY._Mask1     & __Changes1) != 0L) { TILDA__FORMULA_Factory.COLS.PRIMARY.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if ((TILDA__FORMULA_Factory.COLS.TITLE._Mask1       & __Changes1) != 0L) { TILDA__FORMULA_Factory.COLS.TITLE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if ((TILDA__FORMULA_Factory.COLS.DESCRIPTION._Mask1 & __Changes1) != 0L) { TILDA__FORMULA_Factory.COLS.DESCRIPTION.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if ((TILDA__FORMULA_Factory.COLS.FORMULA._Mask1     & __Changes1) != 0L) { TILDA__FORMULA_Factory.COLS.FORMULA.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
@@ -2699,7 +2527,6 @@ This is the hasChanged for:<BR>
           if ((TILDA__FORMULA_Factory.COLS.LOCATION2._Mask1   & __Changes1) != 0L) TILDA__FORMULA_Factory.COLS.LOCATION2.getFullColumnVarForUpdate(C, S);
           if ((TILDA__FORMULA_Factory.COLS.NAME._Mask1        & __Changes1) != 0L) TILDA__FORMULA_Factory.COLS.NAME.getFullColumnVarForUpdate(C, S);
           if ((TILDA__FORMULA_Factory.COLS.TYPE._Mask1        & __Changes1) != 0L) TILDA__FORMULA_Factory.COLS.TYPE.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__FORMULA_Factory.COLS.PRIMARY._Mask1     & __Changes1) != 0L) TILDA__FORMULA_Factory.COLS.PRIMARY.getFullColumnVarForUpdate(C, S);
           if ((TILDA__FORMULA_Factory.COLS.TITLE._Mask1       & __Changes1) != 0L) TILDA__FORMULA_Factory.COLS.TITLE.getFullColumnVarForUpdate(C, S);
           if ((TILDA__FORMULA_Factory.COLS.DESCRIPTION._Mask1 & __Changes1) != 0L) TILDA__FORMULA_Factory.COLS.DESCRIPTION.getFullColumnVarForUpdate(C, S);
           if ((TILDA__FORMULA_Factory.COLS.FORMULA._Mask1     & __Changes1) != 0L) TILDA__FORMULA_Factory.COLS.FORMULA.getFullColumnVarForUpdate(C, S);
@@ -2778,10 +2605,6 @@ This is the hasChanged for:<BR>
                if ((TILDA__FORMULA_Factory.COLS.TYPE._Mask1        & __Changes1) != 0L) 
                 { 
                   if ((TILDA__FORMULA_Factory.COLS.TYPE._Mask1        & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _type);
-                } 
-               if ((TILDA__FORMULA_Factory.COLS.PRIMARY._Mask1     & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__FORMULA_Factory.COLS.PRIMARY._Mask1     & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BOOLEAN); else PS.setBoolean  (++i, _primary);
                 } 
                if ((TILDA__FORMULA_Factory.COLS.TITLE._Mask1       & __Changes1) != 0L) 
                 { 
@@ -2904,7 +2727,6 @@ This is the hasChanged for:<BR>
        S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULA", "location2");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULA", "name");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULA", "type");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULA", "primary");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULA", "title");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULA", "description");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULA", "formula");
@@ -2981,7 +2803,6 @@ This is the hasChanged for:<BR>
                             _location2   = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__FORMULA_Factory.COLS.LOCATION2._Mask1  ;
       __Saved_name        = _name        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__FORMULA_Factory.COLS.NAME._Mask1       ;
                             _type        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__FORMULA_Factory.COLS.TYPE._Mask1       ; else _type        = _type       .trim();
-                            _primary     =                              RS.getBoolean  (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__FORMULA_Factory.COLS.PRIMARY._Mask1    ;
                             _title       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__FORMULA_Factory.COLS.TITLE._Mask1      ;
                             _description = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__FORMULA_Factory.COLS.DESCRIPTION._Mask1;
                             _formula     = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__FORMULA_Factory.COLS.FORMULA._Mask1    ;
@@ -3006,7 +2827,6 @@ This is the hasChanged for:<BR>
                + "; location2: "                                                                                         + TextUtil.PrintVariableStr        (getLocation2  ())
                + "; name: "                                                                                              + TextUtil.PrintVariableStr        (getName       ())
                + "; type: "                                                                                              + TextUtil.PrintVariableStr        (getType       ())
-               + "; primary"       + ((TILDA__FORMULA_Factory.COLS.PRIMARY._Mask1     & __Nulls1) != 0L ? ": NULL" : ": " +                                   getPrimary    () )
                + "; title: "                                                                                             + TextUtil.PrintVariableStr        (getTitle      ())
                + "; description: "                                                                                       + TextUtil.PrintVariableStr        (getDescription())
                + "; formula"       + ((TILDA__FORMULA_Factory.COLS.FORMULA._Mask1     & __Nulls1) != 0L ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getFormula    ()))

@@ -37,6 +37,7 @@ public class Formula extends TypeDef
 
     /*@formatter:off*/
     @SerializedName("name"       ) public String   _Name       ;
+    @SerializedName("measure"    ) public Boolean  _Measure    = Boolean.FALSE;
     @SerializedName("formula"    ) public String[] _FormulaStrs;
     @SerializedName("title"      ) public String   _Title      ;
     @SerializedName("id"         ) public String   _Id         ;

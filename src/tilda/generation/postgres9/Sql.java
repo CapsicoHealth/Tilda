@@ -874,11 +874,11 @@ public class Sql extends PostgreSQL implements CodeGenSql
       {
         if (V._Formulas == null || V._Formulas.isEmpty() == true)
           return;
-        
+
         OutFinal.println("DROP TABLE IF EXISTS " + V._ParentSchema._Name + ".TildaFormulaValue;");
         OutFinal.println("DROP TABLE IF EXISTS " + V._ParentSchema._Name + ".TildaFormulaReference;");
         OutFinal.println("DROP TABLE IF EXISTS " + V._ParentSchema._Name + ".TildaFormula;");
-        
+
 
         OutFinal.println("DO $$");
         OutFinal.println("DECLARE");
@@ -889,8 +889,12 @@ public class Sql extends PostgreSQL implements CodeGenSql
         OutFinal.println("  select into ts current_timestamp;");
         OutFinal.println();
 
-        String RealizedTable = V._Realize == null ? null : V._ParentSchema._Name+"."+V._Name.substring(0, V._Name.length() - (V._Pivot != null ? "PivotView" : "View").length()) + "Realized";
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Formulas
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        String RealizedTable = V._Realize == null ? null : V._ParentSchema._Name + "." + V._Name.substring(0, V._Name.length() - (V._Pivot != null ? "PivotView" : "View").length()) + "Realized";
         int count = -1;
+        int MeasureCount = 0;
         for (Formula F : V._Formulas)
           {
             if (F == null)
@@ -905,6 +909,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
               {
                 OutFinal.print("          ,(");
               }
+            if (F._Measure == true)
+              ++MeasureCount;
             OutFinal.print("k+" + count);
             OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()));
             OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(RealizedTable));
@@ -917,34 +923,36 @@ public class Sql extends PostgreSQL implements CodeGenSql
             OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL("<B>N/A</B>"));
             OutFinal.println(", current_timestamp, current_timestamp, null)");
           }
-/*
-        for (ViewColumn VC : V._ViewColumns)
-          {
-            if (V._Realize != null && TextUtil.FindElement(V._Realize._Excludes, VC.getName(), true, 0) != -1)
-              continue;
-            if (++count == 0)
-              {
-                OutFinal.println("INSERT INTO TILDA.Formula (\"refnum\", \"location\", \"location2\", \"name\", \"type\", \"primary\", \"title\", \"description\", \"formula\", \"htmlDoc\", \"created\", \"lastUpdated\", \"deleted\")");
-                OutFinal.print("    VALUES (");
-              }
-            else
-              {
-                OutFinal.print("          ,(");
-              }
-            OutFinal.print("k+" + count);
-            OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(V._Name));
-            OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(RealizedTable));
-            OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(VC._Name));
-            OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(VC._SameAsObj.getType()._ShortName));
-            OutFinal.print(", null");
-            OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(VC.getShortName()));
-            OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(String.join("\n", VC._SameAsObj._Description)));
-            OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(String.join("\n", "Not Applicable: this is a raw column value from "+VC.getSameAsRoot().getShortName())));
-            OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL("<B>N/A</B>"));
-            OutFinal.println(", current_timestamp, current_timestamp, null)");
-
-          }
-*/
+        /*
+         * for (ViewColumn VC : V._ViewColumns)
+         * {
+         * if (V._Realize != null && TextUtil.FindElement(V._Realize._Excludes, VC.getName(), true, 0) != -1)
+         * continue;
+         * if (++count == 0)
+         * {
+         * OutFinal.
+         * println("INSERT INTO TILDA.Formula (\"refnum\", \"location\", \"location2\", \"name\", \"type\", \"primary\", \"title\", \"description\", \"formula\", \"htmlDoc\", \"created\", \"lastUpdated\", \"deleted\")"
+         * );
+         * OutFinal.print("    VALUES (");
+         * }
+         * else
+         * {
+         * OutFinal.print("          ,(");
+         * }
+         * OutFinal.print("k+" + count);
+         * OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(V._Name));
+         * OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(RealizedTable));
+         * OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(VC._Name));
+         * OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(VC._SameAsObj.getType()._ShortName));
+         * OutFinal.print(", null");
+         * OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(VC.getShortName()));
+         * OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(String.join("\n", VC._SameAsObj._Description)));
+         * OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(String.join("\n", "Not Applicable: this is a raw column value from "+VC.getSameAsRoot().getShortName())));
+         * OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL("<B>N/A</B>"));
+         * OutFinal.println(", current_timestamp, current_timestamp, null)");
+         * 
+         * }
+         */
         if (count >= 0)
           {
             OutFinal.println("  ON CONFLICT(\"location\", \"name\") DO UPDATE");
@@ -962,6 +970,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
         OutFinal.println("UPDATE TILDA.Formula set deleted = current_timestamp where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V._Name) + " AND \"lastUpdated\" < ts;");
         OutFinal.println();
 
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // FormulaResult
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         count = -1;
         for (Formula F : V._Formulas)
           {
@@ -1000,30 +1011,35 @@ public class Sql extends PostgreSQL implements CodeGenSql
         OutFinal.println("                            );");
         OutFinal.println();
 
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // FormulaDependency
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         count = -1;
         for (Formula F : V._Formulas)
           {
             if (F == null)
               continue;
-/*
-            for (ViewColumn VC : F.getDependencyColumns())
-              if (VC != null)
-                {
-                  if (++count == 0)
-                    {
-                      OutFinal.println("INSERT INTO TILDA.FormulaDependency(\"formulaRefnum\", \"dependencyRefnum\", \"created\", \"lastUpdated\", \"deleted\")");
-                      OutFinal.print("    VALUES (");
-                    }
-                  else
-                    {
-                      OutFinal.print("          ,(");
-                    }
-                  OutFinal.println(" (select refnum from TILDA.Formula where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V._Name) + " AND \"name\" = " + TextUtil.EscapeSingleQuoteForSQL(F._Name) + ")");
-                  OutFinal.println("            ,(select refnum from TILDA.Formula where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V._Name) + " AND \"name\" = " + TextUtil.EscapeSingleQuoteForSQL(VC._Name) + ")");
-                  OutFinal.println("            ,current_timestamp, current_timestamp, null");
-                  OutFinal.println("           )");
-                }
-*/
+            /*
+             * for (ViewColumn VC : F.getDependencyColumns())
+             * if (VC != null)
+             * {
+             * if (++count == 0)
+             * {
+             * OutFinal.println("INSERT INTO TILDA.FormulaDependency(\"formulaRefnum\", \"dependencyRefnum\", \"created\", \"lastUpdated\", \"deleted\")");
+             * OutFinal.print("    VALUES (");
+             * }
+             * else
+             * {
+             * OutFinal.print("          ,(");
+             * }
+             * OutFinal.println(" (select refnum from TILDA.Formula where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V._Name) + " AND \"name\" = " +
+             * TextUtil.EscapeSingleQuoteForSQL(F._Name) + ")");
+             * OutFinal.println("            ,(select refnum from TILDA.Formula where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V._Name) + " AND \"name\" = " +
+             * TextUtil.EscapeSingleQuoteForSQL(VC._Name) + ")");
+             * OutFinal.println("            ,current_timestamp, current_timestamp, null");
+             * OutFinal.println("           )");
+             * }
+             */
             for (Formula F2 : F.getDependencyFormulas())
               if (F2 != null)
                 {
@@ -1058,6 +1074,79 @@ public class Sql extends PostgreSQL implements CodeGenSql
         OutFinal.println("                            );");
         OutFinal.println();
 
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Measures
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        OutFinal.println("select into k TILDA.getKeyBatchAsMaxExclusive('TILDA.MEASURE', " + MeasureCount + ")-" + MeasureCount + ";");
+        count = -1;
+        for (Formula F : V._Formulas)
+          if (F != null && F._Measure == true)
+            {
+              if (++count == 0)
+                {
+                  OutFinal.println("INSERT INTO TILDA.Measure (\"refnum\", \"schema\", \"name\", \"created\", \"lastUpdated\", \"deleted\")");
+                  OutFinal.print("    VALUES (");
+                }
+              else
+                {
+                  OutFinal.print("          ,(");
+                }
+              OutFinal.print("k+" + count);
+              OutFinal.print(", "+TextUtil.EscapeSingleQuoteForSQL(V._ParentSchema._Name));
+              OutFinal.print(", "+TextUtil.EscapeSingleQuoteForSQL(F._Title));
+              OutFinal.println(", current_timestamp, current_timestamp, null)");
+            }
+        if (count >= 0)
+          {
+            OutFinal.println("  ON CONFLICT(\"schema\", \"name\") DO UPDATE");
+            OutFinal.println("    SET \"lastUpdated\" = current_timestamp");
+            OutFinal.println("      , \"deleted\" = null");
+            OutFinal.println("  ;");
+          }
+        OutFinal.println();
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Measure formulas
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        count = -1;
+        for (Formula F : V._Formulas)
+          if (F != null && F._Measure == true)
+            {
+              if (++count == 0)
+                {
+                  OutFinal.println("INSERT INTO TILDA.MeasureFormula (\"measureRefnum\", \"formulaRefnum\", \"created\", \"lastUpdated\", \"deleted\")");
+                  OutFinal.print("    VALUES (");
+                }
+              else
+                {
+                  OutFinal.print("          ,(");
+                }
+              OutFinal.println(" (select refnum from TILDA.Measure where \"name\" = " + TextUtil.EscapeSingleQuoteForSQL(F._Title) + ")");
+              OutFinal.println("            ,(select refnum from TILDA.Formula where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()) + " AND \"name\" = " + TextUtil.EscapeSingleQuoteForSQL(F._Name) + ")");
+              OutFinal.println(", current_timestamp, current_timestamp, null)");
+            }
+        if (count >= 0)
+          {
+            OutFinal.println("  ON CONFLICT(\"measureRefnum\", \"formulaRefnum\") DO UPDATE");
+            OutFinal.println("    SET \"lastUpdated\" = current_timestamp");
+            OutFinal.println("      , \"deleted\" = null");
+            OutFinal.println("  ;");
+          }
+        OutFinal.println();
+        OutFinal.println("DELETE FROM TILDA.MeasureFormula");
+        OutFinal.println(" where \"formulaRefnum\" in (select refnum");
+        OutFinal.println("                               from TILDA.Formula");
+        OutFinal.println("                              where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()));
+        OutFinal.println("                                and \"deleted\" is not null");
+        OutFinal.println("                            );");
+        OutFinal.println();
+        OutFinal.println("UPDATE TILDA.Measure");
+        OutFinal.println("   set deleted = current_timestamp");
+        OutFinal.println(" where \"refnum\" not in (select \"measureRefnum\" from TILDA.MeasureFormula)");
+        OutFinal.println(" ;");
+        OutFinal.println();
+        
         OutFinal.println("END; $$");
         OutFinal.println("LANGUAGE PLPGSQL;");
 

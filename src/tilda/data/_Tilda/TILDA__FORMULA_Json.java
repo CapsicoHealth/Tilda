@@ -26,7 +26,6 @@ public class TILDA__FORMULA_Json
    @SerializedName("location2"  ) public String  _location2  ;
    @SerializedName("name"       ) public String  _name       ;
    @SerializedName("type"       ) public String  _type       ;
-   @SerializedName("primary"    ) public Boolean  _primary    ;
    @SerializedName("title"      ) public String  _title      ;
    @SerializedName("description") public String  _description;
    @SerializedName("formula"    ) public String  _formula    ;
@@ -58,7 +57,6 @@ public class TILDA__FORMULA_Json
          if (_location2  .equals(Obj.getLocation2  ()) == false)
           throw new Exception("Cannot update the invariant field 'tilda.data.TILDA.FORMULA.location2' from '"+Obj.getLocation2()+"' to '"+_location2+"': "+Obj.toString());
          if (_type       != null) Obj.setType       (_type       );
-         if (_primary    != null) Obj.setPrimary    (_primary    );
          if (_title      != null) Obj.setTitle      (_title      );
          if (_description!= null) Obj.setDescription(_description);
          if (_formula    != null) Obj.setFormula    (_formula    );
@@ -76,7 +74,6 @@ public class TILDA__FORMULA_Json
       if (_location2  != null) Obj.setLocation2  (_location2  );
       if (_name       != null) Obj.setName       (_name       );
       if (_type       != null) Obj.setType       (_type       );
-      if (_primary    != null) Obj.setPrimary    (_primary    );
       if (_title      != null) Obj.setTitle      (_title      );
       if (_description!= null) Obj.setDescription(_description);
       if (_formula    != null) Obj.setFormula    (_formula    );
@@ -90,7 +87,6 @@ public class TILDA__FORMULA_Json
          + "; location2"  + (_location2   == null ? ": NULL" : "(" + (_location2   == null ? 0 : _location2  .length())+"): "+_location2)
          + "; name"       + (_name        == null ? ": NULL" : "(" + (_name        == null ? 0 : _name       .length())+"): "+_name)
          + "; type"       + (_type        == null ? ": NULL" : "(" + (_type        == null ? 0 : _type       .length())+"): "+_type)
-         + "; primary"    + (_primary     == null ? ": NULL" : ": " + _primary    )
          + "; title"      + (_title       == null ? ": NULL" : "(" + (_title       == null ? 0 : _title      .length())+"): "+(_title       == null || _title      .length() < 100 ? _title       : _title      .substring(0, 100)+"..."))
          + "; description"+ (_description == null ? ": NULL" : "(" + (_description == null ? 0 : _description.length())+"): "+(_description == null || _description.length() < 100 ? _description : _description.substring(0, 100)+"..."))
          + "; formula"    + (_formula     == null ? ": NULL" : "(" + (_formula     == null ? 0 : _formula    .length())+"): "+(_formula     == null || _formula    .length() < 100 ? _formula     : _formula    .substring(0, 100)+"..."))
