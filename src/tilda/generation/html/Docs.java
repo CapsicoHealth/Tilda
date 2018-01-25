@@ -23,11 +23,8 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 
-import com.sun.istack.internal.NotNull;
-
 import tilda.enums.ColumnMode;
 import tilda.enums.FrameworkSourcedType;
-import tilda.enums.ProtectionType;
 import tilda.generation.GeneratorSession;
 import tilda.generation.java8.Helper;
 import tilda.generation.java8.JavaJDBCType;
@@ -250,7 +247,7 @@ public class Docs
 		}
 	}
 
-	private static void PrintColumn(PrintWriter Out, Column C, int level, boolean isLast, @NotNull String valueToAppend) {
+	private static void PrintColumn(PrintWriter Out, Column C, int level, boolean isLast, String valueToAppend) {
 		String indentedBody = "";
 		for(int i = 2; i < level ; i++) indentedBody += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 		if(level > 1) 					indentedBody += "&#9492;&#9472;";
@@ -279,13 +276,13 @@ public class Docs
 		Out.println("<td>"+indentedBody+"<a href='"+tableName+"'>"+C._ParentObject._OriginalName+"</a></td>");
 		
 		if (isLast)
-			Out.println("<td>"+indentedBody+"<a href='"+columnName+"'>"+C.getName()+"</a>"+valueToAppend+" -- "+C._TypeStr+"</td>");
+			Out.println("<td>"+indentedBody+"<a href='"+columnName+"'>"+C.getName()+"</a>"+TextUtil.Print(valueToAppend,"")+" -- "+C._TypeStr+"</td>");
 		else
-			Out.println("<td>"+indentedBody+"<a href='"+columnName+"'>"+C.getName()+"</a>"+valueToAppend+"</td>");
+			Out.println("<td>"+indentedBody+"<a href='"+columnName+"'>"+C.getName()+"</a>"+TextUtil.Print(valueToAppend,"")+"</td>");
 		Out.println("</tr>");
 	}
 	
-	private static void PrintColumn(PrintWriter Out, ViewColumn VC, int level, boolean isLast, @NotNull String valueToAppend) {
+	private static void PrintColumn(PrintWriter Out, ViewColumn VC, int level, boolean isLast, String valueToAppend) {
 		String indentedBody = "";
 		for(int i = 2; i < level ; i++) indentedBody += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 		if(level > 1) 					indentedBody += "&#9492;&#9472;";
@@ -313,13 +310,13 @@ public class Docs
 		Out.println("<td>"+indentedBody+"<a href='"+tableName+"'>"+VC._ParentView._OriginalName+"</a></td>");
 		
 		if (isLast)
-			Out.println("<td>"+indentedBody+"<a href='"+columnName+"'>"+VC.getName()+"</a>"+valueToAppend+" -- "+VC._SameAsObj._TypeStr+"</td>");
+			Out.println("<td>"+indentedBody+"<a href='"+columnName+"'>"+VC.getName()+"</a>"+TextUtil.Print(valueToAppend,"")+" -- "+VC._SameAsObj._TypeStr+"</td>");
 		else
-			Out.println("<td>"+indentedBody+"<a href='"+columnName+"'>"+VC.getName()+"</a>"+valueToAppend+"</td>");
+			Out.println("<td>"+indentedBody+"<a href='"+columnName+"'>"+VC.getName()+"</a>"+TextUtil.Print(valueToAppend,"")+"</td>");
 		Out.println("</tr>");
 	}
 	
-	private static void PrintPivot(PrintWriter Out, ViewColumn pivotColumn, int level, boolean isLast, @NotNull String valueToAppend) {
+	private static void PrintPivot(PrintWriter Out, ViewColumn pivotColumn, int level, boolean isLast, String valueToAppend) {
 		String indentedBody = "";
 		for(int i = 2; i < level ; i++) indentedBody += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 		if(level > 1) 					indentedBody += "&#9492;&#9472;";
@@ -346,9 +343,9 @@ public class Docs
 		Out.println("<td>"+indentedBody+"<a href='"+tableName+"'>"+pivotColumn._ParentView._OriginalName+"</a></td>");
 		
 		if (isLast)
-			Out.println("<td>"+indentedBody+pivotColumn.getAggregateName()+valueToAppend+"</td>");
+			Out.println("<td>"+indentedBody+pivotColumn.getAggregateName()+TextUtil.Print(valueToAppend,"")+"</td>");
 		else
-			Out.println("<td>"+indentedBody+pivotColumn.getAggregateName()+valueToAppend+"</td>");
+			Out.println("<td>"+indentedBody+pivotColumn.getAggregateName()+TextUtil.Print(valueToAppend,"")+"</td>");
 		Out.println("</tr>");
 	}
 	
