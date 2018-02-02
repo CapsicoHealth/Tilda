@@ -500,13 +500,15 @@ public class Sql extends PostgreSQL implements CodeGenSql
               }
             else
               {
-                Str.append("     group by ");
                 First = true;
                 for (ViewColumn VC : V._ViewColumns)
                   if (VC != null && VC._Aggregate == null && VC._JoinOnly == false)
                     {
                       if (First == true)
-                        First = false;
+                        {
+                          Str.append("     group by ");
+                          First = false;
+                        }
                       else
                         Str.append(", ");
                       if (VC._SameAsObj == null && VC._SameAs != null && VC._FrameworkGenerated == true)
@@ -518,7 +520,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
                           Str.append(getFullColumnVar(VC._SameAsObj));
                         }
                     }
-                Str.append("\n");
+                if (First == false)
+                 Str.append("\n");
               }
           }
         if (V._Pivot != null && V._ViewColumns.size() > 3)
