@@ -53,7 +53,7 @@ CREATE UNIQUE INDEX KEY_Name ON TILDA.KEY ("name");
 
 
 
-create table if not exists TILDA.MAPPING -- Performance logs for the Tilda framework
+create table if not exists TILDA.MAPPING -- Generalized Mapping table
  (  "type"         character(10)  not null   -- The type this mapping is for
   , "src"          varchar(1024)  not null   -- The source value for this mapping
   , "dst"          varchar(1024)  not null   -- The the destination (mapped) value for this mapping.
@@ -61,7 +61,7 @@ create table if not exists TILDA.MAPPING -- Performance logs for the Tilda frame
   , "lastUpdated"  timestamptz    not null   -- The timestamp for when the record was last updated.
   , "deleted"      timestamptz               -- The timestamp for when the record was deleted.
  );
-COMMENT ON TABLE TILDA.MAPPING IS E'Performance logs for the Tilda framework';
+COMMENT ON TABLE TILDA.MAPPING IS E'Generalized Mapping table';
 COMMENT ON COLUMN TILDA.MAPPING."type" IS E'The type this mapping is for';
 COMMENT ON COLUMN TILDA.MAPPING."src" IS E'The source value for this mapping';
 COMMENT ON COLUMN TILDA.MAPPING."dst" IS E'The the destination (mapped) value for this mapping.';
@@ -315,6 +315,120 @@ COMMENT ON COLUMN TILDA.MAINTENANCE."deleted" IS E'The timestamp for when the re
 
 
 
+create table if not exists TILDA.FORMULA -- Master formula information
+ (  "refnum"       bigint        not null   -- The primary key for this record
+  , "location"     varchar(64)   not null   -- The name of the primary table/view this formula is defined in.
+  , "location2"    varchar(64)   not null   -- The name of the secondary table/view (a derived view, a realized table), if appropriate.
+  , "name"         varchar(64)   not null   -- The name of the formula/column.
+  , "type"         character(3)  not null   -- The type of the formula/column value/outcome.
+  , "title"        varchar(128)  not null   -- The title of the formula/column.
+  , "description"  text          not null   -- The description of the formula/column.
+  , "formula"      text                     -- The formula.
+  , "htmlDoc"      text                     -- Pre-rendered html fragment with the full documentation for this formula.
+  , "created"      timestamptz   not null   -- The timestamp for when the record was created.
+  , "lastUpdated"  timestamptz   not null   -- The timestamp for when the record was last updated.
+  , "deleted"      timestamptz              -- The timestamp for when the record was deleted.
+  , PRIMARY KEY("refnum")
+ );
+COMMENT ON TABLE TILDA.FORMULA IS E'Master formula information';
+COMMENT ON COLUMN TILDA.FORMULA."refnum" IS E'The primary key for this record';
+COMMENT ON COLUMN TILDA.FORMULA."location" IS E'The name of the primary table/view this formula is defined in.';
+COMMENT ON COLUMN TILDA.FORMULA."location2" IS E'The name of the secondary table/view (a derived view, a realized table), if appropriate.';
+COMMENT ON COLUMN TILDA.FORMULA."name" IS E'The name of the formula/column.';
+COMMENT ON COLUMN TILDA.FORMULA."type" IS E'The type of the formula/column value/outcome.';
+COMMENT ON COLUMN TILDA.FORMULA."title" IS E'The title of the formula/column.';
+COMMENT ON COLUMN TILDA.FORMULA."description" IS E'The description of the formula/column.';
+COMMENT ON COLUMN TILDA.FORMULA."formula" IS E'The formula.';
+COMMENT ON COLUMN TILDA.FORMULA."htmlDoc" IS E'Pre-rendered html fragment with the full documentation for this formula.';
+COMMENT ON COLUMN TILDA.FORMULA."created" IS E'The timestamp for when the record was created.';
+COMMENT ON COLUMN TILDA.FORMULA."lastUpdated" IS E'The timestamp for when the record was last updated.';
+COMMENT ON COLUMN TILDA.FORMULA."deleted" IS E'The timestamp for when the record was deleted.';
+CREATE UNIQUE INDEX FORMULA_Formula ON TILDA.FORMULA ("location", "name");
+delete from TILDA.KEY where "name" = 'TILDA.FORMULA';
+insert into TILDA.KEY ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.KEY), 'TILDA.FORMULA',(select COALESCE(max("refnum"),0)+1 from TILDA.FORMULA), 250, current_timestamp, current_timestamp);
+
+
+
+create table if not exists TILDA.MEASURE -- Master Measure information
+ (  "refnum"       bigint       not null   -- The primary key for this record
+  , "schema"       varchar(64)  not null   -- The Schema wher ethe measure is defined.
+  , "name"         varchar(64)  not null   -- The name of the measure.
+  , "created"      timestamptz  not null   -- The timestamp for when the record was created.
+  , "lastUpdated"  timestamptz  not null   -- The timestamp for when the record was last updated.
+  , "deleted"      timestamptz             -- The timestamp for when the record was deleted.
+  , PRIMARY KEY("refnum")
+ );
+COMMENT ON TABLE TILDA.MEASURE IS E'Master Measure information';
+COMMENT ON COLUMN TILDA.MEASURE."refnum" IS E'The primary key for this record';
+COMMENT ON COLUMN TILDA.MEASURE."schema" IS E'The Schema wher ethe measure is defined.';
+COMMENT ON COLUMN TILDA.MEASURE."name" IS E'The name of the measure.';
+COMMENT ON COLUMN TILDA.MEASURE."created" IS E'The timestamp for when the record was created.';
+COMMENT ON COLUMN TILDA.MEASURE."lastUpdated" IS E'The timestamp for when the record was last updated.';
+COMMENT ON COLUMN TILDA.MEASURE."deleted" IS E'The timestamp for when the record was deleted.';
+CREATE UNIQUE INDEX MEASURE_Measure ON TILDA.MEASURE ("schema", "name");
+delete from TILDA.KEY where "name" = 'TILDA.MEASURE';
+insert into TILDA.KEY ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.KEY), 'TILDA.MEASURE',(select COALESCE(max("refnum"),0)+1 from TILDA.MEASURE), 250, current_timestamp, current_timestamp);
+
+
+
+create table if not exists TILDA.MEASUREFORMULA -- Master Measure information
+ (  "measureRefnum"  bigint       not null   -- The measure.
+  , "formulaRefnum"  bigint       not null   -- The parent formula.
+  , "created"        timestamptz  not null   -- The timestamp for when the record was created.
+  , "lastUpdated"    timestamptz  not null   -- The timestamp for when the record was last updated.
+  , "deleted"        timestamptz             -- The timestamp for when the record was deleted.
+  , PRIMARY KEY("measureRefnum", "formulaRefnum")
+  , CONSTRAINT fk_MEASUREFORMULA_Measure FOREIGN KEY ("measureRefnum") REFERENCES TILDA.MEASURE ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_MEASUREFORMULA_Formula FOREIGN KEY ("formulaRefnum") REFERENCES TILDA.FORMULA ON DELETE restrict ON UPDATE cascade
+ );
+COMMENT ON TABLE TILDA.MEASUREFORMULA IS E'Master Measure information';
+COMMENT ON COLUMN TILDA.MEASUREFORMULA."measureRefnum" IS E'The measure.';
+COMMENT ON COLUMN TILDA.MEASUREFORMULA."formulaRefnum" IS E'The parent formula.';
+COMMENT ON COLUMN TILDA.MEASUREFORMULA."created" IS E'The timestamp for when the record was created.';
+COMMENT ON COLUMN TILDA.MEASUREFORMULA."lastUpdated" IS E'The timestamp for when the record was last updated.';
+COMMENT ON COLUMN TILDA.MEASUREFORMULA."deleted" IS E'The timestamp for when the record was deleted.';
+
+
+
+create table if not exists TILDA.FORMULADEPENDENCY -- Master formula dependency information
+ (  "formulaRefnum"     bigint       not null   -- The parent formula.
+  , "dependencyRefnum"  bigint       not null   -- The dependent formula.
+  , "created"           timestamptz  not null   -- The timestamp for when the record was created.
+  , "lastUpdated"       timestamptz  not null   -- The timestamp for when the record was last updated.
+  , "deleted"           timestamptz             -- The timestamp for when the record was deleted.
+  , PRIMARY KEY("formulaRefnum", "dependencyRefnum")
+  , CONSTRAINT fk_FORMULADEPENDENCY_Formula1 FOREIGN KEY ("formulaRefnum") REFERENCES TILDA.FORMULA ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_FORMULADEPENDENCY_Formula2 FOREIGN KEY ("dependencyRefnum") REFERENCES TILDA.FORMULA ON DELETE restrict ON UPDATE cascade
+ );
+COMMENT ON TABLE TILDA.FORMULADEPENDENCY IS E'Master formula dependency information';
+COMMENT ON COLUMN TILDA.FORMULADEPENDENCY."formulaRefnum" IS E'The parent formula.';
+COMMENT ON COLUMN TILDA.FORMULADEPENDENCY."dependencyRefnum" IS E'The dependent formula.';
+COMMENT ON COLUMN TILDA.FORMULADEPENDENCY."created" IS E'The timestamp for when the record was created.';
+COMMENT ON COLUMN TILDA.FORMULADEPENDENCY."lastUpdated" IS E'The timestamp for when the record was last updated.';
+COMMENT ON COLUMN TILDA.FORMULADEPENDENCY."deleted" IS E'The timestamp for when the record was deleted.';
+
+
+
+create table if not exists TILDA.FORMULARESULT -- Master formula result information, if applicable. Some formulas may not yield an enumeratable value (e.g., returning a date)
+ (  "formulaRefnum"  bigint        not null   -- The parent formula.
+  , "value"          varchar(100)  not null   -- The result value.
+  , "description"    text          not null   -- The description of the result value.
+  , "created"        timestamptz   not null   -- The timestamp for when the record was created.
+  , "lastUpdated"    timestamptz   not null   -- The timestamp for when the record was last updated.
+  , "deleted"        timestamptz              -- The timestamp for when the record was deleted.
+  , PRIMARY KEY("formulaRefnum", "value")
+  , CONSTRAINT fk_FORMULARESULT_Formula FOREIGN KEY ("formulaRefnum") REFERENCES TILDA.FORMULA ON DELETE restrict ON UPDATE cascade
+ );
+COMMENT ON TABLE TILDA.FORMULARESULT IS E'Master formula result information, if applicable. Some formulas may not yield an enumeratable value (e.g., returning a date)';
+COMMENT ON COLUMN TILDA.FORMULARESULT."formulaRefnum" IS E'The parent formula.';
+COMMENT ON COLUMN TILDA.FORMULARESULT."value" IS E'The result value.';
+COMMENT ON COLUMN TILDA.FORMULARESULT."description" IS E'The description of the result value.';
+COMMENT ON COLUMN TILDA.FORMULARESULT."created" IS E'The timestamp for when the record was created.';
+COMMENT ON COLUMN TILDA.FORMULARESULT."lastUpdated" IS E'The timestamp for when the record was last updated.';
+COMMENT ON COLUMN TILDA.FORMULARESULT."deleted" IS E'The timestamp for when the record was deleted.';
+
+
+
 create table if not exists TILDA.TESTING -- blah blah
  (  "refnum"       bigint              not null   -- The primary key for this record
   , "refnum2"      bigint[]            not null   -- The person's primary key
@@ -406,5 +520,88 @@ COMMENT ON COLUMN TILDA.TESTING2."created" IS E'The timestamp for when the recor
 COMMENT ON COLUMN TILDA.TESTING2."lastUpdated" IS E'The timestamp for when the record was last updated.';
 COMMENT ON COLUMN TILDA.TESTING2."deleted" IS E'The timestamp for when the record was deleted.';
 CREATE UNIQUE INDEX TESTING2_T1 ON TILDA.TESTING2 ("t1");
+
+
+
+
+create or replace view TILDA.FORMULARESULTVIEW as 
+-- 'A view of formulas and their values.'
+select TILDA.FORMULARESULT."formulaRefnum" as "formulaRefnum" -- The parent formula.
+     , TILDA.FORMULARESULT."value" as "value" -- The result value.
+     , TILDA.FORMULARESULT."description" as "description" -- The description of the result value.
+     , TILDA.FORMULA."location" as "location" -- The name of the primary table/view this formula is defined in.
+     , TILDA.FORMULA."name" as "name" -- The name of the formula/column.
+  from TILDA.FORMULARESULT
+     inner join TILDA.FORMULA on TILDA.FORMULARESULT."formulaRefnum" = TILDA.FORMULA."refnum"
+ where (TILDA.FORMULA."deleted" is null and TILDA.FORMULARESULT."deleted" is null)
+;
+
+COMMENT ON VIEW TILDA.FORMULARESULTVIEW IS E'create or replace view TILDA.FORMULARESULTVIEW as \n-- ''A view of formulas and their values.''\nselect TILDA.FORMULARESULT."formulaRefnum" as "formulaRefnum" -- The parent formula.\n     , TILDA.FORMULARESULT."value" as "value" -- The result value.\n     , TILDA.FORMULARESULT."description" as "description" -- The description of the result value.\n     , TILDA.FORMULA."location" as "location" -- The name of the primary table/view this formula is defined in.\n     , TILDA.FORMULA."name" as "name" -- The name of the formula/column.\n  from TILDA.FORMULARESULT\n     inner join TILDA.FORMULA on TILDA.FORMULARESULT."formulaRefnum" = TILDA.FORMULA."refnum"\n where (TILDA.FORMULA."deleted" is null and TILDA.FORMULARESULT."deleted" is null)\n;\n';
+
+COMMENT ON COLUMN TILDA.FORMULARESULTVIEW."formulaRefnum" IS E'The parent formula.';
+COMMENT ON COLUMN TILDA.FORMULARESULTVIEW."value" IS E'The result value.';
+COMMENT ON COLUMN TILDA.FORMULARESULTVIEW."description" IS E'The description of the result value.';
+COMMENT ON COLUMN TILDA.FORMULARESULTVIEW."location" IS E'The name of the primary table/view this formula is defined in.';
+COMMENT ON COLUMN TILDA.FORMULARESULTVIEW."name" IS E'The name of the formula/column.';
+
+
+
+
+create or replace view TILDA.FORMULADEPENDENCYVIEW as 
+-- 'A view of formulas and their dependencies.'
+select TILDA.FORMULADEPENDENCY."formulaRefnum" as "formulaRefnum" -- The parent formula.
+     , TILDA.FORMULA."location" as "location" -- The name of the primary table/view this formula is defined in.
+     , TILDA.FORMULA."name" as "name" -- The name of the formula/column.
+     , TILDA.FORMULADEPENDENCY."dependencyRefnum" as "dependencyRefnum" -- The dependent formula.
+     , TILDA_FORMULA_2."name" as "dependentFormulaName" -- The name of the formula/column.
+  from TILDA.FORMULADEPENDENCY
+     inner join TILDA.FORMULA on TILDA.FORMULADEPENDENCY."formulaRefnum" = TILDA.FORMULA."refnum"
+     inner join TILDA.FORMULA as TILDA_FORMULA_2 on TILDA.FORMULADEPENDENCY."dependencyRefnum" = TILDA_FORMULA_2."refnum"
+ where (TILDA.FORMULA."deleted" is null)
+;
+
+COMMENT ON VIEW TILDA.FORMULADEPENDENCYVIEW IS E'create or replace view TILDA.FORMULADEPENDENCYVIEW as \n-- ''A view of formulas and their dependencies.''\nselect TILDA.FORMULADEPENDENCY."formulaRefnum" as "formulaRefnum" -- The parent formula.\n     , TILDA.FORMULA."location" as "location" -- The name of the primary table/view this formula is defined in.\n     , TILDA.FORMULA."name" as "name" -- The name of the formula/column.\n     , TILDA.FORMULADEPENDENCY."dependencyRefnum" as "dependencyRefnum" -- The dependent formula.\n     , TILDA_FORMULA_2."name" as "dependentFormulaName" -- The name of the formula/column.\n  from TILDA.FORMULADEPENDENCY\n     inner join TILDA.FORMULA on TILDA.FORMULADEPENDENCY."formulaRefnum" = TILDA.FORMULA."refnum"\n     inner join TILDA.FORMULA as TILDA_FORMULA_2 on TILDA.FORMULADEPENDENCY."dependencyRefnum" = TILDA_FORMULA_2."refnum"\n where (TILDA.FORMULA."deleted" is null)\n;\n';
+
+COMMENT ON COLUMN TILDA.FORMULADEPENDENCYVIEW."formulaRefnum" IS E'The parent formula.';
+COMMENT ON COLUMN TILDA.FORMULADEPENDENCYVIEW."location" IS E'The name of the primary table/view this formula is defined in.';
+COMMENT ON COLUMN TILDA.FORMULADEPENDENCYVIEW."name" IS E'The name of the formula/column.';
+COMMENT ON COLUMN TILDA.FORMULADEPENDENCYVIEW."dependencyRefnum" IS E'The dependent formula.';
+COMMENT ON COLUMN TILDA.FORMULADEPENDENCYVIEW."dependentFormulaName" IS E'The name of the formula/column.';
+
+
+
+
+create or replace view TILDA.MEASUREFORMULAVIEW as 
+-- 'A view of formulas and their dependencies.'
+select TILDA.MEASUREFORMULA."measureRefnum" as "measureRefnum" -- The measure.
+     , TILDA.MEASURE."schema" as "measureSchema" -- The Schema wher ethe measure is defined.
+     , TILDA.MEASURE."name" as "measureName" -- The name of the measure.
+     , TILDA.FORMULA."refnum" as "formulaRefnum" -- The primary key for this record
+     , TILDA.FORMULA."location" as "formulaLocation" -- The name of the primary table/view this formula is defined in.
+     , TILDA.FORMULA."location2" as "formulaLocation2" -- The name of the secondary table/view (a derived view, a realized table), if appropriate.
+     , TILDA.FORMULA."name" as "formulaName" -- The name of the formula/column.
+     , TILDA.FORMULA."title" as "title" -- The title of the formula/column.
+     , TILDA.FORMULA."description" as "description" -- The description of the formula/column.
+     , TILDA.FORMULA."type" as "type" -- The type of the formula/column value/outcome.
+     , TILDA.FORMULA."formula" as "formula" -- The formula.
+  from TILDA.MEASUREFORMULA
+     inner join TILDA.MEASURE on TILDA.MEASUREFORMULA."measureRefnum" = TILDA.MEASURE."refnum"
+     inner join TILDA.FORMULA on TILDA.MEASUREFORMULA."formulaRefnum" = TILDA.FORMULA."refnum"
+ where (TILDA.FORMULA."deleted" is null and TILDA.MEASURE."deleted" is null)
+;
+
+COMMENT ON VIEW TILDA.MEASUREFORMULAVIEW IS E'create or replace view TILDA.MEASUREFORMULAVIEW as \n-- ''A view of formulas and their dependencies.''\nselect TILDA.MEASUREFORMULA."measureRefnum" as "measureRefnum" -- The measure.\n     , TILDA.MEASURE."schema" as "measureSchema" -- The Schema wher ethe measure is defined.\n     , TILDA.MEASURE."name" as "measureName" -- The name of the measure.\n     , TILDA.FORMULA."refnum" as "formulaRefnum" -- The primary key for this record\n     , TILDA.FORMULA."location" as "formulaLocation" -- The name of the primary table/view this formula is defined in.\n     , TILDA.FORMULA."location2" as "formulaLocation2" -- The name of the secondary table/view (a derived view, a realized table), if appropriate.\n     , TILDA.FORMULA."name" as "formulaName" -- The name of the formula/column.\n     , TILDA.FORMULA."title" as "title" -- The title of the formula/column.\n     , TILDA.FORMULA."description" as "description" -- The description of the formula/column.\n     , TILDA.FORMULA."type" as "type" -- The type of the formula/column value/outcome.\n     , TILDA.FORMULA."formula" as "formula" -- The formula.\n  from TILDA.MEASUREFORMULA\n     inner join TILDA.MEASURE on TILDA.MEASUREFORMULA."measureRefnum" = TILDA.MEASURE."refnum"\n     inner join TILDA.FORMULA on TILDA.MEASUREFORMULA."formulaRefnum" = TILDA.FORMULA."refnum"\n where (TILDA.FORMULA."deleted" is null and TILDA.MEASURE."deleted" is null)\n;\n';
+
+COMMENT ON COLUMN TILDA.MEASUREFORMULAVIEW."measureRefnum" IS E'The measure.';
+COMMENT ON COLUMN TILDA.MEASUREFORMULAVIEW."measureSchema" IS E'The Schema wher ethe measure is defined.';
+COMMENT ON COLUMN TILDA.MEASUREFORMULAVIEW."measureName" IS E'The name of the measure.';
+COMMENT ON COLUMN TILDA.MEASUREFORMULAVIEW."formulaRefnum" IS E'The primary key for this record';
+COMMENT ON COLUMN TILDA.MEASUREFORMULAVIEW."formulaLocation" IS E'The name of the primary table/view this formula is defined in.';
+COMMENT ON COLUMN TILDA.MEASUREFORMULAVIEW."formulaLocation2" IS E'The name of the secondary table/view (a derived view, a realized table), if appropriate.';
+COMMENT ON COLUMN TILDA.MEASUREFORMULAVIEW."formulaName" IS E'The name of the formula/column.';
+COMMENT ON COLUMN TILDA.MEASUREFORMULAVIEW."title" IS E'The title of the formula/column.';
+COMMENT ON COLUMN TILDA.MEASUREFORMULAVIEW."description" IS E'The description of the formula/column.';
+COMMENT ON COLUMN TILDA.MEASUREFORMULAVIEW."type" IS E'The type of the formula/column value/outcome.';
+COMMENT ON COLUMN TILDA.MEASUREFORMULAVIEW."formula" IS E'The formula.';
 
 

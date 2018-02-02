@@ -40,7 +40,7 @@
 
 
     { "name": "Mapping",
-      "description": "Performance logs for the Tilda framework",
+      "description": "Generalized Mapping table",
       "columns":[
          { "name": "type"       , "type": "STRING", "nullable": false, "size":   10, "invariant": true, "description": "The type this mapping is for" }
         ,{ "name": "src"        , "type": "STRING", "nullable": false, "size": 1024, "invariant": true, "description": "The source value for this mapping" }
@@ -192,6 +192,98 @@
      ,"indices":[
       ]
     }
+    
+    
+   ,{ "name":"Formula"
+     ,"occ":true
+     ,"description":"Master formula information"
+     ,"columns":[
+         { "name":"location"   , "type":"STRING" , "nullable":false, "size":   64, "invariant":true, "description":"The name of the primary table/view this formula is defined in."  }
+        ,{ "name":"location2"  , "type":"STRING" , "nullable":false, "size":   64, "invariant":true, "description":"The name of the secondary table/view (a derived view, a realized table), if appropriate."   }
+        ,{ "name":"name"       , "type":"STRING" , "nullable":false, "size":   64,                   "description":"The name of the formula/column."  }
+        ,{ "name":"type"       , "type":"STRING" , "nullable":false, "size":    3,                   "description":"The type of the formula/column value/outcome."
+                               , "values": [ { "name":"String"   , "value":"STR", "description": "String"    }
+                                            ,{ "name":"Character", "value":"CHR", "description": "Character" }
+                                            ,{ "name":"Boolean"  , "value":"BOL", "description": "Boolean"   }
+                                            ,{ "name":"Integer"  , "value":"INT", "description": "Integer"   }
+                                            ,{ "name":"Long"     , "value":"LNG", "description": "Long"      }
+                                            ,{ "name":"Float"    , "value":"FLT", "description": "Float"     }
+                                            ,{ "name":"Double"   , "value":"DBL", "description": "Double"    }
+                                            ,{ "name":"Date"     , "value":"DT" , "description": "Date"      }
+                                            ,{ "name":"DateTime" , "value":"DTM", "description": "DateTime"  }
+                                           ]
+         }
+        ,{ "name":"title"      , "type":"STRING" , "nullable":false, "size":  128,                   "description":"The title of the formula/column."  }
+        ,{ "name":"description", "type":"STRING" , "nullable":false, "size":32000,                   "description":"The description of the formula/column."  }
+        ,{ "name":"formula"    , "type":"STRING" , "nullable":true , "size":32000,                   "description":"The formula."  }
+        ,{ "name":"htmlDoc"    , "type":"STRING" , "nullable":true , "size":32000,                   "description":"Pre-rendered html fragment with the full documentation for this formula."  }
+       ]
+     ,"primary": { "autogen": true }
+     ,"indices":[
+         { "name": "Formula", "columns": ["location" , "name"], "db": true }
+      ]
+    }
+    
+   ,{ "name":"Measure"
+     ,"occ":true
+     ,"description":"Master Measure information"
+     ,"columns":[
+         { "name":"schema"  , "type":"STRING" , "nullable":false, "size":   64,  "description":"The Schema wher ethe measure is defined."  }
+        ,{ "name":"name"    , "type":"STRING" , "nullable":false, "size":   64,  "description":"The name of the measure."  }
+       ]
+     ,"primary": { "autogen": true }
+     ,"indices":[
+         { "name": "Measure", "columns": ["schema", "name"], "db": true }
+      ]
+    }
+
+   ,{ "name":"MeasureFormula"
+     ,"occ":true
+     ,"description":"Master Measure information"
+     ,"columns":[
+         { "name":"measureRefnum"   , "sameas":"Measure.refnum", "invariant":true , "description":"The measure."         }
+        ,{ "name":"formulaRefnum"   , "sameas":"Formula.refnum", "invariant": true, "description":"The parent formula."  }
+       ]
+     ,"primary": { "autogen": false, "columns": ["measureRefnum", "formulaRefnum"] }
+     ,"foreign": [
+         { "name":"Measure",  "srcColumns":["measureRefnum"], "destObject": "Measure" }
+        ,{ "name":"Formula",  "srcColumns":["formulaRefnum"], "destObject": "Formula" }
+       ]
+     ,"indices":[
+      ]
+    }
+
+   ,{ "name":"FormulaDependency"
+     ,"occ":true
+     ,"description":"Master formula dependency information"
+     ,"columns":[
+         { "name":"formulaRefnum"   , "sameas":"Formula.refnum", "invariant": true, "description":"The parent formula."  }
+        ,{ "name":"dependencyRefnum", "sameas":"Formula.refnum", "invariant": true, "description":"The dependent formula."   }
+       ]
+     ,"primary": { "autogen":  false, "columns":["formulaRefnum" , "dependencyRefnum"] }
+     ,"foreign": [
+         { "name":"Formula1",  "srcColumns":["formulaRefnum"   ], "destObject": "Formula" }
+        ,{ "name":"Formula2",  "srcColumns":["dependencyRefnum"], "destObject": "Formula" }
+       ]
+     ,"indices":[
+       ]
+    }
+
+   ,{ "name":"FormulaResult"
+     ,"occ":true
+     ,"description":"Master formula result information, if applicable. Some formulas may not yield an enumeratable value (e.g., returning a date)"
+     ,"columns":[
+         { "name":"formulaRefnum", "sameas":"Formula.refnum",                        "invariant": true, "description":"The parent formula."  }
+        ,{ "name":"value"        , "type":"STRING" , "nullable":false, "size":  100, "invariant": true, "description":"The result value."  }
+        ,{ "name":"description"  , "type":"STRING" , "nullable":false, "size":32000,                    "description":"The description of the result value."  }
+       ]
+     ,"primary": { "autogen": false, "columns":["formulaRefnum" , "value"] }
+     ,"foreign": [
+         { "name":"Formula",  "srcColumns":["formulaRefnum"   ], "destObject": "Formula" }
+       ]
+     ,"indices":[
+       ]
+    }
 
    ,{ "name": "Testing",
       "description": "blah blah",
@@ -257,4 +349,61 @@
        ]
     }
   ]
+    
+    
+ ,"views": [
+     { "name": "FormulaResultView"
+      ,"description": "A view of formulas and their values."
+      ,"columns":[
+          { "sameas": "FormulaResult.formulaRefnum"}
+         ,{ "sameas": "FormulaResult.value"        }
+         ,{ "sameas": "FormulaResult.description"  }
+         ,{ "sameas": "Formula.location"           }
+         ,{ "sameas": "Formula.name"               }
+        ]
+      ,"subWhereX":{
+          "clause":["Formula.deleted is null and FormulaResult.deleted is null"
+                   ]
+         ,"description":["Active formulas and their result values"]
+        }
+     }    
+
+    ,{ "name": "FormulaDependencyView"
+      ,"description": "A view of formulas and their dependencies."
+      ,"columns":[
+          { "sameas": "FormulaDependency.formulaRefnum"    }
+         ,{ "sameas": "Formula.location"                   }
+         ,{ "sameas": "Formula.name"                       }
+         ,{ "sameas": "FormulaDependency.dependencyRefnum" }
+         ,{ "sameas": "Formula.name"                       , "name":"dependentFormulaName"}
+        ]
+      ,"subWhereX":{
+          "clause":["Formula.deleted is null"
+                   ]
+         ,"description":["Active formulas and their sub-formulas"]
+        }
+     }    
+
+    ,{ "name": "MeasureFormulaView"
+      ,"description": "A view of formulas and their dependencies."
+      ,"columns":[
+          { "sameas": "MeasureFormula.measureRefnum"                    }
+         ,{ "sameas": "Measure.schema"      , "name":"measureSchema"    }
+         ,{ "sameas": "Measure.name"        , "name":"measureName"      }
+         ,{ "sameas": "Formula.refnum"      , "name":"formulaRefnum"    }
+         ,{ "sameas": "Formula.location"    , "name":"formulaLocation"  }
+         ,{ "sameas": "Formula.location2"   , "name":"formulaLocation2" }
+         ,{ "sameas": "Formula.name"        , "name":"formulaName"      }
+         ,{ "sameas": "Formula.title"              }
+         ,{ "sameas": "Formula.description"        }
+         ,{ "sameas": "Formula.type"               }
+         ,{ "sameas": "Formula.formula"            }
+        ]
+      ,"subWhereX":{
+          "clause":["Formula.deleted is null and Measure.deleted is null"
+                   ]
+         ,"description":["Active formulas and their sub-formulas"]
+        }
+     }    
+   ]
 }
