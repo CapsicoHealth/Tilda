@@ -364,6 +364,15 @@ public class TextUtil
         return true;
       }
 
+    public static boolean isNullOrEmpty(List<String> Str)
+      {
+        if (Str != null)
+          for (String s : Str)
+            if (TextUtil.isNullOrEmpty(s) == false)
+              return false;
+        return true;
+      }
+
     public static <T> boolean isNullOrEmpty(T[] A)
       {
         if (A == null || A.length == 0)
