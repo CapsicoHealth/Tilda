@@ -91,10 +91,13 @@ public class Docs
         if (view != null)
           DoSubWhereDetails(Out, view);
         
-        Out.println("It contains the following columns:<BR>" + SystemValues.NEWLINE
+        Out.print("It contains the following columns:<BR>" + SystemValues.NEWLINE
                   + " <TABLE border=\"0px\" cellpadding=\"3px\" cellspacing=\"0px\" style=\"border:1px solid grey;\">" + SystemValues.NEWLINE
-                  + "   <TR><TH>&nbsp;</TH><TH align=\"right\">Name&nbsp;&nbsp;</TH><TH align=\"left\">Type</TH><!--TH align=\"left\">Column</TH--><TH align=\"left\">Type</TH><TH align=\"left\">Nullable</TH><TH align=\"left\">Mode</TH><TH align=\"left\">Invariant</TH><TH align=\"left\">Protect</TH><TH align=\"left\">Description</TH></TR>" + SystemValues.NEWLINE
+                  + "   <TR><TH>&nbsp;</TH><TH align=\"right\">Name&nbsp;&nbsp;</TH><TH align=\"left\">Type</TH><TH align=\"left\">Nullable</TH>"
                   );
+        if (O._DBOnly == false)
+         Out.print("<TH align=\"left\">Mode</TH><TH align=\"left\">Invariant</TH><TH align=\"left\">Protect</TH>");
+        Out.print("<TH align=\"left\">Description</TH></TR>" + SystemValues.NEWLINE);
        
         int i = 1;
         for (Column C : O._Columns)
@@ -112,12 +115,17 @@ public class Docs
                Out.println("<TD align=\"right\"><B id='"+O._Name+"-"+C.getName()+"_DIV' class='columns'>" + C.getName() + "</B>&nbsp;&nbsp;</TD>");
              }
             
-            Out.println("<TD>" + JavaJDBCType.getFieldType(C) + (C.isList() == true ? " List<>" : C.isSet() == true ? " Set<>" : "") + "&nbsp;&nbsp;</TD>");
-            Out.println("<TD>" + G.getSql().getColumnType(C) + "&nbsp;&nbsp;</TD>");
+            Out.print("<TD>");
+            if (O._DBOnly == false)
+             Out.print(JavaJDBCType.getFieldType(C) + (C.isList() == true ? " List<>" : C.isSet() == true ? " Set<>" : "") + "&nbsp;/&nbsp;");
+            Out.println(G.getSql().getColumnType(C) + "&nbsp;&nbsp;</TD>");
             Out.println("<TD align=\"center\">" + (C._Nullable == true ? "&#x2611;" : "&#x2610") + "&nbsp;&nbsp;</TD>");
-            Out.println("<TD align=\"left\">" + (C._Mode == ColumnMode.NORMAL ? "-" : C._Mode) + "&nbsp;&nbsp;</TD>");
-            Out.println("<TD align=\"center\">" + (C._Invariant == false ? "&#x2610" : "&#x2611;") + "&nbsp;&nbsp;</TD>");
-            Out.println("<TD align=\"center\">" + (C._Protect == null ? "-" : C._Protect) + "&nbsp;&nbsp;</TD>");
+            if (O._DBOnly == false)
+             {
+               Out.println("<TD align=\"left\">" + (C._Mode == ColumnMode.NORMAL ? "-" : C._Mode) + "&nbsp;&nbsp;</TD>");
+               Out.println("<TD align=\"center\">" + (C._Invariant == false ? "&#x2610" : "&#x2611;") + "&nbsp;&nbsp;</TD>");
+               Out.println("<TD align=\"center\">" + (C._Protect == null ? "-" : C._Protect) + "&nbsp;&nbsp;</TD>");
+             }
             Out.println("<TD>" + C._Description + "</TD>");
             Out.println("</TR>");
             
