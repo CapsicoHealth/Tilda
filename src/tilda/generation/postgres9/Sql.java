@@ -259,6 +259,15 @@ public class Sql extends PostgreSQL implements CodeGenSql
     private String PrintBaseView(View V, boolean OmmitTZs)
     throws Exception
       {
+        if (V._Name.equalsIgnoreCase("QualityEpisodeOasis_View") == true)
+         {
+           LOG.debug("Hello!!!!");
+           LOG.debug("View joins for "+V.getShortName()+".");
+           for (ViewJoin VJ : V._Joins)
+            LOG.debug("  Object: "+VJ._Object+"; As: "+VJ._As+" Type: "+VJ._Join+";");
+           LOG.debug("Hello!!!!");
+         }
+        
         List<TotalMess> FuckList = TotalMess.ScanView(V);
 
         StringBuilder Str = new StringBuilder();
