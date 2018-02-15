@@ -377,20 +377,20 @@ public class Sql extends PostgreSQL implements CodeGenSql
               {
                 if (First == true)
                   {
-                    if (V._Pivot != null && V._ViewColumns.size() > 3)
-                      {
-                        Str.append("(");
-                      }
+//                    if (V._Pivot != null && V._ViewColumns.size() > 3)
+//                      {
+//                        Str.append("(");
+//                      }
                     First = false;
                   }
                 else
                   Str.append("\n     , ");
-                if (PrintViewColumn(Str, VC, TI, V._Pivot != null && V._ViewColumns.size() > 3 && columnCount <= V._ViewColumns.size() - 3) == true)
+                if (PrintViewColumn(Str, VC, TI, false) == true) //V._Pivot != null && V._ViewColumns.size() > 3 && columnCount <= V._ViewColumns.size() - 3) == true)
                   hasAggregates = true;
-                if (V._Pivot != null && V._ViewColumns.size() > 3 && columnCount == V._ViewColumns.size() - 3)
-                  {
-                    Str.append("\n       )::" + V.getShortName() + "_WT as _wt");
-                  }
+  //              if (V._Pivot != null && V._ViewColumns.size() > 3 && columnCount == V._ViewColumns.size() - 3)
+  //                {
+  //                  Str.append("\n       )::" + V.getShortName() + "_WT as _wt");
+  //                }
               }
           }
 
@@ -505,7 +505,11 @@ public class Sql extends PostgreSQL implements CodeGenSql
           {
             if (V._Pivot != null)
               {
-                Str.append("     group by 1, 2\n");
+                //Str.append("     group by 1, 2\n");
+                Str.append("     group by ");
+                for (int i = 0; i < V._ViewColumns.size()-1; ++i)
+                  Str.append((i==0?"":", ")+(i+1));
+                Str.append("\n");                
               }
             else
               {
@@ -533,9 +537,12 @@ public class Sql extends PostgreSQL implements CodeGenSql
                  Str.append("\n");
               }
           }
-        if (V._Pivot != null && V._ViewColumns.size() > 3)
+        if (V._Pivot != null) // && V._ViewColumns.size() > 3)
           {
-            Str.append("     order by 1, 2\n");
+            Str.append("     order by ");
+            for (int i = 0; i < V._ViewColumns.size()-1; ++i)
+              Str.append((i==0?"":", ")+(i+1));
+            Str.append("\n");
           }
 
         if (V._DistinctOn != null)
@@ -622,12 +629,14 @@ public class Sql extends PostgreSQL implements CodeGenSql
         String Str = PrintBaseView(V, false);
         if (V._Pivot != null)
           {
-            Str = V._ViewColumns.size() > 3 ? PivotPostgresWay(V, Str) : PivotGenericWay(V, Str);
+//            Str = V._ViewColumns.size() > 3 ? PivotPostgresWay(V, Str) : PivotGenericWay(V, Str);
+            Str = /*V._ViewColumns.size() > 3 ? PivotPostgresWay(V, Str) :*/ PivotGenericWay(V, Str);
           }
         if (V._Formulas != null && V._Formulas.isEmpty() == false)
           {
             Str = DoFormulasSuperView(V, Str);
           }
+/*
         if (V._Pivot != null && V._ViewColumns.size() > 3)
           {
             OutFinal.println("DROP TYPE IF EXISTS " + V.getShortName() + "_WT cascade;");
@@ -652,7 +661,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
               }
             OutFinal.println("   );");
           }
-
+*/
         OutFinal.println("create or replace view " + V._ParentSchema._Name + "." + V._Name + " as ");
         OutFinal.println(Str + ";");
 
@@ -733,7 +742,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         Str = b.toString();
         return Str;
       }
-
+/*
     private String PivotPostgresWay(View V, String Str)
       {
         StringBuilder b = new StringBuilder();
@@ -799,25 +808,25 @@ public class Sql extends PostgreSQL implements CodeGenSql
         Str += ")\n";
         return Str;
       }
-
+*/
 
     private String PivotGenericWay(View V, String Str)
     throws Exception
       {
-        Str = "with T as (\n" + Str + ") select \n";
+        Str = "with T as (\n" + Str + ") select ";
         for (int i = 0; i < V._ViewColumns.size() - 2; ++i)
           {
             ViewColumn VC = V._ViewColumns.get(i);
             if (VC._SameAs.equals("_TS.p") == true)
               {
                 if (i != 0)
-                  Str += "  , ";
+                  Str += "\n      , ";
                 Str += "\"" + VC.getName() + "\" "; // Date";
               }
             else if (VC != null && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false)
               {
                 if (i != 0)
-                  Str += "  , ";
+                  Str += "\n      , ";
                 Str += "\"" + VC.getName() + "\" "; // + getColumnType(VC._SameAsObj);
               }
           }
@@ -828,7 +837,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         for (int i = 0; i < V._Pivot._Values.length; ++i)
           {
             if (V._CountStar != null)
-              Str += "\n, sum(\"count\") filter (where \"" + VC_base.getName() + "\"= '" + TextUtil.Print(V._Pivot._Values[i]._Name, V._Pivot._Values[i]._Value) + "') ";
+              Str += "\n, sum(\""+V._CountStar+"\") filter (where \"" + VC_base.getName() + "\"= '" + TextUtil.Print(V._Pivot._Values[i]._Name, V._Pivot._Values[i]._Value) + "') ";
             else if (VC_pivot._Aggregate == AggregateType.COUNT || VC_pivot._Aggregate == AggregateType.SUM)
               Str += "\n, sum(\"" + VC_pivot.getName() + "\") filter (where \"" + VC_base.getName() + "\"= '" + V._Pivot._Values[i]._Value + "') ";
             else
@@ -836,8 +845,11 @@ public class Sql extends PostgreSQL implements CodeGenSql
             Str += " as \"" + TextUtil.Print(V._Pivot._Values[i]._Name, V._Pivot._Values[i]._Value) + "\"";
           }
         Str += "\n"
-        + "from T\n"
-        + "group by 1\n";
+        + "from T\n";
+        Str+="     group by ";
+        for (int i = 0; i < V._ViewColumns.size()-2; ++i)
+          Str+=(i==0?"":", ")+(i+1);
+        Str+="\n";                
         return Str;
       }
 
