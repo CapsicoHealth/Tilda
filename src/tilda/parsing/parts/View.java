@@ -114,6 +114,10 @@ public class View extends Base
 
     public ViewJoin getViewjoin(String ObjectName, String As)
       {
+//        LOG.debug("ObjectName: "+ObjectName+"; As: "+As+";");
+//        if (ObjectName.equalsIgnoreCase("AssessmentOasis_Fact") == true)
+//         LOG.debug("HELLO!");
+        
         if (_Joins != null)
           for (ViewJoin vj : _Joins)
             if (vj != null && vj._ObjectObj.getBaseName().equals(ObjectName) == true 
@@ -134,6 +138,9 @@ public class View extends Base
 
     public boolean Validate(ParserSession PS, Schema ParentSchema)
       {
+//        if (_Name.equalsIgnoreCase("QualityEpisodeOasis_View") == true)
+//         LOG.debug("Hello!!!!");
+//        
         if (super.Validate(PS, ParentSchema) == false)
           return false;
 
@@ -154,6 +161,14 @@ public class View extends Base
         String LastUpdatedColObjName = null;
         String LastUpdatedETLColObjName = null;
         String DeletedColObjName = null;
+        
+        if (_Name.equalsIgnoreCase("QualityEpisodeOasis_View") == true)
+          {
+            LOG.debug("View columns for "+getShortName()+".");
+            for (ViewColumn VC : _ViewColumns)
+             LOG.debug("  column: "+VC._SameAs+"; As: "+VC._As+"; Name: "+VC._Name+";");
+            LOG.debug("Hello!!!!");
+          }
         for (int i = 0; i < _ViewColumns.size(); ++i)
           {
             ViewColumn VC = _ViewColumns.get(i);
@@ -256,8 +271,10 @@ public class View extends Base
                           {
                             if (col._FrameworkManaged == true)
                               continue;
+                            ViewColumn OldVC = VC;
                             VC = new ViewColumn();
                             VC._SameAs = col.getFullName();
+                            VC._As = OldVC._As;
                             VC._Name = Prefix + col.getName();
                             _ViewColumns.add(i + j, VC);
                             ++j;
@@ -269,7 +286,7 @@ public class View extends Base
               }
             else if (TextUtil.isNullOrEmpty(VC._Prefix) == false)
               PS.AddError("Column '" + VC.getFullName() + "' defined a prefix but is not a .* column.");
-
+            
             if (VC.Validate(PS, this) == false)
               return false;
 
@@ -303,6 +320,7 @@ public class View extends Base
                 TZCol._SameAs = VC._SameAs + "TZ";
                 TZCol._FrameworkGenerated = true;
                 TZCol._Name = VC._Name == null ? null : VC._Name + "TZ";
+                TZCol._As = VC._As;
                 TZCol.Validate(PS, this);
                 _ViewColumns.add(i, TZCol);
                 ++i;
@@ -318,6 +336,14 @@ public class View extends Base
                   CreateMappedViewColumn(PS, ColumnNames, i++, VC, "Name");
               }
           }
+        if (_Name.equalsIgnoreCase("QualityEpisodeOasis_View") == true)
+          {
+            LOG.debug("View columns for "+getShortName()+" AFTER unrolling.");
+            for (ViewColumn VC : _ViewColumns)
+             LOG.debug("  column: "+VC._SameAs+"; As: "+VC._As+"; Name: "+VC._Name+";");
+            LOG.debug("Hello!!!!");
+          }
+        
 
         if (_TimeSeries != null)
           {
