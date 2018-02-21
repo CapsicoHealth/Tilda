@@ -455,10 +455,15 @@ public class Schema
         return;
       }
 
-    private static void PrintSchemaList(List<Schema> L)
+    public static void PrintSchemaList(List<Schema> L, boolean recurse)
       {
         for (Schema X : L)
-          LOG.info("   " + X._Name);
+          {
+            LOG.info("   " + X._Name);
+            if (recurse == true)
+             for (Object O : X._Objects)
+              LOG.info("       " + O._Name +": "+TextUtil.Print(O.getColumnNames()));
+          }
       }
 
     public static String getCircularPath(Schema S, List<Schema> L)
