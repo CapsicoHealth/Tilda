@@ -134,6 +134,8 @@ public class DataObject
         List<String> Headers = new ArrayList<String>();
         for (ColumnHeader ColumnHeader : _ColumnHeaderList)
           {
+            if (ColumnHeader == null)
+              continue;
             Headers.add(ColumnHeader._Header);
           }
 
