@@ -20,24 +20,25 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.db.ConnectionPool;
+import tilda.utils.AsciiArt;
 
 public class Migrate
   {
     static final Logger    LOG               = LogManager.getLogger(Migrate.class.getName());
 
-    static private boolean _MIGRATION_START_  = false;
-    static private boolean _IS_TESTING_       = false;
+    static private boolean _MIGRATION_START_ = false;
+    static private boolean _IS_TESTING_      = false;
 
     static public boolean isMigrationActive()
       {
         return _MIGRATION_START_;
       }
-    
+
     static public boolean isTesting()
       {
         return _IS_TESTING_;
-      }    
-    
+      }
+
     public static void setIsTesting(boolean isTesting)
       {
         _IS_TESTING_ = isTesting;
@@ -59,13 +60,22 @@ public class Migrate
             _MIGRATION_START_ = true;
             ConnectionPool.autoInit();
           }
-        catch (Exception E)
+        catch (Throwable E)
           {
-            LOG.error("Cannot migrate the database.\n", E);
+            LOG.error("\n"
+            + "          ======================================================================================\n"
+            + AsciiArt.Error("               ")
+            + "\n"
+            + "                                Cannot Automatically Migrate The Database.\n"
+            + "          ======================================================================================\n", E);
+            System.exit(-1);
           }
 
-        LOG.info("");
-        LOG.info("DONE.");
-        LOG.info("");
+        LOG.info("\n"
+        + "          ======================================================================================\n"
+        + AsciiArt.Woohoo("                       ")
+        + "\n"
+        + "               The database was automatically migrated to match the Application's data model.    \n"
+        + "          ======================================================================================");
       }
   }

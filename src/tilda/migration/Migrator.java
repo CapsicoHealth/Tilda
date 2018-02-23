@@ -92,13 +92,11 @@ public class Migrator
                 doAcl(C, TildaList, DBMeta);
               }
             LOG.info("\n"
-                    +"\n"
                     +"          ==============================================================================\n"
                     +AsciiArt.OK("                                    ")
                     +"\n"
                     +"                    The database already matched the Application's data model.          \n"
                     +"          ==============================================================================\n"
-                    +"\n"
                     );
           }
         else if (CheckOnly == false)
@@ -109,26 +107,15 @@ public class Migrator
             doAcl(C, TildaList, DBMeta);
             if (Migrate.isTesting() == false)
               KeysManager.reloadAll();
-            LOG.info("\n"
-                    +"\n"
-                    +"          ======================================================================================\n"
-                    +AsciiArt.Woohoo("                       ")
-                    +"\n"
-                    +"              The database was automatically migrated to match the Application's data model.    \n"
-                    +"          ======================================================================================\n"
-                    +"\n"
-                    );
           }
         else
           {
             LOG.warn("\n"
-                    +"\n"
                     +"          =============================================================================================================\n"
                     +AsciiArt.Warning("          ")
                     +"\n"
                     +"                 The database DOES NOT match the Application's data model. The application may NOT run properly!       \n"
                     +"          =============================================================================================================\n"
-                    +"\n"
                     );
           }
       }

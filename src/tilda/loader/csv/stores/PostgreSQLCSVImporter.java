@@ -67,7 +67,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
                   continue;
                 if (record.isConsistent() == false)
                   {
-                    LOG.debug("Inconsistent values coming through this record" + (NumOfRecs + 1));
+                    LOG.error("Inconsistent values coming through this record" + (NumOfRecs + 1));
                     continue;
                   }
   
@@ -336,9 +336,10 @@ public class PostgreSQLCSVImporter extends CSVImporter
                       }
                   }
                 
-                // lastUpdated incase of Upsert
-                if (isUpsert && DBColumns != null && DBColumns.get("lastupdated") != null && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
+                // lastUpdated in case of Upsert
+                if (upsertOffset != 0 && isUpsert && DBColumns != null && DBColumns.get("lastupdated") != null && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
                   {
+//                    LOG.debug("i: "+i+"; x: "+x+"; upsertOffset: "+upsertOffset+";");
                     Pst.setTimestamp(i + x + upsertOffset, new java.sql.Timestamp(Now.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                   }
                 
@@ -424,7 +425,21 @@ public class PostgreSQLCSVImporter extends CSVImporter
                 Str.append("\"").append(uniqueColumns[i]).append("\"");
                 first = false;
               }
-            Str.append(") DO UPDATE SET ");
+            Str.append(") ");
+            
+            first = true;
+            for (int i = 0; i < columns.length; ++i)
+              {
+                if (TextUtil.FindElement(uniqueColumns, columns[i], false, 0) != -1)
+                 continue;
+                first = false;
+                break;
+              }
+            
+            if (first == false)
+             Str.append(" DO UPDATE SET ");
+            else
+              Str.append(" DO NOTHING ");
             
             first = true;
             for (int i = 0; i < columns.length; ++i)
@@ -438,7 +453,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
                 first = false;
               }
             
-            if (DBColumns != null && DBColumns.get("lastupdated") != null && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
+            if (first == false && DBColumns != null && DBColumns.get("lastupdated") != null && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
               {
                 Str.append(",");
                 Str.append(" \"lastUpdated\"=?");
