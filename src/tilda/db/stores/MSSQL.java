@@ -31,6 +31,7 @@ import org.apache.logging.log4j.Logger;
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
 import tilda.db.metadata.FKMeta;
+import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.PKMeta;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
@@ -40,6 +41,7 @@ import tilda.generation.SQLServer2014.SQLServerType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
+import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
@@ -499,6 +501,21 @@ public class MSSQL implements DBType
       {
         throw new UnsupportedOperationException();
       }
+    
+    @Override
+    public boolean alterTableDropIndex(Connection Con, Object Obj, IndexMeta IX)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public boolean alterTableAddIndex(Connection Con, Index IX)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+    
 
     @Override
     public boolean isSuperUser(Connection C)

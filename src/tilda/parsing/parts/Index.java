@@ -23,6 +23,7 @@ import java.util.Set;
 
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ValidationHelper;
+import tilda.db.metadata.IndexColumnMeta;
 import tilda.enums.ColumnMode;
 import tilda.enums.OrderType;
 import tilda.utils.TextUtil;
@@ -100,6 +101,13 @@ public class Index
                   {
                     if (_SubQuery._OrderBy != null && _SubQuery._OrderBy.length != 0)
                       PS.AddError("Object '" + _Parent.getFullName() + "' defines index '" + _Name + "' with a subQuery that contains an orderBy: this is not allowed as the index already defines one.");
+                    if (_SubQuery._From.length != 0)
+                      PS.AddError("Object '" + _Parent.getFullName() + "' defines index '" + _Name + "' with a subQuery that contains a \"From\" clause: this is not allowed in an Index SubQuery.");
+                    for(Query SubWhere : _SubQuery._Wheres) 
+                      {
+                    	if (SubWhere._Clause.contains("?"))
+                    		PS.AddError("Object '" + _Parent.getFullName() + "' defines index '" + _Name + "' with a subQuery that contains a \"?\" variable placeholder: this is not allowed in an Index SubQuery.");
+                      }
                     _SubQuery.Validate(PS, _Parent, "Object " + _Parent.getFullName() + "'s index '" + _Name + "'", false);
                   }
               }
@@ -154,5 +162,36 @@ public class Index
                 OrderByOrders.add(Order);
               }
           }
+      }
+  
+    public String getSignature() 
+      {
+        StringBuilder Str = new StringBuilder();
+        // Defined Columns
+        for (Column C : _ColumnObjs)
+          {
+            if (Str.length() != 0)
+            {
+              Str.append("|");
+            }
+            Str.append(C._Name + "|asc");
+          }   	
+    	// Defined Order Bys
+        for (Column C : _OrderByObjs)
+          {
+            if (Str.length() != 0)
+              {
+                Str.append("|");
+              }
+            if (C._Name.contains(" desc") || C._Name.contains(" asc"))
+              {
+                Str.append(C._Name.replace(" ", "|"));
+              }  
+            else
+              {
+            	Str.append(C._Name + "|asc");         
+              }
+          }
+    	return (_Unique ? "u" : "") + "i|" + Str.toString();
       }
   }

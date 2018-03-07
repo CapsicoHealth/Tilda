@@ -33,6 +33,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.metadata.FKMeta;
+import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.PKMeta;
 import tilda.db.processors.RecordProcessor;
 import tilda.db.stores.DBType;
@@ -43,6 +44,7 @@ import tilda.enums.TransactionType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
+import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
@@ -625,7 +627,20 @@ public final class Connection
       {
         return _DB.alterTableAddFK(this, FK);
       }
+    
+    public boolean alterTableDropIndex(Object Obj, IndexMeta IX)
+    throws Exception
+      {
+        return _DB.alterTableDropIndex(this, Obj, IX);
+      }
 
+    public boolean alterTableAddIndex(Index IX)
+    throws Exception
+      {
+        return _DB.alterTableAddIndex(this, IX);
+      }
+
+    
     public boolean isSuperUser()
     throws Exception
       {

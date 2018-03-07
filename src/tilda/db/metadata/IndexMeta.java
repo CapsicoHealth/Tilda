@@ -50,4 +50,20 @@ public class IndexMeta
           columnNames.add(icm._Col);
         return columnNames;
       }
+    
+    public String getSignature() 
+      {
+        StringBuilder Str = new StringBuilder();
+        for (IndexColumnMeta ICM : _Columns)
+          {
+            if (Str.length() != 0)
+            {
+              Str.append("|");
+            }
+            Str.append(ICM._Col);
+            Str.append("|" + (ICM._Asc ? "asc" : "desc"));
+          }
+    	
+        return (_Unique ? "u" : "") + "i|" + Str.toString();
+      }
   }

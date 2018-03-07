@@ -320,12 +320,18 @@
       "indices":[ 
         { "name": "AllByName" , "orderBy": ["name asc"], "db": false 
         },
-        { "name": "AllByName2", "orderBy": ["name asc"], "db": true, "subQuery": { "from"  : ["ObjectPerf"], 
-                                                                                   "wheres": [ { "db": "*", "clause": "deleted is null and desc2 >= ?(Lower) and a5 < ?(Upper) or name = ?() and created > ?()" } 
-                                                                                             ] 
-                                                                                 }
+        { "name": "AllByName2", "orderBy": ["name asc"], "db": true
+																		//, "subQuery": { "from"  : ["ObjectPerf"], 
+                                                                        //  "wheres": [ { "db": "*", "clause": "deleted is null and desc2 >= ?(Lower) and a5 < ?(Upper) or name = ?() and created > ?()" } 
+                                                                        //            ] 
+                                                                        //}
         },
-        { "name": "AllByName3", "orderBy": ["name asc"], "db": true, "subWhere": "deleted is null and name = ?() and created > ?()" }
+        { "name": "AllByName3", "orderBy": ["name asc"], "db": true
+        																//, "subWhere": "deleted is null and name = ?() and created > ?"
+        },
+        { "name": "AllByName4", "orderBy": ["name asc"], "db": true
+        																  , "subWhere": "deleted is null and name = 'Hello' and created > '1/1/2018'"
+        }
       ],
       "json":[
         { "name": "AAA", "columns": ["refnum", "refnum2", "name", "description", "desc2", "desc3", "desc4", "desc5", "desc6", "tops", "tops2", "a1", "a2", "a2b", "a2c", "a3", "a3b", "a4", "a4b", "a5", "a5b", "a6", "a6b", "a6c", "a7", "a7b", "a9", "created", "lastUpdated"] }
