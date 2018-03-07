@@ -28,10 +28,12 @@ import java.util.List;
 import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.postgresql.core.Query;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
 import tilda.db.metadata.FKMeta;
+import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.PKMeta;
 import tilda.db.processors.ScalarRP;
 import tilda.db.processors.StringListRP;
@@ -44,8 +46,10 @@ import tilda.generation.interfaces.CodeGenSql;
 import tilda.generation.postgres9.PostgresType;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
+import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
+import tilda.parsing.parts.SubWhereClause;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.types.ColumnDefinition;
@@ -858,6 +862,39 @@ public class PostgreSQL implements DBType
         return Con.ExecuteDDL(FK._ParentObject._ParentSchema._Name, FK._ParentObject.getBaseName(), Q);
       }
     
+    @Override
+    public boolean alterTableDropIndex(Connection Con, Object Obj, IndexMeta IX)
+    throws Exception
+      {
+    	LOG.info("Dropping Index: " + IX._Name + " On Table: " + Obj.getShortName());
+
+        String Q = "DROP INDEX " + Obj._ParentSchema._Name + ".\"" + IX._Name + "\";";
+        return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
+      }
+    
+    @Override
+    public boolean alterTableAddIndex(Connection Con, Index IX)
+    throws Exception
+      {
+/*    	LOG.info("Creating Index ON table: " + IX._Parent.getShortName());
+    	LOG.info("With columns: " + PrintColumnList(IX._ColumnObjs));
+    	LOG.info("SubWhere: " + IX._SubWhere);
+    	LOG.info("SubQuery: " + (IX._SubQuery != null ? IX._SubQuery.getQuery(Postgres)._Clause : "None"));
+    	LOG.info("Print Column List: " + (IX._ColumnObjs != null ? PrintColumnList(IX._ColumnObjs) : ""));
+    	LOG.info("Print OrderBy List: " + (IX._OrderByObjs != null ? PrintColumnList(IX._OrderByObjs) : ""));*/
+    	
+        String Q = "CREATE" + (IX._Unique ? " UNIQUE" : "" ) +" INDEX \"" + IX._Parent._Name.toLowerCase() + "_" + IX._Name.toLowerCase() + "\" ON " 
+        		+ IX._Parent.getShortName() + ""
+        		+ " (" + (IX._ColumnObjs.size() > 0 ? PrintColumnList(IX._ColumnObjs) : "")
+        		+ (IX._ColumnObjs.size() > 0 && IX._OrderByObjs.size() > 0 ? ", " : "")
+        		+ (IX._OrderByObjs.size() > 0 ? PrintColumnList(IX._OrderByObjs) : "")  + ")"
+        		+ (IX._SubWhere != null ? " WHERE " + IX._SubWhere : (IX._SubQuery != null ? " WHERE " +  IX._SubQuery.getQuery(Postgres)._Clause : "")) + ";";
+
+        		
+        LOG.info(Q);
+        return Con.ExecuteDDL(IX._Parent._ParentSchema._Name, IX._Parent.getBaseName(), Q);
+      }
+    
     
     private static String PrintColumnList(List<Column> Columns)
       {
@@ -876,7 +913,6 @@ public class PostgreSQL implements DBType
         return Str.toString();
       }
     
-
     @Override
     public void within(Connection C, StringBuilder Str, Type_DatetimePrimitive Col, Type_DatetimePrimitive ColStart, long DurationCount, IntervalEnum DurationType)
       {
