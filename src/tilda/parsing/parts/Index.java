@@ -21,14 +21,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import tilda.parsing.ParserSession;
-import tilda.parsing.parts.helpers.ValidationHelper;
-import tilda.db.metadata.IndexColumnMeta;
+import com.google.gson.annotations.SerializedName;
+
 import tilda.enums.ColumnMode;
 import tilda.enums.OrderType;
+import tilda.parsing.ParserSession;
+import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.TextUtil;
-
-import com.google.gson.annotations.SerializedName;
 
 public class Index
   {
@@ -47,6 +46,11 @@ public class Index
     public transient boolean         _Unique;
 
     public transient Base            _Parent;
+    
+    public String getName()
+     {
+       return _Parent.getBaseName() + "_" + _Name;
+     }
 
     public boolean Validate(ParserSession PS, Base Parent)
       {
@@ -174,23 +178,18 @@ public class Index
             {
               Str.append("|");
             }
-            Str.append(C._Name + "|asc");
+            Str.append(C._Name).append("|asc");
           }   	
     	// Defined Order Bys
-        for (Column C : _OrderByObjs)
+        for (int i = 0; i < _OrderByObjs.size(); ++i)
           {
+            Column C = _OrderByObjs.get(i);
+            OrderType O = _OrderByOrders.get(i);
             if (Str.length() != 0)
               {
                 Str.append("|");
               }
-            if (C._Name.contains(" desc") || C._Name.contains(" asc"))
-              {
-                Str.append(C._Name.replace(" ", "|"));
-              }  
-            else
-              {
-            	Str.append(C._Name + "|asc");         
-              }
+            Str.append(C._Name).append("|").append(O.name().toLowerCase());
           }
     	return (_Unique ? "u" : "") + "i|" + Str.toString();
       }

@@ -19,10 +19,8 @@ package tilda.db.metadata;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
@@ -115,7 +113,7 @@ public class TableMeta
       }
 
     
-    public IndexMeta getIndex(String[] Columns, boolean Unique)
+    public IndexMeta getIndexMeta(String[] Columns, boolean Unique)
       {
         for (Map.Entry<String, IndexMeta> entry : _Indices.entrySet())
           {
@@ -131,4 +129,9 @@ public class TableMeta
           }
         return null;
       }
+    
+    public IndexMeta getIndexMeta(String Name)
+     {
+       return _Indices.get(Name.toLowerCase());
+     }
   }

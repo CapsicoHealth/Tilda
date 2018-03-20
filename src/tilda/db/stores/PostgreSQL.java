@@ -883,7 +883,7 @@ public class PostgreSQL implements DBType
     	LOG.info("Print Column List: " + (IX._ColumnObjs != null ? PrintColumnList(IX._ColumnObjs) : ""));
     	LOG.info("Print OrderBy List: " + (IX._OrderByObjs != null ? PrintColumnList(IX._OrderByObjs) : ""));*/
     	
-        String Q = "CREATE" + (IX._Unique ? " UNIQUE" : "" ) +" INDEX \"" + IX._Parent._Name.toLowerCase() + "_" + IX._Name.toLowerCase() + "\" ON " 
+        String Q = "CREATE" + (IX._Unique ? " UNIQUE" : "" ) +" INDEX \"" + IX.getName() + "\" ON " 
         		+ IX._Parent.getShortName() + ""
         		+ " (" + (IX._ColumnObjs.size() > 0 ? PrintColumnList(IX._ColumnObjs) : "")
         		+ (IX._ColumnObjs.size() > 0 && IX._OrderByObjs.size() > 0 ? ", " : "")

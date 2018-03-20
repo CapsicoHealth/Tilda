@@ -20,7 +20,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.db.Connection;
-import tilda.db.metadata.FKMeta;
 import tilda.db.metadata.IndexMeta;
 import tilda.migration.MigrationAction;
 
@@ -28,27 +27,25 @@ public class TableIndexDrop extends MigrationAction
   {
     protected static final Logger LOG = LogManager.getLogger(TableIndexDrop.class.getName());
 
-    public TableIndexDrop(tilda.parsing.parts.Object SrcObj, tilda.parsing.parts.Object TargetObj, IndexMeta IX)
+    public TableIndexDrop(tilda.parsing.parts.Object Obj, IndexMeta IX)
       {
         super(false);
-        _SrcObj = SrcObj;
-        _TargetObj = TargetObj;
+        _Obj = Obj;
         _IX = IX;
       }
 
-    protected tilda.parsing.parts.Object _SrcObj;
-    protected tilda.parsing.parts.Object _TargetObj;
+    protected tilda.parsing.parts.Object _Obj;
     protected IndexMeta _IX;
 
     public boolean process(Connection C)
     throws Exception
       {
-        return C.alterTableDropIndex(_SrcObj, _IX);
+        return C.alterTableDropIndex(_Obj, _IX);
       }
 
     @Override
     public String getDescription()
       {
-        return "Dropping Table " + _SrcObj.getFullName()+"'s Index " + _IX._Name + "("+_IX.toString()+")";
+        return "Dropping Index " + _Obj.getShortName()+"." + _IX._Name + "("+_IX.getSignature()+")";
       }
   }

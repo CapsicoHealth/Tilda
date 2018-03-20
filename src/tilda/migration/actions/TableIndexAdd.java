@@ -21,7 +21,6 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.db.Connection;
 import tilda.migration.MigrationAction;
-import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
 
 public class TableIndexAdd extends MigrationAction
@@ -45,7 +44,7 @@ public class TableIndexAdd extends MigrationAction
     @Override
     public String getDescription()
       {
-        return "Adding Index "+_IX._Name+"("+_IX.toString()+") to table " + _IX._Parent.getFullName();
+        return "Adding Index "+_IX._Name+"("+_IX.getSignature()+") to table " + _IX._Parent.getFullName();
       }
 
   }

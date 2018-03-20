@@ -414,6 +414,9 @@ public class Migrator
 		                  }
 	                    if (Found == false)
 	                      {
+	                        IndexMeta IMeta = TMeta.getIndexMeta(IX.getName());
+	                        if (IMeta != null)
+                             Actions.add(new TableIndexDrop(Obj, IMeta));
 	                        Actions.add(new TableIndexAdd(IX));
 	                      }
 	                  }

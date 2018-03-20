@@ -4,8 +4,14 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class IndexMeta
   {
+    
+    static final Logger LOG = LogManager.getLogger(IndexMeta.class.getName());
+    
     protected IndexMeta(ResultSet RS)
     throws Exception
       {
@@ -61,9 +67,9 @@ public class IndexMeta
               Str.append("|");
             }
             Str.append(ICM._Col);
-            Str.append("|" + (ICM._Asc ? "asc" : "desc"));
+            Str.append("|" + (ICM._Asc == null ? "**"+ICM._AscStr+"**" : ICM._Asc == true ? "asc" : "desc"));
           }
-    	
+
         return (_Unique ? "u" : "") + "i|" + Str.toString();
       }
   }
