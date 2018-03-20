@@ -640,12 +640,18 @@ public final class Connection
         return _DB.alterTableAddIndex(this, IX);
       }
 
+    public boolean alterTableRenameIndex(Object Obj, String OldName, String NewName)
+    throws Exception
+      {
+        return _DB.alterTableRenameIndex(this, Obj, OldName, NewName);
+      }
     
     public boolean isSuperUser()
     throws Exception
       {
         return _DB.isSuperUser(this);
       }
+
   }
 
 

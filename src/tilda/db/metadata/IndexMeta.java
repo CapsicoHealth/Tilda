@@ -15,7 +15,7 @@ public class IndexMeta
     protected IndexMeta(ResultSet RS)
     throws Exception
       {
-        _Name   = RS.getString("INDEX_NAME" ).toLowerCase();
+        _Name   = RS.getString("INDEX_NAME" );//.toLowerCase();
         _Unique = RS.getBoolean("NON_UNIQUE") == false;
       }
 

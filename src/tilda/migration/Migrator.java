@@ -53,6 +53,7 @@ import tilda.migration.actions.TableFKAdd;
 import tilda.migration.actions.TableFKDrop;
 import tilda.migration.actions.TableIndexAdd;
 import tilda.migration.actions.TableIndexDrop;
+import tilda.migration.actions.TableIndexRename;
 import tilda.migration.actions.TableKeyCreate;
 import tilda.migration.actions.TablePKReplace;
 import tilda.migration.actions.TildaAclAdd;
@@ -408,15 +409,24 @@ public class Migrator
 		                        if (Sig.equals(Sig1) == true)
 		                          {
 		                            Found = true;
+		                            if (ix._Name.equals(ix._Name.toLowerCase()) == false // name in the DB is not lowercase, i.e., case insensitive
+		                                || ix._Name.equalsIgnoreCase(IX.getName()) == false // same sig, but new index name
+		                               )
+		                              {
+		                                Actions.add(new TableIndexRename(Obj, ix._Name, IX.getName()));
+		                              }
 		                            break;
 		                          }
 	                    	  }
 		                  }
 	                    if (Found == false)
 	                      {
-	                        IndexMeta IMeta = TMeta.getIndexMeta(IX.getName());
-	                        if (IMeta != null)
-                             Actions.add(new TableIndexDrop(Obj, IMeta));
+	                        IndexMeta IMeta = TMeta.getIndexMeta(IX.getName()); // Try case-sensitive fashion
+	                        IndexMeta IMeta2 = TMeta.getIndexMeta(IX.getName().toLowerCase()); // Try case-insensitive fashion
+	                        if (IMeta != null && IMeta2 != null )
+                              Actions.add(new TableIndexDrop(Obj, IMeta));
+                            if (IMeta2 != null)
+                             Actions.add(new TableIndexDrop(Obj, IMeta2));
 	                        Actions.add(new TableIndexAdd(IX));
 	                      }
 	                  }

@@ -866,9 +866,9 @@ public class PostgreSQL implements DBType
     public boolean alterTableDropIndex(Connection Con, Object Obj, IndexMeta IX)
     throws Exception
       {
-    	LOG.info("Dropping Index: " + IX._Name + " On Table: " + Obj.getShortName());
-
-        String Q = "DROP INDEX " + Obj._ParentSchema._Name + ".\"" + IX._Name + "\";";
+        // If the DB Name comes in as all lower case, it's case-insensitive. Otherwise, we have to quote.        
+    	String DropName = IX._Name.equals(IX._Name.toLowerCase()) == false ? "\""+IX._Name+"\"" : IX._Name;
+        String Q = "DROP INDEX " + Obj._ParentSchema._Name + "." + DropName + ";";
         return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
       }
     
@@ -876,26 +876,26 @@ public class PostgreSQL implements DBType
     public boolean alterTableAddIndex(Connection Con, Index IX)
     throws Exception
       {
-/*    	LOG.info("Creating Index ON table: " + IX._Parent.getShortName());
-    	LOG.info("With columns: " + PrintColumnList(IX._ColumnObjs));
-    	LOG.info("SubWhere: " + IX._SubWhere);
-    	LOG.info("SubQuery: " + (IX._SubQuery != null ? IX._SubQuery.getQuery(Postgres)._Clause : "None"));
-    	LOG.info("Print Column List: " + (IX._ColumnObjs != null ? PrintColumnList(IX._ColumnObjs) : ""));
-    	LOG.info("Print OrderBy List: " + (IX._OrderByObjs != null ? PrintColumnList(IX._OrderByObjs) : ""));*/
-    	
-        String Q = "CREATE" + (IX._Unique ? " UNIQUE" : "" ) +" INDEX \"" + IX.getName() + "\" ON " 
-        		+ IX._Parent.getShortName() + ""
-        		+ " (" + (IX._ColumnObjs.size() > 0 ? PrintColumnList(IX._ColumnObjs) : "")
-        		+ (IX._ColumnObjs.size() > 0 && IX._OrderByObjs.size() > 0 ? ", " : "")
-        		+ (IX._OrderByObjs.size() > 0 ? PrintColumnList(IX._OrderByObjs) : "")  + ")"
-        		+ (IX._SubWhere != null ? " WHERE " + IX._SubWhere : (IX._SubQuery != null ? " WHERE " +  IX._SubQuery.getQuery(Postgres)._Clause : "")) + ";";
-
-        		
-        LOG.info(Q);
+        StringWriter Out = new StringWriter();
+        _SQL.genIndex(new PrintWriter(Out), IX);
+        String Q = Out.toString();
         return Con.ExecuteDDL(IX._Parent._ParentSchema._Name, IX._Parent.getBaseName(), Q);
       }
     
+
+    @Override
+    public boolean alterTableRenameIndex(Connection Con, Object Obj, String OldName, String NewName)
+    throws Exception
+      {
+        // If the DB Name comes in as all lower case, it's case-insensitive. Otherwise, we have to quote.        
+        if (OldName.equals(OldName.toLowerCase()) == false)
+         OldName = "\""+OldName+"\"";
+        
+        String Q = "ALTER INDEX " + Obj._ParentSchema._Name+"."+OldName+" RENAME TO "+NewName+";";
+        return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj._Name, Q);
+      }
     
+
     private static String PrintColumnList(List<Column> Columns)
       {
         StringBuilder Str = new StringBuilder();

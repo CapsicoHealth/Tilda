@@ -5,8 +5,6 @@ import java.sql.ResultSet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.db.JDBCHelper;
-
 public class IndexColumnMeta
   {
     static final Logger LOG = LogManager.getLogger(IndexColumnMeta.class.getName());

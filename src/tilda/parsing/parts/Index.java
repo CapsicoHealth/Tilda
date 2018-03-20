@@ -49,7 +49,7 @@ public class Index
     
     public String getName()
      {
-       return _Parent.getBaseName() + "_" + _Name;
+       return _Parent._OriginalName + "_" + _Name;
      }
 
     public boolean Validate(ParserSession PS, Base Parent)

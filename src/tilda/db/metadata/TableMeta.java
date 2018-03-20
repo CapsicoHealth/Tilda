@@ -132,6 +132,6 @@ public class TableMeta
     
     public IndexMeta getIndexMeta(String Name)
      {
-       return _Indices.get(Name.toLowerCase());
+       return _Indices.get(Name);
      }
   }

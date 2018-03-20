@@ -318,19 +318,11 @@
       ],
       "primary": { "autogen": true },
       "indices":[ 
-        { "name": "AllByName" , "orderBy": ["name asc"], "db": false 
-        },
-        { "name": "AllByName2", "orderBy": ["name asc"], "db": true
-																		//, "subQuery": { "from"  : ["ObjectPerf"], 
-                                                                        //  "wheres": [ { "db": "*", "clause": "deleted is null and desc2 >= ?(Lower) and a5 < ?(Upper) or name = ?() and created > ?()" } 
-                                                                        //            ] 
-                                                                        //}
-        },
-        { "name": "AllByName3", "orderBy": ["name asc"], "db": true
-        																//, "subWhere": "deleted is null and name = ?() and created > ?"
-        },
-        { "name": "AllByName4", "orderBy": ["name asc"], "db": true
-        																  , "subWhere": "deleted is null and name = 'Hello' and created > '1/1/2018'"
+        { "name": "AllByName" , "orderBy": ["name asc"], "db": false       },
+        { "name": "AllByName2", "orderBy": ["name asc"], "db": true        },
+        { "name": "AllByName3", "orderBy": ["name desc"], "db": true       },
+        { "name": "AllByName4", "orderBy": ["name asc", "description desc"], "db": true
+        																  , "subWhere": "deleted is null and name = 'Hello' and created > '2018-01-01'"
         }
       ],
       "json":[

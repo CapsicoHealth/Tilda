@@ -74,6 +74,7 @@ public interface DBType
     public boolean alterTableAddFK                (Connection Con, ForeignKey FK) throws Exception;
     public boolean alterTableDropIndex            (Connection Con, Object Obj, IndexMeta IX) throws Exception;
     public boolean alterTableAddIndex             (Connection Con, Index IX) throws Exception;
+    public boolean alterTableRenameIndex          (Connection Con, Object Obj, String OldName, String NewName) throws Exception;
     public String  getHelperFunctionsScript       (Connection Con) throws Exception;    
     public String  getAclRolesScript              (Connection Con, List<Schema> TildaList) throws Exception;
     public boolean isSuperUser                    (Connection C) throws Exception;

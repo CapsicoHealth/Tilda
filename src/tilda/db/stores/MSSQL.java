@@ -516,6 +516,12 @@ public class MSSQL implements DBType
         throw new UnsupportedOperationException();
       }
     
+    @Override
+    public boolean alterTableRenameIndex(Connection Con, Object Obj, String OldName, String NewName)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
 
     @Override
     public boolean isSuperUser(Connection C)
