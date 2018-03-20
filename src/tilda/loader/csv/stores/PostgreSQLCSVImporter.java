@@ -95,16 +95,8 @@ public class PostgreSQLCSVImporter extends CSVImporter
                 // headers: "ha, hb_1, hb_2, hb_3, hc, hd"
   
                 int i, k = 0;
-                int upsertOffset = columns.length;
                 for ( i = 0; i < columns.length; ++i)
                   {
-                    boolean isUniqueColumn = false;
-                    if (TextUtil.FindElement(uniqueColumns, columns[i], false, 0) != -1)
-                      {
-                        isUniqueColumn = true;
-                        upsertOffset--;
-                      }                     
-
                     String c = columns[i];
                     h = headers[i];
                     v = record.get(h);
@@ -132,14 +124,10 @@ public class PostgreSQLCSVImporter extends CSVImporter
                               {
                                 ColumnMeta CI = ColumnsMap.get(c.toLowerCase());
                                 C.setArray(Pst, i + x, CI._TildaType, AllocatedArrays, Values);
-                                if(isUpsert && !isUniqueColumn)
-                                  C.setArray(Pst, i + x + upsertOffset, CI._TildaType, AllocatedArrays, Values);
                               }
                             else
                               {
                                 Pst.setNull(i + x, java.sql.Types.ARRAY);
-                                if(isUpsert && !isUniqueColumn)
-                                  Pst.setNull(i + x + upsertOffset, java.sql.Types.ARRAY);
                               }
                           }
                         else if (multiValueDelim != null)
@@ -160,8 +148,6 @@ public class PostgreSQLCSVImporter extends CSVImporter
                                     if (cHeader._Index != -1 && cHeader._Index < colDataArray.length)
                                       {
                                         Pst.setString(i + x, colDataArray[cHeader._Index]);
-                                        if(isUpsert && !isUniqueColumn)
-                                          Pst.setString(i + x + upsertOffset, colDataArray[cHeader._Index]);
                                       }
                                       
                                     else if (cHeader._Start != -1 && cHeader._Start < colDataArray.length)
@@ -173,8 +159,6 @@ public class PostgreSQLCSVImporter extends CSVImporter
                                         if (Values != null && Values.size() > 0)
                                           {
                                             C.setArray(Pst, i + x, CI._TildaType, AllocatedArrays, Values);
-                                            if(isUpsert && !isUniqueColumn)
-                                              C.setArray(Pst, i + x + upsertOffset, CI._TildaType, AllocatedArrays, Values);
                                           }
                                       }
                                     else if (cHeader._Index == -1 && cHeader._Start == -1)
@@ -189,8 +173,6 @@ public class PostgreSQLCSVImporter extends CSVImporter
                                                   totalValue += Float.parseFloat(eValue);
                                               }
                                             Pst.setDouble(i + x, totalValue);
-                                            if(isUpsert && !isUniqueColumn)
-                                              Pst.setDouble(i + x + upsertOffset, totalValue);
                                           }
                                         else
                                           {
@@ -198,24 +180,18 @@ public class PostgreSQLCSVImporter extends CSVImporter
                                             if (Values != null && Values.size() > 0)
                                               {
                                                 C.setArray(Pst, i + x, CI._TildaType, AllocatedArrays, Values);
-                                                if(isUpsert && !isUniqueColumn)
-                                                  C.setArray(Pst, i + x + upsertOffset, CI._TildaType, AllocatedArrays, Values);
                                               }
                                           }
                                       }
                                     else
                                       {
                                         Pst.setNull(i + x, java.sql.Types.ARRAY);
-                                        if(isUpsert && !isUniqueColumn)
-                                          Pst.setNull(i + x + upsertOffset, java.sql.Types.ARRAY);
                                       }
                                   }
                               }
                             else
                               {
                                 Pst.setNull(i + x, java.sql.Types.ARRAY);
-                                if(isUpsert && !isUniqueColumn)
-                                  Pst.setNull(i + x + upsertOffset, java.sql.Types.ARRAY);
                               }
                           }
                       }
@@ -250,8 +226,6 @@ public class PostgreSQLCSVImporter extends CSVImporter
                                     if (V == SystemValues.EVIL_VALUE)
                                      throw new Exception("Couldn't parse '"+value+"' as an Integer.");
                                     Pst.setInt(i + x, V);
-                                    if(isUpsert && !isUniqueColumn)
-                                      Pst.setInt(i + x + upsertOffset, V);
                                   }                                  
                                 else if (CI._TildaType == ColumnType.LONG)
                                   {
@@ -259,20 +233,14 @@ public class PostgreSQLCSVImporter extends CSVImporter
                                     if (V == SystemValues.EVIL_VALUE)
                                      throw new Exception("Couldn't parse '"+value+"' as a Long.");
                                     Pst.setLong(i + x, V);
-                                    if(isUpsert && !isUniqueColumn)
-                                      Pst.setLong(i + x + upsertOffset, V);
                                   }                                  
                                 else if (CI._TildaType == ColumnType.FLOAT)
                                   {
                                     Pst.setFloat(i + x, Float.parseFloat(value));
-                                    if(isUpsert && !isUniqueColumn)
-                                      Pst.setFloat(i + x + upsertOffset, Float.parseFloat(value));
                                   }                                  
                                 else if (CI._TildaType == ColumnType.DOUBLE)
                                   {
                                     Pst.setDouble(i + x, Double.parseDouble(value));
-                                    if(isUpsert && !isUniqueColumn)
-                                      Pst.setDouble(i + x + upsertOffset, Double.parseDouble(value));
                                   }                                  
                                 else if (CI._TildaType == ColumnType.DATETIME)
                                   {
@@ -281,8 +249,6 @@ public class PostgreSQLCSVImporter extends CSVImporter
                                     ZonedDateTime valueTime = date.atStartOfDay(ZoneId.systemDefault());
                                     java.sql.Timestamp xt = new java.sql.Timestamp(valueTime.toInstant().toEpochMilli());
                                     Pst.setTimestamp(i + x, xt, ZoneInfo_Factory.nowAsCalendar(DateTimeZoneInfoId));
-                                    if(isUpsert && !isUniqueColumn)
-                                      Pst.setTimestamp(i + x + upsertOffset, xt, ZoneInfo_Factory.nowAsCalendar(DateTimeZoneInfoId));
                                   }
                                 else if (CI._TildaType == ColumnType.DATE)
                                   {
@@ -291,27 +257,19 @@ public class PostgreSQLCSVImporter extends CSVImporter
                                     ZonedDateTime valueTime = date.atStartOfDay(ZoneId.systemDefault());
                                     java.sql.Date xt = new java.sql.Date(valueTime.toInstant().toEpochMilli());
                                     Pst.setDate(i + x, xt);
-                                    if(isUpsert && !isUniqueColumn)
-                                      Pst.setDate(i + x + upsertOffset, xt);
                                   }
                                 else if (CI._TildaType == ColumnType.BOOLEAN)
                                   {
                                     Pst.setBoolean(i + x, ParseUtil.parseBoolean(value));
-                                    if(isUpsert && !isUniqueColumn)
-                                      Pst.setBoolean(i + x + upsertOffset, ParseUtil.parseBoolean(value));
                                   }                                  
                                 else
                                   {
                                     Pst.setString(i + x, value);
-                                    if(isUpsert && !isUniqueColumn)
-                                      Pst.setString(i + x + upsertOffset, value);
                                   }                                  
                               }
                             else
                               {
                                 Pst.setString(i + x, value);
-                                if(isUpsert && !isUniqueColumn)
-                                  Pst.setString(i + x + upsertOffset, value);
                               }
                           }
                         else
@@ -330,17 +288,8 @@ public class PostgreSQLCSVImporter extends CSVImporter
                             else if (CI._TildaType == ColumnType.BOOLEAN)
                               DataType = java.sql.Types.BOOLEAN;
                             Pst.setNull(i + x, DataType);
-                            if(isUpsert && !isUniqueColumn)
-                              Pst.setNull(i + x + upsertOffset, DataType);
                           }
                       }
-                  }
-                
-                // lastUpdated in case of Upsert
-                if (upsertOffset != 0 && isUpsert && DBColumns != null && DBColumns.get("lastupdated") != null && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
-                  {
-//                    LOG.debug("i: "+i+"; x: "+x+"; upsertOffset: "+upsertOffset+";");
-                    Pst.setTimestamp(i + x + upsertOffset, new java.sql.Timestamp(Now.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                   }
                 
                 h = null;
@@ -449,14 +398,14 @@ public class PostgreSQLCSVImporter extends CSVImporter
                 if (first == false) {
                   Str.append(",");
                 }                  
-                Str.append(" \"").append(columns[i]).append("\"=?");
+                Str.append(" \"").append(columns[i]).append("\"=EXCLUDED.\"").append(columns[i]).append("\"");
                 first = false;
               }
             
             if (first == false && DBColumns != null && DBColumns.get("lastupdated") != null && TextUtil.FindElement(columns, "lastUpdated", false, 0) == -1)
               {
                 Str.append(",");
-                Str.append(" \"lastUpdated\"=?");
+                Str.append(" \"lastUpdated\"=current_timestamp");
               }
 
           }
