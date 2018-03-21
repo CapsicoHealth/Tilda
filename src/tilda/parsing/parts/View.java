@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
@@ -38,6 +39,7 @@ import tilda.enums.ObjectLifecycle;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.parsing.parts.helpers.SameAsHelper;
+import tilda.utils.Graph;
 import tilda.utils.TextUtil;
 
 public class View extends Base
@@ -708,6 +710,37 @@ public class View extends Base
             if (F != null && F._Name.equalsIgnoreCase(FormulaName) == true)
               return F;
         return null;
+      }
+
+    private static void getDependencyGraph(Graph.Node<Base> N, Object Obj, Set<String> Names)
+      {
+        Graph.Node<Base> child = N.addChild(Obj);
+        if (Obj._FST != FrameworkSourcedType.VIEW)
+         return;
+        for (Column C : Obj._Columns)
+          {
+            if (C == null || C._SameAsObj == null || C._SameAsObj._ParentObject == null)
+             continue;
+            Object Parent = C._SameAsObj._ParentObject;
+            if (Names.add(Parent.getShortName()) == true)
+             getDependencyGraph(child, Parent, Names);
+          }
+      }
+
+    public Graph<Base> getDependencyGraph()
+      {
+        Graph<Base> G = new Graph<Base>(this);
+        Graph.Node<Base> Root = G.getRoot();
+        Set<String> Names = new HashSet<String>();
+        for (ViewColumn VC : _ViewColumns)
+          {
+            if (VC == null || VC._SameAsObj == null || VC._SameAsObj._ParentObject == null)
+              continue;
+            Object Parent = VC._SameAsObj._ParentObject;
+            if (Names.add(Parent.getShortName()) == true)
+             getDependencyGraph(Root, Parent, Names);
+          }
+        return G;
       }
 
   }

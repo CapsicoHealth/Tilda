@@ -29,6 +29,7 @@ import tilda.generation.GeneratorSession;
 import tilda.generation.java8.Helper;
 import tilda.generation.java8.JavaJDBCType;
 import tilda.parsing.ParserSession;
+import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
 import tilda.parsing.parts.Formula;
@@ -36,6 +37,7 @@ import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Value;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.ViewColumn;
+import tilda.utils.Graph;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
 
@@ -629,10 +631,12 @@ public class Docs
             }
         Out.println("</BLOCKQUOTE>");
       }
-
-
+    
     private static void DoSubWhereDetails(PrintWriter Out, View V)
       {
+        Graph<Base> G = V.getDependencyGraph();
+        
+        
         if (V._SubWhereX != null)
           Out.println("<BLOCKQUOTE>That view is filtered: "
           + "<BLOCKQUOTE><PRE>" + cleanClause(String.join("\n", V._SubWhereX._Clause)) + "</PRE>"
