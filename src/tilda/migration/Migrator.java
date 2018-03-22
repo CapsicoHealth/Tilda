@@ -399,7 +399,8 @@ public class Migrator
                 	if (IX._Db)
                 	  {
 	                    boolean Found = false;
-	                    String Sig = IX.getSignature();                    
+	                    String Sig = IX.getSignature();         
+	                    
 	                    for (IndexMeta ix : TMeta._Indices.values()) 
 		                  {
 	                    	if (!ix._Name.toLowerCase().equals(TMeta._TableName.toLowerCase() + "_pkey"))
@@ -408,6 +409,7 @@ public class Migrator
 	                    	
 		                        if (Sig.equals(Sig1) == true)
 		                          {
+		                        	
 		                            Found = true;
 		                            if (ix._Name.equals(ix._Name.toLowerCase()) == false // name in the DB is not lowercase, i.e., case insensitive
 		                                || ix._Name.equalsIgnoreCase(IX.getName()) == false // same sig, but new index name

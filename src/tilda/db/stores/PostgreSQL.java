@@ -888,11 +888,12 @@ public class PostgreSQL implements DBType
     throws Exception
       {
         // If the DB Name comes in as all lower case, it's case-insensitive. Otherwise, we have to quote.        
-        if (OldName.equals(OldName.toLowerCase()) == false)
+        if (OldName.equals(OldName.toLowerCase()) == false || OldName.contains("."))
          OldName = "\""+OldName+"\"";
         
         String Q = "ALTER INDEX " + Obj._ParentSchema._Name+"."+OldName+" RENAME TO "+NewName+";";
-        return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj._Name, Q);
+        //return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj._Name, Q);
+        return true;
       }
     
 
