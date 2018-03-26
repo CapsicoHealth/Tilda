@@ -892,8 +892,8 @@ public class PostgreSQL implements DBType
          OldName = "\""+OldName+"\"";
         
         String Q = "ALTER INDEX " + Obj._ParentSchema._Name+"."+OldName+" RENAME TO "+NewName+";";
-        //return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj._Name, Q);
-        return true;
+        
+        return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj._Name, Q);
       }
     
 

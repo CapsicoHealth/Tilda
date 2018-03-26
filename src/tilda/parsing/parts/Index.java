@@ -60,6 +60,10 @@ public class Index
         // Does it have a name?
         if (TextUtil.isNullOrEmpty(_Name) == true)
           return PS.AddError("Object '" + _Parent.getFullName() + "' is defining an index without a name.");
+        
+        // Does it contain a "."?
+        if (_Name.contains(".") == true)
+            return PS.AddError("Object '" + _Parent.getFullName() + "' is defining an index name with a nonproper JavaIdentifier containing char (\".\").");
 
         if ((_Columns == null || _Columns.length == 0) && (_OrderBy == null || _OrderBy.length == 0))
           return PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '"+_Name+"' without columns and/or order by.");

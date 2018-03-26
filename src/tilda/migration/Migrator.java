@@ -364,36 +364,31 @@ public class Migrator
                 // if (XXX != Actions.size())
                 // Actions.add(new CommitPoint());
               
-                // Checking any Indices in the DB that are Unique so that they can be dropped.
-                // Removing the Drop code per LDH 2018.02.28 conversation
-/*                for (IndexMeta ix : TMeta._Indices.values())
-                  {                	
-                	boolean Found = false;
-                	LOG.info("Checking db table: " + TMeta._TableName + " index: " + ix._Name + ".");          
-                	// Keeps Indices that exist in DB but not Model.
-                    for (Index IX : Obj._Indices)
-                      {
-                    	if(ix._Unique)
-                    	{
-                          LOG.info("Checking model indexes " + IX._Name + " vs " + ix._Name + ".");	                        
-                          if (ix._Name.equals(IX._Name) == true)
-                            {
-                              Found = true;
-                              break;
-                            }
-                        }
-                    	else
-                    	{
-                    		Found = true;
-                    	}
-                      }
+                // Cleaning any Indices that share the same signature, but differing names. Cleaning up Indices that are not unique, but share a name defined in the schema.
+                Set<String> Signatures = new HashSet<String>();
+                for (Index IX : Obj._Indices) 
+                  {
+                	if (IX._Db) 
+                	  {
+                		for (IndexMeta ix : TMeta._Indices.values())
+                		  {
+                			if (IX.getSignature().equals(ix.getSignature())
+                					&& !ix._Name.toLowerCase().equals(TMeta._TableName.toLowerCase() + "_pkey"))
+                			  {               				
+                				if (ix._Unique
+                						&& (ix._Name.equals(ix._Name.toLowerCase()) == false 
+		                                || ix._Name.equalsIgnoreCase(IX.getName()) == false))                				  
+                				  {	
+                					Errors.add("Index "+ix._Name+" is unique and contains the same signature as "+IX.getName()+" in the "+IX._Parent._Name+" schema definition");
+                				  }
+                				else if (Signatures.add(ix.getSignature()) == false) //catches duplicate signatures by different names in db. First will be renamed below
+                					Actions.add(new TableIndexDrop(Obj, ix));
+                			  }
+                		  }
+                	  }
+                  }
                 
-                    if (Found == false && !ix._Name.toLowerCase().equals(TMeta._TableName.toLowerCase() + "_pkey")) {
-                      LOG.info("Adding Drop Index: " + ix._Name);
-                      Actions.add(new TableIndexDrop(Obj, null, ix));
-                    }
-                  }*/
-                // Checking any Indices which are not in the DB, so they can be added. .                
+                // Checking any Indices which are not in the DB, so they can be added.           
                 for (Index IX : Obj._Indices)
                   {
                 	if (IX._Db)
@@ -408,8 +403,7 @@ public class Migrator
 	                    	    String Sig1 = ix.getSignature();
 	                    	
 		                        if (Sig.equals(Sig1) == true)
-		                          {
-		                        	
+		                          {		                        	
 		                            Found = true;
 		                            if (ix._Name.equals(ix._Name.toLowerCase()) == false // name in the DB is not lowercase, i.e., case insensitive
 		                                || ix._Name.equalsIgnoreCase(IX.getName()) == false // same sig, but new index name
