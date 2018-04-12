@@ -22,7 +22,9 @@ public enum JoinType
     
     LEFT,
     
-    RIGHT;
+    RIGHT,
+
+    OUTER;
 
     public static JoinType parse(String Str)
       {
@@ -31,5 +33,10 @@ public enum JoinType
             return e;
         return null;
       }
+    
+    public static String printJoinType(JoinType JT)
+     {
+       return JT == null || JT==JoinType.INNER ? "inner join" : JT == JoinType.LEFT ? "left  join" : JT == JoinType.RIGHT ? "right join" : "full join";
+     }
 
   }

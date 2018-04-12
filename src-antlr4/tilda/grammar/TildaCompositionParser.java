@@ -1,4 +1,4 @@
-// Generated from TildaComposition.g4 by ANTLR 4.5.3
+// Generated from TildaComposition.g4 by ANTLR 4.4
 package tilda.grammar;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -11,13 +11,17 @@ import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class TildaCompositionParser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.5.3", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.4", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, K_AND=3, K_NOT=4, K_OR=5, IDENTIFIER=6, SPACES=7, UNEXPECTED_CHAR=8;
+		T__1=1, T__0=2, K_AND=3, K_NOT=4, K_OR=5, IDENTIFIER=6, SPACES=7, UNEXPECTED_CHAR=8;
+	public static final String[] tokenNames = {
+		"<INVALID>", "'('", "')'", "K_AND", "K_NOT", "K_OR", "IDENTIFIER", "SPACES", 
+		"UNEXPECTED_CHAR"
+	};
 	public static final int
 		RULE_where = 0, RULE_expr = 1, RULE_expr_sub = 2, RULE_bool_expr = 3, 
 		RULE_bool_op = 4, RULE_bool_expr_sub = 5, RULE_parameter = 6;
@@ -26,47 +30,11 @@ public class TildaCompositionParser extends Parser {
 		"parameter"
 	};
 
-	private static final String[] _LITERAL_NAMES = {
-		null, "'('", "')'"
-	};
-	private static final String[] _SYMBOLIC_NAMES = {
-		null, null, null, "K_AND", "K_NOT", "K_OR", "IDENTIFIER", "SPACES", "UNEXPECTED_CHAR"
-	};
-	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
-
-	/**
-	 * @deprecated Use {@link #VOCABULARY} instead.
-	 */
-	@Deprecated
-	public static final String[] tokenNames;
-	static {
-		tokenNames = new String[_SYMBOLIC_NAMES.length];
-		for (int i = 0; i < tokenNames.length; i++) {
-			tokenNames[i] = VOCABULARY.getLiteralName(i);
-			if (tokenNames[i] == null) {
-				tokenNames[i] = VOCABULARY.getSymbolicName(i);
-			}
-
-			if (tokenNames[i] == null) {
-				tokenNames[i] = "<INVALID>";
-			}
-		}
-	}
-
-	@Override
-	@Deprecated
-	public String[] getTokenNames() {
-		return tokenNames;
-	}
-
-	@Override
-
-	public Vocabulary getVocabulary() {
-		return VOCABULARY;
-	}
-
 	@Override
 	public String getGrammarFileName() { return "TildaComposition.g4"; }
+
+	@Override
+	public String[] getTokenNames() { return tokenNames; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
@@ -106,10 +74,8 @@ public class TildaCompositionParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(14);
-			expr();
-			setState(15);
-			match(EOF);
+			setState(14); expr();
+			setState(15); match(EOF);
 			}
 		}
 		catch (RecognitionException re) {
@@ -124,11 +90,11 @@ public class TildaCompositionParser extends Parser {
 	}
 
 	public static class ExprContext extends ParserRuleContext {
-		public Bool_exprContext bool_expr() {
-			return getRuleContext(Bool_exprContext.class,0);
-		}
 		public Expr_subContext expr_sub() {
 			return getRuleContext(Expr_subContext.class,0);
+		}
+		public Bool_exprContext bool_expr() {
+			return getRuleContext(Bool_exprContext.class,0);
 		}
 		public ExprContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -149,20 +115,17 @@ public class TildaCompositionParser extends Parser {
 		enterRule(_localctx, 2, RULE_expr);
 		try {
 			setState(19);
-			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,0,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(17);
-				bool_expr(0);
+				setState(17); bool_expr(0);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(18);
-				expr_sub();
+				setState(18); expr_sub();
 				}
 				break;
 			}
@@ -202,12 +165,9 @@ public class TildaCompositionParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(21);
-			match(T__0);
-			setState(22);
-			expr();
-			setState(23);
-			match(T__1);
+			setState(21); match(T__1);
+			setState(22); expr();
+			setState(23); match(T__0);
 			}
 		}
 		catch (RecognitionException re) {
@@ -225,20 +185,20 @@ public class TildaCompositionParser extends Parser {
 		public Bool_exprContext l_expr;
 		public Bool_opContext op;
 		public Bool_exprContext r_expr;
-		public Bool_expr_subContext bool_expr_sub() {
-			return getRuleContext(Bool_expr_subContext.class,0);
-		}
 		public ParameterContext parameter() {
 			return getRuleContext(ParameterContext.class,0);
+		}
+		public Bool_opContext bool_op() {
+			return getRuleContext(Bool_opContext.class,0);
+		}
+		public Bool_expr_subContext bool_expr_sub() {
+			return getRuleContext(Bool_expr_subContext.class,0);
 		}
 		public List<Bool_exprContext> bool_expr() {
 			return getRuleContexts(Bool_exprContext.class);
 		}
 		public Bool_exprContext bool_expr(int i) {
 			return getRuleContext(Bool_exprContext.class,i);
-		}
-		public Bool_opContext bool_op() {
-			return getRuleContext(Bool_opContext.class,0);
 		}
 		public Bool_exprContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -271,16 +231,14 @@ public class TildaCompositionParser extends Parser {
 			{
 			setState(28);
 			switch (_input.LA(1)) {
-			case T__0:
+			case T__1:
 				{
-				setState(26);
-				bool_expr_sub();
+				setState(26); bool_expr_sub();
 				}
 				break;
 			case IDENTIFIER:
 				{
-				setState(27);
-				parameter();
+				setState(27); parameter();
 				}
 				break;
 			default:
@@ -298,14 +256,11 @@ public class TildaCompositionParser extends Parser {
 					{
 					_localctx = new Bool_exprContext(_parentctx, _parentState);
 					_localctx.l_expr = _prevctx;
-					_localctx.l_expr = _prevctx;
 					pushNewRecursionContext(_localctx, _startState, RULE_bool_expr);
 					setState(30);
 					if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
-					setState(31);
-					((Bool_exprContext)_localctx).op = bool_op();
-					setState(32);
-					((Bool_exprContext)_localctx).r_expr = bool_expr(4);
+					setState(31); ((Bool_exprContext)_localctx).op = bool_op();
+					setState(32); ((Bool_exprContext)_localctx).r_expr = bool_expr(4);
 					}
 					} 
 				}
@@ -354,14 +309,12 @@ public class TildaCompositionParser extends Parser {
 			case K_AND:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(39);
-				match(K_AND);
+				setState(39); match(K_AND);
 				setState(41);
 				_la = _input.LA(1);
 				if (_la==K_NOT) {
 					{
-					setState(40);
-					match(K_NOT);
+					setState(40); match(K_NOT);
 					}
 				}
 
@@ -370,14 +323,12 @@ public class TildaCompositionParser extends Parser {
 			case K_OR:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(43);
-				match(K_OR);
+				setState(43); match(K_OR);
 				setState(45);
 				_la = _input.LA(1);
 				if (_la==K_NOT) {
 					{
-					setState(44);
-					match(K_NOT);
+					setState(44); match(K_NOT);
 					}
 				}
 
@@ -422,12 +373,9 @@ public class TildaCompositionParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(49);
-			match(T__0);
-			setState(50);
-			bool_expr(0);
-			setState(51);
-			match(T__1);
+			setState(49); match(T__1);
+			setState(50); bool_expr(0);
+			setState(51); match(T__0);
 			}
 		}
 		catch (RecognitionException re) {
@@ -463,8 +411,7 @@ public class TildaCompositionParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(53);
-			match(IDENTIFIER);
+			setState(53); match(IDENTIFIER);
 			}
 		}
 		catch (RecognitionException re) {
@@ -480,15 +427,13 @@ public class TildaCompositionParser extends Parser {
 
 	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
 		switch (ruleIndex) {
-		case 3:
-			return bool_expr_sempred((Bool_exprContext)_localctx, predIndex);
+		case 3: return bool_expr_sempred((Bool_exprContext)_localctx, predIndex);
 		}
 		return true;
 	}
 	private boolean bool_expr_sempred(Bool_exprContext _localctx, int predIndex) {
 		switch (predIndex) {
-		case 0:
-			return precpred(_ctx, 3);
+		case 0: return precpred(_ctx, 3);
 		}
 		return true;
 	}

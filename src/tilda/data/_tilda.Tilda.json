@@ -11,32 +11,44 @@
     }
    ],
 
-   
   "objects":[
-    { "name": "Key", "occ": false, // OCC=false because the fields here also serve as a reference for other tables.
-                                   // So we need to define them explicitly here.
+    { "name": "Key", "occ": false,
       "description": "The table to keep track of unique keys across distributed objects/tables",
       "columns":[
-        { "name": "refnum"       , "type": "LONG"       , "nullable": false,                          "invariant": true, "description": "The primary key for this record" },
-        { "name": "name"         , "type": "STRING"     , "nullable": false, "size": 128,             "invariant": true, "description": "The name of the table/object tracked" },
-        { "name": "max"          , "type": "LONG"       , "nullable": false,                                             "description": "The pre-allocated max RefNum for this table/object." },
-        { "name": "count"        , "type": "INTEGER"    , "nullable": false,                                             "description": "The size of the pre-allocation required by this table/object." },
+        { "name": "refnum"        , "type": "LONG"       , "nullable": false,                          "invariant": true, "description": "The primary key for this record" },
+        { "name": "name"          , "type": "STRING"     , "nullable": false, "size": 128,             "invariant": true, "description": "The name of the table/object tracked" },
+        { "name": "max"           , "type": "LONG"       , "nullable": false,                                             "description": "The pre-allocated max RefNum for this table/object." },
+        { "name": "count"         , "type": "INTEGER"    , "nullable": false,                                             "description": "The size of the pre-allocation required by this table/object." },
         
-        { "name": "created"      , "type": "DATETIME"   , "nullable": false,            "mode": "AUTO", "invariant": true, "description": "The timestamp for when the record was created.",
-                                 "values": [ { "name": "Creation", "value": "NOW", "description": "Creation time", "default": "CREATE"} ]
+        { "name": "created"       , "type": "DATETIME"   , "nullable": false,          "mode": "AUTO", "invariant": true, "description": "The timestamp for when the record was created.",
+                                    "values": [ { "name": "Creation", "value": "NOW", "description": "Creation time"    , "default": "CREATE"} ]
         },
-        { "name": "lastUpdated"  , "type": "DATETIME"   , "nullable": false,            "mode": "AUTO",                  "description": "The timestamp for when the record was last updated.",
-                                 "values": [ { "name": "Update", "value": "NOW", "description": "Last updated time", "default": "ALWAYS"} ]
+        { "name": "createdETL"    , "type": "DATETIME"   , "nullable": true ,          "mode": "CALCULATED",              "description": "The timestamp for when the record was ETL-created."},
+        { "name": "lastUpdated"   , "type": "DATETIME"   , "nullable": false,          "mode": "AUTO",                    "description": "The timestamp for when the record was last updated.",
+                                    "values": [ { "name": "Update"  , "value": "NOW", "description": "Last updated time", "default": "ALWAYS"} ]
         },
-        { "name": "deleted"      , "type": "DATETIME"   , "nullable": true,                                            "description": "The timestamp for when the record was deleted." }
+        { "name": "lastUpdatedETL", "type": "DATETIME"   , "nullable": true ,          "mode": "CALCULATED",              "description": "The timestamp for when the record was last ETL-updated."},
+        { "name": "deleted"       , "type": "DATETIME"   , "nullable": true ,                                             "description": "The timestamp for when the record was deleted." }
       ],
-      // No autogen since this is the KEY table itself
-      // Also, because the KEY table serves as a reference, the refnum column is also used as a reference and so must be defined. 
       "primary": { "columns": ["refnum"], "autogen": false },
       "indices":[ 
       	{ "name": "Name"     , "columns": ["name"],                          "db": true },
       	{ "name": "AllByName"                     , "orderBy": ["name asc"], "db": false, "subWhere": "deleted is null" } 
       ]
+    },
+
+
+
+    { "name": "Mapping",
+      "description": "Generalized Mapping table",
+      "columns":[
+         { "name": "type"       , "type": "STRING", "nullable": false, "size":   10, "invariant": true, "description": "The type this mapping is for" }
+        ,{ "name": "src"        , "type": "STRING", "nullable": false, "size": 1024, "invariant": true, "description": "The source value for this mapping" }
+        ,{ "name": "dst"        , "type": "STRING", "nullable": false, "size": 1024, "invariant": true, "description": "The the destination (mapped) value for this mapping." }
+       ],
+      "indices":[ 
+         { "name": "TypeSrcDst", "columns": ["type", "src", "dst"], "db": true }
+       ]
     },
 
 
@@ -85,9 +97,195 @@
       	{ "name": "AllByObjectName", "columns": ["schemaName", "objectName"], "orderBy": ["startPeriod desc"], "db": false }
       ]
     },
+    {
+      "name": "Connection",
+      "description": "Tilda DB Connections Configurations",
+      "columns": [
+		{ "name": "active",     "type": "BOOLEAN",    "nullable": true,                 "description": "Status Flag"                                },
+        { "name": "id",         "type": "STRING",     "nullable": false, "size": 15,    "description": "Connection ID",        "invariant": true    },
+        { "name": "driver",     "type": "STRING",     "nullable": false, "size": 100,   "description": "DB Driver"                                  },
+        { "name": "db",         "type": "STRING",     "nullable": false, "size": 200,   "description": "DB Url"                                     },
+        { "name": "user",       "type": "STRING",     "nullable": false, "size": 30,    "description": "DB User"                                    },
+        { "name": "pswd",       "type": "STRING",     "nullable": false, "size": 40,    "description": "DB Password"                                },
+        { "name": "initial",    "type": "INTEGER",    "nullable": false,                "description": "Minimum Connections"                        },
+        { "name": "max",        "type": "INTEGER",    "nullable": false,                "description": "Maximum Connections"                        },
+        { "name": "schemas",    "type": "STRING[]",   "nullable": false,                "description": "Schemas"                                    }
+      ],
+      "primary": { "columns": ["id"], "autogen": false },
+      "indices": [
+        { "name": "AllById", "orderBy": ["id asc"], "db": true }
+      ],
+      "queries": [
+        {
+          "name": "Active",
+          "description": "All Active Connections",
+          "from": [],
+          "wheres": [
+            { "db":"*", "clause":"active IS NOT false" }
+          ],
+          "orderBy": ["id asc"]
+        }
+      ]
+      
+    }
+    
+   ,{ "name":"Jobs",
+      "description":"Kettle Jobs",
+      "columns":[
+        { "name":"Id"                                   , "type":"INTEGER" , "nullable": false,                 "description":"Id" },        
+        { "name":"Name"                                 , "type":"STRING"  , "nullable": true,  "size":   120,  "description":"Name" },
+        { "name":"StartTime"                            , "type":"DATETIME", "nullable": true,                  "description":"StartTime" },
+        { "name":"EndTime"                              , "type":"DATETIME", "nullable": true,                  "description":"EndTime" },
+        { "name":"TotalRecords"                         , "type":"INTEGER" , "nullable": true,                  "description":"TotalRecords" },
+        { "name":"Status"                               , "type":"STRING"  , "nullable": true,  "size":   200,  "description":"Status" },
+        { "name":"Error"                                , "type":"STRING"  , "nullable": true,  "size":   1000, "description":"Error" }
+       ]
+       ,"indices":[ 
+        { "name":"Job_Id", "columns":["Id"] }
+      ]         
+    }, 
+    { "name":"Job_Detail",
+      "description":"Job Detail",
+      "columns":[
+        { "name":"Id"                                   , "type":"INTEGER" , "nullable": false,                 "description":"Id" },        
+        { "name":"Job_Id"                               , "type":"INTEGER" , "nullable": false,                 "description":"Job Id" },       
+        { "name":"FileName"                             , "type":"STRING"  , "nullable": true,  "size":   200,  "description":"FileName" },
+        { "name":"FileRecords"                          , "type":"INTEGER" , "nullable": true,                  "description":"FileRecords" },
+        { "name":"FileProcessStartTime"                 , "type":"DATETIME", "nullable": true,                  "description":"FileProcessStartTime" },
+        { "name":"FileProcessEndTime"                   , "type":"DATETIME", "nullable": true,                  "description":"FileProcessEndTime" },
+        { "name":"Status"                               , "type":"STRING"  , "nullable": true,  "size":   200,  "description":"Status" },
+        { "name":"Error"                                , "type":"STRING"  , "nullable": true,  "size":   1000, "description":"Error" }
+       ]
+       ,"indices":[ 
+        { "name":"Job_File_Id", "columns":["Id","Job_Id"] }
+      ]         
+    }
     
     
-    { "name": "Testing",
+   ,{ "name": "RefillPerf", "occ": true,
+      "description": "Performance logs for the Tilda Refills",
+      "columns":[
+        { "name": "schemaName"   , "type": "STRING"  , "nullable": false, "size": 64, "invariant": true, "description":"The name of the schema tracked"                    },
+        { "name": "objectName"   , "type": "STRING"  , "nullable": false, "size": 64, "invariant": true, "description":"The name of the table/object tracked"              },
+        { "name": "startPeriod"  , "type": "DATETIME", "nullable": false,             "invariant": true, "description":"The timestamp for when the refill started."        },
+        { "name": "timeCreateMs" , "type": "LONG"    , "nullable": false,                                "description":"The time, in milliseconds, the create took."       },
+        { "name": "timeIndexMs"  , "type": "LONG"    , "nullable": false,                                "description":"The time, in milliseconds, the indexing took."     },
+        { "name": "timeAnalyzeMs", "type": "LONG"    , "nullable": false,                                "description":"The time, in milliseconds, the analyze took."      },
+        { "name": "timeTotalMs"  , "type": "LONG"    , "nullable": false,                                "description":"The time, in milliseconds, the whole refill took." },
+        { "name": "columnsMs"    , "type": "LONG"    , "nullable": false,                                "description":"The list of columns that were refilled."           }
+      ]
+     ,"primary": { "columns": ["schemaName", "objectName", "startPeriod"], "autogen": false }
+     ,"indices":[ 
+        { "name": "SchemaByObjectStart", "columns": ["schemaName"], "orderBy": ["objectName", "startPeriod desc"], "db": true },
+        { "name": "SchemaObjectByStart", "columns": ["schemaName", "objectName"], "orderBy": ["startPeriod desc"], "db": false }
+      ]
+    }
+                     
+   ,{ "name": "Maintenance", "occ": true,
+      "description": "Maintenance information",
+      "columns":[
+        { "name": "type" , "type": "STRING", "nullable": false, "size":    64, "invariant": true, "description":"The type of maintenance resource to track"        }
+       ,{ "name": "name" , "type": "STRING", "nullable": false, "size":   512, "invariant": true, "description":"The name of the maintenance resource to track."   }
+       ,{ "name": "value", "type": "STRING", "nullable": true , "size":500000,                    "description":"The value of the maintenance resource to track."  }
+      ]
+     ,"primary": { "columns": ["type", "name"], "autogen": false }
+     ,"indices":[
+      ]
+    }
+    
+    
+   ,{ "name":"Formula"
+     ,"occ":true
+     ,"description":"Master formula information"
+     ,"columns":[
+         { "name":"location"   , "type":"STRING" , "nullable":false, "size":   64, "invariant":true, "description":"The name of the primary table/view this formula is defined in."  }
+        ,{ "name":"location2"  , "type":"STRING" , "nullable":false, "size":   64, "invariant":true, "description":"The name of the secondary table/view (a derived view, a realized table), if appropriate."   }
+        ,{ "name":"name"       , "type":"STRING" , "nullable":false, "size":   64,                   "description":"The name of the formula/column."  }
+        ,{ "name":"type"       , "type":"STRING" , "nullable":false, "size":    3,                   "description":"The type of the formula/column value/outcome."
+                               , "values": [ { "name":"String"   , "value":"STR", "description": "String"    }
+                                            ,{ "name":"Character", "value":"CHR", "description": "Character" }
+                                            ,{ "name":"Boolean"  , "value":"BOL", "description": "Boolean"   }
+                                            ,{ "name":"Integer"  , "value":"INT", "description": "Integer"   }
+                                            ,{ "name":"Long"     , "value":"LNG", "description": "Long"      }
+                                            ,{ "name":"Float"    , "value":"FLT", "description": "Float"     }
+                                            ,{ "name":"Double"   , "value":"DBL", "description": "Double"    }
+                                            ,{ "name":"Date"     , "value":"DT" , "description": "Date"      }
+                                            ,{ "name":"DateTime" , "value":"DTM", "description": "DateTime"  }
+                                           ]
+         }
+        ,{ "name":"title"      , "type":"STRING" , "nullable":false, "size":  128,                   "description":"The title of the formula/column."  }
+        ,{ "name":"description", "type":"STRING" , "nullable":false, "size":32000,                   "description":"The description of the formula/column."  }
+        ,{ "name":"formula"    , "type":"STRING" , "nullable":true , "size":32000,                   "description":"The formula."  }
+        ,{ "name":"htmlDoc"    , "type":"STRING" , "nullable":true , "size":32000,                   "description":"Pre-rendered html fragment with the full documentation for this formula."  }
+       ]
+     ,"primary": { "autogen": true }
+     ,"indices":[
+         { "name": "Formula", "columns": ["location" , "name"], "db": true }
+      ]
+    }
+    
+   ,{ "name":"Measure"
+     ,"occ":true
+     ,"description":"Master Measure information"
+     ,"columns":[
+         { "name":"schema"  , "type":"STRING" , "nullable":false, "size":   64,  "description":"The Schema wher ethe measure is defined."  }
+        ,{ "name":"name"    , "type":"STRING" , "nullable":false, "size":   64,  "description":"The name of the measure."  }
+       ]
+     ,"primary": { "autogen": true }
+     ,"indices":[
+         { "name": "Measure", "columns": ["schema", "name"], "db": true }
+      ]
+    }
+
+   ,{ "name":"MeasureFormula"
+     ,"occ":true
+     ,"description":"Master Measure information"
+     ,"columns":[
+         { "name":"measureRefnum"   , "sameas":"Measure.refnum", "invariant":true , "description":"The measure."         }
+        ,{ "name":"formulaRefnum"   , "sameas":"Formula.refnum", "invariant": true, "description":"The parent formula."  }
+       ]
+     ,"primary": { "autogen": false, "columns": ["measureRefnum", "formulaRefnum"] }
+     ,"foreign": [
+         { "name":"Measure",  "srcColumns":["measureRefnum"], "destObject": "Measure" }
+        ,{ "name":"Formula",  "srcColumns":["formulaRefnum"], "destObject": "Formula" }
+       ]
+     ,"indices":[
+      ]
+    }
+
+   ,{ "name":"FormulaDependency"
+     ,"occ":true
+     ,"description":"Master formula dependency information"
+     ,"columns":[
+         { "name":"formulaRefnum"   , "sameas":"Formula.refnum", "invariant": true, "description":"The parent formula."  }
+        ,{ "name":"dependencyRefnum", "sameas":"Formula.refnum", "invariant": true, "description":"The dependent formula."   }
+       ]
+     ,"primary": { "autogen":  false, "columns":["formulaRefnum" , "dependencyRefnum"] }
+     ,"foreign": [
+         { "name":"Formula1",  "srcColumns":["formulaRefnum"   ], "destObject": "Formula" }
+        ,{ "name":"Formula2",  "srcColumns":["dependencyRefnum"], "destObject": "Formula" }
+       ]
+     ,"indices":[
+       ]
+    }
+
+   ,{ "name":"FormulaResult"
+     ,"occ":true
+     ,"description":"Master formula result information, if applicable. Some formulas may not yield an enumeratable value (e.g., returning a date)"
+     ,"columns":[
+         { "name":"formulaRefnum", "sameas":"Formula.refnum",                        "invariant": true, "description":"The parent formula."  }
+        ,{ "name":"value"        , "type":"STRING" , "nullable":false, "size":  100, "invariant": true, "description":"The result value."  }
+        ,{ "name":"description"  , "type":"STRING" , "nullable":false, "size":32000,                    "description":"The description of the result value."  }
+       ]
+     ,"primary": { "autogen": false, "columns":["formulaRefnum" , "value"] }
+     ,"foreign": [
+         { "name":"Formula",  "srcColumns":["formulaRefnum"   ], "destObject": "Formula" }
+       ]
+     ,"indices":[
+       ]
+    }
+
+   ,{ "name": "Testing",
       "description": "blah blah",
       "columns":[
         { "name": "refnum2"      , "type": "LONG[]"     , "nullable": false,                "invariant": true , "description": "The person's primary key" },
@@ -97,7 +295,7 @@
         { "name": "desc3"        , "type": "STRING"     ,                    "size":  5000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
         { "name": "desc4"        , "type": "STRING"     ,                    "size":  9000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
         { "name": "desc5"        , "type": "STRING"     ,                    "size": 17000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
-        { "name": "desc6"        , "type": "STRING"     ,                    "size": 33000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
+        { "name": "desc6"        , "type": "STRING"     ,                    "size": 33000, "protect":"SMART",  "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
         { "name": "tops"         , "type": "STRING[]"   ,                                                       "description": "The blah"},
         { "name": "tops2"        , "type": "STRING{}"   ,                                                       "description": "The blah"},
         { "name": "a1"           , "type": "BITFIELD"   ,                                                       "description": "The blah"},
@@ -120,22 +318,90 @@
       ],
       "primary": { "autogen": true },
       "indices":[ 
-      	{ "name": "AllByName" , "orderBy": ["name asc"], "db": false 
-      	},
-      	{ "name": "AllByName2", "orderBy": ["name asc"], "db": true, "subQuery": { "from"  : ["ObjectPerf"], 
-      	                                                                           "wheres": [ { "db": "*", "clause": "deleted is null and desc2 >= ?(Lower) and a5 < ?(Upper) or name = ?() and created > ?()" } 
-      	                                                                                     ] 
-      	                                                                         }
-      	},
-      	{ "name": "AllByName3", "orderBy": ["name asc"], "db": true, "subWhere": "deleted is null and name = ?() and created > ?()" }
+        { "name": "AllByName" , "orderBy": ["name asc"], "db": false       },
+        { "name": "AllByName2", "orderBy": ["name asc"], "db": true        },
+        { "name": "AllByName3", "orderBy": ["name desc"], "db": true       },
+        { "name": "AllByName4", "orderBy": ["name asc", "description desc"], "db": true
+        																  , "subWhere": "deleted is null and name = 'Hello' and created > '2018-01-01'"
+        }
       ],
       "json":[
-        { "name": "AAA", "columns": ["refnum", "refnum2", "name", "description", "desc2", "desc3", "desc4", "desc5", "desc6", "tops", "tops2", "a1", "a2", "a2b", "a2c", "a3", "a3b", "a4", "a4b", "a5", "a5b", "a6", "a6b", "a6c", "a7", "a7b", "a9", "created", "lastupdated"] }
+        { "name": "AAA", "columns": ["refnum", "refnum2", "name", "description", "desc2", "desc3", "desc4", "desc5", "desc6", "tops", "tops2", "a1", "a2", "a2b", "a2c", "a3", "a3b", "a4", "a4b", "a5", "a5b", "a6", "a6b", "a6c", "a7", "a7b", "a9", "created", "lastUpdated"] }
        ,{ "name": "BBB", "columns": ["refnum", "refnum2", "name", "description", "desc2", "desc3"] }
       ],
       "http":[
         { "name": "", "mandatories": ["refnum", "name", "description"] }
       ]
     }
+    
+   ,{ "name":"Testing2",
+      "lc": "READONLY",
+      "dbOnly":true,
+      "description":"Testing",
+      "columns":[
+         { "name":"t1"  , "type":"STRING"  , "nullable": false, "size":   2, "description":"State code" }
+        ,{ "name":"t2"  , "type":"STRING"  , "nullable": false, "size":  60, "description":"State name" }
+       ]
+     ,"indices":[ 
+         { "name":"T1"   , "columns":["t1"] }
+       ]
+    }
   ]
+    
+    
+ ,"views": [
+     { "name": "FormulaResultView"
+      ,"description": "A view of formulas and their values."
+      ,"columns":[
+          { "sameas": "FormulaResult.formulaRefnum"}
+         ,{ "sameas": "FormulaResult.value"        }
+         ,{ "sameas": "FormulaResult.description"  }
+         ,{ "sameas": "Formula.location"           }
+         ,{ "sameas": "Formula.name"               }
+        ]
+      ,"subWhereX":{
+          "clause":["Formula.deleted is null and FormulaResult.deleted is null"
+                   ]
+         ,"description":["Active formulas and their result values"]
+        }
+     }    
+
+    ,{ "name": "FormulaDependencyView"
+      ,"description": "A view of formulas and their dependencies."
+      ,"columns":[
+          { "sameas": "FormulaDependency.formulaRefnum"    }
+         ,{ "sameas": "Formula.location"                   }
+         ,{ "sameas": "Formula.name"                       }
+         ,{ "sameas": "FormulaDependency.dependencyRefnum" }
+         ,{ "sameas": "Formula.name"                       , "name":"dependentFormulaName"}
+        ]
+      ,"subWhereX":{
+          "clause":["Formula.deleted is null"
+                   ]
+         ,"description":["Active formulas and their sub-formulas"]
+        }
+     }    
+
+    ,{ "name": "MeasureFormulaView"
+      ,"description": "A view of formulas and their dependencies."
+      ,"columns":[
+          { "sameas": "MeasureFormula.measureRefnum"                    }
+         ,{ "sameas": "Measure.schema"      , "name":"measureSchema"    }
+         ,{ "sameas": "Measure.name"        , "name":"measureName"      }
+         ,{ "sameas": "Formula.refnum"      , "name":"formulaRefnum"    }
+         ,{ "sameas": "Formula.location"    , "name":"formulaLocation"  }
+         ,{ "sameas": "Formula.location2"   , "name":"formulaLocation2" }
+         ,{ "sameas": "Formula.name"        , "name":"formulaName"      }
+         ,{ "sameas": "Formula.title"              }
+         ,{ "sameas": "Formula.description"        }
+         ,{ "sameas": "Formula.type"               }
+         ,{ "sameas": "Formula.formula"            }
+        ]
+      ,"subWhereX":{
+          "clause":["Formula.deleted is null and Measure.deleted is null"
+                   ]
+         ,"description":["Active formulas and their sub-formulas"]
+        }
+     }    
+   ]
 }

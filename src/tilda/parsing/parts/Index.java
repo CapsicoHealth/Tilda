@@ -21,13 +21,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import tilda.parsing.ParserSession;
-import tilda.parsing.parts.helpers.ValidationHelper;
+import com.google.gson.annotations.SerializedName;
+
 import tilda.enums.ColumnMode;
 import tilda.enums.OrderType;
+import tilda.parsing.ParserSession;
+import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.TextUtil;
-
-import com.google.gson.annotations.SerializedName;
 
 public class Index
   {
@@ -45,30 +45,35 @@ public class Index
     public transient List<OrderType> _OrderByOrders = new ArrayList<OrderType>();
     public transient boolean         _Unique;
 
-    public transient Object          _ParentObject;
+    public transient Base            _Parent;
+    
+    public String getName()
+     {
+       return _Parent._OriginalName + "_" + _Name;
+     }
 
-    public boolean Validate(ParserSession PS, Object ParentObject)
+    public boolean Validate(ParserSession PS, Base Parent)
       {
         int Errs = PS.getErrorCount();
-        _ParentObject = ParentObject;
+        _Parent = Parent;
 
         // Does it have a name?
         if (TextUtil.isNullOrEmpty(_Name) == true)
-          return PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining an index without a name.");
+          return PS.AddError("Object '" + _Parent.getFullName() + "' is defining an index without a name.");
 
         if ((_Columns == null || _Columns.length == 0) && (_OrderBy == null || _OrderBy.length == 0))
-          return PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining index '"+_Name+"' without columns and/or order by.");
+          return PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '"+_Name+"' without columns and/or order by.");
 
         _Unique = _OrderBy == null || _OrderBy.length == 0;
 
-        _ColumnObjs = ValidationHelper.ProcessColumn(PS, _ParentObject, "index '" + _Name + "'", _Columns, new ValidationHelper.Processor() {
+        _ColumnObjs = ValidationHelper.ProcessColumn(PS, _Parent, "index '" + _Name + "'", _Columns, new ValidationHelper.Processor() {
           @Override
           public boolean process(ParserSession PS, Base ParentObject, String What, Column C)
             {
               if (C._Mode == ColumnMode.CALCULATED)
-                PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining an index with column '" + C.getName() + "' which is calculated.");
+                PS.AddError("Object '" + _Parent.getFullName() + "' is defining an index with column '" + C.getName() + "' which is calculated.");
               else if (_Unique == true && C._Nullable == true && _Columns.length > 1)
-                PS.AddError("Object '" + _ParentObject.getFullName() + "' is using nullable column '" + C.getName() + "' in in a multi-column unique index.");
+                PS.AddError("Object '" + _Parent.getFullName() + "' is using nullable column '" + C.getName() + "' in in a multi-column unique index.");
               else
                 {
                   if (_Unique == true)
@@ -87,10 +92,10 @@ public class Index
              for (Column C : _ColumnObjs)
               Names.add(C.getName().toUpperCase());
             
-            processOrderBy(PS, "Object '" + _ParentObject.getFullName() + "' defines index '" + _Name + "'", Names, _ParentObject, _OrderBy, _OrderByObjs, _OrderByOrders);
+            processOrderBy(PS, "Object '" + _Parent.getFullName() + "' defines index '" + _Name + "'", Names, _Parent, _OrderBy, _OrderByObjs, _OrderByOrders);
             
             if (TextUtil.isNullOrEmpty(_SubWhere) == false && _SubQuery != null)
-              PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining unique index '" + _Name + "' with both a subWhere AND a subQuery: only one is allowed.");
+              PS.AddError("Object '" + _Parent.getFullName() + "' is defining unique index '" + _Name + "' with both a subWhere AND a subQuery: only one is allowed.");
             else
               {
                 if (_SubWhere != null)
@@ -99,17 +104,24 @@ public class Index
                 if (_SubQuery != null)
                   {
                     if (_SubQuery._OrderBy != null && _SubQuery._OrderBy.length != 0)
-                      PS.AddError("Object '" + _ParentObject.getFullName() + "' defines index '" + _Name + "' with a subQuery that contains an orderBy: this is not allowed as the index already defines one.");
-                    _SubQuery.Validate(PS, _ParentObject, "Object " + _ParentObject.getFullName() + "'s index '" + _Name + "'", false);
+                      PS.AddError("Object '" + _Parent.getFullName() + "' defines index '" + _Name + "' with a subQuery that contains an orderBy: this is not allowed as the index already defines one.");
+                    if (_SubQuery._From.length != 0)
+                      PS.AddError("Object '" + _Parent.getFullName() + "' defines index '" + _Name + "' with a subQuery that contains a \"From\" clause: this is not allowed in an Index SubQuery.");
+                    for(Query SubWhere : _SubQuery._Wheres) 
+                      {
+                    	if (SubWhere._Clause.contains("?"))
+                    		PS.AddError("Object '" + _Parent.getFullName() + "' defines index '" + _Name + "' with a subQuery that contains a \"?\" variable placeholder: this is not allowed in an Index SubQuery.");
+                      }
+                    _SubQuery.Validate(PS, _Parent, "Object " + _Parent.getFullName() + "'s index '" + _Name + "'", false);
                   }
               }
           }
         else
           {
             if (_SubQuery != null)
-              PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining unique index '" + _Name + "' with a subQuery, which is not allowed.");
+              PS.AddError("Object '" + _Parent.getFullName() + "' is defining unique index '" + _Name + "' with a subQuery, which is not allowed.");
             if (TextUtil.isNullOrEmpty(_SubWhere) == false)
-              PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining unique index '" + _Name + "' with a subWhere, which is not allowed.");
+              PS.AddError("Object '" + _Parent.getFullName() + "' is defining unique index '" + _Name + "' with a subWhere, which is not allowed.");
           }
 
 
@@ -154,5 +166,31 @@ public class Index
                 OrderByOrders.add(Order);
               }
           }
+      }
+  
+    public String getSignature() 
+      {
+        StringBuilder Str = new StringBuilder();
+        // Defined Columns
+        for (Column C : _ColumnObjs)
+          {
+            if (Str.length() != 0)
+            {
+              Str.append("|");
+            }
+            Str.append(C._Name).append("|asc");
+          }   	
+    	// Defined Order Bys
+        for (int i = 0; i < _OrderByObjs.size(); ++i)
+          {
+            Column C = _OrderByObjs.get(i);
+            OrderType O = _OrderByOrders.get(i);
+            if (Str.length() != 0)
+              {
+                Str.append("|");
+              }
+            Str.append(C._Name).append("|").append(O.name().toLowerCase());
+          }
+    	return (_Unique ? "u" : "") + "i|" + Str.toString();
       }
   }

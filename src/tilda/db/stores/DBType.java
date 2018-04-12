@@ -25,10 +25,16 @@ import java.util.List;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
+import tilda.db.metadata.FKMeta;
+import tilda.db.metadata.IndexMeta;
+import tilda.db.metadata.PKMeta;
 import tilda.enums.AggregateType;
+import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
+import tilda.parsing.parts.ForeignKey;
+import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
@@ -63,9 +69,18 @@ public interface DBType
     public boolean alterTableAlterColumnComment   (Connection Con, Column Col) throws Exception;
     public boolean alterTableAlterColumnType      (Connection Con, ColumnType fromType, Column Col, ZoneInfo_Data defaultZI) throws Exception;
     public boolean alterTableAlterColumnStringSize(Connection Con, Column Col, int DBSize) throws Exception;
-    public boolean addHelperFunctions             (Connection Con) throws Exception;    
+    public boolean alterTableReplaceTablePK       (Connection Con, Object Obj, PKMeta oldPK) throws Exception;
+    public boolean alterTableDropFK               (Connection Con, Object Obj, FKMeta FK) throws Exception;
+    public boolean alterTableAddFK                (Connection Con, ForeignKey FK) throws Exception;
+    public boolean alterTableDropIndex            (Connection Con, Object Obj, IndexMeta IX) throws Exception;
+    public boolean alterTableAddIndex             (Connection Con, Index IX) throws Exception;
+    public boolean alterTableRenameIndex          (Connection Con, Object Obj, String OldName, String NewName) throws Exception;
+    public String  getHelperFunctionsScript       (Connection Con) throws Exception;    
+    public String  getAclRolesScript              (Connection Con, List<Schema> TildaList) throws Exception;
+    public boolean isSuperUser                    (Connection C) throws Exception;
 
-    public void   truncateTable(Connection C, String schemaName, String tableName) throws Exception;
+
+    public void   truncateTable(Connection C, String schemaName, String tableName, boolean cascade) throws Exception;
 
     public static DBType DB2       = new IBMDB2    ();
     public static DBType SQLServer = new MSSQL     ();
@@ -81,7 +96,8 @@ public interface DBType
 
     public StringStringPair getTypeMapping(int type, String name, int size, String typeName) throws Exception;
     public void             getFullColumnVar(StringBuilder Str, String SchemaName, String TableName, String ColumnName);
-    public void             getFullTableVar(StringBuilder Str, String SchemaName, String TableName);
+    public void             getFullTableVar (StringBuilder Str, String SchemaName, String TableName);
+    public void             getColumnType   (StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection);
     public void             setArray(Connection C, PreparedStatement PS, int i, ColumnType Type, List<Array> allocatedArrays, Collection<?> val) throws Exception;
     public Collection<?>    getArray(              ResultSet         RS, int i, ColumnType Type, boolean isSet) throws Exception;
     public void             setJson (              PreparedStatement PS, int i, String jsonValue) throws Exception;
@@ -90,4 +106,6 @@ public interface DBType
     public void             setOrderByWithNullsOrdering(Connection C, StringBuilder Str, ColumnDefinition Col, boolean Asc, boolean NullsLast);
     public void             age(Connection C, StringBuilder Str, Type_DatetimePrimitive ColStart, Type_DatetimePrimitive ColEnd, IntervalEnum Type, int Count, String Operator);
     public void             within(Connection C, StringBuilder Str, Type_DatetimePrimitive Col, Type_DatetimePrimitive ColStart, long DurationCount, IntervalEnum DurationType);
+    // LDH-NOTE: UNLOGGED Tables behave strangely in some situations... Disabling this feature.
+//    public boolean setTableLogging(Connection connection, String schemaName, String tableName, boolean logged) throws Exception;
   }

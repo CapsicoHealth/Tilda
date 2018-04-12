@@ -51,6 +51,7 @@ public interface CodeGenSql extends DBType, CodeGenBase
     public String getShortColumnVar(Column C);
 
     public String getColumnType(Column C);
+    public String getColumnType(Column C, ColumnType AggregateType);
 
     public String getColumnTypeRaw(Column C, boolean MultiOverride);
 
@@ -69,9 +70,14 @@ public interface CodeGenSql extends DBType, CodeGenBase
     public void genDDL(PrintWriter Out, Object O)
     throws Exception;
 
-    public String genDDL(PrintWriter Out, View V)
+    public void genDDL(PrintWriter Out, View V)
+    throws Exception;
+    public void genDDLComments(PrintWriter Out, View V)
+    throws Exception;
+    public void genDDLMetadata(PrintWriter Out, View V)
     throws Exception;
 
+    
     public void genIndex(PrintWriter Out, Index I);
 
     public void genKeysManagement(PrintWriter Out, Object O);

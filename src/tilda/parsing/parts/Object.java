@@ -35,10 +35,12 @@ import tilda.parsing.ParserSession;
 public class Object extends Base
   {
 
-    static final Logger                   LOG             = LogManager.getLogger(Object.class.getName());
+    static final Logger                   LOG          = LogManager.getLogger(Object.class.getName());
 
     /*@formatter:off*/
     @SerializedName("occ"           ) public boolean              _OCC        = true ;
+    @SerializedName("dbOnly"        ) public boolean              _DBOnly     = false;
+    @SerializedName("etl"           ) public boolean              _ETL        = false;
     @SerializedName("lc"            ) public String               _LCStr      = ObjectLifecycle.NORMAL.toString();
 
     @SerializedName("columns"       ) public List<Column>         _Columns    = new ArrayList<Column        >();
@@ -48,20 +50,21 @@ public class Object extends Base
     @SerializedName("indices"       ) public List<Index>          _Indices    = new ArrayList<Index         >();
     @SerializedName("http"          ) public HttpMapping[]        _Http       = { };
     @SerializedName("history"       ) public String     []        _History    = { };
-    @SerializedName("dropOldColumns") public String     []        _DropOldColumns = { };
+    @SerializedName("migrations"    ) public Migration  []        _Migrations = { };
+//    @SerializedName("dropOldColumns") public String     []        _DropOldColumns = { };
     
     /*@formatter:on*/
 
     public transient boolean              _HasUniqueIndex;
     public transient boolean              _HasUniqueQuery;
-    public transient FrameworkSourcedType _FST            = FrameworkSourcedType.NONE;
+    public transient FrameworkSourcedType _FST         = FrameworkSourcedType.NONE;
     public transient ObjectLifecycle      _LC;
 
     @Override
     public Column getColumn(String name)
       {
         for (Column C : _Columns)
-          if (C != null && C.getName() != null && C.getName().equalsIgnoreCase(name) == true)
+          if (C != null && C.getName() != null && C.getName().equals(name) == true)
             return C;
         return null;
       }
@@ -105,17 +108,17 @@ public class Object extends Base
 
         if (getFullName().equals("tilda.data.TILDA.KEY") == true)
           {
-            if (getColumn("created") == null || getColumn("lastUpdated") == null || getColumn("deleted") == null)
+            if (getColumn("created") == null || getColumn("lastUpdated") == null || getColumn("deleted") == null || getColumn("lastUpdatedETL") == null || getColumn("createdETL") == null)
               return PS.AddError("Object '" + getFullName() + "' is a built-in Tilda framework object but doesn't seem to have defined the base OCC (created, lastUpdated, deleted) columns.");
             if (getColumn("refnum") == null)
               return PS.AddError("Object '" + getFullName() + "' is a built-in Tilda framework object but doesn't seem to have defined the base refnum columns.");
             _OCC = true;
           }
-        else
+        else if (_FST != FrameworkSourcedType.VIEW)
           {
             if (_OCC == true)
               {
-                if (CreateOCCColumns(PS) == false)
+                if (CreateOCCColumns(PS, _ETL) == false)
                   return false;
               }
             if (_PrimaryKey != null && _PrimaryKey._Autogen == true)
@@ -141,12 +144,13 @@ public class Object extends Base
                     --i;
                     continue;
                   }
-                _PadderColumnNames.track(C.getName());
+                
+                _PadderColumnNames.track(C.getLogicalName());
                 if (C.Validate(PS, this) == true)
                   {
                     if (ColumnNames.add(C.getName().toUpperCase()) == false)
                       PS.AddError("Column '" + C.getFullName() + "' is defined more than once in Object '" + getFullName() + "'.");
-                    if (C._Type == ColumnType.DATETIME && Object.isOCCColumn(C) == false)
+                    if (C._Type == ColumnType.DATETIME && Object.isOCCColumn(C) == false && C._FrameworkManaged == false)
                       {
                         Column TZCol = new Column(C.getName() + "TZ", null, 0, C._Nullable, ColumnMode.AUTO, C._Invariant, null, "Generated helper column to hold the time zone ID for '" + C.getName() + "'.");
                         TZCol._SameAs = "tilda.data.TILDA.ZONEINFO.id";
@@ -169,25 +173,31 @@ public class Object extends Base
                 if (C._Mode == ColumnMode.CALCULATED)
                   continue;
                 C.setSequenceOrder(++Counter);
-                if (Counter >= 128)
+                int Max = 64 * 6;
+                if (Counter >= Max)
                   {
-                    PS.AddError("Object '" + getFullName() + "' has declared " + (i + 1) + " columns. Max allowed is 128!");
-                    // int xxx = 0;
-                    // for (Column ccc : _Columns)
-                    // LOG.error(" "+(++xxx)+" - "+ccc._Name);
+                    PS.AddError("Object '" + getFullName() + "' has declared " + (i + 1) + " columns. Max allowed is "+Max+"!");
                   }
               }
           }
 
-        for (int i = 0; i < _DropOldColumns.length; ++i)
+        Set<String> Names = new HashSet<String>();
+        for (int i = 0; i < _Migrations.length; ++i)
           {
-            String n = _DropOldColumns[i];
-            if (getColumn(n) != null)
-              PS.AddError("Object '" + getFullName() + "' is defining a drop column '" + n + "' which is also already defined as a real column. DropOldColumns is used to automate cleaning of old columns that should no longer be part of a table definition.");
+            Migration M = _Migrations[i];
+            if (M != null)
+              if (M.Validate(PS, this, i) == true)
+                {
+                  for (String col : M._ColumnNames)
+                    if (Names.add(col) == false)
+                      PS.AddError("Object '" + getFullName() + "' has declared migration #" + i + " with a column '" + col + "' which has already been specified in another migration!");
+                }
           }
 
+
         _HasUniqueIndex = false;
-        Set<String> Names = new HashSet<String>();
+        Set<String> Signatures = new HashSet<String>();
+        Names.clear();
         for (Index I : _Indices)
           {
             if (I == null)
@@ -195,6 +205,8 @@ public class Object extends Base
             if (I.Validate(PS, this) == true)
               if (Names.add(I._Name.toUpperCase()) == false)
                 PS.AddError("Object '" + getFullName() + "' is defining a duplicate index '" + I._Name + "'.");
+            if (I._Db == true && Signatures.add(I.getSignature()) == false)
+              PS.AddError("Object '" + getFullName() + "' is defining a duplicate index on signature '" + I.getSignature() + "'.");
             if (I._Unique == true)
               _HasUniqueIndex = true;
           }
@@ -252,8 +264,14 @@ public class Object extends Base
     private boolean CreateAutogenPK(ParserSession PS)
       {
         for (Column C : _Columns)
-          if (C != null && C.getName().equalsIgnoreCase("refnum") == true)
-            return PS.AddError("Object '" + getFullName() + "' has defined an autogen primary key but is also defining column 'refnum', which is a reserved name.");
+          {
+            if (C == null)
+              continue;
+
+            String N = C.getLogicalName();
+            if (N != null && N.equalsIgnoreCase("refnum") == true)
+              return PS.AddError("Object '" + getFullName() + "' has defined an autogen primary key but is also defining column 'refnum', which is a reserved name.");
+          }
 
         Column C = new Column("refnum", null, 0, false, null, true, null, PS.getColumn("tilda.data", "TILDA", "KEY", "refnum")._Description);
         C._SameAs = "tilda.data.TILDA.KEY.refnum";
@@ -262,11 +280,29 @@ public class Object extends Base
         return true;
       }
 
-    private boolean CreateOCCColumns(ParserSession PS)
+    private boolean CreateOCCColumns(ParserSession PS, boolean addETLLastUpdated)
       {
         for (Column C : _Columns)
-          if (C != null && (C.getName().equalsIgnoreCase("created") == true || C.getName().equalsIgnoreCase("lastUpdated") == true || C.getName().equalsIgnoreCase("deleted") == true))
-            return PS.AddError("Object '" + getFullName() + "' has defined OCC to be true but is also defining column '" + C.getName() + "', which is a reserved name.");
+          {
+            if (C == null)
+              continue;
+
+            String N = C.getLogicalName();
+            if (N != null && (N.equalsIgnoreCase("created") == true || N.equalsIgnoreCase("lastUpdated") == true || N.equalsIgnoreCase("createdETL") == true || N.equalsIgnoreCase("lastUpdatedETL") == true || N.equalsIgnoreCase("deleted") == true))
+              return PS.AddError("Object '" + getFullName() + "' has defined OCC to be true but is also defining column '" + C.getName() + "', which is a reserved name.");
+          }
+
+        Object KeyObj = PS.getObject("tilda.data", "TILDA", "KEY");
+        if (KeyObj == null)
+          {
+            LOG.error("WHHHUUUT???? TILDA.KEY cannot be found");
+            throw new Error("There is a class-path issue here... This process cannot see the base Tilda object definitions.");
+          }
+        else if (KeyObj.getColumn("created") == null)
+          {
+            LOG.error("WHHHUUUT???? TILDA.KEY.created cannot be found");
+            throw new Error("There is a class-path issue here... This process cannot see the base Tilda object definitions.");
+          }
 
         Column C = new Column("created", null, 0, false, ColumnMode.AUTO, true, null, PS.getColumn("tilda.data", "TILDA", "KEY", "created")._Description);
         C._SameAs = "tilda.data.TILDA.KEY.created";
@@ -283,12 +319,33 @@ public class Object extends Base
         C._FrameworkManaged = true;
         _Columns.add(C);
 
+        if (addETLLastUpdated == true)
+          {
+            C = new Column("createdETL", null, 0, true, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "KEY", "createdETL")._Description);
+            C._SameAs = "tilda.data.TILDA.KEY.createdETL";
+            C._FrameworkManaged = true;
+            _Columns.add(C);
+
+            C = new Column("lastUpdatedETL", null, 0, true, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "KEY", "lastUpdatedETL")._Description);
+            C._SameAs = "tilda.data.TILDA.KEY.lastUpdatedETL";
+            C._FrameworkManaged = true;
+            _Columns.add(C);
+          }
+
         return true;
       }
 
     public static boolean isOCCColumn(Column C)
       {
         return C.isOCCGenerated();
+      }
+    public static boolean isOCCLastUpdated(Column C)
+      {
+        return C.isOCCLastUpdated();
+      }
+    public static boolean isOCCDeleted(Column C)
+      {
+        return C.isOCCDeleted();
       }
 
     public void AddColumnAfter(Column SiblingCol, Column NewCol)
@@ -369,5 +426,14 @@ public class Object extends Base
                 }
           }
         return false;
+      }
+
+    public List<ForeignKey> getForeignKeys(String targetSchema, String TargetObject)
+      {
+        List<ForeignKey> FKs = new ArrayList<ForeignKey>();
+        for (ForeignKey FK : _ForeignKeys)
+          if (FK._ParentObject.getShortName().equalsIgnoreCase(targetSchema+"."+TargetObject) == true)
+           FKs.add(FK);
+        return FKs;
       }
   }

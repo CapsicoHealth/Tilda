@@ -17,6 +17,7 @@
 package tilda.utils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -576,8 +577,16 @@ public class CollectionUtil
         return result;
       }
 
-    public static String[] toStringArray(List<String> L)
+    public static String[] toStringArray(Collection<String> L)
       {
         return L.toArray(new String[L.size()]);
+      }
+    
+    public static void append(List<String> L, Iterator<String> I)
+      {
+        if (I == null)
+         return;
+        while (I.hasNext() == true)
+          L.add(I.next());
       }
   }

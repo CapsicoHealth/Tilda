@@ -30,6 +30,7 @@ public class Value
 
     /*@formatter:off*/
 	@SerializedName("value"      ) public String _Value;
+    @SerializedName("name"       ) public String _Name;
     @SerializedName("description") public String _Description;
     /*@formatter:on*/
 
@@ -55,9 +56,12 @@ public class Value
         if (TextUtil.isNullOrEmpty(_Value) == true)
           PS.AddError("View '" + ParentView.getFullName() + "' is defining a " + What + " with a null or empty value.");
 
-        if (TextUtil.isNullOrEmpty(_Value) == true)
+        if (TextUtil.isNullOrEmpty(_Description) == true)
           PS.AddError("View '" + ParentView.getFullName() + "' is defining a " + What + " with a null or empty description.");
 
+        if (TextUtil.isNullOrEmpty(_Name) == true)
+         _Name = _Value;
+        
         return Errs == PS.getErrorCount();
       }
 

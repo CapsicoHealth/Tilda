@@ -20,6 +20,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.Clock;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -42,16 +43,37 @@ public class DateTimeUtilTest
       {
         try
           {
+            String TS = "2017-07-31 14:25:11.873-1000";
+            LOG.debug(DateTimeUtil.parse(TS, "yyyy-MM-dd HH:mm:ss.SSSZ"));
+
+//            TS = "2017-10-25 11:04:12.597";            
+//            DateTimeUtil.parse(TS, "yyyy-MM-dd HH:mm:ss.SSS");
+
+                        
+//            Test0();
+            
 //            Test1();
-            Test2();
-            Test3();
-            Test4();
-            Test5();
+//            Test2();
+//            Test3();
+//            Test4();
+//            Test5();
           }
         catch (Exception e)
           {
             LOG.catching(e);
           }
+      }
+    
+    private static void Test0()
+      {
+        String value = "4/4/1940 00:00";
+        String DateTimePattern = "M/d/yyyy HH:mm";
+//        String value = "1940-04-04 00:00:00";
+//        String DateTimePattern = "yyyy-MM-dd HH:mm:ss";
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DateTimePattern);
+        LocalDateTime dateTime = LocalDateTime.parse(value, formatter);
+        
       }
 
 /*

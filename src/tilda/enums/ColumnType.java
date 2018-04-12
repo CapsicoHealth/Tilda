@@ -31,30 +31,33 @@ public enum ColumnType
   {
 
     /*@formatter:off*/
-    STRING  (true , false),
-    JSON    (true , false),
-    CHAR    (true , true ),
-    INTEGER (true , true ),
-    LONG    (true , true ),
-    FLOAT   (true , true ),
-    DOUBLE  (true , true ),
-    BOOLEAN (true , true ),
-    DATETIME(false, false),
-    BINARY  (false, false),
-    BITFIELD(false, true );
+    STRING  (true , false, "STR"),
+    JSON    (true , false, "JSN"),
+    CHAR    (true , true , "CHR"),
+    INTEGER (true , true , "INT"),
+    LONG    (true , true , "LNG"),
+    FLOAT   (true , true , "FLT"),
+    DOUBLE  (true , true , "DBL"),
+    BOOLEAN (true , true , "BOL"),
+    DATE    (false, false, "DT"),
+    DATETIME(false, false, "DTM"),
+    BINARY  (false, false, "BIN"),
+    BITFIELD(false, true , "BF");
     /*@formatter:on*/
 
-    private ColumnType(boolean ArrayCompatible, boolean Primitive)
+    private ColumnType(boolean ArrayCompatible, boolean Primitive, String shortName)
       {
         _ArrayCompatible = ArrayCompatible;
         _Primitive = Primitive;
         _SimpleName = TextUtil.CapitalizeFirstCharacter(name().toLowerCase());
+        _ShortName = shortName;
       }
 
     public static  PaddingTracker  _PadderTypeNames = new PaddingTracker();
     public final boolean _ArrayCompatible;
     public final boolean _Primitive;
     public final String  _SimpleName;
+    public final String  _ShortName;
     
     static
       {
@@ -64,6 +67,8 @@ public enum ColumnType
 
     public static ColumnType parse(String Str)
       {
+        if (Str == null)
+         return null;
         for (ColumnType e : ColumnType.values())
           if (Str.equalsIgnoreCase(e.name()) == true)
             return e;

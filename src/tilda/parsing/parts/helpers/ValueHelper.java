@@ -86,6 +86,7 @@ public class ValueHelper
             return DefaultValue;
           case CHAR:
           case STRING:
+          case DATE:
           case DATETIME:
             return TextUtil.EscapeSingleQuoteForSQL(DefaultValue);
           default:

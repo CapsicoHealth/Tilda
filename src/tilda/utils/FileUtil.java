@@ -25,8 +25,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.io.Reader;
 import java.util.Arrays;
+import java.util.Scanner;
 
 import tilda.utils.comparators.FileNameComparator;
 
@@ -90,7 +90,7 @@ public class FileUtil
     public static void copyFileContentsIntoAnotherFile(String inputFileName, PrintWriter Out)
     throws IOException
       {
-        BufferedReader br = new BufferedReader(new FileReader(inputFileName));
+        BufferedReader br = new BufferedReader(getReaderFromFileOrResource(inputFileName));
         try
           {
             String line = br.readLine();
@@ -132,16 +132,32 @@ public class FileUtil
         return false;
       }
 
-    public static Reader getReaderFromFileOrResource(String Name)
-    throws Exception
+    public static BufferedReader getReaderFromFileOrResource(String Name)
+    throws IOException
       {
         if (new File(Name).exists() == true)
           return new BufferedReader(new FileReader(Name));
 
         InputStream In = FileUtil.getResourceAsStream(Name);
         if (In == null)
-          throw new Exception("Cannot find import file/resource '" + Name + "'.");
+          throw new IOException("Cannot find import file/resource '" + Name + "'.");
         return new BufferedReader(new InputStreamReader(In));
+      }
+
+    public static String getFileOfResourceContents(String Name)
+    throws IOException
+      {
+        BufferedReader R = getReaderFromFileOrResource(Name);
+        if (R == null)
+          return null;
+        StringBuilder Str = new StringBuilder();
+        String L = R.readLine();
+        while (L != null)
+          {
+            Str.append(L).append("\n");
+            L = R.readLine();
+          }
+        return Str.toString();
       }
 
     public static String getBasePathFromFileOrResource(String Name)
@@ -150,10 +166,23 @@ public class FileUtil
         int i1 = Name.lastIndexOf('/');
         int i2 = Name.lastIndexOf('\\');
         if (i1 == -1 && i2 == -1)
-         throw new Exception("Cannot find a path in '" + Name + "'. Looked for '/' and '\\'.");
-        
-        return Name.substring(0, Math.max(i1,  i2)+1);
+          throw new Exception("Cannot find a path in '" + Name + "'. Looked for '/' and '\\'.");
+
+        return Name.substring(0, Math.max(i1, i2) + 1);
       }
 
+    static Scanner _SCANNER = new Scanner(System.in);
+
+    public static String readlnFromStdIn(boolean secure)
+      {
+        if (secure == true && System.console() != null)
+          return new String(System.console().readPassword());
+        return _SCANNER.next();
+      }
+
+    public static String getUserHome()
+      {
+        return System.getProperty("user.home");
+      }
 
   }

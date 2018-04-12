@@ -18,6 +18,7 @@
 package tilda.data;
 
 import java.sql.SQLException;
+import java.time.ZonedDateTime;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.logging.log4j.LogManager;
@@ -79,5 +80,19 @@ public class Key_Data extends tilda.data._Tilda.TILDA__KEY
               return getMax() - k;
             return Key_Factory.replenish(this);
           }
+      }
+
+
+    @Override
+    public ZonedDateTime getCreatedETL()
+      {
+        return null;
+      }
+
+
+    @Override
+    public ZonedDateTime getLastUpdatedETL()
+      {
+        return null;
       }
   }

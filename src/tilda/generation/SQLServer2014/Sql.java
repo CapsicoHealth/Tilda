@@ -103,6 +103,11 @@ public class Sql extends MSSQL implements CodeGenSql
       {
         return getColumnType(C.getType(), C._Size, C._Mode, C.isCollection());
       }
+    @Override
+    public String getColumnType(Column C, ColumnType AggregateType)
+      {
+        return getColumnType(AggregateType, C._Size, C._Mode, C.isCollection());
+      }
 
     @Override
     public String getColumnTypeRaw(Column C, boolean MultiOverride)
@@ -208,7 +213,7 @@ public class Sql extends MSSQL implements CodeGenSql
       }
 
     @Override
-    public String genDDL(PrintWriter OutFinal, View V)
+    public void genDDL(PrintWriter OutFinal, View V)
     throws Exception
       {
         StringBuilderWriter OutStr = new StringBuilderWriter();
@@ -280,7 +285,7 @@ public class Sql extends MSSQL implements CodeGenSql
               Object T = C._SameAsObj._ParentObject;
               if (Names.add(T.getFullName()) == true)
                 {
-                  ViewJoin VJ = V.getViewjoin(T.getBaseName());
+                  ViewJoin VJ = V.getViewjoin(T.getBaseName(), C._As);
                   if (VJ != null)
                     {
                       Out.print("     " + (C._Join == null ? "left" : C._Join) + " join " + getFullTableVar(VJ._ObjectObj));
@@ -348,7 +353,22 @@ public class Sql extends MSSQL implements CodeGenSql
         Str = Str.replaceAll("\n", "\\n");
         // Out.println("COMMENT ON VIEW " + V._ParentSchema._Name + "." + V._Name + " IS " + TextUtil.EscapeSingleQuoteForSQL(Str) + ";");
         OutStr.close();
-        return Str;
+      }
+    
+    @Override
+    public void genDDLComments(PrintWriter Out, View V)
+    throws Exception
+      {
+        // TODO Auto-generated method stub
+        
+      }
+
+    @Override
+    public void genDDLMetadata(PrintWriter Out, View V)
+    throws Exception
+      {
+        // TODO Auto-generated method stub
+        
       }
 
     private boolean CheckFK(PrintWriter Out, Object Obj1, Object Obj2, ViewColumn C, int JoinIndex)
@@ -420,7 +440,7 @@ public class Sql extends MSSQL implements CodeGenSql
       {
         if (I._Db == false)
           Out.print("-- app-level index only -- ");
-        Out.print("CREATE" + (I._Unique == true ? " UNIQUE" : "") + " INDEX " + I._ParentObject.getBaseName() + "_" + I._Name + " ON [" + I._ParentObject._ParentSchema._Name + "].[" + I._ParentObject._Name + "] (");
+        Out.print("CREATE" + (I._Unique == true ? " UNIQUE" : "") + " INDEX " + I._Parent.getBaseName() + "_" + I._Name + " ON [" + I._Parent._ParentSchema._Name + "].[" + I._Parent._Name + "] (");
         if (I._ColumnObjs.isEmpty() == false)
           PrintColumnList(Out, I._ColumnObjs);
         if (I._OrderByObjs.isEmpty() == false)

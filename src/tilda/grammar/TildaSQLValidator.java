@@ -227,6 +227,7 @@ public class TildaSQLValidator extends TildaSQLBaseListener
             return;
           }
         if (T1 == ColumnType.DATETIME || T2 == ColumnType.DATETIME)
+//        else if (ctx.isnull_op().K_NULL_OR_EMPTY() != null)
           {
             _Errors.addError("The operator '" + ctx.getText() + "' cannot be applied to Datetime values.", ctx);
             return;
@@ -591,6 +592,9 @@ public class TildaSQLValidator extends TildaSQLBaseListener
 
         if (_CG != null)
           _CG.isNull(CD, ctx.isnull_op().K_NOT() != null, ctx.isnull_op().K_EMPTY() != null);
+
+//        if (Err == false && _CG != null)
+//          _CG.isNull(CD, ctx.isnull_op().K_NOT() != null, ctx.isnull_op().K_NULL_OR_EMPTY() != null);
 
         super.exitExpr_isnull(ctx);
       }

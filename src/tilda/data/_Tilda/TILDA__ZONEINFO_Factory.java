@@ -64,7 +64,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The value for this enumeration.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
@@ -344,12 +344,14 @@ This is the column definition for:<BR>
        String        _id            =                       ParseUtil.parseString("id"           , true , Values.get("id"           ), Errors );
        String        _value         =                       ParseUtil.parseString("value"        , true , Values.get("value"        ), Errors );
        String        _label         =                       ParseUtil.parseString("label"        , true , Values.get("label"        ), Errors );
+       ZonedDateTime        _deactivated   =                       ParseUtil.parseZonedDateTime("deactivated"  , false, Values.get("deactivated"  ), Errors );
 
        if (IncomingErrors != Errors.size())
         return null;
 
       tilda.data.ZoneInfo_Data Obj = tilda.data.ZoneInfo_Factory.Create(_id, _value, _label);
 
+      if (_deactivated  != null) Obj.setDeactivated  (_deactivated  );
 
       return Obj;
      }

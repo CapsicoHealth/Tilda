@@ -30,6 +30,9 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
+import tilda.db.metadata.FKMeta;
+import tilda.db.metadata.IndexMeta;
+import tilda.db.metadata.PKMeta;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
@@ -37,6 +40,8 @@ import tilda.generation.Generator;
 import tilda.generation.SQLServer2014.SQLServerType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
+import tilda.parsing.parts.ForeignKey;
+import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
@@ -264,10 +269,10 @@ public class MSSQL implements DBType
       }
 
     @Override
-    public boolean addHelperFunctions(Connection Con)
+    public String getHelperFunctionsScript(Connection Con)
     throws Exception
       {
-        return true;
+        throw new UnsupportedOperationException();
       }
 
 
@@ -363,6 +368,12 @@ public class MSSQL implements DBType
       }
 
     @Override
+    public void getColumnType(StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection)
+      {
+        throw new UnsupportedOperationException();        
+      }
+
+    @Override
     public void setArray(Connection C, PreparedStatement PS, int i, ColumnType Type, List<Array> allocatedArrays, Collection<?> val)
     throws Exception
       {
@@ -430,7 +441,7 @@ public class MSSQL implements DBType
       }
 
     @Override
-    public void truncateTable(Connection C, String schemaName, String tableName)
+    public void truncateTable(Connection C, String schemaName, String tableName, boolean cascade)
     throws Exception
       {
         StringBuilder Str = new StringBuilder();
@@ -463,4 +474,59 @@ public class MSSQL implements DBType
         throw new UnsupportedOperationException();
       }
 
+    @Override
+    public String getAclRolesScript(Connection Con, List<Schema> TildaList)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public boolean alterTableReplaceTablePK(Connection Con, Object Obj, PKMeta oldPK)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public boolean alterTableDropFK(Connection Con, Object Obj, FKMeta FK)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public boolean alterTableAddFK(Connection Con, ForeignKey FK)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+    
+    @Override
+    public boolean alterTableDropIndex(Connection Con, Object Obj, IndexMeta IX)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public boolean alterTableAddIndex(Connection Con, Index IX)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+    
+    @Override
+    public boolean alterTableRenameIndex(Connection Con, Object Obj, String OldName, String NewName)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    @Override
+    public boolean isSuperUser(Connection C)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
   }

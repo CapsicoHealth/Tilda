@@ -214,10 +214,16 @@ public class TextUtil
     public static final String EscapeDoubleQuoteForCSV(String S)
       {
         StringBuilder X = new StringBuilder();
-        EscapeSomethingWithSomething(X, '"', "\"", S, "\"", "\"");
+        EscapeDoubleQuoteForCSV(X, S);
         return X.toString();
       }
 
+    public static final void EscapeDoubleQuoteForCSV(StringBuilder X, String S)
+      {
+        EscapeSomethingWithSomething(X, '"', "\"", S, "\"", "\"");
+      }
+    
+    
     public static final String EscapeSingleQuoteWithSlashDouble(String S)
       {
         StringBuilder X = new StringBuilder();
@@ -350,6 +356,15 @@ public class TextUtil
       }
 
     public static boolean isNullOrEmpty(String[] Str)
+      {
+        if (Str != null)
+          for (String s : Str)
+            if (TextUtil.isNullOrEmpty(s) == false)
+              return false;
+        return true;
+      }
+
+    public static boolean isNullOrEmpty(List<String> Str)
       {
         if (Str != null)
           for (String s : Str)
@@ -633,7 +648,7 @@ public class TextUtil
 
     /**
      * Takes a string and rewrites it by replacing all special characters with an '_'. Special characters include
-     * ' ', '*', '\'', '/', '"', ':', ';', ',', '.', '%', '+', '&', '=', '?'
+     * ' ', '*', '\'', '/', '"', ':', ';', ',', '.', '%', '+', '&', '=', '?', '-'
      */
     public static String SanitizeName(String Name)
       {
@@ -656,6 +671,7 @@ public class TextUtil
                 case '&':
                 case '=':
                 case '?':
+                case '-':
                   C[i] = '_';
               }
           }

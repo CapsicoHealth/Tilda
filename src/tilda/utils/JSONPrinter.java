@@ -17,6 +17,7 @@
 package tilda.utils;
 
 import java.io.Writer;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,16 +70,26 @@ public class JSONPrinter
             _Name = Name;
             _Val = Val;
             _JsonExportName = JsonExportName;
+            _SyncToken = null;
           }
+//        public ElementList(String Name, List<? extends JSONable> Val, String JsonExportName, ZonedDateTime SyncToken)
+//          {
+//            _Name = Name;
+//            _Val = Val;
+//            _JsonExportName = JsonExportName;
+//            _SyncToken = SyncToken;
+//          }
 
         protected final String                   _Name;
         protected final List<? extends JSONable> _Val;
         protected final String                   _JsonExportName;
+        protected final ZonedDateTime            _SyncToken;
 
         public void Print(Writer Out, boolean FirstElement, String Header)
         throws Exception
           {
-            JSONUtil.Print(Out, _Name, _JsonExportName, FirstElement, _Val, Header);
+            if (_SyncToken == null)
+             JSONUtil.Print(Out, _Name, _JsonExportName, FirstElement, _Val, Header);
           }
       }
 
@@ -195,6 +206,26 @@ public class JSONPrinter
           }
       }
 
+    protected static class ElementZonedDateTime implements ElementDef
+      {
+        public ElementZonedDateTime(String Name, ZonedDateTime Val)
+          {
+            _Name = Name;
+            _Val = Val;
+          }
+
+        protected final String _Name;
+        protected final ZonedDateTime _Val;
+
+        public void Print(Writer Out, boolean FirstElement, String Header)
+        throws Exception
+          {
+            Out.write(Header);
+            JSONUtil.Print(Out, _Name, FirstElement, _Val);
+          }
+      }
+    
+    
     public JSONPrinter addElement(String Name, JSONable Obj, String JsonExportName)
       {
         _Elements.add(new ElementObj(Name, Obj, JsonExportName));
@@ -207,6 +238,12 @@ public class JSONPrinter
         return this;
       }
 
+//    public JSONPrinter addElement(String Name, List<? extends JSONable> L, String JsonExportName, ZonedDateTime SyncToken)
+//      {
+//        _Elements.add(new ElementList(Name, L, JsonExportName, SyncToken));
+//        return this;
+//      }
+    
     public JSONPrinter addElement(String Name, String[][] Vals)
       {
         _Elements.add(new ElementValues(Name, Vals));
@@ -237,6 +274,12 @@ public class JSONPrinter
         return this;
       }
 
+    public JSONPrinter addElement(String Name, ZonedDateTime Val)
+      {
+        _Elements.add(new ElementZonedDateTime(Name, Val));
+        return this;
+      }
+    
     public JSONPrinter addElementRaw(String Name, String JsonRawValue)
       {
         _Elements.add(new ElementRaw(Name, JsonRawValue));

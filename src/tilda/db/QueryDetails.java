@@ -68,7 +68,7 @@ public class QueryDetails
     
     public static void logQuery(String TableName, String Query, String Values)
       {
-        LOG.debug(_LOGGING_HEADER + AnsiUtil.NEGATIVE + TableName + AnsiUtil.NEGATIVE_OFF + ": "+Query);
+        LOG.debug(_LOGGING_HEADER + AnsiUtil.NEGATIVE + "["+TableName+"]" + AnsiUtil.NEGATIVE_OFF + ": "+Query);
         if (Values != null)
          LOG.debug(_LOGGING_HEADER + "   " + Values);
       }

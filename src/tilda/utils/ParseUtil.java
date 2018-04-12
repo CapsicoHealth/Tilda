@@ -16,6 +16,7 @@
 
 package tilda.utils;
 
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -190,6 +191,18 @@ public class ParseUtil
       {
         return parseInteger(Name, Mandatory, Values == null ? null : Values.split(Separator), Errors);
       }
+    
+    public static int parseIntegerFlexible(String Val, int Default)
+     {
+       int v = parseInteger(Val, Default);
+       if (v != Default)
+        return v;
+       float f = parseFloat(Val, SystemValues.EVIL_VALUE);
+       v = Math.round(f);
+       if (v != Default && v == f)
+        return v;
+       return Default;
+     }
 
     
     
@@ -305,6 +318,17 @@ public class ParseUtil
         return parseLong(Name, Mandatory, Values == null ? null : Values.split(Separator), Errors);
       }
     
+    public static long parseLongFlexible(String Val, long Default)
+      {
+        long v = parseLong(Val, Default);
+        if (v != Default)
+         return v;
+        double f = parseDouble(Val, SystemValues.EVIL_VALUE);
+        v = Math.round(f);
+        if (v != Default && v == f)
+         return v;
+        return Default;
+      }
     
     
 
@@ -717,6 +741,26 @@ public class ParseUtil
           }
         return ZDT;
       }
+
+    public static LocalDate parseLocalDate(String Value)
+      {
+        return DateTimeUtil.parseDateFromJSON(Value);
+      }
+    
+    public static LocalDate parseLocalDate(String Name, boolean Mandatory, String Value, List<StringStringPair> Errors)
+      {
+        if (ParseUtil.parseString(Name, Mandatory, Value, Errors) == null)
+         return null;
+        
+        LocalDate D = parseLocalDate(Value);
+        if (D == null && Mandatory == true)
+          {
+            LOG.error("Invalid parameter format '" + Name + "'.");
+            Errors.add(new StringStringPair(Name, "Invalid parameter value '"+Value+"': expecting a date formatted string."));
+          }
+        return D;
+      }
+    
 
     /**
      * 

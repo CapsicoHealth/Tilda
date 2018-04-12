@@ -76,8 +76,24 @@ public class ParserSession
 
     public Schema getSchema(String PackageName, String SchemaName)
       {
+//        Schema.PrintSchemaList(CollectionUtil.toList(_Dependencies.values().iterator()), true);
         String FullName = PackageName + "." + SchemaName;
-        return _Dependencies.get(FullName);
+        Schema S = _Dependencies.get(FullName);
+        if (S == null)
+          LOG.debug("Schema " + FullName + " cannot be found out of the current schema list ["+getSchemaList()+"].");
+        return S;
+      }
+
+    public String getSchemaList()
+      {
+        StringBuilder Str = new StringBuilder();
+        for (Schema S : _Dependencies.values())
+          {
+            if (Str.length() != 0)
+              Str.append(", ");
+            Str.append(S.getFullName());
+          }
+        return Str.toString();
       }
 
     public Object getObject(String PackageName, String SchemaName, String ObjectName)

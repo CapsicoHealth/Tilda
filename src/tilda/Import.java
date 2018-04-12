@@ -16,13 +16,12 @@
 
 package tilda;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -45,46 +44,59 @@ public class Import
 
     public static void main(String[] args)
       {
+        Connection C = null;
+        ArrayList<String> arguments = new ArrayList<>(Arrays.asList(args));
+        ValidateParams(arguments);
+        
         LOG.info("\n*************************************************************************************************************************************");
         ConnectionPool.autoInit();
         LOG.info("\n*************************************************************************************************************************************\n");
 
-        if (args.length == 0)
-          {
-            LOG.error("This utility must be called with at least 1 argument: the path to an JSON import file named as _tilda.<Schema>.sampledata.<samplePackage>.json.");
-            LOG.error("The utility will then execute the class <Schema.package>+'.importers.'+<samplesPackage>.Root which must implement the ImportProcessor class.");
-            LOG.error("Alternatively, the utility can be called with 3 parameters '-package <packageName> <path-to-json-file> where the packageName from the JSON file name will be overriden by the suplied packageName to resolve to the right importer.");
-            System.exit(1);
-          }
-
-        Connection C = null;
         try
           {
-            int Total = 0;
-            long T0 = System.nanoTime();
-            C = ConnectionPool.get("MAIN");
-            int FileCount = 0;
-            if (args[0].equalsIgnoreCase("-packageName") == true)
+            long timeTaken = System.nanoTime();
+            int RecordsCount = 0;
+            
+            for(int i=0; i < arguments.size() ; i += 4)
               {
-                ++FileCount;
-                Total += Do(args[1], args[2], C);
-                C.commit();
+                if("-f".equals(arguments.get(i)))
+                  {
+                    Importer I = getFileImporter(null, arguments.get(i+1));
+                    String[] connectionIdsArr = arguments.get(i+3).split(",");
+                    List<String> connectionIds = new ArrayList<>(Arrays.asList(connectionIdsArr));
+                    Iterator<String> iterator = connectionIds.iterator();
+
+                    if ( "ALL".equals(connectionIds.get(0)) )
+                      {
+                        iterator = ConnectionPool.getAllDataSourceIds().keySet().iterator();
+                      }                      
+                    else if ( "ALL_TENANTS".equals(connectionIds.get(0)) )
+                      {
+                        iterator = ConnectionPool.getAllTenantDataSourceIds().keySet().iterator(); 
+                      }
+
+                    // Loop connectionIds and run Import
+                    while(iterator.hasNext())
+                      {
+                        C = ConnectionPool.get(iterator.next());
+                        RecordsCount += Do(I, C);
+                        C.commit();
+                        C.close();
+                        C = null;                        
+                      }
+                  }
+                else { throw new Exception("Cannot find a -f parameter starting the command line"); }
               }
-            else for (String a : args)
-              {
-                Total += Do(null, a, C);
-                ++FileCount;
-                C.commit();
-              }
-            T0 = System.nanoTime() - T0;
+            
+            timeTaken = System.nanoTime() - timeTaken;
             LOG.info("");
             LOG.info("");
             LOG.info("");
-            LOG.info("All in all, processed a total of " + Total + " records from "+FileCount+" files in " + DurationUtil.getDurationSeconds(T0) + "s (" + DurationUtil.PrintPerformancePerMinute(T0, Total) + " records/mn).");
+            LOG.info("Processed a total of " + RecordsCount + " records in " + DurationUtil.getDurationSeconds(timeTaken) + "s (" + DurationUtil.PrintPerformancePerMinute(timeTaken, RecordsCount) + " records/mn).");
             StringBuilder Str = new StringBuilder();
+            Str.setLength(0);
             PerfTracker.print(Str);
-            // LDH-NOTE: there is a bug in the Log4j code with a limit on buffer size if out to a file!
-//            LOG.info(Str.toString());
+            //LDH-NOTE: there is a bug in the Log4j code with a limit on buffer size if out to a file!
             LOG.info(TextUtil.toMaxLength(Str.toString(), 20000));
           }
         catch (Throwable T)
@@ -94,41 +106,90 @@ public class Import
               {
                 C.rollback();
               }
-            catch (SQLException x)
-              {
-              }
+            catch (SQLException X)
+              { }
           }
         finally
-          {
-            if (C != null)
-              try
-                {
-                  C.close();
-                }
-              catch (SQLException E)
-                {
-                }
-          }
+        {
+          if (C != null)
+            try
+              {
+                C.close();
+              }
+            catch (SQLException E)
+              { }
+      }
+
+
         LOG.info("Import completed.");
       }
     
-    protected static int Do(String OverridePackageName, String ImportFileName, Connection C)
+    private static void ValidateParams(ArrayList<String> arguments)
+      {
+        if (arguments.size() % 4 != 0)
+          {
+            PrintUsageHint();
+            System.exit(-1);
+          }
+        
+        for (int i = 0 ; i < arguments.size() ; )
+          {
+            if ( !"-f".equals(arguments.get(i)) || TextUtil.isNullOrEmpty(arguments.get(i+1)) 
+              || !"-c".equals(arguments.get(i+2)) || TextUtil.isNullOrEmpty(arguments.get(i+3)) )
+              {
+                PrintUsageHint();
+                System.exit(-1);
+              }
+            i += 4;
+          }
+      }
+
+    private static void PrintUsageHint()
+      {
+        LOG.error("");
+        LOG.error("Import utility must be called with parameter(s) in following format:");
+        LOG.error("-f <file_name> -c ( ALL | ALL_TENANTS | <connection_id>) ");
+        LOG.error("Ex: -f tilda/data/_tilda.Tilda.sampledata.zones.json -c MAIN,KEYS");
+        LOG.error("*** for Multi Tenant System.");
+        LOG.error("    ALL           = All Connection Ids. Except 'KEYS'");
+        LOG.error("    ALL_TENANTS   = All Connection Ids. Except 'MAIN' & 'KEYS'");
+        LOG.error("");
+      }
+    
+    protected static int Do(Importer I, Connection C)
       throws Exception
       {
         LOG.info("");
         LOG.info("");
         LOG.info("");
         LOG.info("=======================================================================================================================");
-        LOG.info("== Importing "+ImportFileName);
+        LOG.info("== Importing into DB ( Url: "+C.getURL()+" )");
+        LOG.info("=======================================================================================================================");
+        long T = System.nanoTime();
+        int Total = I.process(C);
+        T = System.nanoTime() - T;
+        
+        LOG.info("Processed " + Total + " records in " + DurationUtil.getDurationSeconds(T) + "s (" + DurationUtil.PrintPerformancePerMinute(T, Total) + " records/mn).");
+        return Total;
+      }
+    
+    protected static Importer getFileImporter(String OverridePackageName, String ImportFileName)
+    throws Exception
+      {
+        LOG.info("");
+        LOG.info("");
+        LOG.info("");
+        LOG.info("=======================================================================================================================");
+        LOG.info("== Reading Import file: "+ImportFileName);
         LOG.info("=======================================================================================================================");
         Reader R = FileUtil.getReaderFromFileOrResource(ImportFileName);
 
-        Pattern P = Pattern.compile("\\.*\\_tilda\\.([^\\.]+)\\.sampledata\\.([^\\.]+)\\.json\\z");
+        Pattern P = Pattern.compile("\\.*\\_tilda\\.([^\\.]+)\\.([a-zA-Z][_\\-a-zA-Z0-9]*)\\.([^\\.]+)\\.json\\z");
         Matcher M = P.matcher(ImportFileName);
         if (M.find() == false)
-          throw new Exception("The argument '" + ImportFileName + "' is invalid: it should match the format '_tilda.'+<SchemaName>+'.sampledata.'+<samplesPackage>+'.json'.");
+          throw new Exception("The argument '" + ImportFileName + "' is invalid: it should match the format '_tilda.'+<SchemaName>+'.<identifier>.'+<samplesPackage>+'.json'.");
         String SchemaName = M.group(1);
-        String SamplePackageName = OverridePackageName == null ? M.group(2) : OverridePackageName;
+        String SamplePackageName = OverridePackageName == null ? M.group(3) : OverridePackageName;
 
         String SchemaPackage = ConnectionPool.getSchemaPackage(SchemaName);
         if (SchemaPackage == null)
@@ -142,17 +203,14 @@ public class Import
           }
         catch (ClassNotFoundException E)
           {
-            throw new Exception("The root importer class as inferred from the input file '" + ImportFileName + "' cannot be found in the classpath.");
+            throw new Exception("The root importer class '"+RootClassName+"' as inferred from the input file '" + ImportFileName + "' cannot be found in the classpath.");
           }
 
-        long T = System.nanoTime();
+        // long T = System.nanoTime();
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         Importer I = (Importer) gson.fromJson(R, RootClass);
+        // TODO OPTIONAL: Print Time taken to read File
         R.close();
-        int Total = I.process(C);
-        T = System.nanoTime() - T;
-
-        LOG.info("Processed " + Total + " records in " + DurationUtil.getDurationSeconds(T) + "s (" + DurationUtil.PrintPerformancePerMinute(T, Total) + " records/mn).");
-        return Total;
+        return I;        
       }
   }

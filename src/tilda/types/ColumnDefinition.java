@@ -22,6 +22,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.db.Connection;
+import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 
 public class ColumnDefinition
@@ -37,15 +38,67 @@ public class ColumnDefinition
         _Collection = Collection;
         if (Count < 64)
           {
-            _FirstMask = true;
+            _MaskId = 1;
             _Mask1 = 1L << Count;
             _Mask2 = 0;
+            _Mask3 = 0;
+            _Mask4 = 0;
+            _Mask5 = 0;
+            _Mask6 = 0;
+          }
+        else if (Count < 64*2)
+          {
+            _MaskId = 2;
+            _Mask1 = 0;
+            _Mask2 = 1L << Count;
+            _Mask3 = 0;
+            _Mask4 = 0;
+            _Mask5 = 0;
+            _Mask6 = 0;
+          }
+        else if (Count < 64*3)
+          {
+            _MaskId = 3;
+            _Mask1 = 0;
+            _Mask2 = 0;
+            _Mask3 = 1L << Count;
+            _Mask4 = 0;
+            _Mask5 = 0;
+            _Mask6 = 0;
+          }
+        else if (Count < 64*4)
+          {
+            _MaskId = 4;
+            _Mask1 = 0;
+            _Mask2 = 0;
+            _Mask3 = 0;
+            _Mask4 = 1L << Count;
+            _Mask5 = 0;
+            _Mask6 = 0;
+          }
+        else if (Count < 64*5)
+          {
+            _MaskId = 5;
+            _Mask1 = 0;
+            _Mask2 = 0;
+            _Mask3 = 0;
+            _Mask4 = 0;
+            _Mask5 = 1L << Count;
+            _Mask6 = 0;
+          }
+        else if (Count < 64*6)
+          {
+            _MaskId = 6;
+            _Mask1 = 0;
+            _Mask2 = 0;
+            _Mask3 = 0;
+            _Mask4 = 0;
+            _Mask5 = 0;
+            _Mask6 = 1L << Count;
           }
         else
           {
-            _FirstMask = false;
-            _Mask1 = 0;
-            _Mask2 = 1L << Count;
+            throw new Error("Trying to instanciate a column that requires a _Mask with more than 192 bits.");
           }
         _Description = Description;
       }
@@ -57,9 +110,13 @@ public class ColumnDefinition
 
     public final ColumnType _Type;
     public final boolean    _Collection;
-    public final boolean    _FirstMask;  
+    public final int        _MaskId;  
     public final long       _Mask1;
     public final long       _Mask2;
+    public final long       _Mask3;
+    public final long       _Mask4;
+    public final long       _Mask5;
+    public final long       _Mask6;
     
     public String getSchemaName()
       {
@@ -75,11 +132,36 @@ public class ColumnDefinition
       {
         C.getFullColumnVar(Str, null, _TableName, _ColumnName);
       }
+    public String getFullColumnVarForSelect(Connection C)
+      {
+        StringBuilder Str = new StringBuilder();
+        getFullColumnVarForSelect(C, Str);
+        return Str.toString();
+      }
 
     public void getShortColumnVarForSelect(Connection C, StringBuilder Str)
       {
         C.getFullColumnVar(Str, null, null, _ColumnName);
       }
+    public String getShortColumnVarForSelect(Connection C)
+      {
+        StringBuilder Str = new StringBuilder();
+        C.getFullColumnVar(Str, null, null, _ColumnName);
+        return Str.toString();
+      }
+    
+    
+    public void getColumnType(Connection C, StringBuilder Str, ColumnType T, Integer S, ColumnMode M, boolean Collection)
+      {
+        C.getColumnType(Str, T, S, M, Collection);
+      }
+    public String getColumnType(Connection C, ColumnType T, Integer S, ColumnMode M, boolean Collection)
+      {
+        StringBuilder Str = new StringBuilder();
+        getColumnType(C, Str, T, S, M, Collection);
+        return Str.toString();
+      }
+    
 
 
     public void getFullColumnVarForInsert(Connection C, StringBuilder Str)

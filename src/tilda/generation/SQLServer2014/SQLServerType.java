@@ -29,6 +29,7 @@ public enum SQLServerType
     FLOAT   ("real"            , "varchar" , ColumnType.FLOAT   ),
     DOUBLE  ("double precision", "varchar" , ColumnType.DOUBLE  ),
     BOOLEAN ("bit"             , "integer" , ColumnType.BOOLEAN ),
+    DATE    ("date"            , null      , ColumnType.DATE    ),
     DATETIME("datetimeoffset"  , null      , ColumnType.DATETIME),
     BINARY  ("varbinary"       , null      , ColumnType.BINARY  ),
     BITFIELD("integer"         , null      , ColumnType.BITFIELD);

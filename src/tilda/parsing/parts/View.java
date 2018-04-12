@@ -20,12 +20,14 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.db.stores.DBType;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMapperMode;
 import tilda.enums.ColumnMode;
@@ -52,19 +54,25 @@ public class View extends Base
     @SerializedName("countStar"     ) public String                _CountStar;
     @SerializedName("subQuery"      ) public SubWhereClause        _SubQuery;
     @SerializedName("pivot"         ) public ViewPivot             _Pivot;
+    @SerializedName("timeSeries"    ) public ViewTimeSeries        _TimeSeries;
+    @SerializedName("distinctOn"    ) public ViewDistinctOn        _DistinctOn;
     @SerializedName("pivotColumns"  ) public List<ViewPivotColumn> _PivotColumns;
     @SerializedName("realize"       ) public ViewRealize           _Realize;
     @SerializedName("importFormulas") public String[]              _ImportFormulas = new String[] { };
     @SerializedName("formulaColumns") public List<Formula>         _Formulas = new ArrayList<Formula>();
+    @SerializedName("dbOnly"        ) public boolean               _DBOnly = false;
     /*@formatter:on*/
 
     public transient boolean     _OCC            = false;
+    public transient PrimaryKey  _PK             = null;
+    public transient Pattern     _ViewColumnsRegEx;
+    public transient Pattern     _FormulasRegEx;
 
     @Override
     public Column getColumn(String name)
       {
         for (ViewColumn C : _ViewColumns)
-          if (C != null && C._Name != null && C._Name.equalsIgnoreCase(name) == true)
+          if (C != null && C._Name != null && C._Name.equals(name) == true)
             return C._SameAsObj;
         return null;
       }
@@ -104,17 +112,35 @@ public class View extends Base
         return "View";
       }
 
-    public ViewJoin getViewjoin(String ObjectName)
+    public ViewJoin getViewjoin(String ObjectName, String As)
       {
+//        LOG.debug("ObjectName: "+ObjectName+"; As: "+As+";");
+//        if (ObjectName.equalsIgnoreCase("AssessmentOasis_Fact") == true)
+//         LOG.debug("HELLO!");
+        
         if (_Joins != null)
           for (ViewJoin vj : _Joins)
-            if (vj != null && vj._ObjectObj.getBaseName().equals(ObjectName) == true)
+            if (vj != null && vj._ObjectObj.getBaseName().equals(ObjectName) == true 
+                           && (TextUtil.isNullOrEmpty(As)==true || As.equals(vj._As) == true))
               return vj;
         return null;
       }
+    
+    public String getRealizedTableName(boolean includeSchemaName)
+     {
+       return _Realize == null ? null : (includeSchemaName==true?_ParentSchema._Name+".":"")+_Name.substring(0, _Name.length() - (_Pivot != null ? "PivotView" : "View").length()) + "Realized";
+     }
+    
+    public static String getRootViewName(String Name)
+     {
+       return Name.substring(0, Name.length() - (Name.endsWith("PivotView") ==true ? "PivotView" : "View").length());
+     }
 
     public boolean Validate(ParserSession PS, Schema ParentSchema)
       {
+//        if (_Name.equalsIgnoreCase("QualityEpisodeOasis_View") == true)
+//         LOG.debug("Hello!!!!");
+//        
         if (super.Validate(PS, ParentSchema) == false)
           return false;
 
@@ -131,8 +157,18 @@ public class View extends Base
         Set<String> ColumnNames = new HashSet<String>();
         Set<String> ObjectNames = new HashSet<String>();
         String CreatedColObjName = null;
+        String CreatedETLColObjName = null;
         String LastUpdatedColObjName = null;
+        String LastUpdatedETLColObjName = null;
         String DeletedColObjName = null;
+        
+        if (_Name.equalsIgnoreCase("QualityEpisodeOasis_View") == true)
+          {
+            LOG.debug("View columns for "+getShortName()+".");
+            for (ViewColumn VC : _ViewColumns)
+             LOG.debug("  column: "+VC._SameAs+"; As: "+VC._As+"; Name: "+VC._Name+";");
+            LOG.debug("Hello!!!!");
+          }
         for (int i = 0; i < _ViewColumns.size(); ++i)
           {
             ViewColumn VC = _ViewColumns.get(i);
@@ -144,7 +180,7 @@ public class View extends Base
                 continue;
               }
 
-            if (VC._SameAs.endsWith(".*") == true)
+            if (VC._SameAs != null && VC._SameAs.endsWith(".*") == true)
               {
                 _ViewColumns.remove(i);
                 VC._SameAs = VC._SameAs.substring(0, VC._SameAs.length() - 2);
@@ -160,19 +196,71 @@ public class View extends Base
                         if (V._Validated == false)
                           return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " which has failed validation.");
                         int j = 0;
+                        int vcColCount = -1;
                         for (ViewColumn col : V._ViewColumns)
                           {
-                            if (col._FrameworkGenerated == true)
+                            ++vcColCount;
+                            if (col._FrameworkGenerated == true && col._SameAs != null && col._SameAs.equals("_TS.p") == false)
                               continue;
-                            VC = new ViewColumn();
-                            VC._SameAs = col.getFullName();
-                            VC._Name = Prefix + col._Name;
-                            _ViewColumns.add(i + j, VC);
+                            if (TextUtil.FindElement(VC._Exclude, col._Name, false, 0) != -1)
+                              continue;
+                            if (col._JoinOnly == true)
+                              continue;
+                            if (V._Pivot != null && vcColCount >= V._ViewColumns.size() - 2) // (V._TimeSeries!=null?2:3))
+                              break;
+                            ViewColumn NewVC = new ViewColumn();
+                            NewVC._SameAs = col.getFullName();
+                            NewVC._As = VC._As;
+                            NewVC._Name = Prefix + col._Name;
+                            NewVC._FrameworkGenerated = col._FrameworkGenerated;
+                            _ViewColumns.add(i + j, NewVC);
+                            _PadderColumnNames.track(NewVC.getName());
+                            ++j;
+                          }
+                        if (V._Pivot != null)
+                          {
+                            for (Value VPV : V._Pivot._Values)
+                              {
+                                if (TextUtil.FindElement(VC._Exclude, TextUtil.Print(VPV._Name, VPV._Value), false, 0) != -1)
+                                  continue;
+                                ViewColumn NewVC = new ViewColumn();
+                                NewVC._SameAs = V.getShortName() + "." + TextUtil.Print(VPV._Name, VPV._Value);
+                                NewVC._As = VC._As;
+                                NewVC._Name = Prefix + TextUtil.Print(VPV._Name, VPV._Value);
+                                _ViewColumns.add(i + j, NewVC);
+                                _PadderColumnNames.track(NewVC.getName());
+                                ++j;
+                              }
+                          }
+                        for (Formula F : V._Formulas)
+                          {
+                            if (TextUtil.FindElement(VC._Exclude, F._Name, false, 0) != -1)
+                              continue;
+                            ViewColumn NewVC = new ViewColumn();
+                            NewVC._SameAs = V.getFullName() + "." + F._Name;
+                            NewVC._Name = Prefix + F._Name;
+                            NewVC._As = VC._As;
+                            _ViewColumns.add(i + j, NewVC);
+                            _PadderColumnNames.track(NewVC.getName());
+                            ++j;
+                          }
+                        if (V._Pivot == null && TextUtil.isNullOrEmpty(V._CountStar) == false)
+                          {
+                            ViewColumn NewVC = new ViewColumn();
+                            NewVC._SameAs = V.getFullName() + "." + V._CountStar;
+                            NewVC._As = VC._As;
+                            NewVC._Name = Prefix + V._CountStar;
+                            NewVC._Aggregate = AggregateType.COUNT;
+                            _ViewColumns.add(i + j, NewVC);
+                            _PadderColumnNames.track(NewVC.getName());
                             ++j;
                           }
                       }
                     else
                       {
+                        Schema S = PS.getSchema(R._P, R._S);
+                        if (S == null)
+                          return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " resolving to '" + R.getFullName() + "' with a schema which cannot be found. Please check the declared dependencies for this schema.");
                         Object O = PS.getObject(R._P, R._S, R._O);
                         if (O == null)
                           return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " resolving to '" + R.getFullName() + "' which cannot be found.");
@@ -183,9 +271,11 @@ public class View extends Base
                           {
                             if (col._FrameworkManaged == true)
                               continue;
+                            ViewColumn OldVC = VC;
                             VC = new ViewColumn();
                             VC._SameAs = col.getFullName();
-                            VC._Name = Prefix + col._Name;
+                            VC._As = OldVC._As;
+                            VC._Name = Prefix + col.getName();
                             _ViewColumns.add(i + j, VC);
                             ++j;
                           }
@@ -196,21 +286,25 @@ public class View extends Base
               }
             else if (TextUtil.isNullOrEmpty(VC._Prefix) == false)
               PS.AddError("Column '" + VC.getFullName() + "' defined a prefix but is not a .* column.");
-
-
+            
             if (VC.Validate(PS, this) == false)
               return false;
 
-            if (ColumnNames.add(VC.getName().toUpperCase()) == false)
+            if (VC._JoinOnly == false && ColumnNames.add(VC.getName().toUpperCase()) == false)
               PS.AddError("Column '" + VC.getFullName() + "' is defined more than once in View '" + getFullName() + "'.");
 
             if (VC.getName().equals("created") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "created")) == true)
               CreatedColObjName = VC._SameAsObj._ParentObject.getFullName();
+            if (VC.getName().equals("createdETL") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "createdETL")) == true)
+              CreatedETLColObjName = VC._SameAsObj._ParentObject.getFullName();
             else if (VC.getName().equals("lastUpdated") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "lastUpdated")) == true)
               LastUpdatedColObjName = VC._SameAsObj._ParentObject.getFullName();
+            else if (VC.getName().equals("lastUpdatedETL") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "lastUpdatedETL")) == true)
+              LastUpdatedETLColObjName = VC._SameAsObj._ParentObject.getFullName();
             else if (VC.getName().equals("deleted") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "deleted")) == true)
               DeletedColObjName = VC._SameAsObj._ParentObject.getFullName();
 
+            // LOG.debug("VC: " + VC._Name + "; VC._SameAsObj: " + VC._SameAsObj + "; VC._SameAsObj._ParentObject: " + VC._SameAsObj._ParentObject + ";");
             if (ObjectNames.add(VC._SameAsObj._ParentObject.getFullName()) == false)
               {
                 if (VC._Join != null)
@@ -220,12 +314,13 @@ public class View extends Base
               {
                 PS.AddError("Column '" + VC.getFullName() + "' is defining a join type: columns of the first refered table are considered part of the 'from' clause of a view and cannot define a join type.");
               }
-            if (VC._SameAsObj._Type == ColumnType.DATETIME && Object.isOCCColumn(VC._SameAsObj) == false)
+            if (VC._SameAsObj._Type == ColumnType.DATETIME && Object.isOCCColumn(VC._SameAsObj) == false && VC._Aggregate == null && VC._FrameworkGenerated == false && VC._SameAsObj._FrameworkManaged == false)
               {
                 ViewColumn TZCol = new ViewColumn();
                 TZCol._SameAs = VC._SameAs + "TZ";
                 TZCol._FrameworkGenerated = true;
                 TZCol._Name = VC._Name == null ? null : VC._Name + "TZ";
+                TZCol._As = VC._As;
                 TZCol.Validate(PS, this);
                 _ViewColumns.add(i, TZCol);
                 ++i;
@@ -241,43 +336,126 @@ public class View extends Base
                   CreateMappedViewColumn(PS, ColumnNames, i++, VC, "Name");
               }
           }
+        if (_Name.equalsIgnoreCase("QualityEpisodeOasis_View") == true)
+          {
+            LOG.debug("View columns for "+getShortName()+" AFTER unrolling.");
+            for (ViewColumn VC : _ViewColumns)
+             LOG.debug("  column: "+VC._SameAs+"; As: "+VC._As+"; Name: "+VC._Name+";");
+            LOG.debug("Hello!!!!");
+          }
+        
+
+        if (_TimeSeries != null)
+          {
+            if (_TimeSeries.Validate(PS, this) == true)
+              {
+                int firstAgg = -1;
+                if (_DistinctOn == null)
+                  {
+                    for (int i = 0; i < _ViewColumns.size(); ++i)
+                      {
+                        ViewColumn VC = _ViewColumns.get(i);
+                        if (VC._Aggregate != null)
+                          {
+                            firstAgg = i;
+                            break;
+                          }
+                      }
+                    if (firstAgg == -1 && _CountStar != null)
+                      firstAgg = _ViewColumns.size();
+                  }
+                else
+                  {
+                    int offset = 0;
+                    for (int i = 0; i < _DistinctOn._Columns.length; ++i)
+                      {
+                        if (getColumn(_DistinctOn._Columns[i]) != null && getColumn(_DistinctOn._Columns[i])._Type == ColumnType.DATETIME)
+                          ++offset;
+                        if (_DistinctOn._Columns[i].equals(_TimeSeries._Name) == true)
+                          {
+                            firstAgg = i + offset;
+                            if (_Pivot != null)
+                              ++firstAgg;
+                            break;
+                          }
+                      }
+                    if (firstAgg == -1)
+                      firstAgg = _DistinctOn._Columns.length + offset;
+                  }
+
+                if (firstAgg == -1)
+                  PS.AddError("The View '" + getFullName() + "' is defining a time series without having defined any aggregate column or distinct on.");
+                else
+                  {
+                    if (_Pivot != null)
+                      --firstAgg;
+                    ViewColumn VC = new ViewColumn();
+                    VC._SameAs = "_TS.p";
+                    VC._Name = _TimeSeries._Name;
+                    VC._FrameworkGenerated = true;
+                    VC._ParentView = this;
+                    _ViewColumns.add(firstAgg, VC);
+                  }
+              }
+          }
+
+        if (_DistinctOn != null)
+          {
+            _DistinctOn.Validate(PS, this);
+            for (ViewColumn VC : _ViewColumns)
+              if (VC._Aggregate != null)
+                {
+                  PS.AddError("View '" + getFullName() + "' is defining a DistinctOn and Aggregate columns: only one or the other is allowed.");
+                  break;
+                }
+            if (_CountStar != null)
+              PS.AddError("View '" + getFullName() + "' is defining a DistinctOn and a CountStar: only one or the other is allowed.");
+          }
+
 
         if (_PivotColumns != null)
-          for (ViewPivotColumn PVC : _PivotColumns)
-            {
-              if (PVC.Validate(PS, this) == true)
-                {
-                  ViewJoin VJ = new ViewJoin();
-                  VJ._Object = PVC._SourceStr;
-                  Query Q = new Query();
-                  Q._DB = "*";
-                  StringBuilder Str = new StringBuilder();
-                  for (int i = 0; i < PVC._Join.size(); ++i)
-                    {
-                      if (i != 0)
-                        Str.append(" and ");
-                      ViewJoinSimple VJS = PVC._Join.get(i);
-                      Str.append(VJS._FromCol._ParentView._Name).append(".\"").append(VJS._FromCol._Name).append("\" = ").append(VJS._ToCol._SameAsObj._ParentObject._Name).append(".\"").append(VJS._ToCol._Name).append("\"");
-                    }
-                  Q._Clause = Str.toString();
-                  VJ._Ons = new Query[] { Q
-                  };
-                  VJ._JoinStr = JoinType.LEFT.name();
-                  _Joins.add(VJ);
+          {
+            Set<String> PivotNames = new HashSet<String>();
+            for (ViewPivotColumn PVC : _PivotColumns)
+              {
+                if (PivotNames.add(PVC._SourceStr) == false)
+                  {
+                    PS.AddError("The PivotView '" + PVC._SourceStr + "' is defined more than once in View '" + getFullName() + "'.");
+                    break;
+                  }
+                if (PVC.Validate(PS, this) == true)
+                  {
+                    ViewJoin VJ = new ViewJoin();
+                    VJ._Object = PVC._SourceStr;
+                    Query Q = new Query();
+                    Q._DB = "*";
+                    StringBuilder Str = new StringBuilder();
+                    for (int i = 0; i < PVC._Join._FromCol.size(); ++i)
+                      {
+                        if (i != 0)
+                          Str.append(" and ");
+                        Str.append(PVC._Join._FromCol.get(i)._ParentView._Name).append(".\"").append(PVC._Join._FromCol.get(i)._Name).append("\" = ")
+                        .append(PVC._Join._ToCol.get(i)._SameAsObj._ParentObject._Name).append(".\"").append(PVC._Join._ToCol.get(i)._Name).append("\"");
+                      }
+                    Q._Clause = Str.toString();
+                    VJ._Ons = new Query[] { Q
+                    };
+                    VJ._JoinStr = JoinType.LEFT.name();
+                    _Joins.add(VJ);
 
-                  String Prefix = TextUtil.Print(PVC._Prefix, "");
-                  for (Value VPV : PVC._Source._Pivot._Values)
-                    {
-                      ViewColumn VC = new ViewColumn();
-                      VC._SameAs = PVC._SourceStr + "." + VPV._Value;
-                      VC._Name = Prefix + VPV._Value;
-                      VC.Validate(PS, this);
-                      _ViewColumns.add(VC);
-                      _PadderColumnNames.track(VC.getName());
-                    }
-                }
-            }
-
+                    String Prefix = TextUtil.Print(PVC._Prefix, "");
+                    for (Value VPV : PVC._Source._Pivot._Values)
+                      {
+                        ViewColumn VC = new ViewColumn();
+                        VC._SameAs = PVC._SourceStr + "." + TextUtil.Print(VPV._Name, VPV._Value);
+                        VC._Name = Prefix + TextUtil.Print(VPV._Name, VPV._Value);
+                        VC.Validate(PS, this);
+                        _ViewColumns.add(VC);
+                        _PadderColumnNames.track(VC.getName());
+                      }
+                  }
+              }
+          }
         if (TextUtil.isNullOrEmpty(_CountStar) == false)
           {
             ViewColumn CountCol = new ViewColumn();
@@ -306,7 +484,9 @@ public class View extends Base
           }
 
         if (TextUtil.isNullOrEmpty(_SubWhere) == false && _SubQuery != null)
-          PS.AddError("View '" + getFullName() + "' is defining both a subWhere AND a subQuery: only one is allowed.");
+          PS.AddError("View '" +
+
+          getFullName() + "' is defining both a subWhere AND a subQuery: only one is allowed.");
         else
           {
             if (TextUtil.isNullOrEmpty(_SubWhere) == false)
@@ -326,9 +506,16 @@ public class View extends Base
               }
           }
 
+        Set<String> JoinObjectNames = new HashSet<String>();
         if (_Joins != null)
           for (ViewJoin VJ : _Joins)
-            VJ.Validate(PS, this);
+            {
+              if (VJ == null)
+                continue;
+              VJ.Validate(PS, this);
+              if (JoinObjectNames.add(VJ._ObjectObj.getShortName() + " on " + VJ.getQuery(DBType.Postgres)) == false)
+                PS.AddError("View '" + getFullName() + "' is defining a a duplicate join with object " + VJ._ObjectObj.getShortName() + ".");
+            }
 
         if (_Pivot != null)
           {
@@ -343,41 +530,59 @@ public class View extends Base
         O._Json = _Json;
         O._LCStr = ObjectLifecycle.READONLY.name();
         O._OCC = _OCC;
+        int Counter = -1;
         for (ViewColumn VC : _ViewColumns)
           {
             if (_Pivot != null && VC._Name.equals(_Pivot._ColumnName) == true)
               break;
             if (VC != null && VC._FrameworkGenerated == false && VC._JoinOnly == false)
               {
-                if (_OCC == false || VC.getName().equals("created") == false && VC.getName().equals("lastUpdated") == false && VC.getName().equals("deleted") == false)
-                  {
-                    O._Columns.add(new ViewColumnWrapper(VC._SameAsObj, VC));
-                  }
+                O._Columns.add(new ViewColumnWrapper(VC._SameAsObj, VC, ++Counter));
               }
           }
+        if (TextUtil.isNullOrEmpty(_CountStar) == false)
+          {
+            ColumnType Type = ColumnType.LONG;
+            Column C = new Column(_CountStar, Type.name(), 0, true, ColumnMode.NORMAL, true, null, "Count column");
+            O._Columns.add(C);
+          }
 
-        if (_Pivot != null)
-          for (Value VPV : _Pivot._Values)
-            {
-              ColumnType Type = _CountStar != null ? ColumnType.INTEGER : _Pivot._VC._SameAsObj.getType();
-              Column C = new Column(VPV._Value, Type.name(), Type == ColumnType.STRING ? _Pivot._VC._SameAsObj._Size : 0,
-              true, ColumnMode.NORMAL, true, null,
-              "Pivoted count from column '" + _Pivot._VC._SameAsObj.getShortName() + "'='" + VPV._Value + "', " + VPV._Description);
-              O._Columns.add(C);
-            }
+        if (_Pivot != null && _Pivot._Values != null)
+          {
+            ViewColumn VC = _ViewColumns.get(_ViewColumns.size() - 1);
+            ColumnType Type = VC.getAggregateType();
+            for (Value VPV : _Pivot._Values)
+              {
+                Column C = new Column(TextUtil.Print(VPV._Name, VPV._Value), Type.name(), Type == ColumnType.STRING ? _Pivot._VC._SameAsObj._Size : 0,
+                true, ColumnMode.NORMAL, true, null,
+                VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + _Pivot._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')");
+                O._Columns.add(C);
+              }
+          }
+        if (_TimeSeries != null)
+          {
+            ColumnType Type = ColumnType.DATE;
+            Column C = new Column(_TimeSeries._Name, Type.name(), 0, true, ColumnMode.NORMAL, true, null, "Timeseries period");
+            C._FrameworkManaged = true;
+            O._Columns.add(C);
+          }
 
         if (_ImportFormulas != null)
           for (String s : _ImportFormulas)
             {
-              String[] parts = s.split("\\.");
-              View V = _ParentSchema.getView(parts[0]);
+              if (TextUtil.isNullOrEmpty(s) == true)
+                continue;
+              ReferenceHelper R = ReferenceHelper.parseColumnReference(s, this);
+              if (TextUtil.isNullOrEmpty(R._O) == true || TextUtil.isNullOrEmpty(R._C) == true)
+                PS.AddError("View '" + getFullName() + "' is importing formula '" + s + "' which cannot be parsed as a reference.");
+              View V = PS.getView(R._P, R._S, R._O);
               if (V == null)
-                PS.AddError("View '" + getFullName() + "' is importing formula '" + parts[1] + "' from view '" + parts[0] + "' which cannot be found in this schema.");
+                PS.AddError("View '" + getFullName() + "' is importing formula '" + s + "' from view '" + R._S + "." + R._O + "' which cannot be found.");
               else
                 {
-                  Formula F = V.getFormula(parts[1]);
+                  Formula F = V.getFormula(R._C);
                   if (F == null)
-                    PS.AddError("View '" + getFullName() + "' is importing formula '" + parts[1] + "' which cannot be found in view '" + parts[0] + "'.");
+                    PS.AddError("View '" + getFullName() + "' is importing formula '" + s + "' which cannot be found in view '" + R._S + "." + R._O + "'.");
                   else
                     {
                       F = new Formula(F);
@@ -387,25 +592,106 @@ public class View extends Base
                 }
             }
 
+        Set<String> Formulas = new HashSet<String>();
         if (_Formulas != null)
           for (Formula F : _Formulas)
-            F.Validate(PS, this);
+            if (F != null)
+              {
+                if (Formulas.add(F._Name) == false)
+                  PS.AddError("View '" + getFullName() + "' is defining formula '" + F._Name + "' more than once.");
+                else
+                  {
+                    F.Validate(PS, this);
+                    Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "Formula column: " + F._Title);
+                    O._Columns.add(C);
+                  }
+              }
 
-        if (_Formulas != null)
-          for (Formula F : _Formulas)
-            {
-              Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "Formula column: " + F._Title);
-              O._Columns.add(C);
-            }
+        // Preparing regexes for anything that needs to do search and replace.
+        StringBuffer Str = new StringBuffer();
+        for (ViewColumn VC : _ViewColumns)
+          {
+            if (Str.length() != 0)
+              Str.append("|");
+            Str.append(VC._Name);
+          }
+        _ViewColumnsRegEx = Pattern.compile("\\b(" + Str.toString() + ")\\b");
 
+        Str.setLength(0);
+        for (Formula F : _Formulas)
+          {
+            if (F == null)
+              continue;
+            if (Str.length() != 0)
+              Str.append("|");
+            Str.append(F._Name);
+          }
+        _FormulasRegEx = Pattern.compile("\\b(" + Str.toString() + ")\\b");
+
+        PrimaryKey PK = _ViewColumns.get(0)._SameAsObj._ParentObject._PrimaryKey;
+        if (PK != null)
+          {
+            if (PK._Autogen == true && getSameAsColumn(PK._ParentObject.getFullName(), "refnum") != null)
+              {
+                O._PrimaryKey = new PrimaryKey();
+                O._PrimaryKey._Columns = new String[] { _ViewColumns.get(0)._Name
+                };
+                _PK = O._PrimaryKey;
+              }
+            else
+              {
+                int countFound = -1;
+                String[] ColNames = new String[PK._ColumnObjs.size()];
+                for (Column C : PK._ColumnObjs)
+                  {
+                    ViewColumn VC = getViewColumnFromSameAsColumn(C._ParentObject.getFullName(), C._Name);
+                    if (VC != null)
+                      ColNames[++countFound] = VC._Name;
+                    else
+                      break;
+                  }
+                if (countFound == PK._ColumnObjs.size() - 1)
+                  {
+                    O._PrimaryKey = new PrimaryKey();
+                    O._PrimaryKey._Columns = ColNames;
+                    _PK = O._PrimaryKey;
+                  }
+              }
+          }
+
+        O._DBOnly = _DBOnly;
         _ParentSchema._Objects.add(O);
         O.Validate(PS, ParentSchema);
 
         if (_Formulas != null)
           Formula.ValidateFormulaCode(PS, this);
 
+        if (_Realize != null)
+          _Realize.Validate(PS, this, new ViewRealizedWrapper(O));
+
+
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
+      }
+
+    private Column getSameAsColumn(String ObjectFullName, String ColName)
+      {
+        for (ViewColumn VC : _ViewColumns)
+          {
+            if (VC._SameAsObj != null && VC._SameAsObj._ParentObject.getFullName().equals(ObjectFullName) == true && VC._SameAsObj.getName().equals(ColName) == true)
+              return VC._SameAsObj;
+          }
+        return null;
+      }
+
+    private ViewColumn getViewColumnFromSameAsColumn(String ObjectFullName, String ColName)
+      {
+        for (ViewColumn VC : _ViewColumns)
+          {
+            if (VC._SameAsObj != null && VC._SameAsObj._ParentObject.getFullName().equals(ObjectFullName) == true && VC._SameAsObj.getName().equals(ColName) == true)
+              return VC;
+          }
+        return null;
       }
 
     private void CreateMappedViewColumn(ParserSession PS, Set<String> ColumnNames, int i, ViewColumn C, String ExtraName)
@@ -423,8 +709,9 @@ public class View extends Base
       {
         if (_Formulas != null)
           for (Formula F : _Formulas)
-            if (F._Name.equalsIgnoreCase(FormulaName) == true)
+            if (F != null && F._Name.equalsIgnoreCase(FormulaName) == true)
               return F;
         return null;
       }
+
   }

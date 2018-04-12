@@ -47,11 +47,12 @@ public class MasterFactory
 
     static class ObjectMetaData
       {
-        protected ObjectMetaData(String PackageName, Object Obj) throws Exception
+        protected ObjectMetaData(String PackageName, Object Obj)
+          throws Exception
           {
             String FactoryClassName = Helper.getFullBaseClassName(Obj) + "_Factory";
             _FactoryClass = Class.forName(FactoryClassName);
-            
+
             _ObjectName = Obj.getShortName();
 
             String ColsClassName = Helper.getFullBaseClassName(Obj) + "_Factory$COLS";
@@ -66,12 +67,13 @@ public class MasterFactory
                 }
 
             _RunSelectMethodList = _FactoryClass.getMethod("runSelect", Connection.class, SelectQuery.class, Integer.TYPE, Integer.TYPE);
-            _RunSelectMethodOP   = _FactoryClass.getMethod("runSelect", Connection.class, SelectQuery.class, ObjectProcessor.class, Integer.TYPE, Integer.TYPE);
+            _RunSelectMethodOP = _FactoryClass.getMethod("runSelect", Connection.class, SelectQuery.class, ObjectProcessor.class, Integer.TYPE, Integer.TYPE);
           }
-        public final String   _ObjectName;
-        public final Class<?> _FactoryClass;
-        public final Method   _RunSelectMethodList;
-        public final Method   _RunSelectMethodOP;
+
+        public final String                 _ObjectName;
+        public final Class<?>               _FactoryClass;
+        public final Method                 _RunSelectMethodList;
+        public final Method                 _RunSelectMethodOP;
         public final List<ColumnDefinition> _Cols = new ArrayList<ColumnDefinition>();
       }
 
@@ -81,37 +83,44 @@ public class MasterFactory
     throws Exception
       {
         String Key = Obj.getShortName();
-        if (_M.get(Key) != null)
-          throw new Exception("Trying to register Tilda Object " + Key + " more than once!");
+        if (_M.get(Key) != null) 
+          {
+            throw new Exception("Trying to register Tilda Object " + Key + " more than once!");
+          }
 
-        ObjectMetaData OMD = new ObjectMetaData(PackageName, Obj);
-        _M.put(Key, OMD);
+        if (Obj._DBOnly == false)
+          {
+            ObjectMetaData OMD = new ObjectMetaData(PackageName, Obj);
+            _M.put(Key, OMD);
+          }
       }
 
-    public static <T> List<T> LookupWhere(Connection C, Class<T> DataClass, String WhereClause, int Start, int Size) throws Exception
+    public static <T> List<T> LookupWhere(Connection C, Class<T> DataClass, String WhereClause, int Start, int Size)
+    throws Exception
       {
         String ObjectName = (String) DataClass.getField("TABLENAME").get(null);
         ObjectMetaData OMD = _M.get(ObjectName);
         if (OMD == null)
-         {
-           LOG.error("Unknown Tilda object "+ObjectName);
-           return null;
-         }
+          {
+            LOG.error("Unknown Tilda object " + ObjectName);
+            return null;
+          }
         SelectQueryParsedAndValidated SQPV = new SelectQueryParsedAndValidated(OMD, WhereClause);
         return SQPV.execute(C, Start, Size);
       }
-    
-    public static <T> void LookupWhere(Connection C, Class<T> DataClass, ObjectProcessor<T> OP, String WhereClause, int Start, int Size) throws Exception
+
+    public static <T> void LookupWhere(Connection C, Class<T> DataClass, ObjectProcessor<T> OP, String WhereClause, int Start, int Size)
+    throws Exception
       {
         String ObjectName = (String) DataClass.getField("TABLENAME").get(null);
         ObjectMetaData OMD = _M.get(ObjectName);
         if (OMD == null)
-         {
-           LOG.error("Unknown Tilda object "+ObjectName);
-           return;
-         }
+          {
+            LOG.error("Unknown Tilda object " + ObjectName);
+            return;
+          }
         SelectQueryParsedAndValidated SQPV = new SelectQueryParsedAndValidated(OMD, WhereClause);
         SQPV.execute(C, OP, Start, Size);
       }
-    
+
   }

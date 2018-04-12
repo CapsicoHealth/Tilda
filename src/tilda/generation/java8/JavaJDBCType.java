@@ -16,6 +16,7 @@
 
 package tilda.generation.java8;
 
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 
 import tilda.enums.ColumnType;
@@ -35,6 +36,7 @@ public enum JavaJDBCType
     FLOAT   ("float"        , Float.class        , "Float    ", "FLOAT  "                , ColumnType.FLOAT   ),
     DOUBLE  ("double"       , Double.class       , "Double   ", "DOUBLE "                , ColumnType.DOUBLE  ),
     BOOLEAN ("boolean"      , Boolean.class      , "Boolean  ", "BOOLEAN"                , ColumnType.BOOLEAN ),
+    DATE    ("LocalDate"    , LocalDate.class    , "Date     ", "DATE"                   , ColumnType.DATE    ),
     DATETIME("ZonedDateTime", ZonedDateTime.class, "Timestamp", "TIMESTAMP_WITH_TIMEZONE", ColumnType.DATETIME),
     BINARY  ("byte[]"       , byte[].class       , "Bytes    ", "BINARY "                , ColumnType.BINARY  ),
     BITFIELD("int"          , Integer.class      , "Int      ", "BIGINT "                , ColumnType.BITFIELD);

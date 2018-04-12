@@ -23,44 +23,269 @@ import org.apache.logging.log4j.Logger;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
-<DIV id='ZONEINFO_DIV'>
-<H1>ZONEINFO&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 60%;"><A href="#">top</A></SUP></H1>
-The generated Java 8/PostgreSQL Tilda data class <B>Data_ZONEINFO</B> is mapped to the table <B>TILDA.ZONEINFO</B>.
+<DIV>
+<DIV id='ZONEINFO_DIV' class='tables'>
+<H2>ZONEINFO&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 60%;"><A href="#">top</A></SUP></H2>
+</DIV>
+The generated Java 8/PostgreSQL Tilda data class <B>Data_ZONEINFO</B> is mapped to the Table <B>TILDA.ZONEINFO</B>.
 <UL>
 
-<LI>The Object has normal <B>read/write</B> capabilities.</LI>
-<LI>The Object is OCC-enabled. Default created/lastUpdated/deleted columns will be automatically generated.</LI>
+<LI>The Table has normal <B>read/write</B> capabilities.</LI>
+<LI>The Table is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
 </UL>
 <B>Description</B>: blah blah<BR>
 <BR>
+
 It contains the following columns:<BR>
- <TABLE border="0px" cellpadding="3px" cellspacing="0px">
+ <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
    <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><!--TH align="left">Column</TH--><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
 
-  <TR valign="top" bgcolor="#DFECF8"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>id</B>&nbsp;&nbsp;</TD><TD>String&nbsp;&nbsp;</TD><TD>character(5)&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&#x2611;&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The id for this enumeration.</TD></TR>
-  <TR valign="top" bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>value</B>&nbsp;&nbsp;</TD><TD>String&nbsp;&nbsp;</TD><TD>varchar(50)&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&#x2611;&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The value for this enumeration.</TD></TR>
-  <TR valign="top" bgcolor="#DFECF8"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>label</B>&nbsp;&nbsp;</TD><TD>String&nbsp;&nbsp;</TD><TD>varchar(254)&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">ABSOLUTE&nbsp;&nbsp;</TD><TD>The label for this enumeration.</TD></TR>
-  <TR valign="top" bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>deactivatedTZ</B>&nbsp;&nbsp;</TD><TD>String&nbsp;&nbsp;</TD><TD>character(5)&nbsp;&nbsp;</TD><TD align="center">&#x2611;&nbsp;&nbsp;</TD><TD align="center">AUTO&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>Generated helper column to hold the time zone ID for 'deactivated'.</TD></TR>
-  <TR valign="top" bgcolor="#DFECF8"><TD>5&nbsp;&nbsp;</TD><TD align="right"><B>deactivated</B>&nbsp;&nbsp;</TD><TD>ZonedDateTime&nbsp;&nbsp;</TD><TD>timestamptz&nbsp;&nbsp;</TD><TD align="center">&#x2611;&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The label for this enumeration.</TD></TR>
-  <TR valign="top" bgcolor="#FFFFFF"><TD>6&nbsp;&nbsp;</TD><TD align="right"><B>created</B>&nbsp;&nbsp;</TD><TD>ZonedDateTime&nbsp;&nbsp;</TD><TD>timestamptz&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">AUTO&nbsp;&nbsp;</TD><TD align="center">&#x2611;&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The timestamp for when the record was created.</TD></TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>1&nbsp;&nbsp;</TD>
+<TD align="right"><B id='ZONEINFO-id_DIV' class='columns'>id</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;&nbsp;</TD>
+<TD>character(5)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The id for this enumeration.</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>2&nbsp;&nbsp;</TD>
+<TD align="right"><B id='ZONEINFO-value_DIV' class='columns'>value</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;&nbsp;</TD>
+<TD>varchar(50)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The value for this enumeration.</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>3&nbsp;&nbsp;</TD>
+<TD align="right"><B id='ZONEINFO-label_DIV' class='columns'>label</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;&nbsp;</TD>
+<TD>varchar(254)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">ABSOLUTE&nbsp;&nbsp;</TD>
+<TD>The label for this enumeration.</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>4&nbsp;&nbsp;</TD>
+<TD onclick="onModalShowClicked('ZONEINFO-deactivatedTZ')" align="right"><B id='ZONEINFO-deactivatedTZ_DIV' class='columns dotted_underline cursor_pointer'>deactivatedTZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;&nbsp;</TD>
+<TD>character(5)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 'deactivated'.</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>5&nbsp;&nbsp;</TD>
+<TD align="right"><B id='ZONEINFO-deactivated_DIV' class='columns'>deactivated</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;&nbsp;</TD>
+<TD>timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The label for this enumeration.</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>6&nbsp;&nbsp;</TD>
+<TD align="right"><B id='ZONEINFO-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;&nbsp;</TD>
+<TD>timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The timestamp for when the record was created.</TD>
+</TR>
   <TR bgcolor="#FFFFFF"><TD></TD><TD></TD><TD colspan="10" align="center">
-<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Creation</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Creation&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Creation time</TD></TR>
+<TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFF2CC"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Creation</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Creation&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Creation time</TD></TR>
 </TABLE>
 </TD></TR>
-  <TR valign="top" bgcolor="#DFECF8"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>lastUpdated</B>&nbsp;&nbsp;</TD><TD>ZonedDateTime&nbsp;&nbsp;</TD><TD>timestamptz&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">AUTO&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The timestamp for when the record was last updated.</TD></TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>7&nbsp;&nbsp;</TD>
+<TD align="right"><B id='ZONEINFO-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;&nbsp;</TD>
+<TD>timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The timestamp for when the record was last updated.</TD>
+</TR>
   <TR bgcolor="#DFECF8"><TD></TD><TD></TD><TD colspan="10" align="center">
-<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Update</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Update&nbsp;&nbsp;</TD><TD>ALWAYS&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Last updated time</TD></TR>
+<TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFF2CC"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Update</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Update&nbsp;&nbsp;</TD><TD>ALWAYS&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Last updated time</TD></TR>
 </TABLE>
 </TD></TR>
-  <TR valign="top" bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>deleted</B>&nbsp;&nbsp;</TD><TD>ZonedDateTime&nbsp;&nbsp;</TD><TD>timestamptz&nbsp;&nbsp;</TD><TD align="center">&#x2611;&nbsp;&nbsp;</TD><TD align="center">AUTO&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD align="center">&nbsp;&nbsp;</TD><TD>The timestamp for when the record was deleted.</TD></TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>8&nbsp;&nbsp;</TD>
+<TD align="right"><B id='ZONEINFO-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;&nbsp;</TD>
+<TD>timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The timestamp for when the record was deleted.</TD>
+</TR>
 </TABLE>
+<DIV id='ZONEINFO-id_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('ZONEINFO-id_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ZONEINFO_DIV'>ZoneInfo</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ZONEINFO-id_DIV'>id</a> -- STRING</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='ZONEINFO-value_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('ZONEINFO-value_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ZONEINFO_DIV'>ZoneInfo</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ZONEINFO-value_DIV'>value</a> -- STRING</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='ZONEINFO-label_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('ZONEINFO-label_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ZONEINFO_DIV'>ZoneInfo</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ZONEINFO-label_DIV'>label</a> -- STRING</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='ZONEINFO-deactivatedTZ_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('ZONEINFO-deactivatedTZ_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ZONEINFO_DIV'>ZoneInfo</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ZONEINFO-deactivatedTZ_DIV'>deactivatedTZ</a></td>
+</tr>
+<tr><td>&nbsp;</td></tr>
+<tr bgcolor="#DFECF8">
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZONEINFO_DIV'>ZoneInfo</a></td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZONEINFO-id_DIV'>id</a> -- STRING</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='ZONEINFO-deactivated_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('ZONEINFO-deactivated_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ZONEINFO_DIV'>ZoneInfo</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ZONEINFO-deactivated_DIV'>deactivated</a> -- DATETIME</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='ZONEINFO-created_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('ZONEINFO-created_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ZONEINFO_DIV'>ZoneInfo</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ZONEINFO-created_DIV'>created</a> -- DATETIME</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='ZONEINFO-lastUpdated_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('ZONEINFO-lastUpdated_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ZONEINFO_DIV'>ZoneInfo</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ZONEINFO-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='ZONEINFO-deleted_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('ZONEINFO-deleted_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ZONEINFO_DIV'>ZoneInfo</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ZONEINFO-deleted_DIV'>deleted</a> -- DATETIME</td>
+</tr>
+</table>
+</DIV></DIV>
 </DIV>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Dec 7 2016, 20:34:29CST
+ @generated Jan 22 2018, 15:28:02EST
 */
 public abstract class TILDA__ZONEINFO implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
@@ -74,12 +299,20 @@ public abstract class TILDA__ZONEINFO implements tilda.interfaces.WriterObject, 
    private InitMode __Init        = null;
    private long     __Nulls1      = 0L;
    private long     __Nulls2      = 0L;
+   private long     __Nulls3      = 0L;
+   private long     __Nulls4      = 0L;
+   private long     __Nulls5      = 0L;
+   private long     __Nulls6      = 0L;
    private long     __Changes1    = 0L;
    private long     __Changes2    = 0L;
+   private long     __Changes3    = 0L;
+   private long     __Changes4    = 0L;
+   private long     __Changes5    = 0L;
+   private long     __Changes6    = 0L;
    private boolean  __NewlyCreated= false;
    private int      __LookupId;
 
-   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L; }
+   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L || __Changes3 != 0L || __Changes4 != 0L || __Changes5 != 0L || __Changes6 != 0L; }
    public  boolean isNewlyCreated() { return __NewlyCreated; }
 
    void initForCreate()
@@ -198,7 +431,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The value for this enumeration.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
@@ -219,7 +452,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The value for this enumeration.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
@@ -240,11 +473,11 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The value for this enumeration.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   protected void setValue(String v) throws Exception
+   public void setValue(String v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
@@ -253,8 +486,6 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.ZONEINFO.value: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 50.");
        else if (v.equals(_value) == false)
         {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.ZONEINFO.value' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes1 |= TILDA__ZONEINFO_Factory.COLS.VALUE._Mask1;
           __Nulls1   &= ~TILDA__ZONEINFO_Factory.COLS.VALUE._Mask1;
        _value = v;
@@ -276,7 +507,7 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The value for this enumeration.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
@@ -622,7 +853,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setDeactivated(ZonedDateTime v) throws Exception
+   public void setDeactivated(ZonedDateTime v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
@@ -660,7 +891,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setNullDeactivated()
+   public void setNullDeactivated()
      {
        long T0 = System.nanoTime();
        if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask1 & __Nulls1) != 0L)
@@ -688,7 +919,7 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    final void setDeactivatedNow() throws Exception
+   public final void setDeactivatedNow() throws Exception
     {
       setDeactivated(DateTimeUtil.NOW_PLACEHOLDER_ZDT);
     }
@@ -710,7 +941,7 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    final void setDeactivatedUndefined() throws Exception
+   public final void setDeactivatedUndefined() throws Exception
     {
       setDeactivated(DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT);
     }
@@ -732,7 +963,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    final void setDeactivated(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
+   public final void setDeactivated(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
       setDeactivated(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
     }
@@ -1053,7 +1284,7 @@ This is the setter for:<BR>
 
 </TABLE>
 */
-    void setLastUpdated(ZonedDateTime v) throws Exception
+   public final void setLastUpdated(ZonedDateTime v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
@@ -1091,7 +1322,7 @@ This is the NOW setter for:<BR>
 
 </TABLE>
 */
-    final void setLastUpdatedNow() throws Exception
+   public final void setLastUpdatedNow() throws Exception
     {
       setLastUpdated(DateTimeUtil.NOW_PLACEHOLDER_ZDT);
     }
@@ -1120,7 +1351,7 @@ This is the UNDEFINED setter for:<BR>
 
 </TABLE>
 */
-    final void setLastUpdatedUndefined() throws Exception
+   public final void setLastUpdatedUndefined() throws Exception
     {
       setLastUpdated(DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT);
     }
@@ -1149,7 +1380,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 
 </TABLE>
 */
-    final void setLastUpdated(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
+   public final void setLastUpdated(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
       setLastUpdated(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
     }
@@ -1263,7 +1494,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setDeleted(ZonedDateTime v) throws Exception
+   public final void setDeleted(ZonedDateTime v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
@@ -1296,7 +1527,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setNullDeleted()
+   public final void setNullDeleted()
      {
        long T0 = System.nanoTime();
        if ((TILDA__ZONEINFO_Factory.COLS.DELETED._Mask1 & __Nulls1) != 0L)
@@ -1324,7 +1555,7 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    final void setDeletedNow() throws Exception
+   public final void setDeletedNow() throws Exception
     {
       setDeleted(DateTimeUtil.NOW_PLACEHOLDER_ZDT);
     }
@@ -1346,7 +1577,7 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    final void setDeletedUndefined() throws Exception
+   public final void setDeletedUndefined() throws Exception
     {
       setDeleted(DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT);
     }
@@ -1368,7 +1599,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    final void setDeleted(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
+   public final void setDeleted(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
       setDeleted(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
     }
@@ -1404,6 +1635,7 @@ This is the hasChanged for:<BR>
 */
    public void CopyTo(tilda.data._Tilda.TILDA__ZONEINFO Dst) throws Exception
      {
+       Dst.setValue        (_value        );
        Dst.setLabel        (_label        );
        if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask1 & __Nulls1) != 0L) Dst.setNullDeactivatedTZ(); else        Dst.setDeactivatedTZ(_deactivatedTZ);
        if ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask1   & __Nulls1) != 0L) Dst.setNullDeactivated  (); else        Dst.setDeactivated  (_deactivated  );
@@ -1427,7 +1659,7 @@ This is the hasChanged for:<BR>
    public final boolean Write(Connection C) throws Exception
      {
        long T0 = System.nanoTime();
-       if (__Changes1 == 0L && __Changes2 == 0L)
+       if (hasChanged() == false)
         {
           LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.ZONEINFO has not changed: no writing will occur.");
           QueryDetails.setLastQuery(TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, "");
@@ -1639,7 +1871,7 @@ This is the hasChanged for:<BR>
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
         }
 
-       __Changes1= __Changes2= __Nulls1= __Nulls2= 0L;
+       __Changes1= __Changes2= __Changes3= __Changes4= __Changes5= __Changes6= __Nulls1= __Nulls2= __Nulls3= __Nulls4= __Nulls5= __Nulls6= 0L;
        return true;
      }
 
@@ -1665,7 +1897,7 @@ This is the hasChanged for:<BR>
        long T0 = System.nanoTime();
        if (__Init == InitMode.CREATE)
         throw new Exception("This TILDA.ZONEINFO object is being Read() after a Create(), which doesn't make sense.");
-       if (__Init == InitMode.READ == true && Force == false && __Changes1 == 0L && __Changes2 == 0L)
+       if (__Init == InitMode.READ == true && Force == false && hasChanged()==false)
         {
           LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.ZONEINFO object has already been read.");
           QueryDetails.setLastQuery(TILDA__ZONEINFO_Factory.SCHEMA_TABLENAME_LABEL, "");
@@ -1729,7 +1961,7 @@ This is the hasChanged for:<BR>
           RS = PS.executeQuery();
           if (RS.next() == false)
             {
-              LOG.debug(QueryDetails._LOGGING_HEADER + "   [1mNo record was read.[22m");
+              LOG.debug(QueryDetails._LOGGING_HEADER + "   No record was read.");
               return false;
             }
           count = 1;
@@ -1760,8 +1992,7 @@ This is the hasChanged for:<BR>
                               _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
      __LookupId = 0;
      __Init     = InitMode.READ;
-     __Changes1  = 0L;
-     __Changes2  = 0L;
+     __Changes1 = __Changes2 = __Changes3 = __Changes4 = __Changes5 = __Changes6 = 0L;
      return AfterRead(C);
    }
 
@@ -1773,12 +2004,34 @@ This is the hasChanged for:<BR>
       throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + TimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
      ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(RS.getTimestamp(ColumnPos, DateTimeUtil._UTC_CALENDAR), ZI == null ? "null" : ZI.getValue());
      if (RS.wasNull() == true)
-      if (DTField._FirstMask == true)
+      if (DTField._MaskId == 1)
        __Nulls1 |= DTField._Mask1;
-      else
+      else if (DTField._MaskId == 2)
        __Nulls2 |= DTField._Mask2;
-     boolean DTNull = DTField._FirstMask == true ? (__Nulls1 & DTField._Mask1) != 0L : (__Nulls2 & DTField._Mask2) != 0L;
-     boolean TZNull = TZField._FirstMask == true ? (__Nulls1 & TZField._Mask1) != 0L : (__Nulls2 & TZField._Mask2) != 0L;
+      else if (DTField._MaskId == 3)
+       __Nulls3 |= DTField._Mask3;
+      else if (DTField._MaskId == 4)
+       __Nulls4 |= DTField._Mask4;
+      else if (DTField._MaskId == 5)
+       __Nulls5 |= DTField._Mask5;
+      else if (DTField._MaskId == 6)
+       __Nulls6 |= DTField._Mask6;
+      else
+       throw new Error("RUNTIME TILDA ERROR: Invalid MaskId="+DTField._MaskId+" for column "+DTFieldName+". Values should be between 1 and 4.");
+     boolean DTNull = DTField._MaskId == 1 ? (__Nulls1 & DTField._Mask1) != 0L
+                    : DTField._MaskId == 2 ? (__Nulls2 & DTField._Mask2) != 0L
+                    : DTField._MaskId == 3 ? (__Nulls3 & DTField._Mask3) != 0L
+                    : DTField._MaskId == 4 ? (__Nulls4 & DTField._Mask4) != 0L
+                    : DTField._MaskId == 5 ? (__Nulls5 & DTField._Mask5) != 0L
+                                           : (__Nulls6 & DTField._Mask6) != 0L
+                                           ;
+     boolean TZNull = TZField._MaskId == 1 ? (__Nulls1 & TZField._Mask1) != 0L
+                    : TZField._MaskId == 2 ? (__Nulls2 & TZField._Mask2) != 0L
+                    : TZField._MaskId == 3 ? (__Nulls3 & TZField._Mask3) != 0L
+                    : TZField._MaskId == 4 ? (__Nulls4 & TZField._Mask4) != 0L
+                    : TZField._MaskId == 5 ? (__Nulls5 & TZField._Mask5) != 0L
+                                           : (__Nulls6 & TZField._Mask6) != 0L
+                                           ;
      if (DTNull == false && TZNull == true)
       throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
      return ZDT;
@@ -1793,6 +2046,7 @@ This is the hasChanged for:<BR>
                    "id: "                                                                                                     + TextUtil.PrintVariableStr        (getId           ())
                + "; value: "                                                                                                  + TextUtil.PrintVariableStr        (getValue        ())
                + "; label: "                                                                                                  + TextUtil.PrintVariableStr        (getLabel        ())
+               + "; deactivated"     + ((TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask1   & __Nulls1) != 0L ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeactivated  ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

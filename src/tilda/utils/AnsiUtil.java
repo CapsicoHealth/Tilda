@@ -28,25 +28,25 @@ public class AnsiUtil
   {
     protected static final Logger LOG = LogManager.getLogger(AnsiUtil.class.getName());
 
-    public static final String RESET  = "\u001B[0m";
-    public static final String BLACK  = "\u001B[30m";
-    public static final String RED    = "\u001B[31m";
-    public static final String GREEN  = "\u001B[32m";
-    public static final String YELLOW = "\u001B[33m";
-    public static final String BLUE   = "\u001B[34m";
-    public static final String PURPLE = "\u001B[35m";
-    public static final String CYAN   = "\u001B[36m";
-    public static final String WHITE  = "\u001B[37m";
+    public static final String RESET  = ""; //\u001B[0m";
+    public static final String BLACK  = ""; //\u001B[30m";
+    public static final String RED    = ""; //\u001B[31m";
+    public static final String GREEN  = ""; //\u001B[32m";
+    public static final String YELLOW = ""; //\u001B[33m";
+    public static final String BLUE   = ""; //\u001B[34m";
+    public static final String PURPLE = ""; //\u001B[35m";
+    public static final String CYAN   = ""; //\u001B[36m";
+    public static final String WHITE  = ""; //\u001B[37m";
     
-    public static final String BOLD          = "\u001B[1m";
-    public static final String BOLD_OFF      = "\u001B[22m";
-    public static final String ITALIC        = "\u001B[3m";
-    public static final String ITALIC_OFF    = "\u001B[23m";
-    public static final String NEGATIVE      = "\u001B[7m";
-    public static final String NEGATIVE_OFF  = "\u001B[27m";
-    public static final String UNDERLINE     = "\u001B[4m";
-    public static final String UNDERLINE_OFF = "\u001B[24m";
-    public static final String OVERLINED     = "\u001B[53m";
-    public static final String OVERLINED_OFF = "\u001B[55m";
+    public static final String BOLD          = ""; //\u001B[1m";
+    public static final String BOLD_OFF      = ""; //\u001B[22m";
+    public static final String ITALIC        = ""; //\u001B[3m";
+    public static final String ITALIC_OFF    = ""; //\u001B[23m";
+    public static final String NEGATIVE      = ""; //\u001B[7m";
+    public static final String NEGATIVE_OFF  = ""; //\u001B[27m";
+    public static final String UNDERLINE     = ""; //\u001B[4m";
+    public static final String UNDERLINE_OFF = ""; //\u001B[24m";
+    public static final String OVERLINED     = ""; //\u001B[53m";
+    public static final String OVERLINED_OFF = ""; //\u001B[55m";
     
   }

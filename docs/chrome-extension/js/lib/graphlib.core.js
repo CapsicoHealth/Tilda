@@ -702,26 +702,29 @@ Graph.prototype.nodes = function() {
 };
 
 Graph.prototype.sources = function() {
+  var self = this;
   return _.filter(this.nodes(), function(v) {
-    return _.isEmpty(this._in[v]);
-  }, this);
+    return _.isEmpty(self._in[v]);
+  });
 };
 
 Graph.prototype.sinks = function() {
+  var self = this;
   return _.filter(this.nodes(), function(v) {
-    return _.isEmpty(this._out[v]);
-  }, this);
+    return _.isEmpty(self._out[v]);
+  });
 };
 
 Graph.prototype.setNodes = function(vs, value) {
   var args = arguments;
+  var self = this;
   _.each(vs, function(v) {
     if (args.length > 1) {
-      this.setNode(v, value);
+      self.setNode(v, value);
     } else {
-      this.setNode(v);
+      self.setNode(v);
     }
-  }, this);
+  });
   return this;
 };
 
@@ -764,8 +767,8 @@ Graph.prototype.removeNode =  function(v) {
       this._removeFromParentsChildList(v);
       delete this._parent[v];
       _.each(this.children(v), function(child) {
-        this.setParent(child);
-      }, this);
+        self.setParent(child);
+      });
       delete this._children[v];
     }
     _.each(_.keys(this._in[v]), removeEdge);
@@ -794,7 +797,7 @@ Graph.prototype.setParent = function(v, parent) {
          ancestor = this.parent(ancestor)) {
       if (ancestor === v) {
         throw new Error("Setting " + parent+ " as parent of " + v +
-                        " would create create a cycle");
+                        " would create a cycle");
       }
     }
 
@@ -859,6 +862,16 @@ Graph.prototype.neighbors = function(v) {
   }
 };
 
+Graph.prototype.isLeaf = function (v) {
+  var neighbors;
+  if (this.isDirected()) {
+    neighbors = this.successors(v);
+  } else {
+    neighbors = this.neighbors(v);
+  }
+  return neighbors.length === 0;
+};
+
 Graph.prototype.filterNodes = function(filter) {
   var copy = new this.constructor({
     directed: this._isDirected,
@@ -868,19 +881,19 @@ Graph.prototype.filterNodes = function(filter) {
 
   copy.setGraph(this.graph());
 
+  var self = this;
   _.each(this._nodes, function(value, v) {
     if (filter(v)) {
       copy.setNode(v, value);
     }
-  }, this);
+  });
 
   _.each(this._edgeObjs, function(e) {
     if (copy.hasNode(e.v) && copy.hasNode(e.w)) {
-      copy.setEdge(e, this.edge(e));
+      copy.setEdge(e, self.edge(e));
     }
-  }, this);
+  });
 
-  var self = this;
   var parents = {};
   function findParent(v) {
     var parent = self.parent(v);
@@ -1200,7 +1213,7 @@ if (!lodash) {
 module.exports = lodash;
 
 },{"lodash":undefined}],20:[function(require,module,exports){
-module.exports = '2.1.0';
+module.exports = '2.1.5';
 
 },{}]},{},[1])(1)
 });

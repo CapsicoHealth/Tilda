@@ -25,16 +25,20 @@ import org.apache.logging.log4j.Logger;
 
 public class SessionUtil
   {
-    protected static final Logger LOG = LogManager.getLogger(SessionUtil.class.getName());
+    protected static final Logger LOG               = LogManager.getLogger(SessionUtil.class.getName());
+
+    public static final int       FORCE_RELOAD_USER = 1;
+    public static final int       FORCE_COMMIT      = 2;
 
     public static enum Attributes
       {
-        USERREFNUM;
+        USERREFNUM, TENANTUSERREFNUM, FORCE_COMMIT, FORCE_RELOAD_USER, PASSWORD_RESET_TRIES;
       }
 
 
     /**
      * Gets the session object if it exists. Otherwise, creates a new one;
+     * 
      * @param Request
      * @return
      */
@@ -57,11 +61,11 @@ public class SessionUtil
       {
         HttpSession S = Request.getSession(false);
         if (S != null)
-         synchronized(S)
-          {
-            S.invalidate();
-            LOG.info("Invalidating existing session");
-          }
+          synchronized (S)
+            {
+              S.invalidate();
+              LOG.info("Invalidating existing session");
+            }
       }
-    
+
   }

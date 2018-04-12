@@ -1,5 +1,5 @@
 /* ===========================================================================
- * Copyright (C) 2015 CapsicoHealth Inc.
+ * Copyright (C) 2016 CapsicoHealth Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
-import tilda.enums.AggregateType;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
@@ -67,7 +66,7 @@ public class ViewPivot
           return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot with an unknown 'on' colunn '"+_ColumnName+"'.");
         
         if (_ParentView._ViewColumns.get(_ParentView._ViewColumns.size()-2) != _VC)
-          return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot with an unknown 'on' colunn '"+_ColumnName+"' which is not the las column specified in the column list.");
+          return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot with an unknown 'on' colunn '"+_ColumnName+"' which is not the last column specified in the column list.");
 
 //        if (TextUtil.isNullOrEmpty(_ParentView._CountStar) == true)
 //          return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot without having defined a 'countStar' column.");
@@ -88,5 +87,13 @@ public class ViewPivot
         
         return Errs == PS.getErrorCount();
       }
+    
+    public boolean hasValue(String searchValue) {
+    	for(Value value : _Values) {
+    		if(value._Name.equals(searchValue))
+    			return true;
+    	}
+    	return false;
+    }
 
   }

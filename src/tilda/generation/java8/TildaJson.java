@@ -55,7 +55,7 @@ public class TildaJson implements CodeGenTildaJson
         boolean needTime = false;
         if (O._LC != ObjectLifecycle.READONLY)
          for (Column C : O._Columns)
-          if (C != null && C.getType() == ColumnType.DATETIME && Object.isOCCColumn(C) == false)
+          if (C != null && (C.getType() == ColumnType.DATETIME|| C.getType() == ColumnType.DATE) && Object.isOCCColumn(C) == false)
             {
               needTime = true;
               break;
@@ -284,7 +284,7 @@ public class TildaJson implements CodeGenTildaJson
                         Out.println("         if (_" + C.getName() + Pad + "!= Obj.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "())");
                       else
                         Out.println("         if (_" + C.getName() + Pad + ".equals(Obj.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "()) == false)");
-                      Out.println("          throw new Exception(\"Cannot update the invariant field '" + C.getFullName() + "': \"+Obj.toString());");
+                      Out.println("          throw new Exception(\"Cannot update the invariant field '" + C.getFullName() + "' from '\"+Obj.get"+TextUtil.CapitalizeFirstCharacter(C.getName())+"()+\"' to '\"+_"+C.getName()+"+\"': \"+Obj.toString());");
                     }
                 }
             if (count != 0)

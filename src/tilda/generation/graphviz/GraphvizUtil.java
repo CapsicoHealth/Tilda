@@ -2,6 +2,7 @@ package tilda.generation.graphviz;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.lang.reflect.Field;
@@ -21,7 +22,8 @@ import org.json.simple.parser.JSONParser;
 
 import tilda.enums.FrameworkSourcedType;
 import tilda.generation.GeneratorSession;
-import tilda.generation.html.Docs;
+import tilda.generation.html.DocGen;
+import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Documentation;
 import tilda.parsing.parts.Enumeration;
@@ -188,13 +190,13 @@ public class GraphvizUtil
     public GraphvizUtil(Schema schema, GeneratorSession G)
       {
         this.schema = schema;
-        this.objects = schema._Objects;
-        this.mappers = schema._Mappers;
-        this.views = schema._Views;
-        this.enumerations = schema._Enumerations;
+        this.objects = new ArrayList<Object>(schema._Objects);
+        this.mappers = new ArrayList<Mapper>(schema._Mappers);
+        this.views = new ArrayList<View>(schema._Views);
+        this.enumerations = new ArrayList<Enumeration>(schema._Enumerations);
         this.schemaName = schema._Name;
-        this._objects = new ArrayList<Object>();
-        this._objects.addAll(objects);
+        this._objects = new ArrayList<Object>(objects);
+        
         try
           {
             this.builder = factory.newDocumentBuilder();
@@ -616,6 +618,9 @@ public class GraphvizUtil
 
         for (Object obj : objects)
           {
+            if (obj == null)
+              continue;
+            
             String _Name = obj._Name.toUpperCase();
             if (obj._FST == FrameworkSourcedType.NONE)
               {
@@ -774,7 +779,10 @@ public class GraphvizUtil
             printer.flush();
             LOG.info("Generating dot file for " + this.schemaName + " done.");
             LOG.info("Generating schema svg file for " + this.schemaName);
-            BufferedReader streamReader = new BufferedReader(new InputStreamReader(FileUtil.getResourceAsStream("tilda.config.json"), "UTF-8"));
+            InputStream IS = FileUtil.getResourceAsStream("tilda.config.json");
+            if (IS == null)
+             throw new Exception("Cannot locate tilda.config.json in the root class path.");
+            BufferedReader streamReader = new BufferedReader(new InputStreamReader(IS, "UTF-8"));
             StringBuilder responseStrBuilder = new StringBuilder();
 
             String inputStr;
@@ -865,7 +873,7 @@ public class GraphvizUtil
       }
     
 
-    public void writeSchema()
+    public void writeSchema(DocGen DG, ParserSession PS)
       {
         Documentation d = this.schema.getDocumentation();
         if (d._Graph.equalsIgnoreCase("complex"))
@@ -874,7 +882,7 @@ public class GraphvizUtil
           writeSimpleSchema();
         try
           {
-            writeHTML();
+            writeHTML(DG, PS);
           }
         catch (Exception e)
           {
@@ -883,7 +891,7 @@ public class GraphvizUtil
       }
 
 
-    private void writeHTML()
+    private void writeHTML(DocGen DG, ParserSession PS)
     throws Exception
       {
         Documentation d = this.schema.getDocumentation();
@@ -914,7 +922,7 @@ public class GraphvizUtil
         + "\r\n"
         + "    location.href = \"#\";"
         + "\r\n"
-        + "    window.location.href = \"#\"+target.id+\"_DIV\";"
+        + "    openDiv(target.id+\"_DIV\");"
         + "\r\n"
         + "  }"
         + "\r\n"
@@ -924,8 +932,11 @@ public class GraphvizUtil
         writer.println("</SCRIPT>");
         writer.println("</HEAD>");
         writer.println("<BODY>");
-    	writer.println("<DIV class='svgs'>");
-
+        
+        DG.writeSearchHTML(writer); // Add Search Box
+        
+        writer.println("<BR><BR><HR>");
+        writer.println("<DIV class='svgs'>");
         if (d._Graph.equalsIgnoreCase("complex"))
           {
             for (int i = 0; i < 4; ++i)
@@ -959,20 +970,9 @@ public class GraphvizUtil
             LOG.error("Generator session cannot be intialized");
             return;
           }
-        for (Object b : schema._Objects)
-          {
-            try
-              {
-                writer.println("<BR><BR><BR><BR><HR>");
-                b._ParentSchema = schema;
-                Docs.DataClassDocs(writer, G, b);
-              }
-            catch (Exception e)
-              {
-                // TODO Auto-generated catch block
-                //LOG.warn("FYI: this can be ignored for now:\n", e);
-              }
-          }
+        
+        DG.WriteTablesAndViews(PS, writer);
+
         writer.println("<BR><BR><BR><BR><HR><HR>End.<BR><BR><BR>");
         writer.println("<SCRIPT>");
         writer.println("(function(){");

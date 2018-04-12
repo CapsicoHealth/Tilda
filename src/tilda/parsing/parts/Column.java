@@ -17,6 +17,7 @@
 package tilda.parsing.parts;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
@@ -41,7 +42,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Column extends TypeDef
   {
-    static final Logger             LOG                = LogManager.getLogger(Column.class.getName());
+    static final Logger                LOG                = LogManager.getLogger(Column.class.getName());
 
     /*@formatter:off*/
 	@SerializedName("name"       ) protected String      _Name       ;
@@ -56,30 +57,31 @@ public class Column extends TypeDef
     @SerializedName("values"     ) public ColumnValue[]  _Values     ;
     @SerializedName("jsonSchema" ) public JsonSchema     _JsonSchema ;
     /*@formatter:on*/
-    
-    public transient boolean        _FrameworkManaged = false;
-    public transient AggregateType  _Aggregate = null; // For view columns really.
-    public transient ColumnMode     _Mode;
-    public transient ProtectionType _Protect;
-    public transient Column         _SameAsObj;
-    public transient Object         _ParentObject;
-    public transient PaddingTracker _PadderValueNames  = new PaddingTracker();
-    public transient PaddingTracker _PadderValueValues = new PaddingTracker();
-    public transient boolean        _PrimaryKey        = false;
-    public transient boolean        _UniqueIndex       = false;
-    public transient ColumnMapper   _MapperDef         ;
-    public transient ColumnValue    _DefaultCreateValue;
-    public transient ColumnValue    _DefaultUpdateValue;
 
-    
-    public transient int _SequenceOrder = -1;
+    public transient boolean           _FrameworkManaged  = false;
+    public transient AggregateType     _Aggregate         = null;                                        // For view columns really.
+    public transient ColumnMode        _Mode;
+    public transient ProtectionType    _Protect;
+    public transient Column            _SameAsObj;
+    public transient Object            _ParentObject;
+    public transient PaddingTracker    _PadderValueNames  = new PaddingTracker();
+    public transient PaddingTracker    _PadderValueValues = new PaddingTracker();
+    public transient boolean           _PrimaryKey        = false;
+    public transient boolean           _UniqueIndex       = false;
+    public transient ColumnMapper      _MapperDef;
+    public transient ColumnValue       _DefaultCreateValue;
+    public transient ColumnValue       _DefaultUpdateValue;
 
-    private transient ValidationStatus _Validation = ValidationStatus.NONE;
+
+    protected transient int            _SequenceOrder     = -1;
+
+    private transient ValidationStatus _Validation        = ValidationStatus.NONE;
 
     public Column()
-     {
-      
+      {
+
       }
+
     public Column(String Name, String TypeStr, Integer Size, boolean Nullable, ColumnMode Mode, boolean Invariant, ProtectionType Protect, String Description)
       {
         super(TypeStr, Size);
@@ -96,29 +98,29 @@ public class Column extends TypeDef
         _Name = Name;
         _Type = Type;
         _Description = Description;
-        
-//        if (Mapper != null)
-//         _Mapper = new ColumnMapper(Mapper._SrcColumns, Mapper._DestObject, Mapper._Name, Mapper._Group, Mapper._Multi);
-//        
-//        if (Enum != null)
-//          _Enum = new ColumnEnum(Enum._SrcColumns, Enum._DestObject, Enum._Multi);
-//
-//        _Values = ColumnValue.deepCopy(Values);
+
+        // if (Mapper != null)
+        // _Mapper = new ColumnMapper(Mapper._SrcColumns, Mapper._DestObject, Mapper._Name, Mapper._Group, Mapper._Multi);
+        //
+        // if (Enum != null)
+        // _Enum = new ColumnEnum(Enum._SrcColumns, Enum._DestObject, Enum._Multi);
+        //
+        // _Values = ColumnValue.deepCopy(Values);
       }
-    
+
     public Column(String Name, String SameAs, String Description)
       {
         _Name = Name;
         _SameAs = SameAs;
         _Description = Description;
-        
-//        if (Mapper != null)
-//         _Mapper = new ColumnMapper(Mapper._SrcColumns, Mapper._DestObject, Mapper._Name, Mapper._Group, Mapper._Multi);
-//        
-//        if (Enum != null)
-//          _Enum = new ColumnEnum(Enum._SrcColumns, Enum._DestObject, Enum._Multi);
-//
-//        _Values = ColumnValue.deepCopy(Values);
+
+        // if (Mapper != null)
+        // _Mapper = new ColumnMapper(Mapper._SrcColumns, Mapper._DestObject, Mapper._Name, Mapper._Group, Mapper._Multi);
+        //
+        // if (Enum != null)
+        // _Enum = new ColumnEnum(Enum._SrcColumns, Enum._DestObject, Enum._Multi);
+        //
+        // _Values = ColumnValue.deepCopy(Values);
       }
 
     public String getFullName()
@@ -130,12 +132,12 @@ public class Column extends TypeDef
       {
         return _ParentObject.getShortName() + "." + _Name;
       }
-    
+
     public String getName()
       {
         return _Name;
       }
-    
+
     public boolean Validate(ParserSession PS, Object ParentObject)
       {
         _ParentObject = ParentObject;
@@ -149,21 +151,23 @@ public class Column extends TypeDef
 
     private void ValidateBase(ParserSession PS, Object ParentObject)
       {
-        if (TextUtil.isNullOrEmpty(_Name) == true)
+        
+        String N = getLogicalName();        
+        if (TextUtil.isNullOrEmpty(N) == true)
           {
             PS.AddError("Column '" + getFullName() + "' didn't define a 'name'. It is mandatory.");
             return;
           }
-        
-        if (ValidationHelper.isValidIdentifier(_Name) == false)
-         {
-           PS.AddError("Column '" + getFullName() + "' has a name '"+_Name+"' which is not valid. "+ValidationHelper._ValidIdentifierMessage);
-           return;
-         }
+
+        if (ValidationHelper.isValidIdentifier(N) == false)
+          {
+            PS.AddError("Column '" + getFullName() + "' has a name '" + N + "' which is not valid. " + ValidationHelper._ValidIdentifierMessage);
+            return;
+          }
 
         if (ValidateSameAs(PS) == false)
           return;
-        
+
         // Checking values
         if (_ModeStr != null)
           if ((_Mode = ColumnMode.parse(_ModeStr)) == null)
@@ -181,33 +185,33 @@ public class Column extends TypeDef
 
         setDefaults();
 
-        if (super.Validate(PS, "Column '" + getFullName() + "'", true, _SameAsObj!=null || _Mode==ColumnMode.CALCULATED) == false)
-         return;
+        if (super.Validate(PS, "Column '" + getFullName() + "'", true, _SameAsObj != null || _Mode == ColumnMode.CALCULATED) == false)
+          return;
 
         if (TextUtil.isNullOrEmpty(_Description) == true)
-         {
-           if (_SameAsObj != null)
-            PS.AddError("Column '" + getFullName() + "' didn't define a 'description' and neither did its sameAs reference. It is mandatory.");
-           else
-            PS.AddError("Column '" + getFullName() + "' didn't define a 'description'. It is mandatory.");
-         }
+          {
+            if (_SameAsObj != null)
+              PS.AddError("Column '" + getFullName() + "' didn't define a 'description' and neither did its sameAs reference. It is mandatory.");
+            else
+              PS.AddError("Column '" + getFullName() + "' didn't define a 'description'. It is mandatory.");
+          }
 
         if (_Protect != null && _Type != ColumnType.STRING)
-         PS.AddError("Column '" + getFullName() + "' is defined as a '" + _Type + "' with a '_Protect'. Only String columns should have a '_Protect' defined.");
+          PS.AddError("Column '" + getFullName() + "' is defined as a '" + _Type + "' with a '_Protect'. Only String columns should have a '_Protect' defined.");
 
         ValidateValues(PS);
 
         if (_Mapper != null && _Enum != null)
-         PS.AddError("Column '" + getFullName() + "' is defining both a mapper and an enum, which is not allowed: only one can be defined at a time.");
+          PS.AddError("Column '" + getFullName() + "' is defining both a mapper and an enum, which is not allowed: only one can be defined at a time.");
         else if (_Mapper != null)
-         _Mapper.Validate(PS, this);
+          _Mapper.Validate(PS, this);
         else if (_Enum != null)
-         _Enum.Validate(PS, this);
-        
+          _Enum.Validate(PS, this);
+
         if (_JsonSchema != null && _Type != ColumnType.JSON)
-         PS.AddError("Column '" + getFullName() + "' is defining a jsonSchema, but is not of type JSON.");
+          PS.AddError("Column '" + getFullName() + "' is defining a jsonSchema, but is not of type JSON.");
         if (_JsonSchema != null)
-         _JsonSchema.Validate(PS, this);
+          _JsonSchema.Validate(PS, this);
       }
 
 
@@ -219,25 +223,34 @@ public class Column extends TypeDef
         int Errs = PS.getErrorCount();
 
         ReferenceHelper R = ReferenceHelper.parseColumnReference(_SameAs, _ParentObject);
-
+        
         if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true || TextUtil.isNullOrEmpty(R._C) == true)
           PS.AddError("Column '" + getFullName() + "' is declaring sameas '" + _SameAs + "' with an incorrect syntax. It should be '(((package\\.)?schema\\.)?object\\.)?column'.");
         else
           {
-            _SameAsObj = PS.getColumn(R._P, R._S, R._O, R._C);
-
-            if (_SameAsObj == null)
-             _SameAsObj = PS.getColumn(R._P, R._S, R._O, R._C);
-
-            if (_SameAsObj == null)
-              PS.AddError("Column '" + getFullName() + "' is declaring sameas '" + _SameAs + "' resolving to '" + R.getFullName() + "' which cannot be found.");
-            else if (_SameAsObj == this)
-              PS.AddError("Column '" + getFullName() + "' is declaring a 'sameas' to itself! That makes no sense.");
+            Schema S = PS.getSchema(R._P, R._S);
+            if (S == null)
+              PS.AddError("Column '" + getFullName() + "' is declaring sameas '" + _SameAs + "' resolving to '" + R.getFullName() + "' with a schema that cannot be found.");
             else
-              copyFromSameAs(PS);
+              {
+                Object O = PS.getObject(R._P, R._S, R._O);
+                if (O == null)
+                  PS.AddError("Column '" + getFullName() + "' is declaring sameas '" + _SameAs + "' resolving to '" + R.getFullName() + "' with an Object/View that cannot be found.");
+                else
+                  {
+                    _SameAsObj = PS.getColumn(R._P, R._S, R._O, R._C);
+                    if (_SameAsObj == null)
+                      PS.AddError("Column '" + getFullName() + "' is declaring sameas '" + _SameAs + "' resolving to '" + R.getFullName() + "' with a column that cannot be found.");
+                    else if (_SameAsObj == this)
+                      PS.AddError("Column '" + getFullName() + "' is declaring a 'sameas' to itself! That makes no sense.");
+                    else
+                      copyFromSameAs(PS);
+                  }
+              }
           }
 
         return Errs == PS.getErrorCount();
+
       }
 
     private void copyFromSameAs(ParserSession PS)
@@ -245,48 +258,52 @@ public class Column extends TypeDef
         if (_SameAsObj == null)
           return;
 
+        if (_Name == null)
+          _Name = _SameAsObj._Name;
+
         if (_TypeStr != null && _TypeStr.equals(_SameAsObj._TypeStr) == false && _Aggregate == null)
-          PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining a type '"+_TypeStr+"' which doesn't match the destination column's type '"+_SameAsObj._TypeStr+"'. Note that redefining a type for a sameas column is superfluous in the first place.");
+          PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining a type '" + _TypeStr + "' which doesn't match the destination column's type '" + _SameAsObj._TypeStr + "'. Note that redefining a type for a sameas column is superfluous in the first place.");
         else if (_Aggregate == null)
           _TypeStr = _SameAsObj._TypeStr;
 
-/* Should we do this or not? For mappers with extra PKs, this adds additional requirements on the new table with 
- * column names and all... Not very flexible. 
-        if (_SameAsObj._Mapper != null)
-          {
-            if (_Mapper != null)
-             PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining a mapper, which is not allowed.");
-            else
-             _Mapper = new ColumnMapper(_SameAsObj._Mapper);
-          }
-        else if (_SameAsObj._Enum != null)
-          {
-            if (_Enum != null)
-             PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining an enum, which is not allowed.");
-            else
-             _Enum = new ColumnEnum(_SameAsObj._Enum);
-          }
-*/
+        /*
+         * Should we do this or not? For mappers with extra PKs, this adds additional requirements on the new table with
+         * column names and all... Not very flexible.
+         * if (_SameAsObj._Mapper != null)
+         * {
+         * if (_Mapper != null)
+         * PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining a mapper, which is not allowed.");
+         * else
+         * _Mapper = new ColumnMapper(_SameAsObj._Mapper);
+         * }
+         * else if (_SameAsObj._Enum != null)
+         * {
+         * if (_Enum != null)
+         * PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining an enum, which is not allowed.");
+         * else
+         * _Enum = new ColumnEnum(_SameAsObj._Enum);
+         * }
+         */
 
         if (_Size != null && _Size != 0 && _Size != _SameAsObj._Size)
-          PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining a size '"+_Size+"' which doesn't match the destination column's size '"+_SameAsObj._Size+"'. Note that redefining a size for a sameas column is superfluous in the first place.");
+          PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining a size '" + _Size + "' which doesn't match the destination column's size '" + _SameAsObj._Size + "'. Note that redefining a size for a sameas column is superfluous in the first place.");
         else if (_Mapper != null && _Mapper._Multi != MultiType.NONE)
           {
-            _TypeStr+= _Mapper._Multi == MultiType.LIST ? "[]"
-                     : _Mapper._Multi == MultiType.SET  ? "{}"
-                     : null;
+            _TypeStr += _Mapper._Multi == MultiType.LIST ? "[]"
+            : _Mapper._Multi == MultiType.SET ? "{}"
+            : null;
           }
         else if (_Enum != null && _Enum._Multi != MultiType.NONE)
           {
-            _TypeStr+= _Enum._Multi == MultiType.LIST ? "[]"
-                     : _Enum._Multi == MultiType.SET  ? "{}"
-                     : null;
+            _TypeStr += _Enum._Multi == MultiType.LIST ? "[]"
+            : _Enum._Multi == MultiType.SET ? "{}"
+            : null;
           }
         else if (_MapperDef != null && _MapperDef._Multi != MultiType.NONE)
           {
-            _TypeStr+= _MapperDef._Multi == MultiType.LIST ? "[]"
-                     : _MapperDef._Multi == MultiType.SET  ? "{}"
-                     : null;
+            _TypeStr += _MapperDef._Multi == MultiType.LIST ? "[]"
+            : _MapperDef._Multi == MultiType.SET ? "{}"
+            : null;
           }
         else if (_Aggregate == null)
           {
@@ -294,11 +311,11 @@ public class Column extends TypeDef
           }
 
         if (_SameAsObj._Values != null)
-         {
-           if (_Values != null)
-             PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining 'values', which is not allowed.");
+          {
+            if (_Values != null)
+              PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining 'values', which is not allowed.");
             else
-             _Values = ColumnValue.deepCopy(_SameAsObj._Values);
+              _Values = ColumnValue.deepCopy(_SameAsObj._Values);
           }
 
         if (_ProtectStr != null)
@@ -307,19 +324,19 @@ public class Column extends TypeDef
           _ProtectStr = _SameAsObj._ProtectStr;
 
         if (_ModeStr == null)
-         _ModeStr = _SameAsObj._ModeStr;
+          _ModeStr = _SameAsObj._ModeStr;
 
         if (_Nullable == null)
           _Nullable = _SameAsObj._Nullable;
-        
+
         // Only reuse Invariant definition if the destination column is not a PK. By definition, PKs are invariant, so when
         // their definition are reused, mostly as part of an FK definition, most likely Invariant=true makes no sense as
         // an automatically inherited thing. The developer can always re-define "invariantness".
         if (_Invariant == null && _SameAsObj._PrimaryKey == false)
-         _Invariant = _SameAsObj._Invariant;
+          _Invariant = _SameAsObj._Invariant;
 
-        if (_Description== null)
-          _Description= _SameAsObj._Description;
+        if (_Description == null)
+          _Description = _SameAsObj._Description;
       }
 
     private void setDefaults()
@@ -382,21 +399,20 @@ public class Column extends TypeDef
 
     public boolean isCreateColumn()
       {
-        return _FrameworkManaged == false 
-            && _Mode == ColumnMode.NORMAL 
-            && _ParentObject.isAutoGenPrimaryKey(this) == false 
-            && _DefaultCreateValue == null
-            && (   _Invariant == false && _Nullable == false
-                || _Invariant == true
-               );
+        return _FrameworkManaged == false
+        && _Mode == ColumnMode.NORMAL
+        && _ParentObject.isAutoGenPrimaryKey(this) == false
+        && _DefaultCreateValue == null
+        && (_Invariant == false && _Nullable == false
+        || _Invariant == true);
 
       }
 
     public VisibilityType getVisibility()
       {
-        return _ParentObject.getLifecycle() == ObjectLifecycle.READONLY || _MapperDef != null || _FrameworkManaged == true ? VisibilityType.PRIVATE
-            : _Invariant == true || _PrimaryKey == true || _Mode == ColumnMode.AUTO ? VisibilityType.PROTECTED 
-            : VisibilityType.PUBLIC;
+        return _ParentObject.getLifecycle() == ObjectLifecycle.READONLY || _MapperDef != null || (_FrameworkManaged == true && isOCCLastUpdated()==false && isOCCDeleted()==false) ? VisibilityType.PRIVATE
+        : _Invariant == true || _PrimaryKey == true || (_Mode == ColumnMode.AUTO && isOCCLastUpdated()==false && isOCCDeleted()==false) ? VisibilityType.PROTECTED
+        : VisibilityType.PUBLIC;
       }
 
     public boolean isCopyToColumn()
@@ -408,33 +424,71 @@ public class Column extends TypeDef
       {
         return _PrimaryKey == true || _UniqueIndex == true;
       }
+
     public boolean isOCCGenerated()
       {
-        return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && (_Name.equals("created") == true || _Name.equals("lastUpdated") == true || _Name.equals("deleted") == true);
+        return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && (_Name.equals("created") == true || _Name.equals("lastUpdated") == true || _Name.equals("createdETL") == true || _Name.equals("lastUpdatedETL") == true || _Name.equals("deleted") == true);
       }
-    
+    public boolean isOCCLastUpdated()
+      {
+        return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && _Name.equals("lastUpdated") == true;
+      }
+    public boolean isOCCDeleted()
+      {
+        return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && _Name.equals("deleted") == true;
+      }
+
     public boolean isJSONColumn()
       {
-        return (_PrimaryKey == false || _ParentObject.isAutoGenPrimaryKey(this) == false) 
-            && _Mode == ColumnMode.NORMAL && _FrameworkManaged == false && _Name.equals("deleted") == false
-            ;
+        return (_PrimaryKey == false || _ParentObject.isAutoGenPrimaryKey(this) == false)
+        && _Mode == ColumnMode.NORMAL && _FrameworkManaged == false && _Name.equals("deleted") == false;
       }
+
     public boolean hasBeenValidatedSuccessfully()
       {
         return _Validation == ValidationStatus.SUCCESS;
       }
+
     public Object getSingleColFK()
       {
         for (ForeignKey FK : _ParentObject._ForeignKeys)
-         if (FK!=null)
-          {
-            if (FK._SrcColumnObjs.size() == 1 && FK._SrcColumnObjs.get(0)._Name.equals(_Name))
-             return FK._DestObjectObj;
-          }
+          if (FK != null)
+            {
+              if (FK._SrcColumnObjs.size() == 1 && FK._SrcColumnObjs.get(0)._Name.equals(_Name))
+                return FK._DestObjectObj;
+            }
         return null;
       }
+
     public void setSequenceOrder(int i)
       {
         _SequenceOrder = i;
       }
+
+    public int getSequenceOrder()
+      {
+        return _SequenceOrder;
+      }
+
+    public static String PrintColumnList(List<Column> L)
+      {
+        StringBuilder Str = new StringBuilder();
+        for (Column C : L)
+          Str.append(Str.length() == 0 ? "" : ", ").append(C.getShortName());
+        return Str.toString();
+      }
+
+    public String toString()
+      {
+        return getClass().getName() + ":" + getFullName();
+      }
+
+    String getLogicalName()
+      {
+        String N = getName();
+        if (N == null && _SameAs != null)
+          N = _SameAs.substring(_SameAs.lastIndexOf('.') + 1);
+        return N;
+      }
+
   }
