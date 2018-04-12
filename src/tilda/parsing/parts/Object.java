@@ -196,6 +196,7 @@ public class Object extends Base
 
 
         _HasUniqueIndex = false;
+        Set<String> Signatures = new HashSet<String>();
         Names.clear();
         for (Index I : _Indices)
           {
@@ -204,6 +205,8 @@ public class Object extends Base
             if (I.Validate(PS, this) == true)
               if (Names.add(I._Name.toUpperCase()) == false)
                 PS.AddError("Object '" + getFullName() + "' is defining a duplicate index '" + I._Name + "'.");
+            if (I._Db == true && Signatures.add(I.getSignature()) == false)
+              PS.AddError("Object '" + getFullName() + "' is defining a duplicate index on signature '" + I.getSignature() + "'.");
             if (I._Unique == true)
               _HasUniqueIndex = true;
           }

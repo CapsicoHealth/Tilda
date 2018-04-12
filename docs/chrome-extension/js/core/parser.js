@@ -116,7 +116,6 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
       });
       paper.$el.mousemove(function(event) {
         if (dragStartPosition != null){
-          var origin = paper.options.origin;
           paper.setOrigin(event.offsetX - dragStartPosition.x, event.offsetY - dragStartPosition.y);
         }
       });

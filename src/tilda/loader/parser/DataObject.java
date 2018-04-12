@@ -102,7 +102,7 @@ public class DataObject
                 errorMessages.add("Data definition for " + getTableFullName() + " is invalid: upserts must also specify the object's identify in 'uniqueColumns'. ");
                 return false;
               }
-            if (tableMeta.getIndex(uniqueColumns, true) == null)
+            if (tableMeta.getIndexMeta(uniqueColumns, true) == null)
               {
                 errorMessages.add("Data definition for " + getTableFullName() + " is invalid: 'uniqueColumns' is listing columns which do not match any existing unique index in the database.");
                 return false;
