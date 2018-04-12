@@ -88,10 +88,8 @@ define(["jointjs", "lodash", "jquery",
       if(object.get("data").foreign != null){
         // var rels = _.map(object.get("data").foreign, function(ele, i){ return ele.destObject });
         var rels = [];
-        _.each(object.get("data").columns, function(ele, i){
-          if(ele.sameas != null && ele.sameas.split(".").length > 1 ){
-            rels.push(ele.sameas.split(".").reverse()[1]);
-          }
+        _.each(object.get("data").foreign, function(ele, i){
+          rels.push(ele.destObject.split(".").reverse()[0]);
         })
         rels = _.uniq(rels);
         _.each(rels, function(relation, i){

@@ -103,19 +103,20 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
         linkView: CustomLinkView
       });
       this.paper = paper;
-
+      var V = joint.V;
 
       var dragStartPosition = null;
       paper.on('blank:pointerdown',function(event, x, y) {
-        dragStartPosition = { x: x, y: y};
+
+        var scale = V(paper.viewport).scale();
+        dragStartPosition = { x: x * scale.sx, y: y * scale.sy};
       });
       paper.on('cell:pointerup blank:pointerup', function(cellView, x, y) {
         dragStartPosition = null;
       });
       paper.$el.mousemove(function(event) {
         if (dragStartPosition != null){
-          paper.setOrigin(event.offsetX - dragStartPosition.x-$(this).offset().left,
-           event.offsetY - dragStartPosition.y-$(this).offset().top);
+          paper.setOrigin(event.offsetX - dragStartPosition.x, event.offsetY - dragStartPosition.y);
         }
       });
 
@@ -123,7 +124,6 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
         //function onMouseWheel(e){
         e.preventDefault();
         e = e.originalEvent;
-        var V = joint.V;
         var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail))) / 50;
         var offsetX = (e.offsetX || e.clientX - $(this).offset().left);
 

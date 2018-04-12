@@ -263,7 +263,7 @@ public class ConnectionPool
         catch (Throwable T)
           {
             LOG.error("Cannot initialize Tilda\n", T);
-            System.exit(-1);
+            throw new Error(T);
           }
         finally
           {
@@ -277,7 +277,7 @@ public class ConnectionPool
             catch (SQLException E)
               {
                 LOG.error("Cannot initialize Tilda\n", E);
-                System.exit(-1);
+                throw new Error(E);
               }
           }
         if (_InitDebug == false && Migrate.isMigrationActive() == false)

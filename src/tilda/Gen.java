@@ -54,8 +54,7 @@ public class Gen
                 ParserSession PS = Parser.parse(path, G.getSql());
                 if (PS == null)
                   {
-                    LOG.error("An error occurred trying to process Tilda file '" + path + "'.");
-                    break;
+                    throw new Exception("An error occurred trying to process Tilda file '" + path + "'.");
                   }
                 else
                   {
@@ -77,26 +76,22 @@ public class Gen
             catch (Throwable T)
               {
                 LOG.info("\n"
-                        +"\n"
                         +"          ======================================================================================\n"
                         +AsciiArt.Error("               ")
                         +"\n"
                         +"                Couldn't load the Tilda definition file " + path + ".\n"
                         +"          ======================================================================================\n"
-                        +"\n"
-                        );
+                        , T);
                 System.exit(-1);
               }
           }
         
         LOG.info("\n"
-                +"\n"
                 +"          ======================================================================================\n"
                 +AsciiArt.Woohoo("                       ")
                 +"\n"
                 +"              All Tilda code, migration scripts and documentation was generated succesfully.    \n"
-                +"          ======================================================================================\n"
-                +"\n"
+                +"          ======================================================================================"
                 );
       }
   }

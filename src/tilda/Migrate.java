@@ -101,13 +101,22 @@ public class Migrate
             _MIGRATION_START_ = true;
             ConnectionPool.autoInit();
           }
-        catch (Exception E)
+        catch (Throwable E)
           {
-            LOG.error("Cannot migrate the database.\n", E);
+            LOG.error("\n"
+            + "          ======================================================================================\n"
+            + AsciiArt.Error("               ")
+            + "\n"
+            + "                                Cannot Automatically Migrate The Database.\n"
+            + "          ======================================================================================\n", E);
+            System.exit(-1);
           }
 
-        LOG.info("");
-        LOG.info("DONE.");
-        LOG.info("");
+        LOG.info("\n"
+        + "          ======================================================================================\n"
+        + AsciiArt.Woohoo("                       ")
+        + "\n"
+        + "               The database was automatically migrated to match the Application's data model.    \n"
+        + "          ======================================================================================");
       }
   }

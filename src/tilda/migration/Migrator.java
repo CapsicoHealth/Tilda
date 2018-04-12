@@ -32,6 +32,7 @@ import tilda.db.KeysManager;
 import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.DatabaseMeta;
 import tilda.db.metadata.FKMeta;
+import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.PKMeta;
 import tilda.db.metadata.TableMeta;
 import tilda.db.metadata.ViewMeta;
@@ -50,6 +51,9 @@ import tilda.migration.actions.TableComment;
 import tilda.migration.actions.TableCreate;
 import tilda.migration.actions.TableFKAdd;
 import tilda.migration.actions.TableFKDrop;
+import tilda.migration.actions.TableIndexAdd;
+import tilda.migration.actions.TableIndexDrop;
+import tilda.migration.actions.TableIndexRename;
 import tilda.migration.actions.TableKeyCreate;
 import tilda.migration.actions.TablePKReplace;
 import tilda.migration.actions.TildaAclAdd;
@@ -60,6 +64,7 @@ import tilda.migration.actions.ViewUpdate;
 import tilda.parsing.Parser;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
+import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.PrimaryKey;
 import tilda.parsing.parts.Schema;
@@ -92,13 +97,11 @@ public class Migrator
                 doAcl(C, TildaList, DBMeta);
               }
             LOG.info("\n"
-                    +"\n"
                     +"          ==============================================================================\n"
                     +AsciiArt.OK("                                    ")
                     +"\n"
                     +"                    The database already matched the Application's data model.          \n"
                     +"          ==============================================================================\n"
-                    +"\n"
                     );
           }
         else if (CheckOnly == false)
@@ -109,26 +112,15 @@ public class Migrator
             doAcl(C, TildaList, DBMeta);
             if (Migrate.isTesting() == false)
               KeysManager.reloadAll();
-            LOG.info("\n"
-                    +"\n"
-                    +"          ======================================================================================\n"
-                    +AsciiArt.Woohoo("                       ")
-                    +"\n"
-                    +"              The database was automatically migrated to match the Application's data model.    \n"
-                    +"          ======================================================================================\n"
-                    +"\n"
-                    );
           }
         else
           {
             LOG.warn("\n"
-                    +"\n"
                     +"          =============================================================================================================\n"
                     +AsciiArt.Warning("          ")
                     +"\n"
                     +"                 The database DOES NOT match the Application's data model. The application may NOT run properly!       \n"
                     +"          =============================================================================================================\n"
-                    +"\n"
                     );
           }
       }
@@ -363,7 +355,7 @@ public class Migrator
                     if (Found == false)
                       Actions.add(new TableFKAdd(FK));
                   }
-
+                
                 /*
                  * for (String c : Obj._DropOldColumns)
                  * {
@@ -375,7 +367,75 @@ public class Migrator
                  */
                 // if (XXX != Actions.size())
                 // Actions.add(new CommitPoint());
-              }
+              
+                // Checking any Indices in the DB that are Unique so that they can be dropped.
+                // Removing the Drop code per LDH 2018.02.28 conversation
+/*                for (IndexMeta ix : TMeta._Indices.values())
+                  {                	
+                	boolean Found = false;
+                	LOG.info("Checking db table: " + TMeta._TableName + " index: " + ix._Name + ".");          
+                	// Keeps Indices that exist in DB but not Model.
+                    for (Index IX : Obj._Indices)
+                      {
+                    	if(ix._Unique)
+                    	{
+                          LOG.info("Checking model indexes " + IX._Name + " vs " + ix._Name + ".");	                        
+                          if (ix._Name.equals(IX._Name) == true)
+                            {
+                              Found = true;
+                              break;
+                            }
+                        }
+                    	else
+                    	{
+                    		Found = true;
+                    	}
+                      }
+                
+                    if (Found == false && !ix._Name.toLowerCase().equals(TMeta._TableName.toLowerCase() + "_pkey")) {
+                      LOG.info("Adding Drop Index: " + ix._Name);
+                      Actions.add(new TableIndexDrop(Obj, null, ix));
+                    }
+                  }*/
+                // Checking any Indices which are not in the DB, so they can be added. .                
+                for (Index IX : Obj._Indices)
+                  {
+                	if (IX._Db)
+                	  {
+	                    boolean Found = false;
+	                    String Sig = IX.getSignature();                    
+	                    for (IndexMeta ix : TMeta._Indices.values()) 
+		                  {
+	                    	if (!ix._Name.toLowerCase().equals(TMeta._TableName.toLowerCase() + "_pkey"))
+	                    	  {
+	                    	    String Sig1 = ix.getSignature();
+	                    	
+		                        if (Sig.equals(Sig1) == true)
+		                          {
+		                            Found = true;
+		                            if (ix._Name.equals(ix._Name.toLowerCase()) == false // name in the DB is not lowercase, i.e., case insensitive
+		                                || ix._Name.equalsIgnoreCase(IX.getName()) == false // same sig, but new index name
+		                               )
+		                              {
+		                                Actions.add(new TableIndexRename(Obj, ix._Name, IX.getName()));
+		                              }
+		                            break;
+		                          }
+	                    	  }
+		                  }
+	                    if (Found == false)
+	                      {
+	                        IndexMeta IMeta = TMeta.getIndexMeta(IX.getName()); // Try case-sensitive fashion
+	                        IndexMeta IMeta2 = TMeta.getIndexMeta(IX.getName().toLowerCase()); // Try case-insensitive fashion
+	                        if (IMeta != null && IMeta2 != null )
+                              Actions.add(new TableIndexDrop(Obj, IMeta));
+                            if (IMeta2 != null)
+                             Actions.add(new TableIndexDrop(Obj, IMeta2));
+	                        Actions.add(new TableIndexAdd(IX));
+	                      }
+	                  }
+                    }
+              }  
           }
         for (View V : S._Views)
           {

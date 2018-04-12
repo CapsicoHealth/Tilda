@@ -40,7 +40,7 @@
 
 
     { "name": "Mapping",
-      "description": "Performance logs for the Tilda framework",
+      "description": "Generalized Mapping table",
       "columns":[
          { "name": "type"       , "type": "STRING", "nullable": false, "size":   10, "invariant": true, "description": "The type this mapping is for" }
         ,{ "name": "src"        , "type": "STRING", "nullable": false, "size": 1024, "invariant": true, "description": "The source value for this mapping" }
@@ -95,58 +95,6 @@
       "indices":[ 
       	{ "name": "AllBySchemaName", "columns": ["schemaName"], "orderBy": ["objectName", "startPeriod desc"], "db": true },
       	{ "name": "AllByObjectName", "columns": ["schemaName", "objectName"], "orderBy": ["startPeriod desc"], "db": false }
-      ]
-    },
-    
-    
-    { "name": "Testing",
-      "description": "blah blah",
-      "columns":[
-        { "name": "refnum2"      , "type": "LONG[]"     , "nullable": false,                "invariant": true , "description": "The person's primary key" },
-        { "name": "name"         , "type": "STRING"     , "nullable": false, "size":    10,                     "description": "Medical system unique enterprise id" },
-        { "name": "description"  , "type": "STRING"     ,                    "size":   250,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
-        { "name": "desc2"        , "type": "STRING"     ,                    "size":  3000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
-        { "name": "desc3"        , "type": "STRING"     ,                    "size":  5000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
-        { "name": "desc4"        , "type": "STRING"     ,                    "size":  9000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
-        { "name": "desc5"        , "type": "STRING"     ,                    "size": 17000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
-        { "name": "desc6"        , "type": "STRING"     ,                    "size": 33000, "protect":"SMART",  "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
-        { "name": "tops"         , "type": "STRING[]"   ,                                                       "description": "The blah"},
-        { "name": "tops2"        , "type": "STRING{}"   ,                                                       "description": "The blah"},
-        { "name": "a1"           , "type": "BITFIELD"   ,                                                       "description": "The blah"},
-        { "name": "a2"           , "type": "CHAR"       ,                                                       "description": "The blah"},
-        { "name": "a2b"          , "type": "CHAR[]"     ,                                                       "description": "The blah"},
-        { "name": "a2c"          , "type": "CHAR{}"     ,                                                       "description": "The blah"},
-        { "name": "a3"           , "type": "BOOLEAN"    ,                                                       "description": "The blah"},
-        { "name": "a3b"          , "type": "BOOLEAN[]"  ,                                                       "description": "The blah"},
-        { "name": "a4"           , "type": "DOUBLE"     ,                                                       "description": "The blah"},
-        { "name": "a4b"          , "type": "DOUBLE[]"   ,                                                       "description": "The blah"},
-        { "name": "a5"           , "type": "FLOAT"      ,                                                       "description": "The blah"},
-        { "name": "a5b"          , "type": "FLOAT[]"    ,                                                       "description": "The blah"},
-        { "name": "a6"           , "type": "LONG"       ,                                                       "description": "The blah"},
-        { "name": "a6b"          , "type": "LONG[]"     ,                                                       "description": "The blah"},
-        { "name": "a6c"          , "type": "LONG{}"     ,                                                       "description": "The blah"},
-        { "name": "a7"           , "type": "INTEGER"    ,                                                       "description": "The blah"},
-        { "name": "a7b"          , "type": "INTEGER[]"  ,                                                       "description": "The blah"},
-        { "name": "a8"           , "type": "BINARY"     ,                                                       "description": "The blah"},
-        { "name": "a9"           , "type": "DATETIME"   ,                                                       "description": "The blah"}
-      ],
-      "primary": { "autogen": true },
-      "indices":[ 
-      	{ "name": "AllByName" , "orderBy": ["name asc"], "db": false 
-      	},
-      	{ "name": "AllByName2", "orderBy": ["name asc"], "db": true, "subQuery": { "from"  : ["ObjectPerf"], 
-      	                                                                           "wheres": [ { "db": "*", "clause": "deleted is null and desc2 >= ?(Lower) and a5 < ?(Upper) or name = ?() and created > ?()" } 
-      	                                                                                     ] 
-      	                                                                         }
-      	},
-      	{ "name": "AllByName3", "orderBy": ["name asc"], "db": true, "subWhere": "deleted is null and name = ?() and created > ?()" }
-      ],
-      "json":[
-        { "name": "AAA", "columns": ["refnum", "refnum2", "name", "description", "desc2", "desc3", "desc4", "desc5", "desc6", "tops", "tops2", "a1", "a2", "a2b", "a2c", "a3", "a3b", "a4", "a4b", "a5", "a5b", "a6", "a6b", "a6c", "a7", "a7b", "a9", "created", "lastUpdated"] }
-       ,{ "name": "BBB", "columns": ["refnum", "refnum2", "name", "description", "desc2", "desc3"] }
-      ],
-      "http":[
-        { "name": "", "mandatories": ["refnum", "name", "description"] }
       ]
     },
     {
@@ -245,5 +193,215 @@
       ]
     }
     
+    
+   ,{ "name":"Formula"
+     ,"occ":true
+     ,"description":"Master formula information"
+     ,"columns":[
+         { "name":"location"   , "type":"STRING" , "nullable":false, "size":   64, "invariant":true, "description":"The name of the primary table/view this formula is defined in."  }
+        ,{ "name":"location2"  , "type":"STRING" , "nullable":false, "size":   64, "invariant":true, "description":"The name of the secondary table/view (a derived view, a realized table), if appropriate."   }
+        ,{ "name":"name"       , "type":"STRING" , "nullable":false, "size":   64,                   "description":"The name of the formula/column."  }
+        ,{ "name":"type"       , "type":"STRING" , "nullable":false, "size":    3,                   "description":"The type of the formula/column value/outcome."
+                               , "values": [ { "name":"String"   , "value":"STR", "description": "String"    }
+                                            ,{ "name":"Character", "value":"CHR", "description": "Character" }
+                                            ,{ "name":"Boolean"  , "value":"BOL", "description": "Boolean"   }
+                                            ,{ "name":"Integer"  , "value":"INT", "description": "Integer"   }
+                                            ,{ "name":"Long"     , "value":"LNG", "description": "Long"      }
+                                            ,{ "name":"Float"    , "value":"FLT", "description": "Float"     }
+                                            ,{ "name":"Double"   , "value":"DBL", "description": "Double"    }
+                                            ,{ "name":"Date"     , "value":"DT" , "description": "Date"      }
+                                            ,{ "name":"DateTime" , "value":"DTM", "description": "DateTime"  }
+                                           ]
+         }
+        ,{ "name":"title"      , "type":"STRING" , "nullable":false, "size":  128,                   "description":"The title of the formula/column."  }
+        ,{ "name":"description", "type":"STRING" , "nullable":false, "size":32000,                   "description":"The description of the formula/column."  }
+        ,{ "name":"formula"    , "type":"STRING" , "nullable":true , "size":32000,                   "description":"The formula."  }
+        ,{ "name":"htmlDoc"    , "type":"STRING" , "nullable":true , "size":32000,                   "description":"Pre-rendered html fragment with the full documentation for this formula."  }
+       ]
+     ,"primary": { "autogen": true }
+     ,"indices":[
+         { "name": "Formula", "columns": ["location" , "name"], "db": true }
+      ]
+    }
+    
+   ,{ "name":"Measure"
+     ,"occ":true
+     ,"description":"Master Measure information"
+     ,"columns":[
+         { "name":"schema"  , "type":"STRING" , "nullable":false, "size":   64,  "description":"The Schema wher ethe measure is defined."  }
+        ,{ "name":"name"    , "type":"STRING" , "nullable":false, "size":   64,  "description":"The name of the measure."  }
+       ]
+     ,"primary": { "autogen": true }
+     ,"indices":[
+         { "name": "Measure", "columns": ["schema", "name"], "db": true }
+      ]
+    }
+
+   ,{ "name":"MeasureFormula"
+     ,"occ":true
+     ,"description":"Master Measure information"
+     ,"columns":[
+         { "name":"measureRefnum"   , "sameas":"Measure.refnum", "invariant":true , "description":"The measure."         }
+        ,{ "name":"formulaRefnum"   , "sameas":"Formula.refnum", "invariant": true, "description":"The parent formula."  }
+       ]
+     ,"primary": { "autogen": false, "columns": ["measureRefnum", "formulaRefnum"] }
+     ,"foreign": [
+         { "name":"Measure",  "srcColumns":["measureRefnum"], "destObject": "Measure" }
+        ,{ "name":"Formula",  "srcColumns":["formulaRefnum"], "destObject": "Formula" }
+       ]
+     ,"indices":[
+      ]
+    }
+
+   ,{ "name":"FormulaDependency"
+     ,"occ":true
+     ,"description":"Master formula dependency information"
+     ,"columns":[
+         { "name":"formulaRefnum"   , "sameas":"Formula.refnum", "invariant": true, "description":"The parent formula."  }
+        ,{ "name":"dependencyRefnum", "sameas":"Formula.refnum", "invariant": true, "description":"The dependent formula."   }
+       ]
+     ,"primary": { "autogen":  false, "columns":["formulaRefnum" , "dependencyRefnum"] }
+     ,"foreign": [
+         { "name":"Formula1",  "srcColumns":["formulaRefnum"   ], "destObject": "Formula" }
+        ,{ "name":"Formula2",  "srcColumns":["dependencyRefnum"], "destObject": "Formula" }
+       ]
+     ,"indices":[
+       ]
+    }
+
+   ,{ "name":"FormulaResult"
+     ,"occ":true
+     ,"description":"Master formula result information, if applicable. Some formulas may not yield an enumeratable value (e.g., returning a date)"
+     ,"columns":[
+         { "name":"formulaRefnum", "sameas":"Formula.refnum",                        "invariant": true, "description":"The parent formula."  }
+        ,{ "name":"value"        , "type":"STRING" , "nullable":false, "size":  100, "invariant": true, "description":"The result value."  }
+        ,{ "name":"description"  , "type":"STRING" , "nullable":false, "size":32000,                    "description":"The description of the result value."  }
+       ]
+     ,"primary": { "autogen": false, "columns":["formulaRefnum" , "value"] }
+     ,"foreign": [
+         { "name":"Formula",  "srcColumns":["formulaRefnum"   ], "destObject": "Formula" }
+       ]
+     ,"indices":[
+       ]
+    }
+
+   ,{ "name": "Testing",
+      "description": "blah blah",
+      "columns":[
+        { "name": "refnum2"      , "type": "LONG[]"     , "nullable": false,                "invariant": true , "description": "The person's primary key" },
+        { "name": "name"         , "type": "STRING"     , "nullable": false, "size":    10,                     "description": "Medical system unique enterprise id" },
+        { "name": "description"  , "type": "STRING"     ,                    "size":   250,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
+        { "name": "desc2"        , "type": "STRING"     ,                    "size":  3000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
+        { "name": "desc3"        , "type": "STRING"     ,                    "size":  5000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
+        { "name": "desc4"        , "type": "STRING"     ,                    "size":  9000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
+        { "name": "desc5"        , "type": "STRING"     ,                    "size": 17000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
+        { "name": "desc6"        , "type": "STRING"     ,                    "size": 33000, "protect":"SMART",  "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
+        { "name": "tops"         , "type": "STRING[]"   ,                                                       "description": "The blah"},
+        { "name": "tops2"        , "type": "STRING{}"   ,                                                       "description": "The blah"},
+        { "name": "a1"           , "type": "BITFIELD"   ,                                                       "description": "The blah"},
+        { "name": "a2"           , "type": "CHAR"       ,                                                       "description": "The blah"},
+        { "name": "a2b"          , "type": "CHAR[]"     ,                                                       "description": "The blah"},
+        { "name": "a2c"          , "type": "CHAR{}"     ,                                                       "description": "The blah"},
+        { "name": "a3"           , "type": "BOOLEAN"    ,                                                       "description": "The blah"},
+        { "name": "a3b"          , "type": "BOOLEAN[]"  ,                                                       "description": "The blah"},
+        { "name": "a4"           , "type": "DOUBLE"     ,                                                       "description": "The blah"},
+        { "name": "a4b"          , "type": "DOUBLE[]"   ,                                                       "description": "The blah"},
+        { "name": "a5"           , "type": "FLOAT"      ,                                                       "description": "The blah"},
+        { "name": "a5b"          , "type": "FLOAT[]"    ,                                                       "description": "The blah"},
+        { "name": "a6"           , "type": "LONG"       ,                                                       "description": "The blah"},
+        { "name": "a6b"          , "type": "LONG[]"     ,                                                       "description": "The blah"},
+        { "name": "a6c"          , "type": "LONG{}"     ,                                                       "description": "The blah"},
+        { "name": "a7"           , "type": "INTEGER"    ,                                                       "description": "The blah"},
+        { "name": "a7b"          , "type": "INTEGER[]"  ,                                                       "description": "The blah"},
+        { "name": "a8"           , "type": "BINARY"     ,                                                       "description": "The blah"},
+        { "name": "a9"           , "type": "DATETIME"   ,                                                       "description": "The blah"}
+      ],
+      "primary": { "autogen": true },
+      "indices":[ 
+        { "name": "AllByName" , "orderBy": ["name asc"], "db": false       },
+        { "name": "AllByName2", "orderBy": ["name asc"], "db": true        },
+        { "name": "AllByName3", "orderBy": ["name desc"], "db": true       },
+        { "name": "AllByName4", "orderBy": ["name asc", "description desc"], "db": true
+        																  , "subWhere": "deleted is null and name = 'Hello' and created > '2018-01-01'"
+        }
+      ],
+      "json":[
+        { "name": "AAA", "columns": ["refnum", "refnum2", "name", "description", "desc2", "desc3", "desc4", "desc5", "desc6", "tops", "tops2", "a1", "a2", "a2b", "a2c", "a3", "a3b", "a4", "a4b", "a5", "a5b", "a6", "a6b", "a6c", "a7", "a7b", "a9", "created", "lastUpdated"] }
+       ,{ "name": "BBB", "columns": ["refnum", "refnum2", "name", "description", "desc2", "desc3"] }
+      ],
+      "http":[
+        { "name": "", "mandatories": ["refnum", "name", "description"] }
+      ]
+    }
+    
+   ,{ "name":"Testing2",
+      "lc": "READONLY",
+      "dbOnly":true,
+      "description":"Testing",
+      "columns":[
+         { "name":"t1"  , "type":"STRING"  , "nullable": false, "size":   2, "description":"State code" }
+        ,{ "name":"t2"  , "type":"STRING"  , "nullable": false, "size":  60, "description":"State name" }
+       ]
+     ,"indices":[ 
+         { "name":"T1"   , "columns":["t1"] }
+       ]
+    }
   ]
+    
+    
+ ,"views": [
+     { "name": "FormulaResultView"
+      ,"description": "A view of formulas and their values."
+      ,"columns":[
+          { "sameas": "FormulaResult.formulaRefnum"}
+         ,{ "sameas": "FormulaResult.value"        }
+         ,{ "sameas": "FormulaResult.description"  }
+         ,{ "sameas": "Formula.location"           }
+         ,{ "sameas": "Formula.name"               }
+        ]
+      ,"subWhereX":{
+          "clause":["Formula.deleted is null and FormulaResult.deleted is null"
+                   ]
+         ,"description":["Active formulas and their result values"]
+        }
+     }    
+
+    ,{ "name": "FormulaDependencyView"
+      ,"description": "A view of formulas and their dependencies."
+      ,"columns":[
+          { "sameas": "FormulaDependency.formulaRefnum"    }
+         ,{ "sameas": "Formula.location"                   }
+         ,{ "sameas": "Formula.name"                       }
+         ,{ "sameas": "FormulaDependency.dependencyRefnum" }
+         ,{ "sameas": "Formula.name"                       , "name":"dependentFormulaName"}
+        ]
+      ,"subWhereX":{
+          "clause":["Formula.deleted is null"
+                   ]
+         ,"description":["Active formulas and their sub-formulas"]
+        }
+     }    
+
+    ,{ "name": "MeasureFormulaView"
+      ,"description": "A view of formulas and their dependencies."
+      ,"columns":[
+          { "sameas": "MeasureFormula.measureRefnum"                    }
+         ,{ "sameas": "Measure.schema"      , "name":"measureSchema"    }
+         ,{ "sameas": "Measure.name"        , "name":"measureName"      }
+         ,{ "sameas": "Formula.refnum"      , "name":"formulaRefnum"    }
+         ,{ "sameas": "Formula.location"    , "name":"formulaLocation"  }
+         ,{ "sameas": "Formula.location2"   , "name":"formulaLocation2" }
+         ,{ "sameas": "Formula.name"        , "name":"formulaName"      }
+         ,{ "sameas": "Formula.title"              }
+         ,{ "sameas": "Formula.description"        }
+         ,{ "sameas": "Formula.type"               }
+         ,{ "sameas": "Formula.formula"            }
+        ]
+      ,"subWhereX":{
+          "clause":["Formula.deleted is null and Measure.deleted is null"
+                   ]
+         ,"description":["Active formulas and their sub-formulas"]
+        }
+     }    
+   ]
 }
