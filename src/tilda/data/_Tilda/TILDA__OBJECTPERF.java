@@ -655,7 +655,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Nov 25 2017, 15:02:16EST
+ @generated Jan 22 2018, 15:28:02EST
 */
 public abstract class TILDA__OBJECTPERF implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
@@ -671,14 +671,18 @@ public abstract class TILDA__OBJECTPERF implements tilda.interfaces.WriterObject
    private long     __Nulls2      = 0L;
    private long     __Nulls3      = 0L;
    private long     __Nulls4      = 0L;
+   private long     __Nulls5      = 0L;
+   private long     __Nulls6      = 0L;
    private long     __Changes1    = 0L;
    private long     __Changes2    = 0L;
    private long     __Changes3    = 0L;
    private long     __Changes4    = 0L;
+   private long     __Changes5    = 0L;
+   private long     __Changes6    = 0L;
    private boolean  __NewlyCreated= false;
    private int      __LookupId;
 
-   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L || __Changes3 != 0L || __Changes4 != 0L; }
+   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L || __Changes3 != 0L || __Changes4 != 0L || __Changes5 != 0L || __Changes6 != 0L; }
    public  boolean isNewlyCreated() { return __NewlyCreated; }
 
    void initForCreate()
@@ -3411,7 +3415,7 @@ This is the hasChanged for:<BR>
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
         }
 
-       __Changes1= __Changes2= __Changes3= __Changes4= __Nulls1= __Nulls2= __Nulls3= __Nulls4= 0L;
+       __Changes1= __Changes2= __Changes3= __Changes4= __Changes5= __Changes6= __Nulls1= __Nulls2= __Nulls3= __Nulls4= __Nulls5= __Nulls6= 0L;
        return true;
      }
 
@@ -3548,10 +3552,7 @@ This is the hasChanged for:<BR>
                               _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
      __LookupId = 0;
      __Init     = InitMode.READ;
-     __Changes1  = 0L;
-     __Changes2  = 0L;
-     __Changes3  = 0L;
-     __Changes4  = 0L;
+     __Changes1 = __Changes2 = __Changes3 = __Changes4 = __Changes5 = __Changes6 = 0L;
      return AfterRead(C);
    }
 
@@ -3571,17 +3572,25 @@ This is the hasChanged for:<BR>
        __Nulls3 |= DTField._Mask3;
       else if (DTField._MaskId == 4)
        __Nulls4 |= DTField._Mask4;
+      else if (DTField._MaskId == 5)
+       __Nulls5 |= DTField._Mask5;
+      else if (DTField._MaskId == 6)
+       __Nulls6 |= DTField._Mask6;
       else
        throw new Error("RUNTIME TILDA ERROR: Invalid MaskId="+DTField._MaskId+" for column "+DTFieldName+". Values should be between 1 and 4.");
      boolean DTNull = DTField._MaskId == 1 ? (__Nulls1 & DTField._Mask1) != 0L
                     : DTField._MaskId == 2 ? (__Nulls2 & DTField._Mask2) != 0L
                     : DTField._MaskId == 3 ? (__Nulls3 & DTField._Mask3) != 0L
-                                           : (__Nulls4 & DTField._Mask4) != 0L
+                    : DTField._MaskId == 4 ? (__Nulls4 & DTField._Mask4) != 0L
+                    : DTField._MaskId == 5 ? (__Nulls5 & DTField._Mask5) != 0L
+                                           : (__Nulls6 & DTField._Mask6) != 0L
                                            ;
      boolean TZNull = TZField._MaskId == 1 ? (__Nulls1 & TZField._Mask1) != 0L
                     : TZField._MaskId == 2 ? (__Nulls2 & TZField._Mask2) != 0L
                     : TZField._MaskId == 3 ? (__Nulls3 & TZField._Mask3) != 0L
-                                           : (__Nulls4 & TZField._Mask4) != 0L
+                    : TZField._MaskId == 4 ? (__Nulls4 & TZField._Mask4) != 0L
+                    : TZField._MaskId == 5 ? (__Nulls5 & TZField._Mask5) != 0L
+                                           : (__Nulls6 & TZField._Mask6) != 0L
                                            ;
      if (DTNull == false && TZNull == true)
       throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");

@@ -28,10 +28,12 @@ import java.util.List;
 import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.postgresql.core.Query;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
 import tilda.db.metadata.FKMeta;
+import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.PKMeta;
 import tilda.db.processors.ScalarRP;
 import tilda.db.processors.StringListRP;
@@ -44,8 +46,10 @@ import tilda.generation.interfaces.CodeGenSql;
 import tilda.generation.postgres9.PostgresType;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
+import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
+import tilda.parsing.parts.SubWhereClause;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.types.ColumnDefinition;
@@ -300,6 +304,7 @@ public class PostgreSQL implements DBType
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" " + (Col._Nullable == false ? "SET" : "DROP") + " NOT NULL;";
         return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
       }
+
 
     @Override
     public int getVarCharThreshhold()
@@ -857,7 +862,40 @@ public class PostgreSQL implements DBType
         return Con.ExecuteDDL(FK._ParentObject._ParentSchema._Name, FK._ParentObject.getBaseName(), Q);
       }
     
+    @Override
+    public boolean alterTableDropIndex(Connection Con, Object Obj, IndexMeta IX)
+    throws Exception
+      {
+        // If the DB Name comes in as all lower case, it's case-insensitive. Otherwise, we have to quote.        
+    	String DropName = IX._Name.equals(IX._Name.toLowerCase()) == false ? "\""+IX._Name+"\"" : IX._Name;
+        String Q = "DROP INDEX " + Obj._ParentSchema._Name + "." + DropName + ";";
+        return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
+      }
     
+    @Override
+    public boolean alterTableAddIndex(Connection Con, Index IX)
+    throws Exception
+      {
+        StringWriter Out = new StringWriter();
+        _SQL.genIndex(new PrintWriter(Out), IX);
+        String Q = Out.toString();
+        return Con.ExecuteDDL(IX._Parent._ParentSchema._Name, IX._Parent.getBaseName(), Q);
+      }
+    
+
+    @Override
+    public boolean alterTableRenameIndex(Connection Con, Object Obj, String OldName, String NewName)
+    throws Exception
+      {
+        // If the DB Name comes in as all lower case, it's case-insensitive. Otherwise, we have to quote.        
+        if (OldName.equals(OldName.toLowerCase()) == false)
+         OldName = "\""+OldName+"\"";
+        
+        String Q = "ALTER INDEX " + Obj._ParentSchema._Name+"."+OldName+" RENAME TO "+NewName+";";
+        return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj._Name, Q);
+      }
+    
+
     private static String PrintColumnList(List<Column> Columns)
       {
         StringBuilder Str = new StringBuilder();
@@ -875,7 +913,6 @@ public class PostgreSQL implements DBType
         return Str.toString();
       }
     
-
     @Override
     public void within(Connection C, StringBuilder Str, Type_DatetimePrimitive Col, Type_DatetimePrimitive ColStart, long DurationCount, IntervalEnum DurationType)
       {

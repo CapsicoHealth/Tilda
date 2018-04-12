@@ -16,7 +16,6 @@
 
 package tilda.migration.actions;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -85,7 +84,6 @@ public class TildaAclAdd extends MigrationAction
             if (isSuperUser == false && SuperUserCon != null)
               SuperUserCon.close();
           }
-
       }
 
     @Override
@@ -98,6 +96,10 @@ public class TildaAclAdd extends MigrationAction
     public boolean isNeeded(Connection C, DatabaseMeta DBMeta)
     throws Exception
       {
+        // For now, most changes may result in dropping and re-creating tables and/or views.
+        // As a result, we should run ACL every time no matter what.
+        return true;
+/*        
         if (DBMeta.getTableMeta(Maintenance_Factory.SCHEMA_LABEL, Maintenance_Factory.TABLENAME_LABEL) == null)
           return true;
         String Str = C.getAclRolesScript(_TildaList);
@@ -105,6 +107,7 @@ public class TildaAclAdd extends MigrationAction
           return false;
         Maintenance_Data M = Maintenance_Factory.LookupByPrimaryKey("TILDA_ACL", "TILDA_ACL");
         return M.Read(C) == false || M.getValue().equals(Str.trim()) == false;
+*/
       }
 
   }

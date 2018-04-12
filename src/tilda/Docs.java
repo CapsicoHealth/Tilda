@@ -25,6 +25,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.parsing.Loader;
 import tilda.parsing.parts.Schema;
+import tilda.utils.AsciiArt;
 import tilda.utils.FileUtil;
 
 public class Docs
@@ -49,23 +50,37 @@ public class Docs
               throw new Exception("We didn't find the necessary Tilda resources.");
             for (Schema S : TildaList)
               {
-                String DocsName = FileUtil.getBasePathFromFileOrResource(S._ResourceName)+"_Tilda/TILDA___Docs."+S._Name.toUpperCase()+".html";
-                LOG.debug("Extracting Tilda documentation "+DocsName);
+                String Name = FileUtil.getBasePathFromFileOrResource(S._ResourceName)+"_Tilda/TILDA___Docs."+S._Name.toUpperCase()+".html";
+                LOG.debug("Extracting Tilda documentation "+Name);
                 PrintWriter Out = FileUtil.getBufferedPrintWriter(Args[0]+File.separator+"TILDA___Docs."+S._Name.toUpperCase()+".html", false);
-                FileUtil.copyFileContentsIntoAnotherFile(DocsName, Out);
+                FileUtil.copyFileContentsIntoAnotherFile(Name, Out);
+                Out.close();
+
+                Name = FileUtil.getBasePathFromFileOrResource(S._ResourceName)+"_Tilda/TILDA___PostgreSQL."+S._Name.toUpperCase()+".sql";
+                LOG.debug("Extracting Tilda SQL file "+Name);
+                Out = FileUtil.getBufferedPrintWriter(Args[0]+File.separator+"TILDA___PostgreSQL."+S._Name.toUpperCase()+".sql", false);
+                FileUtil.copyFileContentsIntoAnotherFile(Name, Out);
                 Out.close();
               }
           }
         catch (Exception E)
           {
-            LOG.error("Cannot extract documentation from active Tilda schemas in the classpath.\n", E);
-          }
-        finally
-          {
+            LOG.error("\n"
+                     +"          ======================================================================================\n"
+                     +AsciiArt.Error("               ")
+                     +"\n"
+                     +"               Cannot extract documentation from active Tilda definitions in the classpath.\n"
+                     +"          ======================================================================================\n"
+                     , E);
+            System.exit(-1);
           }
 
-        LOG.info("");
-        LOG.info("DONE.");
-        LOG.info("");
+        LOG.info("\n"
+                +"          ======================================================================================\n"
+                +AsciiArt.Woohoo("                       ")
+                +"\n"
+                +"              All Tilda code, migration scripts and documentation was generated succesfully.    \n"
+                +"          ======================================================================================"
+                );
       }
   }

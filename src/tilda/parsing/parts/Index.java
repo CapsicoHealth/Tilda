@@ -21,13 +21,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import tilda.parsing.ParserSession;
-import tilda.parsing.parts.helpers.ValidationHelper;
+import com.google.gson.annotations.SerializedName;
+
 import tilda.enums.ColumnMode;
 import tilda.enums.OrderType;
+import tilda.parsing.ParserSession;
+import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.TextUtil;
-
-import com.google.gson.annotations.SerializedName;
 
 public class Index
   {
@@ -46,6 +46,11 @@ public class Index
     public transient boolean         _Unique;
 
     public transient Base            _Parent;
+    
+    public String getName()
+     {
+       return _Parent._OriginalName + "_" + _Name;
+     }
 
     public boolean Validate(ParserSession PS, Base Parent)
       {
@@ -100,6 +105,13 @@ public class Index
                   {
                     if (_SubQuery._OrderBy != null && _SubQuery._OrderBy.length != 0)
                       PS.AddError("Object '" + _Parent.getFullName() + "' defines index '" + _Name + "' with a subQuery that contains an orderBy: this is not allowed as the index already defines one.");
+                    if (_SubQuery._From.length != 0)
+                      PS.AddError("Object '" + _Parent.getFullName() + "' defines index '" + _Name + "' with a subQuery that contains a \"From\" clause: this is not allowed in an Index SubQuery.");
+                    for(Query SubWhere : _SubQuery._Wheres) 
+                      {
+                    	if (SubWhere._Clause.contains("?"))
+                    		PS.AddError("Object '" + _Parent.getFullName() + "' defines index '" + _Name + "' with a subQuery that contains a \"?\" variable placeholder: this is not allowed in an Index SubQuery.");
+                      }
                     _SubQuery.Validate(PS, _Parent, "Object " + _Parent.getFullName() + "'s index '" + _Name + "'", false);
                   }
               }
@@ -154,5 +166,31 @@ public class Index
                 OrderByOrders.add(Order);
               }
           }
+      }
+  
+    public String getSignature() 
+      {
+        StringBuilder Str = new StringBuilder();
+        // Defined Columns
+        for (Column C : _ColumnObjs)
+          {
+            if (Str.length() != 0)
+            {
+              Str.append("|");
+            }
+            Str.append(C._Name).append("|asc");
+          }   	
+    	// Defined Order Bys
+        for (int i = 0; i < _OrderByObjs.size(); ++i)
+          {
+            Column C = _OrderByObjs.get(i);
+            OrderType O = _OrderByOrders.get(i);
+            if (Str.length() != 0)
+              {
+                Str.append("|");
+              }
+            Str.append(C._Name).append("|").append(O.name().toLowerCase());
+          }
+    	return (_Unique ? "u" : "") + "i|" + Str.toString();
       }
   }

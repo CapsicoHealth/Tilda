@@ -137,7 +137,7 @@ It contains the following columns:<BR>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
+<TD align="center">SMART&nbsp;&nbsp;</TD>
 <TD>The title for a person, i.e., Mr, Miss, Mrs...</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
@@ -958,7 +958,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Nov 25 2017, 15:02:16EST
+ @generated Jan 22 2018, 15:28:02EST
 */
 public abstract class TILDA__TESTING implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject, tilda.interfaces.JSONable
  {
@@ -974,14 +974,18 @@ public abstract class TILDA__TESTING implements tilda.interfaces.WriterObject, t
    private long     __Nulls2      = 0L;
    private long     __Nulls3      = 0L;
    private long     __Nulls4      = 0L;
+   private long     __Nulls5      = 0L;
+   private long     __Nulls6      = 0L;
    private long     __Changes1    = 0L;
    private long     __Changes2    = 0L;
    private long     __Changes3    = 0L;
    private long     __Changes4    = 0L;
+   private long     __Changes5    = 0L;
+   private long     __Changes6    = 0L;
    private boolean  __NewlyCreated= false;
    private int      __LookupId;
 
-   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L || __Changes3 != 0L || __Changes4 != 0L; }
+   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L || __Changes3 != 0L || __Changes4 != 0L || __Changes5 != 0L || __Changes6 != 0L; }
    public  boolean isNewlyCreated() { return __NewlyCreated; }
 
    void initForCreate()
@@ -2102,7 +2106,7 @@ This is the definition for:<BR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>SMART</TD></TR>
 </TABLE>
 */
    String _desc6;
@@ -2122,7 +2126,7 @@ This is the getter for:<BR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>SMART</TD></TR>
 </TABLE>
 */
    public final String getDesc6()
@@ -2143,7 +2147,7 @@ This is the isNull for:<BR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>SMART</TD></TR>
 </TABLE>
 */
    public final boolean isNullDesc6()
@@ -2164,7 +2168,7 @@ This is the setter for:<BR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>SMART</TD></TR>
 </TABLE>
 */
    public void setDesc6(String v) throws Exception
@@ -2178,6 +2182,7 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.TESTING.desc6: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 33000.");
        else if (v.equals(_desc6) == false)
         {
+          v = HTMLFilter.CleanSmart("tilda.data.TILDA.TESTING.desc6",v);
           __Changes1 |= TILDA__TESTING_Factory.COLS.DESC6._Mask1;
           __Nulls1   &= ~TILDA__TESTING_Factory.COLS.DESC6._Mask1;
        _desc6 = v;
@@ -2200,7 +2205,7 @@ This is the null setter for:<BR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>SMART</TD></TR>
 </TABLE>
 */
    public void setNullDesc6()
@@ -2229,7 +2234,7 @@ This is the hasChanged for:<BR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>SMART</TD></TR>
 </TABLE>
 */
    public boolean hasChangedDesc6()
@@ -6572,7 +6577,7 @@ This is the hasChanged for:<BR>
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
         }
 
-       __Changes1= __Changes2= __Changes3= __Changes4= __Nulls1= __Nulls2= __Nulls3= __Nulls4= 0L;
+       __Changes1= __Changes2= __Changes3= __Changes4= __Changes5= __Changes6= __Nulls1= __Nulls2= __Nulls3= __Nulls4= __Nulls5= __Nulls6= 0L;
        return true;
      }
 
@@ -6732,10 +6737,7 @@ This is the hasChanged for:<BR>
                             _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
      __LookupId = 0;
      __Init     = InitMode.READ;
-     __Changes1  = 0L;
-     __Changes2  = 0L;
-     __Changes3  = 0L;
-     __Changes4  = 0L;
+     __Changes1 = __Changes2 = __Changes3 = __Changes4 = __Changes5 = __Changes6 = 0L;
      return AfterRead(C);
    }
 
@@ -6755,17 +6757,25 @@ This is the hasChanged for:<BR>
        __Nulls3 |= DTField._Mask3;
       else if (DTField._MaskId == 4)
        __Nulls4 |= DTField._Mask4;
+      else if (DTField._MaskId == 5)
+       __Nulls5 |= DTField._Mask5;
+      else if (DTField._MaskId == 6)
+       __Nulls6 |= DTField._Mask6;
       else
        throw new Error("RUNTIME TILDA ERROR: Invalid MaskId="+DTField._MaskId+" for column "+DTFieldName+". Values should be between 1 and 4.");
      boolean DTNull = DTField._MaskId == 1 ? (__Nulls1 & DTField._Mask1) != 0L
                     : DTField._MaskId == 2 ? (__Nulls2 & DTField._Mask2) != 0L
                     : DTField._MaskId == 3 ? (__Nulls3 & DTField._Mask3) != 0L
-                                           : (__Nulls4 & DTField._Mask4) != 0L
+                    : DTField._MaskId == 4 ? (__Nulls4 & DTField._Mask4) != 0L
+                    : DTField._MaskId == 5 ? (__Nulls5 & DTField._Mask5) != 0L
+                                           : (__Nulls6 & DTField._Mask6) != 0L
                                            ;
      boolean TZNull = TZField._MaskId == 1 ? (__Nulls1 & TZField._Mask1) != 0L
                     : TZField._MaskId == 2 ? (__Nulls2 & TZField._Mask2) != 0L
                     : TZField._MaskId == 3 ? (__Nulls3 & TZField._Mask3) != 0L
-                                           : (__Nulls4 & TZField._Mask4) != 0L
+                    : TZField._MaskId == 4 ? (__Nulls4 & TZField._Mask4) != 0L
+                    : TZField._MaskId == 5 ? (__Nulls5 & TZField._Mask5) != 0L
+                                           : (__Nulls6 & TZField._Mask6) != 0L
                                            ;
      if (DTNull == false && TZNull == true)
       throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");

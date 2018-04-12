@@ -31,7 +31,7 @@ define(['text!../templates/tilda_schema/_new.html',
       viewScope.schemaEntries = files;
       for(i=0;i<files.length;i++){
         var file = files[i];
-        $select.append('<option value=\''+i+'\'>'+file.name+'&nbsp;&nbsp;&nbsp;--&nbsp;'+file.fullPath.substring(0, file.fullPath.length - file.name.length)+'</option')
+        $select.append('<option value=\''+i+'\'>'+file.name+'</option')
       }
       viewScope.$el.find('.actions').show();
     })
@@ -49,7 +49,7 @@ define(['text!../templates/tilda_schema/_new.html',
       'change select': "changeView",
       'click .save-regex': 'saveRegex',
       'click .filterRegex': function(){
-         $('#filterD').modal('show');
+        $('#filterD').modal('show');
       }
     },
     saveRegex: function(event){
@@ -100,7 +100,7 @@ define(['text!../templates/tilda_schema/_new.html',
           }
         };
         objects.schemaEntry = schemaEntry;
-        var nestedReadEntries = function(callback){
+        var readEntries = function(callback){
           dirReader.readEntries(function(results){
             callback(results)
           })
@@ -115,12 +115,12 @@ define(['text!../templates/tilda_schema/_new.html',
             }
           }
           if(results.length >= 90){
-            nestedReadEntries(callbackFn, function(error){console.error(error.message);});
+            readEntries(callbackFn, function(error){console.error(error.message);});
           } else {
             init(objects);
           }
         }
-        nestedReadEntries(callbackFn, function(error){console.error(error.message);});
+        readEntries(callbackFn, function(error){console.error(error.message);});
       };
       schemaEntry.getParent(function(dEntry){
         var dirReader = dEntry.createReader();
@@ -150,6 +150,8 @@ define(['text!../templates/tilda_schema/_new.html',
             that.$el.find('.regex-f').val(value);
           }
         });        
+      } else {
+        that.excludeRegex = new RegExp("\/bin\/*", "i"); // default filter
       }
 
       that.$el.find('.actions').hide();

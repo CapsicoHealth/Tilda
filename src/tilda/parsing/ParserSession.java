@@ -76,6 +76,7 @@ public class ParserSession
 
     public Schema getSchema(String PackageName, String SchemaName)
       {
+//        Schema.PrintSchemaList(CollectionUtil.toList(_Dependencies.values().iterator()), true);
         String FullName = PackageName + "." + SchemaName;
         Schema S = _Dependencies.get(FullName);
         if (S == null)

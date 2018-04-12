@@ -43,30 +43,58 @@ public class ColumnDefinition
             _Mask2 = 0;
             _Mask3 = 0;
             _Mask4 = 0;
+            _Mask5 = 0;
+            _Mask6 = 0;
           }
-        else if (Count < 128)
+        else if (Count < 64*2)
           {
             _MaskId = 2;
             _Mask1 = 0;
             _Mask2 = 1L << Count;
             _Mask3 = 0;
             _Mask4 = 0;
+            _Mask5 = 0;
+            _Mask6 = 0;
           }
-        else if (Count < 192)
+        else if (Count < 64*3)
           {
             _MaskId = 3;
             _Mask1 = 0;
             _Mask2 = 0;
             _Mask3 = 1L << Count;
             _Mask4 = 0;
+            _Mask5 = 0;
+            _Mask6 = 0;
           }
-        else if (Count < 256)
+        else if (Count < 64*4)
           {
             _MaskId = 4;
             _Mask1 = 0;
             _Mask2 = 0;
             _Mask3 = 0;
             _Mask4 = 1L << Count;
+            _Mask5 = 0;
+            _Mask6 = 0;
+          }
+        else if (Count < 64*5)
+          {
+            _MaskId = 5;
+            _Mask1 = 0;
+            _Mask2 = 0;
+            _Mask3 = 0;
+            _Mask4 = 0;
+            _Mask5 = 1L << Count;
+            _Mask6 = 0;
+          }
+        else if (Count < 64*6)
+          {
+            _MaskId = 6;
+            _Mask1 = 0;
+            _Mask2 = 0;
+            _Mask3 = 0;
+            _Mask4 = 0;
+            _Mask5 = 0;
+            _Mask6 = 1L << Count;
           }
         else
           {
@@ -87,6 +115,8 @@ public class ColumnDefinition
     public final long       _Mask2;
     public final long       _Mask3;
     public final long       _Mask4;
+    public final long       _Mask5;
+    public final long       _Mask6;
     
     public String getSchemaName()
       {

@@ -39,6 +39,7 @@ public class Object extends Base
 
     /*@formatter:off*/
     @SerializedName("occ"           ) public boolean              _OCC        = true ;
+    @SerializedName("dbOnly"        ) public boolean              _DBOnly     = false;
     @SerializedName("etl"           ) public boolean              _ETL        = false;
     @SerializedName("lc"            ) public String               _LCStr      = ObjectLifecycle.NORMAL.toString();
 
@@ -58,8 +59,6 @@ public class Object extends Base
     public transient boolean              _HasUniqueQuery;
     public transient FrameworkSourcedType _FST         = FrameworkSourcedType.NONE;
     public transient ObjectLifecycle      _LC;
-    public transient boolean              _DBOnly;
-
 
     @Override
     public Column getColumn(String name)
@@ -174,9 +173,10 @@ public class Object extends Base
                 if (C._Mode == ColumnMode.CALCULATED)
                   continue;
                 C.setSequenceOrder(++Counter);
-                if (Counter >= 64 * 4)
+                int Max = 64 * 6;
+                if (Counter >= Max)
                   {
-                    PS.AddError("Object '" + getFullName() + "' has declared " + (i + 1) + " columns. Max allowed is 256!");
+                    PS.AddError("Object '" + getFullName() + "' has declared " + (i + 1) + " columns. Max allowed is "+Max+"!");
                   }
               }
           }
@@ -196,6 +196,7 @@ public class Object extends Base
 
 
         _HasUniqueIndex = false;
+        Set<String> Signatures = new HashSet<String>();
         Names.clear();
         for (Index I : _Indices)
           {
@@ -204,6 +205,8 @@ public class Object extends Base
             if (I.Validate(PS, this) == true)
               if (Names.add(I._Name.toUpperCase()) == false)
                 PS.AddError("Object '" + getFullName() + "' is defining a duplicate index '" + I._Name + "'.");
+            if (I._Db == true && Signatures.add(I.getSignature()) == false)
+              PS.AddError("Object '" + getFullName() + "' is defining a duplicate index on signature '" + I.getSignature() + "'.");
             if (I._Unique == true)
               _HasUniqueIndex = true;
           }
