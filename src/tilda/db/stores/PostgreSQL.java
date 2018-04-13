@@ -28,7 +28,6 @@ import java.util.List;
 import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.postgresql.core.Query;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
@@ -49,7 +48,6 @@ import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
-import tilda.parsing.parts.SubWhereClause;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.types.ColumnDefinition;
@@ -888,9 +886,9 @@ public class PostgreSQL implements DBType
     throws Exception
       {
         // If the DB Name comes in as all lower case, it's case-insensitive. Otherwise, we have to quote.        
-        if (OldName.equals(OldName.toLowerCase()) == false || OldName.contains("."))
+        if (OldName.equals(OldName.toLowerCase()) == false || OldName.equals(TextUtil.SanitizeName(OldName)) == false)
          OldName = "\""+OldName+"\"";
-        
+
         String Q = "ALTER INDEX " + Obj._ParentSchema._Name+"."+OldName+" RENAME TO "+NewName+";";
         
         return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj._Name, Q);

@@ -61,9 +61,11 @@ public class Index
         if (TextUtil.isNullOrEmpty(_Name) == true)
           return PS.AddError("Object '" + _Parent.getFullName() + "' is defining an index without a name.");
         
-        // Does it contain a "."?
-        if (_Name.contains(".") == true)
-            return PS.AddError("Object '" + _Parent.getFullName() + "' is defining an index name with a nonproper JavaIdentifier containing char (\".\").");
+        if (_Name.equals(TextUtil.SanitizeName(_Name)) == false)
+          return PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '"+_Name+"' with a name containing invalid characters (must all be alphanumeric or underscore).");
+
+        if (TextUtil.isJavaIdentifier(_Name) == false)
+          return PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '"+_Name+"' with a name that is imcompatible with standard identifier convensions (for example, Java, JavaScript since Foreign Keys have programmatic equivalents in those languages).");
 
         if ((_Columns == null || _Columns.length == 0) && (_OrderBy == null || _OrderBy.length == 0))
           return PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '"+_Name+"' without columns and/or order by.");
