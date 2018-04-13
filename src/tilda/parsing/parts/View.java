@@ -40,6 +40,7 @@ import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.parsing.parts.helpers.SameAsHelper;
 import tilda.utils.Graph;
+import tilda.utils.PaddingUtil;
 import tilda.utils.TextUtil;
 
 public class View extends Base
@@ -116,33 +117,33 @@ public class View extends Base
 
     public ViewJoin getViewjoin(String ObjectName, String As)
       {
-//        LOG.debug("ObjectName: "+ObjectName+"; As: "+As+";");
-//        if (ObjectName.equalsIgnoreCase("AssessmentOasis_Fact") == true)
-//         LOG.debug("HELLO!");
-        
+        // LOG.debug("ObjectName: "+ObjectName+"; As: "+As+";");
+        // if (ObjectName.equalsIgnoreCase("AssessmentOasis_Fact") == true)
+        // LOG.debug("HELLO!");
+
         if (_Joins != null)
           for (ViewJoin vj : _Joins)
-            if (vj != null && vj._ObjectObj.getBaseName().equals(ObjectName) == true 
-                           && (TextUtil.isNullOrEmpty(As)==true || As.equals(vj._As) == true))
+            if (vj != null && vj._ObjectObj.getBaseName().equals(ObjectName) == true
+            && (TextUtil.isNullOrEmpty(As) == true || As.equals(vj._As) == true))
               return vj;
         return null;
       }
-    
+
     public String getRealizedTableName(boolean includeSchemaName)
-     {
-       return _Realize == null ? null : (includeSchemaName==true?_ParentSchema._Name+".":"")+_Name.substring(0, _Name.length() - (_Pivot != null ? "PivotView" : "View").length()) + "Realized";
-     }
-    
+      {
+        return _Realize == null ? null : (includeSchemaName == true ? _ParentSchema._Name + "." : "") + _Name.substring(0, _Name.length() - (_Pivot != null ? "PivotView" : "View").length()) + "Realized";
+      }
+
     public static String getRootViewName(String Name)
-     {
-       return Name.substring(0, Name.length() - (Name.endsWith("PivotView") ==true ? "PivotView" : "View").length());
-     }
+      {
+        return Name.substring(0, Name.length() - (Name.endsWith("PivotView") == true ? "PivotView" : "View").length());
+      }
 
     public boolean Validate(ParserSession PS, Schema ParentSchema)
       {
-//        if (_Name.equalsIgnoreCase("QualityEpisodeOasis_View") == true)
-//         LOG.debug("Hello!!!!");
-//        
+        // if (_Name.equalsIgnoreCase("QualityEpisodeOasis_View") == true)
+        // LOG.debug("Hello!!!!");
+        //
         if (super.Validate(PS, ParentSchema) == false)
           return false;
 
@@ -163,12 +164,12 @@ public class View extends Base
         String LastUpdatedColObjName = null;
         String LastUpdatedETLColObjName = null;
         String DeletedColObjName = null;
-        
+
         if (_Name.equalsIgnoreCase("QualityEpisodeOasis_View") == true)
           {
-            LOG.debug("View columns for "+getShortName()+".");
+            LOG.debug("View columns for " + getShortName() + ".");
             for (ViewColumn VC : _ViewColumns)
-             LOG.debug("  column: "+VC._SameAs+"; As: "+VC._As+"; Name: "+VC._Name+";");
+              LOG.debug("  column: " + VC._SameAs + "; As: " + VC._As + "; Name: " + VC._Name + ";");
             LOG.debug("Hello!!!!");
           }
         for (int i = 0; i < _ViewColumns.size(); ++i)
@@ -288,7 +289,7 @@ public class View extends Base
               }
             else if (TextUtil.isNullOrEmpty(VC._Prefix) == false)
               PS.AddError("Column '" + VC.getFullName() + "' defined a prefix but is not a .* column.");
-            
+
             if (VC.Validate(PS, this) == false)
               return false;
 
@@ -340,12 +341,12 @@ public class View extends Base
           }
         if (_Name.equalsIgnoreCase("QualityEpisodeOasis_View") == true)
           {
-            LOG.debug("View columns for "+getShortName()+" AFTER unrolling.");
+            LOG.debug("View columns for " + getShortName() + " AFTER unrolling.");
             for (ViewColumn VC : _ViewColumns)
-             LOG.debug("  column: "+VC._SameAs+"; As: "+VC._As+"; Name: "+VC._Name+";");
+              LOG.debug("  column: " + VC._SameAs + "; As: " + VC._As + "; Name: " + VC._Name + ";");
             LOG.debug("Hello!!!!");
           }
-        
+
 
         if (_TimeSeries != null)
           {
@@ -712,35 +713,117 @@ public class View extends Base
         return null;
       }
 
-    private static void getDependencyGraph(Graph.Node<Base> N, Object Obj, Set<String> Names)
+    private static void getDependencyGraph(Graph.Node<Base> R, Graph.Node<Base> N, Object Obj, Set<String> Names)
       {
         Graph.Node<Base> child = N.addChild(Obj);
         if (Obj._FST != FrameworkSourcedType.VIEW)
-         return;
+          return;
         for (Column C : Obj._Columns)
           {
             if (C == null || C._SameAsObj == null || C._SameAsObj._ParentObject == null)
-             continue;
+              continue;
             Object Parent = C._SameAsObj._ParentObject;
-            if (Names.add(Parent.getShortName()) == true)
-             getDependencyGraph(child, Parent, Names);
+            // Let's not bring in base-line dependencies that are obvious from generally
+            // TILDA.Key or Tilda.ZoneInfo, for brevity.
+            if (Parent._ParentSchema.getShortName().equals("TILDA") == true)
+              continue;
+
+            if (Names.contains(Parent.getShortName()) == true)
+              continue;
+
+            // Only want to get dependent views and tables if we actually pull columns from them from Root.
+            // Otherwise, dependency graph not really representative of what's accessible from the root view.
+            boolean foundInRoot = false;
+            for (String ColumnName : R.getValue().getColumnNames())
+              {
+                Column RootC = R.getValue().getColumn(ColumnName);
+                if (RootC.getFullName().equals(C.getFullName()) == true)
+                  {
+                    foundInRoot = true;
+                    break;
+                  }
+              }
+            if (foundInRoot == true)
+              {
+                Names.add(Parent.getShortName());
+                getDependencyGraph(R, child, Parent, Names);
+              }
+          }
+      }
+
+    static class DepWrapper
+      {
+        public DepWrapper(Object Obj)
+          {
+            _Obj = Obj;
+          }
+
+        protected Object       _Obj;
+        protected List<Column> _Columns;
+
+        public Object getObj()
+          {
+            return _Obj;
+          }
+
+        public List<Column> getColumns()
+          {
+            return _Columns;
+          }
+
+        public void addColumn(Column C)
+          {
+            _Columns.add(C);
           }
       }
 
     public Graph<Base> getDependencyGraph()
       {
-        Graph<Base> G = new Graph<Base>(this);
-        Graph.Node<Base> Root = G.getRoot();
-        Set<String> Names = new HashSet<String>();
-        for (ViewColumn VC : _ViewColumns)
+        if (getShortName().equals("DATAMART.HOMEHEALTHQUALITYMEASURESVIEW") == true)
           {
-            if (VC == null || VC._SameAsObj == null || VC._SameAsObj._ParentObject == null)
-              continue;
-            Object Parent = VC._SameAsObj._ParentObject;
-            if (Names.add(Parent.getShortName()) == true)
-             getDependencyGraph(Root, Parent, Names);
+            Object Obj = _ParentSchema.getObject(_Name);
+            DepWrapper DW = new DepWrapper(Obj);
+            for (Column C : Obj._Columns)
+              DW.addColumn(C);
+            Graph<DepWrapper> G = new Graph<DepWrapper>(DW);
+            Graph.Node<DepWrapper> Root = G.getRoot();
+            Graph.Node<DepWrapper> N = Root;
+            for (ViewColumn VC : _ViewColumns)
+              {
+                List<Column> L = VC.getSameAsLineage();
+                for (Column C : L)
+                  {
+                    for (Graph.Node<DepWrapper> n : N.getChildrenNodes()) 
+                      if (n.getValue()._Obj == C._ParentObject)
+                       {
+                         n.getValue().addColumn(C);
+                         N = n;
+                       }
+                      else
+                        {
+                          DepWrapper SubDW = new DepWrapper(C._ParentObject);
+                          SubDW.addColumn(C);
+                          N = N.addChild(SubDW);
+                        }
+                  }
+              }
+            LOG.debug("-----");
           }
-        return G;
+          {
+            Graph<Base> G = new Graph<Base>(this);
+            Graph.Node<Base> Root = G.getRoot();
+            Set<String> Names = new HashSet<String>();
+
+            for (ViewColumn VC : _ViewColumns)
+              {
+                if (VC == null || VC._SameAsObj == null || VC._SameAsObj._ParentObject == null)
+                  continue;
+                Object Parent = VC._SameAsObj._ParentObject;
+                if (Names.add(Parent.getShortName()) == true)
+                  getDependencyGraph(Root, Root, Parent, Names);
+              }
+            return G;
+          }
       }
 
   }
