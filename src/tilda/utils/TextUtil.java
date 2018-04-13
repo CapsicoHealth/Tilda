@@ -222,8 +222,8 @@ public class TextUtil
       {
         EscapeSomethingWithSomething(X, '"', "\"", S, "\"", "\"");
       }
-    
-    
+
+
     public static final String EscapeSingleQuoteWithSlashDouble(String S)
       {
         StringBuilder X = new StringBuilder();
@@ -620,6 +620,19 @@ public class TextUtil
           {
             char c = Str.charAt(i);
             if (Character.isJavaIdentifierPart(c) == false)
+              return false;
+          }
+        return true;
+      }
+
+    public static boolean isJavaIdentifier(String Str)
+      {
+        if (Str == null || Str.length() == 0 || !Character.isJavaIdentifierStart(Str.charAt(0)))
+          return false;
+
+        for (int i = 1; i < Str.length(); i++)
+          {
+            if (!Character.isJavaIdentifierPart(Str.charAt(i)))
               return false;
           }
         return true;
