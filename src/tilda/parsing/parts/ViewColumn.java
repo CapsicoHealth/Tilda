@@ -222,7 +222,7 @@ public class ViewColumn
       {
         List<Column> L = new ArrayList<Column>();
         Column C = VC._SameAsObj;
-        while (true)
+        while (C != null)
           {
             L.add(C);
             if (C.isForeignKey() == true || C._ParentObject._FST == FrameworkSourcedType.VIEW)

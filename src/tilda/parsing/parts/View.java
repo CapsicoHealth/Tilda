@@ -737,7 +737,7 @@ public class View extends Base
             for (String ColumnName : R.getValue().getColumnNames())
               {
                 Column RootC = R.getValue().getColumn(ColumnName);
-                if (RootC.getFullName().equals(C.getFullName()) == true)
+                if (RootC != null && RootC.getFullName().equals(C.getFullName()) == true)
                   {
                     foundInRoot = true;
                     break;
@@ -759,7 +759,8 @@ public class View extends Base
           }
 
         protected Object       _Obj;
-        protected List<Column> _Columns;
+        protected List<Column> _Columns = new ArrayList<Column>();
+        protected PrimaryKey   _PK = null;
 
         public Object getObj()
           {
