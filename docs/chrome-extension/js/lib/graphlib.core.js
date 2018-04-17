@@ -587,7 +587,7 @@ PriorityQueue.prototype._swap = function(i, j) {
 };
 
 },{"../lodash":19}],16:[function(require,module,exports){
-"use strict";
+
 
 var _ = require("./lodash");
 
