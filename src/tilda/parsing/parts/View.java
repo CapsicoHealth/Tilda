@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
@@ -40,7 +39,6 @@ import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.parsing.parts.helpers.SameAsHelper;
 import tilda.utils.Graph;
-import tilda.utils.PaddingUtil;
 import tilda.utils.TextUtil;
 
 public class View extends Base
@@ -713,54 +711,59 @@ public class View extends Base
         return null;
       }
 
-    private static void getDependencyGraph(Graph.Node<Base> R, Graph.Node<Base> N, Object Obj, Set<String> Names)
+    /*
+     * private static void getDependencyGraph(Graph.Node<Base> R, Graph.Node<Base> N, Object Obj, Set<String> Names)
+     * {
+     * Graph.Node<Base> child = N.addChild(Obj);
+     * if (Obj._FST != FrameworkSourcedType.VIEW)
+     * return;
+     * for (Column C : Obj._Columns)
+     * {
+     * if (C == null || C._SameAsObj == null || C._SameAsObj._ParentObject == null)
+     * continue;
+     * Object Parent = C._SameAsObj._ParentObject;
+     * // Let's not bring in base-line dependencies that are obvious from generally
+     * // TILDA.Key or Tilda.ZoneInfo, for brevity.
+     * if (Parent._ParentSchema.getShortName().equals("TILDA") == true)
+     * continue;
+     * 
+     * if (Names.contains(Parent.getShortName()) == true)
+     * continue;
+     * 
+     * // Only want to get dependent views and tables if we actually pull columns from them from Root.
+     * // Otherwise, dependency graph not really representative of what's accessible from the root view.
+     * boolean foundInRoot = false;
+     * for (String ColumnName : R.getValue().getColumnNames())
+     * {
+     * Column RootC = R.getValue().getColumn(ColumnName);
+     * if (RootC != null && RootC.getFullName().equals(C.getFullName()) == true)
+     * {
+     * foundInRoot = true;
+     * break;
+     * }
+     * }
+     * if (foundInRoot == true)
+     * {
+     * Names.add(Parent.getShortName());
+     * getDependencyGraph(R, child, Parent, Names);
+     * }
+     * }
+     * }
+     */
+    
+    
+    public static class DepWrapper
       {
-        Graph.Node<Base> child = N.addChild(Obj);
-        if (Obj._FST != FrameworkSourcedType.VIEW)
-          return;
-        for (Column C : Obj._Columns)
-          {
-            if (C == null || C._SameAsObj == null || C._SameAsObj._ParentObject == null)
-              continue;
-            Object Parent = C._SameAsObj._ParentObject;
-            // Let's not bring in base-line dependencies that are obvious from generally
-            // TILDA.Key or Tilda.ZoneInfo, for brevity.
-            if (Parent._ParentSchema.getShortName().equals("TILDA") == true)
-              continue;
-
-            if (Names.contains(Parent.getShortName()) == true)
-              continue;
-
-            // Only want to get dependent views and tables if we actually pull columns from them from Root.
-            // Otherwise, dependency graph not really representative of what's accessible from the root view.
-            boolean foundInRoot = false;
-            for (String ColumnName : R.getValue().getColumnNames())
-              {
-                Column RootC = R.getValue().getColumn(ColumnName);
-                if (RootC != null && RootC.getFullName().equals(C.getFullName()) == true)
-                  {
-                    foundInRoot = true;
-                    break;
-                  }
-              }
-            if (foundInRoot == true)
-              {
-                Names.add(Parent.getShortName());
-                getDependencyGraph(R, child, Parent, Names);
-              }
-          }
-      }
-
-    static class DepWrapper
-      {
-        public DepWrapper(Object Obj)
+        public DepWrapper(Object Obj, String As)
           {
             _Obj = Obj;
+            _As = As;
           }
 
         protected Object       _Obj;
+        protected String       _As ;
         protected List<Column> _Columns = new ArrayList<Column>();
-        protected PrimaryKey   _PK = null;
+        protected PrimaryKey   _PK      = null;
 
         public Object getObj()
           {
@@ -778,53 +781,80 @@ public class View extends Base
           }
       }
 
-    public Graph<Base> getDependencyGraph()
+    public Graph<DepWrapper> getDependencyGraph()
       {
-        if (getShortName().equals("DATAMART.HOMEHEALTHQUALITYMEASURESVIEW") == true)
+        Object Obj = _ParentSchema.getObject(_Name);
+        DepWrapper DW = new DepWrapper(Obj, null);
+        for (Column C : Obj._Columns)
+          DW.addColumn(C);
+        Graph<DepWrapper> G = new Graph<DepWrapper>(DW);
+        Graph.Node<DepWrapper> Root = G.getRoot();
+        Graph.Node<DepWrapper> N = Root;
+        for (ViewColumn VC : _ViewColumns)
           {
-            Object Obj = _ParentSchema.getObject(_Name);
-            DepWrapper DW = new DepWrapper(Obj);
-            for (Column C : Obj._Columns)
-              DW.addColumn(C);
-            Graph<DepWrapper> G = new Graph<DepWrapper>(DW);
-            Graph.Node<DepWrapper> Root = G.getRoot();
-            Graph.Node<DepWrapper> N = Root;
-            for (ViewColumn VC : _ViewColumns)
+//            LOG.debug("Looking at VC " + VC.getShortName() + ".");
+            List<Column> L = VC.getSameAsLineage();
+            for (Column C : L)
               {
-                List<Column> L = VC.getSameAsLineage();
-                for (Column C : L)
+//                LOG.debug("     Ancestor " + C.getShortName() + ".");
+                Graph.Node<DepWrapper> n = null;
+                boolean foundObj = false;
+                for (int i = 0; i < N.getChildrenNodes().size(); ++i) // Searching for a node at that level matching the incoming object definition
                   {
-                    for (Graph.Node<DepWrapper> n : N.getChildrenNodes()) 
-                      if (n.getValue()._Obj == C._ParentObject)
-                       {
-                         n.getValue().addColumn(C);
-                         N = n;
-                       }
-                      else
+                    n = N.getChildrenNodes().get(i);
+                    if (n.getValue()._Obj == C._ParentObject && (TextUtil.isNullOrEmpty(VC._As) == true || VC._As.equals(n.getValue()._As) == true))
+                      {
+                        foundObj = true;
+                        break;
+                      }
+                  }
+                if (foundObj == true)
+                  {
+//                    LOG.debug("     Found, moving on to Graph node " + n.getValue()._Obj.getShortName());
+                    boolean foundCol = false;
+                    for (Column c : n.getValue()._Columns)
+                      if (c == C)
                         {
-                          DepWrapper SubDW = new DepWrapper(C._ParentObject);
-                          SubDW.addColumn(C);
-                          N = N.addChild(SubDW);
+                          foundCol = true;
+                          break;
                         }
+                    if (foundCol == false)
+                     n.getValue().addColumn(C);
+                    N = n;
+                  }
+                else
+                  {
+//                    LOG.debug("     Creating new Graph node " + C._ParentObject.getShortName());
+                    DepWrapper SubDW = new DepWrapper(C._ParentObject, VC._As);
+                    SubDW.addColumn(C);
+                    N = N.addChild(SubDW);
                   }
               }
-            LOG.debug("-----");
+//            LOG.debug("     Resetting to graph root for next VC");
+            N = Root;
           }
-          {
-            Graph<Base> G = new Graph<Base>(this);
-            Graph.Node<Base> Root = G.getRoot();
-            Set<String> Names = new HashSet<String>();
 
-            for (ViewColumn VC : _ViewColumns)
-              {
-                if (VC == null || VC._SameAsObj == null || VC._SameAsObj._ParentObject == null)
-                  continue;
-                Object Parent = VC._SameAsObj._ParentObject;
-                if (Names.add(Parent.getShortName()) == true)
-                  getDependencyGraph(Root, Root, Parent, Names);
-              }
-            return G;
-          }
+//        if (getShortName().equals("DATAMART.HOMEHEALTHQUALITYMEASURESVIEW") == true)
+//          LOG.debug("----------");
+
+        return G;
+        /*
+         * {
+         * Graph<Base> G = new Graph<Base>(this);
+         * Graph.Node<Base> Root = G.getRoot();
+         * Set<String> Names = new HashSet<String>();
+         * 
+         * for (ViewColumn VC : _ViewColumns)
+         * {
+         * if (VC == null || VC._SameAsObj == null || VC._SameAsObj._ParentObject == null)
+         * continue;
+         * Object Parent = VC._SameAsObj._ParentObject;
+         * if (Names.add(Parent.getShortName()) == true)
+         * getDependencyGraph(Root, Root, Parent, Names);
+         * }
+         * return G;
+         * }
+         */
       }
 
   }

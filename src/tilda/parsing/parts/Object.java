@@ -61,6 +61,12 @@ public class Object extends Base
     public transient ObjectLifecycle      _LC;
 
     @Override
+    public String toString()
+      {
+        return super.toString() + ": " + getFullName();
+      }
+
+    @Override
     public Column getColumn(String name)
       {
         for (Column C : _Columns)
@@ -144,7 +150,7 @@ public class Object extends Base
                     --i;
                     continue;
                   }
-                
+
                 _PadderColumnNames.track(C.getLogicalName());
                 if (C.Validate(PS, this) == true)
                   {
@@ -176,7 +182,7 @@ public class Object extends Base
                 int Max = 64 * 6;
                 if (Counter >= Max)
                   {
-                    PS.AddError("Object '" + getFullName() + "' has declared " + (i + 1) + " columns. Max allowed is "+Max+"!");
+                    PS.AddError("Object '" + getFullName() + "' has declared " + (i + 1) + " columns. Max allowed is " + Max + "!");
                   }
               }
           }
@@ -339,10 +345,12 @@ public class Object extends Base
       {
         return C.isOCCGenerated();
       }
+
     public static boolean isOCCLastUpdated(Column C)
       {
         return C.isOCCLastUpdated();
       }
+
     public static boolean isOCCDeleted(Column C)
       {
         return C.isOCCDeleted();
@@ -432,8 +440,8 @@ public class Object extends Base
       {
         List<ForeignKey> FKs = new ArrayList<ForeignKey>();
         for (ForeignKey FK : _ForeignKeys)
-          if (FK._ParentObject.getShortName().equalsIgnoreCase(targetSchema+"."+TargetObject) == true)
-           FKs.add(FK);
+          if (FK._ParentObject.getShortName().equalsIgnoreCase(targetSchema + "." + TargetObject) == true)
+            FKs.add(FK);
         return FKs;
       }
   }

@@ -66,7 +66,7 @@ public class Graph<T>
          * @param FirstMiddleLast 0 if First of level, -1 if middle of level, 1 if last of level.
          * @param v
          */
-        void visitNode(int level, int FirstMiddleLast, T v);
+        void visitNode(int level, int FirstMiddleLast, T v, List<T> Path) throws Exception;
       }
 
     public Graph(T v)
@@ -81,19 +81,22 @@ public class Graph<T>
         return _Root;
       }
 
-    protected static <T> void Traverse(Visitor<T> V, int Level, int FirstMiddleLast, Node<T> N)
+    protected static <T> void Traverse(Visitor<T> V, int Level, int FirstMiddleLast, Node<T> N, List<T> Path) throws Exception
       {
-        V.visitNode(Level, FirstMiddleLast, N._v);
+        Path.add(N.getValue());
+        V.visitNode(Level, FirstMiddleLast, N._v, Path);
         for (int i = 0; i < N.getChildrenNodes().size(); ++i)
           {
             Node<T> Child = N.getChildrenNodes().get(i);
             FirstMiddleLast = i == 0 ? 0 : i == N.getChildrenNodes().size()-1 ? 1 : -1;
-            Traverse(V, Level+1, FirstMiddleLast, Child);
+            Traverse(V, Level+1, FirstMiddleLast, Child, Path);
           }
+        Path.remove(Path.size()-1);
       }
 
-    public void Traverse(Visitor<T> V)
+    public void Traverse(Visitor<T> V) throws Exception
       {
-        Traverse(V, 0, 0, _Root);
+        List<T> Path = new ArrayList<T>();
+        Traverse(V, 0, 0, _Root, Path);
       }
   }

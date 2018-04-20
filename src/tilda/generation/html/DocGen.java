@@ -87,6 +87,9 @@ public class DocGen
         PrintWriter writer = new PrintWriter(getBaseResFileName(schema, ".html"));
         File f = new File(base64FileName);
         writer.println("<HTML>");
+        writer.println("<HEAD>");
+        writeHeader(writer, PS);
+        writer.println("</HEAD>");
         writer.println("<BODY>");
         writer.println("<H1>Schema " + schema._Name + "</H1>");
         if (schema._Documentation != null && schema._Documentation._Description != null)
@@ -112,6 +115,11 @@ public class DocGen
     
     
     
+    private void writeHeader(PrintWriter writer, ParserSession PS) throws Exception
+      {
+        Docs.writeHeader(writer, PS._Main);
+      }
+
     public void WriteTablesAndViews(ParserSession PS, PrintWriter writer)
       {
         writeModalHTMLAndJS(writer);
@@ -149,7 +157,7 @@ public class DocGen
         boolean First = true;
         for (Object b : schema._Objects)
           {
-            if (b._FST != Filter)
+            if (b == null || b._FST != Filter)
               continue;
             if (First == true)
               {

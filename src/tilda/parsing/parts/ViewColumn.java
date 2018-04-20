@@ -49,6 +49,7 @@ public class ViewColumn
     @SerializedName("filter"     ) public String         _Filter       ;
     @SerializedName("useMapper"  ) public boolean        _UseMapper     = false;
     @SerializedName("useEnum"    ) public boolean        _UseEnum       = false;
+    @SerializedName("description") public String         _Description   = null;
     /*@formatter:on*/
 
 
@@ -142,6 +143,9 @@ public class ViewColumn
             if (TextUtil.isNullOrEmpty(_Filter) == false)
               return PS.AddError("View Column '" + getFullName() + "' defined a filter without specifying an aggregate. Filters are only valid with aggregates.");
           }
+        
+        if (TextUtil.isNullOrEmpty(_Description) == true && _SameAsObj != null)
+         _Description = _SameAsObj._Description;
 
         return Errs == PS.getErrorCount();
       }

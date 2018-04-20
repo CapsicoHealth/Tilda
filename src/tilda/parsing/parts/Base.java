@@ -79,7 +79,7 @@ public abstract class Base
     
     /**
      * 
-     * @return simple the name of the object.
+     * @return simply the name of the object, i.e. _Name
      */
     public String getBaseName()
       {
