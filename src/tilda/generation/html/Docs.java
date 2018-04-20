@@ -18,6 +18,7 @@ package tilda.generation.html;
 
 import java.io.PrintWriter;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -26,17 +27,19 @@ import java.util.regex.Matcher;
 import tilda.enums.ColumnMode;
 import tilda.enums.FrameworkSourcedType;
 import tilda.generation.GeneratorSession;
+import tilda.generation.interfaces.CodeGenSql;
 import tilda.generation.java8.Helper;
 import tilda.generation.java8.JavaJDBCType;
 import tilda.parsing.ParserSession;
-import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
 import tilda.parsing.parts.Formula;
 import tilda.parsing.parts.Object;
+import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.Value;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.ViewColumn;
+import tilda.parsing.parts.ViewJoin;
 import tilda.utils.Graph;
 import tilda.utils.PaddingUtil;
 import tilda.utils.SystemValues;
@@ -47,6 +50,43 @@ public class Docs
 
     private static int prevLevel = 0;
     private static int rootLevel = 1;
+
+    public static void writeHeader(PrintWriter Out, Schema S)
+    throws Exception
+      {
+        Out.println(
+        "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\"/>\n"
+        + "<title>Tilda Docs: " + S.getFullName() + "</title>\n"
+        + "<STYLE>\n"
+        + ".RowedTable > TBODY > TR > TD {"
+        + "  vertical-align: top;"
+        + "  border: 1px solid black;"
+        + " }\n"
+        + ".RowedTable > TBODY >TR > TD:nth-child(1) {"
+        + "  padding-right: 5px;"
+        + "  text-align: right;"
+        + " }\n"
+        + ".TreeTable > TBODY > TR > TD {"
+        + "  vertical-align: top;"
+        + "  border: 0px solid black;"
+        + " }\n"
+        + ".TreeTable > TBODY >TR > TD:nth-child(1) {"
+        + "  padding-right: 5px;"
+        + "  text-align: left;"
+        + " }\n"
+        + ".Rowed TR:nth-child(odd) TD {"
+        + "  border-bottom: 2px #666 solid;"
+        + "  background-color: #f0fdf0;"
+        + "}\n"
+        + ".Rowed TR:nth-child(even) TD {"
+        + "  border-bottom: 2px #666 solid;"
+        + "  background-color:#FFFFFF;"
+        + " }\n"
+        + "UL {"
+        + "   margin-top: 0px;"
+        + " }\n"
+        + "</STYLE>\n");
+      }
 
     public static void DataClassDocs(PrintWriter Out, GeneratorSession G, Object O)
     throws Exception
@@ -61,39 +101,46 @@ public class Docs
         Out.println("<DIV id='" + O._Name + "_DIV' class='tables'>");
         Out.println("<H2>" + O._Name + "&nbsp;&nbsp;&nbsp;&nbsp;<SUP style=\"font-size: 60%;\"><A href=\"#\">top</A></SUP></H2>");
         Out.println("</DIV>");
-        Out.println("The generated " + Helper.getCodeGenLanguage() + "/" + G.getSql().getName() + " Tilda data class <B>Data_" + O._Name + "</B> is mapped to the " + ObjType + " <B>" + O.getShortName() + "</B>." + SystemValues.NEWLINE
-        + "<UL>" + SystemValues.NEWLINE);
+
+        Out.println("The " + ObjType + " " + O.getShortName() + " is:<UL>");
+        if (view == null || view._DBOnly == false)
+          Out.println("<LI>Mapped to the generated " + Helper.getCodeGenLanguage() + "/" + G.getSql().getName() + " Tilda data class <B>Data_" + O._Name + "</B>.");
+        else
+          Out.println("<LI>Not mapped to any generated code (i.e., Java code) and only exists in the database.</LI>");
+
+        if (view != null && view._Realize != null)
+          Out.println("<LI>Configured to be Realized.</LI>");
+
         if (view == null)
           switch (O._LC)
             {
               case NORMAL:
-                Out.println("<LI>The " + ObjType + " has normal <B>read/write</B> capabilities.</LI>");
+                Out.println("<LI>Configured for normal <B>read/write</B> access.</LI>");
                 break;
               case READONLY:
-                Out.println("<LI>The " + ObjType + " is <B>ReadOnly</B>.</LI>");
+                Out.println("<LI>Configured for <B>ReadOnly</B> access.</LI>");
                 break;
               case WORM:
-                Out.println("<LI>The " + ObjType + " is <B>WORM</B> (Write Once Read Many).</LI>");
+                Out.println("<LI>Configured for <B>WORM</B> (Write Once Read Many) access.</LI>");
                 break;
               default:
                 throw new Exception("Unknown Object lifecycle value '" + O._LC + "' when generating class docs");
             }
 
-
         if (O._OCC == true)
-          Out.println("<LI>The " + ObjType + " is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>");
+          Out.println("<LI>OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>");
         else
-          Out.println("<LI>That " + ObjType + " is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>");
+          Out.println("<LI>Not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>");
 
         Out.println("</UL>");
 
-        Out.println("<B>Description</B>: " + O._Description + "<BR>" + SystemValues.NEWLINE
-        + "<BR>" + SystemValues.NEWLINE);
+        Out.println("<B>Description</B>: " + O._Description + "<BR>");
+        Out.println("<BR>");
 
         if (view != null)
-          DoSubWhereDetails(Out, view);
+          DoSubWhereDetails(Out, view, G.getSql());
 
-        Out.print("It contains the following columns:<BR>" + SystemValues.NEWLINE
+        Out.print("This " + ObjType + " contains the following columns:<BLOCKQUOTE>" + SystemValues.NEWLINE
         + " <TABLE border=\"0px\" cellpadding=\"3px\" cellspacing=\"0px\" style=\"border:1px solid grey;\">" + SystemValues.NEWLINE
         + "   <TR><TH>&nbsp;</TH><TH align=\"right\">Name&nbsp;&nbsp;</TH><TH align=\"left\">Type</TH><TH align=\"left\">Nullable</TH>");
         if (O._DBOnly == false)
@@ -127,7 +174,28 @@ public class Docs
                 Out.println("<TD align=\"center\">" + (C._Invariant == false ? "&#x2610" : "&#x2611;") + "&nbsp;&nbsp;</TD>");
                 Out.println("<TD align=\"center\">" + (C._Protect == null ? "-" : C._Protect) + "&nbsp;&nbsp;</TD>");
               }
-            Out.println("<TD>" + C._Description + "</TD>");
+            Out.print("<TD>" + C._Description);
+            if (view != null)
+              {
+                ViewColumn VC = view.getViewColumn(C.getName());
+                if (VC != null)
+                  {
+                    List<Column> L = VC.getSameAsLineage();
+                    Out.print("<DIV style=\"margin:0px;margin-left:20px;font-size:75%;\">");
+                    boolean first = true;
+                    for (Column c : L)
+                      {
+                        if (first == true)
+                          first = false;
+                        else
+                          Out.print("<BR>");
+                        Out.print("&rarr;&nbsp;");
+                        Out.print(c.getShortName());
+                      }
+                    Out.print("</DIV>");
+                  }
+              }
+            Out.println("</TD>");
             Out.println("</TR>");
 
             if (C._MapperDef != null)
@@ -144,7 +212,7 @@ public class Docs
               }
             ++i;
           }
-        Out.println("</TABLE>");
+        Out.println("</TABLE></BLOCKQUOTE>");
 
         for (Column C : O._Columns)
           {
@@ -530,24 +598,11 @@ public class Docs
         Out.println("</DIV>");
         Out.println(
         "The generated DataMart table based on the View <B>" + V._Name + "</B>." + SystemValues.NEWLINE
-        + "<BR><BR>"
-        + "<STYLE>"
-        + ".RowedTable > TBODY > TR > TD {"
-        + "  vertical-align: top;"
-        + "  border: 1px solid black;"
-        + " }"
-        + ".RowedTable > TBODY >TR > TD:nth-child(1) {"
-        + "  padding-right: 5px;"
-        + "  text-align: right;"
-        + " }"
-        + "UL {"
-        + "   margin-top: 0px;"
-        + " }"
-        + "</STYLE>");
+        + "<BR><BR>");
 
         Out.println("<H3>Inclusions/Exclusions Criteria</H3>");
         Out.println(V._Description);
-        DoSubWhereDetails(Out, V);
+        DoSubWhereDetails(Out, V, PS._CGSql);
 
         Set<String> ObjectNames = new HashSet<String>();
         boolean First = true;
@@ -571,7 +626,7 @@ public class Docs
                   throw new Exception("Cannot find View " + O._ParentSchema._Package + "." + O._ParentSchema._Name + "." + O._Name);
                 Out.println("<TR><TD>" + V2.getShortName() + "</TD><TD>");
                 Out.println(V._Description);
-                DoSubWhereDetails(Out, V2);
+                DoSubWhereDetails(Out, V2, PS._CGSql);
                 Out.println("</TD></TR>");
               }
           }
@@ -696,15 +751,57 @@ public class Docs
         Out.println("</BLOCKQUOTE>");
       }
 
-    protected static class DependencyPrinter implements Graph.Visitor<Base>
+    protected static class DependencyPrinter implements Graph.Visitor<View.DepWrapper>
       {
+        public DependencyPrinter(CodeGenSql Sql)
+          {
+            _Sql = Sql;
+          }
 
+        protected CodeGenSql    _Sql;
         protected StringBuilder _Str = new StringBuilder();
 
         @Override
-        public void visitNode(int level, int FirstMiddleLast, Base V)
+        public void visitNode(int level, int FirstMiddleLast, View.DepWrapper DW, List<View.DepWrapper> Path)
+        throws Exception
           {
-            _Str.append(PaddingUtil.getPad(level*3)).append(V.getShortName()).append("\n");
+            if (/* level == 0 || */ DW.getObj()._ParentSchema._Name.equals("TILDA") == true)
+              return;
+            View V = DW.getObj()._ParentSchema.getView(DW.getObj()._Name);
+            _Str.append("<TR><TD><PRE>").append(PaddingUtil.getPad(level * 4)).append(DW.getObj().getShortName()).append("</PRE></TD><TD>");
+            if (V != null)
+              {
+                if (V._SubWhereX != null)
+                  _Str.append(String.join("\n", V._SubWhereX._Description) + "<PRE>" + cleanClause(String.join("\n", V._SubWhereX._Clause)) + "</PRE>");
+                else
+                  _Str.append("<PRE>Unfiltered</PRE>");
+              }
+            else
+              {
+                Object parentObj = Path.get(Path.size() - 2).getObj();
+                View parentView = parentObj._ParentSchema.getView(parentObj._Name);
+                boolean found = false;
+                if (parentView != null)
+                  for (ViewJoin VJ : parentView._Joins)
+                    {
+                      if (VJ._ObjectObj.getShortName().equals(DW.getObj().getShortName()) == true)
+                        {
+                          found = true;
+                          _Str.append("<PRE>");
+                          StringBuilder Str = new StringBuilder();
+                          _Sql.genViewJoin(Str, VJ);
+                          _Str.append(Str.toString().trim()).append("</PRE>");
+                        }
+                    }
+                if (found == false && parentView != null)
+                  {
+                    if (FirstMiddleLast == 0)
+                     _Str.append("<PRE>Root table for the view "+parentView.getShortName()+"</PRE>");
+                    else
+                      _Str.append("<PRE>Standard join</PRE>");                      
+                  }
+              }
+            _Str.append("</TD></TR>\n");
           }
 
         public String getPrintout()
@@ -713,26 +810,31 @@ public class Docs
           }
       }
 
-    private static void DoSubWhereDetails(PrintWriter Out, View V)
+    private static void DoSubWhereDetails(PrintWriter Out, View V, CodeGenSql Sql)
+    throws Exception
       {
-        Graph<Base> G = V.getDependencyGraph();
-        DependencyPrinter DepPrinter = new DependencyPrinter();
+        Graph<View.DepWrapper> G = V.getDependencyGraph();
+        DependencyPrinter DepPrinter = new DependencyPrinter(Sql);
         G.Traverse(DepPrinter);
 
-        Out.println("<BLOCKQUOTE>That view depends on the following entities: <BLOCKQUOTE><PRE>" + DepPrinter.getPrintout() + "</BLOCKQUOTE>");
+        /*
+         * if (V._SubWhereX != null)
+         * Out.println("This view is filtered with the following where-clause: "
+         * + "<BLOCKQUOTE><PRE>" + cleanClause(String.join("\n", V._SubWhereX._Clause)) + "</PRE>"
+         * + String.join("\n", V._SubWhereX._Description)
+         * + "</BLOCKQUOTE>");
+         */
+        Out.println("This view depends on the following filter(s), sub-view(s), and/or root table(s):");
+        Out.println("<BLOCKQUOTE><TABLE class=\"TreeTable Rowed\" border=\"0px\" cellspacing=\"0px\" cellpadding=\"2px\">" + DepPrinter.getPrintout() + "</TABLE></BLOCKQUOTE>");
 
-        if (V._SubWhereX != null)
-          Out.println("<BLOCKQUOTE>That view is filtered: "
-          + "<BLOCKQUOTE><PRE>" + cleanClause(String.join("\n", V._SubWhereX._Clause)) + "</PRE>"
-          + String.join("\n", V._SubWhereX._Description)
-          + "</BLOCKQUOTE>");
         if (V._Pivot != null)
           {
-            Out.println("The pivot was done explicitly on the following values for " + V._Pivot._VC._SameAsObj.getName()
+            Out.println("A pivot was done as part of this view explicitly on the following values for " + V._Pivot._VC._SameAsObj.getName()
             + "<BLOCKQUOTE><PRE><TABLE border=\"0px\">");
             for (Value Val : V._Pivot._Values)
               Out.println("<TR><TD>" + Val._Value + "&nbsp;&nbsp;&nbsp;</TD><TD>" + Val._Description + "</TD></TR>");
             Out.println("</TABLE></PRE><BLOCKQUOTE>");
           }
+
       }
   }
