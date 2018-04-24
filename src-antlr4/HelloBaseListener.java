@@ -1,6 +1,7 @@
-// Generated from Hello.g4 by ANTLR 4.5.3
+// Generated from Hello.g4 by ANTLR 4.4
 
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
@@ -15,72 +16,72 @@ public class HelloBaseListener implements HelloListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterEval(HelloParser.EvalContext ctx) { }
+	@Override public void enterAtomExp(@NotNull HelloParser.AtomExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitEval(HelloParser.EvalContext ctx) { }
+	@Override public void exitAtomExp(@NotNull HelloParser.AtomExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAdditionExp(HelloParser.AdditionExpContext ctx) { }
+	@Override public void enterEval(@NotNull HelloParser.EvalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAdditionExp(HelloParser.AdditionExpContext ctx) { }
+	@Override public void exitEval(@NotNull HelloParser.EvalContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMultiplyExp(HelloParser.MultiplyExpContext ctx) { }
+	@Override public void enterMultiplyExp(@NotNull HelloParser.MultiplyExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitMultiplyExp(HelloParser.MultiplyExpContext ctx) { }
+	@Override public void exitMultiplyExp(@NotNull HelloParser.MultiplyExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAtomExp(HelloParser.AtomExpContext ctx) { }
+	@Override public void enterAdditionExp(@NotNull HelloParser.AdditionExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAtomExp(HelloParser.AtomExpContext ctx) { }
+	@Override public void exitAdditionExp(@NotNull HelloParser.AdditionExpContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterEveryRule(ParserRuleContext ctx) { }
+	@Override public void enterEveryRule(@NotNull ParserRuleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitEveryRule(ParserRuleContext ctx) { }
+	@Override public void exitEveryRule(@NotNull ParserRuleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void visitTerminal(TerminalNode node) { }
+	@Override public void visitTerminal(@NotNull TerminalNode node) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void visitErrorNode(ErrorNode node) { }
+	@Override public void visitErrorNode(@NotNull ErrorNode node) { }
 }

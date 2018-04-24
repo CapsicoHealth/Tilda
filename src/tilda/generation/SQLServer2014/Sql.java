@@ -488,4 +488,11 @@ public class Sql extends MSSQL implements CodeGenSql
     throws Exception
       {
       }
+
+    @Override
+    public Query genViewJoin(StringBuilder Str, ViewJoin VJ)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
   }

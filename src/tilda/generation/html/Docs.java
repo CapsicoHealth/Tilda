@@ -17,20 +17,21 @@
 package tilda.generation.html;
 
 import java.io.PrintWriter;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import sun.management.snmp.jvmmib.EnumJvmMemPoolType;
 import tilda.enums.ColumnMode;
-import tilda.enums.FrameworkSourcedType;
+import tilda.enums.ColumnType;
 import tilda.generation.GeneratorSession;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.generation.java8.Helper;
 import tilda.generation.java8.JavaJDBCType;
-import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
 import tilda.parsing.parts.Formula;
@@ -48,8 +49,11 @@ import tilda.utils.TextUtil;
 public class Docs
   {
 
-    private static int prevLevel = 0;
-    private static int rootLevel = 1;
+    private static int            prevLevel = 0;
+    private static int            rootLevel = 1;
+
+    protected static final Logger LOG       = LogManager.getLogger(Docs.class.getName());
+
 
     public static void writeHeader(PrintWriter Out, Schema S)
     throws Exception
@@ -66,6 +70,9 @@ public class Docs
         + "  padding-right: 5px;"
         + "  text-align: right;"
         + " }\n"
+        + ".TreeTable {"
+        + "  border: 2px outset #aaa;"
+        + "}\n"
         + ".TreeTable > TBODY > TR > TD {"
         + "  vertical-align: top;"
         + "  border: 0px solid black;"
@@ -174,9 +181,20 @@ public class Docs
                 Out.println("<TD align=\"center\">" + (C._Invariant == false ? "&#x2610" : "&#x2611;") + "&nbsp;&nbsp;</TD>");
                 Out.println("<TD align=\"center\">" + (C._Protect == null ? "-" : C._Protect) + "&nbsp;&nbsp;</TD>");
               }
+
             Out.print("<TD>" + C._Description);
             if (view != null)
               {
+                if (C.getName().equals("canAmbulate") == true)
+                  LOG.debug("kjofhuofueh");
+                Formula F = view.getFormula(C.getName());
+                if (F != null)
+                  {
+                    Out.println("<BLOCKQUOTE>");
+                    PrintFormulaDetails(Out, view, view._Name, F, false);
+                    Out.println("</BLOCKQUOTE>");
+                  }
+
                 ViewColumn VC = view.getViewColumn(C.getName());
                 if (VC != null)
                   {
@@ -204,7 +222,7 @@ public class Docs
                 Out.println("This column is automatically generated against the Mapper " + C._SameAsObj.getFullName() + ".");
                 Out.println("</TD></TR>");
               }
-            if (C._Values != null)
+            if (C._Values != null && C.getType().equals(ColumnType.DATE) == false && C.getType().equals(ColumnType.DATETIME) == false)
               {
                 Out.println("  <TR bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#DFECF8") + "\"><TD></TD><TD></TD><TD colspan=\"10\" align=\"center\">");
                 docFieldValues(Out, C);
@@ -212,6 +230,7 @@ public class Docs
               }
             ++i;
           }
+
         Out.println("</TABLE></BLOCKQUOTE>");
 
         for (Column C : O._Columns)
@@ -426,7 +445,7 @@ public class Docs
         Out.println("<td>" + indentedBody + "<a href='" + tableName + "'>" + VC._ParentView._OriginalName + "</a></td>");
 
         if (isLast)
-          Out.println("<td>" + indentedBody + "<a href='" + columnName + "'>" + VC.getName() + "</a>" + TextUtil.Print(valueToAppend, "") + " -- " + VC._SameAsObj._TypeStr + "</td>");
+          Out.println("<td>" + indentedBody + "<a href='" + columnName + "'>" + VC.getName() + "</a>" + TextUtil.Print(valueToAppend, "") + (VC._SameAsObj == null ? "" : " -- " + VC._SameAsObj._TypeStr) + "</td>");
         else
           Out.println("<td>" + indentedBody + "<a href='" + columnName + "'>" + VC.getName() + "</a>" + TextUtil.Print(valueToAppend, "") + "</td>");
         Out.println("</tr>");
@@ -588,167 +607,178 @@ public class Docs
         return FormulaMatches;
       }
 
-    public static void RealizedDataMartTableDocs(PrintWriter Out, ParserSession PS, View V)
-    throws Exception
+    /*
+     * public static void RealizedDataMartTableDocs(PrintWriter Out, ParserSession PS, View V)
+     * throws Exception
+     * {
+     * String TName = V.getRealizedTableName(false);
+     * Out.println("<DIV>");
+     * Out.println("<DIV id='" + TName + "_DIV' class='tables'>");
+     * Out.println("<H2>" + TName + "&nbsp;&nbsp;&nbsp;&nbsp;<SUP style=\"font-size: 60%;\"><A href=\"#\">top</A></SUP></H1>");
+     * Out.println("</DIV>");
+     * Out.println(
+     * "The generated DataMart table based on the View <B>" + V._Name + "</B>." + SystemValues.NEWLINE
+     * + "<BR><BR>");
+     * 
+     * Out.println("<H3>Inclusions/Exclusions Criteria</H3>");
+     * Out.println(V._Description);
+     * DoSubWhereDetails(Out, V, PS._CGSql);
+     * 
+     * Set<String> ObjectNames = new HashSet<String>();
+     * boolean First = true;
+     * for (ViewColumn VC : V._ViewColumns)
+     * {
+     * if (VC == null || VC._SameAsObj == null)
+     * continue;
+     * Object O = VC._SameAsObj._ParentObject;
+     * if (ObjectNames.add(O.getShortName()) == false)
+     * continue;
+     * if (O._FST == FrameworkSourcedType.VIEW)
+     * {
+     * if (First == true)
+     * {
+     * Out.println("In addition, this view depends on other views:");
+     * Out.println("<BLOCKQUOTE><TABLE class=\"RowedTable\" border=\"0px\" cellspacing=\"0px\" cellpadding=\"2px\">");
+     * First = false;
+     * }
+     * View V2 = PS.getView(O._ParentSchema._Package, O._ParentSchema._Name, O._Name);
+     * if (V2 == null)
+     * throw new Exception("Cannot find View " + O._ParentSchema._Package + "." + O._ParentSchema._Name + "." + O._Name);
+     * Out.println("<TR><TD>" + V2.getShortName() + "</TD><TD>");
+     * Out.println(V._Description);
+     * DoSubWhereDetails(Out, V2, PS._CGSql);
+     * Out.println("</TD></TR>");
+     * }
+     * }
+     * Out.println("</TABLE></BLOCKQUOTE><BR><BR></BLOCKQUOTE>");
+     * 
+     * Out.println("<H3>The following terms/formulas are defined:</H3>"
+     * + "<BLOCKQUOTE>\n");
+     * 
+     * if (V._Formulas != null)
+     * for (Formula F : V._Formulas)
+     * {
+     * PrintFormulaDetails(Out, V, TName, F);
+     * }
+     * Out.println("</BLOCKQUOTE>");
+     * }
+     */
+
+    private static void PrintFormulaDetails(PrintWriter Out, View V, String TName, Formula F, boolean headerRow)
       {
-        String TName = V.getRealizedTableName(false);
-        Out.println("<DIV>");
-        Out.println("<DIV id='" + TName + "_DIV' class='tables'>");
-        Out.println("<H2>" + TName + "&nbsp;&nbsp;&nbsp;&nbsp;<SUP style=\"font-size: 60%;\"><A href=\"#\">top</A></SUP></H1>");
-        Out.println("</DIV>");
-        Out.println(
-        "The generated DataMart table based on the View <B>" + V._Name + "</B>." + SystemValues.NEWLINE
-        + "<BR><BR>");
-
-        Out.println("<H3>Inclusions/Exclusions Criteria</H3>");
-        Out.println(V._Description);
-        DoSubWhereDetails(Out, V, PS._CGSql);
-
-        Set<String> ObjectNames = new HashSet<String>();
-        boolean First = true;
-        for (ViewColumn VC : V._ViewColumns)
+        StringBuffer Str = new StringBuffer();
+        SortedSet<String> ColumnMatches = new TreeSet<String>();
+        Matcher M = F.getParentView()._ViewColumnsRegEx.matcher(String.join("\n", F._FormulaStrs));
+        while (M.find() == true)
           {
-            if (VC == null || VC._SameAsObj == null)
-              continue;
-            Object O = VC._SameAsObj._ParentObject;
-            if (ObjectNames.add(O.getShortName()) == false)
-              continue;
-            if (O._FST == FrameworkSourcedType.VIEW)
+            String s = M.group(1);
+            ViewColumn VC = V.getViewColumn(s);
+            if (VC != null)
               {
-                if (First == true)
-                  {
-                    Out.println("In addition, this view depends on other views:");
-                    Out.println("<BLOCKQUOTE><TABLE class=\"RowedTable\" border=\"0px\" cellspacing=\"0px\" cellpadding=\"2px\">");
-                    First = false;
-                  }
-                View V2 = PS.getView(O._ParentSchema._Package, O._ParentSchema._Name, O._Name);
-                if (V2 == null)
-                  throw new Exception("Cannot find View " + O._ParentSchema._Package + "." + O._ParentSchema._Name + "." + O._Name);
-                Out.println("<TR><TD>" + V2.getShortName() + "</TD><TD>");
-                Out.println(V._Description);
-                DoSubWhereDetails(Out, V2, PS._CGSql);
-                Out.println("</TD></TR>");
+                M.appendReplacement(Str, "<B style=\"color:#00AA00;\">" + s + "</B>");
+                ColumnMatches.add(s);
               }
           }
-        Out.println("</TABLE></BLOCKQUOTE><BR><BR></BLOCKQUOTE>");
+        M.appendTail(Str);
 
-        Out.println("<H3>The following terms/formulas are defined:</H3>"
-        + "<BLOCKQUOTE>\n");
-
-        if (V._Formulas != null)
-          for (Formula F : V._Formulas)
-            {
-
-              StringBuffer Str = new StringBuffer();
-              SortedSet<String> ColumnMatches = new TreeSet<String>();
-              Matcher M = F.getParentView()._ViewColumnsRegEx.matcher(String.join("\n", F._FormulaStrs));
-              while (M.find() == true)
+        SortedSet<String> FormulaMatches = new TreeSet<String>();
+        M = F.getParentView()._FormulasRegEx.matcher(Str.toString());
+        Str.setLength(0);
+        while (M.find() == true)
+          {
+            String s = M.group(1);
+            for (Formula F2 : V._Formulas)
+              if (s.equals(F2._Name) == true)
                 {
-                  String s = M.group(1);
-                  ViewColumn VC = V.getViewColumn(s);
-                  if (VC != null)
-                    {
-                      M.appendReplacement(Str, "<B style=\"color:#00AA00;\">" + s + "</B>");
-                      ColumnMatches.add(s);
-                    }
+                  M.appendReplacement(Str, "<B style=\"color:#0000AA;\">" + s + "</B>");
+                  FormulaMatches.add(s);
+                  break;
                 }
-              M.appendTail(Str);
+          }
+        M.appendTail(Str);
 
-              SortedSet<String> FormulaMatches = new TreeSet<String>();
-              M = F.getParentView()._FormulasRegEx.matcher(Str.toString());
-              Str.setLength(0);
-              while (M.find() == true)
-                {
-                  String s = M.group(1);
-                  for (Formula F2 : V._Formulas)
-                    if (s.equals(F2._Name) == true)
-                      {
-                        M.appendReplacement(Str, "<B style=\"color:#0000AA;\">" + s + "</B>");
-                        FormulaMatches.add(s);
-                        break;
-                      }
-                }
-              M.appendTail(Str);
+        String FormulaStr = Str.toString();
 
-              String FormulaStr = Str.toString();
+        // Start Table
+        Out.println("<TABLE class=\"RowedTable\" border=\"0px\" cellspacing=\"0px\" cellpadding=\"2px\" width=\"75%\">");
 
-              // Start Table
-              Out.println("<TABLE class=\"RowedTable\" border=\"0px\" cellspacing=\"0px\" cellpadding=\"2px\" width=\"75%\">");
+        // Start Rows
+        // Out.println("<TR style=\"height: 40px;\"><TD style=\"border: 0px !Important;\" colspan=\"2\">&nbsp;</TD></TR>");
 
-              // Start Rows
-              Out.println("<TR style=\"height: 40px;\"><TD style=\"border: 0px !Important;\" colspan=\"2\">&nbsp;</TD></TR>");
+        if (headerRow == true)
+          {
+            Out.println("<TR bgcolor=\"DFECF8\">");
+            if (!FormulaMatches.isEmpty() || !ColumnMatches.isEmpty())
+              {
+                Out.println("<TD style=\"text-align:left !important;\" colspan=\"2\"><B>Term</B> <B onclick=\"onModalShowClicked('" + TName + "-" + F._Name + "')\" id='" + TName + "-" + F._Name + "_DIV' class='formula dotted_underline cursor_pointer'>" + F._Name + "</B>" + (TextUtil.isNullOrEmpty(F._Id) == true ? "" : (" &nbsp;&nbsp;&nbsp; (#" + F._Id + ")")) + "</TD>");
+              }
+            else
+              {
+                Out.println("<TD style=\"text-align:left !important;\" colspan=\"2\"><B id='" + TName + "-" + F._Name + "_DIV' class='formula'>Term " + F._Name + "</B>" + (TextUtil.isNullOrEmpty(F._Id) == true ? "" : (" &nbsp;&nbsp;&nbsp; (#" + F._Id + ")")) + "</TD>");
+              }
+            Out.println("</TR>");
+          }
+        Out.println("<TR><TD><B>Title</B></TD><TD>" + F._Title + "</TD></TR>"
+        + "<TR><TD><B>Description</B></TD><TD>" + CleanForHTML(F._Description) + "</TD></TR>"
+        + "<TR><TD><B>Formula</B></TD><TD><PRE style=\"padding-top: 3px;\">" + FormulaStr + "</PRE></TD><TR>");
+        if (F._Values != null && F._Values.length > 0)
+          {
+            Out.println("<TR valign=\"top\"><TD><B>Values</B></TD><TD><TABLE border=\"0px\">");
+            for (Value Val : F._Values)
+              Out.println("<TR><TD>" + Val._Value + "</TD><TD>" + Val._Description + "</TD><TR>");
+            Out.println("</TABLE></TD></TR>");
+          }
+        Out.println("<TR valign=\"top\"><TD><B>Referenced Columns</B></TD><TD>");
+        if (ColumnMatches.isEmpty() == true)
+          Out.println("None");
+        else
+          {
+            Out.println("<TABLE border=\"0px\">");
+            for (String ColName : ColumnMatches)
+              {
+                Column C = V.getColumn(ColName);
+                Out.println("<TR><TD valign=\"top\" align=\"right\"><B style=\"color:#00AA00;\">" + ColName + "</B>:</TD>");
+                Out.println("<TD>" + (C == null ? "" : C._Description) + "</TD></TR>");
+              }
+            Out.println("</TABLE>");
+          }
+        Out.println("</TD></TR>");
+        Out.println("<TR valign=\"top\"><TD><B>Referenced Terms</B></TD><TD>");
+        if (FormulaMatches.isEmpty() == true)
+          Out.println("None");
+        else
+          {
+            Out.println("<TABLE border=\"0px\">");
+            for (String FormulaName : FormulaMatches)
+              Out.println("<TR><TD valign=\"top\" align=\"right\"><B style=\"color:#0000AA;\">" + FormulaName + "</B>:</TD><TD>" + CleanForHTML(V.getFormula(FormulaName)._Description) + "</TD></TR>");
+            Out.println("</TABLE>");
+          }
+        Out.println("</TD></TR>");
 
-              Out.println("<TR bgcolor=\"DFECF8\">");
-              if (!FormulaMatches.isEmpty() || !ColumnMatches.isEmpty())
-                {
-                  Out.println("<TD style=\"text-align:left !important;\" colspan=\"2\"><B>Term</B> <B onclick=\"onModalShowClicked('" + TName + "-" + F._Name + "')\" id='" + TName + "-" + F._Name + "_DIV' class='formula dotted_underline cursor_pointer'>" + F._Name + "</B>" + (TextUtil.isNullOrEmpty(F._Id) == true ? "" : (" &nbsp;&nbsp;&nbsp; (#" + F._Id + ")")) + "</TD>");
-                }
-              else
-                {
-                  Out.println("<TD style=\"text-align:left !important;\" colspan=\"2\"><B id='" + TName + "-" + F._Name + "_DIV' class='formula'>Term " + F._Name + "</B>" + (TextUtil.isNullOrEmpty(F._Id) == true ? "" : (" &nbsp;&nbsp;&nbsp; (#" + F._Id + ")")) + "</TD>");
-                }
-              Out.println("</TR>");
+        // End Table
+        Out.println("</TABLE>");
 
-              Out.println("<TR><TD><B>Title</B></TD><TD>" + F._Title + "</TD></TR>"
-              + "<TR><TD><B>Description</B></TD><TD>" + CleanForHTML(F._Description) + "</TD></TR>"
-              + "<TR><TD><B>Formula</B></TD><TD><PRE style=\"padding-top: 3px;\">" + FormulaStr + "</PRE></TD><TR>");
-              if (F._Values != null && F._Values.length > 0)
-                {
-                  Out.println("<TR valign=\"top\"><TD><B>Values</B></TD><TD><TABLE border=\"0px\">");
-                  for (Value Val : F._Values)
-                    Out.println("<TR><TD>" + Val._Value + "</TD><TD>" + Val._Description + "</TD><TR>");
-                  Out.println("</TABLE></TD></TR>");
-                }
-              Out.println("<TR valign=\"top\"><TD><B>Referenced Columns</B></TD><TD>");
-              if (ColumnMatches.isEmpty() == true)
-                Out.println("None");
-              else
-                {
-                  Out.println("<TABLE border=\"0px\">");
-                  for (String ColName : ColumnMatches)
-                    Out.println("<TR><TD valign=\"top\" align=\"right\"><B style=\"color:#00AA00;\">" + ColName + "</B>:</TD><TD>" + V.getColumn(ColName)._Description + "</TD></TR>");
-                  Out.println("</TABLE>");
-                }
-              Out.println("</TD></TR>");
-              Out.println("<TR valign=\"top\"><TD><B>Referenced Terms</B></TD><TD>");
-              if (FormulaMatches.isEmpty() == true)
-                Out.println("None");
-              else
-                {
-                  Out.println("<TABLE border=\"0px\">");
-                  for (String FormulaName : FormulaMatches)
-                    Out.println("<TR><TD valign=\"top\" align=\"right\"><B style=\"color:#0000AA;\">" + FormulaName + "</B>:</TD><TD>" + CleanForHTML(V.getFormula(FormulaName)._Description) + "</TD></TR>");
-                  Out.println("</TABLE>");
-                }
-              Out.println("</TD></TR>");
+        if (!ColumnMatches.isEmpty() || !FormulaMatches.isEmpty())
+          {
+            Out.println("<DIV id='" + TName + "-" + F._Name + "_MODAL' class='modal'>");
+            Out.println("<DIV class='modal-content'>");
+            Out.println("<SPAN onclick=\"onModalCloseClicked('" + TName + "-" + F._Name + "_MODAL')\" class='close'>&times;</SPAN>");
+            // Out.println("<DIV><CENTER><H2>Dependencies for Formula "+F.getShortName()+"</H2></CENTER></DIV>");
+            Out.println("<DIV><CENTER><H2>Formula Dependencies</H2></CENTER></DIV>");
 
-              // End Table
-              Out.println("</TABLE>");
+            Out.println("<table style='margin: auto;'> ");
+            Out.println("  <tr> ");
+            Out.println("    <th align='left' width=\"300em\">Schema</th> ");
+            Out.println("    <th align='left' width=\"400em\">Table/View</th> ");
+            Out.println("    <th align='left' >Column/Formula</th> ");
+            Out.println("  </tr> ");
 
-              if (!ColumnMatches.isEmpty() || !FormulaMatches.isEmpty())
-                {
-                  Out.println("<DIV id='" + TName + "-" + F._Name + "_MODAL' class='modal'>");
-                  Out.println("<DIV class='modal-content'>");
-                  Out.println("<SPAN onclick=\"onModalCloseClicked('" + TName + "-" + F._Name + "_MODAL')\" class='close'>&times;</SPAN>");
-                  // Out.println("<DIV><CENTER><H2>Dependencies for Formula "+F.getShortName()+"</H2></CENTER></DIV>");
-                  Out.println("<DIV><CENTER><H2>Formula Dependencies</H2></CENTER></DIV>");
+            prevLevel = 5;
+            PrintFormulaHierarchy(Out, F.getParentView(), F, false, 1);
 
-                  Out.println("<table style='margin: auto;'> ");
-                  Out.println("  <tr> ");
-                  Out.println("    <th align='left' width=\"300em\">Schema</th> ");
-                  Out.println("    <th align='left' width=\"400em\">Table/View</th> ");
-                  Out.println("    <th align='left' >Column/Formula</th> ");
-                  Out.println("  </tr> ");
-
-                  prevLevel = 5;
-                  PrintFormulaHierarchy(Out, F.getParentView(), F, false, 1);
-
-                  Out.println("</table>");
-                  Out.println("</DIV></DIV>");
-                }
-
-            }
-        Out.println("</BLOCKQUOTE>");
+            Out.println("</table>");
+            Out.println("</DIV></DIV>");
+          }
       }
 
     protected static class DependencyPrinter implements Graph.Visitor<View.DepWrapper>
@@ -796,9 +826,9 @@ public class Docs
                 if (found == false && parentView != null)
                   {
                     if (FirstMiddleLast == 0)
-                     _Str.append("<PRE>Root table for the view "+parentView.getShortName()+"</PRE>");
+                      _Str.append("<PRE>Root table for the view " + parentView.getShortName() + "</PRE>");
                     else
-                      _Str.append("<PRE>Standard join</PRE>");                      
+                      _Str.append("<PRE>Standard join</PRE>");
                   }
               }
             _Str.append("</TD></TR>\n");

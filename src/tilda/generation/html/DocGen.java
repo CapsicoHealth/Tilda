@@ -139,16 +139,16 @@ public class DocGen
                 writer.println("<BR><BR><BR><BR><BR><HR><H1>Views</H1>");
                 First = false;
               }
-            try
-              {
-                writer.println("<BR><BR><BR><BR><BR><BR>");
-                Docs.RealizedDataMartTableDocs(writer, PS, V);
-              }
-            catch (Exception e)
-              {
-                // TODO Auto-generated catch block
-                LOG.warn("FYI: this can be ignored for now:\n", e);
-              }
+//            try
+//              {
+//                writer.println("<BR><BR><BR><BR><BR><BR>");
+//                Docs.RealizedDataMartTableDocs(writer, PS, V);
+//              }
+//            catch (Exception e)
+//              {
+//                // TODO Auto-generated catch block
+//                LOG.warn("FYI: this can be ignored for now:\n", e);
+//              }
           }
       }
 
