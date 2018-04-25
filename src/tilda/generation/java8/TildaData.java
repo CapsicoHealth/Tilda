@@ -60,11 +60,15 @@ public class TildaData implements CodeGenTildaData
         Out.println("package " + O._ParentSchema._Package + "." + Helper.TILDA_GEN_PACKAGE + ";");
         Out.println();
         for (Column C : O._Columns)
-          if (C != null && (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATE))
+          {
+            if (C == null)
+              continue;
+          if (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATE)
             {
               Out.println("import java.time.*;");
               break;
             }
+          }
         for (Column C : O._Columns)
           if (C != null && C.isCollection() == true)
             {
@@ -295,6 +299,14 @@ public class TildaData implements CodeGenTildaData
                         else
                           Out.print("DateTimeUtil.toCalendarNoThrow(" + TextUtil.EscapeDoubleQuoteWithSlash(V._Value) + ")");
                         break;
+                      case DATE:
+                        if (V._Value.equalsIgnoreCase("NOW") == true)
+                          Out.print("DateTimeUtil.NOW_PLACEHOLDER_D");
+                        else if (V._Value.equalsIgnoreCase("UNDEFINED") == true)
+                          Out.print("DateTimeUtil.UNDEFINED_PLACEHOLDER_D");
+                        else
+                          Out.print("DateTimeUtil.parseDate(" + TextUtil.EscapeDoubleQuoteWithSlash(V._Value) + ", \"yyyy-MM-dd\")");
+                        break;
                       case STRING:
                       case JSON:
                         Out.print(TextUtil.EscapeDoubleQuoteWithSlash(V._Value));
@@ -371,6 +383,7 @@ public class TildaData implements CodeGenTildaData
                 Out.println("      { return _" + V._ParentColumn.getName() + " == " + ValueNameVar + "; }");
                 break;
               case DATETIME:
+              case DATE:
                 if (V._Value.equalsIgnoreCase("NOW") == true)
                   Out.println("      { return DateTimeUtil.isNowPlaceholder(_" + V._ParentColumn.getName() + "); }");
                 else if (V._Value.equalsIgnoreCase("UNDEFINED") == true)

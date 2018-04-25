@@ -23,6 +23,8 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.gson.annotations.SerializedName;
+
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
@@ -37,8 +39,6 @@ import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.PaddingTracker;
 import tilda.utils.TextUtil;
-
-import com.google.gson.annotations.SerializedName;
 
 public class Column extends TypeDef
   {
