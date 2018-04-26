@@ -25,7 +25,6 @@ import java.util.regex.Matcher;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import sun.management.snmp.jvmmib.EnumJvmMemPoolType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.generation.GeneratorSession;
@@ -92,22 +91,72 @@ public class Docs
         + "UL {"
         + "   margin-top: 0px;"
         + " }\n"
-        + "</STYLE>\n");
+        + ".sticky {"
+        + "   position: fixed;"
+        + "   top: 0;"
+        + "   left: 0;"
+        + "   background-color: #df598b;"
+        + "   color: #000;"
+        + "   width: 100%;"
+        + " }\n"
+        + ".tables::before {"
+        + "   display: block;"
+        + "   content: \" \";"
+        + "   margin-top: -200px;"
+        + "   height: 200px;"
+        + "   visibility: hidden;"
+        + "   pointer-events: none;"
+        + " }\n"
+        + ".columns::before {"
+        + "   display: block;"
+        + "   content: \" \";"
+        + "   margin-top: -100px;"
+        + "   height: 100px;"
+        + "   background-color: #000;"
+        + "   visibility: hidden;"
+        + "   pointer-events: none;"
+        + " }\n"
+        + "</STYLE>\n"
+        + "<SCRIPT>\n"
+        + "var headers = [];\n"
+        + "function registerStickyHeader(elementId) {\n"
+        + "  var h = document.getElementById(elementId);\n"
+        + "  headers.push([h,h.offsetTop]);\n"
+        + "}\n"
+        + "function checkSticky() {\n"
+        + "for (var i = 0; i < headers.length; ++i)\n"
+        + " {\n"
+        + "   var h = headers[i];\n"
+        + "   var pos = h[0].offsetTop;\n"
+        + "   if (pos != 0)\n"
+        + "    h[1] = pos;\n"
+        + "   if (window.pageYOffset >= h[1]+100)\n"
+        + "    h[0].classList.add(\"sticky\");\n"
+        + "   else\n"
+        + "    h[0].classList.remove(\"sticky\");\n"
+        + " }\n"
+        + "}\n"
+        + "window.onscroll = checkSticky;\n"
+        + "</SCRIPT>\n"
+        );
       }
 
+    
+    public static void writeFooter(PrintWriter Out, Schema S)
+      {
+      }
+    
     public static void DataClassDocs(PrintWriter Out, GeneratorSession G, Object O)
     throws Exception
       {
-        if (O.getShortName().equalsIgnoreCase("DATAMART2.SCREENING"))
-          System.out.println("xxx");
-
         View view = O._ParentSchema.getView(O._Name);
         String ObjType = view == null ? "Table" : "View";
 
         Out.println("<DIV>");
-        Out.println("<DIV id='" + O._Name + "_DIV' class='tables'>");
+        Out.println("<DIV id=\"" + O._Name + "_DIV\" class=\"tables\">");
         Out.println("<H2>" + O._Name + "&nbsp;&nbsp;&nbsp;&nbsp;<SUP style=\"font-size: 60%;\"><A href=\"#\">top</A></SUP></H2>");
         Out.println("</DIV>");
+        Out.println("<SCRIPT>registerStickyHeader(\""+O._Name + "_DIV\");</SCRIPT>");
 
         Out.println("The " + ObjType + " " + O.getShortName() + " is:<UL>");
         if (view == null || view._DBOnly == false)
@@ -150,6 +199,8 @@ public class Docs
         Out.print("This " + ObjType + " contains the following columns:<BLOCKQUOTE>" + SystemValues.NEWLINE
         + " <TABLE border=\"0px\" cellpadding=\"3px\" cellspacing=\"0px\" style=\"border:1px solid grey;\">" + SystemValues.NEWLINE
         + "   <TR><TH>&nbsp;</TH><TH align=\"right\">Name&nbsp;&nbsp;</TH><TH align=\"left\">Type</TH><TH align=\"left\">Nullable</TH>");
+        if (view != null && view._Realize != null)
+          Out.print("<TH align=\"left\">Realized</TH>");
         if (O._DBOnly == false)
           Out.print("<TH align=\"left\">Mode</TH><TH align=\"left\">Invariant</TH><TH align=\"left\">Protect</TH>");
         Out.print("<TH align=\"left\">Description</TH></TR>" + SystemValues.NEWLINE);
@@ -161,7 +212,10 @@ public class Docs
               continue;
             Out.println("  <TR valign=\"top\" bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#DFECF8") + "\">");
             Out.println("    <TD>" + i + "&nbsp;&nbsp;</TD>");
-            if (C.getSingleColFK() != null || (view != null && C._SameAsObj != null) || (view != null && view._Pivot != null && view._Pivot.hasValue(C.getName())))
+            if (C.getSingleColFK() != null
+            || (view != null && C._SameAsObj != null)
+            || (view != null && view._Pivot != null && view._Pivot.hasValue(C.getName()))
+            || (view != null && view.getFormula(C.getName()) != null))
               {
                 Out.println("<TD onclick=\"onModalShowClicked('" + O._Name + "-" + C.getName() + "')\" align=\"right\"><B id='" + O._Name + "-" + C.getName() + "_DIV' class='columns dotted_underline cursor_pointer'>" + C.getName() + "</B>&nbsp;&nbsp;</TD>");
               }
@@ -175,6 +229,10 @@ public class Docs
               Out.print(JavaJDBCType.getFieldType(C) + (C.isList() == true ? " List<>" : C.isSet() == true ? " Set<>" : "") + "&nbsp;/&nbsp;");
             Out.println(G.getSql().getColumnType(C) + "&nbsp;&nbsp;</TD>");
             Out.println("<TD align=\"center\">" + (C._Nullable == true ? "&#x2611;" : "&#x2610") + "&nbsp;&nbsp;</TD>");
+            if (view != null && view._Realize != null)
+              {
+                Out.print("<TD align=\"center\">" + (TextUtil.FindElement(view._Realize._Excludes, C.getName(),false,0) == -1 ? "&#x2611;" : "&#x2610") + "&nbsp;&nbsp;</TD>");
+              }
             if (O._DBOnly == false)
               {
                 Out.println("<TD align=\"left\">" + (C._Mode == ColumnMode.NORMAL ? "-" : C._Mode) + "&nbsp;&nbsp;</TD>");
@@ -185,8 +243,6 @@ public class Docs
             Out.print("<TD>" + C._Description);
             if (view != null)
               {
-                if (C.getName().equals("canAmbulate") == true)
-                  LOG.debug("kjofhuofueh");
                 Formula F = view.getFormula(C.getName());
                 if (F != null)
                   {
@@ -867,4 +923,5 @@ public class Docs
           }
 
       }
+
   }

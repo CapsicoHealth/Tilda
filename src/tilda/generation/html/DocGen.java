@@ -106,6 +106,7 @@ public class DocGen
         WriteTablesAndViews(PS, writer);
 
         writer.println("<BR><BR><BR><BR><BR><HR>- End -<BR><BR><BR>");
+        writeFooter(writer, PS);
         writer.println("</BODY>");
         writer.println("</HTML>");
         writer.close();
@@ -119,6 +120,10 @@ public class DocGen
       {
         Docs.writeHeader(writer, PS._Main);
       }
+    private void writeFooter(PrintWriter writer, ParserSession PS) throws Exception
+      {
+        Docs.writeFooter(writer, PS._Main);
+      }
 
     public void WriteTablesAndViews(ParserSession PS, PrintWriter writer)
       {
@@ -128,7 +133,7 @@ public class DocGen
         WriteObjectDocsList(writer, FrameworkSourcedType.MAPPER, "Mappers");
         WriteObjectDocsList(writer, FrameworkSourcedType.NONE, "Tables");
         WriteObjectDocsList(writer, FrameworkSourcedType.VIEW, "Views");
-
+/*
         boolean First = true;
         for (View V : schema._Views)
           {
@@ -150,7 +155,8 @@ public class DocGen
 //                LOG.warn("FYI: this can be ignored for now:\n", e);
 //              }
           }
-      }
+*/
+        }
 
     private void WriteObjectDocsList(PrintWriter writer, FrameworkSourcedType Filter, String TitleLabel)
       {
