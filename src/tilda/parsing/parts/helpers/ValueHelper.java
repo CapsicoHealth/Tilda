@@ -19,6 +19,7 @@ package tilda.parsing.parts.helpers;
 import tilda.enums.DefaultType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Column;
+import tilda.utils.DateTimeUtil;
 import tilda.utils.ParseUtil;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
@@ -65,6 +66,12 @@ public class ValueHelper
                   PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' which is not a default NOW or UNDEFINED value. Only these pre-defined values are allowed for timestamps.");
                 if (Default == DefaultType.NONE)
                   PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' which is not set as a default. Only default values are allowed for timestamps.");
+                break;
+              case DATE:
+                if (Value.equalsIgnoreCase("NOW") == false && Value.equalsIgnoreCase("UNDEFINED") == false && DateTimeUtil.parse(Value, "yyyy-MM-dd") != null)
+                  PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' which is not a default NOW or UNDEFINED, or yyy-MM-dd value. Only these pre-defined values or date format are allowed for dates.");
+                if (Default == DefaultType.NONE)
+                  PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' which is not set as a default. Only default values are allowed for Dates.");
                 break;
               default:
                 throw new Error("Unhandled case in switch for type '" + Col.getType() + "'.");
