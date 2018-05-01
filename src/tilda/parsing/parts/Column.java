@@ -212,6 +212,14 @@ public class Column extends TypeDef
           PS.AddError("Column '" + getFullName() + "' is defining a jsonSchema, but is not of type JSON.");
         if (_JsonSchema != null)
           _JsonSchema.Validate(PS, this);
+        
+        if((_Nullable == null || _Nullable == true) 
+        	&& _Values != null 
+        	&& (!_Name.equals("created") && !_Name.equals("lastUpdated")) 
+        	&& _SameAs == null)
+          {
+        	PS.AddNote("Column '" + getFullName() + "' is defining a default value for a nullable column." );
+          }
       }
 
 

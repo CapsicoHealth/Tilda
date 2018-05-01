@@ -17,6 +17,8 @@
 package tilda;
 
 import java.util.Iterator;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,6 +36,8 @@ import tilda.utils.SystemValues;
 public class Gen
   {
     static final Logger LOG = LogManager.getLogger(Gen.class.getName());
+    
+    static final Set<String> NOTES = new TreeSet<String>();
 
     public static void main(String[] Args)
       {
@@ -44,14 +48,15 @@ public class Gen
             LOG.error("The utility must be called with a path to a Tilda json file");
             System.exit(-1);
           }
-
+        
         for (String path : Args)
           {
             try
               {
-                GeneratorSession G = new GeneratorSession("java", 8, -1, "postgres", 9, -1);
+                GeneratorSession G = new GeneratorSession("java", 8, -1, "postgres", 9, -1);               
                 
                 ParserSession PS = Parser.parse(path, G.getSql());
+                
                 if (PS == null)
                   {
                     throw new Exception("An error occurred trying to process Tilda file '" + path + "'.");
@@ -71,7 +76,19 @@ public class Gen
                     // new GraphvizUtil(PS._Main, G).writeSchema();
                     new DocGen(PS._Main, G).writeSchema(PS);
                     LOG.info("Generated Tilda code for schema '" + PS._Main.getFullName() + "'.");
-                  }
+                    
+                    if(PS.getErrorCount() > 0)
+                      {
+                  	    PS.printErrors();
+                  	    throw new java.lang.RuntimeException("There were parser session errors detected during gen.");
+                      }
+                  
+                    if(PS.getNoteCount() > 0)
+                      {
+                        PS.printNotes();
+                        NOTES.addAll(PS._Notes);
+                      }
+                  }                     
               }
             catch (Throwable T)
               {
@@ -84,6 +101,17 @@ public class Gen
                         , T);
                 System.exit(-1);
               }
+          }
+        
+        if(NOTES.size() > 0)
+          {
+            LOG.info("\n");
+            LOG.info("================================================ Gen Notes ================================================");
+            LOG.info("There were " + NOTES.size() + " notes raised when validating the generated code.");
+            int i = 0;
+            for (String Note : NOTES)
+              LOG.info("    " + (++i) + (i<10?" ":"") + " - " + Note);
+            LOG.info("\n");
           }
         
         LOG.info("\n"

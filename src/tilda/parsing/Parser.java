@@ -53,16 +53,6 @@ public abstract class Parser
         if (loadDependencies(PS, S) == false)
           return null;
 
-        if (PS.getErrorCount() != 0)
-          {
-            LOG.error("==============================================================================================");
-            LOG.error("There were " + PS.getErrorCount() + " errors when trying to validate the schema set");
-            int i = 0;
-            for (String Err : PS._Errors)
-              LOG.error("    " + (++i) + " - " + Err);
-            return null;
-          }
-
         return PS;
       }
 
@@ -198,5 +188,5 @@ public abstract class Parser
             }
         return true;
       }
-
+    
   }
