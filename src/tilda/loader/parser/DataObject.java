@@ -73,64 +73,56 @@ public class DataObject
            return false;
          }
         for (ColumnHeader CH : _ColumnHeaderList)
-         if (CH != null)
-          CH.validate();
+          if (CH != null)
+            CH.validate();
 
-       if (TextUtil.isNullOrEmpty(rootFolder) == false)
-         {
-           ListIterator<String> filesIterator = _FileList.listIterator();
-           while(filesIterator.hasNext())
-             {
-               filesIterator.set(rootFolder + File.separator + filesIterator.next());
-             }
-         }
-       
-       if (TextUtil.isNullOrEmpty(_mode) == true)
-         {
-           errorMessages.add("Data definition for " + getTableFullName() + " is not defining the 'mode' property, which is mandatory. ");
-           return false;
-         }
-       else if (_mode.equals(MODE.INSERT.toString()) == true)
-         {
-           _Inserts = true;
-           _TruncateFirst = false;
-           _TruncateCascade = false;
-         }
-       else if  (_mode.equals(MODE.TRUNCATE_INSERT.toString()) == true)
-         {
-           _Inserts = true;
-           _TruncateFirst = true;
-           _TruncateCascade = false;
-         }
-       else if (_mode.equals(MODE.TRUNCATE_CASCADE_INSERT.toString()) == true)
-         {
-           _Inserts = true;
-           _TruncateFirst = true;
-           _TruncateCascade = true;
-         }
-       else if (_mode.equals(MODE.UPSERT.toString()) == true)
-         {
-           _Upserts = true;
-           String[] uniqueColumns = getUniqueColumnsList();
-           if (uniqueColumns.length < 1)
-             {
-               errorMessages.add("Data definition for " + getTableFullName() + " is invalid: upserts must also specify the object's identify in 'uniqueColumns'. ");
-               return false;
-             }
-           if (tableMeta.getIndex(uniqueColumns, true) == null)
-             {
-               errorMessages.add("Data definition for " + getTableFullName() + " is invalid: 'uniqueColumns' is listing columns which do not match any existing unique index in the database.");
-               return false;
-             }
-         }
-       else
-         {
-           errorMessages.add("Data definition for " + getTableFullName() + " is defining a mode='"+_mode+"' which is invalid. Must be one of 'INSERT', 'TRUNCATE_INSERT', 'UPSERT'. ");
-           return false;
-         }
-       return true;
-     }
-    
+        if (TextUtil.isNullOrEmpty(_mode) == true)
+          {
+            errorMessages.add("Data definition for " + getTableFullName() + " is not defining the 'mode' property, which is mandatory. ");
+            return false;
+          }
+        else if (_mode.equals("INSERT") == true)
+          {
+            _Inserts = true;
+            _TruncateFirst = false;
+            _TruncateCascade = false;
+          }
+        else if (_mode.equals("TRUNCATE_INSERT") == true)
+          {
+            _Inserts = true;
+            _TruncateFirst = true;
+            _TruncateCascade = false;
+          }
+        else if (_mode.equals("TRUNCATE_CASCADE_INSERT") == true)
+          {
+            _Inserts = true;
+            _TruncateFirst = true;
+            _TruncateCascade = true;
+          }
+        else if (_mode.equals("UPSERT") == true)
+          {
+            _Upserts = true;
+            String[] uniqueColumns = getUniqueColumnsList();
+            if (uniqueColumns.length < 1)
+              {
+                errorMessages.add("Data definition for " + getTableFullName() + " is invalid: upserts must also specify the object's identify in 'uniqueColumns'. ");
+                return false;
+              }
+            if (tableMeta.getIndexMeta(uniqueColumns, true) == null)
+              {
+                errorMessages.add("Data definition for " + getTableFullName() + " is invalid: 'uniqueColumns' is listing columns which do not match any existing unique index in the database.");
+                return false;
+              }
+          }
+        else
+          {
+            errorMessages.add("Data definition for " + getTableFullName() + " is defining a mode='" + _mode + "' which is invalid. Must be one of 'INSERT', 'TRUNCATE_INSERT', 'UPSERT'. ");
+            return false;
+          }
+
+        return true;
+      }
+
     public String[] getColumns()
       {
         List<String> Cols = new ArrayList<String>();

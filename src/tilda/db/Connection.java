@@ -33,6 +33,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.metadata.FKMeta;
+import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.PKMeta;
 import tilda.db.processors.RecordProcessor;
 import tilda.db.stores.DBType;
@@ -43,6 +44,7 @@ import tilda.enums.TransactionType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
+import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
@@ -61,7 +63,14 @@ public final class Connection
     static final Logger LOG = LogManager.getLogger(Connection.class.getName());
 
     public Connection(java.sql.Connection C)
-      throws Exception, SQLException
+      throws Exception,
+      SQLException
+      {
+      }
+
+    public Connection(java.sql.Connection C, String PoolId)
+      throws Exception,
+      SQLException
       {
         _C = C;
         _Url = _C.getMetaData().getURL();
@@ -72,21 +81,26 @@ public final class Connection
         : null;
         if (_DB == null)
           throw new Exception("Can't find the DBType based on URL " + _Url);
-        _PoolId = _C.toString() + ", " + getDatabaseProductName() + " V" + getDatabaseProductVersion();
-      }
-
-    public Connection(java.sql.Connection C, String PoolId)
-      throws Exception, SQLException
-      {
-        this(C);
-        _PoolId = PoolId + ": #" + _PoolId;
+        _PoolId = PoolId;
+        _PoolName = PoolId + ": " + getURL() + "USER="+_C.getMetaData().getUserName()+", " + getDatabaseProductName() + " V" + getDatabaseProductVersion();
       }
 
 
     protected String              _PoolId;
+    protected String              _PoolName;
     protected java.sql.Connection _C;
     protected DBType              _DB;
     protected String              _Url;
+
+    public final String getPoolId()
+      {
+        return _PoolId;
+      }
+
+    public final String getPoolName()
+      {
+        return _PoolName;
+      }
 
     public final String getURL()
       {
@@ -122,7 +136,7 @@ public final class Connection
       {
         try
           {
-            LOG.info(QueryDetails._LOGGING_HEADER + AnsiUtil.NEGATIVE + "C O M M I T" + AnsiUtil.NEGATIVE_OFF + "                              -----  " + _PoolId);
+            LOG.info(QueryDetails._LOGGING_HEADER + AnsiUtil.NEGATIVE + "C O M M I T" + AnsiUtil.NEGATIVE_OFF + "                              -----  " + _PoolName);
             long T0 = System.nanoTime();
             _C.commit();
             _SavePoints.clear();
@@ -148,7 +162,7 @@ public final class Connection
       {
         try
           {
-            LOG.info(QueryDetails._LOGGING_HEADER + AnsiUtil.NEGATIVE + "R O L L B A C K" + AnsiUtil.NEGATIVE_OFF + "                          -----  " + _PoolId);
+            LOG.info(QueryDetails._LOGGING_HEADER + AnsiUtil.NEGATIVE + "R O L L B A C K" + AnsiUtil.NEGATIVE_OFF + "                          -----  " + _PoolName);
             long T0 = System.nanoTime();
             _C.rollback();
             _SavePoints.clear();
@@ -191,10 +205,7 @@ public final class Connection
       {
         try
           {
-            if (_C.toString() == _PoolId)
-              LOG.info(QueryDetails._LOGGING_HEADER + "C L O S I N G   C O N N E C T I O N      -----  " + _PoolId);
-            else
-              LOG.info(QueryDetails._LOGGING_HEADER + "R E T U R N I N G   C O N N E C T I O N  -----  " + _PoolId);
+            LOG.info(QueryDetails._LOGGING_HEADER + "C L O S I N G   A N D   R E T U R N I N G   C O N N E C T I O N  -----  " + _PoolName);
             long T0 = System.nanoTime();
             _C.close();
             _SavePoints.clear();
@@ -466,16 +477,16 @@ public final class Connection
         return _DB.alterTableAlterColumnType(this, FromType, Col, defaultZI);
       }
 
-    public boolean addHelperFunctions()
+    public String getHelperFunctionsScript()
     throws Exception
       {
-        return _DB.addHelperFunctions(this);
+        return _DB.getHelperFunctionsScript(this);
       }
 
-    public boolean addAclRoles(List<Schema> TildaList)
+    public String getAclRolesScript(List<Schema> TildaList)
     throws Exception
       {
-        return _DB.addAclRoles(this, TildaList);
+        return _DB.getAclRolesScript(this, TildaList);
       }
 
     public StringStringPair getTypeMapping(int Type, String Name, int Size, String TypeName)
@@ -616,6 +627,31 @@ public final class Connection
       {
         return _DB.alterTableAddFK(this, FK);
       }
+    
+    public boolean alterTableDropIndex(Object Obj, IndexMeta IX)
+    throws Exception
+      {
+        return _DB.alterTableDropIndex(this, Obj, IX);
+      }
+
+    public boolean alterTableAddIndex(Index IX)
+    throws Exception
+      {
+        return _DB.alterTableAddIndex(this, IX);
+      }
+
+    public boolean alterTableRenameIndex(Object Obj, String OldName, String NewName)
+    throws Exception
+      {
+        return _DB.alterTableRenameIndex(this, Obj, OldName, NewName);
+      }
+    
+    public boolean isSuperUser()
+    throws Exception
+      {
+        return _DB.isSuperUser(this);
+      }
+
   }
 
 

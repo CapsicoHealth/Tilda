@@ -39,13 +39,11 @@ The generated Java 8/PostgreSQL Tilda data class <B>Data_CONNECTION</B> is mappe
 
 It contains the following columns:<BR>
  <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
-   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><!--TH align="left">Column</TH--><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
-
+   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='CONNECTION-active_DIV' class='columns'>active</B>&nbsp;&nbsp;</TD>
-<TD>boolean&nbsp;&nbsp;</TD>
-<TD>boolean&nbsp;&nbsp;</TD>
+<TD>boolean&nbsp;/&nbsp;boolean&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -55,8 +53,7 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>2&nbsp;&nbsp;</TD>
 <TD align="right"><B id='CONNECTION-id_DIV' class='columns'>id</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD>
-<TD>character(15)&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(15)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -66,8 +63,7 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>3&nbsp;&nbsp;</TD>
 <TD align="right"><B id='CONNECTION-driver_DIV' class='columns'>driver</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD>
-<TD>varchar(100)&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(100)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -77,8 +73,7 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>4&nbsp;&nbsp;</TD>
 <TD align="right"><B id='CONNECTION-db_DIV' class='columns'>db</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD>
-<TD>varchar(200)&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(200)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -88,8 +83,7 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>5&nbsp;&nbsp;</TD>
 <TD align="right"><B id='CONNECTION-user_DIV' class='columns'>user</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD>
-<TD>varchar(30)&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(30)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -99,8 +93,7 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>6&nbsp;&nbsp;</TD>
 <TD align="right"><B id='CONNECTION-pswd_DIV' class='columns'>pswd</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD>
-<TD>varchar(40)&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(40)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -110,8 +103,7 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>7&nbsp;&nbsp;</TD>
 <TD align="right"><B id='CONNECTION-initial_DIV' class='columns'>initial</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;&nbsp;</TD>
-<TD>integer&nbsp;&nbsp;</TD>
+<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -121,8 +113,7 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>8&nbsp;&nbsp;</TD>
 <TD align="right"><B id='CONNECTION-max_DIV' class='columns'>max</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;&nbsp;</TD>
-<TD>integer&nbsp;&nbsp;</TD>
+<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -132,8 +123,7 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>9&nbsp;&nbsp;</TD>
 <TD align="right"><B id='CONNECTION-schemas_DIV' class='columns'>schemas</B>&nbsp;&nbsp;</TD>
-<TD>List<String> List<>&nbsp;&nbsp;</TD>
-<TD>text[]&nbsp;&nbsp;</TD>
+<TD>List<String> List<>&nbsp;/&nbsp;text[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -143,8 +133,7 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>10&nbsp;&nbsp;</TD>
 <TD align="right"><B id='CONNECTION-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;&nbsp;</TD>
-<TD>timestamptz&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -159,8 +148,7 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>11&nbsp;&nbsp;</TD>
 <TD align="right"><B id='CONNECTION-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;&nbsp;</TD>
-<TD>timestamptz&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -175,8 +163,7 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>12&nbsp;&nbsp;</TD>
 <TD align="right"><B id='CONNECTION-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;&nbsp;</TD>
-<TD>timestamptz&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -392,7 +379,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Nov 27 2017, 17:20:17IST
+ @generated May 1 2018, 10:22:53IST
 */
 public abstract class TILDA__CONNECTION implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
@@ -408,14 +395,18 @@ public abstract class TILDA__CONNECTION implements tilda.interfaces.WriterObject
    private long     __Nulls2      = 0L;
    private long     __Nulls3      = 0L;
    private long     __Nulls4      = 0L;
+   private long     __Nulls5      = 0L;
+   private long     __Nulls6      = 0L;
    private long     __Changes1    = 0L;
    private long     __Changes2    = 0L;
    private long     __Changes3    = 0L;
    private long     __Changes4    = 0L;
+   private long     __Changes5    = 0L;
+   private long     __Changes6    = 0L;
    private boolean  __NewlyCreated= false;
    private int      __LookupId;
 
-   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L || __Changes3 != 0L || __Changes4 != 0L; }
+   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L || __Changes3 != 0L || __Changes4 != 0L || __Changes5 != 0L || __Changes6 != 0L; }
    public  boolean isNewlyCreated() { return __NewlyCreated; }
 
    void initForCreate()
@@ -1686,7 +1677,7 @@ This is the setter for:<BR>
 
 </TABLE>
 */
-    void setLastUpdated(ZonedDateTime v) throws Exception
+   public final void setLastUpdated(ZonedDateTime v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
@@ -1724,7 +1715,7 @@ This is the NOW setter for:<BR>
 
 </TABLE>
 */
-    final void setLastUpdatedNow() throws Exception
+   public final void setLastUpdatedNow() throws Exception
     {
       setLastUpdated(DateTimeUtil.NOW_PLACEHOLDER_ZDT);
     }
@@ -1753,7 +1744,7 @@ This is the UNDEFINED setter for:<BR>
 
 </TABLE>
 */
-    final void setLastUpdatedUndefined() throws Exception
+   public final void setLastUpdatedUndefined() throws Exception
     {
       setLastUpdated(DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT);
     }
@@ -1782,7 +1773,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 
 </TABLE>
 */
-    final void setLastUpdated(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
+   public final void setLastUpdated(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
       setLastUpdated(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
     }
@@ -1896,7 +1887,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setDeleted(ZonedDateTime v) throws Exception
+   public final void setDeleted(ZonedDateTime v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
@@ -1929,7 +1920,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setNullDeleted()
+   public final void setNullDeleted()
      {
        long T0 = System.nanoTime();
        if ((TILDA__CONNECTION_Factory.COLS.DELETED._Mask1 & __Nulls1) != 0L)
@@ -1957,7 +1948,7 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    final void setDeletedNow() throws Exception
+   public final void setDeletedNow() throws Exception
     {
       setDeleted(DateTimeUtil.NOW_PLACEHOLDER_ZDT);
     }
@@ -1979,7 +1970,7 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    final void setDeletedUndefined() throws Exception
+   public final void setDeletedUndefined() throws Exception
     {
       setDeleted(DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT);
     }
@@ -2001,7 +1992,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    final void setDeleted(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
+   public final void setDeleted(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
       setDeleted(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
     }
@@ -2275,7 +2266,7 @@ This is the hasChanged for:<BR>
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
         }
 
-       __Changes1= __Changes2= __Changes3= __Changes4= __Nulls1= __Nulls2= __Nulls3= __Nulls4= 0L;
+       __Changes1= __Changes2= __Changes3= __Changes4= __Changes5= __Changes6= __Nulls1= __Nulls2= __Nulls3= __Nulls4= __Nulls5= __Nulls6= 0L;
        return true;
      }
 
@@ -2395,10 +2386,7 @@ This is the hasChanged for:<BR>
                             _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
      __LookupId = 0;
      __Init     = InitMode.READ;
-     __Changes1  = 0L;
-     __Changes2  = 0L;
-     __Changes3  = 0L;
-     __Changes4  = 0L;
+     __Changes1 = __Changes2 = __Changes3 = __Changes4 = __Changes5 = __Changes6 = 0L;
      return AfterRead(C);
    }
 

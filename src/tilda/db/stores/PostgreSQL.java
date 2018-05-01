@@ -32,9 +32,11 @@ import org.apache.logging.log4j.Logger;
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
 import tilda.db.metadata.FKMeta;
+import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.PKMeta;
 import tilda.db.processors.ScalarRP;
 import tilda.db.processors.StringListRP;
+import tilda.db.processors.StringRP;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
@@ -43,6 +45,7 @@ import tilda.generation.interfaces.CodeGenSql;
 import tilda.generation.postgres9.PostgresType;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
+import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
@@ -300,6 +303,7 @@ public class PostgreSQL implements DBType
         return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
       }
 
+
     @Override
     public int getVarCharThreshhold()
       {
@@ -388,7 +392,7 @@ public class PostgreSQL implements DBType
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
         + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + ";";
         return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
-      }
+      }    
 
     protected static void PrintFunctionIn(StringBuilder Str, String Type)
       {
@@ -449,7 +453,7 @@ public class PostgreSQL implements DBType
       }
 
     @Override
-    public boolean addHelperFunctions(Connection Con)
+    public String getHelperFunctionsScript(Connection Con)
     throws Exception
       {
         StringBuilder Str = new StringBuilder();
@@ -567,44 +571,49 @@ public class PostgreSQL implements DBType
         .append("\n")
         .append("\n")
         .append("CREATE extension if not exists tablefunc;\n");
-
-        return Con.ExecuteDDL("TILDA", "FUNCTIONS", Str.toString());
+        
+        return Str.toString();
       }
-
-    
+   
     
     
     public void reCreateRole(StringBuilder Str, String Role)
     throws Exception
       { 
         Role = Role.toLowerCase();
-        Str.append("DELETE FROM pg_catalog.pg_authid WHERE rolname='"+Role+"';\n");
-        Str.append("CREATE ROLE "+Role+";\n");
+        Str.append("DO $body$\n");
+        Str.append("BEGIN\n");
+        Str.append("   IF NOT EXISTS (SELECT FROM pg_catalog.pg_authid WHERE rolname = "+TextUtil.EscapeSingleQuoteForSQL(Role)+")\n");
+        Str.append("   THEN\n");
+        Str.append("      CREATE ROLE "+Role+";\n");
+        Str.append("   END IF;\n");
+        Str.append("END $body$;\n");
+//        Str.append("DELETE FROM pg_catalog.pg_authid WHERE rolname='"+Role+"';\n");
+//        Str.append("CREATE ROLE "+Role+";\n");
       }
     
     @Override
-    public boolean addAclRoles(Connection Con, List<Schema> TildaList)
+    public String getAclRolesScript(Connection Con, List<Schema> TildaList)
     throws Exception
-      {        
+      {
         StringBuilder Str = new StringBuilder();
-        //reCreateRole(Str, "tilda_app");
+        reCreateRole(Str, "tilda_app");
         reCreateRole(Str, "tilda_read_only");
         reCreateRole(Str, "tilda_reporting");
 
         for (Schema S : TildaList)
           {
-            Str.append("GRANT USAGE ON SCHEMA ").append(S.getShortName()).append(" TO tilda_app;\n");
+            Str.append("GRANT ALL ON SCHEMA ").append(S.getShortName()).append(" TO tilda_app;\n");
             Str.append("GRANT ALL ON ALL TABLES IN SCHEMA ").append(S.getShortName()).append(" TO tilda_app;\n");
             Str.append("GRANT ALL ON ALL FUNCTIONS IN SCHEMA ").append(S.getShortName()).append(" TO tilda_app;\n");
             Str.append("GRANT ALL ON ALL SEQUENCES IN SCHEMA ").append(S.getShortName()).append(" TO tilda_app;\n");
-            
             Str.append("GRANT USAGE ON SCHEMA ").append(S.getShortName()).append(" TO tilda_read_only;\n");
             Str.append("GRANT SELECT ON ALL TABLES IN SCHEMA ").append(S.getShortName()).append(" TO tilda_read_only;\n");
             Str.append("GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA ").append(S.getShortName()).append(" TO tilda_read_only;\n");
             Str.append("GRANT SELECT ON ALL SEQUENCES IN SCHEMA ").append(S.getShortName()).append(" TO tilda_read_only;\n");
           }
 
-        return Con.ExecuteDDL("TILDA", "ACL_ROLES", Str.toString());
+        return Str.toString();
      }
     
     @Override
@@ -851,7 +860,41 @@ public class PostgreSQL implements DBType
         return Con.ExecuteDDL(FK._ParentObject._ParentSchema._Name, FK._ParentObject.getBaseName(), Q);
       }
     
+    @Override
+    public boolean alterTableDropIndex(Connection Con, Object Obj, IndexMeta IX)
+    throws Exception
+      {
+        // If the DB Name comes in as all lower case, it's case-insensitive. Otherwise, we have to quote.        
+    	String DropName = IX._Name.equals(IX._Name.toLowerCase()) == false ? "\""+IX._Name+"\"" : IX._Name;
+        String Q = "DROP INDEX " + Obj._ParentSchema._Name + "." + DropName + ";";
+        return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
+      }
     
+    @Override
+    public boolean alterTableAddIndex(Connection Con, Index IX)
+    throws Exception
+      {
+        StringWriter Out = new StringWriter();
+        _SQL.genIndex(new PrintWriter(Out), IX);
+        String Q = Out.toString();
+        return Con.ExecuteDDL(IX._Parent._ParentSchema._Name, IX._Parent.getBaseName(), Q);
+      }
+    
+
+    @Override
+    public boolean alterTableRenameIndex(Connection Con, Object Obj, String OldName, String NewName)
+    throws Exception
+      {
+        // If the DB Name comes in as all lower case, it's case-insensitive. Otherwise, we have to quote.        
+        if (OldName.equals(OldName.toLowerCase()) == false || OldName.equals(TextUtil.SanitizeName(OldName)) == false)
+         OldName = "\""+OldName+"\"";
+
+        String Q = "ALTER INDEX " + Obj._ParentSchema._Name+"."+OldName+" RENAME TO "+NewName+";";
+        
+        return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj._Name, Q);
+      }
+    
+
     private static String PrintColumnList(List<Column> Columns)
       {
         StringBuilder Str = new StringBuilder();
@@ -869,7 +912,6 @@ public class PostgreSQL implements DBType
         return Str.toString();
       }
     
-
     @Override
     public void within(Connection C, StringBuilder Str, Type_DatetimePrimitive Col, Type_DatetimePrimitive ColStart, long DurationCount, IntervalEnum DurationType)
       {
@@ -901,5 +943,14 @@ public class PostgreSQL implements DBType
             Str.append(")");
           }
       }
+    
+    @Override
+    public boolean isSuperUser(Connection C) throws Exception
+     {
+       String Q = "select current_setting('is_superuser');";
+       StringRP RP = new StringRP();
+       C.ExecuteSelect("SYSTEM", "CURRENT_SETTING", Q, RP);
+       return "on".equals(RP.getResult()) == true;
+     }
 
   }

@@ -196,7 +196,7 @@ This is the column definition for:<BR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>SMART</TD></TR>
 </TABLE>
 */
      public static Type_StringPrimitiveNull    DESC6      = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "desc6"      , 8/*8*/, "The title for a person, i.e., Mr, Miss, Mrs...");
@@ -727,13 +727,14 @@ This is the column definition for:<BR>
              S.append(" order by "); C.getFullColumnVar(S, "TILDA", "TESTING", "name"); S.append(" ASC");
              break;
           case 2:
-             S.append(", TILDA.OBJECTPERF"); // Additional From's from the subwhereclause.
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "TESTING", "deleted"); S.append(" is null and "); C.getFullColumnVar(S, "TILDA", "TESTING", "desc2"); S.append(" >= ").append("?").append(" and "); C.getFullColumnVar(S, "TILDA", "TESTING", "a5"); S.append(" < ").append("?").append(" or "); C.getFullColumnVar(S, "TILDA", "TESTING", "name"); S.append(" = ").append("?").append(" and "); C.getFullColumnVar(S, "TILDA", "TESTING", "created"); S.append(" > ").append("?").append(")");
              S.append(" order by "); C.getFullColumnVar(S, "TILDA", "TESTING", "name"); S.append(" ASC");
              break;
           case 3:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "TESTING", "deleted"); S.append(" is null and "); C.getFullColumnVar(S, "TILDA", "TESTING", "name"); S.append(" = ").append("?").append(" and "); C.getFullColumnVar(S, "TILDA", "TESTING", "created"); S.append(" > ").append("?").append(")");
-             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "TESTING", "name"); S.append(" ASC");
+             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "TESTING", "name"); S.append(" DESC");
+             break;
+          case 4:
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "TESTING", "deleted"); S.append(" is null and "); C.getFullColumnVar(S, "TILDA", "TESTING", "name"); S.append(" = 'Hello' and "); C.getFullColumnVar(S, "TILDA", "TESTING", "created"); S.append(" > '2018-01-01')");
+             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "TESTING", "name"); S.append(" ASC");S.append(", "); C.getFullColumnVar(S, "TILDA", "TESTING", "description"); S.append(" DESC");
              break;
           case -666: break;
           default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
@@ -751,7 +752,6 @@ This is the column definition for:<BR>
        try
         {
           PS = C.prepareStatement(Q);
-          int i = 0;
           switch (LookupId)
            {
              case -7:
@@ -760,19 +760,12 @@ This is the column definition for:<BR>
                break;
              }
              case 2: {
-               LookupWhereAllByName2Params P = (LookupWhereAllByName2Params) ExtraParams;
-               LOG.debug(QueryDetails._LOGGING_HEADER + "  " + P.toString());
-               if (P._desc2Lower==null) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, P._desc2Lower      );
-               PS.setFloat    (++i, P._a5Upper         );
-               if (P._name==null) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, P._name       );
-               if (P._created==null) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else PS.setTimestamp(++i, new java.sql.Timestamp(P._created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                break;
              }
              case 3: {
-               LookupWhereAllByName3Params P = (LookupWhereAllByName3Params) ExtraParams;
-               LOG.debug(QueryDetails._LOGGING_HEADER + "  " + P.toString());
-               if (P._name==null) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, P._name       );
-               if (P._created==null) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else PS.setTimestamp(++i, new java.sql.Timestamp(P._created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+               break;
+             }
+             case 4: {
                break;
              }
              case -666: break;
@@ -929,103 +922,77 @@ This is the column definition for:<BR>
      }
 
 
-   static public ListResults<tilda.data.Testing_Data> LookupWhereAllByName2(Connection C, String desc2Lower, float a5Upper, String name, ZonedDateTime created, int Start, int Size) throws Exception
+   static public ListResults<tilda.data.Testing_Data> LookupWhereAllByName2(Connection C, int Start, int Size) throws Exception
      {
        tilda.data._Tilda.TILDA__TESTING Obj = new tilda.data.Testing_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
 
 
-       LookupWhereAllByName2Params P = new LookupWhereAllByName2Params(desc2Lower, a5Upper, name, created);
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       ReadMany(C, 2, RPI, Obj, P, Start, Size);
+       ReadMany(C, 2, RPI, Obj, null, Start, Size);
        return RPI._L;
      }
 
-   static public void LookupWhereAllByName2(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Testing_Data> OP, String desc2Lower, float a5Upper, String name, ZonedDateTime created, int Start, int Size) throws Exception
+   static public void LookupWhereAllByName2(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Testing_Data> OP, int Start, int Size) throws Exception
      {
        tilda.data._Tilda.TILDA__TESTING Obj = new tilda.data.Testing_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
 
 
-       LookupWhereAllByName2Params P = new LookupWhereAllByName2Params(desc2Lower, a5Upper, name, created);
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       ReadMany(C, 2, RPI, Obj, P, Start, Size);
+       ReadMany(C, 2, RPI, Obj, null, Start, Size);
      }
 
-    private static class LookupWhereAllByName2Params
-     {
-       protected LookupWhereAllByName2Params(String desc2Lower, float a5Upper, String name, ZonedDateTime created)
-         {
-           _desc2Lower = desc2Lower;
-           _a5Upper = a5Upper;
-           _name = name;
-           _created = created;
-         }
-        protected final String _desc2Lower;
-        protected final float _a5Upper;
-        protected final String _name;
-        protected final ZonedDateTime _created;
-       public String toString()
-        {
-          long T0 = System.nanoTime();
-          String Str = ""
-                  + "desc2Lower: " + _desc2Lower + ";"
-                  + "a5Upper: " + _a5Upper + ";"
-                  + "name: " + _name + ";"
-                  + "created: " + _created + ";"
-                 ; 
-          tilda.performance.PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
-          return Str;
-        }
-     }
 
-   static public ListResults<tilda.data.Testing_Data> LookupWhereAllByName3(Connection C, String name, ZonedDateTime created, int Start, int Size) throws Exception
+   static public ListResults<tilda.data.Testing_Data> LookupWhereAllByName3(Connection C, int Start, int Size) throws Exception
      {
        tilda.data._Tilda.TILDA__TESTING Obj = new tilda.data.Testing_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
 
 
-       LookupWhereAllByName3Params P = new LookupWhereAllByName3Params(name, created);
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
-       ReadMany(C, 3, RPI, Obj, P, Start, Size);
+       ReadMany(C, 3, RPI, Obj, null, Start, Size);
        return RPI._L;
      }
 
-   static public void LookupWhereAllByName3(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Testing_Data> OP, String name, ZonedDateTime created, int Start, int Size) throws Exception
+   static public void LookupWhereAllByName3(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Testing_Data> OP, int Start, int Size) throws Exception
      {
        tilda.data._Tilda.TILDA__TESTING Obj = new tilda.data.Testing_Data();
        Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
 
 
-       LookupWhereAllByName3Params P = new LookupWhereAllByName3Params(name, created);
 
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
-       ReadMany(C, 3, RPI, Obj, P, Start, Size);
+       ReadMany(C, 3, RPI, Obj, null, Start, Size);
      }
 
-    private static class LookupWhereAllByName3Params
+
+   static public ListResults<tilda.data.Testing_Data> LookupWhereAllByName4(Connection C, int Start, int Size) throws Exception
      {
-       protected LookupWhereAllByName3Params(String name, ZonedDateTime created)
-         {
-           _name = name;
-           _created = created;
-         }
-        protected final String _name;
-        protected final ZonedDateTime _created;
-       public String toString()
-        {
-          long T0 = System.nanoTime();
-          String Str = ""
-                  + "name: " + _name + ";"
-                  + "created: " + _created + ";"
-                 ; 
-          tilda.performance.PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
-          return Str;
-        }
+       tilda.data._Tilda.TILDA__TESTING Obj = new tilda.data.Testing_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
+       ReadMany(C, 4, RPI, Obj, null, Start, Size);
+       return RPI._L;
      }
+
+   static public void LookupWhereAllByName4(Connection C, tilda.db.processors.ObjectProcessor<tilda.data.Testing_Data> OP, int Start, int Size) throws Exception
+     {
+       tilda.data._Tilda.TILDA__TESTING Obj = new tilda.data.Testing_Data();
+       Obj.initForLookup(tilda.utils.SystemValues.EVIL_VALUE);
+
+
+
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
+       ReadMany(C, 4, RPI, Obj, null, Start, Size);
+     }
+
 
 
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }

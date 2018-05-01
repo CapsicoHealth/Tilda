@@ -61,7 +61,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("package " + O._ParentSchema._Package + "." + Helper.TILDA_GEN_PACKAGE + ";");
         Out.println();
         boolean needTime = false;
-        if (O._LC != ObjectLifecycle.READONLY)
+//        if (O._LC != ObjectLifecycle.READONLY)
          for (Column C : O._Columns)
           if (C != null && (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATE))
             {

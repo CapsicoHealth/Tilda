@@ -20,10 +20,8 @@ import java.io.PrintWriter;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.regex.Matcher;
 
 import org.apache.commons.io.output.StringBuilderWriter;
@@ -37,8 +35,8 @@ import tilda.enums.ColumnType;
 import tilda.enums.JoinType;
 import tilda.enums.TimeSeriesType;
 import tilda.generation.GeneratorSession;
-import tilda.generation.helpers.TotalMess;
 import tilda.generation.helpers.TableRankTracker;
+import tilda.generation.helpers.TotalMess;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
@@ -217,7 +215,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
           for (ForeignKey FK : O._ForeignKeys)
             if (FK != null)
               {
-                Out.print("  , CONSTRAINT "+FK.getName()+" FOREIGN KEY (");
+                Out.print("  , CONSTRAINT " + FK.getName() + " FOREIGN KEY (");
                 PrintColumnList(Out, FK._SrcColumnObjs);
                 Out.println(") REFERENCES " + FK._DestObjectObj._ParentSchema._Name + "." + FK._DestObjectObj._Name + " ON DELETE restrict ON UPDATE cascade");
               }
@@ -365,25 +363,17 @@ public class Sql extends PostgreSQL implements CodeGenSql
                         } while (TI != TableStack.peekLast());
                   }
               }
- 
+
             if (VC._JoinOnly == false && (OmmitTZs == false || OmmitTZs == true && VC._SameAsObj != null && VC._SameAsObj._Mode == ColumnMode.NORMAL))
               {
                 if (First == true)
                   {
-                    if (V._Pivot != null && V._ViewColumns.size() > 3)
-                      {
-                        Str.append("(");
-                      }
                     First = false;
                   }
                 else
                   Str.append("\n     , ");
-                if (PrintViewColumn(Str, VC, TI, V._Pivot != null && V._ViewColumns.size() > 3 && columnCount <= V._ViewColumns.size() - 3) == true)
+                if (PrintViewColumn(Str, VC, TI, false) == true) //V._Pivot != null && V._ViewColumns.size() > 3 && columnCount <= V._ViewColumns.size() - 3) == true)
                   hasAggregates = true;
-                if (V._Pivot != null && V._ViewColumns.size() > 3 && columnCount == V._ViewColumns.size() - 3)
-                  {
-                    Str.append("\n       )::" + V.getShortName() + "_WT as _wt");
-                  }
               }
           }
 
@@ -485,11 +475,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
               Str.append(" where ");
             else
               Str.append("   and ");
-//            if (V._Pivot._VC._SameAsObj.getType() == ColumnType.STRING)
-//              Str.append("trim(");
             Str.append(getFullColumnVar(V._Pivot._VC._SameAsObj));
-//            if (V._Pivot._VC._SameAsObj.getType() == ColumnType.STRING)
-//              Str.append(")");
             Str.append(" in (").append(PrintValueList(V._Pivot)).append(")\n");
 
           }
@@ -498,17 +484,22 @@ public class Sql extends PostgreSQL implements CodeGenSql
           {
             if (V._Pivot != null)
               {
-                Str.append("     group by 1, 2\n");
+                Str.append("     group by ");
+                for (int i = 0; i < V._ViewColumns.size()-1; ++i)
+                  Str.append((i==0?"":", ")+(i+1));
+                Str.append("\n");                
               }
             else
               {
-                Str.append("     group by ");
                 First = true;
                 for (ViewColumn VC : V._ViewColumns)
                   if (VC != null && VC._Aggregate == null && VC._JoinOnly == false)
                     {
                       if (First == true)
-                        First = false;
+                        {
+                          Str.append("     group by ");
+                          First = false;
+                        }
                       else
                         Str.append(", ");
                       if (VC._SameAsObj == null && VC._SameAs != null && VC._FrameworkGenerated == true)
@@ -520,12 +511,16 @@ public class Sql extends PostgreSQL implements CodeGenSql
                           Str.append(getFullColumnVar(VC._SameAsObj));
                         }
                     }
-                Str.append("\n");
+                if (First == false)
+                 Str.append("\n");
               }
           }
-        if (V._Pivot != null && V._ViewColumns.size() > 3)
+        if (V._Pivot != null)
           {
-            Str.append("     order by 1, 2\n");
+            Str.append("     order by ");
+            for (int i = 0; i < V._ViewColumns.size()-1; ++i)
+              Str.append((i==0?"":", ")+(i+1));
+            Str.append("\n");
           }
 
         if (V._DistinctOn != null)
@@ -586,7 +581,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
               }
             if (trimNeeded)
               Str.append("trim(");
-            Str.append(TI.getFullName()/* VC._SameAsObj._ParentObject.getShortName() + (TI._V == 1 ? "" : "_" + TI._V) */ + ".\"" + VC._SameAsObj.getName() + "\"");
+            Str.append(TI.getFullName()+ ".\"" + VC._SameAsObj.getName() + "\"");
             if (trimNeeded)
               Str.append(")");
             if (VC._Aggregate != null)
@@ -612,37 +607,12 @@ public class Sql extends PostgreSQL implements CodeGenSql
         String Str = PrintBaseView(V, false);
         if (V._Pivot != null)
           {
-            Str = V._ViewColumns.size() > 3 ? PivotPostgresWay(V, Str) : PivotGenericWay(V, Str);
+            Str = PivotGenericWay(V, Str);
           }
         if (V._Formulas != null && V._Formulas.isEmpty() == false)
           {
             Str = DoFormulasSuperView(V, Str);
           }
-        if (V._Pivot != null && V._ViewColumns.size() > 3)
-          {
-            OutFinal.println("DROP TYPE IF EXISTS " + V.getShortName() + "_WT cascade;");
-            OutFinal.println("CREATE TYPE " + V.getShortName() + "_WT AS (");
-            boolean First = true;
-            for (int i = 0; i < V._ViewColumns.size() - 2; ++i)
-              {
-                ViewColumn VC = V._ViewColumns.get(i);
-                if (VC._JoinOnly == true)
-                  continue;
-                if (First == true)
-                  {
-                    OutFinal.print("      ");
-                    First = false;
-                  }
-                else
-                  OutFinal.print("    , ");
-                if (VC._SameAs.equals("_TS.p") == true)
-                  OutFinal.println("\"p\" date");
-                else
-                  OutFinal.println("\"" + VC._Name + "\" " + getColumnType(VC._SameAsObj));
-              }
-            OutFinal.println("   );");
-          }
-
         OutFinal.println("create or replace view " + V._ParentSchema._Name + "." + V._Name + " as ");
         OutFinal.println(Str + ";");
 
@@ -674,19 +644,17 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 r.append(")(PIVOT)?VIEW\\b");
                 String BV = PrintBaseView(V, true).replaceAll(r.toString(), "$1Realized");
                 if (V._Formulas != null && V._Formulas.isEmpty() == false)
-                    BV = DoFormulasSuperView(V, BV);
+                  BV = DoFormulasSuperView(V, BV);
 
                 OutFinal.append("With TT as (").append(BV).append(")");
               }
             OutFinal.append("SELECT ").append(genRealizedColumnList(V, "\n                         " + PaddingUtil.getPad(RName.length()))
             + "\n                    " + PaddingUtil.getPad(RName.length()));
-            
+
             if (V._Realize._SubRealized.length != 0)
               OutFinal.append(" FROM TT;\n");
             else
-             OutFinal.append(" FROM " + V._ParentSchema._Name + "." + V._Name + ";\n");
-            // .append(" CREATE UNLOGGED TABLE " + V._ParentSchema._Name + "." + TName + "Realized " + "AS SELECT " + genRealizedColumnList(V) + " FROM " + V._ParentSchema._Name +
-            // "." + V._Name + ";\n");
+              OutFinal.append(" FROM " + V._ParentSchema._Name + "." + V._Name + ";\n");
 
             for (Index I : V._Realize._Indices)
               if (I != null)
@@ -724,90 +692,23 @@ public class Sql extends PostgreSQL implements CodeGenSql
         return Str;
       }
 
-    private String PivotPostgresWay(View V, String Str)
-      {
-        StringBuilder b = new StringBuilder();
-        b.append("select unnest(ARRAY[").append(PrintValueList(V._Pivot)).append("]) as _x order by _x\n");
-        // b.append("select distinct ").append(getFullColumnVar(V._Pivot._VC._SameAsObj)).append("\n")
-        // .append(" from ").append(V._Pivot._VC._SameAsObj._ParentObject.getShortName()).append("\n")
-        // .append(" where ").append(PivotIn(V._Pivot)).append("\n")
-        // .append("order by ").append(getFullColumnVar(V._Pivot._VC._SameAsObj)).append("\n");
-        StringBuilder SelectStr = new StringBuilder();
-        if (V._Pivot != null && V._ViewColumns.size() > 3)
-          {
-            for (int i = 0; i < V._ViewColumns.size() - 2; ++i)
-              {
-                ViewColumn VC = V._ViewColumns.get(i);
-                if (VC._JoinOnly == true)
-                  continue;
-                if (SelectStr.length() != 0)
-                  SelectStr.append("\n     , ");
-                SelectStr.append("(_wt).\"" + VC._Name + "\"");
-              }
-            for (Value v : V._Pivot._Values)
-              {
-                SelectStr.append("\n     , \"" + v._Name + "\"");
-              }
-          }
-        else
-          SelectStr.append("*");
-
-        Str = "select " + SelectStr.toString() + "\n from crosstab (\n" + TextUtil.EscapeSingleQuoteForSQL(Str) + ",\n"
-        + TextUtil.EscapeSingleQuoteForSQL(b.toString()) + ")\n"
-        + "as final_result (";
-        if (V._Pivot != null && V._ViewColumns.size() > 3)
-          {
-            Str += "_wt " + V.getShortName() + "_WT";
-          }
-        else
-          for (int i = 0; i < V._ViewColumns.size() - 2; ++i)
-            {
-              ViewColumn VC = V._ViewColumns.get(i);
-              if (VC._SameAs.equals("_TS.p") == true)
-                {
-                  if (i != 0)
-                    Str += "  , ";
-                  Str += "\"" + VC.getName() + "\" Date";
-                }
-              else if (VC != null && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false)
-                {
-                  if (i != 0)
-                    Str += "  , ";
-                  Str += "\"" + VC.getName() + "\" " + getColumnType(VC._SameAsObj);
-                }
-            }
-        ViewColumn VC = V._ViewColumns.get(V._ViewColumns.size() - 1);
-        ColumnType Type = VC.getAggregateType();
-        for (int i = 0; i < V._Pivot._Values.length; ++i)
-          {
-            Str += ", \"" + TextUtil.Print(V._Pivot._Values[i]._Name, V._Pivot._Values[i]._Value) + "\" ";
-            if (V._CountStar != null)
-              Str += "bigint";
-            else
-              Str += getColumnType(V._Pivot._VC._SameAsObj, Type);
-          }
-        Str += ")\n";
-        return Str;
-      }
-
-
     private String PivotGenericWay(View V, String Str)
     throws Exception
       {
-        Str = "with T as (\n" + Str + ") select \n";
+        Str = "with T as (\n" + Str + ") select ";
         for (int i = 0; i < V._ViewColumns.size() - 2; ++i)
           {
             ViewColumn VC = V._ViewColumns.get(i);
             if (VC._SameAs.equals("_TS.p") == true)
               {
                 if (i != 0)
-                  Str += "  , ";
+                  Str += "\n      , ";
                 Str += "\"" + VC.getName() + "\" "; // Date";
               }
             else if (VC != null && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false)
               {
                 if (i != 0)
-                  Str += "  , ";
+                  Str += "\n      , ";
                 Str += "\"" + VC.getName() + "\" "; // + getColumnType(VC._SameAsObj);
               }
           }
@@ -818,7 +719,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         for (int i = 0; i < V._Pivot._Values.length; ++i)
           {
             if (V._CountStar != null)
-              Str += "\n, sum(\"count\") filter (where \"" + VC_base.getName() + "\"= '" + TextUtil.Print(V._Pivot._Values[i]._Name, V._Pivot._Values[i]._Value) + "') ";
+              Str += "\n, sum(\""+V._CountStar+"\") filter (where \"" + VC_base.getName() + "\"= '" + TextUtil.Print(V._Pivot._Values[i]._Name, V._Pivot._Values[i]._Value) + "') ";
             else if (VC_pivot._Aggregate == AggregateType.COUNT || VC_pivot._Aggregate == AggregateType.SUM)
               Str += "\n, sum(\"" + VC_pivot.getName() + "\") filter (where \"" + VC_base.getName() + "\"= '" + V._Pivot._Values[i]._Value + "') ";
             else
@@ -826,8 +727,11 @@ public class Sql extends PostgreSQL implements CodeGenSql
             Str += " as \"" + TextUtil.Print(V._Pivot._Values[i]._Name, V._Pivot._Values[i]._Value) + "\"";
           }
         Str += "\n"
-        + "from T\n"
-        + "group by 1\n";
+        + "from T\n";
+        Str+="     group by ";
+        for (int i = 0; i < V._ViewColumns.size()-2; ++i)
+          Str+=(i==0?"":", ")+(i+1);
+        Str+="\n";                
         return Str;
       }
 
@@ -850,7 +754,6 @@ public class Sql extends PostgreSQL implements CodeGenSql
               {
                 if (VC == V._Pivot._VC // This is the pivot column
                 || i == V._ViewColumns.size() - 1 // This is the last column (either count(*) or something else)
-                // || VC._Aggregate == AggregateType.COUNT // This is the final count(*) column, so no comment
                 )
                   continue; // no comment
               }
@@ -877,12 +780,26 @@ public class Sql extends PostgreSQL implements CodeGenSql
         if (V._Formulas == null || V._Formulas.isEmpty() == true)
           return;
 
-        OutFinal.println("DELETE FROM " + V._ParentSchema._Name + ".TildaFormulaValue where \"viewName\"=" + TextUtil.EscapeSingleQuoteForSQL(V._Name) + ";");
-        OutFinal.println("DELETE FROM " + V._ParentSchema._Name + ".TildaFormulaReference where \"viewName\"=" + TextUtil.EscapeSingleQuoteForSQL(V._Name) + ";");
-        OutFinal.println("DELETE FROM " + V._ParentSchema._Name + ".TildaFormula where \"viewName\"=" + TextUtil.EscapeSingleQuoteForSQL(V._Name) + ";");
+//        OutFinal.println("DROP TABLE IF EXISTS " + V._ParentSchema._Name + ".TildaFormulaValue;");
+//        OutFinal.println("DROP TABLE IF EXISTS " + V._ParentSchema._Name + ".TildaFormulaReference;");
+//        OutFinal.println("DROP TABLE IF EXISTS " + V._ParentSchema._Name + ".TildaFormula;");
 
-        String RealizedTable = V._Realize == null ? null : V._Name.substring(0, V._Name.length() - (V._Pivot != null ? "PivotView" : "View").length()) + "Realized";
+
+        OutFinal.println("DO $$");
+        OutFinal.println("DECLARE");
+        OutFinal.println("  k bigint;");
+        OutFinal.println("  ts timestamp;");
+        OutFinal.println("BEGIN");
+        OutFinal.println("  select into k TILDA.getKeyBatchAsMaxExclusive('TILDA.FORMULA', " + V._Formulas.size() + ")-" + V._Formulas.size() + ";");
+        OutFinal.println("  select into ts current_timestamp;");
+        OutFinal.println();
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Formulas
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        String RealizedTable = V._Realize == null ? null : V._ParentSchema._Name + "." + V._Name.substring(0, V._Name.length() - (V._Pivot != null ? "PivotView" : "View").length()) + "Realized";
         int count = -1;
+        int MeasureCount = 0;
         for (Formula F : V._Formulas)
           {
             if (F == null)
@@ -890,25 +807,45 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
             if (++count == 0)
               {
-                OutFinal.println("INSERT INTO " + V._ParentSchema._Name + ".TildaFormula (\"viewName\", \"realizedTableName\", \"name\", \"title\", \"description\", \"formula\", \"html\", \"created\", \"lastUpdated\")");
+                OutFinal.println("INSERT INTO TILDA.Formula (\"refnum\", \"location\", \"location2\", \"name\", \"type\", \"title\", \"description\", \"formula\", \"htmlDoc\", \"created\", \"lastUpdated\", \"deleted\")");
                 OutFinal.print("    VALUES (");
               }
             else
               {
                 OutFinal.print("          ,(");
               }
-            OutFinal.print(TextUtil.EscapeSingleQuoteForSQL(V._Name));
+            if (F._Measure == true)
+              ++MeasureCount;
+            OutFinal.print("k+" + count);
+            OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()));
             OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(RealizedTable));
             OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Name));
+            OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(F.getType()._ShortName));
             OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Title));
             OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(String.join("\n", F._Description)));
             OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(String.join("\n", F._FormulaStrs)));
-            OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL("<B>THIS <U>IS</U> ONLY A TEST <I>HTML</I> FRAGMENT!"));
-            OutFinal.println(", current_timestamp, current_timestamp)");
+            OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL("<B>N/A</B>"));
+            OutFinal.println(", current_timestamp, current_timestamp, null)");
           }
         if (count >= 0)
-          OutFinal.println("   ;");
+          {
+            OutFinal.println("  ON CONFLICT(\"location\", \"name\") DO UPDATE");
+            OutFinal.println("    SET \"location2\" = EXCLUDED.\"location2\"");
+            OutFinal.println("      , \"type\" = EXCLUDED.\"type\"");
+            OutFinal.println("      , \"title\" = EXCLUDED.\"title\"");
+            OutFinal.println("      , \"description\" = EXCLUDED.\"description\"");
+            OutFinal.println("      , \"formula\" = EXCLUDED.\"formula\"");
+            OutFinal.println("      , \"htmlDoc\" = EXCLUDED.\"htmlDoc\"");
+            OutFinal.println("      , \"lastUpdated\" = current_timestamp");
+            OutFinal.println("      , \"deleted\" = null");
+            OutFinal.println("   ;");
+          }
+        OutFinal.println("UPDATE TILDA.Formula set deleted = current_timestamp where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V._Name) + " AND \"lastUpdated\" < ts;");
+        OutFinal.println();
 
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // FormulaResult
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         count = -1;
         for (Formula F : V._Formulas)
           {
@@ -917,86 +854,153 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 {
                   if (++count == 0)
                     {
-                      OutFinal.println("INSERT INTO " + V._ParentSchema._Name + ".TildaFormulaValue (\"viewName\", \"formulaName\", \"value\", \"description\", \"created\", \"lastUpdated\")");
+                      OutFinal.println("INSERT INTO TILDA.FormulaResult (\"formulaRefnum\", \"value\", \"description\", \"created\", \"lastUpdated\", \"deleted\")");
                       OutFinal.print("    VALUES (");
                     }
                   else
                     {
                       OutFinal.print("          ,(");
                     }
-                  OutFinal.print(TextUtil.EscapeSingleQuoteForSQL(V._Name));
-                  OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Name));
+                  OutFinal.print("(select refnum from TILDA.Formula where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()) + " AND \"name\" = " + TextUtil.EscapeSingleQuoteForSQL(F._Name) + ")");
                   OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(Val._Value));
                   OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(Val._Description));
-                  OutFinal.println(", current_timestamp, current_timestamp)");
+                  OutFinal.println(", current_timestamp, current_timestamp, null)");
                 }
           }
         if (count >= 0)
-          OutFinal.println("   ;");
+          {
+            OutFinal.println("  ON CONFLICT(\"formulaRefnum\", \"value\") DO UPDATE");
+            OutFinal.println("    SET \"description\" = EXCLUDED.\"description\"");
+            OutFinal.println("      , \"lastUpdated\" = current_timestamp");
+            OutFinal.println("      , \"deleted\" = null");
+            OutFinal.println("   ;");
+          }
+        OutFinal.println("UPDATE TILDA.FormulaResult");
+        OutFinal.println("   set deleted = current_timestamp");
+        OutFinal.println(" where \"formulaRefnum\" in (select refnum");
+        OutFinal.println("                               from TILDA.Formula");
+        OutFinal.println("                              where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()));
+        OutFinal.println("                                and \"deleted\" is not null");
+        OutFinal.println("                            );");
+        OutFinal.println();
 
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // FormulaDependency
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         count = -1;
         for (Formula F : V._Formulas)
           {
             if (F == null)
               continue;
-            Matcher M = F.getParentView()._ViewColumnsRegEx.matcher(String.join("\n", F._FormulaStrs));
-            Set<String> Names = new HashSet<String>();
-            while (M.find() == true)
-              {
-                String s = M.group(1);
-                if (Names.add(s) == false)
-                  continue;
-                ViewColumn VC = V.getViewColumn(s);
-                if (VC != null)
-                  {
-                    if (++count == 0)
-                      {
-                        OutFinal.println("INSERT INTO " + V._ParentSchema._Name + ".TildaFormulaReference (\"viewName\", \"formulaName\", \"referenceName\", \"referenceType\", \"description\", \"created\", \"lastUpdated\")");
-                        OutFinal.print("    VALUES (");
-                      }
-                    else
-                      {
-                        OutFinal.print("          ,(");
-                      }
-                    OutFinal.print(TextUtil.EscapeSingleQuoteForSQL(V._Name));
-                    OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Name));
-                    OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(VC._Name));
-                    OutFinal.print(", 'CLMN'");
-                    OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(VC._SameAsObj == null && VC._SameAs.equals("_TS.p") == true ? "Time series period" : VC._SameAsObj._Description));
-                    OutFinal.println(", current_timestamp, current_timestamp)");
-                  }
-              }
-            Names.clear();
-            M = F.getParentView()._FormulasRegEx.matcher(String.join("\n", F._FormulaStrs));
-            while (M.find() == true)
-              {
-                String s = M.group(1);
-                if (Names.add(s) == false)
-                  continue;
-                for (Formula F2 : V._Formulas)
-                  if (s.equals(F2._Name) == true)
+            for (Formula F2 : F.getDependencyFormulas())
+              if (F2 != null)
+                {
+                  if (++count == 0)
                     {
-                      if (++count == 0)
-                        {
-                          OutFinal.println("INSERT INTO " + V._ParentSchema._Name + ".TildaFormulaReference (\"viewName\", \"formulaName\", \"referenceName\", \"referenceType\", \"description\", \"created\", \"lastUpdated\")");
-                          OutFinal.print("    VALUES (");
-                        }
-                      else
-                        {
-                          OutFinal.print("          ,(");
-                        }
-                      OutFinal.print(TextUtil.EscapeSingleQuoteForSQL(V._Name));
-                      OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(F._Name));
-                      OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(F2._Name));
-                      OutFinal.print(", 'FRML'");
-                      OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(String.join("\n", F2._Description)));
-                      OutFinal.println(", current_timestamp, current_timestamp)");
-                      break;
+                      OutFinal.println("INSERT INTO TILDA.FormulaDependency(\"formulaRefnum\", \"dependencyRefnum\", \"created\", \"lastUpdated\", \"deleted\")");
+                      OutFinal.print("    VALUES (");
                     }
-              }
+                  else
+                    {
+                      OutFinal.print("          ,(");
+                    }
+                  OutFinal.println(" (select refnum from TILDA.Formula where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()) + " AND \"name\" = " + TextUtil.EscapeSingleQuoteForSQL(F._Name) + ")");
+                  OutFinal.println("            ,(select refnum from TILDA.Formula where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()) + " AND \"name\" = " + TextUtil.EscapeSingleQuoteForSQL(F2._Name) + ")");
+                  OutFinal.println("            ,current_timestamp, current_timestamp, null");
+                  OutFinal.println("           )");
+                }
           }
         if (count >= 0)
-          OutFinal.println("   ;");
+          {
+            OutFinal.println("  ON CONFLICT(\"formulaRefnum\", \"dependencyRefnum\") DO UPDATE");
+            OutFinal.println("    SET \"lastUpdated\" = current_timestamp");
+            OutFinal.println("      , \"deleted\" = null");
+            OutFinal.println("   ;");
+          }
+        OutFinal.println("UPDATE TILDA.FormulaDependency");
+        OutFinal.println("   set deleted = current_timestamp");
+        OutFinal.println(" where \"formulaRefnum\" in (select refnum");
+        OutFinal.println("                               from TILDA.Formula");
+        OutFinal.println("                              where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()));
+        OutFinal.println("                                and \"deleted\" is not null");
+        OutFinal.println("                            );");
+        OutFinal.println();
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Measures
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        OutFinal.println("select into k TILDA.getKeyBatchAsMaxExclusive('TILDA.MEASURE', " + MeasureCount + ")-" + MeasureCount + ";");
+        count = -1;
+        for (Formula F : V._Formulas)
+          if (F != null && F._Measure == true)
+            {
+              if (++count == 0)
+                {
+                  OutFinal.println("INSERT INTO TILDA.Measure (\"refnum\", \"schema\", \"name\", \"created\", \"lastUpdated\", \"deleted\")");
+                  OutFinal.print("    VALUES (");
+                }
+              else
+                {
+                  OutFinal.print("          ,(");
+                }
+              OutFinal.print("k+" + count);
+              OutFinal.print(", "+TextUtil.EscapeSingleQuoteForSQL(V._ParentSchema._Name));
+              OutFinal.print(", "+TextUtil.EscapeSingleQuoteForSQL(F._Title));
+              OutFinal.println(", current_timestamp, current_timestamp, null)");
+            }
+        if (count >= 0)
+          {
+            OutFinal.println("  ON CONFLICT(\"schema\", \"name\") DO UPDATE");
+            OutFinal.println("    SET \"lastUpdated\" = current_timestamp");
+            OutFinal.println("      , \"deleted\" = null");
+            OutFinal.println("  ;");
+          }
+        OutFinal.println();
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Measure formulas
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        count = -1;
+        for (Formula F : V._Formulas)
+          if (F != null && F._Measure == true)
+            {
+              if (++count == 0)
+                {
+                  OutFinal.println("INSERT INTO TILDA.MeasureFormula (\"measureRefnum\", \"formulaRefnum\", \"created\", \"lastUpdated\", \"deleted\")");
+                  OutFinal.print("    VALUES (");
+                }
+              else
+                {
+                  OutFinal.print("          ,(");
+                }
+              OutFinal.println(" (select refnum from TILDA.Measure where \"name\" = " + TextUtil.EscapeSingleQuoteForSQL(F._Title) + " and \"schema\" = " + TextUtil.EscapeSingleQuoteForSQL(V._ParentSchema._Name) + ")");
+              OutFinal.println("            ,(select refnum from TILDA.Formula where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()) + " AND \"name\" = " + TextUtil.EscapeSingleQuoteForSQL(F._Name) + ")");
+              OutFinal.println(", current_timestamp, current_timestamp, null)");
+            }
+        if (count >= 0)
+          {
+            OutFinal.println("  ON CONFLICT(\"measureRefnum\", \"formulaRefnum\") DO UPDATE");
+            OutFinal.println("    SET \"lastUpdated\" = current_timestamp");
+            OutFinal.println("      , \"deleted\" = null");
+            OutFinal.println("  ;");
+          }
+        OutFinal.println();
+        OutFinal.println("DELETE FROM TILDA.MeasureFormula");
+        OutFinal.println(" where \"formulaRefnum\" in (select refnum");
+        OutFinal.println("                               from TILDA.Formula");
+        OutFinal.println("                              where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()));
+        OutFinal.println("                                and \"deleted\" is not null");
+        OutFinal.println("                            );");
+        OutFinal.println();
+        OutFinal.println("UPDATE TILDA.Measure");
+        OutFinal.println("   set deleted = current_timestamp");
+        OutFinal.println(" where \"refnum\" not in (select \"measureRefnum\" from TILDA.MeasureFormula)");
+        OutFinal.println(" ;");
+        OutFinal.println();
+        
+        OutFinal.println("END; $$");
+        OutFinal.println("LANGUAGE PLPGSQL;");
 
       }
 
@@ -1065,7 +1069,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   First = false;
                 ViewRealizeMapping VRM = V._Realize.getMapping(VC.getName());
                 if (VRM == null)
-                  Str.append(/*V._ParentSchema._Name + "." + V._Name + "."+*/"\"" + VC._Name + "\"");
+                  Str.append(/* V._ParentSchema._Name + "." + V._Name + "."+ */"\"" + VC._Name + "\"");
                 else
                   Str.append(VRM.printMapping());
               }
@@ -1093,7 +1097,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   First = false;
                 ViewRealizeMapping VRM = V._Realize.getMapping(F._Name);
                 if (VRM == null)
-                  Str.append(/*V._ParentSchema._Name + "." + V._Name + "."+*/"\"" + F._Name + "\"");
+                  Str.append(/* V._ParentSchema._Name + "." + V._Name + "."+ */"\"" + F._Name + "\"");
                 else
                   Str.append(VRM.printMapping());
               }
@@ -1182,7 +1186,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
       {
         if (I._Db == false)
           Out.print("-- app-level index only -- ");
-        Out.print("CREATE" + (I._Unique == true ? " UNIQUE" : "") + " INDEX " + I._Parent.getBaseName() + "_" + I._Name + " ON " + I._Parent.getShortName() + " (");
+        Out.print("CREATE" + (I._Unique == true ? " UNIQUE" : "") + " INDEX " + I.getName() + " ON " + I._Parent.getShortName() + " (");
         if (I._ColumnObjs.isEmpty() == false)
           PrintColumnList(Out, I._ColumnObjs);
         if (I._OrderByObjs.isEmpty() == false)

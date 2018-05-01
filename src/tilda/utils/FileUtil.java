@@ -28,6 +28,8 @@ import java.io.PrintWriter;
 import java.io.Reader;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Scanner;
+
 import tilda.utils.comparators.FileNameComparator;
 
 public class FileUtil
@@ -144,15 +146,31 @@ public class FileUtil
         return new BufferedReader(new InputStreamReader(In));
       }
 
+    public static String getFileOfResourceContents(String Name)
+    throws IOException
+      {
+        BufferedReader R = getReaderFromFileOrResource(Name);
+        if (R == null)
+          return null;
+        StringBuilder Str = new StringBuilder();
+        String L = R.readLine();
+        while (L != null)
+          {
+            Str.append(L).append("\n");
+            L = R.readLine();
+          }
+        return Str.toString();
+      }
+
     public static String getBasePathFromFileOrResource(String Name)
     throws Exception
       {
         int i1 = Name.lastIndexOf('/');
         int i2 = Name.lastIndexOf('\\');
         if (i1 == -1 && i2 == -1)
-         throw new Exception("Cannot find a path in '" + Name + "'. Looked for '/' and '\\'.");
-        
-        return Name.substring(0, Math.max(i1,  i2)+1);
+          throw new Exception("Cannot find a path in '" + Name + "'. Looked for '/' and '\\'.");
+
+        return Name.substring(0, Math.max(i1, i2) + 1);
       }
 
     public static boolean isResource(String name)
@@ -174,6 +192,20 @@ public class FileUtil
           return new File(resource.getPath());
         
         throw new Exception("Cannot find file/resource '"+name+"'.");
+      }
+    
+    static Scanner _SCANNER = new Scanner(System.in);
+
+    public static String readlnFromStdIn(boolean secure)
+      {
+        if (secure == true && System.console() != null)
+          return new String(System.console().readPassword());
+        return _SCANNER.next();
+      }
+
+    public static String getUserHome()
+      {
+        return System.getProperty("user.home");
       }
 
   }

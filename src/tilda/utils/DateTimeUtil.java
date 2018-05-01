@@ -156,6 +156,24 @@ public class DateTimeUtil
           }
       }
 
+    /**
+     * Simple method to get a Calendar object out of a string and a pattern
+     */
+    public static LocalDate parseDate(String DateStr, String Pattern)
+      {
+        if (TextUtil.isNullOrEmpty(DateStr) == true)
+          return null;
+        try
+          {
+            return LocalDate.parse(DateStr, DateTimeFormatter.ofPattern(Pattern));
+          }
+        catch (DateTimeParseException E)
+          {
+            LOG.warn("Cannot parse "+DateStr+" with pattern "+Pattern+": "+E.getMessage());
+            return null;
+          }
+      }
+    
     public static java.sql.Timestamp parseToSqlTimestamp(String DateTimeStr, String Pattern)
       {
         return new java.sql.Timestamp(parse(DateTimeStr, Pattern).toInstant().toEpochMilli());

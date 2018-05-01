@@ -53,6 +53,12 @@ public class ForeignKey
         if (TextUtil.isNullOrEmpty(_Name) == true)
           return PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a foreign key without a name.");
 
+        if (_Name.equals(TextUtil.SanitizeName(_Name)) == false)
+          return PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining foreign key '"+_Name+"' with a name containing invalid characters (must all be alphanumeric or underscore).");
+
+        if (TextUtil.isJavaIdentifier(_Name) == false)
+          return PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining foreign key '"+_Name+"' with a name that is imcompatible with standard identifier convensions (for example, Java, JavaScript since Foreign Keys have programmatic equivalents in those languages).");
+
         ValidateSourceColumns(PS);
         ValidateDestinationObject(PS);
 

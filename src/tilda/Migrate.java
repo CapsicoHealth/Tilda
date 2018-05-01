@@ -16,30 +16,29 @@
 
 package tilda;
 
-import java.util.Scanner;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.db.ConnectionPool;
+import tilda.utils.AsciiArt;
 
 public class Migrate
   {
     static final Logger    LOG               = LogManager.getLogger(Migrate.class.getName());
 
-    static private boolean _MIGRATION_START_  = false;
-    static private boolean _IS_TESTING_       = false;
+    static private boolean _MIGRATION_START_ = false;
+    static private boolean _IS_TESTING_      = false;
 
     static public boolean isMigrationActive()
       {
         return _MIGRATION_START_;
       }
-    
+
     static public boolean isTesting()
       {
         return _IS_TESTING_;
-      }    
-    
+      }
+
     public static void setIsTesting(boolean isTesting)
       {
         _IS_TESTING_ = isTesting;
@@ -56,36 +55,27 @@ public class Migrate
         LOG.info("##  JARs in the classpath.                                                                       ##");
         LOG.info("###################################################################################################");
         LOG.info("");
-        LOG.info("!!! THIS UTILITY MAY CHANGE DATA IN YOUR DATABASE. MAKE SURE YOU HAVE A BACKUP. !!!");
-        //LOG.info("    ===> "+DBUrl);
-        LOG.info("");
-        LOG.info("Press 'y' followed by enter to continue.");
-        Scanner scanner = null;
         try
           {
-            scanner = new Scanner(System.in);
-            String answer = scanner.next();
-            if (answer.toLowerCase().equals("y") == false)
-              throw new Exception("User asked to exit.");
-            LOG.info("");
-            LOG.info("OK! Starting the migration...");
-            LOG.info("------------------------------------");
-
             _MIGRATION_START_ = true;
             ConnectionPool.autoInit();
           }
-        catch (Exception E)
+        catch (Throwable E)
           {
-            LOG.error("Cannot migrate the database.\n", E);
-          }
-        finally
-          {
-            if (scanner != null)
-              scanner.close();
+            LOG.error("\n"
+            + "          ======================================================================================\n"
+            + AsciiArt.Error("               ")
+            + "\n"
+            + "                                Cannot Automatically Migrate The Database.\n"
+            + "          ======================================================================================\n", E);
+            System.exit(-1);
           }
 
-        LOG.info("");
-        LOG.info("DONE.");
-        LOG.info("");
+        LOG.info("\n"
+        + "          ======================================================================================\n"
+        + AsciiArt.Woohoo("                       ")
+        + "\n"
+        + "               The database was automatically migrated to match the Application's data model.    \n"
+        + "          ======================================================================================");
       }
   }

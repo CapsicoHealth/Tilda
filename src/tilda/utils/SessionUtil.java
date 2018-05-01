@@ -32,7 +32,7 @@ public class SessionUtil
 
     public static enum Attributes
       {
-      USERREFNUM, TENANTUSERREFNUM, FORCE_COMMIT, FORCE_RELOAD_USER;
+        USERREFNUM, TENANTUSERREFNUM, FORCE_COMMIT, FORCE_RELOAD_USER, PASSWORD_RESET_TRIES;
       }
 
 

@@ -2597,6 +2597,7 @@ public abstract class QueryHelper
         else
           _QueryStr.append(" group by ");
         Col.getFullColumnVarForSelect(_C, _QueryStr);
+        _QueryStr.append("\n");
         _Section = S.GROUPBY;
         return this;
       }
@@ -2610,7 +2611,7 @@ public abstract class QueryHelper
           _QueryStr.append(",");
         else
           _QueryStr.append(" group by ");
-        _QueryStr.append("\"").append(clause._Col.getName()).append("\"");
+        _QueryStr.append("\"").append(clause._Col.getName()).append("\"").append("\n");
         _Section = S.GROUPBY;
         return this;
       }
@@ -2632,7 +2633,7 @@ public abstract class QueryHelper
       {
         orderByBase();
         Col.getFullColumnVarForSelect(_C, _QueryStr);
-        _QueryStr.append(Asc == true ? " ASC" : " DESC");
+        _QueryStr.append(Asc == true ? " ASC" : " DESC").append("\n");
         return this;
       }
 
@@ -2640,7 +2641,7 @@ public abstract class QueryHelper
     throws Exception
       {
         orderByBase();
-        _QueryStr.append("count(*)").append(Asc == true ? " ASC" : " DESC");
+        _QueryStr.append("count(*)").append(Asc == true ? " ASC" : " DESC").append("\n");
         return this;
       }
 
@@ -2768,6 +2769,23 @@ public abstract class QueryHelper
         _C.within(_QueryStr, Col, ColStart, durationCount, Type);
         return this;
       }
+    
+    
+    public QueryHelper newLine()
+    throws Exception
+      {
+        return newLine(null);
+      }
+    
+    public QueryHelper newLine(String NextHeader)
+    throws Exception
+      {
+        _QueryStr.append("\n");
+        if (TextUtil.isNullOrEmpty(NextHeader) == false)
+          _QueryStr.append(NextHeader);
+        return this;
+      }
+    
 
 
     public String toString()

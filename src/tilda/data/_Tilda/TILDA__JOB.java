@@ -38,13 +38,11 @@ The generated Java 8/PostgreSQL Tilda data class <B>Data_JOB</B> is mapped to th
 
 It contains the following columns:<BR>
  <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
-   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><!--TH align="left">Column</TH--><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
-
+   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOB-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
-<TD>long&nbsp;&nbsp;</TD>
-<TD>bigint&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -54,8 +52,7 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>2&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOB-name_DIV' class='columns'>name</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD>
-<TD>varchar(50)&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(50)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -65,8 +62,7 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>3&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('JOB-startTimeTZ')" align="right"><B id='JOB-startTimeTZ_DIV' class='columns dotted_underline cursor_pointer'>startTimeTZ</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD>
-<TD>character(5)&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -76,8 +72,7 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>4&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOB-startTime_DIV' class='columns'>startTime</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;&nbsp;</TD>
-<TD>timestamptz&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -87,8 +82,7 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>5&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('JOB-endTimeTZ')" align="right"><B id='JOB-endTimeTZ_DIV' class='columns dotted_underline cursor_pointer'>endTimeTZ</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD>
-<TD>character(5)&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -98,8 +92,7 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>6&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOB-endTime_DIV' class='columns'>endTime</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;&nbsp;</TD>
-<TD>timestamptz&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -109,8 +102,7 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>7&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOB-totalRecords_DIV' class='columns'>totalRecords</B>&nbsp;&nbsp;</TD>
-<TD>long&nbsp;&nbsp;</TD>
-<TD>bigint&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -120,8 +112,7 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>8&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOB-status_DIV' class='columns'>status</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD>
-<TD>character(2)&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(2)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -139,8 +130,7 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>9&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOB-error_DIV' class='columns'>error</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD>
-<TD>varchar(1000)&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(1000)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -150,8 +140,7 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>10&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOB-threadsCount_DIV' class='columns'>threadsCount</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;&nbsp;</TD>
-<TD>integer&nbsp;&nbsp;</TD>
+<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -166,8 +155,7 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>11&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOB-loadMode_DIV' class='columns'>loadMode</B>&nbsp;&nbsp;</TD>
-<TD>char&nbsp;&nbsp;</TD>
-<TD>character&nbsp;&nbsp;</TD>
+<TD>char&nbsp;/&nbsp;character&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -183,8 +171,7 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>12&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOB-connectionId_DIV' class='columns'>connectionId</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD>
-<TD>character(15)&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(15)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -194,8 +181,7 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>13&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOB-zipFile_DIV' class='columns'>zipFile</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD>
-<TD>varchar(1000)&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(1000)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -205,8 +191,7 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>14&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOB-zipFileName_DIV' class='columns'>zipFileName</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD>
-<TD>varchar(100)&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(100)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -216,8 +201,7 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>15&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOB-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;&nbsp;</TD>
-<TD>timestamptz&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -232,8 +216,7 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>16&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOB-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;&nbsp;</TD>
-<TD>timestamptz&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -248,8 +231,7 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>17&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOB-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;&nbsp;</TD>
-<TD>timestamptz&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -562,7 +544,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Nov 27 2017, 17:20:17IST
+ @generated May 1 2018, 10:22:53IST
 */
 public abstract class TILDA__JOB implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
@@ -578,14 +560,18 @@ public abstract class TILDA__JOB implements tilda.interfaces.WriterObject, tilda
    private long     __Nulls2      = 0L;
    private long     __Nulls3      = 0L;
    private long     __Nulls4      = 0L;
+   private long     __Nulls5      = 0L;
+   private long     __Nulls6      = 0L;
    private long     __Changes1    = 0L;
    private long     __Changes2    = 0L;
    private long     __Changes3    = 0L;
    private long     __Changes4    = 0L;
+   private long     __Changes5    = 0L;
+   private long     __Changes6    = 0L;
    private boolean  __NewlyCreated= false;
    private int      __LookupId;
 
-   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L || __Changes3 != 0L || __Changes4 != 0L; }
+   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L || __Changes3 != 0L || __Changes4 != 0L || __Changes5 != 0L || __Changes6 != 0L; }
    public  boolean isNewlyCreated() { return __NewlyCreated; }
 
    void initForCreate()
@@ -3102,7 +3088,7 @@ This is the setter for:<BR>
 
 </TABLE>
 */
-    void setLastUpdated(ZonedDateTime v) throws Exception
+   public final void setLastUpdated(ZonedDateTime v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
@@ -3140,7 +3126,7 @@ This is the NOW setter for:<BR>
 
 </TABLE>
 */
-    final void setLastUpdatedNow() throws Exception
+   public final void setLastUpdatedNow() throws Exception
     {
       setLastUpdated(DateTimeUtil.NOW_PLACEHOLDER_ZDT);
     }
@@ -3169,7 +3155,7 @@ This is the UNDEFINED setter for:<BR>
 
 </TABLE>
 */
-    final void setLastUpdatedUndefined() throws Exception
+   public final void setLastUpdatedUndefined() throws Exception
     {
       setLastUpdated(DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT);
     }
@@ -3198,7 +3184,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 
 </TABLE>
 */
-    final void setLastUpdated(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
+   public final void setLastUpdated(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
       setLastUpdated(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
     }
@@ -3312,7 +3298,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setDeleted(ZonedDateTime v) throws Exception
+   public final void setDeleted(ZonedDateTime v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
@@ -3345,7 +3331,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setNullDeleted()
+   public final void setNullDeleted()
      {
        long T0 = System.nanoTime();
        if ((TILDA__JOB_Factory.COLS.DELETED._Mask1 & __Nulls1) != 0L)
@@ -3373,7 +3359,7 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    final void setDeletedNow() throws Exception
+   public final void setDeletedNow() throws Exception
     {
       setDeleted(DateTimeUtil.NOW_PLACEHOLDER_ZDT);
     }
@@ -3395,7 +3381,7 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    final void setDeletedUndefined() throws Exception
+   public final void setDeletedUndefined() throws Exception
     {
       setDeleted(DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT);
     }
@@ -3417,7 +3403,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    final void setDeleted(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
+   public final void setDeleted(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
       setDeleted(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
     }
@@ -3744,7 +3730,7 @@ This is the hasChanged for:<BR>
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
         }
 
-       __Changes1= __Changes2= __Changes3= __Changes4= __Nulls1= __Nulls2= __Nulls3= __Nulls4= 0L;
+       __Changes1= __Changes2= __Changes3= __Changes4= __Changes5= __Changes6= __Nulls1= __Nulls2= __Nulls3= __Nulls4= __Nulls5= __Nulls6= 0L;
        return true;
      }
 
@@ -3871,10 +3857,7 @@ This is the hasChanged for:<BR>
                              _deleted      = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
      __LookupId = 0;
      __Init     = InitMode.READ;
-     __Changes1  = 0L;
-     __Changes2  = 0L;
-     __Changes3  = 0L;
-     __Changes4  = 0L;
+     __Changes1 = __Changes2 = __Changes3 = __Changes4 = __Changes5 = __Changes6 = 0L;
      return AfterRead(C);
    }
 
@@ -3894,17 +3877,25 @@ This is the hasChanged for:<BR>
        __Nulls3 |= DTField._Mask3;
       else if (DTField._MaskId == 4)
        __Nulls4 |= DTField._Mask4;
+      else if (DTField._MaskId == 5)
+       __Nulls5 |= DTField._Mask5;
+      else if (DTField._MaskId == 6)
+       __Nulls6 |= DTField._Mask6;
       else
        throw new Error("RUNTIME TILDA ERROR: Invalid MaskId="+DTField._MaskId+" for column "+DTFieldName+". Values should be between 1 and 4.");
      boolean DTNull = DTField._MaskId == 1 ? (__Nulls1 & DTField._Mask1) != 0L
                     : DTField._MaskId == 2 ? (__Nulls2 & DTField._Mask2) != 0L
                     : DTField._MaskId == 3 ? (__Nulls3 & DTField._Mask3) != 0L
-                                           : (__Nulls4 & DTField._Mask4) != 0L
+                    : DTField._MaskId == 4 ? (__Nulls4 & DTField._Mask4) != 0L
+                    : DTField._MaskId == 5 ? (__Nulls5 & DTField._Mask5) != 0L
+                                           : (__Nulls6 & DTField._Mask6) != 0L
                                            ;
      boolean TZNull = TZField._MaskId == 1 ? (__Nulls1 & TZField._Mask1) != 0L
                     : TZField._MaskId == 2 ? (__Nulls2 & TZField._Mask2) != 0L
                     : TZField._MaskId == 3 ? (__Nulls3 & TZField._Mask3) != 0L
-                                           : (__Nulls4 & TZField._Mask4) != 0L
+                    : TZField._MaskId == 4 ? (__Nulls4 & TZField._Mask4) != 0L
+                    : TZField._MaskId == 5 ? (__Nulls5 & TZField._Mask5) != 0L
+                                           : (__Nulls6 & TZField._Mask6) != 0L
                                            ;
      if (DTNull == false && TZNull == true)
       throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");

@@ -1,0 +1,165 @@
+{
+  "tilda.data#false#measureformula": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 1210,
+      "y": 480
+    },
+    "size": {
+      "width": 168,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "d89eb7ab-2586-4416-b959-c9a0e0542bdf",
+    "z": 12,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "MeasureFormula"
+      },
+      "id": {
+        "0": "m",
+        "1": "e",
+        "2": "a",
+        "3": "s",
+        "4": "u",
+        "5": "r",
+        "6": "e",
+        "7": "f",
+        "8": "o",
+        "9": "r",
+        "10": "m",
+        "11": "u",
+        "12": "l",
+        "13": "a"
+      }
+    }
+  },
+  "tilda.data#false#maintenance": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 460,
+      "y": 250
+    },
+    "size": {
+      "width": 132,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "ac2799c2-b297-45ef-a7b4-568966e47c54",
+    "z": 9,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "Maintenance"
+      },
+      "id": {
+        "0": "m",
+        "1": "a",
+        "2": "i",
+        "3": "n",
+        "4": "t",
+        "5": "e",
+        "6": "n",
+        "7": "a",
+        "8": "n",
+        "9": "c",
+        "10": "e"
+      }
+    }
+  },
+  "tilda.data#false#formuladependency": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 880,
+      "y": 200
+    },
+    "size": {
+      "width": 204,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "b43bd7be-76de-4195-b334-53d53f0a6b44",
+    "z": 13,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "FormulaDependency"
+      },
+      "id": {
+        "0": "f",
+        "1": "o",
+        "2": "r",
+        "3": "m",
+        "4": "u",
+        "5": "l",
+        "6": "a",
+        "7": "d",
+        "8": "e",
+        "9": "p",
+        "10": "e",
+        "11": "n",
+        "12": "d",
+        "13": "e",
+        "14": "n",
+        "15": "c",
+        "16": "y"
+      }
+    }
+  },
+  "tilda.data#false#formularesult": {
+    "type": "basic.Rect",
+    "position": {
+      "x": 760,
+      "y": 450
+    },
+    "size": {
+      "width": 156,
+      "height": 30
+    },
+    "angle": 0,
+    "id": "57ca68ac-3305-4b15-afbf-5872512fc633",
+    "z": 14,
+    "attrs": {
+      "rect": {
+        "fill": "rgb(46,117,182)",
+        "stroke": "rgb(65,113,156)",
+        "stroke-width": 2
+      },
+      "text": {
+        "fill": "white",
+        "text": "FormulaResult"
+      },
+      "id": {
+        "0": "f",
+        "1": "o",
+        "2": "r",
+        "3": "m",
+        "4": "u",
+        "5": "l",
+        "6": "a",
+        "7": "r",
+        "8": "e",
+        "9": "s",
+        "10": "u",
+        "11": "l",
+        "12": "t"
+      }
+    }
+  }
+}

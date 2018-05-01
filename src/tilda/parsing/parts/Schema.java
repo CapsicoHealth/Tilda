@@ -18,8 +18,10 @@ package tilda.parsing.parts;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -41,6 +43,7 @@ public class Schema
     /*@formatter:off*/
     @SerializedName("package"      ) public String            _Package;
     @SerializedName("documentation") public Documentation     _Documentation = new Documentation();
+    @SerializedName("extraDDL"     ) public ExtraDDL          _ExtraDDL      = new ExtraDDL();
     @SerializedName("dependencies" ) public String[]          _Dependencies;
     @SerializedName("interfaces"   ) public List<Interface  > _Interfaces  = new ArrayList<Interface  >();
     @SerializedName("enumerations" ) public List<Enumeration> _Enumerations= new ArrayList<Enumeration>();
@@ -55,25 +58,25 @@ public class Schema
     transient public String        _ResourceNameShort;
     transient public String        _ProjectRoot;
     transient public List<Schema>  _DependencySchemas = new ArrayList<Schema>();
-    transient public Boolean       _Validated = null;
-    
+    transient public Boolean       _Validated         = null;
+
     protected static final Pattern P                  = Pattern.compile("/?_tilda\\.(\\w+)\\.json");
 
     public void setOrigin(String ResourceName)
-      throws Exception
+    throws Exception
       {
         _ResourceName = ResourceName;
-        ResourceName = "/"+ResourceName; 
-        
-        String Pack = "/"+_Package.replaceAll("\\.", "/")+"/";
+        ResourceName = "/" + ResourceName;
+
+        String Pack = "/" + _Package.replaceAll("\\.", "/") + "/";
         ResourceName = ResourceName.replaceAll(File.separatorChar == '\\' ? "\\\\" : "\\" + File.separatorChar, "/");
         int i = ResourceName.indexOf(Pack);
         if (i == -1)
           throw new Exception("The Schema being loaded from resource '" + ResourceName + "' does not match its package declaration '" + _Package + "'.");
 
-        _ProjectRoot = ResourceName.substring(i==0?0:1,  i);
-        _ResourceNameShort = ResourceName.substring(i+1);
-        String res = ResourceName.substring(i+Pack.length()-1);
+        _ProjectRoot = ResourceName.substring(i == 0 ? 0 : 1, i);
+        _ResourceNameShort = ResourceName.substring(i + 1);
+        String res = ResourceName.substring(i + Pack.length() - 1);
         Matcher M = P.matcher(res);
         while (M.matches() == true)
           {
@@ -106,10 +109,10 @@ public class Schema
         for (Object O : _Objects)
           if (O != null && O._Name != null && O._Name.equalsIgnoreCase(Name) == true)
             return O;
-        LOG.debug("Object "+Name+" cannot be found on Schema "+getFullName()+" out of the current Object list ["+getObjectList()+"].");
+        LOG.debug("Object " + Name + " cannot be found on Schema " + getFullName() + " out of the current Object list [" + getObjectList() + "].");
         return null;
       }
-    
+
     public String getObjectList()
       {
         StringBuilder Str = new StringBuilder();
@@ -121,31 +124,31 @@ public class Schema
           }
         return Str.toString();
       }
-    
+
 
     public Object getObject(String SchemaName, String ObjectName)
       {
         if (_Name.equalsIgnoreCase(SchemaName) == true)
-         return getObject(ObjectName);
+          return getObject(ObjectName);
         return getObject(_DependencySchemas, SchemaName, ObjectName);
       }
-    
+
     public static Object getObject(List<Schema> SchemaList, String SchemaName, String ObjectName)
       {
         for (Schema S : SchemaList)
           {
             if (S._Name.equalsIgnoreCase(SchemaName) == true)
-             return S.getObject(ObjectName);
+              return S.getObject(ObjectName);
           }
         return null;
       }
-    
-    
+
+
     public boolean isDefinedInOrder(Object FirstObj, Object SecondObj)
       {
         int i = _Objects.indexOf(FirstObj);
         int j = _Objects.indexOf(SecondObj);
-        return i != -1 && j != -1 && i <= j; 
+        return i != -1 && j != -1 && i <= j;
       }
 
     public View getView(String Name)
@@ -155,15 +158,15 @@ public class Schema
             return V;
         return null;
       }
-    
+
     public View getSourceView(Object O)
       {
         if (_Name.equals(O._ParentSchema._Name) == true)
-         return getView(O._Name);
+          return getView(O._Name);
         for (Schema S : _DependencySchemas)
           {
             if (S._Name.equals(O._ParentSchema._Name) == true)
-             return S.getView(O._Name);
+              return S.getView(O._Name);
           }
         return null;
       }
@@ -206,8 +209,9 @@ public class Schema
                 PS.AddError("The Object '" + O._Name + "' conflicts with another Thing already defined with the same name in Schema '" + getFullName() + "'.");
               O.Validate(PS, this);
             }
+
         boolean hasFormulas = false;
-        boolean hasDataMarts = false;
+        Map<String, Formula> Measures = new HashMap<String, Formula>();
         for (View V : _Views)
           if (V != null)
             {
@@ -215,38 +219,48 @@ public class Schema
                 PS.AddError("The View '" + V._Name + "' conflicts with another Thing already defined with the same name in Schema '" + getFullName() + "'.");
               V.Validate(PS, this);
               if (V._Formulas != null && V._Formulas.isEmpty() == false)
-               hasFormulas = true;
-              if (V._Realize != null)
-               hasDataMarts = true;
+                {
+                  hasFormulas = true;
+                  for (Formula F : V._Formulas)
+                    if (F != null && F._Measure == true)
+                      {
+                        Formula F2 = Measures.put(F._Title, F);
+                        if (F2 != null)
+                         PS.AddError("Schema '" + getFullName() + "' is defining measure '" + F._Title + "' multiple times: '" + F.getShortName()+ "' and '" + F2.getShortName()+ "'.");
+                      }
+                }
             }
+
         if (hasFormulas == true)
          CreateFormulaDocumentationTables(PS);
         
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
       }
-
+    
+    
     private void CreateFormulaDocumentationTables(ParserSession PS)
       {
         Object O = new Object();
+        O._DBOnly = true;
         O._Name = "TildaFormula";
-        O._Description = "Generated table to hold documentation meta-data about formulas defined in this schema";
+        O._Description = "DEPRECATED: DO NOT USE! Generated table to hold documentation meta-data about formulas defined in this schema";
         O._LCStr = ObjectLifecycle.READONLY.name();
         O._OCC = true;
        
-        Column C = new Column("viewName", ColumnType.STRING.name(), 64, false, null, true, null, "The name of the view this formula is defined in");
+        Column C = new Column("viewName", ColumnType.STRING.name(), 64, false, null, true, null, "DEPRECATED: DO NOT USE! The name of the view this formula is defined in");
         O._Columns.add(C);
-        C = new Column("realizedTableName", ColumnType.STRING.name(), 64, true, null, true, null, "The name of the realized table, if appropriate");
+        C = new Column("realizedTableName", ColumnType.STRING.name(), 64, true, null, true, null, "DEPRECATED: DO NOT USE! The name of the realized table, if appropriate");
         O._Columns.add(C);
-        C = new Column("name", ColumnType.STRING.name(), 64, false, null, true, null, "The name of the formula/column");
+        C = new Column("name", ColumnType.STRING.name(), 64, false, null, true, null, "DEPRECATED: DO NOT USE! The name of the formula/column");
         O._Columns.add(C);
-        C = new Column("title", ColumnType.STRING.name(), 128, false, null, true, null, "The title of the formula/column");
+        C = new Column("title", ColumnType.STRING.name(), 128, false, null, true, null, "DEPRECATED: DO NOT USE! The title of the formula/column");
         O._Columns.add(C);
-        C = new Column("description", ColumnType.STRING.name(), 8192, false, null, true, null, "The description of the formula/column");
+        C = new Column("description", ColumnType.STRING.name(), 8192, false, null, true, null, "DEPRECATED: DO NOT USE! The description of the formula/column");
         O._Columns.add(C);
-        C = new Column("formula", ColumnType.STRING.name(), 8192, false, null, true, null, "The formula");
+        C = new Column("formula", ColumnType.STRING.name(), 8192, false, null, true, null, "DEPRECATED: DO NOT USE! The formula");
         O._Columns.add(C);
-        C = new Column("html", ColumnType.STRING.name(), 16384, false, null, true, null, "A pre-rendered html fragment with the full documentation for this formula");
+        C = new Column("html", ColumnType.STRING.name(), 16384, false, null, true, null, "DEPRECATED: DO NOT USE! A pre-rendered html fragment with the full documentation for this formula");
         O._Columns.add(C);
 
         O._PrimaryKey = new PrimaryKey();
@@ -271,18 +285,19 @@ public class Schema
         
 
         O = new Object();
+        O._DBOnly = true;
         O._Name = "TildaFormulaValue";
-        O._Description = "Generated table to hold documentation meta-data about the values for the formulas defined in this schema";
+        O._Description = "DEPRECATED: DO NOT USE! Generated table to hold documentation meta-data about the values for the formulas defined in this schema";
         O._LCStr = ObjectLifecycle.READONLY.name();
         O._OCC = true;
        
-        C = new Column("viewName", ColumnType.STRING.name(), 64, false, null, true, null, "The name of the view this formula value is defined in");
+        C = new Column("viewName", ColumnType.STRING.name(), 64, false, null, true, null, "DEPRECATED: DO NOT USE! The name of the view this formula value is defined in");
         O._Columns.add(C);
-        C = new Column("formulaName", ColumnType.STRING.name(), 64, false, null, true, null, "The name of the formula/column this value is defined for");
+        C = new Column("formulaName", ColumnType.STRING.name(), 64, false, null, true, null, "DEPRECATED: DO NOT USE! The name of the formula/column this value is defined for");
         O._Columns.add(C);
-        C = new Column("value", ColumnType.STRING.name(), 64, false, null, true, null, "The value");
+        C = new Column("value", ColumnType.STRING.name(), 64, false, null, true, null, "DEPRECATED: DO NOT USE! The value");
         O._Columns.add(C);
-        C = new Column("description", ColumnType.STRING.name(), 4096, false, null, true, null, "The description of the value");
+        C = new Column("description", ColumnType.STRING.name(), 4096, false, null, true, null, "DEPRECATED: DO NOT USE! The description of the value");
         O._Columns.add(C);
         
         O._PrimaryKey = new PrimaryKey();
@@ -312,18 +327,19 @@ public class Schema
         O.Validate(PS, this);
 
         O = new Object();
+        O._DBOnly = true;
         O._Name = "TildaFormulaReference";
-        O._Description = "Generated table to hold documentation meta-data about the columns and other formulas referenced by a formula";
+        O._Description = "DEPRECATED: DO NOT USE! Generated table to hold documentation meta-data about the columns and other formulas referenced by a formula";
         O._LCStr = ObjectLifecycle.READONLY.name();
         O._OCC = true;
        
-        C = new Column("viewName", ColumnType.STRING.name(), 64, false, null, true, null, "The name of the view this formula references is defined in");
+        C = new Column("viewName", ColumnType.STRING.name(), 64, false, null, true, null, "DEPRECATED: DO NOT USE! The name of the view this formula references is defined in");
         O._Columns.add(C);
-        C = new Column("formulaName", ColumnType.STRING.name(), 64, false, null, true, null, "The name of the formula/column this value is defined for");
+        C = new Column("formulaName", ColumnType.STRING.name(), 64, false, null, true, null, "DEPRECATED: DO NOT USE! The name of the formula/column this value is defined for");
         O._Columns.add(C);
-        C = new Column("referenceName", ColumnType.STRING.name(), 64, false, null, true, null, "The name of the column or other formula refence");
+        C = new Column("referenceName", ColumnType.STRING.name(), 64, false, null, true, null, "DEPRECATED: DO NOT USE! The name of the column or other formula refence");
         O._Columns.add(C);
-        C = new Column("referenceType", ColumnType.STRING.name(), 4, false, null, true, null, "The type of the refence");
+        C = new Column("referenceType", ColumnType.STRING.name(), 4, false, null, true, null, "DEPRECATED: DO NOT USE! The type of the refence");
         C._Values = new ColumnValue[2];
         C._Values[0] = new ColumnValue();
         C._Values[0]._Name = "Column";
@@ -334,7 +350,7 @@ public class Schema
         C._Values[1]._Value = "FRML";
         C._Values[1]._Description = "A referenced Formula";
         O._Columns.add(C);
-        C = new Column("description", ColumnType.STRING.name(), 4096, false, null, true, null, "The description of the reference");
+        C = new Column("description", ColumnType.STRING.name(), 4096, false, null, true, null, "DEPRECATED: DO NOT USE! The description of the reference");
         O._Columns.add(C);
         
         O._PrimaryKey = new PrimaryKey();
@@ -363,23 +379,25 @@ public class Schema
         _Objects.add(O);
         O.Validate(PS, this);
       }
-    
-    public Documentation getDocumentation(){
-    	if(_Documentation == null){
-    		_Documentation = new Documentation();
-    	}
-    	return _Documentation;
-    }
+
+    public Documentation getDocumentation()
+      {
+        if (_Documentation == null)
+          {
+            _Documentation = new Documentation();
+          }
+        return _Documentation;
+      }
 
     public static int findByResourceName(List<Schema> L, String ResourceName)
       {
         for (int i = 0; i < L.size(); ++i)
           if (L.get(i)._ResourceName.equals(ResourceName) == true)
-           return i;
+            return i;
         return -1;
       }
 
-    
+
     public static void ReorderTildaListWithDependencies(List<Schema> L)
       {
         // LOG.info("Starting with");
@@ -421,8 +439,8 @@ public class Schema
               }
           }
 
-//        LOG.info("Reordered Schemas based on dependencies");
-//        PrintSchemaList(L);
+        // LOG.info("Reordered Schemas based on dependencies");
+        // PrintSchemaList(L);
 
         // L.clear();
         // L.addAll(NewL);
@@ -437,24 +455,29 @@ public class Schema
         return;
       }
 
-    private static void PrintSchemaList(List<Schema> L)
+    public static void PrintSchemaList(List<Schema> L, boolean recurse)
       {
         for (Schema X : L)
-          LOG.info("   " + X._Name);
+          {
+            LOG.info("   " + X._Name);
+            if (recurse == true)
+             for (Object O : X._Objects)
+              LOG.info("       " + O._Name +": "+TextUtil.Print(O.getColumnNames()));
+          }
       }
-    
+
     public static String getCircularPath(Schema S, List<Schema> L)
       {
         StringBuilder Str = new StringBuilder();
         Str.append(S._Name);
         if (TextUtil.isNullOrEmpty(S._Dependencies) == false)
-         for (String s : S._Dependencies)
-           {
-             int j = Schema.findByResourceName(L, s);
-             Schema D = L.get(j);
-             if (getSubCircularPath(S, D, L, Str) == false)
-              break;
-           }
+          for (String s : S._Dependencies)
+            {
+              int j = Schema.findByResourceName(L, s);
+              Schema D = L.get(j);
+              if (getSubCircularPath(S, D, L, Str) == false)
+                break;
+            }
         return Str.append(" :)").toString();
       }
 
@@ -462,24 +485,24 @@ public class Schema
       {
         Str.append(" --> ").append(S._Name);
         if (Root._Name.equals(S._Name) == true)
-         return false;
+          return false;
 
         if (TextUtil.isNullOrEmpty(S._Dependencies) == false)
-         for (String s : S._Dependencies)
-           {
-             int j = Schema.findByResourceName(L, s);
-             Schema D = L.get(j);
-             if (getSubCircularPath(Root, D, L, Str) == false)
-              return false;
-           }
+          for (String s : S._Dependencies)
+            {
+              int j = Schema.findByResourceName(L, s);
+              Schema D = L.get(j);
+              if (getSubCircularPath(Root, D, L, Str) == false)
+                return false;
+            }
         return true;
       }
 
     public boolean hasDataMart()
       {
         for (View V : _Views)
-         if (V._Realize != null)
-          return true;
+          if (V._Realize != null)
+            return true;
         return false;
       }
 

@@ -60,11 +60,15 @@ public class TildaData implements CodeGenTildaData
         Out.println("package " + O._ParentSchema._Package + "." + Helper.TILDA_GEN_PACKAGE + ";");
         Out.println();
         for (Column C : O._Columns)
-          if (C != null && (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATE))
+          {
+            if (C == null)
+              continue;
+          if (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATE)
             {
               Out.println("import java.time.*;");
               break;
             }
+          }
         for (Column C : O._Columns)
           if (C != null && C.isCollection() == true)
             {
@@ -121,14 +125,18 @@ public class TildaData implements CodeGenTildaData
         Out.println("   private long     __Nulls2      = 0L;");
         Out.println("   private long     __Nulls3      = 0L;");
         Out.println("   private long     __Nulls4      = 0L;");
+        Out.println("   private long     __Nulls5      = 0L;");
+        Out.println("   private long     __Nulls6      = 0L;");
         Out.println("   private long     __Changes1    = 0L;");
         Out.println("   private long     __Changes2    = 0L;");
         Out.println("   private long     __Changes3    = 0L;");
         Out.println("   private long     __Changes4    = 0L;");
+        Out.println("   private long     __Changes5    = 0L;");
+        Out.println("   private long     __Changes6    = 0L;");
         Out.println("   private boolean  __NewlyCreated= false;");
         Out.println("   private int      __LookupId;");
         Out.println();
-        Out.println("   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L || __Changes3 != 0L || __Changes4 != 0L; }");
+        Out.println("   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L || __Changes3 != 0L || __Changes4 != 0L || __Changes5 != 0L || __Changes6 != 0L; }");
         Out.println("   public  boolean isNewlyCreated() { return __NewlyCreated; }");
         Out.println();
         Out.println("   void initForCreate()");
@@ -291,6 +299,14 @@ public class TildaData implements CodeGenTildaData
                         else
                           Out.print("DateTimeUtil.toCalendarNoThrow(" + TextUtil.EscapeDoubleQuoteWithSlash(V._Value) + ")");
                         break;
+                      case DATE:
+                        if (V._Value.equalsIgnoreCase("NOW") == true)
+                          Out.print("DateTimeUtil.NOW_PLACEHOLDER_D");
+                        else if (V._Value.equalsIgnoreCase("UNDEFINED") == true)
+                          Out.print("DateTimeUtil.UNDEFINED_PLACEHOLDER_D");
+                        else
+                          Out.print("DateTimeUtil.parseDate(" + TextUtil.EscapeDoubleQuoteWithSlash(V._Value) + ", \"yyyy-MM-dd\")");
+                        break;
                       case STRING:
                       case JSON:
                         Out.print(TextUtil.EscapeDoubleQuoteWithSlash(V._Value));
@@ -367,6 +383,7 @@ public class TildaData implements CodeGenTildaData
                 Out.println("      { return _" + V._ParentColumn.getName() + " == " + ValueNameVar + "; }");
                 break;
               case DATETIME:
+              case DATE:
                 if (V._Value.equalsIgnoreCase("NOW") == true)
                   Out.println("      { return DateTimeUtil.isNowPlaceholder(_" + V._ParentColumn.getName() + "); }");
                 else if (V._Value.equalsIgnoreCase("UNDEFINED") == true)
@@ -519,7 +536,7 @@ public class TildaData implements CodeGenTildaData
             else if (C.isSet() == true)
               Out.println("   " + Visibility + " void addTo" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldTypeBase(C) + " v) throws Exception");
             else
-              Out.println("   " + Visibility + " void set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldType(C) + " v) throws Exception");
+              Out.println("   " + Visibility + (C.isOCCDeleted() || C.isOCCLastUpdated() ? " final":"") + " void set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldType(C) + " v) throws Exception");
             Out.println("     {");
             Out.println("       long T0 = System.nanoTime();");
             if (C.isCollection() == true)
@@ -595,7 +612,7 @@ public class TildaData implements CodeGenTildaData
                       if (C._Protect == ProtectionType.ABSOLUTE)
                         Out.println("          v = HTMLFilter.CleanAbsolute(v);");
                       else if (C._Protect == ProtectionType.SMART)
-                        Out.println("          v = HTMLFilter.CleanSmart(v);");
+                        Out.println("          v = HTMLFilter.CleanSmart("+TextUtil.EscapeDoubleQuoteWithSlash(C.getFullName())+",v);");
                     }
                   break;
                 case BINARY:
@@ -778,7 +795,7 @@ public class TildaData implements CodeGenTildaData
         String Mask = Helper.getRuntimeMask(C) + BitFieldId;
         String Visibility = Helper.getVisibility(C, true);
 
-        Out.println("   " + Visibility + " void setNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()");
+        Out.println("   " + Visibility + (C.isOCCDeleted() || C.isOCCLastUpdated() ? " final":"") + " void setNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()");
         Out.println("     {");
         Out.println("       long T0 = System.nanoTime();");
         if (C._Mode != ColumnMode.CALCULATED)
@@ -1088,7 +1105,7 @@ public class TildaData implements CodeGenTildaData
         Out.println();
         Helper.setSavedFields(Out, O);
         Out.println();
-        Out.println("       __Changes1= __Changes2= __Changes3= __Changes4= __Nulls1= __Nulls2= __Nulls3= __Nulls4= 0L;");
+        Out.println("       __Changes1= __Changes2= __Changes3= __Changes4= __Changes5= __Changes6= __Nulls1= __Nulls2= __Nulls3= __Nulls4= __Nulls5= __Nulls6= 0L;");
         Out.println("       return true;");
         Out.println("     }");
         Out.println();
@@ -1320,17 +1337,14 @@ public class TildaData implements CodeGenTildaData
                   Out.println("                             if (_" + C.getName() +" != null && _" + C.getName() +".size() == 1 && _" + C.getName() +".get(0) == null)");
                   Out.println("                               {");
                   Out.println("                                 _" + C.getName() +" = new "+(C.isSet() == true ? "HashSet<" : "ArrayList<")+"String>();");
-                  Out.println("                                 __Nulls1 |= "+Mask+";");
+                  Out.println("                                 __Nulls"+BitFieldId+" |= "+Mask+";");
                   Out.println("                               }");
 
                 }
             }
         Out.println("     __LookupId = 0;");
         Out.println("     __Init     = InitMode.READ;");
-        Out.println("     __Changes1  = 0L;");
-        Out.println("     __Changes2  = 0L;");
-        Out.println("     __Changes3  = 0L;");
-        Out.println("     __Changes4  = 0L;");
+        Out.println("     __Changes1 = __Changes2 = __Changes3 = __Changes4 = __Changes5 = __Changes6 = 0L;");
         Out.println("     return AfterRead(C);");
         Out.println("   }");
         for (Column C : O._Columns)
@@ -1353,17 +1367,25 @@ public class TildaData implements CodeGenTildaData
               Out.println("       __Nulls3 |= DTField._Mask3;");
               Out.println("      else if (DTField._MaskId == 4)");
               Out.println("       __Nulls4 |= DTField._Mask4;");
+              Out.println("      else if (DTField._MaskId == 5)");
+              Out.println("       __Nulls5 |= DTField._Mask5;");
+              Out.println("      else if (DTField._MaskId == 6)");
+              Out.println("       __Nulls6 |= DTField._Mask6;");
               Out.println("      else");
               Out.println("       throw new Error(\"RUNTIME TILDA ERROR: Invalid MaskId=\"+DTField._MaskId+\" for column \"+DTFieldName+\". Values should be between 1 and 4.\");");
               Out.println("     boolean DTNull = DTField._MaskId == 1 ? (__Nulls1 & DTField._Mask1) != 0L");
               Out.println("                    : DTField._MaskId == 2 ? (__Nulls2 & DTField._Mask2) != 0L");
               Out.println("                    : DTField._MaskId == 3 ? (__Nulls3 & DTField._Mask3) != 0L");
-              Out.println("                                           : (__Nulls4 & DTField._Mask4) != 0L");
+              Out.println("                    : DTField._MaskId == 4 ? (__Nulls4 & DTField._Mask4) != 0L");
+              Out.println("                    : DTField._MaskId == 5 ? (__Nulls5 & DTField._Mask5) != 0L");
+              Out.println("                                           : (__Nulls6 & DTField._Mask6) != 0L");
               Out.println("                                           ;");
               Out.println("     boolean TZNull = TZField._MaskId == 1 ? (__Nulls1 & TZField._Mask1) != 0L");
               Out.println("                    : TZField._MaskId == 2 ? (__Nulls2 & TZField._Mask2) != 0L");
               Out.println("                    : TZField._MaskId == 3 ? (__Nulls3 & TZField._Mask3) != 0L");
-              Out.println("                                           : (__Nulls4 & TZField._Mask4) != 0L");
+              Out.println("                    : TZField._MaskId == 4 ? (__Nulls4 & TZField._Mask4) != 0L");
+              Out.println("                    : TZField._MaskId == 5 ? (__Nulls5 & TZField._Mask5) != 0L");
+              Out.println("                                           : (__Nulls6 & TZField._Mask6) != 0L");
               Out.println("                                           ;");
               Out.println("     if (DTNull == false && TZNull == true)");
               Out.println("      throw new Exception(\"The field \"+DTFieldName+\" is not null while its associated timezone field '\"+DTFieldName+\"TZ' is null. A TZ is mandatory for not null timestamps.\");");
