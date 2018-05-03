@@ -103,22 +103,8 @@ public class Docs
         + "   margin: 0px;"
         + "   padding: 0px;"
         + " }\n"
-        + ".tables::before {"
-        + "   display: block;"
-        + "   content: \" \";"
-        + "   margin-top: -200px;"
-        + "   height: 200px;"
-        + "   visibility: hidden;"
-        + "   pointer-events: none;"
-        + " }\n"
-        + ".columns::before {"
-        + "   display: block;"
-        + "   content: \" \";"
-        + "   margin-top: -100px;"
-        + "   height: 100px;"
-        + "   background-color: #000;"
-        + "   visibility: hidden;"
-        + "   pointer-events: none;"
+        + ".sticky + .content {"
+        + "   padding-top: 96px;"
         + " }\n"
         + "</STYLE>\n"
         + "<SCRIPT>\n"
@@ -134,7 +120,7 @@ public class Docs
         + "   var pos = h[0].offsetTop;\n"
         + "   if (pos != 0)\n"
         + "    h[1] = pos;\n"
-        + "   if (window.pageYOffset >= h[1]+100)\n"
+        + "   if (window.pageYOffset >= h[1])\n"
         + "    {\n"
         + "      h[0].classList.add(\"sticky\");\n"
         + "      var n = document.getElementById('__SEARCH_BOX__');\n"
@@ -173,12 +159,11 @@ public class Docs
         View view = O._ParentSchema.getView(O._Name);
         String ObjType = view == null ? "Table" : "View";
 
-        Out.println("<DIV>");
         Out.println("<TABLE id=\"" + O._Name + "_DIV\" class=\"tables\">");
+        Out.println("<SCRIPT>registerStickyHeader(\""+O._Name + "_DIV\");</SCRIPT>");
         Out.println("<TR valign=\"top\"><TD><H2>" + O._Name + "&nbsp;&nbsp;&nbsp;&nbsp;<SUP style=\"font-size: 70%;\"><A href=\"#\">top</A></SUP></H2></TD><TD align=\"right\"></TD></TR>");
         Out.println("</TABLE>");
-        Out.println("<SCRIPT>registerStickyHeader(\""+O._Name + "_DIV\");</SCRIPT>");
-
+        Out.println("<DIV class=\"content\">");
         Out.println("The " + ObjType + " " + O.getShortName() + " is:<UL>");
         if (view == null || view._DBOnly == false)
           Out.println("<LI>Mapped to the generated " + Helper.getCodeGenLanguage() + "/" + G.getSql().getName() + " Tilda data class <B>Data_" + O._Name + "</B>.");

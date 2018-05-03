@@ -294,8 +294,8 @@ public class DocGen
         writer.println("<input type=\"text\" oninput=\"eventListener()\", id=\"search_input\" placeholder=\"Search Tables/Views, Columns, Formulae\" autocomplete=\"off\">");
         writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener()\", id=\"regcols_check\" checked>&nbsp;Regular Columns</label>");
         writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener()\", id=\"formulas_check\" checked>&nbsp;Formulas</label>");
-        writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener()\", id=\"realcols_check\" checked>&nbsp;Realized Columns</label>");
-        writer.println("<table class=\"search_results\" border=\"0px\" cellpadding=\"3px\" cellspacing=\"0px\"></table>");
+        writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener()\", id=\"realcols_check\" checked>&nbsp;Realized Columns</label></TD></TR>");
+        writer.println("<TR><TD></TD><TD><table class=\"search_results\" width=\"100%\" border=\"0px\" cellpadding=\"3px\" cellspacing=\"0px\"></table>");
         writer.println("</TD></TR></TABLE></DIV>");
 //        writer.println("<SCRIPT>registerStickyHeader(\"__SEARCH_BOX__\");</SCRIPT>");
 
@@ -311,8 +311,13 @@ public class DocGen
         writer.println("  .search_results { ");
         writer.println("	padding-left: 2%; ");
         writer.println("    background-color: #FFF; ");
-        writer.println("    border: 4px ridge #7f7; ");
+        writer.println("    border: 2px ridge #7f7; ");
         writer.println("    display: none; ");
+        writer.println("    height: 200px; ");
+        writer.println("    overflow-y: auto; /* Enable scroll if needed */ ");
+        writer.println("    overflow-x: hidden;");
+        writer.println("    -webkit-border-radius: 5px;");
+        writer.println("    border-radius: 5px;");
         writer.println("   }");
         writer.println("  .blink_div { ");
         writer.println("    animation: blink-animation 0.75s steps(5, start) infinite; ");
