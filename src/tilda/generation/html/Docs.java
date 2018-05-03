@@ -99,6 +99,10 @@ public class Docs
         + "   color: #000;"
         + "   width: 100%;"
         + " }\n"
+        + ".sticky H2 {"
+        + "   margin: 0px;"
+        + "   padding: 0px;"
+        + " }\n"
         + ".tables::before {"
         + "   display: block;"
         + "   content: \" \";"
@@ -131,9 +135,26 @@ public class Docs
         + "   if (pos != 0)\n"
         + "    h[1] = pos;\n"
         + "   if (window.pageYOffset >= h[1]+100)\n"
-        + "    h[0].classList.add(\"sticky\");\n"
+        + "    {\n"
+        + "      h[0].classList.add(\"sticky\");\n"
+        + "      var n = document.getElementById('__SEARCH_BOX__');\n"
+        + "      if (n != null && n.parentNode != null && h[0] != null && h[0] != n)\n"
+        + "       {\n"
+        + "          n.classList.remove(\"sticky\");\n"
+        + "          n.parentNode.removeChild(n);"
+        + "          h[0].rows[0].cells[1].appendChild(n);"
+        + "       }\n"
+        + "    }\n"
         + "   else\n"
-        + "    h[0].classList.remove(\"sticky\");\n"
+        + "    {\n"
+        + "      h[0].classList.remove(\"sticky\");\n"
+        + "    }\n"
+        + "   if (i == 0 && window.pageYOffset < h[1])\n"
+        + "    {\n"
+        + "      var n = document.getElementById('__SEARCH_BOX__');\n"
+        + "      n.parentNode.removeChild(n);\n"
+        + "      document.getElementById('__SEARCH_BOX_BASE__').appendChild(n);\n"
+        + "    }\n"
         + " }\n"
         + "}\n"
         + "window.onscroll = checkSticky;\n"
@@ -153,9 +174,9 @@ public class Docs
         String ObjType = view == null ? "Table" : "View";
 
         Out.println("<DIV>");
-        Out.println("<DIV id=\"" + O._Name + "_DIV\" class=\"tables\">");
-        Out.println("<H2>" + O._Name + "&nbsp;&nbsp;&nbsp;&nbsp;<SUP style=\"font-size: 60%;\"><A href=\"#\">top</A></SUP></H2>");
-        Out.println("</DIV>");
+        Out.println("<TABLE id=\"" + O._Name + "_DIV\" class=\"tables\">");
+        Out.println("<TR valign=\"top\"><TD><H2>" + O._Name + "&nbsp;&nbsp;&nbsp;&nbsp;<SUP style=\"font-size: 70%;\"><A href=\"#\">top</A></SUP></H2></TD><TD align=\"right\"></TD></TR>");
+        Out.println("</TABLE>");
         Out.println("<SCRIPT>registerStickyHeader(\""+O._Name + "_DIV\");</SCRIPT>");
 
         Out.println("The " + ObjType + " " + O.getShortName() + " is:<UL>");

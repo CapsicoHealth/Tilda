@@ -290,22 +290,29 @@ public class DocGen
       {
 
         writer.println("<BR><BR>");
-        writer.println("<H1>SEARCH</H1>");
+        writer.println("<DIV id=\"__SEARCH_BOX_BASE__\"><TABLE id=\"__SEARCH_BOX__\" border=\"0px\" cellspacing=\"0px\" cellpadding=\"0px\"><TR valign=\"top\"><TD width=\"1px\" style=\"font-size: 125%; font-weight:bold;\">SEARCH</TD><TD>");
         writer.println("<input type=\"text\" oninput=\"eventListener()\", id=\"search_input\" placeholder=\"Search Tables/Views, Columns, Formulae\" autocomplete=\"off\">");
-        writer.println("<br><br>");
+        writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener()\", id=\"regcols_check\" checked>&nbsp;Regular Columns</label>");
+        writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener()\", id=\"formulas_check\" checked>&nbsp;Formulas</label>");
+        writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener()\", id=\"realcols_check\" checked>&nbsp;Realized Columns</label>");
         writer.println("<table class=\"search_results\" border=\"0px\" cellpadding=\"3px\" cellspacing=\"0px\"></table>");
+        writer.println("</TD></TR></TABLE></DIV>");
+//        writer.println("<SCRIPT>registerStickyHeader(\"__SEARCH_BOX__\");</SCRIPT>");
 
         writer.println("<style>");
         writer.println("  #search_input {");
-        writer.println("    padding:10px;");
-        writer.println("    width: 98%;");
-        writer.println("    margin-left: 2%;");
+        writer.println("    padding:2px;");
+        writer.println("    width: 250px;");
+        writer.println("    margin-left: 5px;");
         writer.println("    border:2px solid #CCC;");
         writer.println("    -webkit-border-radius: 5px;");
         writer.println("    border-radius: 5px;");
         writer.println("   }");
         writer.println("  .search_results { ");
         writer.println("	padding-left: 2%; ");
+        writer.println("    background-color: #FFF; ");
+        writer.println("    border: 4px ridge #7f7; ");
+        writer.println("    display: none; ");
         writer.println("   }");
         writer.println("  .blink_div { ");
         writer.println("    animation: blink-animation 0.75s steps(5, start) infinite; ");
@@ -373,6 +380,7 @@ public class DocGen
         writer.println("      searchResultsDiv = document.getElementsByClassName(\"search_results\")[0]; ");
         writer.println("    } ");
         writer.println("    var searchInputText = searchInput.value; ");
+        writer.println("    searchResultsDiv.style.display = searchInputText == '' || searchInputText == null ? 'none' : 'block';");
         writer.println("    searchResultsDiv.innerHTML = \"\"; ");
 
         writer.println("    if(searchInputText.length < 1) return; ");
