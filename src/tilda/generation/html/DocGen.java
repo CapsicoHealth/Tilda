@@ -16,7 +16,6 @@ import tilda.generation.graphviz.GraphvizUtil;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
-import tilda.parsing.parts.View;
 import tilda.utils.FileUtil;
 
 public class DocGen
@@ -262,6 +261,7 @@ public class DocGen
         writer.println("    for(var i = 0; i < modals.length; i++) {");
         writer.println("      modals[i].style.display = 'none'; ");
         writer.println("    } ");
+        writer.println("    document.getElementById('__SEARCH_BOX_RESULTS__').style.display = 'none';");
         writer.println("    document.documentElement.style.overflow = \"auto\"; ");
         writer.println("  } ");
         writer.println("  var onModalShowClicked = function(id) {");
@@ -291,14 +291,14 @@ public class DocGen
 
         writer.println("<BR><BR>");
         writer.println("<DIV id=\"__SEARCH_BOX_BASE__\"><TABLE id=\"__SEARCH_BOX__\" border=\"0px\" cellspacing=\"0px\" cellpadding=\"0px\"><TR valign=\"top\"><TD width=\"1px\" style=\"font-size: 125%; font-weight:bold;\">SEARCH</TD><TD>");
-        writer.println("<input type=\"text\" oninput=\"eventListener()\", id=\"search_input\" placeholder=\"Search Tables/Views, Columns, Formulae\" autocomplete=\"off\">");
+        writer.println("<input type=\"text\" onfocus=\"showSearchResults(true);eventListener()\" oninput=\"eventListener()\", id=\"search_input\" placeholder=\"Search Tables/Views, Columns, Formulae\" autocomplete=\"off\">");
         writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener()\", id=\"regcols_check\" checked>&nbsp;Regular Columns</label>");
         writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener()\", id=\"formulas_check\" checked>&nbsp;Formulas</label>");
         writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener()\", id=\"realcols_check\" checked>&nbsp;Realized Columns</label></TD></TR>");
-        writer.println("<TR><TD></TD><TD><table class=\"search_results\" width=\"100%\" border=\"0px\" cellpadding=\"3px\" cellspacing=\"0px\"></table>");
+        writer.println("<TR><TD colspan=\"2\"><table id=\"__SEARCH_BOX_RESULTS__\" class=\"search_results\" border=\"0px\" cellspacing=\"0px\"></table>");
         writer.println("</TD></TR></TABLE></DIV>");
 //        writer.println("<SCRIPT>registerStickyHeader(\"__SEARCH_BOX__\");</SCRIPT>");
-
+//hideIfEsc(event, '__SEARCH_BOX_RESULTS__');
         writer.println("<style>");
         writer.println("  #search_input {");
         writer.println("    padding:2px;");
@@ -309,16 +309,40 @@ public class DocGen
         writer.println("    border-radius: 5px;");
         writer.println("   }");
         writer.println("  .search_results { ");
-        writer.println("	padding-left: 2%; ");
-        writer.println("    background-color: #FFF; ");
-        writer.println("    border: 2px ridge #7f7; ");
-        writer.println("    display: none; ");
-        writer.println("    height: 200px; ");
-        writer.println("    overflow-y: auto; /* Enable scroll if needed */ ");
-        writer.println("    overflow-x: hidden;");
-        writer.println("    -webkit-border-radius: 5px;");
-        writer.println("    border-radius: 5px;");
+        writer.println("     background-color: #FFF;");
+        writer.println("     border: 2px ridge #F09819; ");
+        writer.println("     display: none; ");
+        writer.println("     height: 200px; ");
+        writer.println("     position: absolute;");
+        writer.println("     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);");
+        writer.println("     z-index: 1;");
+        writer.println("     -webkit-border-radius: 5px;");
+        writer.println("     border-radius: 5px;");
+        writer.println("     overflow-y: auto; /* Enable scroll if needed */ ");
+        writer.println("     overflow-x: hidden;");
         writer.println("   }");
+        writer.println("  .search_results TH {");
+        writer.println("     background-color: #FFC837;");
+        writer.println("     font-weight: bold;");
+        writer.println("     border-bottom: 2px #666 solid;");
+        writer.println("     padding: 0px;");
+        writer.println("     font-weight: bold;");
+        writer.println("   }\n");
+        writer.println("  .search_results A {");
+        writer.println("     color: #000;");
+        writer.println("   }\n");
+        writer.println("  .search_results TR:nth-child(odd) TD {");
+        writer.println("     background-color: #fff6d6;");
+        writer.println("   }\n");
+//        writer.println("  .search_results TR:nth-child(odd) TD:nth-child(2) DIV:nth-child(even) {");
+//        writer.println("     width: 100%;");
+//        writer.println("   }\n");
+        writer.println("  .search_results TR:nth-child(even) TD {");
+        writer.println("     background-color: #FFF;");
+        writer.println("   }\n");
+        writer.println("  .search_results TR TD {");
+        writer.println("     padding-right: 10px;");
+        writer.println("   }\n");
         writer.println("  .blink_div { ");
         writer.println("    animation: blink-animation 0.75s steps(5, start) infinite; ");
         writer.println("    color: red; ");
@@ -328,26 +352,9 @@ public class DocGen
         writer.println("      visibility: hidden; ");
         writer.println("    } ");
         writer.println("  } ");
-        writer.println("  .search_results b { ");
-        writer.println("    cursor: pointer; ");
-        writer.println("  } ");
-        writer.println("   .inner-table td{");
-        writer.println("     min-width: 300px;");
-        writer.println("   }");
         writer.println("   input[type=text]:focus {");
         writer.println("     border-color:#DFECF8;");
         writer.println("   } ");
-        writer.println("   a:link    {  ");
-        writer.println("     font-weight:      bold;");
-        writer.println("     color:            black;");
-        writer.println("   } ");
-        writer.println("   a:visited {");
-        writer.println("     font-weight:      bold;");
-        writer.println("   }");
-        writer.println("  .border_right {");
-        writer.println("	border-right: 2px solid #000;");
-        writer.println("  }");
-
         writer.println("</style>");
 
 
@@ -366,71 +373,59 @@ public class DocGen
         writer.println("  }, false); ");
 
         writer.println("  var openDiv = function(divId) {");
-        writer.println("    var targetDiv = document.getElementById(divId); ");
-        writer.println("    if (targetDiv != undefined || targetDiv != null) { ");
+//        writer.println("    var targetDiv = document.getElementById(divId); ");
+//        writer.println("    if (targetDiv != null) { ");
         writer.println("      window.location = \"#\" + divId; ");
-        writer.println("      var existingValue = targetDiv.getAttribute(\"class\"); ");
-        writer.println("      targetDiv.setAttribute(\"class\", existingValue + \" blink_div\"); ");
-        writer.println("      window.setTimeout (function() {  ");
-        writer.println("        targetDiv.setAttribute(\"class\", existingValue);  ");
-        writer.println("      }, 3000); ");
-        writer.println("    } ");
+//        writer.println("      targetDiv.classList.add(\"blink_div\"); ");
+//        writer.println("      window.setTimeout (function() {  ");
+//        writer.println("        targetDiv.classList.remove(\"blink_div\");  ");
+//        writer.println("      }, 3000); ");
+//        writer.println("    } ");
+//        writer.println("    var e = document.getElementById('__SEARCH_BOX_RESULTS__');");
+//        writer.println("    var f = function( event ) { e.style.display='none'; e.removeEventListener('mouseout',f);};");
+//        writer.println("    e.addEventListener('mouseout', f);");
         writer.println("  } ");
+        
+        writer.println("  function showSearchResults(show) {");
+        writer.println("    document.getElementById('__SEARCH_BOX_RESULTS__').style.display = show ? 'inline' : 'none';");
+        writer.println("  }");
 
         writer.println("  var eventListener = function(event) { ");
         writer.println("    if ( searchInput == null || searchInput == undefined ) { ");
-        writer.println("      searchInput = document.getElementById(\"search_input\"); ");
+        writer.println("      searchInput = document.getElementById('search_input'); ");
         writer.println("    } ");
         writer.println("    if ( searchResultsDiv == null || searchResultsDiv == undefined ) { ");
-        writer.println("      searchResultsDiv = document.getElementsByClassName(\"search_results\")[0]; ");
+        writer.println("      searchResultsDiv = document.getElementById('__SEARCH_BOX_RESULTS__'); ");
         writer.println("    } ");
         writer.println("    var searchInputText = searchInput.value; ");
-        writer.println("    searchResultsDiv.style.display = searchInputText == '' || searchInputText == null ? 'none' : 'block';");
-        writer.println("    searchResultsDiv.innerHTML = \"\"; ");
+        writer.println("    showSearchResults(searchInputText != null && searchInputText != '');");
 
-        writer.println("    if(searchInputText.length < 1) return; ");
+//        writer.println("    if(searchInputText.length >= 0) {");
 
         writer.println("    var filteredResults = getFilteredResults(searchInputText); ");
         writer.println("    filteredResults = sortFilteredResults(filteredResults); ");
 
-        writer.println("    var tempElement; ");
-        writer.println("    var tempElementBody; ");
-        writer.println("    var count = 0; ");
-
         writer.println("    // Append Header ");
-        writer.println("    tempElement = document.createElement(\"tr\"); ");
+        writer.println("    var tempElementBody = \"\"; ");
         writer.println("    if (Object.keys(filteredResults).length > 0) { ");
-        writer.println("      tempElement.innerHTML = \"<th class='border_right' align='left'>Table/View</th><th align='left'>Column/Formula</th>\"; ");
+        writer.println("      tempElementBody+= \"<TR><th align='left'>&nbsp;Table/View</th><th align='left'>Field</th><TH>&nbsp;&nbsp;&nbsp;<A href=\\\"javascript:showSearchResults(false);\\\">X</A>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TH></TR>\"; ");
         writer.println("    } else { ");
-        writer.println("      tempElement.innerHTML = \"<td>No</td><td>Results</td><td>Found</td>\" ");
+        writer.println("      tempElementBody+= \"<TR><td colspan=\\\"2\\\">No Results Found</td></TR>\";");
         writer.println("    } ");
-        writer.println("    searchResultsDiv.appendChild(tempElement) ");
 
         writer.println("    for (key in filteredResults) { ");
         writer.println("      value = filteredResults[key]; ");
-        writer.println("      tempElement = document.createElement(\"tr\") ");
-        writer.println("      tempElement.setAttribute(\"valign\", \"top\"); ");
-        writer.println("      if (count%2==0) ");
-        writer.println("        tempElement.setAttribute(\"bgcolor\",\"#D2FFDA\"); ");
         writer.println("      // Reset Temp Variable ");
-        writer.println("      tempElementBody = \"\"; ");
         writer.println("      // Add Table/View ");
-        writer.println("      tempElementBody += \"<td class='border_right'><table><tr><td><u>\" ");
-        writer.println("      tempElementBody += \"<b onclick=openDiv('\"+key+\"_DIV')>\"+key+\"</b>\" ");
-        writer.println("      tempElementBody += \"</u></td></tr></table></td>\" ");
+        writer.println("      tempElementBody += \"<TR valign=\\\"top\\\"><td width=\\\"1px\\\">&nbsp;<A href=\\\"javascript:openDiv('\"+key+\"_CNT')\\\">\"+key+\"</A></TD>\";");
         writer.println("      // Add Columns/Formulae (if Any) ");
-        writer.println("      tempElementBody += \"<td><table class='inner-table' align='top'><tr>\" ");
         writer.println("      for(var i = 0; i < value.length; i++) { ");
-        writer.println("        if (i > 0 && i%3==0) tempElementBody += \"</tr><tr>\" ");
-        writer.println("          tempElementBody += \"<td><u>\" ");
-        writer.println("          tempElementBody += \"<b onclick=openDiv('\"+key+\"-\"+value[i]+\"_DIV')>\"+value[i]+\"</b>\" ");
-        writer.println("          tempElementBody += \"</u></td>\" ");
+        writer.println("          if (i!=0) tempElementBody += \"<TR><TD></TD>\";");
+        writer.println("          tempElementBody += \"<TD><A href=\\\"javascript:openDiv('\"+key+\"-\"+value[i]+\"_DIV')\\\">\"+value[i]+\"</A></TD><TD>&nbsp;</TD></TR>\"; ");
         writer.println("      } ");
-        writer.println("      tempElementBody += \"</tr></table></td>\" ");
-        writer.println("      tempElement.innerHTML = tempElementBody; ");
-        writer.println("      searchResultsDiv.appendChild(tempElement); ");
-        writer.println("      count++; ");
+//        writer.println("     } ");
         writer.println("    } ");
+        writer.println("   searchResultsDiv.innerHTML = tempElementBody; ");
         writer.println("  } ");
 
         writer.println("  // Helper Methods ");
@@ -493,6 +488,7 @@ public class DocGen
         writer.println("    } ");
         writer.println("    return destination; ");
         writer.println("  } ");
+        
         writer.println("</script> ");
       }
 

@@ -91,11 +91,16 @@ public class Docs
         + "UL {"
         + "   margin-top: 0px;"
         + " }\n"
+        + ".BackToDetails {"
+        + "   display: none;"
+        + " }\n"
         + ".sticky {"
         + "   position: fixed;"
         + "   top: 0;"
         + "   left: 0;"
-        + "   background-color: #df598b;"
+        + "   background: #F09819;"
+        + "   background: -webkit-linear-gradient(to top, #F09819, #FFC837);"
+        + "   background: linear-gradient(to top, #F09819, #FFC837);"
         + "   color: #000;"
         + "   width: 100%;"
         + " }\n"
@@ -105,6 +110,9 @@ public class Docs
         + " }\n"
         + ".sticky + .content {"
         + "   padding-top: 96px;"
+        + " }\n"
+        + ".sticky .BackToDetails {"
+        + "   display: inline;"
         + " }\n"
         + "</STYLE>\n"
         + "<SCRIPT>\n"
@@ -161,9 +169,9 @@ public class Docs
 
         Out.println("<TABLE id=\"" + O._Name + "_DIV\" class=\"tables\">");
         Out.println("<SCRIPT>registerStickyHeader(\""+O._Name + "_DIV\");</SCRIPT>");
-        Out.println("<TR valign=\"top\"><TD><H2>" + O._Name + "&nbsp;&nbsp;&nbsp;&nbsp;<SUP style=\"font-size: 70%;\"><A href=\"#\">top</A></SUP></H2></TD><TD align=\"right\"></TD></TR>");
+        Out.println("<TR valign=\"top\"><TD><H2>" + O._Name + "&nbsp;&nbsp;&nbsp;&nbsp;<SUP style=\"font-size: 70%;\"><SPAN class=\"BackToDetails\"><A href=\"#" + O._Name + "_CNT\">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href=\"#\">top</A></SUP></H2></TD><TD align=\"right\"></TD></TR>");
         Out.println("</TABLE>");
-        Out.println("<DIV class=\"content\">");
+        Out.println("<DIV id=\"" + O._Name + "_CNT\" class=\"content\">");
         Out.println("The " + ObjType + " " + O.getShortName() + " is:<UL>");
         if (view == null || view._DBOnly == false)
           Out.println("<LI>Mapped to the generated " + Helper.getCodeGenLanguage() + "/" + G.getSql().getName() + " Tilda data class <B>Data_" + O._Name + "</B>.");
