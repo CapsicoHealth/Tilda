@@ -321,6 +321,9 @@ public class DocGen
         writer.println("     overflow-y: auto; /* Enable scroll if needed */ ");
         writer.println("     overflow-x: hidden;");
         writer.println("   }");
+        writer.println("  .search_results .scrollLock { ");
+        writer.println("     overflow: hidden;");
+        writer.println("   }");
         writer.println("  .search_results TH {");
         writer.println("     background-color: #FFC837;");
         writer.println("     font-weight: bold;");
@@ -375,7 +378,9 @@ public class DocGen
         writer.println("  var openDiv = function(divId) {");
 //        writer.println("    var targetDiv = document.getElementById(divId); ");
 //        writer.println("    if (targetDiv != null) { ");
+        writer.println("      freezeSearchResults(true);");
         writer.println("      window.location = \"#\" + divId; ");
+        writer.println("      setTimeout(function() { freezeSearchResults(false);}, 50); ");
 //        writer.println("      targetDiv.classList.add(\"blink_div\"); ");
 //        writer.println("      window.setTimeout (function() {  ");
 //        writer.println("        targetDiv.classList.remove(\"blink_div\");  ");
@@ -388,6 +393,11 @@ public class DocGen
         
         writer.println("  function showSearchResults(show) {");
         writer.println("    document.getElementById('__SEARCH_BOX_RESULTS__').style.display = show ? 'inline' : 'none';");
+        writer.println("  }");
+        writer.println("  var SearchScrollTop = null;");
+        writer.println("  function freezeSearchResults(freeze) {");
+        writer.println("    var e = document.getElementById('__SEARCH_BOX_RESULTS__');");
+        writer.println("    if (freeze == true) SearchScrollTop = e.scrollTop; else e.scrollTop = SearchScrollTop;");
         writer.println("  }");
 
         writer.println("  var eventListener = function(event) { ");
