@@ -72,7 +72,7 @@ It contains the following columns:<BR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>4&nbsp;&nbsp;</TD>
 <TD align="right"><B id='JOBMESSAGE-message_DIV' class='columns'>message</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;varchar(1000)&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(2000)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -270,7 +270,7 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated May 1 2018, 10:22:53IST
+ @generated May 3 2018, 13:22:05IST
 */
 public abstract class TILDA__JOBMESSAGE implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject, tilda.interfaces.JSONable
  {
@@ -592,9 +592,9 @@ This is the hasChanged for:<BR>
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBMESSAGE.message of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.message of type varchar(1000)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.message of type varchar(2000)</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>1000</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>2000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Message</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
@@ -612,9 +612,9 @@ This is the definition for:<BR>
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBMESSAGE.message of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.message of type varchar(1000)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.message of type varchar(2000)</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>1000</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>2000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Message</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
@@ -633,9 +633,9 @@ This is the getter for:<BR>
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBMESSAGE.message of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.message of type varchar(1000)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.message of type varchar(2000)</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>1000</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>2000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Message</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
@@ -648,8 +648,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.JOBMESSAGE.message to null: it's not nullable.");
-       else if (v.length() > 1000)
-        throw new Exception("Cannot set tilda.data.TILDA.JOBMESSAGE.message: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 1000.");
+       else if (v.length() > 2000)
+        throw new Exception("Cannot set tilda.data.TILDA.JOBMESSAGE.message: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 2000.");
        else if (v.equals(_message) == false)
         {
           __Changes1 |= TILDA__JOBMESSAGE_Factory.COLS.MESSAGE._Mask1;
@@ -667,9 +667,9 @@ This is the setter for:<BR>
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBMESSAGE.message of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.message of type varchar(1000)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.message of type varchar(2000)</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>1000</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>2000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Message</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>

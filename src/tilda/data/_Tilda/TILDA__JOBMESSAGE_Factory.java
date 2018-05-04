@@ -93,9 +93,9 @@ This is the column definition for:<BR>
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBMESSAGE.message of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.message of type varchar(1000)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.message of type varchar(2000)</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>1000</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>2000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Message</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
@@ -317,7 +317,7 @@ This is the column definition for:<BR>
  current object to the destination. 
  @param jobRefnum     Job Foreign key
  @param jobFileRefnum JobFile Foreign key
- @param message       (max size 1000) Message
+ @param message       (max size 2000) Message
 */
    static public tilda.data.JobMessage_Data Create(long jobRefnum, long jobFileRefnum, String message) throws Exception
      {

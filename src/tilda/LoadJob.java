@@ -84,8 +84,7 @@ public class LoadJob
                 jobFile.setFileProcessEndTimeNow();
                 jobFile.Write(statusCon);
                 statusCon.commit();
-              }
-            moveFileToProcessedFolder(zipFile, processedPath);
+              }            
           }
         catch(Throwable T)
           {
@@ -106,6 +105,7 @@ public class LoadJob
 //                    if(job != null)
 //                      {
 //                        job.setError(T.getMessage());
+//                        job.setStatusDone();
 //                        job.Write(statusCon);
 //                      }
                     statusCon.commit();
@@ -119,16 +119,21 @@ public class LoadJob
         finally
           {
             closeDBConnection(statusCon);
+            moveFileToProcessedFolder(jobRefnum, zipFile, processedPath);
           }
         
       }
 
-    private static void moveFileToProcessedFolder(File zipFile, String processedPath)
+    private static void moveFileToProcessedFolder(long jobRefnum, File zipFile, String processedPath)
       {
         try
           {
-            if (zipFile != null && zipFile.exists() && zipFile.isFile())
+            if (zipFile != null && zipFile.exists() && zipFile.isFile()) {
+              String newName = zipFile.getParentFile().getAbsolutePath() + File.separator + jobRefnum + "_" + zipFile.getName();
+              zipFile.renameTo(new File(newName));
+              zipFile = new File(newName);
               FileUtils.moveFileToDirectory(zipFile, new File(processedPath), true);
+            }
           }
         catch (Exception e)
           {

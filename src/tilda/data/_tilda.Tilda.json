@@ -215,7 +215,7 @@
       "columns":[
       	{ "name":"jobRefnum"                            , "sameas": "Job.refnum"     , "nullable": false,                  "description":"Job Foreign key" },
         { "name":"jobFileRefnum"                        , "sameas": "JobFile.refnum" , "nullable": false,                  "description":"JobFile Foreign key" },               
-        { "name":"message"                              , "type":"STRING"            , "nullable": false,  "size":   1000, "description":"Message" },
+        { "name":"message"                              , "type":"STRING"            , "nullable": false,  "size":   2000, "description":"Message" },
         { "name":"isError"                              , "type":"BOOLEAN"                                               , "description":"Boolean flag to identify message type -- error or success" }
        ],
       "queries": [

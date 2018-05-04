@@ -281,7 +281,7 @@ create table if not exists TILDA.JOBMESSAGE -- Job Messages
  (  "refnum"         bigint         not null   -- The primary key for this record
   , "jobRefnum"      bigint         not null   -- Job Foreign key
   , "jobFileRefnum"  bigint         not null   -- JobFile Foreign key
-  , "message"        varchar(1000)  not null   -- Message
+  , "message"        varchar(2000)  not null   -- Message
   , "isError"        boolean                   -- Boolean flag to identify message type -- error or success
   , "created"        timestamptz    not null   -- The timestamp for when the record was created.
   , "lastUpdated"    timestamptz    not null   -- The timestamp for when the record was last updated.

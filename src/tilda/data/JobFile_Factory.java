@@ -34,6 +34,7 @@ public class JobFile_Factory extends tilda.data._Tilda.TILDA__JOBFILE_Factory
      {
        SelectQuery Q = newWhereQuery(C);
        Q.equals(COLS.JOBREFNUM, JobRefnum);
+       Q.orderBy(COLS.REFNUM, true);
        return runSelect(C, Q, Start, Size);
      }
    

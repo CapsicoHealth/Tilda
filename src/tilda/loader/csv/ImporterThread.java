@@ -85,6 +85,7 @@ public class ImporterThread implements Callable<List<Results>>
                 catch(Exception E)
                   {
                     LOG.error("Exception while copying Exception message to JobMessage", E);
+                    throw E;
                   }
               }
             result = null;
