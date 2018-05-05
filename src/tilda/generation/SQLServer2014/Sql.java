@@ -461,9 +461,9 @@ public class Sql extends MSSQL implements CodeGenSql
     @Override
     public void genKeysManagement(PrintWriter Out, Object O)
       {
-        Out.println("delete from [TILDA].[KEY] where \"name\" = '" + O._ParentSchema._Name + "." + O._Name + "';");
-        Out.println("insert into [TILDA].[KEY] (\"refnum\", \"name\", \"max\", \"count\", \"created\", \"lastUpdated\") values ((select COALESCE(max(\"refnum\"),0)+1 from [TILDA].[KEY]), '"
-        + O._ParentSchema._Name + "." + O._Name + "',(select COALESCE(max(\"refnum\"),0)+1 from [" + O._ParentSchema._Name + "].[" + O._Name + "]"
+        Out.println("delete from [TILDA].[Key] where \"name\" = '" + O._ParentSchema._Name + "." + O._Name.toUpperCase() + "';");
+        Out.println("insert into [TILDA].[Key] (\"refnum\", \"name\", \"max\", \"count\", \"created\", \"lastUpdated\") values ((select COALESCE(max(\"refnum\"),0)+1 from [TILDA].[Key]), '"
+        + O._ParentSchema._Name + "." + O._Name.toUpperCase() + "',(select COALESCE(max(\"refnum\"),0)+1 from [" + O._ParentSchema._Name + "].[" + O._Name + "]"
         + "), " + O._PrimaryKey._KeyBatch + ", current_timestamp, current_timestamp);");
       }
 

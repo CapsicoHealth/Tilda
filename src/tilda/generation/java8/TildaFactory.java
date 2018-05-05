@@ -259,7 +259,7 @@ public class TildaFactory implements CodeGenTildaFactory
             Out.println();
             Out.println("       // Auto PK");
             Column PK = O._PrimaryKey._ColumnObjs.get(0);
-            Out.println("       Obj.set" + TextUtil.CapitalizeFirstCharacter(PK.getName()) + "(tilda.db.KeysManager.getKey(" + TextUtil.EscapeDoubleQuoteWithSlash(O.getShortName()) + "));");
+            Out.println("       Obj.set" + TextUtil.CapitalizeFirstCharacter(PK.getName()) + "(tilda.db.KeysManager.getKey(" + TextUtil.EscapeDoubleQuoteWithSlash(O.getShortName().toUpperCase()) + "));");
           }
         if (CreateColumns != null && CreateColumns.isEmpty() == false)
           {

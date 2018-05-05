@@ -37,6 +37,6 @@ public class TableKeyCreate extends MigrationAction
 
     public String getDescription()
       {
-        return "Create/update TILDA.KEY entries for table "+_O.getFullName();
+        return "Create/update TILDA.Key entries for table "+_O.getFullName();
       }
   }

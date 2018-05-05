@@ -137,7 +137,7 @@ public abstract class Base
         _OriginalName = _Name;
 //        _Name = _Name.toUpperCase();
 
-        _BaseClassName = "TILDA__" + _Name;
+        _BaseClassName = "TILDA__" + _Name.toUpperCase();
         _AppDataClassName    = _OriginalName+"_Data";
         _AppFactoryClassName = _OriginalName+"_Factory";
         _AppJsonClassName = _OriginalName+"_Json";

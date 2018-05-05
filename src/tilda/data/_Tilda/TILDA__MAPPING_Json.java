@@ -30,11 +30,11 @@ public class TILDA__MAPPING_Json
    public tilda.data.Mapping_Data Write(Connection C) throws Exception
     {
       if (TextUtil.isNullOrEmpty(_type       ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.MAPPING.type' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Mapping.type' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_src        ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.MAPPING.src' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Mapping.src' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_dst        ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.MAPPING.dst' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Mapping.dst' was null or empty. It's not nullable in the model.\n"+toString());
 
       tilda.data.Mapping_Data Obj = tilda.data.Mapping_Factory.Create(_type, _src, _dst);
       Update(Obj);
@@ -42,7 +42,7 @@ public class TILDA__MAPPING_Json
        {
          Obj = tilda.data.Mapping_Factory.LookupByTypeSrcDst(_type, _src, _dst);
          if (Obj.Read(C) == false)
-          throw new Exception("Cannot create the tilda.data.TILDA.MAPPING object.\n"+toString());
+          throw new Exception("Cannot create the tilda.data.TILDA.Mapping object.\n"+toString());
          LOG.debug("Nothing has changed in the object, so no update necessary.");
 
        }

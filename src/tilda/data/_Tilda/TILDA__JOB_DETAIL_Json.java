@@ -38,20 +38,20 @@ public class TILDA__JOB_DETAIL_Json
    public tilda.data.Job_Detail_Data Write(Connection C) throws Exception
     {
       if (_Id                     == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.JOB_DETAIL.Id' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Job_Detail.Id' was null or empty. It's not nullable in the model.\n"+toString());
       if (_Job_Id                 == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.JOB_DETAIL.Job_Id' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Job_Detail.Job_Id' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(Str_FileProcessStartTime  ) == false)
        {
          _FileProcessStartTime   = DateTimeUtil.parsefromJSON(Str_FileProcessStartTime  );
          if (   _FileProcessStartTime   == null)
-          throw new Exception("Incoming value for 'tilda.data.TILDA.JOB_DETAIL.FileProcessStartTime' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+          throw new Exception("Incoming value for 'tilda.data.TILDA.Job_Detail.FileProcessStartTime' was not in the expected format. Dates should follow the ISO format.\n"+toString());
        }
       if (TextUtil.isNullOrEmpty(Str_FileProcessEndTime    ) == false)
        {
          _FileProcessEndTime     = DateTimeUtil.parsefromJSON(Str_FileProcessEndTime    );
          if (   _FileProcessEndTime     == null)
-          throw new Exception("Incoming value for 'tilda.data.TILDA.JOB_DETAIL.FileProcessEndTime' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+          throw new Exception("Incoming value for 'tilda.data.TILDA.Job_Detail.FileProcessEndTime' was not in the expected format. Dates should follow the ISO format.\n"+toString());
        }
 
       tilda.data.Job_Detail_Data Obj = tilda.data.Job_Detail_Factory.Create(_Id, _Job_Id);
@@ -60,7 +60,7 @@ public class TILDA__JOB_DETAIL_Json
        {
          Obj = tilda.data.Job_Detail_Factory.LookupByJob_File_Id(_Id, _Job_Id);
          if (Obj.Read(C) == false)
-          throw new Exception("Cannot create the tilda.data.TILDA.JOB_DETAIL object.\n"+toString());
+          throw new Exception("Cannot create the tilda.data.TILDA.Job_Detail object.\n"+toString());
          if (_FileName              != null) Obj.setFileName              (_FileName              );
          if (_FileRecords           != null) Obj.setFileRecords           (_FileRecords           );
          if (_FileProcessStartTime  != null) Obj.setFileProcessStartTime  (_FileProcessStartTime  );
@@ -68,7 +68,7 @@ public class TILDA__JOB_DETAIL_Json
          if (_Status                != null) Obj.setStatus                (_Status                );
          if (_Error                 != null) Obj.setError                 (_Error                 );
          if (Obj.Write(C) == false)
-          throw new Exception("Cannot update the tilda.data.TILDA.JOB_DETAIL object: "+Obj.toString());
+          throw new Exception("Cannot update the tilda.data.TILDA.Job_Detail object: "+Obj.toString());
 
        }
       return Obj;

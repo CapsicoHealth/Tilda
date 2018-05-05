@@ -294,15 +294,15 @@ public class View extends Base
             if (VC._JoinOnly == false && ColumnNames.add(VC.getName().toUpperCase()) == false)
               PS.AddError("Column '" + VC.getFullName() + "' is defined more than once in View '" + getFullName() + "'.");
 
-            if (VC.getName().equals("created") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "created")) == true)
+            if (VC.getName().equals("created") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "Key", "created")) == true)
               CreatedColObjName = VC._SameAsObj._ParentObject.getFullName();
-            if (VC.getName().equals("createdETL") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "createdETL")) == true)
+            if (VC.getName().equals("createdETL") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "Key", "createdETL")) == true)
               CreatedETLColObjName = VC._SameAsObj._ParentObject.getFullName();
-            else if (VC.getName().equals("lastUpdated") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "lastUpdated")) == true)
+            else if (VC.getName().equals("lastUpdated") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "Key", "lastUpdated")) == true)
               LastUpdatedColObjName = VC._SameAsObj._ParentObject.getFullName();
-            else if (VC.getName().equals("lastUpdatedETL") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "lastUpdatedETL")) == true)
+            else if (VC.getName().equals("lastUpdatedETL") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "Key", "lastUpdatedETL")) == true)
               LastUpdatedETLColObjName = VC._SameAsObj._ParentObject.getFullName();
-            else if (VC.getName().equals("deleted") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "deleted")) == true)
+            else if (VC.getName().equals("deleted") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "Key", "deleted")) == true)
               DeletedColObjName = VC._SameAsObj._ParentObject.getFullName();
 
             // LOG.debug("VC: " + VC._Name + "; VC._SameAsObj: " + VC._SameAsObj + "; VC._SameAsObj._ParentObject: " + VC._SameAsObj._ParentObject + ";");

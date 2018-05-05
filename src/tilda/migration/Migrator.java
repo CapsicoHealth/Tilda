@@ -303,7 +303,7 @@ public class Migrator
                           Actions.add(new ColumnAlterNull(Col));
                       }
                   }
-                if (Obj._PrimaryKey != null && Obj._PrimaryKey._Autogen == true && KeysManager.hasKey(Obj.getShortName()) == false)
+                if (Obj._PrimaryKey != null && Obj._PrimaryKey._Autogen == true && KeysManager.hasKey(Obj.getShortName().toUpperCase()) == false)
                   Actions.add(new TableKeyCreate(Obj));
                 Set<String> DroppedFKs = new HashSet<String>();
                 if (DifferentPrimaryKeys(Obj._PrimaryKey, TMeta._PrimaryKey) == true)

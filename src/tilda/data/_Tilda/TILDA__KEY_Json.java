@@ -31,13 +31,13 @@ public class TILDA__KEY_Json
    public tilda.data.Key_Data Write(Connection C) throws Exception
     {
       if (_refnum         == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.KEY.refnum' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Key.refnum' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_name          ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.KEY.name' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Key.name' was null or empty. It's not nullable in the model.\n"+toString());
       if (_max            == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.KEY.max' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Key.max' was null or empty. It's not nullable in the model.\n"+toString());
       if (_count          == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.KEY.count' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Key.count' was null or empty. It's not nullable in the model.\n"+toString());
 
       tilda.data.Key_Data Obj = tilda.data.Key_Factory.Create(_refnum, _name, _max, _count);
       Update(Obj);
@@ -45,11 +45,11 @@ public class TILDA__KEY_Json
        {
          Obj = tilda.data.Key_Factory.LookupByName(_name);
          if (Obj.Read(C) == false)
-          throw new Exception("Cannot create the tilda.data.TILDA.KEY object.\n"+toString());
+          throw new Exception("Cannot create the tilda.data.TILDA.Key object.\n"+toString());
          if (_max           != null) Obj.setMax           (_max           );
          if (_count         != null) Obj.setCount         (_count         );
          if (Obj.Write(C) == false)
-          throw new Exception("Cannot update the tilda.data.TILDA.KEY object: "+Obj.toString());
+          throw new Exception("Cannot update the tilda.data.TILDA.Key object: "+Obj.toString());
 
        }
       return Obj;
