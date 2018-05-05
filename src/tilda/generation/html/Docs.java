@@ -17,7 +17,9 @@
 package tilda.generation.html;
 
 import java.io.PrintWriter;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
@@ -33,7 +35,9 @@ import tilda.generation.java8.Helper;
 import tilda.generation.java8.JavaJDBCType;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
+import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Formula;
+import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.Value;
@@ -53,6 +57,17 @@ public class Docs
 
     protected static final Logger LOG       = LogManager.getLogger(Docs.class.getName());
 
+
+    protected static String makeObjectLink(Object O)
+      {
+        return "<A href=\"TILDA___Docs." + O.getSchema().getShortName() + ".html#" + O._Name + "_CNT\">" + TextUtil.SearchReplace(O.getShortName(),".","<B>&nbsp;&#8226;&nbsp;</B>") + "</A>";
+      }
+
+    protected static String makeColumnLink(Column C)
+      {
+        return "<A href=\"TILDA___Docs." + C._ParentObject.getSchema().getShortName() + ".html#" 
+             + C._ParentObject._Name +"-"+C.getName()+ "_DIV\">" + TextUtil.SearchReplace(C.getShortName(),".","<B>&nbsp;&#8226;&nbsp;</B>") + "</A>";
+      }
 
     public static void writeHeader(PrintWriter Out, Schema S)
     throws Exception
@@ -149,15 +164,14 @@ public class Docs
         + " }\n"
         + "}\n"
         + "window.onscroll = checkSticky;\n"
-        + "</SCRIPT>\n"
-        );
+        + "</SCRIPT>\n");
       }
 
-    
+
     public static void writeFooter(PrintWriter Out, Schema S)
       {
       }
-    
+
     public static void DataClassDocs(PrintWriter Out, GeneratorSession G, Object O)
     throws Exception
       {
@@ -165,15 +179,15 @@ public class Docs
         String ObjType = view == null ? "Table" : "View";
 
         Out.println("<TABLE id=\"" + O._Name + "_DIV\" class=\"tables\">");
-        Out.println("<SCRIPT>registerStickyHeader(\""+O._Name + "_DIV\");</SCRIPT>");
+        Out.println("<SCRIPT>registerStickyHeader(\"" + O._Name + "_DIV\");</SCRIPT>");
         Out.println("<TR valign=\"top\"><TD><H2>" + O._Name + "&nbsp;&nbsp;&nbsp;&nbsp;<SUP style=\"font-size: 70%;\"><SPAN class=\"BackToDetails\"><A href=\"#" + O._Name + "_CNT\">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href=\"#\">top</A></SUP></H2></TD><TD align=\"right\"></TD></TR>");
         Out.println("</TABLE>");
         Out.println("<DIV id=\"" + O._Name + "_CNT\" class=\"content\">");
-        Out.println("The " + ObjType + " " + O.getShortName() + " is:<UL>");
+        Out.println("The " + ObjType + " " + O.getShortName() + ":<UL>");
         if (view == null || view._DBOnly == false)
-          Out.println("<LI>Mapped to the generated " + Helper.getCodeGenLanguage() + "/" + G.getSql().getName() + " Tilda data class <B>Data_" + O._Name + "</B>.");
+          Out.println("<LI>Is mapped to the generated " + Helper.getCodeGenLanguage() + "/" + G.getSql().getName() + " Tilda classes <B>" + O.getAppFactoryClassName() + "</B>, <B>" + O.getAppDataClassName() + "</B> in the package <B>"+O._ParentSchema._Package+"</B>.");
         else
-          Out.println("<LI>Not mapped to any generated code (i.e., Java code) and only exists in the database.</LI>");
+          Out.println("<LI>Is not mapped to any generated code (i.e., Java code) and only exists in the database.</LI>");
 
         if (view != null && view._Realize != null)
           Out.println("<LI>Configured to be Realized.</LI>");
@@ -182,22 +196,71 @@ public class Docs
           switch (O._LC)
             {
               case NORMAL:
-                Out.println("<LI>Configured for normal <B>read/write</B> access.</LI>");
+                Out.println("<LI>Is configured for normal <B>read/write</B> access.</LI>");
                 break;
               case READONLY:
-                Out.println("<LI>Configured for <B>ReadOnly</B> access.</LI>");
+                Out.println("<LI>Is configured for <B>ReadOnly</B> access.</LI>");
                 break;
               case WORM:
-                Out.println("<LI>Configured for <B>WORM</B> (Write Once Read Many) access.</LI>");
+                Out.println("<LI>Is configured for <B>WORM</B> (Write Once Read Many) access.</LI>");
                 break;
               default:
                 throw new Exception("Unknown Object lifecycle value '" + O._LC + "' when generating class docs");
             }
 
         if (O._OCC == true)
-          Out.println("<LI>OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>");
+          Out.println("<LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>");
         else
-          Out.println("<LI>Not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>");
+          Out.println("<LI>Is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>");
+
+        if (O._ForeignKeys != null && O._ForeignKeys.isEmpty() == false)
+          {
+            Out.print("<LI>Defines "+(O._ForeignKeys.size()==1 ? "a ":"")+"foreign key"+(O._ForeignKeys.size()==1 ? "":"(s)")+" to ");
+            int x = 0;
+            Set<String> Names = new HashSet<String>();
+            for (ForeignKey FK : O._ForeignKeys)
+              {
+                if (Names.add(FK._DestObjectObj.getShortName()) == false)
+                  continue;
+                Out.print((x == 0 ? "" : ", ") + makeObjectLink(FK._DestObjectObj));
+                ++x;
+              }
+            Out.println(" </LI>");
+          }
+        if (O._PrimaryKey != null || O._HasUniqueIndex == true)
+          {
+            int count = 0;
+            if (O._PrimaryKey != null)
+              ++count;
+            for (Index I : O._Indices)
+             if (I != null && I._Unique == true)
+               ++count;
+            Out.print("<LI>Has the following identit"+(count > 1 ? "ies":"y")+":<UL>");
+            if (O._PrimaryKey != null)
+              {
+                Out.print("<LI>Primary Key: ");
+                int x = 0;
+                for (Column c : O._PrimaryKey._ColumnObjs)
+                  {
+                    Out.print((x==0?"":", ")+c.getName());
+                    ++x;
+                  }
+                Out.println("</LI>");
+              }
+            for (Index I : O._Indices)
+              if (I != null && I._Unique == true)
+                {
+                  Out.print("<LI>Unique Index: ");
+                  int x = 0;
+                  for (Column c : I._ColumnObjs)
+                    {
+                      Out.print((x==0?"":", ")+c.getName());
+                      ++x;
+                    }
+                  Out.println("</LI>");
+                }
+            Out.println("</UL></LI>");
+          }
 
         Out.println("</UL>");
 
@@ -242,7 +305,7 @@ public class Docs
             Out.println("<TD align=\"center\">" + (C._Nullable == true ? "&#x2611;" : "&#x2610") + "&nbsp;&nbsp;</TD>");
             if (view != null && view._Realize != null)
               {
-                Out.print("<TD align=\"center\">" + (TextUtil.FindElement(view._Realize._Excludes, C.getName(),false,0) == -1 ? "&#x2611;" : "&#x2610") + "&nbsp;&nbsp;</TD>");
+                Out.print("<TD align=\"center\">" + (TextUtil.FindElement(view._Realize._Excludes, C.getName(), false, 0) == -1 ? "&#x2611;" : "&#x2610") + "&nbsp;&nbsp;</TD>");
               }
             if (O._DBOnly == false)
               {
@@ -275,9 +338,31 @@ public class Docs
                         else
                           Out.print("<BR>");
                         Out.print("&rarr;&nbsp;");
-                        Out.print(c.getShortName());
+                        Out.print(makeColumnLink(c));
                       }
                     Out.print("</DIV>");
+                  }
+              }
+            else if (C._ForeignKey == true)
+              {
+                List<ForeignKey> FKs = O.getForeignKeys(C);
+                if (FKs != null && FKs.isEmpty() == false)
+                  {
+                    Out.print("<TABLE border=\"0px\" style=\"margin:0px;margin-left:20px;font-size:75%;\">");
+                    int x = 0;
+                    for (ForeignKey FK : FKs)
+                      {
+                        Out.print("<TR><TD>" + (x == 0 ? "<B style=\"color:white;background-color:fuchsia;\">FK</B>" : "") + "</TD><TD>&rarr;&nbsp;" + makeObjectLink(FK._DestObjectObj) + ": ");
+                        int xx = 0;
+                        for (Column c : FK._DestObjectObj._PrimaryKey._ColumnObjs)
+                          {
+                            Out.print((xx == 0 ? "" : ", ") + c.getName());
+                            ++xx;
+                          }
+                        Out.println("</TD></TR>");
+                        ++x;
+                      }
+                    Out.println("</TABLE>");
                   }
               }
             Out.println("</TD>");
@@ -865,7 +950,7 @@ public class Docs
             if (/* level == 0 || */ DW.getObj()._ParentSchema._Name.equals("TILDA") == true)
               return;
             View V = DW.getObj()._ParentSchema.getView(DW.getObj()._Name);
-            _Str.append("<TR><TD><PRE>").append(PaddingUtil.getPad(level * 4)).append(DW.getObj().getShortName()).append("</PRE></TD><TD>");
+            _Str.append("<TR><TD><PRE>").append(PaddingUtil.getPad(level * 4)).append(makeObjectLink(DW.getObj())).append("</PRE></TD><TD>");
             if (V != null)
               {
                 if (V._SubWhereX != null)

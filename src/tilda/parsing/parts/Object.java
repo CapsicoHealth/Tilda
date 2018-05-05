@@ -444,4 +444,16 @@ public class Object extends Base
             FKs.add(FK);
         return FKs;
       }
+    
+    public List<ForeignKey> getForeignKeys(Column Col)
+      {
+        List<ForeignKey> FKs = new ArrayList<ForeignKey>();
+        for (ForeignKey FK : _ForeignKeys)
+          if (FK != null)
+            for (Column C : FK._SrcColumnObjs)
+             if (C == Col)
+              FKs.add(FK);
+        return FKs;
+      }
+    
   }
