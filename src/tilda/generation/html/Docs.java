@@ -44,6 +44,7 @@ import tilda.parsing.parts.Value;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.ViewColumn;
 import tilda.parsing.parts.ViewJoin;
+import tilda.utils.FileUtil;
 import tilda.utils.Graph;
 import tilda.utils.PaddingUtil;
 import tilda.utils.SystemValues;
@@ -58,112 +59,35 @@ public class Docs
     protected static final Logger LOG       = LogManager.getLogger(Docs.class.getName());
 
 
+    protected static String coolPrint(String Name)
+      {
+        return TextUtil.SearchReplace(Name,".","<B>&nbsp;&#8226;&nbsp;</B>");
+      }
+
     protected static String makeObjectLink(Object O)
       {
-        return "<A href=\"TILDA___Docs." + O.getSchema().getShortName() + ".html#" + O._Name + "_CNT\">" + TextUtil.SearchReplace(O.getShortName(),".","<B>&nbsp;&#8226;&nbsp;</B>") + "</A>";
+        return "<A href=\"TILDA___Docs." + O.getSchema().getShortName() + ".html#" + O._Name + "_CNT\">" + coolPrint(O.getShortName()) + "</A>";
       }
 
     protected static String makeColumnLink(Column C)
       {
         return "<A href=\"TILDA___Docs." + C._ParentObject.getSchema().getShortName() + ".html#" 
-             + C._ParentObject._Name +"-"+C.getName()+ "_DIV\">" + TextUtil.SearchReplace(C.getShortName(),".","<B>&nbsp;&#8226;&nbsp;</B>") + "</A>";
+             + C._ParentObject._Name +"-"+C.getName()+ "_DIV\">" + coolPrint(C.getShortName()) + "</A>";
       }
 
     public static void writeHeader(PrintWriter Out, Schema S)
     throws Exception
       {
+        String CSS = FileUtil.getFileOfResourceContents("tilda/generation/html/TildaDocs.css");
+        String JS = FileUtil.getFileOfResourceContents("tilda/generation/html/TildaDocs.js");
         Out.println(
         "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\"/>\n"
         + "<title>Tilda Docs: " + S.getFullName() + "</title>\n"
         + "<STYLE>\n"
-        + ".RowedTable > TBODY > TR > TD {"
-        + "  vertical-align: top;"
-        + "  border: 1px solid black;"
-        + " }\n"
-        + ".RowedTable > TBODY >TR > TD:nth-child(1) {"
-        + "  padding-right: 5px;"
-        + "  text-align: right;"
-        + " }\n"
-        + ".TreeTable {"
-        + "  border: 2px outset #aaa;"
-        + "}\n"
-        + ".TreeTable > TBODY > TR > TD {"
-        + "  vertical-align: top;"
-        + "  border: 0px solid black;"
-        + " }\n"
-        + ".TreeTable > TBODY >TR > TD:nth-child(1) {"
-        + "  padding-right: 5px;"
-        + "  text-align: left;"
-        + " }\n"
-        + ".Rowed TR:nth-child(odd) TD {"
-        + "  border-bottom: 2px #666 solid;"
-        + "  background-color: #f0fdf0;"
-        + "}\n"
-        + ".Rowed TR:nth-child(even) TD {"
-        + "  border-bottom: 2px #666 solid;"
-        + "  background-color:#FFFFFF;"
-        + " }\n"
-        + ".BackToDetails {"
-        + "   display: none;"
-        + " }\n"
-        + ".sticky {"
-        + "   position: fixed;"
-        + "   top: 0;"
-        + "   left: 0;"
-        + "   background: #F09819;"
-        + "   background: -webkit-linear-gradient(to top, #F09819, #FFC837);"
-        + "   background: linear-gradient(to top, #F09819, #FFC837);"
-        + "   color: #000;"
-        + "   width: 100%;"
-        + " }\n"
-        + ".sticky H2 {"
-        + "   margin: 0px;"
-        + "   padding: 0px;"
-        + " }\n"
-        + ".sticky + .content {"
-        + "   padding-top: 90px;"
-        + " }\n"
-        + ".sticky .BackToDetails {"
-        + "   display: inline;"
-        + " }\n"
+        + CSS
         + "</STYLE>\n"
         + "<SCRIPT>\n"
-        + "var headers = [];\n"
-        + "function registerStickyHeader(elementId) {\n"
-        + "  var h = document.getElementById(elementId);\n"
-        + "  headers.push([h,h.offsetTop]);\n"
-        + "}\n"
-        + "function checkSticky() {\n"
-        + "for (var i = 0; i < headers.length; ++i)\n"
-        + " {\n"
-        + "   var h = headers[i];\n"
-        + "   var pos = h[0].offsetTop;\n"
-        + "   if (pos != 0)\n"
-        + "    h[1] = pos;\n"
-        + "   if (window.pageYOffset >= h[1]-5)\n"
-        + "    {\n"
-        + "      h[0].classList.add(\"sticky\");\n"
-        + "      var n = document.getElementById('__SEARCH_BOX__');\n"
-        + "      if (n != null && n.parentNode != null && h[0] != null && h[0] != n)\n"
-        + "       {\n"
-        + "          n.classList.remove(\"sticky\");\n"
-        + "          n.parentNode.removeChild(n);"
-        + "          h[0].rows[0].cells[1].appendChild(n);"
-        + "       }\n"
-        + "    }\n"
-        + "   else\n"
-        + "    {\n"
-        + "      h[0].classList.remove(\"sticky\");\n"
-        + "    }\n"
-        + "   if (i == 0 && window.pageYOffset < h[1])\n"
-        + "    {\n"
-        + "      var n = document.getElementById('__SEARCH_BOX__');\n"
-        + "      n.parentNode.removeChild(n);\n"
-        + "      document.getElementById('__SEARCH_BOX_BASE__').appendChild(n);\n"
-        + "    }\n"
-        + " }\n"
-        + "}\n"
-        + "window.onscroll = checkSticky;\n"
+        + JS
         + "</SCRIPT>\n");
       }
 
@@ -190,7 +114,7 @@ public class Docs
           Out.println("<LI>Is not mapped to any generated code (i.e., Java code) and only exists in the database.</LI>");
 
         if (view != null && view._Realize != null)
-          Out.println("<LI>Configured to be Realized.</LI>");
+          Out.println("<LI>Configured to be Realized to <B>"+coolPrint(view.getRealizedTableName(true))+"</B> through DB function <B>"+coolPrint(view._ParentSchema.getShortName()+".Refill_"+view.getRealizedTableName(false))+"()</B>.</LI>");
 
         if (view == null)
           switch (O._LC)
@@ -261,7 +185,7 @@ public class Docs
                 }
             Out.println("</UL></LI>");
           }
-
+        
         Out.println("</UL>");
 
         Out.println("<B>Description</B>: " + O._Description + "<BR>");
@@ -284,6 +208,9 @@ public class Docs
           {
             if (C == null)
               continue;
+            String FieldType = view != null && view.getFormula(C.getName()) != null ? "formulae":"columns";
+            if (view != null && view._Realize != null && TextUtil.FindElement(view._Realize._Excludes, C.getName(), false, 0) == -1)
+              FieldType = FieldType+" realized"+FieldType;
             Out.println("  <TR valign=\"top\" bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#DFECF8") + "\">");
             Out.println("    <TD>" + i + "&nbsp;&nbsp;</TD>");
             if (C.getSingleColFK() != null
@@ -291,11 +218,11 @@ public class Docs
             || (view != null && view._Pivot != null && view._Pivot.hasValue(C.getName()))
             || (view != null && view.getFormula(C.getName()) != null))
               {
-                Out.println("<TD onclick=\"onModalShowClicked('" + O._Name + "-" + C.getName() + "')\" align=\"right\"><B id='" + O._Name + "-" + C.getName() + "_DIV' class='columns dotted_underline cursor_pointer'>" + C.getName() + "</B>&nbsp;&nbsp;</TD>");
+                Out.println("<TD onclick=\"onModalShowClicked('" + O._Name + "-" + C.getName() + "')\" align=\"right\"><B id='" + O._Name + "-" + C.getName() + "_DIV' class='"+FieldType+" dotted_underline cursor_pointer'>" + C.getName() + "</B>&nbsp;&nbsp;</TD>");
               }
             else
               {
-                Out.println("<TD align=\"right\"><B id='" + O._Name + "-" + C.getName() + "_DIV' class='columns'>" + C.getName() + "</B>&nbsp;&nbsp;</TD>");
+                Out.println("<TD align=\"right\"><B id='" + O._Name + "-" + C.getName() + "_DIV' class='"+FieldType+"'>" + C.getName() + "</B>&nbsp;&nbsp;</TD>");
               }
 
             Out.print("<TD>");
