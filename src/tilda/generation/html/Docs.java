@@ -195,13 +195,14 @@ public class Docs
           DoSubWhereDetails(Out, view, G.getSql());
 
         Out.print("This " + ObjType + " contains the following columns:<BLOCKQUOTE>" + SystemValues.NEWLINE
-        + " <TABLE border=\"0px\" cellpadding=\"3px\" cellspacing=\"0px\" style=\"border:1px solid grey;\">" + SystemValues.NEWLINE
-        + "   <TR><TH>&nbsp;</TH><TH align=\"right\">Name&nbsp;&nbsp;</TH><TH align=\"left\">Type</TH><TH align=\"left\">Nullable</TH>");
+        + " <TABLE id=\"" + O._Name + "_TBL\" border=\"0px\" cellpadding=\"3px\" cellspacing=\"0px\" style=\"border:1px solid grey;\">" + SystemValues.NEWLINE
+        + "   <TR valign=\"bottom\"><TH>&nbsp;</TH><TH align=\"right\">Name&nbsp;&nbsp;</TH><TH align=\"left\">Type</TH><TH align=\"left\">Nullable</TH>");
         if (view != null && view._Realize != null)
-          Out.print("<TH align=\"left\">Realized</TH>");
+          Out.print("<TH align=\"left\" nowrap><label>Realized<input type=\"checkbox\" onchange=\"filterTable('" + O._Name + "_TBL', 'R')\", id=\"" + O._Name + "_TBL_R\"></label>&nbsp;</TH>");
+        
         if (O._DBOnly == false)
           Out.print("<TH align=\"left\">Mode</TH><TH align=\"left\">Invariant</TH><TH align=\"left\">Protect</TH>");
-        Out.print("<TH align=\"left\">Description</TH></TR>" + SystemValues.NEWLINE);
+        Out.print("<TH align=\"left\">Description"+(view!=null&&view._FormulasRegEx != null?"/<label>Formula<input type=\"checkbox\" onchange=\"filterTable('" + O._Name + "_TBL', 'F')\", id=\"" + O._Name + "_TBL_F\"></label>":"")+"</TH></TR>" + SystemValues.NEWLINE);
 
         int i = 1;
         for (Column C : O._Columns)
@@ -232,7 +233,7 @@ public class Docs
             Out.println("<TD align=\"center\">" + (C._Nullable == true ? "&#x2611;" : "&#x2610") + "&nbsp;&nbsp;</TD>");
             if (view != null && view._Realize != null)
               {
-                Out.print("<TD align=\"center\">" + (TextUtil.FindElement(view._Realize._Excludes, C.getName(), false, 0) == -1 ? "&#x2611;" : "&#x2610") + "&nbsp;&nbsp;</TD>");
+                Out.print("<TD align=\"center\">" + (TextUtil.FindElement(view._Realize._Excludes, C.getName(), false, 0) == -1 ? "&#x2611;<!--R-->" : "&#x2610;") + "&nbsp;&nbsp;</TD>");
               }
             if (O._DBOnly == false)
               {
@@ -292,22 +293,25 @@ public class Docs
                     Out.println("</TABLE>");
                   }
               }
-            Out.println("</TD>");
-            Out.println("</TR>");
 
             if (C._MapperDef != null)
               {
-                Out.println("  <TR bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#DFECF8") + "\"><TD></TD><TD></TD><TD colspan=\"10\" align=\"center\">");
-                Out.println("This column is automatically generated against the Mapper " + C._SameAsObj.getFullName() + ".");
-                Out.println("</TD></TR>");
+//                Out.println("  <TR bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#DFECF8") + "\"><TD></TD><TD></TD><TD colspan=\"10\" align=\"center\">");
+                Out.println("<BR>This column is automatically generated against the Mapper " + C._SameAsObj.getFullName() + ".<BR>");
+//                Out.println("</TD></TR>");
               }
             if (C._Values != null && C.getType().equals(ColumnType.DATE) == false && C.getType().equals(ColumnType.DATETIME) == false)
               {
-                Out.println("  <TR bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#DFECF8") + "\"><TD></TD><TD></TD><TD colspan=\"10\" align=\"center\">");
+//                Out.println("  <TR bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#DFECF8") + "\"><TD></TD><TD></TD><TD colspan=\"10\" align=\"center\">");
+                Out.println("<BR>This column has defined a number of constant values:");
+                Out.println("<BLOCKQUOTE>");
                 docFieldValues(Out, C);
-                Out.println("</TD></TR>");
+                Out.println("</BLOCKQUOTE>");
+//                Out.println("</TD></TR>");
               }
             ++i;
+            Out.println("</TD>");
+            Out.println("</TR>");
           }
 
         Out.println("</TABLE></BLOCKQUOTE>");
@@ -626,7 +630,7 @@ public class Docs
           {
             if (V == null)
               continue;
-            Out.println("  <TR bgcolor=\"" + (i % 2 == 1 ? "#FFFFFF" : "#FFF2CC") + "\">"
+            Out.println("  <TR bgcolor=\"" + (i % 2 == 1 ? "#FFFFFF" : "#fff6fc") + "\">"
             + "<TD>" + (i + 1) + "&nbsp;&nbsp;</TD>"
             + "<TD align=\"right\"><B>" + V._Name + "</B>&nbsp;&nbsp;</TD>"
             + "<TD>" + V._Value + "&nbsp;&nbsp;</TD>"
