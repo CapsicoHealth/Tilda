@@ -124,6 +124,8 @@ public class ForeignKey
           return PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a foreign key '" + _Name + "' without any source column.");
 
         _SrcColumnObjs = ValidationHelper.ProcessColumn(PS, _ParentObject, "foreign key '" + _Name + "'", _SrcColumns, null);
+        for (Column C : _SrcColumnObjs)
+          C._ForeignKey = true;
 
         return true;
       }

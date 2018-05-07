@@ -45,7 +45,6 @@ public class ViewRealize
 
     public transient View       _ParentView;
     public transient Base       _ParentRealized;
-    public transient ViewColumn _VC;
     public transient boolean    _FailedValidation = false;
 
 

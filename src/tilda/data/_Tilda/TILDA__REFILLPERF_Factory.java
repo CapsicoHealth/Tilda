@@ -26,20 +26,20 @@ public class TILDA__REFILLPERF_Factory
 
    public static final Class<TILDA__REFILLPERF> DATA_CLASS= TILDA__REFILLPERF.class;
    public static final String SCHEMA_LABEL = TextUtil.Print("TILDA", "");
-   public static final String TABLENAME_LABEL = TextUtil.Print("REFILLPERF", "");
-   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.REFILLPERF", "");
-   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "REFILLPERF"); }
+   public static final String TABLENAME_LABEL = TextUtil.Print("RefillPerf", "");
+   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.RefillPerf", "");
+   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "RefillPerf"); }
 
    public static abstract class COLS {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.REFILLPERF.schemaName -> TILDA.REFILLPERF."schemaName"
+//   Field tilda.data.TILDA.RefillPerf.schemaName -> TILDA.RefillPerf."schemaName"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.schemaName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.schemaName of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.schemaName of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.schemaName of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -52,13 +52,13 @@ This is the column definition for:<BR>
      public static Type_StringPrimitive        SCHEMANAME   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "schemaName"   , 0/*0*/, "The name of the schema tracked");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.REFILLPERF.objectName -> TILDA.REFILLPERF."objectName"
+//   Field tilda.data.TILDA.RefillPerf.objectName -> TILDA.RefillPerf."objectName"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.objectName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.objectName of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.objectName of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.objectName of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -71,13 +71,13 @@ This is the column definition for:<BR>
      public static Type_StringPrimitive        OBJECTNAME   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "objectName"   , 1/*1*/, "The name of the table/object tracked");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.REFILLPERF.startPeriodTZ -> TILDA.REFILLPERF."startPeriodTZ"
+//   Field tilda.data.TILDA.RefillPerf.startPeriodTZ -> TILDA.RefillPerf."startPeriodTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.startPeriodTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.startPeriodTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.startPeriodTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.startPeriodTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -90,13 +90,13 @@ This is the column definition for:<BR>
      public static Type_StringPrimitive        STARTPERIODTZ= new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "startPeriodTZ", 2/*2*/, "Generated helper column to hold the time zone ID for 'startPeriod'.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.REFILLPERF.startPeriod -> TILDA.REFILLPERF."startPeriod"
+//   Field tilda.data.TILDA.RefillPerf.startPeriod -> TILDA.RefillPerf."startPeriod"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.startPeriod of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.startPeriod of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.startPeriod of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.startPeriod of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the refill started.</TD></TR>
@@ -108,13 +108,13 @@ This is the column definition for:<BR>
      public static Type_DatetimePrimitive      STARTPERIOD  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "startPeriod"  , 3/*3*/, "The timestamp for when the refill started.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.REFILLPERF.timeCreateMs -> TILDA.REFILLPERF."timeCreateMs"
+//   Field tilda.data.TILDA.RefillPerf.timeCreateMs -> TILDA.RefillPerf."timeCreateMs"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.timeCreateMs of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.timeCreateMs of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeCreateMs of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeCreateMs of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the create took.</TD></TR>
@@ -126,13 +126,13 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          TIMECREATEMS = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "timeCreateMs" , 4/*4*/, "The time, in milliseconds, the create took.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.REFILLPERF.timeIndexMs -> TILDA.REFILLPERF."timeIndexMs"
+//   Field tilda.data.TILDA.RefillPerf.timeIndexMs -> TILDA.RefillPerf."timeIndexMs"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.timeIndexMs of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.timeIndexMs of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeIndexMs of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeIndexMs of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the indexing took.</TD></TR>
@@ -144,13 +144,13 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          TIMEINDEXMS  = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "timeIndexMs"  , 5/*5*/, "The time, in milliseconds, the indexing took.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.REFILLPERF.timeAnalyzeMs -> TILDA.REFILLPERF."timeAnalyzeMs"
+//   Field tilda.data.TILDA.RefillPerf.timeAnalyzeMs -> TILDA.RefillPerf."timeAnalyzeMs"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.timeAnalyzeMs of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.timeAnalyzeMs of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeAnalyzeMs of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeAnalyzeMs of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the analyze took.</TD></TR>
@@ -162,13 +162,13 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          TIMEANALYZEMS= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "timeAnalyzeMs", 6/*6*/, "The time, in milliseconds, the analyze took.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.REFILLPERF.timeTotalMs -> TILDA.REFILLPERF."timeTotalMs"
+//   Field tilda.data.TILDA.RefillPerf.timeTotalMs -> TILDA.RefillPerf."timeTotalMs"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.timeTotalMs of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.timeTotalMs of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.timeTotalMs of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.timeTotalMs of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The time, in milliseconds, the whole refill took.</TD></TR>
@@ -180,13 +180,13 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          TIMETOTALMS  = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "timeTotalMs"  , 7/*7*/, "The time, in milliseconds, the whole refill took.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.REFILLPERF.columnsMs -> TILDA.REFILLPERF."columnsMs"
+//   Field tilda.data.TILDA.RefillPerf.columnsMs -> TILDA.RefillPerf."columnsMs"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.columnsMs of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.columnsMs of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.columnsMs of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.columnsMs of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The list of columns that were refilled.</TD></TR>
@@ -198,13 +198,13 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          COLUMNSMS    = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "columnsMs"    , 8/*8*/, "The list of columns that were refilled.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.REFILLPERF.created -> TILDA.REFILLPERF."created"
+//   Field tilda.data.TILDA.RefillPerf.created -> TILDA.RefillPerf."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -223,13 +223,13 @@ This is the column definition for:<BR>
      public static Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 9/*9*/, "The timestamp for when the record was created.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.REFILLPERF.lastUpdated -> TILDA.REFILLPERF."lastUpdated"
+//   Field tilda.data.TILDA.RefillPerf.lastUpdated -> TILDA.RefillPerf."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
@@ -248,13 +248,13 @@ This is the column definition for:<BR>
      public static Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 10/*10*/, "The timestamp for when the record was last updated.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.REFILLPERF.deleted -> TILDA.REFILLPERF."deleted"
+//   Field tilda.data.TILDA.RefillPerf.deleted -> TILDA.RefillPerf."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.REFILLPERF.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.REFILLPERF.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.RefillPerf.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.RefillPerf.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
@@ -317,19 +317,19 @@ This is the column definition for:<BR>
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
        S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "schemaName");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "objectName");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "startPeriodTZ");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "startPeriod");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "timeCreateMs");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "timeIndexMs");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "timeAnalyzeMs");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "timeTotalMs");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "columnsMs");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "created");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "lastUpdated");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "deleted");
-       S.append(" from "); C.getFullTableVar(S, "TILDA", "REFILLPERF");
+       S.append(" "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "schemaName");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "objectName");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "startPeriodTZ");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "startPeriod");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeCreateMs");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeIndexMs");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeAnalyzeMs");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeTotalMs");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "columnsMs");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "created");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "lastUpdated");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "deleted");
+       S.append(" from "); C.getFullTableVar(S, "TILDA", "RefillPerf");
        switch (LookupId)
         {
           case -7:
@@ -337,12 +337,12 @@ This is the column definition for:<BR>
              if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
              break;
           case 1:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "schemaName"); S.append("=?)");
-             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "objectName"); S.append(" ASC");S.append(", "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "startPeriod"); S.append(" DESC");
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "RefillPerf", "schemaName"); S.append("=?)");
+             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "objectName"); S.append(" ASC");S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "startPeriod"); S.append(" DESC");
              break;
           case 2:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "objectName"); S.append("=?)");
-             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "REFILLPERF", "startPeriod"); S.append(" DESC");
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "RefillPerf", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "objectName"); S.append("=?)");
+             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "startPeriod"); S.append(" DESC");
              break;
           case -666: break;
           default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
@@ -353,7 +353,7 @@ This is the column definition for:<BR>
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(SCHEMA_TABLENAME_LABEL, Q);
-       QueryDetails.logQuery("TILDA.REFILLPERF", Q, null);
+       QueryDetails.logQuery("TILDA.RefillPerf", Q, null);
        java.sql.PreparedStatement PS=null;
        int count = 0;
        try

@@ -16,6 +16,9 @@
 
 package tilda.parsing.parts;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -46,6 +49,7 @@ public class ViewColumn
     @SerializedName("filter"     ) public String         _Filter       ;
     @SerializedName("useMapper"  ) public boolean        _UseMapper     = false;
     @SerializedName("useEnum"    ) public boolean        _UseEnum       = false;
+    @SerializedName("description") public String         _Description   = null;
     /*@formatter:on*/
 
 
@@ -91,18 +95,18 @@ public class ViewColumn
 
     public String getAggregateName()
       {
-        return _Aggregate == null ? getName() 
-             : _Aggregate == AggregateType.COUNT && _SameAsObj == null ? "COUNT(*)" 
-             : _Aggregate.name()+"("+(_SameAsObj ==null ? getShortName() : _SameAsObj.getShortName())+")";
+        return _Aggregate == null ? getName()
+        : _Aggregate == AggregateType.COUNT && _SameAsObj == null ? "COUNT(*)"
+        : _Aggregate.name() + "(" + (_SameAsObj == null ? getShortName() : _SameAsObj.getShortName()) + ")";
       }
 
     public ColumnType getAggregateType()
       {
         return _Aggregate == null ? _SameAsObj.getType()
-             : _Aggregate == AggregateType.COUNT && _SameAsObj == null ? ColumnType.LONG 
-             : _Aggregate.getType(_SameAsObj.getType());
+        : _Aggregate == AggregateType.COUNT && _SameAsObj == null ? ColumnType.LONG
+        : _Aggregate.getType(_SameAsObj.getType());
       }
-    
+
     public boolean Validate(ParserSession PS, View ParentView)
       {
         int Errs = PS.getErrorCount();
@@ -139,6 +143,9 @@ public class ViewColumn
             if (TextUtil.isNullOrEmpty(_Filter) == false)
               return PS.AddError("View Column '" + getFullName() + "' defined a filter without specifying an aggregate. Filters are only valid with aggregates.");
           }
+        
+        if (TextUtil.isNullOrEmpty(_Description) == true && _SameAsObj != null)
+         _Description = _SameAsObj._Description;
 
         return Errs == PS.getErrorCount();
       }
@@ -209,6 +216,27 @@ public class ViewColumn
           }
         return _SameAsObj;
       }
+
+    public List<Column> getSameAsLineage()
+      {
+        return getSameAsLineage(this);
+      }
+
+    public static List<Column> getSameAsLineage(ViewColumn VC)
+      {
+        List<Column> L = new ArrayList<Column>();
+        Column C = VC._SameAsObj;
+        while (C != null)
+          {
+            L.add(C);
+            if (C.isForeignKey() == true || C._ParentObject._FST == FrameworkSourcedType.VIEW)
+             C = C._SameAsObj;
+            else
+              break;
+          }
+        return L;
+      }
+
 
     public String toString()
       {

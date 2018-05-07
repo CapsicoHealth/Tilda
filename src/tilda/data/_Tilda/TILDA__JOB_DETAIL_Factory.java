@@ -26,20 +26,20 @@ public class TILDA__JOB_DETAIL_Factory
 
    public static final Class<TILDA__JOB_DETAIL> DATA_CLASS= TILDA__JOB_DETAIL.class;
    public static final String SCHEMA_LABEL = TextUtil.Print("TILDA", "");
-   public static final String TABLENAME_LABEL = TextUtil.Print("JOB_DETAIL", "");
-   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.JOB_DETAIL", "");
-   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "JOB_DETAIL"); }
+   public static final String TABLENAME_LABEL = TextUtil.Print("Job_Detail", "");
+   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.Job_Detail", "");
+   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "Job_Detail"); }
 
    public static abstract class COLS {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOB_DETAIL.Id -> TILDA.JOB_DETAIL."Id"
+//   Field tilda.data.TILDA.Job_Detail.Id -> TILDA.Job_Detail."Id"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB_DETAIL.Id of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB_DETAIL.Id of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Job_Detail.Id of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Job_Detail.Id of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Id</TD></TR>
@@ -51,13 +51,13 @@ This is the column definition for:<BR>
      public static Type_IntegerPrimitive       ID                    = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "Id"                    , 0/*0*/, "Id");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOB_DETAIL.Job_Id -> TILDA.JOB_DETAIL."Job_Id"
+//   Field tilda.data.TILDA.Job_Detail.Job_Id -> TILDA.Job_Detail."Job_Id"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB_DETAIL.Job_Id of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB_DETAIL.Job_Id of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Job_Detail.Job_Id of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Job_Detail.Job_Id of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job Id</TD></TR>
@@ -69,13 +69,13 @@ This is the column definition for:<BR>
      public static Type_IntegerPrimitive       JOB_ID                = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "Job_Id"                , 1/*1*/, "Job Id");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOB_DETAIL.FileName -> TILDA.JOB_DETAIL."FileName"
+//   Field tilda.data.TILDA.Job_Detail.FileName -> TILDA.Job_Detail."FileName"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB_DETAIL.FileName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB_DETAIL.FileName of type varchar(200)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Job_Detail.FileName of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Job_Detail.FileName of type varchar(200)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>200</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -88,13 +88,13 @@ This is the column definition for:<BR>
      public static Type_StringPrimitiveNull    FILENAME              = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "FileName"              , 2/*2*/, "FileName");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOB_DETAIL.FileRecords -> TILDA.JOB_DETAIL."FileRecords"
+//   Field tilda.data.TILDA.Job_Detail.FileRecords -> TILDA.Job_Detail."FileRecords"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB_DETAIL.FileRecords of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB_DETAIL.FileRecords of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Job_Detail.FileRecords of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Job_Detail.FileRecords of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileRecords</TD></TR>
@@ -106,13 +106,13 @@ This is the column definition for:<BR>
      public static Type_IntegerPrimitiveNull   FILERECORDS           = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "FileRecords"           , 3/*3*/, "FileRecords");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOB_DETAIL.FileProcessStartTimeTZ -> TILDA.JOB_DETAIL."FileProcessStartTimeTZ"
+//   Field tilda.data.TILDA.Job_Detail.FileProcessStartTimeTZ -> TILDA.Job_Detail."FileProcessStartTimeTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB_DETAIL.FileProcessStartTimeTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB_DETAIL.FileProcessStartTimeTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Job_Detail.FileProcessStartTimeTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Job_Detail.FileProcessStartTimeTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -125,13 +125,13 @@ This is the column definition for:<BR>
      public static Type_StringPrimitiveNull    FILEPROCESSSTARTTIMETZ= new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "FileProcessStartTimeTZ", 4/*4*/, "Generated helper column to hold the time zone ID for 'FileProcessStartTime'.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOB_DETAIL.FileProcessStartTime -> TILDA.JOB_DETAIL."FileProcessStartTime"
+//   Field tilda.data.TILDA.Job_Detail.FileProcessStartTime -> TILDA.Job_Detail."FileProcessStartTime"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB_DETAIL.FileProcessStartTime of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB_DETAIL.FileProcessStartTime of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Job_Detail.FileProcessStartTime of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Job_Detail.FileProcessStartTime of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileProcessStartTime</TD></TR>
@@ -143,13 +143,13 @@ This is the column definition for:<BR>
      public static Type_DatetimePrimitiveNull  FILEPROCESSSTARTTIME  = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "FileProcessStartTime"  , 5/*5*/, "FileProcessStartTime");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOB_DETAIL.FileProcessEndTimeTZ -> TILDA.JOB_DETAIL."FileProcessEndTimeTZ"
+//   Field tilda.data.TILDA.Job_Detail.FileProcessEndTimeTZ -> TILDA.Job_Detail."FileProcessEndTimeTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB_DETAIL.FileProcessEndTimeTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB_DETAIL.FileProcessEndTimeTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Job_Detail.FileProcessEndTimeTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Job_Detail.FileProcessEndTimeTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -162,13 +162,13 @@ This is the column definition for:<BR>
      public static Type_StringPrimitiveNull    FILEPROCESSENDTIMETZ  = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "FileProcessEndTimeTZ"  , 6/*6*/, "Generated helper column to hold the time zone ID for 'FileProcessEndTime'.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOB_DETAIL.FileProcessEndTime -> TILDA.JOB_DETAIL."FileProcessEndTime"
+//   Field tilda.data.TILDA.Job_Detail.FileProcessEndTime -> TILDA.Job_Detail."FileProcessEndTime"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB_DETAIL.FileProcessEndTime of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB_DETAIL.FileProcessEndTime of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Job_Detail.FileProcessEndTime of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Job_Detail.FileProcessEndTime of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>FileProcessEndTime</TD></TR>
@@ -180,13 +180,13 @@ This is the column definition for:<BR>
      public static Type_DatetimePrimitiveNull  FILEPROCESSENDTIME    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "FileProcessEndTime"    , 7/*7*/, "FileProcessEndTime");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOB_DETAIL.Status -> TILDA.JOB_DETAIL."Status"
+//   Field tilda.data.TILDA.Job_Detail.Status -> TILDA.Job_Detail."Status"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB_DETAIL.Status of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB_DETAIL.Status of type varchar(200)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Job_Detail.Status of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Job_Detail.Status of type varchar(200)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>200</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -199,13 +199,13 @@ This is the column definition for:<BR>
      public static Type_StringPrimitiveNull    STATUS                = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "Status"                , 8/*8*/, "Status");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOB_DETAIL.Error -> TILDA.JOB_DETAIL."Error"
+//   Field tilda.data.TILDA.Job_Detail.Error -> TILDA.Job_Detail."Error"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB_DETAIL.Error of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB_DETAIL.Error of type varchar(1000)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Job_Detail.Error of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Job_Detail.Error of type varchar(1000)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>1000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -218,13 +218,13 @@ This is the column definition for:<BR>
      public static Type_StringPrimitiveNull    ERROR                 = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "Error"                 , 9/*9*/, "Error");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOB_DETAIL.created -> TILDA.JOB_DETAIL."created"
+//   Field tilda.data.TILDA.Job_Detail.created -> TILDA.Job_Detail."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB_DETAIL.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB_DETAIL.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Job_Detail.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Job_Detail.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -243,13 +243,13 @@ This is the column definition for:<BR>
      public static Type_DatetimePrimitive      CREATED               = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"               , 10/*10*/, "The timestamp for when the record was created.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOB_DETAIL.lastUpdated -> TILDA.JOB_DETAIL."lastUpdated"
+//   Field tilda.data.TILDA.Job_Detail.lastUpdated -> TILDA.Job_Detail."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB_DETAIL.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB_DETAIL.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Job_Detail.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Job_Detail.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
@@ -268,13 +268,13 @@ This is the column definition for:<BR>
      public static Type_DatetimePrimitive      LASTUPDATED           = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"           , 11/*11*/, "The timestamp for when the record was last updated.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOB_DETAIL.deleted -> TILDA.JOB_DETAIL."deleted"
+//   Field tilda.data.TILDA.Job_Detail.deleted -> TILDA.Job_Detail."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOB_DETAIL.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOB_DETAIL.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Job_Detail.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Job_Detail.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
@@ -337,20 +337,20 @@ This is the column definition for:<BR>
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
        S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "JOB_DETAIL", "Id");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB_DETAIL", "Job_Id");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB_DETAIL", "FileName");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB_DETAIL", "FileRecords");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB_DETAIL", "FileProcessStartTimeTZ");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB_DETAIL", "FileProcessStartTime");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB_DETAIL", "FileProcessEndTimeTZ");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB_DETAIL", "FileProcessEndTime");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB_DETAIL", "Status");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB_DETAIL", "Error");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB_DETAIL", "created");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB_DETAIL", "lastUpdated");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOB_DETAIL", "deleted");
-       S.append(" from "); C.getFullTableVar(S, "TILDA", "JOB_DETAIL");
+       S.append(" "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "Id");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "Job_Id");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "FileName");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "FileRecords");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "FileProcessStartTimeTZ");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "FileProcessStartTime");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "FileProcessEndTimeTZ");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "FileProcessEndTime");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "Status");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "Error");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "created");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "lastUpdated");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "deleted");
+       S.append(" from "); C.getFullTableVar(S, "TILDA", "Job_Detail");
        switch (LookupId)
         {
           case -7:
@@ -366,7 +366,7 @@ This is the column definition for:<BR>
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(SCHEMA_TABLENAME_LABEL, Q);
-       QueryDetails.logQuery("TILDA.JOB_DETAIL", Q, null);
+       QueryDetails.logQuery("TILDA.Job_Detail", Q, null);
        java.sql.PreparedStatement PS=null;
        int count = 0;
        try

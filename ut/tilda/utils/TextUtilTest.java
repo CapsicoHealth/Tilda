@@ -196,9 +196,8 @@ public class TextUtilTest
         char C[] = Name.toCharArray();
         for (char c : C)
           {
-            if (Character.isLetterOrDigit(c) == false)
-              continue;
-            Str.append(Character.toLowerCase(c));
+            if (Character.isLetterOrDigit(c) == true)
+             Str.append(Character.toLowerCase(c));
           }
         return Str.toString();
       }

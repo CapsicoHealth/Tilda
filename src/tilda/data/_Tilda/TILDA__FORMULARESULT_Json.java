@@ -30,11 +30,11 @@ public class TILDA__FORMULARESULT_Json
    public tilda.data.FormulaResult_Data Write(Connection C) throws Exception
     {
       if (_formulaRefnum == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.FORMULARESULT.formulaRefnum' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.FormulaResult.formulaRefnum' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_value        ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.FORMULARESULT.value' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.FormulaResult.value' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_description  ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.FORMULARESULT.description' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.FormulaResult.description' was null or empty. It's not nullable in the model.\n"+toString());
 
       tilda.data.FormulaResult_Data Obj = tilda.data.FormulaResult_Factory.Create(_formulaRefnum, _value, _description);
       Update(Obj);
@@ -42,10 +42,10 @@ public class TILDA__FORMULARESULT_Json
        {
          Obj = tilda.data.FormulaResult_Factory.LookupByPrimaryKey(_formulaRefnum, _value);
          if (Obj.Read(C) == false)
-          throw new Exception("Cannot create the tilda.data.TILDA.FORMULARESULT object.\n"+toString());
+          throw new Exception("Cannot create the tilda.data.TILDA.FormulaResult object.\n"+toString());
          if (_description  != null) Obj.setDescription  (_description  );
          if (Obj.Write(C) == false)
-          throw new Exception("Cannot update the tilda.data.TILDA.FORMULARESULT object: "+Obj.toString());
+          throw new Exception("Cannot update the tilda.data.TILDA.FormulaResult object: "+Obj.toString());
 
        }
       return Obj;

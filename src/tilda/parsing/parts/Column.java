@@ -67,6 +67,7 @@ public class Column extends TypeDef
     public transient PaddingTracker    _PadderValueNames  = new PaddingTracker();
     public transient PaddingTracker    _PadderValueValues = new PaddingTracker();
     public transient boolean           _PrimaryKey        = false;
+    public transient boolean           _ForeignKey        = false;
     public transient boolean           _UniqueIndex       = false;
     public transient ColumnMapper      _MapperDef;
     public transient ColumnValue       _DefaultCreateValue;
@@ -151,8 +152,8 @@ public class Column extends TypeDef
 
     private void ValidateBase(ParserSession PS, Object ParentObject)
       {
-        
-        String N = getLogicalName();        
+
+        String N = getLogicalName();
         if (TextUtil.isNullOrEmpty(N) == true)
           {
             PS.AddError("Column '" + getFullName() + "' didn't define a 'name'. It is mandatory.");
@@ -231,7 +232,7 @@ public class Column extends TypeDef
         int Errs = PS.getErrorCount();
 
         ReferenceHelper R = ReferenceHelper.parseColumnReference(_SameAs, _ParentObject);
-        
+
         if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true || TextUtil.isNullOrEmpty(R._C) == true)
           PS.AddError("Column '" + getFullName() + "' is declaring sameas '" + _SameAs + "' with an incorrect syntax. It should be '(((package\\.)?schema\\.)?object\\.)?column'.");
         else
@@ -418,8 +419,8 @@ public class Column extends TypeDef
 
     public VisibilityType getVisibility()
       {
-        return _ParentObject.getLifecycle() == ObjectLifecycle.READONLY || _MapperDef != null || (_FrameworkManaged == true && isOCCLastUpdated()==false && isOCCDeleted()==false) ? VisibilityType.PRIVATE
-        : _Invariant == true || _PrimaryKey == true || (_Mode == ColumnMode.AUTO && isOCCLastUpdated()==false && isOCCDeleted()==false) ? VisibilityType.PROTECTED
+        return _ParentObject.getLifecycle() == ObjectLifecycle.READONLY || _MapperDef != null || (_FrameworkManaged == true && isOCCLastUpdated() == false && isOCCDeleted() == false) ? VisibilityType.PRIVATE
+        : _Invariant == true || _PrimaryKey == true || (_Mode == ColumnMode.AUTO && isOCCLastUpdated() == false && isOCCDeleted() == false) ? VisibilityType.PROTECTED
         : VisibilityType.PUBLIC;
       }
 
@@ -437,10 +438,12 @@ public class Column extends TypeDef
       {
         return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && (_Name.equals("created") == true || _Name.equals("lastUpdated") == true || _Name.equals("createdETL") == true || _Name.equals("lastUpdatedETL") == true || _Name.equals("deleted") == true);
       }
+
     public boolean isOCCLastUpdated()
       {
         return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && _Name.equals("lastUpdated") == true;
       }
+
     public boolean isOCCDeleted()
       {
         return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && _Name.equals("deleted") == true;
@@ -450,6 +453,16 @@ public class Column extends TypeDef
       {
         return (_PrimaryKey == false || _ParentObject.isAutoGenPrimaryKey(this) == false)
         && _Mode == ColumnMode.NORMAL && _FrameworkManaged == false && _Name.equals("deleted") == false;
+      }
+
+    public boolean isPrimaryKey()
+      {
+        return _PrimaryKey;
+      }
+
+    public boolean isForeignKey()
+      {
+        return _ForeignKey;
       }
 
     public boolean hasBeenValidatedSuccessfully()

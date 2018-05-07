@@ -30,9 +30,9 @@ public class TILDA__MAINTENANCE_Json
    public tilda.data.Maintenance_Data Write(Connection C) throws Exception
     {
       if (TextUtil.isNullOrEmpty(_type       ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.MAINTENANCE.type' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Maintenance.type' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_name       ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.MAINTENANCE.name' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Maintenance.name' was null or empty. It's not nullable in the model.\n"+toString());
 
       tilda.data.Maintenance_Data Obj = tilda.data.Maintenance_Factory.Create(_type, _name);
       Update(Obj);
@@ -40,10 +40,10 @@ public class TILDA__MAINTENANCE_Json
        {
          Obj = tilda.data.Maintenance_Factory.LookupByPrimaryKey(_type, _name);
          if (Obj.Read(C) == false)
-          throw new Exception("Cannot create the tilda.data.TILDA.MAINTENANCE object.\n"+toString());
+          throw new Exception("Cannot create the tilda.data.TILDA.Maintenance object.\n"+toString());
          if (_value      != null) Obj.setValue      (_value      );
          if (Obj.Write(C) == false)
-          throw new Exception("Cannot update the tilda.data.TILDA.MAINTENANCE object: "+Obj.toString());
+          throw new Exception("Cannot update the tilda.data.TILDA.Maintenance object: "+Obj.toString());
 
        }
       return Obj;

@@ -37,18 +37,18 @@ public class TILDA__JOBS_Json
    public tilda.data.Jobs_Data Write(Connection C) throws Exception
     {
       if (_Id           == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.JOBS.Id' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Jobs.Id' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(Str_StartTime   ) == false)
        {
          _StartTime    = DateTimeUtil.parsefromJSON(Str_StartTime   );
          if (   _StartTime    == null)
-          throw new Exception("Incoming value for 'tilda.data.TILDA.JOBS.StartTime' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+          throw new Exception("Incoming value for 'tilda.data.TILDA.Jobs.StartTime' was not in the expected format. Dates should follow the ISO format.\n"+toString());
        }
       if (TextUtil.isNullOrEmpty(Str_EndTime     ) == false)
        {
          _EndTime      = DateTimeUtil.parsefromJSON(Str_EndTime     );
          if (   _EndTime      == null)
-          throw new Exception("Incoming value for 'tilda.data.TILDA.JOBS.EndTime' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+          throw new Exception("Incoming value for 'tilda.data.TILDA.Jobs.EndTime' was not in the expected format. Dates should follow the ISO format.\n"+toString());
        }
 
       tilda.data.Jobs_Data Obj = tilda.data.Jobs_Factory.Create(_Id);
@@ -57,7 +57,7 @@ public class TILDA__JOBS_Json
        {
          Obj = tilda.data.Jobs_Factory.LookupByJob_Id(_Id);
          if (Obj.Read(C) == false)
-          throw new Exception("Cannot create the tilda.data.TILDA.JOBS object.\n"+toString());
+          throw new Exception("Cannot create the tilda.data.TILDA.Jobs object.\n"+toString());
          if (_Name        != null) Obj.setName        (_Name        );
          if (_StartTime   != null) Obj.setStartTime   (_StartTime   );
          if (_EndTime     != null) Obj.setEndTime     (_EndTime     );
@@ -65,7 +65,7 @@ public class TILDA__JOBS_Json
          if (_Status      != null) Obj.setStatus      (_Status      );
          if (_Error       != null) Obj.setError       (_Error       );
          if (Obj.Write(C) == false)
-          throw new Exception("Cannot update the tilda.data.TILDA.JOBS object: "+Obj.toString());
+          throw new Exception("Cannot update the tilda.data.TILDA.Jobs object: "+Obj.toString());
 
        }
       return Obj;

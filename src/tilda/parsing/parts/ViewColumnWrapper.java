@@ -21,6 +21,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnType;
+import tilda.utils.TextUtil;
 
 public class ViewColumnWrapper extends Column
   {
@@ -28,7 +29,7 @@ public class ViewColumnWrapper extends Column
 
     public ViewColumnWrapper(Column SameAsCol, ViewColumn VCol, int SequenceOrder)
       {
-        super(SameAsCol._Name, VCol._SameAs, SameAsCol._Description);
+        super(SameAsCol._Name, VCol._SameAs, TextUtil.isNullOrEmpty(VCol._Description) == false ? VCol._Description : SameAsCol._Description);
         _SequenceOrder = SequenceOrder;
         _Invariant = SameAsCol._Invariant;
         if (VCol._UseMapper == true && SameAsCol._Mapper != null)
