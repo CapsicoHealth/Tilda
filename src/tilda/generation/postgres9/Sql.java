@@ -311,13 +311,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                         ViewJoin VJ = V.getViewjoin(T.getBaseName(), VC._As);
                         if (VJ != null)
                           {
-                            FromList.append("     " + JoinType.printJoinType(VJ._Join) + " " + VJ._ObjectObj.getShortName());
-                            if (TextUtil.isNullOrEmpty(VJ._As) == false)
-                              FromList.append(" as " + VJ._ObjectObj.getShortName().replace(".", "_") + VJ._As);
-                            Query Q = VJ.getQuery(this);
-                            if (Q == null)
-                              throw new Exception("Cannot generate the view because an 'on' clause matching the active database '" + getName() + "' is not available.");
-                            FromList.append(" on " + Q._Clause);
+                            Query Q = genViewJoin(FromList, VJ);
                             TableRankTracker TI2 = TableRankTracker.getElementFromLast(TableStack, VJ._ObjectObj, VJ._As);
                             if (TI2 == null)
                               {
@@ -550,6 +544,20 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
 
         return Str.toString();
+      }
+
+    @Override
+    public Query genViewJoin(StringBuilder Str, ViewJoin VJ)
+    throws Exception
+      {
+        Str.append("     " + JoinType.printJoinType(VJ._Join) + " " + VJ._ObjectObj.getShortName());
+        if (TextUtil.isNullOrEmpty(VJ._As) == false)
+          Str.append(" as " + VJ._ObjectObj.getShortName().replace(".", "_") + VJ._As);
+        Query Q = VJ.getQuery(this);
+        if (Q == null)
+          throw new Exception("Cannot generate the view because an 'on' clause matching the active database '" + this.getName() + "' is not available.");
+        Str.append(" on " + Q._Clause);
+        return Q;
       }
 
     private boolean PrintViewColumn(StringBuilder Str, ViewColumn VC, TableRankTracker TI, boolean NoAs)
@@ -1207,9 +1215,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
     @Override
     public void genKeysManagement(PrintWriter Out, Object O)
       {
-        Out.println("delete from TILDA.KEY where \"name\" = '" + O._ParentSchema._Name + "." + O._Name + "';");
-        Out.println("insert into TILDA.KEY (\"refnum\", \"name\", \"max\", \"count\", \"created\", \"lastUpdated\") values ((select COALESCE(max(\"refnum\"),0)+1 from TILDA.KEY), '"
-        + O._ParentSchema._Name + "." + O._Name + "',(select COALESCE(max(\"refnum\"),0)+1 from " + O._ParentSchema._Name + "." + O._Name
+        Out.println("delete from TILDA.Key where \"name\" = '" + O._ParentSchema._Name + "." + O._Name.toUpperCase() + "';");
+        Out.println("insert into TILDA.Key (\"refnum\", \"name\", \"max\", \"count\", \"created\", \"lastUpdated\") values ((select COALESCE(max(\"refnum\"),0)+1 from TILDA.Key), '"
+        + O._ParentSchema._Name + "." + O._Name.toUpperCase() + "',(select COALESCE(max(\"refnum\"),0)+1 from " + O._ParentSchema._Name + "." + O._Name
         + "), " + O._PrimaryKey._KeyBatch + ", current_timestamp, current_timestamp);");
       }
 

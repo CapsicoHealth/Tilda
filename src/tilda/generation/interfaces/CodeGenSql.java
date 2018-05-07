@@ -24,8 +24,10 @@ import tilda.enums.ColumnType;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Index;
 import tilda.parsing.parts.Object;
+import tilda.parsing.parts.Query;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
+import tilda.parsing.parts.ViewJoin;
 
 
 public interface CodeGenSql extends DBType, CodeGenBase
@@ -77,7 +79,9 @@ public interface CodeGenSql extends DBType, CodeGenBase
     public void genDDLMetadata(PrintWriter Out, View V)
     throws Exception;
 
-    
+    public Query genViewJoin(StringBuilder Str, ViewJoin VJ)
+    throws Exception;
+
     public void genIndex(PrintWriter Out, Index I);
 
     public void genKeysManagement(PrintWriter Out, Object O);

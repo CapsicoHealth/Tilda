@@ -285,9 +285,6 @@ public class Migrator
                         if (Col._Description.equalsIgnoreCase(CMeta._Descr) == false)
                           Actions.add(new ColumnComment(Col));
 
-                        if (CMeta._Nullable == 1 && Col._Nullable == false || CMeta._Nullable == 0 && Col._Nullable == true)
-                          Actions.add(new ColumnAlterNull(Col));
-
                         if (CheckArrays(DBMeta, Errors, Col, CMeta) == false)
                           continue;
 
@@ -301,9 +298,12 @@ public class Migrator
                         && (CMeta._Size < DBMeta.getCLOBThreshhold() && CMeta._Size != Col._Size
                         || CMeta._Size >= DBMeta.getCLOBThreshhold() && Col._Size < DBMeta.getCLOBThreshhold()))
                           Actions.add(new ColumnAlterStringSize(Col, CMeta._Size));
+
+                        if (CMeta._Nullable == 1 && Col._Nullable == false || CMeta._Nullable == 0 && Col._Nullable == true)
+                          Actions.add(new ColumnAlterNull(Col));
                       }
                   }
-                if (Obj._PrimaryKey != null && Obj._PrimaryKey._Autogen == true && KeysManager.hasKey(Obj.getShortName()) == false)
+                if (Obj._PrimaryKey != null && Obj._PrimaryKey._Autogen == true && KeysManager.hasKey(Obj.getShortName().toUpperCase()) == false)
                   Actions.add(new TableKeyCreate(Obj));
                 Set<String> DroppedFKs = new HashSet<String>();
                 if (DifferentPrimaryKeys(Obj._PrimaryKey, TMeta._PrimaryKey) == true)

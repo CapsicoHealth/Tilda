@@ -1,0 +1,147 @@
+
+.dotted_underline { 
+   border-bottom: 1px dotted; 
+ } 
+.modal { 
+   display: none; /* Hidden by default */ 
+   position: fixed; /* Stay in place */ 
+   z-index: 1; /* Sit on top */ 
+   left: 0; 
+   top: 0; 
+   width: 100%; /* Full width */ 
+   height: 100%; /* Full height */ 
+   overflow: auto; /* Enable scroll if needed */ 
+   background-color: rgb(0,0,0); /* Fallback color */ 
+   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */ 
+ } 
+   
+.modal-content { 
+   background-color: #fefefe; 
+   margin: 2% auto; /* 10% from the top and centered */ 
+   padding: 20px; 
+   border: 1px solid #888; 
+   width: 90%; 
+   height: 82%; 
+   overflow: auto; 
+ } 
+   
+.close { 
+   color: #aaa; 
+   float: right; 
+   font-size: 28px; 
+   font-weight: bold; 
+ } 
+.cursor_pointer { 
+   cursor: pointer; 
+ } 
+.close:hover, .close:focus { 
+   color: black; 
+   text-decoration: none; 
+   cursor: pointer; 
+ } 
+
+#search_input {
+   padding:2px;
+   width: 250px;
+   margin-left: 5px;
+   border:2px solid #CCC;
+   -webkit-border-radius: 5px;
+   border-radius: 5px;
+ }
+.search_results { 
+   background-color: #FFF;
+   border: 2px ridge #F09819; 
+   display: none; 
+   height: 200px; 
+   position: absolute;
+   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+   z-index: 1;
+   -webkit-border-radius: 5px;
+   border-radius: 5px;
+   overflow-y: auto; /* Enable scroll if needed */ 
+   overflow-x: hidden;
+ }
+.search_results .scrollLock { 
+   overflow: hidden;
+ }
+.search_results TH {
+   background-color: #FFC837;
+   font-weight: bold;
+   border-bottom: 2px #666 solid;
+   padding: 0px;
+   font-weight: bold;
+ }
+.search_results A {
+   color: #000;
+ }
+.search_results TR:nth-child(odd) TD {
+   background-color: #fff6d6;
+ }
+.search_results TR:nth-child(even) TD {
+   background-color: #FFF;
+ }
+.search_results TR TD {
+   padding-right: 10px;
+ }
+.blink_div { 
+   animation: blink-animation 0.75s steps(5, start) infinite; 
+   color: red; 
+ } 
+@keyframes blink-animation {   
+   to { visibility: hidden; } 
+ } 
+
+input[type=text]:focus {
+   border-color:#DFECF8;
+ } 
+
+.RowedTable > TBODY > TR > TD {
+   vertical-align: top;
+   border: 1px solid black;
+ }
+.RowedTable > TBODY >TR > TD:nth-child(1) {
+   padding-right: 5px;
+   text-align: right;
+ }
+.TreeTable {
+   border: 2px outset #aaa;
+}
+.TreeTable > TBODY > TR > TD {
+   vertical-align: top;
+   border: 0px solid black;
+ }
+.TreeTable > TBODY >TR > TD:nth-child(1) {
+   padding-right: 5px;
+   text-align: left;
+ }
+.Rowed TR:nth-child(odd) TD {
+   border-bottom: 2px #666 solid;
+   background-color: #f0fdf0;
+}
+.Rowed TR:nth-child(even) TD {
+   border-bottom: 2px #666 solid;
+   background-color:#FFFFFF;
+ }
+.BackToDetails {
+   display: none;
+ }
+.sticky {
+   position: fixed;
+   top: 0;
+   left: 0;
+   background: #F09819;
+   background: -webkit-linear-gradient(to top, #F09819, #FFC837);
+   background: linear-gradient(to top, #F09819, #FFC837);
+   color: #000;
+   width: 100%;
+ }
+.sticky H2 {
+   margin: 0px;
+   padding: 0px;
+ }
+.sticky + .content {
+   padding-top: 90px;
+ }
+.sticky .BackToDetails {
+   display: inline;
+ }

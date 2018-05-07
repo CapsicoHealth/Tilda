@@ -61,6 +61,12 @@ public class Object extends Base
     public transient ObjectLifecycle      _LC;
 
     @Override
+    public String toString()
+      {
+        return super.toString() + ": " + getFullName();
+      }
+
+    @Override
     public Column getColumn(String name)
       {
         for (Column C : _Columns)
@@ -106,7 +112,7 @@ public class Object extends Base
 
         int Errs = PS.getErrorCount();
 
-        if (getFullName().equals("tilda.data.TILDA.KEY") == true)
+        if (getFullName().equals("tilda.data.TILDA.Key") == true)
           {
             if (getColumn("created") == null || getColumn("lastUpdated") == null || getColumn("deleted") == null || getColumn("lastUpdatedETL") == null || getColumn("createdETL") == null)
               return PS.AddError("Object '" + getFullName() + "' is a built-in Tilda framework object but doesn't seem to have defined the base OCC (created, lastUpdated, deleted) columns.");
@@ -144,7 +150,7 @@ public class Object extends Base
                     --i;
                     continue;
                   }
-                
+
                 _PadderColumnNames.track(C.getLogicalName());
                 if (C.Validate(PS, this) == true)
                   {
@@ -176,7 +182,7 @@ public class Object extends Base
                 int Max = 64 * 6;
                 if (Counter >= Max)
                   {
-                    PS.AddError("Object '" + getFullName() + "' has declared " + (i + 1) + " columns. Max allowed is "+Max+"!");
+                    PS.AddError("Object '" + getFullName() + "' has declared " + (i + 1) + " columns. Max allowed is " + Max + "!");
                   }
               }
           }
@@ -273,8 +279,8 @@ public class Object extends Base
               return PS.AddError("Object '" + getFullName() + "' has defined an autogen primary key but is also defining column 'refnum', which is a reserved name.");
           }
 
-        Column C = new Column("refnum", null, 0, false, null, true, null, PS.getColumn("tilda.data", "TILDA", "KEY", "refnum")._Description);
-        C._SameAs = "tilda.data.TILDA.KEY.refnum";
+        Column C = new Column("refnum", null, 0, false, null, true, null, PS.getColumn("tilda.data", "TILDA", "Key", "refnum")._Description);
+        C._SameAs = "tilda.data.TILDA.Key.refnum";
         _Columns.add(0, C);
 
         return true;
@@ -292,42 +298,42 @@ public class Object extends Base
               return PS.AddError("Object '" + getFullName() + "' has defined OCC to be true but is also defining column '" + C.getName() + "', which is a reserved name.");
           }
 
-        Object KeyObj = PS.getObject("tilda.data", "TILDA", "KEY");
+        Object KeyObj = PS.getObject("tilda.data", "TILDA", "Key");
         if (KeyObj == null)
           {
-            LOG.error("WHHHUUUT???? TILDA.KEY cannot be found");
+            LOG.error("WHHHUUUT???? TILDA.Key cannot be found");
             throw new Error("There is a class-path issue here... This process cannot see the base Tilda object definitions.");
           }
         else if (KeyObj.getColumn("created") == null)
           {
-            LOG.error("WHHHUUUT???? TILDA.KEY.created cannot be found");
+            LOG.error("WHHHUUUT???? TILDA.Key.created cannot be found");
             throw new Error("There is a class-path issue here... This process cannot see the base Tilda object definitions.");
           }
 
-        Column C = new Column("created", null, 0, false, ColumnMode.AUTO, true, null, PS.getColumn("tilda.data", "TILDA", "KEY", "created")._Description);
-        C._SameAs = "tilda.data.TILDA.KEY.created";
+        Column C = new Column("created", null, 0, false, ColumnMode.AUTO, true, null, PS.getColumn("tilda.data", "TILDA", "Key", "created")._Description);
+        C._SameAs = "tilda.data.TILDA.Key.created";
         C._FrameworkManaged = true;
         _Columns.add(C);
 
-        C = new Column("lastUpdated", null, 0, false, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "KEY", "lastUpdated")._Description);
-        C._SameAs = "tilda.data.TILDA.KEY.lastUpdated";
+        C = new Column("lastUpdated", null, 0, false, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "Key", "lastUpdated")._Description);
+        C._SameAs = "tilda.data.TILDA.Key.lastUpdated";
         C._FrameworkManaged = true;
         _Columns.add(C);
 
-        C = new Column("deleted", null, 0, true, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "KEY", "deleted")._Description);
-        C._SameAs = "tilda.data.TILDA.KEY.deleted";
+        C = new Column("deleted", null, 0, true, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "Key", "deleted")._Description);
+        C._SameAs = "tilda.data.TILDA.Key.deleted";
         C._FrameworkManaged = true;
         _Columns.add(C);
 
         if (addETLLastUpdated == true)
           {
-            C = new Column("createdETL", null, 0, true, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "KEY", "createdETL")._Description);
-            C._SameAs = "tilda.data.TILDA.KEY.createdETL";
+            C = new Column("createdETL", null, 0, true, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "Key", "createdETL")._Description);
+            C._SameAs = "tilda.data.TILDA.Key.createdETL";
             C._FrameworkManaged = true;
             _Columns.add(C);
 
-            C = new Column("lastUpdatedETL", null, 0, true, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "KEY", "lastUpdatedETL")._Description);
-            C._SameAs = "tilda.data.TILDA.KEY.lastUpdatedETL";
+            C = new Column("lastUpdatedETL", null, 0, true, ColumnMode.AUTO, false, null, PS.getColumn("tilda.data", "TILDA", "Key", "lastUpdatedETL")._Description);
+            C._SameAs = "tilda.data.TILDA.Key.lastUpdatedETL";
             C._FrameworkManaged = true;
             _Columns.add(C);
           }
@@ -339,10 +345,12 @@ public class Object extends Base
       {
         return C.isOCCGenerated();
       }
+
     public static boolean isOCCLastUpdated(Column C)
       {
         return C.isOCCLastUpdated();
       }
+
     public static boolean isOCCDeleted(Column C)
       {
         return C.isOCCDeleted();
@@ -432,8 +440,20 @@ public class Object extends Base
       {
         List<ForeignKey> FKs = new ArrayList<ForeignKey>();
         for (ForeignKey FK : _ForeignKeys)
-          if (FK._ParentObject.getShortName().equalsIgnoreCase(targetSchema+"."+TargetObject) == true)
-           FKs.add(FK);
+          if (FK._ParentObject.getShortName().equalsIgnoreCase(targetSchema + "." + TargetObject) == true)
+            FKs.add(FK);
         return FKs;
       }
+    
+    public List<ForeignKey> getForeignKeys(Column Col)
+      {
+        List<ForeignKey> FKs = new ArrayList<ForeignKey>();
+        for (ForeignKey FK : _ForeignKeys)
+          if (FK != null)
+            for (Column C : FK._SrcColumnObjs)
+             if (C == Col)
+              FKs.add(FK);
+        return FKs;
+      }
+    
   }

@@ -29,9 +29,9 @@ public class TILDA__FORMULADEPENDENCY_Json
    public tilda.data.FormulaDependency_Data Write(Connection C) throws Exception
     {
       if (_formulaRefnum    == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.FORMULADEPENDENCY.formulaRefnum' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.FormulaDependency.formulaRefnum' was null or empty. It's not nullable in the model.\n"+toString());
       if (_dependencyRefnum == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.FORMULADEPENDENCY.dependencyRefnum' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.FormulaDependency.dependencyRefnum' was null or empty. It's not nullable in the model.\n"+toString());
 
       tilda.data.FormulaDependency_Data Obj = tilda.data.FormulaDependency_Factory.Create(_formulaRefnum, _dependencyRefnum);
       Update(Obj);
@@ -39,7 +39,7 @@ public class TILDA__FORMULADEPENDENCY_Json
        {
          Obj = tilda.data.FormulaDependency_Factory.LookupByPrimaryKey(_formulaRefnum, _dependencyRefnum);
          if (Obj.Read(C) == false)
-          throw new Exception("Cannot create the tilda.data.TILDA.FORMULADEPENDENCY object.\n"+toString());
+          throw new Exception("Cannot create the tilda.data.TILDA.FormulaDependency object.\n"+toString());
          LOG.debug("Nothing has changed in the object, so no update necessary.");
 
        }

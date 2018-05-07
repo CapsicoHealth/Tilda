@@ -35,17 +35,17 @@ public class TILDA__FORMULA_Json
    public tilda.data.Formula_Data Write(Connection C) throws Exception
     {
       if (TextUtil.isNullOrEmpty(_location   ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.FORMULA.location' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Formula.location' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_location2  ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.FORMULA.location2' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Formula.location2' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_name       ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.FORMULA.name' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Formula.name' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_type       ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.FORMULA.type' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Formula.type' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_title      ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.FORMULA.title' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Formula.title' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_description) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.FORMULA.description' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Formula.description' was null or empty. It's not nullable in the model.\n"+toString());
 
       tilda.data.Formula_Data Obj = tilda.data.Formula_Factory.Create(_location, _location2, _name, _type, _title, _description);
       Update(Obj);
@@ -53,16 +53,16 @@ public class TILDA__FORMULA_Json
        {
          Obj = tilda.data.Formula_Factory.LookupByFormula(_location, _name);
          if (Obj.Read(C) == false)
-          throw new Exception("Cannot create the tilda.data.TILDA.FORMULA object.\n"+toString());
+          throw new Exception("Cannot create the tilda.data.TILDA.Formula object.\n"+toString());
          if (_location2  .equals(Obj.getLocation2  ()) == false)
-          throw new Exception("Cannot update the invariant field 'tilda.data.TILDA.FORMULA.location2' from '"+Obj.getLocation2()+"' to '"+_location2+"': "+Obj.toString());
+          throw new Exception("Cannot update the invariant field 'tilda.data.TILDA.Formula.location2' from '"+Obj.getLocation2()+"' to '"+_location2+"': "+Obj.toString());
          if (_type       != null) Obj.setType       (_type       );
          if (_title      != null) Obj.setTitle      (_title      );
          if (_description!= null) Obj.setDescription(_description);
          if (_formula    != null) Obj.setFormula    (_formula    );
          if (_htmlDoc    != null) Obj.setHtmlDoc    (_htmlDoc    );
          if (Obj.Write(C) == false)
-          throw new Exception("Cannot update the tilda.data.TILDA.FORMULA object: "+Obj.toString());
+          throw new Exception("Cannot update the tilda.data.TILDA.Formula object: "+Obj.toString());
 
        }
       return Obj;

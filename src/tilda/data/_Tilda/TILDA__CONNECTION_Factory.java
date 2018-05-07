@@ -26,20 +26,20 @@ public class TILDA__CONNECTION_Factory
 
    public static final Class<TILDA__CONNECTION> DATA_CLASS= TILDA__CONNECTION.class;
    public static final String SCHEMA_LABEL = TextUtil.Print("TILDA", "");
-   public static final String TABLENAME_LABEL = TextUtil.Print("CONNECTION", "");
-   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.CONNECTION", "");
-   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "CONNECTION"); }
+   public static final String TABLENAME_LABEL = TextUtil.Print("Connection", "");
+   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.Connection", "");
+   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "Connection"); }
 
    public static abstract class COLS {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.active -> TILDA.CONNECTION."active"
+//   Field tilda.data.TILDA.Connection.active -> TILDA.Connection."active"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.active of type boolean</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.active of type boolean</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Connection.active of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.active of type boolean</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Status Flag</TD></TR>
@@ -51,13 +51,13 @@ This is the column definition for:<BR>
      public static Type_BooleanPrimitiveNull   ACTIVE     = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "active"     , 0/*0*/, "Status Flag");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.id -> TILDA.CONNECTION."id"
+//   Field tilda.data.TILDA.Connection.id -> TILDA.Connection."id"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.id of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.id of type character(15)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Connection.id of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.id of type character(15)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>15</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -70,13 +70,13 @@ This is the column definition for:<BR>
      public static Type_StringPrimitive        ID         = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "id"         , 1/*1*/, "Connection ID");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.driver -> TILDA.CONNECTION."driver"
+//   Field tilda.data.TILDA.Connection.driver -> TILDA.Connection."driver"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.driver of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.driver of type varchar(100)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Connection.driver of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.driver of type varchar(100)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>100</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -89,13 +89,13 @@ This is the column definition for:<BR>
      public static Type_StringPrimitive        DRIVER     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "driver"     , 2/*2*/, "DB Driver");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.db -> TILDA.CONNECTION."db"
+//   Field tilda.data.TILDA.Connection.db -> TILDA.Connection."db"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.db of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.db of type varchar(200)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Connection.db of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.db of type varchar(200)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>200</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -108,13 +108,13 @@ This is the column definition for:<BR>
      public static Type_StringPrimitive        DB         = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "db"         , 3/*3*/, "DB Url");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.user -> TILDA.CONNECTION."user"
+//   Field tilda.data.TILDA.Connection.user -> TILDA.Connection."user"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.user of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.user of type varchar(30)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Connection.user of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.user of type varchar(30)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>30</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -127,13 +127,13 @@ This is the column definition for:<BR>
      public static Type_StringPrimitive        USER       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "user"       , 4/*4*/, "DB User");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.pswd -> TILDA.CONNECTION."pswd"
+//   Field tilda.data.TILDA.Connection.pswd -> TILDA.Connection."pswd"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.pswd of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.pswd of type varchar(40)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Connection.pswd of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.pswd of type varchar(40)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>40</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -146,13 +146,13 @@ This is the column definition for:<BR>
      public static Type_StringPrimitive        PSWD       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "pswd"       , 5/*5*/, "DB Password");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.initial -> TILDA.CONNECTION."initial"
+//   Field tilda.data.TILDA.Connection.initial -> TILDA.Connection."initial"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.initial of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.initial of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Connection.initial of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.initial of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Minimum Connections</TD></TR>
@@ -164,13 +164,13 @@ This is the column definition for:<BR>
      public static Type_IntegerPrimitive       INITIAL    = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "initial"    , 6/*6*/, "Minimum Connections");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.max -> TILDA.CONNECTION."max"
+//   Field tilda.data.TILDA.Connection.max -> TILDA.Connection."max"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.max of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.max of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Connection.max of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.max of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Maximum Connections</TD></TR>
@@ -182,13 +182,13 @@ This is the column definition for:<BR>
      public static Type_IntegerPrimitive       MAX        = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "max"        , 7/*7*/, "Maximum Connections");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.schemas -> TILDA.CONNECTION."schemas"
+//   Field tilda.data.TILDA.Connection.schemas -> TILDA.Connection."schemas"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.schemas of type List<String></TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.schemas of type text[]</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Connection.schemas of type List<String></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.schemas of type text[]</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>null</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -201,13 +201,13 @@ This is the column definition for:<BR>
      public static Type_StringCollection       SCHEMAS    = new Type_StringCollection      (SCHEMA_LABEL, TABLENAME_LABEL, "schemas"    , 8/*8*/, "Schemas");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.created -> TILDA.CONNECTION."created"
+//   Field tilda.data.TILDA.Connection.created -> TILDA.Connection."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Connection.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -226,13 +226,13 @@ This is the column definition for:<BR>
      public static Type_DatetimePrimitive      CREATED    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 9/*9*/, "The timestamp for when the record was created.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.lastUpdated -> TILDA.CONNECTION."lastUpdated"
+//   Field tilda.data.TILDA.Connection.lastUpdated -> TILDA.Connection."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Connection.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
@@ -251,13 +251,13 @@ This is the column definition for:<BR>
      public static Type_DatetimePrimitive      LASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 10/*10*/, "The timestamp for when the record was last updated.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.CONNECTION.deleted -> TILDA.CONNECTION."deleted"
+//   Field tilda.data.TILDA.Connection.deleted -> TILDA.Connection."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.CONNECTION.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.CONNECTION.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Connection.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
@@ -320,19 +320,19 @@ This is the column definition for:<BR>
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
        S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "CONNECTION", "active");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "CONNECTION", "id");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "CONNECTION", "driver");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "CONNECTION", "db");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "CONNECTION", "user");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "CONNECTION", "pswd");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "CONNECTION", "initial");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "CONNECTION", "max");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "CONNECTION", "schemas");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "CONNECTION", "created");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "CONNECTION", "lastUpdated");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "CONNECTION", "deleted");
-       S.append(" from "); C.getFullTableVar(S, "TILDA", "CONNECTION");
+       S.append(" "); C.getFullColumnVar(S, "TILDA", "Connection", "active");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "id");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "driver");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "db");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "user");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "pswd");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "initial");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "max");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "schemas");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "created");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "lastUpdated");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Connection", "deleted");
+       S.append(" from "); C.getFullTableVar(S, "TILDA", "Connection");
        switch (LookupId)
         {
           case -7:
@@ -340,11 +340,11 @@ This is the column definition for:<BR>
              if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
              break;
           case 1:
-             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "CONNECTION", "id"); S.append(" ASC");
+             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "Connection", "id"); S.append(" ASC");
              break;
           case 2:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "CONNECTION", "active"); S.append(" IS NOT false)");
-             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "CONNECTION", "id"); S.append(" ASC");
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Connection", "active"); S.append(" IS NOT false)");
+             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "Connection", "id"); S.append(" ASC");
              break;
           case -666: break;
           default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
@@ -355,7 +355,7 @@ This is the column definition for:<BR>
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(SCHEMA_TABLENAME_LABEL, Q);
-       QueryDetails.logQuery("TILDA.CONNECTION", Q, null);
+       QueryDetails.logQuery("TILDA.Connection", Q, null);
        java.sql.PreparedStatement PS=null;
        List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
        int count = 0;
