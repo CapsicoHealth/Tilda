@@ -50,6 +50,8 @@ public class MasterFactory
         protected ObjectMetaData(String PackageName, Object Obj)
           throws Exception
           {
+            _Obj = Obj;
+            
             String FactoryClassName = Helper.getFullBaseClassName(Obj) + "_Factory";
             _FactoryClass = Class.forName(FactoryClassName);
 
@@ -70,11 +72,28 @@ public class MasterFactory
             _RunSelectMethodOP = _FactoryClass.getMethod("runSelect", Connection.class, SelectQuery.class, ObjectProcessor.class, Integer.TYPE, Integer.TYPE);
           }
 
+        protected final Object              _Obj;
         public final String                 _ObjectName;
         public final Class<?>               _FactoryClass;
         public final Method                 _RunSelectMethodList;
         public final Method                 _RunSelectMethodOP;
         public final List<ColumnDefinition> _Cols = new ArrayList<ColumnDefinition>();
+        
+        public String getColumnDefaultCreateValue(String columnName)
+         {
+           Column Col = _Obj.getColumn("abc");
+           if (Col != null && Col._DefaultCreateValue != null)
+            return Col._DefaultCreateValue._Value;
+           return null;
+         }
+        public String getColumnDefaultUpdateValue(String columnName)
+          {
+            Column Col = _Obj.getColumn("abc");
+            if (Col != null && Col._DefaultUpdateValue != null)
+             return Col._DefaultUpdateValue._Value;
+            return null;
+          }
+        
       }
 
     protected static Map<String, ObjectMetaData> _M = new HashMap<String, ObjectMetaData>();
