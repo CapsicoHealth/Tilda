@@ -279,49 +279,48 @@ public class TildaData implements CodeGenTildaData
               else
                 {
                   Out.print("   public static final " + JavaJDBCType.getFieldTypeBase(C) + " _" + C.getName() + TextUtil.CapitalizeFirstCharacter(V._Name) + C._PadderValueNames.getPad(V._Name) + " = ");
-                  switch (V._ParentColumn.getType())
-                    {
-                      case BOOLEAN:
-                      case DOUBLE:
-                      case FLOAT:
-                      case INTEGER:
-                      case LONG:
-                        Out.print(V._Value);
-                        break;
-                      case CHAR:
-                        Out.print(TextUtil.EscapeSingleQuoteForSQL(V._Value));
-                        break;
-                      case DATETIME:
-                        if (V._Value.equalsIgnoreCase("NOW") == true)
-                          Out.print("DateTimeUtil.NOW_PLACEHOLDER_ZDT");
-                        else if (V._Value.equalsIgnoreCase("UNDEFINED") == true)
-                          Out.print("DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT");
-                        else
-                          Out.print("DateTimeUtil.toCalendarNoThrow(" + TextUtil.EscapeDoubleQuoteWithSlash(V._Value) + ")");
-                        break;
-                      case DATE:
-                        if (V._Value.equalsIgnoreCase("NOW") == true)
-                          Out.print("DateTimeUtil.NOW_PLACEHOLDER_D");
-                        else if (V._Value.equalsIgnoreCase("UNDEFINED") == true)
-                          Out.print("DateTimeUtil.UNDEFINED_PLACEHOLDER_D");
-                        else
-                          Out.print("DateTimeUtil.parseDate(" + TextUtil.EscapeDoubleQuoteWithSlash(V._Value) + ", \"yyyy-MM-dd\")");
-                        break;
-                      case STRING:
-                      case JSON:
-                        Out.print(TextUtil.EscapeDoubleQuoteWithSlash(V._Value));
-                        break;
-                      case BINARY:
-                      case BITFIELD:
-                        throw new Error("An invalid type '" + V._ParentColumn.getType() + "' was assigned column values for code gen.");
-                      default:
-                        throw new Error("Unhandled case in switch for type '" + V._ParentColumn.getType() + "'.");
-                    }
+                  Out.print(PrintColumnValue(V._ParentColumn, V._Value));
                   Out.println(";");
                 }
             }
 
 
+      }
+
+    public static String PrintColumnValue(Column C, String V)
+    throws Error
+      {
+        switch (C.getType())
+          {
+            case BOOLEAN:
+            case DOUBLE:
+            case FLOAT:
+            case INTEGER:
+            case LONG:
+              return V;
+            case CHAR:
+              return TextUtil.EscapeSingleQuoteForSQL(V);
+            case DATETIME:
+              if (V.equalsIgnoreCase("NOW") == true)
+                return "DateTimeUtil.NOW_PLACEHOLDER_ZDT";
+              else if (V.equalsIgnoreCase("UNDEFINED") == true)
+                return "DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT";
+              return "DateTimeUtil.toCalendarNoThrow(" + TextUtil.EscapeDoubleQuoteWithSlash(V) + ")";
+            case DATE:
+              if (V.equalsIgnoreCase("NOW") == true)
+                return "DateTimeUtil.NOW_PLACEHOLDER_D";
+              else if (V.equalsIgnoreCase("UNDEFINED") == true)
+                return "DateTimeUtil.UNDEFINED_PLACEHOLDER_D";
+              return "DateTimeUtil.parseDate(" + TextUtil.EscapeDoubleQuoteWithSlash(V) + ", \"yyyy-MM-dd\")";
+            case STRING:
+            case JSON:
+              return TextUtil.EscapeDoubleQuoteWithSlash(V);
+            case BINARY:
+            case BITFIELD:
+              throw new Error("An invalid type '" + C.getType() + "' was assigned column values for code gen.");
+            default:
+              throw new Error("Unhandled case in switch for type '" + C.getType() + "'.");
+          }
       }
 
 
@@ -746,10 +745,11 @@ public class TildaData implements CodeGenTildaData
                 Out.println("      { addTo" + TextUtil.CapitalizeFirstCharacter(V._ParentColumn.getName()) + "(" + ValueNameVar + "); }");
               break;
             case DATETIME:
+            case DATE:
             case BINARY:
             case BITFIELD:
             case JSON:
-              throw new Error("An invalid type '" + V._ParentColumn.getType() + "' was assigned column values for code gen.");
+              throw new Error("An invalid type '" + V._ParentColumn.getType() + "' was assigned column values for code gen for column "+V._ParentColumn.getName()+".");
             default:
               throw new Error("Unhandled case in switch for type '" + V._ParentColumn.getType() + "'.");
           }
