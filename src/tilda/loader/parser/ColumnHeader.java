@@ -35,6 +35,7 @@ public class ColumnHeader
     @SerializedName("operator"             ) public String    _Operator;
     @SerializedName("sum"                  ) public boolean   _Sum = false ;
     @SerializedName("constant"             ) public String    _Constant;
+    @SerializedName("defaultValue"         ) public String    _DefaultValue;
     
     public void validate()
     throws Exception

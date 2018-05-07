@@ -81,14 +81,14 @@ public class MasterFactory
         
         public String getColumnDefaultCreateValue(String columnName)
          {
-           Column Col = _Obj.getColumn("abc");
+           Column Col = _Obj.getColumn(columnName);
            if (Col != null && Col._DefaultCreateValue != null)
             return Col._DefaultCreateValue._Value;
            return null;
          }
         public String getColumnDefaultUpdateValue(String columnName)
           {
-            Column Col = _Obj.getColumn("abc");
+            Column Col = _Obj.getColumn(columnName);
             if (Col != null && Col._DefaultUpdateValue != null)
              return Col._DefaultUpdateValue._Value;
             return null;
@@ -97,7 +97,39 @@ public class MasterFactory
       }
 
     protected static Map<String, ObjectMetaData> _M = new HashMap<String, ObjectMetaData>();
-
+        
+    public static ObjectMetaData GetTableObject(String SchemaName, String TableName)
+    {    	  	  
+      if(_M.get(SchemaName.toUpperCase() + "." + TableName) != null)  	
+  	     return _M.get(SchemaName.toUpperCase() + "." + TableName);	
+  	  return null;
+    }
+  
+    public static String GetDefaultCreateValue(String SchemaName, String TableName, String ColumnName)
+    {
+	  ObjectMetaData omd = GetTableObject(SchemaName, TableName);
+  	
+  	  String defaultCreateValue = omd.getColumnDefaultCreateValue(ColumnName);
+  	  if(defaultCreateValue != null)
+  	    return defaultCreateValue;
+  	  
+  	  LOG.error("No default create value found for " + SchemaName + "." + TableName + "." + ColumnName);
+  	  return null;    	
+    }
+    
+    public static String GetDefaultUpdateValue(String SchemaName, String TableName, String ColumnName)
+    {
+	  ObjectMetaData omd = GetTableObject(SchemaName, TableName);
+	
+	  String defaultUpdateValue = omd.getColumnDefaultUpdateValue(ColumnName);
+	  if(defaultUpdateValue != null)
+	    return defaultUpdateValue;
+	  
+	  LOG.error("No default update value found for " + SchemaName + "." + TableName + "." + ColumnName);
+	  return null;    	
+    }
+  
+  
     public static void register(String PackageName, Object Obj)
     throws Exception
       {
