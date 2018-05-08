@@ -52,7 +52,7 @@ public abstract class Parser
         ParserSession PS = new ParserSession(S, CGSql);
         if (loadDependencies(PS, S) == false)
           return null;
-
+        
         return PS;
       }
 

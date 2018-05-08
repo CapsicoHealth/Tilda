@@ -34,6 +34,7 @@ import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Query;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.SubWhereClause;
+import tilda.utils.DateTimeUtil;
 import tilda.utils.PaddingTracker;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
@@ -216,9 +217,14 @@ public class Helper
           return "set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "Now();";
         else if (V._Value.equalsIgnoreCase("UNDEFINED") == true)
           return "set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "Undefined();";
+        else if (C.getType() == ColumnType.DATE && DateTimeUtil.parseDate(V._Value, "yyyy-MM-dd") != null)
+          {
+            String MethodName = TextUtil.CapitalizeFirstCharacter(C.getName()) + TextUtil.CapitalizeFirstCharacter(V._Name);
+            return "set" + MethodName+"();";
+          }
 
         throw new Error("Trying to generate a setter call to TIMESTAMP column '" + C.getFullName() + "' for the value '" + V._Value
-            + "'. TIMESTAMP fields are not supposed to have explicit values.");
+           + "'. TIMESTAMP fields are not supposed to have explicit values and DATE fields only values of NOW, UNDEFINED or an proper yyy-MM-dd date.");
       }
 
     public static String getTimestampDefaultComma(Column C, ColumnValue V)
@@ -228,9 +234,11 @@ public class Helper
           return "C.getCommaCurrentTimestamp()";
         else if (V._Value.equalsIgnoreCase("UNDEFINED") == true)
           return getSupportClassFullName(C._ParentObject.getSchema()) + "._COMMAQUESTION";
+        else if (C.getType() == ColumnType.DATE && DateTimeUtil.parseDate(V._Value, "yyyy-MM-dd") != null)
+          return getSupportClassFullName(C._ParentObject.getSchema()) + "._COMMAQUESTION";
 
-        throw new Error("Trying to generate a setter call to TIMESTAMP column '" + C.getFullName() + "' for the value '" + V._Value
-            + "'. TIMESTAMP fields are not supposed to have explicit values.");
+        throw new Error("Trying to generate a setter call to a DATE/TIMESTAMP column '" + C.getFullName() + "' for the value '" + V._Value
+            + "'. TIMESTAMP fields are not supposed to have explicit values and DATE fields only values of NOW, UNDEFINED or an proper yyy-MM-dd date.");
       }
 
     public static String getTimestampDefaultEqual(Column C, ColumnValue V)
@@ -240,9 +248,11 @@ public class Helper
           return "C.getEqualCurrentTimestamp()";
         else if (V._Value.equalsIgnoreCase("UNDEFINED") == true)
           return getSupportClassFullName(C._ParentObject.getSchema()) + "._EQUALQUESTION";
+        else if (C.getType() == ColumnType.DATE && DateTimeUtil.parse(V._Value, "yyyy-MM-dd") != null)
+          return getSupportClassFullName(C._ParentObject.getSchema()) + "._EQUALQUESTION";
 
         throw new Error("Trying to generate a setter call to TIMESTAMP column '" + C.getFullName() + "' for the value '" + V._Value
-            + "'. TIMESTAMP fields are not supposed to have explicit values.");
+           + "'. TIMESTAMP fields are not supposed to have explicit values and DATE fields only values of NOW, UNDEFINED or an proper yyy-MM-dd date.");
       }
 
 

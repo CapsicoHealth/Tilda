@@ -746,6 +746,12 @@ public class TildaData implements CodeGenTildaData
               break;
             case DATETIME:
             case DATE:
+              if (V._ParentColumn.isCollection() == false)
+                {
+                  Out.println("      { set" + TextUtil.CapitalizeFirstCharacter(V._ParentColumn.getName()) + "(" + ValueNameVar + "); }");
+                  break;
+                }
+              throw new Error("An invalid type '" + V._ParentColumn.getType() + "' was assigned column values for code gen for column "+V._ParentColumn.getName()+" as a SET or LIST.");
             case BINARY:
             case BITFIELD:
             case JSON:
