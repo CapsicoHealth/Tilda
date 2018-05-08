@@ -133,8 +133,9 @@ public class DataObject
       {
         List<String> Headers = new ArrayList<String>();
         for (ColumnHeader ColumnHeader : _ColumnHeaderList)
-          if (ColumnHeader != null)
+          {
             Headers.add(ColumnHeader._Header);
+          }
 
         return Headers.toArray(new String[Headers.size()]);
       }

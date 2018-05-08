@@ -48,6 +48,7 @@ public class ParserSession
     protected Map<String, Schema> _Dependencies     = new HashMap<String, Schema>();
     protected Set<String>         _ValidatedSchemas = new HashSet<String>();
     protected List<String>        _Errors           = new ArrayList<String>();
+    public List<String>           _Notes            = new ArrayList<String>();
 
     public Iterator<Schema> getDependenciesIterator()
       {
@@ -120,7 +121,7 @@ public class ParserSession
         LOG.error("Error #" + _Errors.size() + ": " + Err);
         return false;
       }
-
+    
     public List<String> getErrors()
       {
         return _Errors;
@@ -129,7 +130,43 @@ public class ParserSession
     public int getErrorCount()
       {
         return _Errors.size();
+      }    
+
+    public boolean printErrors()
+    {
+      LOG.error("==============================================================================================");
+      LOG.error("There were " + getErrorCount() + " errors when trying to validate the schema set");
+      int i = 0;
+      for (String Err : _Errors)
+        LOG.error("    " + (++i) + " - " + Err);
+      return false;
+    }
+
+    public List<String> getNotes()
+      {
+        return _Notes;
       }
 
+    public int getNoteCount()
+      {
+        return _Notes.size();
+      }
 
+    public boolean AddNote(String Note)
+    {
+      _Notes.add(Note);
+      LOG.info("Note #" + _Notes.size() + ": " + Note);
+      return false;
+    }
+  
+    public boolean printNotes()
+      {
+        
+        LOG.info("==============================================================================================");
+        LOG.info("There were " + getNoteCount() + " notes when trying to validate the schema set");
+        int i = 0;
+        for (String Note : _Notes)
+          LOG.info("    " + (++i) + " - " + Note);
+        return false;
+      }
   }

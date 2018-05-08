@@ -31,6 +31,7 @@ import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
 import tilda.parsing.ParserSession;
+import tilda.types.ColumnDefinition;
 
 public class Object extends Base
   {
@@ -179,10 +180,9 @@ public class Object extends Base
                 if (C._Mode == ColumnMode.CALCULATED)
                   continue;
                 C.setSequenceOrder(++Counter);
-                int Max = 64 * 6;
-                if (Counter >= Max)
+                if (Counter >= ColumnDefinition.MAX_COL_COUNT)
                   {
-                    PS.AddError("Object '" + getFullName() + "' has declared " + (i + 1) + " columns. Max allowed is " + Max + "!");
+                    PS.AddError("Object '" + getFullName() + "' has declared " + (i + 1) + " columns. Max allowed is "+ColumnDefinition.MAX_COL_COUNT+"!");
                   }
               }
           }

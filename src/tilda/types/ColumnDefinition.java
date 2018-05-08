@@ -98,10 +98,12 @@ public class ColumnDefinition
           }
         else
           {
-            throw new Error("Trying to instanciate a column that requires a _Mask with more than 192 bits.");
+            throw new Error("Trying to instanciate a column that requires a _Mask with more than "+MAX_COL_COUNT+" bits.");
           }
         _Description = Description;
       }
+    
+    public static final int MAX_COL_COUNT = 64*6-1;
 
     final String            _SchemaName;
     final String            _TableName;
