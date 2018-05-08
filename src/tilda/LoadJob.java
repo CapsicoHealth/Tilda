@@ -84,7 +84,8 @@ public class LoadJob
                 jobFile.setFileProcessEndTimeNow();
                 jobFile.Write(statusCon);
                 statusCon.commit();
-              }            
+              }
+            moveFileToProcessedFolder(jobRefnum, zipFile, processedPath);
           }
         catch(Throwable T)
           {
@@ -118,8 +119,7 @@ public class LoadJob
           }
         finally
           {
-            closeDBConnection(statusCon);
-            moveFileToProcessedFolder(jobRefnum, zipFile, processedPath);
+            closeDBConnection(statusCon);            
           }
         
       }
