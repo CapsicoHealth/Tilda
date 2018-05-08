@@ -88,12 +88,15 @@ window.addEventListener("load", function()
   realizedformulae = getData("realizedformulae");
 }, false);
 
-var openDiv = function(divId)
+var openDiv = function(divId, yOffsetCorrection)
 {
   freezeSearchResults(true);
+  var e = document.getElementById(divId);
   window.location = "#" + divId;
   setTimeout(function()
   {
+    if (yOffsetCorrection != null)
+     window.scrollBy(0, yOffsetCorrection);
     freezeSearchResults(false);
   }, 50);
 }
@@ -142,14 +145,14 @@ var eventListener = function()
     {
       value = filteredResults[key];
       // Add Table/View
-      tempElementBody += "<TR valign=\"top\"><td width=\"1px\">&nbsp;<A href=\"javascript:openDiv('" + key + "_CNT')\">" + key
+      tempElementBody += "<TR valign=\"top\"><td width=\"1px\">&nbsp;<A href=\"javascript:openDiv('" + key + "_CNT',20)\">" + key
           + "</A></TD>";
       // Add Columns/Formulae (if Any)
       for (var i = 0; i < value.length; i++)
         {
           if (i != 0)
             tempElementBody += "<TR><TD></TD>";
-          tempElementBody += "<TD><A href=\"javascript:openDiv('" + key + "-" + value[i] + "_DIV')\">" + value[i]
+          tempElementBody += "<TD><A href=\"javascript:openDiv('" + key + "-" + value[i] + "_DIV', -50)\">" + value[i]
               + "</A></TD><TD>&nbsp;</TD></TR>";
         }
     }
