@@ -104,28 +104,37 @@ public class PostgreSQLCSVImporter extends CSVImporter
                     col = headers[i]; 
                     colVal = "";
                     
-                    if(record.isMapped(col) == false) 
-                       if(DBColumns.get(col.toLowerCase()) != null)
-                         {
-                           if(TextUtil.isNullOrEmpty(columnMap.get(col)._DefaultValue) == false)                    	
-                    	     colVal = columnMap.get(col)._DefaultValue;
-                           else if (DBColumns.get(col.toLowerCase())._Nullable != 1) 
-                            {
-                    	       String defaultCreateValue = MasterFactory.GetDefaultCreateValue(schemaName, tableName, col);
+                    if(DBColumns.get(col.toLowerCase()) != null)
+                      {                    
+	                    if(record.isMapped(col))
+	                      colVal = record.get(col);                    	
+                    	
+                        if(record.isMapped(col) == false || (TextUtil.isNullOrEmpty(colVal) && DBColumns.get(col.toLowerCase())._Nullable != 1)) 
+                          {                       
+                            if(TextUtil.isNullOrEmpty(columnMap.get(col)._DefaultValue) == false)                    	
+                    	      colVal = columnMap.get(col)._DefaultValue;
+                            else if (DBColumns.get(col.toLowerCase())._Nullable != 1) 
+                              {
+                    	        String defaultCreateValue = MasterFactory.GetDefaultCreateValue(schemaName, tableName, col);
                     	   
-                    	       if(TextUtil.isNullOrEmpty(defaultCreateValue) == false)
-                    	         colVal = defaultCreateValue;
-                    	       else
-                    	         LOG.error("The column " + col + " does not have a default create value in the Tilda definition or a default value in the mapping file but and is not nullable.");                  	  
-                            }
-                           else
-                             LOG.info("The column " + col + " does not exist in the CSV file and does not have a default value in the mapping file.");  
-                         }
-                       else
-                    	   LOG.error("The column " + col + " is not found in the database for the table " + schemaName + "." + tableName + ".");                              
-                    else
-                      colVal = record.get(col);
-
+                    	        if(TextUtil.isNullOrEmpty(defaultCreateValue) == false)
+                    	          colVal = defaultCreateValue;
+                    	        else
+                    	          {
+                    	            LOG.error("The column " + col + " does not have a default create value in the Tilda definition or a default value in the mapping file and is not nullable.");                  	  
+                    	            throw new Exception("Not null constraint will be violated.");
+                    	          }
+                              }
+                             else
+                               LOG.info("The column " + col + " does not exist in the CSV file and does not have a default value in the mapping file.");  
+                           }
+                      }
+                    else 
+                      {
+                        LOG.error("The column " + col + " is not found in the database for the table " + schemaName + "." + tableName + ".");                              
+                        throw new Exception("Column " + col + " not found in the database.");
+                      }
+                    
                     ColumnHeader cHeader = columnMap.get(c);
                     if (cHeader != null && cHeader._Multi == true)
                       {
