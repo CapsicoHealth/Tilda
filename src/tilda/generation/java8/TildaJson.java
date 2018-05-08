@@ -51,7 +51,6 @@ public class TildaJson implements CodeGenTildaJson
       {
         Out.println("package " + O._ParentSchema._Package + "." + Helper.TILDA_GEN_PACKAGE + ";");
         Out.println();
-        Out.println("import java.io.*;");
         boolean needTime = false;
         if (O._LC != ObjectLifecycle.READONLY)
          for (Column C : O._Columns)
@@ -91,7 +90,7 @@ public class TildaJson implements CodeGenTildaJson
     public void genClassStart(PrintWriter Out, GeneratorSession G, Object O)
     throws Exception
       {
-        // Out.println("@SuppressWarnings({ \"unused\" })");
+        Out.println("@SuppressWarnings({ \"unused\" })");
         Out.println("public class " + O._BaseClassName + "_Json");
         Out.println(" {");
         Out.println("   static final Logger             LOG                = LogManager.getLogger(" + O._BaseClassName + "_Json.class.getName());");
@@ -323,7 +322,7 @@ public class TildaJson implements CodeGenTildaJson
     public void genMethodToJSON(PrintWriter Out, GeneratorSession G, JsonMapping J)
     throws Exception
       {
-        Out.println("   public static void toJSON" + J._Name + "(Writer Out, List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L, String Lead, boolean FullList) throws IOException");
+        Out.println("   public static void toJSON" + J._Name + "(java.io.Writer Out, List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L, String Lead, boolean FullList) throws java.io.IOException");
         Out.println("    {");
         Out.println("      if (L == null || L.size() == 0) return;");
         Out.println("      if (FullList == true)");
@@ -344,7 +343,7 @@ public class TildaJson implements CodeGenTildaJson
         Out.println("       } ");
         Out.println("    }");
         Out.println();
-        Out.println("   public static void toJSON" + J._Name + "(Writer Out, " + Helper.getFullAppDataClassName(J._ParentObject) + " ObjApp, boolean FullObject) throws IOException");
+        Out.println("   public static void toJSON" + J._Name + "(java.io.Writer Out, " + Helper.getFullAppDataClassName(J._ParentObject) + " ObjApp, boolean FullObject) throws java.io.IOException");
         Out.println("    {");
         Out.println("      long T0 = System.nanoTime();");
         Out.println("      " + Helper.getFullBaseClassName(J._ParentObject) + " Obj = (" + Helper.getFullBaseClassName(J._ParentObject) + ") ObjApp;");
@@ -367,8 +366,8 @@ public class TildaJson implements CodeGenTildaJson
         if (J._ParentObject.isOCC() == true && J._Sync == true)
           {
             Out.println();
-            Out.println("   public static boolean toJSON" + J._Name + "(Writer Out, " + Helper.getFullAppDataClassName(J._ParentObject) + " Data, String ElementName, String Lead, ZonedDateTime LastSync)");
-            Out.println("   throws IOException");
+            Out.println("   public static boolean toJSON" + J._Name + "(java.io.Writer Out, " + Helper.getFullAppDataClassName(J._ParentObject) + " Data, String ElementName, String Lead, ZonedDateTime LastSync)");
+            Out.println("   throws java.io.IOException");
             Out.println("    {");
             Out.println("      SyncStatus s = SyncStatus.get(LastSync, Data);");
             Out.println("      if (s == SyncStatus.OLD)");
@@ -388,8 +387,8 @@ public class TildaJson implements CodeGenTildaJson
             Out.println("      return true;");
             Out.println("    }");
             Out.println();
-            Out.println("   public static void toJSON" + J._Name + "(Writer Out, List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L, String ElementName, String Lead, ZonedDateTime LastSync)");
-            Out.println("   throws IOException");
+            Out.println("   public static void toJSON" + J._Name + "(java.io.Writer Out, List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L, String ElementName, String Lead, ZonedDateTime LastSync)");
+            Out.println("   throws java.io.IOException");
             Out.println("    {");
             Out.println("      Out.write(Lead);");
             Out.println("      if (ElementName != null)");

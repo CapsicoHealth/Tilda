@@ -35,21 +35,18 @@ import org.apache.commons.csv.CSVRecord;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.loader.GenericLoader;
-import tilda.loader.csv.ImportProcessor;
-import tilda.loader.parser.ColumnHeader;
-import tilda.loader.parser.DataObject;
-
 import tilda.db.Connection;
-import tilda.db.MasterFactory;
 import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.DatabaseMeta;
 import tilda.db.metadata.TableMeta;
 import tilda.enums.ColumnType;
+import tilda.loader.GenericLoader;
+import tilda.loader.csv.ImportProcessor;
+import tilda.loader.parser.ColumnHeader;
+import tilda.loader.parser.DataObject;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
-import tilda.types.ColumnDefinition;
 import tilda.utils.DurationUtil;
 import tilda.utils.FileUtil;
 import tilda.utils.NumberFormatUtil;

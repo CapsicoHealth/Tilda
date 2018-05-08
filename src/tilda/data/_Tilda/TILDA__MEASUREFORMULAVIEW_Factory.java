@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+@SuppressWarnings({ "unused" })
 public class TILDA__MEASUREFORMULAVIEW_Factory
  {
    protected static final Logger LOG = LogManager.getLogger(TILDA__MEASUREFORMULAVIEW_Factory.class.getName());

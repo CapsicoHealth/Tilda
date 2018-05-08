@@ -16,8 +16,6 @@
 
 package tilda.migration.actions;
 
-import java.sql.SQLException;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
