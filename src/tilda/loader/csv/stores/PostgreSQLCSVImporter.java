@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,7 @@ import tilda.data.JobMessage_Data;
 import tilda.data.JobMessage_Factory;
 import tilda.data.ZoneInfo_Factory;
 import tilda.db.Connection;
+import tilda.db.MasterFactory;
 import tilda.db.QueryDetails;
 import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.TableMeta;
@@ -26,6 +28,7 @@ import tilda.enums.ColumnType;
 import tilda.loader.GenericLoader;
 import tilda.loader.parser.ColumnHeader;
 import tilda.loader.parser.DataObject;
+import tilda.types.ColumnDefinition;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.DurationUtil;
 import tilda.utils.NumberFormatUtil;
@@ -44,7 +47,9 @@ public class PostgreSQLCSVImporter extends CSVImporter
       }
 
     @Override
-    protected long insertData(boolean isUpsert, long t0, Map<String, ColumnMeta> DBColumns, boolean withHeader, Iterable<CSVRecord> records, StringBuilder Str, String schemaName, String tableName, String[] headers, String[] columns, Map<String, ColumnHeader> columnMap, String[] completeHeaders, String[] uniqueColumns, String DateTimePattern, String DateTimeZoneInfoId, String DatePattern) 
+    protected long insertData(boolean isUpsert, long t0, Map<String, ColumnMeta> DBColumns, boolean withHeader, Iterable<CSVRecord> records, StringBuilder Str, String schemaName, String tableName, 
+    		String[] headers, String[] columns, Map<String, ColumnHeader> columnMap, String[] completeHeaders, String[] uniqueColumns, String DateTimePattern, String DateTimeZoneInfoId, 
+    		String DatePattern) 
     throws Exception
       {
         TableMeta TM = new TableMeta(schemaName, tableName, "");
@@ -56,8 +61,8 @@ public class PostgreSQLCSVImporter extends CSVImporter
         int batchCount = 0;
         
         CSVRecord currentRecord = null;
-        String h = null;
-        String v = null;
+        String col = null;
+        String colVal = null;
 
         Map<String, GenericLoader> LoaderMap = initializeLoaders(C, columnMap);
         try
@@ -106,8 +111,40 @@ public class PostgreSQLCSVImporter extends CSVImporter
                 for ( i = 0; i < columns.length; ++i)
                   {
                     String c = columns[i];
-                    h = headers[i];
-                    v = record.get(h);
+                    col = headers[i]; 
+                    colVal = "";
+                    
+                    if(DBColumns.get(col.toLowerCase()) != null)
+                      {                    
+	                    if(record.isMapped(col))
+	                      colVal = record.get(col);                    	
+                    	
+                        if(record.isMapped(col) == false || (TextUtil.isNullOrEmpty(colVal) && DBColumns.get(col.toLowerCase())._Nullable != 1)) 
+                          {                       
+                            if(TextUtil.isNullOrEmpty(columnMap.get(col)._DefaultValue) == false)                    	
+                    	      colVal = columnMap.get(col)._DefaultValue;
+                            else if (DBColumns.get(col.toLowerCase())._Nullable != 1) 
+                              {
+                    	        String defaultCreateValue = MasterFactory.GetDefaultCreateValue(schemaName, tableName, col);
+                    	   
+                    	        if(TextUtil.isNullOrEmpty(defaultCreateValue) == false)
+                    	          colVal = defaultCreateValue;
+                    	        else
+                    	          {
+                    	            LOG.error("The column " + col + " does not have a default create value in the Tilda definition or a default value in the mapping file and is not nullable.");                  	  
+                    	            throw new Exception("Not null constraint will be violated.");
+                    	          }
+                              }
+                             else
+                               LOG.info("The column " + col + " does not exist in the CSV file and does not have a default value in the mapping file.");  
+                           }
+                      }
+                    else 
+                      {
+                        LOG.error("The column " + col + " is not found in the database for the table " + schemaName + "." + tableName + ".");                              
+                        throw new Exception("Column " + col + " not found in the database.");
+                      }
+                    
                     ColumnHeader cHeader = columnMap.get(c);
                     if (cHeader != null && cHeader._Multi == true)
                       {
@@ -119,12 +156,12 @@ public class PostgreSQLCSVImporter extends CSVImporter
                             List<String> Values = new ArrayList<String>();
                             while (true)
                               {
-                                String value = record.get(h + "_" + (j + 1));
+                                String value = record.get(col + "_" + (j + 1));
                                 if (TextUtil.isNullOrEmpty(value) == false)
                                   Values.add(value);
                                 ++j;
                                 if (i + k + 1 == completeHeaders.length
-                                || completeHeaders[i + k + 1].equals(h + "_" + (j + 1)) == false)
+                                || completeHeaders[i + k + 1].equals(col + "_" + (j + 1)) == false)
                                   break;
                                 ++k;
                               }
@@ -140,7 +177,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
                           }
                         else if (multiValueDelim != null)
                           {
-                            String value = record.get(h);
+                            String value = record.get(col);
                             if (TextUtil.isNullOrEmpty(value) == false)
                               {
                                 // LDH-NOTE: Some CSV data files may encode multi-value columns as direct outputs from a database like Postgres, 
@@ -205,7 +242,8 @@ public class PostgreSQLCSVImporter extends CSVImporter
                       }
                     else
                       {
-                        String value = record.get(h);
+                    	String value = colVal;
+                    	
                         if (cHeader._Split == true)
                           {
                             if (TextUtil.isNullOrEmpty(value) == false)
@@ -300,8 +338,8 @@ public class PostgreSQLCSVImporter extends CSVImporter
                       }
                   }
                 
-                h = null;
-                v = null;
+                col = null;
+                colVal = null;
                 
                 QueryDetails.setLastQuery(TM._SchemaName + "." + TM._TableName, Str.toString());
                 if (NumOfRecs < 5)
@@ -356,9 +394,9 @@ public class PostgreSQLCSVImporter extends CSVImporter
             if (currentRecord != null)
               {
                 LOG.error("An error occurred parsing record #" + currentRecord.getRecordNumber()+".");
-                if (h != null)
+                if (col != null)
                  {
-                  LOG.error("An error occurred parsing column '" + h+"'='"+v+"'.");
+                  LOG.error("An error occurred parsing column '" + col+" ' = '"+colVal+"'.");
                   if (E instanceof DateTimeParseException == true)
                     LOG.error("Cannot parse data with pattern "+DateTimePattern);
                  }

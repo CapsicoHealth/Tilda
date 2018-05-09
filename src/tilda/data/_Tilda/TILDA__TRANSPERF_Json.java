@@ -38,27 +38,27 @@ public class TILDA__TRANSPERF_Json
    public tilda.data.TransPerf_Data Write(Connection C) throws Exception
     {
       if (TextUtil.isNullOrEmpty(_schemaName   ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.TRANSPERF.schemaName' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.TransPerf.schemaName' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_objectName   ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.TRANSPERF.objectName' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.TransPerf.objectName' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(Str_startPeriod  ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.TRANSPERF.startPeriod' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.TransPerf.startPeriod' was null or empty. It's not nullable in the model.\n"+toString());
       _startPeriod   = DateTimeUtil.parsefromJSON(Str_startPeriod  );
       if (   _startPeriod   == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.TRANSPERF.startPeriod' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.TransPerf.startPeriod' was not in the expected format. Dates should follow the ISO format.\n"+toString());
       if (TextUtil.isNullOrEmpty(Str_endPeriod    ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.TRANSPERF.endPeriod' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.TransPerf.endPeriod' was null or empty. It's not nullable in the model.\n"+toString());
       _endPeriod     = DateTimeUtil.parsefromJSON(Str_endPeriod    );
       if (   _endPeriod     == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.TRANSPERF.endPeriod' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.TransPerf.endPeriod' was not in the expected format. Dates should follow the ISO format.\n"+toString());
       if (_commitNano    == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.TRANSPERF.commitNano' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.TransPerf.commitNano' was null or empty. It's not nullable in the model.\n"+toString());
       if (_commitCount   == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.TRANSPERF.commitCount' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.TransPerf.commitCount' was null or empty. It's not nullable in the model.\n"+toString());
       if (_rollbackNano  == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.TRANSPERF.rollbackNano' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.TransPerf.rollbackNano' was null or empty. It's not nullable in the model.\n"+toString());
       if (_rollbackCount == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.TRANSPERF.rollbackCount' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.TransPerf.rollbackCount' was null or empty. It's not nullable in the model.\n"+toString());
 
       tilda.data.TransPerf_Data Obj = tilda.data.TransPerf_Factory.Create(_schemaName, _objectName, _startPeriod, _endPeriod, _commitNano, _commitCount, _rollbackNano, _rollbackCount);
       Update(Obj);
@@ -66,14 +66,14 @@ public class TILDA__TRANSPERF_Json
        {
          Obj = tilda.data.TransPerf_Factory.LookupByPrimaryKey(_schemaName, _objectName, _startPeriod);
          if (Obj.Read(C) == false)
-          throw new Exception("Cannot create the tilda.data.TILDA.TRANSPERF object.\n"+toString());
+          throw new Exception("Cannot create the tilda.data.TILDA.TransPerf object.\n"+toString());
          if (_endPeriod    != null) Obj.setEndPeriod    (_endPeriod    );
          if (_commitNano   != null) Obj.setCommitNano   (_commitNano   );
          if (_commitCount  != null) Obj.setCommitCount  (_commitCount  );
          if (_rollbackNano != null) Obj.setRollbackNano (_rollbackNano );
          if (_rollbackCount!= null) Obj.setRollbackCount(_rollbackCount);
          if (Obj.Write(C) == false)
-          throw new Exception("Cannot update the tilda.data.TILDA.TRANSPERF object: "+Obj.toString());
+          throw new Exception("Cannot update the tilda.data.TILDA.TransPerf object: "+Obj.toString());
 
        }
       return Obj;

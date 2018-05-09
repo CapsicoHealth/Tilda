@@ -36,29 +36,29 @@ public class TILDA__JOBFILE_Json
    public tilda.data.JobFile_Data Write(Connection C) throws Exception
     {
       if (_jobRefnum              == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.JOBFILE.jobRefnum' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.JobFile.jobRefnum' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_fileName              ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.JOBFILE.fileName' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.JobFile.fileName' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(Str_fileProcessStartTime  ) == false)
        {
          _fileProcessStartTime   = DateTimeUtil.parsefromJSON(Str_fileProcessStartTime  );
          if (   _fileProcessStartTime   == null)
-          throw new Exception("Incoming value for 'tilda.data.TILDA.JOBFILE.fileProcessStartTime' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+          throw new Exception("Incoming value for 'tilda.data.TILDA.JobFile.fileProcessStartTime' was not in the expected format. Dates should follow the ISO format.\n"+toString());
        }
       if (TextUtil.isNullOrEmpty(Str_fileProcessEndTime    ) == false)
        {
          _fileProcessEndTime     = DateTimeUtil.parsefromJSON(Str_fileProcessEndTime    );
          if (   _fileProcessEndTime     == null)
-          throw new Exception("Incoming value for 'tilda.data.TILDA.JOBFILE.fileProcessEndTime' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+          throw new Exception("Incoming value for 'tilda.data.TILDA.JobFile.fileProcessEndTime' was not in the expected format. Dates should follow the ISO format.\n"+toString());
        }
       if (_status                 == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.JOBFILE.status' was null or empty. It's not nullable in the model.\n"+toString());
+       _status='E';
 
       tilda.data.JobFile_Data Obj = tilda.data.JobFile_Factory.Create(_jobRefnum, _fileName);
       Update(Obj);
       if (Obj.Write(C) == false)
        {
-         throw new Exception("Cannot create the tilda.data.TILDA.JOBFILE object.\n"+toString());
+         throw new Exception("Cannot create the tilda.data.TILDA.JobFile object.\n"+toString());
        }
       return Obj;
    }

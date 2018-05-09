@@ -65,7 +65,7 @@ public abstract class Base
      */
     public String getFullName()
       {
-        return _ParentSchema.getFullName() + "." + _Name;
+        return _ParentSchema.getFullName() + "." + _OriginalName;
       }
 
     /**
@@ -74,16 +74,16 @@ public abstract class Base
      */
     public String getShortName()
       {
-        return _ParentSchema.getShortName() + "." + _Name;
+        return _ParentSchema.getShortName() + "." + _OriginalName;
       }
     
     /**
      * 
-     * @return simple the name of the object.
+     * @return simply the name of the object, i.e. _Name
      */
     public String getBaseName()
       {
-        return _Name;
+        return _OriginalName;
       }
 
     public Schema getSchema()
@@ -135,9 +135,9 @@ public abstract class Base
           return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring "+getWhat()+" '" + getFullName() + "' without a description name.");
 
         _OriginalName = _Name;
-        _Name = _Name.toUpperCase();
+//        _Name = _Name.toUpperCase();
 
-        _BaseClassName = "TILDA__" + _Name;
+        _BaseClassName = "TILDA__" + _Name.toUpperCase();
         _AppDataClassName    = _OriginalName+"_Data";
         _AppFactoryClassName = _OriginalName+"_Factory";
         _AppJsonClassName = _OriginalName+"_Json";

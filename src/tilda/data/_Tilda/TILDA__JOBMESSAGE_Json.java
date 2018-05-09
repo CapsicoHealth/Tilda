@@ -31,17 +31,17 @@ public class TILDA__JOBMESSAGE_Json
    public tilda.data.JobMessage_Data Write(Connection C) throws Exception
     {
       if (_jobRefnum     == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.JOBMESSAGE.jobRefnum' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.JobMessage.jobRefnum' was null or empty. It's not nullable in the model.\n"+toString());
       if (_jobFileRefnum == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.JOBMESSAGE.jobFileRefnum' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.JobMessage.jobFileRefnum' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_message      ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.JOBMESSAGE.message' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.JobMessage.message' was null or empty. It's not nullable in the model.\n"+toString());
 
       tilda.data.JobMessage_Data Obj = tilda.data.JobMessage_Factory.Create(_jobRefnum, _jobFileRefnum, _message);
       Update(Obj);
       if (Obj.Write(C) == false)
        {
-         throw new Exception("Cannot create the tilda.data.TILDA.JOBMESSAGE object.\n"+toString());
+         throw new Exception("Cannot create the tilda.data.TILDA.JobMessage object.\n"+toString());
        }
       return Obj;
    }

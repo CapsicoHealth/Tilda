@@ -44,32 +44,32 @@ public class TILDA__JOB_Json
        {
          _startTime    = DateTimeUtil.parsefromJSON(Str_startTime   );
          if (   _startTime    == null)
-          throw new Exception("Incoming value for 'tilda.data.TILDA.JOB.startTime' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+          throw new Exception("Incoming value for 'tilda.data.TILDA.Job.startTime' was not in the expected format. Dates should follow the ISO format.\n"+toString());
        }
       if (TextUtil.isNullOrEmpty(Str_endTime     ) == false)
        {
          _endTime      = DateTimeUtil.parsefromJSON(Str_endTime     );
          if (   _endTime      == null)
-          throw new Exception("Incoming value for 'tilda.data.TILDA.JOB.endTime' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+          throw new Exception("Incoming value for 'tilda.data.TILDA.Job.endTime' was not in the expected format. Dates should follow the ISO format.\n"+toString());
        }
       if (TextUtil.isNullOrEmpty(_status      ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.JOB.status' was null or empty. It's not nullable in the model.\n"+toString());
+       _status="EQ";
       if (_threadsCount == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.JOB.threadsCount' was null or empty. It's not nullable in the model.\n"+toString());
+       _threadsCount=1;
       if (_loadMode     == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.JOB.loadMode' was null or empty. It's not nullable in the model.\n"+toString());
+       _loadMode='I';
       if (TextUtil.isNullOrEmpty(_connectionId) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.JOB.connectionId' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Job.connectionId' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_zipFile     ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.JOB.zipFile' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Job.zipFile' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_zipFileName ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.JOB.zipFileName' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Job.zipFileName' was null or empty. It's not nullable in the model.\n"+toString());
 
       tilda.data.Job_Data Obj = tilda.data.Job_Factory.Create(_connectionId, _zipFile, _zipFileName);
       Update(Obj);
       if (Obj.Write(C) == false)
        {
-         throw new Exception("Cannot create the tilda.data.TILDA.JOB object.\n"+toString());
+         throw new Exception("Cannot create the tilda.data.TILDA.Job object.\n"+toString());
        }
       return Obj;
    }

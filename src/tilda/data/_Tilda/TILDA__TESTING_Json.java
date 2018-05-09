@@ -56,21 +56,21 @@ public class TILDA__TESTING_Json
    public tilda.data.Testing_Data Write(Connection C) throws Exception
     {
       if (_refnum2     == null || _refnum2    .isEmpty() == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.TESTING.refnum2' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Testing.refnum2' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_name       ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.TESTING.name' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Testing.name' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(Str_a9         ) == false)
        {
          _a9          = DateTimeUtil.parsefromJSON(Str_a9         );
          if (   _a9          == null)
-          throw new Exception("Incoming value for 'tilda.data.TILDA.TESTING.a9' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+          throw new Exception("Incoming value for 'tilda.data.TILDA.Testing.a9' was not in the expected format. Dates should follow the ISO format.\n"+toString());
        }
 
       tilda.data.Testing_Data Obj = tilda.data.Testing_Factory.Create(_refnum2, _name);
       Update(Obj);
       if (Obj.Write(C) == false)
        {
-         throw new Exception("Cannot create the tilda.data.TILDA.TESTING object.\n"+toString());
+         throw new Exception("Cannot create the tilda.data.TILDA.Testing object.\n"+toString());
        }
       return Obj;
    }

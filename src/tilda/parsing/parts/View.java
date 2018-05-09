@@ -38,6 +38,7 @@ import tilda.enums.ObjectLifecycle;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.parsing.parts.helpers.SameAsHelper;
+import tilda.utils.Graph;
 import tilda.utils.TextUtil;
 
 public class View extends Base
@@ -114,33 +115,33 @@ public class View extends Base
 
     public ViewJoin getViewjoin(String ObjectName, String As)
       {
-//        LOG.debug("ObjectName: "+ObjectName+"; As: "+As+";");
-//        if (ObjectName.equalsIgnoreCase("AssessmentOasis_Fact") == true)
-//         LOG.debug("HELLO!");
-        
+        // LOG.debug("ObjectName: "+ObjectName+"; As: "+As+";");
+        // if (ObjectName.equalsIgnoreCase("AssessmentOasis_Fact") == true)
+        // LOG.debug("HELLO!");
+
         if (_Joins != null)
           for (ViewJoin vj : _Joins)
-            if (vj != null && vj._ObjectObj.getBaseName().equals(ObjectName) == true 
-                           && (TextUtil.isNullOrEmpty(As)==true || As.equals(vj._As) == true))
+            if (vj != null && vj._ObjectObj.getBaseName().equals(ObjectName) == true
+            && (TextUtil.isNullOrEmpty(As) == true || As.equals(vj._As) == true))
               return vj;
         return null;
       }
-    
+
     public String getRealizedTableName(boolean includeSchemaName)
-     {
-       return _Realize == null ? null : (includeSchemaName==true?_ParentSchema._Name+".":"")+_Name.substring(0, _Name.length() - (_Pivot != null ? "PivotView" : "View").length()) + "Realized";
-     }
-    
+      {
+        return _Realize == null ? null : (includeSchemaName == true ? _ParentSchema._Name + "." : "") + _Name.substring(0, _Name.length() - (_Pivot != null ? "PivotView" : "View").length()) + "Realized";
+      }
+
     public static String getRootViewName(String Name)
-     {
-       return Name.substring(0, Name.length() - (Name.endsWith("PivotView") ==true ? "PivotView" : "View").length());
-     }
+      {
+        return Name.substring(0, Name.length() - (Name.endsWith("PivotView") == true ? "PivotView" : "View").length());
+      }
 
     public boolean Validate(ParserSession PS, Schema ParentSchema)
       {
-//        if (_Name.equalsIgnoreCase("QualityEpisodeOasis_View") == true)
-//         LOG.debug("Hello!!!!");
-//        
+        // if (_Name.equalsIgnoreCase("QualityEpisodeOasis_View") == true)
+        // LOG.debug("Hello!!!!");
+        //
         if (super.Validate(PS, ParentSchema) == false)
           return false;
 
@@ -161,12 +162,12 @@ public class View extends Base
         String LastUpdatedColObjName = null;
         String LastUpdatedETLColObjName = null;
         String DeletedColObjName = null;
-        
+
         if (_Name.equalsIgnoreCase("QualityEpisodeOasis_View") == true)
           {
-            LOG.debug("View columns for "+getShortName()+".");
+            LOG.debug("View columns for " + getShortName() + ".");
             for (ViewColumn VC : _ViewColumns)
-             LOG.debug("  column: "+VC._SameAs+"; As: "+VC._As+"; Name: "+VC._Name+";");
+              LOG.debug("  column: " + VC._SameAs + "; As: " + VC._As + "; Name: " + VC._Name + ";");
             LOG.debug("Hello!!!!");
           }
         for (int i = 0; i < _ViewColumns.size(); ++i)
@@ -286,22 +287,22 @@ public class View extends Base
               }
             else if (TextUtil.isNullOrEmpty(VC._Prefix) == false)
               PS.AddError("Column '" + VC.getFullName() + "' defined a prefix but is not a .* column.");
-            
+
             if (VC.Validate(PS, this) == false)
               return false;
 
             if (VC._JoinOnly == false && ColumnNames.add(VC.getName().toUpperCase()) == false)
               PS.AddError("Column '" + VC.getFullName() + "' is defined more than once in View '" + getFullName() + "'.");
 
-            if (VC.getName().equals("created") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "created")) == true)
+            if (VC.getName().equals("created") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "Key", "created")) == true)
               CreatedColObjName = VC._SameAsObj._ParentObject.getFullName();
-            if (VC.getName().equals("createdETL") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "createdETL")) == true)
+            if (VC.getName().equals("createdETL") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "Key", "createdETL")) == true)
               CreatedETLColObjName = VC._SameAsObj._ParentObject.getFullName();
-            else if (VC.getName().equals("lastUpdated") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "lastUpdated")) == true)
+            else if (VC.getName().equals("lastUpdated") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "Key", "lastUpdated")) == true)
               LastUpdatedColObjName = VC._SameAsObj._ParentObject.getFullName();
-            else if (VC.getName().equals("lastUpdatedETL") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "lastUpdatedETL")) == true)
+            else if (VC.getName().equals("lastUpdatedETL") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "Key", "lastUpdatedETL")) == true)
               LastUpdatedETLColObjName = VC._SameAsObj._ParentObject.getFullName();
-            else if (VC.getName().equals("deleted") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "KEY", "deleted")) == true)
+            else if (VC.getName().equals("deleted") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "Key", "deleted")) == true)
               DeletedColObjName = VC._SameAsObj._ParentObject.getFullName();
 
             // LOG.debug("VC: " + VC._Name + "; VC._SameAsObj: " + VC._SameAsObj + "; VC._SameAsObj._ParentObject: " + VC._SameAsObj._ParentObject + ";");
@@ -338,12 +339,12 @@ public class View extends Base
           }
         if (_Name.equalsIgnoreCase("QualityEpisodeOasis_View") == true)
           {
-            LOG.debug("View columns for "+getShortName()+" AFTER unrolling.");
+            LOG.debug("View columns for " + getShortName() + " AFTER unrolling.");
             for (ViewColumn VC : _ViewColumns)
-             LOG.debug("  column: "+VC._SameAs+"; As: "+VC._As+"; Name: "+VC._Name+";");
+              LOG.debug("  column: " + VC._SameAs + "; As: " + VC._As + "; Name: " + VC._Name + ";");
             LOG.debug("Hello!!!!");
           }
-        
+
 
         if (_TimeSeries != null)
           {
@@ -708,6 +709,152 @@ public class View extends Base
             if (F != null && F._Name.equalsIgnoreCase(FormulaName) == true)
               return F;
         return null;
+      }
+
+    /*
+     * private static void getDependencyGraph(Graph.Node<Base> R, Graph.Node<Base> N, Object Obj, Set<String> Names)
+     * {
+     * Graph.Node<Base> child = N.addChild(Obj);
+     * if (Obj._FST != FrameworkSourcedType.VIEW)
+     * return;
+     * for (Column C : Obj._Columns)
+     * {
+     * if (C == null || C._SameAsObj == null || C._SameAsObj._ParentObject == null)
+     * continue;
+     * Object Parent = C._SameAsObj._ParentObject;
+     * // Let's not bring in base-line dependencies that are obvious from generally
+     * // TILDA.Key or Tilda.ZoneInfo, for brevity.
+     * if (Parent._ParentSchema.getShortName().equals("TILDA") == true)
+     * continue;
+     * 
+     * if (Names.contains(Parent.getShortName()) == true)
+     * continue;
+     * 
+     * // Only want to get dependent views and tables if we actually pull columns from them from Root.
+     * // Otherwise, dependency graph not really representative of what's accessible from the root view.
+     * boolean foundInRoot = false;
+     * for (String ColumnName : R.getValue().getColumnNames())
+     * {
+     * Column RootC = R.getValue().getColumn(ColumnName);
+     * if (RootC != null && RootC.getFullName().equals(C.getFullName()) == true)
+     * {
+     * foundInRoot = true;
+     * break;
+     * }
+     * }
+     * if (foundInRoot == true)
+     * {
+     * Names.add(Parent.getShortName());
+     * getDependencyGraph(R, child, Parent, Names);
+     * }
+     * }
+     * }
+     */
+    
+    
+    public static class DepWrapper
+      {
+        public DepWrapper(Object Obj, String As)
+          {
+            _Obj = Obj;
+            _As = As;
+          }
+
+        protected Object       _Obj;
+        protected String       _As ;
+        protected List<Column> _Columns = new ArrayList<Column>();
+        protected PrimaryKey   _PK      = null;
+
+        public Object getObj()
+          {
+            return _Obj;
+          }
+
+        public List<Column> getColumns()
+          {
+            return _Columns;
+          }
+
+        public void addColumn(Column C)
+          {
+            _Columns.add(C);
+          }
+      }
+
+    public Graph<DepWrapper> getDependencyGraph()
+      {
+        Object Obj = _ParentSchema.getObject(_Name);
+        DepWrapper DW = new DepWrapper(Obj, null);
+        for (Column C : Obj._Columns)
+          DW.addColumn(C);
+        Graph<DepWrapper> G = new Graph<DepWrapper>(DW);
+        Graph.Node<DepWrapper> Root = G.getRoot();
+        Graph.Node<DepWrapper> N = Root;
+        for (ViewColumn VC : _ViewColumns)
+          {
+//            LOG.debug("Looking at VC " + VC.getShortName() + ".");
+            List<Column> L = VC.getSameAsLineage();
+            for (Column C : L)
+              {
+//                LOG.debug("     Ancestor " + C.getShortName() + ".");
+                Graph.Node<DepWrapper> n = null;
+                boolean foundObj = false;
+                for (int i = 0; i < N.getChildrenNodes().size(); ++i) // Searching for a node at that level matching the incoming object definition
+                  {
+                    n = N.getChildrenNodes().get(i);
+                    if (n.getValue()._Obj == C._ParentObject && (TextUtil.isNullOrEmpty(VC._As) == true || VC._As.equals(n.getValue()._As) == true))
+                      {
+                        foundObj = true;
+                        break;
+                      }
+                  }
+                if (foundObj == true)
+                  {
+//                    LOG.debug("     Found, moving on to Graph node " + n.getValue()._Obj.getShortName());
+                    boolean foundCol = false;
+                    for (Column c : n.getValue()._Columns)
+                      if (c == C)
+                        {
+                          foundCol = true;
+                          break;
+                        }
+                    if (foundCol == false)
+                     n.getValue().addColumn(C);
+                    N = n;
+                  }
+                else
+                  {
+//                    LOG.debug("     Creating new Graph node " + C._ParentObject.getShortName());
+                    DepWrapper SubDW = new DepWrapper(C._ParentObject, VC._As);
+                    SubDW.addColumn(C);
+                    N = N.addChild(SubDW);
+                  }
+              }
+//            LOG.debug("     Resetting to graph root for next VC");
+            N = Root;
+          }
+
+//        if (getShortName().equals("DATAMART.HOMEHEALTHQUALITYMEASURESVIEW") == true)
+//          LOG.debug("----------");
+
+        return G;
+        /*
+         * {
+         * Graph<Base> G = new Graph<Base>(this);
+         * Graph.Node<Base> Root = G.getRoot();
+         * Set<String> Names = new HashSet<String>();
+         * 
+         * for (ViewColumn VC : _ViewColumns)
+         * {
+         * if (VC == null || VC._SameAsObj == null || VC._SameAsObj._ParentObject == null)
+         * continue;
+         * Object Parent = VC._SameAsObj._ParentObject;
+         * if (Names.add(Parent.getShortName()) == true)
+         * getDependencyGraph(Root, Root, Parent, Names);
+         * }
+         * return G;
+         * }
+         */
       }
 
   }

@@ -46,6 +46,7 @@ import tilda.data.JobFile_Data;
 import tilda.data.JobMessage_Data;
 import tilda.data.JobMessage_Factory;
 import tilda.db.Connection;
+import tilda.db.MasterFactory;
 import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.DatabaseMeta;
 import tilda.db.metadata.TableMeta;
@@ -53,6 +54,7 @@ import tilda.enums.ColumnType;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
+import tilda.types.ColumnDefinition;
 import tilda.utils.DurationUtil;
 import tilda.utils.FileUtil;
 import tilda.utils.NumberFormatUtil;
@@ -86,7 +88,7 @@ public abstract class CSVImporter
           {
             String columns[] = cmsDO.getColumns();
             String headers[] = cmsDO.getHeaders();
-            
+
             String completeHeaders[] = cmsDO.getHeadersList();
             String uniqueColumns[] = cmsDO.getUniqueColumnsList();
 
@@ -124,12 +126,14 @@ public abstract class CSVImporter
                     fileReader = FileUtil.getReaderFromFileOrResource(file);
                   }
 
+                Map<String, ColumnHeader> columnMap = cmsDO.getMultiHeaderColumnMap();
+                
                 CSVFormat csvFormat = CSVFormat.DEFAULT.withHeader(completeHeaders);
                 Iterable<CSVRecord> records = csvFormat.parse(fileReader);
-                getHeader(completeHeaders, cmsDO._HeadersIncluded, records);
+                validateHeaders(completeHeaders, cmsDO._HeadersIncluded, records, columnMap, DBColumns);
 
                 NumOfRecs = insertData(cmsDO.isUpserts(), t0, DBColumns, cmsDO._HeadersIncluded, records, Str, cmsDO._SchemaName,
-                  cmsDO._TableName, headers, columns, cmsDO.getMultiHeaderColumnMap(), completeHeaders, uniqueColumns, 
+                  cmsDO._TableName, headers, columns, columnMap, completeHeaders, uniqueColumns, 
                   cmsDO._dateTimePattern, cmsDO._zoneId, cmsDO._datePattern);
                 
                 fileReader.close();
@@ -282,9 +286,10 @@ public abstract class CSVImporter
      * @param records
      * @throws Exception
      */
-    protected static void getHeader(String[] completeHeaders, boolean withHeader, Iterable<CSVRecord> records)
+    protected static void validateHeaders(String[] completeHeaders, boolean withHeader, Iterable<CSVRecord> records, Map<String, ColumnHeader> columnMap, Map<String, ColumnMeta> DBColumns)
     throws Exception
       {
+    		
         List<String> headerList = new LinkedList<String>();
         if (withHeader == true)
           {
@@ -300,7 +305,7 @@ public abstract class CSVImporter
             String Headers[] = headerList.toArray(new String[headerList.size()]);
             
             boolean Error = false;
-            
+                      	
             if (Headers.length != completeHeaders.length)
               {
                 Error = true;

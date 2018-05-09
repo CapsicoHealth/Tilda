@@ -23,25 +23,27 @@ import org.apache.logging.log4j.Logger;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
-<DIV>
-<DIV id='FORMULA_DIV' class='tables'>
-<H2>FORMULA&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 60%;"><A href="#">top</A></SUP></H2>
-</DIV>
-The generated Java 8/PostgreSQL Tilda data class <B>Data_FORMULA</B> is mapped to the Table <B>TILDA.FORMULA</B>.
-<UL>
-
-<LI>The Table has normal <B>read/write</B> capabilities.</LI>
-<LI>The Table is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
+<TABLE id="Formula_DIV" class="tables">
+<SCRIPT>registerStickyHeader("Formula_DIV");</SCRIPT>
+<TR valign="top"><TD><H2>Formula&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#Formula_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
+</TABLE>
+<DIV id="Formula_CNT" class="content">
+The Table TILDA.Formula:<UL>
+<LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>Formula_Factory</B>, <B>Formula_Data</B> in the package <B>tilda.data</B>.
+<LI>Is configured for normal <B>read/write</B> access.</LI>
+<LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
+<LI>Has the following identities:<UL><LI>Primary Key: refnum</LI>
+<LI>Unique Index: location, name</LI>
+</UL></LI>
 </UL>
 <B>Description</B>: Master formula information<BR>
 <BR>
-
-It contains the following columns:<BR>
- <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
-   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+This Table contains the following columns:<BLOCKQUOTE>
+ <TABLE id="Formula_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
-<TD align="right"><B id='FORMULA-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Formula-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -51,7 +53,7 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>2&nbsp;&nbsp;</TD>
-<TD align="right"><B id='FORMULA-location_DIV' class='columns'>location</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Formula-location_DIV' class='columns'>location</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(64)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -61,7 +63,7 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>3&nbsp;&nbsp;</TD>
-<TD align="right"><B id='FORMULA-location2_DIV' class='columns'>location2</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Formula-location2_DIV' class='columns'>location2</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(64)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -71,7 +73,7 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>4&nbsp;&nbsp;</TD>
-<TD align="right"><B id='FORMULA-name_DIV' class='columns'>name</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Formula-name_DIV' class='columns'>name</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(64)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -81,30 +83,31 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>5&nbsp;&nbsp;</TD>
-<TD align="right"><B id='FORMULA-type_DIV' class='columns'>type</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Formula-type_DIV' class='columns'>type</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(3)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The type of the formula/column value/outcome.</TD>
-</TR>
-  <TR bgcolor="#DFECF8"><TD></TD><TD></TD><TD colspan="10" align="center">
+<TD>The type of the formula/column value/outcome.<BR>This column has defined a number of constant values:
+<BLOCKQUOTE>
 <TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFF2CC"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>String</B>&nbsp;&nbsp;</TD><TD>STR&nbsp;&nbsp;</TD><TD>String&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>String</TD></TR>
+  <TR bgcolor="#fff6fc"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>String</B>&nbsp;&nbsp;</TD><TD>STR&nbsp;&nbsp;</TD><TD>String&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>String</TD></TR>
   <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Character</B>&nbsp;&nbsp;</TD><TD>CHR&nbsp;&nbsp;</TD><TD>Character&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Character</TD></TR>
-  <TR bgcolor="#FFF2CC"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Boolean</B>&nbsp;&nbsp;</TD><TD>BOL&nbsp;&nbsp;</TD><TD>Boolean&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Boolean</TD></TR>
+  <TR bgcolor="#fff6fc"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Boolean</B>&nbsp;&nbsp;</TD><TD>BOL&nbsp;&nbsp;</TD><TD>Boolean&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Boolean</TD></TR>
   <TR bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>Integer</B>&nbsp;&nbsp;</TD><TD>INT&nbsp;&nbsp;</TD><TD>Integer&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Integer</TD></TR>
-  <TR bgcolor="#FFF2CC"><TD>5&nbsp;&nbsp;</TD><TD align="right"><B>Long</B>&nbsp;&nbsp;</TD><TD>LNG&nbsp;&nbsp;</TD><TD>Long&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Long</TD></TR>
+  <TR bgcolor="#fff6fc"><TD>5&nbsp;&nbsp;</TD><TD align="right"><B>Long</B>&nbsp;&nbsp;</TD><TD>LNG&nbsp;&nbsp;</TD><TD>Long&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Long</TD></TR>
   <TR bgcolor="#FFFFFF"><TD>6&nbsp;&nbsp;</TD><TD align="right"><B>Float</B>&nbsp;&nbsp;</TD><TD>FLT&nbsp;&nbsp;</TD><TD>Float&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Float</TD></TR>
-  <TR bgcolor="#FFF2CC"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>Double</B>&nbsp;&nbsp;</TD><TD>DBL&nbsp;&nbsp;</TD><TD>Double&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Double</TD></TR>
+  <TR bgcolor="#fff6fc"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>Double</B>&nbsp;&nbsp;</TD><TD>DBL&nbsp;&nbsp;</TD><TD>Double&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Double</TD></TR>
   <TR bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>Date</B>&nbsp;&nbsp;</TD><TD>DT&nbsp;&nbsp;</TD><TD>Date&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Date</TD></TR>
-  <TR bgcolor="#FFF2CC"><TD>9&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DTM&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
+  <TR bgcolor="#fff6fc"><TD>9&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DTM&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
 </TABLE>
-</TD></TR>
+</BLOCKQUOTE>
+</TD>
+</TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>6&nbsp;&nbsp;</TD>
-<TD align="right"><B id='FORMULA-title_DIV' class='columns'>title</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Formula-title_DIV' class='columns'>title</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(128)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -114,7 +117,7 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>7&nbsp;&nbsp;</TD>
-<TD align="right"><B id='FORMULA-description_DIV' class='columns'>description</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Formula-description_DIV' class='columns'>description</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -124,7 +127,7 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>8&nbsp;&nbsp;</TD>
-<TD align="right"><B id='FORMULA-formula_DIV' class='columns'>formula</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Formula-formula_DIV' class='columns'>formula</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -134,7 +137,7 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>9&nbsp;&nbsp;</TD>
-<TD align="right"><B id='FORMULA-htmlDoc_DIV' class='columns'>htmlDoc</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Formula-htmlDoc_DIV' class='columns'>htmlDoc</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;text&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -144,7 +147,7 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>10&nbsp;&nbsp;</TD>
-<TD align="right"><B id='FORMULA-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Formula-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
@@ -152,14 +155,9 @@ It contains the following columns:<BR>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created.</TD>
 </TR>
-  <TR bgcolor="#FFFFFF"><TD></TD><TD></TD><TD colspan="10" align="center">
-<TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFF2CC"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Creation</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Creation&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Creation time</TD></TR>
-</TABLE>
-</TD></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>11&nbsp;&nbsp;</TD>
-<TD align="right"><B id='FORMULA-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Formula-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
@@ -167,14 +165,9 @@ It contains the following columns:<BR>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated.</TD>
 </TR>
-  <TR bgcolor="#DFECF8"><TD></TD><TD></TD><TD colspan="10" align="center">
-<TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFF2CC"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Update</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Update&nbsp;&nbsp;</TD><TD>ALWAYS&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Last updated time</TD></TR>
-</TABLE>
-</TD></TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>12&nbsp;&nbsp;</TD>
-<TD align="right"><B id='FORMULA-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Formula-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
@@ -182,10 +175,10 @@ It contains the following columns:<BR>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was deleted.</TD>
 </TR>
-</TABLE>
-<DIV id='FORMULA-refnum_MODAL' class='modal'>
+</TABLE></BLOCKQUOTE>
+<DIV id='Formula-refnum_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('FORMULA-refnum_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('Formula-refnum_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -195,14 +188,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULA_DIV'>Formula</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULA-refnum_DIV'>refnum</a> -- LONG</td>
+<td><a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Formula-refnum_DIV'>refnum</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='FORMULA-location_MODAL' class='modal'>
+<DIV id='Formula-location_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('FORMULA-location_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('Formula-location_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -212,14 +205,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULA_DIV'>Formula</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULA-location_DIV'>location</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Formula-location_DIV'>location</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='FORMULA-location2_MODAL' class='modal'>
+<DIV id='Formula-location2_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('FORMULA-location2_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('Formula-location2_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -229,14 +222,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULA_DIV'>Formula</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULA-location2_DIV'>location2</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Formula-location2_DIV'>location2</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='FORMULA-name_MODAL' class='modal'>
+<DIV id='Formula-name_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('FORMULA-name_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('Formula-name_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -246,14 +239,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULA_DIV'>Formula</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULA-name_DIV'>name</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Formula-name_DIV'>name</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='FORMULA-type_MODAL' class='modal'>
+<DIV id='Formula-type_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('FORMULA-type_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('Formula-type_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -263,14 +256,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULA_DIV'>Formula</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULA-type_DIV'>type</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Formula-type_DIV'>type</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='FORMULA-title_MODAL' class='modal'>
+<DIV id='Formula-title_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('FORMULA-title_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('Formula-title_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -280,14 +273,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULA_DIV'>Formula</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULA-title_DIV'>title</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Formula-title_DIV'>title</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='FORMULA-description_MODAL' class='modal'>
+<DIV id='Formula-description_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('FORMULA-description_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('Formula-description_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -297,14 +290,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULA_DIV'>Formula</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULA-description_DIV'>description</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Formula-description_DIV'>description</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='FORMULA-formula_MODAL' class='modal'>
+<DIV id='Formula-formula_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('FORMULA-formula_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('Formula-formula_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -314,14 +307,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULA_DIV'>Formula</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULA-formula_DIV'>formula</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Formula-formula_DIV'>formula</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='FORMULA-htmlDoc_MODAL' class='modal'>
+<DIV id='Formula-htmlDoc_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('FORMULA-htmlDoc_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('Formula-htmlDoc_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -331,14 +324,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULA_DIV'>Formula</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULA-htmlDoc_DIV'>htmlDoc</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Formula-htmlDoc_DIV'>htmlDoc</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='FORMULA-created_MODAL' class='modal'>
+<DIV id='Formula-created_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('FORMULA-created_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('Formula-created_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -348,14 +341,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULA_DIV'>Formula</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULA-created_DIV'>created</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Formula-created_DIV'>created</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='FORMULA-lastUpdated_MODAL' class='modal'>
+<DIV id='Formula-lastUpdated_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('FORMULA-lastUpdated_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('Formula-lastUpdated_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -365,14 +358,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULA_DIV'>Formula</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULA-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Formula-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='FORMULA-deleted_MODAL' class='modal'>
+<DIV id='Formula-deleted_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('FORMULA-deleted_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('Formula-deleted_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -382,8 +375,8 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULA_DIV'>Formula</a></td>
-<td><a href='TILDA___Docs.TILDA.html#FORMULA-deleted_DIV'>deleted</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#Formula_DIV'>Formula</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Formula-deleted_DIV'>deleted</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
@@ -391,14 +384,14 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated May 3 2018, 13:22:05IST
+ @generated May 9 2018, 17:22:41IST
 */
 public abstract class TILDA__FORMULA implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
    protected static final Logger LOG = LogManager.getLogger(TILDA__FORMULA.class.getName());
 
    public static final Class<TILDA__FORMULA_Factory> FACTORY_CLASS= TILDA__FORMULA_Factory.class;
-   public static final String TABLENAME = TextUtil.Print("TILDA.FORMULA", "");
+   public static final String TABLENAME = TextUtil.Print("TILDA.Formula", "");
 
    protected TILDA__FORMULA() { }
 
@@ -441,13 +434,13 @@ public abstract class TILDA__FORMULA implements tilda.interfaces.WriterObject, t
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.refnum -> TILDA.FORMULA."refnum"
+//   Field tilda.data.TILDA.Formula.refnum -> TILDA.Formula."refnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.refnum of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.refnum of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.refnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.refnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
@@ -461,13 +454,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.refnum -> TILDA.FORMULA."refnum"
+//   Field tilda.data.TILDA.Formula.refnum -> TILDA.Formula."refnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.refnum of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.refnum of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.refnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.refnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
@@ -481,13 +474,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.refnum -> TILDA.FORMULA."refnum"
+//   Field tilda.data.TILDA.Formula.refnum -> TILDA.Formula."refnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.refnum of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.refnum of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.refnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.refnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
@@ -502,7 +495,7 @@ This is the setter for:<BR>
        if (v != _refnum)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.FORMULA.refnum' that is invariant, or part of a read-only or pre-existing WORM object.");
+           throw new Exception("Cannot set field 'tilda.data.TILDA.Formula.refnum' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes1 |= TILDA__FORMULA_Factory.COLS.REFNUM._Mask1;
           __Nulls1   &= ~TILDA__FORMULA_Factory.COLS.REFNUM._Mask1;
        _refnum = v;
@@ -518,13 +511,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.location -> TILDA.FORMULA."location"
+//   Field tilda.data.TILDA.Formula.location -> TILDA.Formula."location"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.location of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.location of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.location of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.location of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -539,13 +532,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.location -> TILDA.FORMULA."location"
+//   Field tilda.data.TILDA.Formula.location -> TILDA.Formula."location"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.location of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.location of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.location of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.location of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -560,13 +553,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.location -> TILDA.FORMULA."location"
+//   Field tilda.data.TILDA.Formula.location -> TILDA.Formula."location"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.location of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.location of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.location of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.location of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -580,13 +573,13 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.FORMULA.location to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.Formula.location to null: it's not nullable.");
        else if (v.length() > 64)
-        throw new Exception("Cannot set tilda.data.TILDA.FORMULA.location: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
+        throw new Exception("Cannot set tilda.data.TILDA.Formula.location: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_location) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.FORMULA.location' that is invariant, or part of a read-only or pre-existing WORM object.");
+           throw new Exception("Cannot set field 'tilda.data.TILDA.Formula.location' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes1 |= TILDA__FORMULA_Factory.COLS.LOCATION._Mask1;
           __Nulls1   &= ~TILDA__FORMULA_Factory.COLS.LOCATION._Mask1;
        _location = v;
@@ -596,13 +589,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.location -> TILDA.FORMULA."location"
+//   Field tilda.data.TILDA.Formula.location -> TILDA.Formula."location"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.location of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.location of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.location of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.location of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -623,13 +616,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.location2 -> TILDA.FORMULA."location2"
+//   Field tilda.data.TILDA.Formula.location2 -> TILDA.Formula."location2"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.location2 of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.location2 of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.location2 of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.location2 of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -643,13 +636,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.location2 -> TILDA.FORMULA."location2"
+//   Field tilda.data.TILDA.Formula.location2 -> TILDA.Formula."location2"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.location2 of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.location2 of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.location2 of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.location2 of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -664,13 +657,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.location2 -> TILDA.FORMULA."location2"
+//   Field tilda.data.TILDA.Formula.location2 -> TILDA.Formula."location2"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.location2 of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.location2 of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.location2 of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.location2 of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -684,13 +677,13 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.FORMULA.location2 to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.Formula.location2 to null: it's not nullable.");
        else if (v.length() > 64)
-        throw new Exception("Cannot set tilda.data.TILDA.FORMULA.location2: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
+        throw new Exception("Cannot set tilda.data.TILDA.Formula.location2: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_location2) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.FORMULA.location2' that is invariant, or part of a read-only or pre-existing WORM object.");
+           throw new Exception("Cannot set field 'tilda.data.TILDA.Formula.location2' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes1 |= TILDA__FORMULA_Factory.COLS.LOCATION2._Mask1;
           __Nulls1   &= ~TILDA__FORMULA_Factory.COLS.LOCATION2._Mask1;
        _location2 = v;
@@ -700,13 +693,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.location2 -> TILDA.FORMULA."location2"
+//   Field tilda.data.TILDA.Formula.location2 -> TILDA.Formula."location2"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.location2 of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.location2 of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.location2 of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.location2 of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -727,13 +720,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.name -> TILDA.FORMULA."name"
+//   Field tilda.data.TILDA.Formula.name -> TILDA.Formula."name"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.name of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.name of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.name of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.name of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -748,13 +741,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.name -> TILDA.FORMULA."name"
+//   Field tilda.data.TILDA.Formula.name -> TILDA.Formula."name"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.name of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.name of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.name of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.name of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -769,13 +762,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.name -> TILDA.FORMULA."name"
+//   Field tilda.data.TILDA.Formula.name -> TILDA.Formula."name"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.name of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.name of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.name of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.name of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -789,9 +782,9 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.FORMULA.name to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.Formula.name to null: it's not nullable.");
        else if (v.length() > 64)
-        throw new Exception("Cannot set tilda.data.TILDA.FORMULA.name: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
+        throw new Exception("Cannot set tilda.data.TILDA.Formula.name: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_name) == false)
         {
           __Changes1 |= TILDA__FORMULA_Factory.COLS.NAME._Mask1;
@@ -803,13 +796,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.name -> TILDA.FORMULA."name"
+//   Field tilda.data.TILDA.Formula.name -> TILDA.Formula."name"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.name of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.name of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.name of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.name of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -830,13 +823,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.type -> TILDA.FORMULA."type"
+//   Field tilda.data.TILDA.Formula.type -> TILDA.Formula."type"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.type of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.type of type character(3)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.type of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.type of type character(3)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>3</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -863,7 +856,7 @@ This is the definition for:<BR>
 */
    String _type;
 /**
-These are the enumerated values for tilda.data.TILDA.FORMULA.type, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
+These are the enumerated values for tilda.data.TILDA.Formula.type, which can be used to seed UI elements such as drop downs, checkboxe, radio buttons etc...<BR>
 
 <TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
   <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>String</B>&nbsp;&nbsp;</TD><TD>STR&nbsp;&nbsp;</TD><TD>String&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>String</TD></TR>
@@ -900,13 +893,13 @@ These are the enumerated values for tilda.data.TILDA.FORMULA.type, which can be 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.type -> TILDA.FORMULA."type"
+//   Field tilda.data.TILDA.Formula.type -> TILDA.Formula."type"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.type of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.type of type character(3)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.type of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.type of type character(3)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>3</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -935,7 +928,7 @@ This is the getter for:<BR>
       { return _type; }
 
 /**
-This is the value is-a for tilda.data.TILDA.FORMULA.type:<BR>
+This is the value is-a for tilda.data.TILDA.Formula.type:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>String</TD></TR>
   <TR><TD align="right"><B>Value</B></TD><TD>STR</TD></TR>
@@ -949,7 +942,7 @@ This is the value is-a for tilda.data.TILDA.FORMULA.type:<BR>
       { return _type != null && _type.equals(_typeString); }
 
 /**
-This is the value is-a for tilda.data.TILDA.FORMULA.type:<BR>
+This is the value is-a for tilda.data.TILDA.Formula.type:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>Character</TD></TR>
   <TR><TD align="right"><B>Value</B></TD><TD>CHR</TD></TR>
@@ -963,7 +956,7 @@ This is the value is-a for tilda.data.TILDA.FORMULA.type:<BR>
       { return _type != null && _type.equals(_typeCharacter); }
 
 /**
-This is the value is-a for tilda.data.TILDA.FORMULA.type:<BR>
+This is the value is-a for tilda.data.TILDA.Formula.type:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>Boolean</TD></TR>
   <TR><TD align="right"><B>Value</B></TD><TD>BOL</TD></TR>
@@ -977,7 +970,7 @@ This is the value is-a for tilda.data.TILDA.FORMULA.type:<BR>
       { return _type != null && _type.equals(_typeBoolean); }
 
 /**
-This is the value is-a for tilda.data.TILDA.FORMULA.type:<BR>
+This is the value is-a for tilda.data.TILDA.Formula.type:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>Integer</TD></TR>
   <TR><TD align="right"><B>Value</B></TD><TD>INT</TD></TR>
@@ -991,7 +984,7 @@ This is the value is-a for tilda.data.TILDA.FORMULA.type:<BR>
       { return _type != null && _type.equals(_typeInteger); }
 
 /**
-This is the value is-a for tilda.data.TILDA.FORMULA.type:<BR>
+This is the value is-a for tilda.data.TILDA.Formula.type:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>Long</TD></TR>
   <TR><TD align="right"><B>Value</B></TD><TD>LNG</TD></TR>
@@ -1005,7 +998,7 @@ This is the value is-a for tilda.data.TILDA.FORMULA.type:<BR>
       { return _type != null && _type.equals(_typeLong); }
 
 /**
-This is the value is-a for tilda.data.TILDA.FORMULA.type:<BR>
+This is the value is-a for tilda.data.TILDA.Formula.type:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>Float</TD></TR>
   <TR><TD align="right"><B>Value</B></TD><TD>FLT</TD></TR>
@@ -1019,7 +1012,7 @@ This is the value is-a for tilda.data.TILDA.FORMULA.type:<BR>
       { return _type != null && _type.equals(_typeFloat); }
 
 /**
-This is the value is-a for tilda.data.TILDA.FORMULA.type:<BR>
+This is the value is-a for tilda.data.TILDA.Formula.type:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>Double</TD></TR>
   <TR><TD align="right"><B>Value</B></TD><TD>DBL</TD></TR>
@@ -1033,7 +1026,7 @@ This is the value is-a for tilda.data.TILDA.FORMULA.type:<BR>
       { return _type != null && _type.equals(_typeDouble); }
 
 /**
-This is the value is-a for tilda.data.TILDA.FORMULA.type:<BR>
+This is the value is-a for tilda.data.TILDA.Formula.type:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>Date</TD></TR>
   <TR><TD align="right"><B>Value</B></TD><TD>DT</TD></TR>
@@ -1047,7 +1040,7 @@ This is the value is-a for tilda.data.TILDA.FORMULA.type:<BR>
       { return _type != null && _type.equals(_typeDate); }
 
 /**
-This is the value is-a for tilda.data.TILDA.FORMULA.type:<BR>
+This is the value is-a for tilda.data.TILDA.Formula.type:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>DateTime</TD></TR>
   <TR><TD align="right"><B>Value</B></TD><TD>DTM</TD></TR>
@@ -1062,13 +1055,13 @@ This is the value is-a for tilda.data.TILDA.FORMULA.type:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.type -> TILDA.FORMULA."type"
+//   Field tilda.data.TILDA.Formula.type -> TILDA.Formula."type"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.type of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.type of type character(3)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.type of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.type of type character(3)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>3</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -1097,9 +1090,9 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.FORMULA.type to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.Formula.type to null: it's not nullable.");
        else if (v.length() > 3)
-        throw new Exception("Cannot set tilda.data.TILDA.FORMULA.type: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 3.");
+        throw new Exception("Cannot set tilda.data.TILDA.Formula.type: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 3.");
        else if (v.equals(_type) == false)
         {
           __Changes1 |= TILDA__FORMULA_Factory.COLS.TYPE._Mask1;
@@ -1110,7 +1103,7 @@ This is the setter for:<BR>
      }
 
 /**
-This is the value setter-as for tilda.data.TILDA.FORMULA.type:<BR>
+This is the value setter-as for tilda.data.TILDA.Formula.type:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>String</TD></TR>
   <TR><TD align="right"><B>Value</B></TD><TD>STR</TD></TR>
@@ -1124,7 +1117,7 @@ This is the value setter-as for tilda.data.TILDA.FORMULA.type:<BR>
       { setType(_typeString); }
 
 /**
-This is the value setter-as for tilda.data.TILDA.FORMULA.type:<BR>
+This is the value setter-as for tilda.data.TILDA.Formula.type:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>Character</TD></TR>
   <TR><TD align="right"><B>Value</B></TD><TD>CHR</TD></TR>
@@ -1138,7 +1131,7 @@ This is the value setter-as for tilda.data.TILDA.FORMULA.type:<BR>
       { setType(_typeCharacter); }
 
 /**
-This is the value setter-as for tilda.data.TILDA.FORMULA.type:<BR>
+This is the value setter-as for tilda.data.TILDA.Formula.type:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>Boolean</TD></TR>
   <TR><TD align="right"><B>Value</B></TD><TD>BOL</TD></TR>
@@ -1152,7 +1145,7 @@ This is the value setter-as for tilda.data.TILDA.FORMULA.type:<BR>
       { setType(_typeBoolean); }
 
 /**
-This is the value setter-as for tilda.data.TILDA.FORMULA.type:<BR>
+This is the value setter-as for tilda.data.TILDA.Formula.type:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>Integer</TD></TR>
   <TR><TD align="right"><B>Value</B></TD><TD>INT</TD></TR>
@@ -1166,7 +1159,7 @@ This is the value setter-as for tilda.data.TILDA.FORMULA.type:<BR>
       { setType(_typeInteger); }
 
 /**
-This is the value setter-as for tilda.data.TILDA.FORMULA.type:<BR>
+This is the value setter-as for tilda.data.TILDA.Formula.type:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>Long</TD></TR>
   <TR><TD align="right"><B>Value</B></TD><TD>LNG</TD></TR>
@@ -1180,7 +1173,7 @@ This is the value setter-as for tilda.data.TILDA.FORMULA.type:<BR>
       { setType(_typeLong); }
 
 /**
-This is the value setter-as for tilda.data.TILDA.FORMULA.type:<BR>
+This is the value setter-as for tilda.data.TILDA.Formula.type:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>Float</TD></TR>
   <TR><TD align="right"><B>Value</B></TD><TD>FLT</TD></TR>
@@ -1194,7 +1187,7 @@ This is the value setter-as for tilda.data.TILDA.FORMULA.type:<BR>
       { setType(_typeFloat); }
 
 /**
-This is the value setter-as for tilda.data.TILDA.FORMULA.type:<BR>
+This is the value setter-as for tilda.data.TILDA.Formula.type:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>Double</TD></TR>
   <TR><TD align="right"><B>Value</B></TD><TD>DBL</TD></TR>
@@ -1208,7 +1201,7 @@ This is the value setter-as for tilda.data.TILDA.FORMULA.type:<BR>
       { setType(_typeDouble); }
 
 /**
-This is the value setter-as for tilda.data.TILDA.FORMULA.type:<BR>
+This is the value setter-as for tilda.data.TILDA.Formula.type:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>Date</TD></TR>
   <TR><TD align="right"><B>Value</B></TD><TD>DT</TD></TR>
@@ -1222,7 +1215,7 @@ This is the value setter-as for tilda.data.TILDA.FORMULA.type:<BR>
       { setType(_typeDate); }
 
 /**
-This is the value setter-as for tilda.data.TILDA.FORMULA.type:<BR>
+This is the value setter-as for tilda.data.TILDA.Formula.type:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>DateTime</TD></TR>
   <TR><TD align="right"><B>Value</B></TD><TD>DTM</TD></TR>
@@ -1237,13 +1230,13 @@ This is the value setter-as for tilda.data.TILDA.FORMULA.type:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.type -> TILDA.FORMULA."type"
+//   Field tilda.data.TILDA.Formula.type -> TILDA.Formula."type"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.type of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.type of type character(3)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.type of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.type of type character(3)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>3</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -1279,13 +1272,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.title -> TILDA.FORMULA."title"
+//   Field tilda.data.TILDA.Formula.title -> TILDA.Formula."title"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.title of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.title of type varchar(128)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.title of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.title of type varchar(128)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>128</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -1299,13 +1292,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.title -> TILDA.FORMULA."title"
+//   Field tilda.data.TILDA.Formula.title -> TILDA.Formula."title"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.title of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.title of type varchar(128)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.title of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.title of type varchar(128)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>128</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -1320,13 +1313,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.title -> TILDA.FORMULA."title"
+//   Field tilda.data.TILDA.Formula.title -> TILDA.Formula."title"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.title of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.title of type varchar(128)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.title of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.title of type varchar(128)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>128</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -1340,9 +1333,9 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.FORMULA.title to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.Formula.title to null: it's not nullable.");
        else if (v.length() > 128)
-        throw new Exception("Cannot set tilda.data.TILDA.FORMULA.title: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 128.");
+        throw new Exception("Cannot set tilda.data.TILDA.Formula.title: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 128.");
        else if (v.equals(_title) == false)
         {
           __Changes1 |= TILDA__FORMULA_Factory.COLS.TITLE._Mask1;
@@ -1354,13 +1347,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.title -> TILDA.FORMULA."title"
+//   Field tilda.data.TILDA.Formula.title -> TILDA.Formula."title"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.title of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.title of type varchar(128)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.title of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.title of type varchar(128)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>128</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -1381,13 +1374,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.description -> TILDA.FORMULA."description"
+//   Field tilda.data.TILDA.Formula.description -> TILDA.Formula."description"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.description of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.description of type text</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.description of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.description of type text</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>32000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -1401,13 +1394,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.description -> TILDA.FORMULA."description"
+//   Field tilda.data.TILDA.Formula.description -> TILDA.Formula."description"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.description of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.description of type text</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.description of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.description of type text</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>32000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -1422,13 +1415,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.description -> TILDA.FORMULA."description"
+//   Field tilda.data.TILDA.Formula.description -> TILDA.Formula."description"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.description of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.description of type text</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.description of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.description of type text</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>32000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -1442,9 +1435,9 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.FORMULA.description to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.Formula.description to null: it's not nullable.");
        else if (v.length() > 32000)
-        throw new Exception("Cannot set tilda.data.TILDA.FORMULA.description: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 32000.");
+        throw new Exception("Cannot set tilda.data.TILDA.Formula.description: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 32000.");
        else if (v.equals(_description) == false)
         {
           __Changes1 |= TILDA__FORMULA_Factory.COLS.DESCRIPTION._Mask1;
@@ -1456,13 +1449,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.description -> TILDA.FORMULA."description"
+//   Field tilda.data.TILDA.Formula.description -> TILDA.Formula."description"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.description of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.description of type text</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.description of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.description of type text</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>32000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -1483,13 +1476,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.formula -> TILDA.FORMULA."formula"
+//   Field tilda.data.TILDA.Formula.formula -> TILDA.Formula."formula"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.formula of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.formula of type text</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.formula of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.formula of type text</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>32000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -1503,13 +1496,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.formula -> TILDA.FORMULA."formula"
+//   Field tilda.data.TILDA.Formula.formula -> TILDA.Formula."formula"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.formula of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.formula of type text</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.formula of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.formula of type text</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>32000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -1524,13 +1517,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.formula -> TILDA.FORMULA."formula"
+//   Field tilda.data.TILDA.Formula.formula -> TILDA.Formula."formula"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.formula of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.formula of type text</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.formula of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.formula of type text</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>32000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -1545,13 +1538,13 @@ This is the isNull for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.formula -> TILDA.FORMULA."formula"
+//   Field tilda.data.TILDA.Formula.formula -> TILDA.Formula."formula"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.formula of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.formula of type text</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.formula of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.formula of type text</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>32000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -1569,7 +1562,7 @@ This is the setter for:<BR>
           setNullFormula();
         }
        else if (v.length() > 32000)
-        throw new Exception("Cannot set tilda.data.TILDA.FORMULA.formula: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 32000.");
+        throw new Exception("Cannot set tilda.data.TILDA.Formula.formula: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 32000.");
        else if (v.equals(_formula) == false)
         {
           __Changes1 |= TILDA__FORMULA_Factory.COLS.FORMULA._Mask1;
@@ -1581,13 +1574,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.formula -> TILDA.FORMULA."formula"
+//   Field tilda.data.TILDA.Formula.formula -> TILDA.Formula."formula"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.formula of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.formula of type text</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.formula of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.formula of type text</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>32000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -1610,13 +1603,13 @@ This is the null setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.formula -> TILDA.FORMULA."formula"
+//   Field tilda.data.TILDA.Formula.formula -> TILDA.Formula."formula"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.formula of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.formula of type text</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.formula of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.formula of type text</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>32000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -1637,13 +1630,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.htmlDoc -> TILDA.FORMULA."htmlDoc"
+//   Field tilda.data.TILDA.Formula.htmlDoc -> TILDA.Formula."htmlDoc"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.htmlDoc of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.htmlDoc of type text</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.htmlDoc of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.htmlDoc of type text</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>32000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -1657,13 +1650,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.htmlDoc -> TILDA.FORMULA."htmlDoc"
+//   Field tilda.data.TILDA.Formula.htmlDoc -> TILDA.Formula."htmlDoc"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.htmlDoc of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.htmlDoc of type text</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.htmlDoc of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.htmlDoc of type text</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>32000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -1678,13 +1671,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.htmlDoc -> TILDA.FORMULA."htmlDoc"
+//   Field tilda.data.TILDA.Formula.htmlDoc -> TILDA.Formula."htmlDoc"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.htmlDoc of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.htmlDoc of type text</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.htmlDoc of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.htmlDoc of type text</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>32000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -1699,13 +1692,13 @@ This is the isNull for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.htmlDoc -> TILDA.FORMULA."htmlDoc"
+//   Field tilda.data.TILDA.Formula.htmlDoc -> TILDA.Formula."htmlDoc"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.htmlDoc of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.htmlDoc of type text</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.htmlDoc of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.htmlDoc of type text</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>32000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -1723,7 +1716,7 @@ This is the setter for:<BR>
           setNullHtmlDoc();
         }
        else if (v.length() > 32000)
-        throw new Exception("Cannot set tilda.data.TILDA.FORMULA.htmlDoc: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 32000.");
+        throw new Exception("Cannot set tilda.data.TILDA.Formula.htmlDoc: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 32000.");
        else if (v.equals(_htmlDoc) == false)
         {
           __Changes1 |= TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask1;
@@ -1735,13 +1728,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.htmlDoc -> TILDA.FORMULA."htmlDoc"
+//   Field tilda.data.TILDA.Formula.htmlDoc -> TILDA.Formula."htmlDoc"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.htmlDoc of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.htmlDoc of type text</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.htmlDoc of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.htmlDoc of type text</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>32000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -1764,13 +1757,13 @@ This is the null setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.htmlDoc -> TILDA.FORMULA."htmlDoc"
+//   Field tilda.data.TILDA.Formula.htmlDoc -> TILDA.Formula."htmlDoc"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.htmlDoc of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.htmlDoc of type text</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.htmlDoc of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.htmlDoc of type text</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>32000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
@@ -1791,13 +1784,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.created -> TILDA.FORMULA."created"
+//   Field tilda.data.TILDA.Formula.created -> TILDA.Formula."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -1817,13 +1810,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.created -> TILDA.FORMULA."created"
+//   Field tilda.data.TILDA.Formula.created -> TILDA.Formula."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -1844,13 +1837,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.created -> TILDA.FORMULA."created"
+//   Field tilda.data.TILDA.Formula.created -> TILDA.Formula."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -1870,11 +1863,11 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.FORMULA.created to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.Formula.created to null: it's not nullable.");
        else if (v.equals(_created) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.FORMULA.created' that is invariant, or part of a read-only or pre-existing WORM object.");
+           throw new Exception("Cannot set field 'tilda.data.TILDA.Formula.created' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes1 |= TILDA__FORMULA_Factory.COLS.CREATED._Mask1;
           __Nulls1   &= ~TILDA__FORMULA_Factory.COLS.CREATED._Mask1;
        _created = v;
@@ -1884,13 +1877,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.created -> TILDA.FORMULA."created"
+//   Field tilda.data.TILDA.Formula.created -> TILDA.Formula."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the NOW setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -1913,13 +1906,13 @@ This is the NOW setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.created -> TILDA.FORMULA."created"
+//   Field tilda.data.TILDA.Formula.created -> TILDA.Formula."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the UNDEFINED setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -1942,13 +1935,13 @@ This is the UNDEFINED setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.created -> TILDA.FORMULA."created"
+//   Field tilda.data.TILDA.Formula.created -> TILDA.Formula."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -1971,13 +1964,13 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.created -> TILDA.FORMULA."created"
+//   Field tilda.data.TILDA.Formula.created -> TILDA.Formula."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -2004,13 +1997,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.lastUpdated -> TILDA.FORMULA."lastUpdated"
+//   Field tilda.data.TILDA.Formula.lastUpdated -> TILDA.Formula."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
@@ -2030,13 +2023,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.lastUpdated -> TILDA.FORMULA."lastUpdated"
+//   Field tilda.data.TILDA.Formula.lastUpdated -> TILDA.Formula."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
@@ -2057,13 +2050,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.lastUpdated -> TILDA.FORMULA."lastUpdated"
+//   Field tilda.data.TILDA.Formula.lastUpdated -> TILDA.Formula."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
@@ -2083,7 +2076,7 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.FORMULA.lastUpdated to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.Formula.lastUpdated to null: it's not nullable.");
        else if (v.equals(_lastUpdated) == false)
         {
           __Changes1 |= TILDA__FORMULA_Factory.COLS.LASTUPDATED._Mask1;
@@ -2095,13 +2088,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.lastUpdated -> TILDA.FORMULA."lastUpdated"
+//   Field tilda.data.TILDA.Formula.lastUpdated -> TILDA.Formula."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the NOW setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
@@ -2124,13 +2117,13 @@ This is the NOW setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.lastUpdated -> TILDA.FORMULA."lastUpdated"
+//   Field tilda.data.TILDA.Formula.lastUpdated -> TILDA.Formula."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the UNDEFINED setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
@@ -2153,13 +2146,13 @@ This is the UNDEFINED setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.lastUpdated -> TILDA.FORMULA."lastUpdated"
+//   Field tilda.data.TILDA.Formula.lastUpdated -> TILDA.Formula."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
@@ -2182,13 +2175,13 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.lastUpdated -> TILDA.FORMULA."lastUpdated"
+//   Field tilda.data.TILDA.Formula.lastUpdated -> TILDA.Formula."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
@@ -2215,13 +2208,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.deleted -> TILDA.FORMULA."deleted"
+//   Field tilda.data.TILDA.Formula.deleted -> TILDA.Formula."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
@@ -2234,13 +2227,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.deleted -> TILDA.FORMULA."deleted"
+//   Field tilda.data.TILDA.Formula.deleted -> TILDA.Formula."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
@@ -2254,13 +2247,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.deleted -> TILDA.FORMULA."deleted"
+//   Field tilda.data.TILDA.Formula.deleted -> TILDA.Formula."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
@@ -2274,13 +2267,13 @@ This is the isNull for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.deleted -> TILDA.FORMULA."deleted"
+//   Field tilda.data.TILDA.Formula.deleted -> TILDA.Formula."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
@@ -2307,13 +2300,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.deleted -> TILDA.FORMULA."deleted"
+//   Field tilda.data.TILDA.Formula.deleted -> TILDA.Formula."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
@@ -2335,13 +2328,13 @@ This is the null setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.deleted -> TILDA.FORMULA."deleted"
+//   Field tilda.data.TILDA.Formula.deleted -> TILDA.Formula."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the NOW setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
@@ -2357,13 +2350,13 @@ This is the NOW setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.deleted -> TILDA.FORMULA."deleted"
+//   Field tilda.data.TILDA.Formula.deleted -> TILDA.Formula."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the UNDEFINED setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
@@ -2379,13 +2372,13 @@ This is the UNDEFINED setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.deleted -> TILDA.FORMULA."deleted"
+//   Field tilda.data.TILDA.Formula.deleted -> TILDA.Formula."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
@@ -2401,13 +2394,13 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULA.deleted -> TILDA.FORMULA."deleted"
+//   Field tilda.data.TILDA.Formula.deleted -> TILDA.Formula."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULA.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULA.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Formula.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Formula.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
@@ -2458,7 +2451,7 @@ This is the hasChanged for:<BR>
        long T0 = System.nanoTime();
        if (hasChanged() == false)
         {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.FORMULA has not changed: no writing will occur.");
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Formula has not changed: no writing will occur.");
           QueryDetails.setLastQuery(TILDA__FORMULA_Factory.SCHEMA_TABLENAME_LABEL, "");
           return true;
         }
@@ -2467,7 +2460,7 @@ This is the hasChanged for:<BR>
 
        if (BeforeWrite(C) == false)
         {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.FORMULA object's BeforeWrite() failed.");
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Formula object's BeforeWrite() failed.");
           QueryDetails.setLastQuery(TILDA__FORMULA_Factory.SCHEMA_TABLENAME_LABEL, "");
           return false;
         }
@@ -2475,7 +2468,7 @@ This is the hasChanged for:<BR>
        if (__Init == InitMode.CREATE)
         {
           StringBuilder V = new StringBuilder(1024);
-          S.append("insert into "); C.getFullTableVar(S, "TILDA", "FORMULA");
+          S.append("insert into "); C.getFullTableVar(S, "TILDA", "Formula");
           int Pos = S.length();
           if ((TILDA__FORMULA_Factory.COLS.REFNUM._Mask1      & __Changes1) != 0L) { TILDA__FORMULA_Factory.COLS.REFNUM.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if ((TILDA__FORMULA_Factory.COLS.LOCATION._Mask1    & __Changes1) != 0L) { TILDA__FORMULA_Factory.COLS.LOCATION.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
@@ -2507,7 +2500,7 @@ This is the hasChanged for:<BR>
         }
        else // InitMode can be anything else
         {
-          S.append("update "); C.getFullTableVar(S, "TILDA", "FORMULA"); S.append(" set");
+          S.append("update "); C.getFullTableVar(S, "TILDA", "Formula"); S.append(" set");
           int Pos = S.length();
           if ((TILDA__FORMULA_Factory.COLS.REFNUM._Mask1      & __Changes1) != 0L) TILDA__FORMULA_Factory.COLS.REFNUM.getFullColumnVarForUpdate(C, S);
           if ((TILDA__FORMULA_Factory.COLS.LOCATION._Mask1    & __Changes1) != 0L) TILDA__FORMULA_Factory.COLS.LOCATION.getFullColumnVarForUpdate(C, S);
@@ -2551,10 +2544,10 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "FORMULA", "refnum"); S.append("=?)");
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Formula", "refnum"); S.append("=?)");
                 break;
              case 1:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "FORMULA", "location"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "FORMULA", "name"); S.append("=?)");
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Formula", "location"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "Formula", "name"); S.append("=?)");
                 break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
@@ -2566,7 +2559,7 @@ This is the hasChanged for:<BR>
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(TILDA__FORMULA_Factory.SCHEMA_TABLENAME_LABEL, Q);
-       QueryDetails.logQuery("TILDA.FORMULA", Q, toString());
+       QueryDetails.logQuery("TILDA.Formula", Q, toString());
        java.sql.PreparedStatement PS = null;
        int count = 0;
        try
@@ -2700,35 +2693,35 @@ This is the hasChanged for:<BR>
      {
        long T0 = System.nanoTime();
        if (__Init == InitMode.CREATE)
-        throw new Exception("This TILDA.FORMULA object is being Read() after a Create(), which doesn't make sense.");
+        throw new Exception("This TILDA.Formula object is being Read() after a Create(), which doesn't make sense.");
        if (__Init == InitMode.READ == true && Force == false && hasChanged()==false)
         {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.FORMULA object has already been read.");
+          LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.Formula object has already been read.");
           QueryDetails.setLastQuery(TILDA__FORMULA_Factory.SCHEMA_TABLENAME_LABEL, "");
           return true;
         }
        StringBuilder S = new StringBuilder(1024);
        S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "FORMULA", "refnum");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULA", "location");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULA", "location2");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULA", "name");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULA", "type");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULA", "title");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULA", "description");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULA", "formula");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULA", "htmlDoc");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULA", "created");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULA", "lastUpdated");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULA", "deleted");
-       S.append(" from "); C.getFullTableVar(S, "TILDA", "FORMULA");
+       S.append(" "); C.getFullColumnVar(S, "TILDA", "Formula", "refnum");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "location");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "location2");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "name");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "type");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "title");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "description");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "formula");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "htmlDoc");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "created");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "lastUpdated");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Formula", "deleted");
+       S.append(" from "); C.getFullTableVar(S, "TILDA", "Formula");
        switch (__LookupId)
         {
           case 0:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "FORMULA", "refnum"); S.append("=?)");
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Formula", "refnum"); S.append("=?)");
              break;
           case 1:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "FORMULA", "location"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "FORMULA", "name"); S.append("=?)");
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Formula", "location"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "Formula", "name"); S.append("=?)");
              break;
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
@@ -2738,7 +2731,7 @@ This is the hasChanged for:<BR>
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(TILDA__FORMULA_Factory.SCHEMA_TABLENAME_LABEL, Q);
-       QueryDetails.logQuery("TILDA.FORMULA", Q, toString());
+       QueryDetails.logQuery("TILDA.Formula", Q, toString());
        java.sql.PreparedStatement PS=null;
        java.sql.ResultSet RS=null;
        int count = 0;

@@ -63,13 +63,13 @@ public class ValueHelper
                 break;
               case DATETIME:
                 if (Value.equalsIgnoreCase("NOW") == false && Value.equalsIgnoreCase("UNDEFINED") == false)
-                  PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' which is not a default NOW or UNDEFINED value. Only these pre-defined values are allowed for timestamps.");
+                  PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "->"+Value+"' which is not a default NOW or UNDEFINED value. Only these pre-defined values are allowed for timestamps.");
                 if (Default == DefaultType.NONE)
                   PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' which is not set as a default. Only default values are allowed for timestamps.");
                 break;
               case DATE:
-                if (Value.equalsIgnoreCase("NOW") == false && Value.equalsIgnoreCase("UNDEFINED") == false && DateTimeUtil.parse(Value, "yyyy-MM-dd") != null)
-                  PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' which is not a default NOW or UNDEFINED, or yyy-MM-dd value. Only these pre-defined values or date format are allowed for dates.");
+                if (Value.equalsIgnoreCase("NOW") == false && Value.equalsIgnoreCase("UNDEFINED") == false && DateTimeUtil.parseDate(Value, "yyyy-MM-dd") == null)
+                  PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "->"+Value+"' which is not a default NOW or UNDEFINED, or valid yyyy-MM-dd value. Only these pre-defined values or date format are allowed for dates.");
                 if (Default == DefaultType.NONE)
                   PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' which is not set as a default. Only default values are allowed for Dates.");
                 break;

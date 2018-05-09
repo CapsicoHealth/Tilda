@@ -26,20 +26,20 @@ public class TILDA__JOBMESSAGE_Factory
 
    public static final Class<TILDA__JOBMESSAGE> DATA_CLASS= TILDA__JOBMESSAGE.class;
    public static final String SCHEMA_LABEL = TextUtil.Print("TILDA", "");
-   public static final String TABLENAME_LABEL = TextUtil.Print("JOBMESSAGE", "");
-   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.JOBMESSAGE", "");
-   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "JOBMESSAGE"); }
+   public static final String TABLENAME_LABEL = TextUtil.Print("JobMessage", "");
+   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.JobMessage", "");
+   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "JobMessage"); }
 
    public static abstract class COLS {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOBMESSAGE.refnum -> TILDA.JOBMESSAGE."refnum"
+//   Field tilda.data.TILDA.JobMessage.refnum -> TILDA.JobMessage."refnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBMESSAGE.refnum of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.refnum of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobMessage.refnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobMessage.refnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
@@ -51,13 +51,13 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          REFNUM       = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"       , 0/*0*/, "The primary key for this record");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOBMESSAGE.jobRefnum -> TILDA.JOBMESSAGE."jobRefnum"
+//   Field tilda.data.TILDA.JobMessage.jobRefnum -> TILDA.JobMessage."jobRefnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBMESSAGE.jobRefnum of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.jobRefnum of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobMessage.jobRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobMessage.jobRefnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Job Foreign key</TD></TR>
@@ -69,13 +69,13 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          JOBREFNUM    = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "jobRefnum"    , 1/*1*/, "Job Foreign key");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOBMESSAGE.jobFileRefnum -> TILDA.JOBMESSAGE."jobFileRefnum"
+//   Field tilda.data.TILDA.JobMessage.jobFileRefnum -> TILDA.JobMessage."jobFileRefnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBMESSAGE.jobFileRefnum of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.jobFileRefnum of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobMessage.jobFileRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobMessage.jobFileRefnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>JobFile Foreign key</TD></TR>
@@ -87,13 +87,13 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          JOBFILEREFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "jobFileRefnum", 2/*2*/, "JobFile Foreign key");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOBMESSAGE.message -> TILDA.JOBMESSAGE."message"
+//   Field tilda.data.TILDA.JobMessage.message -> TILDA.JobMessage."message"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBMESSAGE.message of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.message of type varchar(2000)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobMessage.message of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobMessage.message of type varchar(2000)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>2000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -106,13 +106,13 @@ This is the column definition for:<BR>
      public static Type_StringPrimitive        MESSAGE      = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "message"      , 3/*3*/, "Message");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOBMESSAGE.isError -> TILDA.JOBMESSAGE."isError"
+//   Field tilda.data.TILDA.JobMessage.isError -> TILDA.JobMessage."isError"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBMESSAGE.isError of type boolean</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.isError of type boolean</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobMessage.isError of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobMessage.isError of type boolean</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Boolean flag to identify message type -- error or success</TD></TR>
@@ -124,13 +124,13 @@ This is the column definition for:<BR>
      public static Type_BooleanPrimitiveNull   ISERROR      = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "isError"      , 4/*4*/, "Boolean flag to identify message type -- error or success");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOBMESSAGE.created -> TILDA.JOBMESSAGE."created"
+//   Field tilda.data.TILDA.JobMessage.created -> TILDA.JobMessage."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBMESSAGE.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobMessage.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobMessage.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -149,13 +149,13 @@ This is the column definition for:<BR>
      public static Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 5/*5*/, "The timestamp for when the record was created.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOBMESSAGE.lastUpdated -> TILDA.JOBMESSAGE."lastUpdated"
+//   Field tilda.data.TILDA.JobMessage.lastUpdated -> TILDA.JobMessage."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBMESSAGE.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobMessage.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobMessage.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
@@ -174,13 +174,13 @@ This is the column definition for:<BR>
      public static Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 6/*6*/, "The timestamp for when the record was last updated.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.JOBMESSAGE.deleted -> TILDA.JOBMESSAGE."deleted"
+//   Field tilda.data.TILDA.JobMessage.deleted -> TILDA.JobMessage."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JOBMESSAGE.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JOBMESSAGE.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.JobMessage.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.JobMessage.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
@@ -243,15 +243,15 @@ This is the column definition for:<BR>
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
        S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "JOBMESSAGE", "refnum");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBMESSAGE", "jobRefnum");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBMESSAGE", "jobFileRefnum");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBMESSAGE", "message");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBMESSAGE", "isError");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBMESSAGE", "created");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBMESSAGE", "lastUpdated");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "JOBMESSAGE", "deleted");
-       S.append(" from "); C.getFullTableVar(S, "TILDA", "JOBMESSAGE");
+       S.append(" "); C.getFullColumnVar(S, "TILDA", "JobMessage", "refnum");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "JobMessage", "jobRefnum");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "JobMessage", "jobFileRefnum");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "JobMessage", "message");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "JobMessage", "isError");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "JobMessage", "created");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "JobMessage", "lastUpdated");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "JobMessage", "deleted");
+       S.append(" from "); C.getFullTableVar(S, "TILDA", "JobMessage");
        switch (LookupId)
         {
           case -7:
@@ -259,8 +259,8 @@ This is the column definition for:<BR>
              if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
              break;
           case 2:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "JOBMESSAGE", "jobFileRefnum"); S.append(" = ").append("?").append(")");
-             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "JOBMESSAGE", "created"); S.append(" DESC");
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "JobMessage", "jobFileRefnum"); S.append(" = ").append("?").append(")");
+             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "JobMessage", "created"); S.append(" DESC");
              break;
           case -666: break;
           default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
@@ -271,7 +271,7 @@ This is the column definition for:<BR>
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(SCHEMA_TABLENAME_LABEL, Q);
-       QueryDetails.logQuery("TILDA.JOBMESSAGE", Q, null);
+       QueryDetails.logQuery("TILDA.JobMessage", Q, null);
        java.sql.PreparedStatement PS=null;
        int count = 0;
        try
