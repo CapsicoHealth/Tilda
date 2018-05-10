@@ -50,7 +50,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
       {
         TableMeta TM = new TableMeta(schemaName, tableName, "");
         TM.load(C);
-        Map<String, ColumnMeta> ColumnsMap = TM._Columns;
+        Map<String, ColumnMeta> ColumnsMap = TM.getColumnMetaMap();
         PreparedStatement Pst = C.prepareStatement(Str.toString());
         List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
         long NumOfRecs = 0;
