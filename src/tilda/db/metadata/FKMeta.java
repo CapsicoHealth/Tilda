@@ -10,48 +10,65 @@ import org.apache.logging.log4j.Logger;
 public class FKMeta
   {
     static final Logger LOG = LogManager.getLogger(FKMeta.class.getName());
-    
-    protected FKMeta(ResultSet RS, boolean Outgoing)
-    throws Exception
+
+    protected FKMeta(ResultSet RS, boolean Outgoing, TableMeta parentTable)
+      throws Exception
       {
-//        LOG.debug(JDBCHelper.PrintResultSet(RS));
-        _Name   = RS.getString("FK_NAME" );
-        _OtherSchema  = RS.getString(Outgoing == true ? "PKTABLE_SCHEM" : "FKTABLE_SCHEM").toLowerCase();
-        _OtherTable   = RS.getString(Outgoing == true ? "PKTABLE_NAME"  : "FKTABLE_NAME" ).toLowerCase();
+        // LOG.debug(JDBCHelper.PrintResultSet(RS));
+        _Name = RS.getString("FK_NAME");
+        _OtherSchema = RS.getString(Outgoing == true ? "PKTABLE_SCHEM" : "FKTABLE_SCHEM").toLowerCase();
+        _OtherTable = RS.getString(Outgoing == true ? "PKTABLE_NAME" : "FKTABLE_NAME").toLowerCase();
         _Outgoing = Outgoing;
+        _ParentTable = parentTable;
       }
 
-    public final String     _Name       ;
-    public final String     _OtherSchema;
-    public final String     _OtherTable ;
-    public boolean          _Outgoing;
+    public final String             _Name;
+    public final String             _OtherSchema;
+    public final String             _OtherTable;
+    public final boolean            _Outgoing;
+    public final TableMeta          _ParentTable;
+
     public final List<FKColumnMeta> _Columns = new ArrayList<FKColumnMeta>();
 
-    public void addColumn(ResultSet RS) throws Exception
+    public String getCleanName()
       {
-        FKColumnMeta CM = new FKColumnMeta(RS);
+        String cleanName = _Name;
+        if (cleanName.toLowerCase().startsWith(_ParentTable._TableName.toLowerCase()) == true)
+          cleanName = cleanName.substring(_ParentTable._TableName.length());
+        if (cleanName.startsWith("_") == true)
+          cleanName = cleanName.substring(1);
+        if (cleanName.toLowerCase().endsWith("_fkey") == true)
+          cleanName = cleanName.substring(0, cleanName.length()-"_fkey".length());
+        
+        return cleanName;
+      }
+
+    public void addColumn(ResultSet RS)
+    throws Exception
+      {
+        FKColumnMeta CM = new FKColumnMeta(RS, this);
         boolean Found = false;
         for (FKColumnMeta FKCM : _Columns)
-         if (FKCM._Pos == CM._Pos)
-           {
-             Found = true;
-             break;
-           }
+          if (FKCM._Pos == CM._Pos)
+            {
+              Found = true;
+              break;
+            }
         if (Found == false)
-         _Columns.add(CM._Pos-1, CM);
+          _Columns.add(CM._Pos - 1, CM);
       }
-    
+
     public String getColumnList()
-     {
-       StringBuilder Str = new StringBuilder();
-       for (FKColumnMeta FKCM : _Columns)
-         {
-           if (Str.length() != 0)
-            Str.append(", ");
-           Str.append(FKCM._FKCol);
-         }
-       return Str.toString();
-     }
+      {
+        StringBuilder Str = new StringBuilder();
+        for (FKColumnMeta FKCM : _Columns)
+          {
+            if (Str.length() != 0)
+              Str.append(", ");
+            Str.append(FKCM._FKCol);
+          }
+        return Str.toString();
+      }
 
     public String toString()
       {
@@ -59,14 +76,14 @@ public class FKMeta
         for (FKColumnMeta FKCM : _Columns)
           {
             if (Str.length() != 0)
-             Str.append(", ");
+              Str.append(", ");
             Str.append("(").append(FKCM.toString()).append(")");
           }
-        return "Name: " + _Name + "; "+(_Outgoing==true?"To":"From")+": "+ _OtherSchema+"."+_OtherTable + "; Columns: ["+Str.toString()+"];";
+        return "Name: " + _Name + "; " + (_Outgoing == true ? "To" : "From") + ": " + _OtherSchema + "." + _OtherTable + "; Columns: [" + Str.toString() + "];";
       }
 
     public String getSignature()
       {
-        return _OtherSchema.toUpperCase()+"."+_OtherTable.toUpperCase()+"("+getColumnList()+")";
+        return _OtherSchema.toUpperCase() + "." + _OtherTable.toUpperCase() + "(" + getColumnList() + ")";
       }
   }

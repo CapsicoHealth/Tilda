@@ -203,7 +203,7 @@ public class JDBCHelper
           {
             String Name = RS.getMetaData().getColumnName(i);
             String Val = RS.getString(i);
-            Str.append(Name).append("=").append(TextUtil.toMaxLength(Val, 20)).append("; ");
+            Str.append(Name).append("=").append(TextUtil.toMaxLength(Val, 50)).append("; ");
           }
         return Str.toString();
       }
