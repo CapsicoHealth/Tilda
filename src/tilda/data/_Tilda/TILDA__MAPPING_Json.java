@@ -1,7 +1,6 @@
 
 package tilda.data._Tilda;
 
-import java.io.*;
 import java.util.*;
 
 import org.apache.logging.log4j.LogManager;
@@ -15,6 +14,7 @@ import tilda.utils.*;
 import com.google.gson.annotations.SerializedName;
 
 
+@SuppressWarnings({ "unused" })
 public class TILDA__MAPPING_Json
  {
    static final Logger             LOG                = LogManager.getLogger(TILDA__MAPPING_Json.class.getName());

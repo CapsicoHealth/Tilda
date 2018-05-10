@@ -17,7 +17,6 @@ import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.ViewColumn;
-import tilda.utils.PaddingUtil;
 import tilda.utils.TextUtil;
 
 public class TableRankTracker

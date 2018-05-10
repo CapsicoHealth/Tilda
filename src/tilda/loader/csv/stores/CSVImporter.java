@@ -35,21 +35,18 @@ import org.apache.commons.csv.CSVRecord;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.loader.GenericLoader;
-import tilda.loader.csv.ImportProcessor;
-import tilda.loader.parser.ColumnHeader;
-import tilda.loader.parser.DataObject;
-
 import tilda.db.Connection;
-import tilda.db.MasterFactory;
 import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.DatabaseMeta;
 import tilda.db.metadata.TableMeta;
 import tilda.enums.ColumnType;
+import tilda.loader.GenericLoader;
+import tilda.loader.csv.ImportProcessor;
+import tilda.loader.parser.ColumnHeader;
+import tilda.loader.parser.DataObject;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
-import tilda.types.ColumnDefinition;
 import tilda.utils.DurationUtil;
 import tilda.utils.FileUtil;
 import tilda.utils.NumberFormatUtil;
@@ -60,19 +57,19 @@ public abstract class CSVImporter
 
     protected static final Logger LOG                = LogManager.getLogger(CSVImporter.class.getName());
     protected static final int    PERFORMANCE_NUMBER = 50000;
-    
-    protected Connection    C;
-    protected String        rootFolder;
-    protected DataObject    cmsDO;
+
+    protected Connection          C;
+    protected String              rootFolder;
+    protected DataObject          cmsDO;
 
     protected abstract long insertData(boolean isUpsert, long t0, Map<String, ColumnMeta> DBColumns,
-      boolean withHeader, Iterable<CSVRecord> records, StringBuilder Str, String schemaName, String tableName,
-      String[] headers, String[] columns, Map<String, ColumnHeader> columnMap, String[] completeHeaders,
-      String[] uniqueColumns, String DateTimePattern, String DateTimeZoneInfoId, String DatePattern) throws Exception;
+    boolean withHeader, Iterable<CSVRecord> records, StringBuilder Str, String schemaName, String tableName,
+    String[] headers, String[] columns, Map<String, ColumnHeader> columnMap, String[] completeHeaders,
+    String[] uniqueColumns, String DateTimePattern, String DateTimeZoneInfoId, String DatePattern)
+    throws Exception;
 
-    protected abstract StringBuilder GenerateSQL(boolean isUpsert, String schemaName, String tableName, String columns[],
-      Map<String, ColumnMeta> DBColumns, String lookupColumns[]);
-        
+    protected abstract StringBuilder GenerateSQL(boolean isUpsert, String schemaName, String tableName, String columns[], Map<String, ColumnMeta> DBColumns, String lookupColumns[]);
+
     public List<Results> process()
       {
         long NumOfRecs = 0;
@@ -86,23 +83,23 @@ public abstract class CSVImporter
 
             List<String> fileList = cmsDO._FileList;
             ArrayList<Results> resultsList = new ArrayList<Results>();
-            
+
             DatabaseMeta DBMeta = new DatabaseMeta();
             DBMeta.load(C, cmsDO._SchemaName, cmsDO._TableName);
             TableMeta TM = DBMeta.getTableMeta(cmsDO._SchemaName, cmsDO._TableName);
             Map<String, ColumnMeta> DBColumns = null;
-            
-            if(TM == null)
+
+            if (TM == null)
               createSchemaAndTable(C, cmsDO._SchemaName, cmsDO._TableName, columns, 500);
             else
-               DBColumns = TM._Columns;            
+              DBColumns = TM.getColumnMetaMap();
             StringBuilder Str = GenerateSQL(cmsDO.isUpserts(), cmsDO._SchemaName, cmsDO._TableName, columns, DBColumns, uniqueColumns);
-            
+
             for (String file : fileList)
               {
                 Reader R = FileUtil.getReaderFromFileOrResource(rootFolder + file);
               }
-            
+
             if (cmsDO.isInserts() == true && cmsDO.isTruncateFirst() == true)
               ImportProcessor.truncateTable(C, cmsDO._SchemaName, cmsDO._TableName, cmsDO.isTruncateCascade());
 
@@ -114,21 +111,21 @@ public abstract class CSVImporter
                 Reader R = FileUtil.getReaderFromFileOrResource(absoluteFilePath);
 
                 Map<String, ColumnHeader> columnMap = cmsDO.getMultiHeaderColumnMap();
-                
+
                 CSVFormat csvFormat = CSVFormat.DEFAULT.withHeader(completeHeaders);
                 Iterable<CSVRecord> records = csvFormat.parse(R);
                 validateHeaders(completeHeaders, cmsDO._HeadersIncluded, records, columnMap, DBColumns);
-                
+
                 NumOfRecs = insertData(cmsDO.isUpserts(), t0, DBColumns, cmsDO._HeadersIncluded, records, Str, cmsDO._SchemaName,
-                  cmsDO._TableName, headers, columns, columnMap, completeHeaders, uniqueColumns, 
-                  cmsDO._dateTimePattern, cmsDO._zoneId, cmsDO._datePattern);
-                
+                cmsDO._TableName, headers, columns, columnMap, completeHeaders, uniqueColumns,
+                cmsDO._dateTimePattern, cmsDO._zoneId, cmsDO._datePattern);
+
                 R.close();
-                
+
                 NumOfRecs = (cmsDO._HeadersIncluded == true) ? (NumOfRecs - 1) : NumOfRecs;
                 t0 = System.nanoTime() - t0;
                 LOG.debug("Processed a total of " + NumberFormatUtil.PrintWith000Sep(NumOfRecs) + " records in " + DurationUtil.PrintDuration(t0) + " (" + DurationUtil.PrintPerformancePerMinute(t0, NumOfRecs) + " Records/min)");
-                
+
                 Results results = new Results(file, cmsDO._SchemaName, cmsDO._TableName, NumOfRecs, t0);
                 resultsList.add(results);
               }
@@ -163,13 +160,12 @@ public abstract class CSVImporter
           }
       }
 
-    protected StringBuilder GenerateInsertSQL(String schemaName, String tableName, String columns[], 
-      Map<String, ColumnMeta> DBColumns) 
+    protected StringBuilder GenerateInsertSQL(String schemaName, String tableName, String columns[], Map<String, ColumnMeta> DBColumns)
       {
         StringBuilder Str = new StringBuilder();
-        
+
         Str.append("INSERT INTO ").append(schemaName).append(".").append(tableName).append("(");
-  
+
         boolean occ = false;
         if (DBColumns != null && DBColumns.get("refnum") != null && TextUtil.FindElement(columns, "refnum", false, 0) == -1)
           {
@@ -190,7 +186,7 @@ public abstract class CSVImporter
             Str.append("\"created\"");
             occ = true;
           }
-  
+
         for (int i = 0; i < columns.length; ++i)
           {
             if (occ == true)
@@ -200,12 +196,12 @@ public abstract class CSVImporter
               }
             if (i != 0)
               Str.append(",");
-  
+
             Str.append("\"").append(columns[i]).append("\"");
           }
         Str.append(") ");
         Str.append(" Values (");
-  
+
         if (DBColumns != null && DBColumns.get("refnum") != null && TextUtil.FindElement(columns, "refnum", false, 0) == -1)
           {
             Str.append("?");
@@ -215,7 +211,7 @@ public abstract class CSVImporter
           {
             if (occ == true)
               Str.append(",");
-  
+
             Str.append("?");
             occ = true;
           }
@@ -223,11 +219,11 @@ public abstract class CSVImporter
           {
             if (occ == true)
               Str.append(",");
-  
+
             Str.append("?");
             occ = true;
           }
-  
+
         for (int i = 0; i < columns.length; ++i)
           {
             if (occ == true)
@@ -237,13 +233,13 @@ public abstract class CSVImporter
               }
             if (i != 0)
               Str.append(",");
-  
+
             Str.append("?");
           }
-        Str.append(")");        
+        Str.append(")");
         return Str;
       }
-    
+
     protected static boolean isRecordAllNullOrEmpty(CSVRecord record)
       {
         for (int i = 0; i < record.size(); ++i)
@@ -279,7 +275,7 @@ public abstract class CSVImporter
     protected static void validateHeaders(String[] completeHeaders, boolean withHeader, Iterable<CSVRecord> records, Map<String, ColumnHeader> columnMap, Map<String, ColumnMeta> DBColumns)
     throws Exception
       {
-    		
+
         List<String> headerList = new LinkedList<String>();
         if (withHeader == true)
           {
@@ -293,13 +289,13 @@ public abstract class CSVImporter
                 break;
               }
             String Headers[] = headerList.toArray(new String[headerList.size()]);
-            
+
             boolean Error = false;
-                      	
+
             if (Headers.length != completeHeaders.length)
               {
                 Error = true;
-                LOG.error("The file header includes '"+Headers.length+"' columns while the configuration file defines "+completeHeaders.length+" columns in the header list.");
+                LOG.error("The file header includes '" + Headers.length + "' columns while the configuration file defines " + completeHeaders.length + " columns in the header list.");
               }
             else
               {
@@ -308,7 +304,7 @@ public abstract class CSVImporter
                     if (Headers[i].equals(completeHeaders[i]) == false)
                       {
                         Error = true;
-                        LOG.error("File header column '"+Headers[i]+"' and configuration header '"+completeHeaders[i]+"' at position "+i+" don't match .");
+                        LOG.error("File header column '" + Headers[i] + "' and configuration header '" + completeHeaders[i] + "' at position " + i + " don't match .");
                       }
                   }
               }
@@ -317,7 +313,7 @@ public abstract class CSVImporter
                 if (TextUtil.FindElement(completeHeaders, Headers[i], false, 0) == -1)
                   {
                     Error = true;
-                    LOG.error("File header column '"+Headers[i]+"' cannot be found in the header list in the configuration file.");
+                    LOG.error("File header column '" + Headers[i] + "' cannot be found in the header list in the configuration file.");
                   }
               }
             for (int i = 0; i < completeHeaders.length; ++i)
@@ -325,10 +321,10 @@ public abstract class CSVImporter
                 if (TextUtil.FindElement(Headers, completeHeaders[i], false, 0) == -1)
                   {
                     Error = true;
-                    LOG.error("Configuration header column '"+completeHeaders[i]+"' cannot be found in the file's header columns.");
+                    LOG.error("Configuration header column '" + completeHeaders[i] + "' cannot be found in the file's header columns.");
                   }
               }
-            
+
             if (Error == true || Arrays.equals(Headers, completeHeaders) == false)
               {
                 if (Error == false)
@@ -391,7 +387,7 @@ public abstract class CSVImporter
           A.free();
         AllocatedArrays.clear();
       }
-    
+
     // Inner Class
     public static class Results
       {
@@ -410,5 +406,5 @@ public abstract class CSVImporter
         public final long   _RecordsCount;
         public final long   _TimeNano;
       }
-    
+
   }

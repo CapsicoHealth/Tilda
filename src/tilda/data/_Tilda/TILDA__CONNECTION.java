@@ -8,7 +8,6 @@ package tilda.data._Tilda;
 
 import java.time.*;
 import java.util.*;
-import java.io.Writer;
 
 import tilda.db.*;
 import tilda.enums.*;
@@ -39,8 +38,8 @@ The Table TILDA.Connection:<UL>
 <B>Description</B>: Tilda DB Connections Configurations<BR>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
- <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
-   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+ <TABLE id="Connection_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Connection-active_DIV' class='columns'>active</B>&nbsp;&nbsp;</TD>
@@ -370,8 +369,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated May 4 2018, 23:30:24EDT
+ @generated May 8 2018, 01:17:00EDT
 */
+@SuppressWarnings({ "unused" })
 public abstract class TILDA__CONNECTION implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
    protected static final Logger LOG = LogManager.getLogger(TILDA__CONNECTION.class.getName());
@@ -382,22 +382,12 @@ public abstract class TILDA__CONNECTION implements tilda.interfaces.WriterObject
    protected TILDA__CONNECTION() { }
 
    private InitMode __Init        = null;
-   private long     __Nulls1      = 0L;
-   private long     __Nulls2      = 0L;
-   private long     __Nulls3      = 0L;
-   private long     __Nulls4      = 0L;
-   private long     __Nulls5      = 0L;
-   private long     __Nulls6      = 0L;
-   private long     __Changes1    = 0L;
-   private long     __Changes2    = 0L;
-   private long     __Changes3    = 0L;
-   private long     __Changes4    = 0L;
-   private long     __Changes5    = 0L;
-   private long     __Changes6    = 0L;
+   private BitSet   __Nulls       = new BitSet(64);
+   private BitSet   __Changes     = new BitSet(64);
    private boolean  __NewlyCreated= false;
    private int      __LookupId;
 
-   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L || __Changes3 != 0L || __Changes4 != 0L || __Changes5 != 0L || __Changes6 != 0L; }
+   public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
    public  boolean isNewlyCreated() { return __NewlyCreated; }
 
    void initForCreate()
@@ -475,7 +465,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullActive()
-     { return (TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask1 & __Nulls1) != 0L; }
+     { return __Nulls.intersects(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -499,8 +489,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _active)
         {
-          __Changes1 |= TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask1;
-          __Nulls1   &= ~TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask1;
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask);
        _active = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -526,10 +516,10 @@ This is the null setter for:<BR>
    public void setNullActive()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask1 & __Nulls1) != 0L)
+       if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask) == true) // already NULL
         return;
-       __Changes1 |= TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask1;
-       __Nulls1   |= TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask1;
+       __Changes.or(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask);
+       __Nulls.or(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask);
        _active=false;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -552,7 +542,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedActive()
-     { return (TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask); }
 
 
 
@@ -631,8 +621,8 @@ This is the setter for:<BR>
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Connection.id' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes1 |= TILDA__CONNECTION_Factory.COLS.ID._Mask1;
-          __Nulls1   &= ~TILDA__CONNECTION_Factory.COLS.ID._Mask1;
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.ID._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.ID._Mask);
        _id = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -712,8 +702,8 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.Connection.driver: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 100.");
        else if (v.equals(_driver) == false)
         {
-          __Changes1 |= TILDA__CONNECTION_Factory.COLS.DRIVER._Mask1;
-          __Nulls1   &= ~TILDA__CONNECTION_Factory.COLS.DRIVER._Mask1;
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask);
        _driver = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -738,7 +728,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedDriver()
-     { return (TILDA__CONNECTION_Factory.COLS.DRIVER._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask); }
 
 
 
@@ -814,8 +804,8 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.Connection.db: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 200.");
        else if (v.equals(_db) == false)
         {
-          __Changes1 |= TILDA__CONNECTION_Factory.COLS.DB._Mask1;
-          __Nulls1   &= ~TILDA__CONNECTION_Factory.COLS.DB._Mask1;
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.DB._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.DB._Mask);
        _db = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -840,7 +830,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedDb()
-     { return (TILDA__CONNECTION_Factory.COLS.DB._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__CONNECTION_Factory.COLS.DB._Mask); }
 
 
 
@@ -916,8 +906,8 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.Connection.user: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 30.");
        else if (v.equals(_user) == false)
         {
-          __Changes1 |= TILDA__CONNECTION_Factory.COLS.USER._Mask1;
-          __Nulls1   &= ~TILDA__CONNECTION_Factory.COLS.USER._Mask1;
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.USER._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.USER._Mask);
        _user = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -942,7 +932,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedUser()
-     { return (TILDA__CONNECTION_Factory.COLS.USER._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__CONNECTION_Factory.COLS.USER._Mask); }
 
 
 
@@ -1018,8 +1008,8 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.Connection.pswd: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 40.");
        else if (v.equals(_pswd) == false)
         {
-          __Changes1 |= TILDA__CONNECTION_Factory.COLS.PSWD._Mask1;
-          __Nulls1   &= ~TILDA__CONNECTION_Factory.COLS.PSWD._Mask1;
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.PSWD._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.PSWD._Mask);
        _pswd = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1044,7 +1034,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedPswd()
-     { return (TILDA__CONNECTION_Factory.COLS.PSWD._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__CONNECTION_Factory.COLS.PSWD._Mask); }
 
 
 
@@ -1113,8 +1103,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _initial)
         {
-          __Changes1 |= TILDA__CONNECTION_Factory.COLS.INITIAL._Mask1;
-          __Nulls1   &= ~TILDA__CONNECTION_Factory.COLS.INITIAL._Mask1;
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask);
        _initial = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1138,7 +1128,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedInitial()
-     { return (TILDA__CONNECTION_Factory.COLS.INITIAL._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask); }
 
 
 
@@ -1207,8 +1197,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _max)
         {
-          __Changes1 |= TILDA__CONNECTION_Factory.COLS.MAX._Mask1;
-          __Nulls1   &= ~TILDA__CONNECTION_Factory.COLS.MAX._Mask1;
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.MAX._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.MAX._Mask);
        _max = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1232,7 +1222,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedMax()
-     { return (TILDA__CONNECTION_Factory.COLS.MAX._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__CONNECTION_Factory.COLS.MAX._Mask); }
 
 
 
@@ -1310,8 +1300,8 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.Connection.schemas to null: it's not nullable.");
        else if (CollectionUtil.equals(v, _schemas) == false)
         {
-          __Changes1 |=  TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask1;
-          __Nulls1   &= ~TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask1;
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask);
           if (_schemas == null)
            _schemas = new ArrayList<String>();
           else
@@ -1332,8 +1322,8 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.Connection.schemas to null: it's not nullable.");
        else if (_schemas.get(pos).equals(v) == false)
         {
-          __Changes1 |= TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask1;
-          __Nulls1   &= ~TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask1;
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask);
           _schemas.add(pos, v);
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1341,13 +1331,13 @@ This is the setter for:<BR>
    public void removeFromSchemas(String v) throws Exception
      {
        if (_schemas.remove(v) == true)
-          __Changes1 |= TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask1;
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask);
      }
    public void removeFromSchemas(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_schemas.remove(pos) != null)
-          __Changes1 |= TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask1;
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask);
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -1370,7 +1360,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedSchemas()
-     { return (TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask); }
 
 
 
@@ -1464,8 +1454,8 @@ This is the setter for:<BR>
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Connection.created' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes1 |= TILDA__CONNECTION_Factory.COLS.CREATED._Mask1;
-          __Nulls1   &= ~TILDA__CONNECTION_Factory.COLS.CREATED._Mask1;
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.CREATED._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.CREATED._Mask);
        _created = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1583,7 +1573,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedCreated()
-     { return (TILDA__CONNECTION_Factory.COLS.CREATED._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__CONNECTION_Factory.COLS.CREATED._Mask); }
 
 
 
@@ -1675,8 +1665,8 @@ This is the setter for:<BR>
         throw new Exception("Cannot set tilda.data.TILDA.Connection.lastUpdated to null: it's not nullable.");
        else if (v.equals(_lastUpdated) == false)
         {
-          __Changes1 |= TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask1;
-          __Nulls1   &= ~TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask1;
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask);
        _lastUpdated = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1794,7 +1784,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedLastUpdated()
-     { return (TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask); }
 
 
 
@@ -1859,7 +1849,7 @@ This is the isNull for:<BR>
 </TABLE>
 */
    public final boolean isNullDeleted()
-     { return (TILDA__CONNECTION_Factory.COLS.DELETED._Mask1 & __Nulls1) != 0L; }
+     { return __Nulls.intersects(TILDA__CONNECTION_Factory.COLS.DELETED._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1887,8 +1877,8 @@ This is the setter for:<BR>
         }
        else if (v.equals(_deleted) == false)
         {
-          __Changes1 |= TILDA__CONNECTION_Factory.COLS.DELETED._Mask1;
-          __Nulls1   &= ~TILDA__CONNECTION_Factory.COLS.DELETED._Mask1;
+          __Changes.or(TILDA__CONNECTION_Factory.COLS.DELETED._Mask);
+          __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.DELETED._Mask);
        _deleted = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1914,10 +1904,10 @@ This is the null setter for:<BR>
    public final void setNullDeleted()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__CONNECTION_Factory.COLS.DELETED._Mask1 & __Nulls1) != 0L)
+       if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.DELETED._Mask) == true) // already NULL
         return;
-       __Changes1 |= TILDA__CONNECTION_Factory.COLS.DELETED._Mask1;
-       __Nulls1   |= TILDA__CONNECTION_Factory.COLS.DELETED._Mask1;
+       __Changes.or(TILDA__CONNECTION_Factory.COLS.DELETED._Mask);
+       __Nulls.or(TILDA__CONNECTION_Factory.COLS.DELETED._Mask);
        _deleted=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -2006,7 +1996,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedDeleted()
-     { return (TILDA__CONNECTION_Factory.COLS.DELETED._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__CONNECTION_Factory.COLS.DELETED._Mask); }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2019,7 +2009,7 @@ This is the hasChanged for:<BR>
 */
    public void CopyTo(tilda.data._Tilda.TILDA__CONNECTION Dst) throws Exception
      {
-       if ((TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask1      & __Nulls1) != 0L) Dst.setNullActive     (); else        Dst.setActive     (_active     );
+       if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask) == true) Dst.setNullActive     (); else        Dst.setActive     (_active     );
        Dst.setDriver     (_driver     );
        Dst.setDb         (_db         );
        Dst.setUser       (_user       );
@@ -2028,7 +2018,7 @@ This is the hasChanged for:<BR>
        Dst.setMax        (_max        );
        Dst.setSchemas    (_schemas    );
        Dst.setLastUpdated(_lastUpdated);
-       if ((TILDA__CONNECTION_Factory.COLS.DELETED._Mask1     & __Nulls1) != 0L) Dst.setNullDeleted    (); else        Dst.setDeleted    (_deleted    );
+       if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.DELETED._Mask) == true) Dst.setNullDeleted    (); else        Dst.setDeleted    (_deleted    );
      }
 
 /**
@@ -2068,26 +2058,26 @@ This is the hasChanged for:<BR>
           StringBuilder V = new StringBuilder(1024);
           S.append("insert into "); C.getFullTableVar(S, "TILDA", "Connection");
           int Pos = S.length();
-          if ((TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask1      & __Changes1) != 0L) { TILDA__CONNECTION_Factory.COLS.ACTIVE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__CONNECTION_Factory.COLS.ID._Mask1          & __Changes1) != 0L) { TILDA__CONNECTION_Factory.COLS.ID.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__CONNECTION_Factory.COLS.DRIVER._Mask1      & __Changes1) != 0L) { TILDA__CONNECTION_Factory.COLS.DRIVER.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__CONNECTION_Factory.COLS.DB._Mask1          & __Changes1) != 0L) { TILDA__CONNECTION_Factory.COLS.DB.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__CONNECTION_Factory.COLS.USER._Mask1        & __Changes1) != 0L) { TILDA__CONNECTION_Factory.COLS.USER.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__CONNECTION_Factory.COLS.PSWD._Mask1        & __Changes1) != 0L) { TILDA__CONNECTION_Factory.COLS.PSWD.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__CONNECTION_Factory.COLS.INITIAL._Mask1     & __Changes1) != 0L) { TILDA__CONNECTION_Factory.COLS.INITIAL.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__CONNECTION_Factory.COLS.MAX._Mask1         & __Changes1) != 0L) { TILDA__CONNECTION_Factory.COLS.MAX.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask1     & __Changes1) != 0L) { TILDA__CONNECTION_Factory.COLS.SCHEMAS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask) == true) { TILDA__CONNECTION_Factory.COLS.ACTIVE.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.ID._Mask) == true) { TILDA__CONNECTION_Factory.COLS.ID.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask) == true) { TILDA__CONNECTION_Factory.COLS.DRIVER.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.DB._Mask) == true) { TILDA__CONNECTION_Factory.COLS.DB.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.USER._Mask) == true) { TILDA__CONNECTION_Factory.COLS.USER.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.PSWD._Mask) == true) { TILDA__CONNECTION_Factory.COLS.PSWD.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask) == true) { TILDA__CONNECTION_Factory.COLS.INITIAL.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.MAX._Mask) == true) { TILDA__CONNECTION_Factory.COLS.MAX.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask) == true) { TILDA__CONNECTION_Factory.COLS.SCHEMAS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
-          if ((TILDA__CONNECTION_Factory.COLS.CREATED._Mask1     & __Changes1) != 0L) { TILDA__CONNECTION_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
-             V.append((TILDA__CONNECTION_Factory.COLS.CREATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.CREATED._Mask) == true) { TILDA__CONNECTION_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
+             V.append(__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
           else { TILDA__CONNECTION_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
-          if ((TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask1 & __Changes1) != 0L) { TILDA__CONNECTION_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
-             V.append((TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask) == true) { TILDA__CONNECTION_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
+             V.append(__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
           else { TILDA__CONNECTION_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
-          if ((TILDA__CONNECTION_Factory.COLS.DELETED._Mask1     & __Changes1) != 0L) { TILDA__CONNECTION_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
-             V.append((TILDA__CONNECTION_Factory.COLS.DELETED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.DELETED._Mask) == true) { TILDA__CONNECTION_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
+             V.append(__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
 
           S.setCharAt(Pos, '(');
@@ -2100,27 +2090,27 @@ This is the hasChanged for:<BR>
         {
           S.append("update "); C.getFullTableVar(S, "TILDA", "Connection"); S.append(" set");
           int Pos = S.length();
-          if ((TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask1      & __Changes1) != 0L) TILDA__CONNECTION_Factory.COLS.ACTIVE.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__CONNECTION_Factory.COLS.ID._Mask1          & __Changes1) != 0L) TILDA__CONNECTION_Factory.COLS.ID.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__CONNECTION_Factory.COLS.DRIVER._Mask1      & __Changes1) != 0L) TILDA__CONNECTION_Factory.COLS.DRIVER.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__CONNECTION_Factory.COLS.DB._Mask1          & __Changes1) != 0L) TILDA__CONNECTION_Factory.COLS.DB.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__CONNECTION_Factory.COLS.USER._Mask1        & __Changes1) != 0L) TILDA__CONNECTION_Factory.COLS.USER.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__CONNECTION_Factory.COLS.PSWD._Mask1        & __Changes1) != 0L) TILDA__CONNECTION_Factory.COLS.PSWD.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__CONNECTION_Factory.COLS.INITIAL._Mask1     & __Changes1) != 0L) TILDA__CONNECTION_Factory.COLS.INITIAL.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__CONNECTION_Factory.COLS.MAX._Mask1         & __Changes1) != 0L) TILDA__CONNECTION_Factory.COLS.MAX.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask1     & __Changes1) != 0L) TILDA__CONNECTION_Factory.COLS.SCHEMAS.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask) == true) TILDA__CONNECTION_Factory.COLS.ACTIVE.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.ID._Mask) == true) TILDA__CONNECTION_Factory.COLS.ID.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask) == true) TILDA__CONNECTION_Factory.COLS.DRIVER.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.DB._Mask) == true) TILDA__CONNECTION_Factory.COLS.DB.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.USER._Mask) == true) TILDA__CONNECTION_Factory.COLS.USER.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.PSWD._Mask) == true) TILDA__CONNECTION_Factory.COLS.PSWD.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask) == true) TILDA__CONNECTION_Factory.COLS.INITIAL.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.MAX._Mask) == true) TILDA__CONNECTION_Factory.COLS.MAX.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask) == true) TILDA__CONNECTION_Factory.COLS.SCHEMAS.getFullColumnVarForUpdate(C, S);
 
-          if ((TILDA__CONNECTION_Factory.COLS.CREATED._Mask1 & __Changes1) != 0L)
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.CREATED._Mask) == true)
            {
-             if ((TILDA__CONNECTION_Factory.COLS.CREATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true)
+             if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true)
               { TILDA__CONNECTION_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
               TILDA__CONNECTION_Factory.COLS.CREATED.getFullColumnVarForUpdate(C, S);
            }
 
-          if ((TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask1 & __Changes1) != 0L)
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask) == true)
            {
-             if ((TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true)
+             if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true)
               { TILDA__CONNECTION_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
               TILDA__CONNECTION_Factory.COLS.LASTUPDATED.getFullColumnVarForUpdate(C, S);
@@ -2131,9 +2121,9 @@ This is the hasChanged for:<BR>
              setLastUpdatedNow();
            }
 
-          if ((TILDA__CONNECTION_Factory.COLS.DELETED._Mask1 & __Changes1) != 0L)
+          if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.DELETED._Mask) == true)
            {
-             if ((TILDA__CONNECTION_Factory.COLS.DELETED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true)
+             if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true)
               { TILDA__CONNECTION_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
               TILDA__CONNECTION_Factory.COLS.DELETED.getFullColumnVarForUpdate(C, S);
@@ -2162,53 +2152,53 @@ This is the hasChanged for:<BR>
         {
           PS = C.prepareStatement(Q);
           int i = 0;
-               if ((TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask1      & __Changes1) != 0L) 
+               if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask) == true) 
                 { 
-                  if ((TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask1      & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BOOLEAN); else PS.setBoolean  (++i, _active);
+                  if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask) == true) PS.setNull(++i, java.sql.Types.BOOLEAN); else PS.setBoolean  (++i, _active);
                 } 
-               if ((TILDA__CONNECTION_Factory.COLS.ID._Mask1          & __Changes1) != 0L) 
+               if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.ID._Mask) == true) 
                 { 
-                  if ((TILDA__CONNECTION_Factory.COLS.ID._Mask1          & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _id);
+                  if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.ID._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _id);
                 } 
-               if ((TILDA__CONNECTION_Factory.COLS.DRIVER._Mask1      & __Changes1) != 0L) 
+               if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask) == true) 
                 { 
-                  if ((TILDA__CONNECTION_Factory.COLS.DRIVER._Mask1      & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _driver);
+                  if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _driver);
                 } 
-               if ((TILDA__CONNECTION_Factory.COLS.DB._Mask1          & __Changes1) != 0L) 
+               if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.DB._Mask) == true) 
                 { 
-                  if ((TILDA__CONNECTION_Factory.COLS.DB._Mask1          & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _db);
+                  if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.DB._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _db);
                 } 
-               if ((TILDA__CONNECTION_Factory.COLS.USER._Mask1        & __Changes1) != 0L) 
+               if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.USER._Mask) == true) 
                 { 
-                  if ((TILDA__CONNECTION_Factory.COLS.USER._Mask1        & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _user);
+                  if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.USER._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _user);
                 } 
-               if ((TILDA__CONNECTION_Factory.COLS.PSWD._Mask1        & __Changes1) != 0L) 
+               if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.PSWD._Mask) == true) 
                 { 
-                  if ((TILDA__CONNECTION_Factory.COLS.PSWD._Mask1        & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _pswd);
+                  if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.PSWD._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _pswd);
                 } 
-               if ((TILDA__CONNECTION_Factory.COLS.INITIAL._Mask1     & __Changes1) != 0L) 
+               if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask) == true) 
                 { 
-                  if ((TILDA__CONNECTION_Factory.COLS.INITIAL._Mask1     & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _initial);
+                  if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _initial);
                 } 
-               if ((TILDA__CONNECTION_Factory.COLS.MAX._Mask1         & __Changes1) != 0L) 
+               if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.MAX._Mask) == true) 
                 { 
-                  if ((TILDA__CONNECTION_Factory.COLS.MAX._Mask1         & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _max);
+                  if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.MAX._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _max);
                 } 
-               if ((TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask1     & __Changes1) != 0L) 
+               if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask) == true) 
                 { 
-                  if ((TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask1     & __Nulls1  ) != 0L) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__CONNECTION_Factory.COLS.SCHEMAS._Type, AllocatedArrays, _schemas);
+                  if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__CONNECTION_Factory.COLS.SCHEMAS._Type, AllocatedArrays, _schemas);
                 } 
-               if ((TILDA__CONNECTION_Factory.COLS.CREATED._Mask1     & __Changes1) != 0L) 
+               if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.CREATED._Mask) == true) 
                 { 
-                  if ((TILDA__CONNECTION_Factory.COLS.CREATED._Mask1     & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                  if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.CREATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
-               if ((TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask1 & __Changes1) != 0L) 
+               if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask) == true) 
                 { 
-                  if ((TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask1 & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_lastUpdated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                  if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_lastUpdated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
-               if ((TILDA__CONNECTION_Factory.COLS.DELETED._Mask1     & __Changes1) != 0L) 
+               if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.DELETED._Mask) == true) 
                 { 
-                  if ((TILDA__CONNECTION_Factory.COLS.DELETED._Mask1     & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deleted.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+                  if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.DELETED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deleted.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
 
           switch (__LookupId)
@@ -2257,7 +2247,8 @@ This is the hasChanged for:<BR>
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
         }
 
-       __Changes1= __Changes2= __Changes3= __Changes4= __Changes5= __Changes6= __Nulls1= __Nulls2= __Nulls3= __Nulls4= __Nulls5= __Nulls6= 0L;
+       __Changes.clear();
+       __Nulls.clear();
        return true;
      }
 
@@ -2363,21 +2354,21 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-                            _active      =                              RS.getBoolean  (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask1     ;
-      __Saved_id          = _id          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__CONNECTION_Factory.COLS.ID._Mask1         ;
-                            _driver      = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__CONNECTION_Factory.COLS.DRIVER._Mask1     ;
-                            _db          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__CONNECTION_Factory.COLS.DB._Mask1         ;
-                            _user        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__CONNECTION_Factory.COLS.USER._Mask1       ;
-                            _pswd        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__CONNECTION_Factory.COLS.PSWD._Mask1       ;
-                            _initial     =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__CONNECTION_Factory.COLS.INITIAL._Mask1    ;
-                            _max         =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__CONNECTION_Factory.COLS.MAX._Mask1        ;
-                            _schemas = (List<String>) C.getArray(RS, ++i, TILDA__CONNECTION_Factory.COLS.SCHEMAS._Type, false); if (RS.wasNull() == true) __Nulls1 |= TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask1    ;
+                            _active      =                              RS.getBoolean  (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask     );
+      __Saved_id          = _id          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.ID._Mask         );
+                            _driver      = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask     );
+                            _db          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.DB._Mask         );
+                            _user        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.USER._Mask       );
+                            _pswd        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.PSWD._Mask       );
+                            _initial     =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask    );
+                            _max         =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.MAX._Mask        );
+                            _schemas = (List<String>) C.getArray(RS, ++i, TILDA__CONNECTION_Factory.COLS.SCHEMAS._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask    );
                             _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
                             _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
                             _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
      __LookupId = 0;
      __Init     = InitMode.READ;
-     __Changes1 = __Changes2 = __Changes3 = __Changes4 = __Changes5 = __Changes6 = 0L;
+     __Changes.clear();
      return AfterRead(C);
    }
 
@@ -2387,15 +2378,15 @@ This is the hasChanged for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "active"        + ((TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask1      & __Nulls1) != 0L ? ": NULL" : ": " +                                   getActive     () )
-               + "; id: "                                                                                                   + TextUtil.PrintVariableStr        (getId         ())
-               + "; driver: "                                                                                               + TextUtil.PrintVariableStr        (getDriver     ())
-               + "; db: "                                                                                                   + TextUtil.PrintVariableStr        (getDb         ())
-               + "; user: "                                                                                                 + TextUtil.PrintVariableStr        (getUser       ())
-               + "; pswd: "                                                                                                 + TextUtil.PrintVariableStr        (getPswd       ())
-               + "; initial: "                                                                                              +                                   getInitial    () 
-               + "; max: "                                                                                                  +                                   getMax        () 
-               + "; schemas: "                                                                                              + TextUtil.Print                   (getSchemas    ())
+                   "active"        + (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask) == true ? ": NULL" : ": " +                                   getActive     () )
+               + "; id: "                                                                                                  + TextUtil.PrintVariableStr        (getId         ())
+               + "; driver: "                                                                                              + TextUtil.PrintVariableStr        (getDriver     ())
+               + "; db: "                                                                                                  + TextUtil.PrintVariableStr        (getDb         ())
+               + "; user: "                                                                                                + TextUtil.PrintVariableStr        (getUser       ())
+               + "; pswd: "                                                                                                + TextUtil.PrintVariableStr        (getPswd       ())
+               + "; initial: "                                                                                             +                                   getInitial    () 
+               + "; max: "                                                                                                 +                                   getMax        () 
+               + "; schemas: "                                                                                             + TextUtil.Print                   (getSchemas    ())
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

@@ -40,4 +40,8 @@ public class PaddingTracker
         return PaddingUtil.getPad(_Max-Str.length());
       }
     
+    public void clear()
+      {
+        _Max = 0;
+      }
   }

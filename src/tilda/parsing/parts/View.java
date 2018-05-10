@@ -226,7 +226,7 @@ public class View extends Base
               return false;
 
             if (VC._JoinOnly == false && ColumnNames.add(VC.getName().toUpperCase()) == false)
-              PS.AddError("Column '" + VC.getFullName() + "' is defined more than once in View '" + getFullName() + "'.");
+              PS.AddError("Column '" + VC.getFullName() + "' is defined more than once in View '" + getFullName() + "'. Note that column names are checked in a case-insensitive way, so 'id' is the same as 'ID'.");
 
             if (VC.getName().equals("created") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "Key", "created")) == true)
               CreatedColObjName = VC._SameAsObj._ParentObject.getFullName();

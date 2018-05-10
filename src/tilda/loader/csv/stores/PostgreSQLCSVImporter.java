@@ -9,7 +9,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +24,6 @@ import tilda.enums.ColumnType;
 import tilda.loader.GenericLoader;
 import tilda.loader.parser.ColumnHeader;
 import tilda.loader.parser.DataObject;
-import tilda.types.ColumnDefinition;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.DurationUtil;
 import tilda.utils.NumberFormatUtil;
@@ -52,7 +50,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
       {
         TableMeta TM = new TableMeta(schemaName, tableName, "");
         TM.load(C);
-        Map<String, ColumnMeta> ColumnsMap = TM._Columns;
+        Map<String, ColumnMeta> ColumnsMap = TM.getColumnMetaMap();
         PreparedStatement Pst = C.prepareStatement(Str.toString());
         List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
         long NumOfRecs = 0;
