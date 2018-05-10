@@ -6,7 +6,7 @@
 
 package tilda.data._Tilda;
 
-import java.io.Writer;
+import java.util.*;
 
 import tilda.db.*;
 import tilda.enums.*;
@@ -38,8 +38,8 @@ The View TILDA.FormulaResultView:<UL>
 This view depends on the following filter(s), sub-view(s), and/or root table(s):
 <BLOCKQUOTE><TABLE class="TreeTable Rowed" border="0px" cellspacing="0px" cellpadding="2px"></TABLE></BLOCKQUOTE>
 This View contains the following columns:<BLOCKQUOTE>
- <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
-   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+ <TABLE id="FormulaResultView_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description/<label>Formula<input type="checkbox" onchange="filterTable('FormulaResultView_TBL', 'F')", id="FormulaResultView_TBL_F"></label></TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('FormulaResultView-formulaRefnum')" align="right"><B id='FormulaResultView-formulaRefnum_DIV' class='columns dotted_underline cursor_pointer'>formulaRefnum</B>&nbsp;&nbsp;</TD>
@@ -215,8 +215,9 @@ This View contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated May 4 2018, 23:30:24EDT
+ @generated May 8 2018, 01:17:00EDT
 */
+@SuppressWarnings({ "unused" })
 public abstract class TILDA__FORMULARESULTVIEW implements tilda.interfaces.ReaderObject
  {
    protected static final Logger LOG = LogManager.getLogger(TILDA__FORMULARESULTVIEW.class.getName());
@@ -227,22 +228,12 @@ public abstract class TILDA__FORMULARESULTVIEW implements tilda.interfaces.Reade
    protected TILDA__FORMULARESULTVIEW() { }
 
    private InitMode __Init        = null;
-   private long     __Nulls1      = 0L;
-   private long     __Nulls2      = 0L;
-   private long     __Nulls3      = 0L;
-   private long     __Nulls4      = 0L;
-   private long     __Nulls5      = 0L;
-   private long     __Nulls6      = 0L;
-   private long     __Changes1    = 0L;
-   private long     __Changes2    = 0L;
-   private long     __Changes3    = 0L;
-   private long     __Changes4    = 0L;
-   private long     __Changes5    = 0L;
-   private long     __Changes6    = 0L;
+   private BitSet   __Nulls       = new BitSet(64);
+   private BitSet   __Changes     = new BitSet(64);
    private boolean  __NewlyCreated= false;
    private int      __LookupId;
 
-   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L || __Changes3 != 0L || __Changes4 != 0L || __Changes5 != 0L || __Changes6 != 0L; }
+   public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
    public  boolean isNewlyCreated() { return __NewlyCreated; }
 
    void initForCreate()
@@ -326,8 +317,8 @@ This is the setter for:<BR>
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaResultView.formulaRefnum' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes1 |= TILDA__FORMULARESULTVIEW_Factory.COLS.FORMULAREFNUM._Mask1;
-          __Nulls1   &= ~TILDA__FORMULARESULTVIEW_Factory.COLS.FORMULAREFNUM._Mask1;
+          __Changes.or(TILDA__FORMULARESULTVIEW_Factory.COLS.FORMULAREFNUM._Mask);
+          __Nulls.andNot(TILDA__FORMULARESULTVIEW_Factory.COLS.FORMULAREFNUM._Mask);
        _formulaRefnum = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -409,8 +400,8 @@ This is the setter for:<BR>
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaResultView.value' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes1 |= TILDA__FORMULARESULTVIEW_Factory.COLS.VALUE._Mask1;
-          __Nulls1   &= ~TILDA__FORMULARESULTVIEW_Factory.COLS.VALUE._Mask1;
+          __Changes.or(TILDA__FORMULARESULTVIEW_Factory.COLS.VALUE._Mask);
+          __Nulls.andNot(TILDA__FORMULARESULTVIEW_Factory.COLS.VALUE._Mask);
        _value = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -492,8 +483,8 @@ This is the setter for:<BR>
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaResultView.description' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes1 |= TILDA__FORMULARESULTVIEW_Factory.COLS.DESCRIPTION._Mask1;
-          __Nulls1   &= ~TILDA__FORMULARESULTVIEW_Factory.COLS.DESCRIPTION._Mask1;
+          __Changes.or(TILDA__FORMULARESULTVIEW_Factory.COLS.DESCRIPTION._Mask);
+          __Nulls.andNot(TILDA__FORMULARESULTVIEW_Factory.COLS.DESCRIPTION._Mask);
        _description = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -575,8 +566,8 @@ This is the setter for:<BR>
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaResultView.location' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes1 |= TILDA__FORMULARESULTVIEW_Factory.COLS.LOCATION._Mask1;
-          __Nulls1   &= ~TILDA__FORMULARESULTVIEW_Factory.COLS.LOCATION._Mask1;
+          __Changes.or(TILDA__FORMULARESULTVIEW_Factory.COLS.LOCATION._Mask);
+          __Nulls.andNot(TILDA__FORMULARESULTVIEW_Factory.COLS.LOCATION._Mask);
        _location = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -658,8 +649,8 @@ This is the setter for:<BR>
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaResultView.name' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes1 |= TILDA__FORMULARESULTVIEW_Factory.COLS.NAME._Mask1;
-          __Nulls1   &= ~TILDA__FORMULARESULTVIEW_Factory.COLS.NAME._Mask1;
+          __Changes.or(TILDA__FORMULARESULTVIEW_Factory.COLS.NAME._Mask);
+          __Nulls.andNot(TILDA__FORMULARESULTVIEW_Factory.COLS.NAME._Mask);
        _name = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -761,14 +752,14 @@ This is the setter for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-                              _formulaRefnum =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__FORMULARESULTVIEW_Factory.COLS.FORMULAREFNUM._Mask1;
-                              _value         = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__FORMULARESULTVIEW_Factory.COLS.VALUE._Mask1        ;
-                              _description   = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__FORMULARESULTVIEW_Factory.COLS.DESCRIPTION._Mask1  ;
-                              _location      = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__FORMULARESULTVIEW_Factory.COLS.LOCATION._Mask1     ;
-                              _name          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__FORMULARESULTVIEW_Factory.COLS.NAME._Mask1         ;
+                              _formulaRefnum =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULARESULTVIEW_Factory.COLS.FORMULAREFNUM._Mask);
+                              _value         = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULARESULTVIEW_Factory.COLS.VALUE._Mask        );
+                              _description   = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULARESULTVIEW_Factory.COLS.DESCRIPTION._Mask  );
+                              _location      = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULARESULTVIEW_Factory.COLS.LOCATION._Mask     );
+                              _name          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULARESULTVIEW_Factory.COLS.NAME._Mask         );
      __LookupId = 0;
      __Init     = InitMode.READ;
-     __Changes1 = __Changes2 = __Changes3 = __Changes4 = __Changes5 = __Changes6 = 0L;
+     __Changes.clear();
      return AfterRead(C);
    }
 
@@ -778,11 +769,11 @@ This is the setter for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "formulaRefnum: "                                                                                                   +                                   getFormulaRefnum() 
-               + "; value: "                                                                                                           + TextUtil.PrintVariableStr        (getValue        ())
-               + "; description: "                                                                                                     + TextUtil.PrintVariableStr        (getDescription  ())
-               + "; location: "                                                                                                        + TextUtil.PrintVariableStr        (getLocation     ())
-               + "; name: "                                                                                                            + TextUtil.PrintVariableStr        (getName         ())
+                   "formulaRefnum: "                                                                                                  +                                   getFormulaRefnum() 
+               + "; value: "                                                                                                          + TextUtil.PrintVariableStr        (getValue        ())
+               + "; description: "                                                                                                    + TextUtil.PrintVariableStr        (getDescription  ())
+               + "; location: "                                                                                                       + TextUtil.PrintVariableStr        (getLocation     ())
+               + "; name: "                                                                                                           + TextUtil.PrintVariableStr        (getName         ())
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

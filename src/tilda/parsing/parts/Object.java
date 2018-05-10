@@ -180,9 +180,9 @@ public class Object extends Base
                 if (C._Mode == ColumnMode.CALCULATED)
                   continue;
                 C.setSequenceOrder(++Counter);
-                if (Counter >= ColumnDefinition.MAX_COL_COUNT)
+                if (Counter >= ColumnDefinition._MAX_COL_COUNT)
                   {
-                    PS.AddError("Object '" + getFullName() + "' has declared " + (i + 1) + " columns. Max allowed is "+ColumnDefinition.MAX_COL_COUNT+"!");
+                    PS.AddError("Object '" + getFullName() + "' has declared " + (i + 1) + " columns. Max allowed is "+ColumnDefinition._MAX_COL_COUNT+"!");
                   }
               }
           }

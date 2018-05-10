@@ -9,7 +9,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +24,6 @@ import tilda.enums.ColumnType;
 import tilda.loader.GenericLoader;
 import tilda.loader.parser.ColumnHeader;
 import tilda.loader.parser.DataObject;
-import tilda.types.ColumnDefinition;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.DurationUtil;
 import tilda.utils.NumberFormatUtil;
