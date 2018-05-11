@@ -156,7 +156,7 @@ public class Object extends Base
                 if (C.Validate(PS, this) == true)
                   {
                     if (ColumnNames.add(C.getName().toUpperCase()) == false)
-                      PS.AddError("Column '" + C.getFullName() + "' is defined more than once in Object '" + getFullName() + "'.");
+                      PS.AddError("Column '" + C.getFullName() + "' is defined more than once in Object '" + getFullName() + "'. Note that column names are checked in a case-insensitive way, so 'id' is the same as 'ID'.");
                     if (C._Type == ColumnType.DATETIME && Object.isOCCColumn(C) == false && C._FrameworkManaged == false)
                       {
                         Column TZCol = new Column(C.getName() + "TZ", null, 0, C._Nullable, ColumnMode.AUTO, C._Invariant, null, "Generated helper column to hold the time zone ID for '" + C.getName() + "'.");
@@ -180,9 +180,9 @@ public class Object extends Base
                 if (C._Mode == ColumnMode.CALCULATED)
                   continue;
                 C.setSequenceOrder(++Counter);
-                if (Counter >= ColumnDefinition.MAX_COL_COUNT)
+                if (Counter >= ColumnDefinition._MAX_COL_COUNT)
                   {
-                    PS.AddError("Object '" + getFullName() + "' has declared " + (i + 1) + " columns. Max allowed is "+ColumnDefinition.MAX_COL_COUNT+"!");
+                    PS.AddError("Object '" + getFullName() + "' has declared " + (i + 1) + " columns. Max allowed is "+ColumnDefinition._MAX_COL_COUNT+"!");
                   }
               }
           }

@@ -1,7 +1,6 @@
 
 package tilda.data._Tilda;
 
-import java.io.*;
 import java.time.*;
 import java.util.*;
 
@@ -16,6 +15,7 @@ import tilda.utils.*;
 import com.google.gson.annotations.SerializedName;
 
 
+@SuppressWarnings({ "unused" })
 public class TILDA__JOBFILE_Json
  {
    static final Logger             LOG                = LogManager.getLogger(TILDA__JOBFILE_Json.class.getName());
@@ -85,7 +85,7 @@ public class TILDA__JOBFILE_Json
          + ";";
     }
 
-   public static void toJSON(Writer Out, List<tilda.data.JobFile_Data> L, String Lead, boolean FullList) throws IOException
+   public static void toJSON(java.io.Writer Out, List<tilda.data.JobFile_Data> L, String Lead, boolean FullList) throws java.io.IOException
     {
       if (L == null || L.size() == 0) return;
       if (FullList == true)
@@ -106,7 +106,7 @@ public class TILDA__JOBFILE_Json
        } 
     }
 
-   public static void toJSON(Writer Out, tilda.data.JobFile_Data ObjApp, boolean FullObject) throws IOException
+   public static void toJSON(java.io.Writer Out, tilda.data.JobFile_Data ObjApp, boolean FullObject) throws java.io.IOException
     {
       long T0 = System.nanoTime();
       tilda.data._Tilda.TILDA__JOBFILE Obj = (tilda.data._Tilda.TILDA__JOBFILE) ObjApp;

@@ -6,7 +6,7 @@
 
 package tilda.data._Tilda;
 
-import java.io.Writer;
+import java.util.*;
 
 import tilda.db.*;
 import tilda.enums.*;
@@ -220,8 +220,9 @@ This View contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated May 9 2018, 17:22:41IST
+ @generated May 11 2018, 07:54:16IST
 */
+@SuppressWarnings({ "unused" })
 public abstract class TILDA__FORMULADEPENDENCYVIEW implements tilda.interfaces.ReaderObject
  {
    protected static final Logger LOG = LogManager.getLogger(TILDA__FORMULADEPENDENCYVIEW.class.getName());
@@ -232,22 +233,12 @@ public abstract class TILDA__FORMULADEPENDENCYVIEW implements tilda.interfaces.R
    protected TILDA__FORMULADEPENDENCYVIEW() { }
 
    private InitMode __Init        = null;
-   private long     __Nulls1      = 0L;
-   private long     __Nulls2      = 0L;
-   private long     __Nulls3      = 0L;
-   private long     __Nulls4      = 0L;
-   private long     __Nulls5      = 0L;
-   private long     __Nulls6      = 0L;
-   private long     __Changes1    = 0L;
-   private long     __Changes2    = 0L;
-   private long     __Changes3    = 0L;
-   private long     __Changes4    = 0L;
-   private long     __Changes5    = 0L;
-   private long     __Changes6    = 0L;
+   private BitSet   __Nulls       = new BitSet(64);
+   private BitSet   __Changes     = new BitSet(64);
    private boolean  __NewlyCreated= false;
    private int      __LookupId;
 
-   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L || __Changes3 != 0L || __Changes4 != 0L || __Changes5 != 0L || __Changes6 != 0L; }
+   public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
    public  boolean isNewlyCreated() { return __NewlyCreated; }
 
    void initForCreate()
@@ -331,8 +322,8 @@ This is the setter for:<BR>
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaDependencyView.formulaRefnum' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes1 |= TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.FORMULAREFNUM._Mask1;
-          __Nulls1   &= ~TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.FORMULAREFNUM._Mask1;
+          __Changes.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.FORMULAREFNUM._Mask);
+          __Nulls.andNot(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.FORMULAREFNUM._Mask);
        _formulaRefnum = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -414,8 +405,8 @@ This is the setter for:<BR>
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaDependencyView.location' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes1 |= TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.LOCATION._Mask1;
-          __Nulls1   &= ~TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.LOCATION._Mask1;
+          __Changes.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.LOCATION._Mask);
+          __Nulls.andNot(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.LOCATION._Mask);
        _location = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -497,8 +488,8 @@ This is the setter for:<BR>
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaDependencyView.name' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes1 |= TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.NAME._Mask1;
-          __Nulls1   &= ~TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.NAME._Mask1;
+          __Changes.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.NAME._Mask);
+          __Nulls.andNot(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.NAME._Mask);
        _name = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -573,8 +564,8 @@ This is the setter for:<BR>
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaDependencyView.dependencyRefnum' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes1 |= TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENCYREFNUM._Mask1;
-          __Nulls1   &= ~TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENCYREFNUM._Mask1;
+          __Changes.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENCYREFNUM._Mask);
+          __Nulls.andNot(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENCYREFNUM._Mask);
        _dependencyRefnum = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -656,8 +647,8 @@ This is the setter for:<BR>
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.FormulaDependencyView.dependentFormulaName' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes1 |= TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTFORMULANAME._Mask1;
-          __Nulls1   &= ~TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTFORMULANAME._Mask1;
+          __Changes.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTFORMULANAME._Mask);
+          __Nulls.andNot(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTFORMULANAME._Mask);
        _dependentFormulaName = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -759,14 +750,14 @@ This is the setter for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-                                     _formulaRefnum        =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.FORMULAREFNUM._Mask1       ;
-                                     _location             = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.LOCATION._Mask1            ;
-                                     _name                 = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.NAME._Mask1                ;
-                                     _dependencyRefnum     =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENCYREFNUM._Mask1    ;
-                                     _dependentFormulaName = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTFORMULANAME._Mask1;
+                                     _formulaRefnum        =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.FORMULAREFNUM._Mask       );
+                                     _location             = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.LOCATION._Mask            );
+                                     _name                 = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.NAME._Mask                );
+                                     _dependencyRefnum     =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENCYREFNUM._Mask    );
+                                     _dependentFormulaName = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULADEPENDENCYVIEW_Factory.COLS.DEPENDENTFORMULANAME._Mask);
      __LookupId = 0;
      __Init     = InitMode.READ;
-     __Changes1 = __Changes2 = __Changes3 = __Changes4 = __Changes5 = __Changes6 = 0L;
+     __Changes.clear();
      return AfterRead(C);
    }
 
@@ -776,11 +767,11 @@ This is the setter for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "formulaRefnum: "                                                                                                                     +                                   getFormulaRefnum       () 
-               + "; location: "                                                                                                                          + TextUtil.PrintVariableStr        (getLocation            ())
-               + "; name: "                                                                                                                              + TextUtil.PrintVariableStr        (getName                ())
-               + "; dependencyRefnum: "                                                                                                                  +                                   getDependencyRefnum    () 
-               + "; dependentFormulaName: "                                                                                                              + TextUtil.PrintVariableStr        (getDependentFormulaName())
+                   "formulaRefnum: "                                                                                                                    +                                   getFormulaRefnum       () 
+               + "; location: "                                                                                                                         + TextUtil.PrintVariableStr        (getLocation            ())
+               + "; name: "                                                                                                                             + TextUtil.PrintVariableStr        (getName                ())
+               + "; dependencyRefnum: "                                                                                                                 +                                   getDependencyRefnum    () 
+               + "; dependentFormulaName: "                                                                                                             + TextUtil.PrintVariableStr        (getDependentFormulaName())
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;
