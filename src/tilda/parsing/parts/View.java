@@ -52,13 +52,13 @@ public class View extends Base
     @SerializedName("joins"         ) public List<ViewJoin>        _Joins      = new ArrayList<ViewJoin  >();
     @SerializedName("subWhere"      ) public String                _SubWhere;
     @SerializedName("subWhereX"     ) public SubWhereX             _SubWhereX;
-    @SerializedName("countStar"     ) public String                _CountStar;
+    @SerializedName("countStar"     ) public String                _CountStarDeprecated;  // Deprecated
     @SerializedName("subQuery"      ) public SubWhereClause        _SubQuery;
-    @SerializedName("pivot"         ) public ViewPivot             _Pivot;
-    @SerializedName("pivots"        ) public List<ViewPivot>       _Pivots;
+    @SerializedName("pivot"         ) public ViewPivot             _PivotSingle;
+    @SerializedName("pivots"        ) public List<ViewPivot>       _Pivots = new ArrayList<ViewPivot>();
     @SerializedName("timeSeries"    ) public ViewTimeSeries        _TimeSeries;
     @SerializedName("distinctOn"    ) public ViewDistinctOn        _DistinctOn;
-    @SerializedName("pivotColumns"  ) public List<ViewPivotColumn> _PivotColumns;
+    @SerializedName("pivotColumns"  ) public List<ViewPivotColumn> _PivotColumnsDeprecated;  // Deprecated
     @SerializedName("realize"       ) public ViewRealize           _Realize;
     @SerializedName("importFormulas") public String[]              _ImportFormulas = new String[] { };
     @SerializedName("formulaColumns") public List<Formula>         _Formulas = new ArrayList<Formula>();
@@ -149,11 +149,11 @@ public class View extends Base
 
         int Errs = PS.getErrorCount();
 
-        if (_Pivot != null && _Pivots.isEmpty() == false)
+        if (_PivotSingle != null && _Pivots.isEmpty() == false)
           PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring the pivot view '" + getFullName() + "' with both a 'pivot' and 'pivots' element. Only one is allowed.");
 
-        if (_Pivot != null)
-          _Pivots.add(_Pivot);
+        if (_PivotSingle != null)
+          _Pivots.add(_PivotSingle);
 
         if (_Pivots.isEmpty() == false && _OriginalName.endsWith("PivotView") == false)
           PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring the pivot view '" + getFullName() + "' with a name that doesn't end with 'PivotView'.");
@@ -407,9 +407,9 @@ public class View extends Base
           P.Validate(PS, this);
 
         // Deprecations
-        if (_PivotColumns != null)
+        if (_PivotColumnsDeprecated != null)
           PS.AddError("The View '" + _Name + "' is defining a 'pivotColumns' element which is deprecated. Please use the new 'pivots' constructs instead.");
-        if (TextUtil.isNullOrEmpty(_CountStar) == false)
+        if (TextUtil.isNullOrEmpty(_CountStarDeprecated) == false)
           PS.AddError("View '" + getFullName() + "' is defining a 'countStar' element which is deprecated. Please use a standard column definition with an aggregate of 'COUNT'.");
 
         // gotta construct a shadow Object for code-gen.
@@ -424,26 +424,28 @@ public class View extends Base
         int Counter = -1;
         for (ViewColumn VC : _ViewColumns)
           {
-            if (_Pivot != null && VC._Name.equals(_Pivot._ColumnName) == true)
-              break;
+            if (VC._Aggregate != null) // Stop at the first aggregate... so we capture only the "grouped-by" columns.
+             break;
             if (VC != null && VC._FrameworkGenerated == false && VC._JoinOnly == false)
               {
                 O._Columns.add(new ViewColumnWrapper(VC._SameAsObj, VC, ++Counter));
               }
           }
 
-        if (_Pivot != null && _Pivot._Values != null)
+        for (ViewPivot P : _Pivots)
           {
-            ViewColumn VC = _ViewColumns.get(_ViewColumns.size() - 1);
-            ColumnType Type = VC.getAggregateType();
-            for (Value VPV : _Pivot._Values)
+            if (P._Values == null || P._Values.length == 0)
+             continue;
+            ColumnType Type = P._VC.getAggregateType();
+            for (Value VPV : P._Values)
               {
-                Column C = new Column(TextUtil.Print(VPV._Name, VPV._Value), Type.name(), Type == ColumnType.STRING ? _Pivot._VC._SameAsObj._Size : 0,
+                Column C = new Column(TextUtil.Print(VPV._Name, VPV._Value), Type.name(), Type == ColumnType.STRING ? P._VC._SameAsObj._Size : 0,
                 true, ColumnMode.NORMAL, true, null,
-                VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + _Pivot._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')");
+                VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')");
                 O._Columns.add(C);
               }
           }
+        
         if (_TimeSeries != null)
           {
             ColumnType Type = ColumnType.DATE;

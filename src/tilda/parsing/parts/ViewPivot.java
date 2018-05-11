@@ -25,7 +25,6 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.annotations.SerializedName;
 
 import tilda.parsing.ParserSession;
-import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.utils.TextUtil;
 
 public class ViewPivot
@@ -33,9 +32,9 @@ public class ViewPivot
     static final Logger             LOG                = LogManager.getLogger(ViewPivot.class.getName());
 
     /*@formatter:off*/
-	@SerializedName("on"       ) public String  _ColumnName;
-    @SerializedName("for"      ) public String  _AggregateNames;
-    @SerializedName("values"   ) public Value[] _Values    ;
+	@SerializedName("on"       ) public String    _ColumnName;
+    @SerializedName("for"      ) public String[]  _AggregateNames=new String[] { };
+    @SerializedName("values"   ) public Value[]   _Values    ;
     /*@formatter:on*/
 	
     
@@ -63,16 +62,12 @@ public class ViewPivot
         for (Value VPV : _Values)
          VPV.Validate(PS, ParentView, "pivot value");
 
-        ReferenceHelper R = ReferenceHelper.parseObjectReference(_ColumnName, ParentView._ParentSchema);
-        if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true)
-          return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot column " + _ColumnName + " with an incorrect syntax. It should be '((package\\.)?schema\\.)?object\\.\\*'.");
-        
-        _VC = _ParentView.getViewColumn(_ColumnName);
-        if (_VC == null)
-          return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot with an unknown 'on' colunn '"+_ColumnName+"'.");
-        
-        if (_ParentView._ViewColumns.get(_ParentView._ViewColumns.size()-2) != _VC)
-          return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot with an unknown 'on' colunn '"+_ColumnName+"' which is not the last column specified in the column list.");
+        _VC = new ViewColumn();
+        _VC._SameAs = _ColumnName;
+        _VC.Validate(PS, _ParentView);
+
+//        if (_ParentView._ViewColumns.get(_ParentView._ViewColumns.size()-2) != _VC)
+//          return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot with an unknown 'on' colunn '"+_ColumnName+"' which is not the last column specified in the column list.");
 
 //        if (TextUtil.isNullOrEmpty(_ParentView._CountStar) == true)
 //          return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot without having defined a 'countStar' column.");
