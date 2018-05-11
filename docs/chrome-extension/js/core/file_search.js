@@ -10,7 +10,6 @@ define(function(){
       var readEntries = function(directoryReader){      
         counter++;
         directoryReader.readEntries(function (entries) {
-          console.log(entries.length+"  entries");
           for (var i = 0; i < entries.length; i++) {
             var entry = entries[i];
             if (entry.isDirectory) {
