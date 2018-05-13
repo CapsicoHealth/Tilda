@@ -122,6 +122,10 @@ input[type=text]:focus {
    border-bottom: 2px #666 solid;
    background-color:#FFFFFF;
  }
+.NoRowed TR TD{
+   border-bottom: 0px;
+   background-color: none;
+}
 .BackToDetails {
    display: none;
  }
