@@ -157,8 +157,6 @@ public class ViewColumn
 
     public static Column ValidateSameAs(ParserSession PS, String ColFullName, String SameAs, View ParentView)
       {
-        int Errs = PS.getErrorCount();
-
         ReferenceHelper R = ReferenceHelper.parseColumnReference(SameAs, ParentView);
 
         if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true || TextUtil.isNullOrEmpty(R._C) == true)

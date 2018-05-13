@@ -73,7 +73,7 @@ public class Reverse
                     if (Column.isOCCColumnName(Col._NameOriginal) == true)
                      ++colNum;
                     if (   Col._NameOriginal.equals("refnum") == true 
-                        && T._PrimaryKey._Columns.size() == 1 && T._PrimaryKey._Columns.get(0).equals("refnum") == true
+                        && T._PrimaryKey != null && T._PrimaryKey._Columns.size() == 1 && T._PrimaryKey._Columns.get(0).equals("refnum") == true
                         )
                      autoPK = true;
                   }

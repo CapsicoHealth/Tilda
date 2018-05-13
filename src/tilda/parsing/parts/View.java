@@ -45,7 +45,7 @@ public class View extends Base
   {
 
 
-    static final Logger          LOG             = LogManager.getLogger(View.class.getName());
+    static final Logger                LOG             = LogManager.getLogger(View.class.getName());
 
     /*@formatter:off*/
     @SerializedName("columns"       ) public List<ViewColumn>      _ViewColumns= new ArrayList<ViewColumn>();
@@ -65,11 +65,11 @@ public class View extends Base
     @SerializedName("dbOnly"        ) public boolean               _DBOnly = false;
     /*@formatter:on*/
 
-    public transient boolean     _OCC            = false;
-    public transient PrimaryKey  _PK             = null;
-    public transient Pattern     _ViewColumnsRegEx;
-    public transient Pattern     _FormulasRegEx;
-    public transient Map<String,Base>  _Dependencies = new HashMap<String, Base>();
+    public transient boolean           _OCC            = false;
+    public transient PrimaryKey        _PK             = null;
+    public transient Pattern           _ViewColumnsRegEx;
+    public transient Pattern           _FormulasRegEx;
+    public transient Map<String, Base> _Dependencies   = new HashMap<String, Base>();
 
     @Override
     public Column getColumn(String name)
@@ -141,9 +141,6 @@ public class View extends Base
 
     public boolean Validate(ParserSession PS, Schema ParentSchema)
       {
-        // if (_Name.equalsIgnoreCase("QualityEpisodeOasis_View") == true)
-        // LOG.debug("Hello!!!!");
-        //
         if (super.Validate(PS, ParentSchema) == false)
           return false;
 
@@ -390,6 +387,7 @@ public class View extends Base
         if (_Pivots.isEmpty() == false)
           {
             boolean aggregates = false;
+            int i = 0;
             for (ViewColumn VC : _ViewColumns)
               {
                 if (VC._Aggregate != null)
@@ -397,14 +395,33 @@ public class View extends Base
                     if (aggregates == false) // switch from grouped-by columns to pivot columns
                       aggregates = true;
                   }
-                else if (aggregates == true)
+                else
                   {
-                    PS.AddError("View '" + getFullName() + "' is defining a non-aggregate view column " + VC.getShortName() + " after the aggregate section started. Please define grouped-by columns first, followed by aggregates.");
+                    ++i;
+                    if (aggregates == true)
+                      {
+                        PS.AddError("View '" + getFullName() + "' is defining a non-aggregate view column " + VC.getShortName() + " after the aggregate section started. Please define grouped-by columns first, followed by aggregates.");
+                      }
                   }
               }
+            Set<String> PivotNames = new HashSet<String>();
+            Set<String> PivotPrefixes = new HashSet<String>();
+            // Let's validate
+            for (ViewPivot P : _Pivots)
+              {
+                P.Validate(PS, this);
+                if (PivotNames.add(P._VC.getShortName()) == false)
+                  PS.AddError("View '" + getFullName() + "' is defining a duplicate Pivot on column " + P._VC.getShortName() + ".");
+                for (ViewPivotAggregate F : P._Aggregates)
+                  if (PivotPrefixes.add(F._Prefix) == false)
+                    PS.AddError("View '" + getFullName() + "' is defining a Pivot on column " + P._VC.getShortName() + " with a for-prefix '"+F._Prefix+"' which has already been used.");
+              }
+            // Then let's fold the Pivotted-on columns back into the main view.
+            for (ViewPivot P : _Pivots)
+              _ViewColumns.add(i++, P._VC);
           }
-        for (ViewPivot P : _Pivots)
-          P.Validate(PS, this);
+
+
 
         // Deprecations
         if (_PivotColumnsDeprecated != null)
@@ -424,8 +441,8 @@ public class View extends Base
         int Counter = -1;
         for (ViewColumn VC : _ViewColumns)
           {
-            if (VC._Aggregate != null) // Stop at the first aggregate... so we capture only the "grouped-by" columns.
-             break;
+            if (_Pivots.isEmpty() == false && VC._Aggregate != null) // Stop at the first aggregate... so we capture only the "grouped-by" columns.
+              break;
             if (VC != null && VC._FrameworkGenerated == false && VC._JoinOnly == false)
               {
                 O._Columns.add(new ViewColumnWrapper(VC._SameAsObj, VC, ++Counter));
@@ -435,17 +452,20 @@ public class View extends Base
         for (ViewPivot P : _Pivots)
           {
             if (P._Values == null || P._Values.length == 0)
-             continue;
-            ColumnType Type = P._VC.getAggregateType();
-            for (Value VPV : P._Values)
+              continue;
+            for (ViewPivotAggregate A : P._Aggregates)
               {
-                Column C = new Column(TextUtil.Print(VPV._Name, VPV._Value), Type.name(), Type == ColumnType.STRING ? P._VC._SameAsObj._Size : 0,
-                true, ColumnMode.NORMAL, true, null,
-                VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')");
-                O._Columns.add(C);
+                ViewColumn VC = getViewColumn(A._Name);
+                ColumnType Type = VC.getAggregateType();
+                for (Value VPV : P._Values)
+                  {
+                    Column C = new Column(A.makeName(VPV), Type.name(), Type == ColumnType.STRING ? P._VC._SameAsObj._Size : 0, true, ColumnMode.NORMAL, true, null,
+                    VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')");
+                    O._Columns.add(C);
+                  }
               }
           }
-        
+
         if (_TimeSeries != null)
           {
             ColumnType Type = ColumnType.DATE;
@@ -515,37 +535,40 @@ public class View extends Base
           }
         _FormulasRegEx = Pattern.compile("\\b(" + Str.toString() + ")\\b");
 
-        PrimaryKey PK = _ViewColumns.get(0)._SameAsObj._ParentObject._PrimaryKey;
-        if (PK != null)
-          {
-            if (PK._Autogen == true && getSameAsColumn(PK._ParentObject.getFullName(), "refnum") != null)
-              {
-                O._PrimaryKey = new PrimaryKey();
-                O._PrimaryKey._Columns = new String[] { _ViewColumns.get(0)._Name
-                };
-                _PK = O._PrimaryKey;
-              }
-            else
-              {
-                int countFound = -1;
-                String[] ColNames = new String[PK._ColumnObjs.size()];
-                for (Column C : PK._ColumnObjs)
-                  {
-                    ViewColumn VC = getViewColumnFromSameAsColumn(C._ParentObject.getFullName(), C._Name);
-                    if (VC != null)
-                      ColNames[++countFound] = VC._Name;
-                    else
-                      break;
-                  }
-                if (countFound == PK._ColumnObjs.size() - 1)
-                  {
-                    O._PrimaryKey = new PrimaryKey();
-                    O._PrimaryKey._Columns = ColNames;
-                    _PK = O._PrimaryKey;
-                  }
-              }
-          }
-
+        /*
+         * PrimaryKey PK = _ViewColumns.get(0)._SameAsObj._ParentObject._PrimaryKey;
+         * if (_Name.equals("VisitCountAndDurationPivotView") == true)
+         * LOG.debug("");
+         * if (PK != null)
+         * {
+         * if (PK._Autogen == true && getSameAsColumn(PK._ParentObject.getFullName(), "refnum") != null)
+         * {
+         * O._PrimaryKey = new PrimaryKey();
+         * O._PrimaryKey._Columns = new String[] { _ViewColumns.get(0)._Name
+         * };
+         * _PK = O._PrimaryKey;
+         * }
+         * else
+         * {
+         * int countFound = -1;
+         * String[] ColNames = new String[PK._ColumnObjs.size()];
+         * for (Column C : PK._ColumnObjs)
+         * {
+         * ViewColumn VC = getViewColumnFromSameAsColumn(C._ParentObject.getFullName(), C._Name);
+         * if (VC != null)
+         * ColNames[++countFound] = VC._Name;
+         * else
+         * break;
+         * }
+         * if (countFound == PK._ColumnObjs.size() - 1)
+         * {
+         * O._PrimaryKey = new PrimaryKey();
+         * O._PrimaryKey._Columns = ColNames;
+         * _PK = O._PrimaryKey;
+         * }
+         * }
+         * }
+         */
         O._DBOnly = _DBOnly;
         _ParentSchema._Objects.add(O);
         O.Validate(PS, ParentSchema);
@@ -601,19 +624,22 @@ public class View extends Base
             _PadderColumnNames.track(NewVC.getName());
             ++j;
           }
-        if (V._Pivot != null)
+        for (ViewPivot P : _Pivots)
           {
-            for (Value VPV : V._Pivot._Values)
+            if (P != null)
               {
-                if (TextUtil.FindElement(VC._Exclude, TextUtil.Print(VPV._Name, VPV._Value), false, 0) != -1)
-                  continue;
-                ViewColumn NewVC = new ViewColumn();
-                NewVC._SameAs = V.getShortName() + "." + TextUtil.Print(VPV._Name, VPV._Value);
-                NewVC._As = VC._As;
-                NewVC._Name = Prefix + TextUtil.Print(VPV._Name, VPV._Value);
-                _ViewColumns.add(i + j, NewVC);
-                _PadderColumnNames.track(NewVC.getName());
-                ++j;
+                for (Value VPV : P._Values)
+                  {
+                    if (TextUtil.FindElement(VC._Exclude, TextUtil.Print(VPV._Name, VPV._Value), false, 0) != -1)
+                      continue;
+                    ViewColumn NewVC = new ViewColumn();
+                    NewVC._SameAs = V.getShortName() + "." + TextUtil.Print(VPV._Name, VPV._Value);
+                    NewVC._As = VC._As;
+                    NewVC._Name = Prefix + TextUtil.Print(VPV._Name, VPV._Value);
+                    _ViewColumns.add(i + j, NewVC);
+                    _PadderColumnNames.track(NewVC.getName());
+                    ++j;
+                  }
               }
           }
         for (Formula F : V._Formulas)
@@ -814,6 +840,30 @@ public class View extends Base
          * return G;
          * }
          */
+      }
+
+    public ViewPivot getPivotWithValue(String val)
+      {
+        for (ViewPivot P : _Pivots)
+          if (P.hasValue(val) == true)
+            return P;
+        return null;
+      }
+
+    public ViewPivot getPivotWithColumn(String ColName)
+      {
+        for (ViewPivot P : _Pivots)
+          if (P._ColumnName.equals(ColName) == true)
+            return P;
+        return null;
+      }
+
+    public boolean isPivotColumn(ViewColumn VC)
+      {
+        for (ViewPivot P : _Pivots)
+          if (P._VC == VC)
+            return true;
+        return false;
       }
 
   }

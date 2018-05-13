@@ -16,8 +16,10 @@
 
 package tilda.parsing.parts;
 
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,24 +31,24 @@ import tilda.utils.TextUtil;
 
 public class ViewPivot
   {
-    static final Logger             LOG                = LogManager.getLogger(ViewPivot.class.getName());
+    static final Logger LOG             = LogManager.getLogger(ViewPivot.class.getName());
 
     /*@formatter:off*/
-	@SerializedName("on"       ) public String    _ColumnName;
-    @SerializedName("for"      ) public String[]  _AggregateNames=new String[] { };
-    @SerializedName("values"   ) public Value[]   _Values    ;
+	@SerializedName("on"        ) public String                    _ColumnName;
+    @SerializedName("aggregates") public List<ViewPivotAggregate>  _Aggregates=new ArrayList<ViewPivotAggregate>();
+    @SerializedName("values"    ) public Value[]                   _Values    ;
     /*@formatter:on*/
-	
-    
+
+
     public ViewPivot()
-     {
-     }
+      {
+      }
 
     public transient View       _ParentView;
     public transient ViewColumn _VC;
     public transient boolean    _FailedValidation = false;
 
-    
+
     public boolean Validate(ParserSession PS, View ParentView)
       {
         int Errs = PS.getErrorCount();
@@ -58,43 +60,38 @@ public class ViewPivot
 
         if (_Values == null || _Values.length == 0)
           return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot without any 'values' specified.");
-        
+
         for (Value VPV : _Values)
-         VPV.Validate(PS, ParentView, "pivot value");
+          VPV.Validate(PS, ParentView, "pivot value");
 
         _VC = new ViewColumn();
         _VC._SameAs = _ColumnName;
         _VC.Validate(PS, _ParentView);
 
-//        if (_ParentView._ViewColumns.get(_ParentView._ViewColumns.size()-2) != _VC)
-//          return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot with an unknown 'on' colunn '"+_ColumnName+"' which is not the last column specified in the column list.");
-
-//        if (TextUtil.isNullOrEmpty(_ParentView._CountStar) == true)
-//          return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot without having defined a 'countStar' column.");
-          
-//        ViewColumn CountCol = _ParentView._ViewColumns.get(_ParentView._ViewColumns.size()-1);
-//        if (CountCol._Aggregate != AggregateType.COUNT)
-//          return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot but the 'countStar' column did not validate properly.");
         
-        // Need Pivot values to be sorted because of how Pivot tables are constructed.
-        Arrays.sort(_Values, new Comparator<Value>()
+        Set<String> AggregateNames = new HashSet<String>();        
+        for (ViewPivotAggregate A : _Aggregates)
           {
-            @Override
-            public int compare(Value arg0, Value arg1)
-              {
-                return arg0._Value.compareTo(arg1._Value);
-              }
-          });
-        
+            ViewColumn VC = ParentView.getViewColumn(A._Name);
+            if (VC == null)
+              PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot on " + _ColumnName + " for an aggregate " + A._Name + " which cannot be found in the view.");
+            else if (VC._Aggregate == null)
+              return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot on " + _ColumnName + " for " + A._Name + " which is not an aggregate.");
+
+            if (AggregateNames.add(A._Name) == false)
+              PS.AddError("View '" + ParentView.getFullName() + "' is defining a Pivot on column " + _VC.getShortName() + " with a duplicate aggregate name '"+A._Name+"'.");
+          }
+
         return Errs == PS.getErrorCount();
       }
-    
-    public boolean hasValue(String searchValue) {
-    	for(Value value : _Values) {
-    		if(value._Name.equals(searchValue))
-    			return true;
-    	}
-    	return false;
-    }
 
+    public boolean hasValue(String searchValue)
+      {
+        for (Value value : _Values)
+          {
+            if (value._Name.equals(searchValue))
+              return true;
+          }
+        return false;
+      }
   }
