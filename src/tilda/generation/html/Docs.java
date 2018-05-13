@@ -945,15 +945,16 @@ public class Docs
         if (V._Pivots.isEmpty() == false)
           {
             Out.println("A pivot was done as part of this view explicitly on the following columns and values:"
-            + "<BLOCKQUOTE><PRE><TABLE border=\"0px\">");
+            + "<BLOCKQUOTE><PRE><TABLE class=\"Rowed\" border=\"0px\">");
             for (ViewPivot P : V._Pivots)
               {
-                Out.println("<TR><TD>" + P._VC._SameAsObj.getName() + "</TD>");
+                Out.println("<TR valign=\"top\"><TD>" + P._VC._SameAsObj.getName() + "</TD><TD>"+P._VC._Description+"</TD><TR>");
+                Out.print("<TR><TD></TD><TD><TABLE class=\"NoRowed\" border=\"0px\"");
                 for (Value Val : P._Values)
-                  Out.println("<TD>" + Val._Value + "&nbsp;&nbsp;&nbsp;</TD><TD>" + Val._Description + "</TD>");
-                Out.println("</TR>");
+                  Out.println("<TR><TD>" + Val._Value + "&nbsp;&nbsp;&nbsp;</TD><TD>" + Val._Description + "</TD></TR>");
+                Out.println("</TABLE></TD></TR>");
               }
-            Out.println("</TABLE></PRE><BLOCKQUOTE>");
+            Out.println("</TABLE></PRE></BLOCKQUOTE>");
           }
 
       }
