@@ -15,42 +15,35 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
   var CustomElementView = CEV.CustomElementView;
   var renderObject = Helpers.renderObject;
   var renderObjectRelations = LinkRenderer;
-  var p = function(schema, eleId, opts){
-    this.schema = schema
+  var p = function(package, eleId, opts){
+    this.package = package;
     this.opts = opts;
     this.eleId = eleId;
-    this.pKey = this.schema.package.toLowerCase()+"#"+this.opts.viewOnly;
     this.objects = new ObjectCollection();
     this.paper = null;
-    console.log("pKey --> "+this.pKey)
-    var currentPos = { x: -150, y: 30 }
-    this.parse = function(){
-      var that = this;
-      var pushElement = function(collection, schemaObj, _type, _inSchema){
-        var t = new ParserElement();
-        t.set({data: schemaObj, name: schemaObj.name,
-         _type: _type, inSchema: _inSchema, package: that.schema.package, pKey: that.pKey});
-        collection.add(t);
-      }
-      _.each(this.schema.objects, function(object, i){
-        pushElement(that.objects, object, "Object", true)
-      })
-      if(this.opts.viewOnly){
-        _.each(this.schema.views, function(view, i){
-          pushElement(that.objects, view, "View", true)
-        })
-      }
-      else{
-        _.each(this.schema.enumerations, function(enumeration, i){
-          pushElement(that.objects, enumeration, "Enumeration", true)
-        })
-
-        _.each(this.schema.mappers, function (mapper, i){
-          pushElement(that.objects, mapper, "Mapper", true)
-        })
-
-      }
+    this.collection = window.collection.clone();
+    this.schemaName = this.package.split(".")[1];
+    this.pKey = opts.package+"."+this.opts.name;
+    this.currentScale = 1;
+    var that = this;
+    // reset object positions.
+    _.each(this.collection, function(object, i){
+      var object = that.collection.at(i);
+      object.set({"graphId": null});
+    })
+    if(this.opts.viewOnly)
+    {
+      this.objects = new ObjectCollection(this.collection.where({_type: "View", schemaName: this.schemaName}));
     }
+    else 
+    {
+      var objects = this.collection.filter(function (obj) {
+        return obj.get('_type') !== 'View' && obj.get('schemaName') == that.schemaName;
+      });
+      this.objects = new ObjectCollection(objects);
+    }
+    var currentPos = { x: -150, y: 30 }
+
     this.resetAll = function(){
       var elements = this.paper.model.getElements();
       var links = this.paper.model.getLinks();
@@ -68,17 +61,17 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
       var that = this;
 
       var elementChangeHandler = function(event){
-        var eventObject = that.objects.findWhere({graphId: event.get("id")});
-        var key = that.schema.package.toLowerCase()+"#"+eventObject.get("name").toLowerCase();
+        var eventObject = that.collection.findWhere({graphId: this.get("id")})
+        if(eventObject == null){
+          return true;
+        }
+        var key = that.pKey+"#"+eventObject.get("friendlyName");
         var position = eventObject.get("data").position;
         if(eventObject.get("data").position == null){
           eventObject.get("data").position = {};
           var position = eventObject.get("data").position;
         }
-        // Store preferences.
-        var syncSet = {};
-        // console.log("key -> "+key+"\nObject -> "+JSON.stringify(event.toJSON()));
-        window.tildaCache[key] = event.toJSON();
+        window.tildaCache[key] = this.toJSON();
       }
 
       var gotoNextPosition = function(currentPos){
@@ -92,6 +85,8 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
       }
 
       var graph = new joint.dia.Graph;
+      var graph_1 = new joint.dia.Graph;
+
       var paper = new joint.dia.Paper({
         el: $("#"+this.eleId),
         width: window.screen.availWidth,
@@ -102,8 +97,77 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
         elementView: CustomElementView,
         linkView: CustomLinkView
       });
+
+      $("#robj").html('');
+      var paper_1 = new joint.dia.Paper({
+        el: $("#robj"),
+        width: $('#robj').width(),
+        height: (window.screen.availHeight),
+        model: graph_1,
+        gridSize: 1,
+        restrictTranslate: true,
+        elementView: CustomElementView,
+        linkView: CustomLinkView
+      });
+
+      graph.on('remove', function(view){
+        var cell = view.model;
+        if(cell && cell.get('type') == 'basic.Rect')
+        {
+          var obj = that.objects.findWhere({friendlyName: cell.get('attrs').id}, {caseInsensitive: true});
+          if(obj == null)
+          {
+            obj = that.collection.findWhere({friendlyName: cell.get('attrs').id}, {caseInsensitive: true});
+          }
+          obj = obj.clone();
+          cell.set(that.pKey, {hidden: true});
+          var key = that.pKey+"#"+obj.get("friendlyName")+".hidden";
+          window.tildaCache[key] = cell.toJSON();
+          obj.set({graphId: null, rendered: false, nocache: true});
+          var objFn = renderObject[obj.get("_type")];
+          graph_1.addCell(cell);
+          var t = objFn(graph_1, obj, {'x': x, 'y': y}, undefined, that.pKey+".hidden", elementChangeHandler);
+          paper_1.scale(that.currentScale);
+          y = y+40;
+        }
+      })
+
+
+      graph_1.on('remove', function(view) {
+        var cell = view.model;
+        if(cell && cell.get('type') == 'basic.Rect'){
+          var obj = that.objects.findWhere({friendlyName: cell.get('attrs').id}, {caseInsensitive: true});
+          if(obj == null){
+            obj = that.collection.findWhere({friendlyName: cell.get('attrs').id}, {caseInsensitive: true});
+          }
+          cell.unset(that.pKey);
+          var key = that.pKey+"#"+object.get("friendlyName");
+          window.tildaCache[key] = cell.toJSON();
+          object.set({graphId: null, rendered: false});
+          var key = that.pKey+"#"+object.get("friendlyName");
+          var objFn = renderObject[object.get("_type")];
+
+          if ( objFn != null){
+            console.log("Graph ID "+object.get("graphId") )
+            var position = gotoNextPosition(currentPos);
+            var objectAttr = window.tildaCache[key];
+            var t = objFn(graph, object, position, objectAttr, that.pKey, elementChangeHandler);
+            objectAttr.id = t.id;
+            t.set(objectAttr);
+            var key = object.get("_type");
+            var objFn = renderObjectRelations[key]
+            if(objFn != null){
+              objFn(graph, object, that.pKey);
+            }
+            renderAllLinks();
+          }
+        }
+      })
+
       this.paper = paper;
       var V = joint.V;
+      window.paper = paper;
+      window.paper_1 = paper_1;
 
       var dragStartPosition = null;
       paper.on('blank:pointerdown',function(event, x, y) {
@@ -134,52 +198,43 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
         if (newScale > 0.4 && newScale < 2) {
           paper.setOrigin(0, 0);
           paper.scale(newScale, newScale, p.x, p.y);
+          that.currentScale = newScale;
+          paper_1.scale(newScale);
         }
       });
 
-      var that = this;
-      var elementChangeHandler = function(event){
-        var eventObject = that.objects.findWhere({graphId: event.get("id")});
-        var key = eventObject.get("pKey")+"#"+eventObject.get("name").toLowerCase();
-        var position = eventObject.get("data").position;
-        if(eventObject.get("data").position == null){
-          eventObject.get("data").position = {};
-          var position = eventObject.get("data").position;
-        }
-        // Store preferences.
-        window.tildaCache[key] = event.toJSON();
-      }
-      var objects = this.objects
-      if(this.opts.viewOnly){
-        objects = new ObjectCollection(objects.where({_type: "View"}));
-      }
 
-      _.each(objects, function(object, i){
-        var object = objects.at(i);
-        var key = object.get("pKey")+"#"+object.get("name").toLowerCase();
-        var objFn = renderObject[object.get("_type")]
+      var x = 0;
+      var y = 20;
+      _.each(this.objects, function(object, i){
+        var object = that.objects.at(i);
+        var object_1 = that.objects.at(i).clone();
+        var key = that.pKey+"#"+object.get("friendlyName");
+        var objFn = renderObject[object.get("_type")];
         if ( objFn != null){
           var position = gotoNextPosition(currentPos);
           var objectAttr = window.tildaCache[key];
-          var t = objFn(graph, object, position, objectAttr);
-          object.set("graphId", t.get("id"));
-          object.set("rendered", true);
-          t.on('change:position', _.debounce(elementChangeHandler, 500, { 'maxWait' : 1000 }));
+          var t = objFn(graph, object, position, objectAttr, that.pKey, elementChangeHandler);
         }
       })
-
-      _.each(objects, function(object, i){
-        var object = objects.at(i);
-        var key = that.opts.viewOnly ? "only"+object.get("_type") : object.get("_type")
-        var objFn = renderObjectRelations[key]
-        if(objFn != null){
-          objFn(graph, object, that.objects, gotoNextPosition(currentPos));
-        }
-      })
-
+      var renderAllLinks = function(){
+        _.each(that.objects, function(object, i){
+          var object = that.objects.at(i);
+          var key = object.get("_type");
+          var objFn = renderObjectRelations[key]
+          if(objFn != null){
+            objFn(graph, object, that.pKey);
+          }
+        })        
+      }
+      renderAllLinks();
     }
-    this.parse();
-    this.render();
+    try{
+      this.render();
+    } catch(e){
+      console.error(e.message);
+      console.error(e.stack)
+    }
   }
 
   return p;

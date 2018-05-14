@@ -1,32 +1,46 @@
 <div class="container-fluid">
 
   <div class="row">
+    <button class="col-md-12" name="schema-file" style="padding: 0px">Open folder </button>
+  </div>
+  <div class="row actions">
     <hr/>
     <div class="col-md-4">
-      <select class="form-control"></select>
+      <select class="form-control schemas"></select>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-7">
       <form>
         <label class="radio-inline">
-          <a class="filterRegex form-control">Load</a>
+          <a class="filterRegex form-control">Filter</a>
         </label>
         <label class="radio-inline">
-          <input type="radio" name="showObj" value="object" checked="checked"> Object
+          <select class="add-view-holder form-control">
+          </select>
         </label>
-        <label class="radio-inline">
-          <input type="radio" name="showObj" value="view"> View
-        </label>
-        <label class="radio-inline">
-          <button class="saveSchema form-control">Save</button>
-        </label>
+        <span>
+          <label class="radio-inline">
+            <button class="saveSchema form-control">Save</button>
+          </label>
+          <label class="radio-inline">
+            <button class="newCanvas form-control">New ?</button>
+          </label>
+          <label class="radio-inline hidden">
+            <button class="renameCanvas form-control">Rename ?</button>
+          </label>
+          <label class="radio-inline hidden">
+            <button class="deleteCanvas form-control">Delete ?</button>
+          </label>
+        </span>
       </form>
     </div>
   </div>
   <div class="fName" style="padding: 10px"></div>
 
-  <div class="objects">
-    <div id="obj_c" class="obj"> </div>
-    <div id="view_c" class="obj"> </div>
+  <div class="objects row">
+    <div id="obj_c" class="obj col-md-9"> </div>
+    <div class="col-md-3 rendered_objects" style="border-left: 1px solid black;z-index: 1000">
+      <div id='robj'></div>
+    </div>
   </div>
 </div>
 
@@ -35,14 +49,9 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="gridSystemModalLabel">Load Tilda Schema Files</h4>
+        <h4 class="modal-title" id="gridSystemModalLabel">Exclude Dir</h4>
       </div>
       <div class="modal-body">
-<!-- 
-	    <div class="row">
-   		  <button class="col-md-12" name="schema-file" style="padding: 0px">Open folder </button>
-		</div>
- -->
         <form>
           <div class="form-group">
             <label for="message-text" class="control-label">Exclude Directory regex:</label>
@@ -50,10 +59,37 @@
           </div>
         </form>
       </div>
-	<div class="modal-footer">
-		<button class="col-md-12" name="schema-file">Pick a folder </button>
-		<button type="button" class="btn btn-primary save-regex" data-dismiss="modal">Load</button>
-	</div>
-   </div><!-- /.modal-content -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary save-regex">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+<div id="createCanvasD" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">New Canvas ?</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="canvas_name" class="form-control" placeholder="Canvas title">
+            <input type="hidden" id="new_canvas" value="1"/>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary createCanvas" data-dismiss="modal">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
