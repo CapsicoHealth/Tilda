@@ -14,6 +14,7 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
       if(attr == null){
         var name = o.get("schemaName")+"."+o.get("name");
         attr = {
+          id: o.get("friendlyName"),
           position: position,
           size: { width: name.length*12, height: 30 },
           attrs: { 
@@ -22,32 +23,41 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
           }
         }
       }
-      // attr.model = new joint.shapes.devs.Model(attr)
       if(o.get('graphId') == null){
         var t = new joint.shapes.basic.CustomRect(attr).clone();
         o.set({graphId: t.id, rendered: true, package: package})
-        if(attr[package] != null && attr[package].hidden)
+        console.log("Hidden -> "+t.get('hidden'));
+        if(t.get('hidden') == true)
         {
-          g.trigger('remove', {model: t})
+          graph.trigger('remove', {model: t})
           return null;
         }
         else
         {
+          t.set({customId: o.get("friendlyName")});
           g.addCell(t);
         }
       }
       return t;
     }
     var a = renderFn.apply(this, arguments);
+    
     if(a)
+    {
       a.on('change:position', _.debounce(elementChangeHandler, 500, { 'maxWait' : 1000 }));
+      console.log("customId -> "+a.get('customId'));
+    }
 
     var references = object.get("references") || [];
     _.each(references, function(value, i){
       var key = package+"#"+value.get("friendlyName");
       objectAttr = window.tildaCache[key];
       var fn = X[value.get("_type")];
-      fn.apply(this, [graph, value, gotoNextPosition(position), objectAttr, package, elementChangeHandler])
+      var  t = fn.apply(this, [graph, value, gotoNextPosition(position), objectAttr, package, elementChangeHandler])
+      if(t != null)
+      {
+        console.log("customId -> "+ t.get('customId'));        
+      }
     })
     return a;
   }
@@ -67,31 +77,41 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
           }
         }
       }
-      // attr.model = new joint.shapes.devs.Model(attr)
+      // attr.model = new joint.shapes.devs.Model(attr).clone()
       if(o.get('graphId') == null){
         var t = new joint.shapes.basic.CustomRect(attr).clone();
         o.set({graphId: t.id, rendered: true, package: package})
-        if(attr[package] != null && attr[package].hidden)
+        console.log("Hidden -> "+t.get('hidden'));
+        if(t.get('hidden') == true)
         {
           g.trigger('remove', {model: t})
           return null;
         }
         else
         {
+          t.set({customId: o.get("friendlyName")});
           g.addCell(t);
         }
       }
       return t;
     }
     var a = renderFn.apply(this, arguments);
+    
     if(a)
+    {
       a.on('change:position', _.debounce(elementChangeHandler, 500, { 'maxWait' : 1000 }));      
+      console.log("customId -> "+a.get('customId'));
+    }
     var references = object.get("references") || [];
     _.each(references, function(value, i){
       var key = package+"#"+value.get("friendlyName");
       objectAttr = window.tildaCache[key];
       var fn = X[value.get("_type")];
-      fn.apply(this, [graph, value, gotoNextPosition(position), objectAttr, package, elementChangeHandler])
+      var t = fn.apply(this, [graph, value, gotoNextPosition(position), objectAttr, package, elementChangeHandler])
+      if(t != null)
+      {
+        console.log("customId -> "+ t.get('customId'));        
+      }
     })
     return a;
   }
@@ -110,28 +130,41 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
           } 
         }
       }
-      // attr.model = new joint.shapes.devs.Model(attr)
+      // attr.model = new joint.shapes.devs.Model(attr).clone()
       if(o.get('graphId') == null){
         var t = new joint.shapes.basic.CustomRect(attr).clone();
-        o.set({graphId: t.id, rendered: true, package: package})
-        if(attr[package] != null && attr[package].hidden){
+        o.set({graphId: t.id, rendered: true, package: package});
+        console.log("Hidden -> "+t.get('hidden'));
+        if(t.get('hidden') == true)
+        {
           graph.trigger('remove', {model: t})
           return null;
-        } else{
+        }
+        else
+        {
+          t.set({customId: o.get("friendlyName")});
           g.addCell(t);
         }
       }
       return t;
     }
     var a = renderFn.apply(this, arguments);
+    
     if(a)
+    {
       a.on('change:position', _.debounce(elementChangeHandler, 500, { 'maxWait' : 1000 }));      
+      console.log("customId -> "+a.get('customId'));
+    }
     var references = object.get("references") || [];
     _.each(references, function(value, i){
       var key = package+"#"+value.get("friendlyName");
       objectAttr = window.tildaCache[key];
       var fn = X[value.get("_type")];
-      fn.apply(this, [graph, value, gotoNextPosition(position), objectAttr, package, elementChangeHandler])
+      var t  = fn.apply(this, [graph, value, gotoNextPosition(position), objectAttr, package, elementChangeHandler])
+      if(t != null)
+      {
+        console.log("customId -> "+ t.get('customId'));        
+      }
     })
     return a;
   }
@@ -152,22 +185,31 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
         }
       }
 
-      // attr.model = new joint.shapes.devs.Model(attr)
+      // attr.model = new joint.shapes.devs.Model(attr).clone()
       if(o.get('graphId') == null){
         var t = new joint.shapes.basic.CustomRect(attr).clone();
-        o.set({graphId: t.id, rendered: true, package: package})
-        if(attr[package] != null && attr[package].hidden){
+        o.set({graphId: t.id, rendered: true, package: package});
+        console.log("Hidden -> "+t.get('hidden'));
+        if(t.get('hidden') == true)
+        {
           graph.trigger('remove', {model: t})
           return null;
-        } else{
+        }
+        else
+        {
+          t.set({customId: o.get("friendlyName")});
           g.addCell(t);
         }
       }
       return t;
     }
     var a = renderFn.apply(this, arguments);
+    
     if(a)
+    {
       a.on('change:position', _.debounce(elementChangeHandler, 500, { 'maxWait' : 1000 }));
+      console.log("customId -> "+a.get('customId'));
+    }
 
     // dependencies;
     var references = object.get("references") || [];
@@ -175,7 +217,11 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
       var key = package+"#"+value.get("friendlyName");
       objectAttr = window.tildaCache[key];
       var fn = X[value.get("_type")];
-      fn.apply(this, [graph, value, gotoNextPosition(position), objectAttr, package, elementChangeHandler])
+      var t = fn.apply(this, [graph, value, gotoNextPosition(position), objectAttr, package, elementChangeHandler])
+      if(t != null)
+      {
+        console.log("customId -> "+ t.get('customId'));        
+      }
     })
     return a;
   }

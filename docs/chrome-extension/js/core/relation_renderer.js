@@ -3,20 +3,42 @@ define(["jointjs", "lodash", "jquery",
  function(joint, _, $, ParserElement, Helpers){
   var renderObject = Helpers.renderObject;
   var renderedLinks = [];
+  var findByCustomId = function(graph, schemaObj)
+  {
+    return graph.getCells().filter(function(cell)
+    {
+      return cell.get('customId') == schemaObj.get('friendlyName') && schemaObj.get('graphId') == cell.id
+    })[0];
+  }
+  var isConnected = function(graph, sourceCell, targetCell)
+  {
+    var connected = false;
+    var connectedLinks = graph.getConnectedLinks(sourceCell, {deep: true});
+    _.some(connectedLinks, function(link){
+      var targetLink = link.get('target')
+      connected = targetCell.id ==  targetLink.id
+      return connected;
+    })
+    return connected;
+  }
   var renderLink = function(graph, source, target, pKey){
     var elements = graph.getElements();
-    var sources = _.where(elements, {id: source.get("graphId") });
-    var targets = _.where(elements, {id: target.get("graphId") });
-    if(sources.length == 0 || targets.length == 0){
+    var sourceCell = findByCustomId(graph, source)
+    var targetCell = findByCustomId(graph, target)
+    if(sourceCell == null || targetCell == null){
       return false;
     }
-
+    if(isConnected(graph, sourceCell, targetCell))
+    {
+      return false;
+    }
+    
     var key = pKey+"#"+source.get("friendlyName")+"#"+target.get("friendlyName");
     var linkAttrs = window.tildaCache[key];
     if(linkAttrs == null){
       linkAttrs = {
-        source: { id: source.get("graphId") },
-        target: { id: target.get("graphId") }
+        source: { id: sourceCell.id },
+        target: { id: targetCell.id }
       }
       var attrs = {
         '.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' },
@@ -56,8 +78,8 @@ define(["jointjs", "lodash", "jquery",
       linkAttrs["attrs"] = attrs
     } else {
       linkAttrs = _.merge(linkAttrs, {
-        source: { id: source.get("graphId") },
-        target: { id: target.get("graphId") }
+        source: { id: sourceCell.id },
+        target: { id: targetCell.id }
       })
     }
     var vertices = linkAttrs.vertices;

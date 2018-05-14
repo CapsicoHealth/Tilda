@@ -11,11 +11,16 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
     var pointTransformed = svgPoint.matrixTransform(paper.viewport.getCTM().inverse());
     return pointTransformed;
   }
+  var x = 0;
+  var y = 0;
+
   var CustomLinkView = CEV.CustomLinkView;
   var CustomElementView = CEV.CustomElementView;
   var renderObject = Helpers.renderObject;
   var renderObjectRelations = LinkRenderer;
   var p = function(package, eleId, opts){
+    x = 0;
+    y = 0;
     this.package = package;
     this.opts = opts;
     this.eleId = eleId;
@@ -24,7 +29,8 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
     this.collection = window.collection.clone();
     this.schemaName = this.package.split(".")[1];
     this.pKey = opts.package+"."+this.opts.name;
-    this.currentScale = 1;
+    this.currentScale = this.opts.scale || 1;
+    console.log("Scale --> "+this.currentScale);
     var that = this;
     // reset object positions.
     _.each(this.collection, function(object, i){
@@ -93,16 +99,15 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
         height: (window.screen.availHeight),
         model: graph,
         gridSize: 10,
-        restrictTranslate: true,
         elementView: CustomElementView,
-        linkView: CustomLinkView
+        linkView: CustomLinkView,
       });
 
       $("#robj").html('');
       var paper_1 = new joint.dia.Paper({
         el: $("#robj"),
         width: $('#robj').width(),
-        height: (window.screen.availHeight),
+        height: 200,
         model: graph_1,
         gridSize: 1,
         restrictTranslate: true,
@@ -114,21 +119,25 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
         var cell = view.model;
         if(cell && cell.get('type') == 'basic.Rect')
         {
-          var obj = that.objects.findWhere({friendlyName: cell.get('attrs').id}, {caseInsensitive: true});
+          var id = cell.get('customId');
+          var obj = that.objects.findWhere({friendlyName: id}, {caseInsensitive: true});
           if(obj == null)
           {
-            obj = that.collection.findWhere({friendlyName: cell.get('attrs').id}, {caseInsensitive: true});
+            obj = that.collection.findWhere({friendlyName: id}, {caseInsensitive: true});
           }
-          obj = obj.clone();
-          cell.set(that.pKey, {hidden: true});
-          var key = that.pKey+"#"+obj.get("friendlyName")+".hidden";
+          cell.set({hidden: true});
+          var key = that.pKey+"#"+obj.get("friendlyName");
           window.tildaCache[key] = cell.toJSON();
           obj.set({graphId: null, rendered: false, nocache: true});
           var objFn = renderObject[obj.get("_type")];
-          graph_1.addCell(cell);
           var t = objFn(graph_1, obj, {'x': x, 'y': y}, undefined, that.pKey+".hidden", elementChangeHandler);
           paper_1.scale(that.currentScale);
-          y = y+40;
+          x = x+200;
+          if(x >= $('#robj').width())
+          {
+            x = 0;
+            y = y + 60;
+          }
         }
       })
 
@@ -136,28 +145,30 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
       graph_1.on('remove', function(view) {
         var cell = view.model;
         if(cell && cell.get('type') == 'basic.Rect'){
-          var obj = that.objects.findWhere({friendlyName: cell.get('attrs').id}, {caseInsensitive: true});
+          var id = cell.get('customId');
+          var obj = that.objects.findWhere({friendlyName: id}, {caseInsensitive: true});
           if(obj == null){
-            obj = that.collection.findWhere({friendlyName: cell.get('attrs').id}, {caseInsensitive: true});
+            obj = that.collection.findWhere({friendlyName: id}, {caseInsensitive: true});
           }
-          cell.unset(that.pKey);
-          var key = that.pKey+"#"+object.get("friendlyName");
-          window.tildaCache[key] = cell.toJSON();
-          object.set({graphId: null, rendered: false});
-          var key = that.pKey+"#"+object.get("friendlyName");
-          var objFn = renderObject[object.get("_type")];
-
+          cell.unset('hidden');
+          obj.set({graphId: null, rendered: false});
+          if(x <= $('#robj').width() && y > 0)
+          {
+            y = y - 60;
+          }
+          else
+          {
+            x = x - 200;
+          }
+          var objFn = renderObject[obj.get("_type")];
           if ( objFn != null){
-            console.log("Graph ID "+object.get("graphId") )
             var position = gotoNextPosition(currentPos);
             var objectAttr = window.tildaCache[key];
-            var t = objFn(graph, object, position, objectAttr, that.pKey, elementChangeHandler);
-            objectAttr.id = t.id;
-            t.set(objectAttr);
-            var key = object.get("_type");
+            var t = objFn(graph, obj, position, objectAttr, that.pKey, elementChangeHandler);
+            var key = obj.get("_type");
             var objFn = renderObjectRelations[key]
             if(objFn != null){
-              objFn(graph, object, that.pKey);
+              objFn(graph, obj, that.pKey);
             }
             renderAllLinks();
           }
@@ -204,8 +215,6 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
       });
 
 
-      var x = 0;
-      var y = 20;
       _.each(this.objects, function(object, i){
         var object = that.objects.at(i);
         var object_1 = that.objects.at(i).clone();
@@ -222,12 +231,14 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
           var object = that.objects.at(i);
           var key = object.get("_type");
           var objFn = renderObjectRelations[key]
-          if(objFn != null){
+          if(objFn != null && object.get('hidden') != true ){
             objFn(graph, object, that.pKey);
           }
-        })        
+        })
       }
       renderAllLinks();
+      paper_1.scale(that.currentScale);
+      paper.scale(that.currentScale);
     }
     try{
       this.render();

@@ -25,21 +25,21 @@
             <button class="newCanvas form-control">New ?</button>
           </label>
           <label class="radio-inline hidden">
-            <button class="renameCanvas form-control">Rename ?</button>
-          </label>
-          <label class="radio-inline hidden">
-            <button class="deleteCanvas form-control">Delete ?</button>
+            <button class="renameCanvas form-control">Update ?</button>
           </label>
         </span>
       </form>
     </div>
   </div>
-  <div class="fName" style="padding: 10px"></div>
-
-  <div class="objects row">
-    <div id="obj_c" class="obj col-md-9"> </div>
-    <div class="col-md-3 rendered_objects" style="border-left: 1px solid black;z-index: 1000">
-      <div id='robj'></div>
+  <div class="fName" style="padding: 5px"></div>
+  <div class="row">
+    <div class="col-md-12 rendered_objects" style="border: 1px solid gray;border-left: none;border-right: none;">
+      <div id='robj' style="height: 15vh;width: 100%;overflow: auto"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 objects">
+      <div id="obj_c" class="obj" style="height: 75vh;overflow: auto"> </div>
     </div>
   </div>
 </div>
@@ -83,6 +83,9 @@
             <label for="name">Name</label>
             <input type="text" id="canvas_name" class="form-control" placeholder="Canvas title">
             <input type="hidden" id="new_canvas" value="1"/>
+          </div>
+          <div class="form-group">
+            <button class="deleteCanvas btn btn-default btn-danger form-control">Delete ?</button>
           </div>
         </form>
       </div>

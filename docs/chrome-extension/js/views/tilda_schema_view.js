@@ -5,9 +5,12 @@ define(['text!../templates/tilda_schema/_new.html',
     console.log(error.message);
     console.log(error.stack);
   }
+  Array.prototype.diff = function(a) {
+      return this.filter(function(i) {return a.indexOf(i) < 0;});
+  };
   window.renderedCache = {};
   var svgHTML = {}
-  var defaultCanvases = [{name: "object", title: "Tables Graph", package: null, viewOnly: false}, {name: "view", title: "Views Graph", package: null, viewOnly: true}];
+  var defaultCanvases = [{name: "object", title: "Tables Graph", package: null, viewOnly: false, scale: 1}, {name: "view", title: "Views Graph", package: null, viewOnly: true, scale: 1}];
   svgHTML["object"] = { name: "Tables Graph", svg: null };
   svgHTML["view"] = { name: "Views Graph", svg: null };
   var olderViewName = null;
@@ -25,9 +28,11 @@ define(['text!../templates/tilda_schema/_new.html',
       if(value != null)
       {
         value.package = package;
-        var p = new _Parser(fName, "obj_c", {viewOnly: value.viewOnly, package: value.package, name: value.name});
+        var p = new _Parser(fName, "obj_c", {viewOnly: value.viewOnly, package: value.package, name: value.name, scale: value.scale});
         svgHTML[value.name] = svgHTML[value.name] || {};
         svgHTML[value.name]["svg"] = p.paper.$el.find("svg")[0].parentElement.innerHTML;
+        svgHTML[value.name]["name"] = value.name;
+        $("#obj_c").html('');
       }
     })
   }
@@ -72,6 +77,7 @@ define(['text!../templates/tilda_schema/_new.html',
         $('#filterD').modal('show');
       },
       'click .newCanvas': function(){
+        $('.deleteCanvas').hide();
         $('#createCanvasD').modal('show');
       }
     },
@@ -79,7 +85,7 @@ define(['text!../templates/tilda_schema/_new.html',
     {
       var $select = $('select.add-view-holder');
       var selectValue = $select.val();
-      $("#canvas_name").val(102);
+      $("#new_canvas").val(102);
       var canvasConfig = tildaCache.canvases.filter(function(canvas)
       {
         return canvas!= null && canvas.name == selectValue;
@@ -87,12 +93,28 @@ define(['text!../templates/tilda_schema/_new.html',
       tildaCache.canvases = tildaCache.canvases.filter(function(canvas)
       {
         return canvas != null;
-      })[0];
+      });
+      $("#canvas_name").data('oldValue', selectValue);
       $('#canvas_name').val(selectValue);
+      $('.deleteCanvas').html('Delete ?');
+      $('.deleteCanvas').data('confirmed', false);
       $('#createCanvasD').modal('show');
+      return false;
     },
     deleteCanvas: function()
     {
+      var $target = $(event.target);
+      if($target.data('confirmed') == null || $target.data('confirmed') == false)
+      {
+        $target.html('Confirmation: Are you sure to delete ?');
+        $target.data('confirmed', true);
+        $target.attr('disabled', 'disabled');
+        setTimeout(function()
+        {
+          $target.removeAttr('disabled');
+        }, 1000);
+        return false;
+      }
       var $select = $('select.add-view-holder');
       var selectValue = $select.val();
       var canvasConfig = tildaCache.canvases.filter(function(canvas)
@@ -104,13 +126,23 @@ define(['text!../templates/tilda_schema/_new.html',
         return canvas != null;
       });
       var index = tildaCache.canvases.indexOf(canvasConfig);
+      delete svgHTML[name];
       delete tildaCache.canvases[index];
       $select.find('option[value="'+selectValue+'"]').remove();
+      $("#canvas_name").val('');
+      $("#new_canvas").val(1);
+      $('select.add-view-holder').trigger('change');
+      $('#createCanvasD').modal('hide');
+      $target.data('confirmed', false);
+      $target.html('Delete ?');
+      return false;
     },
     createCanvas: function(event)
     {
       var currentOpts = this.schemaParser_object.opts;
+      var $select = $("select.add-view-holder");
       var name = $("#canvas_name").val();
+      var oldName = $("#canvas_name").data('oldValue');
       var new_canvas = parseInt($("#new_canvas").val());
       if(name == "object" || name == "view")
       {
@@ -121,31 +153,37 @@ define(['text!../templates/tilda_schema/_new.html',
       {
         var canvasConfig = tildaCache.canvases.filter(function(canvas)
         {
-          return canvas!= null && canvas.name == name;
+          return canvas!= null && canvas.name == oldName;
         })[0];
         tildaCache.canvases = tildaCache.canvases.filter(function(canvas)
         {
           return canvas != null;
         });
-
-        var index = tildaCache.canvases.indexOf(canvasConfig);
-        delete tildaCache.canvases[index];
-        $select.find('option[value="'+selectValue+'"]').remove();
+        canvasConfig.name = name;
+        $select.find('option[value="'+oldName+'"]').remove();
+        t = svgHTML[oldName]
+        svgHTML[name] = t;
+        delete svgHTML[oldName];
       }
-
-      window.tildaCache.canvases.push({
-        name: name,
-        package: currentOpts.package,
-        viewOnly: currentOpts.viewOnly || false
-      })
-
-      $("select.add-view-holder").append("<option value='"+name+"'>"+name+"</option>");
-      $("select.add-view-holder").val(name);        
-      $(".showObj").val(name);
+      else
+      {
+        svgHTML[name] = { name: name, svg: null };
+        window.tildaCache.canvases.push({
+          name: name,
+          package: currentOpts.package,
+          viewOnly: (currentOpts.viewOnly || false),
+          scale: currentOpts.scale
+        })
+      }
+      $select.append("<option value='"+name+"'>"+name+"</option>");
+      $select.val(name);        
+      // $(".showObj").val(name);
       $('#createCanvasD').modal('hide');      
       $("#canvas_name").val('');
       $("#new_canvas").val(1);
+      olderViewName = name;
       $('select.add-view-holder').trigger('change');
+      return false;
     },
     saveRegex: function(event){
       var value = $('.regex-f').val();
@@ -166,26 +204,25 @@ define(['text!../templates/tilda_schema/_new.html',
         that.packageInfo = pkgInfo;
         that.initCache(objectEntries.cacheEntry).then(function(cache){
           window.tildaCache = cache;
-          var t= {};
           $("select.add-view-holder").html('');
+          $("select.add-view-holder").append("<option value=''>--- select a canvas ---</option>");
           $.each(tildaCache.canvases, function(key, v)
           {
-            if(v != null && t[v.name] == null)
+            if(v != null)
             {
-              t[v.name] = v.name;
               $("select.add-view-holder").append("<option value='"+v.name+"'>"+v.name+"</option>");
             }
           })
 
-          var schemaFname = "_tilda."+pkgInfo.schema.name+".json";
+          var schemaFname = fName;
           that.$el.find(".fName").html("<h4>loaded <i>"+schemaFname+"</i></h4>")
           that.$el.find("#obj_c").html("");
           var reader = new FileReader();
           reader.onload = function(e) {
             var schema = JSON.parse(e.target.result);
-            olderViewName = "object";
             populateSVGHTML(tildaCache.canvases, schemaFname, schema.package);
-            that.schemaParser_object = new _Parser(schemaFname, "obj_c", {viewOnly: false, package: schema.package, name: "object"});
+            that.$el.find("#obj_c").html("");
+            $("#robj").html('');
           }
           schemaEntry.file(function(schemaEntryF){
             reader.readAsText(schemaEntryF);
@@ -210,18 +247,37 @@ define(['text!../templates/tilda_schema/_new.html',
 
     },
     togglePapers: function(event){
+      var that = this;
+      var currentScale = 1
+      if(that.schemaParser_object != null)
+      {
+        currentScale = that.schemaParser_object.currentScale;
+      }
       var schemaFname = $('select.schemas').val();
       var selectValue = $(event.target).val();
-      window.renderedCache = {};
-      $('.renameCanvas').parent().addClass('hidden');
-      $('.deleteCanvas').parent().addClass('hidden');
-      if(selectValue != 'object' || selectValue != 'view')
+      console.log("selectValue -> "+selectValue);
+      if(schemaFname == null || selectValue == null || schemaFname.length == 0 || selectValue.length == 0)
       {
-        $('.renameCanvas').parent().removeClass('hidden');
-        $('.deleteCanvas').parent().removeClass('hidden');
+        this.$el.find("#obj_c").html("");
+        return false;
       }
-      var that = this;
-      svgHTML[olderViewName]["svg"] = this.$el.find("#obj_c").find("svg")[0].parentElement.innerHTML;
+      $('.renameCanvas').parent().removeClass('hidden');
+      if(selectValue == 'object' || selectValue == 'view')
+      {
+        $('.renameCanvas').parent().addClass('hidden');
+      }
+      if(olderViewName != null)
+      {
+        if(svgHTML[olderViewName] == null)
+        {
+          console.error("Cannot find "+olderViewName+" in svgHTML");
+        }
+        else
+        {
+          delete svgHTML[olderViewName]["svg"];
+          svgHTML[olderViewName]["svg"] = this.$el.find("#obj_c").html();
+        }
+      }
       var schemaEntry = this.schemaEntries[schemaFname];
       var reader = new FileReader();
       this.$el.find("#obj_c").html("");
@@ -231,7 +287,8 @@ define(['text!../templates/tilda_schema/_new.html',
         {
           return canvas!= null && canvas.name == selectValue;
         })[0]
-        that.schemaParser_object = new _Parser(schemaFname, "obj_c", {viewOnly: canvasConfig.viewOnly, package: canvasConfig.package, name: canvasConfig.name});
+        canvasConfig.scale = currentScale;
+        that.schemaParser_object = new _Parser(schemaFname, "obj_c", {viewOnly: canvasConfig.viewOnly, package: canvasConfig.package, name: canvasConfig.name, scale: canvasConfig.scale});
       }
       olderViewName = selectValue;
       schemaEntry.file(function(schemaEntryF){
@@ -292,8 +349,11 @@ define(['text!../templates/tilda_schema/_new.html',
         console.log(error.stack);
       }
       chrome.fileSystem.chooseEntry({ type: 'openDirectory'},  function(entry) {
-        that.savedEntry = entry;
-        fileInputHandler(that, entry);
+        if(entry != null)
+        {
+          that.savedEntry = entry;
+          fileInputHandler(that, entry);
+        }
       });
       return 0;
     },
@@ -310,6 +370,17 @@ define(['text!../templates/tilda_schema/_new.html',
       // var objSVG = this.schemaParser_object.paper.$el.find("svg")[0];
 
       // var viewSVG = this.schemaParser_view.paper.$el.find("svg")[0];
+      // saving currently opened view
+      var name = $("select.add-view-holder").val();
+      if(svgHTML[name] == null)
+      {
+        console.error("Cannot find "+name+" in svgHTML");
+      }
+      else
+      {
+        delete svgHTML[name]["svg"];
+        svgHTML[name]["svg"] = this.$el.find("#obj_c").html();
+      }
 
       var that = this;
       var fileName = "_tilda."+this.packageInfo.schema.name.toUpperCase()+".html";
@@ -346,19 +417,20 @@ define(['text!../templates/tilda_schema/_new.html',
                 }\n\
               </script>";
             var blobArr = ["<style>"+css+"</style>"];
-
+            blobArr.push("<div class='container'>"); 
             $.each(svgHTML, function(key, value){
               blobArr.push("<fieldset><legend>"+value.name+"</legend>");
-              blobArr.push("<div class='container'>");
               blobArr.push(value.svg);
-              blobArr.push("\n</div>\n");
-              blobArr.push("<br/>\n");
-              blobArr.push("<br/>\n");
-              blobArr.push("<br/>\n");
               blobArr.push("</fieldset>");
+              blobArr.push("<br/>\n");
+              blobArr.push("<br/>\n");
             });
-            var blob = new Blob(blobArr, {type: "image/svg"});
+            blobArr.push("\n</div>\n");
+            blobArr.push(script);
+            var blob = new Blob(blobArr);
             fileWriter.onwriteend = function(e) {
+              this.truncate(blob.size);
+              fileWriter.onwriteend = null; // stop looping
               console.log('Export to '+fileDisplayPath+' completed');
             };
             fileWriter.onerror = function(e) {
@@ -372,9 +444,12 @@ define(['text!../templates/tilda_schema/_new.html',
     writeUserPrefs: function(entry, event){
       var fileName = "_tilda."+this.packageInfo.schema.name+".graphInfo.json";
       entry.getFile(fileName, {create: true}, function(fileEntry){
+        var truncated = false;
         fileEntry.createWriter(function(fileWriter) {
           var blob = new Blob([JSON.stringify(window.tildaCache,null,2)]);
           fileWriter.onwriteend = function(e) {
+            this.truncate(blob.size);
+            fileWriter.onwriteend = null; // stop looping
             console.log('Export to '+fileDisplayPath+' completed');
           };
           fileWriter.onerror = function(e) {
