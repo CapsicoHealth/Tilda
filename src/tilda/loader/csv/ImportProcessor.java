@@ -41,56 +41,56 @@ public class ImportProcessor
     /*
      * Launch and Shutdown threads
      */
-    public static long parallelProcess(List<String> connectionIds, String rootFolder, int threadsCount, List<DataObject> CMSDataList)
+    public static long parallelProcess(List<String> connectionIds, int threadsCount, List<DataObject> CMSDataList, String statusConId, long jobFileRefnum)
       {
-        ExecutorService pool = Executors.newFixedThreadPool(threadsCount);
-        List<Future<List<Results>>> futures = new ArrayList<>();
+          ExecutorService pool = Executors.newFixedThreadPool(threadsCount);
+          List<Future<List<Results>>> futures = new ArrayList<>();
+          
+          List<Results> Results = new ArrayList<Results>();
+          for (DataObject Data : CMSDataList)
+            {
+              validate(Data);
+              for(String connectionId : connectionIds)
+                {
+                  Callable<List<Results>> thread = new ImporterThread(connectionId, Data, statusConId, jobFileRefnum);
+                  Future<List<Results>> future =  pool.submit(thread);
+                  futures.add(future);
+                }
+            }
+          
+          Iterator<Future<List<Results>>> iterator = futures.iterator(); 
+          while(iterator.hasNext())
+            {
+              Future<List<Results>> future = iterator.next();
+              List<Results> Res;
+              try
+                {
+                  Res = future.get();
+                }
+              catch (InterruptedException | ExecutionException e)
+                {
+                  LOG.error("Exception in one of the ImporterThread's..", e);
+                  Res = null;
+                }
+              if (Res == null)
+                break;
+              Results.addAll(Res);
+            }
+          
+          pool.shutdownNow();
 
-        List<Results> Results = new ArrayList<Results>();
-        for (DataObject Data : CMSDataList)
-          {
-            validate(Data);
-            for (String connectionId : connectionIds)
-              {
-                Callable<List<Results>> thread = new ImporterThread(connectionId, rootFolder, Data);
-                Future<List<Results>> future = pool.submit(thread);
-                futures.add(future);
-              }
-          }
-
-        Iterator<Future<List<Results>>> iterator = futures.iterator();
-        while (iterator.hasNext())
-          {
-            Future<List<Results>> future = iterator.next();
-            List<Results> Res;
-            try
-              {
-                Res = future.get();
-              }
-            catch (InterruptedException | ExecutionException e)
-              {
-                LOG.error("Exception in one of the ImporterThread's..", e);
-                Res = null;
-              }
-            if (Res == null)
-              break;
-            Results.addAll(Res);
-          }
-
-        pool.shutdownNow();
-
-        long totalCount = 0;
-        long totalNano = 0;
-        for (Results R : Results)
-          {
-            totalCount += R._RecordsCount;
-            totalNano += R._TimeNano;
-            LOG.debug("Processed file " + R._FileName + " into table " + R._TableName + " with " + NumberFormatUtil.PrintWith000Sep(R._RecordsCount) + " records in CPU-Time of " + DurationUtil.PrintDuration(R._TimeNano) +
-            " (" + DurationUtil.PrintPerformancePerMinute(R._TimeNano, R._RecordsCount) + " Records/min)");
-          }
-        LOG.debug("--------------------------------------------------------------------------------------------------------------");
-        LOG.debug("In total, processed " + NumberFormatUtil.PrintWith000Sep(totalCount) + " records in CPU-Time of " + DurationUtil.PrintDuration(totalNano) + " (" + DurationUtil.PrintPerformancePerMinute(totalNano, totalCount) + " Records/min)");
-        return totalCount;
+          long totalCount = 0;
+          long totalNano = 0;
+          for (Results R : Results)
+            {
+              totalCount += R._RecordsCount;
+              totalNano += R._TimeNano;
+              LOG.debug("Processed file " + R._FileName + " into table " + R._TableName + " with " + NumberFormatUtil.PrintWith000Sep(R._RecordsCount) + " records in CPU-Time of " + DurationUtil.PrintDuration(R._TimeNano) +
+              " (" + DurationUtil.PrintPerformancePerMinute(R._TimeNano, R._RecordsCount) + " Records/min)");
+            }
+          LOG.debug("--------------------------------------------------------------------------------------------------------------");
+          LOG.debug("In total, processed " + NumberFormatUtil.PrintWith000Sep(totalCount) + " records in CPU-Time of " + DurationUtil.PrintDuration(totalNano) + " (" + DurationUtil.PrintPerformancePerMinute(totalNano, totalCount) + " Records/min)");
+          return totalCount;
       }
 
 
@@ -98,8 +98,10 @@ public class ImportProcessor
       {
         try
           {
+            LOG.debug("Truncating table: "+SchemaName+"."+TableName);
             C.truncateTable(SchemaName, TableName, Cascade);
             C.commit();
+            LOG.debug("Table truncated successfully");
           }
         catch (Exception e)
           {

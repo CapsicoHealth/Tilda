@@ -61,44 +61,60 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("package " + O._ParentSchema._Package + "." + Helper.TILDA_GEN_PACKAGE + ";");
         Out.println();
         boolean needTime = false;
-//        if (O._LC != ObjectLifecycle.READONLY)
-         for (Column C : O._Columns)
-          if (C != null && (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATE))
+        // Check any not null column, which would show up in the Create method.
+        for (Column C : O._Columns)
+          if (C != null && (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATE) && C._Nullable == false)
             {
               needTime = true;
               break;
             }
+        // Check Indices for Lookup methods
+        if (needTime == false)
+          for (Index I : O._Indices)
+            if (I != null)
+              {
+                for (Column C : I._ColumnObjs)
+                    if (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATE)
+                      {
+                        needTime = true;
+                        break;
+                      }
+                if (needTime == true)
+                  break;
+              }
+        // Check query-based lookups methods
         if (needTime == false)
           for (SubWhereClause SWC : O._Queries)
-           if (SWC !=null && SWC._Attributes != null)
-             {
-               Iterator<Query.Attribute> I = SWC._Attributes.iterator();
-               while (I.hasNext() == true)
-                 {
-                   if (I.next()._Col.getType() == ColumnType.DATETIME)
-                     {
-                       needTime = true;
-                       break;
-                     }
-                 }
+            if (SWC != null && SWC._Attributes != null)
+              {
+                Iterator<Query.Attribute> I = SWC._Attributes.iterator();
+                while (I.hasNext() == true)
+                  {
+                    Column C = I.next()._Col;
+                    if (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATE)
+                      {
+                        needTime = true;
+                        break;
+                      }
+                  }
                 if (needTime == true)
-                 break;
-             }
+                  break;
+              }
         if (needTime == true)
-         Out.println("import java.time.*;");          
+          Out.println("import java.time.*;");
         for (Column C : O._Columns)
-         if (C != null && C.isCollection() == true || O._LC != ObjectLifecycle.READONLY)
-           {
-             Out.println("import java.util.*;");
-             break;
-           }
+          if (C != null && C.isCollection() == true || O._LC != ObjectLifecycle.READONLY)
+            {
+              Out.println("import java.util.*;");
+              break;
+            }
         Out.println();
         Out.println("import tilda.db.*;");
         Out.println("import tilda.enums.*;");
         Out.println("import tilda.types.*;");
         Out.println("import tilda.utils.*;");
         if (O._LC != ObjectLifecycle.READONLY)
-         Out.println("import tilda.utils.pairs.*;");
+          Out.println("import tilda.utils.pairs.*;");
         Out.println();
         Out.println("import org.apache.logging.log4j.LogManager;");
         Out.println("import org.apache.logging.log4j.Logger;");
@@ -110,7 +126,7 @@ public class TildaFactory implements CodeGenTildaFactory
     public void genClassStart(PrintWriter Out, GeneratorSession G, Object O)
     throws Exception
       {
-//        Out.println("@SuppressWarnings({ \"unused\" })");
+        Out.println("@SuppressWarnings({ \"unused\" })");
         Out.println("public class " + O._BaseClassName + "_Factory");
         Out.println(" {");
         Out.println("   protected static final Logger LOG = LogManager.getLogger(" + O._BaseClassName + "_Factory.class.getName());");
@@ -139,7 +155,7 @@ public class TildaFactory implements CodeGenTildaFactory
               // String ColVarOthers = TextUtil.EscapeDoubleQuoteWithSlash(G.getSql().getShortColumnVar(C), "", false);
               String ColumnTypeClassName = "Type_" + TextUtil.NormalCapitalization(C.getType().name()) + (C.isCollection() ? "Collection" : "Primitive") + (C._Nullable == true ? "Null" : "");
               G.getGenDocs().docField(Out, G, C, "column definition");
-              Out.println("     public static " + ColumnTypeClassName + TypePad + " " + C.getName().toUpperCase() + ColumnPad + "= new " + ColumnTypeClassName + TypePad + "(SCHEMA_LABEL, TABLENAME_LABEL, \"" + C.getName() + "\"" + ColumnPad + ", " + (++Counter) + "/*"+C.getSequenceOrder()+"*/, " + TextUtil.EscapeDoubleQuoteWithSlash(C._Description) + ");");
+              Out.println("     public static " + ColumnTypeClassName + TypePad + " " + C.getName().toUpperCase() + ColumnPad + "= new " + ColumnTypeClassName + TypePad + "(SCHEMA_LABEL, TABLENAME_LABEL, \"" + C.getName() + "\"" + ColumnPad + ", " + (++Counter) + "/*" + C.getSequenceOrder() + "*/, " + TextUtil.EscapeDoubleQuoteWithSlash(C._Description) + ");");
             }
         Out.println(";");
         Out.println("   }");
@@ -210,13 +226,13 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("       QueryDetails.setLastQuery(SCHEMA_TABLENAME_LABEL, Q);");
         Out.println("       QueryDetails.logQuery(\"" + O.getShortName() + "\", Q, null);");
         Out.println("       java.sql.PreparedStatement PS=null;");
-//        Out.println("       java.sql.ResultSet RS=null;");
+        // Out.println(" java.sql.ResultSet RS=null;");
         for (Column C : O._Columns)
-         if (C != null && C.isCollection() == true)
-           {
-             Out.println("       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();");
-             break;
-           }
+          if (C != null && C.isCollection() == true)
+            {
+              Out.println("       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();");
+              break;
+            }
         Out.println("       int count = 0;");
         Out.println("       try");
         Out.println("        {");
@@ -303,19 +319,19 @@ public class TildaFactory implements CodeGenTildaFactory
                 continue;
               String Pad = C._ParentObject.getColumnPad(C.getName());
               Out.print("       " + (C.isCollection() == true && C._JsonSchema == null ? JavaJDBCType.getFieldType(C) : JavaJDBCType.getFieldTypeBaseClass(C) + "      ")
-                          + "  _" + C.getName() + Pad
-                          + " = " + (C.isList() == true && C._JsonSchema == null ? "CollectionUtil.toList("
-                                   : C.isSet() == true && C._JsonSchema == null ? "CollectionUtil.toSet ("
-                                   : "                      ")
-                          + "ParseUtil.parse" + JavaJDBCType.getFieldTypeBaseClass(C)
-                          + "(" + TextUtil.EscapeDoubleQuoteWithSlash(C.getName()) + Pad
-                          + ", " + (C._Nullable == true ? "false" : "true ")
-                          + ", Values.get(" + TextUtil.EscapeDoubleQuoteWithSlash(C.getName()) + Pad + ")");
+              + "  _" + C.getName() + Pad
+              + " = " + (C.isList() == true && C._JsonSchema == null ? "CollectionUtil.toList("
+              : C.isSet() == true && C._JsonSchema == null ? "CollectionUtil.toSet ("
+              : "                      ")
+              + "ParseUtil.parse" + JavaJDBCType.getFieldTypeBaseClass(C)
+              + "(" + TextUtil.EscapeDoubleQuoteWithSlash(C.getName()) + Pad
+              + ", " + (C._Nullable == true ? "false" : "true ")
+              + ", Values.get(" + TextUtil.EscapeDoubleQuoteWithSlash(C.getName()) + Pad + ")");
               if (C.isCollection() == true && C._JsonSchema == null)
                 Out.print(", " + TextUtil.EscapeDoubleQuoteWithSlash(SystemValues.DEFAULT_SEPARATOR1_BACKQUOTES));
               Out.println(", Errors"
-                        + (C.isCollection() == true && C._JsonSchema == null ? ")" : " ")
-                        + ");");
+              + (C.isCollection() == true && C._JsonSchema == null ? ")" : " ")
+              + ");");
             }
         Out.println();
         Out.println("       if (IncomingErrors != Errors.size())");

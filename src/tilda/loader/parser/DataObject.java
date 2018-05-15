@@ -16,11 +16,12 @@
 
 package tilda.loader.parser;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,6 +36,11 @@ public class DataObject
   {
     protected static final Logger LOG               = LogManager.getLogger(DataObject.class);
 
+    public static enum MODE
+      {
+        INSERT, UPSERT, TRUNCATE_INSERT, TRUNCATE_CASCADE_INSERT;
+      }
+    
     /*@formatter:off*/
     @SerializedName("filepath"       )      public List<String>       _FileList = new ArrayList<String>();
     @SerializedName("schemaName"     )      public String             _SchemaName;
@@ -50,22 +56,22 @@ public class DataObject
     @SerializedName("mode"           )      public String             _mode = null;
     /*@formatter:on*/
 
-    transient boolean         _Upserts;
-    transient boolean         _Inserts;
-    transient boolean         _TruncateFirst;
+    transient boolean _Upserts;
+    transient boolean _Inserts;
+    transient boolean _TruncateFirst;
     transient boolean         _TruncateCascade;
-
-    public boolean validate(Connection C, List<String> errorMessages)
-    throws Exception
-      {
-        SchemaMeta sMeta = new SchemaMeta(_SchemaName);
-        sMeta.load(C, _TableName);
-        TableMeta tableMeta = sMeta.getTableMeta(_TableName);
-        if (tableMeta == null)
-          {
-            errorMessages.add("Table " + getTableFullName() + " cannot be found. ");
-            return false;
-          }
+    transient String  _ZipFilePath      = null;
+    
+    public boolean validate(Connection C, String rootFolder, List<String> errorMessages) throws Exception
+     {
+       SchemaMeta sMeta = new SchemaMeta(_SchemaName);
+       sMeta.load(C, _TableName);
+       TableMeta tableMeta = sMeta.getTableMeta(_TableName);
+       if (tableMeta == null)
+         {
+           errorMessages.add("Table " + getTableFullName() + " cannot be found. ");
+           return false;
+         }
         for (ColumnHeader CH : _ColumnHeaderList)
           if (CH != null)
             CH.validate();
@@ -183,6 +189,45 @@ public class DataObject
     public String getTableFullName()
       {
         return this._SchemaName + "." + this._TableName;
+      }
+
+    public void setInsertMode()
+      {
+        this._mode = MODE.INSERT.toString();
+      }
+    
+    public void setUpsertMode()
+      {
+        this._mode = MODE.UPSERT.toString();
+      }
+    
+    public void setFilePath(String filePath)
+      {
+        if (this._FileList == null)
+          this._FileList = new ArrayList<String>();        
+        this._FileList.clear();
+        this._FileList.add(filePath);
+      }
+    
+    public boolean isShouldTruncate()
+      {
+        return this._TruncateFirst;
+      }
+    
+    public void setShouldTruncate()
+      {
+        if (isInserts() != isUpserts() && isInserts())
+          this._TruncateFirst = true;
+      }
+    
+    public void setZipFilePath(String value)
+      {
+        this._ZipFilePath = value;
+      }
+    
+    public String getZipFilePath()
+      {
+        return this._ZipFilePath;
       }
 
   }

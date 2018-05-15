@@ -9,12 +9,14 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.csv.CSVRecord;
 
+import tilda.data.JobFile_Data;
+import tilda.data.JobMessage_Data;
+import tilda.data.JobMessage_Factory;
 import tilda.data.ZoneInfo_Factory;
 import tilda.db.Connection;
 import tilda.db.MasterFactory;
@@ -25,7 +27,6 @@ import tilda.enums.ColumnType;
 import tilda.loader.GenericLoader;
 import tilda.loader.parser.ColumnHeader;
 import tilda.loader.parser.DataObject;
-import tilda.types.ColumnDefinition;
 import tilda.utils.DateTimeUtil;
 import tilda.utils.DurationUtil;
 import tilda.utils.NumberFormatUtil;
@@ -35,13 +36,12 @@ import tilda.utils.TextUtil;
 
 public class PostgreSQLCSVImporter extends CSVImporter
   {
-
-
-    public PostgreSQLCSVImporter(Connection C, String rootFolder, DataObject cmsDO)
+    public PostgreSQLCSVImporter(Connection C, DataObject cmsDO, Connection status, JobFile_Data jobFile)
       {
         this.C = C;
-        this.rootFolder = rootFolder;
         this.cmsDO = cmsDO;
+        this.statusConnection = status;
+        this.jobFile = jobFile;
       }
 
     @Override
@@ -52,12 +52,12 @@ public class PostgreSQLCSVImporter extends CSVImporter
       {
         TableMeta TM = new TableMeta(schemaName, tableName, "");
         TM.load(C);
-        Map<String, ColumnMeta> ColumnsMap = TM._Columns;
+        Map<String, ColumnMeta> ColumnsMap = TM.getColumnMetaMap();
         PreparedStatement Pst = C.prepareStatement(Str.toString());
         List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
         long NumOfRecs = 0;
         int batchCount = 0;
-  
+        
         CSVRecord currentRecord = null;
         String col = null;
         String colVal = null;
@@ -72,7 +72,13 @@ public class PostgreSQLCSVImporter extends CSVImporter
                   continue;
                 if (record.isConsistent() == false)
                   {
-                    LOG.error("Inconsistent values coming through this record" + (NumOfRecs + 1));
+                    String jobMessageLog = "Inconsistent values coming through this record" + (NumOfRecs + 1);
+                    LOG.debug(jobMessageLog);
+                    if(statusConnection != null && jobFile != null)
+                      {
+                        JobMessage_Data jobMessage = JobMessage_Factory.Create(jobFile.getJobRefnum(), jobFile.getRefnum(), jobMessageLog); 
+                        jobMessage.Write(statusConnection);
+                      }
                     continue;
                   }
   
@@ -354,7 +360,20 @@ public class PostgreSQLCSVImporter extends CSVImporter
                   {
                     C.commit();
                     long t = System.nanoTime() - t0;
-                    LOG.debug("Processed " + NumberFormatUtil.PrintWith000Sep(NumOfRecs) + " records so far in " + DurationUtil.PrintDuration(t) + " (" + DurationUtil.PrintPerformancePerMinute(t, NumOfRecs) + " Records/min)");
+                    String jobMessageLog = "Processed " + NumberFormatUtil.PrintWith000Sep(NumOfRecs) + " records so far in " + DurationUtil.PrintDuration(t) + " (" + DurationUtil.PrintPerformancePerMinute(t, NumOfRecs) + " Records/min)"; 
+                    
+                    LOG.debug(jobMessageLog);
+                    if (statusConnection != null && jobFile != null)
+                      { 
+                        // Update jobFile fileRecords
+                        jobFile.setFileRecords(jobFile.getFileRecords() + NumOfRecs);
+                        jobFile.Write(statusConnection);
+
+                        // set JobMessage
+                        JobMessage_Data jobMessage = JobMessage_Factory.Create(jobFile.getJobRefnum(), jobFile.getRefnum(), jobMessageLog);
+                        jobMessage.Write(statusConnection);
+                        statusConnection.commit();
+                      }                    
                   }
                 HandleFinally(AllocatedArrays);
               }
@@ -389,6 +408,8 @@ public class PostgreSQLCSVImporter extends CSVImporter
             HandleFinally(AllocatedArrays);
           }
         C.commit();
+        if(statusConnection != null)
+          statusConnection.commit();
         Pst.close();
         return NumOfRecs;
       }

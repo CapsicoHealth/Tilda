@@ -54,9 +54,10 @@ public class DBTest
           {
             C = ConnectionPool.get("MAIN");
             //Test1(C);
-            Test2(C);
-            Test3(C);
-            Test4(C);
+            //Test2(C);
+            //Test3(C);
+            //Test4(C);
+            Test5(C);
           }
         catch (Exception E)
           {
@@ -74,6 +75,43 @@ public class DBTest
                 {
                 }
           }
+      }
+
+    private static void Test5(Connection C)
+    throws Exception
+      {
+        List<Long> L = new ArrayList<Long>();
+        L.add((long)1); // Yeah, could have written 1l, but just spent 5mn of my life looking at this and thinking it was "11".
+        L.add((long)10);
+        L.add((long)100);
+        Testing_Data D = Testing_Factory.Create(L, "Blah");
+        if (D.Write(C) == false)
+          throw new Exception("Bad stuff!");
+        
+        List<Character> Lc = new ArrayList<Character>();
+        Lc.add('A');
+        Lc.add('B');
+        D.setA2b(Lc);
+        
+        List<Boolean> Lb = new ArrayList<Boolean>();
+        Lb.add(true);
+        Lb.add(true);
+        Lb.add(false);
+        D.setA3b(Lb);
+                
+        D.setA1(777);
+        D.setA2('G');
+        D.setDesc2("blah blah blah blah blah blah blah");
+
+        if (D.Write(C) == false)
+         throw new Exception("Bad stuff!");
+
+        D.setNullA1();
+        D.setNullA2();
+        if (D.Write(C) == false)
+          throw new Exception("Bad stuff!");
+        
+        C.commit();
       }
 
     private static void Test4(Connection C)

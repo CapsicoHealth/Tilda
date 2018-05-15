@@ -1,7 +1,6 @@
 
 package tilda.data._Tilda;
 
-import java.io.*;
 import java.time.*;
 import java.util.*;
 
@@ -16,6 +15,7 @@ import tilda.utils.*;
 import com.google.gson.annotations.SerializedName;
 
 
+@SuppressWarnings({ "unused" })
 public class TILDA__TRANSPERF_Json
  {
    static final Logger             LOG                = LogManager.getLogger(TILDA__TRANSPERF_Json.class.getName());

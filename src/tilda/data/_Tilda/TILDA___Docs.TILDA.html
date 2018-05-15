@@ -3,53 +3,461 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
 <title>Tilda Docs: tilda.data.TILDA</title>
 <STYLE>
-.RowedTable > TBODY > TR > TD {  vertical-align: top;  border: 1px solid black; }
-.RowedTable > TBODY >TR > TD:nth-child(1) {  padding-right: 5px;  text-align: right; }
-.TreeTable {  border: 2px outset #aaa;}
-.TreeTable > TBODY > TR > TD {  vertical-align: top;  border: 0px solid black; }
-.TreeTable > TBODY >TR > TD:nth-child(1) {  padding-right: 5px;  text-align: left; }
-.Rowed TR:nth-child(odd) TD {  border-bottom: 2px #666 solid;  background-color: #f0fdf0;}
-.Rowed TR:nth-child(even) TD {  border-bottom: 2px #666 solid;  background-color:#FFFFFF; }
-.BackToDetails {   display: none; }
-.sticky {   position: fixed;   top: 0;   left: 0;   background: #F09819;   background: -webkit-linear-gradient(to top, #F09819, #FFC837);   background: linear-gradient(to top, #F09819, #FFC837);   color: #000;   width: 100%; }
-.sticky H2 {   margin: 0px;   padding: 0px; }
-.sticky + .content {   padding-top: 90px; }
-.sticky .BackToDetails {   display: inline; }
+
+.dotted_underline { 
+   border-bottom: 1px dotted; 
+ } 
+.modal { 
+   display: none; /* Hidden by default */ 
+   position: fixed; /* Stay in place */ 
+   z-index: 1; /* Sit on top */ 
+   left: 0; 
+   top: 0; 
+   width: 100%; /* Full width */ 
+   height: 100%; /* Full height */ 
+   overflow: auto; /* Enable scroll if needed */ 
+   background-color: rgb(0,0,0); /* Fallback color */ 
+   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */ 
+ } 
+   
+.modal-content { 
+   background-color: #fefefe; 
+   margin: 2% auto; /* 10% from the top and centered */ 
+   padding: 20px; 
+   border: 1px solid #888; 
+   width: 90%; 
+   height: 82%; 
+   overflow: auto; 
+ } 
+   
+.close { 
+   color: #aaa; 
+   float: right; 
+   font-size: 28px; 
+   font-weight: bold; 
+ } 
+.cursor_pointer { 
+   cursor: pointer; 
+ } 
+.close:hover, .close:focus { 
+   color: black; 
+   text-decoration: none; 
+   cursor: pointer; 
+ } 
+
+#search_input {
+   padding:2px;
+   width: 250px;
+   margin-left: 5px;
+   border:2px solid #CCC;
+   -webkit-border-radius: 5px;
+   border-radius: 5px;
+ }
+.search_results { 
+   background-color: #FFF;
+   border: 2px ridge #F09819; 
+   display: none; 
+   height: 200px; 
+   position: absolute;
+   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+   z-index: 1;
+   -webkit-border-radius: 5px;
+   border-radius: 5px;
+   overflow-y: auto; /* Enable scroll if needed */ 
+   overflow-x: hidden;
+ }
+.search_results .scrollLock { 
+   overflow: hidden;
+ }
+.search_results TH {
+   background-color: #FFC837;
+   font-weight: bold;
+   border-bottom: 2px #666 solid;
+   padding: 0px;
+   font-weight: bold;
+ }
+.search_results A {
+   color: #000;
+ }
+.search_results TR:nth-child(odd) TD {
+   background-color: #fff6d6;
+ }
+.search_results TR:nth-child(even) TD {
+   background-color: #FFF;
+ }
+.search_results TR TD {
+   padding-right: 10px;
+ }
+.blink_div { 
+   animation: blink-animation 0.75s steps(5, start) infinite; 
+   color: red; 
+ } 
+@keyframes blink-animation {   
+   to { visibility: hidden; } 
+ } 
+
+input[type=text]:focus {
+   border-color:#DFECF8;
+ } 
+
+.RowedTable > TBODY > TR > TD {
+   vertical-align: top;
+   border: 1px solid black;
+ }
+.RowedTable > TBODY >TR > TD:nth-child(1) {
+   padding-right: 5px;
+   text-align: right;
+ }
+.TreeTable {
+   border: 2px outset #aaa;
+}
+.TreeTable > TBODY > TR > TD {
+   vertical-align: top;
+   border: 0px solid black;
+ }
+.TreeTable > TBODY >TR > TD:nth-child(1) {
+   padding-right: 5px;
+   text-align: left;
+ }
+.Rowed TR:nth-child(odd) TD {
+   border-bottom: 2px #666 solid;
+   background-color: #f0fdf0;
+}
+.Rowed TR:nth-child(even) TD {
+   border-bottom: 2px #666 solid;
+   background-color:#FFFFFF;
+ }
+.BackToDetails {
+   display: none;
+ }
+.sticky {
+   position: fixed;
+   top: 0;
+   left: 0;
+   background: #F09819;
+   background: -webkit-linear-gradient(to top, #F09819, #FFC837);
+   background: linear-gradient(to top, #F09819, #FFC837);
+   color: #000;
+   width: 100%;
+ }
+.sticky H2 {
+   margin: 0px;
+   padding: 0px;
+ }
+.sticky + .content {
+   padding-top: 90px;
+ }
+.sticky .BackToDetails {
+   display: inline;
+ }
 </STYLE>
 <SCRIPT>
-var headers = [];
-function registerStickyHeader(elementId) {
-  var h = document.getElementById(elementId);
-  headers.push([h,h.offsetTop]);
+var onModalCloseClicked = function(modalId)
+{
+  modal = document.getElementById(modalId);
+  modal.style.display = "none";
+  document.documentElement.style.overflow = "auto";
 }
-function checkSticky() {
-for (var i = 0; i < headers.length; ++i)
+
+window.addEventListener("click", function(event)
+{
+  targetId = event.target.getAttribute("id");
+  if (targetId != null && targetId.endsWith("_MODAL"))
+    {
+      onModalCloseClicked(targetId);
+    }
+});
+
+document.onkeydown = function(evt)
+{
+  evt = evt || window.event;
+  var isEscape = false;
+  if ("key" in evt)
+    {
+      isEscape = (evt.key == "Escape" || evt.key == "Esc");
+    }
+  else
+    {
+      isEscape = (evt.keyCode == 27);
+    }
+  if (isEscape)
+    {
+      closeAllModals();
+    }
+};
+
+var closeAllModals = function()
+{
+  var modals = document.getElementsByClassName("modal");
+  for (var i = 0; i < modals.length; i++)
+    {
+      modals[i].style.display = 'none';
+    }
+  document.getElementById('__SEARCH_BOX_RESULTS__').style.display = 'none';
+  document.documentElement.style.overflow = "auto";
+}
+
+var onModalShowClicked = function(id)
+{
+  modal = document.getElementById(id + "_MODAL");
+  modal.style.display = "block";
+  document.documentElement.style.overflow = "hidden";
+}
+
+window.addEventListener('load', function()
+{
+  expand_buttons = document.getElementsByClassName("expand_div");
+  for (var i = 0; i < expand_buttons.length; i++)
+    {
+      expand_buttons[i].addEventListener("click", function(event)
+      {
+        if (event.target.parentElement.getElementsByTagName("div")[0].style.display == "none")
+          {
+            event.target.parentElement.getElementsByTagName("div")[0].style.display = "block"
+            event.target.innerHTML = "&#9660;"
+          }
+        else
+          {
+            event.target.parentElement.getElementsByTagName("div")[0].style.display = "none"
+            event.target.innerHTML = "&#9654;"
+          }
+      }, false);
+    }
+}, false);
+
+var tables = {};
+var columns = {};
+var formulae = {};
+var realizedcolumns = {};
+var realizedformulae = {};
+var searchInput;
+var searchResultsDiv;
+
+window.addEventListener("load", function()
+{
+  tables = getData("tables");
+  columns = getData("columns");
+  formulae = getData("formulae");
+  realizedcolumns = getData("realizedcolumns");
+  realizedformulae = getData("realizedformulae");
+}, false);
+
+var openDiv = function(divId, yOffsetCorrection)
+{
+  freezeSearchResults(true);
+  var e = document.getElementById(divId);
+  window.location = "#" + divId;
+  setTimeout(function()
+  {
+    if (yOffsetCorrection != null)
+     window.scrollBy(0, yOffsetCorrection);
+    freezeSearchResults(false);
+  }, 50);
+}
+
+function showSearchResults(show)
+{
+  document.getElementById('__SEARCH_BOX_RESULTS__').style.display = show ? 'inline' : 'none';
+}
+
+var SearchScrollTop = null;
+function freezeSearchResults(freeze)
+{
+  var e = document.getElementById('__SEARCH_BOX_RESULTS__');
+  if (freeze == true)
+    SearchScrollTop = e.scrollTop;
+  else
+    e.scrollTop = SearchScrollTop;
+}
+
+var eventListener = function()
+{
+  if (searchInput == null || searchInput == undefined)
+    {
+      searchInput = document.getElementById('search_input');
+    }
+  if (searchResultsDiv == null || searchResultsDiv == undefined)
+    {
+      searchResultsDiv = document.getElementById('__SEARCH_BOX_RESULTS__');
+    }
+  var searchInputText = searchInput.value;
+  showSearchResults(searchInputText != null && searchInputText != '');
+
+  var filteredResults = getFilteredResults(searchInputText);
+  filteredResults = sortFilteredResults(filteredResults);
+  // Append Header
+  var tempElementBody = "";
+  if (Object.keys(filteredResults).length > 0)
+    {
+      tempElementBody += "<TR><th align='left'>&nbsp;Table/View</th><th align='left'>Field</th><TH>&nbsp;&nbsp;&nbsp;<A href=\"javascript:showSearchResults(false);\">X</A>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TH></TR>";
+    }
+  else
+    {
+      tempElementBody += "<TR><td colspan=\"2\">No Results Found</td></TR>";
+    }
+  for (key in filteredResults)
+    {
+      value = filteredResults[key];
+      // Add Table/View
+      tempElementBody += "<TR valign=\"top\"><td width=\"1px\">&nbsp;<A href=\"javascript:openDiv('" + key + "_CNT',20)\">" + key
+          + "</A></TD>";
+      // Add Columns/Formulae (if Any)
+      for (var i = 0; i < value.length; i++)
+        {
+          if (i != 0)
+            tempElementBody += "<TR><TD></TD>";
+          tempElementBody += "<TD><A href=\"javascript:openDiv('" + key + "-" + value[i] + "_DIV', -50)\">" + value[i]
+              + "</A></TD><TD>&nbsp;</TD></TR>";
+        }
+    }
+  searchResultsDiv.innerHTML = tempElementBody;
+}
+
+// Helper Methods
+var sortFilteredResults = function(results)
+{
+  var sortedResults = {};
+  Object.keys(results).sort().forEach(function(key)
+  {
+    sortedResults[key] = results[key];
+  });
+  return sortedResults;
+}
+
+var getFilteredData = function(regex, sourceData, destinationData)
+{
+  for (key in sourceData)
+    {
+      var table_name = sourceData[key][0];
+      var column_name = sourceData[key][1];
+      if (regex.test(table_name))
+        {
+          if (destinationData[table_name] == undefined)
+            destinationData[table_name] = [];
+        }
+      if (column_name != undefined && regex.test(column_name))
+        {
+          var existing_columns = destinationData[table_name];
+          if (existing_columns == undefined)
+            existing_columns = [];
+          existing_columns.push(column_name);
+          destinationData[table_name] = existing_columns;
+        }
+    }
+  return destinationData;
+}
+
+function filterTable(tableId)
  {
-   var h = headers[i];
-   var pos = h[0].offsetTop;
-   if (pos != 0)
-    h[1] = pos;
-   if (window.pageYOffset >= h[1]-5)
-    {
-      h[0].classList.add("sticky");
-      var n = document.getElementById('__SEARCH_BOX__');
-      if (n != null && n.parentNode != null && h[0] != null && h[0] != n)
-       {
-          n.classList.remove("sticky");
-          n.parentNode.removeChild(n);          h[0].rows[0].cells[1].appendChild(n);       }
-    }
-   else
-    {
-      h[0].classList.remove("sticky");
-    }
-   if (i == 0 && window.pageYOffset < h[1])
-    {
-      var n = document.getElementById('__SEARCH_BOX__');
-      n.parentNode.removeChild(n);
-      document.getElementById('__SEARCH_BOX_BASE__').appendChild(n);
-    }
+   var e = document.getElementById(tableId);
+   var realizedFilter = document.getElementById(tableId+"_R");
+   var formulaFilter = document.getElementById(tableId+"_F");
+   if (e == null || realizedFilter == null || formulaFilter == null)
+     return;
+   
+   for (var i = 1; i < e.rows.length; ++i)
+     {
+       var r = e.rows[i];
+       var isRealized = r.cells[4].innerHTML.indexOf("<!--R-->")!=-1;
+       var isFormula = r.cells[5].innerHTML.indexOf("Formula column")==0;
+       var showRealized = realizedFilter.checked == false || isRealized == true;
+       var showFormula  = formulaFilter.checked == false || isFormula == true;
+       
+       r.style.visibility = showRealized && showFormula ? "visible" : "collapse";
+     }
  }
+
+var getFilteredResults = function(queryString)
+{
+  var regex = new RegExp(queryString, 'gi');
+  var matchingResults = {};
+  var doColumns = document.getElementById('cols_check').checked;
+  var doFormulas = document.getElementById('formulas_check').checked;
+  var doRealized = document.getElementById('realized_check').checked;
+
+  if (doColumns == true)
+    {
+      getFilteredData(regex, tables, matchingResults);
+      getFilteredData(regex, doRealized == true ? realizedcolumns : columns, matchingResults);
+    }
+  if (doFormulas == true)
+    {
+      getFilteredData(regex, doRealized == true ? realizedformulae : formulae, matchingResults);
+    }
+  return matchingResults;
 }
+
+var getData = function(type)
+{
+  var dataDivs = document.getElementsByClassName(type);
+  var divIds = {};
+  var tempId;
+  for (var i = 0; i < dataDivs.length; i++)
+    {
+      tempId = dataDivs[i].getAttribute("id");
+      if (tempId != undefined && tempId.length > 0)
+        {
+          divIds[tempId] = tempId.replace("_DIV", "").split("-");
+        }
+    }
+  return divIds;
+}
+
+Object.extend = function(source1, source2, destination)
+{
+  for ( var key in source1)
+    {
+      destination[key] = source1[key];
+    }
+  for ( var key in source2)
+    {
+      destination[key] = source2[key];
+    }
+  return destination;
+}
+
+var headers = [];
+
+function registerStickyHeader(elementId)
+{
+  var h = document.getElementById(elementId);
+  headers.push([
+      h, h.offsetTop
+  ]);
+}
+
+function checkSticky()
+{
+  for (var i = 0; i < headers.length; ++i)
+    {
+      var h = headers[i];
+      var pos = h[0].offsetTop;
+      if (pos != 0)
+        h[1] = pos;
+      if (window.pageYOffset >= h[1] - 5)
+        {
+          h[0].classList.add("sticky");
+          var n = document.getElementById('__SEARCH_BOX__');
+          if (n != null && n.parentNode != null && h[0] != null && h[0] != n)
+            {
+              n.classList.remove("sticky");
+              n.parentNode.removeChild(n);
+              h[0].rows[0].cells[1].appendChild(n);
+            }
+        }
+      else
+        {
+          h[0].classList.remove("sticky");
+        }
+      if (i == 0 && window.pageYOffset < h[1])
+        {
+          var n = document.getElementById('__SEARCH_BOX__');
+          n.parentNode.removeChild(n);
+          document.getElementById('__SEARCH_BOX_BASE__').appendChild(n);
+        }
+    }
+}
+
 window.onscroll = checkSticky;
 </SCRIPT>
 
@@ -58,184 +466,12 @@ window.onscroll = checkSticky;
 <H1>Schema TILDA</H1>
 <BR><BR>
 <DIV id="__SEARCH_BOX_BASE__"><TABLE id="__SEARCH_BOX__" border="0px" cellspacing="0px" cellpadding="0px"><TR valign="top"><TD width="1px" style="font-size: 125%; font-weight:bold;">SEARCH</TD><TD>
-<input type="text" onfocus="showSearchResults(true);eventListener()" oninput="eventListener()", id="search_input" placeholder="Search Tables/Views, Columns, Formulae" autocomplete="off">
-&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" oninput="eventListener()", id="regcols_check" checked>&nbsp;Regular Columns</label>
+<input type="text" onfocus="showSearchResults(true);eventListener()" oninput="eventListener()", id="search_input" placeholder="Search Tables/Views, Fields, Formulae" autocomplete="off">
+&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" oninput="eventListener()", id="cols_check" checked>&nbsp;Fields</label>
 &nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" oninput="eventListener()", id="formulas_check" checked>&nbsp;Formulas</label>
-&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" oninput="eventListener()", id="realcols_check" checked>&nbsp;Realized Columns</label></TD></TR>
+&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" oninput="eventListener()", id="realized_check">&nbsp;Realized</label></TD></TR>
 <TR><TD colspan="2"><table id="__SEARCH_BOX_RESULTS__" class="search_results" border="0px" cellspacing="0px"></table>
 </TD></TR></TABLE></DIV>
-<style>
-  #search_input {
-    padding:2px;
-    width: 250px;
-    margin-left: 5px;
-    border:2px solid #CCC;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-   }
-  .search_results { 
-     background-color: #FFF;
-     border: 2px ridge #F09819; 
-     display: none; 
-     height: 200px; 
-     position: absolute;
-     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-     z-index: 1;
-     -webkit-border-radius: 5px;
-     border-radius: 5px;
-     overflow-y: auto; /* Enable scroll if needed */ 
-     overflow-x: hidden;
-   }
-  .search_results .scrollLock { 
-     overflow: hidden;
-   }
-  .search_results TH {
-     background-color: #FFC837;
-     font-weight: bold;
-     border-bottom: 2px #666 solid;
-     padding: 0px;
-     font-weight: bold;
-   }
-
-  .search_results A {
-     color: #000;
-   }
-
-  .search_results TR:nth-child(odd) TD {
-     background-color: #fff6d6;
-   }
-
-  .search_results TR:nth-child(even) TD {
-     background-color: #FFF;
-   }
-
-  .search_results TR TD {
-     padding-right: 10px;
-   }
-
-  .blink_div { 
-    animation: blink-animation 0.75s steps(5, start) infinite; 
-    color: red; 
-  } 
-  @keyframes blink-animation {   
-    to { 
-      visibility: hidden; 
-    } 
-  } 
-   input[type=text]:focus {
-     border-color:#DFECF8;
-   } 
-</style>
-<script> 
-  var tables    = {}; 
-  var columns   = {}; 
-  var formulae  = {}; 
-  var searchInput; 
-  var searchResultsDiv; 
-  window.addEventListener("load", function() { 
-    tables = getData("tables"); 
-    columns = getData("columns"); 
-    formulae = getData("formula"); 
-  }, false); 
-  var openDiv = function(divId) {
-      freezeSearchResults(true);
-      window.location = "#" + divId; 
-      setTimeout(function() { freezeSearchResults(false);}, 50); 
-  } 
-  function showSearchResults(show) {
-    document.getElementById('__SEARCH_BOX_RESULTS__').style.display = show ? 'inline' : 'none';
-  }
-  var SearchScrollTop = null;
-  function freezeSearchResults(freeze) {
-    var e = document.getElementById('__SEARCH_BOX_RESULTS__');
-    if (freeze == true) SearchScrollTop = e.scrollTop; else e.scrollTop = SearchScrollTop;
-  }
-  var eventListener = function(event) { 
-    if ( searchInput == null || searchInput == undefined ) { 
-      searchInput = document.getElementById('search_input'); 
-    } 
-    if ( searchResultsDiv == null || searchResultsDiv == undefined ) { 
-      searchResultsDiv = document.getElementById('__SEARCH_BOX_RESULTS__'); 
-    } 
-    var searchInputText = searchInput.value; 
-    showSearchResults(searchInputText != null && searchInputText != '');
-    var filteredResults = getFilteredResults(searchInputText); 
-    filteredResults = sortFilteredResults(filteredResults); 
-    // Append Header 
-    var tempElementBody = ""; 
-    if (Object.keys(filteredResults).length > 0) { 
-      tempElementBody+= "<TR><th align='left'>&nbsp;Table/View</th><th align='left'>Field</th><TH>&nbsp;&nbsp;&nbsp;<A href=\"javascript:showSearchResults(false);\">X</A>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TH></TR>"; 
-    } else { 
-      tempElementBody+= "<TR><td colspan=\"2\">No Results Found</td></TR>";
-    } 
-    for (key in filteredResults) { 
-      value = filteredResults[key]; 
-      // Reset Temp Variable 
-      // Add Table/View 
-      tempElementBody += "<TR valign=\"top\"><td width=\"1px\">&nbsp;<A href=\"javascript:openDiv('"+key+"_CNT')\">"+key+"</A></TD>";
-      // Add Columns/Formulae (if Any) 
-      for(var i = 0; i < value.length; i++) { 
-          if (i!=0) tempElementBody += "<TR><TD></TD>";
-          tempElementBody += "<TD><A href=\"javascript:openDiv('"+key+"-"+value[i]+"_DIV')\">"+value[i]+"</A></TD><TD>&nbsp;</TD></TR>"; 
-      } 
-    } 
-   searchResultsDiv.innerHTML = tempElementBody; 
-  } 
-  // Helper Methods 
-  var sortFilteredResults = function(results) { 
-    var sortedResults = {}; 
-    Object.keys(results).sort().forEach(function(key) { 
-      sortedResults[key] = results[key]; 
-    }); 
-    return sortedResults; 
-  } 
-  var getFilteredData = function(regex, sourceData, destinationData) { 
-    for (key in sourceData) { 
-      var table_name = sourceData[key][0]; 
-      var column_name = sourceData[key][1]; 
-      if (regex.test(table_name)) { 
-        if( destinationData[table_name] == undefined) 
-          destinationData[table_name] = []; 
-      } 
-      if (column_name != undefined && regex.test(column_name)) { 
-        var existing_columns = destinationData[table_name]; 
-        if ( existing_columns == undefined) existing_columns = []; 
-        existing_columns.push(column_name); 
-        destinationData[table_name] = existing_columns; 
-      } 
-    } 
-    return destinationData; 
-  } 
-  var getFilteredResults = function(queryString) { 
-    var regex = new RegExp(queryString, 'gi'); 
-    var matchingResults = {}; 
-    getFilteredData(regex, tables, matchingResults); 
-    getFilteredData(regex, columns, matchingResults); 
-    getFilteredData(regex, formulae, matchingResults); 
-    return matchingResults; 
-  } 
-  var getData = function(type) { 
-    var dataDivs = document.getElementsByClassName(type); 
-    var divIds = {}; 
-    var tempId; 
-    for(var i = 0; i < dataDivs.length; i++) { 
-      tempId = dataDivs[i].getAttribute("id"); 
-      if ( tempId != undefined && tempId.length > 0) { 
-        divIds[tempId] = tempId.replace("_DIV", "").split("-"); 
-      } 
-    } 
-    return divIds; 
-  } 
-  Object.extend = function(source1, source2, destination) { 
-    for (var key in source1) { 
-      destination[key] = source1[key]; 
-    } 
-    for (var key in source2) { 
-      destination[key] = source2[key]; 
-    } 
-    return destination; 
-  } 
-</script> 
 <style>.viewport {
    -webkit-user-select: none;
    -moz-user-select: none;
@@ -586,101 +822,6 @@ window.onscroll = checkSticky;
                   bindElementClickEvent();
                 }
               </script>
-<style>
-  .dotted_underline { 
-  	border-bottom: 1px dotted; 
-  } 
-  .modal { 
-      display: none; /* Hidden by default */ 
-      position: fixed; /* Stay in place */ 
-      z-index: 1; /* Sit on top */ 
-      left: 0; 
-      top: 0; 
-      width: 100%; /* Full width */ 
-      height: 100%; /* Full height */ 
-      overflow: auto; /* Enable scroll if needed */ 
-      background-color: rgb(0,0,0); /* Fallback color */ 
-      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */ 
-  } 
-   
-  .modal-content { 
-      background-color: #fefefe; 
-      margin: 2% auto; /* 10% from the top and centered */ 
-      padding: 20px; 
-      border: 1px solid #888; 
-      width: 90%; 
-      height: 82%; 
-      overflow: auto; 
-  } 
-   
-  .close { 
-      color: #aaa; 
-      float: right; 
-      font-size: 28px; 
-      font-weight: bold; 
-  } 
-  .cursor_pointer { 
-    cursor: pointer; 
-  } 
-  .close:hover, 
-  .close:focus { 
-      color: black; 
-      text-decoration: none; 
-      cursor: pointer; 
-  } 
-</style>
-<script>
-  var onModalCloseClicked = function(modalId) {
-    modal = document.getElementById(modalId);
-    modal.style.display = "none";
-    document.documentElement.style.overflow = "auto"; 
-  }
-  window.addEventListener("click", function(event) { 
-    targetId = event.target.getAttribute("id"); 
-    if (targetId != null && targetId.endsWith("_MODAL")){ 
-      onModalCloseClicked(targetId); 
-    } 
-  }); 
-    document.onkeydown = function(evt) { 
-      evt = evt || window.event; 
-      var isEscape = false; 
-      if ("key" in evt) { 
-        isEscape = (evt.key == "Escape" || evt.key == "Esc"); 
-      } else { 
-        isEscape = (evt.keyCode == 27); 
-      } 
-      if (isEscape) { 
-        closeAllModals(); 
-      } 
-    }; 
-  var closeAllModals = function() { 
-    var modals = document.getElementsByClassName("modal"); 
-    for(var i = 0; i < modals.length; i++) {
-      modals[i].style.display = 'none'; 
-    } 
-    document.getElementById('__SEARCH_BOX_RESULTS__').style.display = 'none';
-    document.documentElement.style.overflow = "auto"; 
-  } 
-  var onModalShowClicked = function(id) {
-    modal = document.getElementById(id+"_MODAL");
-    modal.style.display = "block";
-    document.documentElement.style.overflow = "hidden"; 
-  }
-  window.addEventListener('load', function() { 
-    expand_buttons = document.getElementsByClassName("expand_div"); 
-    for ( var i = 0; i < expand_buttons.length; i++ ) { 
-      expand_buttons[i].addEventListener("click", function(event) { 
-        if ( event.target.parentElement.getElementsByTagName("div")[0].style.display == "none" ) {
-      	   event.target.parentElement.getElementsByTagName("div")[0].style.display = "block" 
-      	   event.target.innerHTML = "&#9660;" 
-      	} else { 
-      	   event.target.parentElement.getElementsByTagName("div")[0].style.display = "none" 
-      	   event.target.innerHTML = "&#9654;" 
-      	} 
-      }, false); 
-    } 
-  }, false); 
-</script>
 <BR><BR><BR><BR><BR><HR><H1>Enumerations</H1><BLOCKQUOTE>
 <TABLE id="ZoneInfo_DIV" class="tables">
 <SCRIPT>registerStickyHeader("ZoneInfo_DIV");</SCRIPT>
@@ -700,8 +841,8 @@ The Table TILDA.ZoneInfo:<UL>
 <B>Description</B>: blah blah<BR>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
- <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
-   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+ <TABLE id="ZoneInfo_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ZoneInfo-id_DIV' class='columns'>id</B>&nbsp;&nbsp;</TD>
@@ -946,8 +1087,8 @@ The Table TILDA.Key:<UL>
 <B>Description</B>: The table to keep track of unique keys across distributed objects/tables<BR>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
- <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
-   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+ <TABLE id="Key_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Key-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
@@ -1209,8 +1350,8 @@ The Table TILDA.Mapping:<UL>
 <B>Description</B>: Generalized Mapping table<BR>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
- <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
-   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+ <TABLE id="Mapping_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Mapping-type_DIV' class='columns'>type</B>&nbsp;&nbsp;</TD>
@@ -1392,8 +1533,8 @@ The Table TILDA.ObjectPerf:<UL>
 <B>Description</B>: Performance logs for the Tilda framework<BR>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
- <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
-   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+ <TABLE id="ObjectPerf_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='ObjectPerf-schemaName_DIV' class='columns'>schemaName</B>&nbsp;&nbsp;</TD>
@@ -1996,8 +2137,8 @@ The Table TILDA.TransPerf:<UL>
 <B>Description</B>: Performance logs for the Tilda framework<BR>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
- <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
-   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+ <TABLE id="TransPerf_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='TransPerf-schemaName_DIV' class='columns'>schemaName</B>&nbsp;&nbsp;</TD>
@@ -2383,8 +2524,8 @@ The Table TILDA.Connection:<UL>
 <B>Description</B>: Tilda DB Connections Configurations<BR>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
- <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
-   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+ <TABLE id="Connection_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Connection-active_DIV' class='columns'>active</B>&nbsp;&nbsp;</TD>
@@ -2712,59 +2853,59 @@ This Table contains the following columns:<BLOCKQUOTE>
 </DIV></DIV>
 </DIV>
 <BR><BR><BR><BR><BR><BR>
-<TABLE id="Jobs_DIV" class="tables">
-<SCRIPT>registerStickyHeader("Jobs_DIV");</SCRIPT>
-<TR valign="top"><TD><H2>Jobs&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#Jobs_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
+<TABLE id="Job_DIV" class="tables">
+<SCRIPT>registerStickyHeader("Job_DIV");</SCRIPT>
+<TR valign="top"><TD><H2>Job&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#Job_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
 </TABLE>
-<DIV id="Jobs_CNT" class="content">
-The Table TILDA.Jobs:<UL>
-<LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>Jobs_Factory</B>, <B>Jobs_Data</B> in the package <B>tilda.data</B>.
+<DIV id="Job_CNT" class="content">
+The Table TILDA.Job:<UL>
+<LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>Job_Factory</B>, <B>Job_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for normal <B>read/write</B> access.</LI>
 <LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
 <LI>Defines foreign key(s) to <A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A> </LI>
-<LI>Has the following identity:<UL><LI>Unique Index: Id</LI>
+<LI>Has the following identity:<UL><LI>Primary Key: refnum</LI>
 </UL></LI>
 </UL>
-<B>Description</B>: Kettle Jobs<BR>
+<B>Description</B>: Jobs<BR>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
- <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
-   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+ <TABLE id="Job_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-Id_DIV' class='columns'>Id</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Id</TD>
+<TD>The primary key for this record</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>2&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-Name_DIV' class='columns'>Name</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;varchar(120)&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-name_DIV' class='columns'>name</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(50)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Name</TD>
+<TD>Job Name</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>3&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('Jobs-StartTimeTZ')" align="right"><B id='Jobs-StartTimeTZ_DIV' class='columns dotted_underline cursor_pointer'>StartTimeTZ</B>&nbsp;&nbsp;</TD>
+<TD onclick="onModalShowClicked('Job-startTimeTZ')" align="right"><B id='Job-startTimeTZ_DIV' class='columns dotted_underline cursor_pointer'>startTimeTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'StartTime'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+<TD>Generated helper column to hold the time zone ID for 'startTime'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
 </TABLE>
 </TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>4&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-StartTime_DIV' class='columns'>StartTime</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-startTime_DIV' class='columns'>startTime</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -2774,19 +2915,19 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>5&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('Jobs-EndTimeTZ')" align="right"><B id='Jobs-EndTimeTZ_DIV' class='columns dotted_underline cursor_pointer'>EndTimeTZ</B>&nbsp;&nbsp;</TD>
+<TD onclick="onModalShowClicked('Job-endTimeTZ')" align="right"><B id='Job-endTimeTZ_DIV' class='columns dotted_underline cursor_pointer'>endTimeTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'EndTime'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+<TD>Generated helper column to hold the time zone ID for 'endTime'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
 </TABLE>
 </TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>6&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-EndTime_DIV' class='columns'>EndTime</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-endTime_DIV' class='columns'>endTime</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -2796,8 +2937,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>7&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-TotalRecords_DIV' class='columns'>TotalRecords</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-totalRecords_DIV' class='columns'>totalRecords</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -2806,17 +2947,26 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>8&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-Status_DIV' class='columns'>Status</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;varchar(200)&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-status_DIV' class='columns'>status</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(2)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Status</TD>
+<TD>Status<BR>This column has defined a number of constant values:
+<BLOCKQUOTE>
+<TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#fff6fc"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Enqueued</B>&nbsp;&nbsp;</TD><TD>EQ&nbsp;&nbsp;</TD><TD>Enqueued&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Enque</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Started</B>&nbsp;&nbsp;</TD><TD>ST&nbsp;&nbsp;</TD><TD>Started&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Started</TD></TR>
+  <TR bgcolor="#fff6fc"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Running</B>&nbsp;&nbsp;</TD><TD>RN&nbsp;&nbsp;</TD><TD>Running&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Running</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>Done</B>&nbsp;&nbsp;</TD><TD>DO&nbsp;&nbsp;</TD><TD>Done&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Done</TD></TR>
+</TABLE>
+</BLOCKQUOTE>
+</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>9&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-Error_DIV' class='columns'>Error</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-error_DIV' class='columns'>error</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(1000)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -2826,7 +2976,70 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>10&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-threadsCount_DIV' class='columns'>threadsCount</B>&nbsp;&nbsp;</TD>
+<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Thread count<BR>This column has defined a number of constant values:
+<BLOCKQUOTE>
+<TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#fff6fc"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>DefaultValue</B>&nbsp;&nbsp;</TD><TD>1&nbsp;&nbsp;</TD><TD>Default value&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Default value threads count</TD></TR>
+</TABLE>
+</BLOCKQUOTE>
+</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>11&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-loadMode_DIV' class='columns'>loadMode</B>&nbsp;&nbsp;</TD>
+<TD>char&nbsp;/&nbsp;character&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Insert or upsert?<BR>This column has defined a number of constant values:
+<BLOCKQUOTE>
+<TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#fff6fc"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Upsert</B>&nbsp;&nbsp;</TD><TD>U&nbsp;&nbsp;</TD><TD>Upsert Mode&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Upsert mode</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Insert</B>&nbsp;&nbsp;</TD><TD>I&nbsp;&nbsp;</TD><TD>Insert Mode&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Insert mode</TD></TR>
+</TABLE>
+</BLOCKQUOTE>
+</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>12&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-connectionId_DIV' class='columns'>connectionId</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(15)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Connection Details</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>13&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-zipFile_DIV' class='columns'>zipFile</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(1000)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>ZipFile Absolute Path</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>14&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-zipFileName_DIV' class='columns'>zipFileName</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(100)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>ZipFile Name</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>15&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
@@ -2834,9 +3047,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created.</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>11&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>16&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
@@ -2844,9 +3057,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated.</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>12&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Jobs-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>17&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Job-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
@@ -2855,9 +3068,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>The timestamp for when the record was deleted.</TD>
 </TR>
 </TABLE></BLOCKQUOTE>
-<DIV id='Jobs-Id_MODAL' class='modal'>
+<DIV id='Job-refnum_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Jobs-Id_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('Job-refnum_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -2867,14 +3080,14 @@ This Table contains the following columns:<BLOCKQUOTE>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs-Id_DIV'>Id</a> -- INTEGER</td>
+<td><a href='TILDA___Docs.TILDA.html#Job_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Job-refnum_DIV'>refnum</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='Jobs-Name_MODAL' class='modal'>
+<DIV id='Job-name_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Jobs-Name_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('Job-name_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -2884,14 +3097,14 @@ This Table contains the following columns:<BLOCKQUOTE>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs-Name_DIV'>Name</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#Job_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Job-name_DIV'>name</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='Jobs-StartTimeTZ_MODAL' class='modal'>
+<DIV id='Job-startTimeTZ_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Jobs-StartTimeTZ_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('Job-startTimeTZ_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -2901,8 +3114,8 @@ This Table contains the following columns:<BLOCKQUOTE>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs-StartTimeTZ_DIV'>StartTimeTZ</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Job_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Job-startTimeTZ_DIV'>startTimeTZ</a></td>
 </tr>
 <tr><td>&nbsp;</td></tr>
 <tr bgcolor="#DFECF8">
@@ -2912,9 +3125,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='Jobs-StartTime_MODAL' class='modal'>
+<DIV id='Job-startTime_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Jobs-StartTime_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('Job-startTime_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -2924,14 +3137,14 @@ This Table contains the following columns:<BLOCKQUOTE>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs-StartTime_DIV'>StartTime</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#Job_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Job-startTime_DIV'>startTime</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='Jobs-EndTimeTZ_MODAL' class='modal'>
+<DIV id='Job-endTimeTZ_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Jobs-EndTimeTZ_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('Job-endTimeTZ_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -2941,8 +3154,8 @@ This Table contains the following columns:<BLOCKQUOTE>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs-EndTimeTZ_DIV'>EndTimeTZ</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Job_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Job-endTimeTZ_DIV'>endTimeTZ</a></td>
 </tr>
 <tr><td>&nbsp;</td></tr>
 <tr bgcolor="#DFECF8">
@@ -2952,9 +3165,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='Jobs-EndTime_MODAL' class='modal'>
+<DIV id='Job-endTime_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Jobs-EndTime_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('Job-endTime_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -2964,14 +3177,14 @@ This Table contains the following columns:<BLOCKQUOTE>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs-EndTime_DIV'>EndTime</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#Job_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Job-endTime_DIV'>endTime</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='Jobs-TotalRecords_MODAL' class='modal'>
+<DIV id='Job-totalRecords_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Jobs-TotalRecords_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('Job-totalRecords_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -2981,14 +3194,14 @@ This Table contains the following columns:<BLOCKQUOTE>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs-TotalRecords_DIV'>TotalRecords</a> -- INTEGER</td>
+<td><a href='TILDA___Docs.TILDA.html#Job_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Job-totalRecords_DIV'>totalRecords</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='Jobs-Status_MODAL' class='modal'>
+<DIV id='Job-status_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Jobs-Status_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('Job-status_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -2998,14 +3211,14 @@ This Table contains the following columns:<BLOCKQUOTE>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs-Status_DIV'>Status</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#Job_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Job-status_DIV'>status</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='Jobs-Error_MODAL' class='modal'>
+<DIV id='Job-error_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Jobs-Error_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('Job-error_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3015,14 +3228,14 @@ This Table contains the following columns:<BLOCKQUOTE>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs-Error_DIV'>Error</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#Job_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Job-error_DIV'>error</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='Jobs-created_MODAL' class='modal'>
+<DIV id='Job-threadsCount_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Jobs-created_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('Job-threadsCount_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3032,14 +3245,14 @@ This Table contains the following columns:<BLOCKQUOTE>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs-created_DIV'>created</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#Job_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Job-threadsCount_DIV'>threadsCount</a> -- INTEGER</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='Jobs-lastUpdated_MODAL' class='modal'>
+<DIV id='Job-loadMode_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Jobs-lastUpdated_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('Job-loadMode_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3049,14 +3262,14 @@ This Table contains the following columns:<BLOCKQUOTE>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#Job_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Job-loadMode_DIV'>loadMode</a> -- CHAR</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='Jobs-deleted_MODAL' class='modal'>
+<DIV id='Job-connectionId_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Jobs-deleted_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('Job-connectionId_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3066,86 +3279,171 @@ This Table contains the following columns:<BLOCKQUOTE>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs_DIV'>Jobs</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Jobs-deleted_DIV'>deleted</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#Job_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Job-connectionId_DIV'>connectionId</a> -- STRING</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='Job-zipFile_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('Job-zipFile_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Job_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Job-zipFile_DIV'>zipFile</a> -- STRING</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='Job-zipFileName_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('Job-zipFileName_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Job_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Job-zipFileName_DIV'>zipFileName</a> -- STRING</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='Job-created_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('Job-created_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Job_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Job-created_DIV'>created</a> -- DATETIME</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='Job-lastUpdated_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('Job-lastUpdated_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Job_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Job-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='Job-deleted_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('Job-deleted_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Job_DIV'>Job</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Job-deleted_DIV'>deleted</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
 </DIV>
 <BR><BR><BR><BR><BR><BR>
-<TABLE id="Job_Detail_DIV" class="tables">
-<SCRIPT>registerStickyHeader("Job_Detail_DIV");</SCRIPT>
-<TR valign="top"><TD><H2>Job_Detail&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#Job_Detail_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
+<TABLE id="JobFile_DIV" class="tables">
+<SCRIPT>registerStickyHeader("JobFile_DIV");</SCRIPT>
+<TR valign="top"><TD><H2>JobFile&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#JobFile_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
 </TABLE>
-<DIV id="Job_Detail_CNT" class="content">
-The Table TILDA.Job_Detail:<UL>
-<LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>Job_Detail_Factory</B>, <B>Job_Detail_Data</B> in the package <B>tilda.data</B>.
+<DIV id="JobFile_CNT" class="content">
+The Table TILDA.JobFile:<UL>
+<LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>JobFile_Factory</B>, <B>JobFile_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for normal <B>read/write</B> access.</LI>
 <LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
 <LI>Defines foreign key(s) to <A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A> </LI>
-<LI>Has the following identity:<UL><LI>Unique Index: Id, Job_Id</LI>
+<LI>Has the following identity:<UL><LI>Primary Key: refnum</LI>
 </UL></LI>
 </UL>
-<B>Description</B>: Job Detail<BR>
+<B>Description</B>: Job File Info<BR>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
- <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
-   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+ <TABLE id="JobFile_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Job_Detail-Id_DIV' class='columns'>Id</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobFile-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Id</TD>
+<TD>The primary key for this record</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>2&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Job_Detail-Job_Id_DIV' class='columns'>Job_Id</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobFile-jobRefnum_DIV' class='columns'>jobRefnum</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Job Id</TD>
+<TD>Job Foreign key</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>3&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Job_Detail-FileName_DIV' class='columns'>FileName</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobFile-fileName_DIV' class='columns'>fileName</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;varchar(200)&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>FileName</TD>
+<TD>Zip FileName</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>4&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Job_Detail-FileRecords_DIV' class='columns'>FileRecords</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobFile-fileRecords_DIV' class='columns'>fileRecords</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>FileRecords</TD>
+<TD>Number of records loaded into DB</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>5&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('Job_Detail-FileProcessStartTimeTZ')" align="right"><B id='Job_Detail-FileProcessStartTimeTZ_DIV' class='columns dotted_underline cursor_pointer'>FileProcessStartTimeTZ</B>&nbsp;&nbsp;</TD>
+<TD onclick="onModalShowClicked('JobFile-fileProcessStartTimeTZ')" align="right"><B id='JobFile-fileProcessStartTimeTZ_DIV' class='columns dotted_underline cursor_pointer'>fileProcessStartTimeTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'FileProcessStartTime'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+<TD>Generated helper column to hold the time zone ID for 'fileProcessStartTime'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
 </TABLE>
 </TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>6&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Job_Detail-FileProcessStartTime_DIV' class='columns'>FileProcessStartTime</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobFile-fileProcessStartTime_DIV' class='columns'>fileProcessStartTime</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -3155,19 +3453,19 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>7&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('Job_Detail-FileProcessEndTimeTZ')" align="right"><B id='Job_Detail-FileProcessEndTimeTZ_DIV' class='columns dotted_underline cursor_pointer'>FileProcessEndTimeTZ</B>&nbsp;&nbsp;</TD>
+<TD onclick="onModalShowClicked('JobFile-fileProcessEndTimeTZ')" align="right"><B id='JobFile-fileProcessEndTimeTZ_DIV' class='columns dotted_underline cursor_pointer'>fileProcessEndTimeTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'FileProcessEndTime'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+<TD>Generated helper column to hold the time zone ID for 'fileProcessEndTime'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
 </TABLE>
 </TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>8&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Job_Detail-FileProcessEndTime_DIV' class='columns'>FileProcessEndTime</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobFile-fileProcessEndTime_DIV' class='columns'>fileProcessEndTime</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
@@ -3177,27 +3475,26 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>9&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Job_Detail-Status_DIV' class='columns'>Status</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;varchar(200)&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobFile-status_DIV' class='columns'>status</B>&nbsp;&nbsp;</TD>
+<TD>char&nbsp;/&nbsp;character&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Status</TD>
+<TD>JobFile status pending, success failure<BR>This column has defined a number of constant values:
+<BLOCKQUOTE>
+<TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#fff6fc"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Enqueued</B>&nbsp;&nbsp;</TD><TD>E&nbsp;&nbsp;</TD><TD>Enqueued&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Jobs Status Enque</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Running</B>&nbsp;&nbsp;</TD><TD>R&nbsp;&nbsp;</TD><TD>Running&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Running</TD></TR>
+  <TR bgcolor="#fff6fc"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Success</B>&nbsp;&nbsp;</TD><TD>S&nbsp;&nbsp;</TD><TD>Success&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Success</TD></TR>
+  <TR bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>Failure</B>&nbsp;&nbsp;</TD><TD>F&nbsp;&nbsp;</TD><TD>Failure&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>JobFile Status Failure</TD></TR>
+</TABLE>
+</BLOCKQUOTE>
+</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>10&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Job_Detail-Error_DIV' class='columns'>Error</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;varchar(1000)&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">-&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Error</TD>
-</TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>11&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Job_Detail-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobFile-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
@@ -3205,9 +3502,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was created.</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>12&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Job_Detail-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>11&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobFile-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
@@ -3215,9 +3512,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The timestamp for when the record was last updated.</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>13&nbsp;&nbsp;</TD>
-<TD align="right"><B id='Job_Detail-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>12&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobFile-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
@@ -3226,9 +3523,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>The timestamp for when the record was deleted.</TD>
 </TR>
 </TABLE></BLOCKQUOTE>
-<DIV id='Job_Detail-Id_MODAL' class='modal'>
+<DIV id='JobFile-refnum_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Job_Detail-Id_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JobFile-refnum_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3238,14 +3535,14 @@ This Table contains the following columns:<BLOCKQUOTE>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Job_Detail_DIV'>Job_Detail</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Job_Detail-Id_DIV'>Id</a> -- INTEGER</td>
+<td><a href='TILDA___Docs.TILDA.html#JobFile_DIV'>JobFile</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JobFile-refnum_DIV'>refnum</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='Job_Detail-Job_Id_MODAL' class='modal'>
+<DIV id='JobFile-jobRefnum_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Job_Detail-Job_Id_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JobFile-jobRefnum_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3255,14 +3552,14 @@ This Table contains the following columns:<BLOCKQUOTE>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Job_Detail_DIV'>Job_Detail</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Job_Detail-Job_Id_DIV'>Job_Id</a> -- INTEGER</td>
+<td><a href='TILDA___Docs.TILDA.html#JobFile_DIV'>JobFile</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JobFile-jobRefnum_DIV'>jobRefnum</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='Job_Detail-FileName_MODAL' class='modal'>
+<DIV id='JobFile-fileName_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Job_Detail-FileName_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JobFile-fileName_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3272,14 +3569,14 @@ This Table contains the following columns:<BLOCKQUOTE>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Job_Detail_DIV'>Job_Detail</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Job_Detail-FileName_DIV'>FileName</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#JobFile_DIV'>JobFile</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JobFile-fileName_DIV'>fileName</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='Job_Detail-FileRecords_MODAL' class='modal'>
+<DIV id='JobFile-fileRecords_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Job_Detail-FileRecords_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JobFile-fileRecords_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3289,14 +3586,14 @@ This Table contains the following columns:<BLOCKQUOTE>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Job_Detail_DIV'>Job_Detail</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Job_Detail-FileRecords_DIV'>FileRecords</a> -- INTEGER</td>
+<td><a href='TILDA___Docs.TILDA.html#JobFile_DIV'>JobFile</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JobFile-fileRecords_DIV'>fileRecords</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='Job_Detail-FileProcessStartTimeTZ_MODAL' class='modal'>
+<DIV id='JobFile-fileProcessStartTimeTZ_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Job_Detail-FileProcessStartTimeTZ_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JobFile-fileProcessStartTimeTZ_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3306,8 +3603,8 @@ This Table contains the following columns:<BLOCKQUOTE>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Job_Detail_DIV'>Job_Detail</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Job_Detail-FileProcessStartTimeTZ_DIV'>FileProcessStartTimeTZ</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JobFile_DIV'>JobFile</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JobFile-fileProcessStartTimeTZ_DIV'>fileProcessStartTimeTZ</a></td>
 </tr>
 <tr><td>&nbsp;</td></tr>
 <tr bgcolor="#DFECF8">
@@ -3317,9 +3614,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='Job_Detail-FileProcessStartTime_MODAL' class='modal'>
+<DIV id='JobFile-fileProcessStartTime_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Job_Detail-FileProcessStartTime_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JobFile-fileProcessStartTime_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3329,14 +3626,14 @@ This Table contains the following columns:<BLOCKQUOTE>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Job_Detail_DIV'>Job_Detail</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Job_Detail-FileProcessStartTime_DIV'>FileProcessStartTime</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#JobFile_DIV'>JobFile</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JobFile-fileProcessStartTime_DIV'>fileProcessStartTime</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='Job_Detail-FileProcessEndTimeTZ_MODAL' class='modal'>
+<DIV id='JobFile-fileProcessEndTimeTZ_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Job_Detail-FileProcessEndTimeTZ_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JobFile-fileProcessEndTimeTZ_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3346,8 +3643,8 @@ This Table contains the following columns:<BLOCKQUOTE>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Job_Detail_DIV'>Job_Detail</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Job_Detail-FileProcessEndTimeTZ_DIV'>FileProcessEndTimeTZ</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JobFile_DIV'>JobFile</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JobFile-fileProcessEndTimeTZ_DIV'>fileProcessEndTimeTZ</a></td>
 </tr>
 <tr><td>&nbsp;</td></tr>
 <tr bgcolor="#DFECF8">
@@ -3357,9 +3654,9 @@ This Table contains the following columns:<BLOCKQUOTE>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='Job_Detail-FileProcessEndTime_MODAL' class='modal'>
+<DIV id='JobFile-fileProcessEndTime_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Job_Detail-FileProcessEndTime_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JobFile-fileProcessEndTime_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3369,14 +3666,14 @@ This Table contains the following columns:<BLOCKQUOTE>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Job_Detail_DIV'>Job_Detail</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Job_Detail-FileProcessEndTime_DIV'>FileProcessEndTime</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#JobFile_DIV'>JobFile</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JobFile-fileProcessEndTime_DIV'>fileProcessEndTime</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='Job_Detail-Status_MODAL' class='modal'>
+<DIV id='JobFile-status_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Job_Detail-Status_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JobFile-status_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3386,14 +3683,14 @@ This Table contains the following columns:<BLOCKQUOTE>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Job_Detail_DIV'>Job_Detail</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Job_Detail-Status_DIV'>Status</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#JobFile_DIV'>JobFile</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JobFile-status_DIV'>status</a> -- char</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='Job_Detail-Error_MODAL' class='modal'>
+<DIV id='JobFile-created_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Job_Detail-Error_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JobFile-created_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3403,14 +3700,14 @@ This Table contains the following columns:<BLOCKQUOTE>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Job_Detail_DIV'>Job_Detail</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Job_Detail-Error_DIV'>Error</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#JobFile_DIV'>JobFile</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JobFile-created_DIV'>created</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='Job_Detail-created_MODAL' class='modal'>
+<DIV id='JobFile-lastUpdated_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Job_Detail-created_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JobFile-lastUpdated_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3420,14 +3717,14 @@ This Table contains the following columns:<BLOCKQUOTE>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Job_Detail_DIV'>Job_Detail</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Job_Detail-created_DIV'>created</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#JobFile_DIV'>JobFile</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JobFile-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='Job_Detail-lastUpdated_MODAL' class='modal'>
+<DIV id='JobFile-deleted_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Job_Detail-lastUpdated_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JobFile-deleted_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3437,14 +3734,115 @@ This Table contains the following columns:<BLOCKQUOTE>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Job_Detail_DIV'>Job_Detail</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Job_Detail-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#JobFile_DIV'>JobFile</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JobFile-deleted_DIV'>deleted</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='Job_Detail-deleted_MODAL' class='modal'>
+</DIV>
+<BR><BR><BR><BR><BR><BR>
+<TABLE id="JobMessage_DIV" class="tables">
+<SCRIPT>registerStickyHeader("JobMessage_DIV");</SCRIPT>
+<TR valign="top"><TD><H2>JobMessage&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#JobMessage_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
+</TABLE>
+<DIV id="JobMessage_CNT" class="content">
+The Table TILDA.JobMessage:<UL>
+<LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>JobMessage_Factory</B>, <B>JobMessage_Data</B> in the package <B>tilda.data</B>.
+<LI>Is configured for normal <B>read/write</B> access.</LI>
+<LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
+<LI>Has the following identities:<UL><LI>Primary Key: refnum</LI>
+<LI>Unique Index: refnum, jobFileRefnum</LI>
+</UL></LI>
+</UL>
+<B>Description</B>: Job Messages<BR>
+<BR>
+This Table contains the following columns:<BLOCKQUOTE>
+ <TABLE id="JobMessage_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>1&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobMessage-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The primary key for this record</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>2&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobMessage-jobRefnum_DIV' class='columns'>jobRefnum</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Job Foreign key</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>3&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobMessage-jobFileRefnum_DIV' class='columns'>jobFileRefnum</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>JobFile Foreign key</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>4&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobMessage-message_DIV' class='columns'>message</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(2000)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Message</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>5&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobMessage-isError_DIV' class='columns'>isError</B>&nbsp;&nbsp;</TD>
+<TD>boolean&nbsp;/&nbsp;boolean&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Boolean flag to identify message type -- error or success</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>6&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobMessage-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The timestamp for when the record was created.</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>7&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobMessage-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The timestamp for when the record was last updated.</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>8&nbsp;&nbsp;</TD>
+<TD align="right"><B id='JobMessage-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The timestamp for when the record was deleted.</TD>
+</TR>
+</TABLE></BLOCKQUOTE>
+<DIV id='JobMessage-refnum_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Job_Detail-deleted_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('JobMessage-refnum_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -3454,8 +3852,127 @@ This Table contains the following columns:<BLOCKQUOTE>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Job_Detail_DIV'>Job_Detail</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Job_Detail-deleted_DIV'>deleted</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#JobMessage_DIV'>JobMessage</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JobMessage-refnum_DIV'>refnum</a> -- LONG</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='JobMessage-jobRefnum_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('JobMessage-jobRefnum_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JobMessage_DIV'>JobMessage</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JobMessage-jobRefnum_DIV'>jobRefnum</a> -- LONG</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='JobMessage-jobFileRefnum_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('JobMessage-jobFileRefnum_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JobMessage_DIV'>JobMessage</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JobMessage-jobFileRefnum_DIV'>jobFileRefnum</a> -- LONG</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='JobMessage-message_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('JobMessage-message_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JobMessage_DIV'>JobMessage</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JobMessage-message_DIV'>message</a> -- STRING</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='JobMessage-isError_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('JobMessage-isError_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JobMessage_DIV'>JobMessage</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JobMessage-isError_DIV'>isError</a> -- BOOLEAN</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='JobMessage-created_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('JobMessage-created_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JobMessage_DIV'>JobMessage</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JobMessage-created_DIV'>created</a> -- DATETIME</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='JobMessage-lastUpdated_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('JobMessage-lastUpdated_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JobMessage_DIV'>JobMessage</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JobMessage-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='JobMessage-deleted_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('JobMessage-deleted_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JobMessage_DIV'>JobMessage</a></td>
+<td><a href='TILDA___Docs.TILDA.html#JobMessage-deleted_DIV'>deleted</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
@@ -3477,8 +3994,8 @@ The Table TILDA.RefillPerf:<UL>
 <B>Description</B>: Performance logs for the Tilda Refills<BR>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
- <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
-   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+ <TABLE id="RefillPerf_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='RefillPerf-schemaName_DIV' class='columns'>schemaName</B>&nbsp;&nbsp;</TD>
@@ -3829,8 +4346,8 @@ The Table TILDA.Maintenance:<UL>
 <B>Description</B>: Maintenance information<BR>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
- <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
-   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+ <TABLE id="Maintenance_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Maintenance-type_DIV' class='columns'>type</B>&nbsp;&nbsp;</TD>
@@ -4012,8 +4529,8 @@ The Table TILDA.Formula:<UL>
 <B>Description</B>: Master formula information<BR>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
- <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
-   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+ <TABLE id="Formula_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Formula-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
@@ -4062,21 +4579,22 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The type of the formula/column value/outcome.</TD>
-</TR>
-  <TR bgcolor="#DFECF8"><TD></TD><TD></TD><TD colspan="10" align="center">
+<TD>The type of the formula/column value/outcome.<BR>This column has defined a number of constant values:
+<BLOCKQUOTE>
 <TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFF2CC"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>String</B>&nbsp;&nbsp;</TD><TD>STR&nbsp;&nbsp;</TD><TD>String&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>String</TD></TR>
+  <TR bgcolor="#fff6fc"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>String</B>&nbsp;&nbsp;</TD><TD>STR&nbsp;&nbsp;</TD><TD>String&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>String</TD></TR>
   <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Character</B>&nbsp;&nbsp;</TD><TD>CHR&nbsp;&nbsp;</TD><TD>Character&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Character</TD></TR>
-  <TR bgcolor="#FFF2CC"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Boolean</B>&nbsp;&nbsp;</TD><TD>BOL&nbsp;&nbsp;</TD><TD>Boolean&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Boolean</TD></TR>
+  <TR bgcolor="#fff6fc"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Boolean</B>&nbsp;&nbsp;</TD><TD>BOL&nbsp;&nbsp;</TD><TD>Boolean&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Boolean</TD></TR>
   <TR bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>Integer</B>&nbsp;&nbsp;</TD><TD>INT&nbsp;&nbsp;</TD><TD>Integer&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Integer</TD></TR>
-  <TR bgcolor="#FFF2CC"><TD>5&nbsp;&nbsp;</TD><TD align="right"><B>Long</B>&nbsp;&nbsp;</TD><TD>LNG&nbsp;&nbsp;</TD><TD>Long&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Long</TD></TR>
+  <TR bgcolor="#fff6fc"><TD>5&nbsp;&nbsp;</TD><TD align="right"><B>Long</B>&nbsp;&nbsp;</TD><TD>LNG&nbsp;&nbsp;</TD><TD>Long&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Long</TD></TR>
   <TR bgcolor="#FFFFFF"><TD>6&nbsp;&nbsp;</TD><TD align="right"><B>Float</B>&nbsp;&nbsp;</TD><TD>FLT&nbsp;&nbsp;</TD><TD>Float&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Float</TD></TR>
-  <TR bgcolor="#FFF2CC"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>Double</B>&nbsp;&nbsp;</TD><TD>DBL&nbsp;&nbsp;</TD><TD>Double&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Double</TD></TR>
+  <TR bgcolor="#fff6fc"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>Double</B>&nbsp;&nbsp;</TD><TD>DBL&nbsp;&nbsp;</TD><TD>Double&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Double</TD></TR>
   <TR bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>Date</B>&nbsp;&nbsp;</TD><TD>DT&nbsp;&nbsp;</TD><TD>Date&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Date</TD></TR>
-  <TR bgcolor="#FFF2CC"><TD>9&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DTM&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
+  <TR bgcolor="#fff6fc"><TD>9&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DTM&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
 </TABLE>
-</TD></TR>
+</BLOCKQUOTE>
+</TD>
+</TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>6&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Formula-title_DIV' class='columns'>title</B>&nbsp;&nbsp;</TD>
@@ -4370,8 +4888,8 @@ The Table TILDA.Measure:<UL>
 <B>Description</B>: Master Measure information<BR>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
- <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
-   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+ <TABLE id="Measure_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Measure-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
@@ -4553,8 +5071,8 @@ The Table TILDA.MeasureFormula:<UL>
 <B>Description</B>: Master Measure information<BR>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
- <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
-   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+ <TABLE id="MeasureFormula_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('MeasureFormula-measureRefnum')" align="right"><B id='MeasureFormula-measureRefnum_DIV' class='columns dotted_underline cursor_pointer'>measureRefnum</B>&nbsp;&nbsp;</TD>
@@ -4725,8 +5243,8 @@ The Table TILDA.FormulaDependency:<UL>
 <B>Description</B>: Master formula dependency information<BR>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
- <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
-   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+ <TABLE id="FormulaDependency_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('FormulaDependency-formulaRefnum')" align="right"><B id='FormulaDependency-formulaRefnum_DIV' class='columns dotted_underline cursor_pointer'>formulaRefnum</B>&nbsp;&nbsp;</TD>
@@ -4897,8 +5415,8 @@ The Table TILDA.FormulaResult:<UL>
 <B>Description</B>: Master formula result information, if applicable. Some formulas may not yield an enumeratable value (e.g., returning a date)<BR>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
- <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
-   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+ <TABLE id="FormulaResult_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('FormulaResult-formulaRefnum')" align="right"><B id='FormulaResult-formulaRefnum_DIV' class='columns dotted_underline cursor_pointer'>formulaRefnum</B>&nbsp;&nbsp;</TD>
@@ -5088,8 +5606,8 @@ The Table TILDA.Testing:<UL>
 <B>Description</B>: blah blah<BR>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
- <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
-   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+ <TABLE id="Testing_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-refnum_DIV' class='columns'>refnum</B>&nbsp;&nbsp;</TD>
@@ -5980,8 +6498,8 @@ The Table TILDA.Testing2:<UL>
 <B>Description</B>: Testing<BR>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
- <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
-   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Description</TH></TR>
+ <TABLE id="Testing2_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2-t1_DIV' class='columns'>t1</B>&nbsp;&nbsp;</TD>
@@ -6122,8 +6640,8 @@ The View TILDA.FormulaResultView:<UL>
 This view depends on the following filter(s), sub-view(s), and/or root table(s):
 <BLOCKQUOTE><TABLE class="TreeTable Rowed" border="0px" cellspacing="0px" cellpadding="2px"></TABLE></BLOCKQUOTE>
 This View contains the following columns:<BLOCKQUOTE>
- <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
-   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+ <TABLE id="FormulaResultView_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description/<label>Formula<input type="checkbox" onchange="filterTable('FormulaResultView_TBL', 'F')", id="FormulaResultView_TBL_F"></label></TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('FormulaResultView-formulaRefnum')" align="right"><B id='FormulaResultView-formulaRefnum_DIV' class='columns dotted_underline cursor_pointer'>formulaRefnum</B>&nbsp;&nbsp;</TD>
@@ -6313,8 +6831,8 @@ The View TILDA.FormulaDependencyView:<UL>
 This view depends on the following filter(s), sub-view(s), and/or root table(s):
 <BLOCKQUOTE><TABLE class="TreeTable Rowed" border="0px" cellspacing="0px" cellpadding="2px"></TABLE></BLOCKQUOTE>
 This View contains the following columns:<BLOCKQUOTE>
- <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
-   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+ <TABLE id="FormulaDependencyView_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description/<label>Formula<input type="checkbox" onchange="filterTable('FormulaDependencyView_TBL', 'F')", id="FormulaDependencyView_TBL_F"></label></TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('FormulaDependencyView-formulaRefnum')" align="right"><B id='FormulaDependencyView-formulaRefnum_DIV' class='columns dotted_underline cursor_pointer'>formulaRefnum</B>&nbsp;&nbsp;</TD>
@@ -6507,8 +7025,8 @@ The View TILDA.MeasureFormulaView:<UL>
 This view depends on the following filter(s), sub-view(s), and/or root table(s):
 <BLOCKQUOTE><TABLE class="TreeTable Rowed" border="0px" cellspacing="0px" cellpadding="2px"></TABLE></BLOCKQUOTE>
 This View contains the following columns:<BLOCKQUOTE>
- <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
-   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+ <TABLE id="MeasureFormulaView_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description/<label>Formula<input type="checkbox" onchange="filterTable('MeasureFormulaView_TBL', 'F')", id="MeasureFormulaView_TBL_F"></label></TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('MeasureFormulaView-measureRefnum')" align="right"><B id='MeasureFormulaView-measureRefnum_DIV' class='columns dotted_underline cursor_pointer'>measureRefnum</B>&nbsp;&nbsp;</TD>
@@ -6607,21 +7125,22 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The type of the formula/column value/outcome.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Formula-type_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Formula<B>&nbsp;&#8226;&nbsp;</B>type</A></DIV></TD>
-</TR>
-  <TR bgcolor="#FFFFFF"><TD></TD><TD></TD><TD colspan="10" align="center">
+<TD>The type of the formula/column value/outcome.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Formula-type_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Formula<B>&nbsp;&#8226;&nbsp;</B>type</A></DIV><BR>This column has defined a number of constant values:
+<BLOCKQUOTE>
 <TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFF2CC"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>String</B>&nbsp;&nbsp;</TD><TD>STR&nbsp;&nbsp;</TD><TD>String&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>String</TD></TR>
+  <TR bgcolor="#fff6fc"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>String</B>&nbsp;&nbsp;</TD><TD>STR&nbsp;&nbsp;</TD><TD>String&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>String</TD></TR>
   <TR bgcolor="#FFFFFF"><TD>2&nbsp;&nbsp;</TD><TD align="right"><B>Character</B>&nbsp;&nbsp;</TD><TD>CHR&nbsp;&nbsp;</TD><TD>Character&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Character</TD></TR>
-  <TR bgcolor="#FFF2CC"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Boolean</B>&nbsp;&nbsp;</TD><TD>BOL&nbsp;&nbsp;</TD><TD>Boolean&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Boolean</TD></TR>
+  <TR bgcolor="#fff6fc"><TD>3&nbsp;&nbsp;</TD><TD align="right"><B>Boolean</B>&nbsp;&nbsp;</TD><TD>BOL&nbsp;&nbsp;</TD><TD>Boolean&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Boolean</TD></TR>
   <TR bgcolor="#FFFFFF"><TD>4&nbsp;&nbsp;</TD><TD align="right"><B>Integer</B>&nbsp;&nbsp;</TD><TD>INT&nbsp;&nbsp;</TD><TD>Integer&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Integer</TD></TR>
-  <TR bgcolor="#FFF2CC"><TD>5&nbsp;&nbsp;</TD><TD align="right"><B>Long</B>&nbsp;&nbsp;</TD><TD>LNG&nbsp;&nbsp;</TD><TD>Long&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Long</TD></TR>
+  <TR bgcolor="#fff6fc"><TD>5&nbsp;&nbsp;</TD><TD align="right"><B>Long</B>&nbsp;&nbsp;</TD><TD>LNG&nbsp;&nbsp;</TD><TD>Long&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Long</TD></TR>
   <TR bgcolor="#FFFFFF"><TD>6&nbsp;&nbsp;</TD><TD align="right"><B>Float</B>&nbsp;&nbsp;</TD><TD>FLT&nbsp;&nbsp;</TD><TD>Float&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Float</TD></TR>
-  <TR bgcolor="#FFF2CC"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>Double</B>&nbsp;&nbsp;</TD><TD>DBL&nbsp;&nbsp;</TD><TD>Double&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Double</TD></TR>
+  <TR bgcolor="#fff6fc"><TD>7&nbsp;&nbsp;</TD><TD align="right"><B>Double</B>&nbsp;&nbsp;</TD><TD>DBL&nbsp;&nbsp;</TD><TD>Double&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Double</TD></TR>
   <TR bgcolor="#FFFFFF"><TD>8&nbsp;&nbsp;</TD><TD align="right"><B>Date</B>&nbsp;&nbsp;</TD><TD>DT&nbsp;&nbsp;</TD><TD>Date&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Date</TD></TR>
-  <TR bgcolor="#FFF2CC"><TD>9&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DTM&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
+  <TR bgcolor="#fff6fc"><TD>9&nbsp;&nbsp;</TD><TD align="right"><B>DateTime</B>&nbsp;&nbsp;</TD><TD>DTM&nbsp;&nbsp;</TD><TD>DateTime&nbsp;&nbsp;</TD><TD>NONE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>DateTime</TD></TR>
 </TABLE>
-</TD></TR>
+</BLOCKQUOTE>
+</TD>
+</TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>11&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('MeasureFormulaView-formula')" align="right"><B id='MeasureFormulaView-formula_DIV' class='columns dotted_underline cursor_pointer'>formula</B>&nbsp;&nbsp;</TD>

@@ -101,7 +101,7 @@
       "name": "Connection",
       "description": "Tilda DB Connections Configurations",
       "columns": [
-		{ "name": "active",     "type": "BOOLEAN",    "nullable": true,                 "description": "Status Flag"                                },
+		    { "name": "active",     "type": "BOOLEAN",    "nullable": true,                 "description": "Status Flag"                                },
         { "name": "id",         "type": "STRING",     "nullable": false, "size": 15,    "description": "Connection ID",        "invariant": true    },
         { "name": "driver",     "type": "STRING",     "nullable": false, "size": 100,   "description": "DB Driver"                                  },
         { "name": "db",         "type": "STRING",     "nullable": false, "size": 200,   "description": "DB Url"                                     },
@@ -127,39 +127,117 @@
         }
       ]
       
+    },
+    { "name":"Job",
+       "description": "Jobs",
+       "columns": [
+        {"name": "name"          , "type": "STRING" , "size": 50                                , "description": "Job Name"        },
+        { "name":"startTime"     , "type":"DATETIME", "nullable": true                          , "description": "StartTime"        },
+        { "name":"endTime"       , "type":"DATETIME", "nullable": true                          , "description": "EndTime"          },
+        { "name":"totalRecords"  , "type":"LONG"    , "nullable": true                          , "description": "TotalRecords"     },
+        { "name":"status"        , "type":"STRING"  , "nullable": false,  "size":   2           , "description": "Status"
+                                 , "values": [
+                                      {"name":"Enqueued", "value":"EQ", "description":"Jobs Status Enque"  , "label":"Enqueued", "default":"CREATE" }
+                                     ,{"name":"Started" , "value":"ST", "description":"Jobs Status Started", "label":"Started" } 
+                                     ,{"name":"Running" , "value":"RN", "description":"Jobs Status Running", "label":"Running" } 
+                                     ,{"name":"Done"    , "value":"DO", "description":"Jobs Status Done"   , "label":"Done"    } 
+                                    ]
+        },
+        { "name":"error"         , "type":"STRING"  , "nullable": true,  "size":   1000         , "description":"Error"            },
+        { "name": "threadsCount" , "type": "INTEGER", "nullable": false                         , "description": "Thread count"
+                                 , "values": [
+                                      {"name":"DefaultValue", "value":"1", "description":"Default value threads count"  , "label":"Default value", "default":"CREATE" }
+                                  ]
+        },
+        { "name": "loadMode"     , "type": "CHAR", "nullable": false                         , "description": "Insert or upsert?"
+                                 , "values":[
+                                    {"name": "Upsert", "value": "U", "description": "Upsert mode", "label": "Upsert Mode"}
+                                   ,{"name": "Insert", "value": "I", "description": "Insert mode", "label": "Insert Mode", "default":"CREATE" }
+                                 ]
+        },
+        { "name": "connectionId" , "sameas": "tilda.data.tilda.connection.id", "nullable": false,  "description": "Connection Details" },
+        { "name": "zipFile"      , "type": "STRING", "nullable": false, "size":   1000, "description": "ZipFile Absolute Path" },
+        { "name": "zipFileName"  , "type": "STRING", "nullable": false, "size":   100 , "description": "ZipFile Name" 		   }
+      ],
+      "indices": [
+        { "name": "StatusIndex"     , "columns": ["status"]          , "db": true, "orderBy": ["created DESC"] },
+        { "name": "AllByCreated"    , "orderBy": ["created DESC"]    , "db": true },
+        { "name": "AllByLastUpdated", "orderBy": ["lastUpdated DESC"], "db": true }
+      ],
+      "queries": [
+        {
+          "name": "PendingJobs",
+          "description": "All Pending Jobs",
+          "from": [],
+          "wheres": [
+            { "db":"*", "clause":"status = 'EQ'" }
+          ],
+          "orderBy": ["created DESC"]
+        }
+      ],
+      "primary": { "autogen": true }
+    },
+    { "name":"JobFile",
+      "description":"Job File Info",
+      "columns":[
+        { "name":"jobRefnum"            , "sameas": "Job.refnum", "nullable": false,                 "description":"Job Foreign key" },               
+        { "name":"fileName"             , "type": "STRING"      , "nullable": false, "size":   200,  "description":"Zip FileName"   },
+        { "name":"fileRecords"          , "type": "LONG"        , "nullable": true ,                 "description":"Number of records loaded into DB" },
+        { "name":"fileProcessStartTime" , "type": "DATETIME"    , "nullable": true ,                 "description":"FileProcessStartTime" },
+        { "name":"fileProcessEndTime"   , "type": "DATETIME"    , "nullable": true ,                 "description":"FileProcessEndTime"   },
+        { "name": "status"              , "type": "char"        , "nullable": false,                 "description":"JobFile status pending, success failure"
+                                        , "values": [
+                                           {"name":"Enqueued", "value":"E", "description":"Jobs Status Enque"     , "label":"Enqueued", "default":"CREATE" }
+                                          ,{"name":"Running" , "value":"R", "description":"JobFile Status Running", "label":"Running" } 
+                                          ,{"name":"Success" , "value":"S", "description":"JobFile Status Success", "label":"Success" }
+                                          ,{"name":"Failure" , "value":"F", "description":"JobFile Status Failure", "label":"Failure" }
+                                        ]
+        }
+       ],
+      "queries": [
+        {
+          "name": "ByJobRefnum",
+          "description": "All JobFile(s) by Job Refnum",
+          "from": [],
+          "wheres": [
+            { "db":"*", "clause":"jobRefnum = ?()" }
+          ],
+          "orderBy": ["created DESC"]
+        }
+      ],
+      "primary": { "autogen": true },
+      "json":[
+        { "name": "", "columns": ["refnum", "jobRefnum", "fileName", "fileRecords", "fileProcessStartTime", "status"] }
+      ]
+    },
+    { "name":"JobMessage",
+      "description":"Job Messages",
+      "columns":[
+      	{ "name":"jobRefnum"                            , "sameas": "Job.refnum"     , "nullable": false,                  "description":"Job Foreign key" },
+        { "name":"jobFileRefnum"                        , "sameas": "JobFile.refnum" , "nullable": false,                  "description":"JobFile Foreign key" },               
+        { "name":"message"                              , "type":"STRING"            , "nullable": false,  "size":   2000, "description":"Message" },
+        { "name":"isError"                              , "type":"BOOLEAN"                                               , "description":"Boolean flag to identify message type -- error or success" }
+       ],
+      "queries": [
+        {
+          "name": "ByJobFileRefnum",
+          "description": "All JobMessage(s) by JobFile Refnum",
+          "from": [],
+          "wheres": [
+            { "db":"*", "clause":"jobFileRefnum = ?()" }
+          ],
+          "orderBy": ["created DESC"]
+        }
+      ],
+     "primary": { "autogen": true },
+     "indices":[ 
+        { "name":"JobFile_Refnum", "columns":["refnum","jobFileRefnum"] }
+      ],
+      "json":[
+        { "name": "", "columns": ["jobFileRefnum", "message", "created", "isError"] }
+      ]
     }
     
-   ,{ "name":"Jobs",
-      "description":"Kettle Jobs",
-      "columns":[
-        { "name":"Id"                                   , "type":"INTEGER" , "nullable": false,                 "description":"Id" },        
-        { "name":"Name"                                 , "type":"STRING"  , "nullable": true,  "size":   120,  "description":"Name" },
-        { "name":"StartTime"                            , "type":"DATETIME", "nullable": true,                  "description":"StartTime" },
-        { "name":"EndTime"                              , "type":"DATETIME", "nullable": true,                  "description":"EndTime" },
-        { "name":"TotalRecords"                         , "type":"INTEGER" , "nullable": true,                  "description":"TotalRecords" },
-        { "name":"Status"                               , "type":"STRING"  , "nullable": true,  "size":   200,  "description":"Status" },
-        { "name":"Error"                                , "type":"STRING"  , "nullable": true,  "size":   1000, "description":"Error" }
-       ]
-       ,"indices":[ 
-        { "name":"Job_Id", "columns":["Id"] }
-      ]         
-    }, 
-    { "name":"Job_Detail",
-      "description":"Job Detail",
-      "columns":[
-        { "name":"Id"                                   , "type":"INTEGER" , "nullable": false,                 "description":"Id" },        
-        { "name":"Job_Id"                               , "type":"INTEGER" , "nullable": false,                 "description":"Job Id" },       
-        { "name":"FileName"                             , "type":"STRING"  , "nullable": true,  "size":   200,  "description":"FileName" },
-        { "name":"FileRecords"                          , "type":"INTEGER" , "nullable": true,                  "description":"FileRecords" },
-        { "name":"FileProcessStartTime"                 , "type":"DATETIME", "nullable": true,                  "description":"FileProcessStartTime" },
-        { "name":"FileProcessEndTime"                   , "type":"DATETIME", "nullable": true,                  "description":"FileProcessEndTime" },
-        { "name":"Status"                               , "type":"STRING"  , "nullable": true,  "size":   200,  "description":"Status" },
-        { "name":"Error"                                , "type":"STRING"  , "nullable": true,  "size":   1000, "description":"Error" }
-       ]
-       ,"indices":[ 
-        { "name":"Job_File_Id", "columns":["Id","Job_Id"] }
-      ]         
-    }
     
     
    ,{ "name": "RefillPerf", "occ": true,

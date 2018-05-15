@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.apache.commons.csv.CSVRecord;
 
+import tilda.data.JobFile_Data;
 import tilda.db.Connection;
 import tilda.db.metadata.ColumnMeta;
 import tilda.loader.parser.ColumnHeader;
@@ -12,11 +13,12 @@ import tilda.loader.parser.DataObject;
 public class MSSQLCSVImporter extends CSVImporter
   {
 
-    public MSSQLCSVImporter(Connection C, String rootFolder, DataObject cmsDO)
+    public MSSQLCSVImporter(Connection C, DataObject cmsDO, Connection status, JobFile_Data jobFile)
       {
         this.C = C;
-        this.rootFolder = rootFolder;
         this.cmsDO = cmsDO;
+        this.statusConnection = status;
+        this.jobFile = jobFile;
       }
     
     @Override
