@@ -124,17 +124,21 @@ public abstract class Base
         int Errs = PS.getErrorCount();
 
         _ParentSchema = ParentSchema;
-        LOG.debug("  Validating "+getWhat()+" " + getFullName() + ".");
-
+        
         // Mandatories
-        if (TextUtil.isNullOrEmpty(_Name) == true)
+        if (TextUtil.isNullOrEmpty(_Name) == true)        	
           return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring an "+getWhat()+" without a name.");
+        else 
+          {
+        	_OriginalName = _Name;            
+            LOG.debug("  Validating "+getWhat()+" " + getFullName() + ".");
+          } 
+        	
         if (ValidationHelper.isValidIdentifier(_Name) == false)
           return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring "+getWhat()+" '" + getFullName() + "' with a name '"+_Name+"' which is not valid. "+ValidationHelper._ValidIdentifierMessage);
         if (TextUtil.isNullOrEmpty(_Description) == true)
           return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring "+getWhat()+" '" + getFullName() + "' without a description name.");
 
-        _OriginalName = _Name;
 //        _Name = _Name.toUpperCase();
 
         _BaseClassName = "TILDA__" + _Name.toUpperCase();
