@@ -61,7 +61,7 @@ public class Value
 
         if (TextUtil.isNullOrEmpty(_Name) == true)
          _Name = _Value;
-        
+
         return Errs == PS.getErrorCount();
       }
 

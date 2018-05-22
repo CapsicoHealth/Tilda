@@ -36,7 +36,7 @@ public class ViewPivot
     /*@formatter:off*/
 	@SerializedName("on"        ) public String                    _ColumnName;
     @SerializedName("aggregates") public List<ViewPivotAggregate>  _Aggregates=new ArrayList<ViewPivotAggregate>();
-    @SerializedName("values"    ) public Value[]                   _Values    ;
+    @SerializedName("values"    ) public ViewPivotValue[]          _Values    ;
     /*@formatter:on*/
 
 
@@ -72,6 +72,10 @@ public class ViewPivot
         Set<String> AggregateNames = new HashSet<String>();        
         for (ViewPivotAggregate A : _Aggregates)
           {
+            if (A == null)
+             continue;
+             if (A.Validate(PS, this) == false)
+              continue;
             ViewColumn VC = ParentView.getViewColumn(A._Name);
             if (VC == null)
               PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot on " + _ColumnName + " for an aggregate " + A._Name + " which cannot be found in the view.");
@@ -81,6 +85,8 @@ public class ViewPivot
             if (AggregateNames.add(A._Name) == false)
               PS.AddError("View '" + ParentView.getFullName() + "' is defining a Pivot on column " + _VC.getShortName() + " with a duplicate aggregate name '"+A._Name+"'.");
           }
+        if (AggregateNames.isEmpty() == true)
+          PS.AddError("View '" + ParentView.getFullName() + "' is defining a Pivot on column " + _VC.getShortName() + " without specifying any aggregate targets.");
 
         return Errs == PS.getErrorCount();
       }

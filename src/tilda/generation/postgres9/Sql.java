@@ -52,6 +52,7 @@ import tilda.parsing.parts.ViewColumn;
 import tilda.parsing.parts.ViewJoin;
 import tilda.parsing.parts.ViewPivot;
 import tilda.parsing.parts.ViewPivotAggregate;
+import tilda.parsing.parts.ViewPivotValue;
 import tilda.parsing.parts.ViewRealizeMapping;
 import tilda.utils.PaddingTracker;
 import tilda.utils.PaddingUtil;
@@ -725,8 +726,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
           }
         // ViewColumn VC_base = V._ViewColumns.get(V._ViewColumns.size() - 2);
         // ViewColumn VC_pivot = V._ViewColumns.get(V._ViewColumns.size() - 1);
-//        if (VC_pivot._Aggregate != null && VC_pivot._Aggregate != AggregateType.COUNT && VC_pivot._Aggregate != AggregateType.SUM)
-//          throw new Exception("Cannot do a  pivot on an aggregated " + VC_pivot._Aggregate.name() + " for view " + V.getFullName() + ".");
+        // if (VC_pivot._Aggregate != null && VC_pivot._Aggregate != AggregateType.COUNT && VC_pivot._Aggregate != AggregateType.SUM)
+        // throw new Exception("Cannot do a pivot on an aggregated " + VC_pivot._Aggregate.name() + " for view " + V.getFullName() + ".");
         for (ViewPivot P : V._Pivots)
           {
             for (ViewPivotAggregate A : P._Aggregates)
@@ -734,11 +735,26 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 ViewColumn VC = V.getViewColumn(A._Name);
                 for (i = 0; i < P._Values.length; ++i)
                   {
-                    if (VC._Aggregate == AggregateType.COUNT || VC._Aggregate == AggregateType.SUM)
-                      Str += "\n, sum(\"" + VC.getName() + "\") filter (where \"" + P._VC.getName() + "\"= '" + P._Values[i]._Value + "') ";
-                    else
-                      Str += "\n, max(case when \"" + P._VC.getName() + "\"= '" + P._Values[i]._Value + "' then \"" + VC.getName() + "\" end)";
-                    Str += " as \"" + A.makeName(P._Values[i]) + "\"";
+                    ViewPivotValue Val = P._Values[i];
+                    if (Val == null)
+                      continue;
+                    
+                    String aggr = VC._Aggregate == AggregateType.COUNT ? "sum"
+                                : VC._Aggregate == AggregateType.ARRAY ? "array_agg"
+                                : VC._Aggregate.name()
+                                ;
+                    String Expr = aggr + "(\"" + VC.getName() + "\") filter (where \"" + P._VC.getName() + "\"= '" + P._Values[i]._Value + "') ";
+                    
+                    if (TextUtil.isNullOrEmpty(Val._Expression) == false)
+                     Expr = Val._Expression.replace("?", Expr);
+                    if (Val._Type != null)
+                     Expr = "("+Expr+")::"+getColumnType(Val._Type.getType(), Val._Type._Size, ColumnMode.NORMAL, Val._Type.isCollection());
+                                        
+                    // else if (VC._Aggregate == AggregateType.MAX)
+                    // Str += "\n, max(case when \"" + P._VC.getName() + "\"= '" + P._Values[i]._Value + "' then \"" + VC.getName() + "\" end)";
+                    // else if (VC._Aggregate == AggregateType.MIN)
+                    // Str += "\n, min(case when \"" + P._VC.getName() + "\"= '" + P._Values[i]._Value + "' then \"" + VC.getName() + "\" end)";
+                    Str += "\n     , "+Expr+" as \"" + A.makeName(P._Values[i]) + "\"";
                   }
               }
           }

@@ -183,6 +183,8 @@ public class View extends Base
             // dependency (.*) expansion
             if (VC._SameAs != null && VC._SameAs.endsWith(".*") == true)
               {
+                if (VC._SameAs.equals("OasisAnswerBasicPivotView.*") == true)
+                  LOG.debug("BLAH");
                 _ViewColumns.remove(i);
                 VC._SameAs = VC._SameAs.substring(0, VC._SameAs.length() - 2);
                 ReferenceHelper R = ReferenceHelper.parseObjectReference(VC._SameAs, _ParentSchema);
@@ -388,10 +390,13 @@ public class View extends Base
           {
             boolean aggregates = false;
             int i = 0;
+            boolean composableAggregates = false;
             for (ViewColumn VC : _ViewColumns)
               {
                 if (VC._Aggregate != null)
                   {
+                    if (VC._Aggregate.isComposable() == true)
+                      composableAggregates = true;
                     if (aggregates == false) // switch from grouped-by columns to pivot columns
                       aggregates = true;
                   }
@@ -404,6 +409,9 @@ public class View extends Base
                       }
                   }
               }
+            if (composableAggregates == false && _Pivots.size() > 1)
+              PS.AddError("View '" + getFullName() + "' is defining multiple Pivots but use non-composable aggregateds (e.g., avg, dev...).");
+              
             Set<String> PivotNames = new HashSet<String>();
             Set<String> PivotPrefixes = new HashSet<String>();
             // Let's validate
@@ -419,6 +427,41 @@ public class View extends Base
             // Then let's fold the Pivotted-on columns back into the main view.
             for (ViewPivot P : _Pivots)
               _ViewColumns.add(i++, P._VC);
+            
+            // Then let's manufacture the Pivotted column results
+/*
+            for (ViewPivot P : _Pivots)
+              {
+                if (P == null || P._Values == null || P._Values.length == 0)
+                  continue;
+                for (ViewPivotAggregate A : P._Aggregates)
+                  {
+                    ViewColumn VC = getViewColumn(A._Name);
+                    if (VC == null)
+                      {
+                        PS.AddError("View '" + getFullName() + "' is using an aggregate '"+A._Name+"' which cannot be resolved.");
+                        continue;
+                      }
+                    ColumnType AggregateType = VC.getAggregateType();
+                    for (ViewPivotValue VPV : P._Values)
+                      {
+                        ColumnType Type = VPV._Type != null ? VPV._Type._Type : AggregateType;
+//                        Column C = new Column(A.makeName(VPV), Type.name(), Type == ColumnType.STRING ? P._VC._SameAsObj._Size : 0, true, ColumnMode.NORMAL, true, null,
+//                        VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')");
+
+                        if (TextUtil.FindElement(VC._Exclude, TextUtil.Print(VPV._Name, VPV._Value), false, 0) != -1)
+                          continue;
+                        ViewColumn NewVC = new ViewColumn();
+                        NewVC._SameAs = V.getShortName() + "." + TextUtil.Print(VPV._Name, VPV._Value);
+                        NewVC._As = VC._As;
+                        NewVC._Name = Prefix + TextUtil.Print(VPV._Name, VPV._Value);
+                        _ViewColumns.add(i++, NewVC);
+                        _PadderColumnNames.track(NewVC.getName());
+                      }
+                  }
+              }
+*/
+
           }
 
 
@@ -430,6 +473,17 @@ public class View extends Base
           PS.AddError("View '" + getFullName() + "' is defining a 'countStar' element which is deprecated. Please use a standard column definition with an aggregate of 'COUNT'.");
 
         // gotta construct a shadow Object for code-gen.
+        Object O = MakeObjectProxy(PS, ParentSchema);
+
+        if (_Realize != null)
+          _Realize.Validate(PS, this, new ViewRealizedWrapper(O));
+
+        _Validated = Errs == PS.getErrorCount();
+        return _Validated;
+      }
+
+    private Object MakeObjectProxy(ParserSession PS, Schema ParentSchema)
+      {
         Object O = new Object();
         O._FST = FrameworkSourcedType.VIEW;
         O._Name = _OriginalName;
@@ -441,7 +495,8 @@ public class View extends Base
         int Counter = -1;
         for (ViewColumn VC : _ViewColumns)
           {
-            if (_Pivots.isEmpty() == false && VC._Aggregate != null) // Stop at the first aggregate... so we capture only the "grouped-by" columns.
+            // Skip intermediary pivot-making columns (pivot columns and aggregates) so we capture only the "grouped-by" columns
+            if (_Pivots.isEmpty() == false && (isPivotColumn(VC) == true || VC._Aggregate != null))
               break;
             if (VC != null && VC._FrameworkGenerated == false && VC._JoinOnly == false)
               {
@@ -456,9 +511,15 @@ public class View extends Base
             for (ViewPivotAggregate A : P._Aggregates)
               {
                 ViewColumn VC = getViewColumn(A._Name);
-                ColumnType Type = VC.getAggregateType();
-                for (Value VPV : P._Values)
+                if (VC == null)
                   {
+                    PS.AddError("View '" + getFullName() + "' is using an aggregate '"+A._Name+"' which cannot be resolved.");
+                    continue;
+                  }
+                ColumnType AggregateType = VC.getAggregateType();
+                for (ViewPivotValue VPV : P._Values)
+                  {
+                    ColumnType Type = VPV._Type != null ? VPV._Type._Type : AggregateType;
                     Column C = new Column(A.makeName(VPV), Type.name(), Type == ColumnType.STRING ? P._VC._SameAsObj._Size : 0, true, ColumnMode.NORMAL, true, null,
                     VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')");
                     O._Columns.add(C);
@@ -572,12 +633,7 @@ public class View extends Base
         O._DBOnly = _DBOnly;
         _ParentSchema._Objects.add(O);
         O.Validate(PS, ParentSchema);
-
-        if (_Realize != null)
-          _Realize.Validate(PS, this, new ViewRealizedWrapper(O));
-
-        _Validated = Errs == PS.getErrorCount();
-        return _Validated;
+        return O;
       }
 
     private ViewColumn CopyDependentObjectFields(int i, ViewColumn VC, String Prefix, Object O)

@@ -1,5 +1,5 @@
 /* ===========================================================================
- * Copyright (C) 2016 CapsicoHealth Inc.
+ * Copyright (C) 2015 CapsicoHealth Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,39 +22,36 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.annotations.SerializedName;
 
 import tilda.parsing.ParserSession;
-import tilda.utils.TextUtil;
 
-public class ViewPivotAggregate
+public class ViewPivotValue extends Value
   {
-    static final Logger LOG             = LogManager.getLogger(ViewPivotAggregate.class.getName());
+    static final Logger LOG = LogManager.getLogger(ViewPivotValue.class.getName());
 
     /*@formatter:off*/
-	@SerializedName("name"  ) public String  _Name;
-    @SerializedName("prefix") public String  _Prefix;
+    @SerializedName("type"      ) public String  _TypeStr   ;
+    @SerializedName("size"      ) public Integer _Size      ;
+    @SerializedName("expression") public String  _Expression;
     /*@formatter:on*/
-    
-    public transient ViewPivot _ParentPivot;
 
-    public ViewPivotAggregate()
+    public transient TypeDef _Type;    
+
+    public ViewPivotValue()
       {
       }
-
-    public boolean Validate(ParserSession PS, ViewPivot ParentPivot)
+    
+    public boolean Validate(ParserSession PS, View ParentView, String What)
       {
         int Errs = PS.getErrorCount();
-        _ParentPivot = ParentPivot;
         
-        if (TextUtil.isNullOrEmpty(_Name) == true)
-         return PS.AddError("View '" + ParentPivot._ParentView.getFullName() + "' is defining a pivot on '"+_ParentPivot._ColumnName+"' with an aggregate without any 'name' column specified.");
-
+        super.Validate(PS, ParentView, What);
+        
+        if (_TypeStr != null)
+          {
+            _Type = new TypeDef(_TypeStr, _Size);
+            _Type.Validate(PS, What, true, false);
+          }
+                
         return Errs == PS.getErrorCount();
-      }    
-
-    public String makeName(Value V)
-      {
-        if (TextUtil.isNullOrEmpty(_Prefix) == false)
-         return _Prefix + TextUtil.CapitalizeFirstCharacter(TextUtil.Print(V._Name, V._Value));
-        return TextUtil.Print(V._Name, V._Value);
       }
 
   }

@@ -91,6 +91,10 @@ public class Reverse
                       {
                         Str.append(", \"sameas\":" + TextUtil.EscapeDoubleQuoteWithSlash(FKCol._ParentFK._OtherSchema+"."+FKCol._ParentFK._OtherTable+"."+FKCol._PKCol));
                       }
+                    else if (Col._TildaType == null)
+                      {
+                        Str.append(", \"type\":\"" + Col._TypeName + "_" + Col._TypeSql + "_" + Col._Type+ "\"");
+                      }
                     else if (Col._TildaType == ColumnType.STRING)
                       {
                         if (Col._Size == 1)
