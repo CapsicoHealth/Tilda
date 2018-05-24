@@ -183,40 +183,10 @@ public class View extends Base
             // dependency (.*) expansion
             if (VC._SameAs != null && VC._SameAs.endsWith(".*") == true)
               {
-                if (VC._SameAs.equals("OasisAnswerBasicPivotView.*") == true)
-                  LOG.debug("BLAH");
-                _ViewColumns.remove(i);
-                VC._SameAs = VC._SameAs.substring(0, VC._SameAs.length() - 2);
-                ReferenceHelper R = ReferenceHelper.parseObjectReference(VC._SameAs, _ParentSchema);
-                if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true)
-                  return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " with an incorrect syntax. It should be '((package\\.)?schema\\.)?object\\.\\*'.");
-                else
-                  {
-                    String Prefix = TextUtil.Print(VC._Prefix, "");
-                    Schema S = PS.getSchema(R._P, R._S);
-                    if (S == null)
-                      return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " resolving to '" + R.getFullName() + "' with a schema which cannot be found. Please check the declared dependencies for this schema.");
-                    View V = PS.getView(R._P, R._S, R._O);
-                    if (V != null)
-                      {
-                        _Dependencies.put(V.getShortName().toUpperCase(), V);
-                        if (V._Validated == false)
-                          return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " which has failed validation.");
-                        CopyDependentViewFields(i, VC, Prefix, V);
-                      }
-                    else
-                      {
-                        Object O = PS.getObject(R._P, R._S, R._O);
-                        if (O == null)
-                          return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " resolving to '" + R.getFullName() + "' with a table/view which cannot be found.");
-                        if (O._Validated == false)
-                          return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " which has failed validation.");
-                        _Dependencies.put(O.getShortName().toUpperCase(), O);
-                        VC = CopyDependentObjectFields(i, VC, Prefix, O);
-                      }
-                    --i;
-                    continue;
-                  }
+                if (HandleDotStarExpansion(PS, i, VC) == false)
+                  return false;
+                --i;
+                continue;
               }
             else if (TextUtil.isNullOrEmpty(VC._Prefix) == false)
               PS.AddError("Column '" + VC.getFullName() + "' defined a prefix but is not a .* column.");
@@ -242,11 +212,11 @@ public class View extends Base
             if (ObjectNames.add(VC._SameAsObj._ParentObject.getFullName()) == false)
               {
                 if (VC._Join != null)
-                  PS.AddError("Column '" + VC.getFullName() + "' is defining a join type: only the first column of a refered table can define a join type.");
+                  PS.AddError("Column '" + VC.getFullName() + "' is defining a join type: only the first column of a referenced table can define a join type.");
               }
             else if (ObjectNames.size() == 1 && VC._Join != null)
               {
-                PS.AddError("Column '" + VC.getFullName() + "' is defining a join type: columns of the first refered table are considered part of the 'from' clause of a view and cannot define a join type.");
+                PS.AddError("Column '" + VC.getFullName() + "' is defining a join type: columns of the first referenced table are considered part of the 'from' clause of a view and cannot define a join type.");
               }
             if (VC._SameAsObj._Type == ColumnType.DATETIME && Object.isOCCColumn(VC._SameAsObj) == false && VC._Aggregate == null && VC._FrameworkGenerated == false && VC._SameAsObj._FrameworkManaged == false)
               {
@@ -272,56 +242,7 @@ public class View extends Base
           }
 
         if (_TimeSeries != null)
-          {
-            if (_TimeSeries.Validate(PS, this) == true)
-              {
-                int firstAgg = -1;
-                if (_DistinctOn == null)
-                  {
-                    for (int i = 0; i < _ViewColumns.size(); ++i)
-                      {
-                        ViewColumn VC = _ViewColumns.get(i);
-                        if (VC._Aggregate != null)
-                          {
-                            firstAgg = i;
-                            break;
-                          }
-                      }
-                  }
-                else
-                  {
-                    int offset = 0;
-                    for (int i = 0; i < _DistinctOn._Columns.length; ++i)
-                      {
-                        if (getColumn(_DistinctOn._Columns[i]) != null && getColumn(_DistinctOn._Columns[i])._Type == ColumnType.DATETIME)
-                          ++offset;
-                        if (_DistinctOn._Columns[i].equals(_TimeSeries._Name) == true)
-                          {
-                            firstAgg = i + offset;
-                            if (_Pivots.isEmpty() == false)
-                              ++firstAgg;
-                            break;
-                          }
-                      }
-                    if (firstAgg == -1)
-                      firstAgg = _DistinctOn._Columns.length + offset;
-                  }
-
-                if (firstAgg == -1)
-                  PS.AddError("The View '" + getFullName() + "' is defining a time series without having defined any aggregate column or distinct on.");
-                else
-                  {
-                    if (_Pivots.isEmpty() == false)
-                      --firstAgg;
-                    ViewColumn VC = new ViewColumn();
-                    VC._SameAs = "_TS.p";
-                    VC._Name = _TimeSeries._Name;
-                    VC._FrameworkGenerated = true;
-                    VC._ParentView = this;
-                    _ViewColumns.add(firstAgg, VC);
-                  }
-              }
-          }
+          HandleTimeSeries(PS);
 
         if (_DistinctOn != null)
           {
@@ -351,9 +272,7 @@ public class View extends Base
           }
 
         if (TextUtil.isNullOrEmpty(_SubWhere) == false && _SubQuery != null)
-          PS.AddError("View '" +
-
-          getFullName() + "' is defining both a subWhere AND a subQuery: only one is allowed.");
+          PS.AddError("View '" + getFullName() + "' is defining both a subWhere AND a subQuery: only one is allowed.");
         else
           {
             if (TextUtil.isNullOrEmpty(_SubWhere) == false)
@@ -385,86 +304,8 @@ public class View extends Base
             }
 
         // Let's do the pivot(s).
-        // First, pivots need to be defined a certain way, i.e., grouped-by columns first, then aggregates.
         if (_Pivots.isEmpty() == false)
-          {
-            boolean aggregates = false;
-            int i = 0;
-            boolean composableAggregates = false;
-            for (ViewColumn VC : _ViewColumns)
-              {
-                if (VC._Aggregate != null)
-                  {
-                    if (VC._Aggregate.isComposable() == true)
-                      composableAggregates = true;
-                    if (aggregates == false) // switch from grouped-by columns to pivot columns
-                      aggregates = true;
-                  }
-                else
-                  {
-                    ++i;
-                    if (aggregates == true)
-                      {
-                        PS.AddError("View '" + getFullName() + "' is defining a non-aggregate view column " + VC.getShortName() + " after the aggregate section started. Please define grouped-by columns first, followed by aggregates.");
-                      }
-                  }
-              }
-            if (composableAggregates == false && _Pivots.size() > 1)
-              PS.AddError("View '" + getFullName() + "' is defining multiple Pivots but use non-composable aggregateds (e.g., avg, dev...).");
-              
-            Set<String> PivotNames = new HashSet<String>();
-            Set<String> PivotPrefixes = new HashSet<String>();
-            // Let's validate
-            for (ViewPivot P : _Pivots)
-              {
-                P.Validate(PS, this);
-                if (PivotNames.add(P._VC.getShortName()) == false)
-                  PS.AddError("View '" + getFullName() + "' is defining a duplicate Pivot on column " + P._VC.getShortName() + ".");
-                for (ViewPivotAggregate F : P._Aggregates)
-                  if (PivotPrefixes.add(F._Prefix) == false)
-                    PS.AddError("View '" + getFullName() + "' is defining a Pivot on column " + P._VC.getShortName() + " with a for-prefix '"+F._Prefix+"' which has already been used.");
-              }
-            // Then let's fold the Pivotted-on columns back into the main view.
-            for (ViewPivot P : _Pivots)
-              _ViewColumns.add(i++, P._VC);
-            
-            // Then let's manufacture the Pivotted column results
-/*
-            for (ViewPivot P : _Pivots)
-              {
-                if (P == null || P._Values == null || P._Values.length == 0)
-                  continue;
-                for (ViewPivotAggregate A : P._Aggregates)
-                  {
-                    ViewColumn VC = getViewColumn(A._Name);
-                    if (VC == null)
-                      {
-                        PS.AddError("View '" + getFullName() + "' is using an aggregate '"+A._Name+"' which cannot be resolved.");
-                        continue;
-                      }
-                    ColumnType AggregateType = VC.getAggregateType();
-                    for (ViewPivotValue VPV : P._Values)
-                      {
-                        ColumnType Type = VPV._Type != null ? VPV._Type._Type : AggregateType;
-//                        Column C = new Column(A.makeName(VPV), Type.name(), Type == ColumnType.STRING ? P._VC._SameAsObj._Size : 0, true, ColumnMode.NORMAL, true, null,
-//                        VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')");
-
-                        if (TextUtil.FindElement(VC._Exclude, TextUtil.Print(VPV._Name, VPV._Value), false, 0) != -1)
-                          continue;
-                        ViewColumn NewVC = new ViewColumn();
-                        NewVC._SameAs = V.getShortName() + "." + TextUtil.Print(VPV._Name, VPV._Value);
-                        NewVC._As = VC._As;
-                        NewVC._Name = Prefix + TextUtil.Print(VPV._Name, VPV._Value);
-                        _ViewColumns.add(i++, NewVC);
-                        _PadderColumnNames.track(NewVC.getName());
-                      }
-                  }
-              }
-*/
-
-          }
-
-
+          HandlePivots(PS);
 
         // Deprecations
         if (_PivotColumnsDeprecated != null)
@@ -480,6 +321,172 @@ public class View extends Base
 
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
+      }
+
+    private boolean HandleDotStarExpansion(ParserSession PS, int i, ViewColumn VC)
+      {
+        if (VC._SameAs.equals("OasisAnswerBasicPivotView.*") == true)
+          LOG.debug("BLAH");
+        _ViewColumns.remove(i);
+        VC._SameAs = VC._SameAs.substring(0, VC._SameAs.length() - 2);
+        ReferenceHelper R = ReferenceHelper.parseObjectReference(VC._SameAs, _ParentSchema);
+        if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true)
+          return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " with an incorrect syntax. It should be '((package\\.)?schema\\.)?object\\.\\*'.");
+        String Prefix = TextUtil.Print(VC._Prefix, "");
+        Schema S = PS.getSchema(R._P, R._S);
+        if (S == null)
+          return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " resolving to '" + R.getFullName() + "' with a schema which cannot be found. Please check the declared dependencies for this schema.");
+        View V = PS.getView(R._P, R._S, R._O);
+        if (V != null)
+          {
+            _Dependencies.put(V.getShortName().toUpperCase(), V);
+            if (V._Validated == false)
+              return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " which has failed validation.");
+            CopyDependentViewFields(i, VC, Prefix, V);
+          }
+        else
+          {
+            Object O = PS.getObject(R._P, R._S, R._O);
+            if (O == null)
+              return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " resolving to '" + R.getFullName() + "' with a table/view which cannot be found.");
+            if (O._Validated == false)
+              return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " which has failed validation.");
+            _Dependencies.put(O.getShortName().toUpperCase(), O);
+            VC = CopyDependentObjectFields(i, VC, Prefix, O);
+          }
+        return true;
+      }
+
+    private void HandlePivots(ParserSession PS)
+      {
+        // First, pivots need to be defined a certain way, i.e., grouped-by columns first, then aggregates.
+        boolean aggregates = false;
+        int i = 0;
+        boolean composableAggregates = false;
+        for (ViewColumn VC : _ViewColumns)
+          {
+            if (VC._Aggregate != null)
+              {
+                if (VC._Aggregate.isComposable() == true)
+                  composableAggregates = true;
+                if (aggregates == false) // switch from grouped-by columns to pivot columns
+                  aggregates = true;
+              }
+            else
+              {
+                ++i;
+                if (aggregates == true)
+                  {
+                    PS.AddError("View '" + getFullName() + "' is defining a non-aggregate view column " + VC.getShortName() + " after the aggregate section started. Please define grouped-by columns first, followed by aggregates.");
+                  }
+              }
+          }
+        if (composableAggregates == false && _Pivots.size() > 1)
+          PS.AddError("View '" + getFullName() + "' is defining multiple Pivots but use non-composable aggregateds (e.g., avg, dev...).");
+
+        Set<String> PivotNames = new HashSet<String>();
+        Set<String> PivotPrefixes = new HashSet<String>();
+        // Let's validate
+        for (ViewPivot P : _Pivots)
+          {
+            P.Validate(PS, this);
+            if (PivotNames.add(P._VC.getShortName()) == false)
+              PS.AddError("View '" + getFullName() + "' is defining a duplicate Pivot on column " + P._VC.getShortName() + ".");
+            for (ViewPivotAggregate F : P._Aggregates)
+              if (PivotPrefixes.add(F._Prefix) == false)
+                PS.AddError("View '" + getFullName() + "' is defining a Pivot on column " + P._VC.getShortName() + " with a aggregate-prefix '" + F._Prefix + "' which has already been used.");
+          }
+        // Then let's fold the Pivotted-on columns back into the main view.
+        for (ViewPivot P : _Pivots)
+          _ViewColumns.add(i++, P._VC);
+
+        // Then let's manufacture the Pivotted column results
+        /*
+         * for (ViewPivot P : _Pivots)
+         * {
+         * if (P == null || P._Values == null || P._Values.length == 0)
+         * continue;
+         * for (ViewPivotAggregate A : P._Aggregates)
+         * {
+         * ViewColumn VC = getViewColumn(A._Name);
+         * if (VC == null)
+         * {
+         * PS.AddError("View '" + getFullName() + "' is using an aggregate '" + A._Name + "' which cannot be resolved.");
+         * continue;
+         * }
+         * ColumnType AggregateType = VC.getAggregateType();
+         * for (ViewPivotValue VPV : P._Values)
+         * {
+         * ColumnType Type = VPV._Type != null ? VPV._Type._Type : AggregateType;
+         * // if (TextUtil.FindElement(VC._Exclude, TextUtil.Print(VPV._Name, VPV._Value), false, 0) != -1)
+         * // continue;
+         * // Column C = new Column(A.makeName(VPV), Type.name(), Type == ColumnType.STRING ? P._VC._SameAsObj._Size : 0, true, ColumnMode.NORMAL, true, null,
+         * // VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')");
+         * 
+         * ViewColumn NewVC = new ViewColumn();
+         * NewVC._SameAs = VC._Name; //_SameAs; // getShortName() + "." + TextUtil.Print(VPV._Name, VPV._Value);
+         * NewVC._As = VC._As;
+         * NewVC._Name = A.makeName(VPV);
+         * if (NewVC.Validate(PS, this) == false)
+         * return;
+         * _ViewColumns.add(i++, NewVC);
+         * _PadderColumnNames.track(NewVC.getName());
+         * }
+         * }
+         * }
+         */
+      }
+
+    private void HandleTimeSeries(ParserSession PS)
+      {
+        if (_TimeSeries.Validate(PS, this) == true)
+          {
+            int firstAgg = -1;
+            if (_DistinctOn == null)
+              {
+                for (int i = 0; i < _ViewColumns.size(); ++i)
+                  {
+                    ViewColumn VC = _ViewColumns.get(i);
+                    if (VC._Aggregate != null)
+                      {
+                        firstAgg = i;
+                        break;
+                      }
+                  }
+              }
+            else
+              {
+                int offset = 0;
+                for (int i = 0; i < _DistinctOn._Columns.length; ++i)
+                  {
+                    if (getColumn(_DistinctOn._Columns[i]) != null && getColumn(_DistinctOn._Columns[i])._Type == ColumnType.DATETIME)
+                      ++offset;
+                    if (_DistinctOn._Columns[i].equals(_TimeSeries._Name) == true)
+                      {
+                        firstAgg = i + offset;
+                        if (_Pivots.isEmpty() == false)
+                          ++firstAgg;
+                        break;
+                      }
+                  }
+                if (firstAgg == -1)
+                  firstAgg = _DistinctOn._Columns.length + offset;
+              }
+
+            if (firstAgg == -1)
+              PS.AddError("The View '" + getFullName() + "' is defining a time series without having defined any aggregate column or distinct on.");
+            else
+              {
+                if (_Pivots.isEmpty() == false)
+                  --firstAgg;
+                ViewColumn VC = new ViewColumn();
+                VC._SameAs = "_TS.p";
+                VC._Name = _TimeSeries._Name;
+                VC._FrameworkGenerated = true;
+                VC._ParentView = this;
+                _ViewColumns.add(firstAgg, VC);
+              }
+          }
       }
 
     private Object MakeObjectProxy(ParserSession PS, Schema ParentSchema)
@@ -513,7 +520,7 @@ public class View extends Base
                 ViewColumn VC = getViewColumn(A._Name);
                 if (VC == null)
                   {
-                    PS.AddError("View '" + getFullName() + "' is using an aggregate '"+A._Name+"' which cannot be resolved.");
+                    PS.AddError("View '" + getFullName() + "' is using an aggregate '" + A._Name + "' which cannot be resolved.");
                     continue;
                   }
                 ColumnType AggregateType = VC.getAggregateType();
@@ -680,7 +687,7 @@ public class View extends Base
             _PadderColumnNames.track(NewVC.getName());
             ++j;
           }
-        for (ViewPivot P : _Pivots)
+        for (ViewPivot P : V._Pivots)
           {
             if (P != null)
               {
