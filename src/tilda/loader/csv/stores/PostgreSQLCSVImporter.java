@@ -115,23 +115,23 @@ public class PostgreSQLCSVImporter extends CSVImporter
                     	      colVal = columnMap.get(col)._DefaultValue;
                             else if (DBColumns.get(c.toLowerCase())._Nullable != 1) 
                               {
-                    	        String defaultCreateValue = MasterFactory.GetDefaultCreateValue(schemaName, tableName, col);
+                    	        String defaultCreateValue = MasterFactory.GetDefaultCreateValue(schemaName, tableName, c);
                     	   
                     	        if(TextUtil.isNullOrEmpty(defaultCreateValue) == false)
                     	          colVal = defaultCreateValue;
                     	        else
                     	          {
-                    	            LOG.error("The column " + col + " does not have a default create value in the Tilda definition or a default value in the mapping file and is not nullable.");                  	  
+                    	            LOG.error("The header " + col + " mapped to column "+ c +" does not have a default create value in the Tilda definition or a default value in the mapping file and is not nullable.");                  	  
                     	            throw new Exception("Not null constraint will be violated.");
                     	          }
                               }
                              else
-                               LOG.info("The column " + col + " does not exist in the CSV file and does not have a default value in the mapping file.");  
+                               LOG.info("The column " + c + " does not exist in the CSV file and does not have a default value in the mapping file.");  
                            }
                       }
                     else 
                       {
-                        LOG.error("The column " + c + " is not found in the database for the table " + schemaName + "." + tableName + ".");                              
+                        LOG.error("The header " + col + " mapped to column " + c + " is not found in the database for the table " + schemaName + "." + tableName + ".");                              
                         throw new Exception("Column " + c + " not found in the database.");
                       }
                     
