@@ -104,7 +104,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
                     col = headers[i]; 
                     colVal = "";
                     
-                    if(DBColumns.get(col.toLowerCase()) != null)
+                    if(DBColumns.get(c.toLowerCase()) != null)
                       {                    
 	                    if(record.isMapped(col))
 	                      colVal = record.get(col);                    	
@@ -131,8 +131,8 @@ public class PostgreSQLCSVImporter extends CSVImporter
                       }
                     else 
                       {
-                        LOG.error("The column " + col + " is not found in the database for the table " + schemaName + "." + tableName + ".");                              
-                        throw new Exception("Column " + col + " not found in the database.");
+                        LOG.error("The column " + c + " is not found in the database for the table " + schemaName + "." + tableName + ".");                              
+                        throw new Exception("Column " + c + " not found in the database.");
                       }
                     
                     ColumnHeader cHeader = columnMap.get(c);
