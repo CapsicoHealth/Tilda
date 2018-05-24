@@ -738,23 +738,22 @@ public class Sql extends PostgreSQL implements CodeGenSql
                     ViewPivotValue Val = P._Values[i];
                     if (Val == null)
                       continue;
-                    
+
                     String aggr = VC._Aggregate == AggregateType.COUNT ? "sum"
-                                : VC._Aggregate == AggregateType.ARRAY ? "array_agg"
-                                : VC._Aggregate.name()
-                                ;
+                    : VC._Aggregate == AggregateType.ARRAY ? "array_agg"
+                    : VC._Aggregate.name();
                     String Expr = aggr + "(\"" + VC.getName() + "\") filter (where \"" + P._VC.getName() + "\"= '" + P._Values[i]._Value + "') ";
-                    
+
                     if (TextUtil.isNullOrEmpty(Val._Expression) == false)
-                     Expr = Val._Expression.replace("?", Expr);
+                      Expr = Val._Expression.replace("?", Expr);
                     if (Val._Type != null)
-                     Expr = "("+Expr+")::"+getColumnType(Val._Type.getType(), Val._Type._Size, ColumnMode.NORMAL, Val._Type.isCollection());
-                                        
+                      Expr = "(" + Expr + ")::" + getColumnType(Val._Type.getType(), Val._Type._Size, ColumnMode.NORMAL, Val._Type.isCollection());
+
                     // else if (VC._Aggregate == AggregateType.MAX)
                     // Str += "\n, max(case when \"" + P._VC.getName() + "\"= '" + P._Values[i]._Value + "' then \"" + VC.getName() + "\" end)";
                     // else if (VC._Aggregate == AggregateType.MIN)
                     // Str += "\n, min(case when \"" + P._VC.getName() + "\"= '" + P._Values[i]._Value + "' then \"" + VC.getName() + "\" end)";
-                    Str += "\n     , "+Expr+" as \"" + A.makeName(P._Values[i]) + "\"";
+                    Str += "\n     , " + Expr + " as \"" + A.makeName(P._Values[i]) + "\"";
                   }
               }
           }
@@ -785,17 +784,23 @@ public class Sql extends PostgreSQL implements CodeGenSql
         for (int i = 0; i < V._ViewColumns.size(); ++i)
           {
             ViewColumn VC = V._ViewColumns.get(i);
-            if (V._Pivots.isEmpty() && VC._Aggregate == null) // A pivotted aggregate
-              continue; // no comment
+            if (V._Pivots.isEmpty() == false && (V.isPivotColumn(VC) == true || VC._Aggregate != null))
+              break;
             if (VC != null && VC._SameAsObj != null && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false)
               OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + VC.getName() + "\" IS E" + TextUtil.EscapeSingleQuoteForSQL(VC._SameAsObj._Description) + ";");
           }
         for (ViewPivot P : V._Pivots)
           if (P != null)
-            for (int i = 0; i < P._Values.length; ++i)
-              OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + TextUtil.Print(P._Values[i]._Name, P._Values[i]._Value) + "\" IS E"
-              + TextUtil.EscapeSingleQuoteForSQL("The pivoted column count from '" + P._ColumnName + "'='" + P._Values[i]._Value + "', " + P._Values[i]._Description)
-              + ";");
+            for (ViewPivotAggregate A : P._Aggregates)
+              {
+                ViewColumn VC = V.getViewColumn(A._Name);
+                for (ViewPivotValue VPV : P._Values)
+                  if (VPV != null)
+                    OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + A.makeName(VPV) + "\" IS E"
+                    + TextUtil.EscapeSingleQuoteForSQL(VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')")
+                    // + TextUtil.EscapeSingleQuoteForSQL("The pivoted column count from '" + P._ColumnName + "'='" + P._Values[i]._Value + "', " + P._Values[i]._Description)
+                    + ";");
+              }
         if (V._Formulas != null)
           for (Formula F : V._Formulas)
             if (F != null)
