@@ -109,11 +109,11 @@ public class PostgreSQLCSVImporter extends CSVImporter
 	                    if(record.isMapped(col))
 	                      colVal = record.get(col);                    	
                     	
-                        if(record.isMapped(col) == false || (TextUtil.isNullOrEmpty(colVal) && DBColumns.get(col.toLowerCase())._Nullable != 1)) 
+                        if(record.isMapped(col) == false || (TextUtil.isNullOrEmpty(colVal) && DBColumns.get(c.toLowerCase())._Nullable != 1)) 
                           {                       
                             if(TextUtil.isNullOrEmpty(columnMap.get(col)._DefaultValue) == false)                    	
                     	      colVal = columnMap.get(col)._DefaultValue;
-                            else if (DBColumns.get(col.toLowerCase())._Nullable != 1) 
+                            else if (DBColumns.get(c.toLowerCase())._Nullable != 1) 
                               {
                     	        String defaultCreateValue = MasterFactory.GetDefaultCreateValue(schemaName, tableName, col);
                     	   
