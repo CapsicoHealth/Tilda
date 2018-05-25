@@ -305,7 +305,7 @@ public class View extends Base
 
         // Let's do the pivot(s).
         if (_Pivots.isEmpty() == false)
-          HandlePivots(PS);
+          HandlePivots(PS, ColumnNames);
 
         // Deprecations
         if (_PivotColumnsDeprecated != null)
@@ -357,7 +357,7 @@ public class View extends Base
         return true;
       }
 
-    private void HandlePivots(ParserSession PS)
+    private void HandlePivots(ParserSession PS, Set<String> ColumnNames)
       {
         // First, pivots need to be defined a certain way, i.e., grouped-by columns first, then aggregates.
         boolean aggregates = false;
@@ -398,43 +398,11 @@ public class View extends Base
           }
         // Then let's fold the Pivotted-on columns back into the main view.
         for (ViewPivot P : _Pivots)
-          _ViewColumns.add(i++, P._VC);
-
-        // Then let's manufacture the Pivotted column results
-        /*
-         * for (ViewPivot P : _Pivots)
-         * {
-         * if (P == null || P._Values == null || P._Values.length == 0)
-         * continue;
-         * for (ViewPivotAggregate A : P._Aggregates)
-         * {
-         * ViewColumn VC = getViewColumn(A._Name);
-         * if (VC == null)
-         * {
-         * PS.AddError("View '" + getFullName() + "' is using an aggregate '" + A._Name + "' which cannot be resolved.");
-         * continue;
-         * }
-         * ColumnType AggregateType = VC.getAggregateType();
-         * for (ViewPivotValue VPV : P._Values)
-         * {
-         * ColumnType Type = VPV._Type != null ? VPV._Type._Type : AggregateType;
-         * // if (TextUtil.FindElement(VC._Exclude, TextUtil.Print(VPV._Name, VPV._Value), false, 0) != -1)
-         * // continue;
-         * // Column C = new Column(A.makeName(VPV), Type.name(), Type == ColumnType.STRING ? P._VC._SameAsObj._Size : 0, true, ColumnMode.NORMAL, true, null,
-         * // VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')");
-         * 
-         * ViewColumn NewVC = new ViewColumn();
-         * NewVC._SameAs = VC._Name; //_SameAs; // getShortName() + "." + TextUtil.Print(VPV._Name, VPV._Value);
-         * NewVC._As = VC._As;
-         * NewVC._Name = A.makeName(VPV);
-         * if (NewVC.Validate(PS, this) == false)
-         * return;
-         * _ViewColumns.add(i++, NewVC);
-         * _PadderColumnNames.track(NewVC.getName());
-         * }
-         * }
-         * }
-         */
+          {
+            if (ColumnNames.add(P._VC.getName().toUpperCase()) == false)
+              PS.AddError("Pivot column '" + P._VC.getFullName() + "' conflicts with another column already named the same in view '" + getFullName() + "'. You only need to define pivot columns in the pivot construct, not in the baseline list of view columns.");
+            _ViewColumns.add(i++, P._VC);
+          }
       }
 
     private void HandleTimeSeries(ParserSession PS)
@@ -718,7 +686,7 @@ public class View extends Base
             ++j;
           }
       }
-
+/*
     private Column getSameAsColumn(String ObjectFullName, String ColName)
       {
         for (ViewColumn VC : _ViewColumns)
@@ -738,7 +706,7 @@ public class View extends Base
           }
         return null;
       }
-
+*/
     private void CreateMappedViewColumn(ParserSession PS, Set<String> ColumnNames, int i, ViewColumn C, String ExtraName)
       {
         ViewColumn VC = new ViewColumn();
