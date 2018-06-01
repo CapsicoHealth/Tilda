@@ -113,7 +113,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
     public String getColumnTypeRaw(ColumnType Type, int Size, boolean Calculated, boolean isCollection, boolean MultiOverride)
       {
         if (Type == ColumnType.STRING && Calculated == false)
-          return isCollection == true || MultiOverride == true ? "text" : Size < 15 ? PostgresType.CHAR._SQLType : Size < 4096 ? PostgresType.STRING._SQLType : "text";
+          return isCollection == true || MultiOverride == true ? "text" : Size <= getVarCharThreshhold() ? PostgresType.CHAR._SQLType : Size <= getCLOBThreshhold() ? PostgresType.STRING._SQLType : "text";
         if (Type == ColumnType.JSON)
           return "jsonb";
         return isCollection == true ? PostgresType.get(Type)._SQLArrayType : PostgresType.get(Type)._SQLType;
@@ -125,7 +125,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
     @Override
     public boolean stringNeedsTrim(Column C)
       {
-        return C.getType() == ColumnType.STRING && C._Mode != ColumnMode.CALCULATED && C.isCollection() == false && C._Size < 15;
+        return C.getType() == ColumnType.STRING && C._Mode != ColumnMode.CALCULATED && C.isCollection() == false && C._Size <= getVarCharThreshhold();
       }
 
 
@@ -283,7 +283,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                     Str.append("\"").append(VC._Name).append("\"");
                   }
               }
-            Str.append(")\n");
+            Str.append(")\n       ");
           }
         StringBuilder FromList = new StringBuilder();
         boolean hasAggregates = false;
@@ -570,7 +570,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
         boolean hasAggregates = false;
         if (VC._Aggregate == AggregateType.COUNT)
           {
-            Str.append("count(*)");
+            if (VC._Distinct == true)
+              Str.append("count(distinct "+VC._SameAs+")");
+            else
+              Str.append("count(*)");
             if (TextUtil.isNullOrEmpty(VC._Filter) == false)
               {
                 Str.append(" filter(where ").append(VC._Filter).append(")");
@@ -583,8 +586,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
           }
         else
           {
-            boolean trimNeeded = VC._Aggregate == AggregateType.ARRAY && VC._SameAsObj.getType() == ColumnType.STRING
-            || VC._ParentView.getPivotWithColumn(VC._Name) != null;
+            boolean trimNeeded = stringNeedsTrim( VC._SameAsObj); // || VC._ParentView.getPivotWithColumn(VC._Name) != null;
             if (VC._Aggregate != null)
               {
                 Str.append(getAggregateStr(VC._Aggregate) + "(");
@@ -1144,11 +1146,15 @@ public class Sql extends PostgreSQL implements CodeGenSql
     private String PrintValueList(ViewPivot P)
       {
         StringBuilder Str = new StringBuilder();
+        boolean trimNeeded = stringNeedsTrim(P._VC._SameAsObj);
         for (int i = 0; i < P._Values.length; ++i)
           {
             if (i != 0)
               Str.append(", ");
-            Str.append(TextUtil.EscapeSingleQuoteForSQL(P._Values[i]._Value));
+            String Pad = "";
+            if (trimNeeded == true)
+             Pad = PaddingUtil.getPad(P._VC._SameAsObj._Size-P._Values[i]._Value.length());
+            Str.append(TextUtil.EscapeSingleQuoteForSQL(P._Values[i]._Value+Pad));
           }
         return Str.toString();
       }

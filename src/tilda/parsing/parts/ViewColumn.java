@@ -45,7 +45,7 @@ public class ViewColumn
     @SerializedName("joinType"   ) public String         _JoinStr      ;
     @SerializedName("joinOnly"   ) public boolean        _JoinOnly      = false;
     @SerializedName("aggregate"  ) public String         _AggregateStr ;
-    @SerializedName("distinct"   ) public Boolean        _Distinct     ;
+    @SerializedName("distinct"   ) public Boolean        _Distinct     = false;
     @SerializedName("filter"     ) public String         _Filter       ;
     @SerializedName("useMapper"  ) public boolean        _UseMapper     = false;
     @SerializedName("useEnum"    ) public boolean        _UseEnum       = false;
@@ -95,9 +95,11 @@ public class ViewColumn
 
     public String getAggregateName()
       {
-        return _Aggregate == null ? getName()
-        : _Aggregate == AggregateType.COUNT && _SameAsObj == null ? "COUNT(*)"
-        : _Aggregate.name() + "(" + (_SameAsObj == null ? getShortName() : _SameAsObj.getShortName()) + ")";
+        if (_Aggregate == null)
+         return getName();
+        if (_Aggregate == AggregateType.COUNT && _SameAsObj == null)
+         return _Distinct == true ? "COUNT(DISTINCT "+getName()+")" : "COUNT(*)";
+        return _Aggregate.name() + (_Distinct == true ? "(DISTINCT ":"(") + (_SameAsObj == null ? getShortName() : _SameAsObj.getShortName()) + ")";
       }
 
     public ColumnType getAggregateType()
@@ -142,7 +144,7 @@ public class ViewColumn
           }
         if (_Aggregate == null)
           {
-            if (_Distinct != null)
+            if (_Distinct == true)
               return PS.AddError("View Column '" + getFullName() + "' defined a distinct value without specifying an aggregate. Distincts without aggregates make no sense.");
             if (TextUtil.isNullOrEmpty(_Filter) == false)
               return PS.AddError("View Column '" + getFullName() + "' defined a filter without specifying an aggregate. Filters are only valid with aggregates.");

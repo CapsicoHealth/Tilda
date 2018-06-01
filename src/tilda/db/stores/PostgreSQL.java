@@ -307,7 +307,7 @@ public class PostgreSQL implements DBType
     @Override
     public int getVarCharThreshhold()
       {
-        return 20;
+        return 8;
       }
 
     @Override

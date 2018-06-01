@@ -181,9 +181,9 @@ public class View extends Base
               }
 
             // dependency (.*) expansion
-            if (VC._SameAs != null && VC._SameAs.endsWith(".*") == true)
+            if (VC._SameAs != null && VC._SameAs.endsWith("*") == true)
               {
-                if (HandleDotStarExpansion(PS, i, VC) == false)
+                if (HandleStarExpansion(PS, i, VC) == false)
                   return false;
                 --i;
                 continue;
@@ -323,12 +323,12 @@ public class View extends Base
         return _Validated;
       }
 
-    private boolean HandleDotStarExpansion(ParserSession PS, int i, ViewColumn VC)
+    private boolean HandleStarExpansion(ParserSession PS, int i, ViewColumn VC)
       {
-        if (VC._SameAs.equals("OasisAnswerBasicPivotView.*") == true)
-          LOG.debug("BLAH");
         _ViewColumns.remove(i);
-        VC._SameAs = VC._SameAs.substring(0, VC._SameAs.length() - 2);
+        int lastDot = VC._SameAs.lastIndexOf('.');
+        String startingWith = VC._SameAs.substring(lastDot+1, VC._SameAs.length()-1);
+        VC._SameAs = VC._SameAs.substring(0, lastDot);
         ReferenceHelper R = ReferenceHelper.parseObjectReference(VC._SameAs, _ParentSchema);
         if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true)
           return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " with an incorrect syntax. It should be '((package\\.)?schema\\.)?object\\.\\*'.");
@@ -342,7 +342,7 @@ public class View extends Base
             _Dependencies.put(V.getShortName().toUpperCase(), V);
             if (V._Validated == false)
               return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " which has failed validation.");
-            CopyDependentViewFields(i, VC, Prefix, V);
+            CopyDependentViewFields(i, VC, Prefix, V, startingWith);
           }
         else
           {
@@ -352,7 +352,7 @@ public class View extends Base
             if (O._Validated == false)
               return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " which has failed validation.");
             _Dependencies.put(O.getShortName().toUpperCase(), O);
-            VC = CopyDependentObjectFields(i, VC, Prefix, O);
+            VC = CopyDependentObjectFields(i, VC, Prefix, O, startingWith);
           }
         return true;
       }
@@ -362,13 +362,13 @@ public class View extends Base
         // First, pivots need to be defined a certain way, i.e., grouped-by columns first, then aggregates.
         boolean aggregates = false;
         int i = 0;
-        boolean composableAggregates = false;
+        boolean composableAggregates = true;
         for (ViewColumn VC : _ViewColumns)
           {
             if (VC._Aggregate != null)
               {
-                if (VC._Aggregate.isComposable() == true)
-                  composableAggregates = true;
+                if (VC._Aggregate.isComposable() == false)
+                  composableAggregates = false;
                 if (aggregates == false) // switch from grouped-by columns to pivot columns
                   aggregates = true;
               }
@@ -382,7 +382,7 @@ public class View extends Base
               }
           }
         if (composableAggregates == false && _Pivots.size() > 1)
-          PS.AddError("View '" + getFullName() + "' is defining multiple Pivots but use non-composable aggregateds (e.g., avg, dev...).");
+          PS.AddError("View '" + getFullName() + "' is defining multiple Pivots but uses non-composable aggregateds (e.g., avg, dev...).");
 
         Set<String> PivotNames = new HashSet<String>();
         Set<String> PivotPrefixes = new HashSet<String>();
@@ -611,7 +611,7 @@ public class View extends Base
         return O;
       }
 
-    private ViewColumn CopyDependentObjectFields(int i, ViewColumn VC, String Prefix, Object O)
+    private ViewColumn CopyDependentObjectFields(int i, ViewColumn VC, String Prefix, Object O, String startingWith)
       {
         int j = 0;
         for (Column col : O._Columns)
@@ -620,6 +620,8 @@ public class View extends Base
               continue;
             if (TextUtil.FindElement(VC._Exclude, col._Name, false, 0) != -1)
               continue;
+            if (col._Name.startsWith(startingWith) == false)
+             continue;
             ViewColumn OldVC = VC;
             VC = new ViewColumn();
             VC._SameAs = col.getFullName();
@@ -631,21 +633,21 @@ public class View extends Base
         return VC;
       }
 
-    private void CopyDependentViewFields(int i, ViewColumn VC, String Prefix, View V)
+    private void CopyDependentViewFields(int i, ViewColumn VC, String Prefix, View V, String startingWith)
       {
         int j = 0;
-        int vcColCount = -1;
         for (ViewColumn col : V._ViewColumns)
           {
-            ++vcColCount;
             if (col._FrameworkGenerated == true && col._SameAs != null && col._SameAs.equals("_TS.p") == false)
               continue;
             if (TextUtil.FindElement(VC._Exclude, col._Name, false, 0) != -1)
               continue;
             if (col._JoinOnly == true)
               continue;
-            if (V._Pivots.isEmpty() == false && vcColCount >= V._ViewColumns.size() - 2)
+            if (V.isPivotColumn(col) == true)
               break;
+            if (col._Name.startsWith(startingWith) == false)
+              continue;
             ViewColumn NewVC = new ViewColumn();
             NewVC._SameAs = col.getFullName();
             NewVC._As = VC._As;
@@ -658,20 +660,22 @@ public class View extends Base
         for (ViewPivot P : V._Pivots)
           {
             if (P != null)
-              {
+              for (ViewPivotAggregate A : P._Aggregates)
                 for (Value VPV : P._Values)
                   {
                     if (TextUtil.FindElement(VC._Exclude, TextUtil.Print(VPV._Name, VPV._Value), false, 0) != -1)
                       continue;
+                    String SrcColName = A.makeName(VPV);
+                    if (SrcColName.startsWith(startingWith) == false)
+                      continue;
                     ViewColumn NewVC = new ViewColumn();
-                    NewVC._SameAs = V.getShortName() + "." + TextUtil.Print(VPV._Name, VPV._Value);
+                    NewVC._SameAs = V.getShortName() + "." + SrcColName;
                     NewVC._As = VC._As;
-                    NewVC._Name = Prefix + TextUtil.Print(VPV._Name, VPV._Value);
+                    NewVC._Name = Prefix+SrcColName;
                     _ViewColumns.add(i + j, NewVC);
                     _PadderColumnNames.track(NewVC.getName());
                     ++j;
                   }
-              }
           }
         for (Formula F : V._Formulas)
           {
@@ -686,27 +690,28 @@ public class View extends Base
             ++j;
           }
       }
-/*
-    private Column getSameAsColumn(String ObjectFullName, String ColName)
-      {
-        for (ViewColumn VC : _ViewColumns)
-          {
-            if (VC._SameAsObj != null && VC._SameAsObj._ParentObject.getFullName().equals(ObjectFullName) == true && VC._SameAsObj.getName().equals(ColName) == true)
-              return VC._SameAsObj;
-          }
-        return null;
-      }
 
-    private ViewColumn getViewColumnFromSameAsColumn(String ObjectFullName, String ColName)
-      {
-        for (ViewColumn VC : _ViewColumns)
-          {
-            if (VC._SameAsObj != null && VC._SameAsObj._ParentObject.getFullName().equals(ObjectFullName) == true && VC._SameAsObj.getName().equals(ColName) == true)
-              return VC;
-          }
-        return null;
-      }
-*/
+    /*
+     * private Column getSameAsColumn(String ObjectFullName, String ColName)
+     * {
+     * for (ViewColumn VC : _ViewColumns)
+     * {
+     * if (VC._SameAsObj != null && VC._SameAsObj._ParentObject.getFullName().equals(ObjectFullName) == true && VC._SameAsObj.getName().equals(ColName) == true)
+     * return VC._SameAsObj;
+     * }
+     * return null;
+     * }
+     * 
+     * private ViewColumn getViewColumnFromSameAsColumn(String ObjectFullName, String ColName)
+     * {
+     * for (ViewColumn VC : _ViewColumns)
+     * {
+     * if (VC._SameAsObj != null && VC._SameAsObj._ParentObject.getFullName().equals(ObjectFullName) == true && VC._SameAsObj.getName().equals(ColName) == true)
+     * return VC;
+     * }
+     * return null;
+     * }
+     */
     private void CreateMappedViewColumn(ParserSession PS, Set<String> ColumnNames, int i, ViewColumn C, String ExtraName)
       {
         ViewColumn VC = new ViewColumn();
