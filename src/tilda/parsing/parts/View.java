@@ -669,7 +669,7 @@ public class View extends Base
                     if (SrcColName.startsWith(startingWith) == false)
                       continue;
                     ViewColumn NewVC = new ViewColumn();
-                    NewVC._SameAs = V.getShortName() + "." + SrcColName;
+                    NewVC._SameAs = V.getFullName() + "." + SrcColName;
                     NewVC._As = VC._As;
                     NewVC._Name = Prefix+SrcColName;
                     _ViewColumns.add(i + j, NewVC);
@@ -680,6 +680,8 @@ public class View extends Base
         for (Formula F : V._Formulas)
           {
             if (TextUtil.FindElement(VC._Exclude, F._Name, false, 0) != -1)
+              continue;
+            if (F._Name.startsWith(startingWith) == false)
               continue;
             ViewColumn NewVC = new ViewColumn();
             NewVC._SameAs = V.getFullName() + "." + F._Name;

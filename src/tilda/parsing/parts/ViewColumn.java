@@ -168,9 +168,7 @@ public class ViewColumn
             Column Col = null;
             Schema S = PS.getSchema(R._P, R._S);
             if (S == null)
-              {
-                LOG.error("Cannot find Schema '" + R._P + "." + R._S + "'.");
-              }
+             PS.AddError("Column '" + ColFullName + "' is declaring sameas '" + SameAs + "' resolving to '" + R.getFullName() + "' where schema '"+R._P + "." + R._S+"' cannot be found.");
             else
               {
                 Object O = S.getObject(R._O);

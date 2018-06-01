@@ -30,6 +30,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
+import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.FKMeta;
 import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.PKMeta;
@@ -208,7 +209,7 @@ public class MSSQL implements DBType
         if (Collection == true)
           return "nvarchar(max)";
         if (T == ColumnType.STRING && M != ColumnMode.CALCULATED)
-          return S < getVarCharThreshhold() ? SQLServerType.CHAR._SQLType + "(" + S + ")" : S < getCLOBThreshhold() ? SQLServerType.STRING._SQLType + "(" + S + ")" : "nvarchar(max)";
+          return S < getVarcharThreshold() ? SQLServerType.CHAR._SQLType + "(" + S + ")" : S < getCLOBThreshold() ? SQLServerType.STRING._SQLType + "(" + S + ")" : "nvarchar(max)";
         return SQLServerType.get(T)._SQLType;
       }
 
@@ -244,26 +245,26 @@ public class MSSQL implements DBType
       }
 
     @Override
-    public int getVarCharThreshhold()
+    public int getVarcharThreshold()
       {
         return 20;
       }
 
     @Override
-    public int getCLOBThreshhold()
+    public int getCLOBThreshold()
       {
         return 4096;
       }
 
     @Override
-    public boolean alterTableAlterColumnStringSize(Connection Con, Column Col, int DBSize)
+    public boolean alterTableAlterColumnStringSize(Connection Con, ColumnMeta ColMeta, Column Col)
     throws Exception
       {
         throw new UnsupportedOperationException();
       }
 
     @Override
-    public boolean alterTableAlterColumnType(Connection Con, ColumnType fromType, Column Col, ZoneInfo_Data defaultZI)
+    public boolean alterTableAlterColumnType(Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI)
       {
         return false;
       }

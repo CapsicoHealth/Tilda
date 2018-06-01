@@ -113,7 +113,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
     public String getColumnTypeRaw(ColumnType Type, int Size, boolean Calculated, boolean isCollection, boolean MultiOverride)
       {
         if (Type == ColumnType.STRING && Calculated == false)
-          return isCollection == true || MultiOverride == true ? "text" : Size <= getVarCharThreshhold() ? PostgresType.CHAR._SQLType : Size <= getCLOBThreshhold() ? PostgresType.STRING._SQLType : "text";
+          return isCollection == true || MultiOverride == true ? "text" : Size <= getVarcharThreshold() ? PostgresType.CHAR._SQLType : Size <= getCLOBThreshold() ? PostgresType.STRING._SQLType : "text";
         if (Type == ColumnType.JSON)
           return "jsonb";
         return isCollection == true ? PostgresType.get(Type)._SQLArrayType : PostgresType.get(Type)._SQLType;
@@ -125,7 +125,17 @@ public class Sql extends PostgreSQL implements CodeGenSql
     @Override
     public boolean stringNeedsTrim(Column C)
       {
-        return C.getType() == ColumnType.STRING && C._Mode != ColumnMode.CALCULATED && C.isCollection() == false && C._Size <= getVarCharThreshhold();
+        return C.getType() == ColumnType.STRING && C._Mode != ColumnMode.CALCULATED && C.isCollection() == false && C._Size <= getVarcharThreshold();
+      }
+    
+    @Override
+    public boolean stringArrayAggNeedsText(ViewColumn VC)
+      {
+        return stringNeedsTrim(VC._SameAsObj) == false 
+               && VC._SameAsObj.getType() == ColumnType.STRING && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._SameAsObj.isCollection() == false 
+               && VC._SameAsObj._Size > getVarcharThreshold() && VC._SameAsObj._Size <= getCLOBThreshold() // is a varchar
+               && VC._Aggregate == AggregateType.ARRAY // is an array_agg aggregate that needs to be converted to text[] for operators.
+               ;
       }
 
 
@@ -586,7 +596,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
           }
         else
           {
-            boolean trimNeeded = stringNeedsTrim( VC._SameAsObj); // || VC._ParentView.getPivotWithColumn(VC._Name) != null;
+            boolean trimNeeded = stringNeedsTrim(VC._SameAsObj); // || VC._ParentView.getPivotWithColumn(VC._Name) != null;
+            boolean textConversionNeeded = stringArrayAggNeedsText(VC);
             if (VC._Aggregate != null)
               {
                 Str.append(getAggregateStr(VC._Aggregate) + "(");
@@ -596,7 +607,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
               }
             if (trimNeeded)
               Str.append("trim(");
-            Str.append(TI.getFullName() + ".\"" + VC._SameAsObj.getName() + "\"");
+            Str.append(TI.getFullName() + ".\"" + VC._SameAsObj.getName() + "\"" + (textConversionNeeded?"::TEXT":""));
             if (trimNeeded)
               Str.append(")");
             if (VC._Aggregate != null)

@@ -32,6 +32,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
+import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.FKMeta;
 import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.PKMeta;
@@ -460,21 +461,26 @@ public final class Connection
         return _DB.getSelectLimitClause(Start, Size);
       }
 
-    public int getCLOBThreshhold()
+    public int getCLOBThreshold()
       {
-        return _DB.getCLOBThreshhold();
+        return _DB.getCLOBThreshold();
+      }
+    
+    public int getVarcharThreshold()
+      {
+        return _DB.getVarcharThreshold();
       }
 
-    public boolean alterTableAlterColumnStringSize(Column Col, int DBSize)
+    public boolean alterTableAlterColumnStringSize(ColumnMeta ColMeta, Column Col)
     throws Exception
       {
-        return _DB.alterTableAlterColumnStringSize(this, Col, DBSize);
+        return _DB.alterTableAlterColumnStringSize(this, ColMeta, Col);
       }
 
-    public boolean alterTableAlterColumnType(ColumnType FromType, Column Col, ZoneInfo_Data defaultZI)
+    public boolean alterTableAlterColumnType(ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI)
     throws Exception
       {
-        return _DB.alterTableAlterColumnType(this, FromType, Col, defaultZI);
+        return _DB.alterTableAlterColumnType(this, ColMeta, Col, defaultZI);
       }
 
     public String getHelperFunctionsScript()
