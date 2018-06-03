@@ -222,7 +222,7 @@ public class MSSQL implements DBType
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ADD \"" + Col.getName() + "\" " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection());
         if (Col._Nullable == false)
           {
-            Q += " not null DEFAULT " + ValueHelper.printValue(Col, DefaultValue);
+            Q += " not null DEFAULT " + ValueHelper.printValue(Col.getName(), Col.getType(), DefaultValue);
           }
 
         Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);

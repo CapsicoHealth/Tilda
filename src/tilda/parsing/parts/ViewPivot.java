@@ -26,6 +26,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.enums.ColumnType;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
@@ -35,6 +36,7 @@ public class ViewPivot
 
     /*@formatter:off*/
 	@SerializedName("on"        ) public String                    _ColumnName;
+    @SerializedName("interleave") public boolean                   _Interleave = false;
     @SerializedName("aggregates") public List<ViewPivotAggregate>  _Aggregates=new ArrayList<ViewPivotAggregate>();
     @SerializedName("values"    ) public ViewPivotValue[]          _Values    ;
     /*@formatter:on*/
@@ -61,14 +63,11 @@ public class ViewPivot
         if (_Values == null || _Values.length == 0)
           return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot without any 'values' specified.");
 
-        for (Value VPV : _Values)
-          VPV.Validate(PS, ParentView, "pivot value");
-
         _VC = new ViewColumn();
         _VC._SameAs = _ColumnName;
         _VC.Validate(PS, _ParentView);
 
-        
+        boolean StringAgg = true;
         Set<String> AggregateNames = new HashSet<String>();        
         for (ViewPivotAggregate A : _Aggregates)
           {
@@ -81,13 +80,19 @@ public class ViewPivot
               PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot on " + _ColumnName + " for an aggregate " + A._Name + " which cannot be found in the view.");
             else if (VC._Aggregate == null)
               return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot on " + _ColumnName + " for " + A._Name + " which is not an aggregate.");
-
+            else if (VC._Aggregate.getType(VC._SameAsObj.getType()) != ColumnType.STRING)
+              StringAgg = false;
             if (AggregateNames.add(A._Name) == false)
               PS.AddError("View '" + ParentView.getFullName() + "' is defining a Pivot on column " + _VC.getShortName() + " with a duplicate aggregate name '"+A._Name+"'.");
           }
         if (AggregateNames.isEmpty() == true)
           PS.AddError("View '" + ParentView.getFullName() + "' is defining a Pivot on column " + _VC.getShortName() + " without specifying any aggregate targets.");
 
+        for (ViewPivotValue VPV : _Values)
+          {
+            VPV.Validate(PS, ParentView, "pivot value");
+          }
+        
         return Errs == PS.getErrorCount();
       }
 

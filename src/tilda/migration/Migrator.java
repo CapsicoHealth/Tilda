@@ -301,8 +301,8 @@ public class Migrator
                         // from INT to STRING etc... But they won't catch an internal change of CHAR to VARCHAR not due to
                         // model changes, but to threshold changes.
                         if (Col.isCollection() == false
-                         && Col.isPrimaryKey() == false
-                         && Col.isForeignKey() == false
+//                         && Col.isPrimaryKey() == false
+//                         && Col.isForeignKey() == false
                          && CMeta._TypeSql.equals("CHAR") == true && Col.getType() == ColumnType.STRING && Col._Size > C.getVarcharThreshold())
                           Actions.add(new ColumnAlterType(C, CMeta, Col));
 

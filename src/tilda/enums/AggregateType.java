@@ -59,7 +59,6 @@ public enum AggregateType
                 return ColumnType.DOUBLE;
               break;
             case MAX:
-              return T;
             case MIN:
               return T;
             case SUM:

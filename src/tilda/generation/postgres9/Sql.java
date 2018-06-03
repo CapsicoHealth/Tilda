@@ -54,6 +54,7 @@ import tilda.parsing.parts.ViewPivot;
 import tilda.parsing.parts.ViewPivotAggregate;
 import tilda.parsing.parts.ViewPivotValue;
 import tilda.parsing.parts.ViewRealizeMapping;
+import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.utils.PaddingTracker;
 import tilda.utils.PaddingUtil;
 import tilda.utils.TextUtil;
@@ -575,8 +576,11 @@ public class Sql extends PostgreSQL implements CodeGenSql
         return Q;
       }
 
-    private boolean PrintViewColumn(StringBuilder Str, ViewColumn VC, TableRankTracker TI, boolean NoAs)
+    private boolean PrintViewColumn(StringBuilder Str, ViewColumn VC, TableRankTracker TI, boolean NoAs) throws Exception
       {
+        if (TextUtil.isNullOrEmpty(VC._Coalesce) == false)
+          Str.append("coalesce(");
+
         boolean hasAggregates = false;
         if (VC._Aggregate == AggregateType.COUNT)
           {
@@ -619,6 +623,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   }
               }
           }
+        if (TextUtil.isNullOrEmpty(VC._Coalesce) == false)
+          Str.append(", "+ValueHelper.printValue(VC._SameAsObj.getName(), VC.getAggregateType(), VC._Coalesce)+")");
         if (NoAs == false)
           Str.append(" as \"" + VC.getName() + "\" " + (VC._SameAsObj == null ? "" : "-- " + VC._SameAsObj._Description));
         return hasAggregates;
@@ -737,36 +743,26 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 ++i;
               }
           }
-        // ViewColumn VC_base = V._ViewColumns.get(V._ViewColumns.size() - 2);
-        // ViewColumn VC_pivot = V._ViewColumns.get(V._ViewColumns.size() - 1);
-        // if (VC_pivot._Aggregate != null && VC_pivot._Aggregate != AggregateType.COUNT && VC_pivot._Aggregate != AggregateType.SUM)
-        // throw new Exception("Cannot do a pivot on an aggregated " + VC_pivot._Aggregate.name() + " for view " + V.getFullName() + ".");
+
         for (ViewPivot P : V._Pivots)
           {
             for (ViewPivotAggregate A : P._Aggregates)
               {
                 ViewColumn VC = V.getViewColumn(A._Name);
-                for (i = 0; i < P._Values.length; ++i)
+                for (ViewPivotValue VPV : P._Values)
                   {
-                    ViewPivotValue Val = P._Values[i];
-                    if (Val == null)
+                    if (VPV == null)
                       continue;
-
                     String aggr = VC._Aggregate == AggregateType.COUNT ? "sum"
                     : VC._Aggregate == AggregateType.ARRAY ? "array_agg"
                     : VC._Aggregate.name();
-                    String Expr = aggr + "(\"" + VC.getName() + "\") filter (where \"" + P._VC.getName() + "\"= '" + P._Values[i]._Value + "') ";
+                    String Expr = aggr + "(\"" + VC.getName() + "\") filter (where \"" + P._VC.getName() + "\"= '" + VPV._Value + "') ";
 
-                    if (TextUtil.isNullOrEmpty(Val._Expression) == false)
-                      Expr = Val._Expression.replace("?", Expr);
-                    if (Val._Type != null)
-                      Expr = "(" + Expr + ")::" + getColumnType(Val._Type.getType(), Val._Type._Size, ColumnMode.NORMAL, Val._Type.isCollection());
-
-                    // else if (VC._Aggregate == AggregateType.MAX)
-                    // Str += "\n, max(case when \"" + P._VC.getName() + "\"= '" + P._Values[i]._Value + "' then \"" + VC.getName() + "\" end)";
-                    // else if (VC._Aggregate == AggregateType.MIN)
-                    // Str += "\n, min(case when \"" + P._VC.getName() + "\"= '" + P._Values[i]._Value + "' then \"" + VC.getName() + "\" end)";
-                    Str += "\n     , " + Expr + " as \"" + A.makeName(P._Values[i]) + "\"";
+                    if (TextUtil.isNullOrEmpty(VPV._Expression) == false)
+                      Expr = VPV._Expression.replace("?", Expr);
+                    if (VPV._Type != null)
+                      Expr = "(" + Expr + ")::" + getColumnType(VPV._Type.getType(), VPV._Type._Size, ColumnMode.NORMAL, VPV._Type.isCollection());
+                    Str += "\n     , " + Expr + " as \"" + A.makeName(VPV) + "\"";
                   }
               }
           }

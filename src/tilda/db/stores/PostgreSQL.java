@@ -256,7 +256,7 @@ public class PostgreSQL implements DBType
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ADD COLUMN \"" + Col.getName() + "\" " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection());
         if (Col._Nullable == false && DefaultValue != null)
           {
-            Q += " not null DEFAULT " + ValueHelper.printValue(Col, DefaultValue);
+            Q += " not null DEFAULT " + ValueHelper.printValue(Col.getName(), Col.getType(), DefaultValue);
           }
         if (Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) == false)
           return false;
@@ -295,7 +295,7 @@ public class PostgreSQL implements DBType
               {
                 if (DefaultValue == null)
                   throw new Exception("Cannot alter column '" + Col.getFullName() + "' to not null without a default value. Add a default value in the model, or manually migrate your database.");
-                Q = "UPDATE " + Col._ParentObject.getShortName() + " set \"" + Col.getName() + "\" = " + ValueHelper.printValue(Col, DefaultValue) + " where \"" + Col.getName() + "\" IS NULL";
+                Q = "UPDATE " + Col._ParentObject.getShortName() + " set \"" + Col.getName() + "\" = " + ValueHelper.printValue(Col.getName(), Col.getType(), DefaultValue) + " where \"" + Col.getName() + "\" IS NULL";
                 Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
               }
           }
@@ -403,6 +403,11 @@ public class PostgreSQL implements DBType
             || ColMeta._TypeSql.equals("CHAR") && Col.getType() == ColumnType.STRING && Col._Size > getVarcharThreshold()
            )
          Using = " USING rtrim(\"" + Col.getName() + "\")";
+        
+        if (Col.isPrimaryKey() == true || Col.isForeignKey() == true)
+          {
+            LOG.warn("!!!!!!! ALTERING a primary of foreign key, which in some circumstances, may lock in the JDBC driver. If this occurs, please run the below ALTER statement in the DB command line, and then rerun your program.");
+          }
 
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
         + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + Using + ";";

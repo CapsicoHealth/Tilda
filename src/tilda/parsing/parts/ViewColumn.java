@@ -45,6 +45,7 @@ public class ViewColumn
     @SerializedName("joinType"   ) public String         _JoinStr      ;
     @SerializedName("joinOnly"   ) public boolean        _JoinOnly      = false;
     @SerializedName("aggregate"  ) public String         _AggregateStr ;
+    @SerializedName("coalesce"   ) public String         _Coalesce     = null;
     @SerializedName("distinct"   ) public Boolean        _Distinct     = false;
     @SerializedName("filter"     ) public String         _Filter       ;
     @SerializedName("useMapper"  ) public boolean        _UseMapper     = false;
