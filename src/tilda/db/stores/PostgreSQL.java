@@ -136,6 +136,8 @@ public class PostgreSQL implements DBType
       {
         switch (AT)
           {
+            case COUNT:
+              return "count";
             case AVG:
               return "avg";
             case DEV:

@@ -582,19 +582,20 @@ public class Sql extends PostgreSQL implements CodeGenSql
           Str.append("coalesce(");
 
         boolean hasAggregates = false;
-        if (VC._Aggregate == AggregateType.COUNT)
-          {
-            if (VC._Distinct == true)
-              Str.append("count(distinct "+VC._SameAs+")");
-            else
-              Str.append("count(*)");
-            if (TextUtil.isNullOrEmpty(VC._Filter) == false)
-              {
-                Str.append(" filter(where ").append(VC._Filter).append(")");
-              }
-            hasAggregates = true;
-          }
-        else if (VC._SameAs != null && VC._SameAsObj == null && VC._FrameworkGenerated == true)
+//        if (VC._Aggregate == AggregateType.COUNT)
+//          {
+//            if (VC._Distinct == true)
+//              Str.append("count(distinct "+VC._SameAs+")");
+//            else
+//              Str.append("count(*)");
+//            if (TextUtil.isNullOrEmpty(VC._Filter) == false)
+//              {
+//                Str.append(" filter(where ").append(VC._Filter).append(")");
+//              }
+//            hasAggregates = true;
+//          }
+//        else
+        if (VC._SameAs != null && VC._SameAsObj == null && VC._FrameworkGenerated == true)
           {
             Str.append(VC._SameAs);
           }
