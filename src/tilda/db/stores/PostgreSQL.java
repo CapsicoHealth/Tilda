@@ -31,6 +31,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
+import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.FKMeta;
 import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.PKMeta;
@@ -255,7 +256,7 @@ public class PostgreSQL implements DBType
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ADD COLUMN \"" + Col.getName() + "\" " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection());
         if (Col._Nullable == false && DefaultValue != null)
           {
-            Q += " not null DEFAULT " + ValueHelper.printValue(Col, DefaultValue);
+            Q += " not null DEFAULT " + ValueHelper.printValue(Col.getName(), Col.getType(), DefaultValue);
           }
         if (Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) == false)
           return false;
@@ -294,7 +295,7 @@ public class PostgreSQL implements DBType
               {
                 if (DefaultValue == null)
                   throw new Exception("Cannot alter column '" + Col.getFullName() + "' to not null without a default value. Add a default value in the model, or manually migrate your database.");
-                Q = "UPDATE " + Col._ParentObject.getShortName() + " set \"" + Col.getName() + "\" = " + ValueHelper.printValue(Col, DefaultValue) + " where \"" + Col.getName() + "\" IS NULL";
+                Q = "UPDATE " + Col._ParentObject.getShortName() + " set \"" + Col.getName() + "\" = " + ValueHelper.printValue(Col.getName(), Col.getType(), DefaultValue) + " where \"" + Col.getName() + "\" IS NULL";
                 Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
               }
           }
@@ -305,13 +306,13 @@ public class PostgreSQL implements DBType
 
 
     @Override
-    public int getVarCharThreshhold()
+    public int getVarcharThreshold()
       {
-        return 20;
+        return 8;
       }
 
     @Override
-    public int getCLOBThreshhold()
+    public int getCLOBThreshold()
       {
         return 4096;
       }
@@ -325,17 +326,17 @@ public class PostgreSQL implements DBType
     public String getColumnType(ColumnType T, Integer S, ColumnMode M, boolean Collection)
       {
         if (T == ColumnType.STRING && M != ColumnMode.CALCULATED)
-          return Collection == true ? "text[]" : S < getVarCharThreshhold() ? PostgresType.CHAR._SQLType + "(" + S + ")" : S < getCLOBThreshhold() ? PostgresType.STRING._SQLType + "(" + S + ")" : "text";
+          return Collection == true ? "text[]" : S < getVarcharThreshold() ? PostgresType.CHAR._SQLType + "(" + S + ")" : S < getCLOBThreshold() ? PostgresType.STRING._SQLType + "(" + S + ")" : "text";
         return PostgresType.get(T)._SQLType + (T != ColumnType.JSON && Collection == true ? "[]" : "");
       }
 
     @Override
-    public boolean alterTableAlterColumnStringSize(Connection Con, Column Col, int DBSize)
+    public boolean alterTableAlterColumnStringSize(Connection Con, ColumnMeta ColMeta, Column Col)
     throws Exception
       {
         // Is it shrinking?
-        if (Col._Size < getCLOBThreshhold() && DBSize < getCLOBThreshhold() && Col._Size < DBSize
-        || Col._Size < getCLOBThreshhold() && DBSize >= getCLOBThreshhold())
+        if (Col._Size < getCLOBThreshold() && ColMeta._Size < getCLOBThreshold() && Col._Size < ColMeta._Size
+        || Col._Size < getCLOBThreshold() && ColMeta._Size >= getCLOBThreshold())
           {
             String Q = "SELECT max(length(\"" + Col.getName() + "\")) from " + Col._ParentObject.getShortName();
             ScalarRP RP = new ScalarRP();
@@ -351,21 +352,28 @@ public class PostgreSQL implements DBType
                 LOG.error("Column sample:");
                 for (String s : SLRP.getResult())
                   LOG.error("   - " + s);
-                throw new Exception("Cannot alter String column '" + Col.getFullName() + "' from size " + DBSize + " down to " + Col._Size + " because there are values with sizes up to " + RP.getResult()
+                throw new Exception("Cannot alter String column '" + Col.getFullName() + "' from size " + ColMeta._Size + " down to " + Col._Size + " because there are values with sizes up to " + RP.getResult()
                 + " that would be truncated. You need to manually migrate your database.");
               }
           }
 
-        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection());
+        // Are we switching from CHAR(x) to VARCHAR(y) or TEXT?
+        String Using="";
+        if (ColMeta._Size <= getVarcharThreshold() && Col._Size > getVarcharThreshold()
+           || ColMeta._TypeSql.equals("CHAR") && Col.getType() == ColumnType.STRING && Col._Size > getVarcharThreshold()
+           )
+         Using = " USING rtrim(\"" + Col.getName() + "\")";
+        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" TYPE " 
+                 + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection())+Using+";";
         return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
       }
 
 
     @Override
-    public boolean alterTableAlterColumnType(Connection Con, ColumnType fromType, Column Col, ZoneInfo_Data defaultZI)
+    public boolean alterTableAlterColumnType(Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI)
     throws Exception
       {
-        if (fromType == ColumnType.STRING)
+        if (ColMeta._TildaType == ColumnType.STRING)
           {
             if (Col.getType() == ColumnType.INTEGER || Col.getType() == ColumnType.LONG || Col.getType() == ColumnType.FLOAT || Col.getType() == ColumnType.DOUBLE || Col.getType() == ColumnType.DATE)
               {
@@ -389,8 +397,20 @@ public class PostgreSQL implements DBType
                 return Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) >= 0;
               }
           }
+
+        String Using="";
+        if (ColMeta._TildaType == ColumnType.STRING && Col.getType() == ColumnType.STRING && ColMeta._Size <= getVarcharThreshold() && Col._Size > getVarcharThreshold()
+            || ColMeta._TypeSql.equals("CHAR") && Col.getType() == ColumnType.STRING && Col._Size > getVarcharThreshold()
+           )
+         Using = " USING rtrim(\"" + Col.getName() + "\")";
+        
+        if (Col.isPrimaryKey() == true || Col.isForeignKey() == true)
+          {
+            LOG.warn("!!!!!!! ALTERING a primary of foreign key, which in some circumstances, may lock in the JDBC driver. If this occurs, please run the below ALTER statement in the DB command line, and then rerun your program.");
+          }
+
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
-        + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + ";";
+        + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + Using + ";";
         return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
       }    
 
@@ -705,6 +725,7 @@ public class PostgreSQL implements DBType
               TildaType = ColumnType.CHAR;
               break;
             case "_text":
+            case "_varchar":
             case "character_data":
               TildaType = ColumnType.STRING;
               break;

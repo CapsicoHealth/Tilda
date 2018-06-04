@@ -1,5 +1,5 @@
 /* ===========================================================================
- * Copyright (C) 2015 CapsicoHealth Inc.
+ * Copyright (C) 2016 CapsicoHealth Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,45 +24,37 @@ import com.google.gson.annotations.SerializedName;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
-public class Value
+public class ViewPivotAggregate
   {
-    static final Logger LOG = LogManager.getLogger(Value.class.getName());
+    static final Logger LOG             = LogManager.getLogger(ViewPivotAggregate.class.getName());
 
     /*@formatter:off*/
-	@SerializedName("value"      ) public String _Value;
-    @SerializedName("name"       ) public String _Name;
-    @SerializedName("description") public String _Description;
+	@SerializedName("name"  ) public String  _Name;
+    @SerializedName("prefix") public String  _Prefix;
     /*@formatter:on*/
-
-
-    public Value()
-      {
-      }
-
-    public Value(Value V)
-      {
-        _Value = V._Value;
-        _Description = V._Description;
-      }
     
-    public transient View _ParentView;
+    public transient ViewPivot _ParentPivot;
 
-    public boolean Validate(ParserSession PS, View ParentView, String What)
+    public ViewPivotAggregate()
+      {
+      }
+
+    public boolean Validate(ParserSession PS, ViewPivot ParentPivot)
       {
         int Errs = PS.getErrorCount();
-        _ParentView = ParentView;
-
-        // Mandatories
-        if (TextUtil.isNullOrEmpty(_Value) == true)
-          PS.AddError("View '" + ParentView.getFullName() + "' is defining a " + What + " with a null or empty value.");
-
-        if (TextUtil.isNullOrEmpty(_Description) == true)
-          PS.AddError("View '" + ParentView.getFullName() + "' is defining a " + What + " with a null or empty description.");
-
+        _ParentPivot = ParentPivot;
+        
         if (TextUtil.isNullOrEmpty(_Name) == true)
-         _Name = _Value;
+         return PS.AddError("View '" + ParentPivot._ParentView.getFullName() + "' is defining a pivot on '"+_ParentPivot._ColumnName+"' with an aggregate without any 'name' column specified.");
 
         return Errs == PS.getErrorCount();
+      }    
+
+    public String makeName(Value V)
+      {
+        if (TextUtil.isNullOrEmpty(_Prefix) == false)
+         return _Prefix + TextUtil.CapitalizeFirstCharacter(TextUtil.Print(V._Name, V._Value));
+        return TextUtil.Print(V._Name, V._Value);
       }
 
   }

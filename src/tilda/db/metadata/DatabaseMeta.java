@@ -31,7 +31,8 @@ public class DatabaseMeta
 
     protected Map<String, SchemaMeta> _DBSchemas = new HashMap<String, SchemaMeta>();
     protected boolean _SupportsArrays;
-    protected int _CLOBThreshhold;
+    protected int _CLOBThreshold;
+    protected int _VarcharThreshold;
 
     public void load(Connection C, String SchemaPattern, String TablePattern) throws Exception
       {
@@ -48,7 +49,8 @@ public class DatabaseMeta
           }
         RS.close();
         _SupportsArrays = C.supportsArrays();
-        _CLOBThreshhold = C.getCLOBThreshhold();
+        _CLOBThreshold = C.getCLOBThreshold();
+        _VarcharThreshold = C.getVarcharThreshold();
       }
 
     public void load(Connection C, String SchemaPattern)
@@ -83,8 +85,12 @@ public class DatabaseMeta
         return _SupportsArrays;
       }
 
-    public Integer getCLOBThreshhold()
+    public Integer getCLOBThreshold()
       {
-        return _CLOBThreshhold;
+        return _CLOBThreshold;
+      }
+    public Integer getVarcharThreshold()
+      {
+        return _VarcharThreshold;
       }
   }
