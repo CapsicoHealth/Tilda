@@ -32,6 +32,7 @@ import tilda.db.stores.PostgreSQL;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.enums.DBStringType;
 import tilda.enums.JoinType;
 import tilda.enums.TimeSeriesType;
 import tilda.generation.GeneratorSession;
@@ -114,27 +115,32 @@ public class Sql extends PostgreSQL implements CodeGenSql
     public String getColumnTypeRaw(ColumnType Type, int Size, boolean Calculated, boolean isCollection, boolean MultiOverride)
       {
         if (Type == ColumnType.STRING && Calculated == false)
-          return isCollection == true || MultiOverride == true ? "text" : Size <= getVarcharThreshold() ? PostgresType.CHAR._SQLType : Size <= getCLOBThreshold() ? PostgresType.STRING._SQLType : "text";
+          {
+            DBStringType DBT = getDBStringType(Size);
+          return isCollection == true || MultiOverride == true ? "text" 
+               : DBT == DBStringType.CHARACTER ? PostgresType.CHAR._SQLType 
+               : DBT == DBStringType.VARCHAR ? PostgresType.STRING._SQLType
+               : "text";
+          }
         if (Type == ColumnType.JSON)
           return "jsonb";
         return isCollection == true ? PostgresType.get(Type)._SQLArrayType : PostgresType.get(Type)._SQLType;
       }
 
 
-
-
     @Override
     public boolean stringNeedsTrim(Column C)
       {
-        return C.getType() == ColumnType.STRING && C._Mode != ColumnMode.CALCULATED && C.isCollection() == false && C._Size <= getVarcharThreshold();
+        return C.getType() == ColumnType.STRING && C._Mode != ColumnMode.CALCULATED && C.isCollection() == false && getDBStringType(C._Size)==DBStringType.CHARACTER;
       }
     
     @Override
     public boolean stringArrayAggNeedsText(ViewColumn VC)
       {
+        // We only test for VARCHAR here because we know that CHAR is getting trimmed, which results in TEXT type already.
         return stringNeedsTrim(VC._SameAsObj) == false 
                && VC._SameAsObj.getType() == ColumnType.STRING && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._SameAsObj.isCollection() == false 
-               && VC._SameAsObj._Size > getVarcharThreshold() && VC._SameAsObj._Size <= getCLOBThreshold() // is a varchar
+               && getDBStringType(VC._SameAsObj._Size) == DBStringType.VARCHAR // is a varchar
                && VC._Aggregate == AggregateType.ARRAY // is an array_agg aggregate that needs to be converted to text[] for operators.
                ;
       }

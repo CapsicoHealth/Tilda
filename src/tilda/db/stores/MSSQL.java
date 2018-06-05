@@ -37,9 +37,11 @@ import tilda.db.metadata.PKMeta;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.enums.DBStringType;
 import tilda.generation.Generator;
 import tilda.generation.SQLServer2014.SQLServerType;
 import tilda.generation.interfaces.CodeGenSql;
+import tilda.generation.postgres9.PostgresType;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
@@ -208,8 +210,15 @@ public class MSSQL implements DBType
       {
         if (Collection == true)
           return "nvarchar(max)";
+        
         if (T == ColumnType.STRING && M != ColumnMode.CALCULATED)
-          return S < getVarcharThreshold() ? SQLServerType.CHAR._SQLType + "(" + S + ")" : S < getCLOBThreshold() ? SQLServerType.STRING._SQLType + "(" + S + ")" : "nvarchar(max)";
+          {
+            DBStringType DBT = getDBStringType(S);
+            return DBT == DBStringType.CHARACTER ? PostgresType.CHAR._SQLType + "(" + S + ")"
+            : DBT == DBStringType.VARCHAR ? PostgresType.STRING._SQLType + "(" + S + ")"
+            : "nvarchar(max)";
+          }
+
         return SQLServerType.get(T)._SQLType;
       }
 
@@ -245,15 +254,11 @@ public class MSSQL implements DBType
       }
 
     @Override
-    public int getVarcharThreshold()
+    public DBStringType getDBStringType(int Size)
       {
-        return 20;
-      }
-
-    @Override
-    public int getCLOBThreshold()
-      {
-        return 4096;
+        return Size < 20 ? DBStringType.CHARACTER
+        : Size < 4096 ? DBStringType.VARCHAR
+        : DBStringType.TEXT;
       }
 
     @Override

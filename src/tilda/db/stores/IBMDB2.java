@@ -35,6 +35,7 @@ import tilda.db.metadata.PKMeta;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.enums.DBStringType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
@@ -198,15 +199,11 @@ public class IBMDB2 implements DBType
       }
 
     @Override
-    public int getVarcharThreshold()
+    public DBStringType getDBStringType(int Size)
       {
-        return 20;
-      }
-
-    @Override
-    public int getCLOBThreshold()
-      {
-        return 4096;
+        return Size < 20 ? DBStringType.CHARACTER
+        : Size < 4096 ? DBStringType.VARCHAR
+        : DBStringType.TEXT;
       }
 
     @Override

@@ -38,6 +38,7 @@ import tilda.db.metadata.TableMeta;
 import tilda.db.metadata.ViewMeta;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.enums.DBStringType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.migration.actions.ColumnAdd;
@@ -300,15 +301,17 @@ public class Migrator
                         // the type in the DB. The previous set of checks look at fundamental type changes, for example
                         // from INT to STRING etc... But they won't catch an internal change of CHAR to VARCHAR not due to
                         // model changes, but to threshold changes.
-                        if (Col.isCollection() == false
-//                         && Col.isPrimaryKey() == false
-//                         && Col.isForeignKey() == false
-                         && CMeta._TypeSql.equals("CHAR") == true && Col.getType() == ColumnType.STRING && Col._Size > C.getVarcharThreshold())
-                          Actions.add(new ColumnAlterType(C, CMeta, Col));
+                        if (   Col.isCollection() == false && Col.getType() == ColumnType.STRING
+                            && (   CMeta._TypeSql.equals("CHAR") == true && C.getDBStringType(Col._Size) != DBStringType.CHARACTER
+                                || CMeta._TypeSql.equals("VARCHAR") == true && C.getDBStringType(CMeta._Size) == DBStringType.CHARACTER
+                                )
+                           )
+                         Actions.add(new ColumnAlterType(C, CMeta, Col));
 
-                        if (Col.getType() == ColumnType.STRING && Col.isCollection() == false
-                        && (CMeta._Size < DBMeta.getCLOBThreshold() && CMeta._Size != Col._Size
-                        || CMeta._Size >= DBMeta.getCLOBThreshold() && Col._Size < DBMeta.getCLOBThreshold()))
+                        DBStringType DBStrType = C.getDBStringType(CMeta._Size);
+                        if (   Col.isCollection() == false && Col.getType() == ColumnType.STRING
+                            && CMeta._Size != Col._Size && DBStrType != DBStringType.TEXT
+                            )
                           Actions.add(new ColumnAlterStringSize(CMeta, Col));
 
                         if (CMeta._Nullable == 1 && Col._Nullable == false || CMeta._Nullable == 0 && Col._Nullable == true)
