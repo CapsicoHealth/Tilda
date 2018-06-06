@@ -27,6 +27,7 @@ import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Query;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
+import tilda.parsing.parts.ViewColumn;
 import tilda.parsing.parts.ViewJoin;
 
 
@@ -60,6 +61,7 @@ public interface CodeGenSql extends DBType, CodeGenBase
     public String getColumnTypeRaw(ColumnType Type, int Size, boolean isArray);
 
     public boolean stringNeedsTrim(Column C);
+    public boolean stringArrayAggNeedsText(ViewColumn C);
 
     boolean supportsArrays();
 

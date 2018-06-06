@@ -22,46 +22,35 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.annotations.SerializedName;
 
 import tilda.parsing.ParserSession;
-import tilda.utils.TextUtil;
 
-public class Value
+public class ViewPivotValue extends Value
   {
-    static final Logger LOG = LogManager.getLogger(Value.class.getName());
+    static final Logger LOG = LogManager.getLogger(ViewPivotValue.class.getName());
 
     /*@formatter:off*/
-	@SerializedName("value"      ) public String _Value;
-    @SerializedName("name"       ) public String _Name;
-    @SerializedName("description") public String _Description;
+    @SerializedName("type"      ) public String  _TypeStr   ;
+    @SerializedName("size"      ) public Integer _Size      ;
+    @SerializedName("expression") public String  _Expression;
     /*@formatter:on*/
 
+    public transient TypeDef _Type;    
 
-    public Value()
+    public ViewPivotValue()
       {
-      }
-
-    public Value(Value V)
-      {
-        _Value = V._Value;
-        _Description = V._Description;
       }
     
-    public transient View _ParentView;
-
     public boolean Validate(ParserSession PS, View ParentView, String What)
       {
         int Errs = PS.getErrorCount();
-        _ParentView = ParentView;
-
-        // Mandatories
-        if (TextUtil.isNullOrEmpty(_Value) == true)
-          PS.AddError("View '" + ParentView.getFullName() + "' is defining a " + What + " with a null or empty value.");
-
-        if (TextUtil.isNullOrEmpty(_Description) == true)
-          PS.AddError("View '" + ParentView.getFullName() + "' is defining a " + What + " with a null or empty description.");
-
-        if (TextUtil.isNullOrEmpty(_Name) == true)
-         _Name = _Value;
-
+        
+        super.Validate(PS, ParentView, What);
+        
+        if (_TypeStr != null)
+          {
+            _Type = new TypeDef(_TypeStr, _Size);
+            _Type.Validate(PS, What, true, false);
+          }
+                
         return Errs == PS.getErrorCount();
       }
 

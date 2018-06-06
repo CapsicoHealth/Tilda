@@ -16,6 +16,7 @@
 
 package tilda.parsing.parts.helpers;
 
+import tilda.enums.ColumnType;
 import tilda.enums.DefaultType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Column;
@@ -78,26 +79,26 @@ public class ValueHelper
             }
         }
 
-    public static String printValue(Column Col, String DefaultValue) throws Exception
+    public static String printValue(String colName, ColumnType colType, String defaultValue) throws Exception
       {
-        switch (Col.getType())
+        switch (colType)
         {
           case BINARY:
           case BITFIELD:
-            throw new Exception("Column '" + Col.getFullName() + "' defines default value '"+DefaultValue+"' which is not allowed for type '" + Col.getType() + "'.");
+            throw new Exception("Column '" + colName + "' defines default value '"+defaultValue+"' which is not allowed for type '" + colType + "'.");
           case BOOLEAN:
           case DOUBLE:
           case FLOAT:
           case INTEGER:
           case LONG:
-            return DefaultValue;
+            return defaultValue;
           case CHAR:
           case STRING:
           case DATE:
           case DATETIME:
-            return TextUtil.EscapeSingleQuoteForSQL(DefaultValue);
+            return TextUtil.EscapeSingleQuoteForSQL(defaultValue);
           default:
-            throw new Error("Unhandled case in switch for type '" + Col.getType() + "'.");
+            throw new Error("Unhandled case in switch for type '" + colType + "'.");
         }
       }
   }
