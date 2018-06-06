@@ -84,6 +84,15 @@ public class ParserSession
           LOG.debug("Schema " + FullName + " cannot be found out of the current schema list ["+getSchemaList()+"].");
         return S;
       }
+    
+    public Schema getSchemaForDependency(String PackageName, String SchemaName)
+    {
+      String FullName = PackageName + "." + SchemaName;
+      Schema S = _Dependencies.get(FullName);
+      if (S == null)
+        LOG.debug("Schema "+ FullName +" to be added to schema dependency list.");
+      return S;
+    }    
 
     public String getSchemaList()
       {

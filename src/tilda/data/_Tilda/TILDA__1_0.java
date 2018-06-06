@@ -60,8 +60,9 @@ public final class TILDA__1_0
       tilda.data._Tilda.TILDA__OBJECTPERF_Factory.initObject(C);
       tilda.data._Tilda.TILDA__TRANSPERF_Factory.initObject(C);
       tilda.data._Tilda.TILDA__CONNECTION_Factory.initObject(C);
-      tilda.data._Tilda.TILDA__JOBS_Factory.initObject(C);
-      tilda.data._Tilda.TILDA__JOB_DETAIL_Factory.initObject(C);
+      tilda.data._Tilda.TILDA__JOB_Factory.initObject(C);
+      tilda.data._Tilda.TILDA__JOBFILE_Factory.initObject(C);
+      tilda.data._Tilda.TILDA__JOBMESSAGE_Factory.initObject(C);
       tilda.data._Tilda.TILDA__REFILLPERF_Factory.initObject(C);
       tilda.data._Tilda.TILDA__MAINTENANCE_Factory.initObject(C);
       tilda.data._Tilda.TILDA__FORMULA_Factory.initObject(C);

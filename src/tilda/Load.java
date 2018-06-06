@@ -46,6 +46,8 @@ import javax.swing.border.EtchedBorder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.data.JobFile_Data;
+import tilda.data.Job_Data;
 import tilda.db.Connection;
 import tilda.db.ConnectionPool;
 import tilda.loader.csv.ImportProcessor;
@@ -75,6 +77,56 @@ public class Load
     JButton                       btnAllTables      = new JButton("Select All Tables");
     JButton                       btnAllConnections = new JButton("Select All Connections");
 
+    public static void processLoadJob(String connectionId, int threads, String configPath, String schema, String table, 
+      String zipFilePath, String csvFilename, char mode, boolean shouldTruncate, String statusConId, JobFile_Data jobFile)
+    throws Exception
+      {
+        LOG.debug("Starting the utility in silent mode.");
+        Config conf = Config.fromFile(configPath);
+        
+        List<String> selectedNames = new ArrayList<>();
+        selectedNames.add((schema+"."+table).toUpperCase());
+ 
+        List<String> selectedConnectionIds = new ArrayList<>();
+        selectedConnectionIds.add(connectionId);
+ 
+        List<DataObject> filteredObjects = FilterObjects(selectedNames, conf._CmsData);
+
+        // Apply override values to DataObject(s)
+        for(DataObject DO : conf._CmsData)
+          {
+            DO.setFilePath(csvFilename);
+            DO.setZipFilePath(zipFilePath);
+            if (Character.isLetter(mode))
+              {
+                if (mode == Job_Data._loadModeInsert)
+                  DO.setInsertMode();
+                else if (mode == Job_Data._loadModeUpsert)
+                  DO.setUpsertMode();
+              }
+            
+            if(shouldTruncate)
+              DO.setShouldTruncate();
+          }
+        
+        List<String> errors = ValidateDataObjects(selectedConnectionIds,  filteredObjects, null);
+        if (errors.size() > 0)
+          {
+            for (String error : errors)
+              LOG.error(error);
+            LOG.error("File " + configPath + " failed validation. Aborting !!");
+            
+            throw new Exception(TextUtil.JoinTrim(errors.toArray(new String[errors.size()]), ";"));
+          }
+        
+        LOG.debug("Running ImportProcessor");
+        long timeTaken = System.nanoTime();
+        ImportProcessor.parallelProcess(selectedConnectionIds, threads, filteredObjects, statusConId, jobFile.getRefnum());
+        timeTaken = System.nanoTime() - timeTaken;
+        LOG.debug("Time taken for ImportProcessor.process() = " + DurationUtil.PrintDuration(timeTaken));
+        
+      }
+    
     // Main
     public static void main(String[] argsArray)
     throws Exception
@@ -114,13 +166,13 @@ public class Load
                 List<String> selectedObjectsList = new ArrayList<>(Arrays.asList(arguments.get(i + 3).split(",")));
                 List<String> connectionIdsList = new ArrayList<>(Arrays.asList(arguments.get(i + 5).split(",")));
                 List<DataObject> filteredObjects = FilterObjects(selectedObjectsList, Conf._CmsData);
-                List<String> errors = ValidateDataObjects(connectionIdsList, filteredObjects);
+                List<String> errors = ValidateDataObjects(connectionIdsList, filteredObjects, Conf._RootFolder);
                 if (errors.size() > 0)
                   {
                     for (String error : errors)
                       LOG.error(error);
                     LOG.error("File " + ConfigFileName + " failed validation. Aborting !!");
-                    System.exit(1);
+                    System.exit(-1);
                   }
                 
                 for (DataObject DO : filteredObjects)
@@ -139,7 +191,7 @@ public class Load
                 LOG.debug("Processing file " + ConfigFileName);
                 List<String> selectedObjectsList = new ArrayList<>(Arrays.asList(arguments.get(i + 3).split(",")));
                 List<String> connectionIdsList = new ArrayList<>(Arrays.asList(arguments.get(i + 5).split(",")));
-                ValidateDataObjects(connectionIdsList, Conf._CmsData);
+                ValidateDataObjects(connectionIdsList, Conf._CmsData, Conf._RootFolder);
                 StartImportProcessor(selectedObjectsList, connectionIdsList, Conf, Conf._CmsData);
               }
             LOG.debug("Import Tables completed.");
@@ -211,7 +263,7 @@ public class Load
           }
       }
 
-    private static List<String> ValidateDataObjects(List<String> connectionIdsList, List<DataObject> selectedDO)
+    private static List<String> ValidateDataObjects(List<String> connectionIdsList, List<DataObject> selectedDO, String rootFolder)
       {
         List<String> errorMessages = new ArrayList<>();
         Connection C = null;
@@ -222,7 +274,7 @@ public class Load
                 C = ConnectionPool.get(connectionId);
                 for (DataObject DO : selectedDO)
                   {
-                    DO.validate(C, errorMessages);
+                    DO.validate(C, rootFolder, errorMessages);
                   }
               }
             catch (Throwable T)
@@ -287,7 +339,7 @@ public class Load
 
         LOG.debug("Running ImportProcessor");
         long timeTaken = System.nanoTime();
-        long TotalRowCount = ImportProcessor.parallelProcess(connectionIdsList, Conf._RootFolder, threadsCount, dataObjects);
+        long TotalRowCount = ImportProcessor.parallelProcess(connectionIdsList, threadsCount, dataObjects, null, -666);
         timeTaken = System.nanoTime() - timeTaken;
         LOG.debug("Total time taken for ImportProcessor.process() = " + DurationUtil.PrintDuration(timeTaken) + " with a combined throughput of "+DurationUtil.PrintPerformancePerMinute(timeTaken, TotalRowCount) + " Records/min)");
       }
@@ -348,8 +400,7 @@ public class Load
           {
             return false;
           }
-
-
+        
         return true;
       }
 
@@ -443,7 +494,7 @@ public class Load
                                 // Validate configurations
                                 List<DataObject> selectedDO = FilterObjects(ImportTables, Conf._CmsData);
                                 LOG.debug("Validating Selected Table Indices..");
-                                List<String> errors = ValidateDataObjects(ConnectionIds, selectedDO);
+                                List<String> errors = ValidateDataObjects(ConnectionIds, selectedDO, Conf._RootFolder);
                                 if (errors.size() > 0)
                                   {
                                     String error = TextUtil.JoinTrim(errors.toArray(new String[errors.size()]), ", \n");
@@ -564,4 +615,5 @@ public class Load
       {
         statusLabel.setText(text);
       }
+    
   }

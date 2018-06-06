@@ -16,6 +16,8 @@
 
 package tilda.loader.csv.stores;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -29,21 +31,25 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.loader.GenericLoader;
+import tilda.loader.csv.ImportProcessor;
+import tilda.loader.parser.ColumnHeader;
+import tilda.loader.parser.DataObject;
+import tilda.data.JobFile_Data;
+import tilda.data.JobMessage_Data;
+import tilda.data.JobMessage_Factory;
 import tilda.db.Connection;
 import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.DatabaseMeta;
 import tilda.db.metadata.TableMeta;
 import tilda.enums.ColumnType;
-import tilda.loader.GenericLoader;
-import tilda.loader.csv.ImportProcessor;
-import tilda.loader.parser.ColumnHeader;
-import tilda.loader.parser.DataObject;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
@@ -57,10 +63,11 @@ public abstract class CSVImporter
 
     protected static final Logger LOG                = LogManager.getLogger(CSVImporter.class.getName());
     protected static final int    PERFORMANCE_NUMBER = 50000;
-
-    protected Connection          C;
-    protected String              rootFolder;
-    protected DataObject          cmsDO;
+    
+    protected Connection    C                   = null;
+    protected DataObject    cmsDO               = null;
+    protected Connection    statusConnection    = null;
+    protected JobFile_Data  jobFile             = null;
 
     protected abstract long insertData(boolean isUpsert, long t0, Map<String, ColumnMeta> DBColumns,
     boolean withHeader, Iterable<CSVRecord> records, StringBuilder Str, String schemaName, String tableName,
@@ -69,10 +76,12 @@ public abstract class CSVImporter
     throws Exception;
 
     protected abstract StringBuilder GenerateSQL(boolean isUpsert, String schemaName, String tableName, String columns[], Map<String, ColumnMeta> DBColumns, String lookupColumns[]);
-
-    public List<Results> process()
+        
+    public List<Results> process() throws Exception
       {
         long NumOfRecs = 0;
+        Reader fileReader = null;
+        ZipFile zipFile = null;
         try
           {
             String columns[] = cmsDO.getColumns();
@@ -95,68 +104,70 @@ public abstract class CSVImporter
               DBColumns = TM.getColumnMetaMap();
             StringBuilder Str = GenerateSQL(cmsDO.isUpserts(), cmsDO._SchemaName, cmsDO._TableName, columns, DBColumns, uniqueColumns);
 
-            for (String file : fileList)
-              {
-                Reader R = FileUtil.getReaderFromFileOrResource(rootFolder + file);
-              }
-
             if (cmsDO.isInserts() == true && cmsDO.isTruncateFirst() == true)
               ImportProcessor.truncateTable(C, cmsDO._SchemaName, cmsDO._TableName, cmsDO.isTruncateCascade());
-
+            
             for (String file : fileList)
               {
                 long t0 = System.nanoTime();
-                String absoluteFilePath = rootFolder + file;
-                LOG.debug("Looking for data file or resource " + absoluteFilePath + ".");
-                Reader R = FileUtil.getReaderFromFileOrResource(absoluteFilePath);
+                
+                if(cmsDO.getZipFilePath() != null && this.jobFile != null)
+                  {
+                    LOG.debug("Looking for data file or resource " + file + " in Zip "+cmsDO.getZipFilePath());
+                    zipFile = new ZipFile(FileUtil.getFileOrResource(cmsDO.getZipFilePath()));
+                    ZipEntry entry = zipFile.getEntry(file);
+                    fileReader = new BufferedReader(new InputStreamReader(zipFile.getInputStream(entry)));
+                  }
+                else
+                  {
+                    LOG.debug("Looking for data file or resource " + file + ".");
+                    fileReader = FileUtil.getReaderFromFileOrResource(file);
+                  }
 
                 Map<String, ColumnHeader> columnMap = cmsDO.getMultiHeaderColumnMap();
 
                 CSVFormat csvFormat = CSVFormat.DEFAULT.withHeader(completeHeaders);
-                Iterable<CSVRecord> records = csvFormat.parse(R);
+                Iterable<CSVRecord> records = csvFormat.parse(fileReader);
                 validateHeaders(completeHeaders, cmsDO._HeadersIncluded, records, columnMap, DBColumns);
 
                 NumOfRecs = insertData(cmsDO.isUpserts(), t0, DBColumns, cmsDO._HeadersIncluded, records, Str, cmsDO._SchemaName,
-                cmsDO._TableName, headers, columns, columnMap, completeHeaders, uniqueColumns,
-                cmsDO._dateTimePattern, cmsDO._zoneId, cmsDO._datePattern);
-
-                R.close();
-
+                  cmsDO._TableName, headers, columns, columnMap, completeHeaders, uniqueColumns, 
+                  cmsDO._dateTimePattern, cmsDO._zoneId, cmsDO._datePattern);
+                
+                fileReader.close();
+                fileReader = null;                
+                zipFile.close();
+                zipFile = null;
+                
                 NumOfRecs = (cmsDO._HeadersIncluded == true) ? (NumOfRecs - 1) : NumOfRecs;
                 t0 = System.nanoTime() - t0;
-                LOG.debug("Processed a total of " + NumberFormatUtil.PrintWith000Sep(NumOfRecs) + " records in " + DurationUtil.PrintDuration(t0) + " (" + DurationUtil.PrintPerformancePerMinute(t0, NumOfRecs) + " Records/min)");
+                String jobMessageLog = "Processed a total of " + NumberFormatUtil.PrintWith000Sep(NumOfRecs) + " records in " + DurationUtil.PrintDuration(t0) + " (" + DurationUtil.PrintPerformancePerMinute(t0, NumOfRecs) + " Records/min)";
+                LOG.debug(jobMessageLog);
+                
+                if ( jobFile != null && statusConnection != null)
+                  {
+                    // Update jobFile fileRecords
+                    jobFile.Refresh(statusConnection);
+                    jobFile.setFileRecords(NumOfRecs);
 
+                    // set JobMessage
+                    JobMessage_Data jobMessage = JobMessage_Factory.Create(jobFile.getJobRefnum(), jobFile.getRefnum(), jobMessageLog);
+                    jobMessage.Write(statusConnection);
+                    statusConnection.commit();
+                  }
+                
                 Results results = new Results(file, cmsDO._SchemaName, cmsDO._TableName, NumOfRecs, t0);
                 resultsList.add(results);
               }
             return resultsList;
-
           }
         catch (Exception e)
           {
-            LOG.error("Error while importing CSV Data\n", e);
-            if (C != null)
-              {
-                try
-                  {
-                    C.rollback();
-                  }
-                catch (Exception E)
-                  {
-                    LOG.error("Cannot rollback???\n", E);
-                  }
-
-                // try
-                // {
-                // C.setTableLogging(cmsDO._SchemaName, cmsDO._TableName, true);
-                // C.commit();
-                // }
-                // catch (Exception E)
-                // {
-                // LOG.error("Cannot Reset the table to logged???\n", E);
-                // }
-              }
-            return null;
+            if (fileReader != null)
+              fileReader.close();
+            if (zipFile != null)
+              zipFile.close();
+            throw e;
           }
       }
 
