@@ -29,7 +29,8 @@ public enum TransactionType
     CONNECTION_GET    ("--CONNECTION GET--"    ),
     TILDA_SETTER      ("--TILDA SETTER--"      ),
     TILDA_TOSTRING    ("--TILDA TOSTRING--"    ),
-    TILDA_TOJSON      ("--TILDA TOJSON--"      )
+    TILDA_TOJSON      ("--TILDA TOJSON--"      ),
+    TILDA_TOCSV       ("--TILDA TOCSV--"      )
     ;
 
     private TransactionType(String Name)

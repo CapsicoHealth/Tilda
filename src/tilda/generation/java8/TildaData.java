@@ -1447,4 +1447,19 @@ public class TildaData implements CodeGenTildaData
         Out.println("    }");
       }
 
+    @Override
+    public void genMethodToCSV(PrintWriter Out, GeneratorSession G, Object O)
+      {
+        Out.println("   public void toCSV(java.io.Writer Out, String CSVExportName) throws Exception");
+        Out.println("    {");
+        Out.println("      switch (CSVExportName)");
+        Out.println("        { ");
+        for (JsonMapping j : O._Json)
+          Out.println("          case \"" + j._Name + "\": " + Helper.getFullAppJsonClassName(O) + ".toCSV" + j._Name + "(Out, (" + Helper.getFullAppDataClassName(O) + ") this); break;");
+        Out.println("          default: throw new Exception(\"Unknown CSV exporter '\"+CSVExportName+\"' for " + Helper.getFullAppJsonClassName(O) + "\");");
+        Out.println("        } ");
+        Out.println("    }");
+      }
+
+    
   }

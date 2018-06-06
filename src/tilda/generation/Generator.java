@@ -373,6 +373,7 @@ public class Generator
             Out.println();
             DG.docMethodToJSON(Out, G, O);
             CG.genMethodToJSON(Out, G, O);
+            CG.genMethodToCSV(Out, G, O);
           }
 
         CG.genClassEnd(Out, G);
@@ -515,6 +516,7 @@ public class Generator
               Out.println();
               DG.docMethodToJSON(Out, G, J);
               CG.genMethodToJSON(Out, G, J);
+              CG.genMethodToCSV(Out, G, J);
             }
         Out.println();
         for (Column Col : O._Columns)

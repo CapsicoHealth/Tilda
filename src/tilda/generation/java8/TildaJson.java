@@ -412,10 +412,65 @@ public class TildaJson implements CodeGenTildaJson
             Out.println("      Out.write(Lead);");
             Out.println("      Out.write(\"  ]\\n\");");
             Out.println("    }");
-
+            Out.println();
           }
       }
 
+    @Override
+    public void genMethodToCSV(PrintWriter Out, GeneratorSession G, JsonMapping J)
+    throws Exception
+      {
+        Out.println("   public static void toCSV" + J._Name + "(java.io.Writer Out, List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L) throws java.io.IOException");
+        Out.println("    {");
+        Out.println("      long T0 = System.nanoTime();");
+        StringBuilder header = new StringBuilder();
+        boolean isJson = false;
+        for (Column C : J._ColumnObjs)
+          if (C != null)
+            {
+              if (C.getType() == ColumnType.JSON)
+              {
+                isJson = true;
+                break;
+              }
+              
+        	  if (header.length() == 0) 
+        		 header.append(C.getName());
+        	  else
+        		  header.append("," + C.getName());
+            }
+        if(isJson == false)
+          {
+            Out.println("      Out.write(\""+header.toString()+"\\n\");");
+            Out.println("      for (" + Helper.getFullAppDataClassName(J._ParentObject) + " O : L)");
+            Out.println("       if (O!=null)");
+            Out.println("        {");
+            Out.println("          toCSV" + J._Name + "(Out, O);");
+            Out.println("          Out.write(\"\\n\");");
+            Out.println("        }");
+            Out.println("      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);");
+            Out.println("    }");
+
+            Out.println();
+            Out.println("   public static void toCSV" + J._Name + "(java.io.Writer Out, " + Helper.getFullAppDataClassName(J._ParentObject) + " Data) throws java.io.IOException");
+            Out.println("    {");
+            Out.println("      long T0 = System.nanoTime();");
+            Out.println("      StringBuilder Str = new StringBuilder();");
+            Out.println();
+            boolean First = true;
+            for (Column C : J._ColumnObjs)
+              if (C != null)
+                {
+                  First = Helper.CSVExport(Out, First, C);
+                }
+            Out.println("      Out.write(Str.toString());");
+            Out.println("      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);");            
+          }
+        else
+        	Out.println("      LOG.error(\"This table contains a JSON column type. CSV output for JSON is not supported at this time.\");");
+        Out.println("    }");
+      }
+    
     public void genMethodToString(PrintWriter Out, GeneratorSession G, Object O)
     throws Exception
       {

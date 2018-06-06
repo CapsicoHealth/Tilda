@@ -892,6 +892,28 @@ public class TextUtil
         Print(I, s);
         return s.toString();
       }
+    
+    public static final String Print(Iterator<?> I, String Separator)
+    {	
+        if (I == null)
+          return null;
+        StringBuilder Str = new StringBuilder();
+        boolean First = true;
+        while (I.hasNext() == true)
+          {
+            Object O = I.next();
+            if (First == true)
+              First = false;
+            else
+            	Str.append(Separator);
+            if (O == null)
+            	Str.append("null");
+            else
+            	Str.append(O.getClass() == ZonedDateTime.class ? DateTimeUtil.printDateTimeCompact((ZonedDateTime) O, true, true) : O.toString());
+            }
+         return Str.toString();
+    }
+
 
     public static final void Print(Iterator<?> I, StringBuilder s)
       {
@@ -1261,7 +1283,10 @@ public class TextUtil
           {
             if (Str.length() != 0)
               Str.append(Separator);
-            Str.append(o.toString());
+            if(o.getClass() != null)
+              Str.append(o.getClass().getName());
+            else
+              Str.append(o.toString());
           }
         return Str.toString();
       }

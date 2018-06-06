@@ -685,6 +685,25 @@ public class Helper
         return false;
       }
 
+    public static boolean CSVExport(PrintWriter Out, boolean First, Column C)
+    {
+      if(First == false)
+    	Out.println("      Str.append(\",\");");
+      if (C.getType() == ColumnType.DOUBLE || C.getType() == ColumnType.FLOAT|| C.getType() == ColumnType.LONG || C.getType() == ColumnType.INTEGER 
+    		  || C.getType() == ColumnType.CHAR || C.getType() == ColumnType.BINARY || C.getType() == ColumnType.BOOLEAN)
+        Out.println("      TextUtil.EscapeDoubleQuoteForCSV(Str, \"\" + " + "Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "());");
+      else if (C.isCollection() == true)
+        Out.println("      TextUtil.EscapeDoubleQuoteForCSV(Str, " + "TextUtil.Print(Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(), \",\"));");
+      else if (C.getType() == ColumnType.DATETIME)
+        Out.println("      TextUtil.EscapeDoubleQuoteForCSV(Str, " + "DateTimeUtil.printDateTimeForSQL(Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()));");
+      else if (C.getType() == ColumnType.DATE)
+        Out.println("      TextUtil.EscapeDoubleQuoteForCSV(Str, " + "DateTimeUtil.printDate(Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()));");
+      else
+    	Out.println("      TextUtil.EscapeDoubleQuoteForCSV(Str, " + "Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "());");
+      return false;
+    }
+    
+    
     public static void SelectFrom(PrintWriter Out, Object O)
       {
         Out.println("       S.append(\"select \");");

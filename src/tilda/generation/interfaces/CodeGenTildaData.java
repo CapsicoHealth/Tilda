@@ -206,5 +206,13 @@ public interface CodeGenTildaData extends CodeGenBase
      */
     public void genMethodToJSON(PrintWriter Out, GeneratorSession G, Object O);
 
+    /**
+     * 
+     * @param out
+     * @param g
+     * @param _Json
+     */
+    public void genMethodToCSV(PrintWriter Out, GeneratorSession G, Object O);
+
 
   }

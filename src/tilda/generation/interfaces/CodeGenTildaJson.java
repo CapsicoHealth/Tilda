@@ -84,4 +84,12 @@ public interface CodeGenTildaJson extends CodeGenBase
      */
     public void genMethodJSONSchema(PrintWriter out, GeneratorSession g, Column col);
 
+    /**
+     * 
+     * @param out
+     * @param g
+     * @param col
+     */
+    void genMethodToCSV(PrintWriter Out, GeneratorSession G, JsonMapping J) throws Exception;
+
   }
