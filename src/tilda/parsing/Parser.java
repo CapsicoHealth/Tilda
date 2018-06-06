@@ -153,7 +153,7 @@ public abstract class Parser
             break;
         if (PS.getErrorCount() == 0)
           {
-            if (PS.getSchema(BaseSchema._Package, BaseSchema._Name) == null)
+            if (PS.getSchemaForDependency(BaseSchema._Package, BaseSchema._Name) == null)
               {
                 PS.addDependencySchema(BaseSchema);
               }
