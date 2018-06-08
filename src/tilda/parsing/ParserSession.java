@@ -85,6 +85,15 @@ public class ParserSession
         return S;
       }
 
+    public Schema getSchemaForDependency(String PackageName, String SchemaName)
+    {
+      String FullName = PackageName + "." + SchemaName;
+      Schema S = _Dependencies.get(FullName);
+      if (S == null)
+        LOG.debug("Schema "+ FullName +" has not been found in the schema dependency list.");
+      return S;
+    }    
+    
     public String getSchemaList()
       {
         StringBuilder Str = new StringBuilder();
