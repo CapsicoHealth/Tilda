@@ -90,7 +90,7 @@ public class ParserSession
       String FullName = PackageName + "." + SchemaName;
       Schema S = _Dependencies.get(FullName);
       if (S == null)
-        LOG.debug("Schema "+ FullName +" has been found in the schema dependency list.");
+        LOG.debug("Schema "+ FullName +" has not been found in the schema dependency list.");
       return S;
     }    
     
