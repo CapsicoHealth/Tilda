@@ -128,11 +128,9 @@ public abstract class Base
       // Mandatories
       if (TextUtil.isNullOrEmpty(_Name) == true)        	
         return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring an "+getWhat()+" without a name.");
-      else 
-        {
-      	  _OriginalName = _Name;            
-          LOG.debug("  Validating "+getWhat()+" " + getFullName() + ".");
-        } 
+      
+      _OriginalName = _Name;            
+      LOG.debug("  Validating "+getWhat()+" " + getFullName() + ".");
       	
       if (ValidationHelper.isValidIdentifier(_Name) == false)
         return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring "+getWhat()+" '" + getFullName() + "' with a name '"+_Name+"' which is not valid. "+ValidationHelper._ValidIdentifierMessage);
