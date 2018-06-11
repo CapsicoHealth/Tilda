@@ -309,8 +309,8 @@ public class PostgreSQL implements DBType
 
     public DBStringType getDBStringType(int Size)
       {
-        return Size < 20 ? DBStringType.CHARACTER
-        : Size < 4096 ? DBStringType.VARCHAR
+        return Size <= 8 ? DBStringType.CHARACTER
+        : Size <= 4096 ? DBStringType.VARCHAR
         : DBStringType.TEXT;
       }
 
@@ -362,8 +362,9 @@ public class PostgreSQL implements DBType
 
         // Are we switching from CHAR(x) to VARCHAR(y) or TEXT?
         String Using = "";
-        if (ColMetaT == DBStringType.CHARACTER && ColT != DBStringType.CHARACTER)
-          Using = " USING rtrim(\"" + Col.getName() + "\")";
+//Looks like we do not need the rtrim call. It slows things down and doesn't actually do anything in Postgres 
+//        if (ColMetaT == DBStringType.CHARACTER && ColT != DBStringType.CHARACTER)
+//          Using = " USING rtrim(\"" + Col.getName() + "\")";
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" TYPE "
         + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + Using + ";";
         return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
@@ -402,8 +403,9 @@ public class PostgreSQL implements DBType
           }
 
         String Using = "";
-        if (ColMetaT == DBStringType.CHARACTER && ColT != DBStringType.CHARACTER)
-          Using = " USING rtrim(\"" + Col.getName() + "\")";
+        //Looks like we do not need the rtrim call. It slows things down and doesn't actually do anything in Postgres 
+//        if (ColMetaT == DBStringType.CHARACTER && ColT != DBStringType.CHARACTER)
+//          Using = " USING rtrim(\"" + Col.getName() + "\")";
 
         if (Col.isPrimaryKey() == true || Col.isForeignKey() == true)
           {
