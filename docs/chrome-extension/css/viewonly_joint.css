@@ -314,3 +314,7 @@
     fill: white;
 }
 /*  Links  */
+
+.deleteTool{
+  display: none
+}
