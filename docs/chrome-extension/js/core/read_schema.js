@@ -7,7 +7,9 @@ function(ParserElement, Collection){
       _.each(elementArr, function(value, i){
         var schemaName = package.split(".")[1];
         var objectName = value.name;
-        var friendlyName = schemaName+"."+value.name.toLowerCase();
+        var searchableName = schemaName+"."+value.name.toLowerCase();
+        var friendlyName = value.name.toLowerCase();
+        // console.error(friendlyName);
         var references = [];
         _.each(value.primaryColumns, function(column, j){
           if(column.sameas != null){
@@ -24,22 +26,7 @@ function(ParserElement, Collection){
             }
           }
         })
-        if(_type.toLowerCase() != "view")
-        {
-          _.each(value.foreign, function(foreign, j){
-            var sameas = foreign.destObject.split(".").reverse();
-            var reference = sameas[0];
-            var schema = sameas[1];
-            schema = schema || schemaName;
-            if(reference != null){
-              reference = schema+"."+reference.toLowerCase();
-              if(references.indexOf(reference) == -1){
-                references.push(reference);
-              }
-            }
-          })
-        }
-        else
+        if(_type.toLowerCase() == "view")
         {
           _.each(value.columns, function(column, j){
             if(column.sameas != null){
@@ -56,13 +43,46 @@ function(ParserElement, Collection){
              }
            })
         }
+        else
+        {
+          _.each(value.foreign, function(foreign, j){
+            var sameas = foreign.destObject.split(".").reverse();
+            var reference = sameas[0];
+            var schema = sameas[1];
+            schema = schema || schemaName;
+            if(reference != null){
+              reference = schema+"."+reference.toLowerCase();
+              if(references.indexOf(reference) == -1){
+                references.push(reference);
+              }
+            }
+          })
+          _.each(value.columns, function(column, k)
+          {
+            if(column.mapper != null && column.mapper.destObject != null)
+            {
+              var sameas = column.mapper.destObject.split(".").reverse();
+              var reference = sameas[0];
+              var schema = sameas[1];
+              schema = schema || schemaName;
+              if(reference != null){
+                reference = schema+"."+reference.toLowerCase();
+                if(references.indexOf(reference) == -1){
+                  references.push(reference);
+                }
+              }
+            }
+          });
+        }
         var element = new ParserElement();
         element.set({
           schemaName: schemaName,
+          searchableName: searchableName,
           name: objectName,
           _type: _type,
           references: references,
           friendlyName: friendlyName,
+          inSchema: true,
           data: {}
         })
         collection.add(element);
@@ -78,17 +98,25 @@ function(ParserElement, Collection){
       var fileEntry = fileEntries[index];
       console.log("Reading -> "+fileEntry.name);
       reader.onload = function(e) {
-        var package = fileEntry.name; 
-        var schema = JSON.parse(event.target.result);
-        pushElement(package, schema.objects, "Object")
-        pushElement(package, schema.mappers, "Mapper")
-        pushElement(package, schema.enumerations, "Enumeration")
-        pushElement(package, schema.views, "View")
-
+        var package = fileEntry.name;
+        try
+        {
+          var schema = JSON.parse(event.target.result);
+          pushElement(package, schema.objects, "Object")
+          pushElement(package, schema.mappers, "Mapper")
+          pushElement(package, schema.enumerations, "Enumeration")
+          pushElement(package, schema.views, "View")          
+        }
+        catch(e)
+        {
+          console.error(e.message);
+          console.error(e.stack);
+        }
         readFile(index+1);
       }
       if(fileEntry){
-        fileEntry.file(function(file){
+        fileEntry.file(function(file)
+        {
           reader.readAsText(file);
         });
       }
@@ -106,11 +134,29 @@ function(ParserElement, Collection){
         var refObjs = [];
         if( references != null && references.length > 0){
           _.each(references, function(ref, i){
-            var refObj = collection.findWhere( {friendlyName: ref }, {caseInsensitive: true})
+            var refObj = collection.findWhere( {searchableName: ref }, {caseInsensitive: true})
             if(refObj != null){
               refObjs.push(refObj)
             } else {
-              console.error("Cannot find reference--> "+ref+" --> for "+element.get("name"));
+              var schemaName = ref.split(".")[0];
+              var searchableName = ref;
+              var objectName = ref.split(".")[1];
+              var _type = "Object";
+              var friendlyName = objectName.toLowerCase();
+              var element = new ParserElement();
+              element.set({
+                schemaName: schemaName,
+                searchableName: searchableName,
+                name: objectName,
+                _type: _type,
+                references: [],
+                inSchema: false,
+                friendlyName: friendlyName,
+                data: {}
+              })
+              this.collection.add(element);
+              refObjs.push(element);
+              // console.error("Cannot find reference--> "+ref+" --> for "+element.get("name"));
             }
           })
         }

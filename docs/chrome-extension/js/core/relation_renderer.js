@@ -23,16 +23,16 @@ define(["jointjs", "lodash", "jquery",
   }
   var renderLink = function(graph, source, target, pKey){
     var elements = graph.getElements();
-    var sourceCell = findByCustomId(graph, source)
-    var targetCell = findByCustomId(graph, target)
-    if(sourceCell == null || targetCell == null){
+    var sourceCell = findByCustomId(graph, source);
+    var targetCell = findByCustomId(graph, target);
+    if(sourceCell == null || targetCell == null)
+    {
       return false;
     }
     if(isConnected(graph, sourceCell, targetCell))
     {
       return false;
     }
-    
     var key = pKey+"#"+source.get("friendlyName")+"#"+target.get("friendlyName");
     var linkAttrs = window.tildaCache[key];
     if(linkAttrs == null){
@@ -111,7 +111,8 @@ define(["jointjs", "lodash", "jquery",
     "Object": objRel,
     "View": objRel,
     "onlyView": objRel,
-    "Mapper": objRel
+    "Mapper": objRel,
+    "findByCustomId": findByCustomId
   }
   return renderObjectRelations;
 });

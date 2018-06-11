@@ -1,45 +1,47 @@
 <div class="container-fluid">
-
   <div class="row">
     <button class="col-md-12" name="schema-file" style="padding: 0px">Open folder </button>
+    <span class="col-md-2 col-md-offset-10 hideContent" style="cursor: pointer;text-align: right;">Toggle Actions</span>
   </div>
-  <div class="row actions">
-    <hr/>
-    <div class="col-md-4">
-      <select class="form-control schemas"></select>
-    </div>
-    <div class="col-md-7">
-      <form>
-        <label class="radio-inline">
-          <a class="filterRegex form-control">Filter</a>
-        </label>
-        <label class="radio-inline">
-          <select class="add-view-holder form-control">
-          </select>
-        </label>
-        <span>
+  <div class="hideableContent">
+    <div class="row actions">
+      <hr/>
+      <div class="col-md-4">
+        <select class="form-control schemas"></select>
+      </div>
+      <div class="col-md-7">
+        <form>
           <label class="radio-inline">
-            <button class="saveSchema form-control">Save</button>
+            <a class="filterRegex form-control">Filter</a>
           </label>
           <label class="radio-inline">
-            <button class="newCanvas form-control">New ?</button>
+            <select class="add-view-holder form-control">
+            </select>
           </label>
-          <label class="radio-inline hidden">
-            <button class="renameCanvas form-control">Update ?</button>
-          </label>
-        </span>
-      </form>
+          <span>
+            <label class="radio-inline">
+              <button class="saveSchema form-control">Save</button>
+            </label>
+            <label class="radio-inline">
+              <button class="newCanvas form-control">New ?</button>
+            </label>
+            <label class="radio-inline hidden">
+              <button class="renameCanvas form-control">Update ?</button>
+            </label>
+          </span>
+        </form>
+      </div>
     </div>
-  </div>
-  <div class="fName" style="padding: 5px"></div>
-  <div class="row">
-    <div class="col-md-12 rendered_objects" style="border: 1px solid gray;border-left: none;border-right: none;">
-      <div id='robj' style="height: 15vh;width: 100%;overflow: auto"></div>
+    <div class="fName" style="padding: 5px"></div>
+    <div class="row">
+      <div class="col-md-12 rendered_objects" style="border: 1px solid gray;border-left: none;border-right: none;">
+        <div id='robj' style="height: 15vh;width: 100%;overflow: auto"></div>
+      </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-12 objects">
-      <div id="obj_c" class="obj" style="height: 75vh;overflow: auto"> </div>
+      <div id="obj_c" class="obj" style="height: 95vh;overflow: hide"> </div>
     </div>
   </div>
 </div>

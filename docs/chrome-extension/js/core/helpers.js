@@ -4,32 +4,43 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
       currentPos.x = 100;
       currentPos.y = currentPos.y+200;
     } else{
+      currentPos.y = 100;
       currentPos.x = currentPos.x+200;
     }
     return currentPos;
   }
   var X = {};
+
   var renderView = function(graph, object, position, objectAttr, package, elementChangeHandler){
     var renderFn = function(g, o, p, attr, pkg){
       if(attr == null){
         var name = o.get("schemaName")+"."+o.get("name");
         attr = {
-          id: o.get("friendlyName"),
-          position: position,
           size: { width: name.length*12, height: 30 },
           attrs: { 
             rect: { fill: 'rgb(169,209,142)', stroke: "rgb(0,176,80)", "stroke-width": 1, "stroke-dasharray": "3,3" },
             text: { text: name, fill: 'black'} 
           }
         }
+        // if(graph.get("docket_view") != true)
+        // {
+        //   attr["hidden"] = true;
+        // }
       }
+      if(p != null)
+      {
+        attr["position"] = p;
+      }
+      var width = attr["size"]["width"];
+      width = width + (width <=(7*12) ? 20 : 0);
+      attr["size"]["width"] = width;
       if(o.get('graphId') == null){
         var t = new joint.shapes.basic.CustomRect(attr).clone();
         o.set({graphId: t.id, rendered: true, package: package})
-        console.log("Hidden -> "+t.get('hidden'));
         if(t.get('hidden') == true)
         {
-          graph.trigger('remove', {model: t})
+          t.set({customId: o.get("friendlyName")});
+          g.trigger('remove', {model: t})
           return null;
         }
         else
@@ -41,11 +52,11 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
       return t;
     }
     var a = renderFn.apply(this, arguments);
-    
+
     if(a)
     {
       a.on('change:position', _.debounce(elementChangeHandler, 500, { 'maxWait' : 1000 }));
-      console.log("customId -> "+a.get('customId'));
+//       console.log("customId -> "+a.get('customId'));
     }
 
     var references = object.get("references") || [];
@@ -67,23 +78,38 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
       if(attr == null){
         // , "stroke-dasharray": "3,3"  },
         attr = {
-          id: o.get("friendlyName"),
-          position: p,
           size: { width: name.length*12, height: 30 },
           attrs: {
-            id: o.get("friendlyName"),
-            rect: { fill: 'rgb(46,117,182)', stroke: "rgb(65,113,156)", "stroke-width": 2 },
             text: { text: name, fill: 'white'}
           }
         }
+        if(p != null)
+        {
+          attr["position"] = p;
+        }
+        if(o.get("inSchema"))
+        {
+          attr["attrs"]["rect"] = { fill: 'rgb(46,117,182)', stroke: "rgb(65,113,156)", "stroke-width": 2 }
+        }
+        else
+        {
+          attr["attrs"]["rect"] = { fill: 'rgb(166,201,232)', stroke: "white", "stroke-width": 0  }
+        }
+        // if(graph.get("docket_view") != true)
+        // {
+        //   attr["hidden"] = true;
+        // }
       }
       // attr.model = new joint.shapes.devs.Model(attr).clone()
+      var width = attr["size"]["width"];
+      width = width + (width <=(7*12) ? 20 : 0);
+      attr["size"]["width"] = width;
       if(o.get('graphId') == null){
         var t = new joint.shapes.basic.CustomRect(attr).clone();
         o.set({graphId: t.id, rendered: true, package: package})
-        console.log("Hidden -> "+t.get('hidden'));
         if(t.get('hidden') == true)
         {
+          t.set({customId: o.get("friendlyName")});
           g.trigger('remove', {model: t})
           return null;
         }
@@ -96,11 +122,10 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
       return t;
     }
     var a = renderFn.apply(this, arguments);
-    
     if(a)
     {
       a.on('change:position', _.debounce(elementChangeHandler, 500, { 'maxWait' : 1000 }));      
-      console.log("customId -> "+a.get('customId'));
+      // console.log("customId -> "+a.get('customId'));
     }
     var references = object.get("references") || [];
     _.each(references, function(value, i){
@@ -120,24 +145,33 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
       if(attr == null){
         var name = o.get("schemaName")+"."+o.get("name");
         attr = {
-          id: o.get("friendlyName"),
-          position: position,
+          position: p,
           size: { width: name.length*12, height: 30 },
           attrs: { 
-            id: o.get("friendlyName"),
-            rect: { fill: 'rgb(251,229,214)', stroke: "rgb(248,203,173)", "stroke-width": 1  },
+              rect: { fill: 'rgb(251,229,214)', stroke: "rgb(248,203,173)", "stroke-width": 1  },
             text: { text: name, fill: 'black'} 
           } 
         }
+        // if(graph.get("docket_view") != true)
+        // {
+        //   attr["hidden"] = true;
+        // }
+      }
+      if(p != null)
+      {
+        attr["position"] = p;
       }
       // attr.model = new joint.shapes.devs.Model(attr).clone()
+      var width = attr["size"]["width"];
+      attr["size"]["width"] = width;
+      width = width + (width <=(7*12) ? 20 : 0);
       if(o.get('graphId') == null){
         var t = new joint.shapes.basic.CustomRect(attr).clone();
-        o.set({graphId: t.id, rendered: true, package: package});
-        console.log("Hidden -> "+t.get('hidden'));
+        o.set({graphId: t.id, rendered: true, package: package})
         if(t.get('hidden') == true)
         {
-          graph.trigger('remove', {model: t})
+          t.set({customId: o.get("friendlyName")});
+          g.trigger('remove', {model: t})
           return null;
         }
         else
@@ -153,7 +187,7 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
     if(a)
     {
       a.on('change:position', _.debounce(elementChangeHandler, 500, { 'maxWait' : 1000 }));      
-      console.log("customId -> "+a.get('customId'));
+      // console.log("customId -> "+a.get('customId'));
     }
     var references = object.get("references") || [];
     _.each(references, function(value, i){
@@ -174,25 +208,33 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
       if(attr == null){
         var name = o.get("schemaName")+"."+o.get("name");
         attr = {
-          id: o.get("friendlyName"),
-          position: position,
-          size: { width: name.length*12, height: 30 },
+          size: { width: name.length*12+(name.length <=7 ? 40 : 0 ), height: 30 },
           attrs: { 
-            id: o.get("friendlyName"),
-            rect: { fill: 'rgb(248,203,173)', stroke: "rgb(244,177,131)", "stroke-width": 2  },
+              rect: { fill: 'rgb(248,203,173)', stroke: "rgb(244,177,131)", "stroke-width": 2  },
             text: { text: name, fill: 'black'} 
           } 
         }
+        // if(grap.hget("docket_view") != true)
+        // {
+        //   attr["hidden"] = true;
+        // }
+      }
+      if(p != null)
+      {
+        attr["position"] = p;
       }
 
       // attr.model = new joint.shapes.devs.Model(attr).clone()
+      var width = attr["size"]["width"];
+      width = width + (width <=(7*12) ? 20 : 0);
+      attr["size"]["width"] = width;
       if(o.get('graphId') == null){
         var t = new joint.shapes.basic.CustomRect(attr).clone();
-        o.set({graphId: t.id, rendered: true, package: package});
-        console.log("Hidden -> "+t.get('hidden'));
+        o.set({graphId: t.id, rendered: true, package: package})
         if(t.get('hidden') == true)
         {
-          graph.trigger('remove', {model: t})
+          t.set({customId: o.get("friendlyName")});
+          g.trigger('remove', {model: t})
           return null;
         }
         else
@@ -208,7 +250,7 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
     if(a)
     {
       a.on('change:position', _.debounce(elementChangeHandler, 500, { 'maxWait' : 1000 }));
-      console.log("customId -> "+a.get('customId'));
+      // console.log("customId -> "+a.get('customId'));
     }
 
     // dependencies;

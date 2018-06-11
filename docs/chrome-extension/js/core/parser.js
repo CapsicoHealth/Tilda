@@ -2,7 +2,6 @@ define(["jointjs", "./parser_element",
  "./custom_element_view", "./helpers", 
  "./relation_renderer", "./custom_object_collection"],
 function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
-
   function offsetToLocalPoint(paper, x, y) {
     var svgPoint = paper.svg.createSVGPoint();
     svgPoint.x = x;
@@ -18,6 +17,7 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
   var CustomElementView = CEV.CustomElementView;
   var renderObject = Helpers.renderObject;
   var renderObjectRelations = LinkRenderer;
+  var findByCustomId = LinkRenderer.findByCustomId;
   var p = function(package, eleId, opts){
     x = 0;
     y = 0;
@@ -29,6 +29,7 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
     this.collection = window.collection.clone();
     this.schemaName = this.package.split(".")[1];
     this.pKey = opts.package+"."+this.opts.name;
+    this.canvasName = this.opts.name;
     this.currentScale = this.opts.scale || 1;
     console.log("Scale --> "+this.currentScale);
     var that = this;
@@ -66,12 +67,18 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
     this.render = function(what){
       var that = this;
 
-      var elementChangeHandler = function(event){
+      var elementChangeHandler = function(event)
+      {
         var eventObject = that.collection.findWhere({graphId: this.get("id")})
-        if(eventObject == null){
+        if(eventObject == null)
+        {
           return true;
         }
         var key = that.pKey+"#"+eventObject.get("friendlyName");
+        if(eventObject.get("hidden") == true)
+        {
+          key = key+".hidden";
+        }
         var position = eventObject.get("data").position;
         if(eventObject.get("data").position == null){
           eventObject.get("data").position = {};
@@ -85,6 +92,7 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
           currentPos.x = 150;
           currentPos.y = currentPos.y+300;
         } else{
+          currentPos.y = 150;
           currentPos.x = currentPos.x+300;
         }
         return currentPos;
@@ -92,7 +100,7 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
 
       var graph = new joint.dia.Graph;
       var graph_1 = new joint.dia.Graph;
-
+      graph_1.set("docket_view", true);
       var paper = new joint.dia.Paper({
         el: $("#"+this.eleId),
         width: window.screen.availWidth,
@@ -115,22 +123,33 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
         linkView: CustomLinkView
       });
 
-      graph.on('remove', function(view){
+
+      graph.on('remove', function(view)
+      {
         var cell = view.model;
         if(cell && cell.get('type') == 'basic.Rect')
         {
           var id = cell.get('customId');
+          var currentPosition = cell.get('position');
           var obj = that.objects.findWhere({friendlyName: id}, {caseInsensitive: true});
           if(obj == null)
           {
             obj = that.collection.findWhere({friendlyName: id}, {caseInsensitive: true});
           }
-          cell.set({hidden: true});
+          // var c = findByCustomId(graph_1, obj);
+          // if(c != null)
+          // {
+          //   console.error(c.toJSON()+"  Already exists in graph_1");
+          //   return
+          // }
           var key = that.pKey+"#"+obj.get("friendlyName");
+          cell.set({hidden: true});
           window.tildaCache[key] = cell.toJSON();
+          var objectAttr = window.tildaCache[key+".hidden"];
           obj.set({graphId: null, rendered: false, nocache: true});
           var objFn = renderObject[obj.get("_type")];
-          var t = objFn(graph_1, obj, {'x': x, 'y': y}, undefined, that.pKey+".hidden", elementChangeHandler);
+          var t = objFn(graph_1, obj, {'x': x, 'y': y}, objectAttr, key+".hidden", elementChangeHandler);
+          t.set({gPosition: currentPosition});
           paper_1.scale(that.currentScale);
           x = x+200;
           if(x >= $('#robj').width())
@@ -142,16 +161,27 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
       })
 
 
-      graph_1.on('remove', function(view) {
+      graph_1.on('remove', function(view) 
+      {
         var cell = view.model;
-        if(cell && cell.get('type') == 'basic.Rect'){
+        if(cell && cell.get('type') == 'basic.Rect')
+        {
           var id = cell.get('customId');
           var obj = that.objects.findWhere({friendlyName: id}, {caseInsensitive: true});
-          if(obj == null){
+          if(obj == null)
+          {
             obj = that.collection.findWhere({friendlyName: id}, {caseInsensitive: true});
           }
-          cell.unset('hidden');
+          // var c = findByCustomId(graph, obj);
+          // if(c != null)
+          // {
+          //   console.error(c.toJSON()+"  Already exists in graph");
+          //   return
+          // }
           obj.set({graphId: null, rendered: false});
+          obj.unset('hidden');
+          cell.unset('hidden');
+          var key = that.pKey+"#"+obj.get("friendlyName");
           if(x <= $('#robj').width() && y > 0)
           {
             y = y - 60;
@@ -160,14 +190,24 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
           {
             x = x - 200;
           }
+          x = x < 0 ? 0 : x;
+          y = y < 0 ? 0 : y;
+
           var objFn = renderObject[obj.get("_type")];
-          if ( objFn != null){
-            var position = gotoNextPosition(currentPos);
+          if ( objFn != null)
+          {
+            var position = cell.get('gPosition') || gotoNextPosition(currentPos);
             var objectAttr = window.tildaCache[key];
+            if(objectAttr)
+            {
+              delete objectAttr["hidden"];
+            }
+            window.tildaCache[key] = objectAttr;
             var t = objFn(graph, obj, position, objectAttr, that.pKey, elementChangeHandler);
             var key = obj.get("_type");
             var objFn = renderObjectRelations[key]
-            if(objFn != null){
+            if(objFn != null)
+            {
               objFn(graph, obj, that.pKey);
             }
             renderAllLinks();
@@ -217,7 +257,6 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
 
       _.each(this.objects, function(object, i){
         var object = that.objects.at(i);
-        var object_1 = that.objects.at(i).clone();
         var key = that.pKey+"#"+object.get("friendlyName");
         var objFn = renderObject[object.get("_type")];
         if ( objFn != null){
@@ -244,7 +283,7 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
       this.render();
     } catch(e){
       console.error(e.message);
-      console.error(e.stack)
+      console.error(e.stack);
     }
   }
 
