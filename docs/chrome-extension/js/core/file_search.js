@@ -1,5 +1,5 @@
 define(function(){
-  var SCHEMA_REGEX = /\_tilda\.([A-Z][A-Za-z_0-9]+)\.json/i;
+  var SCHEMA_REGEX = /\_tilda\.([A-Z][A-Za-z_0-9]+)\.json$/i;
   var showFiles = function (firstEntry, excluding_regex, runAfterCompletion) {
     var directoryReader = firstEntry.createReader();
     var excluding_regex = excluding_regex;
