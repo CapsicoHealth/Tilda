@@ -310,7 +310,7 @@ public class PostgreSQL implements DBType
     public DBStringType getDBStringType(int Size)
       {
         return Size <= 8 ? DBStringType.CHARACTER
-        : Size <= 4096 ? DBStringType.VARCHAR
+        : Size <= 4090 ? DBStringType.VARCHAR
         : DBStringType.TEXT;
       }
 
