@@ -41,6 +41,7 @@ import tilda.db.processors.StringRP;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.enums.DBStringType;
 import tilda.generation.Generator;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.generation.postgres9.PostgresType;
@@ -306,17 +307,11 @@ public class PostgreSQL implements DBType
         return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
       }
 
-
-    @Override
-    public int getVarcharThreshold()
+    public DBStringType getDBStringType(int Size)
       {
-        return 8;
-      }
-
-    @Override
-    public int getCLOBThreshold()
-      {
-        return 4096;
+        return Size <= 8 ? DBStringType.CHARACTER
+        : Size <= 4090 ? DBStringType.VARCHAR
+        : DBStringType.TEXT;
       }
 
     @Override
@@ -328,7 +323,12 @@ public class PostgreSQL implements DBType
     public String getColumnType(ColumnType T, Integer S, ColumnMode M, boolean Collection)
       {
         if (T == ColumnType.STRING && M != ColumnMode.CALCULATED)
-          return Collection == true ? "text[]" : S < getVarcharThreshold() ? PostgresType.CHAR._SQLType + "(" + S + ")" : S < getCLOBThreshold() ? PostgresType.STRING._SQLType + "(" + S + ")" : "text";
+          {
+            return Collection == true ? "text[]"
+            : getDBStringType(S) == DBStringType.CHARACTER ? PostgresType.CHAR._SQLType + "(" + S + ")"
+            : getDBStringType(S) == DBStringType.VARCHAR ? PostgresType.STRING._SQLType + "(" + S + ")"
+            : "text";
+          }
         return PostgresType.get(T)._SQLType + (T != ColumnType.JSON && Collection == true ? "[]" : "");
       }
 
@@ -336,9 +336,10 @@ public class PostgreSQL implements DBType
     public boolean alterTableAlterColumnStringSize(Connection Con, ColumnMeta ColMeta, Column Col)
     throws Exception
       {
+        DBStringType ColT = getDBStringType(Col._Size);
+        DBStringType ColMetaT = getDBStringType(ColMeta._Size);
         // Is it shrinking?
-        if (Col._Size < getCLOBThreshold() && ColMeta._Size < getCLOBThreshold() && Col._Size < ColMeta._Size
-        || Col._Size < getCLOBThreshold() && ColMeta._Size >= getCLOBThreshold())
+        if (Col._Size < ColMeta._Size && ColT != DBStringType.TEXT)
           {
             String Q = "SELECT max(length(\"" + Col.getName() + "\")) from " + Col._ParentObject.getShortName();
             ScalarRP RP = new ScalarRP();
@@ -360,13 +361,12 @@ public class PostgreSQL implements DBType
           }
 
         // Are we switching from CHAR(x) to VARCHAR(y) or TEXT?
-        String Using="";
-        if (ColMeta._Size <= getVarcharThreshold() && Col._Size > getVarcharThreshold()
-           || ColMeta._TypeSql.equals("CHAR") && Col.getType() == ColumnType.STRING && Col._Size > getVarcharThreshold()
-           )
-         Using = " USING rtrim(\"" + Col.getName() + "\")";
-        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" TYPE " 
-                 + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection())+Using+";";
+        String Using = "";
+//Looks like we do not need the rtrim call. It slows things down and doesn't actually do anything in Postgres 
+//        if (ColMetaT == DBStringType.CHARACTER && ColT != DBStringType.CHARACTER)
+//          Using = " USING rtrim(\"" + Col.getName() + "\")";
+        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" TYPE "
+        + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + Using + ";";
         return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
       }
 
@@ -375,6 +375,8 @@ public class PostgreSQL implements DBType
     public boolean alterTableAlterColumnType(Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI)
     throws Exception
       {
+        DBStringType ColT = getDBStringType(Col._Size);
+        DBStringType ColMetaT = getDBStringType(ColMeta._Size);
         if (ColMeta._TildaType == ColumnType.STRING)
           {
             if (Col.getType() == ColumnType.INTEGER || Col.getType() == ColumnType.LONG || Col.getType() == ColumnType.FLOAT || Col.getType() == ColumnType.DOUBLE || Col.getType() == ColumnType.DATE)
@@ -400,12 +402,11 @@ public class PostgreSQL implements DBType
               }
           }
 
-        String Using="";
-        if (ColMeta._TildaType == ColumnType.STRING && Col.getType() == ColumnType.STRING && ColMeta._Size <= getVarcharThreshold() && Col._Size > getVarcharThreshold()
-            || ColMeta._TypeSql.equals("CHAR") && Col.getType() == ColumnType.STRING && Col._Size > getVarcharThreshold()
-           )
-         Using = " USING rtrim(\"" + Col.getName() + "\")";
-        
+        String Using = "";
+        //Looks like we do not need the rtrim call. It slows things down and doesn't actually do anything in Postgres 
+//        if (ColMetaT == DBStringType.CHARACTER && ColT != DBStringType.CHARACTER)
+//          Using = " USING rtrim(\"" + Col.getName() + "\")";
+
         if (Col.isPrimaryKey() == true || Col.isForeignKey() == true)
           {
             LOG.warn("!!!!!!! ALTERING a primary of foreign key, which in some circumstances, may lock in the JDBC driver. If this occurs, please run the below ALTER statement in the DB command line, and then rerun your program.");
@@ -414,7 +415,7 @@ public class PostgreSQL implements DBType
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
         + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + Using + ";";
         return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
-      }    
+      }
 
     protected static void PrintFunctionIn(StringBuilder Str, String Type)
       {
@@ -593,27 +594,27 @@ public class PostgreSQL implements DBType
         .append("\n")
         .append("\n")
         .append("CREATE extension if not exists tablefunc;\n");
-        
+
         return Str.toString();
       }
-   
-    
-    
+
+
+
     public void reCreateRole(StringBuilder Str, String Role)
     throws Exception
-      { 
+      {
         Role = Role.toLowerCase();
         Str.append("DO $body$\n");
         Str.append("BEGIN\n");
-        Str.append("   IF NOT EXISTS (SELECT FROM pg_catalog.pg_authid WHERE rolname = "+TextUtil.EscapeSingleQuoteForSQL(Role)+")\n");
+        Str.append("   IF NOT EXISTS (SELECT FROM pg_catalog.pg_authid WHERE rolname = " + TextUtil.EscapeSingleQuoteForSQL(Role) + ")\n");
         Str.append("   THEN\n");
-        Str.append("      CREATE ROLE "+Role+";\n");
+        Str.append("      CREATE ROLE " + Role + ";\n");
         Str.append("   END IF;\n");
         Str.append("END $body$;\n");
-//        Str.append("DELETE FROM pg_catalog.pg_authid WHERE rolname='"+Role+"';\n");
-//        Str.append("CREATE ROLE "+Role+";\n");
+        // Str.append("DELETE FROM pg_catalog.pg_authid WHERE rolname='"+Role+"';\n");
+        // Str.append("CREATE ROLE "+Role+";\n");
       }
-    
+
     @Override
     public String getAclRolesScript(Connection Con, List<Schema> TildaList)
     throws Exception
@@ -636,8 +637,8 @@ public class PostgreSQL implements DBType
           }
 
         return Str.toString();
-     }
-    
+      }
+
     @Override
     public StringStringPair getTypeMapping(int Type, String Name, int Size, String TypeName)
     throws Exception
@@ -855,13 +856,13 @@ public class PostgreSQL implements DBType
           {
             String Q = "ALTER TABLE " + Obj.getShortName() + " DROP CONSTRAINT \"" + oldPK._Name + "\";";
             if (Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q) == false)
-             return false;
+              return false;
           }
         if (Obj._PrimaryKey != null)
-         {
-           String Q = "ALTER TABLE " + Obj.getShortName() + " ADD PRIMARY KEY ("+PrintColumnList(Obj._PrimaryKey._ColumnObjs)+");";
-           return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
-         }
+          {
+            String Q = "ALTER TABLE " + Obj.getShortName() + " ADD PRIMARY KEY (" + PrintColumnList(Obj._PrimaryKey._ColumnObjs) + ");";
+            return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
+          }
         return true;
       }
 
@@ -877,22 +878,22 @@ public class PostgreSQL implements DBType
     public boolean alterTableAddFK(Connection Con, ForeignKey FK)
     throws Exception
       {
-        String Q = "ALTER TABLE " + FK._ParentObject.getShortName() + " ADD CONSTRAINT \"" + FK._Name + "\"" 
-                 + " FOREIGN KEY ("+PrintColumnList(FK._SrcColumnObjs)+") REFERENCES " + FK._DestObjectObj._ParentSchema._Name + "." + FK._DestObjectObj._Name
-                 + " ON DELETE restrict ON UPDATE cascade";
+        String Q = "ALTER TABLE " + FK._ParentObject.getShortName() + " ADD CONSTRAINT \"" + FK._Name + "\""
+        + " FOREIGN KEY (" + PrintColumnList(FK._SrcColumnObjs) + ") REFERENCES " + FK._DestObjectObj._ParentSchema._Name + "." + FK._DestObjectObj._Name
+        + " ON DELETE restrict ON UPDATE cascade";
         return Con.ExecuteDDL(FK._ParentObject._ParentSchema._Name, FK._ParentObject.getBaseName(), Q);
       }
-    
+
     @Override
     public boolean alterTableDropIndex(Connection Con, Object Obj, IndexMeta IX)
     throws Exception
       {
-        // If the DB Name comes in as all lower case, it's case-insensitive. Otherwise, we have to quote.        
-    	String DropName = IX._Name.equals(IX._Name.toLowerCase()) == false ? "\""+IX._Name+"\"" : IX._Name;
+        // If the DB Name comes in as all lower case, it's case-insensitive. Otherwise, we have to quote.
+        String DropName = IX._Name.equals(IX._Name.toLowerCase()) == false ? "\"" + IX._Name + "\"" : IX._Name;
         String Q = "DROP INDEX " + Obj._ParentSchema._Name + "." + DropName + ";";
         return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
       }
-    
+
     @Override
     public boolean alterTableAddIndex(Connection Con, Index IX)
     throws Exception
@@ -902,21 +903,21 @@ public class PostgreSQL implements DBType
         String Q = Out.toString();
         return Con.ExecuteDDL(IX._Parent._ParentSchema._Name, IX._Parent.getBaseName(), Q);
       }
-    
+
 
     @Override
     public boolean alterTableRenameIndex(Connection Con, Object Obj, String OldName, String NewName)
     throws Exception
       {
-        // If the DB Name comes in as all lower case, it's case-insensitive. Otherwise, we have to quote.        
+        // If the DB Name comes in as all lower case, it's case-insensitive. Otherwise, we have to quote.
         if (OldName.equals(OldName.toLowerCase()) == false || OldName.equals(TextUtil.SanitizeName(OldName)) == false)
-         OldName = "\""+OldName+"\"";
+          OldName = "\"" + OldName + "\"";
 
-        String Q = "ALTER INDEX " + Obj._ParentSchema._Name+"."+OldName+" RENAME TO "+NewName+";";
-        
+        String Q = "ALTER INDEX " + Obj._ParentSchema._Name + "." + OldName + " RENAME TO " + NewName + ";";
+
         return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj._Name, Q);
       }
-    
+
 
     private static String PrintColumnList(List<Column> Columns)
       {
@@ -934,7 +935,7 @@ public class PostgreSQL implements DBType
           }
         return Str.toString();
       }
-    
+
     @Override
     public void within(Connection C, StringBuilder Str, Type_DatetimePrimitive Col, Type_DatetimePrimitive ColStart, long DurationCount, IntervalEnum DurationType)
       {
@@ -966,14 +967,15 @@ public class PostgreSQL implements DBType
             Str.append(")");
           }
       }
-    
+
     @Override
-    public boolean isSuperUser(Connection C) throws Exception
-     {
-       String Q = "select current_setting('is_superuser');";
-       StringRP RP = new StringRP();
-       C.ExecuteSelect("SYSTEM", "CURRENT_SETTING", Q, RP);
-       return "on".equals(RP.getResult()) == true;
-     }
+    public boolean isSuperUser(Connection C)
+    throws Exception
+      {
+        String Q = "select current_setting('is_superuser');";
+        StringRP RP = new StringRP();
+        C.ExecuteSelect("SYSTEM", "CURRENT_SETTING", Q, RP);
+        return "on".equals(RP.getResult()) == true;
+      }
 
   }

@@ -38,6 +38,7 @@ import tilda.db.metadata.TableMeta;
 import tilda.db.metadata.ViewMeta;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.enums.DBStringType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.migration.actions.ColumnAdd;
@@ -275,7 +276,7 @@ public class Migrator
                   {
                     if (Col == null || Col._Mode == ColumnMode.CALCULATED)
                       continue;
-                    
+
                     ColumnMeta CMeta = TMeta.getColumnMeta(Col.getName());
                     if (CMeta == null)
                       Actions.add(new ColumnAdd(Col));
@@ -292,7 +293,7 @@ public class Migrator
                         || Col.getType() == ColumnType.JSON && CMeta._TildaType != ColumnType.STRING && CMeta._TildaType != ColumnType.JSON
                         || Col.getType() != ColumnType.BITFIELD && Col.getType() != ColumnType.JSON && Col.getType() != CMeta._TildaType))
                           Actions.add(new ColumnAlterType(C, CMeta, Col));
-                        
+
                         // We have to check if someone changed goal-posts for VARCHAR and CLOG threasholds.
                         // The case here is that we have a CHAR(10) in the database, and the model still says
                         // STRING/10, but the thresholds have changed in such a way that now, it should be in the DB
@@ -300,17 +301,17 @@ public class Migrator
                         // the type in the DB. The previous set of checks look at fundamental type changes, for example
                         // from INT to STRING etc... But they won't catch an internal change of CHAR to VARCHAR not due to
                         // model changes, but to threshold changes.
-                        if (Col.isCollection() == false
-//                         && Col.isPrimaryKey() == false
-//                         && Col.isForeignKey() == false
-                         && CMeta._TypeSql.equals("CHAR") == true && Col.getType() == ColumnType.STRING && Col._Size > C.getVarcharThreshold())
+                        if (Col.isCollection() == false && Col.getType() == ColumnType.STRING
+                        && (CMeta._TypeSql.equals("CHAR") == true && C.getDBStringType(Col._Size) != DBStringType.CHARACTER
+                        || CMeta._TypeSql.equals("VARCHAR") == true && C.getDBStringType(CMeta._Size) == DBStringType.CHARACTER))
                           Actions.add(new ColumnAlterType(C, CMeta, Col));
-
-                        if (Col.getType() == ColumnType.STRING && Col.isCollection() == false
-                        && (CMeta._Size < DBMeta.getCLOBThreshold() && CMeta._Size != Col._Size
-                        || CMeta._Size >= DBMeta.getCLOBThreshold() && Col._Size < DBMeta.getCLOBThreshold()))
-                          Actions.add(new ColumnAlterStringSize(CMeta, Col));
-
+                        // Else, we could still have a size change and stay within a single STRING DB type
+                        else if (Col.isCollection() == false && Col.getType() == ColumnType.STRING)
+                          {
+                            DBStringType DBStrType = C.getDBStringType(CMeta._Size);
+                            if (DBStrType != DBStringType.TEXT && CMeta._Size != Col._Size)
+                              Actions.add(new ColumnAlterStringSize(CMeta, Col));
+                          }
                         if (CMeta._Nullable == 1 && Col._Nullable == false || CMeta._Nullable == 0 && Col._Nullable == true)
                           Actions.add(new ColumnAlterNull(Col));
                       }

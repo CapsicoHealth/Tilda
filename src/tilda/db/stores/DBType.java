@@ -32,6 +32,7 @@ import tilda.db.metadata.PKMeta;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.enums.DBStringType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
@@ -92,8 +93,7 @@ public interface DBType
     public boolean FullIdentifierOnUpdate();
     public String getAggregateStr(AggregateType AT);
 
-    public int getVarcharThreshold();
-    public int getCLOBThreshold();
+    public DBStringType getDBStringType(int Size);
 
     public StringStringPair getTypeMapping(int type, String name, int size, String typeName) throws Exception;
     public void             getFullColumnVar(StringBuilder Str, String SchemaName, String TableName, String ColumnName);
