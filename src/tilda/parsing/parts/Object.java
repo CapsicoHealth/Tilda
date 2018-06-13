@@ -30,6 +30,7 @@ import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
+import tilda.enums.OutputFormatType;
 import tilda.parsing.ParserSession;
 import tilda.types.ColumnDefinition;
 
@@ -230,7 +231,9 @@ public class Object extends Base
               _HasUniqueQuery = true;
           }
 
-        super.ValidateJsonMappings(PS);
+        // LDH-NOTE: We have to validate mappings here, because the whole parent object
+        //          only finishes being validated at this time.
+        super.ValidateOutputMappings(PS);
 
         if ((_LC = ObjectLifecycle.parse(_LCStr)) == null)
           return PS.AddError("Object '" + getFullName() + "' defined an invalid 'lc' '" + _LCStr + "'.");
@@ -454,6 +457,14 @@ public class Object extends Base
              if (C == Col)
               FKs.add(FK);
         return FKs;
+      }
+
+    public boolean isJsonable()
+      {
+        for (OutputMapping OM : _OutputMaps)
+          if (OM._OutputTypes.contains(OutputFormatType.JSON) == true)
+           return true;
+        return false;
       }
     
   }

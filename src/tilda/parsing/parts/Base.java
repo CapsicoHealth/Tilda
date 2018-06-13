@@ -41,7 +41,8 @@ public abstract class Base
     @SerializedName("name"       ) public String               _Name       = null;
     @SerializedName("description") public String               _Description= null;
     @SerializedName("queries"    ) public List<SubWhereClause> _Queries    = new ArrayList<SubWhereClause>();
-    @SerializedName("json"       ) public List<JsonMapping>    _Json       = new ArrayList<JsonMapping   >();
+    @SerializedName("json"       ) public List<OutputMapping>  _JsonDEPRECATED = new ArrayList<OutputMapping >();
+    @SerializedName("outputMaps" ) public List<OutputMapping>  _OutputMaps = new ArrayList<OutputMapping>();
     /*@formatter:on*/
 
     public transient Schema               _ParentSchema;
@@ -142,20 +143,29 @@ public abstract class Base
         _AppFactoryClassName = _OriginalName+"_Factory";
         _AppJsonClassName = _OriginalName+"_Json";
         
+        // LDH-NOTE: We do not validate the mappings at this time, because the whole parent object
+        //          has not finished being validated. As such, columns and other generetated
+        //          artifacts won't exist yet at this point.
+        
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
       }
 
-    protected boolean ValidateJsonMappings(ParserSession PS)
+    protected boolean ValidateOutputMappings(ParserSession PS)
       {
         int Errs = PS.getErrorCount();
         Set<String> Names = new HashSet<String>();
-        for (JsonMapping J : _Json)
-          if (J != null)
+        
+        if (_JsonDEPRECATED.isEmpty() == false)
+          for (OutputMapping J : _JsonDEPRECATED)
+            _OutputMaps.add(J);
+        
+        for (OutputMapping OM : _OutputMaps)
+          if (OM != null)
             {
-              if (Names.add(J._Name) == false)
-                PS.AddError(getWhat()+" '" + getFullName() + "' is defining a duplicate JSON mapping '" + J._Name + "'.");
-              J.Validate(PS, this);
+              if (Names.add(OM._Name) == false)
+                PS.AddError(getWhat()+" '" + getFullName() + "' is defining a duplicate Output mapping '" + OM._Name + "'.");
+              OM.Validate(PS, this);
             }
         _Validated = Errs == PS.getErrorCount();
         return _Validated;

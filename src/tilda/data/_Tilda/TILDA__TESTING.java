@@ -918,7 +918,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated May 8 2018, 01:17:00EDT
+ @generated Jun 13 2018, 17:48:00EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTING implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject, tilda.interfaces.JSONable
@@ -6751,13 +6751,22 @@ This is the hasChanged for:<BR>
       return Str;
     }
 
-   public void toJSON(java.io.Writer Out, String JsonExportName, boolean FullObject) throws Exception
+   public void toJSON(java.io.Writer Out, String ExportName, boolean FullObject) throws Exception
     {
-      switch (JsonExportName)
+      switch (ExportName)
         { 
+          case "CCC": tilda.data.Testing_Json.toJSONCCC(Out, (tilda.data.Testing_Data) this, FullObject); break;
           case "AAA": tilda.data.Testing_Json.toJSONAAA(Out, (tilda.data.Testing_Data) this, FullObject); break;
-          case "BBB": tilda.data.Testing_Json.toJSONBBB(Out, (tilda.data.Testing_Data) this, FullObject); break;
-          default: throw new Exception("Unknown JSON exporter '"+JsonExportName+"' for tilda.data.Testing_Json");
+          default: throw new Exception("Unknown JSON exporter '"+ExportName+"' for tilda.data.Testing_Json");
+        } 
+    }
+   public void toCSV(java.io.Writer Out, String ExportName) throws Exception
+    {
+      switch (ExportName)
+        { 
+          case "CCC": tilda.data.Testing_Json.toCSVCCC(Out, (tilda.data.Testing_Data) this); break;
+          case "BBB": tilda.data.Testing_Json.toCSVBBB(Out, (tilda.data.Testing_Data) this); break;
+          default: throw new Exception("Unknown CSV exporter '"+ExportName+"' for tilda.data.Testing_Json");
         } 
     }
  }

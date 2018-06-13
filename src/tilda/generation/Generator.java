@@ -45,7 +45,7 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
-import tilda.parsing.parts.JsonMapping;
+import tilda.parsing.parts.OutputMapping;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.SubWhereClause;
@@ -163,22 +163,25 @@ public class Generator
         Out.append("\n");
         getViewMetadataDDL(CG, Out, V);
       }
+
     public static void getViewBaseDDL(CodeGenSql CG, PrintWriter Out, View V)
     throws Exception
       {
         CG.genDDL(Out, V);
       }
+
     public static void getViewCommentsDDL(CodeGenSql CG, PrintWriter Out, View V)
     throws Exception
       {
         CG.genDDLComments(Out, V);
       }
+
     public static void getViewMetadataDDL(CodeGenSql CG, PrintWriter Out, View V)
     throws Exception
       {
         CG.genDDLMetadata(Out, V);
       }
-    
+
 
 
     protected static void genTildaSupport(GeneratorSession G, File GenFolder, Schema S)
@@ -368,13 +371,9 @@ public class Generator
         DG.docMethodToString(Out, G, O);
         CG.genMethodToString(Out, G, O);
 
-        if (O._Json.isEmpty() == false)
-          {
-            Out.println();
-            DG.docMethodToJSON(Out, G, O);
-            CG.genMethodToJSON(Out, G, O);
-            CG.genMethodToCSV(Out, G, O);
-          }
+        Out.println();
+        DG.docMethodOutput(Out, G, O);
+        CG.genMethodOutput(Out, G, O);
 
         CG.genClassEnd(Out, G);
         Out.close();
@@ -510,13 +509,12 @@ public class Generator
             Out.println();
             CG.genMethodToString(Out, G, O);
           }
-        for (JsonMapping J : O._Json)
-          if (J != null)
+        for (OutputMapping OM : O._OutputMaps)
+          if (OM != null)
             {
               Out.println();
-              DG.docMethodToJSON(Out, G, J);
-              CG.genMethodToJSON(Out, G, J);
-              CG.genMethodToCSV(Out, G, J);
+              DG.docMethodOutput(Out, G, OM);
+              CG.genMethodToOutput(Out, G, OM);
             }
         Out.println();
         for (Column Col : O._Columns)
