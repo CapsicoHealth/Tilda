@@ -99,8 +99,8 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
       }
 
       var graph = new joint.dia.Graph;
-      var graph_1 = new joint.dia.Graph;
-      graph_1.set("docket_view", true);
+      var dock_graph = new joint.dia.Graph;
+      dock_graph.set("docket_view", true);
       var paper = new joint.dia.Paper({
         el: $("#"+this.eleId),
         width: window.screen.availWidth,
@@ -112,11 +112,11 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
       });
 
       $("#robj").html('');
-      var paper_1 = new joint.dia.Paper({
+      var dock_paper = new joint.dia.Paper({
         el: $("#robj"),
         width: $('#robj').width(),
         height: 200,
-        model: graph_1,
+        model: dock_graph,
         gridSize: 1,
         restrictTranslate: true,
         elementView: CustomElementView,
@@ -136,10 +136,10 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
           {
             obj = that.collection.findWhere({friendlyName: id}, {caseInsensitive: true});
           }
-          // var c = findByCustomId(graph_1, obj);
+          // var c = findByCustomId(dock_graph, obj);
           // if(c != null)
           // {
-          //   console.error(c.toJSON()+"  Already exists in graph_1");
+          //   console.error(c.toJSON()+"  Already exists in dock_graph");
           //   return
           // }
           var key = that.pKey+"#"+obj.get("friendlyName");
@@ -148,9 +148,9 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
           var objectAttr = window.tildaCache[key+".hidden"];
           obj.set({graphId: null, rendered: false, nocache: true});
           var objFn = renderObject[obj.get("_type")];
-          var t = objFn(graph_1, obj, {'x': x, 'y': y}, objectAttr, key+".hidden", elementChangeHandler);
+          var t = objFn(dock_graph, obj, {'x': x, 'y': y}, objectAttr, key+".hidden", elementChangeHandler);
           t.set({gPosition: currentPosition});
-          paper_1.scale(that.currentScale);
+          dock_paper.scale(that.currentScale);
           x = x+200;
           if(x >= $('#robj').width())
           {
@@ -161,7 +161,7 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
       })
 
 
-      graph_1.on('remove', function(view) 
+      dock_graph.on('remove', function(view) 
       {
         var cell = view.model;
         if(cell && cell.get('type') == 'basic.Rect')
@@ -218,7 +218,7 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
       this.paper = paper;
       var V = joint.V;
       window.paper = paper;
-      window.paper_1 = paper_1;
+      window.dock_paper = dock_paper;
 
       var dragStartPosition = null;
       paper.on('blank:pointerdown',function(event, x, y) {
@@ -250,7 +250,7 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
           paper.setOrigin(0, 0);
           paper.scale(newScale, newScale, p.x, p.y);
           that.currentScale = newScale;
-          paper_1.scale(newScale);
+          dock_paper.scale(newScale);
         }
       });
 
@@ -276,8 +276,11 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
         })
       }
       renderAllLinks();
-      paper_1.scale(that.currentScale);
+      dock_paper.scale(that.currentScale);
       paper.scale(that.currentScale);
+      // Global dock graph
+      window.graph = graph;
+      window.dock_graph = dock_graph;
     }
     try{
       this.render();

@@ -22,12 +22,12 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
             text: { text: name, fill: 'black'} 
           }
         }
-        // if(graph.get("docket_view") != true)
-        // {
-        //   attr["hidden"] = true;
-        // }
+        if(graph.get("docket_view") != true)
+        {
+          attr["hidden"] = true;
+        }
       }
-      if(p != null)
+      if(p != null && attr["position"] == null)
       {
         attr["position"] = p;
       }
@@ -83,10 +83,6 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
             text: { text: name, fill: 'white'}
           }
         }
-        if(p != null)
-        {
-          attr["position"] = p;
-        }
         if(o.get("inSchema"))
         {
           attr["attrs"]["rect"] = { fill: 'rgb(46,117,182)', stroke: "rgb(65,113,156)", "stroke-width": 2 }
@@ -95,10 +91,14 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
         {
           attr["attrs"]["rect"] = { fill: 'rgb(166,201,232)', stroke: "white", "stroke-width": 0  }
         }
-        // if(graph.get("docket_view") != true)
-        // {
-        //   attr["hidden"] = true;
-        // }
+        if(graph.get("docket_view") != true)
+        {
+          attr["hidden"] = true;
+        }
+      }
+      if(p != null && attr["position"] == null)
+      {
+        attr["position"] = p;
       }
       // attr.model = new joint.shapes.devs.Model(attr).clone()
       var width = attr["size"]["width"];
@@ -142,22 +142,22 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
   }
   var renderEnumeration = function(graph, object, position, objectAttr, package, elementChangeHandler){
     var renderFn = function(g, o, p, attr, pkg){
-      if(attr == null){
+      if(attr == null)
+      {
         var name = o.get("schemaName")+"."+o.get("name");
         attr = {
-          position: p,
           size: { width: name.length*12, height: 30 },
           attrs: { 
               rect: { fill: 'rgb(251,229,214)', stroke: "rgb(248,203,173)", "stroke-width": 1  },
             text: { text: name, fill: 'black'} 
           } 
         }
-        // if(graph.get("docket_view") != true)
-        // {
-        //   attr["hidden"] = true;
-        // }
+        if(graph.get("docket_view") != true)
+        {
+          attr["hidden"] = true;
+        }
       }
-      if(p != null)
+      if(p != null && attr["position"] == null)
       {
         attr["position"] = p;
       }
@@ -204,9 +204,9 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
   }
   var renderMapper = function(graph, object, position, objectAttr, package, elementChangeHandler){
     var renderFn = function(g, o, p, attr, pkg){
-
+      var name = o.get("schemaName")+"."+o.get("name");
+      debugger;
       if(attr == null){
-        var name = o.get("schemaName")+"."+o.get("name");
         attr = {
           size: { width: name.length*12+(name.length <=7 ? 40 : 0 ), height: 30 },
           attrs: { 
@@ -214,16 +214,16 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
             text: { text: name, fill: 'black'} 
           } 
         }
-        // if(grap.hget("docket_view") != true)
-        // {
-        //   attr["hidden"] = true;
-        // }
+        if(graph.get("docket_view") != true)
+        {
+          attr["hidden"] = true;
+        }
       }
-      if(p != null)
+      if(p != null && attr["position"] == null)
       {
         attr["position"] = p;
       }
-
+      console.debug(name + " -> "+JSON.stringify(attr["position"]));
       // attr.model = new joint.shapes.devs.Model(attr).clone()
       var width = attr["size"]["width"];
       width = width + (width <=(7*12) ? 20 : 0);
