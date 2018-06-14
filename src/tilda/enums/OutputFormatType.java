@@ -23,7 +23,9 @@ public enum OutputFormatType
   {
   JSON,
 
-  CSV;
+  CSV,
+  
+  NVP;
 
     public static OutputFormatType parse(String Str)
       {
