@@ -62,10 +62,6 @@ public class Load
     Load                          app               = null;
 
     private static int            threadsCount      = 1;
-    private static int			  mode				= -1;
-    private static String		  file				= null;
-    private static String		  objects			= null;
-    private static String		  conn  			= null;
     private static Object[][]     data              = null;
     private static Object[][]     connections       = null;
     private static Config         Conf              = null;
@@ -83,7 +79,6 @@ public class Load
     public static void main(String[] argsArray)
     throws Exception
       {
-    	 
         List<String> arguments = new ArrayList<>(Arrays.asList(argsArray));
 
         if (!isValidArguments(arguments))
@@ -91,14 +86,21 @@ public class Load
             PrintUsageHint();
             System.exit(-1);
           }
-        
-        SetArguments(arguments);
 
         LOG.info("\n*************************************************************************************************************************************");
         ConnectionPool.autoInit();
         LOG.info("\n*************************************************************************************************************************************\n");
 
-        if (mode == 1)
+        String[] silentModePair = arguments.get(0).split("=");
+        String[] threadsPair = arguments.get(1).split("=");
+
+        threadsCount = Integer.parseInt(threadsPair[1]);
+        boolean isSilentMode = Integer.parseInt(silentModePair[1]) == 1;
+
+        arguments.remove(0);
+        arguments.remove(0);
+
+        if (isSilentMode)
           {
             LOG.debug("Starting the utility in silent mode.");
 
@@ -109,7 +111,6 @@ public class Load
                 String ConfigFileName = arguments.get(i + 1);
                 Conf = Config.fromFile(ConfigFileName);
                 LOG.debug("Validating file " + ConfigFileName);
-                
                 List<String> selectedObjectsList = new ArrayList<>(Arrays.asList(arguments.get(i + 3).split(",")));
                 List<String> connectionIdsList = new ArrayList<>(Arrays.asList(arguments.get(i + 5).split(",")));
                 List<DataObject> filteredObjects = FilterObjects(selectedObjectsList, Conf._CmsData);
@@ -143,7 +144,7 @@ public class Load
               }
             LOG.debug("Import Tables completed.");
           }
-        else if (mode == 0)
+        else
           {
             String ConfigFileName = arguments.get(1);
             Conf = Config.fromFile(ConfigFileName);
@@ -192,13 +193,9 @@ public class Load
                   }
               });
           }
-        else
-          {
-        	
-          }
       }
 
-	private static void CheckTruncates(Set<String> truncatedTables)
+    private static void CheckTruncates(Set<String> truncatedTables)
     throws Exception
       {
         if (truncatedTables.isEmpty() == false)
@@ -295,125 +292,66 @@ public class Load
         LOG.debug("Total time taken for ImportProcessor.process() = " + DurationUtil.PrintDuration(timeTaken) + " with a combined throughput of "+DurationUtil.PrintPerformancePerMinute(timeTaken, TotalRowCount) + " Records/min)");
       }
 
-    private static void SetArguments(List<String> arguments) 
-      {
-        for(int i=0;i < arguments.size(); i++)
-          {
-   	        String arg = arguments.get(i);
-   	        if(arg.contains("-silentMode="))
-   	          {
-   		        String[] modePair = arguments.get(i).split("=");
-                mode = Integer.parseInt(modePair[1]); 
-   	          }
-   	        else if(arg.contains("-threads="))  
-   	          {
-		        String[] threadPair = arguments.get(i).split("=");	        
-		        threadsCount = Integer.parseInt(threadPair[1]);
-   	          }
-   	        else if(arg.equals("-f"))
-   	          {
-   	            file = arguments.get(i+1);
-   	            i++;
-   	          }    	      
-   	        else if(arg.equals("-c"))
- 	          {
-   	            conn = arguments.get(i+1);
-   	            i++;
-   	          }    	   
-   	        else if(arg.equals("-o"))
- 	          {
-   	            objects = arguments.get(i+1);
-   	            i++;
-   	          }
-   	        else
-   	          {
-   		        LOG.error("Unknown command found: " + arg);
-   	          }     
-          }
-	  }
-    
     private static boolean isValidArguments(List<String> arguments)
-    {       
-       int threads = 1;
-       int mode = -1;
-       String file = null;
-       String object = null;
-       String conn = null;
-    	
-       for(int i=0;i < arguments.size(); i++)
-         {
-    	   String arg = arguments.get(i);
-    	   if(arg.contains("-silentMode="))
-    	     {
-    		   String[] modePair = arguments.get(i).split("=");
-    		   
-               if (modePair != null && modePair.length != 2)
-                   return false;
-               
-   	            try
-   	              {
-   	                mode = Integer.parseInt(modePair[1]);
-   	              }
-   	            catch (Exception E)
-   	              {
-   	                return false;
-   	              }
-    	     }
-    	   else if(arg.contains("-threads="))  
-    	     {
-		        String[] threadPair = arguments.get(i).split("=");
-		     
-		        if (threadPair != null && threadPair.length != 2)
-		            return false;
-	       
-		        try
-		          {
-		            threads = Integer.parseInt(threadPair[1]);
-		            if (threads < 1)
-		              throw new Exception();
-		          }
-		        catch (Exception E)
-		          {
-		            return false;
-		          }
-    	     }
-    	   else if(arg.equals("-f"))
-    	     {
-    	       file = arguments.get(i+1);
-    	       i++;
-    	     }    	      
-    	   else if(arg.equals("-c"))
-  	         {
-    	       conn = arguments.get(i+1);
-    	       i++;
-    	     }    	   
-    	   else if(arg.equals("-o"))
-  	         {
-    	       object = arguments.get(i+1);
-    	       i++;
-    	     }
-    	   else
-    	     {
-    		   LOG.info("Unknown command found: " + arg);
-    		   return false; 
-    	     }     
-         }
-    	
-      if (mode == 1)
-        { // CLI Mode
-          if (TextUtil.isNullOrEmpty(file)
-          || TextUtil.isNullOrEmpty(object)
-          || TextUtil.isNullOrEmpty(conn))
-            return false;    
-        }
-      else // UI Mode or Arbitrary Load Mode
-      if (TextUtil.isNullOrEmpty(file))
-        {
+      {
+        if (arguments.size() < 4)
           return false;
-        }
 
-      return true;
-    }
+        String[] silentModePair = arguments.get(0).split("=");
+        if (silentModePair != null && silentModePair.length != 2)
+          return false;
+        if (silentModePair[0].equalsIgnoreCase("-silentMode") == false)
+          return false;
+
+        int mode = -1;
+        try
+          {
+            mode = Integer.parseInt(silentModePair[1]);
+          }
+        catch (Exception E)
+          {
+            return false;
+          }
+
+        String[] threadsPair = arguments.get(1).split("=");
+        if (threadsPair != null && threadsPair.length != 2)
+          return false;
+        if (threadsPair[0].equalsIgnoreCase("-threads") == false)
+          return false;
+
+        try
+          {
+            int threads = Integer.parseInt(threadsPair[1]);
+            if (threads < 1)
+              throw new Exception();
+          }
+        catch (Exception E)
+          {
+            return false;
+          }
+
+        if (mode == 1)
+          { // CLI Mode
+            if ((arguments.size() % 6) != 2)
+              return false;
+
+            for (int i = 2; i < arguments.size(); i += 6)
+              {
+                if (!"-f".equalsIgnoreCase(arguments.get(i)) || TextUtil.isNullOrEmpty(arguments.get(i + 1))
+                || !"-o".equalsIgnoreCase(arguments.get(i + 2)) || TextUtil.isNullOrEmpty(arguments.get(i + 3))
+                || !"-c".equalsIgnoreCase(arguments.get(i + 4)) || TextUtil.isNullOrEmpty(arguments.get(i + 5)))
+                  return false;
+              }
+          }
+        else // UI Mode
+        if (!"-f".equalsIgnoreCase(arguments.get(2)) || TextUtil.isNullOrEmpty(arguments.get(3)))
+          {
+            return false;
+          }
+
+
+        return true;
+      }
 
     private static void PrintUsageHint()
       {
@@ -427,10 +365,6 @@ public class Load
         LOG.error("    -silentMode=1 -threads=<No.of Threads> -f <filepath>                 -o <object_name>,<object_name>,..   -c <connection_id>,... ");
         LOG.error("ex: -silentMode=1 -threads=2               -f com/c/c/data/config.C.json -o CMS.HCPCS_CODES,CMS.CPT_CODES    -c MAIN,KEYS");
         LOG.error("");
-        LOG.error("*** Arbitrary File Load Mode");
-        LOG.error("    -f <filepath>                 [-o <object_name>,<object_name>,..]   -c <connection_id>,... ");
-        LOG.error("ex: -f /data/Load.csv 			 [-o public.testLoad]   			   -c MAIN,KEYS");
-        LOG.error("");        
         LOG.error("*** for Multi Tenant System.");
         LOG.error("    ALL           = All Connection Ids. Except 'KEYS'");
         LOG.error("    ALL_TENANTS   = All Connection Ids. Except 'MAIN' & 'KEYS'");
