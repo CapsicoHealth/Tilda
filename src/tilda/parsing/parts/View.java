@@ -318,10 +318,7 @@ public class View extends Base
 
         if (_Realize != null)
           _Realize.Validate(PS, this, new ViewRealizedWrapper(O));
-        
-        super.ValidateOutputMappings(PS);
        
-
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
       }
@@ -470,6 +467,8 @@ public class View extends Base
         O._OutputMaps = _OutputMaps;
         O._LCStr = ObjectLifecycle.READONLY.name();
         O._OCC = _OCC;
+        
+        
         int Counter = -1;
         for (ViewColumn VC : _ViewColumns)
           {
