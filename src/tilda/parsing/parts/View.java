@@ -318,6 +318,9 @@ public class View extends Base
 
         if (_Realize != null)
           _Realize.Validate(PS, this, new ViewRealizedWrapper(O));
+        
+        super.ValidateOutputMappings(PS);
+       
 
         _Validated = Errs == PS.getErrorCount();
         return _Validated;

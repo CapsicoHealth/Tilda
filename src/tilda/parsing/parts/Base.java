@@ -147,7 +147,11 @@ public abstract class Base
         //          has not finished being validated. As such, columns and other generetated
         //          artifacts won't exist yet at this point.
         
-        _Validated = Errs == PS.getErrorCount();
+        if (_JsonDEPRECATED.isEmpty() == false)
+          for (OutputMapping J : _JsonDEPRECATED)
+            _OutputMaps.add(J);        
+        
+        _Validated = Errs == PS.getErrorCount();             
         return _Validated;
       }
 
@@ -155,10 +159,6 @@ public abstract class Base
       {
         int Errs = PS.getErrorCount();
         Set<String> Names = new HashSet<String>();
-        
-        if (_JsonDEPRECATED.isEmpty() == false)
-          for (OutputMapping J : _JsonDEPRECATED)
-            _OutputMaps.add(J);
         
         for (OutputMapping OM : _OutputMaps)
           if (OM != null)
