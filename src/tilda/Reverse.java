@@ -73,7 +73,7 @@ public class Reverse
                     if (Column.isOCCColumnName(Col._NameOriginal) == true)
                      ++colNum;
                     if (   Col._NameOriginal.equals("refnum") == true 
-                        && T._PrimaryKey._Columns.size() == 1 && T._PrimaryKey._Columns.get(0).equals("refnum") == true
+                        && T._PrimaryKey != null && T._PrimaryKey._Columns.size() == 1 && T._PrimaryKey._Columns.get(0).equals("refnum") == true
                         )
                      autoPK = true;
                   }
@@ -90,6 +90,10 @@ public class Reverse
                     if (FKCol != null)
                       {
                         Str.append(", \"sameas\":" + TextUtil.EscapeDoubleQuoteWithSlash(FKCol._ParentFK._OtherSchema+"."+FKCol._ParentFK._OtherTable+"."+FKCol._PKCol));
+                      }
+                    else if (Col._TildaType == null)
+                      {
+                        Str.append(", \"type\":\"" + Col._TypeName + "_" + Col._TypeSql + "_" + Col._Type+ "\"");
                       }
                     else if (Col._TildaType == ColumnType.STRING)
                       {

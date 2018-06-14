@@ -44,6 +44,7 @@ import tilda.parsing.parts.Value;
 import tilda.parsing.parts.View;
 import tilda.parsing.parts.ViewColumn;
 import tilda.parsing.parts.ViewJoin;
+import tilda.parsing.parts.ViewPivot;
 import tilda.utils.FileUtil;
 import tilda.utils.Graph;
 import tilda.utils.PaddingUtil;
@@ -61,7 +62,7 @@ public class Docs
 
     protected static String coolPrint(String Name)
       {
-        return TextUtil.SearchReplace(Name,".","<B>&nbsp;&#8226;&nbsp;</B>");
+        return TextUtil.SearchReplace(Name, ".", "<B>&nbsp;&#8226;&nbsp;</B>");
       }
 
     protected static String makeObjectLink(Object O)
@@ -71,8 +72,8 @@ public class Docs
 
     protected static String makeColumnLink(Column C)
       {
-        return "<A href=\"TILDA___Docs." + C._ParentObject.getSchema().getShortName() + ".html#" 
-             + C._ParentObject._Name +"-"+C.getName()+ "_DIV\">" + coolPrint(C.getShortName()) + "</A>";
+        return "<A href=\"TILDA___Docs." + C._ParentObject.getSchema().getShortName() + ".html#"
+        + C._ParentObject._Name + "-" + C.getName() + "_DIV\">" + coolPrint(C.getShortName()) + "</A>";
       }
 
     public static void writeHeader(PrintWriter Out, Schema S)
@@ -109,12 +110,12 @@ public class Docs
         Out.println("<DIV id=\"" + O._Name + "_CNT\" class=\"content\">");
         Out.println("The " + ObjType + " " + O.getShortName() + ":<UL>");
         if (view == null || view._DBOnly == false)
-          Out.println("<LI>Is mapped to the generated " + Helper.getCodeGenLanguage() + "/" + G.getSql().getName() + " Tilda classes <B>" + O.getAppFactoryClassName() + "</B>, <B>" + O.getAppDataClassName() + "</B> in the package <B>"+O._ParentSchema._Package+"</B>.");
+          Out.println("<LI>Is mapped to the generated " + Helper.getCodeGenLanguage() + "/" + G.getSql().getName() + " Tilda classes <B>" + O.getAppFactoryClassName() + "</B>, <B>" + O.getAppDataClassName() + "</B> in the package <B>" + O._ParentSchema._Package + "</B>.");
         else
           Out.println("<LI>Is not mapped to any generated code (i.e., Java code) and only exists in the database.</LI>");
 
         if (view != null && view._Realize != null)
-          Out.println("<LI>Configured to be Realized to <B>"+coolPrint(view.getRealizedTableName(true))+"</B> through DB function <B>"+coolPrint(view._ParentSchema.getShortName()+".Refill_"+view.getRealizedTableName(false))+"()</B>.</LI>");
+          Out.println("<LI>Configured to be Realized to <B>" + coolPrint(view.getRealizedTableName(true)) + "</B> through DB function <B>" + coolPrint(view._ParentSchema.getShortName() + ".Refill_" + view.getRealizedTableName(false)) + "()</B>.</LI>");
 
         if (view == null)
           switch (O._LC)
@@ -139,7 +140,7 @@ public class Docs
 
         if (O._ForeignKeys != null && O._ForeignKeys.isEmpty() == false)
           {
-            Out.print("<LI>Defines "+(O._ForeignKeys.size()==1 ? "a ":"")+"foreign key"+(O._ForeignKeys.size()==1 ? "":"(s)")+" to ");
+            Out.print("<LI>Defines " + (O._ForeignKeys.size() == 1 ? "a " : "") + "foreign key" + (O._ForeignKeys.size() == 1 ? "" : "(s)") + " to ");
             int x = 0;
             Set<String> Names = new HashSet<String>();
             for (ForeignKey FK : O._ForeignKeys)
@@ -157,16 +158,16 @@ public class Docs
             if (O._PrimaryKey != null)
               ++count;
             for (Index I : O._Indices)
-             if (I != null && I._Unique == true)
-               ++count;
-            Out.print("<LI>Has the following identit"+(count > 1 ? "ies":"y")+":<UL>");
+              if (I != null && I._Unique == true)
+                ++count;
+            Out.print("<LI>Has the following identit" + (count > 1 ? "ies" : "y") + ":<UL>");
             if (O._PrimaryKey != null)
               {
                 Out.print("<LI>Primary Key: ");
                 int x = 0;
                 for (Column c : O._PrimaryKey._ColumnObjs)
                   {
-                    Out.print((x==0?"":", ")+c.getName());
+                    Out.print((x == 0 ? "" : ", ") + c.getName());
                     ++x;
                   }
                 Out.println("</LI>");
@@ -178,14 +179,14 @@ public class Docs
                   int x = 0;
                   for (Column c : I._ColumnObjs)
                     {
-                      Out.print((x==0?"":", ")+c.getName());
+                      Out.print((x == 0 ? "" : ", ") + c.getName());
                       ++x;
                     }
                   Out.println("</LI>");
                 }
             Out.println("</UL></LI>");
           }
-        
+
         Out.println("</UL>");
 
         Out.println("<B>Description</B>: " + O._Description + "<BR>");
@@ -199,31 +200,31 @@ public class Docs
         + "   <TR valign=\"bottom\"><TH>&nbsp;</TH><TH align=\"right\">Name&nbsp;&nbsp;</TH><TH align=\"left\">Type</TH><TH align=\"left\">Nullable</TH>");
         if (view != null && view._Realize != null)
           Out.print("<TH align=\"left\" nowrap><label>Realized<input type=\"checkbox\" onchange=\"filterTable('" + O._Name + "_TBL', 'R')\", id=\"" + O._Name + "_TBL_R\"></label>&nbsp;</TH>");
-        
+
         if (O._DBOnly == false)
           Out.print("<TH align=\"left\">Mode</TH><TH align=\"left\">Invariant</TH><TH align=\"left\">Protect</TH>");
-        Out.print("<TH align=\"left\">Description"+(view!=null&&view._FormulasRegEx != null?"/<label>Formula<input type=\"checkbox\" onchange=\"filterTable('" + O._Name + "_TBL', 'F')\", id=\"" + O._Name + "_TBL_F\"></label>":"")+"</TH></TR>" + SystemValues.NEWLINE);
+        Out.print("<TH align=\"left\">Description" + (view != null && view._FormulasRegEx != null ? "/<label>Formula<input type=\"checkbox\" onchange=\"filterTable('" + O._Name + "_TBL', 'F')\", id=\"" + O._Name + "_TBL_F\"></label>" : "") + "</TH></TR>" + SystemValues.NEWLINE);
 
         int i = 1;
         for (Column C : O._Columns)
           {
             if (C == null)
               continue;
-            String FieldType = view != null && view.getFormula(C.getName()) != null ? "formulae":"columns";
+            String FieldType = view != null && view.getFormula(C.getName()) != null ? "formulae" : "columns";
             if (view != null && view._Realize != null && TextUtil.FindElement(view._Realize._Excludes, C.getName(), false, 0) == -1)
-              FieldType = FieldType+" realized"+FieldType;
+              FieldType = FieldType + " realized" + FieldType;
             Out.println("  <TR valign=\"top\" bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#DFECF8") + "\">");
             Out.println("    <TD>" + i + "&nbsp;&nbsp;</TD>");
             if (C.getSingleColFK() != null
             || (view != null && C._SameAsObj != null)
-            || (view != null && view._Pivot != null && view._Pivot.hasValue(C.getName()))
+            || (view != null && view.getPivotWithValue(C.getName()) != null)
             || (view != null && view.getFormula(C.getName()) != null))
               {
-                Out.println("<TD onclick=\"onModalShowClicked('" + O._Name + "-" + C.getName() + "')\" align=\"right\"><B id='" + O._Name + "-" + C.getName() + "_DIV' class='"+FieldType+" dotted_underline cursor_pointer'>" + C.getName() + "</B>&nbsp;&nbsp;</TD>");
+                Out.println("<TD onclick=\"onModalShowClicked('" + O._Name + "-" + C.getName() + "')\" align=\"right\"><B id='" + O._Name + "-" + C.getName() + "_DIV' class='" + FieldType + " dotted_underline cursor_pointer'>" + C.getName() + "</B>&nbsp;&nbsp;</TD>");
               }
             else
               {
-                Out.println("<TD align=\"right\"><B id='" + O._Name + "-" + C.getName() + "_DIV' class='"+FieldType+"'>" + C.getName() + "</B>&nbsp;&nbsp;</TD>");
+                Out.println("<TD align=\"right\"><B id='" + O._Name + "-" + C.getName() + "_DIV' class='" + FieldType + "'>" + C.getName() + "</B>&nbsp;&nbsp;</TD>");
               }
 
             Out.print("<TD>");
@@ -296,18 +297,18 @@ public class Docs
 
             if (C._MapperDef != null)
               {
-//                Out.println("  <TR bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#DFECF8") + "\"><TD></TD><TD></TD><TD colspan=\"10\" align=\"center\">");
+                // Out.println(" <TR bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#DFECF8") + "\"><TD></TD><TD></TD><TD colspan=\"10\" align=\"center\">");
                 Out.println("<BR>This column is automatically generated against the Mapper " + C._SameAsObj.getFullName() + ".<BR>");
-//                Out.println("</TD></TR>");
+                // Out.println("</TD></TR>");
               }
             if (C._Values != null && C.getType().equals(ColumnType.DATE) == false && C.getType().equals(ColumnType.DATETIME) == false)
               {
-//                Out.println("  <TR bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#DFECF8") + "\"><TD></TD><TD></TD><TD colspan=\"10\" align=\"center\">");
+                // Out.println(" <TR bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#DFECF8") + "\"><TD></TD><TD></TD><TD colspan=\"10\" align=\"center\">");
                 Out.println("<BR>This column has defined a number of constant values:");
                 Out.println("<BLOCKQUOTE>");
                 docFieldValues(Out, C);
                 Out.println("</BLOCKQUOTE>");
-//                Out.println("</TD></TR>");
+                // Out.println("</TD></TR>");
               }
             ++i;
             Out.println("</TD>");
@@ -343,26 +344,26 @@ public class Docs
         if (O != null && C != null)
           {
             View view = O._ParentSchema.getView(O._Name);
-            if (C.getSingleColFK() != null || (view != null && C._SameAsObj != null) || (view != null && view._Pivot != null && view._Pivot.hasValue(C.getName())))
+            ViewPivot P = view == null ? null : view.getPivotWithValue(C.getName());
+
+            if (C.getSingleColFK() != null || (view != null && C._SameAsObj != null) || P != null)
               PrintColumn(Out, C, level, false, "");
             else
               PrintColumn(Out, C, level, true, "");
 
-            if (view != null && view._Pivot != null && view._Pivot.hasValue(C.getName()))
+            if (P != null)
               {
                 // Follow Pivot
-                ViewColumn pivotColumn = view._ViewColumns.get(view._ViewColumns.size() - 1);
-                Column sameAs = pivotColumn._SameAsObj;
-                String pivotOn = " (on " + view._Pivot._VC._SameAsObj.getName() + " = '" + C.getName() + "')";
+                Column sameAs = P._VC._SameAsObj;
+                String pivotOn = " (on " + P._VC._SameAsObj.getName() + " = '" + C.getName() + "')";
 
                 if (sameAs != null)
                   {
-                    PrintPivot(Out, pivotColumn, ++level, false, pivotOn);
+                    PrintPivot(Out, P._VC, ++level, false, pivotOn);
                     PrintColumnHierarchy(Out, sameAs._ParentObject, sameAs, true, ++level);
                   }
                 else
-                  PrintPivot(Out, pivotColumn, ++level, true, pivotOn);
-
+                  PrintPivot(Out, P._VC, ++level, true, pivotOn);
               }
             else if (view != null && C._SameAsObj != null)
               {
@@ -387,17 +388,18 @@ public class Docs
       {
         if (V != null && VC != null)
           {
-            if ((V != null && VC._SameAsObj != null) || (V != null && V._Pivot != null && V._Pivot.hasValue(VC.getName())))
+            ViewPivot P = V.getPivotWithValue(VC.getName());
+            if ((V != null && VC._SameAsObj != null) || (V != null && P != null))
               PrintColumn(Out, VC, level, false, "");
             else
               PrintColumn(Out, VC, level, true, "");
 
-            if (V._Pivot != null && V._Pivot.hasValue(VC.getName()))
+            if (P != null)
               {
                 // Follow Pivot
                 ViewColumn pivotColumn = V._ViewColumns.get(V._ViewColumns.size() - 1);
                 Column sameAs = pivotColumn._SameAsObj;
-                String pivotOn = " on " + V._Pivot._VC._SameAsObj.getName() + " = '" + VC.getName() + "'";
+                String pivotOn = " on " + P._VC._SameAsObj.getName() + " = '" + VC.getName() + "'";
 
                 if (sameAs != null)
                   {
@@ -940,13 +942,19 @@ public class Docs
         Out.println("This view depends on the following filter(s), sub-view(s), and/or root table(s):");
         Out.println("<BLOCKQUOTE><TABLE class=\"TreeTable Rowed\" border=\"0px\" cellspacing=\"0px\" cellpadding=\"2px\">" + DepPrinter.getPrintout() + "</TABLE></BLOCKQUOTE>");
 
-        if (V._Pivot != null)
+        if (V._Pivots.isEmpty() == false)
           {
-            Out.println("A pivot was done as part of this view explicitly on the following values for " + V._Pivot._VC._SameAsObj.getName()
-            + "<BLOCKQUOTE><PRE><TABLE border=\"0px\">");
-            for (Value Val : V._Pivot._Values)
-              Out.println("<TR><TD>" + Val._Value + "&nbsp;&nbsp;&nbsp;</TD><TD>" + Val._Description + "</TD></TR>");
-            Out.println("</TABLE></PRE><BLOCKQUOTE>");
+            Out.println("A pivot was done as part of this view explicitly on the following columns and values:"
+            + "<BLOCKQUOTE><PRE><TABLE class=\"Rowed\" border=\"0px\">");
+            for (ViewPivot P : V._Pivots)
+              {
+                Out.println("<TR valign=\"top\"><TD>" + P._VC._SameAsObj.getName() + "</TD><TD>"+P._VC._Description+"</TD><TR>");
+                Out.print("<TR><TD></TD><TD><TABLE class=\"NoRowed\" border=\"0px\"");
+                for (Value Val : P._Values)
+                  Out.println("<TR><TD>" + Val._Value + "&nbsp;&nbsp;&nbsp;</TD><TD>" + Val._Description + "</TD></TR>");
+                Out.println("</TABLE></TD></TR>");
+              }
+            Out.println("</TABLE></PRE></BLOCKQUOTE>");
           }
 
       }

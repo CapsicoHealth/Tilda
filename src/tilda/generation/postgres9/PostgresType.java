@@ -16,7 +16,9 @@
 
 package tilda.generation.postgres9;
 
+import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.parsing.parts.Column;
 
 public enum PostgresType
   {
@@ -35,10 +37,11 @@ public enum PostgresType
     BITFIELD("INTEGER"         , "int4"   , ColumnType.BITFIELD);
     /*@formatter:on*/
 
-    static {
-      ColumnType.validate(PostgresType.values());
-    }
-    
+    static
+      {
+        ColumnType.validate(PostgresType.values());
+      }
+
     private PostgresType(String SQLType, String SQLArrayType, ColumnType T)
       {
         _SQLType = SQLType;

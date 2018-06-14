@@ -28,6 +28,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
+import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.FKMeta;
 import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.PKMeta;
@@ -197,26 +198,26 @@ public class IBMDB2 implements DBType
       }
 
     @Override
-    public int getVarCharThreshhold()
+    public int getVarcharThreshold()
       {
         return 20;
       }
 
     @Override
-    public int getCLOBThreshhold()
+    public int getCLOBThreshold()
       {
         return 4096;
       }
 
     @Override
-    public boolean alterTableAlterColumnStringSize(Connection Con, Column Col, int DBSize)
+    public boolean alterTableAlterColumnStringSize(Connection Con, ColumnMeta ColMeta, Column Col)
     throws Exception
       {
         throw new UnsupportedOperationException();
       }
 
     @Override
-    public boolean alterTableAlterColumnType(Connection Con, ColumnType fromType, Column Col, ZoneInfo_Data defaultZI)
+    public boolean alterTableAlterColumnType(Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI)
       {
         throw new UnsupportedOperationException();
       }

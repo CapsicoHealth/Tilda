@@ -34,7 +34,7 @@ import tilda.utils.TextUtil;
 
 public class ViewColumn
   {
-    static final Logger LOG        = LogManager.getLogger(ViewColumn.class.getName());
+    static final Logger LOG          = LogManager.getLogger(ViewColumn.class.getName());
 
     /*@formatter:off*/
 	@SerializedName("name"       ) public String         _Name         ;
@@ -45,7 +45,8 @@ public class ViewColumn
     @SerializedName("joinType"   ) public String         _JoinStr      ;
     @SerializedName("joinOnly"   ) public boolean        _JoinOnly      = false;
     @SerializedName("aggregate"  ) public String         _AggregateStr ;
-    @SerializedName("distinct"   ) public Boolean        _Distinct     ;
+    @SerializedName("coalesce"   ) public String         _Coalesce     = null;
+    @SerializedName("distinct"   ) public Boolean        _Distinct     = false;
     @SerializedName("filter"     ) public String         _Filter       ;
     @SerializedName("useMapper"  ) public boolean        _UseMapper     = false;
     @SerializedName("useEnum"    ) public boolean        _UseEnum       = false;
@@ -95,9 +96,11 @@ public class ViewColumn
 
     public String getAggregateName()
       {
-        return _Aggregate == null ? getName()
-        : _Aggregate == AggregateType.COUNT && _SameAsObj == null ? "COUNT(*)"
-        : _Aggregate.name() + "(" + (_SameAsObj == null ? getShortName() : _SameAsObj.getShortName()) + ")";
+        if (_Aggregate == null)
+         return getName();
+        if (_Aggregate == AggregateType.COUNT && _SameAsObj == null)
+         return _Distinct == true ? "COUNT(DISTINCT "+getName()+")" : "COUNT(*)";
+        return _Aggregate.name() + (_Distinct == true ? "(DISTINCT ":"(") + (_SameAsObj == null ? getShortName() : _SameAsObj.getShortName()) + ")";
       }
 
     public ColumnType getAggregateType()
@@ -116,8 +119,12 @@ public class ViewColumn
         if (TextUtil.isNullOrEmpty(_SameAs) == true && AggregateType.COUNT.name().equalsIgnoreCase(_AggregateStr) == false)
           return PS.AddError("View column '" + getFullName() + "' didn't define a 'sameAs'. It is mandatory.");
 
-        if (ValidateSameAs(PS) == false)
-          return false;
+        if (TextUtil.isNullOrEmpty(_SameAs) == false)
+          {
+            _SameAsObj = ValidateSameAs(PS, getFullName(), _SameAs, _ParentView);
+            if (_SameAsObj == null)
+             return false;
+          }
 
         if (TextUtil.isNullOrEmpty(_Name) == true)
           {
@@ -138,42 +145,31 @@ public class ViewColumn
           }
         if (_Aggregate == null)
           {
-            if (_Distinct != null)
+            if (_Distinct == true)
               return PS.AddError("View Column '" + getFullName() + "' defined a distinct value without specifying an aggregate. Distincts without aggregates make no sense.");
             if (TextUtil.isNullOrEmpty(_Filter) == false)
               return PS.AddError("View Column '" + getFullName() + "' defined a filter without specifying an aggregate. Filters are only valid with aggregates.");
           }
-        
+
         if (TextUtil.isNullOrEmpty(_Description) == true && _SameAsObj != null)
-         _Description = _SameAsObj._Description;
+          _Description = _SameAsObj._Description;
 
         return Errs == PS.getErrorCount();
       }
 
 
-    private boolean ValidateSameAs(ParserSession PS)
+    public static Column ValidateSameAs(ParserSession PS, String ColFullName, String SameAs, View ParentView)
       {
-        if (TextUtil.isNullOrEmpty(_SameAs) == true)
-          return true;
+        ReferenceHelper R = ReferenceHelper.parseColumnReference(SameAs, ParentView);
 
-        int Errs = PS.getErrorCount();
-
-        ReferenceHelper R = ReferenceHelper.parseColumnReference(_SameAs, _ParentView);
-
-        if (_SameAs.equals("com.capsico.datamart.data.DATAMART.EPISODEMEDICALORDERSVIEW.medicalOrdersCount") == true)
-          {
-            LOG.debug("xxx");
-          }
         if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true || TextUtil.isNullOrEmpty(R._C) == true)
-          PS.AddError("Column '" + getFullName() + "' is declaring sameas '" + _SameAs + "' with an incorrect syntax. It should be '(((package\\.)?schema\\.)?object\\.)?column'.");
+          PS.AddError("Column '" + ColFullName + "' is declaring sameas '" + SameAs + "' with an incorrect syntax. It should be '(((package\\.)?schema\\.)?object\\.)?column'.");
         else
           {
             Column Col = null;
             Schema S = PS.getSchema(R._P, R._S);
             if (S == null)
-              {
-                LOG.error("Cannot find Schema '" + R._P + "." + R._S + "'.");
-              }
+             PS.AddError("Column '" + ColFullName + "' is declaring sameas '" + SameAs + "' resolving to '" + R.getFullName() + "' where schema '"+R._P + "." + R._S+"' cannot be found.");
             else
               {
                 Object O = S.getObject(R._O);
@@ -187,13 +183,12 @@ public class ViewColumn
                   }
               }
             if (Col == null)
-              PS.AddError("Column '" + getFullName() + "' is declaring sameas '" + _SameAs + "' resolving to '" + R.getFullName() + "' which cannot be found.");
+              PS.AddError("Column '" + ColFullName + "' is declaring sameas '" + SameAs + "' resolving to '" + R.getFullName() + "' which cannot be found.");
             else
-              _SameAsObj = Col;
-
+              return Col;
           }
 
-        return Errs == PS.getErrorCount();
+        return null;
       }
 
     public Column getSameAsRoot()
@@ -230,7 +225,7 @@ public class ViewColumn
           {
             L.add(C);
             if (C.isForeignKey() == true || C._ParentObject._FST == FrameworkSourcedType.VIEW)
-             C = C._SameAsObj;
+              C = C._SameAsObj;
             else
               break;
           }

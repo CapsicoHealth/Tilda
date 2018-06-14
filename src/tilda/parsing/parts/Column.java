@@ -436,22 +436,22 @@ public class Column extends TypeDef
 
     public boolean isOCCGenerated()
       {
-        return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && (_Name.equals("created") == true || _Name.equals("lastUpdated") == true || _Name.equals("createdETL") == true || _Name.equals("lastUpdatedETL") == true || _Name.equals("deleted") == true);
+        return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && (_Name.equalsIgnoreCase("created") == true || _Name.equalsIgnoreCase("lastUpdated") == true || _Name.equalsIgnoreCase("createdETL") == true || _Name.equalsIgnoreCase("lastUpdatedETL") == true || _Name.equalsIgnoreCase("deleted") == true);
       }
 
     public boolean isOCCLastUpdated()
       {
-        return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && _Name.equals("lastUpdated") == true;
+        return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && _Name.equalsIgnoreCase("lastUpdated") == true;
       }
 
     public boolean isOCCDeleted()
       {
-        return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && _Name.equals("deleted") == true;
+        return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && _Name.equalsIgnoreCase("deleted") == true;
       }
 
     public static boolean isOCCColumnName(String Name)
       {
-        return Name.equals("created") || Name.equals("lastUpdated") || Name.equals("deleted");
+        return Name.equalsIgnoreCase("created") || Name.equalsIgnoreCase("lastUpdated") || Name.equalsIgnoreCase("deleted");
       }
 
     public boolean isJSONColumn()
