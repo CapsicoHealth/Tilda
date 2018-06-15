@@ -634,7 +634,7 @@ public abstract class QueryHelper
         if (_ST == StatementType.SELECT && _FullSelect == false)
           {
             String Str = _QueryStr.toString();
-            if (_Where == false && withWhere == true)
+            if (_Where == false && withWhere == true && TextUtil.isNullOrEmpty(Str) == false)
               Str = " where " + Str;
             return Str;
           }
