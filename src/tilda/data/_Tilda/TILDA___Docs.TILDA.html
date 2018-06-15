@@ -57,7 +57,7 @@
    background-color: #FFF;
    border: 2px ridge #F09819; 
    display: none; 
-   height: 200px; 
+   height: 450px; 
    position: absolute;
    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
    z-index: 1;
@@ -127,6 +127,10 @@ input[type=text]:focus {
    border-bottom: 2px #666 solid;
    background-color:#FFFFFF;
  }
+.NoRowed TR TD{
+   border-bottom: 0px;
+   background-color: none;
+}
 .BackToDetails {
    display: none;
  }
@@ -1355,7 +1359,7 @@ This Table contains the following columns:<BLOCKQUOTE>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Mapping-type_DIV' class='columns'>type</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;character(10)&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(10)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -2539,7 +2543,7 @@ This Table contains the following columns:<BLOCKQUOTE>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>2&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Connection-id_DIV' class='columns'>id</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;character(15)&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(15)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -5255,7 +5259,7 @@ This Table contains the following columns:<BLOCKQUOTE>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>3&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-name_DIV' class='columns'>name</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;character(10)&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(10)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -6256,8 +6260,6 @@ This Table contains the following columns:<BLOCKQUOTE>
 The View TILDA.FormulaResultView:<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>FormulaResultView_Factory</B>, <B>FormulaResultView_Data</B> in the package <B>tilda.data</B>.
 <LI>Is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>
-<LI>Has the following identity:<UL><LI>Primary Key: formulaRefnum, value</LI>
-</UL></LI>
 </UL>
 <B>Description</B>: A view of formulas and their values.<BR>
 <BR>
@@ -6447,8 +6449,6 @@ This View contains the following columns:<BLOCKQUOTE>
 The View TILDA.FormulaDependencyView:<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>FormulaDependencyView_Factory</B>, <B>FormulaDependencyView_Data</B> in the package <B>tilda.data</B>.
 <LI>Is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>
-<LI>Has the following identity:<UL><LI>Primary Key: formulaRefnum, dependencyRefnum</LI>
-</UL></LI>
 </UL>
 <B>Description</B>: A view of formulas and their dependencies.<BR>
 <BR>

@@ -43,7 +43,7 @@ This Table contains the following columns:<BLOCKQUOTE>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Mapping-type_DIV' class='columns'>type</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;character(10)&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(10)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -207,7 +207,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated May 8 2018, 01:17:00EDT
+ @generated Jun 14 2018, 23:17:30EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__MAPPING implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -254,7 +254,7 @@ public abstract class TILDA__MAPPING implements tilda.interfaces.WriterObject, t
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Mapping.type of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Mapping.type of type character(10)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Mapping.type of type varchar(10)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -275,7 +275,7 @@ This is the definition for:<BR>
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Mapping.type of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Mapping.type of type character(10)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Mapping.type of type varchar(10)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -296,7 +296,7 @@ This is the getter for:<BR>
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Mapping.type of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Mapping.type of type character(10)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Mapping.type of type varchar(10)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -332,7 +332,7 @@ This is the setter for:<BR>
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Mapping.type of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Mapping.type of type character(10)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Mapping.type of type varchar(10)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -1498,7 +1498,7 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_type        = _type        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MAPPING_Factory.COLS.TYPE._Mask       ); else _type        = _type       .trim();
+      __Saved_type        = _type        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MAPPING_Factory.COLS.TYPE._Mask       );
       __Saved_src         = _src         = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MAPPING_Factory.COLS.SRC._Mask        );
       __Saved_dst         = _dst         = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MAPPING_Factory.COLS.DST._Mask        );
                             _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
@@ -1523,4 +1523,5 @@ This is the hasChanged for:<BR>
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;
     }
+
  }

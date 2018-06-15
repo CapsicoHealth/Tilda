@@ -64,7 +64,7 @@ This Table contains the following columns:<BLOCKQUOTE>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>3&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-name_DIV' class='columns'>name</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;character(10)&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(10)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -918,7 +918,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated May 8 2018, 01:17:00EDT
+ @generated Jun 14 2018, 23:17:30EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTING implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject, tilda.interfaces.JSONable
@@ -1178,7 +1178,7 @@ This is the hasChanged for:<BR>
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.name of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.name of type character(10)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.name of type varchar(10)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -1198,7 +1198,7 @@ This is the definition for:<BR>
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.name of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.name of type character(10)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.name of type varchar(10)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -1219,7 +1219,7 @@ This is the getter for:<BR>
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.name of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.name of type character(10)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.name of type varchar(10)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -1253,7 +1253,7 @@ This is the setter for:<BR>
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.name of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.name of type character(10)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.name of type varchar(10)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -6657,7 +6657,7 @@ This is the hasChanged for:<BR>
      __Init = InitMode.LOOKUP;
       __Saved_refnum      = _refnum      =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING_Factory.COLS.REFNUM._Mask     );
                             _refnum2 = (List<Long>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.REFNUM2._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING_Factory.COLS.REFNUM2._Mask    );
-                            _name        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING_Factory.COLS.NAME._Mask       ); else _name        = _name       .trim();
+                            _name        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING_Factory.COLS.NAME._Mask       );
                             _description = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask);
                             _desc2       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING_Factory.COLS.DESC2._Mask      );
                             _desc3       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING_Factory.COLS.DESC3._Mask      );
@@ -6751,13 +6751,22 @@ This is the hasChanged for:<BR>
       return Str;
     }
 
-   public void toJSON(java.io.Writer Out, String JsonExportName, boolean FullObject) throws Exception
+   public void toJSON(java.io.Writer Out, String ExportName, boolean FullObject) throws Exception
     {
-      switch (JsonExportName)
+      switch (ExportName)
         { 
+          case "CCC": tilda.data.Testing_Json.toJSONCCC(Out, (tilda.data.Testing_Data) this, FullObject); break;
           case "AAA": tilda.data.Testing_Json.toJSONAAA(Out, (tilda.data.Testing_Data) this, FullObject); break;
-          case "BBB": tilda.data.Testing_Json.toJSONBBB(Out, (tilda.data.Testing_Data) this, FullObject); break;
-          default: throw new Exception("Unknown JSON exporter '"+JsonExportName+"' for tilda.data.Testing_Json");
+          default: throw new Exception("Unknown JSON exporter '"+ExportName+"' for tilda.data.Testing_Json");
+        } 
+    }
+   public void toCSV(java.io.Writer Out, String ExportName) throws Exception
+    {
+      switch (ExportName)
+        { 
+          case "CCC": tilda.data.Testing_Json.toCSVCCC(Out, (tilda.data.Testing_Data) this); break;
+          case "BBB": tilda.data.Testing_Json.toCSVBBB(Out, (tilda.data.Testing_Data) this); break;
+          default: throw new Exception("Unknown CSV exporter '"+ExportName+"' for tilda.data.Testing_Json");
         } 
     }
  }

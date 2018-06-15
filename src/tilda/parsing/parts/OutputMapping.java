@@ -19,15 +19,16 @@ package tilda.parsing.parts;
 import java.util.List;
 
 import tilda.enums.ColumnType;
+import tilda.enums.OutputFormatType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ValidationHelper;
 
 import com.google.gson.annotations.SerializedName;
 
-public class JsonMapping
+public class OutputMapping
   {
 
-    public JsonMapping()
+    public OutputMapping()
       {
       }
 
@@ -35,9 +36,11 @@ public class JsonMapping
     @SerializedName("name"   ) public String   _Name;
     @SerializedName("columns") public String[] _Columns;
     @SerializedName("sync"   ) public boolean  _Sync = false;
+    @SerializedName("outTypes") public String[] _OutputTypeStrs;
     /*@formatter:on*/
 
     public transient List<Column> _ColumnObjs;
+    public transient List<OutputFormatType> _OutputTypes;
 
     public transient Base       _ParentObject;
 
@@ -46,18 +49,25 @@ public class JsonMapping
         int Errs = PS.getErrorCount();
         _ParentObject = ParentObject;
 
-        _ColumnObjs = ValidationHelper.ProcessColumn(PS, ParentObject, "JSONMapping '" + _Name + "'", _Columns, new ValidationHelper.Processor() {
+        _OutputTypes = OutputFormatType.parse(_OutputTypeStrs);
+        if (_OutputTypes.isEmpty() == true)
+          _OutputTypes.add(OutputFormatType.JSON);
+        
+        _ColumnObjs = ValidationHelper.ProcessColumn(PS, ParentObject, "OutputMapping '" + _Name + "'", _Columns
+         , new ValidationHelper.Processor() {
            @Override
            public boolean process(ParserSession PS, Base ParentObject, String What, Column C)
             {
               if (C._Type == ColumnType.BINARY)
-                PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining a JSON mapping with column '" + C.getName() + "' which is a binary. Binaries cannot be JSONed.");
+                PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining an Output mapping with column '" + C.getName() + "' which is a binary. Binaries cannot be JSONed.");
+              if (C._Type == ColumnType.JSON && _OutputTypes.contains(OutputFormatType.CSV) == true)
+                PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining an Output mapping with column '" + C.getName() + "' which is a JSON object. JSON objects cannot be exported in CSV format.");
               return true;
             }
         });
         
         if (_Sync == true && _ParentObject.isOCC() == false)
-         PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining a 'sync' JSON mapping but the parent object is not OCC.");
+         PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining a 'sync' Output mapping but the parent object is not OCC.");
 
         return Errs == PS.getErrorCount();
       }

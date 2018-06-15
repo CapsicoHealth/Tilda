@@ -27,7 +27,7 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
-import tilda.parsing.parts.JsonMapping;
+import tilda.parsing.parts.OutputMapping;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.PrimaryKey;
 import tilda.parsing.parts.SubWhereClause;
@@ -399,14 +399,14 @@ public class Docs implements CodeGenDocs
 
 
     @Override
-    public void docMethodToJSON(PrintWriter Out, GeneratorSession G, JsonMapping J)
+    public void docMethodOutput(PrintWriter Out, GeneratorSession G, OutputMapping J)
       {
         // TODO Auto-generated method stub
         
       }
 
     @Override
-    public void docMethodToJSON(PrintWriter Out, GeneratorSession G, Object O)
+    public void docMethodOutput(PrintWriter Out, GeneratorSession G, Object O)
       {
         // TODO Auto-generated method stub
         

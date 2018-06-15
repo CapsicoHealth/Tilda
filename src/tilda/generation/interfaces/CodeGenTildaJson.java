@@ -22,7 +22,7 @@ import java.util.List;
 
 import tilda.generation.GeneratorSession;
 import tilda.parsing.parts.Column;
-import tilda.parsing.parts.JsonMapping;
+import tilda.parsing.parts.OutputMapping;
 import tilda.parsing.parts.Object;
 
 public interface CodeGenTildaJson extends CodeGenBase
@@ -72,7 +72,7 @@ public interface CodeGenTildaJson extends CodeGenBase
      * @param G
      * @param J
      */
-    void genMethodToJSON(PrintWriter Out, GeneratorSession G, JsonMapping J)
+    void genMethodToOutput(PrintWriter Out, GeneratorSession G, OutputMapping J)
     throws Exception;
 
 

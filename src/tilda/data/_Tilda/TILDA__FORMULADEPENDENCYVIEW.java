@@ -30,8 +30,6 @@ import org.apache.logging.log4j.Logger;
 The View TILDA.FormulaDependencyView:<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>FormulaDependencyView_Factory</B>, <B>FormulaDependencyView_Data</B> in the package <B>tilda.data</B>.
 <LI>Is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>
-<LI>Has the following identity:<UL><LI>Primary Key: formulaRefnum, dependencyRefnum</LI>
-</UL></LI>
 </UL>
 <B>Description</B>: A view of formulas and their dependencies.<BR>
 <BR>
@@ -220,7 +218,7 @@ This View contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated May 8 2018, 01:17:00EDT
+ @generated Jun 14 2018, 23:17:30EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__FORMULADEPENDENCYVIEW implements tilda.interfaces.ReaderObject
@@ -695,9 +693,6 @@ This is the setter for:<BR>
        S.append(" from "); C.getFullTableVar(S, "TILDA", "FormulaDependencyView");
        switch (__LookupId)
         {
-          case 0:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "FormulaDependencyView", "formulaRefnum"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "FormulaDependencyView", "dependencyRefnum"); S.append("=?)");
-             break;
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
         }
@@ -714,13 +709,8 @@ This is the setter for:<BR>
        try
         {
           PS = C.prepareStatement(Q);
-          int i = 0;
           switch (__LookupId)
            {
-             case 0:
-               PS.setLong     (++i, _formulaRefnum       );
-               PS.setLong     (++i, _dependencyRefnum    );
-               break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
            }
@@ -776,4 +766,5 @@ This is the setter for:<BR>
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;
     }
+
  }
