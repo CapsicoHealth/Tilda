@@ -118,22 +118,25 @@ public abstract class Base
       }
     
     protected boolean Validate(ParserSession PS, Schema ParentSchema)
-      {
-        if (_Validated == true)
-         return true;
-         
-        int Errs = PS.getErrorCount();
+    {
+      if (_Validated == true)
+       return true;
+       
+      int Errs = PS.getErrorCount();
 
-        _ParentSchema = ParentSchema;
-        LOG.debug("  Validating "+getWhat()+" " + getFullName() + ".");
-
-        // Mandatories
-        if (TextUtil.isNullOrEmpty(_Name) == true)
-          return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring an "+getWhat()+" without a name.");
-        if (ValidationHelper.isValidIdentifier(_Name) == false)
-          return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring "+getWhat()+" '" + getFullName() + "' with a name '"+_Name+"' which is not valid. "+ValidationHelper._ValidIdentifierMessage);
-        if (TextUtil.isNullOrEmpty(_Description) == true)
-          return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring "+getWhat()+" '" + getFullName() + "' without a description name.");
+      _ParentSchema = ParentSchema;
+      
+      // Mandatories
+      if (TextUtil.isNullOrEmpty(_Name) == true)        	
+        return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring an "+getWhat()+" without a name.");
+      
+      _OriginalName = _Name;            
+      LOG.debug("  Validating "+getWhat()+" " + getFullName() + ".");
+      	
+      if (ValidationHelper.isValidIdentifier(_Name) == false)
+        return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring "+getWhat()+" '" + getFullName() + "' with a name '"+_Name+"' which is not valid. "+ValidationHelper._ValidIdentifierMessage);
+      if (TextUtil.isNullOrEmpty(_Description) == true)
+        return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring "+getWhat()+" '" + getFullName() + "' without a description name.");
 
         _OriginalName = _Name;
 //        _Name = _Name.toUpperCase();

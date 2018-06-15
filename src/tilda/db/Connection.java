@@ -41,6 +41,7 @@ import tilda.db.stores.DBType;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.enums.DBStringType;
 import tilda.enums.TransactionType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
@@ -83,7 +84,7 @@ public final class Connection
         if (_DB == null)
           throw new Exception("Can't find the DBType based on URL " + _Url);
         _PoolId = PoolId;
-        _PoolName = PoolId + ": " + getURL() + "USER="+_C.getMetaData().getUserName()+", " + getDatabaseProductName() + " V" + getDatabaseProductVersion();
+        _PoolName = PoolId + ": " + getURL() + "USER=" + _C.getMetaData().getUserName() + ", " + getDatabaseProductName() + " V" + getDatabaseProductVersion();
       }
 
 
@@ -461,14 +462,17 @@ public final class Connection
         return _DB.getSelectLimitClause(Start, Size);
       }
 
-    public int getCLOBThreshold()
+
+    /**
+     * For String Columns, checks is the Database would type as a CHARACTER, VARCHAR, or TEXT
+     * (or whatever the equivalents are across different databases).
+     * 
+     * @param Size
+     * @return
+     */
+    public DBStringType getDBStringType(int Size)
       {
-        return _DB.getCLOBThreshold();
-      }
-    
-    public int getVarcharThreshold()
-      {
-        return _DB.getVarcharThreshold();
+        return _DB.getDBStringType(Size);
       }
 
     public boolean alterTableAlterColumnStringSize(ColumnMeta ColMeta, Column Col)
@@ -633,7 +637,7 @@ public final class Connection
       {
         return _DB.alterTableAddFK(this, FK);
       }
-    
+
     public boolean alterTableDropIndex(Object Obj, IndexMeta IX)
     throws Exception
       {
@@ -651,7 +655,7 @@ public final class Connection
       {
         return _DB.alterTableRenameIndex(this, Obj, OldName, NewName);
       }
-    
+
     public boolean isSuperUser()
     throws Exception
       {
