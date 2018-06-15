@@ -54,7 +54,7 @@ CREATE UNIQUE INDEX Key_Name ON TILDA.Key ("name");
 
 
 create table if not exists TILDA.Mapping -- Generalized Mapping table
- (  "type"         character(10)  not null   -- The type this mapping is for
+ (  "type"         varchar(10)    not null   -- The type this mapping is for
   , "src"          varchar(1024)  not null   -- The source value for this mapping
   , "dst"          varchar(1024)  not null   -- The the destination (mapped) value for this mapping.
   , "created"      timestamptz    not null   -- The timestamp for when the record was created.
@@ -163,18 +163,18 @@ CREATE INDEX TransPerf_AllBySchemaName ON TILDA.TransPerf ("schemaName", "object
 
 
 create table if not exists TILDA.Connection -- Tilda DB Connections Configurations
- (  "active"       boolean                   -- Status Flag
-  , "id"           character(15)  not null   -- Connection ID
-  , "driver"       varchar(100)   not null   -- DB Driver
-  , "db"           varchar(200)   not null   -- DB Url
-  , "user"         varchar(30)    not null   -- DB User
-  , "pswd"         varchar(40)    not null   -- DB Password
-  , "initial"      integer        not null   -- Minimum Connections
-  , "max"          integer        not null   -- Maximum Connections
-  , "schemas"      text[]         not null   -- Schemas
-  , "created"      timestamptz    not null   -- The timestamp for when the record was created.
-  , "lastUpdated"  timestamptz    not null   -- The timestamp for when the record was last updated.
-  , "deleted"      timestamptz               -- The timestamp for when the record was deleted.
+ (  "active"       boolean                  -- Status Flag
+  , "id"           varchar(15)   not null   -- Connection ID
+  , "driver"       varchar(100)  not null   -- DB Driver
+  , "db"           varchar(200)  not null   -- DB Url
+  , "user"         varchar(30)   not null   -- DB User
+  , "pswd"         varchar(40)   not null   -- DB Password
+  , "initial"      integer       not null   -- Minimum Connections
+  , "max"          integer       not null   -- Maximum Connections
+  , "schemas"      text[]        not null   -- Schemas
+  , "created"      timestamptz   not null   -- The timestamp for when the record was created.
+  , "lastUpdated"  timestamptz   not null   -- The timestamp for when the record was last updated.
+  , "deleted"      timestamptz              -- The timestamp for when the record was deleted.
   , PRIMARY KEY("id")
  );
 COMMENT ON TABLE TILDA.Connection IS E'Tilda DB Connections Configurations';
@@ -432,7 +432,7 @@ COMMENT ON COLUMN TILDA.FormulaResult."deleted" IS E'The timestamp for when the 
 create table if not exists TILDA.Testing -- blah blah
  (  "refnum"       bigint              not null   -- The primary key for this record
   , "refnum2"      bigint[]            not null   -- The person's primary key
-  , "name"         character(10)       not null   -- Medical system unique enterprise id
+  , "name"         varchar(10)         not null   -- Medical system unique enterprise id
   , "description"  varchar(250)                   -- The title for a person, i.e., Mr, Miss, Mrs...
   , "desc2"        varchar(3000)                  -- The title for a person, i.e., Mr, Miss, Mrs...
   , "desc3"        text                           -- The title for a person, i.e., Mr, Miss, Mrs...
@@ -583,7 +583,7 @@ select TILDA.MeasureFormula."measureRefnum" as "measureRefnum" -- The measure.
      , TILDA.Formula."name" as "formulaName" -- The name of the formula/column.
      , TILDA.Formula."title" as "title" -- The title of the formula/column.
      , TILDA.Formula."description" as "description" -- The description of the formula/column.
-     , TILDA.Formula."type" as "type" -- The type of the formula/column value/outcome.
+     , trim(TILDA.Formula."type") as "type" -- The type of the formula/column value/outcome.
      , TILDA.Formula."formula" as "formula" -- The formula.
   from TILDA.MeasureFormula
      inner join TILDA.Measure on TILDA.MeasureFormula."measureRefnum" = TILDA.Measure."refnum"
@@ -591,7 +591,7 @@ select TILDA.MeasureFormula."measureRefnum" as "measureRefnum" -- The measure.
  where (TILDA.Formula."deleted" is null and TILDA.Measure."deleted" is null)
 ;
 
-COMMENT ON VIEW TILDA.MeasureFormulaView IS E'create or replace view TILDA.MeasureFormulaView as \n-- ''A view of formulas and their dependencies.''\nselect TILDA.MeasureFormula."measureRefnum" as "measureRefnum" -- The measure.\n     , TILDA.Measure."schema" as "measureSchema" -- The Schema wher ethe measure is defined.\n     , TILDA.Measure."name" as "measureName" -- The name of the measure.\n     , TILDA.Formula."refnum" as "formulaRefnum" -- The primary key for this record\n     , TILDA.Formula."location" as "formulaLocation" -- The name of the primary table/view this formula is defined in.\n     , TILDA.Formula."location2" as "formulaLocation2" -- The name of the secondary table/view (a derived view, a realized table), if appropriate.\n     , TILDA.Formula."name" as "formulaName" -- The name of the formula/column.\n     , TILDA.Formula."title" as "title" -- The title of the formula/column.\n     , TILDA.Formula."description" as "description" -- The description of the formula/column.\n     , TILDA.Formula."type" as "type" -- The type of the formula/column value/outcome.\n     , TILDA.Formula."formula" as "formula" -- The formula.\n  from TILDA.MeasureFormula\n     inner join TILDA.Measure on TILDA.MeasureFormula."measureRefnum" = TILDA.Measure."refnum"\n     inner join TILDA.Formula on TILDA.MeasureFormula."formulaRefnum" = TILDA.Formula."refnum"\n where (TILDA.Formula."deleted" is null and TILDA.Measure."deleted" is null)\n;\n';
+COMMENT ON VIEW TILDA.MeasureFormulaView IS E'create or replace view TILDA.MeasureFormulaView as \n-- ''A view of formulas and their dependencies.''\nselect TILDA.MeasureFormula."measureRefnum" as "measureRefnum" -- The measure.\n     , TILDA.Measure."schema" as "measureSchema" -- The Schema wher ethe measure is defined.\n     , TILDA.Measure."name" as "measureName" -- The name of the measure.\n     , TILDA.Formula."refnum" as "formulaRefnum" -- The primary key for this record\n     , TILDA.Formula."location" as "formulaLocation" -- The name of the primary table/view this formula is defined in.\n     , TILDA.Formula."location2" as "formulaLocation2" -- The name of the secondary table/view (a derived view, a realized table), if appropriate.\n     , TILDA.Formula."name" as "formulaName" -- The name of the formula/column.\n     , TILDA.Formula."title" as "title" -- The title of the formula/column.\n     , TILDA.Formula."description" as "description" -- The description of the formula/column.\n     , trim(TILDA.Formula."type") as "type" -- The type of the formula/column value/outcome.\n     , TILDA.Formula."formula" as "formula" -- The formula.\n  from TILDA.MeasureFormula\n     inner join TILDA.Measure on TILDA.MeasureFormula."measureRefnum" = TILDA.Measure."refnum"\n     inner join TILDA.Formula on TILDA.MeasureFormula."formulaRefnum" = TILDA.Formula."refnum"\n where (TILDA.Formula."deleted" is null and TILDA.Measure."deleted" is null)\n;\n';
 
 COMMENT ON COLUMN TILDA.MeasureFormulaView."measureRefnum" IS E'The measure.';
 COMMENT ON COLUMN TILDA.MeasureFormulaView."measureSchema" IS E'The Schema wher ethe measure is defined.';
