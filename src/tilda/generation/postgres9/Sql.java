@@ -279,6 +279,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
     throws Exception
       {
         List<TotalMess> FuckList = TotalMess.ScanView(V);
+        
+        if (V._Name.equalsIgnoreCase("PatientActiveView") == true)
+          LOG.debug("xxx");
 
         StringBuilder Str = new StringBuilder();
         Str.append("-- " + TextUtil.EscapeSingleQuoteForSQL(V._Description) + "\n");
@@ -377,7 +380,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   }
               }
 
-            if (VC._JoinOnly == false && (OmmitTZs == false || OmmitTZs == true && VC._SameAsObj != null && VC._SameAsObj._Mode == ColumnMode.NORMAL))
+            // LDH-NOTE: Cannot remember why OmitTZs was created, but it prevents the time-series field "p" from getting output properly.
+            // For now, we hard-code that field so it gets output. 
+            if (VC._JoinOnly == false && (VC._SameAs.equals("_TS.p") == true || OmmitTZs == false || OmmitTZs == true && VC._SameAsObj != null && VC._SameAsObj._Mode == ColumnMode.NORMAL))
               {
                 if (First == true)
                   {
@@ -677,14 +682,13 @@ public class Sql extends PostgreSQL implements CodeGenSql
                       r.append("|");
                     else
                       First = false;
-
                     r.append(View.getRootViewName(s).toUpperCase());
                   }
                 r.append(")(PIVOT)?VIEW\\b");
-                String BV = PrintBaseView(V, true).replaceAll(r.toString(), "$1Realized");
+                String BV = PrintBaseView(V, true);
+                BV = BV.replaceAll(r.toString(), "$1Realized");
                 if (V._Formulas != null && V._Formulas.isEmpty() == false)
                   BV = DoFormulasSuperView(V, BV);
-
                 OutFinal.append("With TT as (").append(BV).append(")");
               }
             OutFinal.append("SELECT ").append(genRealizedColumnList(V, "\n                         " + PaddingUtil.getPad(RName.length()))
