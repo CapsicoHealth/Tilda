@@ -375,9 +375,6 @@ public class PostgreSQL implements DBType
     public boolean alterTableAlterColumnType(Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI)
     throws Exception
       {
-        LOG.debug("alterTableAlterColumnType - Col: "+(Col==null?"NULL":Col.getFullName())+"; ColMeta: "+(ColMeta==null?"NULL":ColMeta._ParentTable+"."+ColMeta._Name)+";");
-//        DBStringType ColT = getDBStringType(Col._Size);
-//        DBStringType ColMetaT = getDBStringType(ColMeta._Size);
         if (ColMeta._TildaType == ColumnType.STRING)
           {
             if (Col.getType() == ColumnType.INTEGER || Col.getType() == ColumnType.LONG || Col.getType() == ColumnType.FLOAT || Col.getType() == ColumnType.DOUBLE || Col.getType() == ColumnType.DATE)
