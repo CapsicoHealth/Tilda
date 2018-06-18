@@ -51,7 +51,7 @@ public class OutputMapping
 
         _OutputTypes = OutputFormatType.parse(_OutputTypeStrs);
         if (_OutputTypes.isEmpty() == true)
-          _OutputTypes.add(OutputFormatType.JSON);
+          _OutputTypes.add(OutputFormatType.JSON);       
         
         _ColumnObjs = ValidationHelper.ProcessColumn(PS, ParentObject, "OutputMapping '" + _Name + "'", _Columns
          , new ValidationHelper.Processor() {
@@ -66,8 +66,12 @@ public class OutputMapping
             }
         });
         
+        if(_OutputTypes.contains(OutputFormatType.NVP) == true &&  ParentObject.getWhat().equals("Object"))
+          if(_ColumnObjs.size() != 2)
+        	PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP with " + _ColumnObjs.size() + " Columns. Only two Columns are allowed for NVP on table defintions.");
+        
         if (_Sync == true && _ParentObject.isOCC() == false)
-         PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining a 'sync' Output mapping but the parent object is not OCC.");
+          PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining a 'sync' Output mapping but the parent object is not OCC.");
 
         return Errs == PS.getErrorCount();
       }

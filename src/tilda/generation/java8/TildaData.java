@@ -1460,7 +1460,7 @@ public class TildaData implements CodeGenTildaData
                 Out.println("    }");
               }
             for (OutputFormatType OTF : OM._OutputTypes)
-              if (OTF != OutputFormatType.JSON && OTF != OutputFormatType.CSV)
+              if (OTF != OutputFormatType.JSON && OTF != OutputFormatType.CSV && OTF != OutputFormatType.NVP)
                throw new Error("Object '"+O.getFullName()+"' is defining an output mapping '"+O._Name+"' with an unsupported output format type "+OTF.name()+".");
           }
       }

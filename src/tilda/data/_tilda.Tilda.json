@@ -331,6 +331,7 @@
       ],
       "outputMaps":[
         { "name": "CCC", "columns": ["refnum", "name", "description", "desc2"], "outTypes":["CSV","JSON"]}
+       ,{ "name": "DDD", "columns": ["name", "description"], "outTypes":["NVP"] }
       ],
       "http":[
         { "name": "", "mandatories": ["refnum", "name", "description"] }
@@ -405,6 +406,19 @@
                    ]
          ,"description":["Active formulas and their sub-formulas"]
         }
-     }    
+     }
+     
+     ,{ "name":"TestingView",
+      "description":"TestingView",
+      "columns":[
+          { "sameas": "Testing.refnum2"                                        }
+         ,{ "sameas": "Testing.name"               , "name":"testingName"      }
+         ,{ "sameas": "Testing.description"        , "name":"testingDesc"      }
+         ,{ "sameas": "Testing.desc2"              , "name":"testingDesc2"     }
+       ]
+       ,"outputMaps":[
+        { "name": "DDD", "columns": ["testingName", "testingDesc", "testingDesc2"], "outTypes":["NVP"] }
+      ]     
+     }   
    ]
 }
