@@ -24,6 +24,8 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.capsico.analyticsengine.data.BlahView_Data;
+
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
@@ -486,22 +488,14 @@ public class TildaJson implements CodeGenTildaJson
     public void genMethodToNVP(PrintWriter Out, GeneratorSession G, OutputMapping J)
     throws Exception
       {
-    	if(J._ParentObject._Name.equalsIgnoreCase("Table"))
+    	if(true)
     	  {
-            Out.println("   public static Map<String, Double> toNVP" + J._Name + "(java.io.Writer Out, " + Helper.getFullAppDataClassName(J._ParentObject) + " D) throws java.io.IOException");
+            Out.println("   public static Map<String, Double> toNVP" + J._Name + "(java.io.Writer Out, List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L) throws java.io.IOException");
             Out.println("    {");
 
             Out.println("      Map<String, Double> M = new HashMap<String, Double>();");    	   
             Out.println("      for (" + Helper.getFullAppDataClassName(J._ParentObject) + " O : L)");
             Out.println("        {");
-            if(J._ColumnObjs.size() != 2)
-            	LOG.error("The number of columns defined must be two.");
-            boolean First = true;
-            for (Column C : J._ColumnObjs)
-              if (C != null)
-                {
-                  First = Helper.CSVExport(Out, First, C);
-                }
             Out.println("         if(L.getName() != null)");
             Out.println("           M.put(L.getName(), L.getValue());");
     		Out.println("        }");
@@ -510,49 +504,20 @@ public class TildaJson implements CodeGenTildaJson
     	
             Out.println("    }");		
     	  }
-    	else
+    	else  		
     	  {
-    		
+            Out.println("   public static Map<String, Double> toNVP" + J._Name + "(java.io.Writer Out, " + Helper.getFullAppDataClassName(J._ParentObject) + " D) throws java.io.IOException");
+            Out.println("    {");
+            Out.println("      Map<String, Double> M = new HashMap<String, Double>();");    	   
+            Out.println("      for (" + Helper.getFullAppDataClassName(J._ParentObject) + " O : L)");
+            for (Column C : J._ColumnObjs)
+                if (C != null)
+                  {
+                	Out.println("      M.put(\"" + C.getName() + "\"       , L." + TextUtil.CapitalizeFirstCharacter(C.getName()) + "());");
+                  }
+    		Out.println("      return M;");    	
+            Out.println("    }");		
     	  }
-        Out.println("   public static void toCSV" + J._Name + "(java.io.Writer Out, List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L, boolean includeHeader) throws java.io.IOException");
-        Out.println("    {");
-        Out.println("      long T0 = System.nanoTime();");
-        Out.println("      if (includeHeader == true)");
-        StringBuilder header = new StringBuilder();
-        for (Column C : J._ColumnObjs)
-          if (C != null)
-            {
-              if (C.getType() == ColumnType.JSON)
-               throw new Error("toCSV doesn't support export of JSON columns: this should have have come all the way here.");
-              if (header.length() != 0)
-                header.append(",");
-              header.append(TextUtil.EscapeDoubleQuoteForCSV(C.getName()));
-            }
-        Out.println("        Out.write(" + TextUtil.EscapeDoubleQuoteWithSlash(header.toString()+"\\n") + ");");
-        Out.println("      for (" + Helper.getFullAppDataClassName(J._ParentObject) + " O : L)");
-        Out.println("       if (O!=null)");
-        Out.println("        {");
-        Out.println("          toCSV" + J._Name + "(Out, O);");
-        Out.println("          Out.write(\"\\n\");");
-        Out.println("        }");
-        Out.println("      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);");
-        Out.println("    }");
-
-        Out.println();
-        Out.println("   public static void toCSV" + J._Name + "(java.io.Writer Out, " + Helper.getFullAppDataClassName(J._ParentObject) + " Data) throws java.io.IOException");
-        Out.println("    {");
-        Out.println("      long T0 = System.nanoTime();");
-        Out.println("      StringBuilder Str = new StringBuilder();");
-        Out.println();
-        boolean First = true;
-        for (Column C : J._ColumnObjs)
-          if (C != null)
-            {
-              First = Helper.CSVExport(Out, First, C);
-            }
-        Out.println("      Out.write(Str.toString());");
-        Out.println("      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);");
-        Out.println("    }");
       }
 
     public void genMethodToString(PrintWriter Out, GeneratorSession G, Object O)
