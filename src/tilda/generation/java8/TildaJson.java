@@ -517,10 +517,10 @@ public class TildaJson implements CodeGenTildaJson
             Out.println("    {");
             Out.println("      Map<String, Double> M = new HashMap<String, Double>();");    	   
             for (Column C : J._ColumnObjs)
-                if (C != null)
-                  {
-                	Out.println("      M.put(\"" + C.getName() + "\", D.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "());");
-                  }
+              if (C != null)
+                {
+            	  Out.println("      M.put(\"" + C.getName() + "\", D.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "());");
+                }
     		Out.println("      return M;");    	
             Out.println("    }");		
     	  }
