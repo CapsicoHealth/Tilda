@@ -211,6 +211,27 @@ public class TILDA__TESTING_Json
       PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
     }
 
+   public static Map<String, Double> toNVPDDD(List<tilda.data.Testing_Data> L) throws Exception
+    {
+      Map<String, Double> M = new HashMap<String, Double>();
+      for (tilda.data.Testing_Data D : L)
+        {
+          Double val = M.get(D.getName());
+          if(val != null)
+            throw new Exception("The key " + D.getName() + " with value " + val.toString() + " already exists in the Map. Key values must be unique.");
+          if(D.getName() != null)
+            M.put(D.getName(), D.getA4());
+        }
+      return M;
+    }
+
+   public static Map<String, Double> toNVPEEE(tilda.data.Testing_Data D) throws Exception
+    {
+      Map<String, Double> M = new HashMap<String, Double>();
+      M.put("a4", D.getA4());
+      return M;
+    }
+
    public static void toJSONAAA(java.io.Writer Out, List<tilda.data.Testing_Data> L, String Lead, boolean FullList) throws java.io.IOException
     {
       if (L == null || L.size() == 0) return;

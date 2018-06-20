@@ -24,10 +24,9 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.capsico.analyticsengine.data.BlahView_Data;
-
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
+import tilda.enums.NVPType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.OutputFormatType;
 import tilda.generation.GeneratorSession;
@@ -488,32 +487,39 @@ public class TildaJson implements CodeGenTildaJson
     public void genMethodToNVP(PrintWriter Out, GeneratorSession G, OutputMapping J)
     throws Exception
       {
-    	if(true)
+    	if(J._NVPType.equals(NVPType.COLUMN))
     	  {
-            Out.println("   public static Map<String, Double> toNVP" + J._Name + "(java.io.Writer Out, List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L) throws java.io.IOException");
-            Out.println("    {");
-
-            Out.println("      Map<String, Double> M = new HashMap<String, Double>();");    	   
-            Out.println("      for (" + Helper.getFullAppDataClassName(J._ParentObject) + " O : L)");
-            Out.println("        {");
-            Out.println("         if(L.getName() != null)");
-            Out.println("           M.put(L.getName(), L.getValue());");
-    		Out.println("        }");
+    		String keyCol = "";
+    		String valCol = "";
+            for (Column C : J._ColumnObjs)
+              if (C.getName().equals(J._Key))
+                keyCol = C.getName();
+              else
+            	valCol = C.getName();
     		
-    		Out.println("      return M;");
-    	
+            Out.println("   public static Map<String, Double> toNVP" + J._Name + "(List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L) throws Exception");
+            Out.println("    {");
+            Out.println("      Map<String, Double> M = new HashMap<String, Double>();");    	   
+            Out.println("      for (" + Helper.getFullAppDataClassName(J._ParentObject) + " D : L)");
+            Out.println("        {");
+            Out.println("          Double val = M.get(D.getName());");
+            Out.println("          if(val != null)");
+            Out.println("            throw new Exception(\"The key \" + D.getName() + \" with value \" + val.toString() + \" already exists in the Map. Key values must be unique.\");");
+            Out.println("          if(D.get" + TextUtil.CapitalizeFirstCharacter(keyCol) + "() != null)");
+            Out.println("            M.put(D.get" + TextUtil.CapitalizeFirstCharacter(keyCol) + "(), D.get" + TextUtil.CapitalizeFirstCharacter(valCol) + "());");
+    		Out.println("        }");   		
+    		Out.println("      return M;");   	
             Out.println("    }");		
     	  }
     	else  		
     	  {
-            Out.println("   public static Map<String, Double> toNVP" + J._Name + "(java.io.Writer Out, " + Helper.getFullAppDataClassName(J._ParentObject) + " D) throws java.io.IOException");
+            Out.println("   public static Map<String, Double> toNVP" + J._Name + "(" + Helper.getFullAppDataClassName(J._ParentObject) + " D) throws Exception");
             Out.println("    {");
             Out.println("      Map<String, Double> M = new HashMap<String, Double>();");    	   
-            Out.println("      for (" + Helper.getFullAppDataClassName(J._ParentObject) + " O : L)");
             for (Column C : J._ColumnObjs)
                 if (C != null)
                   {
-                	Out.println("      M.put(\"" + C.getName() + "\"       , L." + TextUtil.CapitalizeFirstCharacter(C.getName()) + "());");
+                	Out.println("      M.put(\"" + C.getName() + "\", D.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "());");
                   }
     		Out.println("      return M;");    	
             Out.println("    }");		
