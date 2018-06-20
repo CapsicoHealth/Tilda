@@ -334,8 +334,8 @@ public class TildaJson implements CodeGenTildaJson
                 genMethodToCSV(Out, G, OM);
                 break;
               case NVP:
-                  genMethodToNVP(Out, G, OM);
-                  break;                
+                genMethodToNVP(Out, G, OM);
+                break;                
               default:
                 throw new Error("OutputFormatType " + OFT + " is not supported in the Output methog generation.");
             }
