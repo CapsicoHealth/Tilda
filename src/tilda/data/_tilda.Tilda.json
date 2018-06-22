@@ -331,8 +331,8 @@
       ],
       "outputMaps":[
         { "name": "CCC", "columns": ["refnum", "name", "description", "desc2"], "outTypes":["CSV","JSON"]}
-       ,{ "name": "DDD", "columns": ["name", "a4"], "outTypes":["NVP"], "nvpType":"COLUMN", "key":"name"}
-       ,{ "name": "EEE", "columns": ["a4"], "outTypes":["NVP"], "nvpType":"ROW"}
+       ,{ "name": "DDD", "columns": ["name", "a4"], "outTypes":["NVP"], "nvpData":"ROW", "key":"name"}
+       ,{ "name": "EEE", "columns": ["a4"], "outTypes":["NVP"], "nvpData":"COLUMN"}
       ],
       "http":[
         { "name": "", "mandatories": ["refnum", "name", "description"] }

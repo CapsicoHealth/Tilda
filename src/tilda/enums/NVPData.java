@@ -16,15 +16,15 @@
 
 package tilda.enums;
 
-public enum NVPType
+public enum NVPData
   {
   COLUMN,
 
   ROW;
 
-    public static NVPType parse(String Str)
+    public static NVPData parse(String Str)
       {
-        for (NVPType e : NVPType.values())
+        for (NVPData e : NVPData.values())
           if (Str.equalsIgnoreCase(e.name()) == true)
             return e;
         return null;

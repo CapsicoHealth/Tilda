@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 import tilda.enums.ColumnType;
-import tilda.enums.NVPType;
+import tilda.enums.NVPData;
 import tilda.enums.OutputFormatType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ValidationHelper;
@@ -41,12 +41,12 @@ public class OutputMapping
     @SerializedName("sync"    ) public boolean  _Sync = false;
     @SerializedName("outTypes") public String[] _OutputTypeStrs;
     @SerializedName("key"     ) public String 	_Key;
-    @SerializedName("nvpType" ) public String 	_NVPTypeStr;
+    @SerializedName("nvpData" ) public String 	_NVPDataStr;
     /*@formatter:on*/
 
     public transient List<Column> _ColumnObjs;
     public transient List<OutputFormatType> _OutputTypes;
-    public transient NVPType _NVPType;
+    public transient NVPData _NVPData;
     
     public transient Base       _ParentObject;
 
@@ -74,15 +74,15 @@ public class OutputMapping
         
         if(_OutputTypes.contains(OutputFormatType.NVP) == true)
           {            
-        	if(TextUtil.isNullOrEmpty(_NVPTypeStr) == true)
+        	if(TextUtil.isNullOrEmpty(_NVPDataStr) == true)
               PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP without an NVP type of ROW or COLUMN. An nvpType attribute must be used with NVP outputMap.");  
             
-        	_NVPType = NVPType.parse(_NVPTypeStr);
+        	_NVPData = NVPData.parse(_NVPDataStr);
         	
-        	if(_NVPType == null)
+        	if(_NVPData == null)
         		PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP without a invalid NVP. An nvpType allowed attribute values are ROW or COLUMN.");
         	
-        	if(_NVPType.equals(NVPType.COLUMN))
+        	if(_NVPData.equals(NVPData.ROW))
         	{
               if(_ColumnObjs.size() != 2)
         	    PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP with " + _ColumnObjs.size() + " Columns. Only two Columns are allowed for NVP Column Types.");             
@@ -109,7 +109,7 @@ public class OutputMapping
           	    PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP with Val column \"" + valCol.getName() + "\" that is not a Double. Value columns must be Double datatypes."); 	  
         	}
 
-        	if(_NVPType.equals(NVPType.ROW))
+        	if(_NVPData.equals(NVPData.COLUMN))
         	  {
         		if(TextUtil.isNullOrEmpty(_Key) != true)   
         		  PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP with Key column " + _Key + " For NVP Type ROW. This is not used for Row.");  
