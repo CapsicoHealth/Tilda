@@ -17,16 +17,15 @@
 package tilda.parsing.parts;
 
 import java.util.List;
-import java.util.Optional;
+
+import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.ColumnType;
-import tilda.enums.NVPData;
+import tilda.enums.NVPSourceType;
 import tilda.enums.OutputFormatType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.TextUtil;
-
-import com.google.gson.annotations.SerializedName;
 
 public class OutputMapping
   {
@@ -36,97 +35,84 @@ public class OutputMapping
       }
 
     /*@formatter:off*/
-    @SerializedName("name"    ) public String   _Name;
-    @SerializedName("columns" ) public String[] _Columns;
-    @SerializedName("sync"    ) public boolean  _Sync = false;
-    @SerializedName("outTypes") public String[] _OutputTypeStrs;
-    @SerializedName("key"     ) public String 	_Key;
-    @SerializedName("nvpData" ) public String 	_NVPDataStr;
+    @SerializedName("name"        ) public String   _Name;
+    @SerializedName("columns"     ) public String[] _Columns;
+    @SerializedName("sync"        ) public boolean  _Sync = false;
+    @SerializedName("outTypes"    ) public String[] _OutputTypeStrs;
+    @SerializedName("nvpSrc"      ) public String 	_NVPSrcStr;
+    @SerializedName("nvpValueType") public String   _NVPValueTypeStr; // To further implement.
+    
     /*@formatter:on*/
 
-    public transient List<Column> _ColumnObjs;
+    public transient List<Column>           _ColumnObjs;
     public transient List<OutputFormatType> _OutputTypes;
-    public transient NVPData _NVPData;
-    
-    public transient Base       _ParentObject;
+    public transient NVPSourceType          _NVPSrc;
+
+    public transient Base                   _ParentObject;
 
     public boolean Validate(ParserSession PS, Base ParentObject)
       {
         int Errs = PS.getErrorCount();
-        _ParentObject = ParentObject;   
-        
+        _ParentObject = ParentObject;
+
         _OutputTypes = OutputFormatType.parse(_OutputTypeStrs);
         if (_OutputTypes.isEmpty() == true)
-          _OutputTypes.add(OutputFormatType.JSON);       
-        
-        _ColumnObjs = ValidationHelper.ProcessColumn(PS, ParentObject, "OutputMapping '" + _Name + "'", _Columns
-         , new ValidationHelper.Processor() {
-           @Override
-           public boolean process(ParserSession PS, Base ParentObject, String What, Column C)
-            {
-              if (C._Type == ColumnType.BINARY)
-                PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining an Output mapping with column '" + C.getName() + "' which is a binary. Binaries cannot be JSONed.");
-              if (C._Type == ColumnType.JSON && _OutputTypes.contains(OutputFormatType.CSV) == true)
-                PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining an Output mapping with column '" + C.getName() + "' which is a JSON object. JSON objects cannot be exported in CSV format.");             
-              return true;
-            }
-        });
-        
-        if(_OutputTypes.contains(OutputFormatType.NVP) == true)
-          {            
-        	if(TextUtil.isNullOrEmpty(_NVPDataStr) == true)
-              PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP without an NVP type of ROW or COLUMN. An nvpType attribute must be used with NVP outputMap.");  
-            
-        	_NVPData = NVPData.parse(_NVPDataStr);
-        	
-        	if(_NVPData == null)
-        		PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP without a invalid NVP. An nvpType allowed attribute values are ROW or COLUMN.");
-        	
-        	if(_NVPData.equals(NVPData.ROW))
-        	{
-              if(_ColumnObjs.size() != 2)
-        	    PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP with " + _ColumnObjs.size() + " Columns. Only two Columns are allowed for NVP Column Types.");             
-        	  if(TextUtil.isNullOrEmpty(_Key) == true)
-        		PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP without a Key column. The key attribute value must be one of the columns selected for output.");
-        	  else if(_ColumnObjs.stream().map(Column::getName).filter(_Key::equals).findFirst().isPresent() == false)
-        	    PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP with Key column \"" + _Key + "\" that is not found in the column mappings.");
-        	  
-        	  // UGH there's a better way for this below. This is temporary until we can get the dynamic map datatypes in.
-        	  Column keyCol = null;
-        	  Column valCol = null;
-        	  
-        	  for(Column C : _ColumnObjs)
-        	    {
-        		  if(C.getName().equals(_Key))
-        			  keyCol = C;
-        		  else
-        			  valCol = C;
-        	    }
-        	  
-        	  if(keyCol.getType() != ColumnType.STRING)
-        	    PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP with Key column \"" + _Key + "\" that is not a String. Key columns must be String datatypes.");
-        	  if(valCol.getType() != ColumnType.DOUBLE)
-          	    PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP with Val column \"" + valCol.getName() + "\" that is not a Double. Value columns must be Double datatypes."); 	  
-        	}
+          _OutputTypes.add(OutputFormatType.JSON);
 
-        	if(_NVPData.equals(NVPData.COLUMN))
-        	  {
-        		if(TextUtil.isNullOrEmpty(_Key) != true)   
-        		  PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP with Key column " + _Key + " For NVP Type ROW. This is not used for Row.");  
-        		
-          	  // UGH- again, this is temporary until we can get the dynamic map datatypes in.  
-          	  for(Column C : _ColumnObjs)
-          	    {
-          		  if(C.getType() != ColumnType.DOUBLE)
-          		    {
-          			  PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining an Output mapping with column '" + C.getName() + "' which is NOT a Double datatype. Only Double datatypes are supported in NVP ROW exports at this time.");
-          		    }  
-          	    }
-        	  }
+        _ColumnObjs = ValidationHelper.ProcessColumn(PS, ParentObject, "OutputMapping '" + _Name + "'", _Columns, new ValidationHelper.Processor()
+          {
+            @Override
+            public boolean process(ParserSession PS, Base ParentObject, String What, Column C)
+              {
+                if (C._Type == ColumnType.BINARY)
+                  PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping with column '" + C.getName() + "' which is a binary. Binaries cannot be JSONed.");
+                if (C._Type == ColumnType.JSON && _OutputTypes.contains(OutputFormatType.CSV) == true)
+                  PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping with column '" + C.getName() + "' which is a JSON object. JSON objects cannot be exported in CSV format.");
+                return true;
+              }
+          });
+
+        if (_OutputTypes.contains(OutputFormatType.NVP) == true)
+          {
+            if (TextUtil.isNullOrEmpty(_NVPSrcStr) == true)
+              PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP without an NVP type of ROW or COLUMN. An nvpType attribute must be used with NVP outputMap.");
+
+            _NVPSrc = NVPSourceType.parse(_NVPSrcStr);
+            if (_NVPSrc == null)
+              PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP with an invalid NVPSrc type '" + _NVPSrcStr + "': must be COLUMNS or ROWS.");
+
+            if (_NVPSrc.equals(NVPSourceType.ROWS))
+              {
+                if (_ColumnObjs.size() != 2)
+                  PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP that is ROWS-based with " + _ColumnObjs.size() + " Columns. Only 2 Columns are allowed.");
+                /*
+                 * LDH-NOTE: Keep for future performance analysis of the 2 idioms
+                 * if (_ParentObject.getColumn(_Key) != null)
+                 * if(_ColumnObjs.stream().map(Column::getName).filter(_Key::equals).findFirst().isPresent() == false)
+                 * PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP with Key column \"" + _Key +
+                 * "\" that is not found in the column mappings.");
+                 */
+                if (_ColumnObjs.get(0).getType().equals(ColumnType.STRING) == false)
+                  PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP that is ROWS-based with its 'Name' column \"" + _ColumnObjs.get(0)._Name + "\" that is not a String. The 'Name' columns in the name/value pair structure must be a String.");
+                if (_ColumnObjs.get(1).getType().equals(ColumnType.DOUBLE) == false)
+                  PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP that is ROWS-based with its 'Value' column \"" + _ColumnObjs.get(1)._Name + "\" that is not a Double. The 'Value' columns in the name/value pair structure must be a Double.");
+              }
+            else if (_NVPSrc.equals(NVPSourceType.COLUMNS))
+              {
+                for (Column C : _ColumnObjs)
+                  if (C != null && C.getType() != ColumnType.DOUBLE)
+                    PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping that is COLUMNS-based with column '" + C.getName() + "' that is not a Double. Only Double columns are allowed for COLUMNS-based Name/Value pairs.");
+              }
+            else
+              throw new Error("An Output mapping NVP with a source type '" + _NVPSrc.name() + "' is not handled properly in the code.");
           }
+        else if (TextUtil.isNullOrEmpty(_NVPSrcStr) == false)
+          PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping with a 'nvpSrc' attribute, but no NVP output type.");
+
           
+
         if (_Sync == true && _ParentObject.isOCC() == false)
-          PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining a 'sync' Output mapping but the parent object is not OCC.");
+          PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining a 'sync' Output mapping but the parent object is not OCC.");
 
         return Errs == PS.getErrorCount();
       }

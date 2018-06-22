@@ -16,15 +16,17 @@
 
 package tilda.enums;
 
-public enum NVPData
+public enum NVPSourceType
   {
-  COLUMN,
+    // Column-based, i.e., for a single data row, columns a, b, c -> {{"a", a}, {"b", b}, {"c", c}} 
+  COLUMNS,
 
-  ROW;
+  // Row-based, i.e., for multiple rows with a name and value columns -> {{name,value},{name, value}...} 
+  ROWS;
 
-    public static NVPData parse(String Str)
+    public static NVPSourceType parse(String Str)
       {
-        for (NVPData e : NVPData.values())
+        for (NVPSourceType e : NVPSourceType.values())
           if (Str.equalsIgnoreCase(e.name()) == true)
             return e;
         return null;
