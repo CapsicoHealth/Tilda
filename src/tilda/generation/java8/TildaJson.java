@@ -484,38 +484,49 @@ public class TildaJson implements CodeGenTildaJson
         Out.println("    }");
       }
     
+    
+    
+    
     public void genMethodToNVP(PrintWriter Out, GeneratorSession G, OutputMapping J)
     throws Exception
       {
+    	
+    	Map<String, Float> f = new HashMap<String, Float>();
+    	
+    	String valType = TextUtil.NormalCapitalization(J._NVPValueTypeStr);
+    	
+    	if(valType.equalsIgnoreCase("Char"))
+    		valType = "Character";
+    	
     	if(J._NVPSrc.equals(NVPSourceType.ROWS))
     	  {
     		Column nameCol = J._ColumnObjs.get(0);
     		Column valCol = J._ColumnObjs.get(1);
     		
-            Out.println("   public static Map<String, Double> toNVP" + J._Name + "(List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L) throws Exception");
+            Out.println("   public static Map<String, " +valType+ "> toNVP" + J._Name + "(List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L) throws Exception");
             Out.println("    {");
-            Out.println("      Map<String, Double> M = new HashMap<String, Double>();");    	   
+            Out.println("      Map<String, " +valType+ "> M = new HashMap<String, " +valType+ ">();");    	   
             Out.println("      for (" + Helper.getFullAppDataClassName(J._ParentObject) + " D : L)");
             Out.println("        {");
-            Out.println("          Double val = M.get(D.get" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "());");
+            Out.println("          " +valType+ " val = M.get(D.get" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "());");
             Out.println("          if(val != null)");
             Out.println("            throw new Exception(\"The key \" + D.get" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "() + \" with value \" + val.toString() + \" already exists in the Map. Key values must be unique.\");");
             //TODO: Will need to add logic when the key is something other than string. This works for when the key is string, but if it's numeric, we'll need to move this.
             Out.println("          if(TextUtil.isNullOrEmpty(D.get" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "()) == false)");
-            Out.println("            M.put(D.get" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "(), D.get" + TextUtil.CapitalizeFirstCharacter(valCol.getName()) + "());");
+            Out.println("            M.put(D.get" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "(), " + Helper.NVPValueCast(valCol, J._NVPValueTypeStr) + ");");
     		Out.println("        }");   		
     		Out.println("      return M;");   	
             Out.println("    }");
     	  }
     	else  		
     	  {
-            Out.println("   public static Map<String, Double> toNVP" + J._Name + "(" + Helper.getFullAppDataClassName(J._ParentObject) + " D) throws Exception");
+            Out.println("   public static Map<String, " +valType+ "> toNVP" + J._Name + "(" + Helper.getFullAppDataClassName(J._ParentObject) + " D) throws Exception");
             Out.println("    {");
-            Out.println("      Map<String, Double> M = new HashMap<String, Double>();");    	   
+            Out.println("      Map<String, " +valType+ "> M = new HashMap<String, " +valType+ ">();");       	   
             for (Column C : J._ColumnObjs)
               if (C != null)
                 {
-            	  Out.println("      M.put(\"" + C.getName() + "\", D.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "());");
+            	  Out.println("      M.put(\"" + C.getName() + "\", " + Helper.NVPValueCast(C, J._NVPValueTypeStr) + ");");
                 }
     		Out.println("      return M;");    	
             Out.println("    }");		

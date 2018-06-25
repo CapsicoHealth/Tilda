@@ -220,15 +220,15 @@ public class TILDA__TESTING_Json
           if(val != null)
             throw new Exception("The key " + D.getName() + " with value " + val.toString() + " already exists in the Map. Key values must be unique.");
           if(TextUtil.isNullOrEmpty(D.getName()) == false)
-            M.put(D.getName(), D.getA4());
+            M.put(D.getName(), (double) D.getA5());
         }
       return M;
     }
 
-   public static Map<String, Double> toNVPEEE(tilda.data.Testing_Data D) throws Exception
+   public static Map<String, String> toNVPEEE(tilda.data.Testing_Data D) throws Exception
     {
-      Map<String, Double> M = new HashMap<String, Double>();
-      M.put("a4", D.getA4());
+      Map<String, String> M = new HashMap<String, String>();
+      M.put("a4", String.valueOf(D.getA4()));
       return M;
     }
 

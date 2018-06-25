@@ -703,6 +703,45 @@ public class Helper
       return false;
     }
     
+    public static String NVPValueCast(Column C, String CastTo)
+      {    	      	
+   	    String castString = "D.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()";
+  	    
+  	    if(C.getType().name().equalsIgnoreCase(CastTo) == false)
+          switch(CastTo.toUpperCase())
+            {
+              case "STRING":
+            	  castString =  "String.valueOf("+castString+")";
+                  break;
+              case "CHAR":
+            	  castString =  castString+".toCharArray()";
+                  break;        
+              case "LONG":
+            	  castString =  "(long) " + castString;
+                  break;        
+              case "FLOAT":
+            	  castString =  "(float) " + castString;
+                  break;
+              case "DOUBLE":
+            	  castString =  "(double) " + castString;
+                  break;
+              case "DATETIME":
+            	  castString =   "DateTime(" + castString + ")";
+                  break;                    
+              case "BOOLEAN":
+              case "BITFIELD":
+              case "BINARY":
+              case "DATE":
+              case "JSON":    
+              case "INTEGER":
+            	  break;              
+              default:
+            	  castString = "";
+            }
+    
+        return castString;
+    }    
+    
     
     public static void SelectFrom(PrintWriter Out, Object O)
       {

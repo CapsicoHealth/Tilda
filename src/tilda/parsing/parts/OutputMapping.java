@@ -40,7 +40,7 @@ public class OutputMapping
     @SerializedName("sync"        ) public boolean  _Sync = false;
     @SerializedName("outTypes"    ) public String[] _OutputTypeStrs;
     @SerializedName("nvpSrc"      ) public String 	_NVPSrcStr;
-    @SerializedName("nvpValueType") public String   _NVPValueTypeStr; // To further implement.
+    @SerializedName("nvpValueType") public String   _NVPValueTypeStr;
     
     /*@formatter:on*/
 
@@ -58,7 +58,7 @@ public class OutputMapping
         _OutputTypes = OutputFormatType.parse(_OutputTypeStrs);
         if (_OutputTypes.isEmpty() == true)
           _OutputTypes.add(OutputFormatType.JSON);
-
+        
         _ColumnObjs = ValidationHelper.ProcessColumn(PS, ParentObject, "OutputMapping '" + _Name + "'", _Columns, new ValidationHelper.Processor()
           {
             @Override
@@ -74,6 +74,10 @@ public class OutputMapping
 
         if (_OutputTypes.contains(OutputFormatType.NVP) == true)
           {
+        	
+            if (TextUtil.isNullOrEmpty(_NVPValueTypeStr))
+                PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP without an nvpValueType. A column type ('STRING', 'INTEGER', etc.) must be defined.");
+        	
             if (TextUtil.isNullOrEmpty(_NVPSrcStr) == true)
               PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP without an NVP type of ROW or COLUMN. An nvpType attribute must be used with NVP outputMap.");
 
@@ -94,14 +98,14 @@ public class OutputMapping
                  */
                 if (_ColumnObjs.get(0).getType().equals(ColumnType.STRING) == false)
                   PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP that is ROWS-based with its 'Name' column \"" + _ColumnObjs.get(0)._Name + "\" that is not a String. The 'Name' columns in the name/value pair structure must be a String.");
-                if (_ColumnObjs.get(1).getType().equals(ColumnType.DOUBLE) == false)
-                  PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP that is ROWS-based with its 'Value' column \"" + _ColumnObjs.get(1)._Name + "\" that is not a Double. The 'Value' columns in the name/value pair structure must be a Double.");
+                if (_ColumnObjs.get(1).getType().isCompatible(_NVPValueTypeStr) == false)
+                  PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP that is ROWS-based with its 'Value' column \"" + _ColumnObjs.get(1)._Name + "\" that is incompatible with the nvpValueType of '" + _NVPValueTypeStr + "'. Compatible types are " + _ColumnObjs.get(1).getType().getCompatibleTypes(_NVPValueTypeStr));
               }
             else if (_NVPSrc.equals(NVPSourceType.COLUMNS))
               {
                 for (Column C : _ColumnObjs)
-                  if (C != null && C.getType() != ColumnType.DOUBLE)
-                    PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping that is COLUMNS-based with column '" + C.getName() + "' that is not a Double. Only Double columns are allowed for COLUMNS-based Name/Value pairs.");
+                  if (C != null && C.getType().isCompatible(_NVPValueTypeStr) == false)
+                    PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping that is COLUMNS-based with column '" + C.getName() + "'  that is incompatible with the nvpValueType of '" + _NVPValueTypeStr + "'. Compatible types are " + C.getType().getCompatibleTypes(_NVPValueTypeStr));
               }
             else
               throw new Error("An Output mapping NVP with a source type '" + _NVPSrc.name() + "' is not handled properly in the code.");
