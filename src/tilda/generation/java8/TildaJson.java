@@ -489,10 +489,7 @@ public class TildaJson implements CodeGenTildaJson
     
     public void genMethodToNVP(PrintWriter Out, GeneratorSession G, OutputMapping J)
     throws Exception
-      {
-    	
-    	Map<String, Float> f = new HashMap<String, Float>();
-    	
+      {   
     	String valType = TextUtil.NormalCapitalization(J._NVPValueTypeStr);
     	
     	if(valType.equalsIgnoreCase("Char"))
