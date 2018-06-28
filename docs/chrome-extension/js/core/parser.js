@@ -2,7 +2,6 @@ define(["jointjs", "./parser_element",
  "./custom_element_view", "./helpers", 
  "./relation_renderer", "./custom_object_collection"],
 function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
-
   function offsetToLocalPoint(paper, x, y) {
     var svgPoint = paper.svg.createSVGPoint();
     svgPoint.x = x;
@@ -11,46 +10,47 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
     var pointTransformed = svgPoint.matrixTransform(paper.viewport.getCTM().inverse());
     return pointTransformed;
   }
+  var x = 0;
+  var y = 0;
+
   var CustomLinkView = CEV.CustomLinkView;
   var CustomElementView = CEV.CustomElementView;
   var renderObject = Helpers.renderObject;
   var renderObjectRelations = LinkRenderer;
-  var p = function(schema, eleId, opts){
-    this.schema = schema
+  var findByCustomId = LinkRenderer.findByCustomId;
+  var p = function(package, eleId, opts){
+    x = 0;
+    y = 0;
+    this.package = package;
     this.opts = opts;
     this.eleId = eleId;
-    this.pKey = this.schema.package.toLowerCase()+"#"+this.opts.viewOnly;
     this.objects = new ObjectCollection();
     this.paper = null;
-    console.log("pKey --> "+this.pKey)
-    var currentPos = { x: -150, y: 30 }
-    this.parse = function(){
-      var that = this;
-      var pushElement = function(collection, schemaObj, _type, _inSchema){
-        var t = new ParserElement();
-        t.set({data: schemaObj, name: schemaObj.name,
-         _type: _type, inSchema: _inSchema, package: that.schema.package, pKey: that.pKey});
-        collection.add(t);
-      }
-      _.each(this.schema.objects, function(object, i){
-        pushElement(that.objects, object, "Object", true)
-      })
-      if(this.opts.viewOnly){
-        _.each(this.schema.views, function(view, i){
-          pushElement(that.objects, view, "View", true)
-        })
-      }
-      else{
-        _.each(this.schema.enumerations, function(enumeration, i){
-          pushElement(that.objects, enumeration, "Enumeration", true)
-        })
-
-        _.each(this.schema.mappers, function (mapper, i){
-          pushElement(that.objects, mapper, "Mapper", true)
-        })
-
-      }
+    this.collection = window.collection.clone();
+    this.schemaName = this.package.split(".")[1];
+    this.pKey = opts.package+"."+this.opts.name;
+    this.canvasName = this.opts.name;
+    this.currentScale = this.opts.scale || 1;
+    console.log("Scale --> "+this.currentScale);
+    var that = this;
+    // reset object positions.
+    _.each(this.collection, function(object, i){
+      var object = that.collection.at(i);
+      object.set({"graphId": null});
+    })
+    if(this.opts.viewOnly)
+    {
+      this.objects = new ObjectCollection(this.collection.where({_type: "View", schemaName: this.schemaName}));
     }
+    else 
+    {
+      var objects = this.collection.filter(function (obj) {
+        return obj.get('_type') !== 'View' && obj.get('schemaName') == that.schemaName;
+      });
+      this.objects = new ObjectCollection(objects);
+    }
+    var currentPos = { x: -150, y: 30 }
+
     this.resetAll = function(){
       var elements = this.paper.model.getElements();
       var links = this.paper.model.getLinks();
@@ -67,18 +67,24 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
     this.render = function(what){
       var that = this;
 
-      var elementChangeHandler = function(event){
-        var eventObject = that.objects.findWhere({graphId: event.get("id")});
-        var key = that.schema.package.toLowerCase()+"#"+eventObject.get("name").toLowerCase();
+      var elementChangeHandler = function(event)
+      {
+        var eventObject = that.collection.findWhere({graphId: this.get("id")})
+        if(eventObject == null)
+        {
+          return true;
+        }
+        var key = that.pKey+"#"+eventObject.get("friendlyName");
+        if(eventObject.get("hidden") == true)
+        {
+          key = key+".hidden";
+        }
         var position = eventObject.get("data").position;
         if(eventObject.get("data").position == null){
           eventObject.get("data").position = {};
           var position = eventObject.get("data").position;
         }
-        // Store preferences.
-        var syncSet = {};
-        // console.log("key -> "+key+"\nObject -> "+JSON.stringify(event.toJSON()));
-        window.tildaCache[key] = event.toJSON();
+        window.tildaCache[key] = this.toJSON();
       }
 
       var gotoNextPosition = function(currentPos){
@@ -86,24 +92,133 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
           currentPos.x = 150;
           currentPos.y = currentPos.y+300;
         } else{
+          currentPos.y = 150;
           currentPos.x = currentPos.x+300;
         }
         return currentPos;
       }
 
       var graph = new joint.dia.Graph;
+      var dock_graph = new joint.dia.Graph;
+      dock_graph.set("docket_view", true);
       var paper = new joint.dia.Paper({
         el: $("#"+this.eleId),
         width: window.screen.availWidth,
         height: (window.screen.availHeight),
         model: graph,
         gridSize: 10,
+        elementView: CustomElementView,
+        linkView: CustomLinkView,
+      });
+
+      $("#robj").html('');
+      var dock_paper = new joint.dia.Paper({
+        el: $("#robj"),
+        width: $('#robj').width(),
+        height: 200,
+        model: dock_graph,
+        gridSize: 1,
         restrictTranslate: true,
         elementView: CustomElementView,
         linkView: CustomLinkView
       });
+
+
+      graph.on('remove', function(view)
+      {
+        var cell = view.model;
+        if(cell && cell.get('type') == 'basic.Rect')
+        {
+          var id = cell.get('customId');
+          var currentPosition = cell.get('position');
+          var obj = that.objects.findWhere({friendlyName: id}, {caseInsensitive: true});
+          if(obj == null)
+          {
+            obj = that.collection.findWhere({friendlyName: id}, {caseInsensitive: true});
+          }
+          // var c = findByCustomId(dock_graph, obj);
+          // if(c != null)
+          // {
+          //   console.error(c.toJSON()+"  Already exists in dock_graph");
+          //   return
+          // }
+          var key = that.pKey+"#"+obj.get("friendlyName");
+          cell.set({hidden: true});
+          window.tildaCache[key] = cell.toJSON();
+          var objectAttr = window.tildaCache[key+".hidden"];
+          obj.set({graphId: null, rendered: false, nocache: true});
+          var objFn = renderObject[obj.get("_type")];
+          var t = objFn(dock_graph, obj, {'x': x, 'y': y}, objectAttr, key+".hidden", elementChangeHandler);
+          t.set({gPosition: currentPosition});
+          dock_paper.scale(that.currentScale);
+          x = x+200;
+          if(x >= $('#robj').width())
+          {
+            x = 0;
+            y = y + 60;
+          }
+        }
+      })
+
+
+      dock_graph.on('remove', function(view) 
+      {
+        var cell = view.model;
+        if(cell && cell.get('type') == 'basic.Rect')
+        {
+          var id = cell.get('customId');
+          var obj = that.objects.findWhere({friendlyName: id}, {caseInsensitive: true});
+          if(obj == null)
+          {
+            obj = that.collection.findWhere({friendlyName: id}, {caseInsensitive: true});
+          }
+          // var c = findByCustomId(graph, obj);
+          // if(c != null)
+          // {
+          //   console.error(c.toJSON()+"  Already exists in graph");
+          //   return
+          // }
+          obj.set({graphId: null, rendered: false});
+          obj.unset('hidden');
+          cell.unset('hidden');
+          var key = that.pKey+"#"+obj.get("friendlyName");
+          if(x <= $('#robj').width() && y > 0)
+          {
+            y = y - 60;
+          }
+          else
+          {
+            x = x - 200;
+          }
+          x = x < 0 ? 0 : x;
+          y = y < 0 ? 0 : y;
+
+          var objFn = renderObject[obj.get("_type")];
+          if ( objFn != null)
+          {
+            var position = cell.get('gPosition') || gotoNextPosition(currentPos);
+            var objectAttr = window.tildaCache[key];
+            if(objectAttr)
+            {
+              delete objectAttr["hidden"];
+            }
+            window.tildaCache[key] = objectAttr;
+            var t = objFn(graph, obj, position, objectAttr, that.pKey, elementChangeHandler);
+            var key = obj.get("_type");
+            var objFn = renderObjectRelations[key]
+            if(objFn != null)
+            {
+              objFn(graph, obj, that.pKey);
+            }
+            renderAllLinks();
+          }
+        }
+      })
+
       this.paper = paper;
       var V = joint.V;
+      window.paper = paper;
+      window.dock_paper = dock_paper;
 
       var dragStartPosition = null;
       paper.on('blank:pointerdown',function(event, x, y) {
@@ -134,52 +249,45 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
         if (newScale > 0.4 && newScale < 2) {
           paper.setOrigin(0, 0);
           paper.scale(newScale, newScale, p.x, p.y);
+          that.currentScale = newScale;
+          dock_paper.scale(newScale);
         }
       });
 
-      var that = this;
-      var elementChangeHandler = function(event){
-        var eventObject = that.objects.findWhere({graphId: event.get("id")});
-        var key = eventObject.get("pKey")+"#"+eventObject.get("name").toLowerCase();
-        var position = eventObject.get("data").position;
-        if(eventObject.get("data").position == null){
-          eventObject.get("data").position = {};
-          var position = eventObject.get("data").position;
-        }
-        // Store preferences.
-        window.tildaCache[key] = event.toJSON();
-      }
-      var objects = this.objects
-      if(this.opts.viewOnly){
-        objects = new ObjectCollection(objects.where({_type: "View"}));
-      }
 
-      _.each(objects, function(object, i){
-        var object = objects.at(i);
-        var key = object.get("pKey")+"#"+object.get("name").toLowerCase();
-        var objFn = renderObject[object.get("_type")]
+      _.each(this.objects, function(object, i){
+        var object = that.objects.at(i);
+        var key = that.pKey+"#"+object.get("friendlyName");
+        var objFn = renderObject[object.get("_type")];
         if ( objFn != null){
           var position = gotoNextPosition(currentPos);
           var objectAttr = window.tildaCache[key];
-          var t = objFn(graph, object, position, objectAttr);
-          object.set("graphId", t.get("id"));
-          object.set("rendered", true);
-          t.on('change:position', _.debounce(elementChangeHandler, 500, { 'maxWait' : 1000 }));
+          var t = objFn(graph, object, position, objectAttr, that.pKey, elementChangeHandler);
         }
       })
-
-      _.each(objects, function(object, i){
-        var object = objects.at(i);
-        var key = that.opts.viewOnly ? "only"+object.get("_type") : object.get("_type")
-        var objFn = renderObjectRelations[key]
-        if(objFn != null){
-          objFn(graph, object, that.objects, gotoNextPosition(currentPos));
-        }
-      })
-
+      var renderAllLinks = function(){
+        _.each(that.objects, function(object, i){
+          var object = that.objects.at(i);
+          var key = object.get("_type");
+          var objFn = renderObjectRelations[key]
+          if(objFn != null && object.get('hidden') != true ){
+            objFn(graph, object, that.pKey);
+          }
+        })
+      }
+      renderAllLinks();
+      dock_paper.scale(that.currentScale);
+      paper.scale(that.currentScale);
+      // Global dock graph
+      window.graph = graph;
+      window.dock_graph = dock_graph;
     }
-    this.parse();
-    this.render();
+    try{
+      this.render();
+    } catch(e){
+      console.error(e.message);
+      console.error(e.stack);
+    }
   }
 
   return p;
