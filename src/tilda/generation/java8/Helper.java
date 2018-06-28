@@ -734,7 +734,7 @@ public class Helper
               case CHAR:
             	  break;              
               default:
-            	  throw new Error("The ColumnType does not Cast! There is a problem!");
+            	  throw new Error("The ColumnType " + C.getType().name()  + " does not Cast to " + CastTo.name() + "! There is no cast logic to handle the " + CastTo.name() + " ColumnType in the NVPValueCast.");
             }
     
         return castString;
