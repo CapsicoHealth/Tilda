@@ -111,7 +111,7 @@ public class OutputMapping
             	
                 for (Column C : _ColumnObjs)
                   if (C != null && C.getType().isCompatible(_NVPValueTypeStr) == false)
-                    PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping that is COLUMNS-based with column '" + C.getName() + "'  that is incompatible with the nvpValueType of '" + _NVPValueTypeStr + "'. Compatible types are " + C.getType().getCompatibleTypes(_NVPValueTypeStr));
+                    PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping that is COLUMNS-based with column '" + C.getName() + "'  that is incompatible with the nvpValueType of '" + _NVPValueTypeStr + "'. Compatible types are '" + C.getType().getCompatibleTypes(_NVPValueTypeStr) + "'.");
               }
             else
               throw new Error("An Output mapping NVP with a source type '" + _NVPSrc.name() + "' is not handled properly in the code.");

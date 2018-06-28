@@ -712,9 +712,6 @@ public class Helper
             {
               case "STRING":
             	  castString =  "String.valueOf("+castString+")";
-                  break;
-              case "CHAR":
-            	  castString =  castString+".toCharArray()";
                   break;        
               case "LONG":
             	  castString =  "(long) " + castString;
@@ -734,6 +731,7 @@ public class Helper
               case "DATE":
               case "JSON":    
               case "INTEGER":
+              case "CHAR":
             	  break;              
               default:
             	  castString = "";

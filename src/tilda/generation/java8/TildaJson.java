@@ -512,7 +512,7 @@ public class TildaJson implements CodeGenTildaJson
             Out.println("          " +valType+ " val = M.get(D.get" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "());");
             Out.println("          if(val != null)");
             Out.println("            throw new Exception(\"The key \" + D.get" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "() + \" with value \" + val.toString() + \" already exists in the Map. Key values must be unique.\");");
-            if(nameCol.getType().name().equalsIgnoreCase("String"))            
+            if(nameCol.getType().name().equalsIgnoreCase("STRING"))            
             	Out.println("          if(TextUtil.isNullOrEmpty(D.get" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "()) == false)");
             else
             	Out.println("          if(D.isNull" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "() == false)");
