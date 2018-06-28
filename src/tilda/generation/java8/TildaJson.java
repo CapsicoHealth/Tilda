@@ -511,7 +511,7 @@ public class TildaJson implements CodeGenTildaJson
             Out.println("        {");
             Out.println("          " +valType+ " val = M.get(D.get" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "());");
             Out.println("          if(val != null)");
-            Out.println("            throw new Exception(\"The key \" + D.get" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "() + \" with value \" + val.toString() + \" already exists in the Map. Key values must be unique.\");");
+            Out.println("            throw new Exception(\"The key \" + D.get" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "() + \" with value \" + String.valueOf(val) + \" already exists in the Map. Key values must be unique.\");");
             if(nameCol.getType().name().equalsIgnoreCase("STRING"))            
             	Out.println("          if(TextUtil.isNullOrEmpty(D.get" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "()) == false)");
             else
@@ -534,7 +534,7 @@ public class TildaJson implements CodeGenTildaJson
             for (Column C : J._ColumnObjs)
               if (C != null)
                 {
-            	  Out.println("      M.put(\"" + C.getName() + "\", " + Helper.NVPValueCast(C, J._NVPValueTypeStr) + ");");
+            	  Out.println("      M.put(\"" + C.getName() + "\", " + Helper.NVPValueCast(C, J._NVPValueType) + ");");
                 }
     		Out.println("      return M;");    	
             Out.println("    }");		

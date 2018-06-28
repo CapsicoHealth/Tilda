@@ -332,7 +332,7 @@
       "outputMaps":[
         { "name": "CCC", "columns": ["refnum", "name", "description", "desc2"], "outTypes":["CSV","JSON"] }
        ,{ "name": "DDD", "columns": ["a2", "a5"], "outTypes":["NVP"], "nvpSrc":"ROWS"}
-       ,{ "name": "EEE", "columns": ["a4", "a6", "name", "a7"]        , "outTypes":["NVP"], "nvpSrc":"COLUMNS", "nvpValueType":"STRING"}
+       ,{ "name": "EEE", "columns": ["a4", "a6", "name", "a7"]        , "outTypes":["NVP"], "nvpSrc":"COLUMNS", "nvpValueType":"string"}
       ],
       "http":[
         { "name": "", "mandatories": ["refnum", "name", "description"] }

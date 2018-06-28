@@ -58,27 +58,36 @@ public enum ColumnType
     public final boolean     _Primitive;
     public final String      _SimpleName;
     public final String      _ShortName;
-    public final String[][]  _CompatibleTypes =
-    	{
-    			{"STRING", "JSON, CHAR, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, DATE, DATETIME, BITFIELD" }
-    		   ,{"JSON", ""}
-    		   ,{"CHAR", ""}
-    		   ,{"INTEGER", ""}
-    		   ,{"LONG", "INT"}
-    		   ,{"FLOAT", "INT"}
-    		   ,{"DOUBLE", "FLOAT, INTEGER, LONG"}
-    		   ,{"BOOLEAN", ""}
-    		   ,{"DATE" , ""}
-    		   ,{"DATETIME", "DATE"}
-    		   ,{"BINARY", ""}
-    		   ,{"BITFIELD" , ""}   		   
-    	};
+    public final static ColumnType[][]  _CompatibleTypes;
 
     
     static
       {
         for (ColumnType T : ColumnType.values())
          _PadderTypeNames.track(T.name());
+        
+        _CompatibleTypes = new ColumnType[][] 
+         {
+			{STRING, JSON, CHAR, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, DATE, DATETIME, BITFIELD}
+		   ,{JSON}
+		   ,{CHAR, STRING}
+		   ,{INTEGER}
+		   ,{LONG, INTEGER}
+		   ,{FLOAT, INTEGER}
+		   ,{DOUBLE, FLOAT, INTEGER, LONG}
+		   ,{BOOLEAN}
+		   ,{DATE}
+		   ,{DATETIME, DATE}
+		   ,{BINARY}
+		   ,{BITFIELD}   		   
+          };
+        ColumnType[] colsToValidate = new ColumnType[_CompatibleTypes.length];
+        for(int i = 0; i < _CompatibleTypes.length; i++)
+          {
+        	colsToValidate[i] = _CompatibleTypes[i][0];
+          }
+        ColumnType.validate(colsToValidate);
+        
       }
 
     public static ColumnType parse(String Str)
@@ -101,30 +110,32 @@ public enum ColumnType
         return _Primitive;
       }
     
-    public boolean isCompatible(String columnType) 
+    public boolean isCompatible(ColumnType Type) 
       {
-    	if(TextUtil.isNullOrEmpty(columnType) == false)
+    	if(Type != null)
     	  {
-    	    if(name().equalsIgnoreCase(columnType))
+    	    if(Type == this)
     	      return true;
     		
     	    for(int i = 0 ; i < _CompatibleTypes.length ; i++)
-    	      if(_CompatibleTypes[i][0].equalsIgnoreCase(columnType))
-    		    return _CompatibleTypes[i][1].contains(name());   		
+    	      if(_CompatibleTypes[i][0] == Type)
+    	    	for(int j = 1 ; j < _CompatibleTypes[i].length ; j++)
+    		      if(_CompatibleTypes[i][j] == this)
+    	            return true;
     	  }
     	
 		return false;
 	  }
     
-    public String getCompatibleTypes(String columnType) 
-      {    	
+    public String getCompatibleTypesString(ColumnType Type) 
+      { 
+    	String compatibleTypes = Type.name();
   	    for(int i = 0 ; i < _CompatibleTypes.length ; i++)
-  	      {
-  		    if(_CompatibleTypes[i][0].equalsIgnoreCase(columnType))
-  			  return _CompatibleTypes[i][0] + (TextUtil.isNullOrEmpty(_CompatibleTypes[i][1]) == false ? ", " + _CompatibleTypes[i][1] : "");
-  	      }
+  	    	if(_CompatibleTypes[i][0] == Type)
+    	      for(int j = 1 ; j < _CompatibleTypes[i].length ; j++)
+    	    	  compatibleTypes += (compatibleTypes.length() > 0 ? ", " + _CompatibleTypes[i][j].name() : _CompatibleTypes[i][j].name());
   	    
-		return "";
+		return compatibleTypes;
 	  }    
     
     public static <T> void validate(T[] Enums)

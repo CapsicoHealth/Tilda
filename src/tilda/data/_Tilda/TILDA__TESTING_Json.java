@@ -218,7 +218,7 @@ public class TILDA__TESTING_Json
         {
           Float val = M.get(D.getA2());
           if(val != null)
-            throw new Exception("The key " + D.getA2() + " with value " + val.toString() + " already exists in the Map. Key values must be unique.");
+            throw new Exception("The key " + D.getA2() + " with value " + String.valueOf(val) + " already exists in the Map. Key values must be unique.");
           if(D.isNullA2() == false)
             M.put(D.getA2(), D.getA5());
         }

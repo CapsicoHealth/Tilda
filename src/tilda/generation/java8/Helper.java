@@ -703,35 +703,35 @@ public class Helper
       return false;
     }
     
-    public static String NVPValueCast(Column C, String CastTo)
+    public static String NVPValueCast(Column C, ColumnType CastTo)
       {    	      	
    	    String castString = "D.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()";
   	    
-  	    if(C.getType().name().equalsIgnoreCase(CastTo) == false)
-          switch(CastTo.toUpperCase())
+  	    if(C.getType() != CastTo)
+          switch(CastTo)
             {
-              case "STRING":
+              case STRING:
             	  castString =  "String.valueOf("+castString+")";
                   break;        
-              case "LONG":
+              case LONG:
             	  castString =  "(long) " + castString;
                   break;        
-              case "FLOAT":
+              case FLOAT:
             	  castString =  "(float) " + castString;
                   break;
-              case "DOUBLE":
+              case DOUBLE:
             	  castString =  "(double) " + castString;
                   break;
-              case "DATETIME":
+              case DATETIME:
             	  castString =   "DateTime(" + castString + ")";
                   break;                    
-              case "BOOLEAN":
-              case "BITFIELD":
-              case "BINARY":
-              case "DATE":
-              case "JSON":    
-              case "INTEGER":
-              case "CHAR":
+              case BOOLEAN:
+              case BITFIELD:
+              case BINARY:
+              case DATE:
+              case JSON:    
+              case INTEGER:
+              case CHAR:
             	  break;              
               default:
             	  castString = "";
