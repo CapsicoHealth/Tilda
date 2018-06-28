@@ -75,9 +75,10 @@ public class OutputMapping
         if (_OutputTypes.contains(OutputFormatType.NVP) == true)
           {
         	
-            if (TextUtil.isNullOrEmpty(_NVPValueTypeStr))
-                PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP without an nvpValueType. A column type ('STRING', 'INTEGER', etc.) must be defined.");
-        	
+        	// TODO: Moved to Column Based since that's really the only place required to have this attribute. Run by LDH.
+            //if (TextUtil.isNullOrEmpty(_NVPValueTypeStr))
+            //  PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP without an nvpValueType. A column type ('STRING', 'INTEGER', etc.) must be defined.");
+        	           
             if (TextUtil.isNullOrEmpty(_NVPSrcStr) == true)
               PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP without an NVP type of ROW or COLUMN. An nvpType attribute must be used with NVP outputMap.");
 
@@ -96,13 +97,18 @@ public class OutputMapping
                  * PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP with Key column \"" + _Key +
                  * "\" that is not found in the column mappings.");
                  */
-                if (_ColumnObjs.get(0).getType().equals(ColumnType.STRING) == false)
-                  PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP that is ROWS-based with its 'Name' column \"" + _ColumnObjs.get(0)._Name + "\" that is not a String. The 'Name' columns in the name/value pair structure must be a String.");
-                if (_ColumnObjs.get(1).getType().isCompatible(_NVPValueTypeStr) == false)
-                  PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP that is ROWS-based with its 'Value' column \"" + _ColumnObjs.get(1)._Name + "\" that is incompatible with the nvpValueType of '" + _NVPValueTypeStr + "'. Compatible types are " + _ColumnObjs.get(1).getType().getCompatibleTypes(_NVPValueTypeStr));
+                //if (_ColumnObjs.get(0).getType().equals(ColumnType.STRING) == false)
+                //  PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP that is ROWS-based with its 'Name' column \"" + _ColumnObjs.get(0)._Name + "\" that is not a String. The 'Name' columns in the name/value pair structure must be a String.");
+                
+                // TODO: Not really needed for Row based NVP. Run by LDH.
+                //if (_ColumnObjs.get(1).getType().isCompatible(_NVPValueTypeStr) == false)
+                //  PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP that is ROWS-based with its 'Value' column \"" + _ColumnObjs.get(1)._Name + "\" that is incompatible with the nvpValueType of '" + _NVPValueTypeStr + "'. Compatible types are " + _ColumnObjs.get(1).getType().getCompatibleTypes(_NVPValueTypeStr));
               }
             else if (_NVPSrc.equals(NVPSourceType.COLUMNS))
               {
+                if (TextUtil.isNullOrEmpty(_NVPValueTypeStr))
+                    PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP that is COLUMNS-based without an nvpValueType. A column type ('STRING', 'INTEGER', etc.) must be defined.");    
+            	
                 for (Column C : _ColumnObjs)
                   if (C != null && C.getType().isCompatible(_NVPValueTypeStr) == false)
                     PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping that is COLUMNS-based with column '" + C.getName() + "'  that is incompatible with the nvpValueType of '" + _NVPValueTypeStr + "'. Compatible types are " + C.getType().getCompatibleTypes(_NVPValueTypeStr));
@@ -112,8 +118,6 @@ public class OutputMapping
           }
         else if (TextUtil.isNullOrEmpty(_NVPSrcStr) == false)
           PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping with a 'nvpSrc' attribute, but no NVP output type.");
-
-          
 
         if (_Sync == true && _ParentObject.isOCC() == false)
           PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining a 'sync' Output mapping but the parent object is not OCC.");

@@ -62,7 +62,7 @@ public enum ColumnType
     	{
     			{"STRING", "JSON, CHAR, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, DATE, DATETIME, BITFIELD" }
     		   ,{"JSON", ""}
-    		   ,{"CHAR", "STR"}
+    		   ,{"CHAR", ""}
     		   ,{"INTEGER", ""}
     		   ,{"LONG", "INT"}
     		   ,{"FLOAT", "INT"}
