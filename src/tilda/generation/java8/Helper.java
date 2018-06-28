@@ -734,7 +734,7 @@ public class Helper
               case CHAR:
             	  break;              
               default:
-            	  castString = "";
+            	  throw new Error("The ColumnType does not Cast! There is a problem!");
             }
     
         return castString;
