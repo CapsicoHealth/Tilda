@@ -703,6 +703,43 @@ public class Helper
       return false;
     }
     
+    public static String NVPValueCast(Column C, ColumnType CastTo)
+      {    	      	
+   	    String castString = "D.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()";
+  	    
+  	    if(C.getType() != CastTo)
+          switch(CastTo)
+            {
+              case STRING:
+            	  castString =  "String.valueOf("+castString+")";
+                  break;        
+              case LONG:
+            	  castString =  "(long) " + castString;
+                  break;        
+              case FLOAT:
+            	  castString =  "(float) " + castString;
+                  break;
+              case DOUBLE:
+            	  castString =  "(double) " + castString;
+                  break;
+              case DATETIME:
+            	  castString =   "DateTime(" + castString + ")";
+                  break;                    
+              case BOOLEAN:
+              case BITFIELD:
+              case BINARY:
+              case DATE:
+              case JSON:    
+              case INTEGER:
+              case CHAR:
+            	  break;              
+              default:
+            	  throw new Error("The ColumnType " + C.getType().name()  + " does not Cast to " + CastTo.name() + "! There is no cast logic to handle the " + CastTo.name() + " ColumnType in the NVPValueCast.");
+            }
+    
+        return castString;
+    }    
+    
     
     public static void SelectFrom(PrintWriter Out, Object O)
       {

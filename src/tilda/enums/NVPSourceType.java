@@ -16,37 +16,19 @@
 
 package tilda.enums;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public enum OutputFormatType
+public enum NVPSourceType
   {
-  JSON,
+    // Column-based, i.e., for a single data row, columns a, b, c -> {{"a", a}, {"b", b}, {"c", c}} 
+  COLUMNS,
 
-  CSV, 
-  
-  NVP;
+  // Row-based, i.e., for multiple rows with a name and value columns -> {{name,value},{name, value}...} 
+  ROWS;
 
-    public static OutputFormatType parse(String Str)
+    public static NVPSourceType parse(String Str)
       {
-        if (Str != null)
-          for (OutputFormatType e : OutputFormatType.values())
-            if (Str.equalsIgnoreCase(e.name()) == true)
-              return e;
+        for (NVPSourceType e : NVPSourceType.values())
+          if (Str.equalsIgnoreCase(e.name()) == true)
+            return e;
         return null;
       }
-
-    public static List<OutputFormatType> parse(String[] Strs)
-      {
-        List<OutputFormatType> L = new ArrayList<OutputFormatType>();
-        if (Strs != null)
-          for (String s : Strs)
-            {
-              OutputFormatType OFT = parse(s);
-              if (OFT != null)
-                L.add(OFT);
-            }
-        return L;
-      }
-
   }

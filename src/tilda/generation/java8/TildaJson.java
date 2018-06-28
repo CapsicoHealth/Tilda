@@ -17,13 +17,16 @@
 package tilda.generation.java8;
 
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
+import tilda.enums.NVPSourceType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.OutputFormatType;
 import tilda.generation.GeneratorSession;
@@ -330,6 +333,9 @@ public class TildaJson implements CodeGenTildaJson
               case CSV:
                 genMethodToCSV(Out, G, OM);
                 break;
+              case NVP:
+                genMethodToNVP(Out, G, OM);
+                break;                
               default:
                 throw new Error("OutputFormatType " + OFT + " is not supported in the Output methog generation.");
             }
@@ -478,6 +484,62 @@ public class TildaJson implements CodeGenTildaJson
         Out.println("    }");
       }
     
+    
+    
+    
+    public void genMethodToNVP(PrintWriter Out, GeneratorSession G, OutputMapping J)
+    throws Exception
+      {   	
+    	if(J._NVPSrc.equals(NVPSourceType.ROWS))
+    	  {
+
+    		Column nameCol = J._ColumnObjs.get(0);
+    		Column valCol = J._ColumnObjs.get(1);
+
+        	String nameType = TextUtil.NormalCapitalization(nameCol.getType().name());
+        	String valType = TextUtil.NormalCapitalization(valCol.getType().name());
+        	
+        	if(nameType.equalsIgnoreCase("Char"))
+        		nameType = "Character";
+        	if(valType.equalsIgnoreCase("Char"))
+        		valType = "Character";      	
+    		
+            Out.println("   public static Map<" + nameType +", " +valType+ "> toNVP" + J._Name + "(List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L) throws Exception");
+            Out.println("    {");
+            Out.println("      Map<" + nameType +", " +valType+ "> M = new HashMap<" + nameType +", " +valType+ ">();");    	   
+            Out.println("      for (" + Helper.getFullAppDataClassName(J._ParentObject) + " D : L)");
+            Out.println("        {");
+            Out.println("          " +valType+ " val = M.get(D.get" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "());");
+            Out.println("          if(val != null)");
+            Out.println("            throw new Exception(\"The key \" + D.get" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "() + \" with value \" + String.valueOf(val) + \" already exists in the Map. Key values must be unique.\");");
+            if(nameCol.getType().name().equalsIgnoreCase("STRING"))            
+            	Out.println("          if(TextUtil.isNullOrEmpty(D.get" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "()) == false)");
+            else
+            	Out.println("          if(D.isNull" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "() == false)");
+            Out.println("            M.put(D.get" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "(), D.get" + TextUtil.CapitalizeFirstCharacter(valCol.getName()) + "());");
+    		Out.println("        }");   		
+    		Out.println("      return M;");   	
+            Out.println("    }");
+    	  }
+    	else  		
+    	  {
+        	String valType = TextUtil.NormalCapitalization(J._NVPValueTypeStr);
+        	
+        	if(valType.equalsIgnoreCase("Char"))
+        		valType = "Character";  
+
+            Out.println("   public static Map<String, " +valType+ "> toNVP" + J._Name + "(" + Helper.getFullAppDataClassName(J._ParentObject) + " D) throws Exception");
+            Out.println("    {");
+            Out.println("      Map<String, " +valType+ "> M = new HashMap<String, " +valType+ ">();");       	   
+            for (Column C : J._ColumnObjs)
+              if (C != null)
+                {
+            	  Out.println("      M.put(\"" + C.getName() + "\", " + Helper.NVPValueCast(C, J._NVPValueType) + ");");
+                }
+    		Out.println("      return M;");    	
+            Out.println("    }");		
+    	  }
+      }
 
     public void genMethodToString(PrintWriter Out, GeneratorSession G, Object O)
     throws Exception
