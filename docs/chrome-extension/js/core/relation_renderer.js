@@ -2,22 +2,50 @@ define(["jointjs", "lodash", "jquery",
  "./parser_element", "./helpers"],
  function(joint, _, $, ParserElement, Helpers){
   var renderObject = Helpers.renderObject;
-
-  var renderLink = function(graph, source, target, superset){
-    var key = source.get("pKey")+"#"+source.get("name")+"#"+target.get("name");
-    key = key.toLowerCase();    
+  var renderedLinks = [];
+  var findByCustomId = function(graph, schemaObj)
+  {
+    return graph.getCells().filter(function(cell)
+    {
+      return cell.get('customId') == schemaObj.get('friendlyName') && schemaObj.get('graphId') == cell.id
+    })[0];
+  }
+  var isConnected = function(graph, sourceCell, targetCell)
+  {
+    var connected = false;
+    var connectedLinks = graph.getConnectedLinks(sourceCell, {deep: true});
+    _.some(connectedLinks, function(link){
+      var targetLink = link.get('target')
+      connected = targetCell.id ==  targetLink.id
+      return connected;
+    })
+    return connected;
+  }
+  var renderLink = function(graph, source, target, pKey){
+    var elements = graph.getElements();
+    var sourceCell = findByCustomId(graph, source);
+    var targetCell = findByCustomId(graph, target);
+    if(sourceCell == null || targetCell == null)
+    {
+      return false;
+    }
+    if(isConnected(graph, sourceCell, targetCell))
+    {
+      return false;
+    }
+    var key = pKey+"#"+source.get("friendlyName")+"#"+target.get("friendlyName");
     var linkAttrs = window.tildaCache[key];
     if(linkAttrs == null){
       linkAttrs = {
-        source: { id: source.get("graphId") },
-        target: { id: target.get("graphId") }
+        source: { id: sourceCell.id },
+        target: { id: targetCell.id }
       }
       var attrs = {
         '.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' },
-        'key': source.get("pKey")+"#"+source.get("name")+"#"+target.get("name")
+        'key': pKey+"#"+source.get("friendlyName")+"#"+target.get("friendlyName")
       }
       if(source.get('_type') == "Object"){
-        if(target.get("inSchema")){
+        if(target.get("schemaName") != source.get("schemaName")){
           attrs = _.merge(attrs, {
             '.connection': { stroke: 'rgb(65,113,156)', 'stroke-width': 1 }
           })
@@ -27,7 +55,7 @@ define(["jointjs", "lodash", "jquery",
           })
         }
       } else if(source.get('_type') == "View"){
-        if(target.get("inSchema")){
+        if(target.get("schemaName") != source.get("schemaName")){
           attrs = _.merge(attrs, {
             '.connection': { stroke: 'rgb(0,176,80)', 'stroke-width': 1 }
           })
@@ -37,7 +65,7 @@ define(["jointjs", "lodash", "jquery",
           })
         }
       } else if(source.get('_type') == "Mapper"){
-        if(target.get("inSchema")){
+        if(target.get("schemaName") != source.get("schemaName")){
           attrs = _.merge(attrs, {
             '.connection': { stroke: 'rgb(248,203,173)', 'stroke-width': 1 }
           })
@@ -50,8 +78,8 @@ define(["jointjs", "lodash", "jquery",
       linkAttrs["attrs"] = attrs
     } else {
       linkAttrs = _.merge(linkAttrs, {
-        source: { id: source.get("graphId") },
-        target: { id: target.get("graphId") }
+        source: { id: sourceCell.id },
+        target: { id: targetCell.id }
       })
     }
     var vertices = linkAttrs.vertices;
@@ -67,138 +95,24 @@ define(["jointjs", "lodash", "jquery",
     }
     link.on("change:vertices", _.debounce(eventHandler, 500, { 'maxWait' : 1000 }));
     graph.addCell(link);
+    renderedLinks.push(linkAttrs); 
   }
 
-  var elementChangeHandler = function(superset, event){
-    var eventObject = superset.findWhere({graphId: event.get("id")});
-    var key = eventObject.get("pKey")+"#"+eventObject.get("name").toLowerCase();
-    var position = eventObject.get("data").position;
-    if(eventObject.get("data").position == null){
-      eventObject.get("data").position = {};
-      var position = eventObject.get("data").position;
-    }
-    // Store preferences.
-    var syncSet = {};
-    window.tildaCache[key] = event.toJSON();
+  var X = {};
+  var objRel = function(graph, object, pKey){
+    var rels = object.get('references') || [];
+    _.each(rels, function(target){
+      renderLink(graph, object, target, pKey)
+      objRel.apply(this, [graph, target, pKey]);
+    })
   }
-
   var renderObjectRelations = {
     // This method will add outSchema object
-    "Object": function(graph, object, superset, position){
-      if(object.get("data").foreign != null){
-        // var rels = _.map(object.get("data").foreign, function(ele, i){ return ele.destObject });
-        var rels = [];
-        _.each(object.get("data").foreign, function(ele, i){
-          rels.push(ele.destObject.split(".").reverse()[0]);
-        })
-        rels = _.uniq(rels);
-        _.each(rels, function(relation, i){
-          var package = superset.at(0).get("package")
-          var pKey = superset.at(0).get("pKey");
-          var key = pKey+"#"+relation.toLowerCase();
-          var target = superset.findWhere({name: relation}, {caseInsensitive: true})
-          if(target == null){
-            target = new ParserElement({data: {name: relation }, name: relation,
-               _type: "Object", inSchema: false, package: package, pKey: pKey });
-            superset.add(target);
-            var objectAttr = window.tildaCache[key];
-            var t = renderObject[target.get("_type")](graph, target, position, objectAttr);
-            target.set({graphId: t.get("id")});
-            t.on('change:position', _.debounce(function(event){
-              elementChangeHandler(superset, event);
-            }, 500, { 'maxWait' : 1000 }));
-          }
-          renderLink(graph, object, target, superset)
-        })
-      }
-    },
-    "View": function(graph, object, superset, position){
-      var rels = [];
-      _.each(object.get("data").columns, function(ele, i){
-        if(ele.sameas != null && ele.sameas.split(".").length > 1 ){
-          rels.push(ele.sameas.split(".").reverse()[1]);
-        }
-      })
-      rels = _.uniq(rels);
-      _.each(rels, function(relation, i){
-        var package = superset.at(0).get("package")
-        var pKey = superset.at(0).get("pKey");
-        var key = pKey+"#"+relation.toLowerCase();
-        var target = superset.findWhere({name: relation}, {caseInsensitive: true})
-        if(target == null){
-          target = new ParserElement({data: {name: relation }, name: relation,
-             _type: "Object", inSchema: false, package: package, pKey: pKey });
-          superset.add(target);
-          var objectAttr = window.tildaCache[key];
-          var t = renderObject[target.get("_type")](graph, target, position, objectAttr);
-          target.set({graphId: t.get("id")});
-          t.on('change:position', _.debounce(function(event){
-            elementChangeHandler(superset, event);
-          }, 500, { 'maxWait' : 1000 }));
-        }
-        renderLink(graph, object, target, superset)
-      })
-
-    },
-    "onlyView": function(graph, object, superset, position){
-      var rels = [];
-      _.each(object.get("data").columns, function(ele, i){
-        if(ele.sameas != null && ele.sameas.split(".").length > 1 ){
-          rels.push(ele.sameas.split(".").reverse()[1]);
-        }
-      })
-      rels = _.uniq(rels);
-      _.each(rels, function(relation, i){
-        var package = superset.at(0).get("package")
-        var pKey = superset.at(0).get("pKey");
-        var key = pKey+"#"+relation.toLowerCase();
-        var target = superset.findWhere({name: relation}, {caseInsensitive: true})
-        if(target == null){
-          target = new ParserElement({data: {name: relation }, name: relation,
-             _type: "Object", inSchema: false, package: package, pKey: pKey });
-          superset.add(target);
-        }
-        if(target.get("rendered") != true){
-          var objectAttr = window.tildaCache[key];
-          var t = renderObject[target.get("_type")](graph, target, position, objectAttr);
-          target.set({graphId: t.get("id")});
-          t.on('change:position', _.debounce(function(event){
-            elementChangeHandler(superset, event);
-          }, 500, { 'maxWait' : 1000 }));
-          target.set("rendered", true);
-        }
-        renderLink(graph, object, target, superset)
-
-      })
-    },
-    "Mapper": function(graph, object, superset, position){
-      var rels = [];
-      _.each(object.get("data").primaryColumns, function(ele, i){
-        if(ele.sameas != null && ele.sameas.split(".").length > 1 ){
-          rels.push(ele.sameas.split(".").reverse()[1]);
-        }
-      })
-      rels = _.uniq(rels);
-      _.each(rels, function(relation, i){
-        var package = superset.at(0).get("package")
-        var pKey = superset.at(0).get("pKey");
-        var key = pKey+"#"+relation.toLowerCase();
-        var target = superset.findWhere({name: relation}, {caseInsensitive: true})
-        if(target == null){
-          target = new ParserElement({data: {name: relation }, name: relation,
-             _type: "Object", inSchema: false, package: package, pKey: pKey });
-          superset.add(target);
-          var objectAttr = window.tildaCache[key];
-          var t = renderObject[target.get("_type")](graph, target, position, objectAttr);
-          target.set({graphId: t.get("id")});
-          t.on('change:position', _.debounce(function(event){
-            elementChangeHandler(superset, event);
-          }, 500, { 'maxWait' : 1000 }));
-        }
-
-        renderLink(graph, object, target, superset)
-      })
-    }
+    "Object": objRel,
+    "View": objRel,
+    "onlyView": objRel,
+    "Mapper": objRel,
+    "findByCustomId": findByCustomId
   }
   return renderObjectRelations;
 });
