@@ -25,12 +25,14 @@ import java.util.List;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
+import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.FKMeta;
 import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.PKMeta;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.enums.DBStringType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
@@ -67,8 +69,8 @@ public interface DBType
     public boolean alterTableDropColumn           (Connection Con, Object Obj, String ColumnName) throws Exception;
     public boolean alterTableAlterColumnNull      (Connection Con, Column Col, String DefaultValue) throws Exception;
     public boolean alterTableAlterColumnComment   (Connection Con, Column Col) throws Exception;
-    public boolean alterTableAlterColumnType      (Connection Con, ColumnType fromType, Column Col, ZoneInfo_Data defaultZI) throws Exception;
-    public boolean alterTableAlterColumnStringSize(Connection Con, Column Col, int DBSize) throws Exception;
+    public boolean alterTableAlterColumnType      (Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI) throws Exception;
+    public boolean alterTableAlterColumnStringSize(Connection Con, ColumnMeta ColMeta, Column Col) throws Exception;
     public boolean alterTableReplaceTablePK       (Connection Con, Object Obj, PKMeta oldPK) throws Exception;
     public boolean alterTableDropFK               (Connection Con, Object Obj, FKMeta FK) throws Exception;
     public boolean alterTableAddFK                (Connection Con, ForeignKey FK) throws Exception;
@@ -91,8 +93,7 @@ public interface DBType
     public boolean FullIdentifierOnUpdate();
     public String getAggregateStr(AggregateType AT);
 
-    public int getVarCharThreshhold();
-    public int getCLOBThreshhold();
+    public DBStringType getDBStringType(int Size);
 
     public StringStringPair getTypeMapping(int type, String name, int size, String typeName) throws Exception;
     public void             getFullColumnVar(StringBuilder Str, String SchemaName, String TableName, String ColumnName);

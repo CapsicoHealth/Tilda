@@ -685,6 +685,62 @@ public class Helper
         return false;
       }
 
+    public static boolean CSVExport(PrintWriter Out, boolean First, Column C)
+    {
+      if(First == false)
+    	Out.println("      Str.append(\",\");");
+      if (C.getType() == ColumnType.DOUBLE || C.getType() == ColumnType.FLOAT|| C.getType() == ColumnType.LONG || C.getType() == ColumnType.INTEGER 
+    		  || C.getType() == ColumnType.CHAR || C.getType() == ColumnType.BINARY || C.getType() == ColumnType.BOOLEAN)
+        Out.println("      TextUtil.EscapeDoubleQuoteForCSV(Str, \"\" + " + "Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "());");
+      else if (C.isCollection() == true)
+        Out.println("      TextUtil.EscapeDoubleQuoteForCSV(Str, " + "TextUtil.Print(Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(), \",\"));");
+      else if (C.getType() == ColumnType.DATETIME)
+        Out.println("      TextUtil.EscapeDoubleQuoteForCSV(Str, " + "DateTimeUtil.printDateTimeForSQL(Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()));");
+      else if (C.getType() == ColumnType.DATE)
+        Out.println("      TextUtil.EscapeDoubleQuoteForCSV(Str, " + "DateTimeUtil.printDate(Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()));");
+      else
+    	Out.println("      TextUtil.EscapeDoubleQuoteForCSV(Str, " + "Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "());");
+      return false;
+    }
+    
+    public static String NVPValueCast(Column C, ColumnType CastTo)
+      {    	      	
+   	    String castString = "D.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()";
+  	    
+  	    if(C.getType() != CastTo)
+          switch(CastTo)
+            {
+              case STRING:
+            	  castString =  "String.valueOf("+castString+")";
+                  break;        
+              case LONG:
+            	  castString =  "(long) " + castString;
+                  break;        
+              case FLOAT:
+            	  castString =  "(float) " + castString;
+                  break;
+              case DOUBLE:
+            	  castString =  "(double) " + castString;
+                  break;
+              case DATETIME:
+            	  castString =   "DateTime(" + castString + ")";
+                  break;                    
+              case BOOLEAN:
+              case BITFIELD:
+              case BINARY:
+              case DATE:
+              case JSON:    
+              case INTEGER:
+              case CHAR:
+            	  break;              
+              default:
+            	  throw new Error("The ColumnType " + C.getType().name()  + " does not Cast to " + CastTo.name() + "! There is no cast logic to handle the " + CastTo.name() + " ColumnType in the NVPValueCast.");
+            }
+    
+        return castString;
+    }    
+    
+    
     public static void SelectFrom(PrintWriter Out, Object O)
       {
         Out.println("       S.append(\"select \");");

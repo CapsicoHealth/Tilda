@@ -53,7 +53,7 @@ This Table contains the following columns:<BLOCKQUOTE>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>2&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Connection-id_DIV' class='columns'>id</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;character(15)&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(15)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -369,7 +369,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated May 8 2018, 01:17:00EDT
+ @generated Jun 28 2018, 11:41:21EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__CONNECTION implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -558,7 +558,7 @@ This is the hasChanged for:<BR>
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Connection.id of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.id of type character(15)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.id of type varchar(15)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>15</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -579,7 +579,7 @@ This is the definition for:<BR>
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Connection.id of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.id of type character(15)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.id of type varchar(15)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>15</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -600,7 +600,7 @@ This is the getter for:<BR>
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Connection.id of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.id of type character(15)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.id of type varchar(15)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>15</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -2391,4 +2391,5 @@ This is the hasChanged for:<BR>
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;
     }
+
  }

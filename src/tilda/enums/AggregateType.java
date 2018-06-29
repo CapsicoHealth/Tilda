@@ -59,7 +59,6 @@ public enum AggregateType
                 return ColumnType.DOUBLE;
               break;
             case MAX:
-              return T;
             case MIN:
               return T;
             case SUM:
@@ -76,6 +75,25 @@ public enum AggregateType
               throw new Error("Incomplete Switch statment: unknown ColumnType " + this.name() + ";");
           }
         throw new Error("Cannot do a " + name() + " aggregate on type " + T.name() + ".");
+      }
+
+    public boolean isComposable()
+      {
+        switch (this)
+          {
+            case ARRAY:
+            case COUNT:
+            case MAX:
+            case MIN:
+            case SUM:
+              return true;
+            case AVG:
+            case DEV:
+            case VAR:
+              return false;
+            default:
+              throw new Error("Incomplete Switch statment: unknown ColumnType " + this.name() + ";");
+          }
       }
 
   }

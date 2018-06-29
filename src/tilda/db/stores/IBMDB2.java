@@ -28,12 +28,14 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
+import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.FKMeta;
 import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.PKMeta;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.enums.DBStringType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
@@ -197,26 +199,22 @@ public class IBMDB2 implements DBType
       }
 
     @Override
-    public int getVarCharThreshhold()
+    public DBStringType getDBStringType(int Size)
       {
-        return 20;
+        return Size < 20 ? DBStringType.CHARACTER
+        : Size < 4096 ? DBStringType.VARCHAR
+        : DBStringType.TEXT;
       }
 
     @Override
-    public int getCLOBThreshhold()
-      {
-        return 4096;
-      }
-
-    @Override
-    public boolean alterTableAlterColumnStringSize(Connection Con, Column Col, int DBSize)
+    public boolean alterTableAlterColumnStringSize(Connection Con, ColumnMeta ColMeta, Column Col)
     throws Exception
       {
         throw new UnsupportedOperationException();
       }
 
     @Override
-    public boolean alterTableAlterColumnType(Connection Con, ColumnType fromType, Column Col, ZoneInfo_Data defaultZI)
+    public boolean alterTableAlterColumnType(Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI)
       {
         throw new UnsupportedOperationException();
       }

@@ -40,7 +40,7 @@ public class TILDA__MAPPING_Factory
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Mapping.type of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Mapping.type of type character(10)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Mapping.type of type varchar(10)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>

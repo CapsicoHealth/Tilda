@@ -30,8 +30,6 @@ import org.apache.logging.log4j.Logger;
 The View TILDA.FormulaResultView:<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>FormulaResultView_Factory</B>, <B>FormulaResultView_Data</B> in the package <B>tilda.data</B>.
 <LI>Is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>
-<LI>Has the following identity:<UL><LI>Primary Key: formulaRefnum, value</LI>
-</UL></LI>
 </UL>
 <B>Description</B>: A view of formulas and their values.<BR>
 <BR>
@@ -215,7 +213,7 @@ This View contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated May 8 2018, 01:17:00EDT
+ @generated Jun 28 2018, 11:41:21EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__FORMULARESULTVIEW implements tilda.interfaces.ReaderObject
@@ -697,9 +695,6 @@ This is the setter for:<BR>
        S.append(" from "); C.getFullTableVar(S, "TILDA", "FormulaResultView");
        switch (__LookupId)
         {
-          case 0:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "FormulaResultView", "formulaRefnum"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "FormulaResultView", "value"); S.append("=?)");
-             break;
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
         }
@@ -716,13 +711,8 @@ This is the setter for:<BR>
        try
         {
           PS = C.prepareStatement(Q);
-          int i = 0;
           switch (__LookupId)
            {
-             case 0:
-               PS.setLong     (++i, _formulaRefnum);
-               PS.setString   (++i, _value        );
-               break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
            }
@@ -778,4 +768,5 @@ This is the setter for:<BR>
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;
     }
+
  }

@@ -38,6 +38,7 @@ import tilda.db.metadata.TableMeta;
 import tilda.db.metadata.ViewMeta;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.enums.DBStringType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.migration.actions.ColumnAdd;
@@ -83,7 +84,7 @@ public class Migrator
     throws Exception
       {
         MigrationDataModel migrationData = Migrator.AnalyzeDatabase(C, CheckOnly, TildaList, DBMeta);
-        
+
         if (migrationData.getActionCount() == 0)
           {
             if (CheckOnly == false)
@@ -97,12 +98,11 @@ public class Migrator
                 doAcl(C, TildaList, DBMeta);
               }
             LOG.info("\n"
-                    +"          ==============================================================================\n"
-                    +AsciiArt.OK("                                    ")
-                    +"\n"
-                    +"                    The database already matched the Application's data model.          \n"
-                    +"          ==============================================================================\n"
-                    );
+            + "          ==============================================================================\n"
+            + AsciiArt.OK("                                    ")
+            + "\n"
+            + "                    The database already matched the Application's data model.          \n"
+            + "          ==============================================================================\n");
           }
         else if (CheckOnly == false)
           {
@@ -116,12 +116,11 @@ public class Migrator
         else
           {
             LOG.warn("\n"
-                    +"          =============================================================================================================\n"
-                    +AsciiArt.Warning("          ")
-                    +"\n"
-                    +"                 The database DOES NOT match the Application's data model. The application may NOT run properly!       \n"
-                    +"          =============================================================================================================\n"
-                    );
+            + "          =============================================================================================================\n"
+            + AsciiArt.Warning("          ")
+            + "\n"
+            + "                 The database DOES NOT match the Application's data model. The application may NOT run properly!       \n"
+            + "          =============================================================================================================\n");
           }
       }
 
@@ -136,7 +135,7 @@ public class Migrator
     public static void PrintDiscrepancies(Connection C, MigrationDataModel migrationData)
       {
         LOG.info("");
-        LOG.warn("There were " + migrationData.getActionCount() + " discrepencies found between the application's required data model and the database "+C.getPoolName()+".");
+        LOG.warn("There were " + migrationData.getActionCount() + " discrepencies found between the application's required data model and the database " + C.getPoolName() + ".");
         LOG.info("");
         int counter = 0;
         for (MigrationScript S : migrationData.getMigrationScripts())
@@ -197,7 +196,7 @@ public class Migrator
         LOG.info("\n");
         LOG.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         LOG.info("!!! THE FOLLOWING DATABASE WILL NOW BE MIGRATED:");
-        LOG.info("!!!    ==> "+C.getPoolName());
+        LOG.info("!!!    ==> " + C.getPoolName());
         LOG.info("!!!     ______ ____  ______   ____   ___    ______ __ __ __  __ ____  _____    ___   ");
         LOG.info("!!!    / ____// __ \\/_  __/  / __ ) /   |  / ____// //_// / / // __ \\/ ___/   /__ \\ ");
         LOG.info("!!!   / / __ / / / / / /    / __  |/ /| | / /    / ,<  / / / // /_/ /\\__ \\     / _/ ");
@@ -277,6 +276,7 @@ public class Migrator
                   {
                     if (Col == null || Col._Mode == ColumnMode.CALCULATED)
                       continue;
+
                     ColumnMeta CMeta = TMeta.getColumnMeta(Col.getName());
                     if (CMeta == null)
                       Actions.add(new ColumnAdd(Col));
@@ -292,13 +292,26 @@ public class Migrator
                         && (Col.getType() == ColumnType.BITFIELD && CMeta._TildaType != ColumnType.INTEGER
                         || Col.getType() == ColumnType.JSON && CMeta._TildaType != ColumnType.STRING && CMeta._TildaType != ColumnType.JSON
                         || Col.getType() != ColumnType.BITFIELD && Col.getType() != ColumnType.JSON && Col.getType() != CMeta._TildaType))
-                          Actions.add(new ColumnAlterType(Col, CMeta._TildaType));
+                          Actions.add(new ColumnAlterType(C, CMeta, Col));
 
-                        if (Col.getType() == ColumnType.STRING && Col.isCollection() == false
-                        && (CMeta._Size < DBMeta.getCLOBThreshhold() && CMeta._Size != Col._Size
-                        || CMeta._Size >= DBMeta.getCLOBThreshhold() && Col._Size < DBMeta.getCLOBThreshhold()))
-                          Actions.add(new ColumnAlterStringSize(Col, CMeta._Size));
-
+                        // We have to check if someone changed goal-posts for VARCHAR and CLOG threasholds.
+                        // The case here is that we have a CHAR(10) in the database, and the model still says
+                        // STRING/10, but the thresholds have changed in such a way that now, it should be in the DB
+                        // as VARCHAR(10). We have to check that the "final" type from the model is consistent with
+                        // the type in the DB. The previous set of checks look at fundamental type changes, for example
+                        // from INT to STRING etc... But they won't catch an internal change of CHAR to VARCHAR not due to
+                        // model changes, but to threshold changes.
+                        if (Col.isCollection() == false && Col.getType() == ColumnType.STRING
+                        && (CMeta._TypeSql.equals("CHAR") == true && C.getDBStringType(Col._Size) != DBStringType.CHARACTER
+                        || CMeta._TypeSql.equals("VARCHAR") == true && C.getDBStringType(CMeta._Size) == DBStringType.CHARACTER))
+                          Actions.add(new ColumnAlterType(C, CMeta, Col));
+                        // Else, we could still have a size change and stay within a single STRING DB type
+                        else if (Col.isCollection() == false && Col.getType() == ColumnType.STRING)
+                          {
+                            DBStringType DBStrType = C.getDBStringType(CMeta._Size);
+                            if (DBStrType != DBStringType.TEXT && CMeta._Size != Col._Size)
+                              Actions.add(new ColumnAlterStringSize(CMeta, Col));
+                          }
                         if (CMeta._Nullable == 1 && Col._Nullable == false || CMeta._Nullable == 0 && Col._Nullable == true)
                           Actions.add(new ColumnAlterNull(Col));
                       }
@@ -324,10 +337,10 @@ public class Migrator
                   {
                     boolean Found = false;
                     String Sig = fk.getSignature();
-//                    LOG.debug("Checking db FK " + Sig + ".");
+                    // LOG.debug("Checking db FK " + Sig + ".");
                     for (ForeignKey FK : Obj._ForeignKeys)
                       {
-//                        LOG.debug("Checking model FK " + FK.getSignature() + ".");
+                        // LOG.debug("Checking model FK " + FK.getSignature() + ".");
                         if (Sig.equals(FK.getSignature()) == true)
                           {
                             Found = true;
@@ -351,7 +364,7 @@ public class Migrator
                     if (Found == false)
                       Actions.add(new TableFKAdd(FK));
                   }
-                
+
                 /*
                  * for (String c : Obj._DropOldColumns)
                  * {
@@ -363,71 +376,71 @@ public class Migrator
                  */
                 // if (XXX != Actions.size())
                 // Actions.add(new CommitPoint());
-              
+
                 // Cleaning any Indices that share the same signature, but differing names. Cleaning up Indices that are not unique, but share a name defined in the schema.
                 Set<String> Signatures = new HashSet<String>();
-                for (Index IX : Obj._Indices) 
-                  {
-                	if (IX._Db) 
-                	  {
-                		for (IndexMeta ix : TMeta._Indices.values())
-                		  {
-                			if (IX.getSignature().equals(ix.getSignature())
-                					&& !ix._Name.toLowerCase().equals(TMeta._TableName.toLowerCase() + "_pkey"))
-                			  {               				
-                				if (ix._Unique
-                						&& (ix._Name.equals(ix._Name.toLowerCase()) == false 
-		                                || ix._Name.equalsIgnoreCase(IX.getName()) == false))                				  
-                				  {	
-                					Errors.add("Index "+ix._Name+" is unique and contains the same signature as "+IX.getName()+" in the "+IX._Parent._Name+" schema definition");
-                				  }
-                				else if (Signatures.add(ix.getSignature()) == false) //catches duplicate signatures by different names in db. First will be renamed below
-                					Actions.add(new TableIndexDrop(Obj, ix));
-                			  }
-                		  }
-                	  }
-                  }
-                
-                // Checking any Indices which are not in the DB, so they can be added.           
                 for (Index IX : Obj._Indices)
                   {
-                	if (IX._Db)
-                	  {
-	                    boolean Found = false;
-	                    String Sig = IX.getSignature();         
-	                    
-	                    for (IndexMeta ix : TMeta._Indices.values()) 
-		                  {
-	                    	if (!ix._Name.toLowerCase().equals(TMeta._TableName.toLowerCase() + "_pkey"))
-	                    	  {
-	                    	    String Sig1 = ix.getSignature();
-	                    	
-		                        if (Sig.equals(Sig1) == true)
-		                          {		                        	
-		                            Found = true;
-		                            if (ix._Name.equals(ix._Name.toLowerCase()) == false // name in the DB is not lowercase, i.e., case insensitive
-		                                || ix._Name.equalsIgnoreCase(IX.getName()) == false // same sig, but new index name
-		                               )
-		                              {
-		                                Actions.add(new TableIndexRename(Obj, ix._Name, IX.getName()));
-		                              }
-		                            break;
-		                          }
-	                    	  }
-		                  }
-	                    if (Found == false)
-	                      {
-	                        IndexMeta IMeta = TMeta.getIndexMeta(IX.getName()); // Try case-sensitive fashion
-	                        IndexMeta IMeta2 = TMeta.getIndexMeta(IX.getName().toLowerCase()); // Try case-insensitive fashion
-	                        if (IMeta != null && IMeta2 != null )
+                    if (IX._Db)
+                      {
+                        for (IndexMeta ix : TMeta._Indices.values())
+                          {
+                            if (IX.getSignature().equals(ix.getSignature())
+                            && !ix._Name.toLowerCase().equals(TMeta._TableName.toLowerCase() + "_pkey"))
+                              {
+                                if (ix._Unique
+                                && (ix._Name.equals(ix._Name.toLowerCase()) == false
+                                || ix._Name.equalsIgnoreCase(IX.getName()) == false))
+                                  {
+                                    Errors.add("Index " + ix._Name + " is unique and contains the same signature as " + IX.getName() + " in the " + IX._Parent._Name + " schema definition");
+                                  }
+                                else if (Signatures.add(ix.getSignature()) == false) // catches duplicate signatures by different names in db. First will be renamed below
+                                  Actions.add(new TableIndexDrop(Obj, ix));
+                              }
+                          }
+                      }
+                  }
+
+                // Checking any Indices which are not in the DB, so they can be added.
+                for (Index IX : Obj._Indices)
+                  {
+                    if (IX._Db)
+                      {
+                        boolean Found = false;
+                        String Sig = IX.getSignature();
+
+                        for (IndexMeta ix : TMeta._Indices.values())
+                          {
+                            if (!ix._Name.toLowerCase().equals(TMeta._TableName.toLowerCase() + "_pkey"))
+                              {
+                                String Sig1 = ix.getSignature();
+
+                                if (Sig.equals(Sig1) == true)
+                                  {
+                                    Found = true;
+                                    if (ix._Name.equals(ix._Name.toLowerCase()) == false // name in the DB is not lowercase, i.e., case insensitive
+                                    || ix._Name.equalsIgnoreCase(IX.getName()) == false // same sig, but new index name
+                                    )
+                                      {
+                                        Actions.add(new TableIndexRename(Obj, ix._Name, IX.getName()));
+                                      }
+                                    break;
+                                  }
+                              }
+                          }
+                        if (Found == false)
+                          {
+                            IndexMeta IMeta = TMeta.getIndexMeta(IX.getName()); // Try case-sensitive fashion
+                            IndexMeta IMeta2 = TMeta.getIndexMeta(IX.getName().toLowerCase()); // Try case-insensitive fashion
+                            if (IMeta != null && IMeta2 != null)
                               Actions.add(new TableIndexDrop(Obj, IMeta));
                             if (IMeta2 != null)
-                             Actions.add(new TableIndexDrop(Obj, IMeta2));
-	                        Actions.add(new TableIndexAdd(IX));
-	                      }
-	                  }
-                    }
-              }  
+                              Actions.add(new TableIndexDrop(Obj, IMeta2));
+                            Actions.add(new TableIndexAdd(IX));
+                          }
+                      }
+                  }
+              }
           }
         for (View V : S._Views)
           {

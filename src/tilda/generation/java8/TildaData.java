@@ -29,6 +29,7 @@ import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.MultiType;
 import tilda.enums.ObjectLifecycle;
+import tilda.enums.OutputFormatType;
 import tilda.enums.ProtectionType;
 import tilda.generation.GeneratorSession;
 import tilda.generation.interfaces.CodeGenTildaData;
@@ -36,7 +37,7 @@ import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
 import tilda.parsing.parts.JsonField;
-import tilda.parsing.parts.JsonMapping;
+import tilda.parsing.parts.OutputMapping;
 import tilda.parsing.parts.Object;
 import tilda.utils.AnsiUtil;
 import tilda.utils.PaddingUtil;
@@ -63,11 +64,11 @@ public class TildaData implements CodeGenTildaData
           {
             if (C == null)
               continue;
-          if (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATE)
-            {
-              Out.println("import java.time.*;");
-              break;
-            }
+            if (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATE)
+              {
+                Out.println("import java.time.*;");
+                break;
+              }
           }
         Out.println("import java.util.*;");
         Out.println();
@@ -103,7 +104,7 @@ public class TildaData implements CodeGenTildaData
           Out.print(" tilda.interfaces.WriterObject");
         if (O.isOCC() == true)
           Out.print(", tilda.interfaces.OCCObject");
-        if (O._Json.isEmpty() == false)
+        if (O.isJsonable() == true)
           Out.print(", tilda.interfaces.JSONable");
         Out.println();
         Out.println(" {");
@@ -424,7 +425,7 @@ public class TildaData implements CodeGenTildaData
             if (C._MapperDef == null)
               {
                 Out.println("          __Changes.or(" + Mask + ");");
-                Out.println("          __Nulls.andNot("+ Mask + ");");
+                Out.println("          __Nulls.andNot(" + Mask + ");");
                 if (C._Mapper != null)
                   {
                     if (C._Mapper._Name == ColumnMapperMode.DB)
@@ -516,7 +517,7 @@ public class TildaData implements CodeGenTildaData
             else if (C.isSet() == true)
               Out.println("   " + Visibility + " void addTo" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldTypeBase(C) + " v) throws Exception");
             else
-              Out.println("   " + Visibility + (C.isOCCDeleted() || C.isOCCLastUpdated() ? " final":"") + " void set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldType(C) + " v) throws Exception");
+              Out.println("   " + Visibility + (C.isOCCDeleted() || C.isOCCLastUpdated() ? " final" : "") + " void set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldType(C) + " v) throws Exception");
             Out.println("     {");
             Out.println("       long T0 = System.nanoTime();");
             if (C.isCollection() == true)
@@ -592,7 +593,7 @@ public class TildaData implements CodeGenTildaData
                       if (C._Protect == ProtectionType.ABSOLUTE)
                         Out.println("          v = HTMLFilter.CleanAbsolute(v);");
                       else if (C._Protect == ProtectionType.SMART)
-                        Out.println("          v = HTMLFilter.CleanSmart("+TextUtil.EscapeDoubleQuoteWithSlash(C.getFullName())+",v);");
+                        Out.println("          v = HTMLFilter.CleanSmart(" + TextUtil.EscapeDoubleQuoteWithSlash(C.getFullName()) + ",v);");
                     }
                   break;
                 case BINARY:
@@ -732,11 +733,11 @@ public class TildaData implements CodeGenTildaData
                   Out.println("      { set" + TextUtil.CapitalizeFirstCharacter(V._ParentColumn.getName()) + "(" + ValueNameVar + "); }");
                   break;
                 }
-              throw new Error("An invalid type '" + V._ParentColumn.getType() + "' was assigned column values for code gen for column "+V._ParentColumn.getName()+" as a SET or LIST.");
+              throw new Error("An invalid type '" + V._ParentColumn.getType() + "' was assigned column values for code gen for column " + V._ParentColumn.getName() + " as a SET or LIST.");
             case BINARY:
             case BITFIELD:
             case JSON:
-              throw new Error("An invalid type '" + V._ParentColumn.getType() + "' was assigned column values for code gen for column "+V._ParentColumn.getName()+".");
+              throw new Error("An invalid type '" + V._ParentColumn.getType() + "' was assigned column values for code gen for column " + V._ParentColumn.getName() + ".");
             default:
               throw new Error("Unhandled case in switch for type '" + V._ParentColumn.getType() + "'.");
           }
@@ -781,7 +782,7 @@ public class TildaData implements CodeGenTildaData
         String Mask = Helper.getRuntimeMask(C);
         String Visibility = Helper.getVisibility(C, true);
 
-        Out.println("   " + Visibility + (C.isOCCDeleted() || C.isOCCLastUpdated() ? " final":"") + " void setNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()");
+        Out.println("   " + Visibility + (C.isOCCDeleted() || C.isOCCLastUpdated() ? " final" : "") + " void setNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()");
         Out.println("     {");
         Out.println("       long T0 = System.nanoTime();");
         if (C._Mode != ColumnMode.CALCULATED)
@@ -1314,9 +1315,9 @@ public class TildaData implements CodeGenTildaData
                 {
                   Out.println("                             //This looks weird, but with array aggregates on strings, gotta watch out on left joins with NULL values.");
                   Out.println("                             //Those values show up as a [null] array (1 element, which is null).");
-                  Out.println("                             if (_" + C.getName() +" != null && _" + C.getName() +".size() == 1 && _" + C.getName() +".get(0) == null)");
+                  Out.println("                             if (_" + C.getName() + " != null && _" + C.getName() + ".size() == 1 && _" + C.getName() + ".get(0) == null)");
                   Out.println("                               {");
-                  Out.println("                                 _" + C.getName() +" = new "+(C.isSet() == true ? "HashSet<" : "ArrayList<")+"String>();");
+                  Out.println("                                 _" + C.getName() + " = new " + (C.isSet() == true ? "HashSet<" : "ArrayList<") + "String>();");
                   Out.println("                                 __Nulls.or(" + Mask + ");");
                   Out.println("                               }");
 
@@ -1423,28 +1424,46 @@ public class TildaData implements CodeGenTildaData
         Out.println(" }");
       }
 
-
     @Override
-    public void genMethodToJSON(PrintWriter Out, GeneratorSession G, Object O)
+    public void genMethodOutput(PrintWriter Out, GeneratorSession G, Object O)
       {
-        // Out.println(" public void toJSON(Writer Out, String JsonExportName, List<" + Helper.getFullAppDataClassName(O) + "> L, boolean FullList) throws Exception");
-        // Out.println(" {");
-        // Out.println(" switch (JsonExportName)");
-        // Out.println(" { ");
-        // for (JsonMapping j : O._Json)
-        // Out.println(" case \""+j._Name+"\": "+Helper.getFullAppJsonClassName(O)+".toJson"+j._Name+"(Out, L, \" \", FullList); break;");
-        // Out.println(" default: throw new Exception(\"Unknown JSON exporter '\"+\"' for "+Helper.getFullAppJsonClassName(O)+"\");");
-        // Out.println(" } ");
-        // Out.println(" }");
-        Out.println("   public void toJSON(java.io.Writer Out, String JsonExportName, boolean FullObject) throws Exception");
-        Out.println("    {");
-        Out.println("      switch (JsonExportName)");
-        Out.println("        { ");
-        for (JsonMapping j : O._Json)
-          Out.println("          case \"" + j._Name + "\": " + Helper.getFullAppJsonClassName(O) + ".toJSON" + j._Name + "(Out, (" + Helper.getFullAppDataClassName(O) + ") this, FullObject); break;");
-        Out.println("          default: throw new Exception(\"Unknown JSON exporter '\"+JsonExportName+\"' for " + Helper.getFullAppJsonClassName(O) + "\");");
-        Out.println("        } ");
-        Out.println("    }");
+        boolean JSONDone = false;
+        boolean CSVDone = false;
+        for (OutputMapping OM : O._OutputMaps)
+          {
+            if (OM._OutputTypes.contains(OutputFormatType.JSON) == true && JSONDone == false)
+              {
+                JSONDone = true;
+                Out.println("   public void toJSON(java.io.Writer Out, String ExportName, boolean FullObject) throws Exception");
+                Out.println("    {");
+                Out.println("      switch (ExportName)");
+                Out.println("        { ");
+                for (OutputMapping OM2 : O._OutputMaps)
+                  if (OM2 != null && OM2._OutputTypes.contains(OutputFormatType.JSON) == true)
+                    Out.println("          case \"" + OM2._Name + "\": " + Helper.getFullAppJsonClassName(O) + ".toJSON" + OM2._Name + "(Out, (" + Helper.getFullAppDataClassName(O) + ") this, FullObject); break;");
+                Out.println("          default: throw new Exception(\"Unknown JSON exporter '\"+ExportName+\"' for " + Helper.getFullAppJsonClassName(O) + "\");");
+                Out.println("        } ");
+                Out.println("    }");
+              }
+            else if (OM._OutputTypes.contains(OutputFormatType.CSV) == true && CSVDone == false)
+              {
+                CSVDone = true;
+                Out.println("   public void toCSV(java.io.Writer Out, String ExportName) throws Exception");
+                Out.println("    {");
+                Out.println("      switch (ExportName)");
+                Out.println("        { ");
+                for (OutputMapping OM2 : O._OutputMaps)
+                  if (OM2 != null && OM2._OutputTypes.contains(OutputFormatType.CSV) == true)
+                    Out.println("          case \"" + OM2._Name + "\": " + Helper.getFullAppJsonClassName(O) + ".toCSV" + OM2._Name + "(Out, (" + Helper.getFullAppDataClassName(O) + ") this); break;");
+                Out.println("          default: throw new Exception(\"Unknown CSV exporter '\"+ExportName+\"' for " + Helper.getFullAppJsonClassName(O) + "\");");
+                Out.println("        } ");
+                Out.println("    }");
+              }
+            for (OutputFormatType OTF : OM._OutputTypes)
+              if (OTF != OutputFormatType.JSON && OTF != OutputFormatType.CSV && OTF != OutputFormatType.NVP)
+               throw new Error("Object '"+O.getFullName()+"' is defining an output mapping '"+O._Name+"' with an unsupported output format type "+OTF.name()+".");
+          }
       }
+
 
   }

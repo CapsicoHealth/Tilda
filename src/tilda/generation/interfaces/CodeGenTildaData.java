@@ -204,7 +204,6 @@ public interface CodeGenTildaData extends CodeGenBase
      * @param g
      * @param _Json
      */
-    public void genMethodToJSON(PrintWriter Out, GeneratorSession G, Object O);
-
+    public void genMethodOutput(PrintWriter Out, GeneratorSession G, Object O);
 
   }

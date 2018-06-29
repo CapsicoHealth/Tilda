@@ -58,7 +58,7 @@ This is the column definition for:<BR>
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Connection.id of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.id of type character(15)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Connection.id of type varchar(15)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>15</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>

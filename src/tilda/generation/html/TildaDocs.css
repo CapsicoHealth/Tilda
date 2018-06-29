@@ -52,7 +52,7 @@
    background-color: #FFF;
    border: 2px ridge #F09819; 
    display: none; 
-   height: 200px; 
+   height: 450px; 
    position: absolute;
    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
    z-index: 1;
@@ -122,6 +122,10 @@ input[type=text]:focus {
    border-bottom: 2px #666 solid;
    background-color:#FFFFFF;
  }
+.NoRowed TR TD{
+   border-bottom: 0px;
+   background-color: none;
+}
 .BackToDetails {
    display: none;
  }

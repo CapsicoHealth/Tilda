@@ -327,7 +327,12 @@
       ],
       "json":[
         { "name": "AAA", "columns": ["refnum", "refnum2", "name", "description", "desc2", "desc3", "desc4", "desc5", "desc6", "tops", "tops2", "a1", "a2", "a2b", "a2c", "a3", "a3b", "a4", "a4b", "a5", "a5b", "a6", "a6b", "a6c", "a7", "a7b", "a9", "created", "lastUpdated"] }
-       ,{ "name": "BBB", "columns": ["refnum", "refnum2", "name", "description", "desc2", "desc3"] }
+       ,{ "name": "BBB", "columns": ["refnum", "refnum2", "name", "description", "desc2", "desc3"], "outTypes":["CSV"]}
+      ],
+      "outputMaps":[
+        { "name": "CCC", "columns": ["refnum", "name", "description", "desc2"], "outTypes":["CSV","JSON"] }
+       ,{ "name": "DDD", "columns": ["a2", "a5"], "outTypes":["NVP"], "nvpSrc":"ROWS"}
+       ,{ "name": "EEE", "columns": ["a4", "a6", "name", "a7"]        , "outTypes":["NVP"], "nvpSrc":"COLUMNS", "nvpValueType":"string"}
       ],
       "http":[
         { "name": "", "mandatories": ["refnum", "name", "description"] }
@@ -402,6 +407,6 @@
                    ]
          ,"description":["Active formulas and their sub-formulas"]
         }
-     }    
+     }       
    ]
 }
