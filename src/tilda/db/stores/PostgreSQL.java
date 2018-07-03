@@ -733,6 +733,9 @@ public class PostgreSQL implements DBType
             case "_bool":
               TildaType = ColumnType.BOOLEAN;
               break;
+            case "_date":
+              TildaType = ColumnType.DATE;
+              break;
             default:
               throw new Exception("Cannot map SQL TypeName " + TypeName + " for array column '" + Name + "'.");
           }
