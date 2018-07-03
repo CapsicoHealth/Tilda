@@ -17,7 +17,9 @@
 package tilda.parsing.parts;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,7 +30,7 @@ import tilda.parsing.ParserSession;
 
 public class ViewRealize
   {
-    static final Logger             LOG       = LogManager.getLogger(ViewRealize.class.getName());
+    static final Logger             LOG          = LogManager.getLogger(ViewRealize.class.getName());
 
     /*@formatter:off*/
     @SerializedName("indices"    ) public List<Index> _Indices    = new ArrayList<Index>();
@@ -43,9 +45,9 @@ public class ViewRealize
       {
       }
 
-    public transient View       _ParentView;
-    public transient Base       _ParentRealized;
-    public transient boolean    _FailedValidation = false;
+    public transient View    _ParentView;
+    public transient Base    _ParentRealized;
+    public transient boolean _FailedValidation = false;
 
 
     public boolean Validate(ParserSession PS, View ParentView, Base ParentRealized)
@@ -54,13 +56,23 @@ public class ViewRealize
         _ParentView = ParentView;
         _ParentRealized = ParentRealized;
 
+        Set<String> Names = new HashSet<String>();
         for (Index I : _Indices)
           if (I != null)
-            I.Validate(PS, ParentRealized);
-        
+            {
+              I.Validate(PS, ParentRealized);
+              if (Names.add(I._Name) == false)
+                PS.AddError("Index '" + I._Name + "' is duplicated in the realize section for view '" + ParentView.getFullName() + "'.");
+            }
+
+        Names.clear();
         for (ViewRealizeMapping VRM : _Mappings)
           if (VRM != null)
-            VRM.Validate(PS, ParentView);
+            {
+              VRM.Validate(PS, ParentView);
+              if (Names.add(VRM._Name) == false)
+                PS.AddError("Mapping '" + VRM._Name + "' is duplicated in the realize section for view '" + ParentView.getFullName() + "'.");
+            }
 
         return Errs == PS.getErrorCount();
       }
