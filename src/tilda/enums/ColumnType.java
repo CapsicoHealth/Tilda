@@ -39,8 +39,8 @@ public enum ColumnType
     FLOAT   (true , true , "FLT"),
     DOUBLE  (true , true , "DBL"),
     BOOLEAN (true , true , "BOL"),
-    DATE    (false, false, "DT"),
-    DATETIME(false, false, "DTM"),
+    DATE    (true , false, "DT"),
+    DATETIME(true , false, "DTM"),
     BINARY  (false, false, "BIN"),
     BITFIELD(false, true , "BF");
     /*@formatter:on*/

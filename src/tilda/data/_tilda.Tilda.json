@@ -314,7 +314,10 @@
         { "name": "a7"           , "type": "INTEGER"    ,                                                       "description": "The blah"},
         { "name": "a7b"          , "type": "INTEGER[]"  ,                                                       "description": "The blah"},
         { "name": "a8"           , "type": "BINARY"     ,                                                       "description": "The blah"},
-        { "name": "a9"           , "type": "DATETIME"   ,                                                       "description": "The blah"}
+        { "name": "a9"           , "type": "DATETIME"   ,                                                       "description": "The blah"},
+        { "name": "a9b"          , "type": "DATETIME[]" ,                                                       "description": "The blah"},
+        { "name": "a9c"          , "type": "DATE"       ,                                                       "description": "The blah"},
+        { "name": "a9d"          , "type": "DATE[]"     ,                                                       "description": "The blah"}
       ],
       "primary": { "autogen": true },
       "indices":[ 
@@ -408,5 +411,23 @@
          ,"description":["Active formulas and their sub-formulas"]
         }
      }       
+     
+    ,{ "name": "TestingView"
+      ,"description": "A view of formulas and their dependencies."
+      ,"columns":[
+          { "sameas": "Testing.name"                       }
+         ,{ "sameAs": "Testing.refnum"   ,                 "aggregate":"COUNT"  }
+         ,{ "sameAs": "Testing.a2"       , "name":"a2Min", "aggregate":"MIN"    , "filter":"a2 is not null" , "coalesce":"AAA" }
+         ,{ "sameAs": "Testing.a2"       , "name":"a2Max", "aggregate":"MAX"    , "filter":"a2 is not null" , "coalesce":"ZZZ"}
+         ,{ "sameAs": "Testing.a9"       ,                 "aggregate":"ARRAY"  }
+         ,{ "sameAs": "Testing.a9c"      ,                 "aggregate":"ARRAY", "distinct":true }
+        ]
+      ,"subWhereX":{
+          "clause":["Formula.deleted is null"
+                   ]
+         ,"description":["Active formulas and their sub-formulas"]
+        }
+     }    
+     
    ]
 }

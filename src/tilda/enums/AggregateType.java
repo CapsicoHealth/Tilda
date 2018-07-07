@@ -49,15 +49,13 @@ public enum AggregateType
             case ARRAY:
               return T;
             case AVG:
+            case DEV:
+            case VAR:
               if (T == ColumnType.FLOAT || T == ColumnType.DOUBLE || T == ColumnType.INTEGER || T == ColumnType.LONG)
                 return ColumnType.DOUBLE;
               break;
             case COUNT:
               return ColumnType.LONG;
-            case DEV:
-              if (T == ColumnType.FLOAT || T == ColumnType.DOUBLE || T == ColumnType.INTEGER || T == ColumnType.LONG)
-                return ColumnType.DOUBLE;
-              break;
             case MAX:
             case MIN:
               return T;
@@ -66,10 +64,6 @@ public enum AggregateType
                 return ColumnType.DOUBLE;
               if (T == ColumnType.INTEGER || T == ColumnType.LONG)
                 return ColumnType.LONG;
-              break;
-            case VAR:
-              if (T == ColumnType.FLOAT || T == ColumnType.DOUBLE || T == ColumnType.INTEGER || T == ColumnType.LONG)
-                return ColumnType.DOUBLE;
               break;
             default:
               throw new Error("Incomplete Switch statment: unknown ColumnType " + this.name() + ";");

@@ -1242,14 +1242,16 @@ public class TildaData implements CodeGenTildaData
                     break;
                   case DATE:
                     if (C.isCollection() == true)
-                      // Out.print("_" + C.getName() + Pad + " = " + SerializeArray(G) + "((" + JavaJDBCType.get(C.getType())._JavaClassType + "[])RS.getArray(++i).getArray());");
-                      throw new Error("Cannot do Date arrays yet!");
+                      Out.print("_" + C.getName() + " = (" + (C.isSet() == true ? "Set<" : "List<") + JavaJDBCType.get(C.getType())._JavaClassType + ">) C.getArray(RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, " + C.isSet() + ");");
+//                      Out.print("_" + C.getName() + Pad + " = " + SerializeArray(G) + "((" + JavaJDBCType.get(C.getType())._JavaClassType + "[])RS.getArray(++i).getArray());");
+//                      throw new Error("Cannot do Date arrays yet!");
                     Out.print("_" + C.getName() + Pad + " = DateTimeUtil.toLocalDate(RS.getDate(++i));");
                     break;
                   case DATETIME:
                     if (C.isCollection() == true)
+                     Out.print("_" + C.getName() + " = (" + (C.isSet() == true ? "Set<" : "List<") + JavaJDBCType.get(C.getType())._JavaClassType + ">) C.getArray(RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, " + C.isSet() + ");");
                       // Out.print("_" + C.getName() + Pad + " = " + SerializeArray(G) + "((" + JavaJDBCType.get(C.getType())._JavaClassType + "[])RS.getArray(++i).getArray());");
-                      throw new Error("Cannot do DateTime arrays yet!");
+//                      throw new Error("Cannot do DateTime arrays yet!");
                     else if (C.isOCCGenerated() == false)
                       Out.print("_" + C.getName() + Pad + " = ProcessZDT(_" + C.getName() + "TZ" + Pad + ", \"" + C.getFullName() + "\"" + Pad + ", RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + Pad + ", " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "TZ" + Pad + ");");
                     else

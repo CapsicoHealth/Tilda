@@ -38,7 +38,8 @@ public class ViewColumn
 
     /*@formatter:off*/
 	@SerializedName("name"       ) public String         _Name         ;
-	@SerializedName("sameas"     ) public String         _SameAs       ;
+	@SerializedName("sameas"     ) public String         _Sameas_DEPRECATED;
+    @SerializedName("sameAs"     ) public String         _SameAs       ;
     @SerializedName("as"         ) public String         _As           ;
     @SerializedName("prefix"     ) public String         _Prefix       ;
     @SerializedName("exclude"    ) public String[]       _Exclude       = new String[] { };
@@ -97,10 +98,10 @@ public class ViewColumn
     public String getAggregateName()
       {
         if (_Aggregate == null)
-         return getName();
+          return getName();
         if (_Aggregate == AggregateType.COUNT && _SameAsObj == null)
-         return _Distinct == true ? "COUNT(DISTINCT "+getName()+")" : "COUNT(*)";
-        return _Aggregate.name() + (_Distinct == true ? "(DISTINCT ":"(") + (_SameAsObj == null ? getShortName() : _SameAsObj.getShortName()) + ")";
+          return _Distinct == true ? "COUNT(DISTINCT " + getName() + ")" : "COUNT(*)";
+        return _Aggregate.name() + (_Distinct == true ? "(DISTINCT " : "(") + (_SameAsObj == null ? getShortName() : _SameAsObj.getShortName()) + ")";
       }
 
     public ColumnType getAggregateType()
@@ -115,6 +116,13 @@ public class ViewColumn
         int Errs = PS.getErrorCount();
         _ParentView = ParentView;
 
+        if (TextUtil.isNullOrEmpty(_Sameas_DEPRECATED) == false)
+          {
+            if (TextUtil.isNullOrEmpty(_SameAs) == false)
+              return PS.AddError("View column '" + getFullName() + "' defined both a 'sameAs' and a 'sameas'. Only one is allowed, and preferrably 'sameAs' since 'sameas' has been deprecated.");
+            _SameAs = _Sameas_DEPRECATED;
+          }
+
         // Mandatories
         if (TextUtil.isNullOrEmpty(_SameAs) == true && AggregateType.COUNT.name().equalsIgnoreCase(_AggregateStr) == false)
           return PS.AddError("View column '" + getFullName() + "' didn't define a 'sameAs'. It is mandatory.");
@@ -123,7 +131,7 @@ public class ViewColumn
           {
             _SameAsObj = ValidateSameAs(PS, getFullName(), _SameAs, _ParentView);
             if (_SameAsObj == null)
-             return false;
+              return false;
           }
 
         if (TextUtil.isNullOrEmpty(_Name) == true)
@@ -169,7 +177,7 @@ public class ViewColumn
             Column Col = null;
             Schema S = PS.getSchema(R._P, R._S);
             if (S == null)
-             PS.AddError("Column '" + ColFullName + "' is declaring sameas '" + SameAs + "' resolving to '" + R.getFullName() + "' where schema '"+R._P + "." + R._S+"' cannot be found.");
+              PS.AddError("Column '" + ColFullName + "' is declaring sameas '" + SameAs + "' resolving to '" + R.getFullName() + "' where schema '" + R._P + "." + R._S + "' cannot be found.");
             else
               {
                 Object O = S.getObject(R._O);
