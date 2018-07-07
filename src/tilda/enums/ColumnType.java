@@ -31,23 +31,24 @@ public enum ColumnType
   {
 
     /*@formatter:off*/
-    STRING  (true , false, "STR"),
-    JSON    (true , false, "JSN"),
-    CHAR    (true , true , "CHR"),
-    INTEGER (true , true , "INT"),
-    LONG    (true , true , "LNG"),
-    FLOAT   (true , true , "FLT"),
-    DOUBLE  (true , true , "DBL"),
-    BOOLEAN (true , true , "BOL"),
-    DATE    (true , false, "DT"),
-    DATETIME(true , false, "DTM"),
-    BINARY  (false, false, "BIN"),
-    BITFIELD(false, true , "BF");
+    STRING  (true , true , false, "STR"),
+    JSON    (true , false, false, "JSN"),
+    CHAR    (true , true , true , "CHR"),
+    INTEGER (true , true , true , "INT"),
+    LONG    (true , true , true , "LNG"),
+    FLOAT   (true , true , true , "FLT"),
+    DOUBLE  (true , true , true , "DBL"),
+    BOOLEAN (true , true , true , "BOL"),
+    DATE    (true , true , false, "DT"),
+    DATETIME(true , false, false, "DTM"), // Datetimes are stored as 2 columns in the DB, so SETs are not allowed because they are unordered.
+    BINARY  (false, false, false, "BIN"),
+    BITFIELD(false, true , true , "BF");
     /*@formatter:on*/
 
-    private ColumnType(boolean ArrayCompatible, boolean Primitive, String shortName)
+    private ColumnType(boolean ArrayCompatible, boolean SetCompatible, boolean Primitive, String shortName)
       {
         _ArrayCompatible = ArrayCompatible;
+        _SetCompatible = SetCompatible;
         _Primitive = Primitive;
         _SimpleName = TextUtil.CapitalizeFirstCharacter(name().toLowerCase());
         _ShortName = shortName;
@@ -55,6 +56,7 @@ public enum ColumnType
 
     public static  PaddingTracker  _PadderTypeNames = new PaddingTracker();
     public final boolean     _ArrayCompatible;
+    public final boolean     _SetCompatible;
     public final boolean     _Primitive;
     public final String      _SimpleName;
     public final String      _ShortName;
@@ -100,9 +102,11 @@ public enum ColumnType
         return null;
       }
 
-    public boolean isArrayCompatible()
+    public boolean isCollectionCompatible(MultiType CollectionType)
       {
-        return _ArrayCompatible;
+        return CollectionType == MultiType.LIST ? _ArrayCompatible
+              :CollectionType == MultiType.SET  ? _SetCompatible
+              :false;
       }
     
     public boolean isPrimitive()

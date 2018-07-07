@@ -7,6 +7,7 @@
 package tilda.data._Tilda;
 
 import java.time.*;
+import java.sql.Timestamp;
 import java.util.*;
 
 import tilda.db.*;
@@ -207,7 +208,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 6 2018, 23:14:41EDT
+ @generated Jul 7 2018, 01:25:40EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__MAPPING implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -1501,9 +1502,9 @@ This is the hasChanged for:<BR>
       __Saved_type        = _type        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MAPPING_Factory.COLS.TYPE._Mask       );
       __Saved_src         = _src         = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MAPPING_Factory.COLS.SRC._Mask        );
       __Saved_dst         = _dst         = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__MAPPING_Factory.COLS.DST._Mask        );
-                            _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
-                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
-                            _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
+                            _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__MAPPING_Factory.COLS.CREATED._Mask    );
+                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__MAPPING_Factory.COLS.LASTUPDATED._Mask);
+                            _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__MAPPING_Factory.COLS.DELETED._Mask    );
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();

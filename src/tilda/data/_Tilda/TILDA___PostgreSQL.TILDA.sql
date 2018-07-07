@@ -459,7 +459,7 @@ create table if not exists TILDA.Testing -- blah blah
   , "a8"           BYTEA                          -- The blah
   , "a9TZ"         character(5)                   -- Generated helper column to hold the time zone ID for 'a9'.
   , "a9"           timestamptz                    -- The blah
-  , "a9bTZ"        character(5)                   -- Generated helper column to hold the time zone ID for 'a9b'.
+  , "a9bTZ"        text[]                         -- Generated helper column to hold the time zone ID for 'a9b'.
   , "a9b"          timestamptz[]                  -- The blah
   , "a9c"          date                           -- The blah
   , "a9d"          date[]                         -- The blah
@@ -468,7 +468,6 @@ create table if not exists TILDA.Testing -- blah blah
   , "deleted"      timestamptz                    -- The timestamp for when the record was deleted.
   , PRIMARY KEY("refnum")
   , CONSTRAINT fk_Testing_a9 FOREIGN KEY ("a9TZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
-  , CONSTRAINT fk_Testing_a9b FOREIGN KEY ("a9bTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
  );
 COMMENT ON TABLE TILDA.Testing IS E'blah blah';
 COMMENT ON COLUMN TILDA.Testing."refnum" IS E'The primary key for this record';
@@ -626,11 +625,11 @@ select TILDA.Testing."name" as "name" -- Medical system unique enterprise id
      , array_agg(TILDA.Testing."a9") as "a9" -- The blah
      , array_agg(distinct TILDA.Testing."a9c") as "a9c" -- The blah
   from TILDA.Testing
- where (TILDA.Formula."deleted" is null)
+ where (TILDA.Testing."deleted" is null)
      group by TILDA.Testing."name"
 ;
 
-COMMENT ON VIEW TILDA.TestingView IS E'create or replace view TILDA.TestingView as \n-- ''A view of formulas and their dependencies.''\nselect TILDA.Testing."name" as "name" -- Medical system unique enterprise id\n     , count(TILDA.Testing."refnum") as "refnum" -- The primary key for this record\n     , coalesce(min(TILDA.Testing."a2") filter(where a2 is not null), ''AAA'') as "a2Min" -- The blah\n     , coalesce(max(TILDA.Testing."a2") filter(where a2 is not null), ''ZZZ'') as "a2Max" -- The blah\n     , array_agg(TILDA.Testing."a9") as "a9" -- The blah\n     , array_agg(distinct TILDA.Testing."a9c") as "a9c" -- The blah\n  from TILDA.Testing\n where (TILDA.Formula."deleted" is null)\n     group by TILDA.Testing."name"\n;\n';
+COMMENT ON VIEW TILDA.TestingView IS E'create or replace view TILDA.TestingView as \n-- ''A view of formulas and their dependencies.''\nselect TILDA.Testing."name" as "name" -- Medical system unique enterprise id\n     , count(TILDA.Testing."refnum") as "refnum" -- The primary key for this record\n     , coalesce(min(TILDA.Testing."a2") filter(where a2 is not null), ''AAA'') as "a2Min" -- The blah\n     , coalesce(max(TILDA.Testing."a2") filter(where a2 is not null), ''ZZZ'') as "a2Max" -- The blah\n     , array_agg(TILDA.Testing."a9") as "a9" -- The blah\n     , array_agg(distinct TILDA.Testing."a9c") as "a9c" -- The blah\n  from TILDA.Testing\n where (TILDA.Testing."deleted" is null)\n     group by TILDA.Testing."name"\n;\n';
 
 COMMENT ON COLUMN TILDA.TestingView."name" IS E'Medical system unique enterprise id';
 COMMENT ON COLUMN TILDA.TestingView."refnum" IS E'The primary key for this record';

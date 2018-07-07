@@ -736,6 +736,9 @@ public class PostgreSQL implements DBType
             case "_date":
               TildaType = ColumnType.DATE;
               break;
+            case "_timestamptz":
+              TildaType = ColumnType.DATETIME;
+              break;
             default:
               throw new Exception("Cannot map SQL TypeName " + TypeName + " for array column '" + Name + "'.");
           }

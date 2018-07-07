@@ -7,6 +7,7 @@
 package tilda.data._Tilda;
 
 import java.time.*;
+import java.sql.Timestamp;
 import java.util.*;
 
 import tilda.db.*;
@@ -31,7 +32,6 @@ import org.apache.logging.log4j.Logger;
 The View TILDA.TestingView:<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>TestingView_Factory</B>, <B>TestingView_Data</B> in the package <B>tilda.data</B>.
 <LI>Is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>
-<LI>Defines a foreign key to <A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A> </LI>
 </UL>
 <B>Description</B>: A view of formulas and their dependencies.<BR>
 <BR>
@@ -82,8 +82,8 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>5&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('TestingView-a9TZ')" align="right"><B id='TestingView-a9TZ_DIV' class='columns dotted_underline cursor_pointer'>a9TZ</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TestingView-a9TZ_DIV' class='columns'>a9TZ</B>&nbsp;&nbsp;</TD>
+<TD>List<String> List<>&nbsp;/&nbsp;text[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -216,13 +216,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
 <td><a href='TILDA___Docs.TILDA.html#TestingView_DIV'>TestingView</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TestingView-a9TZ_DIV'>a9TZ</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZoneInfo_DIV'>ZoneInfo</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZoneInfo-id_DIV'>id</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#TestingView-a9TZ_DIV'>a9TZ</a> -- STRING[]</td>
 </tr>
 </table>
 </DIV></DIV>
@@ -276,7 +270,7 @@ This View contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 6 2018, 23:14:41EDT
+ @generated Jul 7 2018, 01:25:40EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTINGVIEW implements tilda.interfaces.ReaderObject
@@ -729,10 +723,10 @@ This is the null setter for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TestingView.a9TZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TestingView.a9TZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TestingView.a9TZ of type List<String></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TestingView.a9TZ of type text[]</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>0</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a9'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
@@ -740,7 +734,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   String _a9TZ;
+   List<String> _a9TZ;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -749,10 +743,10 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TestingView.a9TZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TestingView.a9TZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TestingView.a9TZ of type List<String></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TestingView.a9TZ of type text[]</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>0</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a9'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
@@ -760,8 +754,12 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final String getA9TZ()
-      { return _a9TZ; }
+   public final String[] getA9TZAsArray()
+      { return _a9TZ==null? null : _a9TZ.toArray(new String[_a9TZ.size()]); }
+   public final Iterator<String> getA9TZ()
+      { return _a9TZ==null? null : _a9TZ.iterator(); }
+   public final boolean hasA9TZ(String v)
+      { return _a9TZ==null? false : _a9TZ.contains(v); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -770,10 +768,10 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TestingView.a9TZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TestingView.a9TZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TestingView.a9TZ of type List<String></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TestingView.a9TZ of type text[]</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>0</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a9'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
@@ -791,10 +789,10 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TestingView.a9TZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TestingView.a9TZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TestingView.a9TZ of type List<String></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TestingView.a9TZ of type text[]</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>0</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a9'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
@@ -802,23 +800,57 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setA9TZ(String v) throws Exception
+    void setA9TZ(List<String> v) throws Exception
      {
        long T0 = System.nanoTime();
+       if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+        throw new Exception("Cannot set field 'tilda.data.TILDA.TestingView.a9TZ' that is invariant, or part of a read-only or pre-existing WORM object.");
+       if (v == null  || v.isEmpty() == true)
+        setNullA9TZ();
+       else if (CollectionUtil.equals(v, _a9TZ) == false)
+        {
+          __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A9TZ._Mask);
+          __Nulls.andNot(TILDA__TESTINGVIEW_Factory.COLS.A9TZ._Mask);
+          if (_a9TZ == null)
+           _a9TZ = new ArrayList<String>();
+          else
+           _a9TZ.clear();
+          for (String i : v)
+           {
+             _a9TZ.add(i);
+          }
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+    void addToA9TZ(int pos, String v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (_a9TZ == null)
+        _a9TZ = new ArrayList<String>();
        if (v == null)
         {
           setNullA9TZ();
         }
-       else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.TestingView.a9TZ: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
-       else if (v.equals(_a9TZ) == false)
+       else if (_a9TZ.get(pos).equals(v) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.TestingView.a9TZ' that is invariant, or part of a read-only or pre-existing WORM object.");
           __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A9TZ._Mask);
           __Nulls.andNot(TILDA__TESTINGVIEW_Factory.COLS.A9TZ._Mask);
-       _a9TZ = v;
+          _a9TZ.add(pos, v);
         }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+    void removeFromA9TZ(String v) throws Exception
+     {
+       if (_a9TZ.remove(v) == true)
+          __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A9TZ._Mask);
+     }
+    void removeFromA9TZ(int pos) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (_a9TZ.remove(pos) != null)
+          __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A9TZ._Mask);
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -829,10 +861,10 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TestingView.a9TZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TestingView.a9TZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TestingView.a9TZ of type List<String></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TestingView.a9TZ of type text[]</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>0</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a9'.</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
@@ -979,7 +1011,7 @@ This is the setter for:<BR>
           tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
           if (ZI == null)
            throw new Exception("Cannot set field 'tilda.data.TILDA.TestingView.a9' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-          setA9TZ(ZI.getId());
+          addToA9TZ(pos, ZI.getId());
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -1289,9 +1321,9 @@ This is the null setter for:<BR>
                        _refnum =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.REFNUM._Mask);
                        _a2Min  = ParseUtil.parseCharacter    (RS.getString   (++i));  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A2MIN._Mask );
                        _a2Max  = ParseUtil.parseCharacter    (RS.getString   (++i));  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A2MAX._Mask );
-                       _a9TZ   = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9TZ._Mask  ); else _a9TZ   = _a9TZ  .trim();
-                       _a9 = (List<ZonedDateTime>) C.getArray(RS, ++i, TILDA__TESTINGVIEW_Factory.COLS.A9._Type, false);
-                       _a9c = (List<LocalDate>) C.getArray(RS, ++i, TILDA__TESTINGVIEW_Factory.COLS.A9C._Type, false);_a9c    = DateTimeUtil.toLocalDate(RS.getDate(++i));
+                       _a9TZ = (List<String>) C.getArray(RS, ++i, TILDA__TESTINGVIEW_Factory.COLS.A9TZ._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9TZ._Mask  );
+                       _a9     = ProcessZDTs(C, _a9TZ    , "tilda.data.TILDA.TestingView.a9"    , RS, ++i, TILDA__TESTINGVIEW_Factory.COLS.A9    , TILDA__TESTINGVIEW_Factory.COLS.A9TZ    ); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9._Mask    );
+                       _a9c = (List<LocalDate>) C.getArray(RS, ++i, TILDA__TESTINGVIEW_Factory.COLS.A9C._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9C._Mask   );
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
@@ -1307,14 +1339,42 @@ This is the null setter for:<BR>
      ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(RS.getTimestamp(ColumnPos, DateTimeUtil._UTC_CALENDAR), ZI == null ? "null" : ZI.getValue());
      boolean DTNull = false;
      if (RS.wasNull() == true)
-      {;
+      {
          __Nulls.or(DTField._Mask);
          DTNull = true;
-      };
+      }
      boolean TZNull = __Nulls.intersects(TZField._Mask);
      if (DTNull == false && TZNull == true)
       throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
      return ZDT;
+   }
+  private final List<ZonedDateTime> ProcessZDTs(Connection C, List<String> TimezoneIds, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)
+  throws Exception
+   {
+     List<Timestamp> L = (List<Timestamp>) C.getArray(RS, ColumnPos, TILDA__TESTING_Factory.COLS.A9B._Type, false);
+     boolean DTNull = false;
+     if (RS.wasNull() == true)
+      {
+         __Nulls.or(DTField._Mask);
+         DTNull = true;
+      }
+     boolean TZNull = __Nulls.intersects(TZField._Mask);
+     if (DTNull == false && TZNull == true)
+      throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
+     if (DTNull == true)
+      return null;
+
+     List<ZonedDateTime> ZDTs = new ArrayList<ZonedDateTime>();
+     for (int i = 0; i < TimezoneIds.size(); ++i)
+       {
+         String TimezoneId = TimezoneIds.get(i);
+         tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);
+         if (ZI == null && TextUtil.isNullOrEmpty(TimezoneId) == false)
+          throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + TimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+         ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(L.get(i), ZI == null ? "null" : ZI.getValue());
+         ZDTs.add(ZDT);
+       }
+     return ZDTs;
    }
 
    protected abstract boolean AfterRead(Connection C) throws Exception;

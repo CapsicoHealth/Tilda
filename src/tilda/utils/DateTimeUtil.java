@@ -26,6 +26,7 @@ import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -208,6 +209,17 @@ public class DateTimeUtil
       {
         return ZDT == null ? null : ZDT.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
       }
+    
+    public static List<String> printDateTimeForSQL(List<ZonedDateTime> ZDTs)
+      {
+        if (ZDTs == null)
+          return null;
+        List<String> L = new ArrayList<String>();
+        for (ZonedDateTime ZDT : ZDTs)
+          L.add(printDateTimeForSQL(ZDT));
+        return L;
+      }
+    
 
     public static String printDateTimeForJSON(ZonedDateTime ZDT)
       {
@@ -273,6 +285,17 @@ public class DateTimeUtil
           }
         return null;
       }
+    
+    public static List<ZonedDateTime> parsefromJSON(List<String> DateTimeStr)
+      {
+        if (TextUtil.isNullOrEmpty(DateTimeStr) == true)
+          return null;
+        List<ZonedDateTime> L = new ArrayList<ZonedDateTime>();
+        for (String Str : DateTimeStr)
+          L.add(parsefromJSON(Str));
+        return L;
+      }
+    
 
     private static Pattern _ISO_NOZONE_DATETIME = Pattern.compile("(\\d{4}).(\\d{2}).(\\d{2}).(\\d{2}).(\\d{2}).(\\d{2})");
 

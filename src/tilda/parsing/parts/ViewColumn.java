@@ -111,20 +111,29 @@ public class ViewColumn
         : _Aggregate.getType(_SameAsObj.getType());
       }
 
-    public boolean Validate(ParserSession PS, View ParentView)
+    
+    public boolean FixSameAs(ParserSession PS)
       {
-        int Errs = PS.getErrorCount();
-        _ParentView = ParentView;
-
         if (TextUtil.isNullOrEmpty(_Sameas_DEPRECATED) == false)
           {
             if (TextUtil.isNullOrEmpty(_SameAs) == false)
               return PS.AddError("View column '" + getFullName() + "' defined both a 'sameAs' and a 'sameas'. Only one is allowed, and preferrably 'sameAs' since 'sameas' has been deprecated.");
             _SameAs = _Sameas_DEPRECATED;
+            _Sameas_DEPRECATED = null;
           }
+        return true;
+      }
+    
+    public boolean Validate(ParserSession PS, View ParentView)
+      {
+        int Errs = PS.getErrorCount();
+        _ParentView = ParentView;
+
+        if (FixSameAs(PS) == false)
+         return false;
 
         // Mandatories
-        if (TextUtil.isNullOrEmpty(_SameAs) == true && AggregateType.COUNT.name().equalsIgnoreCase(_AggregateStr) == false)
+        if (TextUtil.isNullOrEmpty(_SameAs) == true)
           return PS.AddError("View column '" + getFullName() + "' didn't define a 'sameAs'. It is mandatory.");
 
         if (TextUtil.isNullOrEmpty(_SameAs) == false)

@@ -416,14 +416,14 @@
       ,"description": "A view of formulas and their dependencies."
       ,"columns":[
           { "sameas": "Testing.name"                       }
-         ,{ "sameAs": "Testing.refnum"   ,                 "aggregate":"COUNT"  }
-         ,{ "sameAs": "Testing.a2"       , "name":"a2Min", "aggregate":"MIN"    , "filter":"a2 is not null" , "coalesce":"AAA" }
-         ,{ "sameAs": "Testing.a2"       , "name":"a2Max", "aggregate":"MAX"    , "filter":"a2 is not null" , "coalesce":"ZZZ"}
-         ,{ "sameAs": "Testing.a9"       ,                 "aggregate":"ARRAY"  }
-         ,{ "sameAs": "Testing.a9c"      ,                 "aggregate":"ARRAY", "distinct":true }
+         ,{ "sameas": "Testing.refnum"   ,                 "aggregate":"COUNT"  }
+         ,{ "sameas": "Testing.a2"       , "name":"a2Min", "aggregate":"MIN"    , "filter":"a2 is not null" , "coalesce":"AAA" }
+         ,{ "sameas": "Testing.a2"       , "name":"a2Max", "aggregate":"MAX"    , "filter":"a2 is not null" , "coalesce":"ZZZ"}
+         ,{ "sameas": "Testing.a9"       ,                 "aggregate":"ARRAY"  }
+         ,{ "sameas": "Testing.a9c"      ,                 "aggregate":"ARRAY", "distinct":true }
         ]
       ,"subWhereX":{
-          "clause":["Formula.deleted is null"
+          "clause":["Testing.deleted is null"
                    ]
          ,"description":["Active formulas and their sub-formulas"]
         }

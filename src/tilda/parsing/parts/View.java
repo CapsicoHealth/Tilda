@@ -180,6 +180,8 @@ public class View extends Base
                 continue;
               }
 
+            if (VC.FixSameAs(PS) == false)
+             return false;
             // dependency (.*) expansion
             if (VC._SameAs != null && VC._SameAs.endsWith("*") == true)
               {

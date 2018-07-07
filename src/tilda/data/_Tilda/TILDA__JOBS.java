@@ -7,6 +7,7 @@
 package tilda.data._Tilda;
 
 import java.time.*;
+import java.sql.Timestamp;
 import java.util.*;
 
 import tilda.db.*;
@@ -386,7 +387,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 6 2018, 23:14:41EDT
+ @generated Jul 7 2018, 01:25:40EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__JOBS implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -2871,15 +2872,15 @@ This is the hasChanged for:<BR>
       __Saved_Id           = _Id           =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.ID._Mask          );
                              _Name         = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.NAME._Mask        );
                              _StartTimeTZ  = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.STARTTIMETZ._Mask ); else _StartTimeTZ  = _StartTimeTZ .trim();
-                             _StartTime    = ProcessZDT(_StartTimeTZ   , "tilda.data.TILDA.Jobs.StartTime"   , RS, ++i, TILDA__JOBS_Factory.COLS.STARTTIME   , TILDA__JOBS_Factory.COLS.STARTTIMETZ   );
+                             _StartTime    = ProcessZDT(_StartTimeTZ   , "tilda.data.TILDA.Jobs.StartTime"   , RS, ++i, TILDA__JOBS_Factory.COLS.STARTTIME   , TILDA__JOBS_Factory.COLS.STARTTIMETZ   ); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.STARTTIME._Mask   );
                              _EndTimeTZ    = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.ENDTIMETZ._Mask   ); else _EndTimeTZ    = _EndTimeTZ   .trim();
-                             _EndTime      = ProcessZDT(_EndTimeTZ     , "tilda.data.TILDA.Jobs.EndTime"     , RS, ++i, TILDA__JOBS_Factory.COLS.ENDTIME     , TILDA__JOBS_Factory.COLS.ENDTIMETZ     );
+                             _EndTime      = ProcessZDT(_EndTimeTZ     , "tilda.data.TILDA.Jobs.EndTime"     , RS, ++i, TILDA__JOBS_Factory.COLS.ENDTIME     , TILDA__JOBS_Factory.COLS.ENDTIMETZ     ); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.ENDTIME._Mask     );
                              _TotalRecords =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.TOTALRECORDS._Mask);
                              _Status       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.STATUS._Mask      );
                              _Error        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.ERROR._Mask       );
-                             _created      = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
-                             _lastUpdated  = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
-                             _deleted      = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
+                             _created      = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.CREATED._Mask     );
+                             _lastUpdated  = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.LASTUPDATED._Mask );
+                             _deleted      = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.DELETED._Mask     );
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
@@ -2895,14 +2896,42 @@ This is the hasChanged for:<BR>
      ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(RS.getTimestamp(ColumnPos, DateTimeUtil._UTC_CALENDAR), ZI == null ? "null" : ZI.getValue());
      boolean DTNull = false;
      if (RS.wasNull() == true)
-      {;
+      {
          __Nulls.or(DTField._Mask);
          DTNull = true;
-      };
+      }
      boolean TZNull = __Nulls.intersects(TZField._Mask);
      if (DTNull == false && TZNull == true)
       throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
      return ZDT;
+   }
+  private final List<ZonedDateTime> ProcessZDTs(Connection C, List<String> TimezoneIds, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)
+  throws Exception
+   {
+     List<Timestamp> L = (List<Timestamp>) C.getArray(RS, ColumnPos, TILDA__TESTING_Factory.COLS.A9B._Type, false);
+     boolean DTNull = false;
+     if (RS.wasNull() == true)
+      {
+         __Nulls.or(DTField._Mask);
+         DTNull = true;
+      }
+     boolean TZNull = __Nulls.intersects(TZField._Mask);
+     if (DTNull == false && TZNull == true)
+      throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
+     if (DTNull == true)
+      return null;
+
+     List<ZonedDateTime> ZDTs = new ArrayList<ZonedDateTime>();
+     for (int i = 0; i < TimezoneIds.size(); ++i)
+       {
+         String TimezoneId = TimezoneIds.get(i);
+         tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);
+         if (ZI == null && TextUtil.isNullOrEmpty(TimezoneId) == false)
+          throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + TimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+         ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(L.get(i), ZI == null ? "null" : ZI.getValue());
+         ZDTs.add(ZDT);
+       }
+     return ZDTs;
    }
 
    protected abstract boolean AfterRead(Connection C) throws Exception;
