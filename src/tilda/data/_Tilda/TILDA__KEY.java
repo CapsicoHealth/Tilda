@@ -290,7 +290,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 7 2018, 01:25:40EDT
+ @generated Jul 8 2018, 00:16:31EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__KEY implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -1733,7 +1733,7 @@ This is the hasChanged for:<BR>
                + "; createdETL: "                                                                                         + DateTimeUtil.printDateTimeForJSON(getCreatedETL    ())
                + "; lastUpdated: "                                                                                        + DateTimeUtil.printDateTimeForJSON(getLastUpdated   ())
                + "; lastUpdatedETL: "                                                                                     + DateTimeUtil.printDateTimeForJSON(getLastUpdatedETL())
-               + "; deleted"          + (__Changes.intersects(TILDA__KEY_Factory.COLS.DELETED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted       ()))
+               + "; deleted"          + (__Nulls.intersects(TILDA__KEY_Factory.COLS.DELETED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted       ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

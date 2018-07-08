@@ -17,6 +17,7 @@
 package tilda;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ import tilda.utils.DateTimeUtil;
 import tilda.utils.DurationUtil;
 import tilda.utils.DateTimeZone;
 import tilda.utils.NumberFormatUtil;
+import tilda.utils.TextUtil;
 
 public class DBTest
   {
@@ -111,6 +113,48 @@ public class DBTest
         if (D.Write(C) == false)
           throw new Exception("Bad stuff!");
         
+        ZonedDateTime Now = DateTimeUtil.NowLocal();
+        D.setA9(Now);
+        LOG.debug("A9 null?: "+D.isNullA9());
+        List<ZonedDateTime> ZDTs = new ArrayList<ZonedDateTime>();
+        ZDTs.add(DateTimeUtil.NewUTC(2018, 1, 1, 0, 0, 0, 0));
+        ZDTs.add(DateTimeUtil.NewUTC(2018, 2, 1, 0, 0, 0, 0));
+        ZDTs.add(DateTimeUtil.NewUTC(2018, 3, 1, 0, 0, 0, 0));
+        ZDTs.add(Now);
+//        D.setA9b(ZDTs);
+//        LOG.debug(TextUtil.Print(D.getA9bTZ()));
+        if (D.Write(C) == false)
+          throw new Exception("Bad stuff!");
+
+        LocalDate Today = DateTimeUtil.NowLocalDate();
+        D.setA9c(Today);
+        LOG.debug("A9c null?: "+D.isNullA9c());
+        List<LocalDate> LDs = new ArrayList<LocalDate>();
+        LDs.add(DateTimeUtil.New(2018, 4, 1));
+        LDs.add(DateTimeUtil.New(2018, 5, 1));
+        LDs.add(DateTimeUtil.New(2018, 6, 1));
+        LDs.add(Today);
+        D.setA9d(LDs);
+        if (D.Write(C) == false)
+         throw new Exception("Bad stuff!");
+        C.commit();
+        
+        D = Testing_Factory.LookupByPrimaryKey(D.getRefnum());
+        if (D.Read(C) == false)
+          throw new Exception("Bad stuff!");
+        LOG.debug("A9: "+D.getA9());
+        LOG.debug("A9b: "+TextUtil.Print(D.getA9b()));
+        LOG.debug("A9bTZ: "+TextUtil.Print(D.getA9bTZ()));
+        LOG.debug("A9c: "+D.getA9c());
+        LOG.debug("A9d: "+TextUtil.Print(D.getA9d()));
+        
+        D.setNullA9();
+        D.setNullA9b();
+        D.setNullA9c();
+        D.setNullA9d();
+        if (D.Write(C) == false)
+          throw new Exception("Bad stuff!");
+
         C.commit();
       }
 

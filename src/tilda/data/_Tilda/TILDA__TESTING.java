@@ -1027,7 +1027,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 7 2018, 01:25:40EDT
+ @generated Jul 8 2018, 00:16:31EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTING implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject, tilda.interfaces.JSONable
@@ -7329,7 +7329,7 @@ This is the hasChanged for:<BR>
                 } 
                if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9C._Mask) == true) 
                 { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9C._Mask) == true) PS.setNull(++i, java.sql.Types.DATE); else if (DateTimeUtil.isNowPlaceholder(_a9c) == false)  PS.setDate(++i, new java.sql.Date(_a9c.getYear(), _a9c.getMonthValue(), _a9c.getDayOfMonth()));
+                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9C._Mask) == true) PS.setNull(++i, java.sql.Types.DATE); else if (DateTimeUtil.isNowPlaceholder(_a9c) == false)  PS.setDate(++i, new java.sql.Date(_a9c.getYear()-1900, _a9c.getMonthValue()-1, _a9c.getDayOfMonth()));
                 } 
                if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9D._Mask) == true) 
                 { 
@@ -7588,7 +7588,7 @@ This is the hasChanged for:<BR>
   private final List<ZonedDateTime> ProcessZDTs(Connection C, List<String> TimezoneIds, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)
   throws Exception
    {
-     List<Timestamp> L = (List<Timestamp>) C.getArray(RS, ColumnPos, TILDA__TESTING_Factory.COLS.A9B._Type, false);
+     List<Timestamp> L = (List<Timestamp>) C.getArray(RS, ColumnPos, DTField._Type, false);
      boolean DTNull = false;
      if (RS.wasNull() == true)
       {
@@ -7623,34 +7623,34 @@ This is the hasChanged for:<BR>
                    "refnum: "                                                                                           +                                   getRefnum     () 
                + "; refnum2: "                                                                                          + TextUtil.Print                   (getRefnum2    ())
                + "; name: "                                                                                             + TextUtil.PrintVariableStr        (getName       ())
-               + "; description"   + (__Changes.intersects(TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDescription()))
-               + "; desc2"         + (__Changes.intersects(TILDA__TESTING_Factory.COLS.DESC2._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc2      ()))
-               + "; desc3"         + (__Changes.intersects(TILDA__TESTING_Factory.COLS.DESC3._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc3      ()))
-               + "; desc4"         + (__Changes.intersects(TILDA__TESTING_Factory.COLS.DESC4._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc4      ()))
-               + "; desc5"         + (__Changes.intersects(TILDA__TESTING_Factory.COLS.DESC5._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc5      ()))
-               + "; desc6"         + (__Changes.intersects(TILDA__TESTING_Factory.COLS.DESC6._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc6      ()))
-               + "; tops"          + (__Changes.intersects(TILDA__TESTING_Factory.COLS.TOPS._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getTops       ()))
-               + "; tops2"         + (__Changes.intersects(TILDA__TESTING_Factory.COLS.TOPS2._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getTops2      ()))
-               + "; a1"            + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A1._Mask) == true ? ": NULL" : ": " +                                   getA1         () )
-               + "; a2"            + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A2._Mask) == true ? ": NULL" : ": " +                                   getA2         () )
-               + "; a2b"           + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A2B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA2b        ()))
-               + "; a2c"           + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A2C._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA2c        ()))
-               + "; a3"            + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A3._Mask) == true ? ": NULL" : ": " +                                   getA3         () )
-               + "; a3b"           + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A3B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA3b        ()))
-               + "; a4"            + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A4._Mask) == true ? ": NULL" : ": " +                                   getA4         () )
-               + "; a4b"           + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A4B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA4b        ()))
-               + "; a5"            + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A5._Mask) == true ? ": NULL" : ": " +                                   getA5         () )
-               + "; a5b"           + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A5B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA5b        ()))
-               + "; a6"            + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A6._Mask) == true ? ": NULL" : ": " +                                   getA6         () )
-               + "; a6b"           + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A6B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA6b        ()))
-               + "; a6c"           + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A6C._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA6c        ()))
-               + "; a7"            + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A7._Mask) == true ? ": NULL" : ": " +                                   getA7         () )
-               + "; a7b"           + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A7B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA7b        ()))
-               + "; a8"            + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A8._Mask) == true ? ": NULL" : ": " +                                   getA8         () )
-               + "; a9"            + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA9         ()))
-               + "; a9b"           + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA9b        ()))
-               + "; a9c"           + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9C._Mask) == true ? ": NULL" : ": " +                                   getA9c        () )
-               + "; a9d"           + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9D._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA9d        ()))
+               + "; description"   + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDescription()))
+               + "; desc2"         + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC2._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc2      ()))
+               + "; desc3"         + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC3._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc3      ()))
+               + "; desc4"         + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC4._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc4      ()))
+               + "; desc5"         + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC5._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc5      ()))
+               + "; desc6"         + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC6._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc6      ()))
+               + "; tops"          + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.TOPS._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getTops       ()))
+               + "; tops2"         + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.TOPS2._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getTops2      ()))
+               + "; a1"            + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A1._Mask) == true ? ": NULL" : ": " +                                   getA1         () )
+               + "; a2"            + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A2._Mask) == true ? ": NULL" : ": " +                                   getA2         () )
+               + "; a2b"           + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A2B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA2b        ()))
+               + "; a2c"           + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A2C._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA2c        ()))
+               + "; a3"            + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A3._Mask) == true ? ": NULL" : ": " +                                   getA3         () )
+               + "; a3b"           + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A3B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA3b        ()))
+               + "; a4"            + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A4._Mask) == true ? ": NULL" : ": " +                                   getA4         () )
+               + "; a4b"           + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A4B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA4b        ()))
+               + "; a5"            + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A5._Mask) == true ? ": NULL" : ": " +                                   getA5         () )
+               + "; a5b"           + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A5B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA5b        ()))
+               + "; a6"            + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A6._Mask) == true ? ": NULL" : ": " +                                   getA6         () )
+               + "; a6b"           + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A6B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA6b        ()))
+               + "; a6c"           + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A6C._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA6c        ()))
+               + "; a7"            + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A7._Mask) == true ? ": NULL" : ": " +                                   getA7         () )
+               + "; a7b"           + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A7B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA7b        ()))
+               + "; a8"            + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A8._Mask) == true ? ": NULL" : ": " +                                   getA8         () )
+               + "; a9"            + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA9         ()))
+               + "; a9b"           + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA9b        ()))
+               + "; a9c"           + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9C._Mask) == true ? ": NULL" : ": " +                                   getA9c        () )
+               + "; a9d"           + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9D._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA9d        ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

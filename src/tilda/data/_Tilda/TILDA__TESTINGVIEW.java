@@ -270,7 +270,7 @@ This View contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 7 2018, 01:25:40EDT
+ @generated Jul 8 2018, 00:16:31EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTINGVIEW implements tilda.interfaces.ReaderObject
@@ -1351,7 +1351,7 @@ This is the null setter for:<BR>
   private final List<ZonedDateTime> ProcessZDTs(Connection C, List<String> TimezoneIds, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)
   throws Exception
    {
-     List<Timestamp> L = (List<Timestamp>) C.getArray(RS, ColumnPos, TILDA__TESTING_Factory.COLS.A9B._Type, false);
+     List<Timestamp> L = (List<Timestamp>) C.getArray(RS, ColumnPos, DTField._Type, false);
      boolean DTNull = false;
      if (RS.wasNull() == true)
       {
@@ -1385,10 +1385,10 @@ This is the null setter for:<BR>
       String Str = 
                    "name: "                                                                                       + TextUtil.PrintVariableStr        (getName  ())
                + "; refnum: "                                                                                     +                                   getRefnum() 
-               + "; a2Min"    + (__Changes.intersects(TILDA__TESTINGVIEW_Factory.COLS.A2MIN._Mask) == true ? ": NULL" : ": " +                                   getA2Min () )
-               + "; a2Max"    + (__Changes.intersects(TILDA__TESTINGVIEW_Factory.COLS.A2MAX._Mask) == true ? ": NULL" : ": " +                                   getA2Max () )
-               + "; a9"       + (__Changes.intersects(TILDA__TESTINGVIEW_Factory.COLS.A9._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA9    ()))
-               + "; a9c"      + (__Changes.intersects(TILDA__TESTINGVIEW_Factory.COLS.A9C._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA9c   ()))
+               + "; a2Min"    + (__Nulls.intersects(TILDA__TESTINGVIEW_Factory.COLS.A2MIN._Mask) == true ? ": NULL" : ": " +                                   getA2Min () )
+               + "; a2Max"    + (__Nulls.intersects(TILDA__TESTINGVIEW_Factory.COLS.A2MAX._Mask) == true ? ": NULL" : ": " +                                   getA2Max () )
+               + "; a9"       + (__Nulls.intersects(TILDA__TESTINGVIEW_Factory.COLS.A9._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA9    ()))
+               + "; a9c"      + (__Nulls.intersects(TILDA__TESTINGVIEW_Factory.COLS.A9C._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA9c   ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

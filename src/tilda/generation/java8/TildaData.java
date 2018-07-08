@@ -1031,7 +1031,7 @@ public class TildaData implements CodeGenTildaData
                   case DATE:
                     Out.print(" else ");
                     if (C.isCollection() == false)
-                      Out.println("if (DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == false)  PS.setDate(++i, new java.sql.Date(_" + C.getName() + ".getYear(), _" + C.getName() + ".getMonthValue(), _" + C.getName() + ".getDayOfMonth()));");
+                      Out.println("if (DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == false)  PS.setDate(++i, new java.sql.Date(_" + C.getName() + ".getYear()-1900, _" + C.getName() + ".getMonthValue()-1, _" + C.getName() + ".getDayOfMonth()));");
                     else
                       Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, AllocatedArrays, _" + C.getName() + ");");
                     break;
@@ -1360,6 +1360,7 @@ public class TildaData implements CodeGenTildaData
               Out.println("      throw new Exception(\"The field \"+DTFieldName+\" is not null while its associated timezone field '\"+DTFieldName+\"TZ' is null. A TZ is mandatory for not null timestamps.\");");
               Out.println("     return ZDT;");
               Out.println("   }");
+              break;
             }
         for (Column C : O._Columns)
           if (C != null && C.getType() == ColumnType.DATETIME && Object.isOCCColumn(C) == false && C.isCollection() == true)
@@ -1416,7 +1417,7 @@ public class TildaData implements CodeGenTildaData
               Out.print((First == false ? "               + \"; " : "                   \"") + C.getName());
 
               if (Nullable)
-                Out.print("\"" + Pad + "   + (__Changes.intersects(" + Mask + ") == true ? \": NULL\" : \"");
+                Out.print("\"" + Pad + "   + (__Nulls.intersects(" + Mask + ") == true ? \": NULL\" : \"");
 
               String Lead = Nullable == true ? "" : PaddingUtil.getPad(Mask.length() + Pad.length() * 2) + "                                        ";
               if (C.isCollection() == false)

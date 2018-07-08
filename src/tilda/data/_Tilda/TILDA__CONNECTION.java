@@ -370,7 +370,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 7 2018, 01:25:40EDT
+ @generated Jul 8 2018, 00:16:31EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__CONNECTION implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -2379,7 +2379,7 @@ This is the hasChanged for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "active"        + (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask) == true ? ": NULL" : ": " +                                   getActive     () )
+                   "active"        + (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask) == true ? ": NULL" : ": " +                                   getActive     () )
                + "; id: "                                                                                                  + TextUtil.PrintVariableStr        (getId         ())
                + "; driver: "                                                                                              + TextUtil.PrintVariableStr        (getDriver     ())
                + "; db: "                                                                                                  + TextUtil.PrintVariableStr        (getDb         ())

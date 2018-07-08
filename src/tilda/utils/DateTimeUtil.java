@@ -96,6 +96,12 @@ public class DateTimeUtil
       {
         return ZonedDateTime.of(Year, Month, Day, Hour, Minutes, Seconds, Milliseconds * 1000000, Z._ZoneId);
       }
+    
+    public static LocalDate New(int Year, int Month, int Day)
+      {
+        return LocalDate.of(Year, Month, Day);
+      }
+    
 
     public static String getCurrentZoneOffset()
       {
@@ -121,6 +127,12 @@ public class DateTimeUtil
       {
         return ZonedDateTime.now(Z._ZoneId);
       }
+    
+    public static LocalDate NowLocalDate()
+      {
+        return LocalDate.now();
+      }
+    
 
     public static ZonedDateTime Oldest(ZonedDateTime ZDT1, ZonedDateTime ZDT2)
       {
