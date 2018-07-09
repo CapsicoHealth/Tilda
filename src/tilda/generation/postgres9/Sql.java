@@ -117,10 +117,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
         if (Type == ColumnType.STRING && Calculated == false)
           {
             DBStringType DBT = getDBStringType(Size);
-          return isCollection == true || MultiOverride == true ? "text" 
-               : DBT == DBStringType.CHARACTER ? PostgresType.CHAR._SQLType 
-               : DBT == DBStringType.VARCHAR ? PostgresType.STRING._SQLType
-               : "text";
+            return isCollection == true || MultiOverride == true ? "text"
+            : DBT == DBStringType.CHARACTER ? PostgresType.CHAR._SQLType
+            : DBT == DBStringType.VARCHAR ? PostgresType.STRING._SQLType
+            : "text";
           }
         if (Type == ColumnType.JSON)
           return "jsonb";
@@ -131,18 +131,18 @@ public class Sql extends PostgreSQL implements CodeGenSql
     @Override
     public boolean stringNeedsTrim(Column C)
       {
-        return C.getType() == ColumnType.STRING && C._Mode != ColumnMode.CALCULATED && C.isCollection() == false && getDBStringType(C._Size)==DBStringType.CHARACTER;
+        return C.getType() == ColumnType.STRING && C._Mode != ColumnMode.CALCULATED && C.isCollection() == false && getDBStringType(C._Size) == DBStringType.CHARACTER;
       }
-    
+
     @Override
     public boolean stringArrayAggNeedsText(ViewColumn VC)
       {
         // We only test for VARCHAR here because we know that CHAR is getting trimmed, which results in TEXT type already.
-        return stringNeedsTrim(VC._SameAsObj) == false 
-               && VC._SameAsObj.getType() == ColumnType.STRING && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._SameAsObj.isCollection() == false 
-               && getDBStringType(VC._SameAsObj._Size) == DBStringType.VARCHAR // is a varchar
-               && VC._Aggregate == AggregateType.ARRAY // is an array_agg aggregate that needs to be converted to text[] for operators.
-               ;
+        return stringNeedsTrim(VC._SameAsObj) == false
+        && VC._SameAsObj.getType() == ColumnType.STRING && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._SameAsObj.isCollection() == false
+        && getDBStringType(VC._SameAsObj._Size) == DBStringType.VARCHAR // is a varchar
+        && VC._Aggregate == AggregateType.ARRAY // is an array_agg aggregate that needs to be converted to text[] for operators.
+        ;
       }
 
 
@@ -279,7 +279,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
     throws Exception
       {
         List<TotalMess> FuckList = TotalMess.ScanView(V);
-        
+
         if (V._Name.equalsIgnoreCase("PatientActiveView") == true)
           LOG.debug("xxx");
 
@@ -381,7 +381,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
               }
 
             // LDH-NOTE: Cannot remember why OmitTZs was created, but it prevents the time-series field "p" from getting output properly.
-            // For now, we hard-code that field so it gets output. 
+            // For now, we hard-code that field so it gets output.
             if (VC._JoinOnly == false && (VC._SameAs.equals("_TS.p") == true || OmmitTZs == false || OmmitTZs == true && VC._SameAsObj != null && VC._SameAsObj._Mode == ColumnMode.NORMAL))
               {
                 if (First == true)
@@ -587,25 +587,26 @@ public class Sql extends PostgreSQL implements CodeGenSql
         return Q;
       }
 
-    private boolean PrintViewColumn(StringBuilder Str, ViewColumn VC, TableRankTracker TI, boolean NoAs) throws Exception
+    private boolean PrintViewColumn(StringBuilder Str, ViewColumn VC, TableRankTracker TI, boolean NoAs)
+    throws Exception
       {
         if (TextUtil.isNullOrEmpty(VC._Coalesce) == false)
           Str.append("coalesce(");
 
         boolean hasAggregates = false;
-//        if (VC._Aggregate == AggregateType.COUNT)
-//          {
-//            if (VC._Distinct == true)
-//              Str.append("count(distinct "+VC._SameAs+")");
-//            else
-//              Str.append("count(*)");
-//            if (TextUtil.isNullOrEmpty(VC._Filter) == false)
-//              {
-//                Str.append(" filter(where ").append(VC._Filter).append(")");
-//              }
-//            hasAggregates = true;
-//          }
-//        else
+        // if (VC._Aggregate == AggregateType.COUNT)
+        // {
+        // if (VC._Distinct == true)
+        // Str.append("count(distinct "+VC._SameAs+")");
+        // else
+        // Str.append("count(*)");
+        // if (TextUtil.isNullOrEmpty(VC._Filter) == false)
+        // {
+        // Str.append(" filter(where ").append(VC._Filter).append(")");
+        // }
+        // hasAggregates = true;
+        // }
+        // else
         if (VC._SameAs != null && VC._SameAsObj == null && VC._FrameworkGenerated == true)
           {
             Str.append(VC._SameAs);
@@ -623,11 +624,24 @@ public class Sql extends PostgreSQL implements CodeGenSql
               }
             if (trimNeeded)
               Str.append("trim(");
-            Str.append(TI.getFullName() + ".\"" + VC._SameAsObj.getName() + "\"" + (textConversionNeeded?"::TEXT":""));
+            Str.append(TI.getFullName() + ".\"" + VC._SameAsObj.getName() + "\"" + (textConversionNeeded ? "::TEXT" : ""));
             if (trimNeeded)
               Str.append(")");
             if (VC._Aggregate != null)
               {
+                if (VC._OrderByObjs != null && VC._OrderByObjs.isEmpty() == false)
+                  {
+                    Str.append(" order by ");
+                    boolean First = true;
+                    for (int i = 0; i < VC._OrderByObjs.size(); ++i)
+                      {
+                        if (First == true)
+                          First = false;
+                        else
+                          Str.append(", ");
+                        Str.append("\"" + VC._OrderByObjs.get(i).getName() + "\" " + VC._OrderByOrders.get(i));
+                      }
+                  }
                 Str.append(")");
                 if (TextUtil.isNullOrEmpty(VC._Filter) == false)
                   {
@@ -636,7 +650,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
               }
           }
         if (TextUtil.isNullOrEmpty(VC._Coalesce) == false)
-          Str.append(", "+ValueHelper.printValue(VC._SameAsObj.getName(), VC.getAggregateType(), VC._Coalesce)+")");
+          Str.append(", " + ValueHelper.printValue(VC._SameAsObj.getName(), VC.getAggregateType(), VC._Coalesce) + ")");
         if (NoAs == false)
           Str.append(" as \"" + VC.getName() + "\" " + (VC._SameAsObj == null ? "" : "-- " + VC._SameAsObj._Description));
         return hasAggregates;
@@ -1171,8 +1185,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
               Str.append(", ");
             String Pad = "";
             if (trimNeeded == true)
-             Pad = PaddingUtil.getPad(P._VC._SameAsObj._Size-P._Values[i]._Value.length());
-            Str.append(TextUtil.EscapeSingleQuoteForSQL(P._Values[i]._Value+Pad));
+              Pad = PaddingUtil.getPad(P._VC._SameAsObj._Size - P._Values[i]._Value.length());
+            Str.append(TextUtil.EscapeSingleQuoteForSQL(P._Values[i]._Value + Pad));
           }
         return Str.toString();
       }

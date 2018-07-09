@@ -17,7 +17,9 @@
 package tilda.parsing.parts;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,6 +30,7 @@ import tilda.enums.AggregateType;
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.JoinType;
+import tilda.enums.OrderType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.utils.TextUtil;
@@ -46,6 +49,7 @@ public class ViewColumn
     @SerializedName("joinType"   ) public String         _JoinStr      ;
     @SerializedName("joinOnly"   ) public boolean        _JoinOnly      = false;
     @SerializedName("aggregate"  ) public String         _AggregateStr ;
+    @SerializedName("orderBy"    ) public String[]       _OrderBy;
     @SerializedName("coalesce"   ) public String         _Coalesce     = null;
     @SerializedName("distinct"   ) public Boolean        _Distinct     = false;
     @SerializedName("filter"     ) public String         _Filter       ;
@@ -71,10 +75,13 @@ public class ViewColumn
      * }
      */
 
-    public transient View          _ParentView;
-    public transient Column        _SameAsObj;
-    public transient JoinType      _Join;
-    public transient AggregateType _Aggregate;
+    public transient View            _ParentView;
+    public transient Column          _SameAsObj;
+    public transient JoinType        _Join;
+    public transient AggregateType   _Aggregate;
+    public transient List<Column>    _OrderByObjs   = new ArrayList<Column>();
+    public transient List<OrderType> _OrderByOrders = new ArrayList<OrderType>();
+
     public transient boolean       _FailedValidation   = false;
 
     public boolean                 _FrameworkGenerated = false;
@@ -170,6 +177,16 @@ public class ViewColumn
 
         if (TextUtil.isNullOrEmpty(_Description) == true && _SameAsObj != null)
           _Description = _SameAsObj._Description;
+        
+        if (_OrderBy!=null && _OrderBy.length > 0)
+          {
+            if (_Aggregate != AggregateType.ARRAY)
+             PS.AddError("View Column '" + getFullName() + "' defined an orderBy value without specifying an ARRAY aggregate. OrderBys are meant only for ARRAY aggregates.");
+            else if (_Distinct == true)
+              PS.AddError("View Column '" + getFullName() + "' defined an orderBy value in a Distinct aggregate, which is not supported.");
+            Set<String> Names = new HashSet<String>();
+            Index.processOrderBy(PS, "View Column '" + getFullName() + "' array aggregate", Names, ParentView, _OrderBy, _OrderByObjs, _OrderByOrders);
+          }
 
         return Errs == PS.getErrorCount();
       }

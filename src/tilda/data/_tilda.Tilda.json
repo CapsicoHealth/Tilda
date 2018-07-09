@@ -416,11 +416,12 @@
       ,"description": "A view of formulas and their dependencies."
       ,"columns":[
           { "sameas": "Testing.name"                       }
+         ,{ "sameas": "Testing.lastUpdated", "joinOnly":true }
          ,{ "sameas": "Testing.refnum"   ,                 "aggregate":"COUNT"  }
          ,{ "sameas": "Testing.a2"       , "name":"a2Min", "aggregate":"MIN"    , "filter":"a2 is not null" , "coalesce":"AAA" }
          ,{ "sameas": "Testing.a2"       , "name":"a2Max", "aggregate":"MAX"    , "filter":"a2 is not null" , "coalesce":"ZZZ"}
-         ,{ "sameas": "Testing.a9"       ,                 "aggregate":"ARRAY"  }
-         ,{ "sameas": "Testing.a9c"      ,                 "aggregate":"ARRAY", "distinct":true }
+         ,{ "sameas": "Testing.a9"       ,                 "aggregate":"ARRAY"  , "orderBy":["lastUpdated asc"] }
+         ,{ "sameas": "Testing.a9c"      ,                 "aggregate":"ARRAY"}
         ]
       ,"subWhereX":{
           "clause":["Testing.deleted is null"
