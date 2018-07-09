@@ -121,8 +121,9 @@ public class DBTest
         ZDTs.add(DateTimeUtil.NewUTC(2018, 2, 1, 0, 0, 0, 0));
         ZDTs.add(DateTimeUtil.NewUTC(2018, 3, 1, 0, 0, 0, 0));
         ZDTs.add(Now);
-//        D.setA9b(ZDTs);
-//        LOG.debug(TextUtil.Print(D.getA9bTZ()));
+        D.setA9b(ZDTs);
+        LOG.debug("A9b: "+TextUtil.Print(D.getA9b()));
+        LOG.debug("A9bTZ: "+TextUtil.Print(D.getA9bTZ()));
         if (D.Write(C) == false)
           throw new Exception("Bad stuff!");
 

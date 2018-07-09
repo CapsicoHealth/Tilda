@@ -370,7 +370,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 8 2018, 00:16:31EDT
+ @generated Jul 8 2018, 22:19:16EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__CONNECTION implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -1304,13 +1304,17 @@ This is the setter for:<BR>
           __Changes.or(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask);
           __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask);
           if (_schemas == null)
-           _schemas = new ArrayList<String>();
+           {
+             _schemas = new ArrayList<String>();
+           }
           else
-           _schemas.clear();
+           {
+             _schemas.clear();
+           }
           for (String i : v)
            {
              _schemas.add(i);
-          }
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -1321,7 +1325,7 @@ This is the setter for:<BR>
         _schemas = new ArrayList<String>();
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.Connection.schemas to null: it's not nullable.");
-       else if (_schemas.get(pos).equals(v) == false)
+       else if (pos >= _schemas.size() || _schemas.get(pos).equals(v) == false)
         {
           __Changes.or(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask);
           __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask);
@@ -1331,14 +1335,18 @@ This is the setter for:<BR>
      }
    public void removeFromSchemas(String v) throws Exception
      {
+       long T0 = System.nanoTime();
        if (_schemas.remove(v) == true)
           __Changes.or(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
    public void removeFromSchemas(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_schemas.remove(pos) != null)
+        {
           __Changes.or(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask);
+        }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 

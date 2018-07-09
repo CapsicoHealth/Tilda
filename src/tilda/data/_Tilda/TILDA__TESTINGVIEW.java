@@ -270,7 +270,7 @@ This View contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 8 2018, 00:16:31EDT
+ @generated Jul 8 2018, 22:19:16EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTINGVIEW implements tilda.interfaces.ReaderObject
@@ -812,13 +812,17 @@ This is the setter for:<BR>
           __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A9TZ._Mask);
           __Nulls.andNot(TILDA__TESTINGVIEW_Factory.COLS.A9TZ._Mask);
           if (_a9TZ == null)
-           _a9TZ = new ArrayList<String>();
+           {
+             _a9TZ = new ArrayList<String>();
+           }
           else
-           _a9TZ.clear();
+           {
+             _a9TZ.clear();
+           }
           for (String i : v)
            {
              _a9TZ.add(i);
-          }
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -831,7 +835,7 @@ This is the setter for:<BR>
         {
           setNullA9TZ();
         }
-       else if (_a9TZ.get(pos).equals(v) == false)
+       else if (pos >= _a9TZ.size() || _a9TZ.get(pos).equals(v) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.TestingView.a9TZ' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -843,14 +847,18 @@ This is the setter for:<BR>
      }
     void removeFromA9TZ(String v) throws Exception
      {
+       long T0 = System.nanoTime();
        if (_a9TZ.remove(v) == true)
           __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A9TZ._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
     void removeFromA9TZ(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_a9TZ.remove(pos) != null)
+        {
           __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A9TZ._Mask);
+        }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -981,13 +989,24 @@ This is the setter for:<BR>
           __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A9._Mask);
           __Nulls.andNot(TILDA__TESTINGVIEW_Factory.COLS.A9._Mask);
           if (_a9 == null)
-           _a9 = new ArrayList<ZonedDateTime>();
-          else
-           _a9.clear();
-          for (ZonedDateTime i : v)
            {
+             _a9 = new ArrayList<ZonedDateTime>();
+             _a9TZ = new ArrayList<String>();
+           }
+          else
+           {
+             _a9.clear();
+             _a9TZ.clear();
+           }
+          for (int k = 0; k < v.size(); ++k)
+           {
+             ZonedDateTime i = v.get(k);
              _a9.add(i);
-          }
+             tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(i.getZone().getId());
+             if (ZI == null)
+              throw new Exception("Cannot set field 'tilda.data.TILDA.TestingView.a9' because the timezone value '"+i.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+             addToA9TZ(k, ZI.getId());
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -999,9 +1018,8 @@ This is the setter for:<BR>
        if (v == null)
         {
           setNullA9();
-          setNullA9TZ();
         }
-       else if (_a9.get(pos).equals(v) == false)
+       else if (pos >= _a9.size() || _a9.get(pos).equals(v) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.TestingView.a9' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -1017,14 +1035,24 @@ This is the setter for:<BR>
      }
     void removeFromA9(ZonedDateTime v) throws Exception
      {
-       if (_a9.remove(v) == true)
+       long T0 = System.nanoTime();
+       int i = _a9.indexOf(v);
+       if (1 != -1)
+        {
+          _a9.remove(i);
+          removeFromA9TZ(i);
           __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A9._Mask);
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
     void removeFromA9(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_a9.remove(pos) != null)
+        {
           __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A9._Mask);
+          removeFromA9TZ(pos);
+        }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -1053,6 +1081,7 @@ This is the null setter for:<BR>
        __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A9._Mask);
        __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9._Mask);
        _a9=null;
+       setNullA9TZ();
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -1154,13 +1183,17 @@ This is the setter for:<BR>
           __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A9C._Mask);
           __Nulls.andNot(TILDA__TESTINGVIEW_Factory.COLS.A9C._Mask);
           if (_a9c == null)
-           _a9c = new ArrayList<LocalDate>();
+           {
+             _a9c = new ArrayList<LocalDate>();
+           }
           else
-           _a9c.clear();
+           {
+             _a9c.clear();
+           }
           for (LocalDate i : v)
            {
              _a9c.add(i);
-          }
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -1173,7 +1206,7 @@ This is the setter for:<BR>
         {
           setNullA9c();
         }
-       else if (_a9c.get(pos).equals(v) == false)
+       else if (pos >= _a9c.size() || _a9c.get(pos).equals(v) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.TestingView.a9c' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -1185,14 +1218,18 @@ This is the setter for:<BR>
      }
     void removeFromA9c(LocalDate v) throws Exception
      {
+       long T0 = System.nanoTime();
        if (_a9c.remove(v) == true)
           __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A9C._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
     void removeFromA9c(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_a9c.remove(pos) != null)
+        {
           __Changes.or(TILDA__TESTINGVIEW_Factory.COLS.A9C._Mask);
+        }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 

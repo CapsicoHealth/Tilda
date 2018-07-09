@@ -273,7 +273,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 8 2018, 00:16:31EDT
+ @generated Jul 8 2018, 22:19:16EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__ZONEINFO implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -838,7 +838,6 @@ This is the setter for:<BR>
        if (v == null)
         {
           setNullDeactivated();
-          setNullDeactivatedTZ();
         }
        else if (v.equals(_deactivated) == false)
         {
@@ -878,6 +877,7 @@ This is the null setter for:<BR>
        __Changes.or(TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask);
        __Nulls.or(TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask);
        _deactivated=null;
+       setNullDeactivatedTZ();
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 

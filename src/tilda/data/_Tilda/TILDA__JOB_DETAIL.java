@@ -414,7 +414,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 8 2018, 00:16:31EDT
+ @generated Jul 8 2018, 22:19:16EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__JOB_DETAIL implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -1175,7 +1175,6 @@ This is the setter for:<BR>
        if (v == null)
         {
           setNullFileProcessStartTime();
-          setNullFileProcessStartTimeTZ();
         }
        else if (v.equals(_FileProcessStartTime) == false)
         {
@@ -1215,6 +1214,7 @@ This is the null setter for:<BR>
        __Changes.or(TILDA__JOB_DETAIL_Factory.COLS.FILEPROCESSSTARTTIME._Mask);
        __Nulls.or(TILDA__JOB_DETAIL_Factory.COLS.FILEPROCESSSTARTTIME._Mask);
        _FileProcessStartTime=null;
+       setNullFileProcessStartTimeTZ();
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -1546,7 +1546,6 @@ This is the setter for:<BR>
        if (v == null)
         {
           setNullFileProcessEndTime();
-          setNullFileProcessEndTimeTZ();
         }
        else if (v.equals(_FileProcessEndTime) == false)
         {
@@ -1586,6 +1585,7 @@ This is the null setter for:<BR>
        __Changes.or(TILDA__JOB_DETAIL_Factory.COLS.FILEPROCESSENDTIME._Mask);
        __Nulls.or(TILDA__JOB_DETAIL_Factory.COLS.FILEPROCESSENDTIME._Mask);
        _FileProcessEndTime=null;
+       setNullFileProcessEndTimeTZ();
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 

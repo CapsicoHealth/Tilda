@@ -1027,7 +1027,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 8 2018, 00:16:31EDT
+ @generated Jul 8 2018, 22:19:16EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTING implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject, tilda.interfaces.JSONable
@@ -1215,13 +1215,17 @@ This is the setter for:<BR>
           __Changes.or(TILDA__TESTING_Factory.COLS.REFNUM2._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.REFNUM2._Mask);
           if (_refnum2 == null)
-           _refnum2 = new ArrayList<Long>();
+           {
+             _refnum2 = new ArrayList<Long>();
+           }
           else
-           _refnum2.clear();
+           {
+             _refnum2.clear();
+           }
           for (long i : v)
            {
              _refnum2.add(i);
-          }
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -1230,7 +1234,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (_refnum2 == null)
         _refnum2 = new ArrayList<Long>();
-       if (_refnum2.get(pos).equals(v) == false)
+       if (pos >= _refnum2.size() || _refnum2.get(pos).equals(v) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing.refnum2' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -1242,14 +1246,18 @@ This is the setter for:<BR>
      }
    protected void removeFromRefnum2(Long v) throws Exception
      {
+       long T0 = System.nanoTime();
        if (_refnum2.remove(v) == true)
           __Changes.or(TILDA__TESTING_Factory.COLS.REFNUM2._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
    protected void removeFromRefnum2(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_refnum2.remove(pos) != null)
+        {
           __Changes.or(TILDA__TESTING_Factory.COLS.REFNUM2._Mask);
+        }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -2400,13 +2408,17 @@ This is the setter for:<BR>
           __Changes.or(TILDA__TESTING_Factory.COLS.TOPS._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.TOPS._Mask);
           if (_tops == null)
-           _tops = new ArrayList<String>();
+           {
+             _tops = new ArrayList<String>();
+           }
           else
-           _tops.clear();
+           {
+             _tops.clear();
+           }
           for (String i : v)
            {
              _tops.add(i);
-          }
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -2419,7 +2431,7 @@ This is the setter for:<BR>
         {
           setNullTops();
         }
-       else if (_tops.get(pos).equals(v) == false)
+       else if (pos >= _tops.size() || _tops.get(pos).equals(v) == false)
         {
           __Changes.or(TILDA__TESTING_Factory.COLS.TOPS._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.TOPS._Mask);
@@ -2429,14 +2441,18 @@ This is the setter for:<BR>
      }
    public void removeFromTops(String v) throws Exception
      {
+       long T0 = System.nanoTime();
        if (_tops.remove(v) == true)
           __Changes.or(TILDA__TESTING_Factory.COLS.TOPS._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
    public void removeFromTops(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_tops.remove(pos) != null)
+        {
           __Changes.or(TILDA__TESTING_Factory.COLS.TOPS._Mask);
+        }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -2590,13 +2606,17 @@ This is the setter for:<BR>
           __Changes.or(TILDA__TESTING_Factory.COLS.TOPS2._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.TOPS2._Mask);
           if (_tops2 == null)
-           _tops2 = new TreeSet<String>();
+           {
+             _tops2 = new TreeSet<String>();
+           }
           else
-           _tops2.clear();
+           {
+             _tops2.clear();
+           }
           for (String i : v)
            {
              _tops2.add(i);
-          }
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -2619,8 +2639,10 @@ This is the setter for:<BR>
      }
    public void removeFromTops2(String v) throws Exception
      {
+       long T0 = System.nanoTime();
        if (_tops2.remove(v) == true)
           __Changes.or(TILDA__TESTING_Factory.COLS.TOPS2._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3053,13 +3075,17 @@ This is the setter for:<BR>
           __Changes.or(TILDA__TESTING_Factory.COLS.A2B._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A2B._Mask);
           if (_a2b == null)
-           _a2b = new ArrayList<Character>();
+           {
+             _a2b = new ArrayList<Character>();
+           }
           else
-           _a2b.clear();
+           {
+             _a2b.clear();
+           }
           for (char i : v)
            {
              _a2b.add(i);
-          }
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -3068,7 +3094,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (_a2b == null)
         _a2b = new ArrayList<Character>();
-       if (_a2b.get(pos).equals(v) == false)
+       if (pos >= _a2b.size() || _a2b.get(pos).equals(v) == false)
         {
           __Changes.or(TILDA__TESTING_Factory.COLS.A2B._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A2B._Mask);
@@ -3078,14 +3104,18 @@ This is the setter for:<BR>
      }
    public void removeFromA2b(Character v) throws Exception
      {
+       long T0 = System.nanoTime();
        if (_a2b.remove(v) == true)
           __Changes.or(TILDA__TESTING_Factory.COLS.A2B._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
    public void removeFromA2b(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_a2b.remove(pos) != null)
+        {
           __Changes.or(TILDA__TESTING_Factory.COLS.A2B._Mask);
+        }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -3233,13 +3263,17 @@ This is the setter for:<BR>
           __Changes.or(TILDA__TESTING_Factory.COLS.A2C._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A2C._Mask);
           if (_a2c == null)
-           _a2c = new TreeSet<Character>();
+           {
+             _a2c = new TreeSet<Character>();
+           }
           else
-           _a2c.clear();
+           {
+             _a2c.clear();
+           }
           for (char i : v)
            {
              _a2c.add(i);
-          }
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -3258,8 +3292,10 @@ This is the setter for:<BR>
      }
    public void removeFromA2c(Character v) throws Exception
      {
+       long T0 = System.nanoTime();
        if (_a2c.remove(v) == true)
           __Changes.or(TILDA__TESTING_Factory.COLS.A2C._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3548,13 +3584,17 @@ This is the setter for:<BR>
           __Changes.or(TILDA__TESTING_Factory.COLS.A3B._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A3B._Mask);
           if (_a3b == null)
-           _a3b = new ArrayList<Boolean>();
+           {
+             _a3b = new ArrayList<Boolean>();
+           }
           else
-           _a3b.clear();
+           {
+             _a3b.clear();
+           }
           for (boolean i : v)
            {
              _a3b.add(i);
-          }
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -3563,7 +3603,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (_a3b == null)
         _a3b = new ArrayList<Boolean>();
-       if (_a3b.get(pos).equals(v) == false)
+       if (pos >= _a3b.size() || _a3b.get(pos).equals(v) == false)
         {
           __Changes.or(TILDA__TESTING_Factory.COLS.A3B._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A3B._Mask);
@@ -3573,14 +3613,18 @@ This is the setter for:<BR>
      }
    public void removeFromA3b(Boolean v) throws Exception
      {
+       long T0 = System.nanoTime();
        if (_a3b.remove(v) == true)
           __Changes.or(TILDA__TESTING_Factory.COLS.A3B._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
    public void removeFromA3b(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_a3b.remove(pos) != null)
+        {
           __Changes.or(TILDA__TESTING_Factory.COLS.A3B._Mask);
+        }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -3870,13 +3914,17 @@ This is the setter for:<BR>
           __Changes.or(TILDA__TESTING_Factory.COLS.A4B._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A4B._Mask);
           if (_a4b == null)
-           _a4b = new ArrayList<Double>();
+           {
+             _a4b = new ArrayList<Double>();
+           }
           else
-           _a4b.clear();
+           {
+             _a4b.clear();
+           }
           for (double i : v)
            {
              _a4b.add(i);
-          }
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -3885,7 +3933,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (_a4b == null)
         _a4b = new ArrayList<Double>();
-       if (_a4b.get(pos).equals(v) == false)
+       if (pos >= _a4b.size() || _a4b.get(pos).equals(v) == false)
         {
           __Changes.or(TILDA__TESTING_Factory.COLS.A4B._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A4B._Mask);
@@ -3895,14 +3943,18 @@ This is the setter for:<BR>
      }
    public void removeFromA4b(Double v) throws Exception
      {
+       long T0 = System.nanoTime();
        if (_a4b.remove(v) == true)
           __Changes.or(TILDA__TESTING_Factory.COLS.A4B._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
    public void removeFromA4b(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_a4b.remove(pos) != null)
+        {
           __Changes.or(TILDA__TESTING_Factory.COLS.A4B._Mask);
+        }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -4192,13 +4244,17 @@ This is the setter for:<BR>
           __Changes.or(TILDA__TESTING_Factory.COLS.A5B._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A5B._Mask);
           if (_a5b == null)
-           _a5b = new ArrayList<Float>();
+           {
+             _a5b = new ArrayList<Float>();
+           }
           else
-           _a5b.clear();
+           {
+             _a5b.clear();
+           }
           for (float i : v)
            {
              _a5b.add(i);
-          }
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -4207,7 +4263,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (_a5b == null)
         _a5b = new ArrayList<Float>();
-       if (_a5b.get(pos).equals(v) == false)
+       if (pos >= _a5b.size() || _a5b.get(pos).equals(v) == false)
         {
           __Changes.or(TILDA__TESTING_Factory.COLS.A5B._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A5B._Mask);
@@ -4217,14 +4273,18 @@ This is the setter for:<BR>
      }
    public void removeFromA5b(Float v) throws Exception
      {
+       long T0 = System.nanoTime();
        if (_a5b.remove(v) == true)
           __Changes.or(TILDA__TESTING_Factory.COLS.A5B._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
    public void removeFromA5b(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_a5b.remove(pos) != null)
+        {
           __Changes.or(TILDA__TESTING_Factory.COLS.A5B._Mask);
+        }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -4514,13 +4574,17 @@ This is the setter for:<BR>
           __Changes.or(TILDA__TESTING_Factory.COLS.A6B._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A6B._Mask);
           if (_a6b == null)
-           _a6b = new ArrayList<Long>();
+           {
+             _a6b = new ArrayList<Long>();
+           }
           else
-           _a6b.clear();
+           {
+             _a6b.clear();
+           }
           for (long i : v)
            {
              _a6b.add(i);
-          }
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -4529,7 +4593,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (_a6b == null)
         _a6b = new ArrayList<Long>();
-       if (_a6b.get(pos).equals(v) == false)
+       if (pos >= _a6b.size() || _a6b.get(pos).equals(v) == false)
         {
           __Changes.or(TILDA__TESTING_Factory.COLS.A6B._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A6B._Mask);
@@ -4539,14 +4603,18 @@ This is the setter for:<BR>
      }
    public void removeFromA6b(Long v) throws Exception
      {
+       long T0 = System.nanoTime();
        if (_a6b.remove(v) == true)
           __Changes.or(TILDA__TESTING_Factory.COLS.A6B._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
    public void removeFromA6b(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_a6b.remove(pos) != null)
+        {
           __Changes.or(TILDA__TESTING_Factory.COLS.A6B._Mask);
+        }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -4694,13 +4762,17 @@ This is the setter for:<BR>
           __Changes.or(TILDA__TESTING_Factory.COLS.A6C._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A6C._Mask);
           if (_a6c == null)
-           _a6c = new TreeSet<Long>();
+           {
+             _a6c = new TreeSet<Long>();
+           }
           else
-           _a6c.clear();
+           {
+             _a6c.clear();
+           }
           for (long i : v)
            {
              _a6c.add(i);
-          }
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -4719,8 +4791,10 @@ This is the setter for:<BR>
      }
    public void removeFromA6c(Long v) throws Exception
      {
+       long T0 = System.nanoTime();
        if (_a6c.remove(v) == true)
           __Changes.or(TILDA__TESTING_Factory.COLS.A6C._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -5009,13 +5083,17 @@ This is the setter for:<BR>
           __Changes.or(TILDA__TESTING_Factory.COLS.A7B._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A7B._Mask);
           if (_a7b == null)
-           _a7b = new ArrayList<Integer>();
+           {
+             _a7b = new ArrayList<Integer>();
+           }
           else
-           _a7b.clear();
+           {
+             _a7b.clear();
+           }
           for (int i : v)
            {
              _a7b.add(i);
-          }
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -5024,7 +5102,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (_a7b == null)
         _a7b = new ArrayList<Integer>();
-       if (_a7b.get(pos).equals(v) == false)
+       if (pos >= _a7b.size() || _a7b.get(pos).equals(v) == false)
         {
           __Changes.or(TILDA__TESTING_Factory.COLS.A7B._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A7B._Mask);
@@ -5034,14 +5112,18 @@ This is the setter for:<BR>
      }
    public void removeFromA7b(Integer v) throws Exception
      {
+       long T0 = System.nanoTime();
        if (_a7b.remove(v) == true)
           __Changes.or(TILDA__TESTING_Factory.COLS.A7B._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
    public void removeFromA7b(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_a7b.remove(pos) != null)
+        {
           __Changes.or(TILDA__TESTING_Factory.COLS.A7B._Mask);
+        }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -5474,7 +5556,6 @@ This is the setter for:<BR>
        if (v == null)
         {
           setNullA9();
-          setNullA9TZ();
         }
        else if (v.equals(_a9) == false)
         {
@@ -5514,6 +5595,7 @@ This is the null setter for:<BR>
        __Changes.or(TILDA__TESTING_Factory.COLS.A9._Mask);
        __Nulls.or(TILDA__TESTING_Factory.COLS.A9._Mask);
        _a9=null;
+       setNullA9TZ();
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -5703,13 +5785,17 @@ This is the setter for:<BR>
           __Changes.or(TILDA__TESTING_Factory.COLS.A9BTZ._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A9BTZ._Mask);
           if (_a9bTZ == null)
-           _a9bTZ = new ArrayList<String>();
+           {
+             _a9bTZ = new ArrayList<String>();
+           }
           else
-           _a9bTZ.clear();
+           {
+             _a9bTZ.clear();
+           }
           for (String i : v)
            {
              _a9bTZ.add(i);
-          }
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -5722,7 +5808,7 @@ This is the setter for:<BR>
         {
           setNullA9bTZ();
         }
-       else if (_a9bTZ.get(pos).equals(v) == false)
+       else if (pos >= _a9bTZ.size() || _a9bTZ.get(pos).equals(v) == false)
         {
           __Changes.or(TILDA__TESTING_Factory.COLS.A9BTZ._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A9BTZ._Mask);
@@ -5732,14 +5818,18 @@ This is the setter for:<BR>
      }
     void removeFromA9bTZ(String v) throws Exception
      {
+       long T0 = System.nanoTime();
        if (_a9bTZ.remove(v) == true)
           __Changes.or(TILDA__TESTING_Factory.COLS.A9BTZ._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
     void removeFromA9bTZ(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_a9bTZ.remove(pos) != null)
+        {
           __Changes.or(TILDA__TESTING_Factory.COLS.A9BTZ._Mask);
+        }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -5889,13 +5979,24 @@ This is the setter for:<BR>
           __Changes.or(TILDA__TESTING_Factory.COLS.A9B._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A9B._Mask);
           if (_a9b == null)
-           _a9b = new ArrayList<ZonedDateTime>();
-          else
-           _a9b.clear();
-          for (ZonedDateTime i : v)
            {
+             _a9b = new ArrayList<ZonedDateTime>();
+             _a9bTZ = new ArrayList<String>();
+           }
+          else
+           {
+             _a9b.clear();
+             _a9bTZ.clear();
+           }
+          for (int k = 0; k < v.size(); ++k)
+           {
+             ZonedDateTime i = v.get(k);
              _a9b.add(i);
-          }
+             tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(i.getZone().getId());
+             if (ZI == null)
+              throw new Exception("Cannot set field 'tilda.data.TILDA.Testing.a9b' because the timezone value '"+i.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+             addToA9bTZ(k, ZI.getId());
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -5907,9 +6008,8 @@ This is the setter for:<BR>
        if (v == null)
         {
           setNullA9b();
-          setNullA9bTZ();
         }
-       else if (_a9b.get(pos).equals(v) == false)
+       else if (pos >= _a9b.size() || _a9b.get(pos).equals(v) == false)
         {
           __Changes.or(TILDA__TESTING_Factory.COLS.A9B._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A9B._Mask);
@@ -5923,14 +6023,24 @@ This is the setter for:<BR>
      }
    public void removeFromA9b(ZonedDateTime v) throws Exception
      {
-       if (_a9b.remove(v) == true)
+       long T0 = System.nanoTime();
+       int i = _a9b.indexOf(v);
+       if (1 != -1)
+        {
+          _a9b.remove(i);
+          removeFromA9bTZ(i);
           __Changes.or(TILDA__TESTING_Factory.COLS.A9B._Mask);
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
    public void removeFromA9b(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_a9b.remove(pos) != null)
+        {
           __Changes.or(TILDA__TESTING_Factory.COLS.A9B._Mask);
+          removeFromA9bTZ(pos);
+        }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -5959,6 +6069,7 @@ This is the null setter for:<BR>
        __Changes.or(TILDA__TESTING_Factory.COLS.A9B._Mask);
        __Nulls.or(TILDA__TESTING_Factory.COLS.A9B._Mask);
        _a9b=null;
+       setNullA9bTZ();
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -6224,13 +6335,17 @@ This is the setter for:<BR>
           __Changes.or(TILDA__TESTING_Factory.COLS.A9D._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A9D._Mask);
           if (_a9d == null)
-           _a9d = new ArrayList<LocalDate>();
+           {
+             _a9d = new ArrayList<LocalDate>();
+           }
           else
-           _a9d.clear();
+           {
+             _a9d.clear();
+           }
           for (LocalDate i : v)
            {
              _a9d.add(i);
-          }
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -6243,7 +6358,7 @@ This is the setter for:<BR>
         {
           setNullA9d();
         }
-       else if (_a9d.get(pos).equals(v) == false)
+       else if (pos >= _a9d.size() || _a9d.get(pos).equals(v) == false)
         {
           __Changes.or(TILDA__TESTING_Factory.COLS.A9D._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A9D._Mask);
@@ -6253,14 +6368,18 @@ This is the setter for:<BR>
      }
    public void removeFromA9d(LocalDate v) throws Exception
      {
+       long T0 = System.nanoTime();
        if (_a9d.remove(v) == true)
           __Changes.or(TILDA__TESTING_Factory.COLS.A9D._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
    public void removeFromA9d(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_a9d.remove(pos) != null)
+        {
           __Changes.or(TILDA__TESTING_Factory.COLS.A9D._Mask);
+        }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -7325,7 +7444,7 @@ This is the hasChanged for:<BR>
                 } 
                if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9B._Mask) == true) 
                 { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A9B._Type, AllocatedArrays, _a9b);
+                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A9B._Type, AllocatedArrays, DateTimeUtil.toSQLTimeStamps(_a9b));
                 } 
                if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9C._Mask) == true) 
                 { 

@@ -387,7 +387,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 8 2018, 00:16:31EDT
+ @generated Jul 8 2018, 22:19:16EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__JOBS implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -911,7 +911,6 @@ This is the setter for:<BR>
        if (v == null)
         {
           setNullStartTime();
-          setNullStartTimeTZ();
         }
        else if (v.equals(_StartTime) == false)
         {
@@ -951,6 +950,7 @@ This is the null setter for:<BR>
        __Changes.or(TILDA__JOBS_Factory.COLS.STARTTIME._Mask);
        __Nulls.or(TILDA__JOBS_Factory.COLS.STARTTIME._Mask);
        _StartTime=null;
+       setNullStartTimeTZ();
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -1282,7 +1282,6 @@ This is the setter for:<BR>
        if (v == null)
         {
           setNullEndTime();
-          setNullEndTimeTZ();
         }
        else if (v.equals(_EndTime) == false)
         {
@@ -1322,6 +1321,7 @@ This is the null setter for:<BR>
        __Changes.or(TILDA__JOBS_Factory.COLS.ENDTIME._Mask);
        __Nulls.or(TILDA__JOBS_Factory.COLS.ENDTIME._Mask);
        _EndTime=null;
+       setNullEndTimeTZ();
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
