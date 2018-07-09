@@ -22,21 +22,20 @@ import java.util.regex.Pattern;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Field
+public class Field extends TypeDef
   {
     static final Logger             LOG                = LogManager.getLogger(Field.class.getName());
 
     /*@formatter:off*/
 	@SerializedName("name"       ) public String         _Name       ;
 
-    @SerializedName("type"       ) public String         _TypeStr    ;
-    @SerializedName("size"       ) public Integer        _Size       ;
     @SerializedName("nullable"   ) public Boolean        _Nullable   ;
     @SerializedName("description") public String         _Description;
     /*@formatter:on*/
@@ -67,22 +66,8 @@ public class Field
         if (TextUtil.isNullOrEmpty(_Name) == true)
           return PS.AddError("Field '" + getFullName() + "' didn't define a 'name'. It is mandatory.");
 
-        if (_TypeStr == null)
-          return PS.AddError("Field '" + getFullName() + "' didn't define a 'type'. It is mandatory.");
-        else
-          {
-            Matcher M = P.matcher(_TypeStr);
-            if (M.matches() == true)
-              {
-                _TypeSep = M.group(1);
-                _TypeStr = _TypeStr.substring(0, M.start(1) - 1);
-              }
-            if ((_Type = ColumnType.parse(_TypeStr)) == null)
-              return PS.AddError("Field '" + getFullName() + "' defined an invalid 'type' '" + _TypeStr + "'.");
-            if (_TypeSep != null && _Type.isArrayCompatible() == false)
-              return PS.AddError("Field '" + getFullName() + "' defined as a 'type' '" + _Type + "' is not compatible with being an array.");
-
-          }
+        if (super.Validate(PS, "Column '" + getFullName() + "'", true, false) == false)
+          return false;
 
         if (_Nullable == null)
           _Nullable = Boolean.TRUE;

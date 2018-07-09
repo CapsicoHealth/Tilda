@@ -161,7 +161,10 @@ public class Object extends Base
                     if (C._Type == ColumnType.DATETIME && Object.isOCCColumn(C) == false && C._FrameworkManaged == false)
                       {
                         Column TZCol = new Column(C.getName() + "TZ", null, 0, C._Nullable, ColumnMode.AUTO, C._Invariant, null, "Generated helper column to hold the time zone ID for '" + C.getName() + "'.");
-                        TZCol._SameAs = "tilda.data.TILDA.ZONEINFO.id";
+                        if (C.isCollection() == false)
+                         TZCol._SameAs = "tilda.data.TILDA.ZONEINFO.id";
+                        else
+                         TZCol._TypeStr="STRING[]"; // Only Arrays/Lists allowed for DateTimes.
                         TZCol._FrameworkManaged = true;
                         _Columns.add(i, TZCol);
                         ++i;
@@ -169,8 +172,10 @@ public class Object extends Base
                         if (ColumnNames.add(TZCol.getName().toUpperCase()) == false)
                           PS.AddError("Generated column '" + TZCol.getFullName() + "' conflicts with another column already named the same in Object '" + getFullName() + "'.");
                         TZCol.Validate(PS, this);
-                        addForeignKey(C.getName(), new String[] { TZCol.getName()
-                        }, "tilda.data.TILDA.ZONEINFO");
+                        if (C.isCollection() == false)
+                         {
+                           addForeignKey(C.getName(), new String[] { TZCol.getName() }, "tilda.data.TILDA.ZONEINFO");
+                         }
                       }
                   }
               }

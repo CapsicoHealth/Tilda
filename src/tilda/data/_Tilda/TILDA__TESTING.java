@@ -7,6 +7,7 @@
 package tilda.data._Tilda;
 
 import java.time.*;
+import java.sql.Timestamp;
 import java.util.*;
 
 import tilda.db.*;
@@ -335,6 +336,46 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>30&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing-a9bTZ_DIV' class='columns'>a9bTZ</B>&nbsp;&nbsp;</TD>
+<TD>List<String> List<>&nbsp;/&nbsp;text[]&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 'a9b'.</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>31&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing-a9b_DIV' class='columns'>a9b</B>&nbsp;&nbsp;</TD>
+<TD>List<ZonedDateTime> List<>&nbsp;/&nbsp;timestamptz[]&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>32&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing-a9c_DIV' class='columns'>a9c</B>&nbsp;&nbsp;</TD>
+<TD>LocalDate&nbsp;/&nbsp;date&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>33&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing-a9d_DIV' class='columns'>a9d</B>&nbsp;&nbsp;</TD>
+<TD>List<LocalDate> List<>&nbsp;/&nbsp;date[]&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>34&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -344,7 +385,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>The timestamp for when the record was created.</TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
-    <TD>31&nbsp;&nbsp;</TD>
+    <TD>35&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -354,7 +395,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD>The timestamp for when the record was last updated.</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
-    <TD>32&nbsp;&nbsp;</TD>
+    <TD>36&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -863,6 +904,74 @@ This Table contains the following columns:<BLOCKQUOTE>
 </tr>
 </table>
 </DIV></DIV>
+<DIV id='Testing-a9bTZ_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('Testing-a9bTZ_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Testing-a9bTZ_DIV'>a9bTZ</a> -- STRING[]</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='Testing-a9b_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('Testing-a9b_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Testing-a9b_DIV'>a9b</a> -- DATETIME[]</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='Testing-a9c_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('Testing-a9c_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Testing-a9c_DIV'>a9c</a> -- DATE</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='Testing-a9d_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('Testing-a9d_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Testing-a9d_DIV'>a9d</a> -- DATE[]</td>
+</tr>
+</table>
+</DIV></DIV>
 <DIV id='Testing-created_MODAL' class='modal'>
 <DIV class='modal-content'>
 <SPAN onclick="onModalCloseClicked('Testing-created_MODAL')" class='close'>&times;</SPAN>
@@ -918,7 +1027,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jun 28 2018, 11:41:21EDT
+ @generated Jul 9 2018, 02:15:25EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTING implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject, tilda.interfaces.JSONable
@@ -1106,13 +1215,17 @@ This is the setter for:<BR>
           __Changes.or(TILDA__TESTING_Factory.COLS.REFNUM2._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.REFNUM2._Mask);
           if (_refnum2 == null)
-           _refnum2 = new ArrayList<Long>();
+           {
+             _refnum2 = new ArrayList<Long>();
+           }
           else
-           _refnum2.clear();
+           {
+             _refnum2.clear();
+           }
           for (long i : v)
            {
              _refnum2.add(i);
-          }
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -1121,7 +1234,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (_refnum2 == null)
         _refnum2 = new ArrayList<Long>();
-       if (_refnum2.get(pos).equals(v) == false)
+       if (pos >= _refnum2.size() || _refnum2.get(pos).equals(v) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing.refnum2' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -1133,14 +1246,18 @@ This is the setter for:<BR>
      }
    protected void removeFromRefnum2(Long v) throws Exception
      {
+       long T0 = System.nanoTime();
        if (_refnum2.remove(v) == true)
           __Changes.or(TILDA__TESTING_Factory.COLS.REFNUM2._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
    protected void removeFromRefnum2(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_refnum2.remove(pos) != null)
+        {
           __Changes.or(TILDA__TESTING_Factory.COLS.REFNUM2._Mask);
+        }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -2291,13 +2408,17 @@ This is the setter for:<BR>
           __Changes.or(TILDA__TESTING_Factory.COLS.TOPS._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.TOPS._Mask);
           if (_tops == null)
-           _tops = new ArrayList<String>();
+           {
+             _tops = new ArrayList<String>();
+           }
           else
-           _tops.clear();
+           {
+             _tops.clear();
+           }
           for (String i : v)
            {
              _tops.add(i);
-          }
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -2310,7 +2431,7 @@ This is the setter for:<BR>
         {
           setNullTops();
         }
-       else if (_tops.get(pos).equals(v) == false)
+       else if (pos >= _tops.size() || _tops.get(pos).equals(v) == false)
         {
           __Changes.or(TILDA__TESTING_Factory.COLS.TOPS._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.TOPS._Mask);
@@ -2320,14 +2441,18 @@ This is the setter for:<BR>
      }
    public void removeFromTops(String v) throws Exception
      {
+       long T0 = System.nanoTime();
        if (_tops.remove(v) == true)
           __Changes.or(TILDA__TESTING_Factory.COLS.TOPS._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
    public void removeFromTops(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_tops.remove(pos) != null)
+        {
           __Changes.or(TILDA__TESTING_Factory.COLS.TOPS._Mask);
+        }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -2481,13 +2606,17 @@ This is the setter for:<BR>
           __Changes.or(TILDA__TESTING_Factory.COLS.TOPS2._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.TOPS2._Mask);
           if (_tops2 == null)
-           _tops2 = new TreeSet<String>();
+           {
+             _tops2 = new TreeSet<String>();
+           }
           else
-           _tops2.clear();
+           {
+             _tops2.clear();
+           }
           for (String i : v)
            {
              _tops2.add(i);
-          }
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -2510,8 +2639,10 @@ This is the setter for:<BR>
      }
    public void removeFromTops2(String v) throws Exception
      {
+       long T0 = System.nanoTime();
        if (_tops2.remove(v) == true)
           __Changes.or(TILDA__TESTING_Factory.COLS.TOPS2._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2944,13 +3075,17 @@ This is the setter for:<BR>
           __Changes.or(TILDA__TESTING_Factory.COLS.A2B._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A2B._Mask);
           if (_a2b == null)
-           _a2b = new ArrayList<Character>();
+           {
+             _a2b = new ArrayList<Character>();
+           }
           else
-           _a2b.clear();
+           {
+             _a2b.clear();
+           }
           for (char i : v)
            {
              _a2b.add(i);
-          }
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -2959,7 +3094,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (_a2b == null)
         _a2b = new ArrayList<Character>();
-       if (_a2b.get(pos).equals(v) == false)
+       if (pos >= _a2b.size() || _a2b.get(pos).equals(v) == false)
         {
           __Changes.or(TILDA__TESTING_Factory.COLS.A2B._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A2B._Mask);
@@ -2969,14 +3104,18 @@ This is the setter for:<BR>
      }
    public void removeFromA2b(Character v) throws Exception
      {
+       long T0 = System.nanoTime();
        if (_a2b.remove(v) == true)
           __Changes.or(TILDA__TESTING_Factory.COLS.A2B._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
    public void removeFromA2b(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_a2b.remove(pos) != null)
+        {
           __Changes.or(TILDA__TESTING_Factory.COLS.A2B._Mask);
+        }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -3124,13 +3263,17 @@ This is the setter for:<BR>
           __Changes.or(TILDA__TESTING_Factory.COLS.A2C._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A2C._Mask);
           if (_a2c == null)
-           _a2c = new TreeSet<Character>();
+           {
+             _a2c = new TreeSet<Character>();
+           }
           else
-           _a2c.clear();
+           {
+             _a2c.clear();
+           }
           for (char i : v)
            {
              _a2c.add(i);
-          }
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -3149,8 +3292,10 @@ This is the setter for:<BR>
      }
    public void removeFromA2c(Character v) throws Exception
      {
+       long T0 = System.nanoTime();
        if (_a2c.remove(v) == true)
           __Changes.or(TILDA__TESTING_Factory.COLS.A2C._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3439,13 +3584,17 @@ This is the setter for:<BR>
           __Changes.or(TILDA__TESTING_Factory.COLS.A3B._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A3B._Mask);
           if (_a3b == null)
-           _a3b = new ArrayList<Boolean>();
+           {
+             _a3b = new ArrayList<Boolean>();
+           }
           else
-           _a3b.clear();
+           {
+             _a3b.clear();
+           }
           for (boolean i : v)
            {
              _a3b.add(i);
-          }
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -3454,7 +3603,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (_a3b == null)
         _a3b = new ArrayList<Boolean>();
-       if (_a3b.get(pos).equals(v) == false)
+       if (pos >= _a3b.size() || _a3b.get(pos).equals(v) == false)
         {
           __Changes.or(TILDA__TESTING_Factory.COLS.A3B._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A3B._Mask);
@@ -3464,14 +3613,18 @@ This is the setter for:<BR>
      }
    public void removeFromA3b(Boolean v) throws Exception
      {
+       long T0 = System.nanoTime();
        if (_a3b.remove(v) == true)
           __Changes.or(TILDA__TESTING_Factory.COLS.A3B._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
    public void removeFromA3b(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_a3b.remove(pos) != null)
+        {
           __Changes.or(TILDA__TESTING_Factory.COLS.A3B._Mask);
+        }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -3761,13 +3914,17 @@ This is the setter for:<BR>
           __Changes.or(TILDA__TESTING_Factory.COLS.A4B._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A4B._Mask);
           if (_a4b == null)
-           _a4b = new ArrayList<Double>();
+           {
+             _a4b = new ArrayList<Double>();
+           }
           else
-           _a4b.clear();
+           {
+             _a4b.clear();
+           }
           for (double i : v)
            {
              _a4b.add(i);
-          }
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -3776,7 +3933,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (_a4b == null)
         _a4b = new ArrayList<Double>();
-       if (_a4b.get(pos).equals(v) == false)
+       if (pos >= _a4b.size() || _a4b.get(pos).equals(v) == false)
         {
           __Changes.or(TILDA__TESTING_Factory.COLS.A4B._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A4B._Mask);
@@ -3786,14 +3943,18 @@ This is the setter for:<BR>
      }
    public void removeFromA4b(Double v) throws Exception
      {
+       long T0 = System.nanoTime();
        if (_a4b.remove(v) == true)
           __Changes.or(TILDA__TESTING_Factory.COLS.A4B._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
    public void removeFromA4b(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_a4b.remove(pos) != null)
+        {
           __Changes.or(TILDA__TESTING_Factory.COLS.A4B._Mask);
+        }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -4083,13 +4244,17 @@ This is the setter for:<BR>
           __Changes.or(TILDA__TESTING_Factory.COLS.A5B._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A5B._Mask);
           if (_a5b == null)
-           _a5b = new ArrayList<Float>();
+           {
+             _a5b = new ArrayList<Float>();
+           }
           else
-           _a5b.clear();
+           {
+             _a5b.clear();
+           }
           for (float i : v)
            {
              _a5b.add(i);
-          }
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -4098,7 +4263,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (_a5b == null)
         _a5b = new ArrayList<Float>();
-       if (_a5b.get(pos).equals(v) == false)
+       if (pos >= _a5b.size() || _a5b.get(pos).equals(v) == false)
         {
           __Changes.or(TILDA__TESTING_Factory.COLS.A5B._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A5B._Mask);
@@ -4108,14 +4273,18 @@ This is the setter for:<BR>
      }
    public void removeFromA5b(Float v) throws Exception
      {
+       long T0 = System.nanoTime();
        if (_a5b.remove(v) == true)
           __Changes.or(TILDA__TESTING_Factory.COLS.A5B._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
    public void removeFromA5b(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_a5b.remove(pos) != null)
+        {
           __Changes.or(TILDA__TESTING_Factory.COLS.A5B._Mask);
+        }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -4405,13 +4574,17 @@ This is the setter for:<BR>
           __Changes.or(TILDA__TESTING_Factory.COLS.A6B._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A6B._Mask);
           if (_a6b == null)
-           _a6b = new ArrayList<Long>();
+           {
+             _a6b = new ArrayList<Long>();
+           }
           else
-           _a6b.clear();
+           {
+             _a6b.clear();
+           }
           for (long i : v)
            {
              _a6b.add(i);
-          }
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -4420,7 +4593,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (_a6b == null)
         _a6b = new ArrayList<Long>();
-       if (_a6b.get(pos).equals(v) == false)
+       if (pos >= _a6b.size() || _a6b.get(pos).equals(v) == false)
         {
           __Changes.or(TILDA__TESTING_Factory.COLS.A6B._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A6B._Mask);
@@ -4430,14 +4603,18 @@ This is the setter for:<BR>
      }
    public void removeFromA6b(Long v) throws Exception
      {
+       long T0 = System.nanoTime();
        if (_a6b.remove(v) == true)
           __Changes.or(TILDA__TESTING_Factory.COLS.A6B._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
    public void removeFromA6b(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_a6b.remove(pos) != null)
+        {
           __Changes.or(TILDA__TESTING_Factory.COLS.A6B._Mask);
+        }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -4585,13 +4762,17 @@ This is the setter for:<BR>
           __Changes.or(TILDA__TESTING_Factory.COLS.A6C._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A6C._Mask);
           if (_a6c == null)
-           _a6c = new TreeSet<Long>();
+           {
+             _a6c = new TreeSet<Long>();
+           }
           else
-           _a6c.clear();
+           {
+             _a6c.clear();
+           }
           for (long i : v)
            {
              _a6c.add(i);
-          }
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -4610,8 +4791,10 @@ This is the setter for:<BR>
      }
    public void removeFromA6c(Long v) throws Exception
      {
+       long T0 = System.nanoTime();
        if (_a6c.remove(v) == true)
           __Changes.or(TILDA__TESTING_Factory.COLS.A6C._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4900,13 +5083,17 @@ This is the setter for:<BR>
           __Changes.or(TILDA__TESTING_Factory.COLS.A7B._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A7B._Mask);
           if (_a7b == null)
-           _a7b = new ArrayList<Integer>();
+           {
+             _a7b = new ArrayList<Integer>();
+           }
           else
-           _a7b.clear();
+           {
+             _a7b.clear();
+           }
           for (int i : v)
            {
              _a7b.add(i);
-          }
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -4915,7 +5102,7 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (_a7b == null)
         _a7b = new ArrayList<Integer>();
-       if (_a7b.get(pos).equals(v) == false)
+       if (pos >= _a7b.size() || _a7b.get(pos).equals(v) == false)
         {
           __Changes.or(TILDA__TESTING_Factory.COLS.A7B._Mask);
           __Nulls.andNot(TILDA__TESTING_Factory.COLS.A7B._Mask);
@@ -4925,14 +5112,18 @@ This is the setter for:<BR>
      }
    public void removeFromA7b(Integer v) throws Exception
      {
+       long T0 = System.nanoTime();
        if (_a7b.remove(v) == true)
           __Changes.or(TILDA__TESTING_Factory.COLS.A7B._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
    public void removeFromA7b(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_a7b.remove(pos) != null)
+        {
           __Changes.or(TILDA__TESTING_Factory.COLS.A7B._Mask);
+        }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -5365,7 +5556,6 @@ This is the setter for:<BR>
        if (v == null)
         {
           setNullA9();
-          setNullA9TZ();
         }
        else if (v.equals(_a9) == false)
         {
@@ -5405,6 +5595,7 @@ This is the null setter for:<BR>
        __Changes.or(TILDA__TESTING_Factory.COLS.A9._Mask);
        __Nulls.or(TILDA__TESTING_Factory.COLS.A9._Mask);
        _a9=null;
+       setNullA9TZ();
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -5493,6 +5684,752 @@ This is the hasChanged for:<BR>
 */
    public boolean hasChangedA9()
      { return __Changes.intersects(TILDA__TESTING_Factory.COLS.A9._Mask); }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a9bTZ -> TILDA.Testing."a9bTZ"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a9bTZ of type List<String></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a9bTZ of type text[]</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>0</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a9b'.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   List<String> _a9bTZ;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a9bTZ -> TILDA.Testing."a9bTZ"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a9bTZ of type List<String></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a9bTZ of type text[]</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>0</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a9b'.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final String[] getA9bTZAsArray()
+      { return _a9bTZ==null? null : _a9bTZ.toArray(new String[_a9bTZ.size()]); }
+   public final Iterator<String> getA9bTZ()
+      { return _a9bTZ==null? null : _a9bTZ.iterator(); }
+   public final boolean hasA9bTZ(String v)
+      { return _a9bTZ==null? false : _a9bTZ.contains(v); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a9bTZ -> TILDA.Testing."a9bTZ"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a9bTZ of type List<String></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a9bTZ of type text[]</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>0</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a9b'.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isNullA9bTZ()
+     { return __Nulls.intersects(TILDA__TESTING_Factory.COLS.A9BTZ._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a9bTZ -> TILDA.Testing."a9bTZ"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a9bTZ of type List<String></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a9bTZ of type text[]</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>0</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a9b'.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setA9bTZ(List<String> v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (v == null  || v.isEmpty() == true)
+        setNullA9bTZ();
+       else if (CollectionUtil.equals(v, _a9bTZ) == false)
+        {
+          __Changes.or(TILDA__TESTING_Factory.COLS.A9BTZ._Mask);
+          __Nulls.andNot(TILDA__TESTING_Factory.COLS.A9BTZ._Mask);
+          if (_a9bTZ == null)
+           {
+             _a9bTZ = new ArrayList<String>();
+           }
+          else
+           {
+             _a9bTZ.clear();
+           }
+          for (String i : v)
+           {
+             _a9bTZ.add(i);
+           }
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+    void addToA9bTZ(int pos, String v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (_a9bTZ == null)
+        _a9bTZ = new ArrayList<String>();
+       if (v == null)
+        {
+          setNullA9bTZ();
+        }
+       else if (pos >= _a9bTZ.size() || _a9bTZ.get(pos).equals(v) == false)
+        {
+          __Changes.or(TILDA__TESTING_Factory.COLS.A9BTZ._Mask);
+          __Nulls.andNot(TILDA__TESTING_Factory.COLS.A9BTZ._Mask);
+          _a9bTZ.add(pos, v);
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+    void removeFromA9bTZ(String v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (_a9bTZ.remove(v) == true)
+          __Changes.or(TILDA__TESTING_Factory.COLS.A9BTZ._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+    void removeFromA9bTZ(int pos) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (_a9bTZ.remove(pos) != null)
+        {
+          __Changes.or(TILDA__TESTING_Factory.COLS.A9BTZ._Mask);
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a9bTZ -> TILDA.Testing."a9bTZ"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a9bTZ of type List<String></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a9bTZ of type text[]</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>0</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a9b'.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setNullA9bTZ()
+     {
+       long T0 = System.nanoTime();
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9BTZ._Mask) == true) // already NULL
+        return;
+       __Changes.or(TILDA__TESTING_Factory.COLS.A9BTZ._Mask);
+       __Nulls.or(TILDA__TESTING_Factory.COLS.A9BTZ._Mask);
+       _a9bTZ=null;
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a9bTZ -> TILDA.Testing."a9bTZ"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the hasChanged for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a9bTZ of type List<String></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a9bTZ of type text[]</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>0</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a9b'.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public boolean hasChangedA9bTZ()
+     { return __Changes.intersects(TILDA__TESTING_Factory.COLS.A9BTZ._Mask); }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a9b -> TILDA.Testing."a9b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a9b of type List<ZonedDateTime></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a9b of type timestamptz[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   List<ZonedDateTime> _a9b;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a9b -> TILDA.Testing."a9b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a9b of type List<ZonedDateTime></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a9b of type timestamptz[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final ZonedDateTime[] getA9bAsArray()
+      { return _a9b==null? null : _a9b.toArray(new ZonedDateTime[_a9b.size()]); }
+   public final Iterator<ZonedDateTime> getA9b()
+      { return _a9b==null? null : _a9b.iterator(); }
+   public final boolean hasA9b(ZonedDateTime v)
+      { return _a9b==null? false : _a9b.contains(v); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a9b -> TILDA.Testing."a9b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a9b of type List<ZonedDateTime></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a9b of type timestamptz[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isNullA9b()
+     { return __Nulls.intersects(TILDA__TESTING_Factory.COLS.A9B._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a9b -> TILDA.Testing."a9b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a9b of type List<ZonedDateTime></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a9b of type timestamptz[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setA9b(List<ZonedDateTime> v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (v == null  || v.isEmpty() == true)
+        setNullA9b();
+       else if (CollectionUtil.equals(v, _a9b) == false)
+        {
+          __Changes.or(TILDA__TESTING_Factory.COLS.A9B._Mask);
+          __Nulls.andNot(TILDA__TESTING_Factory.COLS.A9B._Mask);
+          if (_a9b == null)
+           {
+             _a9b = new ArrayList<ZonedDateTime>();
+             _a9bTZ = new ArrayList<String>();
+           }
+          else
+           {
+             _a9b.clear();
+             _a9bTZ.clear();
+           }
+          for (int k = 0; k < v.size(); ++k)
+           {
+             ZonedDateTime i = v.get(k);
+             _a9b.add(i);
+             tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(i.getZone().getId());
+             if (ZI == null)
+              throw new Exception("Cannot set field 'tilda.data.TILDA.Testing.a9b' because the timezone value '"+i.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+             addToA9bTZ(k, ZI.getId());
+           }
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+   public void addToA9b(int pos, ZonedDateTime v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (_a9b == null)
+        _a9b = new ArrayList<ZonedDateTime>();
+       if (v == null)
+        {
+          setNullA9b();
+        }
+       else if (pos >= _a9b.size() || _a9b.get(pos).equals(v) == false)
+        {
+          __Changes.or(TILDA__TESTING_Factory.COLS.A9B._Mask);
+          __Nulls.andNot(TILDA__TESTING_Factory.COLS.A9B._Mask);
+          _a9b.add(pos, v);
+          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
+          if (ZI == null)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing.a9b' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+          addToA9bTZ(pos, ZI.getId());
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+   public void removeFromA9b(ZonedDateTime v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       int i = _a9b.indexOf(v);
+       if (1 != -1)
+        {
+          _a9b.remove(i);
+          removeFromA9bTZ(i);
+          __Changes.or(TILDA__TESTING_Factory.COLS.A9B._Mask);
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+   public void removeFromA9b(int pos) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (_a9b.remove(pos) != null)
+        {
+          __Changes.or(TILDA__TESTING_Factory.COLS.A9B._Mask);
+          removeFromA9bTZ(pos);
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a9b -> TILDA.Testing."a9b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a9b of type List<ZonedDateTime></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a9b of type timestamptz[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setNullA9b()
+     {
+       long T0 = System.nanoTime();
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9B._Mask) == true) // already NULL
+        return;
+       __Changes.or(TILDA__TESTING_Factory.COLS.A9B._Mask);
+       __Nulls.or(TILDA__TESTING_Factory.COLS.A9B._Mask);
+       _a9b=null;
+       setNullA9bTZ();
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a9b -> TILDA.Testing."a9b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the hasChanged for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a9b of type List<ZonedDateTime></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a9b of type timestamptz[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public boolean hasChangedA9b()
+     { return __Changes.intersects(TILDA__TESTING_Factory.COLS.A9B._Mask); }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a9c -> TILDA.Testing."a9c"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a9c of type LocalDate</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a9c of type date</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   LocalDate _a9c;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a9c -> TILDA.Testing."a9c"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a9c of type LocalDate</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a9c of type date</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final LocalDate getA9c()
+      { return _a9c; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a9c -> TILDA.Testing."a9c"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a9c of type LocalDate</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a9c of type date</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isNullA9c()
+     { return __Nulls.intersects(TILDA__TESTING_Factory.COLS.A9C._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a9c -> TILDA.Testing."a9c"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a9c of type LocalDate</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a9c of type date</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setA9c(LocalDate v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (v == null)
+        {
+          setNullA9c();
+        }
+       else if (v.equals(_a9c) == false)
+        {
+          __Changes.or(TILDA__TESTING_Factory.COLS.A9C._Mask);
+          __Nulls.andNot(TILDA__TESTING_Factory.COLS.A9C._Mask);
+       _a9c = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a9c -> TILDA.Testing."a9c"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a9c of type LocalDate</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a9c of type date</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setNullA9c()
+     {
+       long T0 = System.nanoTime();
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9C._Mask) == true) // already NULL
+        return;
+       __Changes.or(TILDA__TESTING_Factory.COLS.A9C._Mask);
+       __Nulls.or(TILDA__TESTING_Factory.COLS.A9C._Mask);
+       _a9c=null;
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a9c -> TILDA.Testing."a9c"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the hasChanged for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a9c of type LocalDate</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a9c of type date</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public boolean hasChangedA9c()
+     { return __Changes.intersects(TILDA__TESTING_Factory.COLS.A9C._Mask); }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a9d -> TILDA.Testing."a9d"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a9d of type List<LocalDate></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a9d of type date[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   List<LocalDate> _a9d;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a9d -> TILDA.Testing."a9d"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a9d of type List<LocalDate></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a9d of type date[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final LocalDate[] getA9dAsArray()
+      { return _a9d==null? null : _a9d.toArray(new LocalDate[_a9d.size()]); }
+   public final Iterator<LocalDate> getA9d()
+      { return _a9d==null? null : _a9d.iterator(); }
+   public final boolean hasA9d(LocalDate v)
+      { return _a9d==null? false : _a9d.contains(v); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a9d -> TILDA.Testing."a9d"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a9d of type List<LocalDate></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a9d of type date[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isNullA9d()
+     { return __Nulls.intersects(TILDA__TESTING_Factory.COLS.A9D._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a9d -> TILDA.Testing."a9d"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a9d of type List<LocalDate></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a9d of type date[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setA9d(List<LocalDate> v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (v == null  || v.isEmpty() == true)
+        setNullA9d();
+       else if (CollectionUtil.equals(v, _a9d) == false)
+        {
+          __Changes.or(TILDA__TESTING_Factory.COLS.A9D._Mask);
+          __Nulls.andNot(TILDA__TESTING_Factory.COLS.A9D._Mask);
+          if (_a9d == null)
+           {
+             _a9d = new ArrayList<LocalDate>();
+           }
+          else
+           {
+             _a9d.clear();
+           }
+          for (LocalDate i : v)
+           {
+             _a9d.add(i);
+           }
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+   public void addToA9d(int pos, LocalDate v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (_a9d == null)
+        _a9d = new ArrayList<LocalDate>();
+       if (v == null)
+        {
+          setNullA9d();
+        }
+       else if (pos >= _a9d.size() || _a9d.get(pos).equals(v) == false)
+        {
+          __Changes.or(TILDA__TESTING_Factory.COLS.A9D._Mask);
+          __Nulls.andNot(TILDA__TESTING_Factory.COLS.A9D._Mask);
+          _a9d.add(pos, v);
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+   public void removeFromA9d(LocalDate v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (_a9d.remove(v) == true)
+          __Changes.or(TILDA__TESTING_Factory.COLS.A9D._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+   public void removeFromA9d(int pos) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (_a9d.remove(pos) != null)
+        {
+          __Changes.or(TILDA__TESTING_Factory.COLS.A9D._Mask);
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a9d -> TILDA.Testing."a9d"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a9d of type List<LocalDate></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a9d of type date[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public void setNullA9d()
+     {
+       long T0 = System.nanoTime();
+       if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9D._Mask) == true) // already NULL
+        return;
+       __Changes.or(TILDA__TESTING_Factory.COLS.A9D._Mask);
+       __Nulls.or(TILDA__TESTING_Factory.COLS.A9D._Mask);
+       _a9d=null;
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a9d -> TILDA.Testing."a9d"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the hasChanged for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a9d of type List<LocalDate></TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a9d of type date[]</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public boolean hasChangedA9d()
+     { return __Changes.intersects(TILDA__TESTING_Factory.COLS.A9D._Mask); }
 
 
 
@@ -6168,6 +7105,10 @@ This is the hasChanged for:<BR>
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A8._Mask) == true) Dst.setNullA8         (); else        Dst.setA8         (_a8         );
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9TZ._Mask) == true) Dst.setNullA9TZ       (); else        Dst.setA9TZ       (_a9TZ       );
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9._Mask) == true) Dst.setNullA9         (); else        Dst.setA9         (_a9         );
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9BTZ._Mask) == true) Dst.setNullA9bTZ      (); else        Dst.setA9bTZ      (_a9bTZ      );
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9B._Mask) == true) Dst.setNullA9b        (); else        Dst.setA9b        (_a9b        );
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9C._Mask) == true) Dst.setNullA9c        (); else        Dst.setA9c        (_a9c        );
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9D._Mask) == true) Dst.setNullA9d        (); else        Dst.setA9d        (_a9d        );
        Dst.setLastUpdated(_lastUpdated);
        if (__Changes.intersects(TILDA__TESTING_Factory.COLS.DELETED._Mask) == true) Dst.setNullDeleted    (); else        Dst.setDeleted    (_deleted    );
      }
@@ -6241,6 +7182,17 @@ This is the hasChanged for:<BR>
           if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9._Mask) == true) { TILDA__TESTING_Factory.COLS.A9.getFullColumnVarForInsert(C, S);
              V.append(__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9._Mask) == false && DateTimeUtil.isNowPlaceholder(_a9) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
+          if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9BTZ._Mask) == true) { TILDA__TESTING_Factory.COLS.A9BTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+
+          if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9B._Mask) == true) { TILDA__TESTING_Factory.COLS.A9B.getFullColumnVarForInsert(C, S);
+             V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+           }
+          if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9C._Mask) == true) { TILDA__TESTING_Factory.COLS.A9C.getFullColumnVarForInsert(C, S);
+             V.append(__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9C._Mask) == false && DateTimeUtil.isNowPlaceholder(_a9c) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+           }
+          if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9D._Mask) == true) { TILDA__TESTING_Factory.COLS.A9D.getFullColumnVarForInsert(C, S);
+             V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+           }
 
           if (__Changes.intersects(TILDA__TESTING_Factory.COLS.CREATED._Mask) == true) { TILDA__TESTING_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
              V.append(__Nulls.intersects(TILDA__TESTING_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
@@ -6299,6 +7251,23 @@ This is the hasChanged for:<BR>
               { TILDA__TESTING_Factory.COLS.A9.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
               TILDA__TESTING_Factory.COLS.A9.getFullColumnVarForUpdate(C, S);
+           }
+          if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9BTZ._Mask) == true) TILDA__TESTING_Factory.COLS.A9BTZ.getFullColumnVarForUpdate(C, S);
+
+          if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9B._Mask) == true)
+           {
+              TILDA__TESTING_Factory.COLS.A9B.getFullColumnVarForUpdate(C, S);
+           }
+          if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9C._Mask) == true)
+           {
+             if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9C._Mask) == false && DateTimeUtil.isNowPlaceholder(_a9c) == true)
+              { TILDA__TESTING_Factory.COLS.A9C.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
+             else
+              TILDA__TESTING_Factory.COLS.A9C.getFullColumnVarForUpdate(C, S);
+           }
+          if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9D._Mask) == true)
+           {
+              TILDA__TESTING_Factory.COLS.A9D.getFullColumnVarForUpdate(C, S);
            }
 
           if (__Changes.intersects(TILDA__TESTING_Factory.COLS.CREATED._Mask) == true)
@@ -6469,6 +7438,22 @@ This is the hasChanged for:<BR>
                 { 
                   if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_a9) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_a9.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
                 } 
+               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9BTZ._Mask) == true) 
+                { 
+                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9BTZ._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A9BTZ._Type, AllocatedArrays, _a9bTZ);
+                } 
+               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9B._Mask) == true) 
+                { 
+                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A9B._Type, AllocatedArrays, DateTimeUtil.toSQLTimeStamps(_a9b));
+                } 
+               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9C._Mask) == true) 
+                { 
+                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9C._Mask) == true) PS.setNull(++i, java.sql.Types.DATE); else if (DateTimeUtil.isNowPlaceholder(_a9c) == false)  PS.setDate(++i, new java.sql.Date(_a9c.getYear()-1900, _a9c.getMonthValue()-1, _a9c.getDayOfMonth()));
+                } 
+               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9D._Mask) == true) 
+                { 
+                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9D._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.DATE); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A9D._Type, AllocatedArrays, _a9d);
+                } 
                if (__Changes.intersects(TILDA__TESTING_Factory.COLS.CREATED._Mask) == true) 
                 { 
                   if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.CREATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
@@ -6592,6 +7577,10 @@ This is the hasChanged for:<BR>
        S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a8");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9TZ");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9bTZ");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9b");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9c");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9d");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "created");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "lastUpdated");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "deleted");
@@ -6683,10 +7672,14 @@ This is the hasChanged for:<BR>
                             _a7b = (List<Integer>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A7B._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING_Factory.COLS.A7B._Mask        );
                             _a8          =                              RS.getBytes    (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING_Factory.COLS.A8._Mask         );
                             _a9TZ        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING_Factory.COLS.A9TZ._Mask       ); else _a9TZ        = _a9TZ       .trim();
-                            _a9          = ProcessZDT(_a9TZ         , "tilda.data.TILDA.Testing.a9"         , RS, ++i, TILDA__TESTING_Factory.COLS.A9         , TILDA__TESTING_Factory.COLS.A9TZ         );
-                            _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
-                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
-                            _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
+                            _a9          = ProcessZDT(_a9TZ         , "tilda.data.TILDA.Testing.a9"         , RS, ++i, TILDA__TESTING_Factory.COLS.A9         , TILDA__TESTING_Factory.COLS.A9TZ         ); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING_Factory.COLS.A9._Mask         );
+                            _a9bTZ = (List<String>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A9BTZ._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING_Factory.COLS.A9BTZ._Mask      );
+                            _a9b         = ProcessZDTs(C, _a9bTZ        , "tilda.data.TILDA.Testing.a9b"        , RS, ++i, TILDA__TESTING_Factory.COLS.A9B        , TILDA__TESTING_Factory.COLS.A9BTZ        ); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING_Factory.COLS.A9B._Mask        );
+                            _a9c         = DateTimeUtil.toLocalDate(RS.getDate(++i)); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING_Factory.COLS.A9C._Mask        );
+                            _a9d = (List<LocalDate>) C.getArray(RS, ++i, TILDA__TESTING_Factory.COLS.A9D._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING_Factory.COLS.A9D._Mask        );
+                            _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING_Factory.COLS.CREATED._Mask    );
+                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask);
+                            _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING_Factory.COLS.DELETED._Mask    );
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
@@ -6702,14 +7695,42 @@ This is the hasChanged for:<BR>
      ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(RS.getTimestamp(ColumnPos, DateTimeUtil._UTC_CALENDAR), ZI == null ? "null" : ZI.getValue());
      boolean DTNull = false;
      if (RS.wasNull() == true)
-      {;
+      {
          __Nulls.or(DTField._Mask);
          DTNull = true;
-      };
+      }
      boolean TZNull = __Nulls.intersects(TZField._Mask);
      if (DTNull == false && TZNull == true)
       throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
      return ZDT;
+   }
+  private final List<ZonedDateTime> ProcessZDTs(Connection C, List<String> TimezoneIds, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)
+  throws Exception
+   {
+     List<Timestamp> L = (List<Timestamp>) C.getArray(RS, ColumnPos, DTField._Type, false);
+     boolean DTNull = false;
+     if (RS.wasNull() == true)
+      {
+         __Nulls.or(DTField._Mask);
+         DTNull = true;
+      }
+     boolean TZNull = __Nulls.intersects(TZField._Mask);
+     if (DTNull == false && TZNull == true)
+      throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
+     if (DTNull == true)
+      return null;
+
+     List<ZonedDateTime> ZDTs = new ArrayList<ZonedDateTime>();
+     for (int i = 0; i < TimezoneIds.size(); ++i)
+       {
+         String TimezoneId = TimezoneIds.get(i);
+         tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);
+         if (ZI == null && TextUtil.isNullOrEmpty(TimezoneId) == false)
+          throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + TimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+         ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(L.get(i), ZI == null ? "null" : ZI.getValue());
+         ZDTs.add(ZDT);
+       }
+     return ZDTs;
    }
 
    protected abstract boolean AfterRead(Connection C) throws Exception;
@@ -6721,31 +7742,34 @@ This is the hasChanged for:<BR>
                    "refnum: "                                                                                           +                                   getRefnum     () 
                + "; refnum2: "                                                                                          + TextUtil.Print                   (getRefnum2    ())
                + "; name: "                                                                                             + TextUtil.PrintVariableStr        (getName       ())
-               + "; description"   + (__Changes.intersects(TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDescription()))
-               + "; desc2"         + (__Changes.intersects(TILDA__TESTING_Factory.COLS.DESC2._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc2      ()))
-               + "; desc3"         + (__Changes.intersects(TILDA__TESTING_Factory.COLS.DESC3._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc3      ()))
-               + "; desc4"         + (__Changes.intersects(TILDA__TESTING_Factory.COLS.DESC4._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc4      ()))
-               + "; desc5"         + (__Changes.intersects(TILDA__TESTING_Factory.COLS.DESC5._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc5      ()))
-               + "; desc6"         + (__Changes.intersects(TILDA__TESTING_Factory.COLS.DESC6._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc6      ()))
-               + "; tops"          + (__Changes.intersects(TILDA__TESTING_Factory.COLS.TOPS._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getTops       ()))
-               + "; tops2"         + (__Changes.intersects(TILDA__TESTING_Factory.COLS.TOPS2._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getTops2      ()))
-               + "; a1"            + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A1._Mask) == true ? ": NULL" : ": " +                                   getA1         () )
-               + "; a2"            + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A2._Mask) == true ? ": NULL" : ": " +                                   getA2         () )
-               + "; a2b"           + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A2B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA2b        ()))
-               + "; a2c"           + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A2C._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA2c        ()))
-               + "; a3"            + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A3._Mask) == true ? ": NULL" : ": " +                                   getA3         () )
-               + "; a3b"           + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A3B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA3b        ()))
-               + "; a4"            + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A4._Mask) == true ? ": NULL" : ": " +                                   getA4         () )
-               + "; a4b"           + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A4B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA4b        ()))
-               + "; a5"            + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A5._Mask) == true ? ": NULL" : ": " +                                   getA5         () )
-               + "; a5b"           + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A5B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA5b        ()))
-               + "; a6"            + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A6._Mask) == true ? ": NULL" : ": " +                                   getA6         () )
-               + "; a6b"           + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A6B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA6b        ()))
-               + "; a6c"           + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A6C._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA6c        ()))
-               + "; a7"            + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A7._Mask) == true ? ": NULL" : ": " +                                   getA7         () )
-               + "; a7b"           + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A7B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA7b        ()))
-               + "; a8"            + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A8._Mask) == true ? ": NULL" : ": " +                                   getA8         () )
-               + "; a9"            + (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA9         ()))
+               + "; description"   + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDescription()))
+               + "; desc2"         + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC2._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc2      ()))
+               + "; desc3"         + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC3._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc3      ()))
+               + "; desc4"         + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC4._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc4      ()))
+               + "; desc5"         + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC5._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc5      ()))
+               + "; desc6"         + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC6._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc6      ()))
+               + "; tops"          + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.TOPS._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getTops       ()))
+               + "; tops2"         + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.TOPS2._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getTops2      ()))
+               + "; a1"            + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A1._Mask) == true ? ": NULL" : ": " +                                   getA1         () )
+               + "; a2"            + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A2._Mask) == true ? ": NULL" : ": " +                                   getA2         () )
+               + "; a2b"           + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A2B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA2b        ()))
+               + "; a2c"           + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A2C._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA2c        ()))
+               + "; a3"            + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A3._Mask) == true ? ": NULL" : ": " +                                   getA3         () )
+               + "; a3b"           + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A3B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA3b        ()))
+               + "; a4"            + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A4._Mask) == true ? ": NULL" : ": " +                                   getA4         () )
+               + "; a4b"           + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A4B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA4b        ()))
+               + "; a5"            + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A5._Mask) == true ? ": NULL" : ": " +                                   getA5         () )
+               + "; a5b"           + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A5B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA5b        ()))
+               + "; a6"            + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A6._Mask) == true ? ": NULL" : ": " +                                   getA6         () )
+               + "; a6b"           + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A6B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA6b        ()))
+               + "; a6c"           + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A6C._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA6c        ()))
+               + "; a7"            + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A7._Mask) == true ? ": NULL" : ": " +                                   getA7         () )
+               + "; a7b"           + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A7B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA7b        ()))
+               + "; a8"            + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A8._Mask) == true ? ": NULL" : ": " +                                   getA8         () )
+               + "; a9"            + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA9         ()))
+               + "; a9b"           + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA9b        ()))
+               + "; a9c"           + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9C._Mask) == true ? ": NULL" : ": " +                                   getA9c        () )
+               + "; a9d"           + (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9D._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA9d        ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

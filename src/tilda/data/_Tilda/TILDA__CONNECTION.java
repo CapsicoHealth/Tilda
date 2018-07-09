@@ -7,6 +7,7 @@
 package tilda.data._Tilda;
 
 import java.time.*;
+import java.sql.Timestamp;
 import java.util.*;
 
 import tilda.db.*;
@@ -369,7 +370,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jun 28 2018, 11:41:21EDT
+ @generated Jul 9 2018, 02:15:25EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__CONNECTION implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -1303,13 +1304,17 @@ This is the setter for:<BR>
           __Changes.or(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask);
           __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask);
           if (_schemas == null)
-           _schemas = new ArrayList<String>();
+           {
+             _schemas = new ArrayList<String>();
+           }
           else
-           _schemas.clear();
+           {
+             _schemas.clear();
+           }
           for (String i : v)
            {
              _schemas.add(i);
-          }
+           }
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
@@ -1320,7 +1325,7 @@ This is the setter for:<BR>
         _schemas = new ArrayList<String>();
        if (v == null)
         throw new Exception("Cannot set tilda.data.TILDA.Connection.schemas to null: it's not nullable.");
-       else if (_schemas.get(pos).equals(v) == false)
+       else if (pos >= _schemas.size() || _schemas.get(pos).equals(v) == false)
         {
           __Changes.or(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask);
           __Nulls.andNot(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask);
@@ -1330,14 +1335,18 @@ This is the setter for:<BR>
      }
    public void removeFromSchemas(String v) throws Exception
      {
+       long T0 = System.nanoTime();
        if (_schemas.remove(v) == true)
           __Changes.or(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask);
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
    public void removeFromSchemas(int pos) throws Exception
      {
        long T0 = System.nanoTime();
        if (_schemas.remove(pos) != null)
+        {
           __Changes.or(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask);
+        }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -2363,9 +2372,9 @@ This is the hasChanged for:<BR>
                             _initial     =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask    );
                             _max         =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.MAX._Mask        );
                             _schemas = (List<String>) C.getArray(RS, ++i, TILDA__CONNECTION_Factory.COLS.SCHEMAS._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask    );
-                            _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
-                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
-                            _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
+                            _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.CREATED._Mask    );
+                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.LASTUPDATED._Mask);
+                            _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__CONNECTION_Factory.COLS.DELETED._Mask    );
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
@@ -2378,7 +2387,7 @@ This is the hasChanged for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "active"        + (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask) == true ? ": NULL" : ": " +                                   getActive     () )
+                   "active"        + (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask) == true ? ": NULL" : ": " +                                   getActive     () )
                + "; id: "                                                                                                  + TextUtil.PrintVariableStr        (getId         ())
                + "; driver: "                                                                                              + TextUtil.PrintVariableStr        (getDriver     ())
                + "; db: "                                                                                                  + TextUtil.PrintVariableStr        (getDb         ())

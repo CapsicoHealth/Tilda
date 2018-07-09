@@ -17,7 +17,9 @@
 package tilda.parsing.parts;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,6 +30,7 @@ import tilda.enums.AggregateType;
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.JoinType;
+import tilda.enums.OrderType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.utils.TextUtil;
@@ -38,13 +41,15 @@ public class ViewColumn
 
     /*@formatter:off*/
 	@SerializedName("name"       ) public String         _Name         ;
-	@SerializedName("sameas"     ) public String         _SameAs       ;
+	@SerializedName("sameas"     ) public String         _Sameas_DEPRECATED;
+    @SerializedName("sameAs"     ) public String         _SameAs       ;
     @SerializedName("as"         ) public String         _As           ;
     @SerializedName("prefix"     ) public String         _Prefix       ;
     @SerializedName("exclude"    ) public String[]       _Exclude       = new String[] { };
     @SerializedName("joinType"   ) public String         _JoinStr      ;
     @SerializedName("joinOnly"   ) public boolean        _JoinOnly      = false;
     @SerializedName("aggregate"  ) public String         _AggregateStr ;
+    @SerializedName("orderBy"    ) public String[]       _OrderBy;
     @SerializedName("coalesce"   ) public String         _Coalesce     = null;
     @SerializedName("distinct"   ) public Boolean        _Distinct     = false;
     @SerializedName("filter"     ) public String         _Filter       ;
@@ -70,10 +75,13 @@ public class ViewColumn
      * }
      */
 
-    public transient View          _ParentView;
-    public transient Column        _SameAsObj;
-    public transient JoinType      _Join;
-    public transient AggregateType _Aggregate;
+    public transient View            _ParentView;
+    public transient Column          _SameAsObj;
+    public transient JoinType        _Join;
+    public transient AggregateType   _Aggregate;
+    public transient List<Column>    _OrderByObjs   = new ArrayList<Column>();
+    public transient List<OrderType> _OrderByOrders = new ArrayList<OrderType>();
+
     public transient boolean       _FailedValidation   = false;
 
     public boolean                 _FrameworkGenerated = false;
@@ -97,10 +105,10 @@ public class ViewColumn
     public String getAggregateName()
       {
         if (_Aggregate == null)
-         return getName();
+          return getName();
         if (_Aggregate == AggregateType.COUNT && _SameAsObj == null)
-         return _Distinct == true ? "COUNT(DISTINCT "+getName()+")" : "COUNT(*)";
-        return _Aggregate.name() + (_Distinct == true ? "(DISTINCT ":"(") + (_SameAsObj == null ? getShortName() : _SameAsObj.getShortName()) + ")";
+          return _Distinct == true ? "COUNT(DISTINCT " + getName() + ")" : "COUNT(*)";
+        return _Aggregate.name() + (_Distinct == true ? "(DISTINCT " : "(") + (_SameAsObj == null ? getShortName() : _SameAsObj.getShortName()) + ")";
       }
 
     public ColumnType getAggregateType()
@@ -110,20 +118,36 @@ public class ViewColumn
         : _Aggregate.getType(_SameAsObj.getType());
       }
 
+    
+    public boolean FixSameAs(ParserSession PS)
+      {
+        if (TextUtil.isNullOrEmpty(_Sameas_DEPRECATED) == false)
+          {
+            if (TextUtil.isNullOrEmpty(_SameAs) == false)
+              return PS.AddError("View column '" + getFullName() + "' defined both a 'sameAs' and a 'sameas'. Only one is allowed, and preferrably 'sameAs' since 'sameas' has been deprecated.");
+            _SameAs = _Sameas_DEPRECATED;
+            _Sameas_DEPRECATED = null;
+          }
+        return true;
+      }
+    
     public boolean Validate(ParserSession PS, View ParentView)
       {
         int Errs = PS.getErrorCount();
         _ParentView = ParentView;
 
+        if (FixSameAs(PS) == false)
+         return false;
+
         // Mandatories
-        if (TextUtil.isNullOrEmpty(_SameAs) == true && AggregateType.COUNT.name().equalsIgnoreCase(_AggregateStr) == false)
+        if (TextUtil.isNullOrEmpty(_SameAs) == true)
           return PS.AddError("View column '" + getFullName() + "' didn't define a 'sameAs'. It is mandatory.");
 
         if (TextUtil.isNullOrEmpty(_SameAs) == false)
           {
             _SameAsObj = ValidateSameAs(PS, getFullName(), _SameAs, _ParentView);
             if (_SameAsObj == null)
-             return false;
+              return false;
           }
 
         if (TextUtil.isNullOrEmpty(_Name) == true)
@@ -153,6 +177,18 @@ public class ViewColumn
 
         if (TextUtil.isNullOrEmpty(_Description) == true && _SameAsObj != null)
           _Description = _SameAsObj._Description;
+        
+        if (_OrderBy!=null && _OrderBy.length > 0)
+          {
+            if (_Aggregate == null)
+              PS.AddError("View Column '" + getFullName() + "' defined an orderBy value without specifying an aggregate. OrderBys are meant only for ARRAY, FIRST or LAST aggregates.");
+            else if (_Aggregate.isOrderable() == false)
+             PS.AddError("View Column '" + getFullName() + "' defined an orderBy value without specifying an ARRAY/FIRST/LAST aggregate. OrderBys are meant only for ARRAY, FIRST or LAST aggregates.");
+            else if (_Distinct == true)
+              PS.AddError("View Column '" + getFullName() + "' defined an orderBy value in a Distinct aggregate, which is not supported.");
+            Set<String> Names = new HashSet<String>();
+            Index.processOrderBy(PS, "View Column '" + getFullName() + "' array aggregate", Names, ParentView, _OrderBy, _OrderByObjs, _OrderByOrders);
+          }
 
         return Errs == PS.getErrorCount();
       }
@@ -169,7 +205,7 @@ public class ViewColumn
             Column Col = null;
             Schema S = PS.getSchema(R._P, R._S);
             if (S == null)
-             PS.AddError("Column '" + ColFullName + "' is declaring sameas '" + SameAs + "' resolving to '" + R.getFullName() + "' where schema '"+R._P + "." + R._S+"' cannot be found.");
+              PS.AddError("Column '" + ColFullName + "' is declaring sameas '" + SameAs + "' resolving to '" + R.getFullName() + "' where schema '" + R._P + "." + R._S + "' cannot be found.");
             else
               {
                 Object O = S.getObject(R._O);

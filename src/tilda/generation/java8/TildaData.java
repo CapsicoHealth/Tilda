@@ -37,9 +37,10 @@ import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
 import tilda.parsing.parts.JsonField;
-import tilda.parsing.parts.OutputMapping;
 import tilda.parsing.parts.Object;
+import tilda.parsing.parts.OutputMapping;
 import tilda.utils.AnsiUtil;
+import tilda.utils.DateTimeUtil;
 import tilda.utils.PaddingUtil;
 import tilda.utils.TextUtil;
 
@@ -67,6 +68,7 @@ public class TildaData implements CodeGenTildaData
             if (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATE)
               {
                 Out.println("import java.time.*;");
+                Out.println("import java.sql.Timestamp;");
                 break;
               }
           }
@@ -447,9 +449,17 @@ public class TildaData implements CodeGenTildaData
             if (C._JsonSchema == null)
               {
                 Out.println("          if (_" + C.getName() + " == null)");
-                Out.println("           _" + C.getName() + " = new " + (C.isList() == true ? "ArrayList" : "TreeSet") + "<" + JavaJDBCType.getFieldTypeBaseClass(C) + ">();");
+                Out.println("           {");
+                Out.println("             _" + C.getName() + " = new " + (C.isList() == true ? "ArrayList" : "TreeSet") + "<" + JavaJDBCType.getFieldTypeBaseClass(C) + ">();");
+                if (C.getType() == ColumnType.DATETIME && Object.isOCCColumn(C) == false)
+                  Out.println("             _" + C.getName() + "TZ = new " + (C.isList() == true ? "ArrayList" : "TreeSet") + "<String>();");
+                Out.println("           }");
                 Out.println("          else");
-                Out.println("           _" + C.getName() + ".clear();");
+                Out.println("           {");
+                Out.println("             _" + C.getName() + ".clear();");
+                if (C.getType() == ColumnType.DATETIME && Object.isOCCColumn(C) == false)
+                  Out.println("             _" + C.getName() + "TZ.clear();");
+                Out.println("           }");
                 if (C._Mapper != null)
                   {
                     if (C._Mapper._Name != ColumnMapperMode.NONE)
@@ -467,8 +477,19 @@ public class TildaData implements CodeGenTildaData
                         Out.println("           _" + C.getName() + "MappedGroup.clear();");
                       }
                   }
-                Out.println("          for (" + JavaJDBCType.getFieldTypeBase(C) + " i : v)");
-                Out.println("           {");
+                if (C.getType() == ColumnType.DATETIME && Object.isOCCColumn(C) == false)
+                  {
+                    if (C.isList() == false)
+                      throw new Error("ERROR: Cannot have Sets of DateTimes!");
+                    Out.println("          for (int k = 0; k < v.size(); ++k)");
+                    Out.println("           {");
+                    Out.println("             " + JavaJDBCType.getFieldTypeBase(C) + " i = v.get(k);");
+                  }
+                else
+                  {
+                    Out.println("          for (" + JavaJDBCType.getFieldTypeBase(C) + " i : v)");
+                    Out.println("           {");
+                  }
                 if (C._Enum != null)
                   {
                     String FactoryClassName = Helper.getFullAppFactoryClassName(C._Enum._DestObjectObj);
@@ -480,6 +501,13 @@ public class TildaData implements CodeGenTildaData
                   }
                 else
                   Out.println("             _" + C.getName() + ".add(i);");
+                if (C.getType() == ColumnType.DATETIME && Object.isOCCColumn(C) == false)
+                  {
+                    Out.println("             tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(i.getZone().getId());");
+                    Out.println("             if (ZI == null)");
+                    Out.println("              throw new Exception(\"Cannot set field '" + C.getFullName() + "' because the timezone value '\"+i.getZone().getId()+\"' is unknown. Make sure it is mapped properly in the ZoneInfo table.\");");
+                    Out.println("             addTo" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "TZ(k, ZI.getId());");
+                  }
                 if (C._Mapper != null)
                   {
                     String ClassName = Helper.getFullAppFactoryClassName(C._Mapper._DestObjectObj);
@@ -496,7 +524,7 @@ public class TildaData implements CodeGenTildaData
                     if (C._Mapper._Group != ColumnMapperMode.NONE)
                       Out.println("             _" + C.getName() + "MappedGroup.add(" + ClassName + ".getMappedGroup(" + Str + ", i));");
                   }
-                Out.println("          }");
+                Out.println("           }");
               }
             else
               {
@@ -551,7 +579,7 @@ public class TildaData implements CodeGenTildaData
                   if (C.isSet() == true)
                     Out.println("       if (_" + C.getName() + ".contains(v) == false)");
                   else if (C.isList() == true)
-                    Out.println("       if (_" + C.getName() + ".get(pos).equals(v) == false)");
+                    Out.println("       if (pos >= _" + C.getName() + ".size() || _" + C.getName() + ".get(pos).equals(v) == false)");
                   else
                     Out.println("       if (v != _" + C.getName() + ")");
                   Out.println("        {");
@@ -568,10 +596,6 @@ public class TildaData implements CodeGenTildaData
                         Out.println("          _" + C.getName() + " = null;");
                       else
                         Out.println("          setNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "();");
-                      if (C.getType() == ColumnType.DATETIME && Object.isOCCColumn(C) == false)
-                        {
-                          Out.println("          setNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "TZ();");
-                        }
                       Out.println("        }");
                     }
                   else
@@ -584,7 +608,7 @@ public class TildaData implements CodeGenTildaData
                   if (C.isSet() == true)
                     Out.println("       else if (_" + C.getName() + ".contains(v) == false)");
                   else if (C.isList() == true)
-                    Out.println("       else if (_" + C.getName() + ".get(pos).equals(v) == false)");
+                    Out.println("       else if (pos >= _" + C.getName() + ".size() || _" + C.getName() + ".get(pos).equals(v) == false)");
                   else
                     Out.println("       else if (v.equals(_" + C.getName() + ") == false)");
                   Out.println("        {");
@@ -640,7 +664,10 @@ public class TildaData implements CodeGenTildaData
                 Out.println("          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());");
                 Out.println("          if (ZI == null)");
                 Out.println("           throw new Exception(\"Cannot set field '" + C.getFullName() + "' because the timezone value '\"+v.getZone().getId()+\"' is unknown. Make sure it is mapped properly in the ZoneInfo table.\");");
-                Out.println("          set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "TZ(ZI.getId());");
+                if (C.isCollection() == true)
+                  Out.println("          addTo" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "TZ(pos, ZI.getId());");
+                else
+                  Out.println("          set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "TZ(ZI.getId());");
               }
             if (C.getType() != ColumnType.BINARY)
               Out.println("        }");
@@ -651,13 +678,28 @@ public class TildaData implements CodeGenTildaData
               {
                 Out.println("   " + Visibility + " void removeFrom" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(" + JavaJDBCType.getFieldTypeBaseClass(C) + " v) throws Exception");
                 Out.println("     {");
+                Out.println("       long T0 = System.nanoTime();");
                 if (C._Mode != ColumnMode.CALCULATED)
                   {
-                    Out.println("       if (_" + C.getName() + ".remove(v) == true)");
-                    Out.println("          __Changes.or(" + Mask + ");");
+                    if (C.getType() == ColumnType.DATETIME && Object.isOCCColumn(C) == false)
+                      {
+                        Out.println("       int i = _" + C.getName() + ".indexOf(v);");
+                        Out.println("       if (1 != -1)");
+                        Out.println("        {");
+                        Out.println("          _" + C.getName() + ".remove(i);");
+                        Out.println("          removeFrom" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "TZ(i);");
+                        Out.println("          __Changes.or(" + Mask + ");");
+                        Out.println("        }");
+                      }
+                    else
+                      {
+                        Out.println("       if (_" + C.getName() + ".remove(v) == true)");
+                        Out.println("          __Changes.or(" + Mask + ");");
+                      }
                   }
                 else
                   Out.println("       _" + C.getName() + ".remove(v);");
+                Out.println("       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);");
                 Out.println("     }");
               }
             if (C.isList() == true)
@@ -668,7 +710,11 @@ public class TildaData implements CodeGenTildaData
                 if (C._Mode != ColumnMode.CALCULATED)
                   {
                     Out.println("       if (_" + C.getName() + ".remove(pos) != null)");
+                    Out.println("        {");
                     Out.println("          __Changes.or(" + Mask + ");");
+                    if (C.getType() == ColumnType.DATETIME && Object.isOCCColumn(C) == false)
+                      Out.println("          removeFrom" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "TZ(pos);");
+                    Out.println("        }");
                   }
                 else
                   Out.println("       _" + C.getName() + ".remove(pos);");
@@ -823,6 +869,10 @@ public class TildaData implements CodeGenTildaData
               default:
                 throw new Error("ERROR! Cannot match ColumnType " + C.getType() + " when generating a null setter");
             }
+        if (C.getType() == ColumnType.DATETIME && Object.isOCCColumn(C) == false)
+          {
+            Out.println("       setNull" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "TZ();");
+          }
         Out.println("       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);");
         Out.println("     }");
       }
@@ -897,7 +947,7 @@ public class TildaData implements CodeGenTildaData
                   case DATE:
                   case DATETIME:
                     Out.println();
-                    Out.println("             V.append(__Nulls.intersects(" + Mask + ") == false && DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == true ? C.getCommaCurrentTimestamp() : " + Helper.getSupportClassFullName(O._ParentSchema) + "._COMMAQUESTION);");
+                    Out.println("             V.append(" + (C.isCollection() == false ? "__Nulls.intersects(" + Mask + ") == false && DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == true ? C.getCommaCurrentTimestamp() : " : "") + Helper.getSupportClassFullName(O._ParentSchema) + "._COMMAQUESTION);");
                     Out.println("           }");
                     if (C._DefaultCreateValue != null)
                       {
@@ -946,9 +996,12 @@ public class TildaData implements CodeGenTildaData
                   case DATETIME:
                     Out.println("          if (__Changes.intersects(" + Mask + ") == true)");
                     Out.println("           {");
-                    Out.println("             if (__Nulls.intersects(" + Mask + ") == false && DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == true)");
-                    Out.println("              { " + Helper.getRuntimeInsertStr(C) + "; S.append(C.getEqualCurrentTimestamp()); }");
-                    Out.println("             else");
+                    if (C.isCollection() == false)
+                      {
+                        Out.println("             if (__Nulls.intersects(" + Mask + ") == false && DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == true)");
+                        Out.println("              { " + Helper.getRuntimeInsertStr(C) + "; S.append(C.getEqualCurrentTimestamp()); }");
+                        Out.println("             else");
+                      }
                     Out.println("              " + Helper.getRuntimeUpdateStr(C) + ";");
                     Out.println("           }");
                     if (C._DefaultUpdateValue != null)
@@ -970,8 +1023,8 @@ public class TildaData implements CodeGenTildaData
                   case BITFIELD:
                   case BOOLEAN:
                   case CHAR:
-                  case DOUBLE:
                   case FLOAT:
+                  case DOUBLE:
                   case INTEGER:
                   case LONG:
                   case STRING:
@@ -1022,18 +1075,18 @@ public class TildaData implements CodeGenTildaData
               switch (C.getType())
                 {
                   case DATE:
-                    Out.print(" else if (DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == false) ");
+                    Out.print(" else ");
                     if (C.isCollection() == false)
-                      Out.println("PS.setDate(++i, new java.sql.Date(_" + C.getName() + ".getYear(), _" + C.getName() + ".getMonthValue(), _" + C.getName() + ".getDayOfMonth()));");
+                      Out.println("if (DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == false)  PS.setDate(++i, new java.sql.Date(_" + C.getName() + ".getYear()-1900, _" + C.getName() + ".getMonthValue()-1, _" + C.getName() + ".getDayOfMonth()));");
                     else
                       Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, AllocatedArrays, _" + C.getName() + ");");
                     break;
                   case DATETIME:
-                    Out.print(" else if (DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == false) ");
+                    Out.print(" else ");
                     if (C.isCollection() == false)
-                      Out.println("PS.setTimestamp(++i, new java.sql.Timestamp(_" + C.getName() + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
+                      Out.println("if (DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == false) PS.setTimestamp(++i, new java.sql.Timestamp(_" + C.getName() + ".toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);");
                     else
-                      Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, AllocatedArrays, _" + C.getName() + ");");
+                      Out.println("C.setArray(PS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, AllocatedArrays, DateTimeUtil.toSQLTimeStamps(_" + C.getName() + "));");
                     break;
                   case JSON:
                     Out.println(" else PS.set" + JavaJDBCType.get(C.getType())._JDBCType + "(++i, " + (C.getType() == ColumnType.CHAR ? "\"\"+" : "") + "_" + C.getName() + ");");
@@ -1219,7 +1272,6 @@ public class TildaData implements CodeGenTildaData
                     Out.println(Header + "    " + C._JsonSchema._TypeName + "[] tmp = gson.fromJson(_" + C.getName() + ", " + C._JsonSchema._TypeName + "[].class);");
                     Out.println(Header + "    _" + C.getName() + "Obj = CollectionUtil.toList(tmp);");
                     Out.println(Header + "  }");
-                    Out.print(Header + " if (RS.wasNull() == true) __Nulls.or(" + Mask + Pad + ");");
                     break;
                   case DOUBLE:
                   case FLOAT:
@@ -1238,18 +1290,20 @@ public class TildaData implements CodeGenTildaData
                       Out.print("_" + C.getName() + Pad + " = TextUtil.Trim               (RS.get" + JavaJDBCType.get(C.getType())._JDBCType + "(++i)) ; ");
                     else
                       Out.print("_" + C.getName() + Pad + " =                              RS.get" + JavaJDBCType.get(C.getType())._JDBCType + "(++i) ; ");
-                    Out.print(" if (RS.wasNull() == true) __Nulls.or(" + Mask + Pad + ");");
                     break;
                   case DATE:
                     if (C.isCollection() == true)
-                      // Out.print("_" + C.getName() + Pad + " = " + SerializeArray(G) + "((" + JavaJDBCType.get(C.getType())._JavaClassType + "[])RS.getArray(++i).getArray());");
-                      throw new Error("Cannot do Date arrays yet!");
-                    Out.print("_" + C.getName() + Pad + " = DateTimeUtil.toLocalDate(RS.getDate(++i));");
+                      Out.print("_" + C.getName() + " = (" + (C.isSet() == true ? "Set<" : "List<") + JavaJDBCType.get(C.getType())._JavaClassType + ">) C.getArray(RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "._Type, " + C.isSet() + ");");
+                    // Out.print("_" + C.getName() + Pad + " = " + SerializeArray(G) + "((" + JavaJDBCType.get(C.getType())._JavaClassType + "[])RS.getArray(++i).getArray());");
+                    // throw new Error("Cannot do Date arrays yet!");
+                    else
+                      Out.print("_" + C.getName() + Pad + " = DateTimeUtil.toLocalDate(RS.getDate(++i));");
                     break;
                   case DATETIME:
                     if (C.isCollection() == true)
-                      // Out.print("_" + C.getName() + Pad + " = " + SerializeArray(G) + "((" + JavaJDBCType.get(C.getType())._JavaClassType + "[])RS.getArray(++i).getArray());");
-                      throw new Error("Cannot do DateTime arrays yet!");
+                      Out.print("_" + C.getName() + Pad + " = ProcessZDTs(C, _" + C.getName() + "TZ" + Pad + ", \"" + C.getFullName() + "\"" + Pad + ", RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + Pad + ", " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "TZ" + Pad + ");");
+                    // Out.print("_" + C.getName() + Pad + " = " + SerializeArray(G) + "((" + JavaJDBCType.get(C.getType())._JavaClassType + "[])RS.getArray(++i).getArray());");
+                    // throw new Error("Cannot do DateTime arrays yet!");
                     else if (C.isOCCGenerated() == false)
                       Out.print("_" + C.getName() + Pad + " = ProcessZDT(_" + C.getName() + "TZ" + Pad + ", \"" + C.getFullName() + "\"" + Pad + ", RS, ++i, " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + Pad + ", " + O._BaseClassName + "_Factory.COLS." + C.getName().toUpperCase() + "TZ" + Pad + ");");
                     else
@@ -1258,6 +1312,8 @@ public class TildaData implements CodeGenTildaData
                   default:
                     throw new Error("ERROR! Cannot match ColumnType " + C.getType() + " when generating the Read method");
                 }
+
+              Out.print(" if (RS.wasNull() == true) __Nulls.or(" + Mask + Pad + ");");
               if (G.getSql().stringNeedsTrim(C) == true)
                 Out.print(" else _" + C.getName() + Pad + " = _" + C.getName() + Pad + ".trim();");
               Out.println();
@@ -1341,14 +1397,47 @@ public class TildaData implements CodeGenTildaData
               Out.println("     ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(RS.getTimestamp(ColumnPos, DateTimeUtil._UTC_CALENDAR), ZI == null ? \"null\" : ZI.getValue());");
               Out.println("     boolean DTNull = false;");
               Out.println("     if (RS.wasNull() == true)");
-              Out.println("      {;");
+              Out.println("      {");
               Out.println("         __Nulls.or(DTField._Mask);");
               Out.println("         DTNull = true;");
-              Out.println("      };");
+              Out.println("      }");
               Out.println("     boolean TZNull = __Nulls.intersects(TZField._Mask);");
               Out.println("     if (DTNull == false && TZNull == true)");
               Out.println("      throw new Exception(\"The field \"+DTFieldName+\" is not null while its associated timezone field '\"+DTFieldName+\"TZ' is null. A TZ is mandatory for not null timestamps.\");");
               Out.println("     return ZDT;");
+              Out.println("   }");
+              break;
+            }
+        for (Column C : O._Columns)
+          if (C != null && C.getType() == ColumnType.DATETIME && Object.isOCCColumn(C) == false && C.isCollection() == true)
+            {
+              Out.println("  private final List<ZonedDateTime> ProcessZDTs(Connection C, List<String> TimezoneIds, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)");
+              Out.println("  throws Exception");
+              Out.println("   {");
+              Out.println("     List<Timestamp> L = (List<Timestamp>) C.getArray(RS, ColumnPos, DTField._Type, false);");
+              Out.println("     boolean DTNull = false;");
+              Out.println("     if (RS.wasNull() == true)");
+              Out.println("      {");
+              Out.println("         __Nulls.or(DTField._Mask);");
+              Out.println("         DTNull = true;");
+              Out.println("      }");
+              Out.println("     boolean TZNull = __Nulls.intersects(TZField._Mask);");
+              Out.println("     if (DTNull == false && TZNull == true)");
+              Out.println("      throw new Exception(\"The field \"+DTFieldName+\" is not null while its associated timezone field '\"+DTFieldName+\"TZ' is null. A TZ is mandatory for not null timestamps.\");");
+              Out.println("     if (DTNull == true)");
+              Out.println("      return null;");
+              Out.println();
+              Out.println("     List<ZonedDateTime> ZDTs = new ArrayList<ZonedDateTime>();");
+              Out.println("     for (int i = 0; i < TimezoneIds.size(); ++i)");
+              Out.println("       {");
+              Out.println("         String TimezoneId = TimezoneIds.get(i);");
+              Out.println("         tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);");
+              Out.println("         if (ZI == null && TextUtil.isNullOrEmpty(TimezoneId) == false)");
+              Out.println("          throw new Exception(\"Cannot set field '\"+DTFieldName+\"' because the timezone Id '\" + TimezoneId + \"' is unknown. Make sure it is mapped properly in the ZoneInfo table.\");");
+              Out.println("         ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(L.get(i), ZI == null ? \"null\" : ZI.getValue());");
+              Out.println("         ZDTs.add(ZDT);");
+              Out.println("       }");
+              Out.println("     return ZDTs;");
               Out.println("   }");
               break;
             }
@@ -1374,7 +1463,7 @@ public class TildaData implements CodeGenTildaData
               Out.print((First == false ? "               + \"; " : "                   \"") + C.getName());
 
               if (Nullable)
-                Out.print("\"" + Pad + "   + (__Changes.intersects(" + Mask + ") == true ? \": NULL\" : \"");
+                Out.print("\"" + Pad + "   + (__Nulls.intersects(" + Mask + ") == true ? \": NULL\" : \"");
 
               String Lead = Nullable == true ? "" : PaddingUtil.getPad(Mask.length() + Pad.length() * 2) + "                                        ";
               if (C.isCollection() == false)
@@ -1461,7 +1550,7 @@ public class TildaData implements CodeGenTildaData
               }
             for (OutputFormatType OTF : OM._OutputTypes)
               if (OTF != OutputFormatType.JSON && OTF != OutputFormatType.CSV && OTF != OutputFormatType.NVP)
-               throw new Error("Object '"+O.getFullName()+"' is defining an output mapping '"+O._Name+"' with an unsupported output format type "+OTF.name()+".");
+                throw new Error("Object '" + O.getFullName() + "' is defining an output mapping '" + O._Name + "' with an unsupported output format type " + OTF.name() + ".");
           }
       }
 

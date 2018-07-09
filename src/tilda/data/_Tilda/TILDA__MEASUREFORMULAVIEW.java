@@ -425,7 +425,7 @@ This View contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jun 28 2018, 11:41:21EDT
+ @generated Jul 9 2018, 02:15:25EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__MEASUREFORMULAVIEW implements tilda.interfaces.ReaderObject
@@ -1742,7 +1742,7 @@ This is the null setter for:<BR>
                + "; title: "                                                                                                                 + TextUtil.PrintVariableStr        (getTitle           ())
                + "; description: "                                                                                                           + TextUtil.PrintVariableStr        (getDescription     ())
                + "; type: "                                                                                                                  + TextUtil.PrintVariableStr        (getType            ())
-               + "; formula"            + (__Changes.intersects(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULA._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getFormula         ()))
+               + "; formula"            + (__Nulls.intersects(TILDA__MEASUREFORMULAVIEW_Factory.COLS.FORMULA._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getFormula         ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

@@ -7,6 +7,7 @@
 package tilda.data._Tilda;
 
 import java.time.*;
+import java.sql.Timestamp;
 import java.util.*;
 
 import tilda.db.*;
@@ -384,7 +385,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jun 28 2018, 11:41:21EDT
+ @generated Jul 9 2018, 02:15:25EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__FORMULA implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -2779,9 +2780,9 @@ This is the hasChanged for:<BR>
                             _description = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.DESCRIPTION._Mask);
                             _formula     = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.FORMULA._Mask    );
                             _htmlDoc     = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask    );
-                            _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
-                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
-                            _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
+                            _created     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.CREATED._Mask    );
+                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.LASTUPDATED._Mask);
+                            _deleted     = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.DELETED._Mask    );
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
@@ -2801,8 +2802,8 @@ This is the hasChanged for:<BR>
                + "; type: "                                                                                             + TextUtil.PrintVariableStr        (getType       ())
                + "; title: "                                                                                            + TextUtil.PrintVariableStr        (getTitle      ())
                + "; description: "                                                                                      + TextUtil.PrintVariableStr        (getDescription())
-               + "; formula"       + (__Changes.intersects(TILDA__FORMULA_Factory.COLS.FORMULA._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getFormula    ()))
-               + "; htmlDoc"       + (__Changes.intersects(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getHtmlDoc    ()))
+               + "; formula"       + (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.FORMULA._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getFormula    ()))
+               + "; htmlDoc"       + (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getHtmlDoc    ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;
