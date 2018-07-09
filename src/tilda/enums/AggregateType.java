@@ -22,9 +22,13 @@ public enum AggregateType
 
   AVG,
 
+  MIN,
+
+  FIRST,
+
   MAX,
 
-  MIN,
+  LAST,
 
   DEV,
 
@@ -56,8 +60,10 @@ public enum AggregateType
               break;
             case COUNT:
               return ColumnType.LONG;
-            case MAX:
             case MIN:
+            case FIRST:
+            case MAX:
+            case LAST:
               return T;
             case SUM:
               if (T == ColumnType.FLOAT || T == ColumnType.DOUBLE)
@@ -77,8 +83,10 @@ public enum AggregateType
           {
             case ARRAY:
             case COUNT:
-            case MAX:
             case MIN:
+            case FIRST:
+            case MAX:
+            case LAST:
             case SUM:
               return true;
             case AVG:
@@ -89,5 +97,27 @@ public enum AggregateType
               throw new Error("Incomplete Switch statment: unknown ColumnType " + this.name() + ";");
           }
       }
+    
+    public boolean isOrderable()
+      {
+        switch (this)
+          {
+            case ARRAY:
+            case FIRST:
+            case LAST:
+              return true;
+            case COUNT:
+            case MIN:
+            case MAX:
+            case SUM:
+            case AVG:
+            case DEV:
+            case VAR:
+              return false;
+            default:
+              throw new Error("Incomplete Switch statment: unknown ColumnType " + this.name() + ";");
+          }
+      }
+    
 
   }

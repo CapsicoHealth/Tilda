@@ -624,12 +624,14 @@ select TILDA.Testing."name" as "name" -- Medical system unique enterprise id
      , coalesce(max(TILDA.Testing."a2") filter(where a2 is not null), 'ZZZ') as "a2Max" -- The blah
      , array_agg(TILDA.Testing."a9" order by "lastUpdated" ASC) as "a9" -- The blah
      , array_agg(TILDA.Testing."a9c") as "a9c" -- The blah
+     , first(TILDA.Testing."a6" order by "lastUpdated" ASC) as "a6First" -- The blah
+     , last(TILDA.Testing."a6" order by "lastUpdated" ASC) as "a6Last" -- The blah
   from TILDA.Testing
  where (TILDA.Testing."deleted" is null)
      group by TILDA.Testing."name"
 ;
 
-COMMENT ON VIEW TILDA.TestingView IS E'create or replace view TILDA.TestingView as \n-- ''A view of formulas and their dependencies.''\nselect TILDA.Testing."name" as "name" -- Medical system unique enterprise id\n     , count(TILDA.Testing."refnum") as "refnum" -- The primary key for this record\n     , coalesce(min(TILDA.Testing."a2") filter(where a2 is not null), ''AAA'') as "a2Min" -- The blah\n     , coalesce(max(TILDA.Testing."a2") filter(where a2 is not null), ''ZZZ'') as "a2Max" -- The blah\n     , array_agg(TILDA.Testing."a9" order by "lastUpdated" ASC) as "a9" -- The blah\n     , array_agg(TILDA.Testing."a9c") as "a9c" -- The blah\n  from TILDA.Testing\n where (TILDA.Testing."deleted" is null)\n     group by TILDA.Testing."name"\n;\n';
+COMMENT ON VIEW TILDA.TestingView IS E'create or replace view TILDA.TestingView as \n-- ''A view of formulas and their dependencies.''\nselect TILDA.Testing."name" as "name" -- Medical system unique enterprise id\n     , count(TILDA.Testing."refnum") as "refnum" -- The primary key for this record\n     , coalesce(min(TILDA.Testing."a2") filter(where a2 is not null), ''AAA'') as "a2Min" -- The blah\n     , coalesce(max(TILDA.Testing."a2") filter(where a2 is not null), ''ZZZ'') as "a2Max" -- The blah\n     , array_agg(TILDA.Testing."a9" order by "lastUpdated" ASC) as "a9" -- The blah\n     , array_agg(TILDA.Testing."a9c") as "a9c" -- The blah\n     , first(TILDA.Testing."a6" order by "lastUpdated" ASC) as "a6First" -- The blah\n     , last(TILDA.Testing."a6" order by "lastUpdated" ASC) as "a6Last" -- The blah\n  from TILDA.Testing\n where (TILDA.Testing."deleted" is null)\n     group by TILDA.Testing."name"\n;\n';
 
 COMMENT ON COLUMN TILDA.TestingView."name" IS E'Medical system unique enterprise id';
 COMMENT ON COLUMN TILDA.TestingView."refnum" IS E'The primary key for this record';
@@ -637,5 +639,7 @@ COMMENT ON COLUMN TILDA.TestingView."a2Min" IS E'The blah';
 COMMENT ON COLUMN TILDA.TestingView."a2Max" IS E'The blah';
 COMMENT ON COLUMN TILDA.TestingView."a9" IS E'The blah';
 COMMENT ON COLUMN TILDA.TestingView."a9c" IS E'The blah';
+COMMENT ON COLUMN TILDA.TestingView."a6First" IS E'The blah';
+COMMENT ON COLUMN TILDA.TestingView."a6Last" IS E'The blah';
 
 

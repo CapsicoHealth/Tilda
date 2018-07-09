@@ -56,6 +56,7 @@ import tilda.types.ColumnDefinition;
 import tilda.types.Type_DatetimePrimitive;
 import tilda.utils.CollectionUtil;
 import tilda.utils.DurationUtil.IntervalEnum;
+import tilda.utils.FileUtil;
 import tilda.utils.TextUtil;
 import tilda.utils.pairs.StringStringPair;
 
@@ -143,10 +144,14 @@ public class PostgreSQL implements DBType
               return "avg";
             case DEV:
               return "stddev";
-            case MAX:
-              return "max";
             case MIN:
               return "min";
+            case FIRST:
+              return "first";
+            case MAX:
+              return "max";
+            case LAST:
+              return "last";
             case SUM:
               return "sum";
             case VAR:
@@ -477,7 +482,17 @@ public class PostgreSQL implements DBType
     public String getHelperFunctionsScript(Connection Con)
     throws Exception
       {
+        String Str = FileUtil.getFileOfResourceContents("tilda/db/stores/PostgreSQL.helpers.sql");
+        return Str;
+/*
         StringBuilder Str = new StringBuilder();
+        PrintFunctionIn(Str, "text");
+        PrintFunctionIn(Str, "integer");
+        PrintFunctionIn(Str, "bigint");
+        PrintFunctionTo(Str, "Int", "integer");
+        PrintFunctionTo(Str, "Double", "double precision");
+        PrintFunctionTo(Str, "Date", "Date");
+
         Str.append("CREATE OR REPLACE FUNCTION TILDA.Like(v text[], val text)\n")
         .append("  RETURNS boolean\n")
         .append("  IMMUTABLE LANGUAGE SQL AS\n")
@@ -491,15 +506,8 @@ public class PostgreSQL implements DBType
         .append("  IMMUTABLE LANGUAGE SQL AS\n")
         .append("  'select v like ANY(val);';\n")
         .append("\n")
-        .append("\n");
-        PrintFunctionIn(Str, "text");
-        PrintFunctionIn(Str, "integer");
-        PrintFunctionIn(Str, "bigint");
-        PrintFunctionTo(Str, "Int", "integer");
-        PrintFunctionTo(Str, "Double", "double precision");
-        PrintFunctionTo(Str, "Date", "Date");
-
-        Str.append("CREATE OR REPLACE FUNCTION TILDA.getKeyBatch(t text, c integer) RETURNS TABLE (min_key_inclusive bigint, max_key_exclusive bigint) AS $$\n")
+        .append("\n")
+        .append("CREATE OR REPLACE FUNCTION TILDA.getKeyBatch(t text, c integer) RETURNS TABLE (min_key_inclusive bigint, max_key_exclusive bigint) AS $$\n")
         .append("DECLARE\n")
         .append("  val bigint;\n")
         .append("BEGIN\n")
@@ -540,8 +548,7 @@ public class PostgreSQL implements DBType
         .append("  RETURNS integer\n")
         .append("  IMMUTABLE LANGUAGE SQL AS\n")
         .append("'SELECT date_part(''days'', $2 - $1)::integer+(case $3 or $2 < $1 when true then 0 else 1 end);';\n")
-        .append(
-        "COMMENT ON FUNCTION TILDA.DaysBetween(timestamptz, timestamptz, boolean) IS 'Computes the number of days between 2 dates ''start'' and ''end''. The third parameter indicates whether the midnight rule should be applied or not. If true, the number of days between 2016-12-01 and 2016-12-02 for example will be 1 (i.e., one mignight passed). If false, the returned count will be 2.';\n")
+        .append("COMMENT ON FUNCTION TILDA.DaysBetween(timestamptz, timestamptz, boolean) IS 'Computes the number of days between 2 dates ''start'' and ''end''. The third parameter indicates whether the midnight rule should be applied or not. If true, the number of days between 2016-12-01 and 2016-12-02 for example will be 1 (i.e., one mignight passed). If false, the returned count will be 2.';\n")
         .append("\n")
         .append("\n")
         .append("CREATE OR REPLACE FUNCTION TILDA.daysBetween(timestamptz, timestamptz)\n")
@@ -591,9 +598,39 @@ public class PostgreSQL implements DBType
         .append("'SELECT dst from TILDA.MAPPING where type=$1 and src=upper($2)';\n")
         .append("\n")
         .append("\n")
+        .append("CREATE OR REPLACE FUNCTION TILDA.first_agg (anyelement, anyelement)\n")
+        .append("RETURNS anyelement LANGUAGE SQL IMMUTABLE STRICT AS $$\n")
+        .append("        SELECT $1;\n")
+        .append("$$;\n")
+        .append("DO $$ BEGIN\n")
+        .append("if not exists (SELECT 1 FROM pg_proc WHERE proname = 'first' AND proisagg=true) THEN\n")
+        .append("CREATE AGGREGATE public.FIRST (\n")
+        .append("        sfunc    = TILDA.first_agg,\n")
+        .append("        basetype = anyelement,\n")
+        .append("        stype    = anyelement\n")
+        .append(");\n")
+        .append("END IF;\n")
+        .append("END $$;\n")
+        .append(" \n")
+        .append("CREATE OR REPLACE FUNCTION TILDA.last_agg ( anyelement, anyelement )\n")
+        .append("RETURNS anyelement LANGUAGE SQL IMMUTABLE STRICT AS $$\n")
+        .append("        SELECT $2;\n")
+        .append("$$;\n")
+        .append("DO $$ BEGIN\n")
+        .append("if not exists (SELECT 1 FROM pg_proc WHERE proname = 'last' AND proisagg=true) THEN\n")
+        .append("CREATE AGGREGATE public.LAST (\n")
+        .append("        sfunc    = TILDA.last_agg,\n")
+        .append("        basetype = anyelement,\n")
+        .append("        stype    = anyelement\n")
+        .append(");\n")
+        .append("END IF;\n")
+        .append("END $$;\n")
+        .append("\n")
+        .append("\n")
         .append("CREATE extension if not exists tablefunc;\n");
 
         return Str.toString();
+*/
       }
 
 

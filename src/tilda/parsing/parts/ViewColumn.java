@@ -180,8 +180,10 @@ public class ViewColumn
         
         if (_OrderBy!=null && _OrderBy.length > 0)
           {
-            if (_Aggregate != AggregateType.ARRAY)
-             PS.AddError("View Column '" + getFullName() + "' defined an orderBy value without specifying an ARRAY aggregate. OrderBys are meant only for ARRAY aggregates.");
+            if (_Aggregate == null)
+              PS.AddError("View Column '" + getFullName() + "' defined an orderBy value without specifying an aggregate. OrderBys are meant only for ARRAY, FIRST or LAST aggregates.");
+            else if (_Aggregate.isOrderable() == false)
+             PS.AddError("View Column '" + getFullName() + "' defined an orderBy value without specifying an ARRAY/FIRST/LAST aggregate. OrderBys are meant only for ARRAY, FIRST or LAST aggregates.");
             else if (_Distinct == true)
               PS.AddError("View Column '" + getFullName() + "' defined an orderBy value in a Distinct aggregate, which is not supported.");
             Set<String> Names = new HashSet<String>();

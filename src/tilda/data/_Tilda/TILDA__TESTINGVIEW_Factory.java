@@ -48,7 +48,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitive        NAME  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"  , 0/*0*/, "Medical system unique enterprise id");
+     public static Type_StringPrimitive        NAME   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"   , 0/*0*/, "Medical system unique enterprise id");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TestingView.refnum -> TILDA.TestingView."refnum"
@@ -66,7 +66,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitive          REFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum", 1/*1*/, "The primary key for this record");
+     public static Type_LongPrimitive          REFNUM = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum" , 1/*1*/, "The primary key for this record");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TestingView.a2Min -> TILDA.TestingView."a2Min"
@@ -84,7 +84,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_CharPrimitiveNull      A2MIN = new Type_CharPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a2Min" , 2/*2*/, "The blah");
+     public static Type_CharPrimitiveNull      A2MIN  = new Type_CharPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a2Min"  , 2/*2*/, "The blah");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TestingView.a2Max -> TILDA.TestingView."a2Max"
@@ -102,7 +102,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_CharPrimitiveNull      A2MAX = new Type_CharPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a2Max" , 3/*3*/, "The blah");
+     public static Type_CharPrimitiveNull      A2MAX  = new Type_CharPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a2Max"  , 3/*3*/, "The blah");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TestingView.a9TZ -> TILDA.TestingView."a9TZ"
@@ -121,7 +121,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringCollectionNull   A9TZ  = new Type_StringCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a9TZ"  , 4/*4*/, "Generated helper column to hold the time zone ID for 'a9'.");
+     public static Type_StringCollectionNull   A9TZ   = new Type_StringCollectionNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a9TZ"   , 4/*4*/, "Generated helper column to hold the time zone ID for 'a9'.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TestingView.a9 -> TILDA.TestingView."a9"
@@ -139,7 +139,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimeCollectionNull A9    = new Type_DatetimeCollectionNull(SCHEMA_LABEL, TABLENAME_LABEL, "a9"    , 5/*5*/, "The blah");
+     public static Type_DatetimeCollectionNull A9     = new Type_DatetimeCollectionNull(SCHEMA_LABEL, TABLENAME_LABEL, "a9"     , 5/*5*/, "The blah");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.TestingView.a9c -> TILDA.TestingView."a9c"
@@ -157,7 +157,43 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DateCollectionNull     A9C   = new Type_DateCollectionNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a9c"   , 6/*6*/, "The blah");
+     public static Type_DateCollectionNull     A9C    = new Type_DateCollectionNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a9c"    , 6/*6*/, "The blah");
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.TestingView.a6First -> TILDA.TestingView."a6First"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TestingView.a6First of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TestingView.a6First of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public static Type_LongPrimitiveNull      A6FIRST= new Type_LongPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a6First", 7/*7*/, "The blah");
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.TestingView.a6Last -> TILDA.TestingView."a6Last"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TestingView.a6Last of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TestingView.a6Last of type bigint</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public static Type_LongPrimitiveNull      A6LAST = new Type_LongPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "a6Last" , 8/*8*/, "The blah");
 ;
    }
 
@@ -218,6 +254,8 @@ This is the column definition for:<BR>
        S.append(", "); C.getFullColumnVar(S, "TILDA", "TestingView", "a9TZ");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "TestingView", "a9");
        S.append(", "); C.getFullColumnVar(S, "TILDA", "TestingView", "a9c");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TestingView", "a6First");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "TestingView", "a6Last");
        S.append(" from "); C.getFullTableVar(S, "TILDA", "TestingView");
        switch (LookupId)
         {

@@ -172,12 +172,6 @@ public class Migrator
             for (MigrationAction MA : L)
               if (MA._isDependency == false)
                 ++ActionCount;
-            if (S._Name.equalsIgnoreCase("TILDA") == true)
-              {
-                MigrationAction A = new TildaHelpersAdd();
-                if (A.isNeeded(C, DBMeta) == true)
-                  L.add(A);
-              }
             if (S._ExtraDDL != null && S._ExtraDDL._After != null)
               for (String ddl : S._ExtraDDL._After)
                 {
@@ -250,6 +244,13 @@ public class Migrator
 
         if (DBMeta.getSchemaMeta(S._Name) == null)
           Actions.add(new SchemaCreate(S));
+
+        if (S._Name.equalsIgnoreCase("TILDA") == true)
+          {
+            MigrationAction A = new TildaHelpersAdd();
+            if (A.isNeeded(C, DBMeta) == true)
+              Actions.add(A);
+          }
 
         if (S._ExtraDDL != null && S._ExtraDDL._Before != null)
           for (String ddl : S._ExtraDDL._Before)
