@@ -325,7 +325,7 @@ public abstract class QueryHelper
     public final QueryHelper where()
     throws Exception
       {
-        if (_Section != S.FROM && _Section != S.SET)
+        if (_Section != S.FROM && _Section != S.SET && _Section != S.WHERE)
           throw new Exception("Invalid query syntax: Calling where() after a " + _Section + ": " + _QueryStr.toString());
         if (_Section != S.WHERE)
           {
@@ -852,7 +852,7 @@ public abstract class QueryHelper
     throws Exception
       {
         if (V == null || V.length == 0)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty array/list.");
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
 
@@ -875,7 +875,7 @@ public abstract class QueryHelper
     throws Exception
       {
         if (V == null || V.isEmpty() == true)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty array/list.");
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
 
@@ -898,7 +898,7 @@ public abstract class QueryHelper
     throws Exception
       {
         if (V == null || V.length == 0)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty array/list.");
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
 
@@ -922,7 +922,7 @@ public abstract class QueryHelper
     throws Exception
       {
         if (V == null || V.isEmpty() == true)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty array/list.");
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
 
@@ -947,7 +947,7 @@ public abstract class QueryHelper
     throws Exception
       {
         if (V == null || V.length == 0)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty array/list.");
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
 
@@ -970,7 +970,7 @@ public abstract class QueryHelper
     throws Exception
       {
         if (V == null || V.length == 0)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty array/list.");
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
 
@@ -998,7 +998,7 @@ public abstract class QueryHelper
     throws Exception
       {
         if (V == null || V.length == 0)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty array/list.");
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
 
@@ -1026,7 +1026,7 @@ public abstract class QueryHelper
     throws Exception
       {
         if (V == null || V.length == 0)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty array/list.");
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
 
@@ -1054,7 +1054,7 @@ public abstract class QueryHelper
     throws Exception
       {
         if (V == null || V.length == 0)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty array/list.");
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
 
@@ -1082,7 +1082,7 @@ public abstract class QueryHelper
     throws Exception
       {
         if (V == null || V.length == 0)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty array/list.");
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
 
@@ -1115,7 +1115,7 @@ public abstract class QueryHelper
     throws Exception
       {
         if (V == null || V.isEmpty() == true)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' with a null or empty array/list.");
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
         if (isWhereClause() == false)
           throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
 
@@ -1153,7 +1153,7 @@ public abstract class QueryHelper
     throws Exception
       {
         if (isWhereClause() == false)
-          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+          throw new Exception("Invalid query syntax: Calling the operator 'in' after a " + _Section + " in a query of type " + _ST + " on " + Col.getName() + ": " + _QueryStr.toString());
         if (Q._Cardinality != 1)
           throw new Exception("Invalid query syntax: Calling the operator 'in' with a subquery that has a column cardinality " + Q._Cardinality + ": " + _QueryStr.toString());
 
