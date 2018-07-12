@@ -1,7 +1,6 @@
 
 package tilda.data._Tilda;
 
-import java.io.*;
 import java.time.*;
 import java.util.*;
 
@@ -16,6 +15,7 @@ import tilda.utils.*;
 import com.google.gson.annotations.SerializedName;
 
 
+@SuppressWarnings({ "unused" })
 public class TILDA__TESTING_Json
  {
    static final Logger             LOG                = LogManager.getLogger(TILDA__TESTING_Json.class.getName());
@@ -51,26 +51,36 @@ public class TILDA__TESTING_Json
    @SerializedName("a8"         ) public byte[]  _a8         ;
    @SerializedName("a9"         ) public String  Str_a9         ;
    transient                      public ZonedDateTime  _a9         ;
+   @SerializedName("a9b"        ) public List<String>  Str_a9b        ;
+   transient                      public List<ZonedDateTime>  _a9b        ;
+   @SerializedName("a9c"        ) public LocalDate  _a9c        ;
+   @SerializedName("a9d"        ) public List<LocalDate>  _a9d        ;
    /*@formatter:on*/
 
    public tilda.data.Testing_Data Write(Connection C) throws Exception
     {
       if (_refnum2     == null || _refnum2    .isEmpty() == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.TESTING.refnum2' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Testing.refnum2' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_name       ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.TESTING.name' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Testing.name' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(Str_a9         ) == false)
        {
          _a9          = DateTimeUtil.parsefromJSON(Str_a9         );
          if (   _a9          == null)
-          throw new Exception("Incoming value for 'tilda.data.TILDA.TESTING.a9' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+          throw new Exception("Incoming value for 'tilda.data.TILDA.Testing.a9' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+       }
+      if (TextUtil.isNullOrEmpty(Str_a9b        ) == false)
+       {
+         _a9b         = DateTimeUtil.parsefromJSON(Str_a9b        );
+         if (   _a9b         == null)
+          throw new Exception("Incoming value for 'tilda.data.TILDA.Testing.a9b' was not in the expected format. Dates should follow the ISO format.\n"+toString());
        }
 
       tilda.data.Testing_Data Obj = tilda.data.Testing_Factory.Create(_refnum2, _name);
       Update(Obj);
       if (Obj.Write(C) == false)
        {
-         throw new Exception("Cannot create the tilda.data.TILDA.TESTING object.\n"+toString());
+         throw new Exception("Cannot create the tilda.data.TILDA.Testing object.\n"+toString());
        }
       return Obj;
    }
@@ -104,6 +114,9 @@ public class TILDA__TESTING_Json
       if (_a7b        != null) Obj.setA7b        (_a7b        );
       if (_a8         != null) Obj.setA8         (_a8         );
       if (_a9         != null) Obj.setA9         (_a9         );
+      if (_a9b        != null) Obj.setA9b        (_a9b        );
+      if (_a9c        != null) Obj.setA9c        (_a9c        );
+      if (_a9d        != null) Obj.setA9d        (_a9d        );
     }
 
    public String toString()
@@ -136,10 +149,109 @@ public class TILDA__TESTING_Json
          + "; a7b"        + (_a7b         == null ? ": NULL" : ": " + _a7b        )
          + "; a8"         + (_a8          == null ? ": NULL" : ": " + _a8         )
          + "; a9"         + (_a9          == null ? ": NULL" : ": "+DateTimeUtil.printDateTimeForSQL(_a9))
+         + "; a9b"        + (_a9b         == null ? ": NULL" : ": "+DateTimeUtil.printDateTimeForSQL(_a9b))
+         + "; a9c"        + (_a9c         == null ? ": NULL" : ": " + _a9c        )
+         + "; a9d"        + (_a9d         == null ? ": NULL" : ": " + _a9d        )
          + ";";
     }
 
-   public static void toJSONAAA(Writer Out, List<tilda.data.Testing_Data> L, String Lead, boolean FullList) throws IOException
+   public static void toCSVCCC(java.io.Writer Out, List<tilda.data.Testing_Data> L, boolean includeHeader) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      if (includeHeader == true)
+        Out.write("\"refnum\",\"name\",\"description\",\"desc2\"\n");
+      for (tilda.data.Testing_Data O : L)
+       if (O!=null)
+        {
+          toCSVCCC(Out, O);
+          Out.write("\n");
+        }
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
+    }
+
+   public static void toCSVCCC(java.io.Writer Out, tilda.data.Testing_Data Data) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      StringBuilder Str = new StringBuilder();
+
+      TextUtil.EscapeDoubleQuoteForCSV(Str, "" + Data.getRefnum());
+      Str.append(",");
+      TextUtil.EscapeDoubleQuoteForCSV(Str, Data.getName());
+      Str.append(",");
+      TextUtil.EscapeDoubleQuoteForCSV(Str, Data.getDescription());
+      Str.append(",");
+      TextUtil.EscapeDoubleQuoteForCSV(Str, Data.getDesc2());
+      Out.write(Str.toString());
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
+    }
+   public static void toJSONCCC(java.io.Writer Out, List<tilda.data.Testing_Data> L, String Lead, boolean FullList) throws java.io.IOException
+    {
+      if (L == null || L.size() == 0) return;
+      if (FullList == true)
+       Out.write("[\n");
+      boolean First = true;
+      for (tilda.data.Testing_Data O : L)
+       if (O!=null)
+        {
+          Out.write(Lead);
+          if (First == false) Out.write(","); else { Out.write(" "); First = false; }
+          toJSONCCC(Out, O, true);
+          Out.write("\n");
+        }
+      if (FullList == true)
+       { 
+          Out.write(Lead);
+          Out.write("]\n");
+       } 
+    }
+
+   public static void toJSONCCC(java.io.Writer Out, tilda.data.Testing_Data ObjApp, boolean FullObject) throws java.io.IOException
+    {
+      long T0 = System.nanoTime();
+      tilda.data._Tilda.TILDA__TESTING Obj = (tilda.data._Tilda.TILDA__TESTING) ObjApp;
+      if (FullObject == true)
+       Out.write("{");
+
+        JSONUtil.Print(Out, "refnum", true, Obj.getRefnum());
+
+        JSONUtil.Print(Out, "name", false, Obj.getName());
+
+      if (Obj.isNullDescription() == false && Obj.getDescription() != null)
+        JSONUtil.Print(Out, "description", false, Obj.getDescription());
+
+      if (Obj.isNullDesc2() == false && Obj.getDesc2() != null)
+        JSONUtil.Print(Out, "desc2", false, Obj.getDesc2());
+
+      if (FullObject == true)
+       Out.write(" }");
+      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
+    }
+
+   public static Map<Character, Float> toNVPDDD(List<tilda.data.Testing_Data> L) throws Exception
+    {
+      Map<Character, Float> M = new HashMap<Character, Float>();
+      for (tilda.data.Testing_Data D : L)
+        {
+          Float val = M.get(D.getA2());
+          if(val != null)
+            throw new Exception("The key " + D.getA2() + " with value " + String.valueOf(val) + " already exists in the Map. Key values must be unique.");
+          if(D.isNullA2() == false)
+            M.put(D.getA2(), D.getA5());
+        }
+      return M;
+    }
+
+   public static Map<String, String> toNVPEEE(tilda.data.Testing_Data D) throws Exception
+    {
+      Map<String, String> M = new HashMap<String, String>();
+      M.put("a4", String.valueOf(D.getA4()));
+      M.put("a6", String.valueOf(D.getA6()));
+      M.put("name", D.getName());
+      M.put("a7", String.valueOf(D.getA7()));
+      return M;
+    }
+
+   public static void toJSONAAA(java.io.Writer Out, List<tilda.data.Testing_Data> L, String Lead, boolean FullList) throws java.io.IOException
     {
       if (L == null || L.size() == 0) return;
       if (FullList == true)
@@ -160,7 +272,7 @@ public class TILDA__TESTING_Json
        } 
     }
 
-   public static void toJSONAAA(Writer Out, tilda.data.Testing_Data ObjApp, boolean FullObject) throws IOException
+   public static void toJSONAAA(java.io.Writer Out, tilda.data.Testing_Data ObjApp, boolean FullObject) throws java.io.IOException
     {
       long T0 = System.nanoTime();
       tilda.data._Tilda.TILDA__TESTING Obj = (tilda.data._Tilda.TILDA__TESTING) ObjApp;
@@ -254,52 +366,38 @@ public class TILDA__TESTING_Json
       PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
     }
 
-   public static void toJSONBBB(Writer Out, List<tilda.data.Testing_Data> L, String Lead, boolean FullList) throws IOException
+   public static void toCSVBBB(java.io.Writer Out, List<tilda.data.Testing_Data> L, boolean includeHeader) throws java.io.IOException
     {
-      if (L == null || L.size() == 0) return;
-      if (FullList == true)
-       Out.write("[\n");
-      boolean First = true;
+      long T0 = System.nanoTime();
+      if (includeHeader == true)
+        Out.write("\"refnum\",\"refnum2\",\"name\",\"description\",\"desc2\",\"desc3\"\n");
       for (tilda.data.Testing_Data O : L)
        if (O!=null)
         {
-          Out.write(Lead);
-          if (First == false) Out.write(","); else { Out.write(" "); First = false; }
-          toJSONBBB(Out, O, true);
+          toCSVBBB(Out, O);
           Out.write("\n");
         }
-      if (FullList == true)
-       { 
-          Out.write(Lead);
-          Out.write("]\n");
-       } 
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
     }
 
-   public static void toJSONBBB(Writer Out, tilda.data.Testing_Data ObjApp, boolean FullObject) throws IOException
+   public static void toCSVBBB(java.io.Writer Out, tilda.data.Testing_Data Data) throws java.io.IOException
     {
       long T0 = System.nanoTime();
-      tilda.data._Tilda.TILDA__TESTING Obj = (tilda.data._Tilda.TILDA__TESTING) ObjApp;
-      if (FullObject == true)
-       Out.write("{");
+      StringBuilder Str = new StringBuilder();
 
-        JSONUtil.Print(Out, "refnum", true, Obj.getRefnum());
-
-        JSONUtil.Print(Out, "refnum2", false, Obj._refnum2.toArray(new Long[Obj._refnum2.size()]));
-
-        JSONUtil.Print(Out, "name", false, Obj.getName());
-
-      if (Obj.isNullDescription() == false && Obj.getDescription() != null)
-        JSONUtil.Print(Out, "description", false, Obj.getDescription());
-
-      if (Obj.isNullDesc2() == false && Obj.getDesc2() != null)
-        JSONUtil.Print(Out, "desc2", false, Obj.getDesc2());
-
-      if (Obj.isNullDesc3() == false && Obj.getDesc3() != null)
-        JSONUtil.Print(Out, "desc3", false, Obj.getDesc3());
-
-      if (FullObject == true)
-       Out.write(" }");
-      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
+      TextUtil.EscapeDoubleQuoteForCSV(Str, "" + Data.getRefnum());
+      Str.append(",");
+      TextUtil.EscapeDoubleQuoteForCSV(Str, "" + Data.getRefnum2());
+      Str.append(",");
+      TextUtil.EscapeDoubleQuoteForCSV(Str, Data.getName());
+      Str.append(",");
+      TextUtil.EscapeDoubleQuoteForCSV(Str, Data.getDescription());
+      Str.append(",");
+      TextUtil.EscapeDoubleQuoteForCSV(Str, Data.getDesc2());
+      Str.append(",");
+      TextUtil.EscapeDoubleQuoteForCSV(Str, Data.getDesc3());
+      Out.write(Str.toString());
+      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);
     }
 
  }

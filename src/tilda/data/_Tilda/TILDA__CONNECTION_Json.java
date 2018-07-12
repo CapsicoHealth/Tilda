@@ -1,7 +1,6 @@
 
 package tilda.data._Tilda;
 
-import java.io.*;
 import java.util.*;
 
 import org.apache.logging.log4j.LogManager;
@@ -15,6 +14,7 @@ import tilda.utils.*;
 import com.google.gson.annotations.SerializedName;
 
 
+@SuppressWarnings({ "unused" })
 public class TILDA__CONNECTION_Json
  {
    static final Logger             LOG                = LogManager.getLogger(TILDA__CONNECTION_Json.class.getName());
@@ -36,21 +36,21 @@ public class TILDA__CONNECTION_Json
    public tilda.data.Connection_Data Write(Connection C) throws Exception
     {
       if (TextUtil.isNullOrEmpty(_id         ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.CONNECTION.id' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Connection.id' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_driver     ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.CONNECTION.driver' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Connection.driver' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_db         ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.CONNECTION.db' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Connection.db' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_user       ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.CONNECTION.user' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Connection.user' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_pswd       ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.CONNECTION.pswd' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Connection.pswd' was null or empty. It's not nullable in the model.\n"+toString());
       if (_initial     == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.CONNECTION.initial' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Connection.initial' was null or empty. It's not nullable in the model.\n"+toString());
       if (_max         == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.CONNECTION.max' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Connection.max' was null or empty. It's not nullable in the model.\n"+toString());
       if (_schemas     == null || _schemas    .isEmpty() == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.CONNECTION.schemas' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Connection.schemas' was null or empty. It's not nullable in the model.\n"+toString());
 
       tilda.data.Connection_Data Obj = tilda.data.Connection_Factory.Create(_id, _driver, _db, _user, _pswd, _initial, _max, _schemas);
       Update(Obj);
@@ -58,7 +58,7 @@ public class TILDA__CONNECTION_Json
        {
          Obj = tilda.data.Connection_Factory.LookupByPrimaryKey(_id);
          if (Obj.Read(C) == false)
-          throw new Exception("Cannot create the tilda.data.TILDA.CONNECTION object.\n"+toString());
+          throw new Exception("Cannot create the tilda.data.TILDA.Connection object.\n"+toString());
          if (_active     != null) Obj.setActive     (_active     );
          if (_driver     != null) Obj.setDriver     (_driver     );
          if (_db         != null) Obj.setDb         (_db         );
@@ -68,7 +68,7 @@ public class TILDA__CONNECTION_Json
          if (_max        != null) Obj.setMax        (_max        );
          if (_schemas    != null) Obj.setSchemas    (_schemas    );
          if (Obj.Write(C) == false)
-          throw new Exception("Cannot update the tilda.data.TILDA.CONNECTION object: "+Obj.toString());
+          throw new Exception("Cannot update the tilda.data.TILDA.Connection object: "+Obj.toString());
 
        }
       return Obj;

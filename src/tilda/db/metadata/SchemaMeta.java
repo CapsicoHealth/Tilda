@@ -18,6 +18,7 @@ package tilda.db.metadata;
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -74,6 +75,11 @@ public class SchemaMeta
         return _DBTables.get(TableName.toLowerCase());
       }
 
+    public Collection<TableMeta> getTableMetas()
+      {
+        return _DBTables.values();
+      }
+    
     public ViewMeta getViewMeta(String ViewName)
       {
         return _DBViews.get(ViewName.toLowerCase());

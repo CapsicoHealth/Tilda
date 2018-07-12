@@ -18,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+@SuppressWarnings({ "unused" })
 public class TILDA__MEASUREFORMULA_Factory
  {
    protected static final Logger LOG = LogManager.getLogger(TILDA__MEASUREFORMULA_Factory.class.getName());
@@ -26,20 +27,20 @@ public class TILDA__MEASUREFORMULA_Factory
 
    public static final Class<TILDA__MEASUREFORMULA> DATA_CLASS= TILDA__MEASUREFORMULA.class;
    public static final String SCHEMA_LABEL = TextUtil.Print("TILDA", "");
-   public static final String TABLENAME_LABEL = TextUtil.Print("MEASUREFORMULA", "");
-   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.MEASUREFORMULA", "");
-   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "MEASUREFORMULA"); }
+   public static final String TABLENAME_LABEL = TextUtil.Print("MeasureFormula", "");
+   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.MeasureFormula", "");
+   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "MeasureFormula"); }
 
    public static abstract class COLS {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.MEASUREFORMULA.measureRefnum -> TILDA.MEASUREFORMULA."measureRefnum"
+//   Field tilda.data.TILDA.MeasureFormula.measureRefnum -> TILDA.MeasureFormula."measureRefnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MEASUREFORMULA.measureRefnum of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MEASUREFORMULA.measureRefnum of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MeasureFormula.measureRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MeasureFormula.measureRefnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The measure.</TD></TR>
@@ -51,13 +52,13 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          MEASUREREFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "measureRefnum", 0/*0*/, "The measure.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.MEASUREFORMULA.formulaRefnum -> TILDA.MEASUREFORMULA."formulaRefnum"
+//   Field tilda.data.TILDA.MeasureFormula.formulaRefnum -> TILDA.MeasureFormula."formulaRefnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MEASUREFORMULA.formulaRefnum of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MEASUREFORMULA.formulaRefnum of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MeasureFormula.formulaRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MeasureFormula.formulaRefnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The parent formula.</TD></TR>
@@ -69,13 +70,13 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          FORMULAREFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formulaRefnum", 1/*1*/, "The parent formula.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.MEASUREFORMULA.created -> TILDA.MEASUREFORMULA."created"
+//   Field tilda.data.TILDA.MeasureFormula.created -> TILDA.MeasureFormula."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MEASUREFORMULA.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MEASUREFORMULA.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MeasureFormula.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MeasureFormula.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -94,13 +95,13 @@ This is the column definition for:<BR>
      public static Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 2/*2*/, "The timestamp for when the record was created.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.MEASUREFORMULA.lastUpdated -> TILDA.MEASUREFORMULA."lastUpdated"
+//   Field tilda.data.TILDA.MeasureFormula.lastUpdated -> TILDA.MeasureFormula."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MEASUREFORMULA.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MEASUREFORMULA.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MeasureFormula.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MeasureFormula.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
@@ -119,13 +120,13 @@ This is the column definition for:<BR>
      public static Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 3/*3*/, "The timestamp for when the record was last updated.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.MEASUREFORMULA.deleted -> TILDA.MEASUREFORMULA."deleted"
+//   Field tilda.data.TILDA.MeasureFormula.deleted -> TILDA.MeasureFormula."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MEASUREFORMULA.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MEASUREFORMULA.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MeasureFormula.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MeasureFormula.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
@@ -188,12 +189,12 @@ This is the column definition for:<BR>
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
        S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "MEASUREFORMULA", "measureRefnum");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "MEASUREFORMULA", "formulaRefnum");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "MEASUREFORMULA", "created");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "MEASUREFORMULA", "lastUpdated");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "MEASUREFORMULA", "deleted");
-       S.append(" from "); C.getFullTableVar(S, "TILDA", "MEASUREFORMULA");
+       S.append(" "); C.getFullColumnVar(S, "TILDA", "MeasureFormula", "measureRefnum");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormula", "formulaRefnum");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormula", "created");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormula", "lastUpdated");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormula", "deleted");
+       S.append(" from "); C.getFullTableVar(S, "TILDA", "MeasureFormula");
        switch (LookupId)
         {
           case -7:
@@ -209,7 +210,7 @@ This is the column definition for:<BR>
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(SCHEMA_TABLENAME_LABEL, Q);
-       QueryDetails.logQuery("TILDA.MEASUREFORMULA", Q, null);
+       QueryDetails.logQuery("TILDA.MeasureFormula", Q, null);
        java.sql.PreparedStatement PS=null;
        int count = 0;
        try

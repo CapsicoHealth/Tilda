@@ -22,9 +22,13 @@ public enum AggregateType
 
   AVG,
 
+  MIN,
+
+  FIRST,
+
   MAX,
 
-  MIN,
+  LAST,
 
   DEV,
 
@@ -49,18 +53,17 @@ public enum AggregateType
             case ARRAY:
               return T;
             case AVG:
+            case DEV:
+            case VAR:
               if (T == ColumnType.FLOAT || T == ColumnType.DOUBLE || T == ColumnType.INTEGER || T == ColumnType.LONG)
                 return ColumnType.DOUBLE;
               break;
             case COUNT:
               return ColumnType.LONG;
-            case DEV:
-              if (T == ColumnType.FLOAT || T == ColumnType.DOUBLE || T == ColumnType.INTEGER || T == ColumnType.LONG)
-                return ColumnType.DOUBLE;
-              break;
-            case MAX:
-              return T;
             case MIN:
+            case FIRST:
+            case MAX:
+            case LAST:
               return T;
             case SUM:
               if (T == ColumnType.FLOAT || T == ColumnType.DOUBLE)
@@ -68,14 +71,53 @@ public enum AggregateType
               if (T == ColumnType.INTEGER || T == ColumnType.LONG)
                 return ColumnType.LONG;
               break;
-            case VAR:
-              if (T == ColumnType.FLOAT || T == ColumnType.DOUBLE || T == ColumnType.INTEGER || T == ColumnType.LONG)
-                return ColumnType.DOUBLE;
-              break;
             default:
               throw new Error("Incomplete Switch statment: unknown ColumnType " + this.name() + ";");
           }
         throw new Error("Cannot do a " + name() + " aggregate on type " + T.name() + ".");
       }
+
+    public boolean isComposable()
+      {
+        switch (this)
+          {
+            case ARRAY:
+            case COUNT:
+            case MIN:
+            case FIRST:
+            case MAX:
+            case LAST:
+            case SUM:
+              return true;
+            case AVG:
+            case DEV:
+            case VAR:
+              return false;
+            default:
+              throw new Error("Incomplete Switch statment: unknown ColumnType " + this.name() + ";");
+          }
+      }
+    
+    public boolean isOrderable()
+      {
+        switch (this)
+          {
+            case ARRAY:
+            case FIRST:
+            case LAST:
+              return true;
+            case COUNT:
+            case MIN:
+            case MAX:
+            case SUM:
+            case AVG:
+            case DEV:
+            case VAR:
+              return false;
+            default:
+              throw new Error("Incomplete Switch statment: unknown ColumnType " + this.name() + ";");
+          }
+      }
+    
 
   }

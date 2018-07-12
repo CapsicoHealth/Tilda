@@ -52,17 +52,7 @@ public abstract class Parser
         ParserSession PS = new ParserSession(S, CGSql);
         if (loadDependencies(PS, S) == false)
           return null;
-
-        if (PS.getErrorCount() != 0)
-          {
-            LOG.error("==============================================================================================");
-            LOG.error("There were " + PS.getErrorCount() + " errors when trying to validate the schema set");
-            int i = 0;
-            for (String Err : PS._Errors)
-              LOG.error("    " + (++i) + " - " + Err);
-            return null;
-          }
-
+        
         return PS;
       }
 
@@ -163,7 +153,7 @@ public abstract class Parser
             break;
         if (PS.getErrorCount() == 0)
           {
-            if (PS.getSchema(BaseSchema._Package, BaseSchema._Name) == null)
+            if (PS.getSchemaForDependency(BaseSchema._Package, BaseSchema._Name) == null)
               {
                 PS.addDependencySchema(BaseSchema);
               }
@@ -198,5 +188,5 @@ public abstract class Parser
             }
         return true;
       }
-
+    
   }

@@ -222,8 +222,8 @@ public class TextUtil
       {
         EscapeSomethingWithSomething(X, '"', "\"", S, "\"", "\"");
       }
-    
-    
+
+
     public static final String EscapeSingleQuoteWithSlashDouble(String S)
       {
         StringBuilder X = new StringBuilder();
@@ -625,6 +625,19 @@ public class TextUtil
         return true;
       }
 
+    public static boolean isJavaIdentifier(String Str)
+      {
+        if (Str == null || Str.length() == 0 || !Character.isJavaIdentifierStart(Str.charAt(0)))
+          return false;
+
+        for (int i = 1; i < Str.length(); i++)
+          {
+            if (!Character.isJavaIdentifierPart(Str.charAt(i)))
+              return false;
+          }
+        return true;
+      }
+
     public static String ProcessTextToHTMLParagraphs(String Text, String StyleClass)
       {
         Text = Text.replace("<br>", "</P><P class='" + StyleClass + "'>");
@@ -879,6 +892,28 @@ public class TextUtil
         Print(I, s);
         return s.toString();
       }
+    
+    public static final String Print(Iterator<?> I, String Separator)
+    {	
+        if (I == null)
+          return null;
+        StringBuilder Str = new StringBuilder();
+        boolean First = true;
+        while (I.hasNext() == true)
+          {
+            Object O = I.next();
+            if (First == true)
+              First = false;
+            else
+            	Str.append(Separator);
+            if (O == null)
+            	Str.append("null");
+            else
+            	Str.append(O.getClass() == ZonedDateTime.class ? DateTimeUtil.printDateTimeCompact((ZonedDateTime) O, true, true) : O.toString());
+            }
+         return Str.toString();
+    }
+
 
     public static final void Print(Iterator<?> I, StringBuilder s)
       {
@@ -1248,7 +1283,10 @@ public class TextUtil
           {
             if (Str.length() != 0)
               Str.append(Separator);
-            Str.append(o.toString());
+            if(o.getClass() != null)
+              Str.append(o.getClass().getName());
+            else
+              Str.append(o.toString());
           }
         return Str.toString();
       }

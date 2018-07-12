@@ -34,6 +34,7 @@ import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Query;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.SubWhereClause;
+import tilda.utils.DateTimeUtil;
 import tilda.utils.PaddingTracker;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
@@ -216,9 +217,14 @@ public class Helper
           return "set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "Now();";
         else if (V._Value.equalsIgnoreCase("UNDEFINED") == true)
           return "set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "Undefined();";
+        else if (C.getType() == ColumnType.DATE && DateTimeUtil.parseDate(V._Value, "yyyy-MM-dd") != null)
+          {
+            String MethodName = TextUtil.CapitalizeFirstCharacter(C.getName()) + TextUtil.CapitalizeFirstCharacter(V._Name);
+            return "set" + MethodName+"();";
+          }
 
         throw new Error("Trying to generate a setter call to TIMESTAMP column '" + C.getFullName() + "' for the value '" + V._Value
-            + "'. TIMESTAMP fields are not supposed to have explicit values.");
+           + "'. TIMESTAMP fields are not supposed to have explicit values and DATE fields only values of NOW, UNDEFINED or an proper yyy-MM-dd date.");
       }
 
     public static String getTimestampDefaultComma(Column C, ColumnValue V)
@@ -228,9 +234,11 @@ public class Helper
           return "C.getCommaCurrentTimestamp()";
         else if (V._Value.equalsIgnoreCase("UNDEFINED") == true)
           return getSupportClassFullName(C._ParentObject.getSchema()) + "._COMMAQUESTION";
+        else if (C.getType() == ColumnType.DATE && DateTimeUtil.parseDate(V._Value, "yyyy-MM-dd") != null)
+          return getSupportClassFullName(C._ParentObject.getSchema()) + "._COMMAQUESTION";
 
-        throw new Error("Trying to generate a setter call to TIMESTAMP column '" + C.getFullName() + "' for the value '" + V._Value
-            + "'. TIMESTAMP fields are not supposed to have explicit values.");
+        throw new Error("Trying to generate a setter call to a DATE/TIMESTAMP column '" + C.getFullName() + "' for the value '" + V._Value
+            + "'. TIMESTAMP fields are not supposed to have explicit values and DATE fields only values of NOW, UNDEFINED or an proper yyy-MM-dd date.");
       }
 
     public static String getTimestampDefaultEqual(Column C, ColumnValue V)
@@ -240,9 +248,11 @@ public class Helper
           return "C.getEqualCurrentTimestamp()";
         else if (V._Value.equalsIgnoreCase("UNDEFINED") == true)
           return getSupportClassFullName(C._ParentObject.getSchema()) + "._EQUALQUESTION";
+        else if (C.getType() == ColumnType.DATE && DateTimeUtil.parse(V._Value, "yyyy-MM-dd") != null)
+          return getSupportClassFullName(C._ParentObject.getSchema()) + "._EQUALQUESTION";
 
         throw new Error("Trying to generate a setter call to TIMESTAMP column '" + C.getFullName() + "' for the value '" + V._Value
-            + "'. TIMESTAMP fields are not supposed to have explicit values.");
+           + "'. TIMESTAMP fields are not supposed to have explicit values and DATE fields only values of NOW, UNDEFINED or an proper yyy-MM-dd date.");
       }
 
 
@@ -675,6 +685,62 @@ public class Helper
         return false;
       }
 
+    public static boolean CSVExport(PrintWriter Out, boolean First, Column C)
+    {
+      if(First == false)
+    	Out.println("      Str.append(\",\");");
+      if (C.getType() == ColumnType.DOUBLE || C.getType() == ColumnType.FLOAT|| C.getType() == ColumnType.LONG || C.getType() == ColumnType.INTEGER 
+    		  || C.getType() == ColumnType.CHAR || C.getType() == ColumnType.BINARY || C.getType() == ColumnType.BOOLEAN)
+        Out.println("      TextUtil.EscapeDoubleQuoteForCSV(Str, \"\" + " + "Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "());");
+      else if (C.isCollection() == true)
+        Out.println("      TextUtil.EscapeDoubleQuoteForCSV(Str, " + "TextUtil.Print(Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "(), \",\"));");
+      else if (C.getType() == ColumnType.DATETIME)
+        Out.println("      TextUtil.EscapeDoubleQuoteForCSV(Str, " + "DateTimeUtil.printDateTimeForSQL(Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()));");
+      else if (C.getType() == ColumnType.DATE)
+        Out.println("      TextUtil.EscapeDoubleQuoteForCSV(Str, " + "DateTimeUtil.printDate(Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()));");
+      else
+    	Out.println("      TextUtil.EscapeDoubleQuoteForCSV(Str, " + "Data.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "());");
+      return false;
+    }
+    
+    public static String NVPValueCast(Column C, ColumnType CastTo)
+      {    	      	
+   	    String castString = "D.get" + TextUtil.CapitalizeFirstCharacter(C.getName()) + "()";
+  	    
+  	    if(C.getType() != CastTo)
+          switch(CastTo)
+            {
+              case STRING:
+            	  castString =  "String.valueOf("+castString+")";
+                  break;        
+              case LONG:
+            	  castString =  "(long) " + castString;
+                  break;        
+              case FLOAT:
+            	  castString =  "(float) " + castString;
+                  break;
+              case DOUBLE:
+            	  castString =  "(double) " + castString;
+                  break;
+              case DATETIME:
+            	  castString =   "DateTime(" + castString + ")";
+                  break;                    
+              case BOOLEAN:
+              case BITFIELD:
+              case BINARY:
+              case DATE:
+              case JSON:    
+              case INTEGER:
+              case CHAR:
+            	  break;              
+              default:
+            	  throw new Error("The ColumnType " + C.getType().name()  + " does not Cast to " + CastTo.name() + "! There is no cast logic to handle the " + CastTo.name() + " ColumnType in the NVPValueCast.");
+            }
+    
+        return castString;
+    }    
+    
+    
     public static void SelectFrom(PrintWriter Out, Object O)
       {
         Out.println("       S.append(\"select \");");

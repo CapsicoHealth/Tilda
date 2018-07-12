@@ -17,31 +17,32 @@
 package tilda.migration.actions;
 
 import tilda.db.Connection;
+import tilda.db.metadata.ColumnMeta;
 import tilda.migration.MigrationAction;
 import tilda.parsing.parts.Column;
 
 public class ColumnAlterStringSize extends MigrationAction
   {
-    public ColumnAlterStringSize(Column Col, int CurrentSize)
+    public ColumnAlterStringSize(ColumnMeta ColMeta, Column Col)
       {
         super(false);
         _Col = Col;
-        _CurrentSize = CurrentSize;
+        _ColMeta = ColMeta;
       }
 
     protected Column _Col;
-    protected int _CurrentSize;
+    protected ColumnMeta _ColMeta;
 
     public boolean process(Connection C)
     throws Exception
       {
-        return C.alterTableAlterColumnStringSize(_Col, _CurrentSize);
+        return C.alterTableAlterColumnStringSize(_ColMeta, _Col);
       }
 
     @Override
     public String getDescription()
       {
         return "Alter table "+_Col._ParentObject.getFullName()
-              +(_Col._Size > _CurrentSize ? " expanding" : " shrinking")+" string column "+_Col.getName()+" size from "+_CurrentSize+" to "+_Col._Size;
+              +(_Col._Size > _ColMeta._Size ? " expanding" : " shrinking")+" string column "+_Col.getName()+" size from "+_ColMeta._Size+" to "+_Col._Size;
       }
   }

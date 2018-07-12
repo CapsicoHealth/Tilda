@@ -17,6 +17,7 @@
 package tilda;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ import tilda.utils.DateTimeUtil;
 import tilda.utils.DurationUtil;
 import tilda.utils.DateTimeZone;
 import tilda.utils.NumberFormatUtil;
+import tilda.utils.TextUtil;
 
 public class DBTest
   {
@@ -54,9 +56,10 @@ public class DBTest
           {
             C = ConnectionPool.get("MAIN");
             //Test1(C);
-            Test2(C);
-            Test3(C);
-            Test4(C);
+            //Test2(C);
+            //Test3(C);
+            //Test4(C);
+            Test5(C);
           }
         catch (Exception E)
           {
@@ -74,6 +77,86 @@ public class DBTest
                 {
                 }
           }
+      }
+
+    private static void Test5(Connection C)
+    throws Exception
+      {
+        List<Long> L = new ArrayList<Long>();
+        L.add((long)1); // Yeah, could have written 1l, but just spent 5mn of my life looking at this and thinking it was "11".
+        L.add((long)10);
+        L.add((long)100);
+        Testing_Data D = Testing_Factory.Create(L, "Blah");
+        if (D.Write(C) == false)
+          throw new Exception("Bad stuff!");
+        
+        List<Character> Lc = new ArrayList<Character>();
+        Lc.add('A');
+        Lc.add('B');
+        D.setA2b(Lc);
+        
+        List<Boolean> Lb = new ArrayList<Boolean>();
+        Lb.add(true);
+        Lb.add(true);
+        Lb.add(false);
+        D.setA3b(Lb);
+                
+        D.setA1(777);
+        D.setA2('G');
+        D.setDesc2("blah blah blah blah blah blah blah");
+
+        if (D.Write(C) == false)
+         throw new Exception("Bad stuff!");
+
+        D.setNullA1();
+        D.setNullA2();
+        if (D.Write(C) == false)
+          throw new Exception("Bad stuff!");
+        
+        ZonedDateTime Now = DateTimeUtil.NowLocal();
+        D.setA9(Now);
+        LOG.debug("A9 null?: "+D.isNullA9());
+        List<ZonedDateTime> ZDTs = new ArrayList<ZonedDateTime>();
+        ZDTs.add(DateTimeUtil.NewUTC(2018, 1, 1, 0, 0, 0, 0));
+        ZDTs.add(DateTimeUtil.NewUTC(2018, 2, 1, 0, 0, 0, 0));
+        ZDTs.add(DateTimeUtil.NewUTC(2018, 3, 1, 0, 0, 0, 0));
+        ZDTs.add(Now);
+        D.setA9b(ZDTs);
+        LOG.debug("A9b: "+TextUtil.Print(D.getA9b()));
+        LOG.debug("A9bTZ: "+TextUtil.Print(D.getA9bTZ()));
+        if (D.Write(C) == false)
+          throw new Exception("Bad stuff!");
+
+        LocalDate Today = DateTimeUtil.NowLocalDate();
+        D.setA9c(Today);
+        LOG.debug("A9c null?: "+D.isNullA9c());
+        List<LocalDate> LDs = new ArrayList<LocalDate>();
+        LDs.add(DateTimeUtil.New(2018, 4, 1));
+        LDs.add(DateTimeUtil.New(2018, 5, 1));
+        LDs.add(DateTimeUtil.New(2018, 6, 1));
+        LDs.add(Today);
+        D.setA9d(LDs);
+        if (D.Write(C) == false)
+         throw new Exception("Bad stuff!");
+        C.commit();
+        
+        D = Testing_Factory.LookupByPrimaryKey(D.getRefnum());
+        if (D.Read(C) == false)
+          throw new Exception("Bad stuff!");
+        LOG.debug("A9: "+D.getA9());
+        LOG.debug("A9b: "+TextUtil.Print(D.getA9b()));
+        LOG.debug("A9bTZ: "+TextUtil.Print(D.getA9bTZ()));
+        LOG.debug("A9c: "+D.getA9c());
+        LOG.debug("A9d: "+TextUtil.Print(D.getA9d()));
+        
+        D.setNullA9();
+        D.setNullA9b();
+        D.setNullA9c();
+        D.setNullA9d();
+        if (D.Write(C) == false)
+          throw new Exception("Bad stuff!");
+
+        C.commit();
       }
 
     private static void Test4(Connection C)

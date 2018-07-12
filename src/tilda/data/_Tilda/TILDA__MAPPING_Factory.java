@@ -18,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+@SuppressWarnings({ "unused" })
 public class TILDA__MAPPING_Factory
  {
    protected static final Logger LOG = LogManager.getLogger(TILDA__MAPPING_Factory.class.getName());
@@ -26,20 +27,20 @@ public class TILDA__MAPPING_Factory
 
    public static final Class<TILDA__MAPPING> DATA_CLASS= TILDA__MAPPING.class;
    public static final String SCHEMA_LABEL = TextUtil.Print("TILDA", "");
-   public static final String TABLENAME_LABEL = TextUtil.Print("MAPPING", "");
-   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.MAPPING", "");
-   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "MAPPING"); }
+   public static final String TABLENAME_LABEL = TextUtil.Print("Mapping", "");
+   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.Mapping", "");
+   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "Mapping"); }
 
    public static abstract class COLS {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.MAPPING.type -> TILDA.MAPPING."type"
+//   Field tilda.data.TILDA.Mapping.type -> TILDA.Mapping."type"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MAPPING.type of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MAPPING.type of type character(10)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Mapping.type of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Mapping.type of type varchar(10)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -52,13 +53,13 @@ This is the column definition for:<BR>
      public static Type_StringPrimitive        TYPE       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "type"       , 0/*0*/, "The type this mapping is for");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.MAPPING.src -> TILDA.MAPPING."src"
+//   Field tilda.data.TILDA.Mapping.src -> TILDA.Mapping."src"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MAPPING.src of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MAPPING.src of type varchar(1024)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Mapping.src of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Mapping.src of type varchar(1024)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>1024</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -71,13 +72,13 @@ This is the column definition for:<BR>
      public static Type_StringPrimitive        SRC        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "src"        , 1/*1*/, "The source value for this mapping");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.MAPPING.dst -> TILDA.MAPPING."dst"
+//   Field tilda.data.TILDA.Mapping.dst -> TILDA.Mapping."dst"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MAPPING.dst of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MAPPING.dst of type varchar(1024)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Mapping.dst of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Mapping.dst of type varchar(1024)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>1024</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -90,13 +91,13 @@ This is the column definition for:<BR>
      public static Type_StringPrimitive        DST        = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "dst"        , 2/*2*/, "The the destination (mapped) value for this mapping.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.MAPPING.created -> TILDA.MAPPING."created"
+//   Field tilda.data.TILDA.Mapping.created -> TILDA.Mapping."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MAPPING.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MAPPING.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Mapping.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Mapping.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -115,13 +116,13 @@ This is the column definition for:<BR>
      public static Type_DatetimePrimitive      CREATED    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 3/*3*/, "The timestamp for when the record was created.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.MAPPING.lastUpdated -> TILDA.MAPPING."lastUpdated"
+//   Field tilda.data.TILDA.Mapping.lastUpdated -> TILDA.Mapping."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MAPPING.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MAPPING.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Mapping.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Mapping.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
@@ -140,13 +141,13 @@ This is the column definition for:<BR>
      public static Type_DatetimePrimitive      LASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 4/*4*/, "The timestamp for when the record was last updated.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.MAPPING.deleted -> TILDA.MAPPING."deleted"
+//   Field tilda.data.TILDA.Mapping.deleted -> TILDA.Mapping."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MAPPING.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MAPPING.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Mapping.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Mapping.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
@@ -209,13 +210,13 @@ This is the column definition for:<BR>
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
        S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "MAPPING", "type");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "MAPPING", "src");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "MAPPING", "dst");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "MAPPING", "created");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "MAPPING", "lastUpdated");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "MAPPING", "deleted");
-       S.append(" from "); C.getFullTableVar(S, "TILDA", "MAPPING");
+       S.append(" "); C.getFullColumnVar(S, "TILDA", "Mapping", "type");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Mapping", "src");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Mapping", "dst");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Mapping", "created");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Mapping", "lastUpdated");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Mapping", "deleted");
+       S.append(" from "); C.getFullTableVar(S, "TILDA", "Mapping");
        switch (LookupId)
         {
           case -7:
@@ -231,7 +232,7 @@ This is the column definition for:<BR>
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(SCHEMA_TABLENAME_LABEL, Q);
-       QueryDetails.logQuery("TILDA.MAPPING", Q, null);
+       QueryDetails.logQuery("TILDA.Mapping", Q, null);
        java.sql.PreparedStatement PS=null;
        int count = 0;
        try

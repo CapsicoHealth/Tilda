@@ -104,5 +104,11 @@ public class NumberFormatUtil
              : X >=    10 && X <    100 ?   "00"+X
              : "0"+X;
       }
+
+    public static final String LeadingSpace(long X, int spaces)
+      {
+        int length = String.valueOf(X).length();
+        return (length < spaces ? PaddingUtil.getPad(spaces-length):"")+X;
+      }
     
   }

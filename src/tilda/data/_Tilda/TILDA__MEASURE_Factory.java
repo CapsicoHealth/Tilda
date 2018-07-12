@@ -18,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+@SuppressWarnings({ "unused" })
 public class TILDA__MEASURE_Factory
  {
    protected static final Logger LOG = LogManager.getLogger(TILDA__MEASURE_Factory.class.getName());
@@ -26,20 +27,20 @@ public class TILDA__MEASURE_Factory
 
    public static final Class<TILDA__MEASURE> DATA_CLASS= TILDA__MEASURE.class;
    public static final String SCHEMA_LABEL = TextUtil.Print("TILDA", "");
-   public static final String TABLENAME_LABEL = TextUtil.Print("MEASURE", "");
-   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.MEASURE", "");
-   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "MEASURE"); }
+   public static final String TABLENAME_LABEL = TextUtil.Print("Measure", "");
+   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.Measure", "");
+   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "Measure"); }
 
    public static abstract class COLS {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.MEASURE.refnum -> TILDA.MEASURE."refnum"
+//   Field tilda.data.TILDA.Measure.refnum -> TILDA.Measure."refnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MEASURE.refnum of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MEASURE.refnum of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Measure.refnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Measure.refnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
@@ -51,13 +52,13 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          REFNUM     = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"     , 0/*0*/, "The primary key for this record");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.MEASURE.schema -> TILDA.MEASURE."schema"
+//   Field tilda.data.TILDA.Measure.schema -> TILDA.Measure."schema"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MEASURE.schema of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MEASURE.schema of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Measure.schema of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Measure.schema of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -70,13 +71,13 @@ This is the column definition for:<BR>
      public static Type_StringPrimitive        SCHEMA     = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "schema"     , 1/*1*/, "The Schema wher ethe measure is defined.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.MEASURE.name -> TILDA.MEASURE."name"
+//   Field tilda.data.TILDA.Measure.name -> TILDA.Measure."name"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MEASURE.name of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MEASURE.name of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Measure.name of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Measure.name of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -89,13 +90,13 @@ This is the column definition for:<BR>
      public static Type_StringPrimitive        NAME       = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "name"       , 2/*2*/, "The name of the measure.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.MEASURE.created -> TILDA.MEASURE."created"
+//   Field tilda.data.TILDA.Measure.created -> TILDA.Measure."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MEASURE.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MEASURE.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Measure.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Measure.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -114,13 +115,13 @@ This is the column definition for:<BR>
      public static Type_DatetimePrimitive      CREATED    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 3/*3*/, "The timestamp for when the record was created.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.MEASURE.lastUpdated -> TILDA.MEASURE."lastUpdated"
+//   Field tilda.data.TILDA.Measure.lastUpdated -> TILDA.Measure."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MEASURE.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MEASURE.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Measure.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Measure.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
@@ -139,13 +140,13 @@ This is the column definition for:<BR>
      public static Type_DatetimePrimitive      LASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 4/*4*/, "The timestamp for when the record was last updated.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.MEASURE.deleted -> TILDA.MEASURE."deleted"
+//   Field tilda.data.TILDA.Measure.deleted -> TILDA.Measure."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MEASURE.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MEASURE.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Measure.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Measure.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
@@ -208,13 +209,13 @@ This is the column definition for:<BR>
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
        S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "MEASURE", "refnum");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "MEASURE", "schema");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "MEASURE", "name");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "MEASURE", "created");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "MEASURE", "lastUpdated");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "MEASURE", "deleted");
-       S.append(" from "); C.getFullTableVar(S, "TILDA", "MEASURE");
+       S.append(" "); C.getFullColumnVar(S, "TILDA", "Measure", "refnum");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Measure", "schema");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Measure", "name");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Measure", "created");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Measure", "lastUpdated");
+       S.append(", "); C.getFullColumnVar(S, "TILDA", "Measure", "deleted");
+       S.append(" from "); C.getFullTableVar(S, "TILDA", "Measure");
        switch (LookupId)
         {
           case -7:
@@ -230,7 +231,7 @@ This is the column definition for:<BR>
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(SCHEMA_TABLENAME_LABEL, Q);
-       QueryDetails.logQuery("TILDA.MEASURE", Q, null);
+       QueryDetails.logQuery("TILDA.Measure", Q, null);
        java.sql.PreparedStatement PS=null;
        int count = 0;
        try

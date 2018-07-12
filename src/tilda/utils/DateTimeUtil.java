@@ -26,6 +26,7 @@ import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -96,6 +97,12 @@ public class DateTimeUtil
         return ZonedDateTime.of(Year, Month, Day, Hour, Minutes, Seconds, Milliseconds * 1000000, Z._ZoneId);
       }
 
+    public static LocalDate New(int Year, int Month, int Day)
+      {
+        return LocalDate.of(Year, Month, Day);
+      }
+
+
     public static String getCurrentZoneOffset()
       {
         return ZonedDateTime.now().getOffset().getId();
@@ -120,6 +127,12 @@ public class DateTimeUtil
       {
         return ZonedDateTime.now(Z._ZoneId);
       }
+
+    public static LocalDate NowLocalDate()
+      {
+        return LocalDate.now();
+      }
+
 
     public static ZonedDateTime Oldest(ZonedDateTime ZDT1, ZonedDateTime ZDT2)
       {
@@ -151,7 +164,25 @@ public class DateTimeUtil
           }
         catch (DateTimeParseException E)
           {
-            LOG.warn("Cannot parse "+DateTimeStr+" with pattern "+Pattern+": "+E.getMessage());
+            LOG.warn("Cannot parse " + DateTimeStr + " with pattern " + Pattern + ": " + E.getMessage());
+            return null;
+          }
+      }
+
+    /**
+     * Simple method to get a Calendar object out of a string and a pattern
+     */
+    public static LocalDate parseDate(String DateStr, String Pattern)
+      {
+        if (TextUtil.isNullOrEmpty(DateStr) == true)
+          return null;
+        try
+          {
+            return LocalDate.parse(DateStr, DateTimeFormatter.ofPattern(Pattern));
+          }
+        catch (DateTimeParseException E)
+          {
+            LOG.warn("Cannot parse " + DateStr + " with pattern " + Pattern + ": " + E.getMessage());
             return null;
           }
       }
@@ -190,6 +221,17 @@ public class DateTimeUtil
       {
         return ZDT == null ? null : ZDT.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
       }
+
+    public static List<String> printDateTimeForSQL(List<ZonedDateTime> ZDTs)
+      {
+        if (ZDTs == null)
+          return null;
+        List<String> L = new ArrayList<String>();
+        for (ZonedDateTime ZDT : ZDTs)
+          L.add(printDateTimeForSQL(ZDT));
+        return L;
+      }
+
 
     public static String printDateTimeForJSON(ZonedDateTime ZDT)
       {
@@ -255,6 +297,17 @@ public class DateTimeUtil
           }
         return null;
       }
+
+    public static List<ZonedDateTime> parsefromJSON(List<String> DateTimeStr)
+      {
+        if (TextUtil.isNullOrEmpty(DateTimeStr) == true)
+          return null;
+        List<ZonedDateTime> L = new ArrayList<ZonedDateTime>();
+        for (String Str : DateTimeStr)
+          L.add(parsefromJSON(Str));
+        return L;
+      }
+
 
     private static Pattern _ISO_NOZONE_DATETIME = Pattern.compile("(\\d{4}).(\\d{2}).(\\d{2}).(\\d{2}).(\\d{2}).(\\d{2})");
 
@@ -599,28 +652,42 @@ public class DateTimeUtil
 
         return printDateTimeForJSON(BaseTimeMarker);
       }
-    
+
     public static boolean validateBoundary(TimeSeriesType Type, boolean Start, ZonedDateTime ZDT)
       {
         Month m = ZDT.getMonth();
-        int   d = ZDT.getDayOfMonth();
-        long  dMax = ZDT.range(ChronoField.DAY_OF_MONTH).getMaximum();
+        int d = ZDT.getDayOfMonth();
+        long dMax = ZDT.range(ChronoField.DAY_OF_MONTH).getMaximum();
         switch (Type)
           {
             case YEARLY:
-              return  Start == true  && m == Month.JANUARY  && d == 1
-                   || Start == false && m == Month.DECEMBER && d == dMax;
+              return Start == true && m == Month.JANUARY && d == 1
+              || Start == false && m == Month.DECEMBER && d == dMax;
             case QUARTERLY:
-              return  Start == true  && (m == Month.JANUARY || m == Month.APRIL || m == Month.JULY      || m == Month.OCTOBER ) && d == 1
-                   || Start == false && (m == Month.MARCH   || m == Month.JUNE  || m == Month.SEPTEMBER || m == Month.DECEMBER) && d == dMax;
+              return Start == true && (m == Month.JANUARY || m == Month.APRIL || m == Month.JULY || m == Month.OCTOBER) && d == 1
+              || Start == false && (m == Month.MARCH || m == Month.JUNE || m == Month.SEPTEMBER || m == Month.DECEMBER) && d == dMax;
             case MONTHLY:
-              return Start == true  && d == 1
-                  || Start == false && d == dMax;
+              return Start == true && d == 1
+              || Start == false && d == dMax;
             case DAILY:
               return true;
             default:
               throw new Error("Switch statement on TimeSeriesType does not handle the case '" + Type + "'.");
           }
       }
-    
+
+    public static List<java.sql.Timestamp> toSQLTimeStamps(List<ZonedDateTime> L)
+      {
+        if (L == null)
+          return null;
+        List<java.sql.Timestamp> newL = new ArrayList<java.sql.Timestamp>();
+        for (ZonedDateTime ZDT : L)
+          {
+            newL.add(ZDT == null ? null : new java.sql.Timestamp(ZDT.toInstant().toEpochMilli()));
+          }
+        LOG.debug("L: "+TextUtil.Print(L.iterator()));
+        LOG.debug("newL: "+TextUtil.Print(newL.iterator()));
+        return newL;
+      }
+
   }

@@ -16,9 +16,11 @@
 
 package tilda.parsing.parts.helpers;
 
+import tilda.enums.ColumnType;
 import tilda.enums.DefaultType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Column;
+import tilda.utils.DateTimeUtil;
 import tilda.utils.ParseUtil;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
@@ -62,35 +64,41 @@ public class ValueHelper
                 break;
               case DATETIME:
                 if (Value.equalsIgnoreCase("NOW") == false && Value.equalsIgnoreCase("UNDEFINED") == false)
-                  PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' which is not a default NOW or UNDEFINED value. Only these pre-defined values are allowed for timestamps.");
+                  PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "->"+Value+"' which is not a default NOW or UNDEFINED value. Only these pre-defined values are allowed for timestamps.");
                 if (Default == DefaultType.NONE)
                   PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' which is not set as a default. Only default values are allowed for timestamps.");
+                break;
+              case DATE:
+                if (Value.equalsIgnoreCase("NOW") == false && Value.equalsIgnoreCase("UNDEFINED") == false && DateTimeUtil.parseDate(Value, "yyyy-MM-dd") == null)
+                  PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "->"+Value+"' which is not a default NOW or UNDEFINED, or valid yyyy-MM-dd value. Only these pre-defined values or date format are allowed for dates.");
+                if (Default == DefaultType.NONE)
+                  PS.AddError("Column '" + Col.getFullName() + "' defines Value '" + Name + "' which is not set as a default. Only default values are allowed for Dates.");
                 break;
               default:
                 throw new Error("Unhandled case in switch for type '" + Col.getType() + "'.");
             }
         }
 
-    public static String printValue(Column Col, String DefaultValue) throws Exception
+    public static String printValue(String colName, ColumnType colType, String defaultValue) throws Exception
       {
-        switch (Col.getType())
+        switch (colType)
         {
           case BINARY:
           case BITFIELD:
-            throw new Exception("Column '" + Col.getFullName() + "' defines default value '"+DefaultValue+"' which is not allowed for type '" + Col.getType() + "'.");
+            throw new Exception("Column '" + colName + "' defines default value '"+defaultValue+"' which is not allowed for type '" + colType + "'.");
           case BOOLEAN:
           case DOUBLE:
           case FLOAT:
           case INTEGER:
           case LONG:
-            return DefaultValue;
+            return defaultValue;
           case CHAR:
           case STRING:
           case DATE:
           case DATETIME:
-            return TextUtil.EscapeSingleQuoteForSQL(DefaultValue);
+            return TextUtil.EscapeSingleQuoteForSQL(defaultValue);
           default:
-            throw new Error("Unhandled case in switch for type '" + Col.getType() + "'.");
+            throw new Error("Unhandled case in switch for type '" + colType + "'.");
         }
       }
   }

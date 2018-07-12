@@ -33,6 +33,7 @@ import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.ColumnType;
 import tilda.enums.ObjectLifecycle;
+import tilda.enums.OutputFormatType;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
@@ -274,11 +275,12 @@ public class Schema
         I._Db = false;
         O._Indices.add(I);
         
-        O._Json = new ArrayList<JsonMapping>();
-        JsonMapping J = new JsonMapping();
-        J._Name = "";
-        J._Columns = new String[] { "viewName", "realizedTableName", "name", "title", "description", "formula", "html", "created", "lastUpdated"}; 
-        O._Json.add(J);
+        O._OutputMaps = new ArrayList<OutputMapping>();
+        OutputMapping OM = new OutputMapping();
+        OM._Name = "";
+        OM._OutputTypeStrs = new String[] {"JSON"};
+        OM._Columns = new String[] { "viewName", "realizedTableName", "name", "title", "description", "formula", "html", "created", "lastUpdated"}; 
+        O._OutputMaps.add(OM);
 
         _Objects.add(O);
         O.Validate(PS, this);
@@ -317,11 +319,12 @@ public class Schema
         I._Db = false;
         O._Indices.add(I);
         
-        O._Json = new ArrayList<JsonMapping>();
-        J = new JsonMapping();
-        J._Name = "";
-        J._Columns = new String[] { "viewName", "formulaName", "value", "description", "created", "lastUpdated"}; 
-        O._Json.add(J);
+        O._OutputMaps = new ArrayList<OutputMapping>();
+        OM = new OutputMapping();
+        OM._Name = "";
+        OM._OutputTypeStrs = new String[] {"JSON"};
+        OM._Columns = new String[] { "viewName", "formulaName", "value", "description", "created", "lastUpdated"}; 
+        O._OutputMaps.add(OM);
 
         _Objects.add(O);
         O.Validate(PS, this);
@@ -370,11 +373,12 @@ public class Schema
         I._Db = false;
         O._Indices.add(I);
         
-        O._Json = new ArrayList<JsonMapping>();
-        J = new JsonMapping();
-        J._Name = "";
-        J._Columns = new String[] { "viewName", "formulaName", "referenceName", "referenceType", "description", "created", "lastUpdated"}; 
-        O._Json.add(J);
+        O._OutputMaps = new ArrayList<OutputMapping>();
+        OM = new OutputMapping();
+        OM._Name = "";
+        OM._OutputTypeStrs = new String[] {"JSON"};
+        OM._Columns = new String[] { "viewName", "formulaName", "referenceName", "referenceType", "description", "created", "lastUpdated"}; 
+        O._OutputMaps.add(OM);
 
         _Objects.add(O);
         O.Validate(PS, this);
