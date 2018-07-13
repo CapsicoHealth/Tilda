@@ -167,8 +167,6 @@ public class Migrator
         Scripts.add(InitScript);
         for (Schema S : TildaList)
           {
-            if (S.getShortName().contentEquals("PATIENTS") == true)
-              LOG.debug("xxx");
             List<MigrationAction> L = Migrator.getMigrationActions(C, C.getSQlCodeGen(), S, TildaList, DBMeta);
             for (MigrationAction MA : L)
               if (MA.isDependencyAction() == false)
@@ -233,7 +231,6 @@ public class Migrator
                   C.commit();
               }
           }
-
       }
 
     protected static List<MigrationAction> getMigrationActions(Connection C, CodeGenSql CGSQL, Schema S, List<Schema> TildaList, DatabaseMeta DBMeta)

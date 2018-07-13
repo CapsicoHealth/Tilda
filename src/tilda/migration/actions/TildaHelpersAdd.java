@@ -68,7 +68,17 @@ public class TildaHelpersAdd extends MigrationAction
         if (Str == null)
           return false;
         Maintenance_Data M = Maintenance_Factory.LookupByPrimaryKey("TILDA_HELPERS", "TILDA_HELPERS");
-        return M.Read(C) == false || M.getValue().equals(Str.trim()) == false;
+        if (M.Read(C) == false)
+          {
+            LOG.debug("No maintenance records found for the helpers... need to update.");
+            return true;
+          }
+        else if (M.getValue().equals(Str.trim()) == false)
+          {
+            LOG.debug("Some updates have occurred to the helpers... need to update.");
+            return true;
+          }
+        return false; // no ned for update
       }
 
   }
