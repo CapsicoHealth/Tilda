@@ -177,13 +177,6 @@ CREATE OR REPLACE FUNCTION TILDA.ageBetween(timestamptz, timestamptz, float, flo
   IMMUTABLE LANGUAGE SQL AS
 'SELECT TILDA.Age($1, $2) >= $3 AND TILDA.Age($1, $2) < $4';
 
-
-CREATE OR REPLACE FUNCTION TILDA.map(varchar, varchar)
-  RETURNS varchar
-  IMMUTABLE LANGUAGE SQL AS
-'SELECT dst from TILDA.MAPPING where type=$1 and src=upper($2)';
-
-
 CREATE OR REPLACE FUNCTION TILDA.first_agg (anyelement, anyelement)
 RETURNS anyelement LANGUAGE SQL IMMUTABLE STRICT AS $$
         SELECT $1;
