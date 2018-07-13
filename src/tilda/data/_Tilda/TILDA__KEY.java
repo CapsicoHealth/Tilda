@@ -290,7 +290,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 9 2018, 02:15:25EDT
+ @generated Jul 12 2018, 19:45:33EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__KEY implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -1504,6 +1504,7 @@ This is the hasChanged for:<BR>
              case 1:
                 S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Key", "name"); S.append("=?)");
                 break;
+             case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
            }
@@ -1635,15 +1636,15 @@ This is the hasChanged for:<BR>
           return true;
         }
        StringBuilder S = new StringBuilder(1024);
-       S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "Key", "refnum");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Key", "name");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Key", "max");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Key", "count");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Key", "created");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Key", "lastUpdated");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Key", "deleted");
-       S.append(" from "); C.getFullTableVar(S, "TILDA", "Key");
+          S.append("select ");
+          S.append(" "); C.getFullColumnVar(S, "TILDA", "Key", "refnum");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Key", "name");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Key", "max");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Key", "count");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Key", "created");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Key", "lastUpdated");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Key", "deleted");
+          S.append(" from "); C.getFullTableVar(S, "TILDA", "Key");
        switch (__LookupId)
         {
           case 0:
@@ -1652,6 +1653,7 @@ This is the hasChanged for:<BR>
           case 1:
              S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Key", "name"); S.append("=?)");
              break;
+          case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
         }

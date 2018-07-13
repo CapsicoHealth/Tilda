@@ -22,9 +22,9 @@ import tilda.parsing.parts.View;
 
 public class ViewCreate extends MigrationAction
   {
-    public ViewCreate(View V, boolean isDependency)
+    public ViewCreate(View V)
       {
-        super(isDependency);
+        super(V._ParentSchema._Name, V._Name, false);
         _V = V;
       }
 

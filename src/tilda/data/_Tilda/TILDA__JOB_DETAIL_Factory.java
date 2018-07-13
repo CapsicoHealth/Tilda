@@ -333,36 +333,50 @@ This is the column definition for:<BR>
         }
      }
 
+   protected static final ListResults<tilda.data.Job_Detail_Data> ReadMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception
+     {
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
+       ReadMany(C, -77, RPI, null, FullSelectQuery, Start, Size);
+       return RPI._L;
+     }
+
    private static final void ReadMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__JOB_DETAIL Obj, Object ExtraParams, int Start, int Size) throws Exception
      {
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
-       S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "Id");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "Job_Id");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "FileName");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "FileRecords");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "FileProcessStartTimeTZ");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "FileProcessStartTime");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "FileProcessEndTimeTZ");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "FileProcessEndTime");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "Status");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "Error");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "created");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "lastUpdated");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "deleted");
-       S.append(" from "); C.getFullTableVar(S, "TILDA", "Job_Detail");
-       switch (LookupId)
+       if (LookupId == -77)
         {
-          case -7:
-             String clause = ((SelectQuery)ExtraParams).getWhereClause();
-             if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
-             break;
-          case -666: break;
-          default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
+          S.append((String)ExtraParams);
+        }
+       else
+        {
+          S.append("select ");
+          S.append(" "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "Id");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "Job_Id");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "FileName");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "FileRecords");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "FileProcessStartTimeTZ");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "FileProcessStartTime");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "FileProcessEndTimeTZ");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "FileProcessEndTime");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "Status");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "Error");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "created");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "lastUpdated");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Job_Detail", "deleted");
+          S.append(" from "); C.getFullTableVar(S, "TILDA", "Job_Detail");
+          switch (LookupId)
+           {
+             case -7:
+                String clause = ((SelectQuery)ExtraParams).getWhereClause();
+                if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
+                break;
+             case -77: 
+             case -666: break;
+             default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
+           }
         }
 
-       
        String Q = S.toString() + C.getSelectLimitClause(Start, Size+1);
        S.setLength(0);
        S = null;
@@ -375,6 +389,7 @@ This is the column definition for:<BR>
           PS = C.prepareStatement(Q);
           switch (LookupId)
            {
+             case -77:
              case -7:
                 break;
              case -666: break;

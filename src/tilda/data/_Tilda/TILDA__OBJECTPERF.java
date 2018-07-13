@@ -630,7 +630,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 9 2018, 02:15:25EDT
+ @generated Jul 12 2018, 19:45:33EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__OBJECTPERF implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -3230,6 +3230,7 @@ This is the hasChanged for:<BR>
              case 0:
                 S.append(" where ("); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "objectName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "startPeriod"); S.append("=?)");
                 break;
+             case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
            }
@@ -3415,34 +3416,35 @@ This is the hasChanged for:<BR>
           return true;
         }
        StringBuilder S = new StringBuilder(1024);
-       S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "schemaName");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "objectName");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "startPeriodTZ");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "startPeriod");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "endPeriodTZ");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "endPeriod");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "selectNano");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "selectCount");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "selectRecords");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "insertNano");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "insertCount");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "insertRecords");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "updateNano");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "updateCount");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "updateRecords");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "deleteNano");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "deleteCount");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "deleteRecords");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "created");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "lastUpdated");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "deleted");
-       S.append(" from "); C.getFullTableVar(S, "TILDA", "ObjectPerf");
+          S.append("select ");
+          S.append(" "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "schemaName");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "objectName");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "startPeriodTZ");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "startPeriod");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "endPeriodTZ");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "endPeriod");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "selectNano");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "selectCount");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "selectRecords");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "insertNano");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "insertCount");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "insertRecords");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "updateNano");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "updateCount");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "updateRecords");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "deleteNano");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "deleteCount");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "deleteRecords");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "created");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "lastUpdated");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "deleted");
+          S.append(" from "); C.getFullTableVar(S, "TILDA", "ObjectPerf");
        switch (__LookupId)
         {
           case 0:
              S.append(" where ("); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "objectName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "startPeriod"); S.append("=?)");
              break;
+          case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
         }

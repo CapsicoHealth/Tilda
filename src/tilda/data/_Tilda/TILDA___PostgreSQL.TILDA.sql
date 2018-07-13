@@ -429,6 +429,32 @@ COMMENT ON COLUMN TILDA.FormulaResult."deleted" IS E'The timestamp for when the 
 
 
 
+create table if not exists TILDA.DependencyDDLDummyTable -- A dummy Table created to generate JavaCode to handle results from the Tilda.getDependenciesDDLs() function output.
+ (  "srcSchemaName"  varchar(100)  not null   -- The result value.
+  , "srcTVName"      varchar(100)  not null   -- The result value.
+  , "seq"            integer       not null   -- The blah
+  , "depSchemaName"  varchar(100)  not null   -- The result value.
+  , "depViewName"    varchar(100)  not null   -- The result value.
+  , "restoreScript"  text          not null   -- The result value.
+  , "created"        timestamptz   not null   -- The timestamp for when the record was created.
+  , "lastUpdated"    timestamptz   not null   -- The timestamp for when the record was last updated.
+  , "deleted"        timestamptz              -- The timestamp for when the record was deleted.
+ );
+COMMENT ON TABLE TILDA.DependencyDDLDummyTable IS E'A dummy Table created to generate JavaCode to handle results from the Tilda.getDependenciesDDLs() function output.';
+COMMENT ON COLUMN TILDA.DependencyDDLDummyTable."srcSchemaName" IS E'The result value.';
+COMMENT ON COLUMN TILDA.DependencyDDLDummyTable."srcTVName" IS E'The result value.';
+COMMENT ON COLUMN TILDA.DependencyDDLDummyTable."seq" IS E'The blah';
+COMMENT ON COLUMN TILDA.DependencyDDLDummyTable."depSchemaName" IS E'The result value.';
+COMMENT ON COLUMN TILDA.DependencyDDLDummyTable."depViewName" IS E'The result value.';
+COMMENT ON COLUMN TILDA.DependencyDDLDummyTable."restoreScript" IS E'The result value.';
+COMMENT ON COLUMN TILDA.DependencyDDLDummyTable."created" IS E'The timestamp for when the record was created.';
+COMMENT ON COLUMN TILDA.DependencyDDLDummyTable."lastUpdated" IS E'The timestamp for when the record was last updated.';
+COMMENT ON COLUMN TILDA.DependencyDDLDummyTable."deleted" IS E'The timestamp for when the record was deleted.';
+CREATE UNIQUE INDEX DependencyDDLDummyTable_DepedencySequence ON TILDA.DependencyDDLDummyTable ("srcSchemaName", "srcTVName", "seq");
+CREATE UNIQUE INDEX DependencyDDLDummyTable_DepedencySTV ON TILDA.DependencyDDLDummyTable ("srcSchemaName", "srcTVName", "depSchemaName", "depViewName");
+
+
+
 create table if not exists TILDA.Testing -- blah blah
  (  "refnum"       bigint              not null   -- The primary key for this record
   , "refnum2"      bigint[]            not null   -- The person's primary key

@@ -336,7 +336,7 @@ This View contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 9 2018, 02:15:25EDT
+ @generated Jul 12 2018, 19:45:33EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTINGVIEW implements tilda.interfaces.ReaderObject
@@ -1607,19 +1607,20 @@ This is the null setter for:<BR>
           return true;
         }
        StringBuilder S = new StringBuilder(1024);
-       S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "TestingView", "name");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TestingView", "refnum");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TestingView", "a2Min");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TestingView", "a2Max");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TestingView", "a9TZ");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TestingView", "a9");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TestingView", "a9c");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TestingView", "a6First");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TestingView", "a6Last");
-       S.append(" from "); C.getFullTableVar(S, "TILDA", "TestingView");
+          S.append("select ");
+          S.append(" "); C.getFullColumnVar(S, "TILDA", "TestingView", "name");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TestingView", "refnum");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TestingView", "a2Min");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TestingView", "a2Max");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TestingView", "a9TZ");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TestingView", "a9");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TestingView", "a9c");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TestingView", "a6First");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TestingView", "a6Last");
+          S.append(" from "); C.getFullTableVar(S, "TILDA", "TestingView");
        switch (__LookupId)
         {
+          case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
         }

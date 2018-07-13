@@ -16,6 +16,7 @@
 
 package tilda.utils;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -31,7 +32,7 @@ import tilda.parsing.Parser;
  * @author ldh
  *
  */
-public class ReverseIterator<T>
+public class ReverseIterator<T> implements Iterator<T>
   {
     protected static final Logger LOG = LogManager.getLogger(Parser.class.getName());
     

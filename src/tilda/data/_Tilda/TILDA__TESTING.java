@@ -1027,7 +1027,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 9 2018, 02:15:25EDT
+ @generated Jul 12 2018, 19:45:33EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTING implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject, tilda.interfaces.JSONable
@@ -7304,6 +7304,7 @@ This is the hasChanged for:<BR>
              case 0:
                 S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Testing", "refnum"); S.append("=?)");
                 break;
+             case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
            }
@@ -7547,49 +7548,50 @@ This is the hasChanged for:<BR>
           return true;
         }
        StringBuilder S = new StringBuilder(1024);
-       S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "Testing", "refnum");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "refnum2");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "name");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "description");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "desc2");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "desc3");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "desc4");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "desc5");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "desc6");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "tops");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "tops2");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a1");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a2");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a2b");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a2c");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a3");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a3b");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a4");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a4b");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a5");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a5b");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a6");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a6b");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a6c");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a7");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a7b");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a8");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9TZ");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9bTZ");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9b");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9c");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9d");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "created");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "lastUpdated");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "deleted");
-       S.append(" from "); C.getFullTableVar(S, "TILDA", "Testing");
+          S.append("select ");
+          S.append(" "); C.getFullColumnVar(S, "TILDA", "Testing", "refnum");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "refnum2");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "name");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "description");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "desc2");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "desc3");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "desc4");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "desc5");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "desc6");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "tops");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "tops2");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a1");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a2");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a2b");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a2c");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a3");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a3b");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a4");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a4b");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a5");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a5b");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a6");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a6b");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a6c");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a7");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a7b");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a8");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9TZ");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9bTZ");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9b");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9c");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9d");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "created");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "lastUpdated");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "deleted");
+          S.append(" from "); C.getFullTableVar(S, "TILDA", "Testing");
        switch (__LookupId)
         {
           case 0:
              S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Testing", "refnum"); S.append("=?)");
              break;
+          case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
         }

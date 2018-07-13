@@ -25,7 +25,7 @@ public class ColumnAlterStringSize extends MigrationAction
   {
     public ColumnAlterStringSize(ColumnMeta ColMeta, Column Col)
       {
-        super(false);
+        super(Col._ParentObject._ParentSchema._Name, Col._ParentObject._Name, false);
         _Col = Col;
         _ColMeta = ColMeta;
       }

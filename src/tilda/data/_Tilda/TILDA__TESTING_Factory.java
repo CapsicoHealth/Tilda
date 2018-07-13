@@ -753,72 +753,86 @@ This is the column definition for:<BR>
         }
      }
 
+   protected static final ListResults<tilda.data.Testing_Data> ReadMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception
+     {
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
+       ReadMany(C, -77, RPI, null, FullSelectQuery, Start, Size);
+       return RPI._L;
+     }
+
    private static final void ReadMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__TESTING Obj, Object ExtraParams, int Start, int Size) throws Exception
      {
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
-       S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "Testing", "refnum");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "refnum2");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "name");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "description");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "desc2");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "desc3");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "desc4");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "desc5");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "desc6");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "tops");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "tops2");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a1");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a2");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a2b");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a2c");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a3");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a3b");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a4");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a4b");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a5");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a5b");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a6");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a6b");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a6c");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a7");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a7b");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a8");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9TZ");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9bTZ");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9b");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9c");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9d");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "created");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "lastUpdated");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "deleted");
-       S.append(" from "); C.getFullTableVar(S, "TILDA", "Testing");
-       switch (LookupId)
+       if (LookupId == -77)
         {
-          case -7:
-             String clause = ((SelectQuery)ExtraParams).getWhereClause();
-             if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
-             break;
-          case 1:
-             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "Testing", "name"); S.append(" ASC");
-             break;
-          case 2:
-             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "Testing", "name"); S.append(" ASC");
-             break;
-          case 3:
-             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "Testing", "name"); S.append(" DESC");
-             break;
-          case 4:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Testing", "deleted"); S.append(" is null and "); C.getFullColumnVar(S, "TILDA", "Testing", "name"); S.append(" = 'Hello' and "); C.getFullColumnVar(S, "TILDA", "Testing", "created"); S.append(" > '2018-01-01')");
-             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "Testing", "name"); S.append(" ASC");S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "description"); S.append(" DESC");
-             break;
-          case -666: break;
-          default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
+          S.append((String)ExtraParams);
+        }
+       else
+        {
+          S.append("select ");
+          S.append(" "); C.getFullColumnVar(S, "TILDA", "Testing", "refnum");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "refnum2");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "name");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "description");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "desc2");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "desc3");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "desc4");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "desc5");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "desc6");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "tops");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "tops2");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a1");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a2");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a2b");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a2c");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a3");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a3b");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a4");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a4b");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a5");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a5b");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a6");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a6b");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a6c");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a7");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a7b");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a8");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9TZ");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9bTZ");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9b");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9c");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9d");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "created");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "lastUpdated");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "deleted");
+          S.append(" from "); C.getFullTableVar(S, "TILDA", "Testing");
+          switch (LookupId)
+           {
+             case -7:
+                String clause = ((SelectQuery)ExtraParams).getWhereClause();
+                if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
+                break;
+             case 1:
+                S.append(" order by "); C.getFullColumnVar(S, "TILDA", "Testing", "name"); S.append(" ASC");
+                break;
+             case 2:
+                S.append(" order by "); C.getFullColumnVar(S, "TILDA", "Testing", "name"); S.append(" ASC");
+                break;
+             case 3:
+                S.append(" order by "); C.getFullColumnVar(S, "TILDA", "Testing", "name"); S.append(" DESC");
+                break;
+             case 4:
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "Testing", "deleted"); S.append(" is null and "); C.getFullColumnVar(S, "TILDA", "Testing", "name"); S.append(" = 'Hello' and "); C.getFullColumnVar(S, "TILDA", "Testing", "created"); S.append(" > '2018-01-01')");
+                S.append(" order by "); C.getFullColumnVar(S, "TILDA", "Testing", "name"); S.append(" ASC");S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "description"); S.append(" DESC");
+                break;
+             case -77: 
+             case -666: break;
+             default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
+           }
         }
 
-       
        String Q = S.toString() + C.getSelectLimitClause(Start, Size+1);
        S.setLength(0);
        S = null;
@@ -832,6 +846,7 @@ This is the column definition for:<BR>
           PS = C.prepareStatement(Q);
           switch (LookupId)
            {
+             case -77:
              case -7:
                 break;
              case 1: {

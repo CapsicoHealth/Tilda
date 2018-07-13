@@ -414,7 +414,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 9 2018, 02:15:25EDT
+ @generated Jul 12 2018, 19:45:33EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TRANSPERF implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -2238,6 +2238,7 @@ This is the hasChanged for:<BR>
              case 0:
                 S.append(" where ("); C.getFullColumnVar(S, "TILDA", "TransPerf", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "TransPerf", "objectName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "TransPerf", "startPeriod"); S.append("=?)");
                 break;
+             case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
            }
@@ -2391,26 +2392,27 @@ This is the hasChanged for:<BR>
           return true;
         }
        StringBuilder S = new StringBuilder(1024);
-       S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "TransPerf", "schemaName");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "objectName");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "startPeriodTZ");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "startPeriod");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "endPeriodTZ");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "endPeriod");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "commitNano");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "commitCount");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "rollbackNano");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "rollbackCount");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "created");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "lastUpdated");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "deleted");
-       S.append(" from "); C.getFullTableVar(S, "TILDA", "TransPerf");
+          S.append("select ");
+          S.append(" "); C.getFullColumnVar(S, "TILDA", "TransPerf", "schemaName");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "objectName");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "startPeriodTZ");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "startPeriod");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "endPeriodTZ");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "endPeriod");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "commitNano");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "commitCount");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "rollbackNano");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "rollbackCount");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "created");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "lastUpdated");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "deleted");
+          S.append(" from "); C.getFullTableVar(S, "TILDA", "TransPerf");
        switch (__LookupId)
         {
           case 0:
              S.append(" where ("); C.getFullColumnVar(S, "TILDA", "TransPerf", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "TransPerf", "objectName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "TransPerf", "startPeriod"); S.append("=?)");
              break;
+          case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
         }

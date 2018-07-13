@@ -18,27 +18,30 @@ package tilda.migration.actions;
 
 import tilda.db.Connection;
 import tilda.migration.MigrationAction;
+import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 
-public class ViewUpdate extends MigrationAction
+public class SchemaViewsCreate extends MigrationAction
   {
-    public ViewUpdate(View V)
+    public SchemaViewsCreate(Schema S)
       {
-        super(V._ParentSchema._Name, V._Name, false);
-        _V = V;
+        super(S._Name, null, false, false);
+        _S = S;
       }
 
-    protected View _V;
+    protected Schema _S;
 
-    @Override
     public boolean process(Connection C)
     throws Exception
       {
-        return C.createView(_V);
+        for (View V : _S._Views)
+          if (C.createView(V) == false)
+            return false;
+        return true;
       }
 
     public String getDescription()
       {
-        return "Update view " + _V.getFullName();
+        return "Create all views for schema " + _S.getFullName();
       }
   }

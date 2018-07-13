@@ -33,7 +33,7 @@ public class TildaHelpersAdd extends MigrationAction
 
     public TildaHelpersAdd()
       {
-        super(false);
+        super(null, null, false);
       }
 
     public boolean process(Connection C)

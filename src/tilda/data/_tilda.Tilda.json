@@ -3,7 +3,7 @@
  ,"dependencies": null
 
  ,"extraDDL":{
-     "before":["_tilda.Tilda.postgres.procedures.sql"]
+     "before":[]
     ,"after":[]
    } 
 
@@ -290,6 +290,23 @@
        ]
     }
 
+    ,{ "name": "DependencyDDLDummyTable"
+      ,"description": "A dummy Table created to generate JavaCode to handle results from the Tilda.getDependenciesDDLs() function output."
+      ,"columns":[
+           { "name":"srcSchemaName", "type":"STRING" , "nullable":false, "size":  100, "description":"The result value."  }
+          ,{ "name":"srcTVName"    , "type":"STRING" , "nullable":false, "size":  100, "description":"The result value."  }
+          ,{ "name":"seq"          , "type":"INTEGER", "nullable":false              , "description": "The blah"          }
+          ,{ "name":"depSchemaName", "type":"STRING" , "nullable":false, "size":  100, "description":"The result value."  }
+          ,{ "name":"depViewName"  , "type":"STRING" , "nullable":false, "size":  100, "description":"The result value."  }
+          ,{ "name":"restoreScript", "type":"STRING" , "nullable":false, "size":30000, "description":"The result value."  }
+       ]
+      ,"indices":[
+           { "name": "DepedencySequence", "columns": ["srcSchemaName" , "srcTVName", "seq"], "db": true }
+          ,{ "name": "DepedencySTV"     , "columns": ["srcSchemaName" , "srcTVName", "depSchemaName", "depViewName"], "db": true }
+       ]
+     }    
+
+
    ,{ "name": "Testing",
       "description": "blah blah",
       "columns":[
@@ -435,7 +452,6 @@
                    ]
          ,"description":["Active formulas and their sub-formulas"]
         }
-     }    
-     
+     }
    ]
 }

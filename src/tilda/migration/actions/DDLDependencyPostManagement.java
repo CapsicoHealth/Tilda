@@ -17,28 +17,29 @@
 package tilda.migration.actions;
 
 import tilda.db.Connection;
+import tilda.migration.DDLDependencyManager;
 import tilda.migration.MigrationAction;
-import tilda.parsing.parts.View;
 
-public class ViewUpdate extends MigrationAction
+public class DDLDependencyPostManagement extends MigrationAction
   {
-    public ViewUpdate(View V)
+    public DDLDependencyPostManagement(DDLDependencyManager DdlDepMan)
       {
-        super(V._ParentSchema._Name, V._Name, false);
-        _V = V;
+        super(DdlDepMan.getSchemaName(), DdlDepMan.getTableViewName(), true);
+        _DdlDepMan = DdlDepMan;
       }
 
-    protected View _V;
+    protected DDLDependencyManager _DdlDepMan;
 
     @Override
     public boolean process(Connection C)
     throws Exception
       {
-        return C.createView(_V);
+        _DdlDepMan.restoreDependencies(C);
+        return true;
       }
 
     public String getDescription()
       {
-        return "Update view " + _V.getFullName();
+        return "Restoring all views that were dependent on " + _DdlDepMan.getSchemaName() + "." + _DdlDepMan.getTableViewName()+".";
       }
   }

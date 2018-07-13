@@ -217,7 +217,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 9 2018, 02:15:25EDT
+ @generated Jul 12 2018, 19:45:33EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__FORMULARESULT implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -1266,6 +1266,7 @@ This is the hasChanged for:<BR>
              case 0:
                 S.append(" where ("); C.getFullColumnVar(S, "TILDA", "FormulaResult", "formulaRefnum"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "value"); S.append("=?)");
                 break;
+             case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
            }
@@ -1389,19 +1390,20 @@ This is the hasChanged for:<BR>
           return true;
         }
        StringBuilder S = new StringBuilder(1024);
-       S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "formulaRefnum");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "value");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "description");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "created");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "lastUpdated");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "deleted");
-       S.append(" from "); C.getFullTableVar(S, "TILDA", "FormulaResult");
+          S.append("select ");
+          S.append(" "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "formulaRefnum");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "value");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "description");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "created");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "lastUpdated");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "deleted");
+          S.append(" from "); C.getFullTableVar(S, "TILDA", "FormulaResult");
        switch (__LookupId)
         {
           case 0:
              S.append(" where ("); C.getFullColumnVar(S, "TILDA", "FormulaResult", "formulaRefnum"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "value"); S.append("=?)");
              break;
+          case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
         }

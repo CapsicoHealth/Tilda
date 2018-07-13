@@ -25,7 +25,7 @@ public class SchemaViewsDrop extends MigrationAction
   {
     public SchemaViewsDrop(Schema S)
       {
-        super(true);
+        super(S._Name, null, true, false);
         _S = S;
       }
 
