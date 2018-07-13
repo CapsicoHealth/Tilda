@@ -330,7 +330,7 @@ for v_curr in
 
   v_ddltxt:=v_ddltxt||coalesce(v_txt,'-- NO VIEW COMMENTS'||E'\n');
 
-  select string_agg('COMMENT ON COLUMN ' || n.nspname || '.' || c.relname || '.' || a.attname || ' IS ''' || replace(d.description, '''', '''''') || ''';' || E'\n', '')
+  select string_agg('COMMENT ON COLUMN ' || n.nspname || '.' || c.relname || '."' || a.attname || '" IS ''' || replace(d.description, '''', '''''') || ''';' || E'\n', '')
     into v_txt
     from pg_class c
       join pg_attribute a on c.oid = a.attrelid
