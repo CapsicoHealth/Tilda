@@ -275,7 +275,7 @@ public class MSSQL implements DBType
       }
 
     @Override
-    public String getHelperFunctionsScript(Connection Con)
+    public String getHelperFunctionsScript(Connection Con, boolean Start)
     throws Exception
       {
         throw new UnsupportedOperationException();
