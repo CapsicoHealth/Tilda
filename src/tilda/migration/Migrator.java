@@ -59,7 +59,8 @@ import tilda.migration.actions.TableKeyCreate;
 import tilda.migration.actions.TablePKReplace;
 import tilda.migration.actions.TildaAclAdd;
 import tilda.migration.actions.TildaExtraDDL;
-import tilda.migration.actions.TildaHelpersAdd;
+import tilda.migration.actions.TildaHelpersAddEnd;
+import tilda.migration.actions.TildaHelpersAddStart;
 import tilda.migration.actions.ViewCreate;
 import tilda.migration.actions.ViewUpdate;
 import tilda.parsing.Parser;
@@ -89,10 +90,11 @@ public class Migrator
           {
             if (CheckOnly == false)
               {
-                MigrationAction A = new TildaHelpersAdd();
+                MigrationAction A = new TildaHelpersAddStart();
                 if (A.isNeeded(C, DBMeta) == true)
                   {
                     A.process(C);
+                    new TildaHelpersAddEnd().process(C);
                     C.commit();
                   }
                 doAcl(C, TildaList, DBMeta);
@@ -245,11 +247,15 @@ public class Migrator
         if (DBMeta.getSchemaMeta(S._Name) == null)
           Actions.add(new SchemaCreate(S));
 
+        boolean Helpers = false;
         if (S._Name.equalsIgnoreCase("TILDA") == true)
           {
-            MigrationAction A = new TildaHelpersAdd();
+            MigrationAction A = new TildaHelpersAddStart();
             if (A.isNeeded(C, DBMeta) == true)
-              Actions.add(A);
+              {
+                Actions.add(A);
+                Helpers = true;
+              }
           }
 
         if (S._ExtraDDL != null && S._ExtraDDL._Before != null)
@@ -461,6 +467,11 @@ public class Migrator
                 else
                   Actions.add(new ViewUpdate(V, true));
               }
+          }
+
+        if (Helpers == true)
+          {
+            Actions.add(new TildaHelpersAddEnd());
           }
 
         if (Errors.isEmpty() == false)

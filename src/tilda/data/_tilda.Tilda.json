@@ -3,7 +3,7 @@
  ,"dependencies": null
  ,"extraDDL":{
      "before":[]
-    ,"after":["_tilda.Tilda.postgres.helpers.sql"]
+    ,"after":["_tilda.Tilda.postgres.helpers-after.sql"]
    },
   
 
