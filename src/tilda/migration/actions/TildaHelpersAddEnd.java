@@ -23,17 +23,16 @@ import tilda.data.Maintenance_Data;
 import tilda.data.Maintenance_Factory;
 import tilda.data._Tilda.TILDA__KEY_Factory;
 import tilda.db.Connection;
-import tilda.db.metadata.DatabaseMeta;
 import tilda.migration.MigrationAction;
 
-public class TildaHelpersAdd extends MigrationAction
+public class TildaHelpersAddEnd extends MigrationAction
   {
 
-    static final Logger LOG = LogManager.getLogger(TildaHelpersAdd.class.getName());
+    static final Logger LOG = LogManager.getLogger(TildaHelpersAddEnd.class.getName());
 
-    public TildaHelpersAdd()
+    public TildaHelpersAddEnd()
       {
-        super(null, null, false);
+        super(false);
       }
 
     public boolean process(Connection C)
@@ -41,10 +40,11 @@ public class TildaHelpersAdd extends MigrationAction
       {
         LOG.debug(getDescription());
 
-        String Str = C.getHelperFunctionsScript();
+        String Str = C.getHelperFunctionsScript(false);
         if (C.ExecuteDDL(TILDA__KEY_Factory.SCHEMA_LABEL, "*", Str) == false)
           return false;
 
+        Str = C.getHelperFunctionsScript(true)+"\n"+Str;
         Maintenance_Data M = Maintenance_Factory.LookupByPrimaryKey("TILDA_HELPERS", "TILDA_HELPERS");
         if (M.Read(C) == false)
           M = Maintenance_Factory.Create("TILDA_HELPERS", "TILDA_HELPERS");
@@ -55,30 +55,9 @@ public class TildaHelpersAdd extends MigrationAction
     @Override
     public String getDescription()
       {
-        return "Adding Tilda helper stored procedures";
+        return "Adding Tilda end-helper stored procedures";
       }
-
-    @Override
-    public boolean isNeeded(Connection C, DatabaseMeta DBMeta)
-    throws Exception
-      {
-        if (DBMeta.getTableMeta(Maintenance_Factory.SCHEMA_LABEL, Maintenance_Factory.TABLENAME_LABEL) == null)
-          return true;
-        String Str = C.getHelperFunctionsScript();
-        if (Str == null)
-          return false;
-        Maintenance_Data M = Maintenance_Factory.LookupByPrimaryKey("TILDA_HELPERS", "TILDA_HELPERS");
-        if (M.Read(C) == false)
-          {
-            LOG.debug("No maintenance records found for the helpers... need to update.");
-            return true;
-          }
-        else if (M.getValue().equals(Str.trim()) == false)
-          {
-            LOG.debug("Some updates have occurred to the helpers... need to update.");
-            return true;
-          }
-        return false; // no ned for update
-      }
+    
+    // No need for isNeeded. The migrator code is responsible to add "end" if it added "start"
 
   }

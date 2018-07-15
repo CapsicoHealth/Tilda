@@ -1,12 +1,11 @@
 {
   "package": "tilda.data"
  ,"dependencies": null
-
  ,"extraDDL":{
      "before":[]
-    ,"after":[]
-   } 
-
+    ,"after":["_tilda.Tilda.postgres.helpers-after.sql"]
+   }
+  
  ,"enumerations": [
 
     { "name": "ZoneInfo",

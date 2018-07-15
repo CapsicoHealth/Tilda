@@ -487,10 +487,10 @@ public final class Connection
         return _DB.alterTableAlterColumnType(this, ColMeta, Col, defaultZI);
       }
 
-    public String getHelperFunctionsScript()
+    public String getHelperFunctionsScript(boolean Start)
     throws Exception
       {
-        return _DB.getHelperFunctionsScript(this);
+        return _DB.getHelperFunctionsScript(this, Start);
       }
 
     public String getAclRolesScript(List<Schema> TildaList)

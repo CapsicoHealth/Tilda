@@ -479,11 +479,10 @@ public class PostgreSQL implements DBType
       }
 
     @Override
-    public String getHelperFunctionsScript(Connection Con)
+    public String getHelperFunctionsScript(Connection Con, boolean Start)
     throws Exception
       {
-        String Str = FileUtil.getFileOfResourceContents("tilda/db/stores/PostgreSQL.helpers.sql");
-        return Str;
+        return FileUtil.getFileOfResourceContents("tilda/db/stores/PostgreSQL.helpers-"+(Start == true?"start":"end")+".sql");
 /*
         StringBuilder Str = new StringBuilder();
         PrintFunctionIn(Str, "text");
