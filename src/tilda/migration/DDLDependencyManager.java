@@ -61,7 +61,7 @@ public class DDLDependencyManager
           {
             if (TextUtil.isNullOrEmpty(S.getRestoreScript()) == true)
               {
-                LOG.error("Couldn't get a restore script for view "+S.getDepSchemaName()+"."+S.getDepViewName()+".");
+                LOG.error("Couldn't get a restore script for view " + S.getDepSchemaName() + "." + S.getDepViewName() + ".");
                 Error = true;
               }
           }
@@ -73,19 +73,24 @@ public class DDLDependencyManager
         return true;
       }
 
+    public boolean hasDependencies()
+      {
+        return _Scripts != null && _Scripts.isEmpty() == false;
+      }
+
     public void dropDependencies(Connection C)
     throws Exception
       {
         if (_Scripts.isEmpty() == true)
           {
-            LOG.debug("Table/View "+_SchemaName+"."+_TableViewName+" has no dependencies to drop.");
+            LOG.debug("Table/View " + _SchemaName + "." + _TableViewName + " has no dependencies to drop.");
             return;
           }
         StringBuilder Str = new StringBuilder();
         for (DependencyDDLDummyTable_Data S : _Scripts)
-         Str.append("\nDROP VIEW "+S.getDepSchemaName()+"."+S.getDepViewName()+";");
+          Str.append("\nDROP VIEW " + S.getDepSchemaName() + "." + S.getDepViewName() + ";");
         if (C.ExecuteDDL(_SchemaName, _TableViewName, Str.toString()) == false)
-          throw new Exception("Database error dropping views dependent on "+_SchemaName+"."+_TableViewName+".");
+          throw new Exception("Database error dropping views dependent on " + _SchemaName + "." + _TableViewName + ".");
       }
 
     public void restoreDependencies(Connection C)
@@ -93,7 +98,7 @@ public class DDLDependencyManager
       {
         if (_Scripts.isEmpty() == true)
           {
-            LOG.debug("Table/View "+_SchemaName+"."+_TableViewName+" has no dependencies to restore.");
+            LOG.debug("Table/View " + _SchemaName + "." + _TableViewName + " has no dependencies to restore.");
             return;
           }
         Iterator<DependencyDDLDummyTable_Data> I = new ReverseIterator<DependencyDDLDummyTable_Data>(_Scripts);
@@ -101,7 +106,7 @@ public class DDLDependencyManager
           {
             DependencyDDLDummyTable_Data S = I.next();
             if (C.ExecuteDDL(S.getDepSchemaName(), S.getDepViewName(), S.getRestoreScript()) == false)
-              throw new Exception("Database error restoring view "+S.getDepSchemaName()+"."+S.getDepViewName()+" that was dependent on "+_SchemaName+"."+_TableViewName+".");
+              throw new Exception("Database error restoring view " + S.getDepSchemaName() + "." + S.getDepViewName() + " that was dependent on " + _SchemaName + "." + _TableViewName + ".");
           }
       }
 

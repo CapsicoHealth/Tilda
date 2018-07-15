@@ -221,17 +221,41 @@ public class Migrator
       {
         LOG.info("===> Migrating DB ( Url: " + C.getURL() + " )");
         LOG.info("Applying migration actions.");
-        for (MigrationScript S : migrationData.getMigrationScripts())
+        DDLDependencyManager DdlDepMan = null;
+        MigrationAction lastAction = null;
+        try
           {
-            if (S._Actions.isEmpty() == true)
-              continue;
-            for (MigrationAction A : S._Actions)
+            for (MigrationScript S : migrationData.getMigrationScripts())
               {
-                if (A.process(C) == false)
-                  throw new Exception("There was an error with the action '" + A.getDescription() + "'.");
-                if (Migrate.isTesting() == false)
-                  C.commit();
+                if (S._Actions.isEmpty() == true)
+                  continue;
+                for (MigrationAction A : S._Actions)
+                  {
+                    lastAction = A;
+                    LOG.error("Applying migration: "+lastAction.getDescription());
+                    if (A.process(C) == false)
+                      throw new Exception("There was an error with the action '" + A.getDescription() + "'.");
+                    if (Migrate.isTesting() == false)
+                      C.commit();
+                    if (A.getClass() == DDLDependencyPreManagement.class)
+                      DdlDepMan = ((DDLDependencyPreManagement) A)._DdlDepMan;
+                    else if (A.getClass() == DDLDependencyPostManagement.class)
+                      DdlDepMan = null;
+                  }
               }
+          }
+        catch (Exception E)
+          {
+            LOG.error("An exception occurred during migration: "+lastAction.getDescription());
+            LOG.catching(E);
+            if (DdlDepMan != null)
+              {
+                C.rollback();
+                LOG.debug("There were dropped dependencies that need to be restored now.");
+                DdlDepMan.restoreDependencies(C);
+                C.commit();
+              }
+            throw new Exception("Migration failed, and temporarily dropped dependencies were restored");
           }
       }
 
@@ -336,8 +360,12 @@ public class Migrator
                 if (NeedsDdlDependencyManagement == true)
                   {
                     DDLDependencyManager DdlDepMan = new DDLDependencyManager(Obj._ParentSchema._Name, Obj._Name);
-                    Actions.add(DddlManagementPos, new DDLDependencyPreManagement(DdlDepMan));
-                    Actions.add(new DDLDependencyPostManagement(DdlDepMan));
+                    MigrationAction A = new DDLDependencyPreManagement(DdlDepMan);
+                    if (A.isNeeded(C, DBMeta) == true)
+                      {
+                        Actions.add(DddlManagementPos, A);
+                        Actions.add(new DDLDependencyPostManagement(DdlDepMan));
+                      }
                   }
                 if (Obj._PrimaryKey != null && Obj._PrimaryKey._Autogen == true && KeysManager.hasKey(Obj.getShortName().toUpperCase()) == false)
                   Actions.add(new TableKeyCreate(Obj));
@@ -481,8 +509,12 @@ public class Migrator
                 if (VMeta._Descr == null || VMeta._Descr.replace("\r\n", " ").replace("\n", " ").trim().equals(ViewDef.replace("\r\n", " ").replace("\n", " ").trim()) == false)
                   {
                     DDLDependencyManager DdlDepMan = new DDLDependencyManager(V._ParentSchema._Name, V._Name);
-                    Actions.add(new DDLDependencyPreManagement(DdlDepMan));
+                    MigrationAction A = new DDLDependencyPreManagement(DdlDepMan);
+                    boolean NeedsDdlDependencyManagement = A.isNeeded(C, DBMeta);
+                    if (NeedsDdlDependencyManagement == true)
+                        Actions.add(A);
                     Actions.add(new ViewUpdate(V));
+                    if (NeedsDdlDependencyManagement == true)
                     Actions.add(new DDLDependencyPostManagement(DdlDepMan));
                   }
               }

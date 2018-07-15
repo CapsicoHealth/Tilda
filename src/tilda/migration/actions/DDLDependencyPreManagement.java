@@ -17,6 +17,7 @@
 package tilda.migration.actions;
 
 import tilda.db.Connection;
+import tilda.db.metadata.DatabaseMeta;
 import tilda.migration.DDLDependencyManager;
 import tilda.migration.MigrationAction;
 
@@ -28,18 +29,28 @@ public class DDLDependencyPreManagement extends MigrationAction
         _DdlDepMan = DdlDepMan;
       }
 
-    protected DDLDependencyManager _DdlDepMan;
+    public final DDLDependencyManager _DdlDepMan;
 
     @Override
     public boolean process(Connection C)
     throws Exception
       {
-        if (_DdlDepMan.fetchDependencies(C) == false)
-         return false;
         _DdlDepMan.dropDependencies(C);
         return true;
       }
+    
+    @Override
+    public boolean isNeeded(Connection C, DatabaseMeta DBMeta)
+    throws Exception
+      {
+        if (_DdlDepMan.fetchDependencies(C) == false)
+          return false;
+        if (_DdlDepMan.hasDependencies() == false)
+         return false;
 
+        return true;
+      }
+    
     public String getDescription()
       {
         return "Dropping all views dependent on " + _DdlDepMan.getSchemaName() + "." + _DdlDepMan.getTableViewName()+" (to be re-created after all changes have been applied).";
