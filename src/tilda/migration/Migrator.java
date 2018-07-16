@@ -232,7 +232,7 @@ public class Migrator
                 for (MigrationAction A : S._Actions)
                   {
                     lastAction = A;
-                    LOG.info("Applying migration: "+lastAction.getDescription());
+                    LOG.debug("Applying migration: "+lastAction.getDescription());
                     if (A.process(C) == false)
                       throw new Exception("There was an error with the action '" + A.getDescription() + "'.");
                     if (Migrate.isTesting() == false)
@@ -251,7 +251,7 @@ public class Migrator
             if (DdlDepMan != null)
               {
                 C.rollback();
-                LOG.info("There were dropped dependencies that need to be restored now.");
+                LOG.debug("There were dropped dependencies that need to be restored now.");
                 DdlDepMan.restoreDependencies(C);
                 C.commit();
               }
@@ -509,9 +509,15 @@ public class Migrator
                 if (VMeta._Descr == null || VMeta._Descr.replace("\r\n", " ").replace("\n", " ").trim().equals(ViewDef.replace("\r\n", " ").replace("\n", " ").trim()) == false)
                   {
                     DDLDependencyManager DdlDepMan = new DDLDependencyManager(V._ParentSchema._Name, V._Name);
-                    Actions.add(new DDLDependencyPreManagement(DdlDepMan));
-                    Actions.add(new ViewDrop(V));
+                    MigrationAction A = new DDLDependencyPreManagement(DdlDepMan);
+                    boolean NeedsDdlDependencyManagement = A.isNeeded(C, DBMeta);
+                    if (NeedsDdlDependencyManagement == true)
+                      {
+                        Actions.add(A);
+                        Actions.add(new ViewDrop(V));
+                      }
                     Actions.add(new ViewCreate(V));
+                    if (NeedsDdlDependencyManagement == true)
                     Actions.add(new DDLDependencyPostManagement(DdlDepMan));
                   }
               }
