@@ -35,22 +35,12 @@ public class DDLDependencyPreManagement extends MigrationAction
     public boolean process(Connection C)
     throws Exception
       {
+        if (_DdlDepMan.fetchDependencies(C) == false)
+          return false;
         _DdlDepMan.dropDependencies(C);
         return true;
       }
-    
-    @Override
-    public boolean isNeeded(Connection C, DatabaseMeta DBMeta)
-    throws Exception
-      {
-        if (_DdlDepMan.fetchDependencies(C) == false)
-          return false;
-        if (_DdlDepMan.hasDependencies() == false)
-         return false;
 
-        return true;
-      }
-    
     public String getDescription()
       {
         return "Dropping all views dependent on " + _DdlDepMan.getSchemaName() + "." + _DdlDepMan.getTableViewName()+" (to be re-created after all changes have been applied).";
