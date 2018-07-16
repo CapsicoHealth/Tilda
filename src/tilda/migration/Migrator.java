@@ -63,6 +63,7 @@ import tilda.migration.actions.TildaExtraDDL;
 import tilda.migration.actions.TildaHelpersAddEnd;
 import tilda.migration.actions.TildaHelpersAddStart;
 import tilda.migration.actions.ViewCreate;
+import tilda.migration.actions.ViewDrop;
 import tilda.migration.actions.ViewUpdate;
 import tilda.parsing.Parser;
 import tilda.parsing.parts.Column;
@@ -232,7 +233,7 @@ public class Migrator
                 for (MigrationAction A : S._Actions)
                   {
                     lastAction = A;
-                    LOG.error("Applying migration: "+lastAction.getDescription());
+                    LOG.info("Applying migration: "+lastAction.getDescription());
                     if (A.process(C) == false)
                       throw new Exception("There was an error with the action '" + A.getDescription() + "'.");
                     if (Migrate.isTesting() == false)
@@ -251,7 +252,7 @@ public class Migrator
             if (DdlDepMan != null)
               {
                 C.rollback();
-                LOG.debug("There were dropped dependencies that need to be restored now.");
+                LOG.info("There were dropped dependencies that need to be restored now.");
                 DdlDepMan.restoreDependencies(C);
                 C.commit();
               }
@@ -509,12 +510,9 @@ public class Migrator
                 if (VMeta._Descr == null || VMeta._Descr.replace("\r\n", " ").replace("\n", " ").trim().equals(ViewDef.replace("\r\n", " ").replace("\n", " ").trim()) == false)
                   {
                     DDLDependencyManager DdlDepMan = new DDLDependencyManager(V._ParentSchema._Name, V._Name);
-                    MigrationAction A = new DDLDependencyPreManagement(DdlDepMan);
-                    boolean NeedsDdlDependencyManagement = A.isNeeded(C, DBMeta);
-                    if (NeedsDdlDependencyManagement == true)
-                        Actions.add(A);
+                    Actions.add(new DDLDependencyPreManagement(DdlDepMan));
+                    Actions.add(new ViewDrop(V));
                     Actions.add(new ViewUpdate(V));
-                    if (NeedsDdlDependencyManagement == true)
                     Actions.add(new DDLDependencyPostManagement(DdlDepMan));
                   }
               }
