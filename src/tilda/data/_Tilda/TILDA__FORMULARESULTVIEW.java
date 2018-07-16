@@ -213,7 +213,7 @@ This View contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 9 2018, 02:15:25EDT
+ @generated Jul 12 2018, 19:45:33EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__FORMULARESULTVIEW implements tilda.interfaces.ReaderObject
@@ -686,15 +686,16 @@ This is the setter for:<BR>
           return true;
         }
        StringBuilder S = new StringBuilder(1024);
-       S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "FormulaResultView", "formulaRefnum");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResultView", "value");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResultView", "description");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResultView", "location");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResultView", "name");
-       S.append(" from "); C.getFullTableVar(S, "TILDA", "FormulaResultView");
+          S.append("select ");
+          S.append(" "); C.getFullColumnVar(S, "TILDA", "FormulaResultView", "formulaRefnum");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResultView", "value");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResultView", "description");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResultView", "location");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResultView", "name");
+          S.append(" from "); C.getFullTableVar(S, "TILDA", "FormulaResultView");
        switch (__LookupId)
         {
+          case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
         }

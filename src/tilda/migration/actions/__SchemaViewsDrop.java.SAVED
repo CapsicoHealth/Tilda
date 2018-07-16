@@ -21,11 +21,11 @@ import tilda.migration.MigrationAction;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 
-public class SchemaViewsCreate extends MigrationAction
+public class SchemaViewsDrop extends MigrationAction
   {
-    public SchemaViewsCreate(Schema S)
+    public SchemaViewsDrop(Schema S)
       {
-        super(false);
+        super(S._Name, null, true, false);
         _S = S;
       }
 
@@ -35,13 +35,13 @@ public class SchemaViewsCreate extends MigrationAction
     throws Exception
       {
         for (View V : _S._Views)
-          if (C.createView(V) == false)
+          if (C.dropView(V) == false)
             return false;
         return true;
       }
 
     public String getDescription()
       {
-        return "Create all views for schema " + _S.getFullName();
+        return "Drop all views for schema " + _S.getFullName();
       }
   }

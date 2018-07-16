@@ -204,29 +204,43 @@ This is the column definition for:<BR>
         }
      }
 
+   protected static final ListResults<tilda.data.FormulaResult_Data> ReadMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception
+     {
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
+       ReadMany(C, -77, RPI, null, FullSelectQuery, Start, Size);
+       return RPI._L;
+     }
+
    private static final void ReadMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__FORMULARESULT Obj, Object ExtraParams, int Start, int Size) throws Exception
      {
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
-       S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "formulaRefnum");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "value");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "description");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "created");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "lastUpdated");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "deleted");
-       S.append(" from "); C.getFullTableVar(S, "TILDA", "FormulaResult");
-       switch (LookupId)
+       if (LookupId == -77)
         {
-          case -7:
-             String clause = ((SelectQuery)ExtraParams).getWhereClause();
-             if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
-             break;
-          case -666: break;
-          default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
+          S.append((String)ExtraParams);
+        }
+       else
+        {
+          S.append("select ");
+          S.append(" "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "formulaRefnum");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "value");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "description");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "created");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "lastUpdated");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaResult", "deleted");
+          S.append(" from "); C.getFullTableVar(S, "TILDA", "FormulaResult");
+          switch (LookupId)
+           {
+             case -7:
+                String clause = ((SelectQuery)ExtraParams).getWhereClause();
+                if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
+                break;
+             case -77: 
+             case -666: break;
+             default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
+           }
         }
 
-       
        String Q = S.toString() + C.getSelectLimitClause(Start, Size+1);
        S.setLength(0);
        S = null;
@@ -239,6 +253,7 @@ This is the column definition for:<BR>
           PS = C.prepareStatement(Q);
           switch (LookupId)
            {
+             case -77:
              case -7:
                 break;
              case -666: break;

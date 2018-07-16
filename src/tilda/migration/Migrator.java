@@ -46,8 +46,9 @@ import tilda.migration.actions.ColumnAlterNull;
 import tilda.migration.actions.ColumnAlterStringSize;
 import tilda.migration.actions.ColumnAlterType;
 import tilda.migration.actions.ColumnComment;
+import tilda.migration.actions.DDLDependencyPostManagement;
+import tilda.migration.actions.DDLDependencyPreManagement;
 import tilda.migration.actions.SchemaCreate;
-import tilda.migration.actions.SchemaViewsDrop;
 import tilda.migration.actions.TableComment;
 import tilda.migration.actions.TableCreate;
 import tilda.migration.actions.TableFKAdd;
@@ -143,10 +144,10 @@ public class Migrator
         for (MigrationScript S : migrationData.getMigrationScripts())
           for (MigrationAction MA : S._Actions)
             {
-              if (MA._isDependency == false)
-                LOG.warn("    " + (++counter) + " - " + MA.getDescription() + ".");
+              if (MA.isDependencyAction() == false)
+                LOG.warn("    " + (++counter) + " - " + MA.getDescription());
               else
-                LOG.debug("    - (dependency) " + MA.getDescription() + ".");
+                LOG.debug("    - (dependency) " + MA.getDescription());
             }
       }
 
@@ -162,17 +163,15 @@ public class Migrator
         LOG.info("===> Analyzing DB ( Url: " + C.getPoolName() + " )");
         LOG.info("Analyzing differences between the database and the application's expected data model...");
         MigrationScript InitScript = new MigrationScript(null, new ArrayList<MigrationAction>());
-        for (Schema S : TildaList)
-          if (S._Views.isEmpty() == false)
-            InitScript._Actions.add(new SchemaViewsDrop(S));
+        // for (Schema S : TildaList)
+        // if (S._Views.isEmpty() == false)
+        // InitScript._Actions.add(new SchemaViewsDrop(S));
         Scripts.add(InitScript);
         for (Schema S : TildaList)
           {
-            if (S.getShortName().contentEquals("PATIENTS") == true)
-              LOG.debug("xxx");
             List<MigrationAction> L = Migrator.getMigrationActions(C, C.getSQlCodeGen(), S, TildaList, DBMeta);
             for (MigrationAction MA : L)
-              if (MA._isDependency == false)
+              if (MA.isDependencyAction() == false)
                 ++ActionCount;
             if (S._ExtraDDL != null && S._ExtraDDL._After != null)
               for (String ddl : S._ExtraDDL._After)
@@ -222,17 +221,41 @@ public class Migrator
       {
         LOG.info("===> Migrating DB ( Url: " + C.getURL() + " )");
         LOG.info("Applying migration actions.");
-        for (MigrationScript S : migrationData.getMigrationScripts())
+        DDLDependencyManager DdlDepMan = null;
+        MigrationAction lastAction = null;
+        try
           {
-            if (S._Actions.isEmpty() == true)
-              continue;
-            for (MigrationAction A : S._Actions)
+            for (MigrationScript S : migrationData.getMigrationScripts())
               {
-                if (A.process(C) == false)
-                  throw new Exception("There was an error with the action '" + A.getDescription() + "'.");
-                if (Migrate.isTesting() == false)
-                  C.commit();
+                if (S._Actions.isEmpty() == true)
+                  continue;
+                for (MigrationAction A : S._Actions)
+                  {
+                    lastAction = A;
+                    LOG.error("Applying migration: "+lastAction.getDescription());
+                    if (A.process(C) == false)
+                      throw new Exception("There was an error with the action '" + A.getDescription() + "'.");
+                    if (Migrate.isTesting() == false)
+                      C.commit();
+                    if (A.getClass() == DDLDependencyPreManagement.class)
+                      DdlDepMan = ((DDLDependencyPreManagement) A)._DdlDepMan;
+                    else if (A.getClass() == DDLDependencyPostManagement.class)
+                      DdlDepMan = null;
+                  }
               }
+          }
+        catch (Exception E)
+          {
+            LOG.error("An exception occurred during migration: "+lastAction.getDescription());
+            LOG.catching(E);
+            if (DdlDepMan != null)
+              {
+                C.rollback();
+                LOG.debug("There were dropped dependencies that need to be restored now.");
+                DdlDepMan.restoreDependencies(C);
+                C.commit();
+              }
+            throw new Exception("Migration failed, and temporarily dropped dependencies were restored");
           }
       }
 
@@ -273,6 +296,8 @@ public class Migrator
             if (Obj._FST == FrameworkSourcedType.VIEW)
               continue;
             TableMeta TMeta = DBMeta.getTableMeta(Obj._ParentSchema._Name, Obj._Name);
+            int DddlManagementPos = Actions.size();
+            boolean NeedsDdlDependencyManagement = false;
             if (TMeta == null)
               Actions.add(new TableCreate(Obj));
             else
@@ -299,9 +324,12 @@ public class Migrator
                         && (Col.getType() == ColumnType.BITFIELD && CMeta._TildaType != ColumnType.INTEGER
                         || Col.getType() == ColumnType.JSON && CMeta._TildaType != ColumnType.STRING && CMeta._TildaType != ColumnType.JSON
                         || Col.getType() != ColumnType.BITFIELD && Col.getType() != ColumnType.JSON && Col.getType() != CMeta._TildaType))
-                          Actions.add(new ColumnAlterType(C, CMeta, Col));
+                          {
+                            Actions.add(new ColumnAlterType(C, CMeta, Col));
+                            NeedsDdlDependencyManagement = true;
+                          }
 
-                        // We have to check if someone changed goal-posts for VARCHAR and CLOG threasholds.
+                        // We have to check if someone changed goal-posts for VARCHAR and CLOG thresholds.
                         // The case here is that we have a CHAR(10) in the database, and the model still says
                         // STRING/10, but the thresholds have changed in such a way that now, it should be in the DB
                         // as VARCHAR(10). We have to check that the "final" type from the model is consistent with
@@ -311,16 +339,32 @@ public class Migrator
                         if (Col.isCollection() == false && Col.getType() == ColumnType.STRING
                         && (CMeta._TypeSql.equals("CHAR") == true && C.getDBStringType(Col._Size) != DBStringType.CHARACTER
                         || CMeta._TypeSql.equals("VARCHAR") == true && C.getDBStringType(CMeta._Size) == DBStringType.CHARACTER))
-                          Actions.add(new ColumnAlterType(C, CMeta, Col));
+                          {
+                            Actions.add(new ColumnAlterType(C, CMeta, Col));
+                            NeedsDdlDependencyManagement = true;
+                          }
                         // Else, we could still have a size change and stay within a single STRING DB type
                         else if (Col.isCollection() == false && Col.getType() == ColumnType.STRING)
                           {
                             DBStringType DBStrType = C.getDBStringType(CMeta._Size);
                             if (DBStrType != DBStringType.TEXT && CMeta._Size != Col._Size)
-                              Actions.add(new ColumnAlterStringSize(CMeta, Col));
+                              {
+                                Actions.add(new ColumnAlterStringSize(CMeta, Col));
+                                NeedsDdlDependencyManagement = true;
+                              }
                           }
                         if (CMeta._Nullable == 1 && Col._Nullable == false || CMeta._Nullable == 0 && Col._Nullable == true)
                           Actions.add(new ColumnAlterNull(Col));
+                      }
+                  }
+                if (NeedsDdlDependencyManagement == true)
+                  {
+                    DDLDependencyManager DdlDepMan = new DDLDependencyManager(Obj._ParentSchema._Name, Obj._Name);
+                    MigrationAction A = new DDLDependencyPreManagement(DdlDepMan);
+                    if (A.isNeeded(C, DBMeta) == true)
+                      {
+                        Actions.add(DddlManagementPos, A);
+                        Actions.add(new DDLDependencyPostManagement(DdlDepMan));
                       }
                   }
                 if (Obj._PrimaryKey != null && Obj._PrimaryKey._Autogen == true && KeysManager.hasKey(Obj.getShortName().toUpperCase()) == false)
@@ -455,7 +499,7 @@ public class Migrator
               continue;
             ViewMeta VMeta = DBMeta.getViewMeta(V._ParentSchema._Name, V._Name);
             if (VMeta == null)
-              Actions.add(new ViewCreate(V, false));
+              Actions.add(new ViewCreate(V));
             else
               {
                 StringBuilderWriter Out = new StringBuilderWriter();
@@ -463,9 +507,16 @@ public class Migrator
                 String ViewDef = Out.toString();
                 Out.close();
                 if (VMeta._Descr == null || VMeta._Descr.replace("\r\n", " ").replace("\n", " ").trim().equals(ViewDef.replace("\r\n", " ").replace("\n", " ").trim()) == false)
-                  Actions.add(new ViewUpdate(V, false));
-                else
-                  Actions.add(new ViewUpdate(V, true));
+                  {
+                    DDLDependencyManager DdlDepMan = new DDLDependencyManager(V._ParentSchema._Name, V._Name);
+                    MigrationAction A = new DDLDependencyPreManagement(DdlDepMan);
+                    boolean NeedsDdlDependencyManagement = A.isNeeded(C, DBMeta);
+                    if (NeedsDdlDependencyManagement == true)
+                        Actions.add(A);
+                    Actions.add(new ViewUpdate(V));
+                    if (NeedsDdlDependencyManagement == true)
+                    Actions.add(new DDLDependencyPostManagement(DdlDepMan));
+                  }
               }
           }
 

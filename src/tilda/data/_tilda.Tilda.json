@@ -4,19 +4,18 @@
  ,"extraDDL":{
      "before":[]
     ,"after":["_tilda.Tilda.postgres.helpers-after.sql"]
-   },
+   }
   
-
-  "enumerations": [
+ ,"enumerations": [
 
     { "name": "ZoneInfo",
       "description": "blah blah",
       "id"    : { "type": "STRING", "size":  5  },
       "value" : { "type": "STRING", "size":  50 }
     }
-   ],
+   ]
 
-  "objects":[
+ ,"objects":[
     { "name": "Key", "occ": false,
       "description": "The table to keep track of unique keys across distributed objects/tables",
       "columns":[
@@ -290,6 +289,23 @@
        ]
     }
 
+    ,{ "name": "DependencyDDLDummyTable"
+      ,"description": "A dummy Table created to generate JavaCode to handle results from the Tilda.getDependenciesDDLs() function output."
+      ,"columns":[
+           { "name":"srcSchemaName", "type":"STRING" , "nullable":false, "size":  100, "description":"The result value."  }
+          ,{ "name":"srcTVName"    , "type":"STRING" , "nullable":false, "size":  100, "description":"The result value."  }
+          ,{ "name":"seq"          , "type":"INTEGER", "nullable":false              , "description": "The blah"          }
+          ,{ "name":"depSchemaName", "type":"STRING" , "nullable":false, "size":  100, "description":"The result value."  }
+          ,{ "name":"depViewName"  , "type":"STRING" , "nullable":false, "size":  100, "description":"The result value."  }
+          ,{ "name":"restoreScript", "type":"STRING" , "nullable":false, "size":30000, "description":"The result value."  }
+       ]
+      ,"indices":[
+           { "name": "DepedencySequence", "columns": ["srcSchemaName" , "srcTVName", "seq"], "db": true }
+          ,{ "name": "DepedencySTV"     , "columns": ["srcSchemaName" , "srcTVName", "depSchemaName", "depViewName"], "db": true }
+       ]
+     }    
+
+
    ,{ "name": "Testing",
       "description": "blah blah",
       "columns":[
@@ -435,7 +451,6 @@
                    ]
          ,"description":["Active formulas and their sub-formulas"]
         }
-     }    
-     
+     }
    ]
 }

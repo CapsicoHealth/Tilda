@@ -21,23 +21,23 @@ import tilda.migration.MigrationAction;
 
 public class TableComment extends MigrationAction
   {
-    public TableComment(tilda.parsing.parts.Object O)
+    public TableComment(tilda.parsing.parts.Object Obj)
       {
-        super(false);
-        _O = O;
+        super(Obj._ParentSchema._Name, Obj._Name, false);
+        _Obj = Obj;
       }
 
-    protected tilda.parsing.parts.Object _O;
+    protected tilda.parsing.parts.Object _Obj;
 
     public boolean process(Connection C)
     throws Exception
       {
-        return C.alterTableComment(_O);
+        return C.alterTableComment(_Obj);
       }
 
     @Override
     public String getDescription()
       {
-        return "Set table "+_O.getFullName()+"'s comment";
+        return "Set table "+_Obj.getFullName()+"'s comment";
       }
   }

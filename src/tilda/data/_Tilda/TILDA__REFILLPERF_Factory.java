@@ -313,43 +313,57 @@ This is the column definition for:<BR>
         }
      }
 
+   protected static final ListResults<tilda.data.RefillPerf_Data> ReadMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception
+     {
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
+       ReadMany(C, -77, RPI, null, FullSelectQuery, Start, Size);
+       return RPI._L;
+     }
+
    private static final void ReadMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__REFILLPERF Obj, Object ExtraParams, int Start, int Size) throws Exception
      {
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
-       S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "schemaName");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "objectName");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "startPeriodTZ");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "startPeriod");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeCreateMs");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeIndexMs");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeAnalyzeMs");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeTotalMs");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "columnsMs");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "created");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "lastUpdated");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "deleted");
-       S.append(" from "); C.getFullTableVar(S, "TILDA", "RefillPerf");
-       switch (LookupId)
+       if (LookupId == -77)
         {
-          case -7:
-             String clause = ((SelectQuery)ExtraParams).getWhereClause();
-             if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
-             break;
-          case 1:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "RefillPerf", "schemaName"); S.append("=?)");
-             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "objectName"); S.append(" ASC");S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "startPeriod"); S.append(" DESC");
-             break;
-          case 2:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "RefillPerf", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "objectName"); S.append("=?)");
-             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "startPeriod"); S.append(" DESC");
-             break;
-          case -666: break;
-          default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
+          S.append((String)ExtraParams);
+        }
+       else
+        {
+          S.append("select ");
+          S.append(" "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "schemaName");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "objectName");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "startPeriodTZ");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "startPeriod");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeCreateMs");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeIndexMs");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeAnalyzeMs");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "timeTotalMs");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "columnsMs");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "created");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "lastUpdated");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "deleted");
+          S.append(" from "); C.getFullTableVar(S, "TILDA", "RefillPerf");
+          switch (LookupId)
+           {
+             case -7:
+                String clause = ((SelectQuery)ExtraParams).getWhereClause();
+                if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
+                break;
+             case 1:
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "RefillPerf", "schemaName"); S.append("=?)");
+                S.append(" order by "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "objectName"); S.append(" ASC");S.append(", "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "startPeriod"); S.append(" DESC");
+                break;
+             case 2:
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "RefillPerf", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "objectName"); S.append("=?)");
+                S.append(" order by "); C.getFullColumnVar(S, "TILDA", "RefillPerf", "startPeriod"); S.append(" DESC");
+                break;
+             case -77: 
+             case -666: break;
+             default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
+           }
         }
 
-       
        String Q = S.toString() + C.getSelectLimitClause(Start, Size+1);
        S.setLength(0);
        S = null;
@@ -363,6 +377,7 @@ This is the column definition for:<BR>
           int i = 0;
           switch (LookupId)
            {
+             case -77:
              case -7:
                 break;
              case 1: {

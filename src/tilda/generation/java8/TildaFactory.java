@@ -207,16 +207,28 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("        }");
         Out.println("     }");
         Out.println();
-        Out.println("   private static final void ReadMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, " + Helper.getFullBaseClassName(O)
-        + " Obj, Object ExtraParams, int Start, int Size) throws Exception");
+        Out.println("   protected static final ListResults<" + Helper.getFullAppDataClassName(O) + "> ReadMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception");
         Out.println("     {");
-
+        Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);");
+        Out.println("       ReadMany(C, -77, RPI, null, FullSelectQuery, Start, Size);");
+        Out.println("       return RPI._L;");
+        Out.println("     }");
+        Out.println();
+        Out.println("   private static final void ReadMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, "
+        + Helper.getFullBaseClassName(O)+ " Obj, Object ExtraParams, int Start, int Size) throws Exception");
+        Out.println("     {");
         Out.println("       long T0 = System.nanoTime();");
         Out.println("       StringBuilder S = new StringBuilder(1024);");
+        Out.println("       if (LookupId == -77)");
+        Out.println("        {");
+        Out.println("          S.append((String)ExtraParams);");
+        Out.println("        }");
+        Out.println("       else");
+        Out.println("        {");
         Helper.SelectFrom(Out, O);
-        Helper.SwitchLookupIdWhereClauses(Out, G, O, "       ", false);
+        Helper.SwitchLookupIdWhereClauses(Out, G, O, "          ", false);
+        Out.println("        }");
         Out.println();
-        Out.println("       ");
         if (G.getSql().supportsSelectLimit() == true || G.getSql().supportsSelectOffset() == true)
           Out.println("       String Q = S.toString() + C.getSelectLimitClause(Start, Size+1);");
         else

@@ -27,7 +27,7 @@ public class ColumnAlterType extends MigrationAction
   {
     public ColumnAlterType(Connection C, ColumnMeta CMeta, Column Col)
       {
-        super(false);
+        super(Col._ParentObject._ParentSchema._Name, Col._ParentObject._Name, false);
         _Col = Col;
         _CMeta = CMeta;
         StringBuilder Str = new StringBuilder();

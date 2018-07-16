@@ -425,7 +425,7 @@ This View contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 9 2018, 02:15:25EDT
+ @generated Jul 12 2018, 19:45:33EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__MEASUREFORMULAVIEW implements tilda.interfaces.ReaderObject
@@ -1647,21 +1647,22 @@ This is the null setter for:<BR>
           return true;
         }
        StringBuilder S = new StringBuilder(1024);
-       S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "measureRefnum");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "measureSchema");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "measureName");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "formulaRefnum");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "formulaLocation");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "formulaLocation2");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "formulaName");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "title");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "description");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "type");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "formula");
-       S.append(" from "); C.getFullTableVar(S, "TILDA", "MeasureFormulaView");
+          S.append("select ");
+          S.append(" "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "measureRefnum");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "measureSchema");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "measureName");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "formulaRefnum");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "formulaLocation");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "formulaLocation2");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "formulaName");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "title");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "description");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "type");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormulaView", "formula");
+          S.append(" from "); C.getFullTableVar(S, "TILDA", "MeasureFormulaView");
        switch (__LookupId)
         {
+          case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
         }
