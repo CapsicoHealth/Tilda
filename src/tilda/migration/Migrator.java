@@ -361,8 +361,11 @@ public class Migrator
                   {
                     DDLDependencyManager DdlDepMan = new DDLDependencyManager(Obj._ParentSchema._Name, Obj._Name);
                     MigrationAction A = new DDLDependencyPreManagement(DdlDepMan);
-                    Actions.add(DddlManagementPos, A);
-                    Actions.add(new DDLDependencyPostManagement(DdlDepMan));
+                    if (A.isNeeded(C, DBMeta) == true)
+                      {
+                        Actions.add(DddlManagementPos, A);
+                        Actions.add(new DDLDependencyPostManagement(DdlDepMan));
+                      }
                   }
                 if (Obj._PrimaryKey != null && Obj._PrimaryKey._Autogen == true && KeysManager.hasKey(Obj.getShortName().toUpperCase()) == false)
                   Actions.add(new TableKeyCreate(Obj));
