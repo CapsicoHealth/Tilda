@@ -64,7 +64,6 @@ import tilda.migration.actions.TildaHelpersAddEnd;
 import tilda.migration.actions.TildaHelpersAddStart;
 import tilda.migration.actions.ViewCreate;
 import tilda.migration.actions.ViewDrop;
-import tilda.migration.actions.ViewUpdate;
 import tilda.parsing.Parser;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
@@ -512,7 +511,7 @@ public class Migrator
                     DDLDependencyManager DdlDepMan = new DDLDependencyManager(V._ParentSchema._Name, V._Name);
                     Actions.add(new DDLDependencyPreManagement(DdlDepMan));
                     Actions.add(new ViewDrop(V));
-                    Actions.add(new ViewUpdate(V));
+                    Actions.add(new ViewCreate(V));
                     Actions.add(new DDLDependencyPostManagement(DdlDepMan));
                   }
               }
