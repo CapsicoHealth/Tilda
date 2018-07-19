@@ -205,7 +205,6 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
   var renderMapper = function(graph, object, position, objectAttr, package, elementChangeHandler){
     var renderFn = function(g, o, p, attr, pkg){
       var name = o.get("schemaName")+"."+o.get("name");
-      debugger;
       if(attr == null){
         attr = {
           size: { width: name.length*12+(name.length <=7 ? 40 : 0 ), height: 30 },
