@@ -85,8 +85,6 @@ define(["jointjs", "lodash", "jquery",
     var vertices = linkAttrs.vertices;
     var link = new joint.dia.Link(linkAttrs);
     var eventHandler = function(event){
-      var key = event.get("attrs").key.toLowerCase();
-      var syncSet = {}
       var attributes = event.attributes;
       window.tildaCache[key] = _.merge(attributes, { vertices: this.get('vertices') })
     }
