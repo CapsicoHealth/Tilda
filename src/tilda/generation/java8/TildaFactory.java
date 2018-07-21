@@ -74,11 +74,11 @@ public class TildaFactory implements CodeGenTildaFactory
             if (I != null)
               {
                 for (Column C : I._ColumnObjs)
-                    if (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATE)
-                      {
-                        needTime = true;
-                        break;
-                      }
+                  if (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATE)
+                    {
+                      needTime = true;
+                      break;
+                    }
                 if (needTime == true)
                   break;
               }
@@ -215,7 +215,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("     }");
         Out.println();
         Out.println("   private static final void ReadMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, "
-        + Helper.getFullBaseClassName(O)+ " Obj, Object ExtraParams, int Start, int Size) throws Exception");
+        + Helper.getFullBaseClassName(O) + " Obj, Object ExtraParams, int Start, int Size) throws Exception");
         Out.println("     {");
         Out.println("       long T0 = System.nanoTime();");
         Out.println("       StringBuilder S = new StringBuilder(1024);");
@@ -820,6 +820,78 @@ public class TildaFactory implements CodeGenTildaFactory
     throws Exception
       {
         Out.println(" }");
+      }
+
+
+    @Override
+    public void genBatchWrite(PrintWriter Out, GeneratorSession G, Object O)
+    throws Exception
+      {
+/*
+        Out.println("   public final boolean Write(Connection C, List<" + Helper.getFullAppDataClassName(O) + "> L, int batchSize) throws Exception");
+        Out.println("     {");
+        Out.println("       long T0 = System.nanoTime();");
+        Out.println();
+        Out.println("       for (" + Helper.getFullAppDataClassName(O) + " d : L)");
+        Out.println("        {");
+        
+        Out.println("        }");
+        
+        Out.println("       if (BeforeWrite(C) == false)");
+        Out.println("        {");
+        Out.println("          LOG.debug(QueryDetails._LOGGING_HEADER + \"The " + O.getFullName() + " object's BeforeWrite() failed.\");");
+        Out.println("          QueryDetails.setLastQuery(" + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
+        Out.println("          return false;");
+        Out.println("        }");
+        Out.println();
+        Out.println("       String Q = getWriteQuery(C);");
+        Out.println();
+        Out.println("       java.sql.PreparedStatement PS = null;");
+        Out.println("       int count = 0;");
+        for (Column C : O._Columns)
+          if (C != null && C.isCollection() == true)
+            {
+              Out.println("       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();");
+              break;
+            }
+        Out.println("       try");
+        Out.println("        {");
+        Out.println("          PS = C.prepareStatement(Q);");
+        Out.println("          int i = populatePreparedStatement(C, PS, AllocatedArrays);");
+        Out.println();
+        Helper.SwitchLookupIdPreparedStatement(Out, G, O, "          ", true, false);
+        Out.println();
+        if (G.getSql().needsSavepoint() == true)
+          {
+            Out.println("          C.setSavepoint();");
+          }
+        Out.println("          count = PS.executeUpdate();");
+        if (G.getSql().needsSavepoint() == true)
+          {
+            Out.println("          C.releaseSavepoint(true);");
+          }
+        Out.println("          if (count == 0)");
+        Out.println("           return false;");
+        Out.println("        }");
+        Helper.CatchFinallyBlock(Out, O, "updated or inserted", "__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE", G.getSql().needsSavepoint(), false);
+        Out.println();
+        Out.println("       if (__Init == InitMode.CREATE)");
+        Out.println("        {");
+        Out.println("          __Init = InitMode.WRITTEN;");
+        Out.println("          __LookupId = 0;");
+        Out.println("        }");
+        Out.println("       else");
+        Out.println("        {");
+        Out.println("          __Init = __Init == InitMode.READ ? InitMode.READ_WRITTEN : InitMode.WRITTEN;");
+        Out.println("        }");
+        Out.println();
+        Helper.setSavedFields(Out, O);
+        Out.println();
+        Out.println("       __Changes.clear();");
+        Out.println("       __Nulls.clear();");
+        Out.println("       return true;");
+        Out.println("     }");
+*/
       }
 
   }

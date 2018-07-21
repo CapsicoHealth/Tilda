@@ -208,7 +208,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 12 2018, 19:45:33EDT
+ @generated Jul 20 2018, 22:11:03CDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__MAPPING implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -1220,24 +1220,9 @@ This is the hasChanged for:<BR>
  Writes the object to the data store if any changes has occurred since the object was initially
  read from the data store or last written. 
 */
-   public final boolean Write(Connection C) throws Exception
+   protected String getWriteQuery(Connection C) throws Exception
      {
-       long T0 = System.nanoTime();
-       if (hasChanged() == false)
-        {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Mapping has not changed: no writing will occur.");
-          QueryDetails.setLastQuery(TILDA__MAPPING_Factory.SCHEMA_TABLENAME_LABEL, "");
-          return true;
-        }
-
        StringBuilder S = new StringBuilder(1024);
-
-       if (BeforeWrite(C) == false)
-        {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Mapping object's BeforeWrite() failed.");
-          QueryDetails.setLastQuery(TILDA__MAPPING_Factory.SCHEMA_TABLENAME_LABEL, "");
-          return false;
-        }
 
        if (__Init == InitMode.CREATE)
         {
@@ -1320,36 +1305,63 @@ This is the hasChanged for:<BR>
        S = null;
        QueryDetails.setLastQuery(TILDA__MAPPING_Factory.SCHEMA_TABLENAME_LABEL, Q);
        QueryDetails.logQuery("TILDA.Mapping", Q, toString());
+
+       return Q;
+     }
+   protected int populatePreparedStatement(Connection C, java.sql.PreparedStatement PS, List<java.sql.Array> AllocatedArrays) throws Exception
+     {
+       int i = 0;
+       if (__Changes.intersects(TILDA__MAPPING_Factory.COLS.TYPE._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__MAPPING_Factory.COLS.TYPE._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _type);
+        } 
+       if (__Changes.intersects(TILDA__MAPPING_Factory.COLS.SRC._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__MAPPING_Factory.COLS.SRC._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _src);
+        } 
+       if (__Changes.intersects(TILDA__MAPPING_Factory.COLS.DST._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__MAPPING_Factory.COLS.DST._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _dst);
+        } 
+       if (__Changes.intersects(TILDA__MAPPING_Factory.COLS.CREATED._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__MAPPING_Factory.COLS.CREATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+        } 
+       if (__Changes.intersects(TILDA__MAPPING_Factory.COLS.LASTUPDATED._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__MAPPING_Factory.COLS.LASTUPDATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_lastUpdated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+        } 
+       if (__Changes.intersects(TILDA__MAPPING_Factory.COLS.DELETED._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__MAPPING_Factory.COLS.DELETED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deleted.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+        } 
+       return i;
+     }
+   public final boolean Write(Connection C) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (hasChanged() == false)
+        {
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Mapping has not changed: no writing will occur.");
+          QueryDetails.setLastQuery(TILDA__MAPPING_Factory.SCHEMA_TABLENAME_LABEL, "");
+          return true;
+        }
+
+       if (BeforeWrite(C) == false)
+        {
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Mapping object's BeforeWrite() failed.");
+          QueryDetails.setLastQuery(TILDA__MAPPING_Factory.SCHEMA_TABLENAME_LABEL, "");
+          return false;
+        }
+
+       String Q = getWriteQuery(C);
+
        java.sql.PreparedStatement PS = null;
        int count = 0;
        try
         {
           PS = C.prepareStatement(Q);
-          int i = 0;
-               if (__Changes.intersects(TILDA__MAPPING_Factory.COLS.TYPE._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__MAPPING_Factory.COLS.TYPE._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _type);
-                } 
-               if (__Changes.intersects(TILDA__MAPPING_Factory.COLS.SRC._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__MAPPING_Factory.COLS.SRC._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _src);
-                } 
-               if (__Changes.intersects(TILDA__MAPPING_Factory.COLS.DST._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__MAPPING_Factory.COLS.DST._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _dst);
-                } 
-               if (__Changes.intersects(TILDA__MAPPING_Factory.COLS.CREATED._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__MAPPING_Factory.COLS.CREATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
-                } 
-               if (__Changes.intersects(TILDA__MAPPING_Factory.COLS.LASTUPDATED._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__MAPPING_Factory.COLS.LASTUPDATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_lastUpdated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
-                } 
-               if (__Changes.intersects(TILDA__MAPPING_Factory.COLS.DELETED._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__MAPPING_Factory.COLS.DELETED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deleted.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
-                } 
+          int i = populatePreparedStatement(C, PS, AllocatedArrays);
 
           switch (__LookupId)
            {

@@ -40,7 +40,6 @@ import tilda.parsing.parts.JsonField;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.OutputMapping;
 import tilda.utils.AnsiUtil;
-import tilda.utils.DateTimeUtil;
 import tilda.utils.PaddingUtil;
 import tilda.utils.TextUtil;
 
@@ -906,28 +905,11 @@ public class TildaData implements CodeGenTildaData
         Out.println("     }");
       }
 
-    @Override
-    public void genMethodWrite(PrintWriter Out, GeneratorSession G, Object O)
-    throws Exception
+    protected static void genWriteQuery(PrintWriter Out, GeneratorSession G, Object O)
       {
-        Out.println("   public final boolean Write(Connection C) throws Exception");
+        Out.println("   protected String getWriteQuery(Connection C) throws Exception");
         Out.println("     {");
-        Out.println("       long T0 = System.nanoTime();");
-        Out.println("       if (hasChanged() == false)");
-        Out.println("        {");
-        Out.println("          LOG.debug(QueryDetails._LOGGING_HEADER + \"The " + O.getFullName() + " has not changed: no writing will occur.\");");
-        Out.println("          QueryDetails.setLastQuery(" + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
-        Out.println("          return true;");
-        Out.println("        }");
-        Out.println();
         Out.println("       StringBuilder S = new StringBuilder(1024);");
-        Out.println();
-        Out.println("       if (BeforeWrite(C) == false)");
-        Out.println("        {");
-        Out.println("          LOG.debug(QueryDetails._LOGGING_HEADER + \"The " + O.getFullName() + " object's BeforeWrite() failed.\");");
-        Out.println("          QueryDetails.setLastQuery(" + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
-        Out.println("          return false;");
-        Out.println("        }");
         Out.println();
         Out.println("       if (__Init == InitMode.CREATE)");
         Out.println("        {");
@@ -1052,26 +1034,26 @@ public class TildaData implements CodeGenTildaData
         Out.println("       S = null;");
         Out.println("       QueryDetails.setLastQuery(" + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, Q);");
         Out.println("       QueryDetails.logQuery(\"" + O.getShortName() + "\", Q, toString());");
-        Out.println("       java.sql.PreparedStatement PS = null;");
-        Out.println("       int count = 0;");
-        for (Column C : O._Columns)
-          if (C != null && C.isCollection() == true)
-            {
-              Out.println("       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();");
-              break;
-            }
-        Out.println("       try");
-        Out.println("        {");
-        Out.println("          PS = C.prepareStatement(Q);");
-        Out.println("          int i = 0;");
+        Out.println();
+        Out.println("       return Q;");
+        Out.println("     }");
+      }
+    
+    
+    private void genWritePreparedStatementPopulation(PrintWriter Out, Object O)
+    throws Error
+      {
+        Out.println("   protected int populatePreparedStatement(Connection C, java.sql.PreparedStatement PS, List<java.sql.Array> AllocatedArrays) throws Exception");
+        Out.println("     {");
+        Out.println("       int i = 0;");
         for (Column C : O._Columns)
           if (C != null && C._Mode != ColumnMode.CALCULATED)
             {
               String Mask = Helper.getRuntimeMask(C);
-              String Pad = O._PadderColumnNames.getPad(C.getName());
-              Out.println("               if (__Changes.intersects(" + Mask + ") == true) ");
-              Out.println("                { ");
-              Out.print("                  if (__Nulls.intersects(" + Mask + ") == true) PS.setNull(++i, " + (C.isCollection() == true ? "C.supportsArrays()?java.sql.Types.ARRAY:" : "") + "java.sql.Types." + JavaJDBCType.get(C.getType())._JDBCSQLType + ");");
+//              String Pad = O._PadderColumnNames.getPad(C.getName());
+              Out.println("       if (__Changes.intersects(" + Mask + ") == true) ");
+              Out.println("        { ");
+              Out.print  ("          if (__Nulls.intersects(" + Mask + ") == true) PS.setNull(++i, " + (C.isCollection() == true ? "C.supportsArrays()?java.sql.Types.ARRAY:" : "") + "java.sql.Types." + JavaJDBCType.get(C.getType())._JDBCSQLType + ");");
               switch (C.getType())
                 {
                   case DATE:
@@ -1109,8 +1091,73 @@ public class TildaData implements CodeGenTildaData
                   default:
                     throw new Error("ERROR! Cannot match ColumnType " + C.getType() + " when generating a Write method");
                 }
-              Out.println("                } ");
+              Out.println("        } ");
             }
+        Out.println("       return i;");
+        Out.println("     }");
+      }
+    
+    private void genPostWriteObjectStateUpdate(PrintWriter Out, Object O)
+      {
+        Out.println("   protected void stateUpdatePostWrite() throws Exception");
+        Out.println("     {");
+        Out.println("       if (__Init == InitMode.CREATE)");
+        Out.println("        {");
+        Out.println("          __Init = InitMode.WRITTEN;");
+        Out.println("          __LookupId = 0;");
+        Out.println("        }");
+        Out.println("       else");
+        Out.println("        {");
+        Out.println("          __Init = __Init == InitMode.READ ? InitMode.READ_WRITTEN : InitMode.WRITTEN;");
+        Out.println("        }");
+        Out.println();
+        Helper.setSavedFields(Out, O);
+        Out.println();
+        Out.println("       __Changes.clear();");
+        Out.println("       __Nulls.clear();");
+        Out.println("     }");
+      }
+    
+    
+
+    @Override
+    public void genMethodWrite(PrintWriter Out, GeneratorSession G, Object O)
+    throws Exception
+      {
+        genWriteQuery(Out, G, O);
+        genWritePreparedStatementPopulation(Out, O);
+        genPostWriteObjectStateUpdate(Out, O);
+        Out.println("   public final boolean Write(Connection C) throws Exception");
+        Out.println("     {");
+        Out.println("       long T0 = System.nanoTime();");
+        Out.println("       if (hasChanged() == false)");
+        Out.println("        {");
+        Out.println("          LOG.debug(QueryDetails._LOGGING_HEADER + \"The " + O.getFullName() + " has not changed: no writing will occur.\");");
+        Out.println("          QueryDetails.setLastQuery(" + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
+        Out.println("          return true;");
+        Out.println("        }");
+        Out.println();
+        Out.println("       if (BeforeWrite(C) == false)");
+        Out.println("        {");
+        Out.println("          LOG.debug(QueryDetails._LOGGING_HEADER + \"The " + O.getFullName() + " object's BeforeWrite() failed.\");");
+        Out.println("          QueryDetails.setLastQuery(" + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
+        Out.println("          return false;");
+        Out.println("        }");
+        Out.println();
+        Out.println("       String Q = getWriteQuery(C);");
+        Out.println();
+        Out.println("       java.sql.PreparedStatement PS = null;");
+        Out.println("       int count = 0;");
+        for (Column C : O._Columns)
+          if (C != null && C.isCollection() == true)
+            {
+              Out.println("       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();");
+              break;
+            }
+        Out.println("       try");
+        Out.println("        {");
+        Out.println("          PS = C.prepareStatement(Q);");
+        Out.println("          int i = populatePreparedStatement(C, PS, AllocatedArrays);");
         Out.println();
         Helper.SwitchLookupIdPreparedStatement(Out, G, O, "          ", true, false);
         Out.println();
@@ -1128,25 +1175,14 @@ public class TildaData implements CodeGenTildaData
         Out.println("        }");
         Helper.CatchFinallyBlock(Out, O, "updated or inserted", "__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE", G.getSql().needsSavepoint(), false);
         Out.println();
-        Out.println("       if (__Init == InitMode.CREATE)");
-        Out.println("        {");
-        Out.println("          __Init = InitMode.WRITTEN;");
-        Out.println("          __LookupId = 0;");
-        Out.println("        }");
-        Out.println("       else");
-        Out.println("        {");
-        Out.println("          __Init = __Init == InitMode.READ ? InitMode.READ_WRITTEN : InitMode.WRITTEN;");
-        Out.println("        }");
-        Out.println();
-        Helper.setSavedFields(Out, O);
-        Out.println();
-        Out.println("       __Changes.clear();");
-        Out.println("       __Nulls.clear();");
+        Out.println("       stateUpdatePostWrite();");
         Out.println("       return true;");
         Out.println("     }");
         Out.println();
         Out.println("   protected abstract boolean BeforeWrite(Connection C) throws Exception;");
       }
+
+
 
     @Override
     public void genMethodCopyTo(PrintWriter Out, GeneratorSession G, Object O, List<Column> CopyToColumns)

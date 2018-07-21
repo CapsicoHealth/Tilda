@@ -55,11 +55,12 @@ public class DBTest
         try
           {
             C = ConnectionPool.get("MAIN");
-            //Test1(C);
-            //Test2(C);
-            //Test3(C);
-            //Test4(C);
-            Test5(C);
+            // Test1(C);
+            // Test2(C);
+            // Test3(C);
+            // Test4(C);
+            // Test5(C);
+            Test_Batch(C);
           }
         catch (Exception E)
           {
@@ -79,57 +80,75 @@ public class DBTest
           }
       }
 
+    private static void Test_Batch(Connection C)
+    throws Exception
+      {
+        List<Long> LongList = new ArrayList<Long>();
+        LongList.add((long) 1); // Yeah, could have written 1l, but just spent 5mn of my life looking at this and thinking it was "11".
+        LongList.add((long) 10);
+        LongList.add((long) 100);
+        List<Testing_Data> L = new ArrayList<Testing_Data>();
+        for (int i = 0; i < 1000; ++i)
+          L.add(Testing_Factory.Create(LongList, "aaa-"+Integer.toString(i)));
+
+        int errIndex = (Testing_Factory.Write(C, L, 400);
+        if (errIndex != -1)
+          {
+           LOG.debug("Failed obj: "+L.get(errIndex).toString());
+          }
+      }
+
     private static void Test5(Connection C)
     throws Exception
       {
         List<Long> L = new ArrayList<Long>();
-        L.add((long)1); // Yeah, could have written 1l, but just spent 5mn of my life looking at this and thinking it was "11".
-        L.add((long)10);
-        L.add((long)100);
+        L.add((long) 1); // Yeah, could have written 1l, but just spent 5mn of my life looking at this and thinking it was "11".
+        L.add((long) 10);
+        L.add((long) 100);
         Testing_Data D = Testing_Factory.Create(L, "Blah");
         if (D.Write(C) == false)
           throw new Exception("Bad stuff!");
-        
+
         List<Character> Lc = new ArrayList<Character>();
         Lc.add('A');
         Lc.add('B');
         D.setA2b(Lc);
-        
+
         List<Boolean> Lb = new ArrayList<Boolean>();
         Lb.add(true);
         Lb.add(true);
         Lb.add(false);
         D.setA3b(Lb);
-                
+
         D.setA1(777);
         D.setA2('G');
         D.setDesc2("blah blah blah blah blah blah blah");
 
         if (D.Write(C) == false)
-         throw new Exception("Bad stuff!");
+          throw new Exception("Bad stuff!");
 
         D.setNullA1();
         D.setNullA2();
         if (D.Write(C) == false)
           throw new Exception("Bad stuff!");
-        
+
         ZonedDateTime Now = DateTimeUtil.NowLocal();
         D.setA9(Now);
-        LOG.debug("A9 null?: "+D.isNullA9());
+        LOG.debug("A9 null?: " + D.isNullA9());
         List<ZonedDateTime> ZDTs = new ArrayList<ZonedDateTime>();
         ZDTs.add(DateTimeUtil.NewUTC(2018, 1, 1, 0, 0, 0, 0));
         ZDTs.add(DateTimeUtil.NewUTC(2018, 2, 1, 0, 0, 0, 0));
         ZDTs.add(DateTimeUtil.NewUTC(2018, 3, 1, 0, 0, 0, 0));
         ZDTs.add(Now);
         D.setA9b(ZDTs);
-        LOG.debug("A9b: "+TextUtil.Print(D.getA9b()));
-        LOG.debug("A9bTZ: "+TextUtil.Print(D.getA9bTZ()));
+        LOG.debug("A9b: " + TextUtil.Print(D.getA9b()));
+        LOG.debug("A9bTZ: " + TextUtil.Print(D.getA9bTZ()));
         if (D.Write(C) == false)
           throw new Exception("Bad stuff!");
 
         LocalDate Today = DateTimeUtil.NowLocalDate();
         D.setA9c(Today);
-        LOG.debug("A9c null?: "+D.isNullA9c());
+        LOG.debug("A9c null?: " + D.isNullA9c());
         List<LocalDate> LDs = new ArrayList<LocalDate>();
         LDs.add(DateTimeUtil.New(2018, 4, 1));
         LDs.add(DateTimeUtil.New(2018, 5, 1));
@@ -137,18 +156,18 @@ public class DBTest
         LDs.add(Today);
         D.setA9d(LDs);
         if (D.Write(C) == false)
-         throw new Exception("Bad stuff!");
+          throw new Exception("Bad stuff!");
         C.commit();
-        
+
         D = Testing_Factory.LookupByPrimaryKey(D.getRefnum());
         if (D.Read(C) == false)
           throw new Exception("Bad stuff!");
-        LOG.debug("A9: "+D.getA9());
-        LOG.debug("A9b: "+TextUtil.Print(D.getA9b()));
-        LOG.debug("A9bTZ: "+TextUtil.Print(D.getA9bTZ()));
-        LOG.debug("A9c: "+D.getA9c());
-        LOG.debug("A9d: "+TextUtil.Print(D.getA9d()));
-        
+        LOG.debug("A9: " + D.getA9());
+        LOG.debug("A9b: " + TextUtil.Print(D.getA9b()));
+        LOG.debug("A9bTZ: " + TextUtil.Print(D.getA9bTZ()));
+        LOG.debug("A9c: " + D.getA9c());
+        LOG.debug("A9d: " + TextUtil.Print(D.getA9d()));
+
         D.setNullA9();
         D.setNullA9b();
         D.setNullA9c();
@@ -167,23 +186,23 @@ public class DBTest
         L.add(10l);
         L.add(100l);
         Testing_Data D = Testing_Factory.Create(L, "Blah");
-        
+
         List<Character> Lc = new ArrayList<Character>();
         Lc.add('A');
         Lc.add('B');
         D.setA2b(Lc);
-        
+
         List<Boolean> Lb = new ArrayList<Boolean>();
         Lb.add(true);
         Lb.add(true);
         Lb.add(false);
         D.setA3b(Lb);
-        
+
         List<Double> Ld = new ArrayList<Double>();
         Ld.add(2.3);
         Ld.add(6.3);
         D.setA4b(Ld);
-        
+
         List<Float> Lf = new ArrayList<Float>();
         Lf.add(2.3f);
         Lf.add(6.3f);
@@ -193,27 +212,27 @@ public class DBTest
         Ll.add(1111111111111l);
         Ll.add(5555555555555l);
         D.setA6b(Ll);
-        
+
         List<Integer> Li = new ArrayList<Integer>();
         Li.add(33333);
         Li.add(77777);
         D.setA7b(Li);
-        
-        
+
+
         if (D.Write(C) == false)
-         throw new Exception("Bad stuff!");
+          throw new Exception("Bad stuff!");
         C.commit();
-        
+
         D.setA1(777);
         D.setA2('G');
         D.setDesc2("blah blah blah blah blah blah blah");
         if (D.Write(C) == false)
           throw new Exception("Bad stuff!");
         C.commit();
-        
+
       }
-    
-    
+
+
     private static void Test3(Connection C)
     throws Exception
       {
@@ -221,12 +240,12 @@ public class DBTest
         LOG.debug("0, 0");
         ListResults<Key_Data> L = Key_Factory.LookupWhereAllByName(C, 0, 0);
         PrintDetails(L);
-        
+
         LOG.debug("\n");
         LOG.debug("0, -1");
         L = Key_Factory.LookupWhereAllByName(C, 0, -1);
         PrintDetails(L);
-        
+
         LOG.debug("\n");
         LOG.debug("5, -1");
         L = Key_Factory.LookupWhereAllByName(C, 5, -1);
@@ -236,7 +255,7 @@ public class DBTest
         LOG.debug("5, 5");
         L = Key_Factory.LookupWhereAllByName(C, 5, 5);
         PrintDetails(L);
-        
+
         LOG.debug("\n");
         LOG.debug("10, 10");
         L = Key_Factory.LookupWhereAllByName(C, 10, 10);
@@ -250,10 +269,10 @@ public class DBTest
 
     private static void PrintDetails(ListResults<Key_Data> L)
       {
-        LOG.debug("Size: "+L.size()+"; Start: "+L.getStart()+"; End: "+L.getEnd()+"; Max: "+L.getMax()+"; More: "+L.hasMore()+";");
+        LOG.debug("Size: " + L.size() + "; Start: " + L.getStart() + "; End: " + L.getEnd() + "; Max: " + L.getMax() + "; More: " + L.hasMore() + ";");
         LOG.debug("Keys:");
         for (Key_Data k : L)
-         LOG.debug("   "+NumberFormatUtil.LeadingZero3(k.getRefnum())+" / "+ k.getName());
+          LOG.debug("   " + NumberFormatUtil.LeadingZero3(k.getRefnum()) + " / " + k.getName());
       }
 
     private static void Test2(Connection C)

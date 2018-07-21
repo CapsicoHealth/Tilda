@@ -477,6 +477,8 @@ public class Generator
             CG.genEnumerationSupport(Out, G, O);
           }
 
+        CG.genBatchWrite(Out, G, O);
+        
         CG.genClassEnd(Out, G);
         Out.close();
       }
