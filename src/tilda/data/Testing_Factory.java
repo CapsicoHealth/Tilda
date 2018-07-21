@@ -117,7 +117,9 @@ public class Testing_Factory extends tilda.data._Tilda.TILDA__TESTING_Factory
                     LOG.debug(QueryDetails._LOGGING_HEADER + "A batch of tilda.data.TILDA.Testing objects ending at position #" + index + " failed being written to the database.");
                     return index;
                   }
-                LOG.debug("Final batch-inserted " + index + " objects so far");
+                for (int index2 = batchStart; index2 <= index; ++index2)
+                  L.get(index2).stateUpdatePostWrite();
+                LOG.debug("Final Batch-inserted objects between positions #" + batchStart + " and #" + index + ".");
               }
 
             C.releaseSavepoint(true);
