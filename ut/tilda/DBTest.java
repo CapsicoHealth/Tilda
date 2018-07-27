@@ -35,6 +35,7 @@ import tilda.data.TransPerf_Data;
 import tilda.data.TransPerf_Factory;
 import tilda.db.Connection;
 import tilda.db.ConnectionPool;
+import tilda.db.JDBCHelper;
 import tilda.db.KeysManager;
 import tilda.db.ListResults;
 import tilda.performance.PerfTracker;
@@ -61,6 +62,8 @@ public class DBTest
             // Test4(C);
             // Test5(C);
             Test_Batch(C);
+            //Test_Batch2(C);
+            //Test_Batch3(C);
           }
         catch (Exception E)
           {
@@ -79,6 +82,31 @@ public class DBTest
                 }
           }
       }
+    
+    private static void Test_Batch4(Connection C)
+    throws Exception
+      {
+        
+        List<Long> LongList = new ArrayList<Long>();
+        LongList.add((long) 1); // Yeah, could have written 1l, but just spent 5mn of my life looking at this and thinking it was "11".
+        LongList.add((long) 10);
+        LongList.add((long) 100);
+        List<Testing_Data> L = new ArrayList<Testing_Data>();
+        for (int i = 0; i < 1000; ++i)
+          L.add(Testing_Factory.Create(LongList, "aaa-"+Integer.toString(i)));
+        
+        for(Testing_Data d : L)
+          {
+            StringBuilder SB = new StringBuilder();
+            SB.append("INSERT INTO tilda.testing (\"refnum2\",\"name\",\"created\",\"lastUpdated\")");
+            SB.append("VALUES (").append(d.getRefnum2()).append(",").append(d.getName()).append(",").append(DateTimeUtil.NowLocal()).append(",").append(DateTimeUtil.NowLocal());
+            //JDBCHelper.ExecuteInsert(C._C, "tilda", "testing", SB.toString());
+          }
+        
+      }
+    
+    
+    
 
     private static void Test_Batch(Connection C)
     throws Exception
@@ -88,16 +116,65 @@ public class DBTest
         LongList.add((long) 10);
         LongList.add((long) 100);
         List<Testing_Data> L = new ArrayList<Testing_Data>();
-        for (int i = 0; i < 1000; ++i)
+        for (int i = 0; i < 1000000; ++i)
           L.add(Testing_Factory.Create(LongList, "aaa-"+Integer.toString(i)));
 
-        int errIndex = (Testing_Factory.Write(C, L, 400);
+        int errIndex = (Testing_Factory.WriteBatch(C, L, 1000, 10000));
+        if (errIndex != -1)
+          {
+           LOG.debug("Failed obj: "+L.get(errIndex).toString());
+          }
+        
+      }
+    
+    private static void Test_Batch2(Connection C)
+    throws Exception
+      {
+        List<Long> LongList = new ArrayList<Long>();
+        LongList.add((long) 1); // Yeah, could have written 1l, but just spent 5mn of my life looking at this and thinking it was "11".
+        LongList.add((long) 10);
+        LongList.add((long) 100);
+        List<Testing_Data> L = new ArrayList<Testing_Data>();
+        
+        Testing_Data D = Testing_Factory.Create(LongList, "aaa-0");
+        D.setA9Now();
+        L.add(D);
+        D = Testing_Factory.Create(LongList, "aaa-1");
+        D.setA9(DateTimeUtil.NowLocal());
+        L.add(D);        
+        
+        int errIndex = Testing_Factory.WriteBatch(C, L, 400, 800);
         if (errIndex != -1)
           {
            LOG.debug("Failed obj: "+L.get(errIndex).toString());
           }
       }
 
+
+    private static void Test_Batch3(Connection C)
+    throws Exception
+      {
+        List<Long> LongList = new ArrayList<Long>();
+        LongList.add((long) 1); // Yeah, could have written 1l, but just spent 5mn of my life looking at this and thinking it was "11".
+        LongList.add((long) 10);
+        LongList.add((long) 100);
+        List<Testing_Data> L = new ArrayList<Testing_Data>();
+        
+        Testing_Data D = Testing_Factory.Create(LongList, "aaa-0");
+        D.setA9(DateTimeUtil.NowLocal());
+        L.add(D);
+        D = Testing_Factory.Create(LongList, "aaa-1");
+        D.setA2('X');
+        L.add(D);        
+        
+        int errIndex = Testing_Factory.WriteBatch(C, L, 400, 1200);
+        if (errIndex != -1)
+          {
+           LOG.debug("Failed obj: "+L.get(errIndex).toString());
+          }
+      }
+
+    
     private static void Test5(Connection C)
     throws Exception
       {

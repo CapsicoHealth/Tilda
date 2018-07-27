@@ -116,9 +116,9 @@ public class TildaData implements CodeGenTildaData
         Out.println();
         Out.println("   protected " + O._BaseClassName + "() { }");
         Out.println();
-        Out.println("   private InitMode __Init        = null;");
+        Out.println("   InitMode __Init        = null;");
         Out.println("   private BitSet   __Nulls       = new BitSet(64);");
-        Out.println("   private BitSet   __Changes     = new BitSet(64);");
+        Out.println("   BitSet   __Changes     = new BitSet(64);");
         Out.println("   private boolean  __NewlyCreated= false;");
         Out.println("   private int      __LookupId;");
         Out.println();
@@ -905,6 +905,22 @@ public class TildaData implements CodeGenTildaData
         Out.println("     }");
       }
 
+    public void genTimestampSignature(PrintWriter Out, Object O)
+      {
+        Out.println("   protected String getTimeStampSignature() throws Exception");
+        Out.println("     {");
+        Out.println("       StringBuilder S = new StringBuilder(1024);");
+        for (Column C : O._Columns)
+          if (C != null && C._Mode != ColumnMode.CALCULATED && C.getType() == ColumnType.DATETIME && C.isCollection() == false)
+            {
+              String Mask = Helper.getRuntimeMask(C);
+              Out.println("       if (__Changes.intersects(" + Mask + ") == true) S.append(DateTimeUtil.isNowPlaceholder(_" + C.getName() + ") == true ? \"C\" : \"X\");");
+            }
+        Out.println("       return S.toString();");
+        Out.println("     }");
+      }
+
+    
     protected static void genWriteQuery(PrintWriter Out, GeneratorSession G, Object O)
       {
         Out.println("   protected String getWriteQuery(Connection C) throws Exception");
@@ -1039,7 +1055,6 @@ public class TildaData implements CodeGenTildaData
         Out.println("     }");
       }
     
-    
     private void genWritePreparedStatementPopulation(PrintWriter Out, Object O)
     throws Error
       {
@@ -1124,6 +1139,7 @@ public class TildaData implements CodeGenTildaData
     public void genMethodWrite(PrintWriter Out, GeneratorSession G, Object O)
     throws Exception
       {
+        genTimestampSignature(Out, O);
         genWriteQuery(Out, G, O);
         genWritePreparedStatementPopulation(Out, O);
         genPostWriteObjectStateUpdate(Out, O);
@@ -1148,12 +1164,12 @@ public class TildaData implements CodeGenTildaData
         Out.println();
         Out.println("       java.sql.PreparedStatement PS = null;");
         Out.println("       int count = 0;");
-        for (Column C : O._Columns)
-          if (C != null && C.isCollection() == true)
-            {
+        //for (Column C : O._Columns)
+          //if (C != null && C.isCollection() == true)
+            //{
               Out.println("       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();");
-              break;
-            }
+              //break;
+            //}
         Out.println("       try");
         Out.println("        {");
         Out.println("          PS = C.prepareStatement(Q);");
@@ -1180,8 +1196,8 @@ public class TildaData implements CodeGenTildaData
         Out.println("     }");
         Out.println();
         Out.println("   protected abstract boolean BeforeWrite(Connection C) throws Exception;");
+        Out.println();
       }
-
 
 
     @Override

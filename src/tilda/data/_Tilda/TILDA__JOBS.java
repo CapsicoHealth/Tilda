@@ -387,7 +387,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 20 2018, 22:11:03CDT
+ @generated Jul 27 2018, 13:22:01EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__JOBS implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -399,9 +399,9 @@ public abstract class TILDA__JOBS implements tilda.interfaces.WriterObject, tild
 
    protected TILDA__JOBS() { }
 
-   private InitMode __Init        = null;
+   InitMode __Init        = null;
    private BitSet   __Nulls       = new BitSet(64);
-   private BitSet   __Changes     = new BitSet(64);
+   BitSet   __Changes     = new BitSet(64);
    private boolean  __NewlyCreated= false;
    private int      __LookupId;
 
@@ -2534,6 +2534,16 @@ This is the hasChanged for:<BR>
  Writes the object to the data store if any changes has occurred since the object was initially
  read from the data store or last written. 
 */
+   protected String getTimeStampSignature() throws Exception
+     {
+       StringBuilder S = new StringBuilder(1024);
+       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.STARTTIME._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_StartTime) == true ? "C" : "X");
+       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.ENDTIME._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_EndTime) == true ? "C" : "X");
+       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.CREATED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_created) == true ? "C" : "X");
+       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.LASTUPDATED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? "C" : "X");
+       if (__Changes.intersects(TILDA__JOBS_Factory.COLS.DELETED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_deleted) == true ? "C" : "X");
+       return S.toString();
+     }
    protected String getWriteQuery(Connection C) throws Exception
      {
        StringBuilder S = new StringBuilder(1024);
@@ -2707,6 +2717,30 @@ This is the hasChanged for:<BR>
         } 
        return i;
      }
+   protected void stateUpdatePostWrite() throws Exception
+     {
+       if (__Init == InitMode.CREATE)
+        {
+          __Init = InitMode.WRITTEN;
+          __LookupId = 0;
+        }
+       else
+        {
+          __Init = __Init == InitMode.READ ? InitMode.READ_WRITTEN : InitMode.WRITTEN;
+        }
+
+       switch (__LookupId)
+        {
+          case 0:
+             __Saved_Id           = _Id          ;
+             break;
+          case -666: if (__Init == InitMode.CREATE) break;
+          default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
+        }
+
+       __Changes.clear();
+       __Nulls.clear();
+     }
    public final boolean Write(Connection C) throws Exception
      {
        long T0 = System.nanoTime();
@@ -2728,6 +2762,7 @@ This is the hasChanged for:<BR>
 
        java.sql.PreparedStatement PS = null;
        int count = 0;
+       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
        try
         {
           PS = C.prepareStatement(Q);
@@ -2759,31 +2794,12 @@ This is the hasChanged for:<BR>
           PS = null;
         }
 
-       if (__Init == InitMode.CREATE)
-        {
-          __Init = InitMode.WRITTEN;
-          __LookupId = 0;
-        }
-       else
-        {
-          __Init = __Init == InitMode.READ ? InitMode.READ_WRITTEN : InitMode.WRITTEN;
-        }
-
-       switch (__LookupId)
-        {
-          case 0:
-             __Saved_Id           = _Id          ;
-             break;
-          case -666: if (__Init == InitMode.CREATE) break;
-          default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
-        }
-
-       __Changes.clear();
-       __Nulls.clear();
+       stateUpdatePostWrite();
        return true;
      }
 
    protected abstract boolean BeforeWrite(Connection C) throws Exception;
+
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

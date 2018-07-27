@@ -218,7 +218,7 @@ This View contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 20 2018, 22:11:03CDT
+ @generated Jul 27 2018, 13:22:01EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__FORMULADEPENDENCYVIEW implements tilda.interfaces.ReaderObject
@@ -230,9 +230,9 @@ public abstract class TILDA__FORMULADEPENDENCYVIEW implements tilda.interfaces.R
 
    protected TILDA__FORMULADEPENDENCYVIEW() { }
 
-   private InitMode __Init        = null;
+   InitMode __Init        = null;
    private BitSet   __Nulls       = new BitSet(64);
-   private BitSet   __Changes     = new BitSet(64);
+   BitSet   __Changes     = new BitSet(64);
    private boolean  __NewlyCreated= false;
    private int      __LookupId;
 

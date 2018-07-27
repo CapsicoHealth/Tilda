@@ -409,6 +409,8 @@ public class Generator
             Out.println();
             DG.docMethodCreate(Out, G, O, CreateColumns);
             CG.genMethodCreate(Out, G, O, CreateColumns, DefaultCreateColumns);
+            
+            CG.genBatchWrite(Out, G, O);
           }
 
         int LookupId = -1;
@@ -476,9 +478,7 @@ public class Generator
             DG.docEnumerationSupport(Out, G, O);
             CG.genEnumerationSupport(Out, G, O);
           }
-
-        CG.genBatchWrite(Out, G, O);
-        
+              
         CG.genClassEnd(Out, G);
         Out.close();
       }

@@ -51,90 +51,90 @@ public class Testing_Factory extends tilda.data._Tilda.TILDA__TESTING_Factory
         // Add logic to initialize your object, for example, caching some values, or validating some things.
       }
 
-    public static int WriteBatch(Connection C, List<Testing_Data> L, int batchSize)
-    throws Exception
-      {
-        long T0 = System.nanoTime();
-
-        if (L == null || L.isEmpty() == true)
-          return -1;
-
-        java.sql.PreparedStatement PS = null;
-        List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
-        int count = 0;
-        int batchStart = 0;
-
-        try
-          {
-            C.setSavepoint();
-            String Q = L.get(0).getWriteQuery(C);
-            PS = C.prepareStatement(Q);
-
-            int index = -1;
-            for (Testing_Data d : L)
-              {
-                ++index;
-                if (d == null || d.hasChanged() == false)
-                  continue;
-
-                if (d.__Init == InitMode.CREATE)
-                  {
-                    LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.TILDA.Testing' object at positon #" + index + " was not in an insertable state. Only inserts are allowed in batch writes (i.e., no updates).");
-                    QueryDetails.setLastQuery(TILDA__TESTING_Factory.SCHEMA_TABLENAME_LABEL, "");
-                    return index;
-                  }
-
-                if (d.BeforeWrite(C) == false)
-                  {
-                    LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Testing object at positon #" + index + " failed in its BeforeWrite() method.");
-                    QueryDetails.setLastQuery(TILDA__TESTING_Factory.SCHEMA_TABLENAME_LABEL, "");
-                    return index;
-                  }
-
-                int i = d.populatePreparedStatement(C, PS, AllocatedArrays);
-
-                PS.addBatch();
-                if (index != 0 && index % batchSize == 0)
-                  {
-                    int[] results = PS.executeBatch();
-                    if (results == null || results.length != 1 || results[0] == 0)
-                      {
-                        LOG.debug(QueryDetails._LOGGING_HEADER + "A batch of tilda.data.TILDA.Testing objects between positions #" + batchStart + " and #" + index + " failed being written to the database.");
-                        return index;
-                      }
-                    for (int index2 = batchStart; index2 <= index; ++index2)
-                      L.get(index2).stateUpdatePostWrite();
-                    LOG.debug("Batch-inserted objects between positions #" + batchStart + " and #" + index + ".");
-                    batchStart = 0;
-                  }
-                PS.clearParameters();
-              }
-            if (index != 0 && index % batchSize != 0)
-              {
-                int[] results = PS.executeBatch();
-                if (results == null || results.length != 1 || results[0] == 0)
-                  {
-                    LOG.debug(QueryDetails._LOGGING_HEADER + "A batch of tilda.data.TILDA.Testing objects ending at position #" + index + " failed being written to the database.");
-                    return index;
-                  }
-                for (int index2 = batchStart; index2 <= index; ++index2)
-                  L.get(index2).stateUpdatePostWrite();
-                LOG.debug("Final Batch-inserted objects between positions #" + batchStart + " and #" + index + ".");
-              }
-
-            C.releaseSavepoint(true);
-          }
-        catch (java.sql.SQLException E)
-          {
-            C.releaseSavepoint(false);
-            return tilda.data._Tilda.TILDA__1_0.HandleCatch(C, E, "updated or inserted");
-          }
-        finally
-          {
-            tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__TESTING_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
-            PS = null;
-            AllocatedArrays = null;
-          }
-      }
+//    public static int WriteBatch(Connection C, List<Testing_Data> L, int batchSize)
+//    throws Exception
+//      {
+//        long T0 = System.nanoTime();
+//
+//        if (L == null || L.isEmpty() == true)
+//          return -1;
+//
+//        java.sql.PreparedStatement PS = null;
+//        List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
+//        int count = 0;
+//        int batchStart = 0;
+//
+//        try
+//          {
+//            C.setSavepoint();
+//            String Q = L.get(0).getWriteQuery(C);
+//            PS = C.prepareStatement(Q);
+//
+//            int index = -1;
+//            for (Testing_Data d : L)
+//              {
+//                ++index;
+//                if (d == null || d.hasChanged() == false)
+//                  continue;
+//
+//                if (d.__Init == InitMode.CREATE)
+//                  {
+//                    LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.TILDA.Testing' object at positon #" + index + " was not in an insertable state. Only inserts are allowed in batch writes (i.e., no updates).");
+//                    QueryDetails.setLastQuery(TILDA__TESTING_Factory.SCHEMA_TABLENAME_LABEL, "");
+//                    return index;
+//                  }
+//
+//                if (d.BeforeWrite(C) == false)
+//                  {
+//                    LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Testing object at positon #" + index + " failed in its BeforeWrite() method.");
+//                    QueryDetails.setLastQuery(TILDA__TESTING_Factory.SCHEMA_TABLENAME_LABEL, "");
+//                    return index;
+//                  }
+//
+//                int i = d.populatePreparedStatement(C, PS, AllocatedArrays);
+//
+//                PS.addBatch();
+//                if (index != 0 && index % batchSize == 0)
+//                  {
+//                    int[] results = PS.executeBatch();
+//                    if (results == null || results.length != 1 || results[0] == 0)
+//                      {
+//                        LOG.debug(QueryDetails._LOGGING_HEADER + "A batch of tilda.data.TILDA.Testing objects between positions #" + batchStart + " and #" + index + " failed being written to the database.");
+//                        return index;
+//                      }
+//                    for (int index2 = batchStart; index2 <= index; ++index2)
+//                      L.get(index2).stateUpdatePostWrite();
+//                    LOG.debug("Batch-inserted objects between positions #" + batchStart + " and #" + index + ".");
+//                    batchStart = 0;
+//                  }
+//                PS.clearParameters();
+//              }
+//            if (index != 0 && index % batchSize != 0)
+//              {
+//                int[] results = PS.executeBatch();
+//                if (results == null || results.length != 1 || results[0] == 0)
+//                  {
+//                    LOG.debug(QueryDetails._LOGGING_HEADER + "A batch of tilda.data.TILDA.Testing objects ending at position #" + index + " failed being written to the database.");
+//                    return index;
+//                  }
+//                for (int index2 = batchStart; index2 <= index; ++index2)
+//                  L.get(index2).stateUpdatePostWrite();
+//                LOG.debug("Final Batch-inserted objects between positions #" + batchStart + " and #" + index + ".");
+//              }
+//
+//            C.releaseSavepoint(true);
+//          }
+//        catch (java.sql.SQLException E)
+//          {
+//            C.releaseSavepoint(false);
+//            return tilda.data._Tilda.TILDA__1_0.HandleCatch(C, E, "updated or inserted");
+//          }
+//        finally
+//          {
+//            tilda.data._Tilda.TILDA__1_0.HandleFinally(PS, T0, TILDA__TESTING_Factory.SCHEMA_TABLENAME_LABEL, __Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+//            PS = null;
+//            AllocatedArrays = null;
+//          }
+//      }
 
   }

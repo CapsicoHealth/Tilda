@@ -17,6 +17,8 @@
 package tilda.generation.java8;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -26,10 +28,16 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.util.StringBuilderWriter;
 
+import tilda.data._Tilda.TILDA__TESTING;
+import tilda.data._Tilda.TILDA__TESTING_Factory;
+import tilda.db.InitMode;
+import tilda.db.JDBCHelper;
+import tilda.db.QueryDetails;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
+import tilda.enums.StatementType;
 import tilda.generation.GeneratorSession;
 import tilda.generation.interfaces.CodeGenTildaFactory;
 import tilda.parsing.parts.Base;
@@ -827,71 +835,130 @@ public class TildaFactory implements CodeGenTildaFactory
     public void genBatchWrite(PrintWriter Out, GeneratorSession G, Object O)
     throws Exception
       {
-/*
-        Out.println("   public final boolean Write(Connection C, List<" + Helper.getFullAppDataClassName(O) + "> L, int batchSize) throws Exception");
+        Out.println("   public static int WriteBatch(Connection C, List<" + Helper.getFullAppDataClassName(O) + "> L, int batchSize, int commitSize) throws Exception");
         Out.println("     {");
         Out.println("       long T0 = System.nanoTime();");
         Out.println();
-        Out.println("       for (" + Helper.getFullAppDataClassName(O) + " d : L)");
-        Out.println("        {");
-        
-        Out.println("        }");
-        
-        Out.println("       if (BeforeWrite(C) == false)");
-        Out.println("        {");
-        Out.println("          LOG.debug(QueryDetails._LOGGING_HEADER + \"The " + O.getFullName() + " object's BeforeWrite() failed.\");");
-        Out.println("          QueryDetails.setLastQuery(" + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
-        Out.println("          return false;");
-        Out.println("        }");
-        Out.println();
-        Out.println("       String Q = getWriteQuery(C);");
+        Out.println("       if (L == null || L.isEmpty() == true)");
+        Out.println("         return -1;");
         Out.println();
         Out.println("       java.sql.PreparedStatement PS = null;");
+        Out.println("       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();");        
         Out.println("       int count = 0;");
-        for (Column C : O._Columns)
-          if (C != null && C.isCollection() == true)
-            {
-              Out.println("       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();");
-              break;
-            }
+        Out.println("       int batchStart = 0;");
+        Out.println("       " + O._BaseClassName + " lastObj = null;");
+        Out.println("       BitSet firstChangeList = (BitSet) (("+O._BaseClassName+") L.get(0)).__Changes.clone();");
+        Out.println("       String firstTimeStampSignature = (("+O._BaseClassName+") L.get(0)).getTimeStampSignature();");
+        Out.println();
         Out.println("       try");
-        Out.println("        {");
-        Out.println("          PS = C.prepareStatement(Q);");
-        Out.println("          int i = populatePreparedStatement(C, PS, AllocatedArrays);");
+        Out.println("         {");
+        if (G.getSql().needsSavepoint() == true)         
+          Out.println("           C.setSavepoint();");
+        Out.println("           String Q = L.get(0).getWriteQuery(C);");         
+        Out.println("           PS = C.prepareStatement(Q);");
+        Out.println("           int insertCount = 0;");
         Out.println();
-        Helper.SwitchLookupIdPreparedStatement(Out, G, O, "          ", true, false);
+        Out.println("           int index = -1;");
+        Out.println("           for (" + Helper.getFullAppDataClassName(O) + " d : L)");
+        Out.println("             {");
+        Out.println("               ++index;");
+        Out.println("               if (d == null || d.hasChanged() == false)");
+        Out.println("                 continue;");     
+        Out.println();
+        Out.println("               lastObj = ((" + O._BaseClassName + ") d);");            
+        Out.println();      
+        Out.println("               if (((" + O._BaseClassName + ") d).__Init != InitMode.CREATE)");
+        Out.println("                 {");
+        Out.println("                   LOG.debug(QueryDetails._LOGGING_HEADER + \"The '"+Helper.getFullAppDataClassName(O) +"' object at positon #\" + index + \" was not in an insertable state. Only inserts are allowed in batch writes (i.e., no updates).\");");
+        Out.println("                   QueryDetails.setLastQuery("+O.getBaseClassName() +"_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
+        Out.println("                   return index;");
+        Out.println("                 }");
+        Out.println();
+        Out.println("               if (((" + O._BaseClassName + ") d).BeforeWrite(C) == false)");
+        Out.println("                 {");
+        Out.println("                   LOG.debug(QueryDetails._LOGGING_HEADER + \"The '"+Helper.getFullAppDataClassName(O) +"' object at positon #\" + index + \" failed in its BeforeWrite() method.\");");
+        Out.println("                   QueryDetails.setLastQuery("+O.getBaseClassName() +"_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
+        Out.println("                   return index;");
+        Out.println("                 }");
+        Out.println();               
+        Out.println("               if (firstChangeList.equals((("+O._BaseClassName+") d).__Changes) == false)");
+        Out.println("                 {");
+        Out.println("                   LOG.debug(QueryDetails._LOGGING_HEADER + \"The '"+Helper.getFullAppDataClassName(O) +"' object at positon #\" + index + \" failed matching the list of columns being changed compared to the first object passed.\");");
+        Out.println("                   QueryDetails.setLastQuery("+O.getBaseClassName() +"_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
+        Out.println("                   return index;");
+        Out.println("                 }");
+        Out.println();
+        Out.println("               if (firstTimeStampSignature.equals((("+O._BaseClassName+") d).getTimeStampSignature()) == false)");
+        Out.println("                 {");
+        Out.println("                   LOG.debug(QueryDetails._LOGGING_HEADER + \"The '"+Helper.getFullAppDataClassName(O) +"' object at positon #\" + index + \" failed matching the list of updated current vs value based timestamps.\");");
+        Out.println("                   QueryDetails.setLastQuery("+O.getBaseClassName() +"_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
+        Out.println("                   return index;");
+        Out.println("                 }");  
+        Out.println();
+        Out.println("               int i = d.populatePreparedStatement(C, PS, AllocatedArrays);");
+        Out.println();
+        Out.println("               PS.addBatch();");
+        Out.println("               if (index != 0 && (index + 1) % batchSize == 0)");
+        Out.println("                 {");
+        Out.println("                   int[] results = PS.executeBatch();");
+        Out.println("                   if (JDBCHelper.BatchWriteDone(results, batchSize) == false)");
+        Out.println("                     {");
+        Out.println("                       LOG.debug(QueryDetails._LOGGING_HEADER + \"A batch of " + Helper.getFullAppDataClassName(O) + " objects between positions #\" + batchStart + \" and #\" + index + \" failed being written to the database.\");");
+        Out.println("                       return index;");
+        Out.println("                     }");
+        Out.println("                   for (int index2 = batchStart; index2 <= index; ++index2)");
+        Out.println("                     L.get(index2).stateUpdatePostWrite();");
+        Out.println("                   LOG.debug(\"Batch-inserted objects between positions #\" + batchStart + \" and #\" + index + \".\");");
+        Out.println("                   batchStart = 0;");
+        Out.println("                   insertCount+=batchSize;");
+        Out.println();
+        Out.println("                   if (insertCount % commitSize == 0 && commitSize > 0)");
+        Out.println("                     {");
+        Out.println("                       C.commit();");
+        Out.println("                       LOG.debug(\"Commited \" + commitSize + \" batch records. At insert count \" + insertCount);");
+        Out.println("                     }");   
+        
+        Out.println("                 }");
+        Out.println("               PS.clearParameters();");
+        Out.println("             }");
+        Out.println();
+        Out.println("           if (index != 0 && (index + 1) % batchSize != 0)");
+        Out.println("             {");
+        Out.println("               int[] results = PS.executeBatch();");
+        Out.println("               if (JDBCHelper.BatchWriteDone(results, L.size() - insertCount) == false)");
+        Out.println("                 {");
+        Out.println("                   LOG.debug(QueryDetails._LOGGING_HEADER + \"A batch of '" + O.getAppDataClassName() + "' objects ending at position #\" + index + \" failed being written to the database.\");");
+        Out.println("                   return index;");
+        Out.println("                 }");
+        Out.println("               for (int index2 = batchStart; index2 <= index; ++index2)");
+        Out.println("                 L.get(index2).stateUpdatePostWrite();");
+        Out.println();
+        Out.println("               if(commitSize > 0)");
+        Out.println("                 {");
+        Out.println("                   C.commit();");
+        Out.println("                   LOG.debug(\"Commited \" + insertCount + \" batch records.\");");
+        Out.println("                 }");
+        Out.println("               LOG.debug(\"Final Batch-inserted objects between positions #\" + batchStart + \" and #\" + index + \".\");");
+        Out.println("             }");
         Out.println();
         if (G.getSql().needsSavepoint() == true)
           {
-            Out.println("          C.setSavepoint();");
-          }
-        Out.println("          count = PS.executeUpdate();");
-        if (G.getSql().needsSavepoint() == true)
-          {
-            Out.println("          C.releaseSavepoint(true);");
-          }
-        Out.println("          if (count == 0)");
-        Out.println("           return false;");
-        Out.println("        }");
-        Helper.CatchFinallyBlock(Out, O, "updated or inserted", "__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE", G.getSql().needsSavepoint(), false);
-        Out.println();
-        Out.println("       if (__Init == InitMode.CREATE)");
-        Out.println("        {");
-        Out.println("          __Init = InitMode.WRITTEN;");
-        Out.println("          __LookupId = 0;");
-        Out.println("        }");
-        Out.println("       else");
-        Out.println("        {");
-        Out.println("          __Init = __Init == InitMode.READ ? InitMode.READ_WRITTEN : InitMode.WRITTEN;");
-        Out.println("        }");
-        Out.println();
-        Helper.setSavedFields(Out, O);
-        Out.println();
-        Out.println("       __Changes.clear();");
-        Out.println("       __Nulls.clear();");
-        Out.println("       return true;");
-        Out.println("     }");
-*/
+            Out.println("           C.releaseSavepoint(true);");
+          }     
+        Out.println("           return -1;");
+        Out.println("         }");
+        Out.println("       catch (java.sql.SQLException E)");
+        Out.println("         {");
+        Out.println("           C.releaseSavepoint(false);");
+        Out.println("           TILDA__1_0.HandleCatch(C, E, \"updated or inserted\");");
+        Out.println("           return 1;");
+        Out.println("         }");
+        Out.println("       finally");
+        Out.println("         {");
+        Out.println("           TILDA__1_0.HandleFinally(PS, T0, " + O._BaseClassName + "_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);");
+        Out.println("           PS = null;");
+        Out.println("           AllocatedArrays = null;");  
+        Out.println("         }");
+        Out.println("       }");      
       }
-
   }
