@@ -110,4 +110,18 @@ public class DDLDependencyManager
           }
       }
 
+    public String getDependencyNames()
+      {
+        StringBuilder Str = new StringBuilder();
+        Iterator<DependencyDDLDummyTable_Data> I = new ReverseIterator<DependencyDDLDummyTable_Data>(_Scripts);
+        while (I.hasNext() == true)
+          {
+            DependencyDDLDummyTable_Data S = I.next();
+            if (Str.length() != 0)
+             Str.append(", ");
+            Str.append(S.getDepSchemaName()+"."+S.getDepViewName());
+          }
+        return Str.toString();
+      }
+
   }
