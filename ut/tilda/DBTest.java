@@ -23,6 +23,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,13 +36,13 @@ import tilda.data.TransPerf_Data;
 import tilda.data.TransPerf_Factory;
 import tilda.db.Connection;
 import tilda.db.ConnectionPool;
-import tilda.db.JDBCHelper;
 import tilda.db.KeysManager;
 import tilda.db.ListResults;
 import tilda.performance.PerfTracker;
 import tilda.utils.DateTimeUtil;
-import tilda.utils.DurationUtil;
 import tilda.utils.DateTimeZone;
+import tilda.utils.DurationUtil;
+import tilda.utils.LogUtil;
 import tilda.utils.NumberFormatUtil;
 import tilda.utils.TextUtil;
 
@@ -61,9 +62,10 @@ public class DBTest
             // Test3(C);
             // Test4(C);
             // Test5(C);
-            //Test_Batch(C);
+//            Test_Batch0(C);
             Test_Batch2(C);
-            //Test_Batch3(C);
+            Test_Batch1(C);
+            // Test_Batch3(C);
           }
         catch (Exception E)
           {
@@ -82,95 +84,124 @@ public class DBTest
                 }
           }
       }
-    
-    private static void Test_Batch4(Connection C)
+
+    private static List<Testing_Data> CreateSampleListDataset()
     throws Exception
       {
-        
         List<Long> LongList = new ArrayList<Long>();
         LongList.add((long) 1); // Yeah, could have written 1l, but just spent 5mn of my life looking at this and thinking it was "11".
         LongList.add((long) 10);
         LongList.add((long) 100);
         List<Testing_Data> L = new ArrayList<Testing_Data>();
-        for (int i = 0; i < 1000; ++i)
-          L.add(Testing_Factory.Create(LongList, "aaa-"+Integer.toString(i)));
-        
-        for(Testing_Data d : L)
-          {
-            StringBuilder SB = new StringBuilder();
-            SB.append("INSERT INTO tilda.testing (\"refnum2\",\"name\",\"created\",\"lastUpdated\")");
-            SB.append("VALUES (").append(d.getRefnum2()).append(",").append(d.getName()).append(",").append(DateTimeUtil.NowLocal()).append(",").append(DateTimeUtil.NowLocal());
-            //JDBCHelper.ExecuteInsert(C._C, "tilda", "testing", SB.toString());
-          }
-        
+        for (int i = 0; i < 200_000; ++i)
+          L.add(Testing_Factory.Create(LongList, "aaa-" + Integer.toString(i)));
+        return L;
       }
-    
-    
-    
 
-    private static void Test_Batch(Connection C)
+    private static void TruncateTestingTable(Connection C)
     throws Exception
       {
-        List<Long> LongList = new ArrayList<Long>();
-        LongList.add((long) 1); // Yeah, could have written 1l, but just spent 5mn of my life looking at this and thinking it was "11".
-        LongList.add((long) 10);
-        LongList.add((long) 100);
-        List<Testing_Data> L = new ArrayList<Testing_Data>();
-        for (int i = 0; i < 1000000; ++i)
-          L.add(Testing_Factory.Create(LongList, "aaa-"+Integer.toString(i)));
+        if (C.ExecuteDDL(Testing_Factory.SCHEMA_LABEL, Testing_Factory.TABLENAME_LABEL, "TRUNCATE TABLE " + Testing_Factory.SCHEMA_TABLENAME_LABEL) == false)
+          throw new Exception("Cannot execute...");
+      }
 
-        int errIndex = (Testing_Factory.WriteBatch(C, L, 1000, 10000));
+
+    /*
+     * Testing for regular inserts
+     */
+    private static void Test_Batch0(Connection C)
+    throws Exception
+      {
+        TruncateTestingTable(C);
+        List<Testing_Data> L = CreateSampleListDataset();
+        long T0 = System.nanoTime();
+
+        int commitSize = 10000;
+        int i = 0;
+        for (Testing_Data D : L)
+          {
+            if (D.Write(C) == false)
+              throw new Exception("Failed obj: " + D.toString());
+            if (++i % commitSize == 0)
+              {
+                LogUtil.resetLogLevel();
+                long T1 = System.nanoTime() - T0;
+                LOG.debug("Wrote: " + i + " records so far. Took " + DurationUtil.PrintDuration(T1) + " or " + DurationUtil.PrintPerformancePerSecond(T1, i) + " records/s");
+                C.commit();
+                LogUtil.setLogLevel(Level.ERROR);
+              }
+            if (i == 5)
+             LogUtil.setLogLevel(Level.ERROR);
+          }
+        LogUtil.resetLogLevel();
+        C.commit();
+
+        T0 = System.nanoTime() - T0;
+        LOG.info("Test_Batch0 took " + DurationUtil.PrintDuration(T0) + " or " + DurationUtil.PrintPerformancePerSecond(T0, L.size()) + " records/s");
+      }
+
+
+    /**
+     * Testing for batch-insert with auto commits
+     * 
+     * @param C
+     * @throws Exception
+     */
+    private static void Test_Batch1(Connection C)
+    throws Exception
+      {
+        TruncateTestingTable(C);
+        List<Testing_Data> L = CreateSampleListDataset();
+        long T0 = System.nanoTime();
+
+        int batchSize = 1000;
+        int commitSize = 10000;
+        int errIndex = Testing_Factory.WriteBatch(C, L, batchSize, commitSize);
         if (errIndex != -1)
-          {
-           LOG.debug("Failed obj: "+L.get(errIndex).toString());
-          }
-        
+          throw new Exception("Failed obj: " + L.get(errIndex).toString());
+
+        T0 = System.nanoTime() - T0;
+        LOG.info("Test_Batch1 took " + DurationUtil.PrintDuration(T0) + " or " + DurationUtil.PrintPerformancePerSecond(T0, L.size()) + " records/s");
       }
-    
+
+    /**
+     * Testing for batch inserts with application-level commits
+     * 
+     * @param C
+     * @throws Exception
+     */
     private static void Test_Batch2(Connection C)
     throws Exception
       {
-        List<Long> LongList = new ArrayList<Long>();
-        LongList.add((long) 1); // Yeah, could have written 1l, but just spent 5mn of my life looking at this and thinking it was "11".
-        LongList.add((long) 10);
-        LongList.add((long) 100);
-        List<Testing_Data> L = new ArrayList<Testing_Data>();
-        for (int i = 0; i < 1000000; ++i)
-          L.add(Testing_Factory.Create(LongList, "aaa-"+Integer.toString(i)));
-        
+        TruncateTestingTable(C);
+        List<Testing_Data> L = CreateSampleListDataset();
+        long T0 = System.nanoTime();
+
         int batchSize = 1000;
         int commitSize = 10000;
-        int writeCount = 0;
-        int totalCount = 0;
-        
-        long T0 = System.nanoTime();
-        
-        for (int i = 0; i < L.size(); i+=batchSize)
+        for (int i = 0; i < L.size(); i += commitSize)
           {
-            
-            int errIndex = (Testing_Factory.WriteBatch(C, L.subList(i, i+batchSize), totalCount));
-            
-            writeCount+=batchSize;
-            LOG.debug("WriteCount: " + writeCount);
+            List<Testing_Data> subL = L.subList(i, i + commitSize);
+            int errIndex = Testing_Factory.WriteBatch(C, subL, batchSize, -1);
             if (errIndex != -1)
-              {
-               LOG.debug("Failed obj: "+L.get(errIndex).toString());
-              }
-            if(writeCount >= commitSize)
-              {
-                C.commit();
-                LOG.debug("Commited: " + writeCount + " records");
-                totalCount+=writeCount;
-                writeCount = 0;
-              }
+              throw new Exception("Failed obj: " + subL.get(errIndex).toString());
+            long T1 = System.nanoTime() - T0;
+            LOG.debug("Wrote: " + i + " records so far. Took " + DurationUtil.PrintDuration(T1) + " or " + DurationUtil.PrintPerformancePerSecond(T1, i) + " records/s");
+            LOG.debug("Commiting sub-batch of " + subL.size() + " records");
+            C.commit();
           }
-          if(writeCount != 0)
-            C.commit();      
-          T0 = System.nanoTime() - T0;
-          LOG.info("Took " + DurationUtil.PrintDuration(T0) + " or " + DurationUtil.PrintPerformancePerSecond(T0, totalCount) + " records/s");
+
+        T0 = System.nanoTime() - T0;
+        LOG.info("Test_Batch2 took " + DurationUtil.PrintDuration(T0) + " or " + DurationUtil.PrintPerformancePerSecond(T0, L.size()) + " records/s");
       }
 
 
+    /**
+     * Testing error conditions
+     * 
+     * @param C
+     * @throws Exception
+     */
     private static void Test_Batch3(Connection C)
     throws Exception
       {
@@ -179,22 +210,22 @@ public class DBTest
         LongList.add((long) 10);
         LongList.add((long) 100);
         List<Testing_Data> L = new ArrayList<Testing_Data>();
-        
+
         Testing_Data D = Testing_Factory.Create(LongList, "aaa-0");
         D.setA9(DateTimeUtil.NowLocal());
         L.add(D);
         D = Testing_Factory.Create(LongList, "aaa-1");
         D.setA2('X');
-        L.add(D);        
-        
+        L.add(D);
+
         int errIndex = Testing_Factory.WriteBatch(C, L, 400, 1200);
         if (errIndex != -1)
           {
-           LOG.debug("Failed obj: "+L.get(errIndex).toString());
+            LOG.debug("Failed obj: " + L.get(errIndex).toString());
           }
       }
 
-    
+
     private static void Test5(Connection C)
     throws Exception
       {

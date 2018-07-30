@@ -340,7 +340,7 @@
         { "name": "a9c"          , "type": "DATE"       ,                                                       "description": "The blah"},
         { "name": "a9d"          , "type": "DATE[]"     ,                                                       "description": "The blah"}
       ],
-      "primary": { "autogen": true },
+      "primary": { "autogen": true, "keyBatch": 25000 },
       "indices":[ 
         { "name": "AllByName" , "orderBy": ["name asc"], "db": false       },
         { "name": "AllByName2", "orderBy": ["name asc"], "db": true        },

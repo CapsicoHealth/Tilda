@@ -537,7 +537,7 @@ CREATE INDEX Testing_AllByName2 ON TILDA.Testing ("name" ASC);
 CREATE INDEX Testing_AllByName3 ON TILDA.Testing ("name" DESC);
 CREATE INDEX Testing_AllByName4 ON TILDA.Testing ("name" ASC, "description" DESC);
 delete from TILDA.Key where "name" = 'TILDA.TESTING';
-insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDA.TESTING',(select COALESCE(max("refnum"),0)+1 from TILDA.Testing), 250, current_timestamp, current_timestamp);
+insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated") values ((select COALESCE(max("refnum"),0)+1 from TILDA.Key), 'TILDA.TESTING',(select COALESCE(max("refnum"),0)+1 from TILDA.Testing), 25000, current_timestamp, current_timestamp);
 
 
 
