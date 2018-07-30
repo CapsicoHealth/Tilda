@@ -112,6 +112,8 @@ public class DDLDependencyManager
 
     public String getDependencyNames()
       {
+        if (_Scripts == null)
+         return "";
         StringBuilder Str = new StringBuilder();
         Iterator<DependencyDDLDummyTable_Data> I = new ReverseIterator<DependencyDDLDummyTable_Data>(_Scripts);
         while (I.hasNext() == true)

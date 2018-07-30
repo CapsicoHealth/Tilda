@@ -412,7 +412,12 @@ public class PostgreSQL implements DBType
 
         if (Col.isPrimaryKey() == true || Col.isForeignKey() == true)
           {
-            LOG.warn("!!!!!!! ALTERING a primary of foreign key, which in some circumstances, may lock in the JDBC driver. If this occurs, please run the below ALTER statement in the DB command line, and then rerun your program.");
+            LOG.warn("\n\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
+                    +"!! ALTERING a primary or foreign key, which in some circumstances may lock in the JDBC driver. It should only \n"
+                    +"!! take a few seconds at most. If this takes any longer, it's hung. If this occurs, please run the below ALTER \n"
+                    +"!!  statement in the DB command line, and then rerun your program.\n"
+                    +"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
+                    );
           }
 
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
