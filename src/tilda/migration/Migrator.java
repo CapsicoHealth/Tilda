@@ -232,7 +232,7 @@ public class Migrator
                 for (MigrationAction A : S._Actions)
                   {
                     lastAction = A;
-                    LOG.debug("Applying migration: "+lastAction.getDescription());
+                    LOG.debug("Applying migration: " + lastAction.getDescription());
                     if (A.process(C) == false)
                       throw new Exception("There was an error with the action '" + A.getDescription() + "'.");
                     if (Migrate.isTesting() == false)
@@ -246,7 +246,7 @@ public class Migrator
           }
         catch (Exception E)
           {
-            LOG.error("An exception occurred during migration: "+lastAction.getDescription());
+            LOG.error("An exception occurred during migration: " + lastAction.getDescription());
             LOG.catching(E);
             if (DdlDepMan != null)
               {
@@ -512,13 +512,11 @@ public class Migrator
                     MigrationAction A = new DDLDependencyPreManagement(DdlDepMan);
                     boolean NeedsDdlDependencyManagement = A.isNeeded(C, DBMeta);
                     if (NeedsDdlDependencyManagement == true)
-                      {
-                        Actions.add(A);
-                        Actions.add(new ViewDrop(V));
-                      }
+                     Actions.add(A);
+                    Actions.add(new ViewDrop(V));
                     Actions.add(new ViewCreate(V));
                     if (NeedsDdlDependencyManagement == true)
-                    Actions.add(new DDLDependencyPostManagement(DdlDepMan));
+                      Actions.add(new DDLDependencyPostManagement(DdlDepMan));
                   }
               }
           }

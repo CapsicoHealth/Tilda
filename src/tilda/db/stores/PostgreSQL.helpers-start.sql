@@ -62,6 +62,28 @@ END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
 
+CREATE OR REPLACE FUNCTION TILDA.toFloat(str varchar, val real)
+RETURNS real AS $$
+BEGIN
+  RETURN case when str is null then val else str::real end;
+EXCEPTION WHEN OTHERS THEN
+  RETURN val;
+END;
+$$ LANGUAGE plpgsql IMMUTABLE;
+CREATE OR REPLACE FUNCTION TILDA.toFloat(str1 varchar, str2 varchar, val real)
+RETURNS real AS $$
+BEGIN
+  RETURN coalesce(Tilda.toFloat(str1, null), Tilda.toFloat(str2, val));
+END;
+$$ LANGUAGE plpgsql IMMUTABLE;
+CREATE OR REPLACE FUNCTION TILDA.toFloat(str1 varchar, str2 varchar, str3 varchar, val real)
+RETURNS real AS $$
+BEGIN
+  RETURN coalesce(Tilda.toFloat(str1, null), Tilda.toFloat(str2, null), Tilda.toFloat(str3, val));
+END;
+$$ LANGUAGE plpgsql IMMUTABLE;
+
+
 CREATE OR REPLACE FUNCTION TILDA.toDate(str varchar, val Date)
 RETURNS Date AS $$
 BEGIN
