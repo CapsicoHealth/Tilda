@@ -77,6 +77,7 @@ public class DDLDependencyPreManagement extends MigrationAction
 
     public String getDescription()
       {
-        return "Dropping all views dependent on " + _DdlDepMan.getSchemaName() + "." + _DdlDepMan.getTableViewName() + " (to be re-created after all changes have been applied).";
+        String Str = _DdlDepMan == null ? "" : ": "+_DdlDepMan.getDependencyNames();
+        return "Dropping all views dependent on " + _DdlDepMan.getSchemaName() + "." + _DdlDepMan.getTableViewName() +Str+" (to be re-created after all changes have been applied).";
       }
   }
