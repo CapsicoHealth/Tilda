@@ -207,7 +207,17 @@ public class JDBCHelper
           }
         return Str.toString();
       }
-
-
-
+    
+    public static int BatchWriteDone(int[] results, int size)
+    throws Exception
+      {
+        if(results.length != size)
+          return 0;
+        
+        for(int i = 0 ; i < results.length ; i++)
+            if(results[i] != -2 && results[i] <= 0)
+              return i;
+    
+        return -1;
+      }
   }

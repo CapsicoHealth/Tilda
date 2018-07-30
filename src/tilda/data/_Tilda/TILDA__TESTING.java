@@ -1027,7 +1027,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 12 2018, 19:45:33EDT
+ @generated Jul 30 2018, 18:43:21EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTING implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject, tilda.interfaces.JSONable
@@ -1039,9 +1039,9 @@ public abstract class TILDA__TESTING implements tilda.interfaces.WriterObject, t
 
    protected TILDA__TESTING() { }
 
-   private InitMode __Init        = null;
+   InitMode __Init        = null;
    private BitSet   __Nulls       = new BitSet(64);
-   private BitSet   __Changes     = new BitSet(64);
+   BitSet   __Changes     = new BitSet(64);
    private boolean  __NewlyCreated= false;
    private int      __LookupId;
 
@@ -7126,24 +7126,18 @@ This is the hasChanged for:<BR>
  Writes the object to the data store if any changes has occurred since the object was initially
  read from the data store or last written. 
 */
-   public final boolean Write(Connection C) throws Exception
+   protected String getTimeStampSignature() throws Exception
      {
-       long T0 = System.nanoTime();
-       if (hasChanged() == false)
-        {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Testing has not changed: no writing will occur.");
-          QueryDetails.setLastQuery(TILDA__TESTING_Factory.SCHEMA_TABLENAME_LABEL, "");
-          return true;
-        }
-
        StringBuilder S = new StringBuilder(1024);
-
-       if (BeforeWrite(C) == false)
-        {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Testing object's BeforeWrite() failed.");
-          QueryDetails.setLastQuery(TILDA__TESTING_Factory.SCHEMA_TABLENAME_LABEL, "");
-          return false;
-        }
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_a9) == true ? "C" : "X");
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.CREATED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_created) == true ? "C" : "X");
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? "C" : "X");
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.DELETED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_deleted) == true ? "C" : "X");
+       return S.toString();
+     }
+   protected String getWriteQuery(Connection C) throws Exception
+     {
+       StringBuilder S = new StringBuilder(1024);
 
        if (__Init == InitMode.CREATE)
         {
@@ -7316,157 +7310,208 @@ This is the hasChanged for:<BR>
        S = null;
        QueryDetails.setLastQuery(TILDA__TESTING_Factory.SCHEMA_TABLENAME_LABEL, Q);
        QueryDetails.logQuery("TILDA.Testing", Q, toString());
+
+       return Q;
+     }
+   protected int populatePreparedStatement(Connection C, java.sql.PreparedStatement PS, List<java.sql.Array> AllocatedArrays) throws Exception
+     {
+       int i = 0;
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.REFNUM._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.REFNUM._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _refnum);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.REFNUM2._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.REFNUM2._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.BIGINT ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.REFNUM2._Type, AllocatedArrays, _refnum2);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.NAME._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.NAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _name);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _description);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.DESC2._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC2._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _desc2);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.DESC3._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC3._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _desc3);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.DESC4._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC4._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _desc4);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.DESC5._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC5._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _desc5);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.DESC6._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC6._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _desc6);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.TOPS._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.TOPS._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.TOPS._Type, AllocatedArrays, _tops);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.TOPS2._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.TOPS2._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.TOPS2._Type, AllocatedArrays, _tops2);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A1._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A1._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setInt      (++i, _a1);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A2._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A2._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, ""+_a2);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A2B._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A2B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A2B._Type, AllocatedArrays, _a2b);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A2C._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A2C._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A2C._Type, AllocatedArrays, _a2c);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A3._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A3._Mask) == true) PS.setNull(++i, java.sql.Types.BOOLEAN); else PS.setBoolean  (++i, _a3);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A3B._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A3B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.BOOLEAN); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A3B._Type, AllocatedArrays, _a3b);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A4._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A4._Mask) == true) PS.setNull(++i, java.sql.Types.DOUBLE ); else PS.setDouble   (++i, _a4);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A4B._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A4B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.DOUBLE ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A4B._Type, AllocatedArrays, _a4b);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A5._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A5._Mask) == true) PS.setNull(++i, java.sql.Types.FLOAT  ); else PS.setFloat    (++i, _a5);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A5B._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A5B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.FLOAT  ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A5B._Type, AllocatedArrays, _a5b);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A6._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A6._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _a6);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A6B._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A6B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.BIGINT ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A6B._Type, AllocatedArrays, _a6b);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A6C._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A6C._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.BIGINT ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A6C._Type, AllocatedArrays, _a6c);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A7._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A7._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _a7);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A7B._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A7B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.INTEGER); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A7B._Type, AllocatedArrays, _a7b);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A8._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A8._Mask) == true) PS.setNull(++i, java.sql.Types.BINARY ); else PS.setBytes    (++i, _a8);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9TZ._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9TZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _a9TZ);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_a9) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_a9.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9BTZ._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9BTZ._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A9BTZ._Type, AllocatedArrays, _a9bTZ);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9B._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A9B._Type, AllocatedArrays, DateTimeUtil.toSQLTimeStamps(_a9b));
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9C._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9C._Mask) == true) PS.setNull(++i, java.sql.Types.DATE); else if (DateTimeUtil.isNowPlaceholder(_a9c) == false)  PS.setDate(++i, new java.sql.Date(_a9c.getYear()-1900, _a9c.getMonthValue()-1, _a9c.getDayOfMonth()));
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9D._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9D._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.DATE); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A9D._Type, AllocatedArrays, _a9d);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.CREATED._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.CREATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_lastUpdated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+        } 
+       if (__Changes.intersects(TILDA__TESTING_Factory.COLS.DELETED._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DELETED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deleted.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+        } 
+       return i;
+     }
+   protected void stateUpdatePostWrite() throws Exception
+     {
+       if (__Init == InitMode.CREATE)
+        {
+          __Init = InitMode.WRITTEN;
+          __LookupId = 0;
+        }
+       else
+        {
+          __Init = __Init == InitMode.READ ? InitMode.READ_WRITTEN : InitMode.WRITTEN;
+        }
+
+       switch (__LookupId)
+        {
+          case 0:
+             __Saved_refnum      = _refnum     ;
+             break;
+          case -666: if (__Init == InitMode.CREATE) break;
+          default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
+        }
+
+       __Changes.clear();
+       __Nulls.clear();
+     }
+   public final boolean Write(Connection C) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (hasChanged() == false)
+        {
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Testing has not changed: no writing will occur.");
+          QueryDetails.setLastQuery(TILDA__TESTING_Factory.SCHEMA_TABLENAME_LABEL, "");
+          return true;
+        }
+
+       if (BeforeWrite(C) == false)
+        {
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.Testing object's BeforeWrite() failed.");
+          QueryDetails.setLastQuery(TILDA__TESTING_Factory.SCHEMA_TABLENAME_LABEL, "");
+          return false;
+        }
+
+       String Q = getWriteQuery(C);
+
        java.sql.PreparedStatement PS = null;
        int count = 0;
        List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
        try
         {
           PS = C.prepareStatement(Q);
-          int i = 0;
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.REFNUM._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.REFNUM._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _refnum);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.REFNUM2._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.REFNUM2._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.BIGINT ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.REFNUM2._Type, AllocatedArrays, _refnum2);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.NAME._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.NAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _name);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESCRIPTION._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _description);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.DESC2._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC2._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _desc2);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.DESC3._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC3._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _desc3);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.DESC4._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC4._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _desc4);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.DESC5._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC5._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _desc5);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.DESC6._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DESC6._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _desc6);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.TOPS._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.TOPS._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.TOPS._Type, AllocatedArrays, _tops);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.TOPS2._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.TOPS2._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.TOPS2._Type, AllocatedArrays, _tops2);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A1._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A1._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setInt      (++i, _a1);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A2._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A2._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, ""+_a2);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A2B._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A2B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A2B._Type, AllocatedArrays, _a2b);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A2C._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A2C._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A2C._Type, AllocatedArrays, _a2c);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A3._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A3._Mask) == true) PS.setNull(++i, java.sql.Types.BOOLEAN); else PS.setBoolean  (++i, _a3);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A3B._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A3B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.BOOLEAN); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A3B._Type, AllocatedArrays, _a3b);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A4._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A4._Mask) == true) PS.setNull(++i, java.sql.Types.DOUBLE ); else PS.setDouble   (++i, _a4);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A4B._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A4B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.DOUBLE ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A4B._Type, AllocatedArrays, _a4b);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A5._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A5._Mask) == true) PS.setNull(++i, java.sql.Types.FLOAT  ); else PS.setFloat    (++i, _a5);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A5B._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A5B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.FLOAT  ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A5B._Type, AllocatedArrays, _a5b);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A6._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A6._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _a6);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A6B._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A6B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.BIGINT ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A6B._Type, AllocatedArrays, _a6b);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A6C._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A6C._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.BIGINT ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A6C._Type, AllocatedArrays, _a6c);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A7._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A7._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _a7);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A7B._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A7B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.INTEGER); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A7B._Type, AllocatedArrays, _a7b);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A8._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A8._Mask) == true) PS.setNull(++i, java.sql.Types.BINARY ); else PS.setBytes    (++i, _a8);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9TZ._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9TZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _a9TZ);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_a9) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_a9.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9BTZ._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9BTZ._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A9BTZ._Type, AllocatedArrays, _a9bTZ);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9B._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9B._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A9B._Type, AllocatedArrays, DateTimeUtil.toSQLTimeStamps(_a9b));
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9C._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9C._Mask) == true) PS.setNull(++i, java.sql.Types.DATE); else if (DateTimeUtil.isNowPlaceholder(_a9c) == false)  PS.setDate(++i, new java.sql.Date(_a9c.getYear()-1900, _a9c.getMonthValue()-1, _a9c.getDayOfMonth()));
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.A9D._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.A9D._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.DATE); else C.setArray(PS, ++i, TILDA__TESTING_Factory.COLS.A9D._Type, AllocatedArrays, _a9d);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.CREATED._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.CREATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.LASTUPDATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_lastUpdated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
-                } 
-               if (__Changes.intersects(TILDA__TESTING_Factory.COLS.DELETED._Mask) == true) 
-                { 
-                  if (__Nulls.intersects(TILDA__TESTING_Factory.COLS.DELETED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deleted.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
-                } 
+          int i = populatePreparedStatement(C, PS, AllocatedArrays);
 
           switch (__LookupId)
            {
@@ -7495,31 +7540,12 @@ This is the hasChanged for:<BR>
           AllocatedArrays = null;
         }
 
-       if (__Init == InitMode.CREATE)
-        {
-          __Init = InitMode.WRITTEN;
-          __LookupId = 0;
-        }
-       else
-        {
-          __Init = __Init == InitMode.READ ? InitMode.READ_WRITTEN : InitMode.WRITTEN;
-        }
-
-       switch (__LookupId)
-        {
-          case 0:
-             __Saved_refnum      = _refnum     ;
-             break;
-          case -666: if (__Init == InitMode.CREATE) break;
-          default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
-        }
-
-       __Changes.clear();
-       __Nulls.clear();
+       stateUpdatePostWrite();
        return true;
      }
 
    protected abstract boolean BeforeWrite(Connection C) throws Exception;
+
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

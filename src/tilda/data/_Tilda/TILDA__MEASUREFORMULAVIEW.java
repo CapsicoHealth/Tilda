@@ -425,7 +425,7 @@ This View contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 12 2018, 19:45:33EDT
+ @generated Jul 30 2018, 18:43:21EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__MEASUREFORMULAVIEW implements tilda.interfaces.ReaderObject
@@ -437,9 +437,9 @@ public abstract class TILDA__MEASUREFORMULAVIEW implements tilda.interfaces.Read
 
    protected TILDA__MEASUREFORMULAVIEW() { }
 
-   private InitMode __Init        = null;
+   InitMode __Init        = null;
    private BitSet   __Nulls       = new BitSet(64);
-   private BitSet   __Changes     = new BitSet(64);
+   BitSet   __Changes     = new BitSet(64);
    private boolean  __NewlyCreated= false;
    private int      __LookupId;
 
