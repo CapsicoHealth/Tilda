@@ -893,10 +893,11 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("               if (index != 0 && (index + 1) % batchSize == 0)");
         Out.println("                 {");
         Out.println("                   int[] results = PS.executeBatch();");
-        Out.println("                   if (JDBCHelper.BatchWriteDone(results, batchSize) == false)");
+        Out.println("                   int failedRec = JDBCHelper.BatchWriteDone(results, batchSize);");
+        Out.println("                   if (failedRec != -1)");
         Out.println("                     {");
         Out.println("                       LOG.debug(QueryDetails._LOGGING_HEADER + \"A batch of " + Helper.getFullAppDataClassName(O) + " objects between positions #\" + batchStart + \" and #\" + index + \" failed being written to the database.\");");
-        Out.println("                       return index;");
+        Out.println("                       return insertCount+failedRec;");
         Out.println("                     }");
         Out.println("                   for (int index2 = batchStart; index2 <= index; ++index2)");
         Out.println("                     L.get(index2).stateUpdatePostWrite();");
@@ -916,10 +917,11 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("           if (index != 0 && (index + 1) % batchSize != 0)");
         Out.println("             {");
         Out.println("               int[] results = PS.executeBatch();");
-        Out.println("               if (JDBCHelper.BatchWriteDone(results, L.size() - insertCount) == false)");
+        Out.println("               int failedRec = JDBCHelper.BatchWriteDone(results, L.size() - insertCount);");
+        Out.println("               if (failedRec != -1)");
         Out.println("                 {");
         Out.println("                   LOG.debug(QueryDetails._LOGGING_HEADER + \"A batch of '" + O.getAppDataClassName() + "' objects ending at position #\" + index + \" failed being written to the database.\");");
-        Out.println("                   return index;");
+        Out.println("                   return L.size() - insertCount+failedRec;");
         Out.println("                 }");
         Out.println("               for (int index2 = batchStart; index2 <= index; ++index2)");
         Out.println("                 L.get(index2).stateUpdatePostWrite();");

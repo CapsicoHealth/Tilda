@@ -363,10 +363,11 @@ This is the column definition for:<BR>
                if (index != 0 && (index + 1) % batchSize == 0)
                  {
                    int[] results = PS.executeBatch();
-                   if (JDBCHelper.BatchWriteDone(results, batchSize) == false)
+                   int failedRec = JDBCHelper.BatchWriteDone(results, batchSize);
+                   if (failedRec != -1)
                      {
                        LOG.debug(QueryDetails._LOGGING_HEADER + "A batch of tilda.data.FormulaDependency_Data objects between positions #" + batchStart + " and #" + index + " failed being written to the database.");
-                       return index;
+                       return insertCount+failedRec;
                      }
                    for (int index2 = batchStart; index2 <= index; ++index2)
                      L.get(index2).stateUpdatePostWrite();
@@ -377,7 +378,7 @@ This is the column definition for:<BR>
                if (commitSize > 0 && index != 0 && (index + 1) % commitSize == 0)
                  {
                    C.commit();
-                   LOG.debug("Commited " + commitSize + " batch records. At insert count " + (index-commitSize));
+                   LOG.debug("Commited " + commitSize + " batch records. At insert count " + (index-commitSize+1));
                  }
                PS.clearParameters();
              }
@@ -385,10 +386,11 @@ This is the column definition for:<BR>
            if (index != 0 && (index + 1) % batchSize != 0)
              {
                int[] results = PS.executeBatch();
-               if (JDBCHelper.BatchWriteDone(results, L.size() - insertCount) == false)
+               int failedRec = JDBCHelper.BatchWriteDone(results, L.size() - insertCount);
+               if (failedRec != -1)
                  {
                    LOG.debug(QueryDetails._LOGGING_HEADER + "A batch of 'FormulaDependency_Data' objects ending at position #" + index + " failed being written to the database.");
-                   return index;
+                   return L.size() - insertCount+failedRec;
                  }
                for (int index2 = batchStart; index2 <= index; ++index2)
                  L.get(index2).stateUpdatePostWrite();

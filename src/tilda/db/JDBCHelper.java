@@ -208,16 +208,16 @@ public class JDBCHelper
         return Str.toString();
       }
     
-    public static boolean BatchWriteDone(int[] results, int size)
+    public static int BatchWriteDone(int[] results, int size)
     throws Exception
       {
         if(results.length != size)
-          return false;
+          return 0;
         
         for(int i = 0 ; i < results.length ; i++)
             if(results[i] != -2 && results[i] <= 0)
-              return false;
+              return i;
     
-        return true;
+        return -1;
       }
   }
