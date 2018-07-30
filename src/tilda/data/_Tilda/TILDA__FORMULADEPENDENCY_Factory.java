@@ -419,6 +419,100 @@ This is the column definition for:<BR>
          }
        }
 
+
+   public static int WriteBatch(Connection C, List<tilda.data.FormulaDependency_Data> L, int logOffset) throws Exception
+     {
+       long T0 = System.nanoTime();
+
+       if (L == null || L.isEmpty() == true)
+         return -1;
+
+       java.sql.PreparedStatement PS = null;
+       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
+       int count = 0;
+       TILDA__FORMULADEPENDENCY lastObj = null;
+       BitSet firstChangeList = (BitSet) ((TILDA__FORMULADEPENDENCY) L.get(0)).__Changes.clone();
+       String firstTimeStampSignature = ((TILDA__FORMULADEPENDENCY) L.get(0)).getTimeStampSignature();
+
+       try
+         {
+           C.setSavepoint();
+           String Q = L.get(0).getWriteQuery(C);
+           PS = C.prepareStatement(Q);
+           int insertCount = 0;
+           int indexOffset = 0;
+
+           int index = -1;
+           for (tilda.data.FormulaDependency_Data d : L)
+             {
+               ++index;
+               indexOffset = index  + logOffset;
+               if (d == null || d.hasChanged() == false)
+                 continue;
+
+               lastObj = ((TILDA__FORMULADEPENDENCY) d);
+
+               if (((TILDA__FORMULADEPENDENCY) d).__Init != InitMode.CREATE)
+                 {
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.FormulaDependency_Data' object at positon #" + indexOffset + " was not in an insertable state. Only inserts are allowed in batch writes (i.e., no updates).");
+                   QueryDetails.setLastQuery(TILDA__FORMULADEPENDENCY_Factory.SCHEMA_TABLENAME_LABEL, "");
+                   return indexOffset;
+                 }
+
+               if (((TILDA__FORMULADEPENDENCY) d).BeforeWrite(C) == false)
+                 {
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.FormulaDependency_Data' object at positon #" + indexOffset + " failed in its BeforeWrite() method.");
+                   QueryDetails.setLastQuery(TILDA__FORMULADEPENDENCY_Factory.SCHEMA_TABLENAME_LABEL, "");
+                   return indexOffset;
+                 }
+
+               if (firstChangeList.equals(((TILDA__FORMULADEPENDENCY) d).__Changes) == false)
+                 {
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.FormulaDependency_Data' object at positon #" + indexOffset + " failed matching the list of columns being changed compared to the first object passed.");
+                   QueryDetails.setLastQuery(TILDA__FORMULADEPENDENCY_Factory.SCHEMA_TABLENAME_LABEL, "");
+                   return indexOffset;
+                 }
+
+               if (firstTimeStampSignature.equals(((TILDA__FORMULADEPENDENCY) d).getTimeStampSignature()) == false)
+                 {
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.FormulaDependency_Data' object at positon #" + indexOffset + " failed matching the list of updated current vs value based timestamps.");
+                   QueryDetails.setLastQuery(TILDA__FORMULADEPENDENCY_Factory.SCHEMA_TABLENAME_LABEL, "");
+                   return indexOffset;
+                 }
+
+               int i = d.populatePreparedStatement(C, PS, AllocatedArrays);
+
+               PS.addBatch();
+               PS.clearParameters();
+             }
+
+           int[] results = PS.executeBatch();
+           if (JDBCHelper.BatchWriteDone(results, L.size() - insertCount) == false)
+             {
+               LOG.debug(QueryDetails._LOGGING_HEADER + "A batch of 'FormulaDependency_Data' objects ending at position #" + indexOffset + " failed being written to the database.");
+               return indexOffset;
+             }
+           for (int index2 = 0; index2 <= index; ++index2)
+             L.get(index2).stateUpdatePostWrite();
+           LOG.debug("Final Batch-inserted objects between positions #" + logOffset + " and #" + indexOffset + ".");
+
+         C.releaseSavepoint(true);
+           return -1;
+         }
+       catch (java.sql.SQLException E)
+         {
+           C.releaseSavepoint(false);
+           TILDA__1_0.HandleCatch(C, E, "updated or inserted");
+           return 1;
+         }
+       finally
+         {
+           TILDA__1_0.HandleFinally(PS, T0, TILDA__FORMULADEPENDENCY_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+           PS = null;
+           AllocatedArrays = null;
+         }
+       }
+
    static public tilda.data.FormulaDependency_Data LookupByPrimaryKey(long formulaRefnum, long dependencyRefnum) throws Exception
      {
        tilda.data._Tilda.TILDA__FORMULADEPENDENCY Obj = new tilda.data.FormulaDependency_Data();

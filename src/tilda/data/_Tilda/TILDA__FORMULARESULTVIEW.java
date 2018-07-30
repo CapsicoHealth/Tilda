@@ -213,7 +213,7 @@ This View contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 27 2018, 13:22:01EDT
+ @generated Jul 30 2018, 11:02:02EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__FORMULARESULTVIEW implements tilda.interfaces.ReaderObject

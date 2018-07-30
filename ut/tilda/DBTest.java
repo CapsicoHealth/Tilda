@@ -61,8 +61,8 @@ public class DBTest
             // Test3(C);
             // Test4(C);
             // Test5(C);
-            Test_Batch(C);
-            //Test_Batch2(C);
+            //Test_Batch(C);
+            Test_Batch2(C);
             //Test_Batch3(C);
           }
         catch (Exception E)
@@ -135,19 +135,39 @@ public class DBTest
         LongList.add((long) 10);
         LongList.add((long) 100);
         List<Testing_Data> L = new ArrayList<Testing_Data>();
+        for (int i = 0; i < 1000000; ++i)
+          L.add(Testing_Factory.Create(LongList, "aaa-"+Integer.toString(i)));
         
-        Testing_Data D = Testing_Factory.Create(LongList, "aaa-0");
-        D.setA9Now();
-        L.add(D);
-        D = Testing_Factory.Create(LongList, "aaa-1");
-        D.setA9(DateTimeUtil.NowLocal());
-        L.add(D);        
+        int batchSize = 1000;
+        int commitSize = 10000;
+        int writeCount = 0;
+        int totalCount = 0;
         
-        int errIndex = Testing_Factory.WriteBatch(C, L, 400, 800);
-        if (errIndex != -1)
+        long T0 = System.nanoTime();
+        
+        for (int i = 0; i < L.size(); i+=batchSize)
           {
-           LOG.debug("Failed obj: "+L.get(errIndex).toString());
+            
+            int errIndex = (Testing_Factory.WriteBatch(C, L.subList(i, i+batchSize), totalCount));
+            
+            writeCount+=batchSize;
+            LOG.debug("WriteCount: " + writeCount);
+            if (errIndex != -1)
+              {
+               LOG.debug("Failed obj: "+L.get(errIndex).toString());
+              }
+            if(writeCount >= commitSize)
+              {
+                C.commit();
+                LOG.debug("Commited: " + writeCount + " records");
+                totalCount+=writeCount;
+                writeCount = 0;
+              }
           }
+          if(writeCount != 0)
+            C.commit();      
+          T0 = System.nanoTime() - T0;
+          LOG.info("Took " + DurationUtil.PrintDuration(T0) + " or " + DurationUtil.PrintPerformancePerSecond(T0, totalCount) + " records/s");
       }
 
 
