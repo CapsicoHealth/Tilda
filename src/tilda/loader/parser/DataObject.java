@@ -26,6 +26,8 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.data.ZoneInfo_Data;
+import tilda.data.ZoneInfo_Factory;
 import tilda.db.Connection;
 import tilda.db.metadata.SchemaMeta;
 import tilda.db.metadata.TableMeta;
@@ -113,6 +115,13 @@ public class DataObject
             errorMessages.add("Data definition for " + getTableFullName() + " is defining a mode='" + _mode + "' which is invalid. Must be one of 'INSERT', 'TRUNCATE_INSERT', 'UPSERT'. ");
             return false;
           }
+        
+        if (ZoneInfo_Factory.getEnumerationById(_zoneId) == null)
+          {
+            errorMessages.add("Data definition for " + getTableFullName() + " is invalid: it defines zoneId='"+_zoneId+"' which cannot be found in the Tilda.ZoneInfo table.");
+            return false;
+          }
+        
 
         return true;
       }
