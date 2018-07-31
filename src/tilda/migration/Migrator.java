@@ -173,13 +173,6 @@ public class Migrator
             for (MigrationAction MA : L)
               if (MA.isDependencyAction() == false)
                 ++ActionCount;
-            if (S._ExtraDDL != null && S._ExtraDDL._After != null)
-              for (String ddl : S._ExtraDDL._After)
-                {
-                  MigrationAction A = new TildaExtraDDL(S, ddl);
-                  if (A.isNeeded(C, DBMeta) == true)
-                    L.add(A);
-                }
             Scripts.add(new MigrationScript(S, L));
           }
         return new MigrationDataModel(ActionCount, Scripts);
@@ -280,7 +273,7 @@ public class Migrator
                 Helpers = true;
               }
           }
-
+        
         if (S._ExtraDDL != null && S._ExtraDDL._Before != null)
           for (String ddl : S._ExtraDDL._Before)
             {
@@ -520,6 +513,14 @@ public class Migrator
                   }
               }
           }
+        
+        if (S._ExtraDDL != null && S._ExtraDDL._After != null)
+          for (String ddl : S._ExtraDDL._After)
+            {
+              MigrationAction A = new TildaExtraDDL(S, ddl);
+              if (A.isNeeded(C, DBMeta) == true)
+                Actions.add(A);
+            }
 
         if (Helpers == true)
           {

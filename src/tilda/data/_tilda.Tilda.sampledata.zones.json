@@ -1,5 +1,8 @@
-{
-  "zones": [
+{ "comment":["THIS FILE IS FOR IMPORT PURPOSE. NOTE THAT THE SAME DATA IS AVAILABLE AUTOMATICALLY"
+            ,"IN THE FILE _tilda.Tilda.postgres.helpers-after. Keep those 2 files in sync so that"
+            ,"both IMPORT and regular MIGRATE work the same"
+            ]
+ ,"zones": [
 	    { "id":"UTC"  , "label":"UTC"                , "value":"Etc/UTC"             }
 	   ,{ "id":"Zulu" , "label":"Zulu"               , "value":"Etc/Zulu"            }
        ,{ "id":"Z"    , "label":"Z"                  , "value":"Z"                   }
