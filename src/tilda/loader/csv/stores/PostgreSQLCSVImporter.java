@@ -341,14 +341,14 @@ public class PostgreSQLCSVImporter extends CSVImporter
                 ++batchCount;
                 ++NumOfRecs;
   
-                if (batchCount == 100)
+                if (batchCount == BATCH_SIZE)
                   {
                     Pst.executeBatch();
                     batchCount = 0;
                   }
                 Pst.clearParameters();
   
-                if (NumOfRecs % PERFORMANCE_NUMBER == 0)
+                if (NumOfRecs % COMMIT_SIZE == 0)
                   {
                     C.commit();
                     long t = System.nanoTime() - t0;
