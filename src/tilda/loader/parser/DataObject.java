@@ -26,7 +26,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
-import tilda.data.ZoneInfo_Data;
 import tilda.data.ZoneInfo_Factory;
 import tilda.db.Connection;
 import tilda.db.metadata.SchemaMeta;
@@ -116,7 +115,7 @@ public class DataObject
             return false;
           }
         
-        if (ZoneInfo_Factory.getEnumerationById(_zoneId) == null)
+        if (TextUtil.isNullOrEmpty(_zoneId) == false && ZoneInfo_Factory.getEnumerationById(_zoneId) == null)
           {
             errorMessages.add("Data definition for " + getTableFullName() + " is invalid: it defines zoneId='"+_zoneId+"' which cannot be found in the Tilda.ZoneInfo table.");
             return false;
