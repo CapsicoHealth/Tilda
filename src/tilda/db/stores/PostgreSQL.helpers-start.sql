@@ -164,6 +164,13 @@ CREATE OR REPLACE FUNCTION TILDA.strToArray(varchar)
 'SELECT regexp_split_to_array($1, ''``'');';
 CREATE CAST (varchar AS text[]) WITH FUNCTION TILDA.strToArray(varchar) as Implicit;
 
+-- allows a native representation, i.e., '{xxx,"abc 123",aaa}' to be parsed back into an array.
+CREATE OR REPLACE FUNCTION TILDA.StrNativeArrayToArray(v text)
+  RETURNS text[]
+  IMMUTABLE LANGUAGE SQL AS $$
+  select regexp_split_to_array(regexp_replace(v, '^{\"?|\"?}$', '', 'g'), '\"?,\"?')
+$$;
+
 
 
 -----------------------------------------------------------------------------------------------------------------
