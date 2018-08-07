@@ -46,7 +46,9 @@ public class ViewColumn
     @SerializedName("as"         ) public String         _As           ;
     @SerializedName("prefix"     ) public String         _Prefix       ;
     @SerializedName("exclude"    ) public String[]       _Exclude       = new String[] { };
+    @SerializedName("block"      ) public String[]       _Block         = new String[] { };
     @SerializedName("joinType"   ) public String         _JoinStr      ;
+    @SerializedName("formulaOnly") public boolean        _FormulaOnly   = false;
     @SerializedName("joinOnly"   ) public boolean        _JoinOnly      = false;
     @SerializedName("aggregate"  ) public String         _AggregateStr ;
     @SerializedName("orderBy"    ) public String[]       _OrderBy;
@@ -189,6 +191,10 @@ public class ViewColumn
             Set<String> Names = new HashSet<String>();
             Index.processOrderBy(PS, "View Column '" + getFullName() + "' array aggregate", Names, ParentView, _OrderBy, _OrderByObjs, _OrderByOrders);
           }
+        
+        if (_Exclude.length > 0 || _Block.length > 0)
+          if (_SameAs.endsWith("*") == true)
+            PS.AddError("View Column '" + getFullName() + "' defined an 'exclude' or 'block' attribute but the column is not a .*.");
 
         return Errs == PS.getErrorCount();
       }
