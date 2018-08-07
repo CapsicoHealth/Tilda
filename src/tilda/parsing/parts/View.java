@@ -196,7 +196,7 @@ public class View extends Base
             if (VC.Validate(PS, this) == false)
               return false;
 
-            if (VC._JoinOnly == false && ColumnNames.add(VC.getName().toUpperCase()) == false)
+            if (VC._JoinOnly == false && VC._FormulaOnly == false && ColumnNames.add(VC.getName().toUpperCase()) == false)
               PS.AddError("Column '" + VC.getFullName() + "' is defined more than once in View '" + getFullName() + "'. Note that column names are checked in a case-insensitive way, so 'id' is the same as 'ID'.");
 
             if (VC.getName().equals("created") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "Key", "created")) == true)
@@ -241,6 +241,10 @@ public class View extends Base
                 if (VC._SameAsObj._Mapper._Name == ColumnMapperMode.DB)
                   CreateMappedViewColumn(PS, ColumnNames, i++, VC, "Name");
               }
+
+            if (VC._Block.length > 0 && _Formulas.isEmpty() == true && _ImportFormulas.length == 0)
+             PS.AddError("View Column '" + VC.getFullName() + "' defined a 'block' attribute but the parent view hasn't defined any formulas.");
+            
           }
 
         if (_TimeSeries != null)
@@ -477,7 +481,7 @@ public class View extends Base
             // Skip intermediary pivot-making columns (pivot columns and aggregates) so we capture only the "grouped-by" columns
             if (_Pivots.isEmpty() == false && (isPivotColumn(VC) == true || VC._Aggregate != null))
               break;
-            if (VC != null && VC._FrameworkGenerated == false && VC._JoinOnly == false)
+            if (VC != null && VC._FrameworkGenerated == false && VC._JoinOnly == false && VC._FormulaOnly == false)
               {
                 O._Columns.add(new ViewColumnWrapper(VC._SameAsObj, VC, ++Counter));
               }
@@ -555,11 +559,13 @@ public class View extends Base
               }
 
         // Preparing regexes for anything that needs to do search and replace.
+        Set<String> Names = new HashSet<String>();
         StringBuffer Str = new StringBuffer();
         for (ViewColumn VC : _ViewColumns)
           {
             if (Str.length() != 0)
               Str.append("|");
+            Names.add(VC._Name);
             Str.append(VC._Name);
           }
         _ViewColumnsRegEx = Pattern.compile("\\b(" + Str.toString() + ")\\b");
@@ -568,6 +574,8 @@ public class View extends Base
         for (Formula F : _Formulas)
           {
             if (F == null)
+              continue;
+            if (Names.add(F._Name) == false)
               continue;
             if (Str.length() != 0)
               Str.append("|");
@@ -646,17 +654,20 @@ public class View extends Base
               continue;
             if (TextUtil.FindElement(VC._Exclude, col._Name, false, 0) != -1)
               continue;
-            if (col._JoinOnly == true)
+            if (col._JoinOnly == true || col._FormulaOnly == true)
               continue;
             if (V.isPivotColumn(col) == true)
               break;
             if (col._Name.startsWith(startingWith) == false)
               continue;
             ViewColumn NewVC = new ViewColumn();
+            LOG.debug(col._Name);
             NewVC._SameAs = col.getFullName();
             NewVC._As = VC._As;
             NewVC._Name = Prefix + col._Name;
             NewVC._FrameworkGenerated = col._FrameworkGenerated;
+            if (TextUtil.FindElement(VC._Block, col._Name, false, 0) != -1)
+              NewVC._FormulaOnly = true;
             _ViewColumns.add(i + j, NewVC);
             _PadderColumnNames.track(NewVC.getName());
             ++j;

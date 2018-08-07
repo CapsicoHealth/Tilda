@@ -280,9 +280,6 @@ public class Sql extends PostgreSQL implements CodeGenSql
       {
         List<TotalMess> FuckList = TotalMess.ScanView(V);
 
-        if (V._Name.equalsIgnoreCase("PatientActiveView") == true)
-          LOG.debug("xxx");
-
         StringBuilder Str = new StringBuilder();
         Str.append("-- " + TextUtil.EscapeSingleQuoteForSQL(V._Description) + "\n");
         Str.append("select ");
@@ -521,7 +518,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
               {
                 First = true;
                 for (ViewColumn VC : V._ViewColumns)
-                  if (VC != null && VC._Aggregate == null && VC._JoinOnly == false)
+                  if (VC != null && VC._Aggregate == null && VC._JoinOnly == false/* && VC._FormulaOnly == false */) // base view must have the "blocked" columns
                     {
                       if (First == true)
                         {
@@ -653,6 +650,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
           Str.append(", " + ValueHelper.printValue(VC._SameAsObj.getName(), VC.getAggregateType(), VC._Coalesce) + ")");
         if (NoAs == false)
           Str.append(" as \"" + VC.getName() + "\" " + (VC._SameAsObj == null ? "" : "-- " + VC._SameAsObj._Description));
+        if (VC._FormulaOnly == true)
+          Str.append(" -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)");
         return hasAggregates;
       }
 
@@ -733,7 +732,23 @@ public class Sql extends PostgreSQL implements CodeGenSql
     private String DoFormulasSuperView(View V, String Str)
       {
         StringBuilder b = new StringBuilder();
-        b.append("select *\n");
+        b.append("select \n");
+        boolean First = true;
+        for (ViewColumn VC : V._ViewColumns)
+          {
+            if (VC._FormulaOnly == true)
+              {
+                b.append("--     \"").append(VC._Name).append("\"  BLOCKED\n");
+                continue;
+              }
+            if (VC._SameAsObj != null && VC._SameAsObj._Mode == ColumnMode.CALCULATED)
+              continue;
+            if (First == true)
+              First = false;
+            else
+              b.append("     , ");
+            b.append("\"").append(VC._Name).append("\"\n");
+          }
         for (Formula F : V._Formulas)
           {
             if (F == null)
@@ -760,7 +775,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
               break;
             if (VC == null)
               continue;
-            if (VC._SameAs.equals("_TS.p") == true || VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false)
+            if (VC._SameAs.equals("_TS.p") == true || VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false && VC._FormulaOnly == false)
               {
                 if (i != 0)
                   Str += "\n       , ";
@@ -820,8 +835,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
             ViewColumn VC = V._ViewColumns.get(i);
             if (V._Pivots.isEmpty() == false && (V.isPivotColumn(VC) == true || VC._Aggregate != null))
               break;
-            if (VC != null && VC._SameAsObj != null && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false)
+            if (VC != null && VC._SameAsObj != null && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false && VC._FormulaOnly == false)
               OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + VC.getName() + "\" IS E" + TextUtil.EscapeSingleQuoteForSQL(VC._SameAsObj._Description) + ";");
+            else
+              OutFinal.println("-- COMMENT ON COLUMN " + V.getShortName() + ".\"" + VC.getName() + "\" IS E" + TextUtil.EscapeSingleQuoteForSQL(VC._SameAsObj == null ? "N/A" : VC._SameAsObj._Description) + ";");
           }
         for (ViewPivot P : V._Pivots)
           if (P != null)
@@ -1127,19 +1144,31 @@ public class Sql extends PostgreSQL implements CodeGenSql
       {
         StringBuilder Str = new StringBuilder();
         boolean First = true;
+        boolean Blocked = false;
         for (ViewColumn VC : V._ViewColumns)
           {
-            if (VC == null || (VC._SameAsObj != null && VC._SameAsObj._Mode != ColumnMode.NORMAL) || VC._JoinOnly == true)
-              continue;
+            if (VC == null || (VC._SameAsObj != null && VC._SameAsObj._Mode != ColumnMode.NORMAL) || VC._JoinOnly == true || VC._FormulaOnly == true)
+              {
+                if (VC != null)
+                  {
+                    Str.append(Lead + "-- \"" + VC._Name + "\" -- " + (VC._FormulaOnly == true ? "BLOCKED" : "EXCLUDED"));
+                    Blocked = true;
+                  }
+                continue;
+              }
             if (TextUtil.FindElement(V._Realize._Excludes, VC.getName(), true, 0) == -1)
               {
                 if (First == false)
                   Str.append(Lead).append(",");
                 else
-                  First = false;
+                  {
+                    if (Blocked == true)
+                      Str.append(Lead);
+                    First = false;
+                  }
                 ViewRealizeMapping VRM = V._Realize.getMapping(VC.getName());
                 if (VRM == null)
-                  Str.append(/* V._ParentSchema._Name + "." + V._Name + "."+ */"\"" + VC._Name + "\"");
+                  Str.append(/* V._ParentSchema._Name + "." + V._Name + "."+ */"\"" + VC._Name + "\" -- COLUMN");
                 else
                   Str.append(VRM.printMapping());
               }
@@ -1151,8 +1180,12 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 if (First == false)
                   Str.append(Lead).append(",");
                 else
-                  First = false;
-                Str.append(VRM.printMapping());
+                  {
+                    if (Blocked == true)
+                      Str.append(Lead);
+                    First = false;
+                  }
+                Str.append(VRM.printMapping() + " -- MAPPING");
               }
           }
         for (Formula F : V._Formulas)
@@ -1164,10 +1197,14 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 if (First == false)
                   Str.append(Lead).append(",");
                 else
-                  First = false;
+                  {
+                    if (Blocked == true)
+                      Str.append(Lead);
+                    First = false;
+                  }
                 ViewRealizeMapping VRM = V._Realize.getMapping(F._Name);
                 if (VRM == null)
-                  Str.append(/* V._ParentSchema._Name + "." + V._Name + "."+ */"\"" + F._Name + "\"");
+                  Str.append(/* V._ParentSchema._Name + "." + V._Name + "."+ */"\"" + F._Name + "\" -- FORMULA");
                 else
                   Str.append(VRM.printMapping());
               }
