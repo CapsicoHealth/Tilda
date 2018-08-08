@@ -634,12 +634,13 @@ public class View extends Base
               continue;
             if (col._Name.startsWith(startingWith) == false)
              continue;
-            ViewColumn OldVC = VC;
-            VC = new ViewColumn();
-            VC._SameAs = col.getFullName();
-            VC._As = OldVC._As;
-            VC._Name = Prefix + col.getName();
-            _ViewColumns.add(i + j, VC);
+            ViewColumn NewVC = new ViewColumn();
+            if (TextUtil.FindStarElement(VC._Block, col._Name, false, 0) != -1)
+              NewVC._FormulaOnly = true;
+            NewVC._SameAs = col.getFullName();
+            NewVC._As = VC._As;
+            NewVC._Name = Prefix + col.getName();
+            _ViewColumns.add(i + j, NewVC);
             ++j;
           }
         return VC;
