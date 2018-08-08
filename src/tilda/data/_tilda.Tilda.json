@@ -434,7 +434,7 @@
      }       
      
     ,{ "name": "TestingView"
-      ,"description": "A view of formulas and their dependencies."
+      ,"description": "A test view to test aggregates."
       ,"columns":[
           { "sameas": "Testing.name"                       }
          ,{ "sameas": "Testing.lastUpdated", "joinOnly":true }
@@ -449,8 +449,39 @@
       ,"subWhereX":{
           "clause":["Testing.deleted is null"
                    ]
-         ,"description":["Active formulas and their sub-formulas"]
+         ,"description":["Active test records"]
         }
      }
+     
+    ,{ "name": "Testing2View"
+      ,"description": "A test view to test .* and exclude and block."
+      ,"columns":[
+          { "sameas": "Testing.name"                       }
+         ,{ "sameas": "Testing.lastUpdated", "joinOnly":true }
+         ,{ "sameas": "Testing.refnum" }
+         ,{ "sameas": "Testing.a*" 
+           ,"exclude":["a2*"]
+           ,"block"  :["a3", "a6*"]
+          }
+        ]
+      ,"subWhereX":{
+            "clause":["Testing.deleted is null"
+                     ]
+           ,"description":["Active test records"]
+        }
+      ,"formulaColumns":[
+          { "name": "a3"
+           ,"type": "LONG"
+           ,"formula":[ 
+               "a3*2"
+             ]
+           ,"title": "A3 Multiplied By Two"
+           ,"description":[
+               "The values of A3 multiplied by 2."
+             ]
+          }
+        ]
+     }
+     
    ]
 }

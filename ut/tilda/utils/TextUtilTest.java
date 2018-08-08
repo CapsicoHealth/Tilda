@@ -31,15 +31,60 @@ public class TextUtilTest
 
     public static void main(String[] args)
       {
-        Test_SimplifyName();
+//        Test_SimplifyName();
 //        Test1();
 //        Test2();
 //        Test3();
 //        Test4();
-//        Test5();
+//        Test_Perf_toString_type_vs_cast();
+          Test_FindLikeElement();
       }
 
-    private static void Test5()
+    private static void Test_FindLikeElement()
+      {
+        String[] A = {"abc", "def", "aaa*", "xyz", "xyz*"};
+        String[] ValArray = {"abc", "a", "aaa", "aaaaaaaaaaaaaa", "aaaa", "xyz123", "xyz"};
+        int PosArray[] = {0, -1, 2, 2, 2, 4, 3};
+        
+        for (int i = 0; i < ValArray.length; ++i)
+          {
+            int pos = TextUtil.FindStarElement(A, ValArray[i], false, 0);
+            String Msg = "i: "+i+"; Val: "+ValArray[i]+"; Pos: "+pos+"; ExpectedPos: "+PosArray[i]+"; Status: "+(pos == PosArray[i] ? "OK":"ERROR");
+            if (pos == PosArray[i])
+             LOG.debug(Msg);
+             else               
+             LOG.error(Msg);
+          }
+        
+        
+        for (int i = 0; i < ValArray.length; ++i)
+          ValArray[i] = ValArray[i].toUpperCase();
+        
+        for (int i = 0; i < ValArray.length; ++i)
+          {
+            int pos = TextUtil.FindStarElement(A, ValArray[i], true, 0);
+            String Msg = "i: "+i+"; Val: "+ValArray[i]+"; Pos: "+pos+"; ExpectedPos: "+PosArray[i]+"; Status: "+(pos == PosArray[i] ? "OK":"ERROR");
+            if (pos == PosArray[i])
+             LOG.debug(Msg);
+             else               
+             LOG.error(Msg);
+          }
+        
+        PosArray = new int[] {-1, -1, -1, -1,-1, -1, -1};
+        for (int i = 0; i < ValArray.length; ++i)
+          {
+            int pos = TextUtil.FindStarElement(A, ValArray[i], false, 0);
+            String Msg = "i: "+i+"; Val: "+ValArray[i]+"; Pos: "+pos+"; ExpectedPos: "+PosArray[i]+"; Status: "+(pos == PosArray[i] ? "OK":"ERROR");
+            if (pos == PosArray[i])
+             LOG.debug(Msg);
+             else               
+             LOG.error(Msg);
+          }
+        
+        
+      }
+
+    private static void Test_Perf_toString_type_vs_cast()
       {
           {
             long T0 = System.nanoTime();

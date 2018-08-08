@@ -1156,7 +1156,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   }
                 continue;
               }
-            if (TextUtil.FindElement(V._Realize._Excludes, VC.getName(), true, 0) == -1)
+            if (TextUtil.FindStarElement(V._Realize._Excludes, VC.getName(), true, 0) == -1)
               {
                 if (First == false)
                   Str.append(Lead).append(",");
@@ -1192,7 +1192,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
           {
             if (F == null)
               continue;
-            if (TextUtil.FindElement(V._Realize._Excludes, F._Name, true, 0) == -1)
+            if (TextUtil.FindStarElement(V._Realize._Excludes, F._Name, true, 0) == -1)
               {
                 if (First == false)
                   Str.append(Lead).append(",");

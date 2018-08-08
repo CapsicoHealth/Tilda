@@ -33,7 +33,7 @@ The View TILDA.TestingView:<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>TestingView_Factory</B>, <B>TestingView_Data</B> in the package <B>tilda.data</B>.
 <LI>Is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>
 </UL>
-<B>Description</B>: A view of formulas and their dependencies.<BR>
+<B>Description</B>: A test view to test aggregates.<BR>
 <BR>
 This view depends on the following filter(s), sub-view(s), and/or root table(s):
 <BLOCKQUOTE><TABLE class="TreeTable Rowed" border="0px" cellspacing="0px" cellpadding="2px"></TABLE></BLOCKQUOTE>
@@ -336,7 +336,7 @@ This View contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 30 2018, 18:43:21EDT
+ @generated Aug 8 2018, 12:32:08EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTINGVIEW implements tilda.interfaces.ReaderObject
