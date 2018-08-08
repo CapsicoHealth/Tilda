@@ -37,8 +37,56 @@ public class TextUtilTest
 //        Test3();
 //        Test4();
 //        Test_Perf_toString_type_vs_cast();
-          Test_FindLikeElement();
+//          Test_FindLikeElement();
+          Test_Perf_endsWith_vs_charAt();
       }
+
+    private static void Test_Perf_endsWith_vs_charAt()
+      {
+        String[] A = new String[1000000];
+        System.out.println("Initializing Test_Perf_endsWith_vs_charAt with "+NumberFormatUtil.PrintWith000Sep(A.length)+" elements");
+        for (int i = 0; i < A.length; ++i)
+         A[i] = (i%10 == 0 ? "*":"")+EncryptionUtil.getToken(RandomUtil.pick(10, 100))+(i%5 == 0 && i%10 != 0 ? "*":"");
+
+        System.out.println("Starting test cases");
+        long T0 = System.nanoTime();
+        int count = 0;
+        for (int i = 0; i < A.length; ++i)
+          {        
+            if (A[i].endsWith("*") == true)
+             ++count;
+          }
+        System.out.println("count: "+count+"; endsWith: " + DurationUtil.PrintDuration(System.nanoTime() - T0));
+
+        T0 = System.nanoTime();
+        count = 0;
+        for (int i = 0; i < A.length; ++i)
+          {        
+            if (A[i].charAt(A[i].length()-1) == '*')
+             ++count;
+          }              
+        System.out.println("count: "+count+"; charAt(length-1): " + DurationUtil.PrintDuration(System.nanoTime() - T0));
+        
+        T0 = System.nanoTime();
+        count = 0;
+        for (int i = 0; i < A.length; ++i)
+          {        
+            if (A[i].startsWith("*") == true)
+             ++count;
+          }
+        System.out.println("count: "+count+"; startsWith: " + DurationUtil.PrintDuration(System.nanoTime() - T0));
+
+        T0 = System.nanoTime();
+        count = 0;
+        for (int i = 0; i < A.length; ++i)
+          {        
+            if (A[i].charAt(0) == '*')
+             ++count;
+          }              
+        System.out.println("charAt(0): " + DurationUtil.PrintDuration(System.nanoTime() - T0));
+
+      }
+    
 
     private static void Test_FindLikeElement()
       {

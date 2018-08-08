@@ -517,10 +517,10 @@ public class TextUtil
       }
     
     /**
-     * returns the index in A that matched the value of Val, either as a startsWith, if the element in A ends in '*', or
-     * a strict equal otherwise. the comparison is case-sensitive or not based on IgnoreCase. -1 is returned is no match is
-     * found. If there are multiple matches (for example comparing "aaaa" with "a*" and "aa*", only the first one will be
-     * returned. 
+     * Returns the index in A that matched the value of Val, either as a startsWith, if the element in A ends in '*', or
+     * a endsWith if the element in A starts with a '*', or a strict equal otherwise. The comparison is case-sensitive 
+     * or not based on IgnoreCase. -1 is returned is no match is found. If there are multiple matches (for example 
+     * comparing "aaaa" with "a*" and "aa*", only the first one will be returned. 
      * @param A
      * @param Val
      * @param IgnoreCase
@@ -543,6 +543,11 @@ public class TextUtil
             if (Str.endsWith("*") == true)
               {
                 if (Val.startsWith(Str.substring(0, Str.length()-1)) == true)
+                 return i;
+              }
+            else if (Str.startsWith("*") == true)
+              {
+                if (Val.endsWith(Str.substring(1)) == true)
                  return i;
               }
             else if (Str.equals(Val) == true)
