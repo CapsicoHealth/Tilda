@@ -630,7 +630,7 @@ public class View extends Base
           {
             if (col._FrameworkManaged == true)
               continue;
-            if (TextUtil.FindElement(VC._Exclude, col._Name, false, 0) != -1)
+            if (TextUtil.FindStarElement(VC._Exclude, col._Name, false, 0) != -1)
               continue;
             if (col._Name.startsWith(startingWith) == false)
              continue;
@@ -645,6 +645,7 @@ public class View extends Base
         return VC;
       }
 
+
     private void CopyDependentViewFields(int i, ViewColumn VC, String Prefix, View V, String startingWith)
       {
         int j = 0;
@@ -652,7 +653,7 @@ public class View extends Base
           {
             if (col._FrameworkGenerated == true && col._SameAs != null && col._SameAs.equals("_TS.p") == false)
               continue;
-            if (TextUtil.FindElement(VC._Exclude, col._Name, false, 0) != -1)
+            if (TextUtil.FindStarElement(VC._Exclude, col._Name, false, 0) != -1)
               continue;
             if (col._JoinOnly == true || col._FormulaOnly == true)
               continue;
@@ -666,7 +667,7 @@ public class View extends Base
             NewVC._As = VC._As;
             NewVC._Name = Prefix + col._Name;
             NewVC._FrameworkGenerated = col._FrameworkGenerated;
-            if (TextUtil.FindElement(VC._Block, col._Name, false, 0) != -1)
+            if (TextUtil.FindStarElement(VC._Block, col._Name, false, 0) != -1)
               NewVC._FormulaOnly = true;
             _ViewColumns.add(i + j, NewVC);
             _PadderColumnNames.track(NewVC.getName());
@@ -678,7 +679,7 @@ public class View extends Base
               for (ViewPivotAggregate A : P._Aggregates)
                 for (Value VPV : P._Values)
                   {
-                    if (TextUtil.FindElement(VC._Exclude, TextUtil.Print(VPV._Name, VPV._Value), false, 0) != -1)
+                    if (TextUtil.FindStarElement(VC._Exclude, TextUtil.Print(VPV._Name, VPV._Value), false, 0) != -1)
                       continue;
                     String SrcColName = A.makeName(VPV);
                     if (SrcColName.startsWith(startingWith) == false)
@@ -694,7 +695,7 @@ public class View extends Base
           }
         for (Formula F : V._Formulas)
           {
-            if (TextUtil.FindElement(VC._Exclude, F._Name, false, 0) != -1)
+            if (TextUtil.FindStarElement(VC._Exclude, F._Name, false, 0) != -1)
               continue;
             if (F._Name.startsWith(startingWith) == false)
               continue;
