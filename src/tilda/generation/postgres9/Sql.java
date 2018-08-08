@@ -741,7 +741,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 b.append("--     \"").append(VC._Name).append("\"  BLOCKED\n");
                 continue;
               }
-            if (VC._SameAsObj != null && VC._SameAsObj._Mode == ColumnMode.CALCULATED)
+            if (VC._SameAsObj != null && VC._SameAsObj._Mode == ColumnMode.CALCULATED || VC._JoinOnly == true)
               continue;
             if (First == true)
               First = false;
