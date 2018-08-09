@@ -1090,7 +1090,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         OutFinal.println("LANGUAGE PLPGSQL;");
 
       }
-
+    
     private String genFormulaCode(View ParentView, Formula F)
       {
         String FormulaStr = TextUtil.JoinTrim(F._FormulaStrs, " ");
