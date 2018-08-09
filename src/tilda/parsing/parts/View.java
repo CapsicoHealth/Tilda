@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
@@ -181,7 +182,7 @@ public class View extends Base
               }
 
             if (VC.FixSameAs(PS) == false)
-             return false;
+              return false;
             // dependency (.*) expansion
             if (VC._SameAs != null && VC._SameAs.endsWith("*") == true)
               {
@@ -243,8 +244,8 @@ public class View extends Base
               }
 
             if (VC._Block.length > 0 && _Formulas.isEmpty() == true && _ImportFormulas.length == 0)
-             PS.AddError("View Column '" + VC.getFullName() + "' defined a 'block' attribute but the parent view hasn't defined any formulas.");
-            
+              PS.AddError("View Column '" + VC.getFullName() + "' defined a 'block' attribute but the parent view hasn't defined any formulas.");
+
           }
 
         if (_TimeSeries != null)
@@ -324,7 +325,7 @@ public class View extends Base
 
         if (_Realize != null)
           _Realize.Validate(PS, this, new ViewRealizedWrapper(O));
-       
+
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
       }
@@ -333,7 +334,7 @@ public class View extends Base
       {
         _ViewColumns.remove(i);
         int lastDot = VC._SameAs.lastIndexOf('.');
-        String startingWith = VC._SameAs.substring(lastDot+1, VC._SameAs.length()-1);
+        String startingWith = VC._SameAs.substring(lastDot + 1, VC._SameAs.length() - 1);
         VC._SameAs = VC._SameAs.substring(0, lastDot);
         ReferenceHelper R = ReferenceHelper.parseObjectReference(VC._SameAs, _ParentSchema);
         if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true)
@@ -473,8 +474,8 @@ public class View extends Base
         O._OutputMaps = _OutputMaps;
         O._LCStr = ObjectLifecycle.READONLY.name();
         O._OCC = _OCC;
-        
-        
+
+
         int Counter = -1;
         for (ViewColumn VC : _ViewColumns)
           {
@@ -583,6 +584,14 @@ public class View extends Base
           }
         _FormulasRegEx = Pattern.compile("\\b(" + Str.toString() + ")\\b");
 
+        for (Formula F : _Formulas)
+          {
+            String Path = checkInfiniteRecursion(F);
+            if (Path != null)
+              PS.AddError("View '" + getFullName() + "' is defining formula '" + F._Name + "' with an infinite reference loop '" + Path + "'.");
+          }
+
+
         /*
          * PrimaryKey PK = _ViewColumns.get(0)._SameAsObj._ParentObject._PrimaryKey;
          * if (_Name.equals("VisitCountAndDurationPivotView") == true)
@@ -623,6 +632,40 @@ public class View extends Base
         return O;
       }
 
+
+    private String checkInfiniteRecursion(Formula F)
+      {
+        List<String> Path = new ArrayList<String>();
+        if (checkInfiniteRecursion(F, Path) == false)
+          return TextUtil.Print(Path.iterator());
+        return null;
+      }
+
+    private boolean checkInfiniteRecursion(Formula F, List<String> Path)
+      {
+        if (Path.contains(F._Name) == true)
+          {
+            Path.add(F._Name);
+            return false;
+          }
+        String FormulaStr = TextUtil.JoinTrim(F._FormulaStrs, " ");
+        Matcher M = F.getParentView()._FormulasRegEx.matcher(FormulaStr);
+        while (M.find() == true)
+          {
+            String s = M.group(1);
+            for (Formula F2 : F._ParentView._Formulas)
+              if (s.equals(F2._Name) == true && s.equals(F._Name) == false)
+                {
+                  Path.add(F._Name);
+                  if (checkInfiniteRecursion(F2, Path) == false)
+                    return false;
+                  Path.remove(Path.size() - 1);
+                  break;
+                }
+          }
+        return true;
+      }
+
     private ViewColumn CopyDependentObjectFields(int i, ViewColumn VC, String Prefix, Object O, String startingWith)
       {
         int j = 0;
@@ -633,7 +676,7 @@ public class View extends Base
             if (TextUtil.FindStarElement(VC._Exclude, col._Name, false, 0) != -1)
               continue;
             if (col._Name.startsWith(startingWith) == false)
-             continue;
+              continue;
             ViewColumn NewVC = new ViewColumn();
             if (TextUtil.FindStarElement(VC._Block, col._Name, false, 0) != -1)
               NewVC._FormulaOnly = true;
@@ -688,7 +731,7 @@ public class View extends Base
                     ViewColumn NewVC = new ViewColumn();
                     NewVC._SameAs = V.getFullName() + "." + SrcColName;
                     NewVC._As = VC._As;
-                    NewVC._Name = Prefix+SrcColName;
+                    NewVC._Name = Prefix + SrcColName;
                     _ViewColumns.add(i + j, NewVC);
                     _PadderColumnNames.track(NewVC.getName());
                     ++j;

@@ -769,8 +769,8 @@ select
      , "a9b"
      , "a9c"
      , "a9d"
-     -- The values of A3 multiplied by 2.
-     , ("a3"*2)::bigint as "a3"
+     -- Blah...
+     , (NOT "a3")::boolean as "a3"
 
  from (
 -- 'A test view to test .* and exclude and block.'
@@ -800,7 +800,7 @@ select TILDA.Testing."name" as "name" -- Medical system unique enterprise id
 
       ) as T;
 
-COMMENT ON VIEW TILDA.Testing2View IS E'create or replace view TILDA.Testing2View as \nselect \n"name"\n     , "refnum"\n     , "a1"\n--     "a3"  BLOCKED\n     , "a3b"\n     , "a4"\n     , "a4b"\n     , "a5"\n     , "a5b"\n--     "a6"  BLOCKED\n--     "a6b"  BLOCKED\n--     "a6c"  BLOCKED\n     , "a7"\n     , "a7b"\n     , "a8"\n     , "a9TZ"\n     , "a9"\n     , "a9bTZ"\n     , "a9b"\n     , "a9c"\n     , "a9d"\n     -- The values of A3 multiplied by 2.\n     , ("a3"*2)::bigint as "a3"\n\n from (\n-- ''A test view to test .* and exclude and block.''\nselect TILDA.Testing."name" as "name" -- Medical system unique enterprise id\n     , TILDA.Testing."refnum" as "refnum" -- The primary key for this record\n     , TILDA.Testing."a1" as "a1" -- The blah\n     , TILDA.Testing."a3" as "a3" -- The blah -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing."a3b" as "a3b" -- The blah\n     , TILDA.Testing."a4" as "a4" -- The blah\n     , TILDA.Testing."a4b" as "a4b" -- The blah\n     , TILDA.Testing."a5" as "a5" -- The blah\n     , TILDA.Testing."a5b" as "a5b" -- The blah\n     , TILDA.Testing."a6" as "a6" -- The blah -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing."a6b" as "a6b" -- The blah -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing."a6c" as "a6c" -- The blah -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing."a7" as "a7" -- The blah\n     , TILDA.Testing."a7b" as "a7b" -- The blah\n     , TILDA.Testing."a8" as "a8" -- The blah\n     , trim(TILDA.Testing."a9TZ") as "a9TZ" -- Generated helper column to hold the time zone ID for ''a9''.\n     , TILDA.Testing."a9" as "a9" -- The blah\n     , TILDA.Testing."a9bTZ" as "a9bTZ" -- Generated helper column to hold the time zone ID for ''a9b''.\n     , TILDA.Testing."a9b" as "a9b" -- The blah\n     , TILDA.Testing."a9c" as "a9c" -- The blah\n     , TILDA.Testing."a9d" as "a9d" -- The blah\n  from TILDA.Testing\n where (TILDA.Testing."deleted" is null)\n\n      ) as T;\n';
+COMMENT ON VIEW TILDA.Testing2View IS E'create or replace view TILDA.Testing2View as \nselect \n"name"\n     , "refnum"\n     , "a1"\n--     "a3"  BLOCKED\n     , "a3b"\n     , "a4"\n     , "a4b"\n     , "a5"\n     , "a5b"\n--     "a6"  BLOCKED\n--     "a6b"  BLOCKED\n--     "a6c"  BLOCKED\n     , "a7"\n     , "a7b"\n     , "a8"\n     , "a9TZ"\n     , "a9"\n     , "a9bTZ"\n     , "a9b"\n     , "a9c"\n     , "a9d"\n     -- Blah...\n     , (NOT "a3")::boolean as "a3"\n\n from (\n-- ''A test view to test .* and exclude and block.''\nselect TILDA.Testing."name" as "name" -- Medical system unique enterprise id\n     , TILDA.Testing."refnum" as "refnum" -- The primary key for this record\n     , TILDA.Testing."a1" as "a1" -- The blah\n     , TILDA.Testing."a3" as "a3" -- The blah -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing."a3b" as "a3b" -- The blah\n     , TILDA.Testing."a4" as "a4" -- The blah\n     , TILDA.Testing."a4b" as "a4b" -- The blah\n     , TILDA.Testing."a5" as "a5" -- The blah\n     , TILDA.Testing."a5b" as "a5b" -- The blah\n     , TILDA.Testing."a6" as "a6" -- The blah -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing."a6b" as "a6b" -- The blah -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing."a6c" as "a6c" -- The blah -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing."a7" as "a7" -- The blah\n     , TILDA.Testing."a7b" as "a7b" -- The blah\n     , TILDA.Testing."a8" as "a8" -- The blah\n     , trim(TILDA.Testing."a9TZ") as "a9TZ" -- Generated helper column to hold the time zone ID for ''a9''.\n     , TILDA.Testing."a9" as "a9" -- The blah\n     , TILDA.Testing."a9bTZ" as "a9bTZ" -- Generated helper column to hold the time zone ID for ''a9b''.\n     , TILDA.Testing."a9b" as "a9b" -- The blah\n     , TILDA.Testing."a9c" as "a9c" -- The blah\n     , TILDA.Testing."a9d" as "a9d" -- The blah\n  from TILDA.Testing\n where (TILDA.Testing."deleted" is null)\n\n      ) as T;\n';
 
 COMMENT ON COLUMN TILDA.Testing2View."name" IS E'Medical system unique enterprise id';
 -- COMMENT ON COLUMN TILDA.Testing2View."lastUpdated" IS E'The timestamp for when the record was last updated.';
@@ -824,7 +824,7 @@ COMMENT ON COLUMN TILDA.Testing2View."a9bTZ" IS E'Generated helper column to hol
 COMMENT ON COLUMN TILDA.Testing2View."a9b" IS E'The blah';
 COMMENT ON COLUMN TILDA.Testing2View."a9c" IS E'The blah';
 COMMENT ON COLUMN TILDA.Testing2View."a9d" IS E'The blah';
-COMMENT ON COLUMN TILDA.Testing2View."a3" IS E'The calculated formula: The values of A3 multiplied by 2.';
+COMMENT ON COLUMN TILDA.Testing2View."a3" IS E'The calculated formula: Blah...';
 
 DO $$
 DECLARE
@@ -835,7 +835,7 @@ BEGIN
   select into ts current_timestamp;
 
 INSERT INTO TILDA.Formula ("refnum", "location", "location2", "name", "type", "title", "description", "formula", "htmlDoc", "created", "lastUpdated", "deleted")
-    VALUES (k+0, 'TILDA.Testing2View', '', 'a3', 'LNG', 'A3 Multiplied By Two', 'The values of A3 multiplied by 2.', 'a3*2', '<B>N/A</B>', current_timestamp, current_timestamp, null)
+    VALUES (k+0, 'TILDA.Testing2View', '', 'a3', 'BOL', 'Not A3', 'Blah...', 'NOT a3', '<B>N/A</B>', current_timestamp, current_timestamp, null)
   ON CONFLICT("location", "name") DO UPDATE
     SET "location2" = EXCLUDED."location2"
       , "type" = EXCLUDED."type"

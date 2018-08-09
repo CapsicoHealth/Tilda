@@ -683,7 +683,7 @@ public class Docs
           {
             String s = M.group(1);
             for (Formula F2 : F.getParentView()._Formulas)
-              if (s.equals(F2._Name) == true)
+              if (s.equals(F2._Name) == true && s.equals(F._Name) == false)
                 {
                   FormulaMatches.add(s);
                   break;

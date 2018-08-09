@@ -471,13 +471,13 @@
         }
       ,"formulaColumns":[
           { "name": "a3"
-           ,"type": "LONG"
+           ,"type": "BOOLEAN"
            ,"formula":[ 
-               "a3*2"
+               "NOT a3"
              ]
-           ,"title": "A3 Multiplied By Two"
+           ,"title": "Not A3"
            ,"description":[
-               "The values of A3 multiplied by 2."
+               "Blah..."
              ]
           }
         ]

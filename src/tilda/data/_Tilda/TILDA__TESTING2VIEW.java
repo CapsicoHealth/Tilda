@@ -214,14 +214,14 @@ This View contains the following columns:<BLOCKQUOTE>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>18&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('Testing2View-a3')" align="right"><B id='Testing2View-a3_DIV' class='formulae dotted_underline cursor_pointer'>a3</B>&nbsp;&nbsp;</TD>
-<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
+<TD>boolean&nbsp;/&nbsp;boolean&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Formula column: A3 Multiplied By Two<BLOCKQUOTE>
+<TD>Formula column: Not A3<BLOCKQUOTE>
 <TABLE class="RowedTable" border="0px" cellspacing="0px" cellpadding="2px" width="75%">
-<TR><TD><B>Title</B></TD><TD>A3 Multiplied By Two</TD></TR><TR><TD><B>Description</B></TD><TD>The values of A3 multiplied by 2.</TD></TR><TR><TD><B>Formula</B></TD><TD><PRE style="padding-top: 3px;"><B style="color:#00AA00;">a3</B>*2</PRE></TD><TR>
+<TR><TD><B>Title</B></TD><TD>Not A3</TD></TR><TR><TD><B>Description</B></TD><TD>Blah...</TD></TR><TR><TD><B>Formula</B></TD><TD><PRE style="padding-top: 3px;">NOT <B style="color:#00AA00;">a3</B></PRE></TD><TR>
 <TR valign="top"><TD><B>Referenced Columns</B></TD><TD>
 <TABLE border="0px">
 <TR><TD valign="top" align="right"><B style="color:#00AA00;">a3</B>:</TD>
@@ -662,7 +662,7 @@ None
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
 <td><a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing2View-a3_DIV'>a3</a> -- LONG</td>
+<td><a href='TILDA___Docs.TILDA.html#Testing2View-a3_DIV'>a3</a> -- BOOLEAN</td>
 </tr>
 </table>
 </DIV></DIV>
@@ -670,7 +670,7 @@ None
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Aug 8 2018, 19:06:03EDT
+ @generated Aug 8 2018, 22:43:58EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTING2VIEW implements tilda.interfaces.ReaderObject
@@ -3127,17 +3127,17 @@ This is the null setter for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a3 of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a3 of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a3 of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a3 of type boolean</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: A3 Multiplied By Two</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Not A3</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   long _a3= SystemValues.EVIL_VALUE;
+   boolean _a3;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3146,17 +3146,17 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a3 of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a3 of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a3 of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a3 of type boolean</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: A3 Multiplied By Two</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Not A3</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final long getA3()
+   public final boolean getA3()
       { return _a3; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3166,11 +3166,11 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a3 of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a3 of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a3 of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a3 of type boolean</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: A3 Multiplied By Two</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Not A3</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3186,17 +3186,17 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a3 of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a3 of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a3 of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a3 of type boolean</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: A3 Multiplied By Two</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Not A3</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setA3(long v) throws Exception
+    void setA3(boolean v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v != _a3)
@@ -3217,11 +3217,11 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a3 of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a3 of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a3 of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a3 of type boolean</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: A3 Multiplied By Two</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: Not A3</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3234,7 +3234,7 @@ This is the null setter for:<BR>
         return;
        __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A3._Mask);
        __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A3._Mask);
-       _a3=0L;
+       _a3=false;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -3360,7 +3360,7 @@ This is the null setter for:<BR>
                        _a9b    = ProcessZDTs(C, _a9bTZ   , "tilda.data.TILDA.Testing2View.a9b"   , RS, ++i, TILDA__TESTING2VIEW_Factory.COLS.A9B   , TILDA__TESTING2VIEW_Factory.COLS.A9BTZ   ); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A9B._Mask   );
                        _a9c    = DateTimeUtil.toLocalDate(RS.getDate(++i)); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A9C._Mask   );
                        _a9d = (List<LocalDate>) C.getArray(RS, ++i, TILDA__TESTING2VIEW_Factory.COLS.A9D._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A9D._Mask   );
-                       _a3     =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A3._Mask    );
+                       _a3     =                              RS.getBoolean  (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A3._Mask    );
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
