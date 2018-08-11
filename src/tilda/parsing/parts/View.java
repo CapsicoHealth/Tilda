@@ -321,7 +321,7 @@ public class View extends Base
           PS.AddError("View '" + getFullName() + "' is defining a 'countStar' element which is deprecated. Please use a standard column definition with an aggregate of 'COUNT'.");
 
         // gotta construct a shadow Object for code-gen.
-        Object O = MakeObjectProxy(PS, ParentSchema);
+        Object O = MakeObjectProxy(PS);
 
         if (_Realize != null)
           _Realize.Validate(PS, this, new ViewRealizedWrapper(O));
@@ -464,7 +464,7 @@ public class View extends Base
           }
       }
 
-    private Object MakeObjectProxy(ParserSession PS, Schema ParentSchema)
+    private Object MakeObjectProxy(ParserSession PS)
       {
         Object O = new Object();
         O._FST = FrameworkSourcedType.VIEW;
@@ -555,6 +555,8 @@ public class View extends Base
                   {
                     F.Validate(PS, this);
                     Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "Formula column: " + F._Title);
+                    if (F.getType() == ColumnType.DATETIME)
+                     C._FrameworkManaged = true;
                     O._Columns.add(C);
                   }
               }
@@ -628,7 +630,8 @@ public class View extends Base
          */
         O._DBOnly = _DBOnly;
         _ParentSchema._Objects.add(O);
-        O.Validate(PS, ParentSchema);
+        O.Validate(PS, _ParentSchema);
+        
         return O;
       }
 

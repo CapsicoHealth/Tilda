@@ -25,6 +25,8 @@ public enum FrameworkSourcedType
     , ENUMERATION
 
     , VIEW
+
+    , REALIZED
     ;
     
 

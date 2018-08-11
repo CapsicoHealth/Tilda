@@ -456,9 +456,10 @@
     ,{ "name": "Testing2View"
       ,"description": "A test view to test .* and exclude and block."
       ,"columns":[
-          { "sameas": "Testing.name"                       }
-         ,{ "sameas": "Testing.lastUpdated", "joinOnly":true }
-         ,{ "sameas": "Testing.refnum" }
+          { "sameas": "Testing.refnum" }
+         ,{ "sameas": "Testing.name"                       }
+         ,{ "sameas": "Testing.lastUpdated"                }
+         ,{ "sameas": "Testing.created",   "joinOnly":true }
          ,{ "sameas": "Testing.a*" 
            ,"exclude":["a2*"]
            ,"block"  :["a3", "a6*"]
@@ -480,7 +481,43 @@
                "Blah..."
              ]
           }
+         ,{ "name": "bastille"
+           ,"type": "DATETIME"
+           ,"formula":[ 
+               "'1789-07-14'"
+             ]
+           ,"title": "Bastille Day"
+           ,"description":[
+               "Blah..."
+             ]
+          }
+         ,{ "name": "toto"
+           ,"type": "DATETIME"
+           ,"formula":[ 
+               "'2018-08-10'"
+             ]
+           ,"title": "Last Updated"
+           ,"description":[
+               "Blah..."
+             ]
+          }
         ]
-     }     
+      ,"realize": {
+          "indices":[ 
+              { "name": "Refnum", "columns":["refnum"] }
+             ,{ "name": "LastUpdated", "orderBy":["lastUpdated desc"] }
+           ]
+         ,"excludes":[ "a9*"
+                     ]
+        }
+     }
+    ,{ "name": "Testing3View"
+      ,"description": "A test view to test .* and exclude and block."
+      ,"columns":[
+          { "sameas": "Testing2Realized.refnum"      }
+         ,{ "sameas": "Testing2Realized.name"        }
+         ,{ "sameas": "Testing2Realized.lastUpdated" }
+        ]
+     }
    ]
 }

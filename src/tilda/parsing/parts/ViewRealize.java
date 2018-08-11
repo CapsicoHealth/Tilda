@@ -26,7 +26,10 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.enums.FrameworkSourcedType;
+import tilda.enums.ObjectLifecycle;
 import tilda.parsing.ParserSession;
+import tilda.utils.TextUtil;
 
 public class ViewRealize
   {
@@ -50,7 +53,7 @@ public class ViewRealize
     public transient boolean _FailedValidation = false;
 
 
-    public boolean Validate(ParserSession PS, View ParentView, Base ParentRealized)
+    public boolean Validate(ParserSession PS, View ParentView, ViewRealizedWrapper ParentRealized)
       {
         int Errs = PS.getErrorCount();
         _ParentView = ParentView;
@@ -73,6 +76,26 @@ public class ViewRealize
               if (Names.add(VRM._Name) == false)
                 PS.AddError("Mapping '" + VRM._Name + "' is duplicated in the realize section for view '" + ParentView.getFullName() + "'.");
             }
+        
+        Object O = new Object();
+        O._FST = FrameworkSourcedType.REALIZED;
+        O._Name = ParentView.getRealizedTableName(false);
+        O._Description = "Realized table for view "+ParentView.getShortName()+": "+ParentRealized._O._Description;
+        O._Queries = ParentView._Queries;
+        O._OutputMaps = ParentView._OutputMaps;
+        O._LCStr = ObjectLifecycle.READONLY.name();
+        O._OCC = ParentView._OCC;
+        O._Indices = _Indices;
+        
+        for (Column C : ParentRealized._O._Columns)
+          {
+            if (TextUtil.FindStarElement(_Excludes, C._Name, false, 0) == -1)
+             O._Columns.add(new Column(C._Name, C._TypeStr, C._Size, true, C._Mode, C._Invariant, C._Protect, C._Description));
+          }
+        
+        O._DBOnly = ParentView._DBOnly;
+        ParentView._ParentSchema._Objects.add(O);
+        O.Validate(PS, ParentView._ParentSchema);
 
         return Errs == PS.getErrorCount();
       }
