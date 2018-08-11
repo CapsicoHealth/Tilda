@@ -37,7 +37,7 @@ public class TildaAclAdd extends MigrationAction
 
     public TildaAclAdd(List<Schema> TildaList)
       {
-        super(null, null, true);
+        super(null, null, true, null);
         _TildaList = TildaList;
       }
 

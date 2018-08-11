@@ -29,7 +29,7 @@ public class TableFKAdd extends MigrationAction
 
     public TableFKAdd(ForeignKey FK)
       {
-        super(FK._ParentObject._ParentSchema._Name, FK._ParentObject._Name, false);
+        super(FK._ParentObject._ParentSchema._Name, FK._ParentObject._Name, false, null);
         _FK = FK;
       }
 

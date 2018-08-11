@@ -24,7 +24,7 @@ public class ViewCreate extends MigrationAction
   {
     public ViewCreate(View V)
       {
-        super(V._ParentSchema._Name, V._Name, false);
+        super(V._ParentSchema._Name, V._Name, false, null);
         _V = V;
       }
 

@@ -23,7 +23,7 @@ public class TableCreate extends MigrationAction
   {
     public TableCreate(tilda.parsing.parts.Object Obj)
       {
-        super(Obj._ParentSchema._Name, Obj._Name, false);
+        super(Obj._ParentSchema._Name, Obj._Name, false, null);
         _Obj = Obj;
       }
 

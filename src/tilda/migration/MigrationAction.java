@@ -16,21 +16,26 @@
 
 package tilda.migration;
 
+import java.util.List;
+
 import tilda.db.Connection;
 import tilda.db.metadata.DatabaseMeta;
 
 public abstract class MigrationAction
   {
-    protected MigrationAction(String SchemaName, String TableViewName, boolean isDependencyAction)
+
+    protected MigrationAction(String SchemaName, String TableViewName, boolean isDependencyAction, List<MigrationAction> GroupedActions)
       {
         _isDependencyAction = isDependencyAction;
         _SchemaName = SchemaName;
         _TableViewName = TableViewName;
+        _GroupedActions = GroupedActions;
       }
 
     protected final String  _SchemaName;
     protected final String  _TableViewName;
     protected final boolean _isDependencyAction;
+    protected final List<MigrationAction> _GroupedActions;
 
     public abstract boolean process(Connection C)
     throws Exception;
@@ -56,5 +61,10 @@ public abstract class MigrationAction
     public boolean isDependencyAction()
       {
         return _isDependencyAction;
+      }
+    
+    public List<MigrationAction> getGroupedActions()
+      {
+        return _GroupedActions;
       }
   }

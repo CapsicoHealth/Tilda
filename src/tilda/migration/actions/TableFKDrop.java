@@ -29,7 +29,7 @@ public class TableFKDrop extends MigrationAction
 
     public TableFKDrop(tilda.parsing.parts.Object SrcObj, tilda.parsing.parts.Object TargetObj, FKMeta FK)
       {
-        super(SrcObj._ParentSchema._Name, SrcObj._Name, false);
+        super(SrcObj._ParentSchema._Name, SrcObj._Name, false, null);
         _SrcObj = SrcObj;
         _TargetObj = TargetObj;
         _FK = FK;

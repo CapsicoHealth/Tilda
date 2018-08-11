@@ -24,7 +24,7 @@ public class SchemaCreate extends MigrationAction
   {
     public SchemaCreate(Schema S)
       {
-        super(S._Name, null, false);
+        super(S._Name, null, false, null);
         _S = S;
       }
 

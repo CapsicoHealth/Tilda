@@ -33,7 +33,7 @@ public class TildaHelpersAddStart extends MigrationAction
 
     public TildaHelpersAddStart()
       {
-        super(Maintenance_Factory.SCHEMA_LABEL, Maintenance_Factory.TABLENAME_LABEL, false);
+        super(Maintenance_Factory.SCHEMA_LABEL, Maintenance_Factory.TABLENAME_LABEL, false, null);
       }
 
     public boolean process(Connection C)

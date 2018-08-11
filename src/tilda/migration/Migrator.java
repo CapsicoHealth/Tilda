@@ -282,6 +282,9 @@ public class Migrator
                 Actions.add(A);
             }
 
+        Object lastObj = null;
+        MigrationAction firstAction = null;
+        
         for (Object Obj : S._Objects)
           {
             if (Obj == null)
@@ -290,6 +293,10 @@ public class Migrator
               continue;
             TableMeta TMeta = DBMeta.getTableMeta(Obj._ParentSchema._Name, Obj._Name);
             int DddlManagementPos = Actions.size();
+            
+            boolean isBatchCapable = BatchCapable(lastObj, Obj);
+            lastObj = Obj;
+                        
             boolean NeedsDdlDependencyManagement = false;
             if (TMeta == null)
               Actions.add(new TableCreate(Obj));
@@ -343,6 +350,8 @@ public class Migrator
                             if (DBStrType != DBStringType.TEXT && CMeta._Size != Col._Size)
                               {
                                 Actions.add(new ColumnAlterStringSize(CMeta, Col));
+//                                if(batchCapable)
+//                                  firstBatchAction = 
                                 NeedsDdlDependencyManagement = true;
                               }
                           }
@@ -535,6 +544,12 @@ public class Migrator
             throw new Exception("Database couldn't be migrated.");
           }
         return Actions;
+      }
+
+    private static boolean BatchCapable(Object lastObj, Object obj)
+      {         
+        
+        return true;
       }
 
     private static Object CheckForeignKeys(List<Schema> TildaList, List<String> Errors, Object Obj, FKMeta fk)

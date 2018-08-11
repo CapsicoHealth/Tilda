@@ -24,7 +24,7 @@ public class ViewDrop extends MigrationAction
   {
     public ViewDrop(View V)
       {
-        super(V._ParentSchema._Name, V._Name, false);
+        super(V._ParentSchema._Name, V._Name, false, null);
         _V = V;
       }
 

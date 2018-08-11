@@ -28,7 +28,7 @@ public class TableIndexRename extends MigrationAction
 
     public TableIndexRename(tilda.parsing.parts.Object Obj, String OldName, String NewName)
       {
-        super(Obj._ParentSchema._Name, Obj._Name, false);
+        super(Obj._ParentSchema._Name, Obj._Name, false, null);
         _Obj = Obj;
         _OldName = OldName;
         _NewName = NewName;

@@ -24,7 +24,7 @@ public class ColumnAdd extends MigrationAction
   {
     public ColumnAdd(Column Col)
       {
-        super(Col._ParentObject._ParentSchema._Name, Col._ParentObject._Name, false);
+        super(Col._ParentObject._ParentSchema._Name, Col._ParentObject._Name, false, null);
         _Col = Col;
       }
 

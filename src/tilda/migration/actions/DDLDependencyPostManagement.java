@@ -24,7 +24,7 @@ public class DDLDependencyPostManagement extends MigrationAction
   {
     public DDLDependencyPostManagement(DDLDependencyManager DdlDepMan)
       {
-        super(DdlDepMan.getSchemaName(), DdlDepMan.getTableViewName(), true);
+        super(DdlDepMan.getSchemaName(), DdlDepMan.getTableViewName(), true, null);
         _DdlDepMan = DdlDepMan;
       }
 
