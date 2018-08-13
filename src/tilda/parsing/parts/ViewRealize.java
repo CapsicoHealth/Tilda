@@ -87,15 +87,25 @@ public class ViewRealize
         O._OCC = ParentView._OCC;
         O._Indices = _Indices;
         
+        if (O._Name.equals("Testing2Realized") == true)
+          LOG.debug("yyyyy");
+        
+        LOG.debug(ParentRealized._O.getFullName()+": "+TextUtil.Print(ParentRealized._O.getColumnNames()));
         for (Column C : ParentRealized._O._Columns)
           {
             if (TextUtil.FindStarElement(_Excludes, C._Name, false, 0) == -1)
-             O._Columns.add(new Column(C._Name, C._TypeStr, C._Size, true, C._Mode, C._Invariant, C._Protect, C._Description));
+              {
+                Column newCol = new Column(C._Name, C._TypeStr, C._Size, true, C._Mode, C._Invariant, C._Protect, C._Description);
+                newCol._FrameworkManaged = C._FrameworkManaged == true; // || C._SameAsObj._FrameworkManaged == true;
+                O._Columns.add(newCol);
+              }
           }
         
+//        LOG.debug(TextUtil.Print(O.getColumnNames()));
         O._DBOnly = ParentView._DBOnly;
         ParentView._ParentSchema._Objects.add(O);
         O.Validate(PS, ParentView._ParentSchema);
+//        LOG.debug(TextUtil.Print(O.getColumnNames()));
 
         return Errs == PS.getErrorCount();
       }

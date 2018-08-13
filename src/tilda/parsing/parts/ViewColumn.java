@@ -150,6 +150,7 @@ public class ViewColumn
             _SameAsObj = ValidateSameAs(PS, getFullName(), _SameAs, _ParentView);
             if (_SameAsObj == null)
               return false;
+            _FrameworkGenerated = _SameAsObj._FrameworkManaged;
           }
 
         if (TextUtil.isNullOrEmpty(_Name) == true)

@@ -6,8 +6,6 @@
 
 package tilda.data._Tilda;
 
-import java.time.*;
-import java.sql.Timestamp;
 import java.util.*;
 
 import tilda.db.*;
@@ -32,7 +30,6 @@ import org.apache.logging.log4j.Logger;
 The View TILDA.Testing3View:<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>Testing3View_Factory</B>, <B>Testing3View_Data</B> in the package <B>tilda.data</B>.
 <LI>Is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>
-<LI>Defines a foreign key to <A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A> </LI>
 </UL>
 <B>Description</B>: A test view to test .* and exclude and block.<BR>
 <BR>
@@ -60,26 +57,6 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Medical system unique enterprise id<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2Realized-name_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2Realized<B>&nbsp;&#8226;&nbsp;</B>name</A></DIV></TD>
-</TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>3&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('Testing3View-lastUpdatedTZ')" align="right"><B id='Testing3View-lastUpdatedTZ_DIV' class='columns dotted_underline cursor_pointer'>lastUpdatedTZ</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'lastUpdated'.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2Realized-lastUpdatedTZ_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2Realized<B>&nbsp;&#8226;&nbsp;</B>lastUpdatedTZ</A><BR>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo-id_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo<B>&nbsp;&#8226;&nbsp;</B>id</A></DIV></TD>
-</TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>4&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('Testing3View-lastUpdated')" align="right"><B id='Testing3View-lastUpdated_DIV' class='columns dotted_underline cursor_pointer'>lastUpdated</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
-<TD align="left">AUTO&nbsp;&nbsp;</TD>
-<TD align="center">&#x2610&nbsp;&nbsp;</TD>
-<TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The timestamp for when the record was last updated.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing2Realized-lastUpdated_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2Realized<B>&nbsp;&#8226;&nbsp;</B>lastUpdated</A></DIV></TD>
 </TR>
 </TABLE></BLOCKQUOTE>
 <DIV id='Testing3View-refnum_MODAL' class='modal'>
@@ -128,57 +105,11 @@ This View contains the following columns:<BLOCKQUOTE>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='Testing3View-lastUpdatedTZ_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing3View-lastUpdatedTZ_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing3View_DIV'>Testing3View</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing3View-lastUpdatedTZ_DIV'>lastUpdatedTZ</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZoneInfo_DIV'>ZoneInfo</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZoneInfo-id_DIV'>id</a> -- STRING</td>
-</tr>
-</table>
-</DIV></DIV>
-<DIV id='Testing3View-lastUpdated_MODAL' class='modal'>
-<DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('Testing3View-lastUpdated_MODAL')" class='close'>&times;</SPAN>
-<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
-<table style='margin: auto;'> 
-  <tr> 
-    <th align='left' width="300em">Schema</th> 
-    <th align='left' width="400em">Table/View</th> 
-    <th align='left' >Column/Formula</th> 
-  </tr> 
-<tr bgcolor="#a3c8eb">
-<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing3View_DIV'>Testing3View</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing3View-lastUpdated_DIV'>lastUpdated</a></td>
-</tr>
-<tr><td>&nbsp;</td></tr>
-<tr bgcolor="#DFECF8">
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2Realized_DIV'>Testing2Realized</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2Realized-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
-</tr>
-</table>
-</DIV></DIV>
 </DIV>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Aug 11 2018, 00:32:47EDT
+ @generated Aug 13 2018, 03:00:41EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTING3VIEW implements tilda.interfaces.ReaderObject
@@ -471,274 +402,6 @@ This is the null setter for:<BR>
      }
 
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing3View.lastUpdatedTZ -> TILDA.Testing3View."lastUpdatedTZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing3View.lastUpdatedTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing3View.lastUpdatedTZ of type character(5)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'lastUpdated'.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   String _lastUpdatedTZ;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing3View.lastUpdatedTZ -> TILDA.Testing3View."lastUpdatedTZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing3View.lastUpdatedTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing3View.lastUpdatedTZ of type character(5)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'lastUpdated'.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final String getLastUpdatedTZ()
-      { return _lastUpdatedTZ; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing3View.lastUpdatedTZ -> TILDA.Testing3View."lastUpdatedTZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing3View.lastUpdatedTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing3View.lastUpdatedTZ of type character(5)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'lastUpdated'.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isNullLastUpdatedTZ()
-     { return __Nulls.intersects(TILDA__TESTING3VIEW_Factory.COLS.LASTUPDATEDTZ._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing3View.lastUpdatedTZ -> TILDA.Testing3View."lastUpdatedTZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing3View.lastUpdatedTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing3View.lastUpdatedTZ of type character(5)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'lastUpdated'.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-    void setLastUpdatedTZ(String v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (v == null)
-        {
-          setNullLastUpdatedTZ();
-        }
-       else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.Testing3View.lastUpdatedTZ: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
-       else if (v.equals(_lastUpdatedTZ) == false)
-        {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing3View.lastUpdatedTZ' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes.or(TILDA__TESTING3VIEW_Factory.COLS.LASTUPDATEDTZ._Mask);
-          __Nulls.andNot(TILDA__TESTING3VIEW_Factory.COLS.LASTUPDATEDTZ._Mask);
-       _lastUpdatedTZ = v;
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing3View.lastUpdatedTZ -> TILDA.Testing3View."lastUpdatedTZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing3View.lastUpdatedTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing3View.lastUpdatedTZ of type character(5)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'lastUpdated'.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-    void setNullLastUpdatedTZ()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING3VIEW_Factory.COLS.LASTUPDATEDTZ._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING3VIEW_Factory.COLS.LASTUPDATEDTZ._Mask);
-       __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.LASTUPDATEDTZ._Mask);
-       _lastUpdatedTZ=null;
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing3View.lastUpdated -> TILDA.Testing3View."lastUpdated"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing3View.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing3View.lastUpdated of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   ZonedDateTime _lastUpdated;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing3View.lastUpdated -> TILDA.Testing3View."lastUpdated"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the getter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing3View.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing3View.lastUpdated of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final ZonedDateTime getLastUpdated()
-      { return _lastUpdated; }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing3View.lastUpdated -> TILDA.Testing3View."lastUpdated"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing3View.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing3View.lastUpdated of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isNullLastUpdated()
-     { return __Nulls.intersects(TILDA__TESTING3VIEW_Factory.COLS.LASTUPDATED._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing3View.lastUpdated -> TILDA.Testing3View."lastUpdated"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing3View.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing3View.lastUpdated of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-    void setLastUpdated(ZonedDateTime v) throws Exception
-     {
-       long T0 = System.nanoTime();
-       if (v == null)
-        {
-          setNullLastUpdated();
-        }
-       else if (v.equals(_lastUpdated) == false)
-        {
-          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing3View.lastUpdated' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes.or(TILDA__TESTING3VIEW_Factory.COLS.LASTUPDATED._Mask);
-          __Nulls.andNot(TILDA__TESTING3VIEW_Factory.COLS.LASTUPDATED._Mask);
-       _lastUpdated = v;
-          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
-          if (ZI == null)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing3View.lastUpdated' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-          setLastUpdatedTZ(ZI.getId());
-        }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing3View.lastUpdated -> TILDA.Testing3View."lastUpdated"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing3View.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing3View.lastUpdated of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-    void setNullLastUpdated()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING3VIEW_Factory.COLS.LASTUPDATED._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING3VIEW_Factory.COLS.LASTUPDATED._Mask);
-       __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.LASTUPDATED._Mask);
-       _lastUpdated=null;
-       setNullLastUpdatedTZ();
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -773,8 +436,6 @@ This is the null setter for:<BR>
           S.append("select ");
           S.append(" "); C.getFullColumnVar(S, "TILDA", "Testing3View", "refnum");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing3View", "name");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing3View", "lastUpdatedTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing3View", "lastUpdated");
           S.append(" from "); C.getFullTableVar(S, "TILDA", "Testing3View");
        switch (__LookupId)
         {
@@ -826,33 +487,12 @@ This is the null setter for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-                              _refnum        =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.REFNUM._Mask       );
-                              _name          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.NAME._Mask         );
-                              _lastUpdatedTZ = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.LASTUPDATEDTZ._Mask); else _lastUpdatedTZ = _lastUpdatedTZ.trim();
-                              _lastUpdated   = ProcessZDT(_lastUpdatedTZ  , "tilda.data.TILDA.Testing3View.lastUpdated"  , RS, ++i, TILDA__TESTING3VIEW_Factory.COLS.LASTUPDATED  , TILDA__TESTING3VIEW_Factory.COLS.LASTUPDATEDTZ  ); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.LASTUPDATED._Mask  );
+                       _refnum =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.REFNUM._Mask);
+                       _name   = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.NAME._Mask  );
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
      return AfterRead(C);
-   }
-
-  private final ZonedDateTime ProcessZDT(String TimezoneId, String DTFieldName, java.sql.ResultSet RS, int ColumnPos, tilda.types.ColumnDefinition DTField, tilda.types.ColumnDefinition TZField)
-  throws Exception
-   {
-     tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationById(TimezoneId);
-     if (ZI == null && TextUtil.isNullOrEmpty(TimezoneId) == false)
-      throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + TimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
-     ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(RS.getTimestamp(ColumnPos, DateTimeUtil._UTC_CALENDAR), ZI == null ? "null" : ZI.getValue());
-     boolean DTNull = false;
-     if (RS.wasNull() == true)
-      {
-         __Nulls.or(DTField._Mask);
-         DTNull = true;
-      }
-     boolean TZNull = __Nulls.intersects(TZField._Mask);
-     if (DTNull == false && TZNull == true)
-      throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
-     return ZDT;
    }
 
    protected abstract boolean AfterRead(Connection C) throws Exception;
@@ -861,9 +501,8 @@ This is the null setter for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "refnum"          + (__Nulls.intersects(TILDA__TESTING3VIEW_Factory.COLS.REFNUM._Mask) == true ? ": NULL" : ": " +                                   getRefnum       () )
-               + "; name"            + (__Nulls.intersects(TILDA__TESTING3VIEW_Factory.COLS.NAME._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getName         ()))
-               + "; lastUpdated"     + (__Nulls.intersects(TILDA__TESTING3VIEW_Factory.COLS.LASTUPDATED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getLastUpdated  ()))
+                   "refnum"   + (__Nulls.intersects(TILDA__TESTING3VIEW_Factory.COLS.REFNUM._Mask) == true ? ": NULL" : ": " +                                   getRefnum() )
+               + "; name"     + (__Nulls.intersects(TILDA__TESTING3VIEW_Factory.COLS.NAME._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getName  ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

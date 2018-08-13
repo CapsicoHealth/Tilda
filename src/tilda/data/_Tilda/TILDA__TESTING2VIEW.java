@@ -33,7 +33,7 @@ The View TILDA.Testing2View:<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>Testing2View_Factory</B>, <B>Testing2View_Data</B> in the package <B>tilda.data</B>.
 <LI>Configured to be Realized to <B>TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing2Realized</B> through DB function <B>TILDA<B>&nbsp;&#8226;&nbsp;</B>Refill_Testing2Realized()</B>.</LI>
 <LI>Is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>
-<LI>Defines a foreign key to <A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A> </LI>
+<LI>Defines foreign key(s) to <A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A> </LI>
 </UL>
 <B>Description</B>: A test view to test .* and exclude and block.<BR>
 <BR>
@@ -164,6 +164,26 @@ This View contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>13&nbsp;&nbsp;</TD>
+<TD onclick="onModalShowClicked('Testing2View-a8bTZ')" align="right"><B id='Testing2View-a8bTZ_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>a8bTZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Generated helper column to hold the time zone ID for 'a8b'.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-a8bTZ_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a8bTZ</A><BR>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo-id_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo<B>&nbsp;&#8226;&nbsp;</B>id</A></DIV></TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>14&nbsp;&nbsp;</TD>
+<TD onclick="onModalShowClicked('Testing2View-a8b')" align="right"><B id='Testing2View-a8b_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>a8b</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-a8b_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a8b</A></DIV></TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>15&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('Testing2View-a9TZ')" align="right"><B id='Testing2View-a9TZ_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>a9TZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -173,7 +193,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD>Generated helper column to hold the time zone ID for 'a9'.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-a9TZ_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a9TZ</A><BR>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo-id_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo<B>&nbsp;&#8226;&nbsp;</B>id</A></DIV></TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
-    <TD>14&nbsp;&nbsp;</TD>
+    <TD>16&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('Testing2View-a9')" align="right"><B id='Testing2View-a9_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>a9</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -183,7 +203,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-a9_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a9</A></DIV></TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
-    <TD>15&nbsp;&nbsp;</TD>
+    <TD>17&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2View-a9bTZ_DIV' class='columns realizedcolumns'>a9bTZ</B>&nbsp;&nbsp;</TD>
 <TD>List<String> List<>&nbsp;/&nbsp;text[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -193,7 +213,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD>Generated helper column to hold the time zone ID for 'a9b'.<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-a9bTZ_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a9bTZ</A></DIV></TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
-    <TD>16&nbsp;&nbsp;</TD>
+    <TD>18&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('Testing2View-a9b')" align="right"><B id='Testing2View-a9b_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>a9b</B>&nbsp;&nbsp;</TD>
 <TD>List<ZonedDateTime> List<>&nbsp;/&nbsp;timestamptz[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -203,7 +223,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-a9b_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a9b</A></DIV></TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
-    <TD>17&nbsp;&nbsp;</TD>
+    <TD>19&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('Testing2View-a9c')" align="right"><B id='Testing2View-a9c_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>a9c</B>&nbsp;&nbsp;</TD>
 <TD>LocalDate&nbsp;/&nbsp;date&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -213,7 +233,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-a9c_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a9c</A></DIV></TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
-    <TD>18&nbsp;&nbsp;</TD>
+    <TD>20&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('Testing2View-a9d')" align="right"><B id='Testing2View-a9d_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>a9d</B>&nbsp;&nbsp;</TD>
 <TD>List<LocalDate> List<>&nbsp;/&nbsp;date[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -223,7 +243,7 @@ This View contains the following columns:<BLOCKQUOTE>
 <TD>The blah<DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-a9d_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a9d</A></DIV></TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
-    <TD>19&nbsp;&nbsp;</TD>
+    <TD>21&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('Testing2View-a3')" align="right"><B id='Testing2View-a3_DIV' class='formulae realizedformulae dotted_underline cursor_pointer'>a3</B>&nbsp;&nbsp;</TD>
 <TD>boolean&nbsp;/&nbsp;boolean&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -275,7 +295,7 @@ None
 <DIV style="margin:0px;margin-left:20px;font-size:75%;">&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#Testing-a3_DIV">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing<B>&nbsp;&#8226;&nbsp;</B>a3</A></DIV></TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
-    <TD>20&nbsp;&nbsp;</TD>
+    <TD>22&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('Testing2View-bastille')" align="right"><B id='Testing2View-bastille_DIV' class='formulae realizedformulae dotted_underline cursor_pointer'>bastille</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -296,7 +316,7 @@ None
 </TD>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
-    <TD>21&nbsp;&nbsp;</TD>
+    <TD>23&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('Testing2View-toto')" align="right"><B id='Testing2View-toto_DIV' class='formulae realizedformulae dotted_underline cursor_pointer'>toto</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -593,6 +613,52 @@ None
 </tr>
 </table>
 </DIV></DIV>
+<DIV id='Testing2View-a8bTZ_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('Testing2View-a8bTZ_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Testing2View-a8bTZ_DIV'>a8bTZ</a></td>
+</tr>
+<tr><td>&nbsp;</td></tr>
+<tr bgcolor="#DFECF8">
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZoneInfo_DIV'>ZoneInfo</a></td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZoneInfo-id_DIV'>id</a> -- STRING</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='Testing2View-a8b_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('Testing2View-a8b_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Testing2View-a8b_DIV'>a8b</a></td>
+</tr>
+<tr><td>&nbsp;</td></tr>
+<tr bgcolor="#DFECF8">
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-a8b_DIV'>a8b</a> -- DATETIME</td>
+</tr>
+</table>
+</DIV></DIV>
 <DIV id='Testing2View-a9TZ_MODAL' class='modal'>
 <DIV class='modal-content'>
 <SPAN onclick="onModalCloseClicked('Testing2View-a9TZ_MODAL')" class='close'>&times;</SPAN>
@@ -780,7 +846,7 @@ None
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Aug 11 2018, 00:32:47EDT
+ @generated Aug 13 2018, 03:00:41EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTING2VIEW implements tilda.interfaces.ReaderObject
@@ -2385,6 +2451,274 @@ This is the null setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a8bTZ -> TILDA.Testing2View."a8bTZ"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a8bTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a8bTZ of type character(5)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a8b'.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   String _a8bTZ;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a8bTZ -> TILDA.Testing2View."a8bTZ"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a8bTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a8bTZ of type character(5)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a8b'.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final String getA8bTZ()
+      { return _a8bTZ; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a8bTZ -> TILDA.Testing2View."a8bTZ"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a8bTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a8bTZ of type character(5)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a8b'.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isNullA8bTZ()
+     { return __Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A8BTZ._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a8bTZ -> TILDA.Testing2View."a8bTZ"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a8bTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a8bTZ of type character(5)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a8b'.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setA8bTZ(String v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (v == null)
+        {
+          setNullA8bTZ();
+        }
+       else if (v.length() > 5)
+        throw new Exception("Cannot set tilda.data.TILDA.Testing2View.a8bTZ: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
+       else if (v.equals(_a8bTZ) == false)
+        {
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.a8bTZ' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A8BTZ._Mask);
+          __Nulls.andNot(TILDA__TESTING2VIEW_Factory.COLS.A8BTZ._Mask);
+       _a8bTZ = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a8bTZ -> TILDA.Testing2View."a8bTZ"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a8bTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a8bTZ of type character(5)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a8b'.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setNullA8bTZ()
+     {
+       long T0 = System.nanoTime();
+       if (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A8BTZ._Mask) == true) // already NULL
+        return;
+       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A8BTZ._Mask);
+       __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A8BTZ._Mask);
+       _a8bTZ=null;
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a8b -> TILDA.Testing2View."a8b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a8b of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a8b of type timestamptz</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   ZonedDateTime _a8b;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a8b -> TILDA.Testing2View."a8b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a8b of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a8b of type timestamptz</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final ZonedDateTime getA8b()
+      { return _a8b; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a8b -> TILDA.Testing2View."a8b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a8b of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a8b of type timestamptz</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isNullA8b()
+     { return __Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A8B._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a8b -> TILDA.Testing2View."a8b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a8b of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a8b of type timestamptz</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setA8b(ZonedDateTime v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (v == null)
+        {
+          setNullA8b();
+        }
+       else if (v.equals(_a8b) == false)
+        {
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.a8b' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A8B._Mask);
+          __Nulls.andNot(TILDA__TESTING2VIEW_Factory.COLS.A8B._Mask);
+       _a8b = v;
+          tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
+          if (ZI == null)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.a8b' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+          setA8bTZ(ZI.getId());
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a8b -> TILDA.Testing2View."a8b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a8b of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a8b of type timestamptz</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setNullA8b()
+     {
+       long T0 = System.nanoTime();
+       if (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A8B._Mask) == true) // already NULL
+        return;
+       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A8B._Mask);
+       __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A8B._Mask);
+       _a8b=null;
+       setNullA8bTZ();
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing2View.a9TZ -> TILDA.Testing2View."a9TZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -3749,6 +4083,8 @@ This is the null setter for:<BR>
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a7");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a7b");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a8");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a8bTZ");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a8b");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a9TZ");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a9");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a9bTZ");
@@ -3824,6 +4160,8 @@ This is the null setter for:<BR>
                             _a7          =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A7._Mask         );
                             _a7b = (List<Integer>) C.getArray(RS, ++i, TILDA__TESTING2VIEW_Factory.COLS.A7B._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A7B._Mask        );
                             _a8          =                              RS.getBytes    (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A8._Mask         );
+                            _a8bTZ       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A8BTZ._Mask      ); else _a8bTZ       = _a8bTZ      .trim();
+                            _a8b         = ProcessZDT(_a8bTZ        , "tilda.data.TILDA.Testing2View.a8b"        , RS, ++i, TILDA__TESTING2VIEW_Factory.COLS.A8B        , TILDA__TESTING2VIEW_Factory.COLS.A8BTZ        ); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A8B._Mask        );
                             _a9TZ        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A9TZ._Mask       ); else _a9TZ        = _a9TZ       .trim();
                             _a9          = ProcessZDT(_a9TZ         , "tilda.data.TILDA.Testing2View.a9"         , RS, ++i, TILDA__TESTING2VIEW_Factory.COLS.A9         , TILDA__TESTING2VIEW_Factory.COLS.A9TZ         ); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A9._Mask         );
                             _a9bTZ = (List<String>) C.getArray(RS, ++i, TILDA__TESTING2VIEW_Factory.COLS.A9BTZ._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A9BTZ._Mask      );
@@ -3894,7 +4232,6 @@ This is the null setter for:<BR>
       String Str = 
                    "refnum: "                                                                                                +                                   getRefnum     () 
                + "; name: "                                                                                                  + TextUtil.PrintVariableStr        (getName       ())
-               + "; lastUpdated: "                                                                                           + DateTimeUtil.printDateTimeForJSON(getLastUpdated())
                + "; a1"            + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A1._Mask) == true ? ": NULL" : ": " +                                   getA1         () )
                + "; a3b"           + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A3B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA3b        ()))
                + "; a4"            + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A4._Mask) == true ? ": NULL" : ": " +                                   getA4         () )
@@ -3904,6 +4241,7 @@ This is the null setter for:<BR>
                + "; a7"            + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A7._Mask) == true ? ": NULL" : ": " +                                   getA7         () )
                + "; a7b"           + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A7B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA7b        ()))
                + "; a8"            + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A8._Mask) == true ? ": NULL" : ": " +                                   getA8         () )
+               + "; a8b"           + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A8B._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA8b        ()))
                + "; a9"            + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A9._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA9         ()))
                + "; a9b"           + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A9B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA9b        ()))
                + "; a9c"           + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A9C._Mask) == true ? ": NULL" : ": " +                                   getA9c        () )

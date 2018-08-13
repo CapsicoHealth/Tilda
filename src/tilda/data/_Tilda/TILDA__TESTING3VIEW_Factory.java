@@ -46,7 +46,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_LongPrimitiveNull      REFNUM       = new Type_LongPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "refnum"       , 0/*0*/, "The primary key for this record");
+     public static Type_LongPrimitiveNull      REFNUM= new Type_LongPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "refnum", 0/*0*/, "The primary key for this record");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing3View.name -> TILDA.Testing3View."name"
@@ -65,44 +65,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    NAME         = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "name"         , 1/*1*/, "Medical system unique enterprise id");
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing3View.lastUpdatedTZ -> TILDA.Testing3View."lastUpdatedTZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing3View.lastUpdatedTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing3View.lastUpdatedTZ of type character(5)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'lastUpdated'.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_StringPrimitiveNull    LASTUPDATEDTZ= new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdatedTZ", 2/*2*/, "Generated helper column to hold the time zone ID for 'lastUpdated'.");
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing3View.lastUpdated -> TILDA.Testing3View."lastUpdated"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing3View.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing3View.lastUpdated of type timestamptz</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_DatetimePrimitiveNull  LASTUPDATED  = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 3/*3*/, "The timestamp for when the record was last updated.");
+     public static Type_StringPrimitiveNull    NAME  = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "name"  , 1/*1*/, "Medical system unique enterprise id");
 ;
    }
 
@@ -171,8 +134,6 @@ This is the column definition for:<BR>
           S.append("select ");
           S.append(" "); C.getFullColumnVar(S, "TILDA", "Testing3View", "refnum");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing3View", "name");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing3View", "lastUpdatedTZ");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing3View", "lastUpdated");
           S.append(" from "); C.getFullTableVar(S, "TILDA", "Testing3View");
           switch (LookupId)
            {
@@ -224,7 +185,6 @@ This is the column definition for:<BR>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
    public static SelectQuery newSelectQuery(Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, true); }
    public static SelectQuery newWhereQuery (Connection C) throws Exception { return new SelectQuery(C, SCHEMA_LABEL, TABLENAME_LABEL, false); }

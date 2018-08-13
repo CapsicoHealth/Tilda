@@ -169,6 +169,8 @@ public class View extends Base
         String LastUpdatedETLColObjName = null;
         String DeletedColObjName = null;
 
+        if (_Name.equals("Testing3View") == true)
+          LOG.debug("xxxxxx");
         // First, let's construct the actual view and validate its fields
         for (int i = 0; i < _ViewColumns.size(); ++i)
           {
@@ -211,7 +213,7 @@ public class View extends Base
             else if (VC.getName().equals("deleted") == true && SameAsHelper.checkRootSameAs(VC._SameAsObj, PS.getColumn("tilda.data", "TILDA", "Key", "deleted")) == true)
               DeletedColObjName = VC._SameAsObj._ParentObject.getFullName();
 
-            // LOG.debug("VC: " + VC._Name + "; VC._SameAsObj: " + VC._SameAsObj + "; VC._SameAsObj._ParentObject: " + VC._SameAsObj._ParentObject + ";");
+            //LOG.debug("VC: " + VC._Name + "; VC._SameAsObj: " + VC._SameAsObj + "; VC._SameAsObj._ParentObject: " + VC._SameAsObj._ParentObject + ";");
             if (ObjectNames.add(VC._SameAsObj._ParentObject.getFullName()) == false)
               {
                 if (VC._Join != null)
@@ -221,7 +223,14 @@ public class View extends Base
               {
                 PS.AddError("Column '" + VC.getFullName() + "' is defining a join type: columns of the first referenced table are considered part of the 'from' clause of a view and cannot define a join type.");
               }
-            if (VC._SameAsObj._Type == ColumnType.DATETIME && Object.isOCCColumn(VC._SameAsObj) == false && VC._Aggregate == null && VC._FrameworkGenerated == false && VC._SameAsObj._FrameworkManaged == false)
+//            if (_Name.equals("Testing3View") == true)
+//              LOG.debug("xxx");
+            if (   VC._SameAsObj._Type == ColumnType.DATETIME // Must be datetime 
+                && Object.isOCCColumn(VC._SameAsObj) == false // Must not be an OCC column 
+                && VC._Aggregate == null // must not be an aggregate column
+                && VC._FrameworkGenerated == false // Not a framework generated asset
+                && VC._SameAsObj._FrameworkManaged == false // the referred column is not framework managed.
+               )
               {
                 ViewColumn TZCol = new ViewColumn();
                 TZCol._SameAs = VC._SameAs + "TZ";
@@ -245,7 +254,6 @@ public class View extends Base
 
             if (VC._Block.length > 0 && _Formulas.isEmpty() == true && _ImportFormulas.length == 0)
               PS.AddError("View Column '" + VC.getFullName() + "' defined a 'block' attribute but the parent view hasn't defined any formulas.");
-
           }
 
         if (_TimeSeries != null)
@@ -321,6 +329,8 @@ public class View extends Base
           PS.AddError("View '" + getFullName() + "' is defining a 'countStar' element which is deprecated. Please use a standard column definition with an aggregate of 'COUNT'.");
 
         // gotta construct a shadow Object for code-gen.
+        if (_Name.equals("Testing2View") == true)
+         LOG.debug("zzzzzzz");
         Object O = MakeObjectProxy(PS);
 
         if (_Realize != null)
@@ -359,7 +369,7 @@ public class View extends Base
             if (O._Validated == false)
               return PS.AddError("View '" + getFullName() + "' is defining a .* view column as " + VC._SameAs + " which has failed validation.");
             _Dependencies.put(O.getShortName().toUpperCase(), O);
-            VC = CopyDependentObjectFields(i, VC, Prefix, O, startingWith);
+            CopyDependentObjectFields(i, VC, Prefix, O, startingWith);
           }
         return true;
       }
@@ -476,18 +486,21 @@ public class View extends Base
         O._OCC = _OCC;
 
 
+        LOG.debug(getFullName()+": "+TextUtil.Print(getColumnNames()));
         int Counter = -1;
         for (ViewColumn VC : _ViewColumns)
           {
             // Skip intermediary pivot-making columns (pivot columns and aggregates) so we capture only the "grouped-by" columns
             if (_Pivots.isEmpty() == false && (isPivotColumn(VC) == true || VC._Aggregate != null))
               break;
-            if (VC != null && VC._FrameworkGenerated == false && VC._JoinOnly == false && VC._FormulaOnly == false)
+//            LOG.debug(VC._Name+": isOCCGenerated="+(VC._SameAsObj == null ? "false":VC._SameAsObj.isOCCGenerated())+"; _FrameworkGenerated="+VC._FrameworkGenerated+"; _JoinOnly="+VC._JoinOnly+"; _FormulaOnly="+VC._FormulaOnly+";");
+            if (VC != null && (VC._SameAsObj!=null && VC._SameAsObj.isOCCGenerated() == true || VC._FrameworkGenerated == false) && VC._JoinOnly == false && VC._FormulaOnly == false)
               {
                 O._Columns.add(new ViewColumnWrapper(VC._SameAsObj, VC, ++Counter));
               }
           }
-
+        LOG.debug(O._Name+": "+TextUtil.Print(O.getColumnNames()));
+        Counter = Counter;
         for (ViewPivot P : _Pivots)
           {
             if (P._Values == null || P._Values.length == 0)
@@ -669,7 +682,7 @@ public class View extends Base
         return true;
       }
 
-    private ViewColumn CopyDependentObjectFields(int i, ViewColumn VC, String Prefix, Object O, String startingWith)
+    private void CopyDependentObjectFields(int i, ViewColumn VC, String Prefix, Object O, String startingWith)
       {
         int j = 0;
         for (Column col : O._Columns)
@@ -689,7 +702,6 @@ public class View extends Base
             _ViewColumns.add(i + j, NewVC);
             ++j;
           }
-        return VC;
       }
 
 

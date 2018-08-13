@@ -32,6 +32,7 @@ public class ViewColumnWrapper extends Column
         super(SameAsCol._Name, VCol._SameAs, TextUtil.isNullOrEmpty(VCol._Description) == false ? VCol._Description : SameAsCol._Description);
         _SequenceOrder = SequenceOrder;
         _Invariant = SameAsCol._Invariant;
+        _FrameworkManaged = SameAsCol._FrameworkManaged;
         if (VCol._UseMapper == true && SameAsCol._Mapper != null)
           _Mapper = new ColumnMapper(SameAsCol._Mapper._SrcColumns, SameAsCol._Mapper._DestObject, SameAsCol._Mapper._Name, SameAsCol._Mapper._Group, SameAsCol._Mapper._Multi);
         if (VCol._UseEnum == true && SameAsCol._Enum != null)

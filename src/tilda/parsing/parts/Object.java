@@ -158,7 +158,7 @@ public class Object extends Base
                   {
                     if (ColumnNames.add(C.getName().toUpperCase()) == false)
                       PS.AddError("Column '" + C.getFullName() + "' is defined more than once in Object '" + getFullName() + "'. Note that column names are checked in a case-insensitive way, so 'id' is the same as 'ID'.");
-                    if (C._Type == ColumnType.DATETIME && Object.isOCCColumn(C) == false && C._FrameworkManaged == false)
+                    if (C._Type == ColumnType.DATETIME && Object.isOCCColumn(C) == false && C._FrameworkManaged == false && _FST != FrameworkSourcedType.REALIZED)
                       {
                         Column TZCol = new Column(C.getName() + "TZ", null, 0, C._Nullable, ColumnMode.AUTO, C._Invariant, null, "Generated helper column to hold the time zone ID for '" + C.getName() + "'.");
                         if (C.isCollection() == false)
@@ -169,9 +169,9 @@ public class Object extends Base
                         _Columns.add(i, TZCol);
                         ++i;
                         _PadderColumnNames.track(TZCol.getName());
+                        TZCol.Validate(PS, this);
                         if (ColumnNames.add(TZCol.getName().toUpperCase()) == false)
                           PS.AddError("Generated column '" + TZCol.getFullName() + "' conflicts with another column already named the same in Object '" + getFullName() + "'.");
-                        TZCol.Validate(PS, this);
                         if (C.isCollection() == false)
                          {
                            addForeignKey(C.getName(), new String[] { TZCol.getName() }, "tilda.data.TILDA.ZONEINFO");
