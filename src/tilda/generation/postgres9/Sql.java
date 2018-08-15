@@ -698,7 +698,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                     r.append(View.getRootViewName(s).toUpperCase());
                   }
                 r.append(")(PIVOT)?VIEW\\b");
-                String BV = PrintBaseView(V, true);
+                String BV = PrintBaseView(V, false);
                 BV = BV.replaceAll(r.toString(), "$1Realized");
                 if (V._Formulas != null && V._Formulas.isEmpty() == false)
                   BV = DoFormulasSuperView(V, BV);
@@ -1088,7 +1088,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         OutFinal.println("LANGUAGE PLPGSQL;");
 
       }
-    
+
     private String genFormulaCode(View ParentView, Formula F)
       {
         String FormulaStr = TextUtil.JoinTrim(F._FormulaStrs, " ");
@@ -1145,7 +1145,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         boolean Blocked = false;
         if (V._Name.equals("Testing2View") == true)
           LOG.debug("zzzzzzzzzzz");
-        LOG.debug("View "+V._Name+": "+TextUtil.Print(V.getColumnNames()));
+        LOG.debug("View " + V._Name + ": " + TextUtil.Print(V.getColumnNames()));
         for (ViewColumn VC : V._ViewColumns)
           {
             if (VC == null || (VC._SameAsObj != null && VC._SameAsObj._Mode == ColumnMode.CALCULATED) || VC._JoinOnly == true || VC._FormulaOnly == true)
@@ -1174,7 +1174,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   Str.append(VRM.printMapping());
               }
             else
-              Str.append(Lead + "-- \"" + VC._Name + "\" -- REALIZE-EXCLUDED");
+              {
+                Blocked = true;
+                Str.append(Lead + "-- \"" + VC._Name + "\" -- REALIZE-EXCLUDED");
+              }
           }
         for (ViewRealizeMapping VRM : V._Realize._Mappings)
           {

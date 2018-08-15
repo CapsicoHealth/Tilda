@@ -84,22 +84,22 @@ public class TotalMess
               FuckList.add(FT);
           }
 
-        LOG.debug("\n\nDETAILS for view " + V.getShortName());
+//        LOG.debug("\n\nDETAILS for view " + V.getShortName());
         for (TotalMess FT : FuckList)
           {
             boolean Printed = false;
             if (FT._PK != null)
               {
-                LOG.debug(FT._VC._SameAsObj.getShortName() + "(" + FT._SequenceOrder + ") as " + FT._VC._Name + "      --> " + FT._C.getShortName() + " is " + (FT._implicitFKImport == true ? "an implicitly imported" : "a") + " primary key");
+//                LOG.debug(FT._VC._SameAsObj.getShortName() + "(" + FT._SequenceOrder + ") as " + FT._VC._Name + "      --> " + FT._C.getShortName() + " is " + (FT._implicitFKImport == true ? "an implicitly imported" : "a") + " primary key");
                 Printed = true;
               }
             for (ForeignKey FK : FT._FKs)
               {
-                LOG.debug(FT._VC._SameAsObj.getShortName() + "(" + FT._SequenceOrder + ") as " + FT._VC._Name + "      --> " + FT._C.getShortName() + " is part of " + (FT._implicitFKImport == true ? "an implicitly imported" : "a") + " FK " + FK._Name + " to " + FK._DestObjectObj.getShortName());
+//                LOG.debug(FT._VC._SameAsObj.getShortName() + "(" + FT._SequenceOrder + ") as " + FT._VC._Name + "      --> " + FT._C.getShortName() + " is part of " + (FT._implicitFKImport == true ? "an implicitly imported" : "a") + " FK " + FK._Name + " to " + FK._DestObjectObj.getShortName());
                 Printed = true;
               }
           }
-        LOG.debug("---------------------------------------------------\n");
+//        LOG.debug("---------------------------------------------------\n");
 
         return FuckList;
       }
@@ -107,7 +107,7 @@ public class TotalMess
 
     public static ForeignKey getClosestFKTable(List<TotalMess> FuckList, View V, Object T, int columnSequenceOrder)
       {
-        LOG.debug("Searching for FK to/from " + T.getShortName() + " from view column #" + columnSequenceOrder);
+//        LOG.debug("Searching for FK to/from " + T.getShortName() + " from view column #" + columnSequenceOrder);
         int i = FuckList.size() - 1;
         while (i >= 0 && FuckList.get(i)._SequenceOrder >= columnSequenceOrder)
           --i;
