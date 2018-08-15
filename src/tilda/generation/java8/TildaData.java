@@ -27,10 +27,12 @@ import tilda.enums.AggregateType;
 import tilda.enums.ColumnMapperMode;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.enums.FrameworkSourcedType;
 import tilda.enums.MultiType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.OutputFormatType;
 import tilda.enums.ProtectionType;
+import tilda.enums.TildaType;
 import tilda.generation.GeneratorSession;
 import tilda.generation.interfaces.CodeGenTildaData;
 import tilda.parsing.parts.Base;
@@ -103,7 +105,7 @@ public class TildaData implements CodeGenTildaData
           Out.print(" tilda.interfaces.ReaderObject");
         else
           Out.print(" tilda.interfaces.WriterObject");
-        if (O.isOCC() == true)
+        if (O.isOCC() == true && O._FST == FrameworkSourcedType.NONE)
           Out.print(", tilda.interfaces.OCCObject");
         if (O.isJsonable() == true)
           Out.print(", tilda.interfaces.JSONable");
@@ -1506,8 +1508,11 @@ public class TildaData implements CodeGenTildaData
         Out.println("      String Str = ");
         boolean First = true;
         for (Column C : O._Columns)
-          if (C != null && C._FrameworkManaged == false)
+          if (C != null && C._TZGenerated == false)
             {
+//              LOG.debug("Col "+C.getFullName());
+//              if (C.getName().equals("a8bTZ") == true)
+//                LOG.debug("zzzzzzzzzzzzzzz");
               String Mask = Helper.getRuntimeMask(C);
               String Pad = O._PadderColumnNames.getPad(C.getName());
               boolean Nullable = C._Nullable == true && C._Mode != ColumnMode.CALCULATED;

@@ -66,9 +66,9 @@ public class OutputMapping
             public boolean process(ParserSession PS, Base ParentObject, String What, Column C)
               {
                 if (C._Type == ColumnType.BINARY)
-                  PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping with column '" + C.getName() + "' which is a binary. Binaries cannot be JSONed.");
+                  PS.AddError(ParentObject._TildaType.name() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping with column '" + C.getName() + "' which is a binary. Binaries cannot be JSONed.");
                 if (C._Type == ColumnType.JSON && _OutputTypes.contains(OutputFormatType.CSV) == true)
-                  PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping with column '" + C.getName() + "' which is a JSON object. JSON objects cannot be exported in CSV format.");
+                  PS.AddError(ParentObject._TildaType.name() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping with column '" + C.getName() + "' which is a JSON object. JSON objects cannot be exported in CSV format.");
                 return true;
               }
           });
@@ -81,16 +81,16 @@ public class OutputMapping
             //  PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP without an nvpValueType. A column type ('STRING', 'INTEGER', etc.) must be defined.");
         	           
             if (TextUtil.isNullOrEmpty(_NVPSrcStr) == true)
-              PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP without an NVP type of ROW or COLUMN. An nvpType attribute must be used with NVP outputMap.");
+              PS.AddError(ParentObject._TildaType.name() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP without an NVP type of ROW or COLUMN. An nvpType attribute must be used with NVP outputMap.");
 
             _NVPSrc = NVPSourceType.parse(_NVPSrcStr);
             if (_NVPSrc == null)
-              PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP with an invalid NVPSrc type '" + _NVPSrcStr + "': must be COLUMNS or ROWS.");
+              PS.AddError(ParentObject._TildaType.name() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP with an invalid NVPSrc type '" + _NVPSrcStr + "': must be COLUMNS or ROWS.");
 
             if (_NVPSrc.equals(NVPSourceType.ROWS))
               {
                 if (_ColumnObjs.size() != 2)
-                  PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP that is ROWS-based with " + _ColumnObjs.size() + " Columns. Only 2 Columns are allowed.");
+                  PS.AddError(ParentObject._TildaType.name() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP that is ROWS-based with " + _ColumnObjs.size() + " Columns. Only 2 Columns are allowed.");
                 /*
                  * LDH-NOTE: Keep for future performance analysis of the 2 idioms
                  * if (_ParentObject.getColumn(_Key) != null)
@@ -112,20 +112,20 @@ public class OutputMapping
                 _NVPValueType = ColumnType.parse(_NVPValueTypeStr);
                 
                 if (_NVPValueType == null)
-                    PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP that is COLUMNS-based without a valid nvpValueType. An nvpValueType matching a column type ('STRING', 'INTEGER', etc.) must be defined.");    
+                    PS.AddError(ParentObject._TildaType.name() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP that is COLUMNS-based without a valid nvpValueType. An nvpValueType matching a column type ('STRING', 'INTEGER', etc.) must be defined.");    
             	
                 for (Column C : _ColumnObjs)
                   if (C != null && C.getType().isCompatible(_NVPValueType) == false)
-                    PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping that is COLUMNS-based with column '" + C.getName() + "'  that is incompatible with the nvpValueType of '" + _NVPValueTypeStr + "'. Compatible types are '" + C.getType().getCompatibleTypesString(_NVPValueType) + "'.");
+                    PS.AddError(ParentObject._TildaType.name() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping that is COLUMNS-based with column '" + C.getName() + "'  that is incompatible with the nvpValueType of '" + _NVPValueTypeStr + "'. Compatible types are '" + C.getType().getCompatibleTypesString(_NVPValueType) + "'.");
               }
             else
               throw new Error("An Output mapping NVP with a source type '" + _NVPSrc.name() + "' is not handled properly in the code.");
           }
         else if (TextUtil.isNullOrEmpty(_NVPSrcStr) == false)
-          PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping with a 'nvpSrc' attribute, but no NVP output type.");
+          PS.AddError(ParentObject._TildaType.name() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping with a 'nvpSrc' attribute, but no NVP output type.");
 
         if (_Sync == true && _ParentObject.isOCC() == false)
-          PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining a 'sync' Output mapping but the parent object is not OCC.");
+          PS.AddError(ParentObject._TildaType.name() + " '" + _ParentObject.getFullName() + "' is defining a 'sync' Output mapping but the parent object is not OCC.");
 
         return Errs == PS.getErrorCount();
       }

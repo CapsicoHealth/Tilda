@@ -81,31 +81,38 @@ public class ViewRealize
         O._FST = FrameworkSourcedType.REALIZED;
         O._Name = ParentView.getRealizedTableName(false);
         O._Description = "Realized table for view "+ParentView.getShortName()+": "+ParentRealized._O._Description;
-        O._Queries = ParentView._Queries;
+        O.addQueries(ParentView._Queries);
         O._OutputMaps = ParentView._OutputMaps;
         O._LCStr = ObjectLifecycle.READONLY.name();
-        O._OCC = ParentView._OCC;
         O._Indices = _Indices;
         
-        if (O._Name.equals("Testing2Realized") == true)
-          LOG.debug("yyyyy");
-        
-        LOG.debug(ParentRealized._O.getFullName()+": "+TextUtil.Print(ParentRealized._O.getColumnNames()));
+        boolean OCC = false;
+//        LOG.debug(ParentRealized._O.getFullName()+": "+TextUtil.Print(ParentRealized._O.getColumnNames()));
         for (Column C : ParentRealized._O._Columns)
           {
             if (TextUtil.FindStarElement(_Excludes, C._Name, false, 0) == -1)
               {
+                if (C.isOCCGenerated() == true || C._SameAsObj != null && C._SameAsObj.isOCCGenerated() == true)
+                 OCC = true;
                 Column newCol = new Column(C._Name, C._TypeStr, C._Size, true, C._Mode, C._Invariant, C._Protect, C._Description);
-                newCol._FrameworkManaged = C._FrameworkManaged == true; // || C._SameAsObj._FrameworkManaged == true;
+                newCol._FrameworkManaged = C._FrameworkManaged == true || C._SameAsObj != null && C._SameAsObj._FrameworkManaged == true;
+                newCol._TZGenerated = C._TZGenerated == true || C._SameAsObj != null && C._SameAsObj._TZGenerated == true;
                 O._Columns.add(newCol);
               }
           }
-        
-//        LOG.debug(TextUtil.Print(O.getColumnNames()));
+        O._OCC = OCC;
         O._DBOnly = ParentView._DBOnly;
         ParentView._ParentSchema._Objects.add(O);
         O.Validate(PS, ParentView._ParentSchema);
-//        LOG.debug(TextUtil.Print(O.getColumnNames()));
+
+//        if (O._Name.equals("Testing2Realized") == true)
+//          LOG.debug("yyyyy");
+//        for (Column C : O._Columns)
+//          {
+//            LOG.debug(C.getFullName()+": isOCCGenerated="+C.isOCCGenerated());
+//            if (C._SameAsObj != null)
+//             LOG.debug(C._SameAsObj.getFullName()+": isOCCGenerated="+C._SameAsObj.isOCCGenerated());
+//          }
 
         return Errs == PS.getErrorCount();
       }

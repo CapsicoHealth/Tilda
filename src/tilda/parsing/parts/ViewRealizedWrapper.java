@@ -20,6 +20,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.enums.ObjectLifecycle;
+import tilda.enums.TildaType;
 
 public class ViewRealizedWrapper extends Base
   {
@@ -27,6 +28,7 @@ public class ViewRealizedWrapper extends Base
 
     public ViewRealizedWrapper(Object O)
       {
+        super(TildaType.REALIZED_VIEW);
         _O = O;
         _Name = _O._Name.substring(0, _O._Name.length()-4)+"Realized";
         _OriginalName = _O._OriginalName.substring(0, _O._OriginalName.length()-4)+"Realized";
@@ -56,12 +58,6 @@ public class ViewRealizedWrapper extends Base
     public boolean isOCC()
       {
         return _O.isOCC();
-      }
-
-    @Override
-    public String getWhat()
-      {
-        return "Realized"+_O.getWhat();
       }
 
     @Override

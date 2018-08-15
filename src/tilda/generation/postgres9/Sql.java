@@ -837,8 +837,6 @@ public class Sql extends PostgreSQL implements CodeGenSql
               break;
             if (VC != null && VC._SameAsObj != null && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false && VC._FormulaOnly == false)
               OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + VC.getName() + "\" IS E" + TextUtil.EscapeSingleQuoteForSQL(VC._SameAsObj._Description) + ";");
-            else
-              OutFinal.println("-- COMMENT ON COLUMN " + V.getShortName() + ".\"" + VC.getName() + "\" IS E" + TextUtil.EscapeSingleQuoteForSQL(VC._SameAsObj == null ? "N/A" : VC._SameAsObj._Description) + ";");
           }
         for (ViewPivot P : V._Pivots)
           if (P != null)
@@ -1145,13 +1143,16 @@ public class Sql extends PostgreSQL implements CodeGenSql
         StringBuilder Str = new StringBuilder();
         boolean First = true;
         boolean Blocked = false;
+        if (V._Name.equals("Testing2View") == true)
+          LOG.debug("zzzzzzzzzzz");
+        LOG.debug("View "+V._Name+": "+TextUtil.Print(V.getColumnNames()));
         for (ViewColumn VC : V._ViewColumns)
           {
-            if (VC == null || (VC._SameAsObj != null && VC._SameAsObj._Mode != ColumnMode.NORMAL) || VC._JoinOnly == true || VC._FormulaOnly == true)
+            if (VC == null || (VC._SameAsObj != null && VC._SameAsObj._Mode == ColumnMode.CALCULATED) || VC._JoinOnly == true || VC._FormulaOnly == true)
               {
                 if (VC != null)
                   {
-                    Str.append(Lead + "-- \"" + VC._Name + "\" -- " + (VC._FormulaOnly == true ? "BLOCKED" : "EXCLUDED"));
+                    Str.append(Lead + "-- \"" + VC._Name + "\" -- " + (VC._FormulaOnly == true ? "BLOCKED" : "VIEW-EXCLUDED"));
                     Blocked = true;
                   }
                 continue;
@@ -1172,6 +1173,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 else
                   Str.append(VRM.printMapping());
               }
+            else
+              Str.append(Lead + "-- \"" + VC._Name + "\" -- REALIZE-EXCLUDED");
           }
         for (ViewRealizeMapping VRM : V._Realize._Mappings)
           {

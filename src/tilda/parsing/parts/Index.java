@@ -25,6 +25,7 @@ import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.ColumnMode;
 import tilda.enums.OrderType;
+import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.TextUtil;
@@ -79,8 +80,9 @@ public class Index
               {
                 if (C._Mode == ColumnMode.CALCULATED)
                   PS.AddError("Object '" + _Parent.getFullName() + "' is defining an index with column '" + C.getName() + "' which is calculated.");
-                else if (_Unique == true && C._Nullable == true && _Columns.length > 1)
-                  PS.AddError("Object '" + _Parent.getFullName() + "' is using nullable column '" + C.getName() + "' in in a multi-column unique index.");
+// We think it's OK to have indices on null columns. Postgres will be smart about it for example, and SQLServer seems to handle it properly too.                
+//                else if (_Unique == true && C._Nullable == true && _Columns.length > 1)
+//                  PS.AddError("Object '" + _Parent.getFullName() + "' is using nullable column '" + C.getName() + "' in a multi-column unique index.");
                 else
                   {
                     if (_Unique == true)
@@ -162,12 +164,12 @@ public class Index
             Column C = ParentObject.getColumn(Col);
             if (C == null)
               {
-                PS.AddError(What + " with orderby '" + Col + "' which cannot be found.");
+                PS.AddError(What + " with orderby '" + Col + "' which cannot be found."+(ParentObject._TildaType!=TildaType.VIEW?"":" If you do need that column for the orderBy but do not want it in the final view, add it with \"joinOnly\"=true."));
                 continue;
               }
             if (C._Mode == ColumnMode.CALCULATED)
               {
-                PS.AddError(What + " with orderby '" + Col + "' which is calculated.");
+                PS.AddError(What + " with orderby '" + Col + "' which is calculated and therefore, not available at the database level.");
                 continue;
               }
             OrderByObjs.add(C);

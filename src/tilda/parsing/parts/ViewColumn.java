@@ -81,12 +81,13 @@ public class ViewColumn
     public transient Column          _SameAsObj;
     public transient JoinType        _Join;
     public transient AggregateType   _Aggregate;
-    public transient List<Column>    _OrderByObjs   = new ArrayList<Column>();
-    public transient List<OrderType> _OrderByOrders = new ArrayList<OrderType>();
+    public transient List<Column>    _OrderByObjs        = new ArrayList<Column>();
+    public transient List<OrderType> _OrderByOrders      = new ArrayList<OrderType>();
 
-    public transient boolean       _FailedValidation   = false;
+    public transient boolean         _FailedValidation   = false;
 
-    public boolean                 _FrameworkGenerated = false;
+    public transient boolean         _FrameworkGenerated = false;
+    public transient boolean         _TZGenerated        = false;
 
 
     public String getFullName()
@@ -120,7 +121,7 @@ public class ViewColumn
         : _Aggregate.getType(_SameAsObj.getType());
       }
 
-    
+
     public boolean FixSameAs(ParserSession PS)
       {
         if (TextUtil.isNullOrEmpty(_Sameas_DEPRECATED) == false)
@@ -132,14 +133,14 @@ public class ViewColumn
           }
         return true;
       }
-    
+
     public boolean Validate(ParserSession PS, View ParentView)
       {
         int Errs = PS.getErrorCount();
         _ParentView = ParentView;
 
         if (FixSameAs(PS) == false)
-         return false;
+          return false;
 
         // Mandatories
         if (TextUtil.isNullOrEmpty(_SameAs) == true)
@@ -151,6 +152,7 @@ public class ViewColumn
             if (_SameAsObj == null)
               return false;
             _FrameworkGenerated = _SameAsObj._FrameworkManaged;
+            _TZGenerated = _SameAsObj._TZGenerated;
           }
 
         if (TextUtil.isNullOrEmpty(_Name) == true)
@@ -180,19 +182,19 @@ public class ViewColumn
 
         if (TextUtil.isNullOrEmpty(_Description) == true && _SameAsObj != null)
           _Description = _SameAsObj._Description;
-        
-        if (_OrderBy!=null && _OrderBy.length > 0)
+
+        if (_OrderBy != null && _OrderBy.length > 0)
           {
             if (_Aggregate == null)
               PS.AddError("View Column '" + getFullName() + "' defined an orderBy value without specifying an aggregate. OrderBys are meant only for ARRAY, FIRST or LAST aggregates.");
             else if (_Aggregate.isOrderable() == false)
-             PS.AddError("View Column '" + getFullName() + "' defined an orderBy value without specifying an ARRAY/FIRST/LAST aggregate. OrderBys are meant only for ARRAY, FIRST or LAST aggregates.");
+              PS.AddError("View Column '" + getFullName() + "' defined an orderBy value without specifying an ARRAY/FIRST/LAST aggregate. OrderBys are meant only for ARRAY, FIRST or LAST aggregates.");
             else if (_Distinct == true)
               PS.AddError("View Column '" + getFullName() + "' defined an orderBy value in a Distinct aggregate, which is not supported.");
             Set<String> Names = new HashSet<String>();
             Index.processOrderBy(PS, "View Column '" + getFullName() + "' array aggregate", Names, ParentView, _OrderBy, _OrderByObjs, _OrderByOrders);
           }
-        
+
         if (_Exclude.length > 0 || _Block.length > 0)
           if (_SameAs.endsWith("*") == true)
             PS.AddError("View Column '" + getFullName() + "' defined an 'exclude' or 'block' attribute but the column is not a .*.");

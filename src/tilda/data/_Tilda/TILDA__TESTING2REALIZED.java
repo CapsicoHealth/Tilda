@@ -32,7 +32,7 @@ import org.apache.logging.log4j.Logger;
 The Table TILDA.Testing2Realized:<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>Testing2Realized_Factory</B>, <B>Testing2Realized_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for <B>ReadOnly</B> access.</LI>
-<LI>Is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>
+<LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
 <LI>Has the following identity:<UL><LI>Unique Index: refnum</LI>
 </UL></LI>
 </UL>
@@ -505,7 +505,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Aug 13 2018, 03:00:41EDT
+ @generated Aug 14 2018, 23:32:29EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTING2REALIZED implements tilda.interfaces.ReaderObject
@@ -880,7 +880,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setLastUpdated(ZonedDateTime v) throws Exception
+    final void setLastUpdated(ZonedDateTime v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
@@ -915,7 +915,7 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setNullLastUpdated()
+    final void setNullLastUpdated()
      {
        long T0 = System.nanoTime();
        if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.LASTUPDATED._Mask) == true) // already NULL
@@ -3040,6 +3040,7 @@ This is the null setter for:<BR>
       String Str = 
                    "refnum"        + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.REFNUM._Mask) == true ? ": NULL" : ": " +                                   getRefnum     () )
                + "; name"          + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.NAME._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getName       ()))
+               + "; lastUpdated"   + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.LASTUPDATED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getLastUpdated()))
                + "; a1"            + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A1._Mask) == true ? ": NULL" : ": " +                                   getA1         () )
                + "; a3b"           + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A3B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA3b        ()))
                + "; a4"            + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A4._Mask) == true ? ": NULL" : ": " +                                   getA4         () )
@@ -3051,6 +3052,8 @@ This is the null setter for:<BR>
                + "; a8"            + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8._Mask) == true ? ": NULL" : ": " +                                   getA8         () )
                + "; a8b"           + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8B._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA8b        ()))
                + "; a3"            + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A3._Mask) == true ? ": NULL" : ": " +                                   getA3         () )
+               + "; bastille"      + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.BASTILLE._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getBastille   ()))
+               + "; toto"          + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.TOTO._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getToto       ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

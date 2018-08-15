@@ -846,7 +846,7 @@ None
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Aug 13 2018, 03:00:41EDT
+ @generated Aug 14 2018, 23:32:29EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTING2VIEW implements tilda.interfaces.ReaderObject
@@ -4232,6 +4232,7 @@ This is the null setter for:<BR>
       String Str = 
                    "refnum: "                                                                                                +                                   getRefnum     () 
                + "; name: "                                                                                                  + TextUtil.PrintVariableStr        (getName       ())
+               + "; lastUpdated: "                                                                                           + DateTimeUtil.printDateTimeForJSON(getLastUpdated())
                + "; a1"            + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A1._Mask) == true ? ": NULL" : ": " +                                   getA1         () )
                + "; a3b"           + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A3B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA3b        ()))
                + "; a4"            + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A4._Mask) == true ? ": NULL" : ": " +                                   getA4         () )
@@ -4247,6 +4248,8 @@ This is the null setter for:<BR>
                + "; a9c"           + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A9C._Mask) == true ? ": NULL" : ": " +                                   getA9c        () )
                + "; a9d"           + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A9D._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA9d        ()))
                + "; a3"            + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A3._Mask) == true ? ": NULL" : ": " +                                   getA3         () )
+               + "; bastille"      + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.BASTILLE._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getBastille   ()))
+               + "; toto"          + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.TOTO._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getToto       ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

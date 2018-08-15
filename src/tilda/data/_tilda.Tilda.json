@@ -364,19 +364,6 @@
         { "name": "", "mandatories": ["refnum", "name", "description"] }
       ]
     }
-    
-   ,{ "name":"Testing2",
-      "lc": "READONLY",
-      "dbOnly":true,
-      "description":"Testing",
-      "columns":[
-         { "name":"t1"  , "type":"STRING"  , "nullable": false, "size":   2, "description":"State code" }
-        ,{ "name":"t2"  , "type":"STRING"  , "nullable": false, "size":  60, "description":"State name" }
-       ]
-     ,"indices":[ 
-         { "name":"T1"   , "columns":["t1"] }
-       ]
-    }
   ]
     
     
@@ -518,8 +505,15 @@
       ,"columns":[
           { "sameas": "Testing2Realized.refnum"      }
          ,{ "sameas": "Testing2Realized.name"        }
+         ,{ "sameas": "Testing2Realized.a8b*"        }
          ,{ "sameas": "Testing2Realized.lastUpdated" }
         ]
+      ,"realize": {
+          "indices":[ 
+              { "name": "Refnum", "columns":["refnum"] }
+             ,{ "name": "LastUpdated", "orderBy":["lastUpdated desc"] }
+           ]
+        }
      }
    ]
 }

@@ -36,6 +36,7 @@ import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
+import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.parsing.parts.helpers.SameAsHelper;
@@ -44,8 +45,6 @@ import tilda.utils.TextUtil;
 
 public class View extends Base
   {
-
-
     static final Logger                LOG             = LogManager.getLogger(View.class.getName());
 
     /*@formatter:off*/
@@ -72,6 +71,11 @@ public class View extends Base
     public transient Pattern           _FormulasRegEx;
     public transient Map<String, Base> _Dependencies   = new HashMap<String, Base>();
 
+    public View()
+      {
+        super(TildaType.VIEW);
+      }
+    
     @Override
     public Column getColumn(String name)
       {
@@ -108,12 +112,6 @@ public class View extends Base
     public boolean isOCC()
       {
         return _OCC;
-      }
-
-    @Override
-    public String getWhat()
-      {
-        return "View";
       }
 
     public ViewJoin getViewjoin(String ObjectName, String As)
@@ -169,9 +167,10 @@ public class View extends Base
         String LastUpdatedETLColObjName = null;
         String DeletedColObjName = null;
 
-        if (_Name.equals("Testing3View") == true)
-          LOG.debug("xxxxxx");
+//        if (_Name.equals("Testing3View") == true)
+//          LOG.debug("xxxxxx");
         // First, let's construct the actual view and validate its fields
+        boolean err = false;
         for (int i = 0; i < _ViewColumns.size(); ++i)
           {
             ViewColumn VC = _ViewColumns.get(i);
@@ -188,16 +187,21 @@ public class View extends Base
             // dependency (.*) expansion
             if (VC._SameAs != null && VC._SameAs.endsWith("*") == true)
               {
+//                LOG.debug("View "+_Name+": "+TextUtil.Print(getColumnNames()));
                 if (HandleStarExpansion(PS, i, VC) == false)
                   return false;
                 --i;
+//                LOG.debug("View "+_Name+": "+TextUtil.Print(getColumnNames()));
                 continue;
               }
             else if (TextUtil.isNullOrEmpty(VC._Prefix) == false)
               PS.AddError("Column '" + VC.getFullName() + "' defined a prefix but is not a .* column.");
 
             if (VC.Validate(PS, this) == false)
-              return false;
+              {
+                err = true;
+                continue;
+              }
 
             if (VC._JoinOnly == false && VC._FormulaOnly == false && ColumnNames.add(VC.getName().toUpperCase()) == false)
               PS.AddError("Column '" + VC.getFullName() + "' is defined more than once in View '" + getFullName() + "'. Note that column names are checked in a case-insensitive way, so 'id' is the same as 'ID'.");
@@ -225,18 +229,25 @@ public class View extends Base
               }
 //            if (_Name.equals("Testing3View") == true)
 //              LOG.debug("xxx");
+            // For DATETIME columns, we add an extra column to maintain the timezone.  
             if (   VC._SameAsObj._Type == ColumnType.DATETIME // Must be datetime 
                 && Object.isOCCColumn(VC._SameAsObj) == false // Must not be an OCC column 
                 && VC._Aggregate == null // must not be an aggregate column
-                && VC._FrameworkGenerated == false // Not a framework generated asset
-                && VC._SameAsObj._FrameworkManaged == false // the referred column is not framework managed.
+//                && VC._FrameworkGenerated == false // Not a framework generated asset
+//                && VC._SameAsObj._FrameworkManaged == false // the referred column is not framework managed.
                )
               {
                 ViewColumn TZCol = new ViewColumn();
                 TZCol._SameAs = VC._SameAs + "TZ";
-                TZCol._FrameworkGenerated = true;
                 TZCol._Name = VC._Name == null ? null : VC._Name + "TZ";
                 TZCol._As = VC._As;
+                
+                // want to make sure that the TZ col follows directives from source col.
+                TZCol._FrameworkGenerated = true;
+                TZCol._TZGenerated = true;
+                TZCol._FormulaOnly = VC._FormulaOnly;
+                TZCol._JoinOnly = VC._JoinOnly;
+
                 TZCol.Validate(PS, this);
                 _ViewColumns.add(i, TZCol);
                 ++i;
@@ -255,6 +266,9 @@ public class View extends Base
             if (VC._Block.length > 0 && _Formulas.isEmpty() == true && _ImportFormulas.length == 0)
               PS.AddError("View Column '" + VC.getFullName() + "' defined a 'block' attribute but the parent view hasn't defined any formulas.");
           }
+        
+        if (err == true)
+         return false;
 
         if (_TimeSeries != null)
           HandleTimeSeries(PS);
@@ -329,9 +343,11 @@ public class View extends Base
           PS.AddError("View '" + getFullName() + "' is defining a 'countStar' element which is deprecated. Please use a standard column definition with an aggregate of 'COUNT'.");
 
         // gotta construct a shadow Object for code-gen.
-        if (_Name.equals("Testing2View") == true)
-         LOG.debug("zzzzzzz");
+//        LOG.debug("View "+_Name+": "+TextUtil.Print(getColumnNames()));
+//        if (_Name.equals("Testing3View") == true)
+//         LOG.debug("zzzzzzz");
         Object O = MakeObjectProxy(PS);
+//        LOG.debug("Object "+O._Name+": "+TextUtil.Print(O.getColumnNames()));
 
         if (_Realize != null)
           _Realize.Validate(PS, this, new ViewRealizedWrapper(O));
@@ -480,27 +496,40 @@ public class View extends Base
         O._FST = FrameworkSourcedType.VIEW;
         O._Name = _OriginalName;
         O._Description = _Description;
-        O._Queries = _Queries;
+        O.addQueries(_Queries);
         O._OutputMaps = _OutputMaps;
         O._LCStr = ObjectLifecycle.READONLY.name();
         O._OCC = _OCC;
 
+//        if (_Name.equals("PatientScoreView") == true)
+//          LOG.debug("zzzzzz");
 
-        LOG.debug(getFullName()+": "+TextUtil.Print(getColumnNames()));
+//        LOG.debug(getFullName()+": "+TextUtil.Print(getColumnNames()));
         int Counter = -1;
         for (ViewColumn VC : _ViewColumns)
           {
+//            if (VC._Name.equals("scoreNameEnumValue") == true)
+//              LOG.debug("zzzzzzzz");
             // Skip intermediary pivot-making columns (pivot columns and aggregates) so we capture only the "grouped-by" columns
             if (_Pivots.isEmpty() == false && (isPivotColumn(VC) == true || VC._Aggregate != null))
               break;
-//            LOG.debug(VC._Name+": isOCCGenerated="+(VC._SameAsObj == null ? "false":VC._SameAsObj.isOCCGenerated())+"; _FrameworkGenerated="+VC._FrameworkGenerated+"; _JoinOnly="+VC._JoinOnly+"; _FormulaOnly="+VC._FormulaOnly+";");
-            if (VC != null && (VC._SameAsObj!=null && VC._SameAsObj.isOCCGenerated() == true || VC._FrameworkGenerated == false) && VC._JoinOnly == false && VC._FormulaOnly == false)
+//            LOG.debug(VC._Name+": VC._SameAsObj="+(VC._SameAsObj != null ? VC._SameAsObj.getFullName():"NULL")+"; isOCCGenerated="+(VC._SameAsObj == null ? "false":VC._SameAsObj.isOCCGenerated())+"; _FrameworkGenerated="+VC._FrameworkGenerated+"; _JoinOnly="+VC._JoinOnly+"; _FormulaOnly="+VC._FormulaOnly+";");
+            if (    VC != null 
+                && (VC._SameAsObj!=null && VC._SameAsObj.isOCCGenerated() == true || VC._TZGenerated == false)  // either an OC column or not a TZ column
+                && VC._JoinOnly == false  // not join only
+                && VC._FormulaOnly == false // not formula
+                && (_TimeSeries == null || VC._Name.equals(_TimeSeries._Name) == false) // not time series
+               )
               {
+//                LOG.debug("     --> "+VC._Name +" SELECTED ");
                 O._Columns.add(new ViewColumnWrapper(VC._SameAsObj, VC, ++Counter));
               }
+//            else
+//              LOG.debug("     --> "+VC._Name +" IGNORED ");
+              
           }
-        LOG.debug(O._Name+": "+TextUtil.Print(O.getColumnNames()));
-        Counter = Counter;
+//        LOG.debug(O._Name+": "+TextUtil.Print(O.getColumnNames()));
+//        Counter = Counter;
         for (ViewPivot P : _Pivots)
           {
             if (P._Values == null || P._Values.length == 0)
@@ -699,6 +728,7 @@ public class View extends Base
             NewVC._SameAs = col.getFullName();
             NewVC._As = VC._As;
             NewVC._Name = Prefix + col.getName();
+            NewVC._TZGenerated = col._TZGenerated;
             _ViewColumns.add(i + j, NewVC);
             ++j;
           }
@@ -721,11 +751,12 @@ public class View extends Base
             if (col._Name.startsWith(startingWith) == false)
               continue;
             ViewColumn NewVC = new ViewColumn();
-            LOG.debug(col._Name);
+//            LOG.debug(col._Name);
             NewVC._SameAs = col.getFullName();
             NewVC._As = VC._As;
             NewVC._Name = Prefix + col._Name;
             NewVC._FrameworkGenerated = col._FrameworkGenerated;
+            NewVC._TZGenerated = col._TZGenerated;
             if (TextUtil.FindStarElement(VC._Block, col._Name, false, 0) != -1)
               NewVC._FormulaOnly = true;
             _ViewColumns.add(i + j, NewVC);

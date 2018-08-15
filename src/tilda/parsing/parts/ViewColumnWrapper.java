@@ -29,10 +29,11 @@ public class ViewColumnWrapper extends Column
 
     public ViewColumnWrapper(Column SameAsCol, ViewColumn VCol, int SequenceOrder)
       {
-        super(SameAsCol._Name, VCol._SameAs, TextUtil.isNullOrEmpty(VCol._Description) == false ? VCol._Description : SameAsCol._Description);
+        super(VCol._Name, VCol._SameAs, TextUtil.isNullOrEmpty(VCol._Description) == false ? VCol._Description : SameAsCol._Description);
         _SequenceOrder = SequenceOrder;
         _Invariant = SameAsCol._Invariant;
         _FrameworkManaged = SameAsCol._FrameworkManaged;
+        _TZGenerated = SameAsCol._TZGenerated;
         if (VCol._UseMapper == true && SameAsCol._Mapper != null)
           _Mapper = new ColumnMapper(SameAsCol._Mapper._SrcColumns, SameAsCol._Mapper._DestObject, SameAsCol._Mapper._Name, SameAsCol._Mapper._Group, SameAsCol._Mapper._Multi);
         if (VCol._UseEnum == true && SameAsCol._Enum != null)

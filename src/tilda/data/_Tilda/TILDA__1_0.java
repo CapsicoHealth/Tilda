@@ -78,6 +78,7 @@ public final class TILDA__1_0
       tilda.data._Tilda.TILDA__TESTING2VIEW_Factory.initObject(C);
       tilda.data._Tilda.TILDA__TESTING2REALIZED_Factory.initObject(C);
       tilda.data._Tilda.TILDA__TESTING3VIEW_Factory.initObject(C);
+      tilda.data._Tilda.TILDA__TESTING3REALIZED_Factory.initObject(C);
     }
 
  }
