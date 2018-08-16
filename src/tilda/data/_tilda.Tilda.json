@@ -515,5 +515,33 @@
            ]
         }
      }
+/*
+    ,{ "name": "Testing4View"
+      ,"description": "A test view to test .* and exclude and block."
+      ,"columns":[
+          { "sameas": "Testing2view.*"
+           ,"block":["a3"]   
+          }
+        ]
+      ,"formulaColumns":[
+          { "name": "a3"
+           ,"type": "BOOLEAN"
+           ,"formula":[ 
+               "NOT a3 OR A3"
+             ]
+           ,"title": "Always True"
+           ,"description":[
+               "Blah..."
+             ]
+          }
+        ]
+      ,"realize": {
+          "indices":[ 
+              { "name": "Refnum", "columns":["refnum"] }
+             ,{ "name": "LastUpdated", "orderBy":["lastUpdated desc"] }
+           ]
+        }
+     }
+ */
    ]
 }

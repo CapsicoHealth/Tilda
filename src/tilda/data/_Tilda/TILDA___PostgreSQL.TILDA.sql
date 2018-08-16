@@ -800,32 +800,32 @@ COMMENT ON COLUMN TILDA.TestingView."a6Last" IS E'The blah';
 
 create or replace view TILDA.Testing2View as 
 select 
-"refnum"
-     , "name"
-     , "lastUpdated"
-     , "a1"
+"refnum" -- COLUMN
+     , "name" -- COLUMN
+     , "lastUpdated" -- COLUMN
+     , "a1" -- COLUMN
 --     "a3"  BLOCKED
-     , "a3b"
-     , "a4"
-     , "a4b"
-     , "a5"
-     , "a5b"
+     , "a3b" -- COLUMN
+     , "a4" -- COLUMN
+     , "a4b" -- COLUMN
+     , "a5" -- COLUMN
+     , "a5b" -- COLUMN
 --     "a6"  BLOCKED
 --     "a6b"  BLOCKED
 --     "a6c"  BLOCKED
 --     "a6dTZ"  BLOCKED
 --     "a6d"  BLOCKED
-     , "a7"
-     , "a7b"
-     , "a8"
-     , "a8bTZ"
-     , "a8b"
-     , "a9TZ"
-     , "a9"
-     , "a9bTZ"
-     , "a9b"
-     , "a9c"
-     , "a9d"
+     , "a7" -- COLUMN
+     , "a7b" -- COLUMN
+     , "a8" -- COLUMN
+     , "a8bTZ" -- COLUMN
+     , "a8b" -- COLUMN
+     , "a9TZ" -- COLUMN
+     , "a9" -- COLUMN
+     , "a9bTZ" -- COLUMN
+     , "a9b" -- COLUMN
+     , "a9c" -- COLUMN
+     , "a9d" -- COLUMN
      -- Blah...
      , (NOT "a3")::boolean as "a3"
      -- Blah...
@@ -864,7 +864,7 @@ select TILDA.Testing."refnum" as "refnum" -- The primary key for this record
   from TILDA.Testing
  where (TILDA.Testing."deleted" is null)
 
-      ) as T
+      ) as T;
 -- Realized as "refnum" -- COLUMN ,"name" -- COLUMN ,"lastUpdated" -- COLUMN -- "created" -- VIEW-EXCLUDED ,"a1" -- COLUMN -- "a3" -- BLOCKED ,"a3b" -- COLUMN ,"a4" -- COLUMN ,"a4b" -- COLUMN ,"a5" -- COLUMN ,"a5b" -- COLUMN -- "a6" -- BLOCKED -- "a6b" -- BLOCKED -- "a6c" -- BLOCKED -- "a6dTZ" -- BLOCKED -- "a6d" -- BLOCKED ,"a7" -- COLUMN ,"a7b" -- COLUMN ,"a8" -- COLUMN ,"a8bTZ" -- COLUMN ,"a8b" -- COLUMN -- "a9TZ" -- REALIZE-EXCLUDED -- "a9" -- REALIZE-EXCLUDED -- "a9bTZ" -- REALIZE-EXCLUDED -- "a9b" -- REALIZE-EXCLUDED -- "a9c" -- REALIZE-EXCLUDED -- "a9d" -- REALIZE-EXCLUDED ,"a3" -- FORMULA ,"bastille" -- FORMULA ,"toto" -- FORMULA
 ;
 
@@ -872,7 +872,8 @@ DROP FUNCTION IF EXISTS TILDA.Refill_Testing2Realized();
 CREATE OR REPLACE FUNCTION TILDA.Refill_Testing2Realized() RETURNS boolean AS $$
 BEGIN
   TRUNCATE TILDA.Testing2Realized;
-  INSERT INTO TILDA.Testing2Realized SELECT "refnum" -- COLUMN
+  INSERT INTO TILDA.Testing2Realized ("refnum", "name", "lastUpdated", "a1", "a3b", "a4", "a4b", "a5", "a5b", "a7", "a7b", "a8", "a8bTZ", "a8b", "a3", "bastille", "toto")
+     SELECT "refnum" -- COLUMN
                                                ,"name" -- COLUMN
                                                ,"lastUpdated" -- COLUMN
                                                -- "created" -- VIEW-EXCLUDED
@@ -912,7 +913,7 @@ END; $$
 LANGUAGE PLPGSQL;
 
 -- SELECT TILDA.Refill_Testing2Realized();-- !!! THIS MAY TAKE SEVERAL MINUTES !!! --
-COMMENT ON VIEW TILDA.Testing2View IS E'create or replace view TILDA.Testing2View as \nselect \n"refnum"\n     , "name"\n     , "lastUpdated"\n     , "a1"\n--     "a3"  BLOCKED\n     , "a3b"\n     , "a4"\n     , "a4b"\n     , "a5"\n     , "a5b"\n--     "a6"  BLOCKED\n--     "a6b"  BLOCKED\n--     "a6c"  BLOCKED\n--     "a6dTZ"  BLOCKED\n--     "a6d"  BLOCKED\n     , "a7"\n     , "a7b"\n     , "a8"\n     , "a8bTZ"\n     , "a8b"\n     , "a9TZ"\n     , "a9"\n     , "a9bTZ"\n     , "a9b"\n     , "a9c"\n     , "a9d"\n     -- Blah...\n     , (NOT "a3")::boolean as "a3"\n     -- Blah...\n     , (''1789-07-14'')::timestamptz as "bastille"\n     -- Blah...\n     , (''2018-08-10'')::timestamptz as "toto"\n\n from (\n-- ''A test view to test .* and exclude and block.''\nselect TILDA.Testing."refnum" as "refnum" -- The primary key for this record\n     , TILDA.Testing."name" as "name" -- Medical system unique enterprise id\n     , TILDA.Testing."lastUpdated" as "lastUpdated" -- The timestamp for when the record was last updated.\n     , TILDA.Testing."a1" as "a1" -- The blah\n     , TILDA.Testing."a3" as "a3" -- The blah -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing."a3b" as "a3b" -- The blah\n     , TILDA.Testing."a4" as "a4" -- The blah\n     , TILDA.Testing."a4b" as "a4b" -- The blah\n     , TILDA.Testing."a5" as "a5" -- The blah\n     , TILDA.Testing."a5b" as "a5b" -- The blah\n     , TILDA.Testing."a6" as "a6" -- The blah -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing."a6b" as "a6b" -- The blah -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing."a6c" as "a6c" -- The blah -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , trim(TILDA.Testing."a6dTZ") as "a6dTZ" -- Generated helper column to hold the time zone ID for ''a6d''. -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing."a6d" as "a6d" -- The blah -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing."a7" as "a7" -- The blah\n     , TILDA.Testing."a7b" as "a7b" -- The blah\n     , TILDA.Testing."a8" as "a8" -- The blah\n     , trim(TILDA.Testing."a8bTZ") as "a8bTZ" -- Generated helper column to hold the time zone ID for ''a8b''.\n     , TILDA.Testing."a8b" as "a8b" -- The blah\n     , trim(TILDA.Testing."a9TZ") as "a9TZ" -- Generated helper column to hold the time zone ID for ''a9''.\n     , TILDA.Testing."a9" as "a9" -- The blah\n     , TILDA.Testing."a9bTZ" as "a9bTZ" -- Generated helper column to hold the time zone ID for ''a9b''.\n     , TILDA.Testing."a9b" as "a9b" -- The blah\n     , TILDA.Testing."a9c" as "a9c" -- The blah\n     , TILDA.Testing."a9d" as "a9d" -- The blah\n  from TILDA.Testing\n where (TILDA.Testing."deleted" is null)\n\n      ) as T\n-- Realized as "refnum" -- COLUMN ,"name" -- COLUMN ,"lastUpdated" -- COLUMN -- "created" -- VIEW-EXCLUDED ,"a1" -- COLUMN -- "a3" -- BLOCKED ,"a3b" -- COLUMN ,"a4" -- COLUMN ,"a4b" -- COLUMN ,"a5" -- COLUMN ,"a5b" -- COLUMN -- "a6" -- BLOCKED -- "a6b" -- BLOCKED -- "a6c" -- BLOCKED -- "a6dTZ" -- BLOCKED -- "a6d" -- BLOCKED ,"a7" -- COLUMN ,"a7b" -- COLUMN ,"a8" -- COLUMN ,"a8bTZ" -- COLUMN ,"a8b" -- COLUMN -- "a9TZ" -- REALIZE-EXCLUDED -- "a9" -- REALIZE-EXCLUDED -- "a9bTZ" -- REALIZE-EXCLUDED -- "a9b" -- REALIZE-EXCLUDED -- "a9c" -- REALIZE-EXCLUDED -- "a9d" -- REALIZE-EXCLUDED ,"a3" -- FORMULA ,"bastille" -- FORMULA ,"toto" -- FORMULA\n;\n\nDROP FUNCTION IF EXISTS TILDA.Refill_Testing2Realized();\nCREATE OR REPLACE FUNCTION TILDA.Refill_Testing2Realized() RETURNS boolean AS $$\nBEGIN\n  TRUNCATE TILDA.Testing2Realized;\n  INSERT INTO TILDA.Testing2Realized SELECT "refnum" -- COLUMN\n                                               ,"name" -- COLUMN\n                                               ,"lastUpdated" -- COLUMN\n                                               -- "created" -- VIEW-EXCLUDED\n                                               ,"a1" -- COLUMN\n                                               -- "a3" -- BLOCKED\n                                               ,"a3b" -- COLUMN\n                                               ,"a4" -- COLUMN\n                                               ,"a4b" -- COLUMN\n                                               ,"a5" -- COLUMN\n                                               ,"a5b" -- COLUMN\n                                               -- "a6" -- BLOCKED\n                                               -- "a6b" -- BLOCKED\n                                               -- "a6c" -- BLOCKED\n                                               -- "a6dTZ" -- BLOCKED\n                                               -- "a6d" -- BLOCKED\n                                               ,"a7" -- COLUMN\n                                               ,"a7b" -- COLUMN\n                                               ,"a8" -- COLUMN\n                                               ,"a8bTZ" -- COLUMN\n                                               ,"a8b" -- COLUMN\n                                               -- "a9TZ" -- REALIZE-EXCLUDED\n                                               -- "a9" -- REALIZE-EXCLUDED\n                                               -- "a9bTZ" -- REALIZE-EXCLUDED\n                                               -- "a9b" -- REALIZE-EXCLUDED\n                                               -- "a9c" -- REALIZE-EXCLUDED\n                                               -- "a9d" -- REALIZE-EXCLUDED\n                                               ,"a3" -- FORMULA\n                                               ,"bastille" -- FORMULA\n                                               ,"toto" -- FORMULA\n                                           FROM TILDA.Testing2View;\n  GRANT ALL ON TILDA.Testing2Realized TO tilda_app;\n  GRANT SELECT ON TILDA.Testing2Realized TO tilda_read_only;\n  GRANT SELECT ON TILDA.Testing2Realized TO tilda_reporting;\n  ANALYZE TILDA.Testing2Realized;\n  return true;\nEND; $$\nLANGUAGE PLPGSQL;\n\n-- SELECT TILDA.Refill_Testing2Realized();-- !!! THIS MAY TAKE SEVERAL MINUTES !!! --';
+COMMENT ON VIEW TILDA.Testing2View IS E'create or replace view TILDA.Testing2View as \nselect \n"refnum" -- COLUMN\n     , "name" -- COLUMN\n     , "lastUpdated" -- COLUMN\n     , "a1" -- COLUMN\n--     "a3"  BLOCKED\n     , "a3b" -- COLUMN\n     , "a4" -- COLUMN\n     , "a4b" -- COLUMN\n     , "a5" -- COLUMN\n     , "a5b" -- COLUMN\n--     "a6"  BLOCKED\n--     "a6b"  BLOCKED\n--     "a6c"  BLOCKED\n--     "a6dTZ"  BLOCKED\n--     "a6d"  BLOCKED\n     , "a7" -- COLUMN\n     , "a7b" -- COLUMN\n     , "a8" -- COLUMN\n     , "a8bTZ" -- COLUMN\n     , "a8b" -- COLUMN\n     , "a9TZ" -- COLUMN\n     , "a9" -- COLUMN\n     , "a9bTZ" -- COLUMN\n     , "a9b" -- COLUMN\n     , "a9c" -- COLUMN\n     , "a9d" -- COLUMN\n     -- Blah...\n     , (NOT "a3")::boolean as "a3"\n     -- Blah...\n     , (''1789-07-14'')::timestamptz as "bastille"\n     -- Blah...\n     , (''2018-08-10'')::timestamptz as "toto"\n\n from (\n-- ''A test view to test .* and exclude and block.''\nselect TILDA.Testing."refnum" as "refnum" -- The primary key for this record\n     , TILDA.Testing."name" as "name" -- Medical system unique enterprise id\n     , TILDA.Testing."lastUpdated" as "lastUpdated" -- The timestamp for when the record was last updated.\n     , TILDA.Testing."a1" as "a1" -- The blah\n     , TILDA.Testing."a3" as "a3" -- The blah -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing."a3b" as "a3b" -- The blah\n     , TILDA.Testing."a4" as "a4" -- The blah\n     , TILDA.Testing."a4b" as "a4b" -- The blah\n     , TILDA.Testing."a5" as "a5" -- The blah\n     , TILDA.Testing."a5b" as "a5b" -- The blah\n     , TILDA.Testing."a6" as "a6" -- The blah -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing."a6b" as "a6b" -- The blah -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing."a6c" as "a6c" -- The blah -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , trim(TILDA.Testing."a6dTZ") as "a6dTZ" -- Generated helper column to hold the time zone ID for ''a6d''. -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing."a6d" as "a6d" -- The blah -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing."a7" as "a7" -- The blah\n     , TILDA.Testing."a7b" as "a7b" -- The blah\n     , TILDA.Testing."a8" as "a8" -- The blah\n     , trim(TILDA.Testing."a8bTZ") as "a8bTZ" -- Generated helper column to hold the time zone ID for ''a8b''.\n     , TILDA.Testing."a8b" as "a8b" -- The blah\n     , trim(TILDA.Testing."a9TZ") as "a9TZ" -- Generated helper column to hold the time zone ID for ''a9''.\n     , TILDA.Testing."a9" as "a9" -- The blah\n     , TILDA.Testing."a9bTZ" as "a9bTZ" -- Generated helper column to hold the time zone ID for ''a9b''.\n     , TILDA.Testing."a9b" as "a9b" -- The blah\n     , TILDA.Testing."a9c" as "a9c" -- The blah\n     , TILDA.Testing."a9d" as "a9d" -- The blah\n  from TILDA.Testing\n where (TILDA.Testing."deleted" is null)\n\n      ) as T;\n-- Realized as "refnum" -- COLUMN ,"name" -- COLUMN ,"lastUpdated" -- COLUMN -- "created" -- VIEW-EXCLUDED ,"a1" -- COLUMN -- "a3" -- BLOCKED ,"a3b" -- COLUMN ,"a4" -- COLUMN ,"a4b" -- COLUMN ,"a5" -- COLUMN ,"a5b" -- COLUMN -- "a6" -- BLOCKED -- "a6b" -- BLOCKED -- "a6c" -- BLOCKED -- "a6dTZ" -- BLOCKED -- "a6d" -- BLOCKED ,"a7" -- COLUMN ,"a7b" -- COLUMN ,"a8" -- COLUMN ,"a8bTZ" -- COLUMN ,"a8b" -- COLUMN -- "a9TZ" -- REALIZE-EXCLUDED -- "a9" -- REALIZE-EXCLUDED -- "a9bTZ" -- REALIZE-EXCLUDED -- "a9b" -- REALIZE-EXCLUDED -- "a9c" -- REALIZE-EXCLUDED -- "a9d" -- REALIZE-EXCLUDED ,"a3" -- FORMULA ,"bastille" -- FORMULA ,"toto" -- FORMULA\n;\n\nDROP FUNCTION IF EXISTS TILDA.Refill_Testing2Realized();\nCREATE OR REPLACE FUNCTION TILDA.Refill_Testing2Realized() RETURNS boolean AS $$\nBEGIN\n  TRUNCATE TILDA.Testing2Realized;\n  INSERT INTO TILDA.Testing2Realized ("refnum", "name", "lastUpdated", "a1", "a3b", "a4", "a4b", "a5", "a5b", "a7", "a7b", "a8", "a8bTZ", "a8b", "a3", "bastille", "toto")\n     SELECT "refnum" -- COLUMN\n                                               ,"name" -- COLUMN\n                                               ,"lastUpdated" -- COLUMN\n                                               -- "created" -- VIEW-EXCLUDED\n                                               ,"a1" -- COLUMN\n                                               -- "a3" -- BLOCKED\n                                               ,"a3b" -- COLUMN\n                                               ,"a4" -- COLUMN\n                                               ,"a4b" -- COLUMN\n                                               ,"a5" -- COLUMN\n                                               ,"a5b" -- COLUMN\n                                               -- "a6" -- BLOCKED\n                                               -- "a6b" -- BLOCKED\n                                               -- "a6c" -- BLOCKED\n                                               -- "a6dTZ" -- BLOCKED\n                                               -- "a6d" -- BLOCKED\n                                               ,"a7" -- COLUMN\n                                               ,"a7b" -- COLUMN\n                                               ,"a8" -- COLUMN\n                                               ,"a8bTZ" -- COLUMN\n                                               ,"a8b" -- COLUMN\n                                               -- "a9TZ" -- REALIZE-EXCLUDED\n                                               -- "a9" -- REALIZE-EXCLUDED\n                                               -- "a9bTZ" -- REALIZE-EXCLUDED\n                                               -- "a9b" -- REALIZE-EXCLUDED\n                                               -- "a9c" -- REALIZE-EXCLUDED\n                                               -- "a9d" -- REALIZE-EXCLUDED\n                                               ,"a3" -- FORMULA\n                                               ,"bastille" -- FORMULA\n                                               ,"toto" -- FORMULA\n                                           FROM TILDA.Testing2View;\n  GRANT ALL ON TILDA.Testing2Realized TO tilda_app;\n  GRANT SELECT ON TILDA.Testing2Realized TO tilda_read_only;\n  GRANT SELECT ON TILDA.Testing2Realized TO tilda_reporting;\n  ANALYZE TILDA.Testing2Realized;\n  return true;\nEND; $$\nLANGUAGE PLPGSQL;\n\n-- SELECT TILDA.Refill_Testing2Realized();-- !!! THIS MAY TAKE SEVERAL MINUTES !!! --';
 
 COMMENT ON COLUMN TILDA.Testing2View."refnum" IS E'The primary key for this record';
 COMMENT ON COLUMN TILDA.Testing2View."name" IS E'Medical system unique enterprise id';
@@ -1012,7 +1013,8 @@ DROP FUNCTION IF EXISTS TILDA.Refill_Testing3Realized();
 CREATE OR REPLACE FUNCTION TILDA.Refill_Testing3Realized() RETURNS boolean AS $$
 BEGIN
   TRUNCATE TILDA.Testing3Realized;
-  INSERT INTO TILDA.Testing3Realized SELECT "refnum" -- COLUMN
+  INSERT INTO TILDA.Testing3Realized ("refnum", "name", "a8bTZ", "a8b", "lastUpdated")
+     SELECT "refnum" -- COLUMN
                                                ,"name" -- COLUMN
                                                ,"a8bTZ" -- COLUMN
                                                ,"a8b" -- COLUMN
@@ -1027,7 +1029,7 @@ END; $$
 LANGUAGE PLPGSQL;
 
 -- SELECT TILDA.Refill_Testing3Realized();-- !!! THIS MAY TAKE SEVERAL MINUTES !!! --
-COMMENT ON VIEW TILDA.Testing3View IS E'create or replace view TILDA.Testing3View as \n-- ''A test view to test .* and exclude and block.''\nselect TILDA.Testing2Realized."refnum" as "refnum" -- The primary key for this record\n     , TILDA.Testing2Realized."name" as "name" -- Medical system unique enterprise id\n     , trim(TILDA.Testing2Realized."a8bTZ") as "a8bTZ" -- Generated helper column to hold the time zone ID for ''a8b''.\n     , TILDA.Testing2Realized."a8b" as "a8b" -- The blah\n     , TILDA.Testing2Realized."lastUpdated" as "lastUpdated" -- The timestamp for when the record was last updated.\n  from TILDA.Testing2Realized\n;\n\nDROP FUNCTION IF EXISTS TILDA.Refill_Testing3Realized();\nCREATE OR REPLACE FUNCTION TILDA.Refill_Testing3Realized() RETURNS boolean AS $$\nBEGIN\n  TRUNCATE TILDA.Testing3Realized;\n  INSERT INTO TILDA.Testing3Realized SELECT "refnum" -- COLUMN\n                                               ,"name" -- COLUMN\n                                               ,"a8bTZ" -- COLUMN\n                                               ,"a8b" -- COLUMN\n                                               ,"lastUpdated" -- COLUMN\n                                           FROM TILDA.Testing3View;\n  GRANT ALL ON TILDA.Testing3Realized TO tilda_app;\n  GRANT SELECT ON TILDA.Testing3Realized TO tilda_read_only;\n  GRANT SELECT ON TILDA.Testing3Realized TO tilda_reporting;\n  ANALYZE TILDA.Testing3Realized;\n  return true;\nEND; $$\nLANGUAGE PLPGSQL;\n\n-- SELECT TILDA.Refill_Testing3Realized();-- !!! THIS MAY TAKE SEVERAL MINUTES !!! --';
+COMMENT ON VIEW TILDA.Testing3View IS E'create or replace view TILDA.Testing3View as \n-- ''A test view to test .* and exclude and block.''\nselect TILDA.Testing2Realized."refnum" as "refnum" -- The primary key for this record\n     , TILDA.Testing2Realized."name" as "name" -- Medical system unique enterprise id\n     , trim(TILDA.Testing2Realized."a8bTZ") as "a8bTZ" -- Generated helper column to hold the time zone ID for ''a8b''.\n     , TILDA.Testing2Realized."a8b" as "a8b" -- The blah\n     , TILDA.Testing2Realized."lastUpdated" as "lastUpdated" -- The timestamp for when the record was last updated.\n  from TILDA.Testing2Realized\n;\n\nDROP FUNCTION IF EXISTS TILDA.Refill_Testing3Realized();\nCREATE OR REPLACE FUNCTION TILDA.Refill_Testing3Realized() RETURNS boolean AS $$\nBEGIN\n  TRUNCATE TILDA.Testing3Realized;\n  INSERT INTO TILDA.Testing3Realized ("refnum", "name", "a8bTZ", "a8b", "lastUpdated")\n     SELECT "refnum" -- COLUMN\n                                               ,"name" -- COLUMN\n                                               ,"a8bTZ" -- COLUMN\n                                               ,"a8b" -- COLUMN\n                                               ,"lastUpdated" -- COLUMN\n                                           FROM TILDA.Testing3View;\n  GRANT ALL ON TILDA.Testing3Realized TO tilda_app;\n  GRANT SELECT ON TILDA.Testing3Realized TO tilda_read_only;\n  GRANT SELECT ON TILDA.Testing3Realized TO tilda_reporting;\n  ANALYZE TILDA.Testing3Realized;\n  return true;\nEND; $$\nLANGUAGE PLPGSQL;\n\n-- SELECT TILDA.Refill_Testing3Realized();-- !!! THIS MAY TAKE SEVERAL MINUTES !!! --';
 
 COMMENT ON COLUMN TILDA.Testing3View."refnum" IS E'The primary key for this record';
 COMMENT ON COLUMN TILDA.Testing3View."name" IS E'Medical system unique enterprise id';

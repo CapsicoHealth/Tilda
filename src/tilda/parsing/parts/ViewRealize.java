@@ -39,7 +39,9 @@ public class ViewRealize
     @SerializedName("indices"    ) public List<Index> _Indices    = new ArrayList<Index>();
     @SerializedName("subRealized") public String[]    _SubRealized= new String[] { };
     
-    @SerializedName("excludes") public String[]       _Excludes   = new String[] { };
+    // It was "exclude" for view columns, so why was it ever "excludes" here? Not consistent.
+    @SerializedName("excludes") public String[]       _Excludes_DEPRECATED   = new String[] { };
+    @SerializedName("exclude" ) public String[]       _Exclude       = new String[] { };
     @SerializedName("mappings") public List<ViewRealizeMapping> _Mappings = new ArrayList<>();
     /*@formatter:on*/
 
@@ -58,6 +60,10 @@ public class ViewRealize
         int Errs = PS.getErrorCount();
         _ParentView = ParentView;
         _ParentRealized = ParentRealized;
+        
+        // Taking care of deprecated stuff...
+        if (_Exclude.length == 0)
+          _Exclude = _Excludes_DEPRECATED;
 
         Set<String> Names = new HashSet<String>();
         for (Index I : _Indices)
@@ -75,6 +81,8 @@ public class ViewRealize
               VRM.Validate(PS, ParentView);
               if (Names.add(VRM._Name) == false)
                 PS.AddError("Mapping '" + VRM._Name + "' is duplicated in the realize section for view '" + ParentView.getFullName() + "'.");
+              if (ParentView.getColumn(VRM._Name) == null && ParentView.getFormula(VRM._Name) == null)
+                PS.AddError("Mapping '" + VRM._Name + "' is defined without a matching column/formula in the main view '" + ParentView.getFullName() + "'.");
             }
         
         Object O = new Object();
@@ -90,7 +98,7 @@ public class ViewRealize
 //        LOG.debug(ParentRealized._O.getFullName()+": "+TextUtil.Print(ParentRealized._O.getColumnNames()));
         for (Column C : ParentRealized._O._Columns)
           {
-            if (TextUtil.FindStarElement(_Excludes, C._Name, false, 0) == -1)
+            if (TextUtil.FindStarElement(_Exclude, C._Name, false, 0) == -1)
               {
                 if (C.isOCCGenerated() == true || C._SameAsObj != null && C._SameAsObj.isOCCGenerated() == true)
                  OCC = true;

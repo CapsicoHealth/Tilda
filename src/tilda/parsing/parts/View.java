@@ -626,7 +626,8 @@ public class View extends Base
               Str.append("|");
             Str.append(F._Name);
           }
-        _FormulasRegEx = Pattern.compile("\\b(" + Str.toString() + ")\\b");
+
+        _FormulasRegEx = Str.length()==0?null:Pattern.compile("\\b(" + Str.toString() + ")\\b");
 
         for (Formula F : _Formulas)
           {
@@ -688,6 +689,8 @@ public class View extends Base
 
     private boolean checkInfiniteRecursion(Formula F, List<String> Path)
       {
+        if (F.getParentView()._FormulasRegEx == null)
+         return true;
         if (Path.contains(F._Name) == true)
           {
             Path.add(F._Name);
