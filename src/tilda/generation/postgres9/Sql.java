@@ -681,8 +681,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
             OutFinal.append("DROP FUNCTION IF EXISTS " + V._ParentSchema._Name + ".Refill_" + TName + "();\n")
             .append("CREATE OR REPLACE FUNCTION " + V._ParentSchema._Name + ".Refill_" + TName + "() RETURNS boolean AS $$\n")
             .append("BEGIN\n")
-            .append("  DROP TABLE IF EXISTS " + RName + ";\n")
-            .append("  CREATE TABLE " + RName + " AS ");
+//            .append("  DROP TABLE IF EXISTS " + RName + ";\n")
+            .append("  TRUNCATE " + RName + ";\n")
+            .append("  INSERT INTO " + RName+" ");
 
             if (V._Realize._SubRealized.length != 0)
               {
@@ -712,9 +713,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
             else
               OutFinal.append(" FROM " + V._ParentSchema._Name + "." + V._Name + ";\n");
 
-            for (Index I : V._Realize._Indices)
-              if (I != null)
-                genIndex(OutFinal, I);
+//            for (Index I : V._Realize._Indices)
+//              if (I != null)
+//                genIndex(OutFinal, I);
 
             OutFinal.append("  GRANT ALL ON ").append(RName).append(" TO tilda_app;\n");
             OutFinal.append("  GRANT SELECT ON ").append(RName).append(" TO tilda_read_only;\n");
