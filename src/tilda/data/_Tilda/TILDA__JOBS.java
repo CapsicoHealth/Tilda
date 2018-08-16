@@ -387,7 +387,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Aug 8 2018, 22:43:58EDT
+ @generated Aug 16 2018, 07:41:40EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__JOBS implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -2949,6 +2949,9 @@ This is the hasChanged for:<BR>
                + "; TotalRecords"   + (__Nulls.intersects(TILDA__JOBS_Factory.COLS.TOTALRECORDS._Mask) == true ? ": NULL" : ": " +                                   getTotalRecords() )
                + "; Status"         + (__Nulls.intersects(TILDA__JOBS_Factory.COLS.STATUS._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getStatus      ()))
                + "; Error"          + (__Nulls.intersects(TILDA__JOBS_Factory.COLS.ERROR._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getError       ()))
+               + "; created: "                                                                                         + DateTimeUtil.printDateTimeForJSON(getCreated     ())
+               + "; lastUpdated: "                                                                                     + DateTimeUtil.printDateTimeForJSON(getLastUpdated ())
+               + "; deleted"        + (__Nulls.intersects(TILDA__JOBS_Factory.COLS.DELETED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted     ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

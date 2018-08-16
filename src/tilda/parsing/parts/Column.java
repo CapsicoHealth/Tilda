@@ -29,6 +29,7 @@ import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.DefaultType;
+import tilda.enums.FrameworkSourcedType;
 import tilda.enums.MultiType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.ProtectionType;
@@ -59,6 +60,7 @@ public class Column extends TypeDef
     /*@formatter:on*/
 
     public transient boolean           _FrameworkManaged  = false;
+    public transient boolean           _TZGenerated       = false;
     public transient AggregateType     _Aggregate         = null;                                        // For view columns really.
     public transient ColumnMode        _Mode;
     public transient ProtectionType    _Protect;
@@ -72,7 +74,6 @@ public class Column extends TypeDef
     public transient ColumnMapper      _MapperDef;
     public transient ColumnValue       _DefaultCreateValue;
     public transient ColumnValue       _DefaultUpdateValue;
-
 
     protected transient int            _SequenceOrder     = -1;
 

@@ -21,6 +21,7 @@ import java.util.List;
 
 import tilda.enums.ColumnMapperMode;
 import tilda.enums.ColumnMode;
+import tilda.enums.FrameworkSourcedType;
 import tilda.enums.MultiType;
 import tilda.enums.ValidationStatus;
 import tilda.parsing.ParserSession;
@@ -41,27 +42,29 @@ public class ColumnMapper
     @SerializedName("multi"     ) public MultiType         _Multi  = MultiType.NONE;
     /*@formatter:on*/
 
-    public transient List<Column> _SrcColumnObjs = new ArrayList<Column>();
-    public transient Object       _DestObjectObj;
-    public transient Column       _ParentColumn ;
-    
-    private transient ValidationStatus _Validation = ValidationStatus.NONE;
-    
+    public transient List<Column>      _SrcColumnObjs = new ArrayList<Column>();
+    public transient Object            _DestObjectObj;
+    public transient Column            _ParentColumn;
+
+    private transient ValidationStatus _Validation    = ValidationStatus.NONE;
+
     public ColumnMapper()
       {
       }
+
     public ColumnMapper(ColumnMapper CM)
       {
         this(CM._SrcColumns, CM._DestObject, CM._Name, CM._Group, CM._Multi);
       }
-    public ColumnMapper(String[] SrcColumns, String DestObject, ColumnMapperMode  Name, ColumnMapperMode  Group, MultiType Multi)
+
+    public ColumnMapper(String[] SrcColumns, String DestObject, ColumnMapperMode Name, ColumnMapperMode Group, MultiType Multi)
       {
         _SrcColumns = SrcColumns;
         _DestObject = DestObject;
-        _Name       = Name      ;
-        _Group      = Group     ;
-        _Multi      = Multi     ;
-     }
+        _Name = Name;
+        _Group = Group;
+        _Multi = Multi;
+      }
 
     public boolean Validate(ParserSession PS, Column ParentColumn)
       {
@@ -72,10 +75,11 @@ public class ColumnMapper
         _Validation = Errs == PS.getErrorCount() ? ValidationStatus.SUCCESS : ValidationStatus.FAIL;
         return _Validation == ValidationStatus.SUCCESS;
       }
+
     private void ValidateBase(ParserSession PS, Column ParentColumn)
       {
         _ParentColumn = ParentColumn;
-        
+
         if (ValidateDestinationObject(PS) == false)
           return;
         if (ValidateSourceColumns(PS) == false)
@@ -83,31 +87,37 @@ public class ColumnMapper
         _SrcColumnObjs.add(_ParentColumn);
 
         if (_Name == ColumnMapperMode.NONE && _Group == ColumnMapperMode.NONE)
-         PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares a mapper where both 'name' and 'group' are set to NONE. Why is a mapper defined then? At least one must not be NONE.");
-        
+          PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares a mapper where both 'name' and 'group' are set to NONE. Why is a mapper defined then? At least one must not be NONE.");
+
         if (ForeignKey.CheckForeignKeyMapping(PS, _ParentColumn._ParentObject, _SrcColumnObjs, _DestObjectObj, "mapper") == false)
           return;
-        
+
         if (_DestObjectObj.getColumn("name") == null && _Name != ColumnMapperMode.NONE)
-         {
-           PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares a mapper for 'name' but the mapper object '"+_DestObjectObj.getFullName()+"' doesn't define a 'name' column.");
-           return;
-         }
+          {
+            PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares a mapper for 'name' but the mapper object '" + _DestObjectObj.getFullName() + "' doesn't define a 'name' column.");
+            return;
+          }
 
         if (_DestObjectObj.getColumn("group") == null && _Group != ColumnMapperMode.NONE)
           {
-            PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares a mapper for 'group' but the mapper object '"+_DestObjectObj.getFullName()+"' doesn't define a 'group' column.");
+            PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares a mapper for 'group' but the mapper object '" + _DestObjectObj.getFullName() + "' doesn't define a 'group' column.");
             return;
           }
-        
+
         if (_Group != ColumnMapperMode.NONE)
           {
-            if (_ParentColumn._ParentObject.getColumn(_ParentColumn.getName()+"MappedGroup") != null)
-             PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares a mapper which automatically adds the column '"+_ParentColumn.getName()+"MappedGroup'. That column has already been defined.");
+            Column C = _ParentColumn._ParentObject.getColumn(_ParentColumn.getName() + "MappedGroup");
+            if (C != null)
+              {
+                // For views and realized tables, it's possible for generated columns to have already been brought in, so no need
+                // to bring them in again.
+                if (C._FrameworkManaged == false) // || _ParentColumn._ParentObject._FST == FrameworkSourcedType.VIEW == false && _ParentColumn._ParentObject._FST == FrameworkSourcedType.REALIZED == false)
+                  PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares a mapper which automatically adds the column '" + _ParentColumn.getName() + "MappedGroup'. That column has already been defined.");
+              }
             else
               {
-                Column Col = new Column(_ParentColumn.getName()+"MappedGroup", null, 0, _ParentColumn._Nullable, _Group == ColumnMapperMode.DB ? ColumnMode.AUTO : ColumnMode.CALCULATED, 
-                                        false, null, "Mapped group for '"+_ParentColumn.getName()+"' through '"+_DestObjectObj.getFullName()+"'.");
+                Column Col = new Column(_ParentColumn.getName() + "MappedGroup", null, 0, _ParentColumn._Nullable, _Group == ColumnMapperMode.DB ? ColumnMode.AUTO : ColumnMode.CALCULATED,
+                false, null, "Mapped group for '" + _ParentColumn.getName() + "' through '" + _DestObjectObj.getFullName() + "'.");
                 Col._SameAs = _DestObjectObj.getColumn("group").getFullName();
                 Col._FrameworkManaged = true;
                 Col._MapperDef = this;
@@ -116,19 +126,25 @@ public class ColumnMapper
           }
         if (_Name != ColumnMapperMode.NONE)
           {
-            if (_ParentColumn._ParentObject.getColumn(_ParentColumn.getName()+"MappedName") != null)
-             PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares a mapper which automatically adds the column '"+_ParentColumn.getName()+"MappedName'. That name clashes with an already defined column.");
+            Column C = _ParentColumn._ParentObject.getColumn(_ParentColumn.getName() + "MappedName");
+            if (C != null)
+              {
+                // For views and realized tables, it's possible for generated columns to hav already been brought in, so no need
+                // to bring them in again.
+                if (C._FrameworkManaged == false) // || _ParentColumn._ParentObject._FST == FrameworkSourcedType.VIEW == false && _ParentColumn._ParentObject._FST == FrameworkSourcedType.REALIZED == false)
+                  PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares a mapper which automatically adds the column '" + _ParentColumn.getName() + "MappedName'. That name clashes with an already defined column.");
+              }
             else
               {
-                Column Col = new Column(_ParentColumn.getName()+"MappedName", null, 0, _ParentColumn._Nullable, _Name == ColumnMapperMode.DB ? ColumnMode.AUTO : ColumnMode.CALCULATED, 
-                                        _ParentColumn._Invariant, null, "Mapped name for '"+_ParentColumn.getName()+"' through '"+_DestObjectObj.getFullName()+"'.");
+                Column Col = new Column(_ParentColumn.getName() + "MappedName", null, 0, _ParentColumn._Nullable, _Name == ColumnMapperMode.DB ? ColumnMode.AUTO : ColumnMode.CALCULATED,
+                _ParentColumn._Invariant, null, "Mapped name for '" + _ParentColumn.getName() + "' through '" + _DestObjectObj.getFullName() + "'.");
                 Col._SameAs = _DestObjectObj.getColumn("name").getFullName();
                 Col._FrameworkManaged = true;
                 Col._MapperDef = this;
                 _ParentColumn._ParentObject.AddColumnAfter(_ParentColumn, Col);
               }
           }
-        
+
       }
 
     private boolean ValidateSourceColumns(ParserSession PS)
@@ -140,7 +156,7 @@ public class ColumnMapper
 
         return true;
       }
-    
+
     private boolean ValidateDestinationObject(ParserSession PS)
       {
         if (TextUtil.isNullOrEmpty(_DestObject) == true)
@@ -148,13 +164,13 @@ public class ColumnMapper
 
         ReferenceHelper R = ReferenceHelper.parseObjectReference(_DestObject, _ParentColumn._ParentObject.getSchema());
         if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true)
-         return PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares mapper with an incorrect syntax for the destination object '" + _DestObject + "'. It should be '((package\\.)?schema\\.)?object'.");
-        
+          return PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares mapper with an incorrect syntax for the destination object '" + _DestObject + "'. It should be '((package\\.)?schema\\.)?object'.");
+
         _DestObjectObj = PS.getObject(R._P, R._S, R._O);
         if (_DestObjectObj == null)
-         return PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares mapper with destination Object '" + _DestObject + "' resolving to '"+R.getFullName()+"' which cannot be found.");
+          return PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares mapper with destination Object '" + _DestObject + "' resolving to '" + R.getFullName() + "' which cannot be found.");
 
         return true;
       }
-    
+
   }

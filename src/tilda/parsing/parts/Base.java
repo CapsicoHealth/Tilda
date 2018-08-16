@@ -27,6 +27,7 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.ObjectLifecycle;
+import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.PaddingTracker;
@@ -45,20 +46,28 @@ public abstract class Base
     @SerializedName("outputMaps" ) public List<OutputMapping>  _OutputMaps = new ArrayList<OutputMapping>();
     /*@formatter:on*/
 
-    public transient Schema               _ParentSchema;
-    public transient PaddingTracker       _PadderColumnNames = new PaddingTracker();
-    public transient String               _OriginalName;
-    public transient String               _BaseClassName;
-    public transient String               _AppDataClassName;
-    public transient String               _AppFactoryClassName;
-    public transient String               _AppJsonClassName;
-    public transient boolean              _Validated = false;
+    public transient Schema          _ParentSchema;
+    public transient PaddingTracker  _PadderColumnNames = new PaddingTracker();
+    public transient String          _OriginalName;
+    public transient String          _BaseClassName;
+    public transient String          _AppDataClassName;
+    public transient String          _AppFactoryClassName;
+    public transient String          _AppJsonClassName;
+    public transient boolean         _Validated         = false;
+    public transient final TildaType _TildaType;
 
     public abstract Column getColumn(String name);
+
     public abstract String[] getColumnNames();
+
     public abstract ObjectLifecycle getLifecycle();
+
     public abstract boolean isOCC();
-    public abstract String getWhat();
+
+    public Base(TildaType Type)
+      {
+        _TildaType = Type;
+      }
 
     /**
      * 
@@ -77,7 +86,7 @@ public abstract class Base
       {
         return _ParentSchema.getShortName() + "." + _OriginalName;
       }
-    
+
     /**
      * 
      * @return simply the name of the object, i.e. _Name
@@ -96,12 +105,12 @@ public abstract class Base
       {
         return _AppDataClassName;
       }
-    
+
     public String getAppFactoryClassName()
       {
         return _AppFactoryClassName;
       }
-    
+
     public String getAppJsonClassName()
       {
         return _AppJsonClassName;
@@ -116,45 +125,45 @@ public abstract class Base
       {
         return _PadderColumnNames.getPad(Name);
       }
-    
-    protected boolean Validate(ParserSession PS, Schema ParentSchema)
-    {
-      if (_Validated == true)
-       return true;
-       
-      int Errs = PS.getErrorCount();
 
-      _ParentSchema = ParentSchema;
-      
-      // Mandatories
-      if (TextUtil.isNullOrEmpty(_Name) == true)        	
-        return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring an "+getWhat()+" without a name.");
-      
-      _OriginalName = _Name;            
-      LOG.debug("  Validating "+getWhat()+" " + getFullName() + ".");
-      	
-      if (ValidationHelper.isValidIdentifier(_Name) == false)
-        return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring "+getWhat()+" '" + getFullName() + "' with a name '"+_Name+"' which is not valid. "+ValidationHelper._ValidIdentifierMessage);
-      if (TextUtil.isNullOrEmpty(_Description) == true)
-        return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring "+getWhat()+" '" + getFullName() + "' without a description name.");
+    protected boolean Validate(ParserSession PS, Schema ParentSchema)
+      {
+        if (_Validated == true)
+          return true;
+
+        int Errs = PS.getErrorCount();
+
+        _ParentSchema = ParentSchema;
+
+        // Mandatories
+        if (TextUtil.isNullOrEmpty(_Name) == true)
+          return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring an " + _TildaType.name() + " without a name.");
 
         _OriginalName = _Name;
-//        _Name = _Name.toUpperCase();
+        LOG.debug("  Validating " + _TildaType.name() + " " + getFullName() + ".");
+
+        if (ValidationHelper.isValidIdentifier(_Name) == false)
+          return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getFullName() + "' with a name '" + _Name + "' which is not valid. " + ValidationHelper._ValidIdentifierMessage);
+        if (TextUtil.isNullOrEmpty(_Description) == true)
+          return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getFullName() + "' without a description name.");
+
+        _OriginalName = _Name;
+        // _Name = _Name.toUpperCase();
 
         _BaseClassName = "TILDA__" + _Name.toUpperCase();
-        _AppDataClassName    = _OriginalName+"_Data";
-        _AppFactoryClassName = _OriginalName+"_Factory";
-        _AppJsonClassName = _OriginalName+"_Json";
-        
+        _AppDataClassName = _OriginalName + "_Data";
+        _AppFactoryClassName = _OriginalName + "_Factory";
+        _AppJsonClassName = _OriginalName + "_Json";
+
         // LDH-NOTE: We do not validate the mappings at this time, because the whole parent object
-        //          has not finished being validated. As such, columns and other generetated
-        //          artifacts won't exist yet at this point.
-        
+        // has not finished being validated. As such, columns and other generetated
+        // artifacts won't exist yet at this point.
+
         if (_JsonDEPRECATED.isEmpty() == false)
           for (OutputMapping J : _JsonDEPRECATED)
-            _OutputMaps.add(J);        
-        
-        _Validated = Errs == PS.getErrorCount();             
+            _OutputMaps.add(J);
+
+        _Validated = Errs == PS.getErrorCount();
         return _Validated;
       }
 
@@ -162,15 +171,15 @@ public abstract class Base
       {
         int Errs = PS.getErrorCount();
         Set<String> Names = new HashSet<String>();
-        
+
         for (OutputMapping OM : _OutputMaps)
           if (OM != null)
             {
               if (Names.add(OM._Name) == false)
-                PS.AddError(getWhat()+" '" + getFullName() + "' is defining a duplicate Output mapping '" + OM._Name + "'.");
+                PS.AddError(_TildaType.name() + " '" + getFullName() + "' is defining a duplicate Output mapping '" + OM._Name + "'.");
               OM.Validate(PS, this);
             }
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
       }
- }
+  }

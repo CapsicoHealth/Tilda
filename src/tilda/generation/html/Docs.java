@@ -211,7 +211,7 @@ public class Docs
             if (C == null)
               continue;
             String FieldType = view != null && view.getFormula(C.getName()) != null ? "formulae" : "columns";
-            if (view != null && view._Realize != null && TextUtil.FindElement(view._Realize._Excludes, C.getName(), false, 0) == -1)
+            if (view != null && view._Realize != null && TextUtil.FindElement(view._Realize._Exclude, C.getName(), false, 0) == -1)
               FieldType = FieldType + " realized" + FieldType;
             Out.println("  <TR valign=\"top\" bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#DFECF8") + "\">");
             Out.println("    <TD>" + i + "&nbsp;&nbsp;</TD>");
@@ -234,7 +234,7 @@ public class Docs
             Out.println("<TD align=\"center\">" + (C._Nullable == true ? "&#x2611;" : "&#x2610") + "&nbsp;&nbsp;</TD>");
             if (view != null && view._Realize != null)
               {
-                Out.print("<TD align=\"center\">" + (TextUtil.FindElement(view._Realize._Excludes, C.getName(), false, 0) == -1 ? "&#x2611;<!--R-->" : "&#x2610;") + "&nbsp;&nbsp;</TD>");
+                Out.print("<TD align=\"center\">" + (TextUtil.FindElement(view._Realize._Exclude, C.getName(), false, 0) == -1 ? "&#x2611;<!--R-->" : "&#x2610;") + "&nbsp;&nbsp;</TD>");
               }
             if (O._DBOnly == false)
               {

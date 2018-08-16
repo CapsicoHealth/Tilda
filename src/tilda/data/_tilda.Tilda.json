@@ -332,9 +332,11 @@
         { "name": "a6"           , "type": "LONG"       ,                                                       "description": "The blah"},
         { "name": "a6b"          , "type": "LONG[]"     ,                                                       "description": "The blah"},
         { "name": "a6c"          , "type": "LONG{}"     ,                                                       "description": "The blah"},
+        { "name": "a6d"          , "type": "DATETIME"   ,                                                       "description": "The blah"},
         { "name": "a7"           , "type": "INTEGER"    ,                                                       "description": "The blah"},
         { "name": "a7b"          , "type": "INTEGER[]"  ,                                                       "description": "The blah"},
         { "name": "a8"           , "type": "BINARY"     ,                                                       "description": "The blah"},
+        { "name": "a8b"          , "type": "DATETIME"   ,                                                       "description": "The blah"},
         { "name": "a9"           , "type": "DATETIME"   ,                                                       "description": "The blah"},
         { "name": "a9b"          , "type": "DATETIME[]" ,                                                       "description": "The blah"},
         { "name": "a9c"          , "type": "DATE"       ,                                                       "description": "The blah"},
@@ -361,19 +363,6 @@
       "http":[
         { "name": "", "mandatories": ["refnum", "name", "description"] }
       ]
-    }
-    
-   ,{ "name":"Testing2",
-      "lc": "READONLY",
-      "dbOnly":true,
-      "description":"Testing",
-      "columns":[
-         { "name":"t1"  , "type":"STRING"  , "nullable": false, "size":   2, "description":"State code" }
-        ,{ "name":"t2"  , "type":"STRING"  , "nullable": false, "size":  60, "description":"State name" }
-       ]
-     ,"indices":[ 
-         { "name":"T1"   , "columns":["t1"] }
-       ]
     }
   ]
     
@@ -456,9 +445,10 @@
     ,{ "name": "Testing2View"
       ,"description": "A test view to test .* and exclude and block."
       ,"columns":[
-          { "sameas": "Testing.name"                       }
-         ,{ "sameas": "Testing.lastUpdated", "joinOnly":true }
-         ,{ "sameas": "Testing.refnum" }
+          { "sameas": "Testing.refnum" }
+         ,{ "sameas": "Testing.name"                       }
+         ,{ "sameas": "Testing.lastUpdated"                }
+         ,{ "sameas": "Testing.created",   "joinOnly":true }
          ,{ "sameas": "Testing.a*" 
            ,"exclude":["a2*"]
            ,"block"  :["a3", "a6*"]
@@ -480,7 +470,78 @@
                "Blah..."
              ]
           }
+         ,{ "name": "bastille"
+           ,"type": "DATETIME"
+           ,"formula":[ 
+               "'1789-07-14'"
+             ]
+           ,"title": "Bastille Day"
+           ,"description":[
+               "Blah..."
+             ]
+          }
+         ,{ "name": "toto"
+           ,"type": "DATETIME"
+           ,"formula":[ 
+               "'2018-08-10'"
+             ]
+           ,"title": "Last Updated"
+           ,"description":[
+               "Blah..."
+             ]
+          }
         ]
-     }     
+      ,"realize": {
+          "indices":[ 
+              { "name": "Refnum", "columns":["refnum"] }
+             ,{ "name": "LastUpdated", "orderBy":["lastUpdated desc"] }
+           ]
+         ,"excludes":[ "a9*"
+                     ]
+        }
+     }
+    ,{ "name": "Testing3View"
+      ,"description": "A test view to test .* and exclude and block."
+      ,"columns":[
+          { "sameas": "Testing2Realized.refnum"      }
+         ,{ "sameas": "Testing2Realized.name"        }
+         ,{ "sameas": "Testing2Realized.a8b*"        }
+         ,{ "sameas": "Testing2Realized.lastUpdated" }
+        ]
+      ,"realize": {
+          "indices":[ 
+              { "name": "Refnum", "columns":["refnum"] }
+             ,{ "name": "LastUpdated", "orderBy":["lastUpdated desc"] }
+           ]
+        }
+     }
+/*
+    ,{ "name": "Testing4View"
+      ,"description": "A test view to test .* and exclude and block."
+      ,"columns":[
+          { "sameas": "Testing2view.*"
+           ,"block":["a3"]   
+          }
+        ]
+      ,"formulaColumns":[
+          { "name": "a3"
+           ,"type": "BOOLEAN"
+           ,"formula":[ 
+               "NOT a3 OR A3"
+             ]
+           ,"title": "Always True"
+           ,"description":[
+               "Blah..."
+             ]
+          }
+        ]
+      ,"realize": {
+          "indices":[ 
+              { "name": "Refnum", "columns":["refnum"] }
+             ,{ "name": "LastUpdated", "orderBy":["lastUpdated desc"] }
+           ]
+        }
+     }
+ */
    ]
 }

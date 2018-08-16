@@ -16,23 +16,20 @@
 
 package tilda.enums;
 
-public enum FrameworkSourcedType
+public enum TildaType
   {
-      NONE
+      OBJECT
     
-    , MAPPER 
-    
-    , ENUMERATION
-
     , VIEW
+    
+    , REALIZED_VIEW
 
-    , REALIZED
     ;
     
 
-    public static FrameworkSourcedType parse(String Str)
+    public static TildaType parse(String Str)
       {
-        for (FrameworkSourcedType e : FrameworkSourcedType.values())
+        for (TildaType e : TildaType.values())
           if (Str.equalsIgnoreCase(e.name()) == true)
             return e;
         return null;
