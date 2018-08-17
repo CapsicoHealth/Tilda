@@ -21,6 +21,7 @@ import java.util.List;
 
 import tilda.enums.ColumnMapperMode;
 import tilda.enums.ColumnMode;
+import tilda.enums.FrameworkColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.MultiType;
 import tilda.enums.ValidationStatus;
@@ -111,7 +112,7 @@ public class ColumnMapper
               {
                 // For views and realized tables, it's possible for generated columns to have already been brought in, so no need
                 // to bring them in again.
-                if (C._FrameworkManaged == false) // || _ParentColumn._ParentObject._FST == FrameworkSourcedType.VIEW == false && _ParentColumn._ParentObject._FST == FrameworkSourcedType.REALIZED == false)
+                if (C._FCT.isManaged() == false) // || _ParentColumn._ParentObject._FST == FrameworkSourcedType.VIEW == false && _ParentColumn._ParentObject._FST == FrameworkSourcedType.REALIZED == false)
                   PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares a mapper which automatically adds the column '" + _ParentColumn.getName() + "MappedGroup'. That column has already been defined.");
               }
             else
@@ -119,7 +120,7 @@ public class ColumnMapper
                 Column Col = new Column(_ParentColumn.getName() + "MappedGroup", null, 0, _ParentColumn._Nullable, _Group == ColumnMapperMode.DB ? ColumnMode.AUTO : ColumnMode.CALCULATED,
                 false, null, "Mapped group for '" + _ParentColumn.getName() + "' through '" + _DestObjectObj.getFullName() + "'.");
                 Col._SameAs = _DestObjectObj.getColumn("group").getFullName();
-                Col._FrameworkManaged = true;
+                Col._FCT = FrameworkColumnType.MAPPER_GROUP;
                 Col._MapperDef = this;
                 _ParentColumn._ParentObject.AddColumnAfter(_ParentColumn, Col);
               }
@@ -131,7 +132,7 @@ public class ColumnMapper
               {
                 // For views and realized tables, it's possible for generated columns to hav already been brought in, so no need
                 // to bring them in again.
-                if (C._FrameworkManaged == false) // || _ParentColumn._ParentObject._FST == FrameworkSourcedType.VIEW == false && _ParentColumn._ParentObject._FST == FrameworkSourcedType.REALIZED == false)
+                if (C._FCT.isManaged() == false)
                   PS.AddError("Column '" + _ParentColumn.getFullName() + "' declares a mapper which automatically adds the column '" + _ParentColumn.getName() + "MappedName'. That name clashes with an already defined column.");
               }
             else
@@ -139,7 +140,7 @@ public class ColumnMapper
                 Column Col = new Column(_ParentColumn.getName() + "MappedName", null, 0, _ParentColumn._Nullable, _Name == ColumnMapperMode.DB ? ColumnMode.AUTO : ColumnMode.CALCULATED,
                 _ParentColumn._Invariant, null, "Mapped name for '" + _ParentColumn.getName() + "' through '" + _DestObjectObj.getFullName() + "'.");
                 Col._SameAs = _DestObjectObj.getColumn("name").getFullName();
-                Col._FrameworkManaged = true;
+                Col._FCT = FrameworkColumnType.MAPPER_NAME;
                 Col._MapperDef = this;
                 _ParentColumn._ParentObject.AddColumnAfter(_ParentColumn, Col);
               }

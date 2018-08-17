@@ -63,7 +63,7 @@ public class TotalMess
           {
             ++i;
             Column C = VC.getSameAsRoot();
-            if (C == null || C._FrameworkManaged == true || C._Mode == ColumnMode.CALCULATED) // for counts and calculated fields where there is no mapping to an actual column.
+            if (C == null || C._FCT.isManaged() == true || C._Mode == ColumnMode.CALCULATED) // for counts and calculated fields where there is no mapping to an actual column.
               continue;
             // LOG.debug(" - " + VC.getShortName() + " as " + VC._SameAsObj.getShortName());
             TotalMess FT = new TotalMess(VC, C, i, false);

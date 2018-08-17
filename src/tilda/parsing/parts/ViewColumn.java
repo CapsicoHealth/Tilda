@@ -28,6 +28,7 @@ import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnType;
+import tilda.enums.FrameworkColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.JoinType;
 import tilda.enums.OrderType;
@@ -77,18 +78,16 @@ public class ViewColumn
      * }
      */
 
-    public transient View            _ParentView;
-    public transient Column          _SameAsObj;
-    public transient JoinType        _Join;
-    public transient AggregateType   _Aggregate;
-    public transient List<Column>    _OrderByObjs        = new ArrayList<Column>();
-    public transient List<OrderType> _OrderByOrders      = new ArrayList<OrderType>();
+    public transient View                _ParentView;
+    public transient Column              _SameAsObj;
+    public transient JoinType            _Join;
+    public transient AggregateType       _Aggregate;
+    public transient List<Column>        _OrderByObjs      = new ArrayList<Column>();
+    public transient List<OrderType>     _OrderByOrders    = new ArrayList<OrderType>();
 
-    public transient boolean         _FailedValidation   = false;
+    public transient boolean             _FailedValidation = false;
 
-    public transient boolean         _FrameworkGenerated = false;
-    public transient boolean         _TZGenerated        = false;
-
+    public transient FrameworkColumnType _FCT              = FrameworkColumnType.NONE;
 
     public String getFullName()
       {
@@ -151,8 +150,7 @@ public class ViewColumn
             _SameAsObj = ValidateSameAs(PS, getFullName(), _SameAs, _ParentView);
             if (_SameAsObj == null)
               return false;
-            _FrameworkGenerated = _SameAsObj._FrameworkManaged;
-            _TZGenerated = _SameAsObj._TZGenerated;
+            _FCT = _SameAsObj._FCT;
           }
 
         if (TextUtil.isNullOrEmpty(_Name) == true)
@@ -280,6 +278,11 @@ public class ViewColumn
 
     public String toString()
       {
-        return getClass().getName() + ":" + getFullName();
+        return getClass().getName() + ":" + _ParentView != null ? getFullName() : _Sameas_DEPRECATED != null ? _Sameas_DEPRECATED : _SameAs;
+      }
+
+    public boolean isSameAsLitteral()
+      {
+        return _SameAs != null && _SameAsObj == null && _FCT.isManaged() == true;
       }
   }

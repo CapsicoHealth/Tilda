@@ -59,7 +59,7 @@ public class TildaJson implements CodeGenTildaJson
         boolean needTime = false;
         if (O._LC != ObjectLifecycle.READONLY)
           for (Column C : O._Columns)
-            if (C != null && (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATE) && Object.isOCCColumn(C) == false)
+            if (C != null && (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATE) && C._FCT.isOCC() == false)
               {
                 needTime = true;
                 break;

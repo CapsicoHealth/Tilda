@@ -306,6 +306,56 @@
      }    
 
 
+   ,{ "name": "DateDim"
+     ,"description": "The Date dimension, capturing pre-calculated metrics on dates"
+     ,"columns":[
+          { "name":"dt"            , "type":"DATE"   , "nullable":false, "invariant":true, "description":"The Date date"  }
+         ,{ "name":"epoch"         , "type":"LONG"   , "nullable":false,             "description":"The epoch date"  }
+         ,{ "name":"dayName"       , "type":"STRING" , "nullable":true , "size":255, "description":"Day name (i.e., Monday, Tuesday...) of the date"  }
+         ,{ "name":"dayOfWeek"     , "type":"INTEGER", "nullable":true ,             "description":"ISO 8601 day of the week (Monday=1 to Sunday=7) of the date"  }
+         ,{ "name":"dayOfMonth"    , "type":"INTEGER", "nullable":true ,             "description":"ISO 8601 day of the month (starting with 1) of the date"  }
+         ,{ "name":"dayOfQuarter"  , "type":"INTEGER", "nullable":true ,             "description":"ISO 8601 day of the quarter (starting with 1) of the date"  }
+         ,{ "name":"dayOfYear"     , "type":"INTEGER", "nullable":true ,             "description":"ISO 8601 day of the year (starting with 1) of the date"  }
+         ,{ "name":"weekOfMonth"   , "type":"INTEGER", "nullable":true ,             "description":"ISO 8601 week of the month (starting with 1) of the date"  }
+         ,{ "name":"weekOfYear"    , "type":"INTEGER", "nullable":true ,             "description":"ISO 8601 week of the year (starting with 1) of the date"  }
+         ,{ "name":"monthOfYear"   , "type":"INTEGER", "nullable":true ,             "description":"ISO 8601 month of the year (starting with 1) of the date"  }
+         ,{ "name":"monthName"     , "type":"STRING" , "nullable":true , "size":255, "description":"Month name (i.e., January, February...) of the date."  }
+         ,{ "name":"monthNameShort", "type":"STRING" , "nullable":true , "size":255, "description":"Monday short name (i.e., Jan, Feb...) of the date."  }
+         ,{ "name":"quarterOfYear" , "type":"INTEGER", "nullable":true ,             "description":"ISO 8601 quarter of the year (starting with 1) of the date."  }
+         ,{ "name":"quarterName"   , "type":"STRING" , "nullable":true , "size":255, "description":"Quarter name (i.e., Q1, Q2...) of the date."  }
+         ,{ "name":"year"          , "type":"INTEGER", "nullable":true ,             "description":"ISO 8601 year (1.e., 2018) of the date."  }
+         ,{ "name":"mmyyyy"        , "type":"STRING" , "nullable":true , "size":  6, "description":"The mmyyyy printable version of a date."  }
+         ,{ "name":"mmddyyyy"      , "type":"STRING" , "nullable":true , "size":  8, "description":"The mmddyyyy printable version of a date."  }
+         ,{ "name":"yyyymmdd"      , "type":"STRING" , "nullable":true , "size":  8, "description":"The yyyymmdd sortable printable version of a date."  }
+         ,{ "name":"isWeekend"     , "type":"INTEGER", "nullable":true ,             "description":"1 if this is a weekend day, 0 otherwise."  }
+         ,{ "name":"isBusinessDay" , "type":"INTEGER", "nullable":true ,             "description":"1 if this is a business day, 0 otherwise."  }
+         ,{ "name":"isHoliday"     , "type":"INTEGER", "nullable":true ,             "description":"1 if this is a holiday, 0 otherwise."  }
+         ,{ "name":"holidayName"   , "type":"STRING" , "nullable":true , "size":255, "description":"The name of the holiday if applicable."  }
+      ]
+     ,"primary": { "autogen": false, "columns": ["dt"] } 
+    }
+
+   ,{ "name": "DateLimitDim"
+     ,"occ":false
+     ,"description": "A single row for min, max and invalid dates for the Date_Dim"
+     ,"columns":[
+          { "name":"invalidDate", "sameas":"DateDim.dt", "nullable":false, "description":"The invalid date"  }
+         ,{ "name":"minDate"    , "sameas":"DateDim.dt", "nullable":false, "description":"The min date"  }
+         ,{ "name":"maxDate"    , "sameas":"DateDim.dt", "nullable":false, "description":"The max date"  }
+      ]
+     ,"foreign": [
+          { "name":"InvalidDt" , "srcColumns":["invalidDate" ], "destObject": "DateDim" }
+         ,{ "name":"MinDt"     , "srcColumns":["minDate"     ], "destObject": "DateDim" }
+         ,{ "name":"MaxDt"     , "srcColumns":["maxDate"     ], "destObject": "DateDim" }
+       ]
+     ,"indices": [ 
+          { "name":"InvalidDate"  , "columns": ["invalidDate"] }
+       ]
+    }
+
+
+
+
    ,{ "name": "Testing",
       "description": "blah blah",
       "columns":[
@@ -422,6 +472,7 @@
         }
      }       
      
+     
     ,{ "name": "TestingView"
       ,"description": "A test view to test aggregates."
       ,"columns":[
@@ -448,6 +499,7 @@
           { "sameas": "Testing.refnum" }
          ,{ "sameas": "Testing.name"                       }
          ,{ "sameas": "Testing.lastUpdated"                }
+         ,{ "sameas": "Testing.lastUpdated"                , "name":"xxxLastUpdated"}
          ,{ "sameas": "Testing.created",   "joinOnly":true }
          ,{ "sameas": "Testing.a*" 
            ,"exclude":["a2*"]
@@ -507,6 +559,7 @@
          ,{ "sameas": "Testing2Realized.name"        }
          ,{ "sameas": "Testing2Realized.a8b*"        }
          ,{ "sameas": "Testing2Realized.lastUpdated" }
+         ,{ "sameas": "Testing2Realized.xxx*" }
         ]
       ,"realize": {
           "indices":[ 
@@ -515,12 +568,12 @@
            ]
         }
      }
-/*
+
     ,{ "name": "Testing4View"
       ,"description": "A test view to test .* and exclude and block."
       ,"columns":[
           { "sameas": "Testing2view.*"
-           ,"block":["a3"]   
+           ,"block":["a3", "*astUpdated"]   
           }
         ]
       ,"formulaColumns":[
@@ -528,6 +581,16 @@
            ,"type": "BOOLEAN"
            ,"formula":[ 
                "NOT a3 OR A3"
+             ]
+           ,"title": "Always True"
+           ,"description":[
+               "Blah..."
+             ]
+          }
+         ,{ "name": "lastUpdated"
+           ,"type": "DATETIME"
+           ,"formula":[ 
+               "GREATEST(lastUpdated, xxxLastUpdated)"
              ]
            ,"title": "Always True"
            ,"description":[
@@ -542,6 +605,6 @@
            ]
         }
      }
- */
+
    ]
 }

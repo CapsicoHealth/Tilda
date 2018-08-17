@@ -341,14 +341,12 @@ This is the column definition for:<BR>
        String        _name           =                       ParseUtil.parseString("name"          , true , Values.get("name"          ), Errors );
        Long        _max            =                       ParseUtil.parseLong("max"           , true , Values.get("max"           ), Errors );
        Integer        _count          =                       ParseUtil.parseInteger("count"         , true , Values.get("count"         ), Errors );
-       ZonedDateTime        _deleted        =                       ParseUtil.parseZonedDateTime("deleted"       , false, Values.get("deleted"       ), Errors );
 
        if (IncomingErrors != Errors.size())
         return null;
 
       tilda.data.Key_Data Obj = tilda.data.Key_Factory.Create(_refnum, _name, _max, _count);
 
-      if (_deleted       != null) Obj.setDeleted       (_deleted       );
 
       return Obj;
      }
