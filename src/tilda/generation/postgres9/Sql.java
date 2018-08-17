@@ -663,8 +663,6 @@ public class Sql extends PostgreSQL implements CodeGenSql
     public void genDDL(PrintWriter OutFinal, View V)
     throws Exception
       {
-        if (V._Name.equals("Testing2View") == true)
-          LOG.debug("zzzzzz");
         String Str = PrintBaseView(V, false);
         if (V._Pivots.isEmpty() == false)
           {
@@ -689,8 +687,6 @@ public class Sql extends PostgreSQL implements CodeGenSql
             .append("  TRUNCATE " + RName + ";\n")
             .append("  INSERT INTO " + RName + " (" + PrintInsertColumnNames(V) + ")\n     ");
 
-            if (V._Name.equals("Testing2View") == true)
-              LOG.debug("zzzzzz");
             if (V._Realize._SubRealized.length != 0)
               {
                 StringBuilder r = new StringBuilder();
@@ -778,8 +774,6 @@ public class Sql extends PostgreSQL implements CodeGenSql
         boolean First = true;
         for (ViewColumn VC : V._ViewColumns)
           {
-            // if (VC._Name.equals("startM0030_START_CARE_DT") == true)
-            // LOG.debug("zzzzzz");
             if (VC._FormulaOnly == true)
               {
                 b.append("--     \"").append(VC._Name).append("\"  BLOCKED\n");
@@ -1204,8 +1198,6 @@ public class Sql extends PostgreSQL implements CodeGenSql
         StringBuilder Str = new StringBuilder();
         boolean First = true;
         boolean Blocked = false;
-        // if (V._Name.equals("Testing2View") == true)
-        // LOG.debug("zzzzzzzzzzz");
         // LOG.debug("View " + V._Name + ": " + TextUtil.Print(V.getColumnNames()));
         for (ViewColumn VC : V._ViewColumns)
           {

@@ -338,8 +338,6 @@ public class View extends Base
 
         // gotta construct a shadow Object for code-gen.
 //        LOG.debug("View " + _Name + ": " + TextUtil.Print(getColumnNames()));
-        // if (_Name.equals("Testing3View") == true)
-        // LOG.debug("zzzzzzz");
         Object O = MakeObjectProxy(PS);
 //        LOG.debug("Object " + O._Name + ": " + TextUtil.Print(O.getColumnNames()));
 
@@ -495,9 +493,6 @@ public class View extends Base
         O._LCStr = ObjectLifecycle.READONLY.name();
         O._OCC = _OCC;
         
-        // if (_Name.equals("PatientScoreView") == true)
-        // LOG.debug("zzzzzz");
-
         // LOG.debug(getFullName()+": "+TextUtil.Print(getColumnNames()));
         int Counter = -1;
         for (ViewColumn VC : _ViewColumns)
@@ -505,8 +500,6 @@ public class View extends Base
             // Skip intermediary pivot-making columns (pivot columns and aggregates) so we capture only the "grouped-by" columns
             if (_Pivots.isEmpty() == false && (isPivotColumn(VC) == true || VC._Aggregate != null))
               break;
-            if (_Name.equals("CHCQualityOfCareOutcomeMeasuresView") == true && VC._Name=="p")
-              LOG.debug("xxxxxx");
 
             // LOG.debug(VC._Name+": VC._SameAsObj="+(VC._SameAsObj != null ? VC._SameAsObj.getFullName():"NULL")+"; isOCCGenerated="+(VC._SameAsObj == null ?
             // "false":VC._SameAsObj.isOCCGenerated())+"; _FrameworkGenerated="+VC._FrameworkGenerated+"; _JoinOnly="+VC._JoinOnly+"; _FormulaOnly="+VC._FormulaOnly+";");
@@ -741,8 +734,6 @@ public class View extends Base
         int j = 0;
         for (ViewColumn col : V._ViewColumns)
           {
-            if (col._Name != null && col._Name.equals("xxxLastUpdated") == true)
-              LOG.debug("zzzzzzzzzzzzz");
             if (col._FCT == FrameworkColumnType.TZ
             || col._FCT != FrameworkColumnType.NONE && col._FCT != FrameworkColumnType.TS && col._FCT.isOCC() == false)
               continue;
