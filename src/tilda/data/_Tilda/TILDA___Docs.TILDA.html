@@ -5482,6 +5482,827 @@ This Table contains the following columns:<BLOCKQUOTE>
 </DIV></DIV>
 </DIV>
 <BR><BR><BR><BR><BR><BR>
+<TABLE id="DateDim_DIV" class="tables">
+<SCRIPT>registerStickyHeader("DateDim_DIV");</SCRIPT>
+<TR valign="top"><TD><H2>DateDim&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#DateDim_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
+</TABLE>
+<DIV id="DateDim_CNT" class="content">
+The Table TILDA.DateDim:<UL>
+<LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>DateDim_Factory</B>, <B>DateDim_Data</B> in the package <B>tilda.data</B>.
+<LI>Is configured for normal <B>read/write</B> access.</LI>
+<LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
+<LI>Has the following identity:<UL><LI>Primary Key: dt</LI>
+</UL></LI>
+</UL>
+<B>Description</B>: The Date dimension, capturing pre-calculated metrics on dates<BR>
+<BR>
+This Table contains the following columns:<BLOCKQUOTE>
+ <TABLE id="DateDim_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>1&nbsp;&nbsp;</TD>
+<TD align="right"><B id='DateDim-dt_DIV' class='columns'>dt</B>&nbsp;&nbsp;</TD>
+<TD>LocalDate&nbsp;/&nbsp;date&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The Date date</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>2&nbsp;&nbsp;</TD>
+<TD align="right"><B id='DateDim-epoch_DIV' class='columns'>epoch</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The epoch date</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>3&nbsp;&nbsp;</TD>
+<TD align="right"><B id='DateDim-dayName_DIV' class='columns'>dayName</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(255)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Day name (i.e., Monday, Tuesday...) of the date</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>4&nbsp;&nbsp;</TD>
+<TD align="right"><B id='DateDim-dayOfWeek_DIV' class='columns'>dayOfWeek</B>&nbsp;&nbsp;</TD>
+<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>ISO 8601 day of the week (Monday=1 to Sunday=7) of the date</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>5&nbsp;&nbsp;</TD>
+<TD align="right"><B id='DateDim-dayOfMonth_DIV' class='columns'>dayOfMonth</B>&nbsp;&nbsp;</TD>
+<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>ISO 8601 day of the month (starting with 1) of the date</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>6&nbsp;&nbsp;</TD>
+<TD align="right"><B id='DateDim-dayOfQuarter_DIV' class='columns'>dayOfQuarter</B>&nbsp;&nbsp;</TD>
+<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>ISO 8601 day of the quarter (starting with 1) of the date</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>7&nbsp;&nbsp;</TD>
+<TD align="right"><B id='DateDim-dayOfYear_DIV' class='columns'>dayOfYear</B>&nbsp;&nbsp;</TD>
+<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>ISO 8601 day of the year (starting with 1) of the date</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>8&nbsp;&nbsp;</TD>
+<TD align="right"><B id='DateDim-weekOfMonth_DIV' class='columns'>weekOfMonth</B>&nbsp;&nbsp;</TD>
+<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>ISO 8601 week of the month (starting with 1) of the date</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>9&nbsp;&nbsp;</TD>
+<TD align="right"><B id='DateDim-weekOfYear_DIV' class='columns'>weekOfYear</B>&nbsp;&nbsp;</TD>
+<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>ISO 8601 week of the year (starting with 1) of the date</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>10&nbsp;&nbsp;</TD>
+<TD align="right"><B id='DateDim-monthOfYear_DIV' class='columns'>monthOfYear</B>&nbsp;&nbsp;</TD>
+<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>ISO 8601 month of the year (starting with 1) of the date</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>11&nbsp;&nbsp;</TD>
+<TD align="right"><B id='DateDim-monthName_DIV' class='columns'>monthName</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(255)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Month name (i.e., January, February...) of the date.</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>12&nbsp;&nbsp;</TD>
+<TD align="right"><B id='DateDim-monthNameShort_DIV' class='columns'>monthNameShort</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(255)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Monday short name (i.e., Jan, Feb...) of the date.</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>13&nbsp;&nbsp;</TD>
+<TD align="right"><B id='DateDim-quarterOfYear_DIV' class='columns'>quarterOfYear</B>&nbsp;&nbsp;</TD>
+<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>ISO 8601 quarter of the year (starting with 1) of the date.</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>14&nbsp;&nbsp;</TD>
+<TD align="right"><B id='DateDim-quarterName_DIV' class='columns'>quarterName</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(255)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Quarter name (i.e., Q1, Q2...) of the date.</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>15&nbsp;&nbsp;</TD>
+<TD align="right"><B id='DateDim-year_DIV' class='columns'>year</B>&nbsp;&nbsp;</TD>
+<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>ISO 8601 year (1.e., 2018) of the date.</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>16&nbsp;&nbsp;</TD>
+<TD align="right"><B id='DateDim-mmyyyy_DIV' class='columns'>mmyyyy</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(6)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The mmyyyy printable version of a date.</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>17&nbsp;&nbsp;</TD>
+<TD align="right"><B id='DateDim-mmddyyyy_DIV' class='columns'>mmddyyyy</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(8)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The mmddyyyy printable version of a date.</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>18&nbsp;&nbsp;</TD>
+<TD align="right"><B id='DateDim-yyyymmdd_DIV' class='columns'>yyyymmdd</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(8)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The yyyymmdd sortable printable version of a date.</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>19&nbsp;&nbsp;</TD>
+<TD align="right"><B id='DateDim-isWeekend_DIV' class='columns'>isWeekend</B>&nbsp;&nbsp;</TD>
+<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>1 if this is a weekend day, 0 otherwise.</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>20&nbsp;&nbsp;</TD>
+<TD align="right"><B id='DateDim-isBusinessDay_DIV' class='columns'>isBusinessDay</B>&nbsp;&nbsp;</TD>
+<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>1 if this is a business day, 0 otherwise.</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>21&nbsp;&nbsp;</TD>
+<TD align="right"><B id='DateDim-isHoliday_DIV' class='columns'>isHoliday</B>&nbsp;&nbsp;</TD>
+<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>1 if this is a holiday, 0 otherwise.</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>22&nbsp;&nbsp;</TD>
+<TD align="right"><B id='DateDim-holidayName_DIV' class='columns'>holidayName</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(255)&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The name of the holiday if applicable.</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>23&nbsp;&nbsp;</TD>
+<TD align="right"><B id='DateDim-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The timestamp for when the record was created.</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>24&nbsp;&nbsp;</TD>
+<TD align="right"><B id='DateDim-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The timestamp for when the record was last updated.</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>25&nbsp;&nbsp;</TD>
+<TD align="right"><B id='DateDim-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The timestamp for when the record was deleted.</TD>
+</TR>
+</TABLE></BLOCKQUOTE>
+<DIV id='DateDim-dt_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('DateDim-dt_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim-dt_DIV'>dt</a> -- DATE</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='DateDim-epoch_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('DateDim-epoch_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim-epoch_DIV'>epoch</a> -- LONG</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='DateDim-dayName_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('DateDim-dayName_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim-dayName_DIV'>dayName</a> -- STRING</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='DateDim-dayOfWeek_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('DateDim-dayOfWeek_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim-dayOfWeek_DIV'>dayOfWeek</a> -- INTEGER</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='DateDim-dayOfMonth_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('DateDim-dayOfMonth_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim-dayOfMonth_DIV'>dayOfMonth</a> -- INTEGER</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='DateDim-dayOfQuarter_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('DateDim-dayOfQuarter_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim-dayOfQuarter_DIV'>dayOfQuarter</a> -- INTEGER</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='DateDim-dayOfYear_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('DateDim-dayOfYear_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim-dayOfYear_DIV'>dayOfYear</a> -- INTEGER</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='DateDim-weekOfMonth_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('DateDim-weekOfMonth_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim-weekOfMonth_DIV'>weekOfMonth</a> -- INTEGER</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='DateDim-weekOfYear_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('DateDim-weekOfYear_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim-weekOfYear_DIV'>weekOfYear</a> -- INTEGER</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='DateDim-monthOfYear_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('DateDim-monthOfYear_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim-monthOfYear_DIV'>monthOfYear</a> -- INTEGER</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='DateDim-monthName_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('DateDim-monthName_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim-monthName_DIV'>monthName</a> -- STRING</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='DateDim-monthNameShort_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('DateDim-monthNameShort_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim-monthNameShort_DIV'>monthNameShort</a> -- STRING</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='DateDim-quarterOfYear_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('DateDim-quarterOfYear_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim-quarterOfYear_DIV'>quarterOfYear</a> -- INTEGER</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='DateDim-quarterName_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('DateDim-quarterName_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim-quarterName_DIV'>quarterName</a> -- STRING</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='DateDim-year_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('DateDim-year_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim-year_DIV'>year</a> -- INTEGER</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='DateDim-mmyyyy_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('DateDim-mmyyyy_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim-mmyyyy_DIV'>mmyyyy</a> -- STRING</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='DateDim-mmddyyyy_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('DateDim-mmddyyyy_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim-mmddyyyy_DIV'>mmddyyyy</a> -- STRING</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='DateDim-yyyymmdd_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('DateDim-yyyymmdd_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim-yyyymmdd_DIV'>yyyymmdd</a> -- STRING</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='DateDim-isWeekend_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('DateDim-isWeekend_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim-isWeekend_DIV'>isWeekend</a> -- INTEGER</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='DateDim-isBusinessDay_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('DateDim-isBusinessDay_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim-isBusinessDay_DIV'>isBusinessDay</a> -- INTEGER</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='DateDim-isHoliday_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('DateDim-isHoliday_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim-isHoliday_DIV'>isHoliday</a> -- INTEGER</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='DateDim-holidayName_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('DateDim-holidayName_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim-holidayName_DIV'>holidayName</a> -- STRING</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='DateDim-created_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('DateDim-created_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim-created_DIV'>created</a> -- DATETIME</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='DateDim-lastUpdated_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('DateDim-lastUpdated_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='DateDim-deleted_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('DateDim-deleted_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateDim-deleted_DIV'>deleted</a> -- DATETIME</td>
+</tr>
+</table>
+</DIV></DIV>
+</DIV>
+<BR><BR><BR><BR><BR><BR>
+<TABLE id="DateLimitDim_DIV" class="tables">
+<SCRIPT>registerStickyHeader("DateLimitDim_DIV");</SCRIPT>
+<TR valign="top"><TD><H2>DateLimitDim&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#DateLimitDim_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
+</TABLE>
+<DIV id="DateLimitDim_CNT" class="content">
+The Table TILDA.DateLimitDim:<UL>
+<LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>DateLimitDim_Factory</B>, <B>DateLimitDim_Data</B> in the package <B>tilda.data</B>.
+<LI>Is configured for normal <B>read/write</B> access.</LI>
+<LI>Is not OCC-Enabled. No record lifecycle columns (created/updated/deleted) have been generated.</LI>
+<LI>Defines foreign key(s) to <A href="TILDA___Docs.TILDA.html#DateDim_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>DateDim</A> </LI>
+<LI>Has the following identity:<UL><LI>Unique Index: invalidDate</LI>
+</UL></LI>
+</UL>
+<B>Description</B>: A single row for min, max and invalid dates for the Date_Dim<BR>
+<BR>
+This Table contains the following columns:<BLOCKQUOTE>
+ <TABLE id="DateLimitDim_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>1&nbsp;&nbsp;</TD>
+<TD onclick="onModalShowClicked('DateLimitDim-invalidDate')" align="right"><B id='DateLimitDim-invalidDate_DIV' class='columns dotted_underline cursor_pointer'>invalidDate</B>&nbsp;&nbsp;</TD>
+<TD>LocalDate&nbsp;/&nbsp;date&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The invalid date<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#DateDim_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>DateDim</A>: dt</TD></TR>
+</TABLE>
+</TD>
+</TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>2&nbsp;&nbsp;</TD>
+<TD onclick="onModalShowClicked('DateLimitDim-minDate')" align="right"><B id='DateLimitDim-minDate_DIV' class='columns dotted_underline cursor_pointer'>minDate</B>&nbsp;&nbsp;</TD>
+<TD>LocalDate&nbsp;/&nbsp;date&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The min date<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#DateDim_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>DateDim</A>: dt</TD></TR>
+</TABLE>
+</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>3&nbsp;&nbsp;</TD>
+<TD onclick="onModalShowClicked('DateLimitDim-maxDate')" align="right"><B id='DateLimitDim-maxDate_DIV' class='columns dotted_underline cursor_pointer'>maxDate</B>&nbsp;&nbsp;</TD>
+<TD>LocalDate&nbsp;/&nbsp;date&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The max date<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#DateDim_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>DateDim</A>: dt</TD></TR>
+</TABLE>
+</TD>
+</TR>
+</TABLE></BLOCKQUOTE>
+<DIV id='DateLimitDim-invalidDate_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('DateLimitDim-invalidDate_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateLimitDim_DIV'>DateLimitDim</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateLimitDim-invalidDate_DIV'>invalidDate</a></td>
+</tr>
+<tr><td>&nbsp;</td></tr>
+<tr bgcolor="#DFECF8">
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#DateDim-dt_DIV'>dt</a> -- DATE</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='DateLimitDim-minDate_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('DateLimitDim-minDate_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateLimitDim_DIV'>DateLimitDim</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateLimitDim-minDate_DIV'>minDate</a></td>
+</tr>
+<tr><td>&nbsp;</td></tr>
+<tr bgcolor="#DFECF8">
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#DateDim-dt_DIV'>dt</a> -- DATE</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='DateLimitDim-maxDate_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('DateLimitDim-maxDate_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateLimitDim_DIV'>DateLimitDim</a></td>
+<td><a href='TILDA___Docs.TILDA.html#DateLimitDim-maxDate_DIV'>maxDate</a></td>
+</tr>
+<tr><td>&nbsp;</td></tr>
+<tr bgcolor="#DFECF8">
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#DateDim_DIV'>DateDim</a></td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#DateDim-dt_DIV'>dt</a> -- DATE</td>
+</tr>
+</table>
+</DIV></DIV>
+</DIV>
+<BR><BR><BR><BR><BR><BR>
 <TABLE id="Testing_DIV" class="tables">
 <SCRIPT>registerStickyHeader("Testing_DIV");</SCRIPT>
 <TR valign="top"><TD><H2>Testing&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#Testing_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>

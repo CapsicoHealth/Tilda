@@ -455,6 +455,79 @@ CREATE UNIQUE INDEX DependencyDDLDummyTable_DepedencySTV ON TILDA.DependencyDDLD
 
 
 
+create table if not exists TILDA.DateDim -- The Date dimension, capturing pre-calculated metrics on dates
+ (  "dt"              date          not null   -- The Date date
+  , "epoch"           bigint        not null   -- The epoch date
+  , "dayName"         varchar(255)             -- Day name (i.e., Monday, Tuesday...) of the date
+  , "dayOfWeek"       integer                  -- ISO 8601 day of the week (Monday=1 to Sunday=7) of the date
+  , "dayOfMonth"      integer                  -- ISO 8601 day of the month (starting with 1) of the date
+  , "dayOfQuarter"    integer                  -- ISO 8601 day of the quarter (starting with 1) of the date
+  , "dayOfYear"       integer                  -- ISO 8601 day of the year (starting with 1) of the date
+  , "weekOfMonth"     integer                  -- ISO 8601 week of the month (starting with 1) of the date
+  , "weekOfYear"      integer                  -- ISO 8601 week of the year (starting with 1) of the date
+  , "monthOfYear"     integer                  -- ISO 8601 month of the year (starting with 1) of the date
+  , "monthName"       varchar(255)             -- Month name (i.e., January, February...) of the date.
+  , "monthNameShort"  varchar(255)             -- Monday short name (i.e., Jan, Feb...) of the date.
+  , "quarterOfYear"   integer                  -- ISO 8601 quarter of the year (starting with 1) of the date.
+  , "quarterName"     varchar(255)             -- Quarter name (i.e., Q1, Q2...) of the date.
+  , "year"            integer                  -- ISO 8601 year (1.e., 2018) of the date.
+  , "mmyyyy"          character(6)             -- The mmyyyy printable version of a date.
+  , "mmddyyyy"        character(8)             -- The mmddyyyy printable version of a date.
+  , "yyyymmdd"        character(8)             -- The yyyymmdd sortable printable version of a date.
+  , "isWeekend"       integer                  -- 1 if this is a weekend day, 0 otherwise.
+  , "isBusinessDay"   integer                  -- 1 if this is a business day, 0 otherwise.
+  , "isHoliday"       integer                  -- 1 if this is a holiday, 0 otherwise.
+  , "holidayName"     varchar(255)             -- The name of the holiday if applicable.
+  , "created"         timestamptz   not null   -- The timestamp for when the record was created.
+  , "lastUpdated"     timestamptz   not null   -- The timestamp for when the record was last updated.
+  , "deleted"         timestamptz              -- The timestamp for when the record was deleted.
+  , PRIMARY KEY("dt")
+ );
+COMMENT ON TABLE TILDA.DateDim IS E'The Date dimension, capturing pre-calculated metrics on dates';
+COMMENT ON COLUMN TILDA.DateDim."dt" IS E'The Date date';
+COMMENT ON COLUMN TILDA.DateDim."epoch" IS E'The epoch date';
+COMMENT ON COLUMN TILDA.DateDim."dayName" IS E'Day name (i.e., Monday, Tuesday...) of the date';
+COMMENT ON COLUMN TILDA.DateDim."dayOfWeek" IS E'ISO 8601 day of the week (Monday=1 to Sunday=7) of the date';
+COMMENT ON COLUMN TILDA.DateDim."dayOfMonth" IS E'ISO 8601 day of the month (starting with 1) of the date';
+COMMENT ON COLUMN TILDA.DateDim."dayOfQuarter" IS E'ISO 8601 day of the quarter (starting with 1) of the date';
+COMMENT ON COLUMN TILDA.DateDim."dayOfYear" IS E'ISO 8601 day of the year (starting with 1) of the date';
+COMMENT ON COLUMN TILDA.DateDim."weekOfMonth" IS E'ISO 8601 week of the month (starting with 1) of the date';
+COMMENT ON COLUMN TILDA.DateDim."weekOfYear" IS E'ISO 8601 week of the year (starting with 1) of the date';
+COMMENT ON COLUMN TILDA.DateDim."monthOfYear" IS E'ISO 8601 month of the year (starting with 1) of the date';
+COMMENT ON COLUMN TILDA.DateDim."monthName" IS E'Month name (i.e., January, February...) of the date.';
+COMMENT ON COLUMN TILDA.DateDim."monthNameShort" IS E'Monday short name (i.e., Jan, Feb...) of the date.';
+COMMENT ON COLUMN TILDA.DateDim."quarterOfYear" IS E'ISO 8601 quarter of the year (starting with 1) of the date.';
+COMMENT ON COLUMN TILDA.DateDim."quarterName" IS E'Quarter name (i.e., Q1, Q2...) of the date.';
+COMMENT ON COLUMN TILDA.DateDim."year" IS E'ISO 8601 year (1.e., 2018) of the date.';
+COMMENT ON COLUMN TILDA.DateDim."mmyyyy" IS E'The mmyyyy printable version of a date.';
+COMMENT ON COLUMN TILDA.DateDim."mmddyyyy" IS E'The mmddyyyy printable version of a date.';
+COMMENT ON COLUMN TILDA.DateDim."yyyymmdd" IS E'The yyyymmdd sortable printable version of a date.';
+COMMENT ON COLUMN TILDA.DateDim."isWeekend" IS E'1 if this is a weekend day, 0 otherwise.';
+COMMENT ON COLUMN TILDA.DateDim."isBusinessDay" IS E'1 if this is a business day, 0 otherwise.';
+COMMENT ON COLUMN TILDA.DateDim."isHoliday" IS E'1 if this is a holiday, 0 otherwise.';
+COMMENT ON COLUMN TILDA.DateDim."holidayName" IS E'The name of the holiday if applicable.';
+COMMENT ON COLUMN TILDA.DateDim."created" IS E'The timestamp for when the record was created.';
+COMMENT ON COLUMN TILDA.DateDim."lastUpdated" IS E'The timestamp for when the record was last updated.';
+COMMENT ON COLUMN TILDA.DateDim."deleted" IS E'The timestamp for when the record was deleted.';
+
+
+
+create table if not exists TILDA.DateLimitDim -- A single row for min, max and invalid dates for the Date_Dim
+ (  "invalidDate"  date  not null   -- The invalid date
+  , "minDate"      date  not null   -- The min date
+  , "maxDate"      date  not null   -- The max date
+  , CONSTRAINT fk_DateLimitDim_InvalidDt FOREIGN KEY ("invalidDate") REFERENCES TILDA.DateDim ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_DateLimitDim_MinDt FOREIGN KEY ("minDate") REFERENCES TILDA.DateDim ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_DateLimitDim_MaxDt FOREIGN KEY ("maxDate") REFERENCES TILDA.DateDim ON DELETE restrict ON UPDATE cascade
+ );
+COMMENT ON TABLE TILDA.DateLimitDim IS E'A single row for min, max and invalid dates for the Date_Dim';
+COMMENT ON COLUMN TILDA.DateLimitDim."invalidDate" IS E'The invalid date';
+COMMENT ON COLUMN TILDA.DateLimitDim."minDate" IS E'The min date';
+COMMENT ON COLUMN TILDA.DateLimitDim."maxDate" IS E'The max date';
+CREATE UNIQUE INDEX DateLimitDim_InvalidDate ON TILDA.DateLimitDim ("invalidDate");
+
+
+
 create table if not exists TILDA.Testing -- blah blah
  (  "refnum"       bigint              not null   -- The primary key for this record
   , "refnum2"      bigint[]            not null   -- The person's primary key
