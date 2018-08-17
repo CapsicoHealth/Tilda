@@ -290,7 +290,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Aug 16 2018, 13:43:05EDT
+ @generated Aug 17 2018, 00:34:57EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__KEY implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -776,7 +776,7 @@ This is the setter for:<BR>
 
 </TABLE>
 */
-   protected void setCreated(ZonedDateTime v) throws Exception
+    void setCreated(ZonedDateTime v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v == null)
@@ -816,7 +816,7 @@ This is the NOW setter for:<BR>
 
 </TABLE>
 */
-   protected final void setCreatedNow() throws Exception
+    final void setCreatedNow() throws Exception
     {
       setCreated(DateTimeUtil.NOW_PLACEHOLDER_ZDT);
     }
@@ -845,7 +845,7 @@ This is the UNDEFINED setter for:<BR>
 
 </TABLE>
 */
-   protected final void setCreatedUndefined() throws Exception
+    final void setCreatedUndefined() throws Exception
     {
       setCreated(DateTimeUtil.UNDEFINED_PLACEHOLDER_ZDT);
     }
@@ -874,7 +874,7 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 
 </TABLE>
 */
-   protected final void setCreated(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
+    final void setCreated(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
     {
       setCreated(DateTimeUtil.New(year, month, date, hourOfDay, minute, second, millis, z));
     }

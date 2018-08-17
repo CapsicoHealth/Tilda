@@ -678,6 +678,8 @@ public class Docs
     public static SortedSet<String> getFormulaMatches(Formula F)
       {
         SortedSet<String> FormulaMatches = new TreeSet<String>();
+        if (F.getParentView()._FormulasRegEx == null)
+         return FormulaMatches;
         Matcher M = F.getParentView()._FormulasRegEx.matcher(String.join("\n", F._FormulaStrs));
         while (M.find() == true)
           {
@@ -767,21 +769,23 @@ public class Docs
         M.appendTail(Str);
 
         SortedSet<String> FormulaMatches = new TreeSet<String>();
-        M = F.getParentView()._FormulasRegEx.matcher(Str.toString());
-        Str.setLength(0);
-        while (M.find() == true)
+        if (F.getParentView()._FormulasRegEx != null)
           {
-            String s = M.group(1);
-            for (Formula F2 : V._Formulas)
-              if (s.equals(F2._Name) == true)
-                {
-                  M.appendReplacement(Str, "<B style=\"color:#0000AA;\">" + s + "</B>");
-                  FormulaMatches.add(s);
-                  break;
-                }
+            M = F.getParentView()._FormulasRegEx.matcher(Str.toString());
+            Str.setLength(0);
+            while (M.find() == true)
+              {
+                String s = M.group(1);
+                for (Formula F2 : V._Formulas)
+                  if (s.equals(F2._Name) == true)
+                    {
+                      M.appendReplacement(Str, "<B style=\"color:#0000AA;\">" + s + "</B>");
+                      FormulaMatches.add(s);
+                      break;
+                    }
+              }
+            M.appendTail(Str);
           }
-        M.appendTail(Str);
-
         String FormulaStr = Str.toString();
 
         // Start Table
@@ -948,7 +952,7 @@ public class Docs
             + "<BLOCKQUOTE><PRE><TABLE class=\"Rowed\" border=\"0px\">");
             for (ViewPivot P : V._Pivots)
               {
-                Out.println("<TR valign=\"top\"><TD>" + P._VC._SameAsObj.getName() + "</TD><TD>"+P._VC._Description+"</TD><TR>");
+                Out.println("<TR valign=\"top\"><TD>" + P._VC._SameAsObj.getName() + "</TD><TD>" + P._VC._Description + "</TD><TR>");
                 Out.print("<TR><TD></TD><TD><TABLE class=\"NoRowed\" border=\"0px\"");
                 for (Value Val : P._Values)
                   Out.println("<TR><TD>" + Val._Value + "&nbsp;&nbsp;&nbsp;</TD><TD>" + Val._Description + "</TD></TR>");

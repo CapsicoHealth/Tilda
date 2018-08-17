@@ -293,7 +293,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   First = false;
                 else
                   Str.append(", ");
-                if (VC._SameAs != null && VC._SameAsObj == null && VC._FrameworkGenerated == true)
+                if (VC.isSameAsLitteral() == true)
                   Str.append(VC._SameAs);
                 else
                   {
@@ -527,7 +527,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                         }
                       else
                         Str.append(", ");
-                      if (VC._SameAsObj == null && VC._SameAs != null && VC._FrameworkGenerated == true)
+                      if (VC.isSameAsLitteral() == true)
                         {
                           Str.append(VC._SameAs);
                         }
@@ -551,7 +551,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   First = false;
                 else
                   Str.append(", ");
-                if (VC._SameAs != null && VC._SameAsObj == null && VC._FrameworkGenerated == true)
+                if (VC.isSameAsLitteral() == true)
                   Str.append(VC._SameAs);
                 else
                   {
@@ -604,7 +604,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
         // hasAggregates = true;
         // }
         // else
-        if (VC._SameAs != null && VC._SameAsObj == null && VC._FrameworkGenerated == true)
+        
+        // If the column has a sameAs string, but no sameAsObj and is managed, then we print the sameAs as is.
+        if (VC.isSameAsLitteral() == true)
           {
             Str.append(VC._SameAs);
           }
@@ -661,6 +663,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
     public void genDDL(PrintWriter OutFinal, View V)
     throws Exception
       {
+        if (V._Name.equals("Testing2View") == true)
+          LOG.debug("zzzzzz");
         String Str = PrintBaseView(V, false);
         if (V._Pivots.isEmpty() == false)
           {
@@ -685,6 +689,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
             .append("  TRUNCATE " + RName + ";\n")
             .append("  INSERT INTO " + RName + " (" + PrintInsertColumnNames(V) + ")\n     ");
 
+            if (V._Name.equals("Testing2View") == true)
+              LOG.debug("zzzzzz");
             if (V._Realize._SubRealized.length != 0)
               {
                 StringBuilder r = new StringBuilder();
@@ -804,7 +810,11 @@ public class Sql extends PostgreSQL implements CodeGenSql
               continue;
             String FormulaType = getColumnType(F.getType(), 8192, null, false);
             b.append("     -- ").append(String.join("\n     -- ", F._Description)).append("\n");
-            b.append("     , (").append(genFormulaCode(V, F)).append(")::" + FormulaType + " as \"").append(F._Name).append("\"\n");
+            if (First == true)
+              First = false;
+            else
+              b.append("     , ");
+            b.append("(").append(genFormulaCode(V, F)).append(")::" + FormulaType + " as \"").append(F._Name).append("\"\n");
           }
         b.append("\n from (\n").append(Str).append("\n      ) as T;");
         if (V._Realize != null)
@@ -1169,21 +1179,23 @@ public class Sql extends PostgreSQL implements CodeGenSql
         FormulaStr = Str.toString();
 
         // Resolve sub-formulas
-        M = F.getParentView()._FormulasRegEx.matcher(FormulaStr);
-        Str.setLength(0);
-        while (M.find() == true)
+        if (F.getParentView()._FormulasRegEx != null)
           {
-            String s = M.group(1);
-            for (Formula F2 : ParentView._Formulas)
-              if (s.equals(F2._Name) == true && s.equals(F._Name) == false)
-                {
-                  String FormulaType = getColumnType(F2.getType(), F2._Size, null, false);
-                  M.appendReplacement(Str, "(" + genFormulaCode(ParentView, F2) + ")::" + FormulaType);
-                  break;
-                }
+            M = F.getParentView()._FormulasRegEx.matcher(FormulaStr);
+            Str.setLength(0);
+            while (M.find() == true)
+              {
+                String s = M.group(1);
+                for (Formula F2 : ParentView._Formulas)
+                  if (s.equals(F2._Name) == true && s.equals(F._Name) == false)
+                    {
+                      String FormulaType = getColumnType(F2.getType(), F2._Size, null, false);
+                      M.appendReplacement(Str, "(" + genFormulaCode(ParentView, F2) + ")::" + FormulaType);
+                      break;
+                    }
+              }
+            M.appendTail(Str);
           }
-        M.appendTail(Str);
-
         return Str.toString();
       }
 

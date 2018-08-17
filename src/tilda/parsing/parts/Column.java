@@ -29,7 +29,7 @@ import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.DefaultType;
-import tilda.enums.FrameworkSourcedType;
+import tilda.enums.FrameworkColumnType;
 import tilda.enums.MultiType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.ProtectionType;
@@ -43,7 +43,7 @@ import tilda.utils.TextUtil;
 
 public class Column extends TypeDef
   {
-    static final Logger                LOG                = LogManager.getLogger(Column.class.getName());
+    static final Logger                  LOG                = LogManager.getLogger(Column.class.getName());
 
     /*@formatter:off*/
 	@SerializedName("name"       ) protected String      _Name       ;
@@ -59,25 +59,24 @@ public class Column extends TypeDef
     @SerializedName("jsonSchema" ) public JsonSchema     _JsonSchema ;
     /*@formatter:on*/
 
-    public transient boolean           _FrameworkManaged  = false;
-    public transient boolean           _TZGenerated       = false;
-    public transient AggregateType     _Aggregate         = null;                                        // For view columns really.
-    public transient ColumnMode        _Mode;
-    public transient ProtectionType    _Protect;
-    public transient Column            _SameAsObj;
-    public transient Object            _ParentObject;
-    public transient PaddingTracker    _PadderValueNames  = new PaddingTracker();
-    public transient PaddingTracker    _PadderValueValues = new PaddingTracker();
-    public transient boolean           _PrimaryKey        = false;
-    public transient boolean           _ForeignKey        = false;
-    public transient boolean           _UniqueIndex       = false;
-    public transient ColumnMapper      _MapperDef;
-    public transient ColumnValue       _DefaultCreateValue;
-    public transient ColumnValue       _DefaultUpdateValue;
+    public transient FrameworkColumnType _FCT               = FrameworkColumnType.NONE;
+    public transient AggregateType       _Aggregate         = null;                                        // For view columns really.
+    public transient ColumnMode          _Mode;
+    public transient ProtectionType      _Protect;
+    public transient Column              _SameAsObj;
+    public transient Object              _ParentObject;
+    public transient PaddingTracker      _PadderValueNames  = new PaddingTracker();
+    public transient PaddingTracker      _PadderValueValues = new PaddingTracker();
+    public transient boolean             _PrimaryKey        = false;
+    public transient boolean             _ForeignKey        = false;
+    public transient boolean             _UniqueIndex       = false;
+    public transient ColumnMapper        _MapperDef;
+    public transient ColumnValue         _DefaultCreateValue;
+    public transient ColumnValue         _DefaultUpdateValue;
 
-    protected transient int            _SequenceOrder     = -1;
+    protected transient int              _SequenceOrder     = -1;
 
-    private transient ValidationStatus _Validation        = ValidationStatus.NONE;
+    private transient ValidationStatus   _Validation        = ValidationStatus.NONE;
 
     public Column()
       {
@@ -409,32 +408,15 @@ public class Column extends TypeDef
 
     public boolean isCreateColumn()
       {
-        return _FrameworkManaged == false
+        return _FCT == FrameworkColumnType.NONE
         && _Mode == ColumnMode.NORMAL
         && _ParentObject.isAutoGenPrimaryKey(this) == false
         && _DefaultCreateValue == null
         && (_Invariant == false && _Nullable == false
         || _Invariant == true);
-
       }
 
-    public VisibilityType getVisibility()
-      {
-        return _ParentObject.getLifecycle() == ObjectLifecycle.READONLY || _MapperDef != null || (_FrameworkManaged == true && isOCCLastUpdated() == false && isOCCDeleted() == false) ? VisibilityType.PRIVATE
-        : _Invariant == true || _PrimaryKey == true || (_Mode == ColumnMode.AUTO && isOCCLastUpdated() == false && isOCCDeleted() == false) ? VisibilityType.PROTECTED
-        : VisibilityType.PUBLIC;
-      }
-
-    public boolean isCopyToColumn()
-      {
-        return _PrimaryKey == false && _Mode != ColumnMode.CALCULATED && _Invariant == false;
-      }
-
-    public boolean isSavedField()
-      {
-        return _PrimaryKey == true || _UniqueIndex == true;
-      }
-
+    /*
     public boolean isOCCGenerated()
       {
         return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && (_Name.equalsIgnoreCase("created") == true || _Name.equalsIgnoreCase("lastUpdated") == true || _Name.equalsIgnoreCase("createdETL") == true || _Name.equalsIgnoreCase("lastUpdatedETL") == true || _Name.equalsIgnoreCase("deleted") == true);
@@ -454,11 +436,29 @@ public class Column extends TypeDef
       {
         return Name.equalsIgnoreCase("created") || Name.equalsIgnoreCase("lastUpdated") || Name.equalsIgnoreCase("deleted");
       }
+*/
+
+    public VisibilityType getVisibility()
+      {
+        return _ParentObject.getLifecycle() == ObjectLifecycle.READONLY || _MapperDef != null || (_FCT != FrameworkColumnType.NONE && _FCT != FrameworkColumnType.OCC_LASTUPDATED && _FCT != FrameworkColumnType.OCC_DELETED) ? VisibilityType.PRIVATE
+        : _Invariant == true || _PrimaryKey == true || (_Mode == ColumnMode.AUTO && _FCT != FrameworkColumnType.OCC_LASTUPDATED && _FCT != FrameworkColumnType.OCC_DELETED) ? VisibilityType.PROTECTED
+        : VisibilityType.PUBLIC;
+      }
+
+    public boolean isCopyToColumn()
+      {
+        return _PrimaryKey == false && _Mode != ColumnMode.CALCULATED && _Invariant == false;
+      }
+
+    public boolean isSavedField()
+      {
+        return _PrimaryKey == true || _UniqueIndex == true;
+      }
 
     public boolean isJSONColumn()
       {
         return (_PrimaryKey == false || _ParentObject.isAutoGenPrimaryKey(this) == false)
-        && _Mode == ColumnMode.NORMAL && _FrameworkManaged == false && _Name.equals("deleted") == false;
+        && _Mode == ColumnMode.NORMAL && _FCT == FrameworkColumnType.NONE && _Name.equals("deleted") == false;
       }
 
     public boolean isPrimaryKey()
@@ -516,6 +516,11 @@ public class Column extends TypeDef
         if (N == null && _SameAs != null)
           N = _SameAs.substring(_SameAs.lastIndexOf('.') + 1);
         return N;
+      }
+
+    public boolean needsTZ()
+      {
+        return getType() == ColumnType.DATETIME && _FCT == FrameworkColumnType.NONE;
       }
 
   }

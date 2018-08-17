@@ -23,6 +23,7 @@ import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.ColumnMapperMode;
 import tilda.enums.ColumnMode;
+import tilda.enums.FrameworkColumnType;
 import tilda.enums.MultiType;
 import tilda.enums.ValidationStatus;
 import tilda.parsing.ParserSession;
@@ -87,7 +88,7 @@ public class ColumnEnum
                 Column Col = new Column(_ParentColumn.getName()+"EnumValue", null, 0, _ParentColumn._Nullable, _Name == ColumnMapperMode.DB ? ColumnMode.AUTO : ColumnMode.CALCULATED, 
                                         _ParentColumn._Invariant, null, "Enum value for '"+_ParentColumn.getName()+"' through '"+_DestObjectObj.getFullName()+"'.");
                 Col._SameAs = _DestObjectObj.getColumn("value").getFullName();
-                Col._FrameworkManaged = true;
+                Col._FCT = FrameworkColumnType.MAPPER_NAME;
                 Col._MapperDef = new ColumnMapper(new String[] { _ParentColumn.getName() }, _DestObject, _Name, null, _Multi);
                 _ParentColumn._ParentObject.AddColumnAfter(_ParentColumn, Col);
               }

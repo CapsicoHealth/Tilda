@@ -73,6 +73,16 @@ This Table contains the following columns:<BLOCKQUOTE>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>4&nbsp;&nbsp;</TD>
+<TD align="right"><B id='Testing2Realized-xxxLastUpdated_DIV' class='columns'>xxxLastUpdated</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">AUTO&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>The timestamp for when the record was last updated.</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>5&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-a1_DIV' class='columns'>a1</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;INTEGER&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -81,8 +91,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>5&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>6&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-a3b_DIV' class='columns'>a3b</B>&nbsp;&nbsp;</TD>
 <TD>List<Boolean> List<>&nbsp;/&nbsp;boolean[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -91,8 +101,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>6&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>7&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-a4_DIV' class='columns'>a4</B>&nbsp;&nbsp;</TD>
 <TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -101,8 +111,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>7&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>8&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-a4b_DIV' class='columns'>a4b</B>&nbsp;&nbsp;</TD>
 <TD>List<Double> List<>&nbsp;/&nbsp;double precision[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -111,8 +121,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>8&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>9&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-a5_DIV' class='columns'>a5</B>&nbsp;&nbsp;</TD>
 <TD>float&nbsp;/&nbsp;real&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -121,8 +131,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>9&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>10&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-a5b_DIV' class='columns'>a5b</B>&nbsp;&nbsp;</TD>
 <TD>List<Float> List<>&nbsp;/&nbsp;real[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -131,8 +141,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>10&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>11&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-a7_DIV' class='columns'>a7</B>&nbsp;&nbsp;</TD>
 <TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -141,8 +151,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>11&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>12&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-a7b_DIV' class='columns'>a7b</B>&nbsp;&nbsp;</TD>
 <TD>List<Integer> List<>&nbsp;/&nbsp;integer[]&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -151,8 +161,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>12&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>13&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-a8_DIV' class='columns'>a8</B>&nbsp;&nbsp;</TD>
 <TD>byte[]&nbsp;/&nbsp;BYTEA&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -161,8 +171,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>13&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>14&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-a8bTZ_DIV' class='columns'>a8bTZ</B>&nbsp;&nbsp;</TD>
 <TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -171,8 +181,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Generated helper column to hold the time zone ID for 'a8b'.</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>14&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>15&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-a8b_DIV' class='columns'>a8b</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -181,8 +191,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>The blah</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>15&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>16&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-a3_DIV' class='columns'>a3</B>&nbsp;&nbsp;</TD>
 <TD>boolean&nbsp;/&nbsp;boolean&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -191,8 +201,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Formula column: Not A3</TD>
 </TR>
-  <TR valign="top" bgcolor="#FFFFFF">
-    <TD>16&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>17&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-bastille_DIV' class='columns'>bastille</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -201,8 +211,8 @@ This Table contains the following columns:<BLOCKQUOTE>
 <TD align="center">-&nbsp;&nbsp;</TD>
 <TD>Formula column: Bastille Day</TD>
 </TR>
-  <TR valign="top" bgcolor="#DFECF8">
-    <TD>17&nbsp;&nbsp;</TD>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>18&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-toto_DIV' class='columns'>toto</B>&nbsp;&nbsp;</TD>
 <TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -260,6 +270,23 @@ This Table contains the following columns:<BLOCKQUOTE>
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
 <td><a href='TILDA___Docs.TILDA.html#Testing2Realized_DIV'>Testing2Realized</a></td>
 <td><a href='TILDA___Docs.TILDA.html#Testing2Realized-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='Testing2Realized-xxxLastUpdated_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('Testing2Realized-xxxLastUpdated_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Testing2Realized_DIV'>Testing2Realized</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Testing2Realized-xxxLastUpdated_DIV'>xxxLastUpdated</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
@@ -505,7 +532,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Aug 16 2018, 13:43:05EDT
+ @generated Aug 17 2018, 00:34:57EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTING2REALIZED implements tilda.interfaces.ReaderObject
@@ -819,6 +846,13 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Update</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Update&nbsp;&nbsp;</TD><TD>ALWAYS&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Last updated time</TD></TR>
+</TABLE>
+</TD></TR>
+
 </TABLE>
 */
    ZonedDateTime _lastUpdated;
@@ -838,6 +872,13 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Update</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Update&nbsp;&nbsp;</TD><TD>ALWAYS&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Last updated time</TD></TR>
+</TABLE>
+</TD></TR>
+
 </TABLE>
 */
    public final ZonedDateTime getLastUpdated()
@@ -858,6 +899,13 @@ This is the isNull for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Update</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Update&nbsp;&nbsp;</TD><TD>ALWAYS&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Last updated time</TD></TR>
+</TABLE>
+</TD></TR>
+
 </TABLE>
 */
    public final boolean isNullLastUpdated()
@@ -878,6 +926,13 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Update</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Update&nbsp;&nbsp;</TD><TD>ALWAYS&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Last updated time</TD></TR>
+</TABLE>
+</TD></TR>
+
 </TABLE>
 */
     final void setLastUpdated(ZonedDateTime v) throws Exception
@@ -913,6 +968,13 @@ This is the null setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Update</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Update&nbsp;&nbsp;</TD><TD>ALWAYS&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Last updated time</TD></TR>
+</TABLE>
+</TD></TR>
+
 </TABLE>
 */
     final void setNullLastUpdated()
@@ -923,6 +985,169 @@ This is the null setter for:<BR>
        __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.LASTUPDATED._Mask);
        __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.LASTUPDATED._Mask);
        _lastUpdated=null;
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2Realized.xxxLastUpdated -> TILDA.Testing2Realized."xxxLastUpdated"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.xxxLastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.xxxLastUpdated of type timestamptz</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Update</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Update&nbsp;&nbsp;</TD><TD>ALWAYS&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Last updated time</TD></TR>
+</TABLE>
+</TD></TR>
+
+</TABLE>
+*/
+   ZonedDateTime _xxxLastUpdated;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2Realized.xxxLastUpdated -> TILDA.Testing2Realized."xxxLastUpdated"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.xxxLastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.xxxLastUpdated of type timestamptz</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Update</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Update&nbsp;&nbsp;</TD><TD>ALWAYS&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Last updated time</TD></TR>
+</TABLE>
+</TD></TR>
+
+</TABLE>
+*/
+   public final ZonedDateTime getXxxLastUpdated()
+      { return _xxxLastUpdated; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2Realized.xxxLastUpdated -> TILDA.Testing2Realized."xxxLastUpdated"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.xxxLastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.xxxLastUpdated of type timestamptz</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Update</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Update&nbsp;&nbsp;</TD><TD>ALWAYS&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Last updated time</TD></TR>
+</TABLE>
+</TD></TR>
+
+</TABLE>
+*/
+   public final boolean isNullXxxLastUpdated()
+     { return __Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.XXXLASTUPDATED._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2Realized.xxxLastUpdated -> TILDA.Testing2Realized."xxxLastUpdated"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.xxxLastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.xxxLastUpdated of type timestamptz</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Update</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Update&nbsp;&nbsp;</TD><TD>ALWAYS&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Last updated time</TD></TR>
+</TABLE>
+</TD></TR>
+
+</TABLE>
+*/
+    final void setXxxLastUpdated(ZonedDateTime v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (v == null)
+        {
+          setNullXxxLastUpdated();
+        }
+       else if (v.equals(_xxxLastUpdated) == false)
+        {
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2Realized.xxxLastUpdated' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.XXXLASTUPDATED._Mask);
+          __Nulls.andNot(TILDA__TESTING2REALIZED_Factory.COLS.XXXLASTUPDATED._Mask);
+       _xxxLastUpdated = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2Realized.xxxLastUpdated -> TILDA.Testing2Realized."xxxLastUpdated"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.xxxLastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.xxxLastUpdated of type timestamptz</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>Update</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Update&nbsp;&nbsp;</TD><TD>ALWAYS&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Last updated time</TD></TR>
+</TABLE>
+</TD></TR>
+
+</TABLE>
+*/
+    final void setNullXxxLastUpdated()
+     {
+       long T0 = System.nanoTime();
+       if (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.XXXLASTUPDATED._Mask) == true) // already NULL
+        return;
+       __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.XXXLASTUPDATED._Mask);
+       __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.XXXLASTUPDATED._Mask);
+       _xxxLastUpdated=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -2915,6 +3140,7 @@ This is the null setter for:<BR>
           S.append(" "); C.getFullColumnVar(S, "TILDA", "Testing2Realized", "refnum");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2Realized", "name");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2Realized", "lastUpdated");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2Realized", "xxxLastUpdated");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2Realized", "a1");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2Realized", "a3b");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2Realized", "a4");
@@ -2957,7 +3183,7 @@ This is the null setter for:<BR>
           switch (__LookupId)
            {
              case 0:
-               if (isNullRefnum() == true) PS.setNull(++i, java.sql.Types.BIGINT );  else PS.setLong     (++i, _refnum     );
+               if (isNullRefnum() == true) PS.setNull(++i, java.sql.Types.BIGINT );  else PS.setLong     (++i, _refnum        );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -2990,23 +3216,24 @@ This is the null setter for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_refnum      = _refnum      =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.REFNUM._Mask     );
-                            _name        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.NAME._Mask       );
-                            _lastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.LASTUPDATED._Mask);
-                            _a1          =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A1._Mask         );
-                            _a3b = (List<Boolean>) C.getArray(RS, ++i, TILDA__TESTING2REALIZED_Factory.COLS.A3B._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A3B._Mask        );
-                            _a4          =                              RS.getDouble   (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A4._Mask         );
-                            _a4b = (List<Double>) C.getArray(RS, ++i, TILDA__TESTING2REALIZED_Factory.COLS.A4B._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A4B._Mask        );
-                            _a5          =                              RS.getFloat    (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A5._Mask         );
-                            _a5b = (List<Float>) C.getArray(RS, ++i, TILDA__TESTING2REALIZED_Factory.COLS.A5B._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A5B._Mask        );
-                            _a7          =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A7._Mask         );
-                            _a7b = (List<Integer>) C.getArray(RS, ++i, TILDA__TESTING2REALIZED_Factory.COLS.A7B._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A7B._Mask        );
-                            _a8          =                              RS.getBytes    (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A8._Mask         );
-                            _a8bTZ       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A8BTZ._Mask      ); else _a8bTZ       = _a8bTZ      .trim();
-                            _a8b         = ProcessZDT(_a8bTZ        , "tilda.data.TILDA.Testing2Realized.a8b"        , RS, ++i, TILDA__TESTING2REALIZED_Factory.COLS.A8B        , TILDA__TESTING2REALIZED_Factory.COLS.A8BTZ        ); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A8B._Mask        );
-                            _a3          =                              RS.getBoolean  (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A3._Mask         );
-                            _bastille    = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.BASTILLE._Mask   );
-                            _toto        = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.TOTO._Mask       );
+      __Saved_refnum         = _refnum         =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.REFNUM._Mask        );
+                               _name           = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.NAME._Mask          );
+                               _lastUpdated    = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.LASTUPDATED._Mask   );
+                               _xxxLastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.XXXLASTUPDATED._Mask);
+                               _a1             =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A1._Mask            );
+                               _a3b = (List<Boolean>) C.getArray(RS, ++i, TILDA__TESTING2REALIZED_Factory.COLS.A3B._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A3B._Mask           );
+                               _a4             =                              RS.getDouble   (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A4._Mask            );
+                               _a4b = (List<Double>) C.getArray(RS, ++i, TILDA__TESTING2REALIZED_Factory.COLS.A4B._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A4B._Mask           );
+                               _a5             =                              RS.getFloat    (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A5._Mask            );
+                               _a5b = (List<Float>) C.getArray(RS, ++i, TILDA__TESTING2REALIZED_Factory.COLS.A5B._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A5B._Mask           );
+                               _a7             =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A7._Mask            );
+                               _a7b = (List<Integer>) C.getArray(RS, ++i, TILDA__TESTING2REALIZED_Factory.COLS.A7B._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A7B._Mask           );
+                               _a8             =                              RS.getBytes    (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A8._Mask            );
+                               _a8bTZ          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A8BTZ._Mask         ); else _a8bTZ          = _a8bTZ         .trim();
+                               _a8b            = ProcessZDT(_a8bTZ           , "tilda.data.TILDA.Testing2Realized.a8b"           , RS, ++i, TILDA__TESTING2REALIZED_Factory.COLS.A8B           , TILDA__TESTING2REALIZED_Factory.COLS.A8BTZ           ); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A8B._Mask           );
+                               _a3             =                              RS.getBoolean  (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A3._Mask            );
+                               _bastille       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.BASTILLE._Mask      );
+                               _toto           = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.TOTO._Mask          );
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
@@ -3038,22 +3265,23 @@ This is the null setter for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "refnum"        + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.REFNUM._Mask) == true ? ": NULL" : ": " +                                   getRefnum     () )
-               + "; name"          + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.NAME._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getName       ()))
-               + "; lastUpdated"   + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.LASTUPDATED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getLastUpdated()))
-               + "; a1"            + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A1._Mask) == true ? ": NULL" : ": " +                                   getA1         () )
-               + "; a3b"           + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A3B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA3b        ()))
-               + "; a4"            + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A4._Mask) == true ? ": NULL" : ": " +                                   getA4         () )
-               + "; a4b"           + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A4B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA4b        ()))
-               + "; a5"            + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A5._Mask) == true ? ": NULL" : ": " +                                   getA5         () )
-               + "; a5b"           + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A5B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA5b        ()))
-               + "; a7"            + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7._Mask) == true ? ": NULL" : ": " +                                   getA7         () )
-               + "; a7b"           + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA7b        ()))
-               + "; a8"            + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8._Mask) == true ? ": NULL" : ": " +                                   getA8         () )
-               + "; a8b"           + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8B._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA8b        ()))
-               + "; a3"            + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A3._Mask) == true ? ": NULL" : ": " +                                   getA3         () )
-               + "; bastille"      + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.BASTILLE._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getBastille   ()))
-               + "; toto"          + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.TOTO._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getToto       ()))
+                   "refnum"           + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.REFNUM._Mask) == true ? ": NULL" : ": " +                                   getRefnum        () )
+               + "; name"             + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.NAME._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getName          ()))
+               + "; lastUpdated"      + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.LASTUPDATED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getLastUpdated   ()))
+               + "; xxxLastUpdated"   + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.XXXLASTUPDATED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getXxxLastUpdated()))
+               + "; a1"               + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A1._Mask) == true ? ": NULL" : ": " +                                   getA1            () )
+               + "; a3b"              + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A3B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA3b           ()))
+               + "; a4"               + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A4._Mask) == true ? ": NULL" : ": " +                                   getA4            () )
+               + "; a4b"              + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A4B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA4b           ()))
+               + "; a5"               + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A5._Mask) == true ? ": NULL" : ": " +                                   getA5            () )
+               + "; a5b"              + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A5B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA5b           ()))
+               + "; a7"               + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7._Mask) == true ? ": NULL" : ": " +                                   getA7            () )
+               + "; a7b"              + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A7B._Mask) == true ? ": NULL" : ": " + TextUtil.Print                   (getA7b           ()))
+               + "; a8"               + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8._Mask) == true ? ": NULL" : ": " +                                   getA8            () )
+               + "; a8b"              + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8B._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA8b           ()))
+               + "; a3"               + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A3._Mask) == true ? ": NULL" : ": " +                                   getA3            () )
+               + "; bastille"         + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.BASTILLE._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getBastille      ()))
+               + "; toto"             + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.TOTO._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getToto          ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

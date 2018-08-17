@@ -100,11 +100,12 @@ public class ViewRealize
           {
             if (TextUtil.FindStarElement(_Exclude, C._Name, false, 0) == -1)
               {
-                if (C.isOCCGenerated() == true || C._SameAsObj != null && C._SameAsObj.isOCCGenerated() == true)
+                if (C._FCT.isOCC() == true)
                  OCC = true;
                 Column newCol = new Column(C._Name, C._TypeStr, C._Size, true, C._Mode, C._Invariant, C._Protect, C._Description);
-                newCol._FrameworkManaged = C._FrameworkManaged == true || C._SameAsObj != null && C._SameAsObj._FrameworkManaged == true;
-                newCol._TZGenerated = C._TZGenerated == true || C._SameAsObj != null && C._SameAsObj._TZGenerated == true;
+                newCol._FCT = C._FCT;
+                newCol._SameAs = C._SameAs;
+                newCol._SameAsObj = C._SameAsObj;
                 O._Columns.add(newCol);
               }
           }

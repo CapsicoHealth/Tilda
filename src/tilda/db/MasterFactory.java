@@ -61,7 +61,7 @@ public class MasterFactory
             Class<?> _ColsClass = Class.forName(ColsClassName);
 
             for (Column C : Obj._Columns)
-              if (C != null && C._FrameworkManaged == false && C._Mode != ColumnMode.CALCULATED)
+              if (C != null && C._FCT.isManaged() == false && C._Mode != ColumnMode.CALCULATED)
                 {
                   Field F = _ColsClass.getDeclaredField(C.getName().toUpperCase());
                   ColumnDefinition CD = (ColumnDefinition) F.get(null);

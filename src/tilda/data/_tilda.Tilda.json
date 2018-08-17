@@ -448,6 +448,7 @@
           { "sameas": "Testing.refnum" }
          ,{ "sameas": "Testing.name"                       }
          ,{ "sameas": "Testing.lastUpdated"                }
+         ,{ "sameas": "Testing.lastUpdated"                , "name":"xxxLastUpdated"}
          ,{ "sameas": "Testing.created",   "joinOnly":true }
          ,{ "sameas": "Testing.a*" 
            ,"exclude":["a2*"]
@@ -507,6 +508,7 @@
          ,{ "sameas": "Testing2Realized.name"        }
          ,{ "sameas": "Testing2Realized.a8b*"        }
          ,{ "sameas": "Testing2Realized.lastUpdated" }
+         ,{ "sameas": "Testing2Realized.xxx*" }
         ]
       ,"realize": {
           "indices":[ 
@@ -515,12 +517,12 @@
            ]
         }
      }
-/*
+
     ,{ "name": "Testing4View"
       ,"description": "A test view to test .* and exclude and block."
       ,"columns":[
           { "sameas": "Testing2view.*"
-           ,"block":["a3"]   
+           ,"block":["a3", "*astUpdated"]   
           }
         ]
       ,"formulaColumns":[
@@ -528,6 +530,16 @@
            ,"type": "BOOLEAN"
            ,"formula":[ 
                "NOT a3 OR A3"
+             ]
+           ,"title": "Always True"
+           ,"description":[
+               "Blah..."
+             ]
+          }
+         ,{ "name": "lastUpdated"
+           ,"type": "DATETIME"
+           ,"formula":[ 
+               "GREATEST(lastUpdated, xxxLastUpdated)"
              ]
            ,"title": "Always True"
            ,"description":[
@@ -542,6 +554,6 @@
            ]
         }
      }
- */
+
    ]
 }

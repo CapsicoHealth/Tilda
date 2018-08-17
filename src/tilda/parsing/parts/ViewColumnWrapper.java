@@ -32,8 +32,7 @@ public class ViewColumnWrapper extends Column
         super(VCol._Name, VCol._SameAs, TextUtil.isNullOrEmpty(VCol._Description) == false ? VCol._Description : SameAsCol._Description);
         _SequenceOrder = SequenceOrder;
         _Invariant = SameAsCol._Invariant;
-        _FrameworkManaged = SameAsCol._FrameworkManaged;
-        _TZGenerated = SameAsCol._TZGenerated;
+        _FCT = SameAsCol._FCT;
         if (VCol._UseMapper == true && SameAsCol._Mapper != null)
           _Mapper = new ColumnMapper(SameAsCol._Mapper._SrcColumns, SameAsCol._Mapper._DestObject, SameAsCol._Mapper._Name, SameAsCol._Mapper._Group, SameAsCol._Mapper._Multi);
         if (VCol._UseEnum == true && SameAsCol._Enum != null)
@@ -79,10 +78,11 @@ public class ViewColumnWrapper extends Column
       {
         return _VCol.getName();
       }
-    
+/*    
     @Override
     public boolean isOCCGenerated()
     {
       return _VCol._SameAsObj == null ? super.isOCCGenerated() : _VCol._SameAsObj.isOCCGenerated();
     }
+*/
   }

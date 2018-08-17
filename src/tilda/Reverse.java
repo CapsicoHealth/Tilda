@@ -29,6 +29,7 @@ import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.SchemaMeta;
 import tilda.db.metadata.TableMeta;
 import tilda.enums.ColumnType;
+import tilda.enums.FrameworkColumnType;
 import tilda.parsing.parts.Column;
 import tilda.utils.AsciiArt;
 import tilda.utils.NumberFormatUtil;
@@ -70,7 +71,7 @@ public class Reverse
                 boolean autoPK = false;
                 for (ColumnMeta Col : T.getColumnMetaList())
                   {
-                    if (Column.isOCCColumnName(Col._NameOriginal) == true)
+                    if (FrameworkColumnType.isOCCColumnName(Col._NameOriginal) == true)
                      ++colNum;
                     if (   Col._NameOriginal.equals("refnum") == true 
                         && T._PrimaryKey != null && T._PrimaryKey._Columns.size() == 1 && T._PrimaryKey._Columns.get(0).equals("refnum") == true
@@ -81,7 +82,7 @@ public class Reverse
                 colNum = -1;
                 for (ColumnMeta Col : T.getColumnMetaList())
                   {
-                    if (isOCC == true && Column.isOCCColumnName(Col._NameOriginal) == true)
+                    if (isOCC == true && FrameworkColumnType.isOCCColumnName(Col._NameOriginal) == true)
                      continue;
                     if (autoPK == true && Col._NameOriginal.equals("refnum") == true)
                      continue;
