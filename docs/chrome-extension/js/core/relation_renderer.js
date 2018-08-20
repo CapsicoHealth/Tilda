@@ -42,7 +42,7 @@ define(["jointjs", "lodash", "jquery",
       }
       var attrs = {
         '.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' },
-        'key': pKey+"#"+source.get("friendlyName")+"#"+target.get("friendlyName")
+        'key': key
       }
       if(source.get('_type') == "Object"){
         if(target.get("schemaName") != source.get("schemaName")){
@@ -84,8 +84,12 @@ define(["jointjs", "lodash", "jquery",
     }
     var vertices = linkAttrs.vertices;
     var link = new joint.dia.Link(linkAttrs);
+    link.set("key", key);
+    link.set("pKey", pKey);
     var eventHandler = function(event){
       var attributes = event.attributes;
+      console.log("pKey -> "+this.get('pKey'));
+      console.log("key -> "+this.get('key'));      
       window.tildaCache[key] = _.merge(attributes, { vertices: this.get('vertices') })
     }
     if(vertices){

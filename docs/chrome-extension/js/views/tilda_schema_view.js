@@ -4,16 +4,25 @@ define(['text!../templates/tilda_schema/_new.html',
   var error = function(error){
     console.log(error.message);
     console.log(error.stack);
+
   }
+  String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.split(search).join(replacement);
+  };
   Array.prototype.diff = function(a) {
       return this.filter(function(i) {return a.indexOf(i) < 0;});
   };
+  String.prototype.clean = function()
+  {
+    return this.replace(/[&\/\\#,+()$~%.'":*?<>{}\s]/g, '');
+  }
   var SCHEMA_REGEX = /\_tilda\.([A-Z][A-Za-z_0-9]+)\.json$/i;
   window.renderedCache = {};
   var svgHTML = {}
   var defaultCanvases = [{name: "object", title: "Tables Graph", package: null, viewOnly: false, scale: 1}, {name: "view", title: "Views Graph", package: null, viewOnly: true, scale: 1}];
-  svgHTML["object"] = { name: "Tables Graph", svg: null };
-  svgHTML["view"] = { name: "Views Graph", svg: null };
+  svgHTML["object"] = { name: "object", svg: null };
+  svgHTML["view"] = { name: "view", svg: null };
   var olderViewName = null;
   var Backbone = require('backbone');
   var _ = require('lodash');
@@ -57,6 +66,7 @@ define(['text!../templates/tilda_schema/_new.html',
       {
         value.package = package;
         var p = new _Parser(fName, "obj_c", {viewOnly: value.viewOnly, package: value.package, name: value.name, scale: value.scale});
+        p.removeAll();
         svgHTML[value.name] = svgHTML[value.name] || {};
         svgHTML[value.name]["svg"] = p.paper.$el.find("svg")[0].parentElement.innerHTML;
         svgHTML[value.name]["name"] = value.name;
@@ -107,6 +117,7 @@ define(['text!../templates/tilda_schema/_new.html',
       },
       'click .newCanvas': function(){
         $('.deleteCanvas').hide();
+        $("#new_canvas").val(1);
         $('#createCanvasD').modal('show');
       }
     },
@@ -128,8 +139,8 @@ define(['text!../templates/tilda_schema/_new.html',
       {
         return canvas != null;
       });
-      $("#canvas_name").data('oldValue', selectValue);
-      $('#canvas_name').val(selectValue);
+      $("#canvas_title").data('oldTitle', selectValue);
+      $('#canvas_title').val(canvasConfig.title);
       $('.deleteCanvas').html('Delete ?');
       $('.deleteCanvas').data('confirmed', false);
       $('#createCanvasD').modal('show');
@@ -150,10 +161,10 @@ define(['text!../templates/tilda_schema/_new.html',
         return false;
       }
       var $select = $('select.add-view-holder');
-      var selectValue = $select.val();
+      var canvasName = $select.val();
       var canvasConfig = tildaCache.canvases.filter(function(canvas)
       {
-        return canvas!= null && canvas.name == selectValue;
+        return canvas!= null && canvas.name == canvasName;
       })[0];
       tildaCache.canvases = tildaCache.canvases.filter(function(canvas)
       {
@@ -163,8 +174,8 @@ define(['text!../templates/tilda_schema/_new.html',
       delete svgHTML[name];
       delete tildaCache.canvases[index];
       deleteTildaCache(canvasConfig.name);
-      $select.find('option[value="'+selectValue+'"]').remove();
-      $("#canvas_name").val('');
+      $select.find('option[value="'+canvasName+'"]').remove();
+      $("#canvas_title").val('');
       $("#new_canvas").val(1);
       $('select.add-view-holder').trigger('change');
       $('#createCanvasD').modal('hide');
@@ -176,43 +187,42 @@ define(['text!../templates/tilda_schema/_new.html',
     {
       var currentOpts = this.schemaParser_object.opts;
       var $select = $("select.add-view-holder");
-      var name = $("#canvas_name").val();
-      var oldName = $("#canvas_name").data('oldValue');
+      var name = null;
+      var title = $("#canvas_title").val();
+      var oldName = $("#canvas_title").data('oldValue');
       var new_canvas = parseInt($("#new_canvas").val());
       if(new_canvas != 1)
       {
+        name = $select.val();
         var canvasConfig = tildaCache.canvases.filter(function(canvas)
         {
-          return canvas!= null && canvas.name == oldName;
+          return canvas!= null && canvas.name == name;
         })[0];
         tildaCache.canvases = tildaCache.canvases.filter(function(canvas)
         {
           return canvas != null;
         });
-        canvasConfig.name = name;
-        $select.find('option[value="'+oldName+'"]').remove();
-        t = svgHTML[oldName]
-        svgHTML[name] = t;
-        deleteTildaCache(oldName);
-        delete svgHTML[oldName];
+        canvasConfig.title = title;
+        $select.find('option[value="'+name+'"]').html(canvasConfig.title);
       }
       else
       {
+        name = title.clean();
         oldName = this.schemaParser_object.canvasName;
-        svgHTML[name] = { name: name, svg: null };
+        svgHTML[name] = { name: name, svg: null, title: title };
         window.tildaCache.canvases.push({
           name: name,
           package: currentOpts.package,
           viewOnly: (currentOpts.viewOnly || false),
           scale: currentOpts.scale
         })
+        copyTildaCache(oldName, name);
+        $select.append("<option value='"+name+"'>"+title+"</option>");
       }
-      copyTildaCache(oldName, name);
-      $select.append("<option value='"+name+"'>"+name+"</option>");
       $select.val(name);
       // $(".showObj").val(name);
       $('#createCanvasD').modal('hide');      
-      $("#canvas_name").val('');
+      $("#canvas_title").val('');
       $("#new_canvas").val(1);
       olderViewName = name;
       $('select.add-view-holder').trigger('change');
@@ -243,7 +253,9 @@ define(['text!../templates/tilda_schema/_new.html',
           {
             if(v != null)
             {
-              $("select.add-view-holder").append("<option value='"+v.name+"'>"+v.name+"</option>");
+              v.title = v.title || v.name;
+              v.name = (v.name || v.title).clean();
+              $("select.add-view-holder").append("<option value='"+v.name+"'>"+v.title+"</option>");
             }
           })
 
@@ -325,12 +337,23 @@ define(['text!../templates/tilda_schema/_new.html',
           return canvas!= null && canvas.name == selectValue;
         })[0];
         canvasConfig.scale = currentScale;
+        that.clearAll();
         that.schemaParser_object = new _Parser(schemaFname, "obj_c", {viewOnly: canvasConfig.viewOnly, package: canvasConfig.package, name: canvasConfig.name, scale: canvasConfig.scale});
       }
       olderViewName = selectValue;
       schemaEntry.file(function(schemaEntryF){
         reader.readAsText(schemaEntryF);
       });
+    },
+    clearAll: function()
+    {
+      if(this.schemaParser_object != null)
+      {
+        this.schemaParser_object.removeAll();
+      }
+      delete window.graph;
+      delete window.dock_graph;
+      delete this.schemaParser_object;
     },
     render: function(){
       var that = this;
@@ -449,7 +472,7 @@ define(['text!../templates/tilda_schema/_new.html',
                     var svg = svgs[i];\n\
                     var bbox = svg.getBBox();\n\
                     svg.setAttribute('viewBox', [bbox.x, bbox.y, bbox.width, bbox.height]);\n\
-                    svg.width.baseVal.valueAsString = window.innerWidth;\n\
+                    svg.width.baseVal.valueAsString = bbox.width;\n\
                     svg.height.baseVal.valueAsString = bbox.height;\n\
                   }\n\
                   bindElementClickEvent();\n\
@@ -460,7 +483,12 @@ define(['text!../templates/tilda_schema/_new.html',
             $.each(svgHTML, function(key, value){
               if(value.svg != null)
               {
-                blobArr.push("<fieldset><legend>"+value.name+"</legend>");
+                var canvasConfig = tildaCache.canvases.filter(function(canvas)
+                {
+                  return canvas!= null && canvas.name == value.name;
+                })[0];
+                debugger;
+                blobArr.push("<fieldset data-key='"+canvasConfig.name+"'><legend>"+canvasConfig.title+"</legend>");
                 blobArr.push(value.svg);
                 blobArr.push("</fieldset>");
                 blobArr.push("<br/>\n");

@@ -64,6 +64,17 @@ function(joint, ParserElement, CEV, Helpers, LinkRenderer, ObjectCollection){
         $el.find(".connection").attr("stroke-width", 1);
       })
     }
+    this.removeAll = function()
+    {
+      if(window.graph != null)
+      {
+        window.graph.clear();
+      }
+      if(window.dock_graph != null)
+      {
+        window.dock_graph.clear();
+      }
+    }
     this.render = function(what){
       var that = this;
 
