@@ -162,7 +162,6 @@ define(['text!../templates/tilda_schema/_new.html',
       var index = tildaCache.canvases.indexOf(canvasConfig);
       delete svgHTML[name];
       delete tildaCache.canvases[index];
-      debugger;
       deleteTildaCache(canvasConfig.name);
       $select.find('option[value="'+selectValue+'"]').remove();
       $("#canvas_name").val('');
@@ -180,11 +179,6 @@ define(['text!../templates/tilda_schema/_new.html',
       var name = $("#canvas_name").val();
       var oldName = $("#canvas_name").data('oldValue');
       var new_canvas = parseInt($("#new_canvas").val());
-      if(name == "object" || name == "view")
-      {
-        console.error("Name cannot be object or view");
-        return false;
-      }
       if(new_canvas != 1)
       {
         var canvasConfig = tildaCache.canvases.filter(function(canvas)
@@ -309,10 +303,6 @@ define(['text!../templates/tilda_schema/_new.html',
         return false;
       }
       $('.renameCanvas').parent().removeClass('hidden');
-      if(selectValue == 'object' || selectValue == 'view')
-      {
-        $('.renameCanvas').parent().addClass('hidden');
-      }
       if(olderViewName != null)
       {
         if(svgHTML[olderViewName] == null)
@@ -459,7 +449,7 @@ define(['text!../templates/tilda_schema/_new.html',
                     var svg = svgs[i];\n\
                     var bbox = svg.getBBox();\n\
                     svg.setAttribute('viewBox', [bbox.x, bbox.y, bbox.width, bbox.height]);\n\
-                    svg.width.baseVal.valueAsString = bbox.width;\n\
+                    svg.width.baseVal.valueAsString = window.innerWidth;\n\
                     svg.height.baseVal.valueAsString = bbox.height;\n\
                   }\n\
                   bindElementClickEvent();\n\
@@ -468,11 +458,14 @@ define(['text!../templates/tilda_schema/_new.html',
             var blobArr = ["<style>"+css+"</style>"];
             blobArr.push("<div class='container'>"); 
             $.each(svgHTML, function(key, value){
-              blobArr.push("<fieldset><legend>"+value.name+"</legend>");
-              blobArr.push(value.svg);
-              blobArr.push("</fieldset>");
-              blobArr.push("<br/>\n");
-              blobArr.push("<br/>\n");
+              if(value.svg != null)
+              {
+                blobArr.push("<fieldset><legend>"+value.name+"</legend>");
+                blobArr.push(value.svg);
+                blobArr.push("</fieldset>");
+                blobArr.push("<br/>\n");
+                blobArr.push("<br/>\n");                
+              }
             });
             blobArr.push("\n</div>\n");
             blobArr.push(script);

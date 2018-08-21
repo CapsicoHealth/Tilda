@@ -414,7 +414,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 30 2018, 18:43:21EDT
+ @generated Aug 17 2018, 03:41:49EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__JOB_DETAIL implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -3084,6 +3084,9 @@ This is the hasChanged for:<BR>
                + "; FileProcessEndTime"       + (__Nulls.intersects(TILDA__JOB_DETAIL_Factory.COLS.FILEPROCESSENDTIME._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getFileProcessEndTime    ()))
                + "; Status"                   + (__Nulls.intersects(TILDA__JOB_DETAIL_Factory.COLS.STATUS._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getStatus                ()))
                + "; Error"                    + (__Nulls.intersects(TILDA__JOB_DETAIL_Factory.COLS.ERROR._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getError                 ()))
+               + "; created: "                                                                                                                   + DateTimeUtil.printDateTimeForJSON(getCreated               ())
+               + "; lastUpdated: "                                                                                                               + DateTimeUtil.printDateTimeForJSON(getLastUpdated           ())
+               + "; deleted"                  + (__Nulls.intersects(TILDA__JOB_DETAIL_Factory.COLS.DELETED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted               ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;

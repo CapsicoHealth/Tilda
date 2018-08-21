@@ -42,6 +42,28 @@
        ,"subWhere": "Test.deleted is null"
        ,"queries": [
          ]
+      ,"formulaColumns":[
+          { "name": "test_loop_1"
+           ,"type": "STRING", "size":100
+           ,"formula":[ 
+               "'test_loop_1: '||(a3*2)||test_loop_2"
+             ]
+           ,"title": "test_loop_2 Multiplied By Two"
+           ,"description":[
+               "Blah..."
+             ]
+          }
+         ,{ "name": "test_loop_2"
+           ,"type": "STRING", "size":100
+           ,"formula":[ 
+               "'test_loop_2: '||(a3*2)||test_loop_1"
+             ]
+           ,"title": "test_loop_1 Multiplied By Two"
+           ,"description":[
+               "Blah..."
+             ]
+          }
+        ]
        ,"json":[
             { "name": "", "columns": ["refnum", "name", "userId"] }
          ]

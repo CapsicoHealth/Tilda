@@ -372,3 +372,69 @@ end loop;
 end;
 $$
 LANGUAGE plpgsql;
+
+
+
+
+-- compares 2 tables row by row as per the identify columns and check if they are all equals.
+-- returns the number of rows with a discrepancy.
+CREATE OR REPLACE FUNCTION tilda.CompareTables(table1 varchar, identity1 varchar[], columns1 varchar[], table2 varchar, identity2 varchar[], columns2 varchar[])
+  RETURNS BIGINT AS
+$BODY$
+declare
+  v_query1 text;
+  v_query2 text;
+  v_query3 text;
+  v_txt text;
+  v_txt2 text;
+  v_res1 BIGINT;
+  v_res2 BIGINT;
+BEGIN
+  if identity2 is null then
+    identity2:= identity1;
+  end if;
+  if columns2 is null then
+    columns2:= columns1;
+  end if;
+
+  -- sub select for first table
+  select '"'||array_to_string(identity1, '","')||'"' into v_txt;
+  v_query1:= '(select '||v_txt;
+  select '"'||array_to_string(columns1, '","')||'"' into v_txt;
+  v_query1:= v_query1||', row_to_json(row('||v_txt||'))'||E'\n'||'        from '||table1||') t1';
+  -- count for the first table
+  EXECUTE 'select count(*) from '||v_query1 INTO v_res1;
+
+  -- sub select for second table
+  select '"'||array_to_string(identity2, '","')||'"' into v_txt;
+  v_query2:= '(select '||v_txt;
+  select '"'||array_to_string(columns2, '","')||'"' into v_txt;
+  v_query2:= v_query2||', row_to_json(row('||v_txt||'))'||E'\n'||'        from '||table2||') t2';
+  -- count for the second table
+  EXECUTE 'select count(*) from '||E'\n'||'        '||v_query2 INTO v_res2;
+
+  -- test that the 2 counts are the same
+  if v_res1-v_res2 <> 0 then
+   return v_res1-v_res2;
+  end if;
+
+  v_txt:='';
+  v_txt2:='';
+  FOR i IN array_lower(identity1, 1) .. array_upper(identity1, 1)
+  LOOP
+    if length(v_txt) <> 0 then
+       v_txt:=v_txt||E'\n'||'             and ';
+       v_txt2:=v_txt2||E'\n'||'   and ';
+    end if;
+    v_txt:=v_txt||'t1."'||identity1[i]||'" = t2."'||identity2[i]||'"';
+    v_txt2:=v_txt2||'(t1."'||identity1[i]||'" is null or t2."'||identity2[i]||'" is null)';
+  END LOOP;
+
+  v_query3:='select count(*)'||E'\n'||' from '||v_query1||E'\n\n'||' full outer join '||v_query2||E'\n'||'              on '||v_txt||E'\n'||' where '||v_txt2;
+  RAISE NOTICE '%',v_query3;
+  EXECUTE v_query3 INTO v_res1;
+
+  RETURN v_res1;
+END; $BODY$
+  LANGUAGE plpgsql STABLE
+  COST 100;

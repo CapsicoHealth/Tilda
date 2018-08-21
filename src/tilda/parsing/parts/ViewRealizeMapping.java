@@ -51,8 +51,8 @@ public class ViewRealizeMapping
         if (TextUtil.isNullOrEmpty(_Name) == true)
           return PS.AddError("A realize-mapping for '" + _ParentView.getFullName() + "' is being defined without a column.");
 
-//        if (_ParentView.getColumn(_Name) == null && _ParentView.getFormula(_Name) == null)
-//          return PS.AddError("A realize-mapping for '" + _ParentView.getFullName() + "' is being defined for column/formula '" + _Name + "' which cannot be found.");
+        // if (_ParentView.getColumn(_Name) == null && _ParentView.getFormula(_Name) == null)
+        // return PS.AddError("A realize-mapping for '" + _ParentView.getFullName() + "' is being defined for column/formula '" + _Name + "' which cannot be found.");
 
         if (TextUtil.isNullOrEmpty(_Mapper) == true)
           return PS.AddError("A realize-mapping for '" + _ParentView.getFullName() + "' is being defined for column '" + _Name + "' without a mapper.");
@@ -73,14 +73,16 @@ public class ViewRealizeMapping
           }
         M.appendTail(Str);
 
-        M = _ParentView._FormulasRegEx.matcher(Str.toString());
-        Str.setLength(0);
-        while (M.find() == true)
+        if (_ParentView._FormulasRegEx != null)
           {
-            M.appendReplacement(Str, '"' + M.group(1) + '"');
+            M = _ParentView._FormulasRegEx.matcher(Str.toString());
+            Str.setLength(0);
+            while (M.find() == true)
+              {
+                M.appendReplacement(Str, '"' + M.group(1) + '"');
+              }
+            M.appendTail(Str);
           }
-        M.appendTail(Str);
-
         return Str + " as " + "\"" + _Name + "\"";
       }
 

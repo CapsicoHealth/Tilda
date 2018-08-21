@@ -327,7 +327,7 @@ public class TildaFactory implements CodeGenTildaFactory
                   Out.println("        Errors.add(new StringStringPair(" + TextUtil.EscapeDoubleQuoteWithSlash(C.getName()) + ", \"Parameter is of a binary type and cannot be passed as a string value.\"));");
                   continue;
                 }
-              if (C._FrameworkManaged == true || C._Mode != ColumnMode.NORMAL)
+              if (C._FCT.isManaged() == true || C._Mode != ColumnMode.NORMAL)
                 continue;
               String Pad = C._ParentObject.getColumnPad(C.getName());
               Out.print("       " + (C.isCollection() == true && C._JsonSchema == null ? JavaJDBCType.getFieldType(C) : JavaJDBCType.getFieldTypeBaseClass(C) + "      ")
@@ -363,7 +363,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println(");");
         Out.println();
         for (Column C : O._Columns)
-          if (C != null && C.getType() != ColumnType.BINARY && C._FrameworkManaged == false && C._Mode == ColumnMode.NORMAL && CreateColumns.contains(C) == false)
+          if (C != null && C.getType() != ColumnType.BINARY && C._FCT.isManaged() == false && C._Mode == ColumnMode.NORMAL && CreateColumns.contains(C) == false)
             {
               String Pad = O._PadderColumnNames.getPad(C.getName());
               Out.println("      if (_" + C.getName() + Pad + "!= null) Obj.set" + TextUtil.CapitalizeFirstCharacter(C.getName()) + Pad + "(_" + C.getName() + Pad + ");");

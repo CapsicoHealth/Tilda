@@ -26,7 +26,10 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.enums.FrameworkSourcedType;
+import tilda.enums.ObjectLifecycle;
 import tilda.parsing.ParserSession;
+import tilda.utils.TextUtil;
 
 public class ViewRealize
   {
@@ -36,7 +39,9 @@ public class ViewRealize
     @SerializedName("indices"    ) public List<Index> _Indices    = new ArrayList<Index>();
     @SerializedName("subRealized") public String[]    _SubRealized= new String[] { };
     
-    @SerializedName("excludes") public String[]       _Excludes   = new String[] { };
+    // It was "exclude" for view columns, so why was it ever "excludes" here? Not consistent.
+    @SerializedName("excludes") public String[]       _Excludes_DEPRECATED   = new String[] { };
+    @SerializedName("exclude" ) public String[]       _Exclude       = new String[] { };
     @SerializedName("mappings") public List<ViewRealizeMapping> _Mappings = new ArrayList<>();
     /*@formatter:on*/
 
@@ -50,11 +55,15 @@ public class ViewRealize
     public transient boolean _FailedValidation = false;
 
 
-    public boolean Validate(ParserSession PS, View ParentView, Base ParentRealized)
+    public boolean Validate(ParserSession PS, View ParentView, ViewRealizedWrapper ParentRealized)
       {
         int Errs = PS.getErrorCount();
         _ParentView = ParentView;
         _ParentRealized = ParentRealized;
+        
+        // Taking care of deprecated stuff...
+        if (_Exclude.length == 0)
+          _Exclude = _Excludes_DEPRECATED;
 
         Set<String> Names = new HashSet<String>();
         for (Index I : _Indices)
@@ -72,7 +81,47 @@ public class ViewRealize
               VRM.Validate(PS, ParentView);
               if (Names.add(VRM._Name) == false)
                 PS.AddError("Mapping '" + VRM._Name + "' is duplicated in the realize section for view '" + ParentView.getFullName() + "'.");
+              if (ParentView.getColumn(VRM._Name) == null && ParentView.getFormula(VRM._Name) == null)
+                PS.AddError("Mapping '" + VRM._Name + "' is defined without a matching column/formula in the main view '" + ParentView.getFullName() + "'.");
             }
+        
+        Object O = new Object();
+        O._FST = FrameworkSourcedType.REALIZED;
+        O._Name = ParentView.getRealizedTableName(false);
+        O._Description = "Realized table for view "+ParentView.getShortName()+": "+ParentRealized._O._Description;
+        O.addQueries(ParentView._Queries);
+        O._OutputMaps = ParentView._OutputMaps;
+        O._LCStr = ObjectLifecycle.READONLY.name();
+        O._Indices = _Indices;
+        
+        boolean OCC = false;
+//        LOG.debug(ParentRealized._O.getFullName()+": "+TextUtil.Print(ParentRealized._O.getColumnNames()));
+        for (Column C : ParentRealized._O._Columns)
+          {
+            if (TextUtil.FindStarElement(_Exclude, C._Name, false, 0) == -1)
+              {
+                if (C._FCT.isOCC() == true)
+                 OCC = true;
+                Column newCol = new Column(C._Name, C._TypeStr, C._Size, true, C._Mode, C._Invariant, C._Protect, C._Description);
+                newCol._FCT = C._FCT;
+                newCol._SameAs = C._SameAs;
+                newCol._SameAsObj = C._SameAsObj;
+                O._Columns.add(newCol);
+              }
+          }
+        O._OCC = OCC;
+        O._DBOnly = ParentView._DBOnly;
+        ParentView._ParentSchema._Objects.add(O);
+        O.Validate(PS, ParentView._ParentSchema);
+
+//        if (O._Name.equals("Testing2Realized") == true)
+//          LOG.debug("yyyyy");
+//        for (Column C : O._Columns)
+//          {
+//            LOG.debug(C.getFullName()+": isOCCGenerated="+C.isOCCGenerated());
+//            if (C._SameAsObj != null)
+//             LOG.debug(C._SameAsObj.getFullName()+": isOCCGenerated="+C._SameAsObj.isOCCGenerated());
+//          }
 
         return Errs == PS.getErrorCount();
       }

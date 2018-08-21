@@ -37,7 +37,7 @@ This view depends on the following filter(s), sub-view(s), and/or root table(s):
 <BLOCKQUOTE><TABLE class="TreeTable Rowed" border="0px" cellspacing="0px" cellpadding="2px"></TABLE></BLOCKQUOTE>
 This View contains the following columns:<BLOCKQUOTE>
  <TABLE id="MeasureFormulaView_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
-   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description/<label>Formula<input type="checkbox" onchange="filterTable('MeasureFormulaView_TBL', 'F')", id="MeasureFormulaView_TBL_F"></label></TH></TR>
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('MeasureFormulaView-measureRefnum')" align="right"><B id='MeasureFormulaView-measureRefnum_DIV' class='columns dotted_underline cursor_pointer'>measureRefnum</B>&nbsp;&nbsp;</TD>
@@ -425,7 +425,7 @@ This View contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jul 30 2018, 18:43:21EDT
+ @generated Aug 17 2018, 03:41:49EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__MEASUREFORMULAVIEW implements tilda.interfaces.ReaderObject

@@ -29,6 +29,7 @@ import tilda.enums.FrameworkSourcedType;
 import tilda.enums.NVPSourceType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.OutputFormatType;
+import tilda.enums.TildaType;
 import tilda.generation.GeneratorSession;
 import tilda.generation.interfaces.CodeGenTildaJson;
 import tilda.parsing.parts.Base;
@@ -58,7 +59,7 @@ public class TildaJson implements CodeGenTildaJson
         boolean needTime = false;
         if (O._LC != ObjectLifecycle.READONLY)
           for (Column C : O._Columns)
-            if (C != null && (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATE) && Object.isOCCColumn(C) == false)
+            if (C != null && (C.getType() == ColumnType.DATETIME || C.getType() == ColumnType.DATE) && C._FCT.isOCC() == false)
               {
                 needTime = true;
                 break;
@@ -386,7 +387,7 @@ public class TildaJson implements CodeGenTildaJson
         Out.println("      PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);");
         Out.println("    }");
 
-        if (J._ParentObject.isOCC() == true && J._Sync == true)
+        if (J._ParentObject.isOCC() == true && (J._ParentObject._TildaType == TildaType.OBJECT || J._ParentObject._TildaType == TildaType.VIEW) && J._Sync == true)
           {
             Out.println();
             Out.println("   public static boolean toJSON" + J._Name + "(java.io.Writer Out, " + Helper.getFullAppDataClassName(J._ParentObject) + " Data, String ElementName, String Lead, ZonedDateTime LastSync)");

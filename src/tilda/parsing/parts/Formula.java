@@ -115,6 +115,8 @@ public class Formula extends TypeDef
     public List<ViewColumn> getDependencyColumns()
       {
         List<ViewColumn> L = new ArrayList<ViewColumn>();
+        if (getParentView()._ViewColumnsRegEx == null)
+          return L;
         Matcher M = getParentView()._ViewColumnsRegEx.matcher(String.join("\n", _FormulaStrs));
         Set<String> Names = new HashSet<String>();
         while (M.find() == true)
@@ -130,6 +132,8 @@ public class Formula extends TypeDef
     public List<Formula> getDependencyFormulas()
       {
         List<Formula> L = new ArrayList<Formula>();
+        if (getParentView()._FormulasRegEx == null)
+          return L;
         Matcher M = getParentView()._FormulasRegEx.matcher(String.join("\n", _FormulaStrs));
         Set<String> Names = new HashSet<String>();
         while (M.find() == true)

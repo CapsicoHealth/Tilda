@@ -492,6 +492,15 @@ public class TextUtil
         return Index;
       }
 
+    /**
+     * Returns the index in A that matched the value of Val (strict equal case sensitive or not based on IgnoreCase).
+     * If no match is found, returns -1; 
+     * @param A
+     * @param Val
+     * @param IgnoreCase
+     * @param Start
+     * @return
+     */
     public static int FindElement(String[] A, String Val, boolean IgnoreCase, int Start)
       {
         if (A == null)
@@ -506,6 +515,47 @@ public class TextUtil
           }
         return -1;
       }
+    
+    /**
+     * Returns the index in A that matched the value of Val, either as a startsWith, if the element in A ends in '*', or
+     * a endsWith if the element in A starts with a '*', or a strict equal otherwise. The comparison is case-sensitive 
+     * or not based on IgnoreCase. -1 is returned is no match is found. If there are multiple matches (for example 
+     * comparing "aaaa" with "a*" and "aa*", only the first one will be returned. 
+     * @param A
+     * @param Val
+     * @param IgnoreCase
+     * @param Start
+     * @return
+     */
+    public static int FindStarElement(String[] A, String Val, boolean IgnoreCase, int Start)
+      {
+        if (A == null)
+          return -1;
+        if (IgnoreCase == true)
+         Val = Val.toLowerCase();
+        for (int i = Start; i < A.length; ++i)
+          {
+            String Str = A[i];
+            if (Str == null)
+              continue;
+            if (IgnoreCase == true)
+             Str = Str.toLowerCase();
+            if (Str.endsWith("*") == true)
+              {
+                if (Val.startsWith(Str.substring(0, Str.length()-1)) == true)
+                 return i;
+              }
+            else if (Str.startsWith("*") == true)
+              {
+                if (Val.endsWith(Str.substring(1)) == true)
+                 return i;
+              }
+            else if (Str.equals(Val) == true)
+              return i;
+          }
+        return -1;
+      }
+    
 
     public static int FindElement(String[][] A, String Val, int pos, boolean IgnoreCase, int Start)
       {

@@ -46,9 +46,13 @@ public class TILDA__TESTING_Json
    @SerializedName("a6"         ) public Long  _a6         ;
    @SerializedName("a6b"        ) public List<Long>  _a6b        ;
    @SerializedName("a6c"        ) public Set <Long>  _a6c        ;
+   @SerializedName("a6d"        ) public String  Str_a6d        ;
+   transient                      public ZonedDateTime  _a6d        ;
    @SerializedName("a7"         ) public Integer  _a7         ;
    @SerializedName("a7b"        ) public List<Integer>  _a7b        ;
    @SerializedName("a8"         ) public byte[]  _a8         ;
+   @SerializedName("a8b"        ) public String  Str_a8b        ;
+   transient                      public ZonedDateTime  _a8b        ;
    @SerializedName("a9"         ) public String  Str_a9         ;
    transient                      public ZonedDateTime  _a9         ;
    @SerializedName("a9b"        ) public List<String>  Str_a9b        ;
@@ -63,6 +67,18 @@ public class TILDA__TESTING_Json
        throw new Exception("Incoming value for 'tilda.data.TILDA.Testing.refnum2' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_name       ) == true)
        throw new Exception("Incoming value for 'tilda.data.TILDA.Testing.name' was null or empty. It's not nullable in the model.\n"+toString());
+      if (TextUtil.isNullOrEmpty(Str_a6d        ) == false)
+       {
+         _a6d         = DateTimeUtil.parsefromJSON(Str_a6d        );
+         if (   _a6d         == null)
+          throw new Exception("Incoming value for 'tilda.data.TILDA.Testing.a6d' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+       }
+      if (TextUtil.isNullOrEmpty(Str_a8b        ) == false)
+       {
+         _a8b         = DateTimeUtil.parsefromJSON(Str_a8b        );
+         if (   _a8b         == null)
+          throw new Exception("Incoming value for 'tilda.data.TILDA.Testing.a8b' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+       }
       if (TextUtil.isNullOrEmpty(Str_a9         ) == false)
        {
          _a9          = DateTimeUtil.parsefromJSON(Str_a9         );
@@ -110,9 +126,11 @@ public class TILDA__TESTING_Json
       if (_a6         != null) Obj.setA6         (_a6         );
       if (_a6b        != null) Obj.setA6b        (_a6b        );
       if (_a6c        != null) Obj.setA6c        (_a6c        );
+      if (_a6d        != null) Obj.setA6d        (_a6d        );
       if (_a7         != null) Obj.setA7         (_a7         );
       if (_a7b        != null) Obj.setA7b        (_a7b        );
       if (_a8         != null) Obj.setA8         (_a8         );
+      if (_a8b        != null) Obj.setA8b        (_a8b        );
       if (_a9         != null) Obj.setA9         (_a9         );
       if (_a9b        != null) Obj.setA9b        (_a9b        );
       if (_a9c        != null) Obj.setA9c        (_a9c        );
@@ -145,9 +163,11 @@ public class TILDA__TESTING_Json
          + "; a6"         + (_a6          == null ? ": NULL" : ": " + _a6         )
          + "; a6b"        + (_a6b         == null ? ": NULL" : ": " + _a6b        )
          + "; a6c"        + (_a6c         == null ? ": NULL" : ": " + _a6c        )
+         + "; a6d"        + (_a6d         == null ? ": NULL" : ": "+DateTimeUtil.printDateTimeForSQL(_a6d))
          + "; a7"         + (_a7          == null ? ": NULL" : ": " + _a7         )
          + "; a7b"        + (_a7b         == null ? ": NULL" : ": " + _a7b        )
          + "; a8"         + (_a8          == null ? ": NULL" : ": " + _a8         )
+         + "; a8b"        + (_a8b         == null ? ": NULL" : ": "+DateTimeUtil.printDateTimeForSQL(_a8b))
          + "; a9"         + (_a9          == null ? ": NULL" : ": "+DateTimeUtil.printDateTimeForSQL(_a9))
          + "; a9b"        + (_a9b         == null ? ": NULL" : ": "+DateTimeUtil.printDateTimeForSQL(_a9b))
          + "; a9c"        + (_a9c         == null ? ": NULL" : ": " + _a9c        )
