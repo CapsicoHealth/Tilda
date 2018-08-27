@@ -29,7 +29,7 @@ public class TableIndexDrop extends MigrationAction
 
     public TableIndexDrop(tilda.parsing.parts.Object Obj, IndexMeta IX)
       {
-        super(Obj._ParentSchema._Name, Obj._Name, false, null);
+        super(Obj._ParentSchema._Name, Obj._Name, false);
         _Obj = Obj;
         _IX = IX;
       }

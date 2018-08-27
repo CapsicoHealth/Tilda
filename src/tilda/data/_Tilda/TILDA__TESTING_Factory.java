@@ -713,6 +713,79 @@ This is the column definition for:<BR>
      public static Type_DateCollectionNull     A9D        = new Type_DateCollectionNull    (SCHEMA_LABEL, TABLENAME_LABEL, "a9d"        , 36/*36*/, "The blah");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a10a -> TILDA.Testing."a10a"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a10a of type boolean</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a10a of type boolean</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public static Type_BooleanPrimitiveNull   A10A       = new Type_BooleanPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a10a"       , 37/*37*/, "The blah");
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a10b -> TILDA.Testing."a10b"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a10b of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a10b of type integer</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public static Type_IntegerPrimitiveNull   A10B       = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a10b"       , 38/*38*/, "The blah");
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a10cTZ -> TILDA.Testing."a10cTZ"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a10cTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a10cTZ of type character(5)</TD></TR>
+
+  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a10c'.</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public static Type_StringPrimitiveNull    A10CTZ     = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a10cTZ"     , 39/*39*/, "Generated helper column to hold the time zone ID for 'a10c'.");
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing.a10c -> TILDA.Testing."a10c"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the column definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a10c of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a10c of type timestamptz</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+     public static Type_DatetimePrimitiveNull  A10C       = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "a10c"       , 40/*40*/, "The blah");
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing.created -> TILDA.Testing."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -735,7 +808,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 37/*37*/, "The timestamp for when the record was created.");
+     public static Type_DatetimePrimitive      CREATED    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 41/*41*/, "The timestamp for when the record was created.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing.lastUpdated -> TILDA.Testing."lastUpdated"
@@ -760,7 +833,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 38/*38*/, "The timestamp for when the record was last updated.");
+     public static Type_DatetimePrimitive      LASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 42/*42*/, "The timestamp for when the record was last updated.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing.deleted -> TILDA.Testing."deleted"
@@ -778,7 +851,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 39/*39*/, "The timestamp for when the record was deleted.");
+     public static Type_DatetimePrimitiveNull  DELETED    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 43/*43*/, "The timestamp for when the record was deleted.");
 ;
    }
 
@@ -882,6 +955,10 @@ This is the column definition for:<BR>
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9b");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9c");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9d");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a10a");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a10b");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a10cTZ");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a10c");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "created");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "lastUpdated");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "deleted");
@@ -1029,6 +1106,9 @@ This is the column definition for:<BR>
        List<ZonedDateTime>  _a9b         = CollectionUtil.toList(ParseUtil.parseZonedDateTime("a9b"        , false, Values.get("a9b"        ), "``", Errors));
        LocalDate        _a9c         =                       ParseUtil.parseLocalDate("a9c"        , false, Values.get("a9c"        ), Errors );
        List<LocalDate>  _a9d         = CollectionUtil.toList(ParseUtil.parseLocalDate("a9d"        , false, Values.get("a9d"        ), "``", Errors));
+       Boolean        _a10a        =                       ParseUtil.parseBoolean("a10a"       , false, Values.get("a10a"       ), Errors );
+       Integer        _a10b        =                       ParseUtil.parseInteger("a10b"       , false, Values.get("a10b"       ), Errors );
+       ZonedDateTime        _a10c        =                       ParseUtil.parseZonedDateTime("a10c"       , false, Values.get("a10c"       ), Errors );
 
        if (IncomingErrors != Errors.size())
         return null;
@@ -1065,6 +1145,9 @@ This is the column definition for:<BR>
       if (_a9b        != null) Obj.setA9b        (_a9b        );
       if (_a9c        != null) Obj.setA9c        (_a9c        );
       if (_a9d        != null) Obj.setA9d        (_a9d        );
+      if (_a10a       != null) Obj.setA10a       (_a10a       );
+      if (_a10b       != null) Obj.setA10b       (_a10b       );
+      if (_a10c       != null) Obj.setA10c       (_a10c       );
 
       return Obj;
      }
@@ -1294,6 +1377,7 @@ This is the column definition for:<BR>
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
        ReadMany(C, 4, RPI, Obj, null, Start, Size);
      }
+
 
 
 

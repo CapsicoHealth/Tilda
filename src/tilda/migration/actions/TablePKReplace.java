@@ -30,7 +30,7 @@ public class TablePKReplace extends MigrationAction
 
     public TablePKReplace(tilda.parsing.parts.Object Obj, TableMeta TMeta)
       {
-        super(Obj._ParentSchema._Name, Obj._Name, false, null);
+        super(Obj._ParentSchema._Name, Obj._Name, false);
         _Obj = Obj;
         _TMeta = TMeta;
         // LOG.debug("FK Out");

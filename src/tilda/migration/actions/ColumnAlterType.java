@@ -16,18 +16,22 @@
 
 package tilda.migration.actions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import tilda.data.ZoneInfo_Factory;
 import tilda.db.Connection;
 import tilda.db.metadata.ColumnMeta;
 import tilda.enums.ColumnType;
 import tilda.migration.MigrationAction;
 import tilda.parsing.parts.Column;
+import tilda.utils.pairs.ColMetaColPair;
 
 public class ColumnAlterType extends MigrationAction
   {
     public ColumnAlterType(Connection C, ColumnMeta CMeta, Column Col)
       {
-        super(Col._ParentObject._ParentSchema._Name, Col._ParentObject._Name, false, null);
+        super(Col._ParentObject._ParentSchema._Name, Col._ParentObject._Name, false);
         _Col = Col;
         _CMeta = CMeta;
         StringBuilder Str = new StringBuilder();
@@ -41,8 +45,20 @@ public class ColumnAlterType extends MigrationAction
 
     public boolean process(Connection C)
     throws Exception
+      {       
+        return C.alterTableAlterColumnType(GetBatchCols(_GroupedCols, _CMeta, _Col), ZoneInfo_Factory.getEnumerationById("UTC"));
+      }
+
+    private List<ColMetaColPair> GetBatchCols(List<ColMetaColPair> BatchCols, ColumnMeta CMeta, Column Col)
       {
-        return C.alterTableAlterColumnType(_CMeta, _Col, ZoneInfo_Factory.getEnumerationById("UTC"));
+        List<ColMetaColPair> Cols = new ArrayList<ColMetaColPair>();
+        Cols.add(new ColMetaColPair(CMeta, Col));
+        
+        if(BatchCols != null && BatchCols.size() > 0)        
+          for(ColMetaColPair CP : BatchCols)
+            Cols.add(new ColMetaColPair(CP._CMeta, CP._Col));
+                 
+        return Cols;
       }
 
     @Override

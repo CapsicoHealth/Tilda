@@ -22,6 +22,7 @@ import java.sql.Array;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -58,6 +59,7 @@ import tilda.utils.CollectionUtil;
 import tilda.utils.DurationUtil.IntervalEnum;
 import tilda.utils.FileUtil;
 import tilda.utils.TextUtil;
+import tilda.utils.pairs.ColMetaColPair;
 import tilda.utils.pairs.StringStringPair;
 
 public class PostgreSQL implements DBType
@@ -367,9 +369,9 @@ public class PostgreSQL implements DBType
 
         // Are we switching from CHAR(x) to VARCHAR(y) or TEXT?
         String Using = "";
-//Looks like we do not need the rtrim call. It slows things down and doesn't actually do anything in Postgres 
-//        if (ColMetaT == DBStringType.CHARACTER && ColT != DBStringType.CHARACTER)
-//          Using = " USING rtrim(\"" + Col.getName() + "\")";
+        // Looks like we do not need the rtrim call. It slows things down and doesn't actually do anything in Postgres
+        // if (ColMetaT == DBStringType.CHARACTER && ColT != DBStringType.CHARACTER)
+        // Using = " USING rtrim(\"" + Col.getName() + "\")";
         String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" TYPE "
         + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + Using + ";";
         return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
@@ -377,52 +379,73 @@ public class PostgreSQL implements DBType
 
 
     @Override
-    public boolean alterTableAlterColumnType(Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI)
+    public boolean alterTableAlterColumnType(Connection Con, List<ColMetaColPair> BatchCols, ZoneInfo_Data defaultZI)
     throws Exception
       {
-        if (ColMeta._TildaType == ColumnType.STRING)
+        if (BatchCols == null || BatchCols.size() == 0)
+          LOG.error("There are no columns to process for alterTableAlterColumnType. Something has gone wrong when adding columns to the migration action.");
+
+        String Q = "ALTER TABLE " + BatchCols.get(0)._Col._ParentObject.getShortName();
+        ArrayList<String> QU = new ArrayList<String>();
+
+        for (ColMetaColPair CMP : BatchCols)
           {
-            if (Col.getType() == ColumnType.INTEGER || Col.getType() == ColumnType.LONG || Col.getType() == ColumnType.FLOAT || Col.getType() == ColumnType.DOUBLE || Col.getType() == ColumnType.DATE)
+            if (CMP._CMeta._TildaType == ColumnType.STRING)
               {
-                String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
-                + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection())
-                + " USING (trim(\"" + Col.getName() + "\")::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + ");";
-                return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
+                if (CMP._Col.getType() == ColumnType.INTEGER || CMP._Col.getType() == ColumnType.LONG || CMP._Col.getType() == ColumnType.FLOAT || CMP._Col.getType() == ColumnType.DOUBLE || CMP._Col.getType() == ColumnType.DATE || CMP._Col.getType() == ColumnType.BOOLEAN)
+                  {
+                    Q += " ALTER COLUMN \"" + CMP._Col.getName()
+                    + "\" TYPE " + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection())
+                    + " USING (trim(\"" + CMP._Col.getName() + "\")::" + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection()) + "),";
+                    // return Con.ExecuteDDL(CMP._Col._ParentObject._ParentSchema._Name, CMP._Col._ParentObject.getBaseName(), Q);
+                  }
+                else if (CMP._Col.getType() == ColumnType.DATETIME)
+                  {
+                    Q += " ALTER COLUMN \"" + CMP._Col.getName()
+                    + "\" TYPE " + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection())
+                    + " USING (trim(\"" + CMP._Col.getName() + "\")::" + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection()) + "),";
+
+                    // if (Con.ExecuteDDL(CMP._Col._ParentObject._ParentSchema._Name, CMP._Col._ParentObject.getBaseName(), Q) == false)
+                    // return false;
+
+                    Column ColTZ = CMP._Col._ParentObject.getColumn(CMP._Col.getName() + "TZ");
+                    QU.add("UPDATE " + ColTZ._ParentObject.getShortName() + " SET \"" + ColTZ.getName() + "\" = 'UTC' WHERE \"" + ColTZ.getName() + "\" IS NULL;");
+
+                    // return Con.ExecuteUpdate(CMP._Col._ParentObject._ParentSchema._Name, CMP._Col._ParentObject.getBaseName(), Q) >= 0;
+                  }
               }
-            else if (Col.getType() == ColumnType.DATETIME)
+
+            String Using = "";
+            // Looks like we do not need the rtrim call. It slows things down and doesn't actually do anything in Postgres
+            // if (ColMetaT == DBStringType.CHARACTER && ColT != DBStringType.CHARACTER)
+            // Using = " USING rtrim(\"" + Col.getName() + "\")";
+
+            if (CMP._Col.isPrimaryKey() == true || CMP._Col.isForeignKey() == true)
               {
-                String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
-                + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection())
-                + " USING (trim(\"" + Col.getName() + "\")::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + ");";
-
-                if (Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) == false)
-                  return false;
-
-                Col = Col._ParentObject.getColumn(Col.getName() + "TZ");
-                Q = "UPDATE " + Col._ParentObject.getShortName() + " SET \"" + Col.getName() + "\" = 'UTC' WHERE \"" + Col.getName() + "\" IS NULL";
-
-                return Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) >= 0;
+                LOG.warn("\n\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
+                + "!! ALTERING a primary or foreign key, which in some circumstances may lock in the JDBC driver. It should only \n"
+                + "!! take a few seconds at most. If this takes any longer, it's hung. If this occurs, please run the below ALTER \n"
+                + "!!  statement in the DB command line, and then rerun your program.\n"
+                + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
               }
+
+            Q += " ALTER COLUMN \"" + CMP._Col.getName()
+            + "\" TYPE " + getColumnType(CMP._Col.getType(), CMP._Col._Size, CMP._Col._Mode, CMP._Col.isCollection()) + Using + ",";
           }
-
-        String Using = "";
-        //Looks like we do not need the rtrim call. It slows things down and doesn't actually do anything in Postgres 
-//        if (ColMetaT == DBStringType.CHARACTER && ColT != DBStringType.CHARACTER)
-//          Using = " USING rtrim(\"" + Col.getName() + "\")";
-
-        if (Col.isPrimaryKey() == true || Col.isForeignKey() == true)
+        
+        Q = Q.substring(0, Q.length()-1) + ";";
+        LOG.info(Q);
+        if (QU.size() > 0)
           {
-            LOG.warn("\n\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
-                    +"!! ALTERING a primary or foreign key, which in some circumstances may lock in the JDBC driver. It should only \n"
-                    +"!! take a few seconds at most. If this takes any longer, it's hung. If this occurs, please run the below ALTER \n"
-                    +"!!  statement in the DB command line, and then rerun your program.\n"
-                    +"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
-                    );
+            if (Con.ExecuteDDL(BatchCols.get(0)._Col._ParentObject._ParentSchema._Name, BatchCols.get(0)._Col._ParentObject.getBaseName(), Q) == false)
+              return false;
+            for(String DTQ : QU)
+              if(Con.ExecuteUpdate(BatchCols.get(0)._Col._ParentObject._ParentSchema._Name, BatchCols.get(0)._Col._ParentObject.getBaseName(), DTQ) <= 0)
+                return false;
+            return true;
           }
-
-        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
-        + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + Using + ";";
-        return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
+        else
+          return Con.ExecuteDDL(BatchCols.get(0)._Col._ParentObject._ParentSchema._Name, BatchCols.get(0)._Col._ParentObject.getBaseName(), Q);
       }
 
     protected static void PrintFunctionIn(StringBuilder Str, String Type)
@@ -487,160 +510,166 @@ public class PostgreSQL implements DBType
     public String getHelperFunctionsScript(Connection Con, boolean Start)
     throws Exception
       {
-        return FileUtil.getFileOfResourceContents("tilda/db/stores/PostgreSQL.helpers-"+(Start == true?"start":"end")+".sql");
-/*
-        StringBuilder Str = new StringBuilder();
-        PrintFunctionIn(Str, "text");
-        PrintFunctionIn(Str, "integer");
-        PrintFunctionIn(Str, "bigint");
-        PrintFunctionTo(Str, "Int", "integer");
-        PrintFunctionTo(Str, "Double", "double precision");
-        PrintFunctionTo(Str, "Date", "Date");
-
-        Str.append("CREATE OR REPLACE FUNCTION TILDA.Like(v text[], val text)\n")
-        .append("  RETURNS boolean\n")
-        .append("  IMMUTABLE LANGUAGE SQL AS\n")
-        .append("  'select exists (select * from unnest(v) x_ where x_ like val);';\n")
-        .append("CREATE OR REPLACE FUNCTION TILDA.Like(v text[], val text[])\n")
-        .append("  RETURNS boolean\n")
-        .append("  IMMUTABLE LANGUAGE SQL AS\n")
-        .append("  'select exists (select * from unnest(v) x_ where x_ like ANY(val));';\n")
-        .append("CREATE OR REPLACE FUNCTION TILDA.Like(v text, val text[])\n")
-        .append("  RETURNS boolean\n")
-        .append("  IMMUTABLE LANGUAGE SQL AS\n")
-        .append("  'select v like ANY(val);';\n")
-        .append("\n")
-        .append("\n")
-        .append("CREATE OR REPLACE FUNCTION TILDA.getKeyBatch(t text, c integer) RETURNS TABLE (min_key_inclusive bigint, max_key_exclusive bigint) AS $$\n")
-        .append("DECLARE\n")
-        .append("  val bigint;\n")
-        .append("BEGIN\n")
-        .append("  UPDATE TILDA.Key set \"max\"=\"max\"+c where \"name\"=t;\n")
-        .append("  SELECT \"max\" into val from TILDA.Key where \"name\"=t;\n")
-        .append("  return query select val-c as min_key_inclusive, val as max_key_exclusive;\n")
-        .append("END; $$\n")
-        .append("LANGUAGE PLPGSQL;\n")
-        .append("\n")
-        .append("\n")
-        .append("CREATE OR REPLACE FUNCTION TILDA.getKeyBatchAsMaxExclusive(t text, c integer) RETURNS bigint AS $$\n")
-        .append("DECLARE\n")
-        .append("  val bigint;\n")
-        .append("BEGIN\n")
-        .append("  UPDATE TILDA.Key set \"max\"=\"max\"+c where \"name\"=t;\n")
-        .append("  SELECT \"max\" into val from TILDA.Key where \"name\"=t;\n")
-        .append("  return val;\n")
-        .append("END; $$\n")
-        .append("LANGUAGE PLPGSQL;\n")
-        .append("\n")
-        .append("\n")
-        .append("DROP CAST IF EXISTS (text AS text[]);\n")
-        .append("CREATE OR REPLACE FUNCTION TILDA.strToArray(text)\n")
-        .append("  RETURNS text[]\n")
-        .append("  IMMUTABLE LANGUAGE SQL AS\n")
-        .append("'SELECT regexp_split_to_array($1, ''``'');';\n")
-        .append("CREATE CAST (text AS text[]) WITH FUNCTION TILDA.strToArray(text) as Implicit;\n")
-        .append("\n")
-        .append("DROP CAST IF EXISTS (varchar AS text[]);\n")
-        .append("CREATE OR REPLACE FUNCTION TILDA.strToArray(varchar)\n")
-        .append("  RETURNS text[]\n")
-        .append("  IMMUTABLE LANGUAGE SQL AS\n")
-        .append("'SELECT regexp_split_to_array($1, ''``'');';\n")
-        .append("CREATE CAST (varchar AS text[]) WITH FUNCTION TILDA.strToArray(varchar) as Implicit;\n")
-        .append("\n")
-        .append("\n")
-        .append("CREATE OR REPLACE FUNCTION TILDA.daysBetween(timestamptz, timestamptz, boolean)\n")
-        .append("  RETURNS integer\n")
-        .append("  IMMUTABLE LANGUAGE SQL AS\n")
-        .append("'SELECT date_part(''days'', $2 - $1)::integer+(case $3 or $2 < $1 when true then 0 else 1 end);';\n")
-        .append("COMMENT ON FUNCTION TILDA.DaysBetween(timestamptz, timestamptz, boolean) IS 'Computes the number of days between 2 dates ''start'' and ''end''. The third parameter indicates whether the midnight rule should be applied or not. If true, the number of days between 2016-12-01 and 2016-12-02 for example will be 1 (i.e., one mignight passed). If false, the returned count will be 2.';\n")
-        .append("\n")
-        .append("\n")
-        .append("CREATE OR REPLACE FUNCTION TILDA.daysBetween(timestamptz, timestamptz)\n")
-        .append("  RETURNS integer\n")
-        .append("  IMMUTABLE LANGUAGE SQL AS\n")
-        .append("'SELECT date_part(''days'', $2 - $1)::integer+1;';\n")
-        .append("COMMENT ON FUNCTION TILDA.DaysBetween(timestamptz, timestamptz) IS 'Computes the number of days between 2 dates ''start'' and ''end''. This function is the same as TILDA.DaysBetween(timestamptz, timestamptz, boolean) but with the third parapeter defaulted to false, i.e., the number of days between 2016-12-01 and 2016-12-02 is 2.';\n")
-        .append("\n")
-        .append("\n")
-        .append("CREATE OR REPLACE FUNCTION TILDA.monthsBetween(timestamptz, timestamptz)\n")
-        .append("  RETURNS float\n")
-        .append("  IMMUTABLE LANGUAGE SQL AS\n")
-        .append("'SELECT date_part(''year'', age($2, $1))*12+date_part(''month'', age($2, $1))+date_part(''days'', age($2, $1))/30.0;';\n")
-        .append("COMMENT ON FUNCTION TILDA.MonthsBetween(timestamptz, timestamptz) IS 'Computes the aproximate number of months between 2 dates ''start'' and ''end''. It''s approximate because fractional days are computed as a 30th part of a month no matter which month it is.';\n")
-        .append("\n")
-        .append("\n")
-        .append("CREATE OR REPLACE FUNCTION TILDA.quartersBetween(timestamptz, timestamptz)\n")
-        .append("  RETURNS float\n")
-        .append("  IMMUTABLE LANGUAGE SQL AS\n")
-        .append("'SELECT date_part(''year'', age($2, $1))*4+date_part(''month'', age($2, $1))/3.0+date_part(''days'', age($2, $1))/91.0;';\n")
-        .append("COMMENT ON FUNCTION TILDA.QuartersBetween(timestamptz, timestamptz) IS 'Computes the aproximate number of quarters between 2 dates ''start'' and ''end''. It''s approximate because fractional days are computed as a 91st part of a quarter no matter which quarter it is.';\n")
-        .append("\n")
-        .append("\n")
-        .append("CREATE OR REPLACE FUNCTION TILDA.yearsBetween(timestamptz, timestamptz)\n")
-        .append("  RETURNS float\n")
-        .append("  IMMUTABLE LANGUAGE SQL AS\n")
-        .append("'SELECT date_part(''year'', age($2, $1))+date_part(''month'', age($2, $1))/12.0+date_part(''days'', age($2, $1))/365.0;';\n")
-        .append("COMMENT ON FUNCTION TILDA.YearsBetween(timestamptz, timestamptz) IS 'Computes the aproximate number of years between 2 dates ''start'' and ''end''. It''s approximate because fractional days are computed as a 365th part of a year no matter which year it is.';\n")
-        .append("\n")
-        .append("\n")
-        .append("CREATE OR REPLACE FUNCTION TILDA.age(timestamptz, timestamptz)\n")
-        .append("  RETURNS float\n")
-        .append("  IMMUTABLE LANGUAGE SQL AS\n")
-        .append("'SELECT date_part(''year'', age($2, $1)) + date_part(''month'', age($2, $1))/12.0 + date_part(''day'', age($2, $1))/365.0;';\n")
-        .append("COMMENT ON FUNCTION TILDA.Age(timestamptz, timestamptz) IS 'Computes the age in years between 2 dates ''start'' and ''end'' with decimal places, so 1.25 years is 1y and 3 months. It is not 100% accurate as we use a simple 1y=365 days calculation. Use Tilda.DaysBetween if you want accurate days-based calculations.';\n")
-        .append("\n")
-        .append("\n")
-        .append("CREATE OR REPLACE FUNCTION TILDA.ageBetween(timestamptz, timestamptz, float, float)\n")
-        .append("  RETURNS boolean\n")
-        .append("  IMMUTABLE LANGUAGE SQL AS\n")
-        .append("'SELECT TILDA.Age($1, $2) >= $3 AND TILDA.Age($1, $2) < $4';\n")
-        .append("\n")
-        .append("\n")
-        .append("CREATE OR REPLACE FUNCTION TILDA.map(varchar, varchar)\n")
-        .append("  RETURNS varchar\n")
-        .append("  IMMUTABLE LANGUAGE SQL AS\n")
-        .append("'SELECT dst from TILDA.MAPPING where type=$1 and src=upper($2)';\n")
-        .append("\n")
-        .append("\n")
-        .append("CREATE OR REPLACE FUNCTION TILDA.map(varchar, varchar, varchar)\n")
-        .append("  RETURNS varchar\n")
-        .append("  IMMUTABLE LANGUAGE SQL AS\n")
-        .append("'SELECT coalesce(TILDA.map($1, $2), $3');\n")
-        .append("\n")
-        .append("\n")
-        .append("CREATE OR REPLACE FUNCTION TILDA.first_agg (anyelement, anyelement)\n")
-        .append("RETURNS anyelement LANGUAGE SQL IMMUTABLE STRICT AS $$\n")
-        .append("        SELECT $1;\n")
-        .append("$$;\n")
-        .append("DO $$ BEGIN\n")
-        .append("if not exists (SELECT 1 FROM pg_proc WHERE proname = 'first' AND proisagg=true) THEN\n")
-        .append("CREATE AGGREGATE public.FIRST (\n")
-        .append("        sfunc    = TILDA.first_agg,\n")
-        .append("        basetype = anyelement,\n")
-        .append("        stype    = anyelement\n")
-        .append(");\n")
-        .append("END IF;\n")
-        .append("END $$;\n")
-        .append(" \n")
-        .append("CREATE OR REPLACE FUNCTION TILDA.last_agg ( anyelement, anyelement )\n")
-        .append("RETURNS anyelement LANGUAGE SQL IMMUTABLE STRICT AS $$\n")
-        .append("        SELECT $2;\n")
-        .append("$$;\n")
-        .append("DO $$ BEGIN\n")
-        .append("if not exists (SELECT 1 FROM pg_proc WHERE proname = 'last' AND proisagg=true) THEN\n")
-        .append("CREATE AGGREGATE public.LAST (\n")
-        .append("        sfunc    = TILDA.last_agg,\n")
-        .append("        basetype = anyelement,\n")
-        .append("        stype    = anyelement\n")
-        .append(");\n")
-        .append("END IF;\n")
-        .append("END $$;\n")
-        .append("\n")
-        .append("\n")
-        .append("CREATE extension if not exists tablefunc;\n");
-
-        return Str.toString();
-*/
+        return FileUtil.getFileOfResourceContents("tilda/db/stores/PostgreSQL.helpers-" + (Start == true ? "start" : "end") + ".sql");
+        /*
+         * StringBuilder Str = new StringBuilder();
+         * PrintFunctionIn(Str, "text");
+         * PrintFunctionIn(Str, "integer");
+         * PrintFunctionIn(Str, "bigint");
+         * PrintFunctionTo(Str, "Int", "integer");
+         * PrintFunctionTo(Str, "Double", "double precision");
+         * PrintFunctionTo(Str, "Date", "Date");
+         * 
+         * Str.append("CREATE OR REPLACE FUNCTION TILDA.Like(v text[], val text)\n")
+         * .append("  RETURNS boolean\n")
+         * .append("  IMMUTABLE LANGUAGE SQL AS\n")
+         * .append("  'select exists (select * from unnest(v) x_ where x_ like val);';\n")
+         * .append("CREATE OR REPLACE FUNCTION TILDA.Like(v text[], val text[])\n")
+         * .append("  RETURNS boolean\n")
+         * .append("  IMMUTABLE LANGUAGE SQL AS\n")
+         * .append("  'select exists (select * from unnest(v) x_ where x_ like ANY(val));';\n")
+         * .append("CREATE OR REPLACE FUNCTION TILDA.Like(v text, val text[])\n")
+         * .append("  RETURNS boolean\n")
+         * .append("  IMMUTABLE LANGUAGE SQL AS\n")
+         * .append("  'select v like ANY(val);';\n")
+         * .append("\n")
+         * .append("\n")
+         * .append("CREATE OR REPLACE FUNCTION TILDA.getKeyBatch(t text, c integer) RETURNS TABLE (min_key_inclusive bigint, max_key_exclusive bigint) AS $$\n")
+         * .append("DECLARE\n")
+         * .append("  val bigint;\n")
+         * .append("BEGIN\n")
+         * .append("  UPDATE TILDA.Key set \"max\"=\"max\"+c where \"name\"=t;\n")
+         * .append("  SELECT \"max\" into val from TILDA.Key where \"name\"=t;\n")
+         * .append("  return query select val-c as min_key_inclusive, val as max_key_exclusive;\n")
+         * .append("END; $$\n")
+         * .append("LANGUAGE PLPGSQL;\n")
+         * .append("\n")
+         * .append("\n")
+         * .append("CREATE OR REPLACE FUNCTION TILDA.getKeyBatchAsMaxExclusive(t text, c integer) RETURNS bigint AS $$\n")
+         * .append("DECLARE\n")
+         * .append("  val bigint;\n")
+         * .append("BEGIN\n")
+         * .append("  UPDATE TILDA.Key set \"max\"=\"max\"+c where \"name\"=t;\n")
+         * .append("  SELECT \"max\" into val from TILDA.Key where \"name\"=t;\n")
+         * .append("  return val;\n")
+         * .append("END; $$\n")
+         * .append("LANGUAGE PLPGSQL;\n")
+         * .append("\n")
+         * .append("\n")
+         * .append("DROP CAST IF EXISTS (text AS text[]);\n")
+         * .append("CREATE OR REPLACE FUNCTION TILDA.strToArray(text)\n")
+         * .append("  RETURNS text[]\n")
+         * .append("  IMMUTABLE LANGUAGE SQL AS\n")
+         * .append("'SELECT regexp_split_to_array($1, ''``'');';\n")
+         * .append("CREATE CAST (text AS text[]) WITH FUNCTION TILDA.strToArray(text) as Implicit;\n")
+         * .append("\n")
+         * .append("DROP CAST IF EXISTS (varchar AS text[]);\n")
+         * .append("CREATE OR REPLACE FUNCTION TILDA.strToArray(varchar)\n")
+         * .append("  RETURNS text[]\n")
+         * .append("  IMMUTABLE LANGUAGE SQL AS\n")
+         * .append("'SELECT regexp_split_to_array($1, ''``'');';\n")
+         * .append("CREATE CAST (varchar AS text[]) WITH FUNCTION TILDA.strToArray(varchar) as Implicit;\n")
+         * .append("\n")
+         * .append("\n")
+         * .append("CREATE OR REPLACE FUNCTION TILDA.daysBetween(timestamptz, timestamptz, boolean)\n")
+         * .append("  RETURNS integer\n")
+         * .append("  IMMUTABLE LANGUAGE SQL AS\n")
+         * .append("'SELECT date_part(''days'', $2 - $1)::integer+(case $3 or $2 < $1 when true then 0 else 1 end);';\n")
+         * .append("COMMENT ON FUNCTION TILDA.DaysBetween(timestamptz, timestamptz, boolean) IS 'Computes the number of days between 2 dates ''start'' and ''end''. The third parameter indicates whether the midnight rule should be applied or not. If true, the number of days between 2016-12-01 and 2016-12-02 for example will be 1 (i.e., one mignight passed). If false, the returned count will be 2.';\n"
+         * )
+         * .append("\n")
+         * .append("\n")
+         * .append("CREATE OR REPLACE FUNCTION TILDA.daysBetween(timestamptz, timestamptz)\n")
+         * .append("  RETURNS integer\n")
+         * .append("  IMMUTABLE LANGUAGE SQL AS\n")
+         * .append("'SELECT date_part(''days'', $2 - $1)::integer+1;';\n")
+         * .append("COMMENT ON FUNCTION TILDA.DaysBetween(timestamptz, timestamptz) IS 'Computes the number of days between 2 dates ''start'' and ''end''. This function is the same as TILDA.DaysBetween(timestamptz, timestamptz, boolean) but with the third parapeter defaulted to false, i.e., the number of days between 2016-12-01 and 2016-12-02 is 2.';\n"
+         * )
+         * .append("\n")
+         * .append("\n")
+         * .append("CREATE OR REPLACE FUNCTION TILDA.monthsBetween(timestamptz, timestamptz)\n")
+         * .append("  RETURNS float\n")
+         * .append("  IMMUTABLE LANGUAGE SQL AS\n")
+         * .append("'SELECT date_part(''year'', age($2, $1))*12+date_part(''month'', age($2, $1))+date_part(''days'', age($2, $1))/30.0;';\n")
+         * .append("COMMENT ON FUNCTION TILDA.MonthsBetween(timestamptz, timestamptz) IS 'Computes the aproximate number of months between 2 dates ''start'' and ''end''. It''s approximate because fractional days are computed as a 30th part of a month no matter which month it is.';\n"
+         * )
+         * .append("\n")
+         * .append("\n")
+         * .append("CREATE OR REPLACE FUNCTION TILDA.quartersBetween(timestamptz, timestamptz)\n")
+         * .append("  RETURNS float\n")
+         * .append("  IMMUTABLE LANGUAGE SQL AS\n")
+         * .append("'SELECT date_part(''year'', age($2, $1))*4+date_part(''month'', age($2, $1))/3.0+date_part(''days'', age($2, $1))/91.0;';\n")
+         * .append("COMMENT ON FUNCTION TILDA.QuartersBetween(timestamptz, timestamptz) IS 'Computes the aproximate number of quarters between 2 dates ''start'' and ''end''. It''s approximate because fractional days are computed as a 91st part of a quarter no matter which quarter it is.';\n"
+         * )
+         * .append("\n")
+         * .append("\n")
+         * .append("CREATE OR REPLACE FUNCTION TILDA.yearsBetween(timestamptz, timestamptz)\n")
+         * .append("  RETURNS float\n")
+         * .append("  IMMUTABLE LANGUAGE SQL AS\n")
+         * .append("'SELECT date_part(''year'', age($2, $1))+date_part(''month'', age($2, $1))/12.0+date_part(''days'', age($2, $1))/365.0;';\n")
+         * .append("COMMENT ON FUNCTION TILDA.YearsBetween(timestamptz, timestamptz) IS 'Computes the aproximate number of years between 2 dates ''start'' and ''end''. It''s approximate because fractional days are computed as a 365th part of a year no matter which year it is.';\n"
+         * )
+         * .append("\n")
+         * .append("\n")
+         * .append("CREATE OR REPLACE FUNCTION TILDA.age(timestamptz, timestamptz)\n")
+         * .append("  RETURNS float\n")
+         * .append("  IMMUTABLE LANGUAGE SQL AS\n")
+         * .append("'SELECT date_part(''year'', age($2, $1)) + date_part(''month'', age($2, $1))/12.0 + date_part(''day'', age($2, $1))/365.0;';\n")
+         * .append("COMMENT ON FUNCTION TILDA.Age(timestamptz, timestamptz) IS 'Computes the age in years between 2 dates ''start'' and ''end'' with decimal places, so 1.25 years is 1y and 3 months. It is not 100% accurate as we use a simple 1y=365 days calculation. Use Tilda.DaysBetween if you want accurate days-based calculations.';\n"
+         * )
+         * .append("\n")
+         * .append("\n")
+         * .append("CREATE OR REPLACE FUNCTION TILDA.ageBetween(timestamptz, timestamptz, float, float)\n")
+         * .append("  RETURNS boolean\n")
+         * .append("  IMMUTABLE LANGUAGE SQL AS\n")
+         * .append("'SELECT TILDA.Age($1, $2) >= $3 AND TILDA.Age($1, $2) < $4';\n")
+         * .append("\n")
+         * .append("\n")
+         * .append("CREATE OR REPLACE FUNCTION TILDA.map(varchar, varchar)\n")
+         * .append("  RETURNS varchar\n")
+         * .append("  IMMUTABLE LANGUAGE SQL AS\n")
+         * .append("'SELECT dst from TILDA.MAPPING where type=$1 and src=upper($2)';\n")
+         * .append("\n")
+         * .append("\n")
+         * .append("CREATE OR REPLACE FUNCTION TILDA.map(varchar, varchar, varchar)\n")
+         * .append("  RETURNS varchar\n")
+         * .append("  IMMUTABLE LANGUAGE SQL AS\n")
+         * .append("'SELECT coalesce(TILDA.map($1, $2), $3');\n")
+         * .append("\n")
+         * .append("\n")
+         * .append("CREATE OR REPLACE FUNCTION TILDA.first_agg (anyelement, anyelement)\n")
+         * .append("RETURNS anyelement LANGUAGE SQL IMMUTABLE STRICT AS $$\n")
+         * .append("        SELECT $1;\n")
+         * .append("$$;\n")
+         * .append("DO $$ BEGIN\n")
+         * .append("if not exists (SELECT 1 FROM pg_proc WHERE proname = 'first' AND proisagg=true) THEN\n")
+         * .append("CREATE AGGREGATE public.FIRST (\n")
+         * .append("        sfunc    = TILDA.first_agg,\n")
+         * .append("        basetype = anyelement,\n")
+         * .append("        stype    = anyelement\n")
+         * .append(");\n")
+         * .append("END IF;\n")
+         * .append("END $$;\n")
+         * .append(" \n")
+         * .append("CREATE OR REPLACE FUNCTION TILDA.last_agg ( anyelement, anyelement )\n")
+         * .append("RETURNS anyelement LANGUAGE SQL IMMUTABLE STRICT AS $$\n")
+         * .append("        SELECT $2;\n")
+         * .append("$$;\n")
+         * .append("DO $$ BEGIN\n")
+         * .append("if not exists (SELECT 1 FROM pg_proc WHERE proname = 'last' AND proisagg=true) THEN\n")
+         * .append("CREATE AGGREGATE public.LAST (\n")
+         * .append("        sfunc    = TILDA.last_agg,\n")
+         * .append("        basetype = anyelement,\n")
+         * .append("        stype    = anyelement\n")
+         * .append(");\n")
+         * .append("END IF;\n")
+         * .append("END $$;\n")
+         * .append("\n")
+         * .append("\n")
+         * .append("CREATE extension if not exists tablefunc;\n");
+         * 
+         * return Str.toString();
+         */
       }
 
 

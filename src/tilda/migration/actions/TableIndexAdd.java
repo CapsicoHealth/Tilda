@@ -29,7 +29,7 @@ public class TableIndexAdd extends MigrationAction
 
     public TableIndexAdd(Index IX)
       {
-        super(IX._Parent._ParentSchema._Name, IX._Parent._Name, false, null);
+        super(IX._Parent._ParentSchema._Name, IX._Parent._Name, false);
         _IX = IX;
       }
 

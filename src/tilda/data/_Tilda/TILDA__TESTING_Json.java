@@ -59,6 +59,10 @@ public class TILDA__TESTING_Json
    transient                      public List<ZonedDateTime>  _a9b        ;
    @SerializedName("a9c"        ) public LocalDate  _a9c        ;
    @SerializedName("a9d"        ) public List<LocalDate>  _a9d        ;
+   @SerializedName("a10a"       ) public Boolean  _a10a       ;
+   @SerializedName("a10b"       ) public Integer  _a10b       ;
+   @SerializedName("a10c"       ) public String  Str_a10c       ;
+   transient                      public ZonedDateTime  _a10c       ;
    /*@formatter:on*/
 
    public tilda.data.Testing_Data Write(Connection C) throws Exception
@@ -90,6 +94,12 @@ public class TILDA__TESTING_Json
          _a9b         = DateTimeUtil.parsefromJSON(Str_a9b        );
          if (   _a9b         == null)
           throw new Exception("Incoming value for 'tilda.data.TILDA.Testing.a9b' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+       }
+      if (TextUtil.isNullOrEmpty(Str_a10c       ) == false)
+       {
+         _a10c        = DateTimeUtil.parsefromJSON(Str_a10c       );
+         if (   _a10c        == null)
+          throw new Exception("Incoming value for 'tilda.data.TILDA.Testing.a10c' was not in the expected format. Dates should follow the ISO format.\n"+toString());
        }
 
       tilda.data.Testing_Data Obj = tilda.data.Testing_Factory.Create(_refnum2, _name);
@@ -135,6 +145,9 @@ public class TILDA__TESTING_Json
       if (_a9b        != null) Obj.setA9b        (_a9b        );
       if (_a9c        != null) Obj.setA9c        (_a9c        );
       if (_a9d        != null) Obj.setA9d        (_a9d        );
+      if (_a10a       != null) Obj.setA10a       (_a10a       );
+      if (_a10b       != null) Obj.setA10b       (_a10b       );
+      if (_a10c       != null) Obj.setA10c       (_a10c       );
     }
 
    public String toString()
@@ -172,6 +185,9 @@ public class TILDA__TESTING_Json
          + "; a9b"        + (_a9b         == null ? ": NULL" : ": "+DateTimeUtil.printDateTimeForSQL(_a9b))
          + "; a9c"        + (_a9c         == null ? ": NULL" : ": " + _a9c        )
          + "; a9d"        + (_a9d         == null ? ": NULL" : ": " + _a9d        )
+         + "; a10a"       + (_a10a        == null ? ": NULL" : ": " + _a10a       )
+         + "; a10b"       + (_a10b        == null ? ": NULL" : ": " + _a10b       )
+         + "; a10c"       + (_a10c        == null ? ": NULL" : ": "+DateTimeUtil.printDateTimeForSQL(_a10c))
          + ";";
     }
 

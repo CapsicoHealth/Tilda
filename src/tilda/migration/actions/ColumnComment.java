@@ -24,7 +24,7 @@ public class ColumnComment extends MigrationAction
   {
     public ColumnComment(Column Col)
       {
-        super(Col._ParentObject._ParentSchema._Name, Col._ParentObject._Name, false, null);
+        super(Col._ParentObject._ParentSchema._Name, Col._ParentObject._Name, false);
         _Col = Col;
       }
 

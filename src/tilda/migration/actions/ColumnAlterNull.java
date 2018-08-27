@@ -24,7 +24,7 @@ public class ColumnAlterNull extends MigrationAction
   {
     public ColumnAlterNull(Column Col)
       {
-        super(Col._ParentObject._ParentSchema._Name, Col._ParentObject._Name, false, null);
+        super(Col._ParentObject._ParentSchema._Name, Col._ParentObject._Name, false);
         _Col = Col;
       }
 

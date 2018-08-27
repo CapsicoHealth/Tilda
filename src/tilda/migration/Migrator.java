@@ -74,6 +74,7 @@ import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 import tilda.utils.AsciiArt;
 import tilda.utils.FileUtil;
+import tilda.utils.pairs.ColMetaColPair;
 
 public class Migrator
   {
@@ -295,8 +296,7 @@ public class Migrator
             int DddlManagementPos = Actions.size();
             
             boolean isBatchCapable = BatchCapable(lastObj, Obj);
-            lastObj = Obj;
-                        
+         
             boolean NeedsDdlDependencyManagement = false;
             if (TMeta == null)
               Actions.add(new TableCreate(Obj));
@@ -324,8 +324,11 @@ public class Migrator
                         && (Col.getType() == ColumnType.BITFIELD && CMeta._TildaType != ColumnType.INTEGER
                         || Col.getType() == ColumnType.JSON && CMeta._TildaType != ColumnType.STRING && CMeta._TildaType != ColumnType.JSON
                         || Col.getType() != ColumnType.BITFIELD && Col.getType() != ColumnType.JSON && Col.getType() != CMeta._TildaType))
-                          {
-                            Actions.add(new ColumnAlterType(C, CMeta, Col));
+                          {                      
+                            if(isBatchCapable == true && Actions.size() > 0 && Actions.get(Actions.size()-1).getClass().getName().equals("tilda.migration.actions.ColumnAlterType") == true)
+                              Actions.get(Actions.size()-1)._GroupedCols.add(new ColMetaColPair(CMeta, Col));
+                            else
+                              Actions.add(new ColumnAlterType(C, CMeta, Col));
                             NeedsDdlDependencyManagement = true;
                           }
 
@@ -494,6 +497,7 @@ public class Migrator
                       }
                   }
               }
+            lastObj = Obj;
           }
         for (View V : S._Views)
           {
@@ -548,6 +552,11 @@ public class Migrator
 
     private static boolean BatchCapable(Object lastObj, Object obj)
       {         
+        if(lastObj == null)
+          return false;
+        
+        if(lastObj._ParentSchema.equals(obj._ParentSchema) == true)
+          return true;
         
         return true;
       }

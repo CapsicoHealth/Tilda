@@ -390,7 +390,14 @@
         { "name": "a9"           , "type": "DATETIME"   ,                                                       "description": "The blah"},
         { "name": "a9b"          , "type": "DATETIME[]" ,                                                       "description": "The blah"},
         { "name": "a9c"          , "type": "DATE"       ,                                                       "description": "The blah"},
-        { "name": "a9d"          , "type": "DATE[]"     ,                                                       "description": "The blah"}
+        { "name": "a9d"          , "type": "DATE[]"     ,                                                       "description": "The blah"},
+        
+        //{ "name": "a10a"         , "type": "INTEGER"        ,                                                       "description": "The blah"},
+        { "name": "a10a"         , "type": "BOOLEAN"        ,                                                       "description": "The blah"},
+        //{ "name": "a10b"         , "type": "STRING"        ,                  "size":    10,                    "description": "The blah"},
+        { "name": "a10b"         , "type": "INTEGER"        ,                                                       "description": "The blah"},
+        //{ "name": "a10c"         , "type": "INTEGER"        ,                                                       "description": "The blah"}
+        ,{ "name": "a10c"         , "type": "DATETIME"        ,                                                       "description": "The blah"}
       ],
       "primary": { "autogen": true, "keyBatch": 25000 },
       "indices":[ 

@@ -43,6 +43,7 @@ import tilda.parsing.parts.View;
 import tilda.types.ColumnDefinition;
 import tilda.types.Type_DatetimePrimitive;
 import tilda.utils.DurationUtil.IntervalEnum;
+import tilda.utils.pairs.ColMetaColPair;
 import tilda.utils.pairs.StringStringPair;
 
 public interface DBType
@@ -69,7 +70,7 @@ public interface DBType
     public boolean alterTableDropColumn           (Connection Con, Object Obj, String ColumnName) throws Exception;
     public boolean alterTableAlterColumnNull      (Connection Con, Column Col, String DefaultValue) throws Exception;
     public boolean alterTableAlterColumnComment   (Connection Con, Column Col) throws Exception;
-    public boolean alterTableAlterColumnType      (Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI) throws Exception;
+    public boolean alterTableAlterColumnType      (Connection Con, List<ColMetaColPair> BatchCols, ZoneInfo_Data defaultZI) throws Exception;
     public boolean alterTableAlterColumnStringSize(Connection Con, ColumnMeta ColMeta, Column Col) throws Exception;
     public boolean alterTableReplaceTablePK       (Connection Con, Object Obj, PKMeta oldPK) throws Exception;
     public boolean alterTableDropFK               (Connection Con, Object Obj, FKMeta FK) throws Exception;

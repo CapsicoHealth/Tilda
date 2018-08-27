@@ -36,7 +36,7 @@ public class TildaExtraDDL extends MigrationAction
     public TildaExtraDDL(Schema S, String ResourceName)
       throws Exception
       {
-        super(S._Name, null, false, null);
+        super(S._Name, null, false);
         _ResourceName = FileUtil.getBasePathFromFileOrResource(S._ResourceName) + ResourceName;
         _SchemaName = S._Name;
       }

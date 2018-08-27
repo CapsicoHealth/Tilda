@@ -14,31 +14,24 @@
  * limitations under the License.
  */
 
-package tilda.migration.actions;
+package tilda.utils.pairs;
 
-import tilda.db.Connection;
-import tilda.migration.MigrationAction;
-import tilda.parsing.parts.View;
+import tilda.db.metadata.ColumnMeta;
+import tilda.parsing.parts.Column;
 
-public class ViewDrop extends MigrationAction
+/**
+ * @author shh
+ *
+ */
+public class ColMetaColPair
   {
-    public ViewDrop(View V)
+    public ColMetaColPair(ColumnMeta ColMeta, Column Col)
       {
-        super(V._ParentSchema._Name, V._Name, false);
-        _V = V;
+        _CMeta = ColMeta;
+        _Col = Col;
       }
 
-    protected View _V;
+    public final ColumnMeta _CMeta;
+    public final Column     _Col;
 
-    @Override
-    public boolean process(Connection C)
-    throws Exception
-      {
-        return C.dropView(_V);
-      }
-
-    public String getDescription()
-      {
-        return "Dropping view " + _V.getFullName();
-      }
   }

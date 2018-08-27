@@ -30,7 +30,7 @@ public class DDLDependencyPreManagement extends MigrationAction
 
     public DDLDependencyPreManagement(DDLDependencyManager DdlDepMan)
       {
-        super(DdlDepMan.getSchemaName(), DdlDepMan.getTableViewName(), true, null);
+        super(DdlDepMan.getSchemaName(), DdlDepMan.getTableViewName(), true);
         _DdlDepMan = DdlDepMan;
       }
 

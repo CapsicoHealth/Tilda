@@ -24,6 +24,7 @@ import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.sql.Statement;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Deque;
 import java.util.List;
@@ -57,6 +58,7 @@ import tilda.utils.AnsiUtil;
 import tilda.utils.CollectionUtil;
 import tilda.utils.DurationUtil.IntervalEnum;
 import tilda.utils.SystemValues;
+import tilda.utils.pairs.ColMetaColPair;
 import tilda.utils.pairs.StringStringPair;
 
 
@@ -481,10 +483,10 @@ public final class Connection
         return _DB.alterTableAlterColumnStringSize(this, ColMeta, Col);
       }
 
-    public boolean alterTableAlterColumnType(ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI)
+    public boolean alterTableAlterColumnType(List<ColMetaColPair> BatchCols, ZoneInfo_Data defaultZI)
     throws Exception
       {
-        return _DB.alterTableAlterColumnType(this, ColMeta, Col, defaultZI);
+        return _DB.alterTableAlterColumnType(this, BatchCols, defaultZI);
       }
 
     public String getHelperFunctionsScript(boolean Start)

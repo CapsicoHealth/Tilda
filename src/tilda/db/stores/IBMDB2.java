@@ -47,6 +47,7 @@ import tilda.types.ColumnDefinition;
 import tilda.types.Type_DatetimePrimitive;
 import tilda.utils.DurationUtil.IntervalEnum;
 import tilda.utils.TextUtil;
+import tilda.utils.pairs.ColMetaColPair;
 import tilda.utils.pairs.StringStringPair;
 
 public class IBMDB2 implements DBType
@@ -214,7 +215,7 @@ public class IBMDB2 implements DBType
       }
 
     @Override
-    public boolean alterTableAlterColumnType(Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI)
+    public boolean alterTableAlterColumnType(Connection Con, List<ColMetaColPair> BatchCols, ZoneInfo_Data defaultZI)
       {
         throw new UnsupportedOperationException();
       }
