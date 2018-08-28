@@ -4,9 +4,9 @@
   "main": "bower.json",
   "moduleType": [],
   "authors": [
-    "mohan"
+    "CapsicoHealth, Inc."
   ],
-  "license": "MIT",
+  "license": "Apache License 2.0",
   "homepage": "",
   "private": true,
   "ignore": [
