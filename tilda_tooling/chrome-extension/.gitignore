@@ -1,0 +1,7 @@
+bower_components
+node_modules
+output/js/lib/*.js
+output/js/lib/require/*.js
+output/css/*.css
+!output/css/custom.css
+!output/css/viewonly_joint.css
