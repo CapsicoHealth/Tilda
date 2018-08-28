@@ -13,14 +13,14 @@ config = function(grunt) {
             flatten: true,
             cwd: 'bower_components',
             src: ['jointjs/dist/joint.css'],
-            dest: 'output/css'
+            dest: 'output/css/lib'
           },
           {
             expand: true,
             flatten: true,
             cwd: 'bower_components',
             src: ['bootstrap/dist/css/bootstrap.css'],
-            dest: 'output/css'
+            dest: 'output/css/lib'
           }
         ]
       },

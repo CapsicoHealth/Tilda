@@ -1,7 +1,2 @@
 chrome-extension/bower_components
 chrome-extension/node_modules
-chrome-extension/output/js/lib/*.js
-chrome-extension/output/js/lib/require/*.js
-chrome-extension/output/css/*.css
-!chrome-extension/output/css/custom.css
-!chrome-extension/output/css/viewonly_joint.css
