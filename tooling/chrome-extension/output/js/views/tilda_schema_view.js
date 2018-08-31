@@ -191,6 +191,9 @@ define(['text!../templates/tilda_schema/_new.html',
       var title = $("#canvas_title").val();
       var oldName = $("#canvas_title").data('oldValue');
       var new_canvas = parseInt($("#new_canvas").val());
+      var canvasType = $("input[name='canvasType']:checked").val();
+      var isCopyConfig = $("input[name='copyConfig']:checked").length > 0;
+      $('.errors').remove();
       if(new_canvas != 1)
       {
         name = $select.val();
@@ -208,15 +211,25 @@ define(['text!../templates/tilda_schema/_new.html',
       else
       {
         name = title.clean();
+        if($select.find("option[value='"+name+"']").length > 0)
+        {
+          event.preventDefault();
+          $("<p class='errors' style='color: red'>"+name+" already exists</p>").insertAfter("#canvas_title");
+          return false;
+        }
         oldName = this.schemaParser_object.canvasName;
         svgHTML[name] = { name: title, svg: null };
         window.tildaCache.canvases.push({
           name: name,
           package: currentOpts.package,
-          viewOnly: (currentOpts.viewOnly || false),
-          scale: currentOpts.scale
+          viewOnly: (canvasType == 'view'),
+          scale: currentOpts.scale,
+          title: title
         })
-        copyTildaCache(oldName, name);
+        if(isCopyConfig)
+        {
+          copyTildaCache(oldName, name);
+        }
         $select.append("<option value='"+name+"'>"+title+"</option>");
       }
       $select.val(name);
@@ -303,7 +316,6 @@ define(['text!../templates/tilda_schema/_new.html',
       var selectValue = $(event.target).val();
       if(selectValue == null && selectValue.length == 0)
       {
-        $('.newCanvas').parent().hide();
         $('.renameCanvas').parent().hide();
         return null;
       }
@@ -370,7 +382,7 @@ define(['text!../templates/tilda_schema/_new.html',
       } else {
         that.excludeRegex = new RegExp("\/bin\/*", "i"); // default filter
       }
-      that.$el.find('.newCanvas').parent().hide();
+      // that.$el.find('.newCanvas').parent().hide();
       that.$el.find('.renameCanvas').parent().hide();
 
       that.$el.find('.actions').hide();
