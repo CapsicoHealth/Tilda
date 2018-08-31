@@ -17,6 +17,8 @@
 package tilda.parsing.parts;
 
 import java.awt.Frame;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -29,8 +31,10 @@ import java.util.regex.Pattern;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
+import tilda.db.Connection;
 import tilda.db.stores.DBType;
 import tilda.enums.ColumnMapperMode;
 import tilda.enums.ColumnMode;
@@ -39,7 +43,9 @@ import tilda.enums.FrameworkColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.TildaType;
+import tilda.interfaces.PatternObject;
 import tilda.parsing.ParserSession;
+import tilda.parsing.parts.formulaTemplates.Flagging;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.parsing.parts.helpers.SameAsHelper;
 import tilda.utils.Graph;
@@ -50,21 +56,22 @@ public class View extends Base
     static final Logger                LOG             = LogManager.getLogger(View.class.getName());
 
     /*@formatter:off*/
-    @SerializedName("columns"       ) public List<ViewColumn>      _ViewColumns= new ArrayList<ViewColumn>();
-    @SerializedName("joins"         ) public List<ViewJoin>        _Joins      = new ArrayList<ViewJoin  >();
-    @SerializedName("subWhere"      ) public String                _SubWhere;
-    @SerializedName("subWhereX"     ) public SubWhereX             _SubWhereX;
-    @SerializedName("countStar"     ) public String                _CountStarDeprecated;  // Deprecated
-    @SerializedName("subQuery"      ) public SubWhereClause        _SubQuery;
-    @SerializedName("pivot"         ) public ViewPivot             _PivotSingle;
-    @SerializedName("pivots"        ) public List<ViewPivot>       _Pivots = new ArrayList<ViewPivot>();
-    @SerializedName("timeSeries"    ) public ViewTimeSeries        _TimeSeries;
-    @SerializedName("distinctOn"    ) public ViewDistinctOn        _DistinctOn;
-    @SerializedName("pivotColumns"  ) public List<ViewPivotColumn> _PivotColumnsDeprecated;  // Deprecated
-    @SerializedName("realize"       ) public ViewRealize           _Realize;
-    @SerializedName("importFormulas") public String[]              _ImportFormulas = new String[] { };
-    @SerializedName("formulaColumns") public List<Formula>         _Formulas = new ArrayList<Formula>();
-    @SerializedName("dbOnly"        ) public boolean               _DBOnly = false;
+    @SerializedName("columns"         ) public List<ViewColumn>      _ViewColumns= new ArrayList<ViewColumn>();
+    @SerializedName("joins"           ) public List<ViewJoin>        _Joins      = new ArrayList<ViewJoin  >();
+    @SerializedName("subWhere"        ) public String                _SubWhere;
+    @SerializedName("subWhereX"       ) public SubWhereX             _SubWhereX;
+    @SerializedName("countStar"       ) public String                _CountStarDeprecated;  // Deprecated
+    @SerializedName("subQuery"        ) public SubWhereClause        _SubQuery;
+    @SerializedName("pivot"           ) public ViewPivot             _PivotSingle;
+    @SerializedName("pivots"          ) public List<ViewPivot>       _Pivots = new ArrayList<ViewPivot>();
+    @SerializedName("timeSeries"      ) public ViewTimeSeries        _TimeSeries;
+    @SerializedName("distinctOn"      ) public ViewDistinctOn        _DistinctOn;
+    @SerializedName("pivotColumns"    ) public List<ViewPivotColumn> _PivotColumnsDeprecated;  // Deprecated
+    @SerializedName("realize"         ) public ViewRealize           _Realize;
+    @SerializedName("importFormulas"  ) public String[]              _ImportFormulas = new String[] { };
+    @SerializedName("formulaColumns"  ) public List<Formula>         _Formulas = new ArrayList<Formula>();
+    @SerializedName("formulaTemplates") public List<FormulaTemplate> _FormulaTemplates = new ArrayList<FormulaTemplate>();
+    @SerializedName("dbOnly"          ) public boolean               _DBOnly = false;
     /*@formatter:on*/
 
     public transient boolean           _OCC            = false;
@@ -574,6 +581,23 @@ public class View extends Base
                     }
                 }
             }
+        
+        if (_FormulaTemplates != null)
+          for (FormulaTemplate FT : _FormulaTemplates)
+            if (FT != null)
+              {
+                try
+                  {
+                    Class<?> patternClass = Class.forName("tilda.parsing.parts.formulaTemplates." + TextUtil.CapitalizeFirstCharacter(FT._Pattern.toLowerCase()));        
+                    Gson gson = new Gson();                                                       
+                    PatternObject obj = (PatternObject) gson.fromJson(FT._Impl.toString(), patternClass);                    
+                    obj.Validate(PS, this);                                                             
+                  }
+                catch (Exception  e)
+                  {
+                    LOG.error("There was a problem instantiating the the Class '" + FT._Pattern + "' for the PatternObject interface. \n", e);
+                  } 
+              }   
 
         Set<String> Formulas = new HashSet<String>();
         if (_Formulas != null)
@@ -588,9 +612,14 @@ public class View extends Base
                     Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "Formula column: " + F._Title);
                     if (F.getType() == ColumnType.DATETIME)
                       C._FCT = FrameworkColumnType.DT_FORMULA;
+                    else if(F._FormulaTemplate == true)
+                      C._FCT = FrameworkColumnType.FORMULA_TEMPLATE;
                     O._Columns.add(C);
                   }
               }
+        
+
+     
 
         // Preparing regexes for anything that needs to do search and replace.
         Set<String> Names = new HashSet<String>();

@@ -496,7 +496,7 @@
     ,{ "name": "Testing2View"
       ,"description": "A test view to test .* and exclude and block."
       ,"columns":[
-          { "sameas": "Testing.refnum" }
+          { "sameas": "Testing.refnum"                     }
          ,{ "sameas": "Testing.name"                       }
          ,{ "sameas": "Testing.lastUpdated"                }
          ,{ "sameas": "Testing.lastUpdated"                , "name":"xxxLastUpdated"}
@@ -505,12 +505,30 @@
            ,"exclude":["a2*"]
            ,"block"  :["a3", "a6*"]
           }
+         ,{ "sameas": "Testing.desc*"                      }
         ]
       ,"subWhereX":{
             "clause":["Testing.deleted is null"
                      ]
            ,"description":["Active test records"]
         }
+        
+                
+      ,"formulaTemplates":[
+       { 
+          "name":"County flags"
+         ,"pattern":"FLAGGING"
+         ,"impl": {
+             "type": "DOUBLE"
+            ,"column":"desc2"
+            ,"ranges":[
+                 { "values":["a","b","c"], "name":"Cat1" }
+                ,{ "values":["x","y","z"], "name":"Cat2" }
+                ,{ "values":["x","y","z"], "name":"Cat3" }
+              ]
+          }
+        }
+      ]
       ,"formulaColumns":[
           { "name": "a3"
            ,"type": "BOOLEAN"
@@ -543,16 +561,16 @@
              ]
           }
         ]
-      ,"realize": {
+      /*,"realize": {
           "indices":[ 
               { "name": "Refnum", "columns":["refnum"] }
              ,{ "name": "LastUpdated", "orderBy":["lastUpdated desc"] }
            ]
          ,"excludes":[ "a9*"
                      ]
-        }
+        }*/
      }
-    ,{ "name": "Testing3View"
+    /*,{ "name": "Testing3View"
       ,"description": "A test view to test .* and exclude and block."
       ,"columns":[
           { "sameas": "Testing2Realized.refnum"      }
@@ -604,7 +622,7 @@
              ,{ "name": "LastUpdated", "orderBy":["lastUpdated desc"] }
            ]
         }
-     }
+     }*/
 
    ]
 }
