@@ -41,9 +41,9 @@ public class FormulaTemplate
     protected static final Logger   LOG             = LogManager.getLogger(FormulaTemplate.class.getName());
 
     /*@formatter:off*/
-    @SerializedName("name"   ) public String     _Name   ;
-    @SerializedName("pattern") public String     _PatternStr;
-    @SerializedName("impl"   ) public JSONObject  _Impl   ;
+    @SerializedName("name"   ) public String             _Name   ;
+    @SerializedName("pattern") public String             _PatternStr;
+    @SerializedName("impls"   ) public List<JSONObject>  _Impls = new ArrayList<JSONObject>();
     /*@formatter:on*/
     
     public FormulaPatternType _Pattern;
@@ -58,7 +58,7 @@ public class FormulaTemplate
       {
         _Name = FT._Name;
         _PatternStr = FT._PatternStr;
-        _Impl = FT._Impl;
+        _Impls = FT._Impls;
       }
 
     public View getParentView()

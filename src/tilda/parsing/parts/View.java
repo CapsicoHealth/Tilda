@@ -30,6 +30,7 @@ import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.simple.JSONObject;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
@@ -589,9 +590,12 @@ public class View extends Base
                 try
                   {
                     Class<?> patternClass = Class.forName("tilda.parsing.parts.formulaTemplates." + TextUtil.CapitalizeFirstCharacter(FT._PatternStr.toLowerCase()));        
-                    Gson gson = new Gson();                                                       
-                    PatternObject obj = (PatternObject) gson.fromJson(FT._Impl.toString(), patternClass);                    
-                    obj.Validate(PS, this);                                                             
+                    Gson gson = new Gson();   
+                    for(JSONObject JO : FT._Impls)
+                      {
+                         PatternObject obj = (PatternObject) gson.fromJson(JO.toString(), patternClass);                    
+                         obj.Validate(PS, this);
+                      }
                   }
                 catch (Exception  e)
                   {
