@@ -12,7 +12,7 @@ window.addEventListener('load', function(){
       propertyParser : 'lib/require/propertyParser',
       markdownConverter : 'lib/Markdown.Converter',
       text: 'lib/require/text',
-      jquery: 'lib/jquery',
+//      jquery: 'lib/jquery',
       lodash: 'lib/lodash',
       backbone: 'lib/backbone',
       jointjs: 'lib/joint',

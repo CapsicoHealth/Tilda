@@ -1,5 +1,8 @@
-define(['text!../templates/tilda_schema/_new.html', 
-    "../core/parser", '../core/file_search', '../core/read_schema'],
+define(['text!../templates/tilda_schema_view.html'
+       ,"../core/parser"
+       ,'../core/file_search'
+       , '../core/read_schema'
+       ],
   function(_NewView, _Parser, _FileSearch, _ReadSchema){
   var error = function(error){
     console.log(error.message);
