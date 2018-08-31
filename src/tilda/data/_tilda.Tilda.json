@@ -366,7 +366,11 @@
         { "name": "desc3"        , "type": "STRING"     ,                    "size":  5000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
         { "name": "desc4"        , "type": "STRING"     ,                    "size":  9000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
         { "name": "desc5"        , "type": "STRING"     ,                    "size": 17000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
-        { "name": "desc6"        , "type": "STRING"     ,                    "size": 33000, "protect":"SMART",  "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
+        { "name": "desc6"        , "type": "STRING"     ,                    "size": 33000, "protect":"SMART",  "description": "The title for a person, i.e., Mr, Miss, Mrs..."
+                                 , "values": [ { "name":"String"   , "value":"STR", "description": "String"    }
+                                              ,{ "name":"DateTime" , "value":"DTM", "description": "DateTime"  }
+                                             ]
+        },
         { "name": "tops"         , "type": "STRING[]"   ,                                                       "description": "The blah"},
         { "name": "tops2"        , "type": "STRING{}"   ,                                                       "description": "The blah"},
         { "name": "a1"           , "type": "BITFIELD"   ,                                                       "description": "The blah"},

@@ -83,6 +83,13 @@ public class Column extends TypeDef
 
       }
 
+    public Column(String Name, String TypeStr, Integer Size, String Description)
+      {
+        super(TypeStr, Size);
+        _Name = Name;
+        _Description = Description;
+      }
+
     public Column(String Name, String TypeStr, Integer Size, boolean Nullable, ColumnMode Mode, boolean Invariant, ProtectionType Protect, String Description)
       {
         super(TypeStr, Size);
@@ -269,7 +276,7 @@ public class Column extends TypeDef
 
         if (_Name == null)
           _Name = _SameAsObj._Name;
-
+        
         if (_TypeStr != null && _TypeStr.equals(_SameAsObj._TypeStr) == false && _Aggregate == null)
           PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining a type '" + _TypeStr + "' which doesn't match the destination column's type '" + _SameAsObj._TypeStr + "'. Note that redefining a type for a sameas column is superfluous in the first place.");
         else if (_Aggregate == null)
@@ -327,7 +334,7 @@ public class Column extends TypeDef
               _Values = ColumnValue.deepCopy(_SameAsObj._Values);
           }
 
-        if (_ProtectStr != null)
+        if (_ProtectStr != null && _ProtectStr.equals(_SameAsObj._ProtectStr) == false)
           PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining 'protect', which is not allowed.");
         else
           _ProtectStr = _SameAsObj._ProtectStr;

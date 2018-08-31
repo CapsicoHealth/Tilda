@@ -152,7 +152,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Aug 31 2018, 16:59:43EDT
+ @generated Aug 31 2018, 17:50:22EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__DATELIMITDIM implements tilda.interfaces.WriterObject
