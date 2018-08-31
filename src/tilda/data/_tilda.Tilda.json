@@ -512,7 +512,6 @@
                      ]
            ,"description":["Active test records"]
         }
-        
                 
       ,"formulaTemplates":[
        { 
@@ -573,16 +572,16 @@
              ]
           }
         ]
-      /*,"realize": {
+      ,"realize": {
           "indices":[ 
               { "name": "Refnum", "columns":["refnum"] }
              ,{ "name": "LastUpdated", "orderBy":["lastUpdated desc"] }
            ]
          ,"excludes":[ "a9*"
                      ]
-        }*/
+        }
      }
-    /*,{ "name": "Testing3View"
+    ,{ "name": "Testing3View"
       ,"description": "A test view to test .* and exclude and block."
       ,"columns":[
           { "sameas": "Testing2Realized.refnum"      }
@@ -634,7 +633,7 @@
              ,{ "name": "LastUpdated", "orderBy":["lastUpdated desc"] }
            ]
         }
-     }*/
+     }
 
    ]
 }
