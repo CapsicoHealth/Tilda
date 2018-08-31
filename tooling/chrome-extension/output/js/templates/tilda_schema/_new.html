@@ -87,13 +87,21 @@
             <input type="hidden" id="new_canvas" value="1"/>
           </div>
           <div class="form-group">
+            View: <input type="radio" name="canvasType" type="radio" value="view">
+            Object: <input name="canvasType" type="radio" type="radio" value="object">
+          </div>
+          <div class="form-group">
+            <label for="name">Copy from selected config ?</label>
+            <input type="checkbox" name="copyConfig" class="form-control" value="true" />
+          </div>
+          <div class="form-group">
             <button class="deleteCanvas btn btn-default btn-danger form-control">Delete ?</button>
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary createCanvas" data-dismiss="modal">Save changes</button>
+        <button type="button" class="btn btn-primary createCanvas">Save changes</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
