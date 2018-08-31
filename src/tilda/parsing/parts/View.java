@@ -588,7 +588,7 @@ public class View extends Base
               {
                 try
                   {
-                    Class<?> patternClass = Class.forName("tilda.parsing.parts.formulaTemplates." + TextUtil.CapitalizeFirstCharacter(FT._Pattern.toLowerCase()));        
+                    Class<?> patternClass = Class.forName("tilda.parsing.parts.formulaTemplates." + TextUtil.CapitalizeFirstCharacter(FT._PatternStr.toLowerCase()));        
                     Gson gson = new Gson();                                                       
                     PatternObject obj = (PatternObject) gson.fromJson(FT._Impl.toString(), patternClass);                    
                     obj.Validate(PS, this);                                                             

@@ -31,6 +31,7 @@ import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.ColumnType;
+import tilda.enums.FormulaPatternType;
 import tilda.interfaces.JSONable;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
@@ -41,13 +42,13 @@ public class FormulaTemplate
 
     /*@formatter:off*/
     @SerializedName("name"   ) public String     _Name   ;
-    @SerializedName("pattern") public String     _Pattern;
+    @SerializedName("pattern") public String     _PatternStr;
     @SerializedName("impl"   ) public JSONObject  _Impl   ;
-
-
     /*@formatter:on*/
+    
+    public FormulaPatternType _Pattern;
 
-    protected transient View        _ParentView;
+    protected transient View  _ParentView;
 
     public FormulaTemplate()
       {
@@ -56,7 +57,7 @@ public class FormulaTemplate
     public FormulaTemplate(FormulaTemplate FT)
       {
         _Name = FT._Name;
-        _Pattern = FT._Pattern;
+        _PatternStr = FT._PatternStr;
         _Impl = FT._Impl;
       }
 
@@ -70,39 +71,17 @@ public class FormulaTemplate
         return this._ParentView.getShortName() + "." + this._Name;
       }
 
-    public boolean Validate(ParserSession PS, View ParentView)
+    public void Validate(ParserSession PS, View ParentView)
       {
-        int Errs = PS.getErrorCount();
-
         _ParentView = ParentView;
 
-//        if (TextUtil.isNullOrEmpty(_DefaultName) == true)
-//          PS.AddError("View " + _ParentView.getShortName() + " is defining a formula without a name.");
-//
-//        if (TextUtil.isNullOrEmpty(_TypeStr) == true)
-//          PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _DefaultName + "' without a type.");
-//        else if ((_Type = ColumnType.parse(_TypeStr)) == null)
-//          PS.AddError("View " + _ParentView.getShortName() + " defined a formula '" + _DefaultName + "' with an invalid type '" + _TypeStr + "'.");
-//
-//        // if (_FormulaStrs == null || _FormulaStrs.length == 0)
-//        // PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' without a formula.");
-//
-//        // if (TextUtil.isNullOrEmpty(_Title) == true)
-//        // PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' without a title.");
-//        //
-//        // else if (_Title.length() > 128)
-//        // PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' with a title that is too long. 128 characters maximum.");
-//        //
-//        // if (_Description == null || _Description.length == 0)
-//        // PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' without a description.");
-//        //
-//        // if (_Values != null)
-//        // for (Value VPV : _Values)
-//        // VPV.Validate(PS, ParentView, "value for formula '" + _Name + "'");
-//
-//        super.Validate(PS, "Formula '" + _DefaultName + "' in View " + ParentView.getShortName() + "", true, false);
+        if (TextUtil.isNullOrEmpty(_Name) == true)
+          PS.AddError("View " + _ParentView.getShortName() + " is defining a formula template without a name.");
 
-        return PS.getErrorCount() == Errs;
+        if (TextUtil.isNullOrEmpty(_PatternStr) == true)
+          PS.AddError("View " + _ParentView.getShortName() + " is defining a formula template'" + _Name + "' without a pattern.");
+        else if ((_Pattern = FormulaPatternType.parse(_PatternStr)) == null)
+          PS.AddError("View " + _ParentView.getShortName() + " defined a formula '" + _Name + "' with an invalid PatternType '" + _PatternStr + "'.");
       }
 
   }

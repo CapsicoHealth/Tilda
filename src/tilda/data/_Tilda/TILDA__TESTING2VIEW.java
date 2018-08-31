@@ -561,6 +561,110 @@ None
 </BLOCKQUOTE>
 </TD>
 </TR>
+  <TR valign="top" bgcolor="#FFFFFF">
+    <TD>34&nbsp;&nbsp;</TD>
+<TD onclick="onModalShowClicked('Testing2View-a7_Cat1')" align="right"><B id='Testing2View-a7_Cat1_DIV' class='formulae dotted_underline cursor_pointer'>a7_Cat1</B>&nbsp;&nbsp;</TD>
+<TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Formula column: a7_Cat1 Title<BLOCKQUOTE>
+<TABLE class="RowedTable" border="0px" cellspacing="0px" cellpadding="2px" width="75%">
+<TR><TD><B>Title</B></TD><TD>a7_Cat1 Title</TD></TR><TR><TD><B>Description</B></TD><TD>This formula checks whether the column 'a7' value falls in the range of 0.0 and 10.0.</TD></TR><TR><TD><B>Formula</B></TD><TD><PRE style="padding-top: 3px;">case when <B style="color:#00AA00;">a7</B> >= 0.0 and <B style="color:#00AA00;">a7</B></PRE></TD><TR>
+<TR valign="top"><TD><B>Referenced Columns</B></TD><TD>
+<TABLE border="0px">
+<TR><TD valign="top" align="right"><B style="color:#00AA00;">a7</B>:</TD>
+<TD>The blah</TD></TR>
+</TABLE>
+</TD></TR>
+<TR valign="top"><TD><B>Referenced Terms</B></TD><TD>
+None
+</TD></TR>
+</TABLE>
+<DIV id='Testing2View-a7_Cat1_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('Testing2View-a7_Cat1_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Formula Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Testing2View-a7_Cat1_DIV'>a7_Cat1</a></td>
+</tr>
+<tr><td>&nbsp;</td></tr>
+<tr bgcolor="#DFECF8">
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2View-a7_DIV'>a7</a></td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-a7_DIV'>a7</a> -- INTEGER</td>
+</tr>
+</table>
+</DIV></DIV>
+</BLOCKQUOTE>
+</TD>
+</TR>
+  <TR valign="top" bgcolor="#DFECF8">
+    <TD>35&nbsp;&nbsp;</TD>
+<TD onclick="onModalShowClicked('Testing2View-a7_Cat2')" align="right"><B id='Testing2View-a7_Cat2_DIV' class='formulae dotted_underline cursor_pointer'>a7_Cat2</B>&nbsp;&nbsp;</TD>
+<TD>double&nbsp;/&nbsp;double precision&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="left">-&nbsp;&nbsp;</TD>
+<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">-&nbsp;&nbsp;</TD>
+<TD>Formula column: a7_Cat2 Title<BLOCKQUOTE>
+<TABLE class="RowedTable" border="0px" cellspacing="0px" cellpadding="2px" width="75%">
+<TR><TD><B>Title</B></TD><TD>a7_Cat2 Title</TD></TR><TR><TD><B>Description</B></TD><TD>This formula checks whether the column 'a7' value falls in the range of 10.0 and 20.0.</TD></TR><TR><TD><B>Formula</B></TD><TD><PRE style="padding-top: 3px;">case when <B style="color:#00AA00;">a7</B> >= 10.0 and <B style="color:#00AA00;">a7</B></PRE></TD><TR>
+<TR valign="top"><TD><B>Referenced Columns</B></TD><TD>
+<TABLE border="0px">
+<TR><TD valign="top" align="right"><B style="color:#00AA00;">a7</B>:</TD>
+<TD>The blah</TD></TR>
+</TABLE>
+</TD></TR>
+<TR valign="top"><TD><B>Referenced Terms</B></TD><TD>
+None
+</TD></TR>
+</TABLE>
+<DIV id='Testing2View-a7_Cat2_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('Testing2View-a7_Cat2_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Formula Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Testing2View-a7_Cat2_DIV'>a7_Cat2</a></td>
+</tr>
+<tr><td>&nbsp;</td></tr>
+<tr bgcolor="#DFECF8">
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing2View-a7_DIV'>a7</a></td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-a7_DIV'>a7</a> -- INTEGER</td>
+</tr>
+</table>
+</DIV></DIV>
+</BLOCKQUOTE>
+</TD>
+</TR>
 </TABLE></BLOCKQUOTE>
 <DIV id='Testing2View-refnum_MODAL' class='modal'>
 <DIV class='modal-content'>
@@ -1279,11 +1383,45 @@ None
 </tr>
 </table>
 </DIV></DIV>
+<DIV id='Testing2View-a7_Cat1_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('Testing2View-a7_Cat1_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Testing2View-a7_Cat1_DIV'>a7_Cat1</a> -- DOUBLE</td>
+</tr>
+</table>
+</DIV></DIV>
+<DIV id='Testing2View-a7_Cat2_MODAL' class='modal'>
+<DIV class='modal-content'>
+<SPAN onclick="onModalCloseClicked('Testing2View-a7_Cat2_MODAL')" class='close'>&times;</SPAN>
+<DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
+<table style='margin: auto;'> 
+  <tr> 
+    <th align='left' width="300em">Schema</th> 
+    <th align='left' width="400em">Table/View</th> 
+    <th align='left' >Column/Formula</th> 
+  </tr> 
+<tr bgcolor="#a3c8eb">
+<td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Testing2View_DIV'>Testing2View</a></td>
+<td><a href='TILDA___Docs.TILDA.html#Testing2View-a7_Cat2_DIV'>a7_Cat2</a> -- DOUBLE</td>
+</tr>
+</table>
+</DIV></DIV>
 </DIV>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Aug 31 2018, 14:17:58EDT
+ @generated Aug 31 2018, 16:26:24EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTING2VIEW implements tilda.interfaces.ReaderObject
@@ -5757,6 +5895,254 @@ This is the null setter for:<BR>
      }
 
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a7_Cat1 -> TILDA.Testing2View."a7_Cat1"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a7_Cat1 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a7_Cat1 of type double precision</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: a7_Cat1 Title</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   double _a7_Cat1= SystemValues.EVIL_VALUE;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a7_Cat1 -> TILDA.Testing2View."a7_Cat1"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a7_Cat1 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a7_Cat1 of type double precision</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: a7_Cat1 Title</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final double getA7_Cat1()
+      { return _a7_Cat1; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a7_Cat1 -> TILDA.Testing2View."a7_Cat1"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a7_Cat1 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a7_Cat1 of type double precision</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: a7_Cat1 Title</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isNullA7_Cat1()
+     { return __Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A7_CAT1._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a7_Cat1 -> TILDA.Testing2View."a7_Cat1"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a7_Cat1 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a7_Cat1 of type double precision</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: a7_Cat1 Title</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setA7_Cat1(double v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (v != _a7_Cat1)
+        {
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.a7_Cat1' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A7_CAT1._Mask);
+          __Nulls.andNot(TILDA__TESTING2VIEW_Factory.COLS.A7_CAT1._Mask);
+       _a7_Cat1 = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a7_Cat1 -> TILDA.Testing2View."a7_Cat1"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a7_Cat1 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a7_Cat1 of type double precision</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: a7_Cat1 Title</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setNullA7_Cat1()
+     {
+       long T0 = System.nanoTime();
+       if (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A7_CAT1._Mask) == true) // already NULL
+        return;
+       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A7_CAT1._Mask);
+       __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A7_CAT1._Mask);
+       _a7_Cat1=0L;
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a7_Cat2 -> TILDA.Testing2View."a7_Cat2"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the definition for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a7_Cat2 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a7_Cat2 of type double precision</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: a7_Cat2 Title</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   double _a7_Cat2= SystemValues.EVIL_VALUE;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a7_Cat2 -> TILDA.Testing2View."a7_Cat2"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the getter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a7_Cat2 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a7_Cat2 of type double precision</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: a7_Cat2 Title</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final double getA7_Cat2()
+      { return _a7_Cat2; }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a7_Cat2 -> TILDA.Testing2View."a7_Cat2"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the isNull for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a7_Cat2 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a7_Cat2 of type double precision</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: a7_Cat2 Title</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+   public final boolean isNullA7_Cat2()
+     { return __Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A7_CAT2._Mask); }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a7_Cat2 -> TILDA.Testing2View."a7_Cat2"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a7_Cat2 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a7_Cat2 of type double precision</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: a7_Cat2 Title</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setA7_Cat2(double v) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (v != _a7_Cat2)
+        {
+          if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
+           throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2View.a7_Cat2' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A7_CAT2._Mask);
+          __Nulls.andNot(TILDA__TESTING2VIEW_Factory.COLS.A7_CAT2._Mask);
+       _a7_Cat2 = v;
+        }
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Field tilda.data.TILDA.Testing2View.a7_Cat2 -> TILDA.Testing2View."a7_Cat2"
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+This is the null setter for:<BR>
+<TABLE border="0px" cellpadding="3px" cellspacing="0px">
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2View.a7_Cat2 of type double</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2View.a7_Cat2 of type double precision</TD></TR>
+
+  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Formula column: a7_Cat2 Title</TD></TR>
+  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
+  <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+</TABLE>
+*/
+    void setNullA7_Cat2()
+     {
+       long T0 = System.nanoTime();
+       if (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A7_CAT2._Mask) == true) // already NULL
+        return;
+       __Changes.or(TILDA__TESTING2VIEW_Factory.COLS.A7_CAT2._Mask);
+       __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A7_CAT2._Mask);
+       _a7_Cat2=0L;
+       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
+     }
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -5822,6 +6208,8 @@ This is the null setter for:<BR>
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "desc2_Cat1");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "desc2_Cat2");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "desc2_Cat3");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a7_Cat1");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing2View", "a7_Cat2");
           S.append(" from "); C.getFullTableVar(S, "TILDA", "Testing2View");
        switch (__LookupId)
         {
@@ -5909,6 +6297,8 @@ This is the null setter for:<BR>
                                _desc2_Cat1     =                              RS.getDouble   (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT1._Mask    );
                                _desc2_Cat2     =                              RS.getDouble   (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT2._Mask    );
                                _desc2_Cat3     =                              RS.getDouble   (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT3._Mask    );
+                               _a7_Cat1        =                              RS.getDouble   (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A7_CAT1._Mask       );
+                               _a7_Cat2        =                              RS.getDouble   (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2VIEW_Factory.COLS.A7_CAT2._Mask       );
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();
@@ -5998,6 +6388,8 @@ This is the null setter for:<BR>
                + "; desc2_Cat1"       + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT1._Mask) == true ? ": NULL" : ": " +                                   getDesc2_Cat1    () )
                + "; desc2_Cat2"       + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT2._Mask) == true ? ": NULL" : ": " +                                   getDesc2_Cat2    () )
                + "; desc2_Cat3"       + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.DESC2_CAT3._Mask) == true ? ": NULL" : ": " +                                   getDesc2_Cat3    () )
+               + "; a7_Cat1"          + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A7_CAT1._Mask) == true ? ": NULL" : ": " +                                   getA7_Cat1       () )
+               + "; a7_Cat2"          + (__Nulls.intersects(TILDA__TESTING2VIEW_Factory.COLS.A7_CAT2._Mask) == true ? ": NULL" : ": " +                                   getA7_Cat2       () )
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;
