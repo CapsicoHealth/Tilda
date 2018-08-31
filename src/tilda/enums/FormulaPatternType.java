@@ -16,27 +16,19 @@
 
 package tilda.enums;
 
-public enum FrameworkSourcedType
+
+public enum FormulaPatternType
   {
-      NONE
+    FLAGGING,
     
-    , MAPPER 
-    
-    , ENUMERATION
+    BINNING;
 
-    , VIEW
-
-    , REALIZED
-    
-    ;
-    
-
-    public static FrameworkSourcedType parse(String Str)
+    public static FormulaPatternType parse(String Str)
       {
-        for (FrameworkSourcedType e : FrameworkSourcedType.values())
+        for (FormulaPatternType e : FormulaPatternType.values())
           if (Str.equalsIgnoreCase(e.name()) == true)
             return e;
         return null;
       }
 
-  }
+  };

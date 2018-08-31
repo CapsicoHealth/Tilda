@@ -14,29 +14,13 @@
  * limitations under the License.
  */
 
-package tilda.enums;
+package tilda.interfaces;
 
-public enum FrameworkSourcedType
+import tilda.parsing.ParserSession;
+import tilda.parsing.parts.View;
+
+public interface PatternObject
   {
-      NONE
-    
-    , MAPPER 
-    
-    , ENUMERATION
-
-    , VIEW
-
-    , REALIZED
-    
-    ;
-    
-
-    public static FrameworkSourcedType parse(String Str)
-      {
-        for (FrameworkSourcedType e : FrameworkSourcedType.values())
-          if (Str.equalsIgnoreCase(e.name()) == true)
-            return e;
-        return null;
-      }
-
+    public void Validate(ParserSession PS, View ParentView) throws Exception;
+    public String getColumnName();
   }

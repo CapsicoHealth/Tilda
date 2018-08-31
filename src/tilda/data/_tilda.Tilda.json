@@ -366,7 +366,11 @@
         { "name": "desc3"        , "type": "STRING"     ,                    "size":  5000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
         { "name": "desc4"        , "type": "STRING"     ,                    "size":  9000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
         { "name": "desc5"        , "type": "STRING"     ,                    "size": 17000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
-        { "name": "desc6"        , "type": "STRING"     ,                    "size": 33000, "protect":"SMART",  "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
+        { "name": "desc6"        , "type": "STRING"     ,                    "size": 33000, "protect":"SMART",  "description": "The title for a person, i.e., Mr, Miss, Mrs..."
+                                 , "values": [ { "name":"String"   , "value":"STR", "description": "String"    }
+                                              ,{ "name":"DateTime" , "value":"DTM", "description": "DateTime"  }
+                                             ]
+        },
         { "name": "tops"         , "type": "STRING[]"   ,                                                       "description": "The blah"},
         { "name": "tops2"        , "type": "STRING{}"   ,                                                       "description": "The blah"},
         { "name": "a1"           , "type": "BITFIELD"   ,                                                       "description": "The blah"},
@@ -496,7 +500,7 @@
     ,{ "name": "Testing2View"
       ,"description": "A test view to test .* and exclude and block."
       ,"columns":[
-          { "sameas": "Testing.refnum" }
+          { "sameas": "Testing.refnum"                     }
          ,{ "sameas": "Testing.name"                       }
          ,{ "sameas": "Testing.lastUpdated"                }
          ,{ "sameas": "Testing.lastUpdated"                , "name":"xxxLastUpdated"}
@@ -505,12 +509,42 @@
            ,"exclude":["a2*"]
            ,"block"  :["a3", "a6*"]
           }
+         ,{ "sameas": "Testing.desc*"                      }
         ]
       ,"subWhereX":{
             "clause":["Testing.deleted is null"
                      ]
            ,"description":["Active test records"]
         }
+                
+      ,"formulaTemplates":[
+          { "name":"Descritpion flags"
+           ,"pattern":"FLAGGING"
+           ,"impls": [
+               { "type": "DOUBLE"
+                ,"column":"desc2"
+                ,"ranges":[
+                    { "values":["a","b","c"], "name":"Cat1" }
+                   ,{ "values":["x","y","z"], "name":"Cat2" }
+                   ,{ "values":["x","y","z"], "name":"Cat3" }
+                  ]
+               }
+             ]
+          }
+         ,{ 
+            "name":"Descritpion Bins"
+           ,"pattern":"BINNING"
+           ,"impls":[
+               { "type": "DOUBLE"
+                ,"column":"a7"
+                ,"ranges":[
+                     { "min":"0" , "maxExclusive":"10", "name":"Cat4" }
+                    ,{ "min":"10", "maxExclusive":"20", "name":"Cat5" }
+                  ]
+               }
+             ]
+          }
+        ]
       ,"formulaColumns":[
           { "name": "a3"
            ,"type": "BOOLEAN"

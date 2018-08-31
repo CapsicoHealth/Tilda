@@ -48,7 +48,7 @@ public class Gen
             LOG.error("The utility must be called with a path to a Tilda json file");
             System.exit(-1);
           }
-
+        
         for (String path : Args)
           {
             try
