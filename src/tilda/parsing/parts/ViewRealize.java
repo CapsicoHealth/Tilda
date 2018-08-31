@@ -104,7 +104,7 @@ public class ViewRealize
                  OCC = true;
 //              Column newCol = new Column(C._Name, C._TypeStr, C._Size, true, C._Mode, C._Invariant, C._Protect, C._Description);
                 Column newCol = new Column(C._Name, C._TypeStr, C._Size, C._Description);
-                newCol._Nullable = C._Nullable;
+                newCol._Nullable = true;
                 newCol._FCT = C._FCT;
                 newCol._SameAs = C._SameAs;
                 newCol._SameAsObj = C._SameAsObj;

@@ -625,10 +625,10 @@ insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated
 
 
 create table if not exists TILDA.Testing2Realized -- Realized table for view TILDA.Testing2View: A test view to test .* and exclude and block.
- (  "refnum"          bigint              not null   -- The primary key for this record
-  , "name"            varchar(10)         not null   -- Medical system unique enterprise id
-  , "lastUpdated"     timestamptz         not null   -- The timestamp for when the record was last updated. (TILDA.Testing)
-  , "xxxLastUpdated"  timestamptz         not null   -- The timestamp for when the record was last updated. (TILDA.Testing)
+ (  "refnum"          bigint                         -- The primary key for this record
+  , "name"            varchar(10)                    -- Medical system unique enterprise id
+  , "lastUpdated"     timestamptz                    -- The timestamp for when the record was last updated. (TILDA.Testing)
+  , "xxxLastUpdated"  timestamptz                    -- The timestamp for when the record was last updated. (TILDA.Testing)
   , "a1"              INTEGER                        -- The blah
   , "a3b"             boolean[]                      -- The blah
   , "a4"              double precision               -- The blah
@@ -681,12 +681,12 @@ CREATE INDEX Testing2Realized_LastUpdated ON TILDA.Testing2Realized ("lastUpdate
 
 
 create table if not exists TILDA.Testing3Realized -- Realized table for view TILDA.Testing3View: A test view to test .* and exclude and block.
- (  "refnum"          bigint        not null   -- The primary key for this record
-  , "name"            varchar(10)   not null   -- Medical system unique enterprise id
+ (  "refnum"          bigint                   -- The primary key for this record
+  , "name"            varchar(10)              -- Medical system unique enterprise id
   , "a8bTZ"           character(5)             -- Generated helper column to hold the time zone ID for 'a8b'.
   , "a8b"             timestamptz              -- The blah
-  , "lastUpdated"     timestamptz   not null   -- The timestamp for when the record was last updated. (TILDA.Testing)
-  , "xxxLastUpdated"  timestamptz   not null   -- The timestamp for when the record was last updated. (TILDA.Testing)
+  , "lastUpdated"     timestamptz              -- The timestamp for when the record was last updated. (TILDA.Testing)
+  , "xxxLastUpdated"  timestamptz              -- The timestamp for when the record was last updated. (TILDA.Testing)
  );
 COMMENT ON TABLE TILDA.Testing3Realized IS E'Realized table for view TILDA.Testing3View: A test view to test .* and exclude and block.';
 COMMENT ON COLUMN TILDA.Testing3Realized."refnum" IS E'The primary key for this record';
@@ -701,8 +701,8 @@ CREATE INDEX Testing3Realized_LastUpdated ON TILDA.Testing3Realized ("lastUpdate
 
 
 create table if not exists TILDA.Testing4Realized -- Realized table for view TILDA.Testing4View: A test view to test .* and exclude and block.
- (  "refnum"       bigint              not null   -- The primary key for this record
-  , "name"         varchar(10)         not null   -- Medical system unique enterprise id
+ (  "refnum"       bigint                         -- The primary key for this record
+  , "name"         varchar(10)                    -- Medical system unique enterprise id
   , "a1"           INTEGER                        -- The blah
   , "a3b"          boolean[]                      -- The blah
   , "a4"           double precision               -- The blah

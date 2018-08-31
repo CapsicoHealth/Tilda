@@ -217,7 +217,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Aug 31 2018, 17:50:22EDT
+ @generated Aug 31 2018, 18:02:57EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__FORMULARESULT implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
