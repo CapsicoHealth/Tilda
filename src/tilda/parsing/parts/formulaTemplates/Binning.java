@@ -111,7 +111,7 @@ public class Binning implements PatternObject
           
           if(BR._Max != null)
             formulaStr[0] += " <= " + BR._Max + " then 1 else 0 end";
-          else if(BR._MinExclusive != null)
+          else if(BR._MaxExclusive != null)
             formulaStr[0] += " < " + BR._MaxExclusive + " then 1 else 0 end"; 
                    
           F._FormulaStrs = formulaStr;

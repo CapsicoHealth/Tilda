@@ -587,6 +587,8 @@ public class View extends Base
           for (FormulaTemplate FT : _FormulaTemplates)
             if (FT != null)
               {
+                if (FT.Validate(PS, this) == false)
+                 continue;
                 try
                   {
                     Class<?> patternClass = Class.forName("tilda.parsing.parts.formulaTemplates." + TextUtil.CapitalizeFirstCharacter(FT._PatternStr.toLowerCase()));        

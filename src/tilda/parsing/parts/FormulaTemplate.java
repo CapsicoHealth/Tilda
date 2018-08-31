@@ -43,7 +43,7 @@ public class FormulaTemplate
     /*@formatter:off*/
     @SerializedName("name"   ) public String             _Name   ;
     @SerializedName("pattern") public String             _PatternStr;
-    @SerializedName("impls"   ) public List<JSONObject>  _Impls = new ArrayList<JSONObject>();
+    @SerializedName("impls"  ) public List<JSONObject>  _Impls = new ArrayList<JSONObject>();
     /*@formatter:on*/
     
     public FormulaPatternType _Pattern;
@@ -71,8 +71,10 @@ public class FormulaTemplate
         return this._ParentView.getShortName() + "." + this._Name;
       }
 
-    public void Validate(ParserSession PS, View ParentView)
+    public boolean Validate(ParserSession PS, View ParentView)
       {
+        int Errs = PS.getErrorCount();
+
         _ParentView = ParentView;
 
         if (TextUtil.isNullOrEmpty(_Name) == true)
@@ -81,7 +83,11 @@ public class FormulaTemplate
         if (TextUtil.isNullOrEmpty(_PatternStr) == true)
           PS.AddError("View " + _ParentView.getShortName() + " is defining a formula template'" + _Name + "' without a pattern.");
         else if ((_Pattern = FormulaPatternType.parse(_PatternStr)) == null)
-          PS.AddError("View " + _ParentView.getShortName() + " defined a formula '" + _Name + "' with an invalid PatternType '" + _PatternStr + "'.");
+          PS.AddError("View " + _ParentView.getShortName() + " defined a formula template '" + _Name + "' with an invalid PatternType '" + _PatternStr + "'.");
+        if (_Impls.isEmpty() == true)
+          PS.AddError("View " + _ParentView.getShortName() + " defined a formula template '" + _Name + "' with an empty list of implementations.");
+
+        return Errs == PS.getErrorCount();
       }
 
   }

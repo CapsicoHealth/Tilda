@@ -518,32 +518,33 @@
         }
                 
       ,"formulaTemplates":[
-       { 
-          "name":"Descritpion flags"
-         ,"pattern":"FLAGGING"
-         ,"impl": {
-             "type": "DOUBLE"
-            ,"column":"desc2"
-            ,"ranges":[
-                 { "values":["a","b","c"], "name":"Cat1" }
-                ,{ "values":["x","y","z"], "name":"Cat2" }
-                ,{ "values":["x","y","z"], "name":"Cat3" }
-              ]
+          { "name":"Descritpion flags"
+           ,"pattern":"FLAGGING"
+           ,"impls": [
+               { "type": "DOUBLE"
+                ,"column":"desc2"
+                ,"ranges":[
+                    { "values":["a","b","c"], "name":"Cat1" }
+                   ,{ "values":["x","y","z"], "name":"Cat2" }
+                   ,{ "values":["x","y","z"], "name":"Cat3" }
+                  ]
+               }
+             ]
           }
-        }
-        ,{ 
-          "name":"Descritpion Bins"
-         ,"pattern":"BINNING"
-         ,"impl": {
-             "type": "DOUBLE"
-            ,"column":"a7"
-            ,"ranges":[
-                 { "min":"0" , "maxExclusive":"10", "name":"Cat1" }
-                ,{ "min":"10", "maxExclusive":"20", "name":"Cat2" }
-              ]
+         ,{ 
+            "name":"Descritpion Bins"
+           ,"pattern":"BINNING"
+           ,"impls":[
+               { "type": "DOUBLE"
+                ,"column":"a7"
+                ,"ranges":[
+                     { "min":"0" , "maxExclusive":"10", "name":"Cat4" }
+                    ,{ "min":"10", "maxExclusive":"20", "name":"Cat5" }
+                  ]
+               }
+             ]
           }
-        }
-      ]
+        ]
       ,"formulaColumns":[
           { "name": "a3"
            ,"type": "BOOLEAN"
