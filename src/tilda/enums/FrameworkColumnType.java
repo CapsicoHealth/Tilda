@@ -39,6 +39,9 @@ public enum FrameworkColumnType
   , MAPPER_GROUP // Mapped group
 
   , TS // Time series column
+  
+  , FORMULA_TEMPLATE // Formula column generated from a template
+
     ;
 
     public boolean isOCC()

@@ -27,6 +27,7 @@ public enum FrameworkSourcedType
     , VIEW
 
     , REALIZED
+    
     ;
     
 

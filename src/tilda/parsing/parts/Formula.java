@@ -46,6 +46,7 @@ public class Formula extends TypeDef
     /*@formatter:on*/
 
     protected transient View      _ParentView;
+    public boolean                _FormulaTemplate = false;
 
     public Formula()
       {
@@ -65,6 +66,7 @@ public class Formula extends TypeDef
             for (int i = 0; i < F._Values.length; ++i)
               _Values[i] = new Value(F._Values[i]);
           }
+        _FormulaTemplate = F._FormulaTemplate;
       }
 
     public View getParentView()
