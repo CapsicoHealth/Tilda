@@ -87,14 +87,16 @@ define(['text!../templates/tilda_schema_view.html'
     viewScope.$el.find('.actions').hide();
     var f = new _FileSearch(entry, viewScope.excludeRegex, function(files){
       viewScope.$el.find('.actions').show();
-      var rs = new _ReadSchema(files, function(){
+      var rs = new _ReadSchema(files, function(collection){
+        console.log("collection", collection);
         $select.html('');
         $select.append('<option value=\'\'>--- select a schema ---</option');
         for(i=0;i<files.length;i++){
           var file = files[i];
+          var schemaName = file.name.split(".")[1];
           viewScope.schemaEntries[file.name] = viewScope.schemaEntries[file.name] || {};
           viewScope.schemaEntries[file.name] = file;
-          $select.append('<option value=\''+file.name+'\'>'+file.name+'</option');
+          $select.append('<option value=\''+file.name+'\'>'+file.name+(collection.findWhere({schemaName: schemaName})==null?"  **LOAD ERROR**":"")+'</option');
         }
       })
     })
@@ -280,11 +282,17 @@ define(['text!../templates/tilda_schema_view.html'
           that.$el.find("#obj_c").html("");
           var reader = new FileReader();
           reader.onload = function(e) {
-            var schema = JSON.parse(e.target.result);
+            try {
+            var schema = JSON.parseWithComments(e.target.result);
             that.schema = schema;
             populateSVGHTML(tildaCache.canvases, schemaFname, schema.package);
             that.$el.find("#obj_c").html("");
             $("#robj").html('');
+             }
+            catch (e)
+             {
+               $("#robj").html(e.message);
+             }
           }
           schemaEntry.file(function(schemaEntryF){
             reader.readAsText(schemaEntryF);
@@ -347,7 +355,7 @@ define(['text!../templates/tilda_schema_view.html'
       var reader = new FileReader();
       this.$el.find("#obj_c").html("");
       reader.onload = function(e) {
-        var schema = JSON.parse(e.target.result);
+        var schema = JSON.parseWithComments(e.target.result);
         canvasConfig = tildaCache.canvases.filter(function(canvas)
         {
           return canvas!= null && canvas.name == selectValue;
@@ -398,7 +406,7 @@ define(['text!../templates/tilda_schema_view.html'
           var reader = new FileReader();
           reader.onload = function(event) {
             try{
-              var tildaCache = event.target.result.length > 0 ? (JSON.parse(event.target.result) || {}) : {};
+              var tildaCache = event.target.result.length > 0 ? (JSON.parseWithComments(event.target.result) || {}) : {};
               tildaCache.canvases = tildaCache.canvases || defaultCanvases;
               resolve(tildaCache);
             } catch(e){
