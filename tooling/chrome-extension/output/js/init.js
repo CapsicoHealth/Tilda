@@ -16,6 +16,7 @@ window.addEventListener('load', function(){
       lodash: 'lib/lodash',
       backbone: 'lib/backbone',
       jointjs: 'lib/joint',
+      stripjsoncomments: 'lib/strip-json-comments',
       graphlib: 'lib/graphlib.core'
     },
     map: {
