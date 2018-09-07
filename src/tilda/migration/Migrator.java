@@ -45,7 +45,7 @@ import tilda.migration.actions.ColumnAdd;
 import tilda.migration.actions.ColumnAlterNull;
 import tilda.migration.actions.ColumnAlterStringSize;
 import tilda.migration.actions.ColumnAlterType;
-import tilda.migration.actions.ColumnAlterTypeMulti;
+import tilda.migration.actions.ColumnAlterMulti;
 import tilda.migration.actions.ColumnComment;
 import tilda.migration.actions.DDLDependencyPostManagement;
 import tilda.migration.actions.DDLDependencyPreManagement;
@@ -295,9 +295,7 @@ public class Migrator
               continue;
             TableMeta TMeta = DBMeta.getTableMeta(Obj._ParentSchema._Name, Obj._Name);
             int DddlManagementPos = Actions.size();
-            
-            boolean isBatchCapable = BatchCapable(lastObj, Obj);
-         
+               
             boolean NeedsDdlDependencyManagement = false;
             if (TMeta == null)
               Actions.add(new TableCreate(Obj));
@@ -306,7 +304,7 @@ public class Migrator
                 if (Obj._Description.equalsIgnoreCase(TMeta._Descr) == false)
                   Actions.add(new TableComment(Obj));
                 
-                ColumnAlterTypeMulti CATM = new ColumnAlterTypeMulti(C, Obj);
+                ColumnAlterMulti CATM = new ColumnAlterMulti(C, Obj);
                 
                 for (Column Col : Obj._Columns)
                   {
@@ -333,7 +331,6 @@ public class Migrator
                             CATM.addColumnAlterType(CMeta, Col);
                             NeedsDdlDependencyManagement = true;
                           }
-
                         // We have to check if someone changed goal-posts for VARCHAR and CLOG thresholds.
                         // The case here is that we have a CHAR(10) in the database, and the model still says
                         // STRING/10, but the thresholds have changed in such a way that now, it should be in the DB
@@ -345,7 +342,7 @@ public class Migrator
                         && (CMeta._TypeSql.equals("CHAR") == true && C.getDBStringType(Col._Size) != DBStringType.CHARACTER
                         || CMeta._TypeSql.equals("VARCHAR") == true && C.getDBStringType(CMeta._Size) == DBStringType.CHARACTER))
                           {
-                            Actions.add(new ColumnAlterType(C, CMeta, Col));
+                            CATM.addColumnAlterType(CMeta, Col);
                             NeedsDdlDependencyManagement = true;
                           }
                         // Else, we could still have a size change and stay within a single STRING DB type
@@ -354,9 +351,7 @@ public class Migrator
                             DBStringType DBStrType = C.getDBStringType(CMeta._Size);
                             if (DBStrType != DBStringType.TEXT && CMeta._Size != Col._Size)
                               {
-                                Actions.add(new ColumnAlterStringSize(CMeta, Col));
-//                                if(batchCapable)
-//                                  firstBatchAction = 
+                                CATM.addColumnAlterStringSize(CMeta, Col);
                                 NeedsDdlDependencyManagement = true;
                               }
                           }
@@ -366,8 +361,7 @@ public class Migrator
                   }
                 if(CATM.isEmpty() == false)
                   Actions.add(CATM);
-                
-                
+                                
                 if (NeedsDdlDependencyManagement == true)
                   {
                     DDLDependencyManager DdlDepMan = new DDLDependencyManager(Obj._ParentSchema._Name, Obj._Name);
@@ -554,17 +548,6 @@ public class Migrator
             throw new Exception("Database couldn't be migrated.");
           }
         return Actions;
-      }
-
-    private static boolean BatchCapable(Object lastObj, Object obj)
-      {         
-        if(lastObj == null)
-          return false;
-        
-        if(lastObj._ParentSchema.equals(obj._ParentSchema) == true)
-          return true;
-        
-        return true;
       }
 
     private static Object CheckForeignKeys(List<Schema> TildaList, List<String> Errors, Object Obj, FKMeta fk)

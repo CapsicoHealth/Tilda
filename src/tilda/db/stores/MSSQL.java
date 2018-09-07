@@ -276,7 +276,7 @@ public class MSSQL implements DBType
       }  
     
     @Override
-    public boolean alterTableAlterColumnTypeMulti(Connection Con, List<ColMetaColPair> BatchCols, ZoneInfo_Data defaultZI)
+    public boolean alterTableAlterColumnMulti(Connection Con, List<ColMetaColPair> BatchTypeCols, List<ColMetaColPair> BatchSizeCols, ZoneInfo_Data defaultZI)
       {
         return false;
       }

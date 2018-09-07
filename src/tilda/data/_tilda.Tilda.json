@@ -400,8 +400,8 @@
         { "name": "a10a"         , "type": "BOOLEAN"        ,                                                       "description": "The blah"},
         //{ "name": "a10b"         , "type": "STRING"        ,                  "size":    10,                    "description": "The blah"},
         { "name": "a10b"         , "type": "INTEGER"        ,                                                       "description": "The blah"},
-        //{ "name": "a10c"         , "type": "INTEGER"        ,                                                       "description": "The blah"}
-        ,{ "name": "a10c"         , "type": "DATETIME"        ,                                                       "description": "The blah"}
+        { "name": "a10c"         , "type": "INTEGER"        ,                                                       "description": "The blah"}
+        //,{ "name": "a10c"         , "type": "LONG"        ,                                                       "description": "The blah"}
       ],
       "primary": { "autogen": true, "keyBatch": 25000 },
       "indices":[ 

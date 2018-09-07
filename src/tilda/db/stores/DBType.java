@@ -71,7 +71,7 @@ public interface DBType
     public boolean alterTableAlterColumnNull      (Connection Con, Column Col, String DefaultValue) throws Exception;
     public boolean alterTableAlterColumnComment   (Connection Con, Column Col) throws Exception;
     public boolean alterTableAlterColumnType      (Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI) throws Exception;
-    public boolean alterTableAlterColumnTypeMulti (Connection Con, List<ColMetaColPair> BatchCols, ZoneInfo_Data defaultZI)  throws Exception;
+    public boolean alterTableAlterColumnMulti     (Connection Con, List<ColMetaColPair> BatchTypeCols, List<ColMetaColPair> BatchSizeCols, ZoneInfo_Data defaultZI)  throws Exception;
     public boolean alterTableAlterColumnStringSize(Connection Con, ColumnMeta ColMeta, Column Col) throws Exception;
     public boolean alterTableReplaceTablePK       (Connection Con, Object Obj, PKMeta oldPK) throws Exception;
     public boolean alterTableDropFK               (Connection Con, Object Obj, FKMeta FK) throws Exception;

@@ -28,17 +28,18 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
 import tilda.utils.pairs.ColMetaColPair;
 
-public class ColumnAlterTypeMulti extends MigrationAction
+public class ColumnAlterMulti extends MigrationAction
   {
     private Connection _C;
 
-    public ColumnAlterTypeMulti(Connection C, Object ParentObject)
+    public ColumnAlterMulti(Connection C, Object ParentObject)
       {
         super(ParentObject._ParentSchema._Name, ParentObject._Name, false);
         _C = C;
       }
 
     protected List<ColumnAlterType> _L = new ArrayList<ColumnAlterType>();
+    protected List<ColumnAlterStringSize> _LS = new ArrayList<ColumnAlterStringSize>();
 
     public void addColumnAlterType(ColumnMeta CMeta, Column Col)
     {
@@ -46,13 +47,19 @@ public class ColumnAlterTypeMulti extends MigrationAction
       _L.add(CAT);      
     }
     
+    public void addColumnAlterStringSize(ColumnMeta CMeta, Column Col)
+    {
+      ColumnAlterStringSize CAT = new ColumnAlterStringSize( CMeta, Col);
+      _LS.add(CAT);      
+    }
+    
     public boolean process(Connection C)
     throws Exception
       {       
-        return C.alterTableAlterColumnTypeMulti(GetBatchCols(), ZoneInfo_Factory.getEnumerationById("UTC"));
+        return C.alterTableAlterColumnMulti(GetBatchTypeCols(), GetBatchSizeCols(), ZoneInfo_Factory.getEnumerationById("UTC"));
       }
 
-    private List<ColMetaColPair> GetBatchCols()
+    private List<ColMetaColPair> GetBatchTypeCols()
       {
         List<ColMetaColPair> Cols = new ArrayList<ColMetaColPair>();
         
@@ -63,14 +70,38 @@ public class ColumnAlterTypeMulti extends MigrationAction
                 
         return Cols;
       }
+    
+    private List<ColMetaColPair> GetBatchSizeCols()
+      {
+        List<ColMetaColPair> Cols = new ArrayList<ColMetaColPair>();
+        
+        for(ColumnAlterStringSize CAS : _LS)
+          {
+            Cols.add(new ColMetaColPair(CAS._ColMeta, CAS._Col));
+          }
+                
+        return Cols;
+      }
 
     @Override
     public String getDescription()
       {
-          return "";
-        //        return "Alter table "+_Col._ParentObject.getFullName()
-//              +" alter column "+_Col.getName()+" type from "+_CMeta._TypeSql+(_CMeta._TildaType == ColumnType.STRING &&  _CMeta._Size > 0 ? "("+_CMeta._Size+")":"")
-//              +" to "+_ColTypeStr;
+        String S = "Alter table "+ this._L.get(0)._Col._ParentObject.getFullName();
+        
+        for(ColumnAlterType CAT : _L)
+          {
+            S += "\n                                                         -"
+            +"Alter Column "+CAT._Col.getName()+" type from "+CAT._CMeta._TypeSql+(CAT._CMeta._TildaType == ColumnType.STRING &&  CAT._CMeta._Size > 0 ? "("+CAT._CMeta._Size+")":"")
+            +" to "+CAT._Col.getType();
+          }
+        
+        for(ColumnAlterStringSize CAS : _LS)
+          {
+            S += "\n                                                         -"
+            +(CAS._Col._Size > CAS._ColMeta._Size ? " expanding" : " shrinking")+" string column "+CAS._Col.getName()+" size from "+CAS._ColMeta._Size+" to "+CAS._Col._Size;
+          }
+        
+        return S;
       }
 
     public boolean isEmpty()

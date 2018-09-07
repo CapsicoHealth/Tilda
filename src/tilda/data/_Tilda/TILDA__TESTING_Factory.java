@@ -114,9 +114,9 @@ This is the column definition for:<BR>
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.desc2 of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.desc2 of type varchar(3000)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.desc2 of type varchar(10)</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>3000</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
@@ -757,32 +757,13 @@ This is the column definition for:<BR>
      public static Type_IntegerPrimitiveNull   A10B       = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a10b"       , 38/*38*/, "The blah");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing.a10cTZ -> TILDA.Testing."a10cTZ"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the column definition for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a10cTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a10cTZ of type character(5)</TD></TR>
-
-  <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Generated helper column to hold the time zone ID for 'a10c'.</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-     public static Type_StringPrimitiveNull    A10CTZ     = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "a10cTZ"     , 39/*39*/, "Generated helper column to hold the time zone ID for 'a10c'.");
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing.a10c -> TILDA.Testing."a10c"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a10c of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a10c of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing.a10c of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing.a10c of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
@@ -791,7 +772,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  A10C       = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "a10c"       , 40/*40*/, "The blah");
+     public static Type_IntegerPrimitiveNull   A10C       = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "a10c"       , 39/*39*/, "The blah");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing.created -> TILDA.Testing."created"
@@ -816,7 +797,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 41/*41*/, "The timestamp for when the record was created. (TILDA.Testing)");
+     public static Type_DatetimePrimitive      CREATED    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"    , 40/*40*/, "The timestamp for when the record was created. (TILDA.Testing)");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing.lastUpdated -> TILDA.Testing."lastUpdated"
@@ -841,7 +822,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 42/*42*/, "The timestamp for when the record was last updated. (TILDA.Testing)");
+     public static Type_DatetimePrimitive      LASTUPDATED= new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated", 41/*41*/, "The timestamp for when the record was last updated. (TILDA.Testing)");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Testing.deleted -> TILDA.Testing."deleted"
@@ -859,7 +840,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 43/*43*/, "The timestamp for when the record was deleted. (TILDA.Testing)");
+     public static Type_DatetimePrimitiveNull  DELETED    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"    , 42/*42*/, "The timestamp for when the record was deleted. (TILDA.Testing)");
 ;
    }
 
@@ -965,7 +946,6 @@ This is the column definition for:<BR>
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a9d");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a10a");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a10b");
-          S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a10cTZ");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "a10c");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "created");
           S.append(", "); C.getFullColumnVar(S, "TILDA", "Testing", "lastUpdated");
@@ -1116,7 +1096,7 @@ This is the column definition for:<BR>
        List<LocalDate>  _a9d         = CollectionUtil.toList(ParseUtil.parseLocalDate("a9d"        , false, Values.get("a9d"        ), "``", Errors));
        Boolean        _a10a        =                       ParseUtil.parseBoolean("a10a"       , false, Values.get("a10a"       ), Errors );
        Integer        _a10b        =                       ParseUtil.parseInteger("a10b"       , false, Values.get("a10b"       ), Errors );
-       ZonedDateTime        _a10c        =                       ParseUtil.parseZonedDateTime("a10c"       , false, Values.get("a10c"       ), Errors );
+       Integer        _a10c        =                       ParseUtil.parseInteger("a10c"       , false, Values.get("a10c"       ), Errors );
 
        if (IncomingErrors != Errors.size())
         return null;
@@ -1385,7 +1365,6 @@ This is the column definition for:<BR>
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, OP);
        ReadMany(C, 4, RPI, Obj, null, Start, Size);
      }
-
 
 
 
