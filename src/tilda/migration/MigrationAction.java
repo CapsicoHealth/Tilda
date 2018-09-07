@@ -37,7 +37,6 @@ public abstract class MigrationAction
     protected final String  _TableViewName;
     protected final boolean _isDependencyAction;
     
-    protected List<ColMetaColPair> _GroupedCols = new ArrayList<ColMetaColPair>();
     public abstract boolean process(Connection C)
     throws Exception;
 
@@ -62,10 +61,5 @@ public abstract class MigrationAction
     public boolean isDependencyAction()
       {
         return _isDependencyAction;
-      }
-    
-    public List<ColMetaColPair> getGroupedCols()
-      {
-        return _GroupedCols;
       }
   }

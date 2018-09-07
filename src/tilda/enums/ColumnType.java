@@ -68,21 +68,21 @@ public enum ColumnType
         for (ColumnType T : ColumnType.values())
          _PadderTypeNames.track(T.name());
         
-        _CompatibleTypes = new ColumnType[][] 
-         {
-			{STRING, JSON, CHAR, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, DATE, DATETIME, BITFIELD}
-		   ,{JSON}
-		   ,{CHAR, STRING}
-		   ,{INTEGER}
-		   ,{LONG, INTEGER}
-		   ,{FLOAT, INTEGER}
-		   ,{DOUBLE, FLOAT, INTEGER, LONG}
-		   ,{BOOLEAN}
-		   ,{DATE}
-		   ,{DATETIME, DATE}
-		   ,{BINARY}
-		   ,{BITFIELD}   		   
-          };
+        _CompatibleTypes = new ColumnType[][]
+          {
+             {STRING, JSON, CHAR, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, DATE, DATETIME, BITFIELD}
+            ,{JSON}
+            ,{CHAR, STRING, BOOLEAN}
+            ,{INTEGER, BOOLEAN}
+            ,{LONG, INTEGER, BOOLEAN}
+            ,{FLOAT, INTEGER, BOOLEAN}
+            ,{DOUBLE, FLOAT, INTEGER, LONG, BOOLEAN}
+            ,{BOOLEAN, DOUBLE, FLOAT, LONG, INTEGER, CHAR, STRING}
+            ,{DATE}
+            ,{DATETIME, DATE}
+            ,{BINARY}
+            ,{BITFIELD}             
+           };
         ColumnType[] colsToValidate = new ColumnType[_CompatibleTypes.length];
         for(int i = 0; i < _CompatibleTypes.length; i++)
           {

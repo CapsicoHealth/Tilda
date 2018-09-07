@@ -45,6 +45,7 @@ import tilda.migration.actions.ColumnAdd;
 import tilda.migration.actions.ColumnAlterNull;
 import tilda.migration.actions.ColumnAlterStringSize;
 import tilda.migration.actions.ColumnAlterType;
+import tilda.migration.actions.ColumnAlterTypeMulti;
 import tilda.migration.actions.ColumnComment;
 import tilda.migration.actions.DDLDependencyPostManagement;
 import tilda.migration.actions.DDLDependencyPreManagement;
@@ -284,7 +285,7 @@ public class Migrator
             }
 
         Object lastObj = null;
-        MigrationAction firstAction = null;
+
         
         for (Object Obj : S._Objects)
           {
@@ -304,6 +305,9 @@ public class Migrator
               {
                 if (Obj._Description.equalsIgnoreCase(TMeta._Descr) == false)
                   Actions.add(new TableComment(Obj));
+                
+                ColumnAlterTypeMulti CATM = new ColumnAlterTypeMulti(C, Obj);
+                
                 for (Column Col : Obj._Columns)
                   {
                     if (Col == null || Col._Mode == ColumnMode.CALCULATED)
@@ -320,15 +324,13 @@ public class Migrator
                         if (CheckArrays(DBMeta, Errors, Col, CMeta) == false)
                           continue;
 
+                        
                         if (Col.isCollection() == false
                         && (Col.getType() == ColumnType.BITFIELD && CMeta._TildaType != ColumnType.INTEGER
                         || Col.getType() == ColumnType.JSON && CMeta._TildaType != ColumnType.STRING && CMeta._TildaType != ColumnType.JSON
                         || Col.getType() != ColumnType.BITFIELD && Col.getType() != ColumnType.JSON && Col.getType() != CMeta._TildaType))
                           {                      
-                            if(isBatchCapable == true && Actions.size() > 0 && Actions.get(Actions.size()-1).getClass().getName().equals("tilda.migration.actions.ColumnAlterType") == true)
-                              Actions.get(Actions.size()-1)._GroupedCols.add(new ColMetaColPair(CMeta, Col));
-                            else
-                              Actions.add(new ColumnAlterType(C, CMeta, Col));
+                            CATM.addColumnAlterType(CMeta, Col);
                             NeedsDdlDependencyManagement = true;
                           }
 
@@ -362,6 +364,10 @@ public class Migrator
                           Actions.add(new ColumnAlterNull(Col));
                       }
                   }
+                if(CATM.isEmpty() == false)
+                  Actions.add(CATM);
+                
+                
                 if (NeedsDdlDependencyManagement == true)
                   {
                     DDLDependencyManager DdlDepMan = new DDLDependencyManager(Obj._ParentSchema._Name, Obj._Name);

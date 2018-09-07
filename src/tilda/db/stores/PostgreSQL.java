@@ -379,7 +379,80 @@ public class PostgreSQL implements DBType
 
 
     @Override
-    public boolean alterTableAlterColumnType(Connection Con, List<ColMetaColPair> BatchCols, ZoneInfo_Data defaultZI)
+    public boolean alterTableAlterColumnType(Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI)
+    throws Exception
+      {
+        // Are the to/from types compatible?
+        if (Col.getType().isCompatible(ColMeta._TildaType) == false)
+         throw new Exception("Type incompatbility re    quested for an alter column: cannot alter from "+ColMeta._TildaType+" to "+Col.getType()+".");
+          
+        
+        if (ColMeta._TildaType == ColumnType.STRING)
+          {
+/*
+            String Q = "SELECT count(*)\n"
+                      +"  FROM " + Col._ParentObject.getShortName()+"\n"
+                      +" WHERE trim(\"" + Col.getName() + "\")::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) +" is null or 1=1"
+                      ;
+            ScalarRP RP = new ScalarRP();
+            // Will throw if it fails.
+            Con.ExecuteSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
+*/
+            if (   Col.getType() == ColumnType.DATETIME || Col.getType() == ColumnType.DATE
+                || Col.getType() == ColumnType.INTEGER || Col.getType() == ColumnType.LONG || Col.getType() == ColumnType.FLOAT || Col.getType() == ColumnType.DOUBLE
+                || Col.getType() == ColumnType.BOOLEAN
+               )
+              {
+                String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
+                + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection())
+                + " USING (trim(\"" + Col.getName() + "\")::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + ");";
+ 
+                boolean res = Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
+                if (Col.getType() != ColumnType.DATETIME || res == false)
+                 return res;
+ 
+                Col = Col._ParentObject.getColumn(Col.getName() + "TZ");
+                Q = "UPDATE " + Col._ParentObject.getShortName() + " SET \"" + Col.getName() + "\" = 'UTC' WHERE \"" + Col.getName() + "\" IS NULL";
+ 
+                return Con.ExecuteUpdate(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q) >= 0;
+              }
+            else
+              throw new Exception("Cannot alter a column from "+ColMeta._TildaType+" to "+Col.getType()+".");
+          }
+        
+        if (Col.isPrimaryKey() == true || Col.isForeignKey() == true)
+          {
+            LOG.warn("\n\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
+                    +"!! ALTERING a primary or foreign key, which in some circumstances may lock in the JDBC driver. It should only \n"
+                    +"!! take a few seconds at most. If this takes any longer, it's hung. If this occurs, please run the below ALTER \n"
+                    +"!!  statement in the DB command line, and then rerun your program.\n"
+                    +"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
+                    );
+          }
+/*
+        String Q = "SELECT count(*)\n"
+                  +"  FROM " + Col._ParentObject.getShortName()+"\n"
+                  +" WHERE \"" + Col.getName() + "\"::" + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) +" is null or 1=1"
+                  ;
+        ScalarRP RP = new ScalarRP();
+        // Will throw if it fails.
+        Con.ExecuteSelect(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q, RP);
+*/
+        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName()
+        + "\" TYPE " + getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection());
+        // going to boolean, must use a more elaborate expression to convert
+        if (Col.getType() == ColumnType.BOOLEAN)
+         Q+= " USING (case when \"" + Col.getName() + "\"=0 then true when \"" + Col.getName() + "\" is null then null else false end)";
+        else if (ColMeta._TildaType == ColumnType.BOOLEAN)
+         Q+=" USING \"" + Col.getName() + "\"::INTEGER::"+ getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + ";";
+        else 
+         Q+=" USING \"" + Col.getName() + "\"::"+ getColumnType(Col.getType(), Col._Size, Col._Mode, Col.isCollection()) + ";";
+        
+        return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
+      } 
+    
+    @Override
+    public boolean alterTableAlterColumnTypeMulti(Connection Con, List<ColMetaColPair> BatchCols, ZoneInfo_Data defaultZI)
     throws Exception
       {
         if (BatchCols == null || BatchCols.size() == 0)

@@ -483,10 +483,16 @@ public final class Connection
         return _DB.alterTableAlterColumnStringSize(this, ColMeta, Col);
       }
 
-    public boolean alterTableAlterColumnType(List<ColMetaColPair> BatchCols, ZoneInfo_Data defaultZI)
+    public boolean alterTableAlterColumnType(Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI)
     throws Exception
       {
-        return _DB.alterTableAlterColumnType(this, BatchCols, defaultZI);
+        return _DB.alterTableAlterColumnType(this, ColMeta, Col, defaultZI);
+      }
+    
+    public boolean alterTableAlterColumnTypeMulti(List<ColMetaColPair> BatchCols, ZoneInfo_Data defaultZI)
+    throws Exception
+      {
+        return _DB.alterTableAlterColumnTypeMulti(this, BatchCols, defaultZI);
       }
 
     public String getHelperFunctionsScript(boolean Start)

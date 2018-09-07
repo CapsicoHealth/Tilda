@@ -46,20 +46,9 @@ public class ColumnAlterType extends MigrationAction
     public boolean process(Connection C)
     throws Exception
       {       
-        return C.alterTableAlterColumnType(GetBatchCols(_GroupedCols, _CMeta, _Col), ZoneInfo_Factory.getEnumerationById("UTC"));
+        return C.alterTableAlterColumnType(C, _CMeta, _Col, ZoneInfo_Factory.getEnumerationById("UTC"));
       }
 
-    private List<ColMetaColPair> GetBatchCols(List<ColMetaColPair> BatchCols, ColumnMeta CMeta, Column Col)
-      {
-        List<ColMetaColPair> Cols = new ArrayList<ColMetaColPair>();
-        Cols.add(new ColMetaColPair(CMeta, Col));
-        
-        if(BatchCols != null && BatchCols.size() > 0)        
-          for(ColMetaColPair CP : BatchCols)
-            Cols.add(new ColMetaColPair(CP._CMeta, CP._Col));
-                 
-        return Cols;
-      }
 
     @Override
     public String getDescription()
