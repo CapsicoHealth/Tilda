@@ -304,10 +304,12 @@ public class Migrator
                 if (Obj._Description.equalsIgnoreCase(TMeta._Descr) == false)
                   Actions.add(new TableComment(Obj));
                 
-                ColumnAlterMulti CATM = new ColumnAlterMulti(C, Obj);
-                
+                ColumnAlterMulti CAM = new ColumnAlterMulti(C, Obj);
+                                
                 for (Column Col : Obj._Columns)
                   {
+                    boolean catAdded = false;
+                    
                     if (Col == null || Col._Mode == ColumnMode.CALCULATED)
                       continue;
 
@@ -328,7 +330,8 @@ public class Migrator
                         || Col.getType() == ColumnType.JSON && CMeta._TildaType != ColumnType.STRING && CMeta._TildaType != ColumnType.JSON
                         || Col.getType() != ColumnType.BITFIELD && Col.getType() != ColumnType.JSON && Col.getType() != CMeta._TildaType))
                           {                      
-                            CATM.addColumnAlterType(CMeta, Col);
+                            CAM.addColumnAlterType(CMeta, Col);
+                            catAdded = true;
                             NeedsDdlDependencyManagement = true;
                           }
                         // We have to check if someone changed goal-posts for VARCHAR and CLOG thresholds.
@@ -340,9 +343,10 @@ public class Migrator
                         // model changes, but to threshold changes.
                         if (Col.isCollection() == false && Col.getType() == ColumnType.STRING
                         && (CMeta._TypeSql.equals("CHAR") == true && C.getDBStringType(Col._Size) != DBStringType.CHARACTER
-                        || CMeta._TypeSql.equals("VARCHAR") == true && C.getDBStringType(CMeta._Size) == DBStringType.CHARACTER))
+                        || CMeta._TypeSql.equals("VARCHAR") == true && C.getDBStringType(CMeta._Size) == DBStringType.CHARACTER)
+                        && catAdded == false)
                           {
-                            CATM.addColumnAlterType(CMeta, Col);
+                            CAM.addColumnAlterType(CMeta, Col);
                             NeedsDdlDependencyManagement = true;
                           }
                         // Else, we could still have a size change and stay within a single STRING DB type
@@ -351,7 +355,7 @@ public class Migrator
                             DBStringType DBStrType = C.getDBStringType(CMeta._Size);
                             if (DBStrType != DBStringType.TEXT && CMeta._Size != Col._Size)
                               {
-                                CATM.addColumnAlterStringSize(CMeta, Col);
+                                CAM.addColumnAlterStringSize(CMeta, Col);
                                 NeedsDdlDependencyManagement = true;
                               }
                           }
@@ -359,8 +363,8 @@ public class Migrator
                           Actions.add(new ColumnAlterNull(Col));
                       }
                   }
-                if(CATM.isEmpty() == false)
-                  Actions.add(CATM);
+                if(CAM.isEmpty() == false)
+                  Actions.add(CAM);
                                 
                 if (NeedsDdlDependencyManagement == true)
                   {
