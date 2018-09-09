@@ -59,7 +59,8 @@ public class LineCount
                   }
                 finally
                   {
-                    In.close();
+                    if (In != null)
+                     In.close();
                   }
                 TS = System.nanoTime() - TS;
                 LOG.info("Processed " + NumberFormatUtil.PrintWith000Sep(i) + " lines for '" + fileName + "' in " + DurationUtil.PrintDuration(TS) + " (" + NumberFormatUtil.PrintWith1DecAnd000Sep(DurationUtil.perSecond(TS, i)) + " lines/s).");
