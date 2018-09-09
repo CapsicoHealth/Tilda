@@ -75,7 +75,7 @@ public abstract class Base
      */
     public String getFullName()
       {
-        return _ParentSchema.getFullName() + "." + _OriginalName;
+        return (_ParentSchema==null?"":(_ParentSchema.getFullName() + ".")) + _OriginalName;
       }
 
     /**
@@ -84,7 +84,7 @@ public abstract class Base
      */
     public String getShortName()
       {
-        return _ParentSchema.getShortName() + "." + _OriginalName;
+        return (_ParentSchema==null?"":(_ParentSchema.getShortName() + ".")) + _OriginalName;
       }
 
     /**
