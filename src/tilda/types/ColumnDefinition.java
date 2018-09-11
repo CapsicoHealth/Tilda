@@ -25,6 +25,7 @@ import org.apache.logging.log4j.Logger;
 import tilda.db.Connection;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.utils.TextUtil;
 
 public class ColumnDefinition
   {
@@ -151,7 +152,63 @@ public class ColumnDefinition
             LOG.error("Cannot instanciate type '" + ClassName + " as a ColumnDefinition descendant with a proper constructor'\n", E);
             return null;
           }
+      }
+
+    public static String printColumns(Connection C, ColumnDefinition[] A, boolean shortName, String templateStr)
+      {
+        StringBuilder Str = new StringBuilder();
+        printColumns(C, A, shortName, templateStr, Str);
+        return Str.toString();
+      }
+
+    /*
+     * Returns a string that includes a comma-separated list of column names in short of long (with the table name) form.
+     * If templateStr is provided, all instances of the character '?' will be replaced with the column name.
+     */
+    public static void printColumns(Connection C, ColumnDefinition[] A, boolean shortName, String templateStr, StringBuilder Str)
+      {
+        boolean First = true;
+        if (A == null || A.length == 0)
+          return;
+
+        // Two implementations depending on whether we have the templateStr or not. Without it, the method is quite faster.
+        if (TextUtil.isNullOrEmpty(templateStr) == true)
+          for (ColumnDefinition cd : A)
+            {
+              if (First == true)
+                First = false;
+              else
+                Str.append(", ");
+              if (shortName == true)
+                cd.getShortColumnVarForSelect(C, Str);
+              else
+                cd.getFullColumnVarForSelect(C, Str);
+            }
+        else
+          for (ColumnDefinition cd : A)
+            {
+              if (First == true)
+                First = false;
+              else
+                Str.append(", ");
+              String Name = shortName == true ? cd.getShortColumnVarForSelect(C) : cd.getFullColumnVarForSelect(C);
+              Str.append(templateStr.replaceAll("\\?", Name));
+            }
 
       }
+
+    public static String[] getColumnNames(ColumnDefinition[] A)
+      {
+        if (A == null)
+          return null;
+
+        String[] Names = new String[A.length];
+
+        for (int i = 0; i < A.length; ++i)
+          Names[i] = A[i]._ColumnName;
+
+        return Names;
+      }
+
 
   }
