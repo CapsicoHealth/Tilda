@@ -383,7 +383,7 @@ public class PostgreSQL implements DBType
     throws Exception
       {
         // Are the to/from types compatible?
-        if (Col.getType().isCompatible(ColMeta._TildaType) == false)
+        if (Col.getType().isDBCompatible(ColMeta._TildaType) == false)
           throw new Exception("Type incompatbility requested for an alter column: cannot alter from " + ColMeta._TildaType + " to " + Col.getType() + ".");
 
 
@@ -454,7 +454,7 @@ public class PostgreSQL implements DBType
     throws Exception
       {
         if ((BatchTypeCols == null || BatchTypeCols.size() == 0) && (BatchSizeCols == null || BatchSizeCols.size() == 0))
-          LOG.error("There are no columns to process for alterTableAlterColumnMulti. Something has gone wrong when adding columns to the AlterColumnTypeMulti migration action.");
+          LOG.error("There are no columns to process for alterTableAlterColumnMulti. Something has gone wrong when adding columns to the AlterColumnMulti migration action.");
         
         String Q = "ALTER TABLE "; 
         if(BatchTypeCols.size() > 0)
@@ -468,7 +468,7 @@ public class PostgreSQL implements DBType
         for (ColMetaColPair CMP : BatchTypeCols)
           {
             // Are the to/from types compatible?
-            if (CMP._Col.getType().isCompatible(CMP._CMeta._TildaType) == false)
+            if (CMP._Col.getType().isDBCompatible(CMP._CMeta._TildaType) == false)
               throw new Exception("Type incompatbility requested for an alter column: cannot alter from " + CMP._CMeta._TildaType + " to " + CMP._Col.getType() + ".");
 
             if (CMP._CMeta._TildaType == ColumnType.STRING)

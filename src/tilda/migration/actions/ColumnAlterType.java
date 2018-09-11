@@ -16,16 +16,12 @@
 
 package tilda.migration.actions;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import tilda.data.ZoneInfo_Factory;
 import tilda.db.Connection;
 import tilda.db.metadata.ColumnMeta;
 import tilda.enums.ColumnType;
 import tilda.migration.MigrationAction;
 import tilda.parsing.parts.Column;
-import tilda.utils.pairs.ColMetaColPair;
 
 public class ColumnAlterType extends MigrationAction
   {

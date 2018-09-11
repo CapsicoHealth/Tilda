@@ -308,8 +308,6 @@ public class Migrator
                                 
                 for (Column Col : Obj._Columns)
                   {
-                    boolean catAdded = false;
-                    
                     if (Col == null || Col._Mode == ColumnMode.CALCULATED)
                       continue;
 
@@ -324,16 +322,12 @@ public class Migrator
                         if (CheckArrays(DBMeta, Errors, Col, CMeta) == false)
                           continue;
 
-                        
-                        if (Col.isCollection() == false
+                        boolean condition1 = Col.isCollection() == false
                         && (Col.getType() == ColumnType.BITFIELD && CMeta._TildaType != ColumnType.INTEGER
                         || Col.getType() == ColumnType.JSON && CMeta._TildaType != ColumnType.STRING && CMeta._TildaType != ColumnType.JSON
-                        || Col.getType() != ColumnType.BITFIELD && Col.getType() != ColumnType.JSON && Col.getType() != CMeta._TildaType))
-                          {                      
-                            CAM.addColumnAlterType(CMeta, Col);
-                            catAdded = true;
-                            NeedsDdlDependencyManagement = true;
-                          }
+                        || Col.getType() != ColumnType.BITFIELD && Col.getType() != ColumnType.JSON && Col.getType() != CMeta._TildaType)
+                        ;
+                        
                         // We have to check if someone changed goal-posts for VARCHAR and CLOG thresholds.
                         // The case here is that we have a CHAR(10) in the database, and the model still says
                         // STRING/10, but the thresholds have changed in such a way that now, it should be in the DB
@@ -341,16 +335,18 @@ public class Migrator
                         // the type in the DB. The previous set of checks look at fundamental type changes, for example
                         // from INT to STRING etc... But they won't catch an internal change of CHAR to VARCHAR not due to
                         // model changes, but to threshold changes.
-                        if (Col.isCollection() == false && Col.getType() == ColumnType.STRING
+                        boolean condition2 = Col.isCollection() == false && Col.getType() == ColumnType.STRING
                         && (CMeta._TypeSql.equals("CHAR") == true && C.getDBStringType(Col._Size) != DBStringType.CHARACTER
                         || CMeta._TypeSql.equals("VARCHAR") == true && C.getDBStringType(CMeta._Size) == DBStringType.CHARACTER)
-                        && catAdded == false)
-                          {
+                        ;
+                        
+                        if (condition1 || condition2)
+                          {                      
                             CAM.addColumnAlterType(CMeta, Col);
                             NeedsDdlDependencyManagement = true;
                           }
                         // Else, we could still have a size change and stay within a single STRING DB type
-                        else if (Col.isCollection() == false && Col.getType() == ColumnType.STRING)
+                        if (!condition2 && Col.isCollection() == false && Col.getType() == ColumnType.STRING)
                           {
                             DBStringType DBStrType = C.getDBStringType(CMeta._Size);
                             if (DBStrType != DBStringType.TEXT && CMeta._Size != Col._Size)
