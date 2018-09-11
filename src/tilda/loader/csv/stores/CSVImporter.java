@@ -56,8 +56,8 @@ public abstract class CSVImporter
   {
 
     protected static final Logger LOG                = LogManager.getLogger(CSVImporter.class.getName());
-    protected static final int    COMMIT_SIZE = 25_000;
-    protected static final int    BATCH_SIZE = 1_000;
+    protected static final int    COMMIT_SIZE = 20_000;
+    protected static final int    BATCH_SIZE = 2_000;
 
     protected Connection          C;
     protected String              rootFolder;

@@ -24,6 +24,7 @@
     "requirejs": "^2.2.0",
     "graphlib": "^2.1.0",
     "requirejs-plugins": "^1.0.3",
-    "bootstrap": "3.3.7"
+    "bootstrap": "3.3.7",
+    "strip-json-comments":"*"
   }
 }

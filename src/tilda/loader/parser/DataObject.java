@@ -141,9 +141,8 @@ public class DataObject
       {
         List<String> Headers = new ArrayList<String>();
         for (ColumnHeader ColumnHeader : _ColumnHeaderList)
-          {
+          if (ColumnHeader != null)
             Headers.add(ColumnHeader._Header);
-          }
 
         return Headers.toArray(new String[Headers.size()]);
       }
@@ -152,9 +151,9 @@ public class DataObject
       {
         Map<String, ColumnHeader> MultiHeaderColMap = new HashMap<String, ColumnHeader>();
         for (ColumnHeader ColumnHeader : _ColumnHeaderList)
-          {
+          if (ColumnHeader != null)
             MultiHeaderColMap.put(ColumnHeader._Column, ColumnHeader);
-          }
+
         return MultiHeaderColMap;
       }
 

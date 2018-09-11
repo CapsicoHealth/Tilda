@@ -1,5 +1,18 @@
-define(["./parser_element", "./custom_object_collection"],
-function(ParserElement, Collection){
+define(["./parser_element", "./custom_object_collection", "./strip-json-comments-modified"],
+function(ParserElement, Collection, StripJsonComments){
+  
+JSON.parseWithComments = function(jsonText)
+ {
+   var txt = StripJsonComments(jsonText);
+   if (txt==null || txt=="")
+    throw new SyntaxError("Invalid JSON");
+   var data = JSON.parse(txt);
+   if (data==null || data=={})
+    throw new SyntaxError("Invalid JSON");
+   return data;
+ }
+
+  
   var readFiles = function(fileEntries, callback) {
     var that = this;
     var collection = new Collection();
@@ -101,7 +114,7 @@ function(ParserElement, Collection){
         var package = fileEntry.name;
         try
         {
-          var schema = JSON.parse(event.target.result);
+          var schema = JSON.parseWithComments(event.target.result);
           pushElement(package, schema.objects, "Object")
           pushElement(package, schema.mappers, "Mapper")
           pushElement(package, schema.enumerations, "Enumeration")

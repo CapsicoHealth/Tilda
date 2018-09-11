@@ -507,11 +507,17 @@ public class Sql extends PostgreSQL implements CodeGenSql
             if (V._Pivots.isEmpty() == false)
               {
                 Str.append(" group by ");
+                int count = 0;
                 for (int i = 0; i < V._ViewColumns.size(); ++i)
-                  if (V._ViewColumns.get(i)._Aggregate == null)
-                    Str.append((i == 0 ? "" : ", ") + (i + 1));
-                  else
-                    break;
+                  {
+                    if (V._ViewColumns.get(i)._Aggregate != null)
+                      break;
+                    if (V._ViewColumns.get(i)._JoinOnly == false)
+                      {
+                        ++count;
+                        Str.append((count == 1 ? "" : ", ") + count);
+                      }
+                  }
                 Str.append("\n");
               }
             else
@@ -604,7 +610,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         // hasAggregates = true;
         // }
         // else
-        
+
         // If the column has a sameAs string, but no sameAsObj and is managed, then we print the sameAs as is.
         if (VC.isSameAsLitteral() == true)
           {
@@ -862,11 +868,15 @@ public class Sql extends PostgreSQL implements CodeGenSql
         Str += "\n"
         + "from T\n";
         Str += "     group by ";
+        int count = 0;
         for (i = 0; i < V._ViewColumns.size(); ++i)
           if (V.isPivotColumn(V._ViewColumns.get(i)) == true)
             break;
-          else
-            Str += (i == 0 ? "" : ", ") + (i + 1);
+          else if (V._ViewColumns.get(i)._JoinOnly == false)
+            {
+              ++count;
+              Str += (count == 1 ? "" : ", ") + count;
+            }
         Str += "\n";
         return Str;
       }

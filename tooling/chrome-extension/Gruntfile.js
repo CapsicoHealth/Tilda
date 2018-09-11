@@ -31,8 +31,18 @@ config = function(grunt) {
             flatten: true,
             cwd: 'bower_components',
             src: ['requirejs/require.js', 'underscore/underscore.js', 'lodash/lodash.js',
-             'jointjs/dist/joint.js', 'backbone/backbone.js', 'jquery/dist/jquery.js', 'graphlib/dist/graphlib.core.js'],
+             'jointjs/dist/joint.js', 'backbone/backbone.js', 'jquery/dist/jquery.js', 'graphlib/dist/graphlib.core.js', 'strip-json-comments/index.js'],
             dest: 'output/js/lib'
+          },
+          {
+            expand: true,
+            flatten: true,
+            cwd: 'bower_components',
+            src: ['strip-json-comments/index.js'],
+            dest: 'output/js/lib',
+            rename: function(dest, src) {
+                return dest+'/strip-json-comments.original.js';
+            }
           },
           {
             expand: true,
