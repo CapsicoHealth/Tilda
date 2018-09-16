@@ -17,6 +17,7 @@
 package tilda.migration.actions;
 
 import tilda.db.Connection;
+import tilda.db.metadata.DatabaseMeta;
 import tilda.migration.MigrationAction;
 import tilda.parsing.parts.Column;
 
@@ -35,6 +36,7 @@ public class ColumnAdd extends MigrationAction
       {
         return C.alterTableAddColumn(_Col, _Col._DefaultCreateValue == null ? null : _Col._DefaultCreateValue._Value);
       }
+    
 
     @Override
     public String getDescription()

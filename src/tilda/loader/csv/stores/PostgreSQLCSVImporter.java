@@ -102,17 +102,21 @@ public class PostgreSQLCSVImporter extends CSVImporter
                   {
                     String c = columns[i];
                     col = headers[i]; 
-                    colVal = "";
-                    
+                    colVal = null;
+
                     if(DBColumns.get(c.toLowerCase()) != null)
                       {                    
 	                    if(record.isMapped(col))
-	                      colVal = record.get(col);                    	
+	                      {
+	                        colVal = record.get(col);
+	                        if (colVal.equals("") == true)
+	                         colVal = null;
+	                      }
                     	
                         if(record.isMapped(col) == false || (TextUtil.isNullOrEmpty(colVal) && DBColumns.get(c.toLowerCase())._Nullable != 1)) 
                           {                       
-                            if(TextUtil.isNullOrEmpty(columnMap.get(col)._DefaultValue) == false)                    	
-                    	      colVal = columnMap.get(col)._DefaultValue;
+                            if(columnMap.get(c)._DefaultValue != null)                    	
+                    	      colVal = columnMap.get(c)._DefaultValue;
                             else if (DBColumns.get(c.toLowerCase())._Nullable != 1) 
                               {
                     	        String defaultCreateValue = MasterFactory.GetDefaultCreateValue(schemaName, tableName, c);
@@ -132,7 +136,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
                     else 
                       {
                         LOG.error("The header " + col + " mapped to column " + c + " is not found in the database for the table " + schemaName + "." + tableName + ".");                              
-                        throw new Exception("Column " + c + " not found in the database.");
+                        throw new Exception("Column '" + c + "' not found in the database.");
                       }
                     
                     ColumnHeader cHeader = columnMap.get(c);
@@ -236,7 +240,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
                     	
                         if (cHeader._Split == true)
                           {
-                            if (TextUtil.isNullOrEmpty(value) == false)
+                            if (value != null)
                               {
                                 int upperBound = cHeader._SplitEndIndex != -1 ? cHeader._SplitEndIndex
                                 : value.length();
@@ -251,7 +255,9 @@ public class PostgreSQLCSVImporter extends CSVImporter
                           }
   
                         ColumnMeta CI = ColumnsMap.get(c.toLowerCase());
-                        if (TextUtil.isNullOrEmpty(value) == false)
+                        if (   TextUtil.isNullOrEmpty(value) == false
+                            || (CI._TildaType == ColumnType.STRING || CI._TildaType == ColumnType.CHAR) && value != null && value.equals("") 
+                           )
                           {
                             value = value.trim();
                             if (CI != null)
@@ -260,22 +266,28 @@ public class PostgreSQLCSVImporter extends CSVImporter
                                   {
                                     int V = ParseUtil.parseIntegerFlexible(value, SystemValues.EVIL_VALUE);
                                     if (V == SystemValues.EVIL_VALUE)
-                                     throw new Exception("Couldn't parse '"+value+"' as an Integer.");
+                                     throw new Exception("Couldn't parse '"+value+"' as an Integer for column '"+CI._Name+"'.");
                                     Pst.setInt(i + x, V);
                                   }                                  
                                 else if (CI._TildaType == ColumnType.LONG)
                                   {
                                     long V = ParseUtil.parseLongFlexible(value, SystemValues.EVIL_VALUE);
                                     if (V == SystemValues.EVIL_VALUE)
-                                     throw new Exception("Couldn't parse '"+value+"' as a Long.");
+                                     throw new Exception("Couldn't parse '"+value+"' as a Long for column '"+CI._Name+"'.");
                                     Pst.setLong(i + x, V);
                                   }                                  
                                 else if (CI._TildaType == ColumnType.FLOAT)
                                   {
+                                    float V = ParseUtil.parseFloat(value, SystemValues.EVIL_VALUE);
+                                    if (V == SystemValues.EVIL_VALUE)
+                                     throw new Exception("Couldn't parse '"+value+"' as a Float for column '"+CI._Name+"'.");
                                     Pst.setFloat(i + x, Float.parseFloat(value));
                                   }                                  
                                 else if (CI._TildaType == ColumnType.DOUBLE)
                                   {
+                                    double V = ParseUtil.parseDouble(value, SystemValues.EVIL_VALUE);
+                                    if (V == SystemValues.EVIL_VALUE)
+                                     throw new Exception("Couldn't parse '"+value+"' as a Double for column '"+CI._Name+"'.");
                                     Pst.setDouble(i + x, Double.parseDouble(value));
                                   }                                  
                                 else if (CI._TildaType == ColumnType.DATETIME)

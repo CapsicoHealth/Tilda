@@ -119,6 +119,8 @@ public class Schema
         StringBuilder Str = new StringBuilder();
         for (Object O : _Objects)
           {
+            if (O == null)
+             continue;
             if (Str.length() != 0)
               Str.append(", ");
             Str.append(O.getFullName());
