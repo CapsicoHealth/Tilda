@@ -42,7 +42,7 @@ public abstract class MigrationAction
       {
         return true;
       }
-
+    
     public String getSchema()
       {
         return _SchemaName;

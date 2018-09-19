@@ -16,9 +16,6 @@
 
 package tilda.parsing.parts;
 
-import java.awt.Frame;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -35,7 +32,6 @@ import org.json.simple.JSONObject;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
-import tilda.db.Connection;
 import tilda.db.stores.DBType;
 import tilda.enums.ColumnMapperMode;
 import tilda.enums.ColumnMode;
@@ -43,10 +39,10 @@ import tilda.enums.ColumnType;
 import tilda.enums.FrameworkColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
+import tilda.enums.ObjectMode;
 import tilda.enums.TildaType;
 import tilda.interfaces.PatternObject;
 import tilda.parsing.ParserSession;
-import tilda.parsing.parts.formulaTemplates.Flagging;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.parsing.parts.helpers.SameAsHelper;
 import tilda.utils.Graph;
@@ -695,7 +691,7 @@ public class View extends Base
          * }
          * }
          */
-        O._DBOnly = _DBOnly;
+        O._ModeStr = _DBOnly==true?ObjectMode.DB_ONLY.toString():ObjectMode.NORMAL.toString();
         _ParentSchema._Objects.add(O);
         O.Validate(PS, _ParentSchema);
 

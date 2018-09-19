@@ -29,6 +29,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.enums.ObjectMode;
 import tilda.generation.GeneratorSession;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.generation.java8.Helper;
@@ -118,20 +119,35 @@ public class Docs
           Out.println("<LI>Configured to be Realized to <B>" + coolPrint(view.getRealizedTableName(true)) + "</B> through DB function <B>" + coolPrint(view._ParentSchema.getShortName() + ".Refill_" + view.getRealizedTableName(false)) + "()</B>.</LI>");
 
         if (view == null)
-          switch (O._LC)
-            {
-              case NORMAL:
-                Out.println("<LI>Is configured for normal <B>read/write</B> access.</LI>");
-                break;
-              case READONLY:
-                Out.println("<LI>Is configured for <B>ReadOnly</B> access.</LI>");
-                break;
-              case WORM:
-                Out.println("<LI>Is configured for <B>WORM</B> (Write Once Read Many) access.</LI>");
-                break;
-              default:
-                throw new Exception("Unknown Object lifecycle value '" + O._LC + "' when generating class docs");
-            }
+          {
+            switch (O._LC)
+              {
+                case NORMAL:
+                  Out.println("<LI>Is configured for normal <B>read/write</B> access.</LI>");
+                  break;
+                case READONLY:
+                  Out.println("<LI>Is configured for <B>ReadOnly</B> access.</LI>");
+                  break;
+                case WORM:
+                  Out.println("<LI>Is configured for <B>WORM</B> (Write Once Read Many) access.</LI>");
+                  break;
+                default:
+                  throw new Exception("Unknown Object lifecycle value '" + O._LC + "' when generating class docs");
+              }
+            switch (O._Mode)
+              {
+                case NORMAL:
+                  break;
+                case DB_ONLY:
+                  Out.println("<LI>Is configured to <B>only output database-level artifacts</B> (i.e., no application code generated).</LI>");
+                  break;
+                case CODE_ONLY:
+                  Out.println("<LI>Is configured to <B>only output application-level artifacts</B> (i.e., no database code generated).</LI>");
+                  break;
+                default:
+                  throw new Exception("Unknown Object mode value '" + O._Mode + "' when generating class docs");
+              }
+          }
 
         if (O._OCC == true)
           Out.println("<LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>");
@@ -201,7 +217,7 @@ public class Docs
         if (view != null && view._Realize != null)
           Out.print("<TH align=\"left\" nowrap><label>Realized<input type=\"checkbox\" onchange=\"filterTable('" + O._Name + "_TBL', 'R')\", id=\"" + O._Name + "_TBL_R\"></label>&nbsp;</TH>");
 
-        if (O._DBOnly == false)
+        if (O._Mode != ObjectMode.DB_ONLY)
           Out.print("<TH align=\"left\">Mode</TH><TH align=\"left\">Invariant</TH><TH align=\"left\">Protect</TH>");
         Out.print("<TH align=\"left\">Description" + (view != null && view._FormulasRegEx != null ? "/<label>Formula<input type=\"checkbox\" onchange=\"filterTable('" + O._Name + "_TBL', 'F')\", id=\"" + O._Name + "_TBL_F\"></label>" : "") + "</TH></TR>" + SystemValues.NEWLINE);
 
@@ -228,7 +244,7 @@ public class Docs
               }
 
             Out.print("<TD>");
-            if (O._DBOnly == false)
+            if (O._Mode != ObjectMode.DB_ONLY)
               Out.print(JavaJDBCType.getFieldType(C) + (C.isList() == true ? " List<>" : C.isSet() == true ? " Set<>" : "") + "&nbsp;/&nbsp;");
             Out.println(G.getSql().getColumnType(C) + "&nbsp;&nbsp;</TD>");
             Out.println("<TD align=\"center\">" + (C._Nullable == true ? "&#x2611;" : "&#x2610") + "&nbsp;&nbsp;</TD>");
@@ -236,7 +252,7 @@ public class Docs
               {
                 Out.print("<TD align=\"center\">" + (TextUtil.FindStarElement(view._Realize._Exclude, C.getName(), false, 0) == -1 ? "&#x2611;<!--R-->" : "&#x2610;") + "&nbsp;&nbsp;</TD>");
               }
-            if (O._DBOnly == false)
+            if (O._Mode != ObjectMode.DB_ONLY)
               {
                 Out.println("<TD align=\"left\">" + (C._Mode == ColumnMode.NORMAL ? "-" : C._Mode) + "&nbsp;&nbsp;</TD>");
                 Out.println("<TD align=\"center\">" + (C._Invariant == false ? "&#x2610" : "&#x2611;") + "&nbsp;&nbsp;</TD>");
@@ -679,7 +695,7 @@ public class Docs
       {
         SortedSet<String> FormulaMatches = new TreeSet<String>();
         if (F.getParentView()._FormulasRegEx == null)
-         return FormulaMatches;
+          return FormulaMatches;
         Matcher M = F.getParentView()._FormulasRegEx.matcher(String.join("\n", F._FormulaStrs));
         while (M.find() == true)
           {

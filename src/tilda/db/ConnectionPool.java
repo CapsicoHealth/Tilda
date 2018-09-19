@@ -239,7 +239,7 @@ public class ConnectionPool
                         DatabaseMeta DBMeta = LoadDatabaseMetaData(C, TildaList);
                         Migrator.MigrateDatabase(C, Migrate.isMigrationActive() == false, TildaList, DBMeta, first, connectionUrls);
                       }
-                    if (first == true && Migrate.isMigrationActive() == false)
+                    if (/*first == true &&*/ Migrate.isMigrationActive() == false)
                       {
                         LOG.info("Initializing Schemas.");
                         for (Schema S : TildaList)
@@ -555,6 +555,7 @@ public class ConnectionPool
                     C = DriverManager.getConnection(BDS.getUrl(), userId, userPswd);
                     C.setAutoCommit(false);
                     C.setTransactionIsolation(java.sql.Connection.TRANSACTION_READ_COMMITTED);
+                    C.setClientInfo("defaultRowFetchSize", "1000");
                   }
                 PerfTracker.add(TransactionType.CONNECTION_GET, System.nanoTime() - T0);
                 break;

@@ -27,10 +27,10 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.ColumnMode;
-import tilda.enums.ColumnType;
 import tilda.enums.FrameworkColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
+import tilda.enums.ObjectMode;
 import tilda.enums.OutputFormatType;
 import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
@@ -43,9 +43,10 @@ public class Object extends Base
 
     /*@formatter:off*/
     @SerializedName("occ"           ) public boolean              _OCC        = true ;
-    @SerializedName("dbOnly"        ) public boolean              _DBOnly     = false;
+    @SerializedName("dbOnly"        ) public Boolean              _DBOnly_DEPRECATED;
+    @SerializedName("mode"          ) public String               _ModeStr    ;
     @SerializedName("etl"           ) public boolean              _ETL        = false;
-    @SerializedName("lc"            ) public String               _LCStr      = ObjectLifecycle.NORMAL.toString();
+    @SerializedName("lc"            ) public String               _LCStr      ;
 
     @SerializedName("columns"       ) public List<Column>         _Columns    = new ArrayList<Column        >();
 
@@ -55,7 +56,6 @@ public class Object extends Base
     @SerializedName("http"          ) public HttpMapping[]        _Http       = { };
     @SerializedName("history"       ) public String     []        _History    = { };
     @SerializedName("migrations"    ) public Migration  []        _Migrations = { };
-//    @SerializedName("dropOldColumns") public String     []        _DropOldColumns = { };
     
     /*@formatter:on*/
 
@@ -63,6 +63,7 @@ public class Object extends Base
     public transient boolean              _HasUniqueQuery;
     public transient FrameworkSourcedType _FST         = FrameworkSourcedType.NONE;
     public transient ObjectLifecycle      _LC;
+    public transient ObjectMode           _Mode;
 
     public Object()
       {
@@ -257,9 +258,32 @@ public class Object extends Base
         // only finishes being validated at this time.
         super.ValidateOutputMappings(PS);
 
-        if ((_LC = ObjectLifecycle.parse(_LCStr)) == null)
+        // if dbOnly has been set, we have to check for deprecation condition
+        if (_DBOnly_DEPRECATED != null)
+          {
+            if (_ModeStr != null)
+             return PS.AddError("Object '" + getFullName() + "' defined both 'dbOnly' and 'mode'. dbOnly is deprecated. Stop using it and use mode=NORMAL|DB_ONLY|CODE_ONLY instead.");
+            else
+             _Mode = _DBOnly_DEPRECATED==true?ObjectMode.DB_ONLY:ObjectMode.NORMAL;
+          }
+        else if (_ModeStr == null)
+          _Mode = ObjectMode.NORMAL;
+        else if ((_Mode = ObjectMode.parse(_ModeStr)) == null)
+         return PS.AddError("Object '" + getFullName() + "' defined an invalid 'mode' '" + _ModeStr + "'.");
+        
+        // If an object is CODE_ONLY, then it can only be READ_ONLY, i.e., selects. Since CODE_ONLY objects are meant
+        // to be used with complex queries matching a known set of columns, there is nothing to insert, update or delete.
+        if (_Mode == ObjectMode.CODE_ONLY)
+          {
+            if (_LCStr!=null && _LCStr.equals(ObjectLifecycle.READONLY.toString()) == false)
+              return PS.AddError("Object '" + getFullName() + "' defined mode=CODE_ONLY and lc="+_LCStr+". If an object is defined as CODE_ONLY, it can only be READ_ONLY as well.");
+            _LC = ObjectLifecycle.READONLY;
+          }
+        else if (_LCStr == null)
+         _LC = ObjectLifecycle.NORMAL;
+        else if ((_LC = ObjectLifecycle.parse(_LCStr)) == null)
           return PS.AddError("Object '" + getFullName() + "' defined an invalid 'lc' '" + _LCStr + "'.");
-
+          
         if (_PrimaryKey != null)
           _PrimaryKey.Validate(PS, this);
 
