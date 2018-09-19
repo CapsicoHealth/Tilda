@@ -40,6 +40,7 @@ import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.DBStringType;
 import tilda.enums.FrameworkSourcedType;
+import tilda.enums.ObjectMode;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.migration.actions.ColumnAdd;
 import tilda.migration.actions.ColumnAlterNull;
@@ -286,7 +287,7 @@ public class Migrator
           {
             if (Obj == null)
               continue;
-            if (Obj._FST == FrameworkSourcedType.VIEW)
+            if (Obj._FST == FrameworkSourcedType.VIEW || Obj._Mode == ObjectMode.CODE_ONLY == true)
               continue;
             TableMeta TMeta = DBMeta.getTableMeta(Obj._ParentSchema._Name, Obj._Name);
             int DddlManagementPos = Actions.size();

@@ -28,6 +28,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.db.processors.ObjectProcessor;
 import tilda.enums.ColumnMode;
+import tilda.enums.ObjectMode;
 import tilda.generation.java8.Helper;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
@@ -139,7 +140,7 @@ public class MasterFactory
             throw new Exception("Trying to register Tilda Object " + Key + " more than once!");
           }
 
-        if (Obj._DBOnly == false)
+        if (Obj._Mode != ObjectMode.DB_ONLY)
           {
             ObjectMetaData OMD = new ObjectMetaData(PackageName, Obj);
             _M.put(Key, OMD);

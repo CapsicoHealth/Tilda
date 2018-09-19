@@ -28,6 +28,7 @@ import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
+import tilda.enums.ObjectMode;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
@@ -112,7 +113,7 @@ public class ViewRealize
               }
           }
         O._OCC = OCC;
-        O._DBOnly = ParentView._DBOnly;
+        O._ModeStr = ParentView._DBOnly==true?ObjectMode.DB_ONLY.toString():ObjectMode.NORMAL.toString();
         ParentView._ParentSchema._Objects.add(O);
         O.Validate(PS, ParentView._ParentSchema);
 

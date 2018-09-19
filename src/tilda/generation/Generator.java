@@ -29,6 +29,7 @@ import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.MultiType;
 import tilda.enums.ObjectLifecycle;
+import tilda.enums.ObjectMode;
 import tilda.generation.interfaces.CodeGenAppData;
 import tilda.generation.interfaces.CodeGenAppFactory;
 import tilda.generation.interfaces.CodeGenAppJson;
@@ -75,7 +76,7 @@ public class Generator
         genTildaSupport(G, GenFolder, S);
 
         for (Object O : S._Objects)
-          if (O != null && O._DBOnly == false)
+          if (O != null && O._Mode != ObjectMode.DB_ONLY)
             {
               genTildaData(G, GenFolder, O);
               genTildaFactory(G, GenFolder, O);
@@ -112,7 +113,7 @@ public class Generator
         CG.genFileStart(Out, S);
 
         for (Object O : S._Objects)
-          if (O != null && O._FST != FrameworkSourcedType.VIEW)
+          if (O != null && O._FST != FrameworkSourcedType.VIEW && O._Mode != ObjectMode.CODE_ONLY)
             {
               Out.println();
               Out.println();
