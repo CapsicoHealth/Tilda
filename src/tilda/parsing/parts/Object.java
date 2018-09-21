@@ -151,7 +151,6 @@ public class Object extends Base
               }
           }
 
-
         if (_Columns == null || _Columns.isEmpty() == true)
           PS.AddError("Object '" + getFullName() + "' doesn't define any columns!");
         else
@@ -175,8 +174,6 @@ public class Object extends Base
                       PS.AddError("Column '" + C.getFullName() + "' is defined more than once in Object '" + getFullName() + "'. Note that column names are checked in a case-insensitive way, so 'id' is the same as 'ID'.");
                     if (C.needsTZ()==true && _FST != FrameworkSourcedType.REALIZED)
                       {
-                        if (C._Name.equals("xxxLastUpdated") == true)
-                          LOG.debug("zzzzzz");
                         Column TZCol = new Column(C.getName() + "TZ", null, 0, C._Nullable, ColumnMode.AUTO, C._Invariant, null, "Generated helper column to hold the time zone ID for '" + C.getName() + "'.");
                         if (C.isCollection() == false)
                           TZCol._SameAs = "tilda.data.TILDA.ZONEINFO.id";
