@@ -70,6 +70,7 @@ public final class Connection
       throws Exception,
       SQLException
       {
+        this(C, "SINGLE_CONN");
       }
 
     public Connection(java.sql.Connection C, String PoolId)
@@ -95,6 +96,12 @@ public final class Connection
     protected java.sql.Connection _C;
     protected DBType              _DB;
     protected String              _Url;
+
+    public <T> T unwrap(Class<T> clas)
+    throws SQLException
+      {
+        return _C.unwrap(clas);
+      }
 
     public final String getPoolId()
       {

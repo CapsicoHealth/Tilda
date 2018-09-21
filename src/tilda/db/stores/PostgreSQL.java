@@ -29,6 +29,7 @@ import java.util.List;
 import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.postgresql.core.BaseConnection;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
@@ -418,6 +419,11 @@ public class PostgreSQL implements DBType
             else
               throw new Exception("Cannot alter a column from " + ColMeta._TildaType + " to " + Col.getType() + ".");
           }
+
+        String Using = "";
+        // Looks like we do not need the rtrim call. It slows things down and doesn't actually do anything in Postgres
+        // if (ColMetaT == DBStringType.CHARACTER && ColT != DBStringType.CHARACTER)
+        // Using = " USING rtrim(\"" + Col.getName() + "\")";
 
         if (Col.isPrimaryKey() == true || Col.isForeignKey() == true)
           {
@@ -1173,6 +1179,13 @@ public class PostgreSQL implements DBType
         StringRP RP = new StringRP();
         C.ExecuteSelect("SYSTEM", "CURRENT_SETTING", Q, RP);
         return "on".equals(RP.getResult()) == true;
+      }
+
+    
+    public void cancel(Connection C)
+    throws SQLException
+      {
+        C.unwrap(BaseConnection.class).cancelQuery();
       }
 
   }
