@@ -505,3 +505,15 @@ BEGIN
 END
 $$ LANGUAGE plpgsql;
 
+
+
+-- Get the list of tables and columns that have a foreign key to a target table.
+/*
+SELECT tc.table_schema, tc.table_name, tc.constraint_name, kcu.column_name, ccu.table_schema AS foreign_schema_name, ccu.table_name AS foreign_table_name, ccu.column_name AS foreign_column_name
+  FROM information_schema.table_constraints tc
+    JOIN information_schema.key_column_usage kcu ON tc.constraint_name = kcu.constraint_name
+    JOIN information_schema.constraint_column_usage ccu ON ccu.constraint_name = tc.constraint_name
+ WHERE constraint_type = 'FOREIGN KEY'
+   AND ccu.table_name='clinician_dim'
+ ORDER BY tc.table_schema, tc.table_name, kcu.column_name
+*/
