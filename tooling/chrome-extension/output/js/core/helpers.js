@@ -64,7 +64,7 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
       var key = package+"#"+value.get("friendlyName");
       objectAttr = window.tildaCache[key];
       var fn = X[value.get("_type")];
-      var  t = fn.apply(this, [graph, value, gotoNextPosition(position), objectAttr, package, elementChangeHandler])
+      var  t = fn.apply(this, [graph, value, gotoNextPosition(position), objectAttr, package, elementChangeHandler]);
       if(t != null)
       {
         console.log("customId -> "+ t.get('customId'));        
@@ -132,10 +132,19 @@ define(["jointjs", "lodash", "jquery"], function(joint, _, $){
       var key = package+"#"+value.get("friendlyName");
       objectAttr = window.tildaCache[key];
       var fn = X[value.get("_type")];
-      var t = fn.apply(this, [graph, value, gotoNextPosition(position), objectAttr, package, elementChangeHandler])
+      var childDependency = value.get('references') || [];
+      if(childDependency.indexOf(value) > -1)
+      {
+        childDependency.splice(value, 1);
+      }
+      if(childDependency.indexOf(object) > -1)
+      {
+        childDependency.splice(object, 1);
+      }
+      var t = fn.apply(this, [graph, value, gotoNextPosition(position), objectAttr, package, elementChangeHandler]);
       if(t != null)
       {
-        console.log("customId -> "+ t.get('customId'));        
+        console.log("customId -> "+ t.get('customId'));
       }
     })
     return a;
