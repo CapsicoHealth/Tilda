@@ -31,7 +31,7 @@ public enum ObjectMode
     
     /**
      * Only the code-side artifacts are generated and nothing is defined in the DB. This is useful to customize a complex query where
-     * columns are known in advance and reuse JDBC Row handling, queries, JSON formatting etc on the ode-side.
+     * columns are known in advance and reuse JDBC Row handling, queries, JSON formatting etc on the code-side.
      */
     CODE_ONLY;
 

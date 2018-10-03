@@ -47,7 +47,8 @@ public class Column extends TypeDef
 
     /*@formatter:off*/
 	@SerializedName("name"       ) protected String      _Name       ;
-	@SerializedName("sameas"     ) public String         _SameAs     ;
+	@SerializedName("sameas"     ) public String         _SameAs__DEPRECATED;
+    @SerializedName("sameAs"     ) public String         _SameAs     ;
     @SerializedName("nullable"   ) public Boolean        _Nullable   ;
     @SerializedName("mode"       ) public String         _ModeStr    ;
     @SerializedName("invariant"  ) public Boolean        _Invariant  ;
@@ -233,10 +234,18 @@ public class Column extends TypeDef
 
     private boolean ValidateSameAs(ParserSession PS)
       {
-        if (TextUtil.isNullOrEmpty(_SameAs) == true)
+        if (TextUtil.isNullOrEmpty(_SameAs) == true && TextUtil.isNullOrEmpty(_SameAs__DEPRECATED) == true)
           return true;
 
         int Errs = PS.getErrorCount();
+
+        if (TextUtil.isNullOrEmpty(_SameAs__DEPRECATED) == false)
+          {
+            if (TextUtil.isNullOrEmpty(_SameAs) == false)
+              return PS.AddError("Column '" + getFullName() + "' is declaring both 'sameas' and 'sameAs'. Use 'sameAs' only since 'sameas' is deprecated.");
+            _SameAs = _SameAs__DEPRECATED;
+            _SameAs__DEPRECATED = null;
+          }
 
         ReferenceHelper R = ReferenceHelper.parseColumnReference(_SameAs, _ParentObject);
 
@@ -276,7 +285,7 @@ public class Column extends TypeDef
 
         if (_Name == null)
           _Name = _SameAsObj._Name;
-        
+
         if (_TypeStr != null && _TypeStr.equals(_SameAsObj._TypeStr) == false && _Aggregate == null)
           PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining a type '" + _TypeStr + "' which doesn't match the destination column's type '" + _SameAsObj._TypeStr + "'. Note that redefining a type for a sameas column is superfluous in the first place.");
         else if (_Aggregate == null)
@@ -424,26 +433,27 @@ public class Column extends TypeDef
       }
 
     /*
-    public boolean isOCCGenerated()
-      {
-        return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && (_Name.equalsIgnoreCase("created") == true || _Name.equalsIgnoreCase("lastUpdated") == true || _Name.equalsIgnoreCase("createdETL") == true || _Name.equalsIgnoreCase("lastUpdatedETL") == true || _Name.equalsIgnoreCase("deleted") == true);
-      }
-
-    public boolean isOCCLastUpdated()
-      {
-        return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && _Name.equalsIgnoreCase("lastUpdated") == true;
-      }
-
-    public boolean isOCCDeleted()
-      {
-        return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && _Name.equalsIgnoreCase("deleted") == true;
-      }
-
-    public static boolean isOCCColumnName(String Name)
-      {
-        return Name.equalsIgnoreCase("created") || Name.equalsIgnoreCase("lastUpdated") || Name.equalsIgnoreCase("deleted");
-      }
-*/
+     * public boolean isOCCGenerated()
+     * {
+     * return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && (_Name.equalsIgnoreCase("created") == true || _Name.equalsIgnoreCase("lastUpdated") == true ||
+     * _Name.equalsIgnoreCase("createdETL") == true || _Name.equalsIgnoreCase("lastUpdatedETL") == true || _Name.equalsIgnoreCase("deleted") == true);
+     * }
+     * 
+     * public boolean isOCCLastUpdated()
+     * {
+     * return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && _Name.equalsIgnoreCase("lastUpdated") == true;
+     * }
+     * 
+     * public boolean isOCCDeleted()
+     * {
+     * return _ParentObject.isOCC() == true && _Type == ColumnType.DATETIME && _Name.equalsIgnoreCase("deleted") == true;
+     * }
+     * 
+     * public static boolean isOCCColumnName(String Name)
+     * {
+     * return Name.equalsIgnoreCase("created") || Name.equalsIgnoreCase("lastUpdated") || Name.equalsIgnoreCase("deleted");
+     * }
+     */
 
     public VisibilityType getVisibility()
       {
@@ -520,8 +530,14 @@ public class Column extends TypeDef
     String getLogicalName()
       {
         String N = getName();
-        if (N == null && _SameAs != null)
-          N = _SameAs.substring(_SameAs.lastIndexOf('.') + 1);
+        if (N == null)
+          {
+            // This method could be called before validation of columns, and so sameas may not have been validated yet
+            if (_SameAs != null)
+              N = _SameAs.substring(_SameAs.lastIndexOf('.') + 1);
+            else if (_SameAs__DEPRECATED != null)
+              N = _SameAs__DEPRECATED.substring(_SameAs__DEPRECATED.lastIndexOf('.') + 1);
+          }
         return N;
       }
 

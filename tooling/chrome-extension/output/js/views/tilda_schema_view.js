@@ -478,7 +478,7 @@ define(['text!../templates/tilda_schema_view.html'
                   var eventHandler = function(event){\n\
                     var name = this.querySelector('tspan').innerHTML;\n\
                     console.log(name);\n\
-                    window.location.href = '#'+name.toUpperCase()+'_DIV';\n\
+                    window.location.href = '#'+name+'_CNT';\n\
                   }\n\
                   elements = document.getElementsByClassName('element')\n\
                   for (var i = 0; i < elements.length; i++) {\n\
