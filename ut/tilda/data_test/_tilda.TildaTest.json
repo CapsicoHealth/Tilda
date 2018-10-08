@@ -14,12 +14,32 @@
       { "name": "Test"
        ,"description": "The table to keep track tests amd owners"
        ,"columns":[
-            { "name": "userRefnum", "sameAs": "com.capsico.people.data.PEOPLE.User.refnum" , "nullable": false,              "invariant": true, "description": "The user of the test" }
+            { "name": "id"        , "type": "STRING"                                       , "nullable": false, "size": 128, "invariant": true, "description": "The name of the test" }
            ,{ "name": "name"      , "type": "STRING"                                       , "nullable": false, "size": 128, "invariant": true, "description": "The name of the test" }
+           ,{ "name": "test_fk"   , "sameAs":"Test.refnum"                                 , "nullable": false,              "invariant": true, "description": "The name of the test" }
+           ,{ "name": "test2_fk"  , "sameAs":"Test2.refnum"                                , "nullable": false,              "invariant": true, "description": "The name of the test" }
          ]
        ,"primary": { "autogen": true }
        ,"foreign": [
-            { "name":"User", "srcColumns":["userRefnum"], "destObject":"com.capsico.people.data.PEOPLE.User" }
+            { "name":"Test ", "srcColumns":["test_fk"], "destObject":"Test" }
+           ,{ "name":"Test2", "srcColumns":["test2_fk"], "destObject":"Test2" }
+         ]
+       ,"indices":[ 
+            { "name": "Name"     , "columns": ["name"] }
+         ]
+       ,"json":[
+            { "name": "", "columns": ["refnum", "userRefnum", "name"] }
+         ]
+      }
+     ,{ "name": "Test2"
+       ,"description": "The table to keep track tests amd owners"
+       ,"columns":[
+            { "name": "name"      , "type": "STRING"                                       , "nullable": false, "size": 128, "invariant": true, "description": "The name of the test" }
+           ,{ "name": "test_fk"   , "sameAs":"Test.refnum"                                 , "nullable": false,              "invariant": true, "description": "The name of the test" }
+         ]
+       ,"primary": { "autogen": true }
+       ,"foreign": [
+            { "name":"Test", "srcColumns":["test_fk"], "destObject":"Test" }
          ]
        ,"indices":[ 
             { "name": "Name"     , "columns": ["name"] }
@@ -37,7 +57,6 @@
        ,"columns":[
             { "sameas": "Test.refnum"                            }
            ,{ "sameas": "Test.name"                              }
-           ,{ "sameas": "com.capsico.people.data.PEOPLE.User.id", "name": "userId"    }
          ]
        ,"subWhere": "Test.deleted is null"
        ,"queries": [

@@ -78,6 +78,7 @@ public class Generator
         for (Object O : S._Objects)
           if (O != null && O._Mode != ObjectMode.DB_ONLY)
             {
+              LOG.debug("  Generating Tilda classes for Object '" + O.getFullName() + "'.");
               genTildaData(G, GenFolder, O);
               genTildaFactory(G, GenFolder, O);
               genTildaJson(G, GenFolder, O);
@@ -216,8 +217,6 @@ public class Generator
 
         File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(O));
         PrintWriter Out = new PrintWriter(f);
-        LOG.debug("  Generating Tilda class for Object '" + O.getFullName() + "'.");
-        // LOG.debug(" -> " + f.getCanonicalPath());
 
         DG.DataFileDocs(Out, G);
         Out.println();
@@ -388,8 +387,6 @@ public class Generator
 
         File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(O));
         PrintWriter Out = new PrintWriter(f);
-        LOG.debug("  Generating Tilda class for Object '" + O.getFullName() + "'.");
-        // LOG.debug(" -> " + f.getCanonicalPath());
 
         DG.FactoryFileDocs(Out, G);
         Out.println();
@@ -492,8 +489,7 @@ public class Generator
 
         File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(O));
         PrintWriter Out = new PrintWriter(f);
-        LOG.debug("  Generating Tilda JSON class for Object '" + O.getFullName() + "'.");
-        // LOG.debug(" -> " + f.getCanonicalPath());
+
         DG.JsonFileDocs(Out, G, O);
         Out.println();
         CG.genFileStart(Out, O);
@@ -542,8 +538,7 @@ public class Generator
         if (f.exists() == false)
           {
             PrintWriter Out = new PrintWriter(f);
-            LOG.debug("  Generating template App Data class for Object '" + O.getFullName() + "'.");
-            // LOG.debug(" -> " + f.getCanonicalPath());
+
             DG.AppFileDocs(Out, G);
             Out.println();
             CG.genFileStart(Out, O);
@@ -570,8 +565,7 @@ public class Generator
         if (f.exists() == false)
           {
             PrintWriter Out = new PrintWriter(f);
-            LOG.debug("  Generating template App Factory class for Object '" + O.getFullName() + "'.");
-            // LOG.debug(" -> " + f.getCanonicalPath());
+
             DG.AppFileDocs(Out, G);
             Out.println();
             CG.genFileStart(Out, O);
@@ -598,8 +592,7 @@ public class Generator
         if (f.exists() == false)
           {
             PrintWriter Out = new PrintWriter(f);
-            LOG.debug("  Generating template App Json class for Object '" + O.getFullName() + "'.");
-            // LOG.debug(" -> " + f.getCanonicalPath());
+
             DG.AppFileDocs(Out, G);
             Out.println();
             CG.genFileStart(Out, O);

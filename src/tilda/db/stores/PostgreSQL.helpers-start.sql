@@ -1,3 +1,19 @@
+/* ===========================================================================
+ * Copyright (C) 2017 CapsicoHealth Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 -----------------------------------------------------------------------------------------------------------------
 -- TILDA in() functions
 CREATE OR REPLACE FUNCTION TILDA.In(v text[], vals text[])
@@ -14,6 +30,21 @@ CREATE OR REPLACE FUNCTION TILDA.In(v bigint[], vals bigint[])
   RETURNS boolean
   IMMUTABLE LANGUAGE SQL AS
   'select v && vals;';
+
+CREATE OR REPLACE FUNCTION TILDA.In(v text, vals text[])
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select v = ANY(vals);';
+
+CREATE OR REPLACE FUNCTION TILDA.In(v integer, vals integer[])
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select v = ANY(vals);';
+
+CREATE OR REPLACE FUNCTION TILDA.In(v bigint, vals bigint[])
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select v = ANY(vals);';
 
 
 -----------------------------------------------------------------------------------------------------------------
@@ -438,3 +469,67 @@ BEGIN
 END; $BODY$
   LANGUAGE plpgsql STABLE
   COST 100;
+
+  
+
+-- Renames a column and properly handles cases where the table doesn't exist, source column doesn't exist, or dest column already exists.  
+-- Furthermore, the function handles a list of possible source names. For example, V2 of something renames a to b, and then V3 renames 
+-- b to c. This function can then handle a case of renaming either a or b to c. This can be useful when migrating different existing versions.
+-- A check will be performed to make sure there is only one valid source column.
+-- Return values:
+--     1: the operation was completed successfully and the column was renamed
+--     0: none of the source columns exist and the destination column already exists. We assume it was previously renamed.
+--    -1: the table couldn't be found
+--    -2: there were multiple matches in the table for the source column list. Only one match is expected.
+--    -3: none of the source columns can be found.
+--    -4: the destination column already exists.
+drop FUNCTION IF EXISTS tilda.renameColumnIfExists(schemaName varchar, tableName varchar, columnNames varchar[], newColumnName varchar);
+CREATE FUNCTION tilda.renameColumnIfExists(schemaName varchar, tableName varchar, columnNames varchar[], newColumnName varchar) 
+RETURNS RECORD AS $$
+DECLARE
+  _tableName varchar;
+  _columnNames varchar[];
+  _newColumnName varchar;
+BEGIN
+  SELECT tables.table_name, C2.column_name, array_agg(C1.column_name::TEXT)
+    INTO   _tableName, _newColumnName, _columnNames
+    FROM information_schema.tables
+      LEFT join information_schema.columns C2 on C2.table_schema=tables.table_schema and C2.table_name=tables.table_name and C2.column_name=newColumnName
+      LEFT join information_schema.columns C1 on C1.table_schema=tables.table_schema and C1.table_name=tables.table_name and Tilda.In(C1.column_name,columnNames)
+   WHERE lower(tables.table_schema)=lower(schemaName) and lower(tables.table_name)=lower(tableName)
+   GROUP BY 1,2
+  ;
+   -- Does the table exist?
+  IF _tableName is null
+  THEN RETURN (-1, 'Table '||schemaName||'.'||tableName||' cannot be found.');
+  -- Are there more than one potential source columns actually in the table?
+  ELSEIF array_length(_columnNames,1) > 1
+  THEN RETURN (-2, 'Multiple potential source columns '||schemaName||'.'||tableName||'.'||_columnNames::TEXT||' exist. There should be only one match.');
+  -- Does the src column not exist and neither the dest column?
+  ELSEIF _columnNames[1] is null AND _newColumnName is null
+  THEN RETURN (-3, 'Source column(s) '||schemaName||'.'||tableName||'.'||columnNames::TEXT||' cannot be found.');
+  -- Does the src column not exist but the dest column does?
+  ELSEIF _columnNames[1] is null AND _newColumnName is not null
+  THEN RETURN (0, 'Destination column '||schemaName||'.'||tableName||'.'||newColumnName||' already exists. Maybe it has been renamed already?');
+  -- the source column exists, but does the destination column already exists?
+  ELSEIF _newColumnName is not null
+  THEN RETURN (-4, 'Destination column '||schemaName||'.'||tableName||'.'||newColumnName||' already exists.');
+  END IF;
+  -- good to go
+  EXECUTE 'ALTER TABLE '||schemaName||'.'||tableName||' RENAME COLUMN "'||_columnNames[1]||'" TO "'||newColumnName||'"';
+  RETURN (1, 'Column '||schemaName||'.'||tableName||'.'||_columnNames[1]||' has been successfully renamed to '||newColumnName||'.');
+END
+$$ LANGUAGE plpgsql;
+
+
+
+-- Get the list of tables and columns that have a foreign key to a target table.
+/*
+SELECT tc.table_schema, tc.table_name, tc.constraint_name, kcu.column_name, ccu.table_schema AS foreign_schema_name, ccu.table_name AS foreign_table_name, ccu.column_name AS foreign_column_name
+  FROM information_schema.table_constraints tc
+    JOIN information_schema.key_column_usage kcu ON tc.constraint_name = kcu.constraint_name
+    JOIN information_schema.constraint_column_usage ccu ON ccu.constraint_name = tc.constraint_name
+ WHERE constraint_type = 'FOREIGN KEY'
+   AND ccu.table_name='clinician_dim'
+ ORDER BY tc.table_schema, tc.table_name, kcu.column_name
+*/
