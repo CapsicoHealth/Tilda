@@ -6364,7 +6364,7 @@ This Table contains the following columns:<BLOCKQUOTE>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>5&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-desc2_DIV' class='columns'>desc2</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;varchar(10)&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(3000)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -6707,7 +6707,7 @@ This Table contains the following columns:<BLOCKQUOTE>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>38&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-a10a_DIV' class='columns'>a10a</B>&nbsp;&nbsp;</TD>
-<TD>boolean&nbsp;/&nbsp;boolean&nbsp;&nbsp;</TD>
+<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -6717,7 +6717,7 @@ This Table contains the following columns:<BLOCKQUOTE>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>39&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing-a10b_DIV' class='columns'>a10b</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(10)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -7425,7 +7425,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
 <td><a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing-a10a_DIV'>a10a</a> -- BOOLEAN</td>
+<td><a href='TILDA___Docs.TILDA.html#Testing-a10a_DIV'>a10a</a> -- INTEGER</td>
 </tr>
 </table>
 </DIV></DIV>
@@ -7442,7 +7442,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
 <td><a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing-a10b_DIV'>a10b</a> -- INTEGER</td>
+<td><a href='TILDA___Docs.TILDA.html#Testing-a10b_DIV'>a10b</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
@@ -7524,6 +7524,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 The Table TILDA.TildaFormula:<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>TildaFormula_Factory</B>, <B>TildaFormula_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for <B>ReadOnly</B> access.</LI>
+<LI>Is configured to <B>only output database-level artifacts</B> (i.e., no application code generated).</LI>
 <LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
 <LI>Has the following identity:<UL><LI>Primary Key: viewName, name</LI>
 </UL></LI>
@@ -7784,6 +7785,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 The Table TILDA.TildaFormulaValue:<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>TildaFormulaValue_Factory</B>, <B>TildaFormulaValue_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for <B>ReadOnly</B> access.</LI>
+<LI>Is configured to <B>only output database-level artifacts</B> (i.e., no application code generated).</LI>
 <LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
 <LI>Has the following identity:<UL><LI>Primary Key: viewName, formulaName, value</LI>
 </UL></LI>
@@ -7972,6 +7974,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 The Table TILDA.TildaFormulaReference:<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>TildaFormulaReference_Factory</B>, <B>TildaFormulaReference_Data</B> in the package <B>tilda.data</B>.
 <LI>Is configured for <B>ReadOnly</B> access.</LI>
+<LI>Is configured to <B>only output database-level artifacts</B> (i.e., no application code generated).</LI>
 <LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
 <LI>Has the following identity:<UL><LI>Primary Key: viewName, formulaName, referenceName, referenceType</LI>
 </UL></LI>
@@ -9509,7 +9512,7 @@ This View contains the following columns:<BLOCKQUOTE>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>22&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('Testing2View-a10a')" align="right"><B id='Testing2View-a10a_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>a10a</B>&nbsp;&nbsp;</TD>
-<TD>boolean&nbsp;/&nbsp;boolean&nbsp;&nbsp;</TD>
+<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -9519,7 +9522,7 @@ This View contains the following columns:<BLOCKQUOTE>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>23&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('Testing2View-a10b')" align="right"><B id='Testing2View-a10b_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>a10b</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(10)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -9549,7 +9552,7 @@ This View contains the following columns:<BLOCKQUOTE>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>26&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('Testing2View-desc2')" align="right"><B id='Testing2View-desc2_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>desc2</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;varchar(10)&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(3000)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -10454,7 +10457,7 @@ None
 <tr bgcolor="#DFECF8">
 <td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
 <td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-a10a_DIV'>a10a</a> -- BOOLEAN</td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-a10a_DIV'>a10a</a> -- INTEGER</td>
 </tr>
 </table>
 </DIV></DIV>
@@ -10477,7 +10480,7 @@ None
 <tr bgcolor="#DFECF8">
 <td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
 <td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-a10b_DIV'>a10b</a> -- INTEGER</td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-a10b_DIV'>a10b</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
@@ -11210,7 +11213,7 @@ This View contains the following columns:<BLOCKQUOTE>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>20&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('Testing4View-a10a')" align="right"><B id='Testing4View-a10a_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>a10a</B>&nbsp;&nbsp;</TD>
-<TD>boolean&nbsp;/&nbsp;boolean&nbsp;&nbsp;</TD>
+<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -11220,7 +11223,7 @@ This View contains the following columns:<BLOCKQUOTE>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>21&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('Testing4View-a10b')" align="right"><B id='Testing4View-a10b_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>a10b</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(10)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -11250,7 +11253,7 @@ This View contains the following columns:<BLOCKQUOTE>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>24&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('Testing4View-desc2')" align="right"><B id='Testing4View-desc2_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>desc2</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;varchar(10)&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(3000)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -12037,7 +12040,7 @@ None
 <tr>
 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-a10a_DIV'>a10a</a> -- BOOLEAN</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-a10a_DIV'>a10a</a> -- INTEGER</td>
 </tr>
 </table>
 </DIV></DIV>
@@ -12065,7 +12068,7 @@ None
 <tr>
 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing_DIV'>Testing</a></td>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-a10b_DIV'>a10b</a> -- INTEGER</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#Testing-a10b_DIV'>a10b</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>

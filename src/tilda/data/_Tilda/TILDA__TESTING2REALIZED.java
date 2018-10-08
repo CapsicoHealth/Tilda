@@ -194,7 +194,7 @@ This Table contains the following columns:<BLOCKQUOTE>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>16&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-a10a_DIV' class='columns'>a10a</B>&nbsp;&nbsp;</TD>
-<TD>boolean&nbsp;/&nbsp;boolean&nbsp;&nbsp;</TD>
+<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -204,7 +204,7 @@ This Table contains the following columns:<BLOCKQUOTE>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>17&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-a10b_DIV' class='columns'>a10b</B>&nbsp;&nbsp;</TD>
-<TD>int&nbsp;/&nbsp;integer&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(10)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -234,7 +234,7 @@ This Table contains the following columns:<BLOCKQUOTE>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>20&nbsp;&nbsp;</TD>
 <TD align="right"><B id='Testing2Realized-desc2_DIV' class='columns'>desc2</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;/&nbsp;varchar(10)&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(3000)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -637,7 +637,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
 <td><a href='TILDA___Docs.TILDA.html#Testing2Realized_DIV'>Testing2Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing2Realized-a10a_DIV'>a10a</a> -- BOOLEAN</td>
+<td><a href='TILDA___Docs.TILDA.html#Testing2Realized-a10a_DIV'>a10a</a> -- INTEGER</td>
 </tr>
 </table>
 </DIV></DIV>
@@ -654,7 +654,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
 <td><a href='TILDA___Docs.TILDA.html#Testing2Realized_DIV'>Testing2Realized</a></td>
-<td><a href='TILDA___Docs.TILDA.html#Testing2Realized-a10b_DIV'>a10b</a> -- INTEGER</td>
+<td><a href='TILDA___Docs.TILDA.html#Testing2Realized-a10b_DIV'>a10b</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
@@ -917,7 +917,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Sep 7 2018, 16:32:30EDT
+ @generated Sep 28 2018, 09:34:12EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTING2REALIZED implements tilda.interfaces.ReaderObject
@@ -3122,8 +3122,8 @@ This is the null setter for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a10a of type boolean</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a10a of type boolean</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a10a of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a10a of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
@@ -3132,7 +3132,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   boolean _a10a;
+   int _a10a= SystemValues.EVIL_VALUE;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3141,8 +3141,8 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a10a of type boolean</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a10a of type boolean</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a10a of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a10a of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
@@ -3151,7 +3151,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final boolean getA10a()
+   public final int getA10a()
       { return _a10a; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3161,8 +3161,8 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a10a of type boolean</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a10a of type boolean</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a10a of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a10a of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
@@ -3181,8 +3181,8 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a10a of type boolean</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a10a of type boolean</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a10a of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a10a of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
@@ -3191,7 +3191,7 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setA10a(boolean v) throws Exception
+    void setA10a(int v) throws Exception
      {
        long T0 = System.nanoTime();
        if (v != _a10a)
@@ -3212,8 +3212,8 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a10a of type boolean</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a10a of type boolean</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a10a of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a10a of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
@@ -3229,7 +3229,7 @@ This is the null setter for:<BR>
         return;
        __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A10A._Mask);
        __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A10A._Mask);
-       _a10a=false;
+       _a10a=0;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -3246,9 +3246,10 @@ This is the null setter for:<BR>
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a10b of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a10b of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a10b of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a10b of type varchar(10)</TD></TR>
 
+  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
@@ -3256,7 +3257,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   int _a10b= SystemValues.EVIL_VALUE;
+   String _a10b;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3265,9 +3266,10 @@ This is the definition for:<BR>
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a10b of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a10b of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a10b of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a10b of type varchar(10)</TD></TR>
 
+  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
@@ -3275,7 +3277,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-   public final int getA10b()
+   public final String getA10b()
       { return _a10b; }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3285,9 +3287,10 @@ This is the getter for:<BR>
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a10b of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a10b of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a10b of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a10b of type varchar(10)</TD></TR>
 
+  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
@@ -3305,9 +3308,10 @@ This is the isNull for:<BR>
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a10b of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a10b of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a10b of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a10b of type varchar(10)</TD></TR>
 
+  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
@@ -3315,10 +3319,16 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-    void setA10b(int v) throws Exception
+    void setA10b(String v) throws Exception
      {
        long T0 = System.nanoTime();
-       if (v != _a10b)
+       if (v == null)
+        {
+          setNullA10b();
+        }
+       else if (v.length() > 10)
+        throw new Exception("Cannot set tilda.data.TILDA.Testing2Realized.a10b: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 10.");
+       else if (v.equals(_a10b) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
            throw new Exception("Cannot set field 'tilda.data.TILDA.Testing2Realized.a10b' that is invariant, or part of a read-only or pre-existing WORM object.");
@@ -3336,9 +3346,10 @@ This is the setter for:<BR>
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a10b of type int</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a10b of type integer</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.a10b of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.a10b of type varchar(10)</TD></TR>
 
+  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The blah</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
@@ -3353,7 +3364,7 @@ This is the null setter for:<BR>
         return;
        __Changes.or(TILDA__TESTING2REALIZED_Factory.COLS.A10B._Mask);
        __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A10B._Mask);
-       _a10b=0;
+       _a10b=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -3630,9 +3641,9 @@ This is the null setter for:<BR>
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.desc2 of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2 of type varchar(10)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2 of type varchar(3000)</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>3000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
@@ -3650,9 +3661,9 @@ This is the definition for:<BR>
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.desc2 of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2 of type varchar(10)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2 of type varchar(3000)</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>3000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
@@ -3671,9 +3682,9 @@ This is the getter for:<BR>
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.desc2 of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2 of type varchar(10)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2 of type varchar(3000)</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>3000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
@@ -3692,9 +3703,9 @@ This is the isNull for:<BR>
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.desc2 of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2 of type varchar(10)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2 of type varchar(3000)</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>3000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
@@ -3709,8 +3720,8 @@ This is the setter for:<BR>
         {
           setNullDesc2();
         }
-       else if (v.length() > 10)
-        throw new Exception("Cannot set tilda.data.TILDA.Testing2Realized.desc2: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 10.");
+       else if (v.length() > 3000)
+        throw new Exception("Cannot set tilda.data.TILDA.Testing2Realized.desc2: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 3000.");
        else if (v.equals(_desc2) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
@@ -3730,9 +3741,9 @@ This is the setter for:<BR>
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing2Realized.desc2 of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2 of type varchar(10)</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing2Realized.desc2 of type varchar(3000)</TD></TR>
 
-  <TR><TD align="right"><B>Size</B></TD><TD>10</TD></TR>
+  <TR><TD align="right"><B>Size</B></TD><TD>3000</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The title for a person, i.e., Mr, Miss, Mrs...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
@@ -5515,8 +5526,8 @@ This is the null setter for:<BR>
                                _a8             =                              RS.getBytes    (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A8._Mask            );
                                _a8bTZ          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A8BTZ._Mask         ); else _a8bTZ          = _a8bTZ         .trim();
                                _a8b            = ProcessZDT(_a8bTZ           , "tilda.data.TILDA.Testing2Realized.a8b"           , RS, ++i, TILDA__TESTING2REALIZED_Factory.COLS.A8B           , TILDA__TESTING2REALIZED_Factory.COLS.A8BTZ           ); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A8B._Mask           );
-                               _a10a           =                              RS.getBoolean  (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A10A._Mask          );
-                               _a10b           =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A10B._Mask          );
+                               _a10a           =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A10A._Mask          );
+                               _a10b           = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A10B._Mask          );
                                _a10c           =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.A10C._Mask          );
                                _description    = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.DESCRIPTION._Mask   );
                                _desc2          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING2REALIZED_Factory.COLS.DESC2._Mask         );
@@ -5578,7 +5589,7 @@ This is the null setter for:<BR>
                + "; a8"               + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8._Mask) == true ? ": NULL" : ": " +                                   getA8            () )
                + "; a8b"              + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A8B._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA8b           ()))
                + "; a10a"             + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10A._Mask) == true ? ": NULL" : ": " +                                   getA10a          () )
-               + "; a10b"             + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10B._Mask) == true ? ": NULL" : ": " +                                   getA10b          () )
+               + "; a10b"             + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10B._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getA10b          ()))
                + "; a10c"             + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.A10C._Mask) == true ? ": NULL" : ": " +                                   getA10c          () )
                + "; description"      + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESCRIPTION._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDescription   ()))
                + "; desc2"            + (__Nulls.intersects(TILDA__TESTING2REALIZED_Factory.COLS.DESC2._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getDesc2         ()))

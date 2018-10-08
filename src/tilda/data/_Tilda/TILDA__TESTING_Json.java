@@ -59,8 +59,8 @@ public class TILDA__TESTING_Json
    transient                      public List<ZonedDateTime>  _a9b        ;
    @SerializedName("a9c"        ) public LocalDate  _a9c        ;
    @SerializedName("a9d"        ) public List<LocalDate>  _a9d        ;
-   @SerializedName("a10a"       ) public Boolean  _a10a       ;
-   @SerializedName("a10b"       ) public Integer  _a10b       ;
+   @SerializedName("a10a"       ) public Integer  _a10a       ;
+   @SerializedName("a10b"       ) public String  _a10b       ;
    @SerializedName("a10c"       ) public Integer  _a10c       ;
    /*@formatter:on*/
 
@@ -149,7 +149,7 @@ public class TILDA__TESTING_Json
              "refnum2"    + (_refnum2     == null ? ": NULL" : ": " + _refnum2    )
          + "; name"       + (_name        == null ? ": NULL" : "(" + (_name        == null ? 0 : _name       .length())+"): "+_name)
          + "; description"+ (_description == null ? ": NULL" : "(" + (_description == null ? 0 : _description.length())+"): "+(_description == null || _description.length() < 100 ? _description : _description.substring(0, 100)+"..."))
-         + "; desc2"      + (_desc2       == null ? ": NULL" : "(" + (_desc2       == null ? 0 : _desc2      .length())+"): "+_desc2)
+         + "; desc2"      + (_desc2       == null ? ": NULL" : "(" + (_desc2       == null ? 0 : _desc2      .length())+"): "+(_desc2       == null || _desc2      .length() < 100 ? _desc2       : _desc2      .substring(0, 100)+"..."))
          + "; desc3"      + (_desc3       == null ? ": NULL" : "(" + (_desc3       == null ? 0 : _desc3      .length())+"): "+(_desc3       == null || _desc3      .length() < 100 ? _desc3       : _desc3      .substring(0, 100)+"..."))
          + "; desc4"      + (_desc4       == null ? ": NULL" : "(" + (_desc4       == null ? 0 : _desc4      .length())+"): "+(_desc4       == null || _desc4      .length() < 100 ? _desc4       : _desc4      .substring(0, 100)+"..."))
          + "; desc5"      + (_desc5       == null ? ": NULL" : "(" + (_desc5       == null ? 0 : _desc5      .length())+"): "+(_desc5       == null || _desc5      .length() < 100 ? _desc5       : _desc5      .substring(0, 100)+"..."))
@@ -179,7 +179,7 @@ public class TILDA__TESTING_Json
          + "; a9c"        + (_a9c         == null ? ": NULL" : ": " + _a9c        )
          + "; a9d"        + (_a9d         == null ? ": NULL" : ": " + _a9d        )
          + "; a10a"       + (_a10a        == null ? ": NULL" : ": " + _a10a       )
-         + "; a10b"       + (_a10b        == null ? ": NULL" : ": " + _a10b       )
+         + "; a10b"       + (_a10b        == null ? ": NULL" : "(" + (_a10b        == null ? 0 : _a10b       .length())+"): "+_a10b)
          + "; a10c"       + (_a10c        == null ? ": NULL" : ": " + _a10c       )
          + ";";
     }
