@@ -533,3 +533,22 @@ SELECT tc.table_schema, tc.table_name, tc.constraint_name, kcu.column_name, ccu.
    AND ccu.table_name='clinician_dim'
  ORDER BY tc.table_schema, tc.table_name, kcu.column_name
 */
+
+
+
+/*
+DROP SEQUENCE IF EXISTS temp_seq;
+CREATE SEQUENCE temp_seq START 1101001 INCREMENT 1 CACHE 1000;
+with T as (
+  select refnum from Patients.Order
+  where refnum > 1101000
+  order by refnum
+  limit 2000000
+)
+update Patients.Order
+  set refnum=nextval('temp_seq')
+where refnum in (select refnum from T)
+
+update tilda.key set max=(select max(refnum)+1 from PATIENTS.Order) where "name"='PATIENTS.ORDER'
+DROP SEQUENCE IF EXISTS temp_seq;
+*/

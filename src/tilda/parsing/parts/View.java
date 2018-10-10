@@ -136,7 +136,7 @@ public class View extends Base
 
     public String getRealizedTableName(boolean includeSchemaName)
       {
-        return _Realize == null ? null : (includeSchemaName == true ? _ParentSchema._Name + "." : "") + _Name.substring(0, _Name.length() - (_Pivots.isEmpty() == false ? "PivotView" : "View").length()) + "Realized";
+        return _Realize == null ? null : (includeSchemaName == true ? _ParentSchema._Name + "." : "") + (TextUtil.isNullOrEmpty(_Realize._Name)==false ? _Realize._Name : _Name.substring(0, _Name.length() - (_Pivots.isEmpty() == false ? "PivotView" : "View").length()) + "Realized");
       }
 
     public static String getRootViewName(String Name)
