@@ -55,7 +55,7 @@ public class Object extends Base
     @SerializedName("indices"       ) public List<Index>          _Indices    = new ArrayList<Index         >();
     @SerializedName("http"          ) public HttpMapping[]        _Http       = { };
     @SerializedName("history"       ) public String     []        _History    = { };
-    @SerializedName("migrations"    ) public Migration  []        _Migrations = { };
+//    @SerializedName("migrations"    ) public Migration  []        _Migrations = { };
     
     /*@formatter:on*/
 
@@ -209,6 +209,7 @@ public class Object extends Base
           }
 
         Set<String> Names = new HashSet<String>();
+        /*
         for (int i = 0; i < _Migrations.length; ++i)
           {
             Migration M = _Migrations[i];
@@ -220,6 +221,7 @@ public class Object extends Base
                       PS.AddError("Object '" + getFullName() + "' has declared migration #" + i + " with a column '" + col + "' which has already been specified in another migration!");
                 }
           }
+         */
 
 
         _HasUniqueIndex = false;

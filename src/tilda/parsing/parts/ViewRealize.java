@@ -37,6 +37,7 @@ public class ViewRealize
     static final Logger             LOG          = LogManager.getLogger(ViewRealize.class.getName());
 
     /*@formatter:off*/
+    @SerializedName("name"       ) public String                  _Name;
     @SerializedName("indices"    ) public List<Index> _Indices    = new ArrayList<Index>();
     @SerializedName("subRealized") public String[]    _SubRealized= new String[] { };
     
