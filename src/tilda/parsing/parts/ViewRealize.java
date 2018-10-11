@@ -83,8 +83,10 @@ public class ViewRealize
               VRM.Validate(PS, ParentView);
               if (Names.add(VRM._Name) == false)
                 PS.AddError("Mapping '" + VRM._Name + "' is duplicated in the realize section for view '" + ParentView.getFullName() + "'.");
-              if (ParentView.getColumn(VRM._Name) == null && ParentView.getFormula(VRM._Name) == null)
-                PS.AddError("Mapping '" + VRM._Name + "' is defined without a matching column/formula in the main view '" + ParentView.getFullName() + "'.");
+              if (VRM._Name.equals("visitCountMSW") == true)
+                LOG.debug("xxx");
+              if (ParentView.getColumn(VRM._Name) == null && ParentView.getFormula(VRM._Name) == null && ParentView.getPivottedColumn(VRM._Name) == null)
+                PS.AddError("Mapping for column '" + VRM._Name + "' is defined without a matching column/formula/pivot in the main view '" + ParentView.getFullName() + "'.");
             }
         
         Object O = new Object();

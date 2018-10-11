@@ -686,6 +686,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
             OutFinal.println();
             String TName = V.getRealizedTableName(false);
             String RName = V.getRealizedTableName(true);
+            if (V._Name.equalsIgnoreCase("VisitCountAndDurationPivotView") == true)
+              LOG.debug("xxx");
+
             OutFinal.append("DROP FUNCTION IF EXISTS " + V._ParentSchema._Name + ".Refill_" + TName + "();\n")
             .append("CREATE OR REPLACE FUNCTION " + V._ParentSchema._Name + ".Refill_" + TName + "() RETURNS boolean AS $$\n")
             .append("BEGIN\n")
@@ -716,9 +719,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
             else
               {
                 // String BV = DoFormulasSuperView(V, BV);
-                OutFinal.append("SELECT ").append(genRealizedColumnList(V, "\n                         " + PaddingUtil.getPad(RName.length()))
-                + "\n                    " + PaddingUtil.getPad(RName.length()));
-                OutFinal.append(" FROM " + V._ParentSchema._Name + "." + V._Name + ";\n");
+                OutFinal.append("SELECT ").append(genRealizedColumnList(V, "\n          "))
+                .append("\n     FROM " + V._ParentSchema._Name + "." + V._Name + ";\n");
               }
             // for (Index I : V._Realize._Indices)
             // if (I != null)
@@ -749,12 +751,24 @@ public class Sql extends PostgreSQL implements CodeGenSql
               continue;
             if (TextUtil.FindStarElement(V._Realize._Exclude, VC._Name, true, 0) != -1)
               continue;
+            if (V.isPivotColumn(VC) == true)
+              break;
             if (First == true)
               First = false;
             else
               Str.append(", ");
             Str.append("\"").append(VC._Name).append("\"");
           }
+          for (Column C : V._PivotColumns)
+            {
+              if (TextUtil.FindStarElement(V._Realize._Exclude, C.getName(), true, 0) != -1)
+                continue;
+              if (First == true)
+                First = false;
+              else
+                Str.append(", ");
+              Str.append("\"").append(C.getName()).append("\"");
+            }
         for (ViewRealizeMapping VRM : V._Realize._Mappings)
           {
             if (V.getColumn(VRM._Name) == null && V.getFormula(VRM._Name) == null)
@@ -802,6 +816,17 @@ public class Sql extends PostgreSQL implements CodeGenSql
               b.append("\"" + VC._Name + "\" -- COLUMN\n");
             else
               b.append(VRM.printMapping() + " -- COLUMN MAPPING OVERRIDE\n");
+          }
+
+        for (Column C : V._PivotColumns)
+          {
+            if (TextUtil.FindStarElement(V._Realize._Exclude, C.getName(), true, 0) != -1)
+              continue;
+            if (First == true)
+              First = false;
+            else
+              b.append(", ");
+            b.append("\"").append(C.getName()).append("\"");
           }
 
         for (Formula F : V._Formulas)
@@ -1211,6 +1236,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
         // LOG.debug("View " + V._Name + ": " + TextUtil.Print(V.getColumnNames()));
         for (ViewColumn VC : V._ViewColumns)
           {
+            if (V.isPivotColumn(VC) == true)
+              break;
             if (VC == null || (VC._SameAsObj != null && VC._SameAsObj._Mode == ColumnMode.CALCULATED) || VC._JoinOnly == true || VC._FormulaOnly == true)
               {
                 if (VC != null)
@@ -1241,6 +1268,12 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 Blocked = true;
                 Str.append(Lead + "-- \"" + VC._Name + "\" -- REALIZE-EXCLUDED");
               }
+          }
+        for (Column C : V._PivotColumns)
+          {
+            if (TextUtil.FindStarElement(V._Realize._Exclude, C.getName(), true, 0) != -1)
+              continue;
+            Str.append(Lead + ", \"" + C.getName() + "\" -- PIVOT COLUMN");
           }
         for (ViewRealizeMapping VRM : V._Realize._Mappings)
           {

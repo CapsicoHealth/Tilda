@@ -76,6 +76,7 @@ public class View extends Base
     public transient Pattern           _ViewColumnsRegEx;
     public transient Pattern           _FormulasRegEx;
     public transient Map<String, Base> _Dependencies   = new HashMap<String, Base>();
+    public transient List<Column>      _PivotColumns   = new ArrayList<Column>();
 
     public View()
       {
@@ -523,28 +524,7 @@ public class View extends Base
           }
         // LOG.debug(O._Name+": "+TextUtil.Print(O.getColumnNames()));
         // Counter = Counter;
-        for (ViewPivot P : _Pivots)
-          {
-            if (P._Values == null || P._Values.length == 0)
-              continue;
-            for (ViewPivotAggregate A : P._Aggregates)
-              {
-                ViewColumn VC = getViewColumn(A._Name);
-                if (VC == null)
-                  {
-                    PS.AddError("View '" + getFullName() + "' is using an aggregate '" + A._Name + "' which cannot be resolved.");
-                    continue;
-                  }
-                ColumnType AggregateType = VC.getAggregateType();
-                for (ViewPivotValue VPV : P._Values)
-                  {
-                    ColumnType Type = VPV._Type != null ? VPV._Type._Type : AggregateType;
-                    Column C = new Column(A.makeName(VPV), Type.name(), Type == ColumnType.STRING ? P._VC._SameAsObj._Size : 0, true, ColumnMode.NORMAL, true, null,
-                    VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')");
-                    O._Columns.add(C);
-                  }
-              }
-          }
+        genPivotColumns(PS, O);
 
         if (_TimeSeries != null)
           {
@@ -696,6 +676,37 @@ public class View extends Base
         O.Validate(PS, _ParentSchema);
 
         return O;
+      }
+
+    private void genPivotColumns(ParserSession PS, Object O)
+      {
+        for (ViewPivot P : _Pivots)
+          {
+            if (P._Values == null || P._Values.length == 0)
+              continue;
+            for (ViewPivotAggregate A : P._Aggregates)
+              {
+                ViewColumn VC = getViewColumn(A._Name);
+                if (VC == null)
+                  {
+                    String Msg = "View '" + getFullName() + "' is using an aggregate '" + A._Name + "' which cannot be resolved.";
+                    if (PS != null)
+                     PS.AddError(Msg);
+                    else
+                      throw new Error("View.genPivotColumns() being called with a null ParserSession but stil generating at least one error: "+Msg);
+                    continue;
+                  }
+                ColumnType AggregateType = VC.getAggregateType();
+                for (ViewPivotValue VPV : P._Values)
+                  {
+                    ColumnType Type = VPV._Type != null ? VPV._Type._Type : AggregateType;
+                    Column C = new Column(A.makeName(VPV), Type.name(), Type == ColumnType.STRING ? P._VC._SameAsObj._Size : 0, true, ColumnMode.NORMAL, true, null,
+                    VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')");
+                    O._Columns.add(C);
+                    _PivotColumns.add(C);
+                  }
+              }
+          }
       }
 
 
@@ -1038,4 +1049,11 @@ public class View extends Base
         return false;
       }
 
+    public Column getPivottedColumn(String Name)
+      {
+        for (Column C : _PivotColumns)
+          if (C.getName().equals(Name) == true)
+           return C;
+        return null;
+      }
   }
