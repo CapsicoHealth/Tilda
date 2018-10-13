@@ -415,8 +415,7 @@ public class View extends Base
           PS.AddError("View '" + getFullName() + "' is defining multiple Pivots but uses non-composable aggregateds (e.g., avg, dev...).");
 
         Set<String> PivotNames = new HashSet<String>();
-        Set<String> PivotPrefixes = new HashSet<String>();
-        Set<String> PivotSuffixes = new HashSet<String>();
+        Set<String> PivotFixes = new HashSet<String>();
         // Let's validate
         for (ViewPivot P : _Pivots)
           {
@@ -425,10 +424,9 @@ public class View extends Base
               PS.AddError("View '" + getFullName() + "' is defining a duplicate Pivot on column " + P._VC.getShortName() + ".");
             for (ViewPivotAggregate F : P._Aggregates)
               {
-                if (TextUtil.isNullOrEmpty(F._Prefix) == false && PivotPrefixes.add(F._Prefix) == false)
-                  PS.AddError("View '" + getFullName() + "' is defining a Pivot on column " + P._VC.getShortName() + " with a aggregate-prefix '" + F._Prefix + "' which has already been used.");
-                if (TextUtil.isNullOrEmpty(F._Suffix) == false && PivotSuffixes.add(F._Suffix) == false)
-                  PS.AddError("View '" + getFullName() + "' is defining a Pivot on column " + P._VC.getShortName() + " with a aggregate-suffix '" + F._Suffix + "' which has already been used.");
+                String fixes = TextUtil.Print(F._Prefix, "") + TextUtil.Print(F._Suffix, "");
+                if (TextUtil.isNullOrEmpty(fixes) == false && PivotFixes.add(fixes) == false)
+                  PS.AddError("View '" + getFullName() + "' is defining a Pivot on column " + P._VC.getShortName() + " with an aggregate-prefix/suffix combination '" + fixes + "' which has already been used.");
               }
           }
         // Then let's fold the Pivotted-on columns back into the main view.
@@ -527,9 +525,6 @@ public class View extends Base
             // LOG.debug(" --> "+VC._Name +" IGNORED ");
 
           }
-        // LOG.debug(O._Name+": "+TextUtil.Print(O.getColumnNames()));
-        // Counter = Counter;
-        genPivotColumns(PS, O);
 
         if (_TimeSeries != null)
           {
@@ -605,42 +600,18 @@ public class View extends Base
                   }
               }
 
-
-
-
-        // Preparing regexes for anything that needs to do search and replace.
-        Set<String> Names = new HashSet<String>();
-        StringBuffer Str = new StringBuffer();
-        for (ViewColumn VC : _ViewColumns)
-          {
-            if (Str.length() != 0)
-              Str.append("|");
-            Names.add(VC._Name);
-            Str.append(VC._Name);
-          }
-        _ViewColumnsRegEx = Pattern.compile("\\b(" + Str.toString() + ")\\b");
-
-        Str.setLength(0);
-        for (Formula F : _Formulas)
-          {
-            if (F == null)
-              continue;
-            if (Names.add(F._Name) == false)
-              continue;
-            if (Str.length() != 0)
-              Str.append("|");
-            Str.append(F._Name);
-          }
-
-        _FormulasRegEx = Str.length() == 0 ? null : Pattern.compile("\\b(" + Str.toString() + ")\\b");
+        // LOG.debug(O._Name+": "+TextUtil.Print(O.getColumnNames()));
+        genPivotColumns(PS, O);
+        
+        PrepRegexes();
 
         for (Formula F : _Formulas)
-          {
-            String Path = checkInfiniteRecursion(F);
-            if (Path != null)
-              PS.AddError("View '" + getFullName() + "' is defining formula '" + F._Name + "' with an infinite reference loop '" + Path + "'.");
-          }
-
+          if (F != null)
+            {
+              String Path = checkInfiniteRecursion(F);
+              if (Path != null)
+                PS.AddError("View '" + getFullName() + "' is defining formula '" + F._Name + "' with an infinite reference loop '" + Path + "'.");
+            }
 
         /*
          * PrimaryKey PK = _ViewColumns.get(0)._SameAsObj._ParentObject._PrimaryKey;
@@ -681,6 +652,43 @@ public class View extends Base
         O.Validate(PS, _ParentSchema);
 
         return O;
+      }
+
+    private void PrepRegexes()
+      {
+        // Preparing regexes for anything that needs to do search and replace.
+        Set<String> Names = new HashSet<String>();
+        StringBuffer Str = new StringBuffer();
+        for (ViewColumn VC : _ViewColumns)
+          {
+            if (Str.length() != 0)
+              Str.append("|");
+            Names.add(VC._Name);
+            Str.append(VC._Name);
+          }
+        for (Column C : _PivotColumns)
+          {
+            if (Str.length() != 0)
+              Str.append("|");
+            Names.add(C.getName());
+            Str.append(C.getName());
+          }
+        _ViewColumnsRegEx = Pattern.compile("\\b(" + Str.toString() + ")\\b");
+
+        Str.setLength(0);
+        for (Formula F : _Formulas)
+          {
+            if (F == null)
+              continue;
+            if (Names.add(F._Name) == false)
+              continue;
+            if (Str.length() != 0)
+              Str.append("|");
+            Str.append(F._Name);
+          }
+
+        _FormulasRegEx = Str.length() == 0 ? null : Pattern.compile("\\b(" + Str.toString() + ")\\b");
+        
       }
 
     private void genPivotColumns(ParserSession PS, Object O)
@@ -754,7 +762,7 @@ public class View extends Base
 
     private boolean checkInfiniteRecursion(Formula F, List<String> Path)
       {
-        if (F.getParentView()._FormulasRegEx == null)
+        if (F.getParentView() == null || F.getParentView()._FormulasRegEx == null)
           return true;
         if (Path.contains(F._Name) == true)
           {

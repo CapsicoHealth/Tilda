@@ -37,9 +37,11 @@ public class ViewRealize
     static final Logger             LOG          = LogManager.getLogger(ViewRealize.class.getName());
 
     /*@formatter:off*/
-    @SerializedName("name"       ) public String                  _Name;
-    @SerializedName("indices"    ) public List<Index> _Indices    = new ArrayList<Index>();
-    @SerializedName("subRealized") public String[]    _SubRealized= new String[] { };
+    @SerializedName("name"       ) public String            _Name;
+    @SerializedName("primary"    ) public PrimaryKey        _PrimaryKey = null;
+    @SerializedName("foreign"    ) public List<ForeignKey>  _ForeignKeys= new ArrayList<ForeignKey>();
+    @SerializedName("indices"    ) public List<Index>       _Indices    = new ArrayList<Index>();
+    @SerializedName("subRealized") public String[]          _SubRealized= new String[] { };
     
     // It was "exclude" for view columns, so why was it ever "excludes" here? Not consistent.
     @SerializedName("excludes") public String[]       _Excludes_DEPRECATED   = new String[] { };
@@ -75,7 +77,11 @@ public class ViewRealize
               if (Names.add(I._Name) == false)
                 PS.AddError("Index '" + I._Name + "' is duplicated in the realize section for view '" + ParentView.getFullName() + "'.");
             }
-
+        
+        if (_PrimaryKey != null && _PrimaryKey._Autogen == true)
+          PS.AddError("The realize section for view '" + ParentView.getFullName() + "' defines an autogen primary key: these are not allowed for realized tables.");
+          
+        
         Names.clear();
         for (ViewRealizeMapping VRM : _Mappings)
           if (VRM != null)
@@ -83,10 +89,10 @@ public class ViewRealize
               VRM.Validate(PS, ParentView);
               if (Names.add(VRM._Name) == false)
                 PS.AddError("Mapping '" + VRM._Name + "' is duplicated in the realize section for view '" + ParentView.getFullName() + "'.");
-              if (VRM._Name.equals("visitCountMSW") == true)
-                LOG.debug("xxx");
               if (ParentView.getColumn(VRM._Name) == null && ParentView.getFormula(VRM._Name) == null && ParentView.getPivottedColumn(VRM._Name) == null)
                 PS.AddError("Mapping for column '" + VRM._Name + "' is defined without a matching column/formula/pivot in the main view '" + ParentView.getFullName() + "'.");
+              if (TextUtil.FindStarElement(_Exclude, VRM._Name, true, 0) != -1)
+                PS.AddError("Mapping for column '" + VRM._Name + "' is defined while also being excluded.");
             }
         
         Object O = new Object();
@@ -96,6 +102,8 @@ public class ViewRealize
         O.addQueries(ParentView._Queries);
         O._OutputMaps = ParentView._OutputMaps;
         O._LCStr = ObjectLifecycle.READONLY.name();
+        O._PrimaryKey = _PrimaryKey;
+        O._ForeignKeys = _ForeignKeys;
         O._Indices = _Indices;
         
         boolean OCC = false;
@@ -108,7 +116,8 @@ public class ViewRealize
                  OCC = true;
 //              Column newCol = new Column(C._Name, C._TypeStr, C._Size, true, C._Mode, C._Invariant, C._Protect, C._Description);
                 Column newCol = new Column(C._Name, C._TypeStr, C._Size, C._Description);
-                newCol._Nullable = true;
+                newCol._Nullable = O.isUniqueIndexColumn(C._Name) == false && O.isPrimaryKey(C._Name) == false;
+                newCol._Invariant = O.isPrimaryKey(C._Name)==true;
                 newCol._FCT = C._FCT;
                 newCol._SameAs = C._SameAs;
                 newCol._SameAsObj = C._SameAsObj;
