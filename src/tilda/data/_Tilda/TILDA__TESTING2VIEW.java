@@ -1429,7 +1429,7 @@ None
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Oct 12 2018, 22:30:52EDT
+ @generated Oct 12 2018, 22:44:17EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTING2VIEW implements tilda.interfaces.ReaderObject

@@ -329,7 +329,7 @@ public class Object extends Base
         if (_Indices != null)
           for (Index I : _Indices)
             {
-              if (I == null || I._Unique == false)
+              if (I == null || I._Unique == false || I._Db == false)
                 continue;
               for (String n : I._Columns)
                 if (n.equals(Name) == true)
