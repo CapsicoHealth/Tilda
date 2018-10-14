@@ -625,7 +625,7 @@ insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated
 
 
 create table if not exists TILDA.Testing2Realized -- Realized table for view TILDA.Testing2View: A test view to test .* and exclude and block.
- (  "refnum"          bigint                         -- The primary key for this record
+ (  "refnum"          bigint              not null   -- The primary key for this record
   , "name"            varchar(10)                    -- Medical system unique enterprise id
   , "lastUpdated"     timestamptz                    -- The timestamp for when the record was last updated. (TILDA.Testing)
   , "xxxLastUpdated"  timestamptz                    -- The timestamp for when the record was last updated. (TILDA.Testing)
@@ -691,7 +691,7 @@ CREATE INDEX Testing2Realized_LastUpdated ON TILDA.Testing2Realized ("lastUpdate
 
 
 create table if not exists TILDA.Testing3Realized -- Realized table for view TILDA.Testing3View: A test view to test .* and exclude and block.
- (  "refnum"          bigint                   -- The primary key for this record
+ (  "refnum"          bigint        not null   -- The primary key for this record
   , "name"            varchar(10)              -- Medical system unique enterprise id
   , "a8bTZ"           character(5)             -- Generated helper column to hold the time zone ID for 'a8b'.
   , "a8b"             timestamptz              -- The blah
@@ -711,7 +711,7 @@ CREATE INDEX Testing3Realized_LastUpdated ON TILDA.Testing3Realized ("lastUpdate
 
 
 create table if not exists TILDA.Testing4Realized -- Realized table for view TILDA.Testing4View: A test view to test .* and exclude and block.
- (  "refnum"       bigint                         -- The primary key for this record
+ (  "refnum"       bigint              not null   -- The primary key for this record
   , "name"         varchar(10)                    -- Medical system unique enterprise id
   , "a1"           INTEGER                        -- The blah
   , "a3b"          boolean[]                      -- The blah

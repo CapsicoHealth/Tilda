@@ -21,6 +21,7 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.enums.FrameworkSourcedType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.parsing.parts.helpers.SameAsHelper;
@@ -41,9 +42,10 @@ public class ForeignKey
     public transient Object       _ParentObject;
 
     public String getName()
-     {
-       return "fk_"+_ParentObject.getBaseName()+"_"+_Name;
-     }
+      {
+        return "fk_" + _ParentObject.getBaseName() + "_" + _Name;
+      }
+
     public boolean Validate(ParserSession PS, Object O)
       {
         int Errs = PS.getErrorCount();
@@ -54,10 +56,10 @@ public class ForeignKey
           return PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a foreign key without a name.");
 
         if (_Name.equals(TextUtil.SanitizeName(_Name)) == false)
-          return PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining foreign key '"+_Name+"' with a name containing invalid characters (must all be alphanumeric or underscore).");
+          return PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining foreign key '" + _Name + "' with a name containing invalid characters (must all be alphanumeric or underscore).");
 
         if (TextUtil.isJavaIdentifier(_Name) == false)
-          return PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining foreign key '"+_Name+"' with a name that is imcompatible with standard identifier convensions (for example, Java, JavaScript since Foreign Keys have programmatic equivalents in those languages).");
+          return PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining foreign key '" + _Name + "' with a name that is imcompatible with standard identifier convensions (for example, Java, JavaScript since Foreign Keys have programmatic equivalents in those languages).");
 
         ValidateSourceColumns(PS);
         ValidateDestinationObject(PS);
@@ -74,22 +76,23 @@ public class ForeignKey
       {
         PrimaryKey DPK = DestObject._PrimaryKey;
         if (DPK == null)
-          return PS.AddError("Object '" + ParentObject.getFullName() + "' declares "+What+" to Object  '" + DestObject.getFullName() + " with no primary key.");
+          return PS.AddError("Object '" + ParentObject.getFullName() + "' declares " + What + " to Object  '" + DestObject.getFullName() + " with no primary key.");
         if (DPK._ColumnObjs == null)
-          return PS.AddError("Object '" + ParentObject.getFullName() + "' declares "+What+" to Object  '" + DestObject.getFullName() + " which incorrectly defined a primary key.");
+          return PS.AddError("Object '" + ParentObject.getFullName() + "' declares " + What + " to Object  '" + DestObject.getFullName() + " which incorrectly defined a primary key.");
         if (SrcColumns.size() != DPK._ColumnObjs.size())
-          return PS.AddError("Object '" + ParentObject.getFullName() + "' declares "+What+" with " + SrcColumns.size() + " columns against a primary key on '" + DestObject.getFullName() + "' with  " + DPK._ColumnObjs.size() + " columns.");
+          return PS.AddError("Object '" + ParentObject.getFullName() + "' declares " + What + " with " + SrcColumns.size() + " columns against a primary key on '" + DestObject.getFullName() + "' with  " + DPK._ColumnObjs.size() + " columns.");
 
-        for (int i = 0; i < SrcColumns.size(); ++i)
-          {
-            Column S = SrcColumns.get(i);
-            Column FK = DestObject._PrimaryKey._ColumnObjs.get(i);
+        if (ParentObject._FST != FrameworkSourcedType.REALIZED)
+          for (int i = 0; i < SrcColumns.size(); ++i)
+            {
+              Column S = SrcColumns.get(i);
+              Column FK = DestObject._PrimaryKey._ColumnObjs.get(i);
 
-            if (S._SameAsObj == null)
-              PS.AddError("Object '" + ParentObject.getFullName() + "' declares "+What+" with src column '" + S.getFullName() + "' which doesn't define a SameAs.");
-            else if (SameAsHelper.checkRootSameAs(S, FK) == false)
-              PS.AddError("Object '" + ParentObject.getFullName() + "' declares "+What+" with src column '" + S.getFullName() + "' with a SameAs which doesn't match the intended primary key column '" + FK.getFullName() + "'.");
-          }
+              if (S._SameAsObj == null)
+                PS.AddError("Object '" + ParentObject.getFullName() + "' declares " + What + " with src column '" + S.getFullName() + "' which doesn't define a SameAs.");
+              else if (SameAsHelper.checkRootSameAs(S, FK) == false)
+                PS.AddError("Object '" + ParentObject.getFullName() + "' declares " + What + " with src column '" + S.getFullName() + "' with a SameAs which doesn't match the intended primary key column '" + FK.getFullName() + "'.");
+            }
         return true;
       }
 
@@ -105,13 +108,13 @@ public class ForeignKey
           {
             _DestObjectObj = PS.getObject(R._P, R._S, R._O);
             if (_DestObjectObj == null)
-              return PS.AddError("Object '" + _ParentObject.getFullName() + "' declares foreign key '" + _Name + "' with destination Object '" + _DestObject + "' resolving to '"+R.getFullName()+"' which cannot be found.");
+              return PS.AddError("Object '" + _ParentObject.getFullName() + "' declares foreign key '" + _Name + "' with destination Object '" + _DestObject + "' resolving to '" + R.getFullName() + "' which cannot be found.");
             if (_ParentObject != _DestObjectObj && _DestObjectObj._Validated == false)
               {
                 if (_ParentObject.getSchema().isDefinedInOrder(_DestObjectObj, _ParentObject) == false)
-                 return PS.AddError("Object '" + _ParentObject.getFullName() + "' declares foreign key to destination Object '" + _DestObject + "', but is defined before. Dependent object must be defined first.");
+                  return PS.AddError("Object '" + _ParentObject.getFullName() + "' declares foreign key to destination Object '" + _DestObject + "', but is defined before. Dependent object must be defined first.");
                 else
-                 return PS.AddError("Object '" + _ParentObject.getFullName() + "' declares foreign key to destination Object '" + _DestObject + "' which has failed validation.");
+                  return PS.AddError("Object '" + _ParentObject.getFullName() + "' declares foreign key to destination Object '" + _DestObject + "' which has failed validation.");
               }
           }
 
@@ -129,12 +132,14 @@ public class ForeignKey
 
         return true;
       }
+
     public String getColumnList()
       {
         return TextUtil.Print(_SrcColumns);
       }
+
     public String getSignature()
       {
-        return _DestObjectObj.getShortName().toUpperCase()+"("+getColumnList()+")";
+        return _DestObjectObj.getShortName().toUpperCase() + "(" + getColumnList() + ")";
       }
   }

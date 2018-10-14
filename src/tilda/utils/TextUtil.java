@@ -540,6 +540,11 @@ public class TextUtil
               continue;
             if (IgnoreCase == true)
              Str = Str.toLowerCase();
+            if (Str.length() > 1 && Str.endsWith("*") == true && Str.startsWith("*") == true)
+              {
+                if (Val.indexOf(Str.substring(1, Str.length()-1)) != -1)
+                 return i;
+              }
             if (Str.endsWith("*") == true)
               {
                 if (Val.startsWith(Str.substring(0, Str.length()-1)) == true)
