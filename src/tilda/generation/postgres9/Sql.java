@@ -786,7 +786,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
     private String DoFormulasSuperView(View V, String Str, boolean Realize)
       {
         StringBuilder b = new StringBuilder();
-        b.append("select \n");
+        b.append("select /*DoFormulasSuperView*/\n");
         boolean First = true;
         for (ViewColumn VC : V._ViewColumns)
           {
@@ -812,11 +812,11 @@ public class Sql extends PostgreSQL implements CodeGenSql
             else
               b.append("     , ");
 
-//            ViewRealizeMapping VRM = Realize == false ? null : V._Realize.getMapping(VC.getName());
-//            if (Realize == false || VRM == null)
+            ViewRealizeMapping VRM = Realize == false ? null : V._Realize.getMapping(VC.getName());
+            if (Realize == false || VRM == null)
              b.append("\"" + VC._Name + "\" -- COLUMN\n");
-//            else
-//              b.append(VRM.printMapping() + " -- COLUMN (MAPPING OVERRIDE)\n");
+            else
+             b.append(VRM.printMapping() + " -- COLUMN (MAPPING OVERRIDE)\n");
           }
 
         for (Formula F : V._Formulas)
@@ -1242,6 +1242,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
     private String genRealizedColumnList(View V, String Lead)
       {
         StringBuilder Str = new StringBuilder();
+        Str.append("/*genRealizedColumnList*/");
         boolean First = true;
         boolean Blocked = false;
         // LOG.debug("View " + V._Name + ": " + TextUtil.Print(V.getColumnNames()));
@@ -1311,23 +1312,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             else
               Str.append(Lead + ", " + VRM.printMapping() + " -- PIVOT (REALIZE MAPPING OVERRIDE)");
           }
-        /*
-         * for (ViewRealizeMapping VRM : V._Realize._Mappings)
-         * {
-         * if (V.getColumn(VRM._Name) == null && V.getFormula(VRM._Name) == null)
-         * {
-         * if (First == false)
-         * Str.append(Lead).append(",");
-         * else
-         * {
-         * if (Blocked == true)
-         * Str.append(Lead);
-         * First = false;
-         * }
-         * Str.append(VRM.printMapping() + " -- COLUMN MAPPING OVERRIDE");
-         * }
-         * }
-         */
+
         return Str.toString();
       }
 

@@ -432,7 +432,7 @@ BEGIN
   select '"'||array_to_string(identity1, '","')||'"' into v_txt;
   v_query1:= '(select '||v_txt;
   select '"'||array_to_string(columns1, '","')||'"' into v_txt;
-  v_query1:= v_query1||', row_to_json(row('||v_txt||'))'||E'\n'||'        from '||table1||') t1';
+  v_query1:= v_query1||', row_to_json(row('||v_txt||'))::TEXT as txt'||E'\n'||'        from '||table1||') t1';
   -- count for the first table
   EXECUTE 'select count(*) from '||v_query1 INTO v_res1;
 
@@ -440,7 +440,7 @@ BEGIN
   select '"'||array_to_string(identity2, '","')||'"' into v_txt;
   v_query2:= '(select '||v_txt;
   select '"'||array_to_string(columns2, '","')||'"' into v_txt;
-  v_query2:= v_query2||', row_to_json(row('||v_txt||'))'||E'\n'||'        from '||table2||') t2';
+  v_query2:= v_query2||', row_to_json(row('||v_txt||'))::TEXT as txt'||E'\n'||'        from '||table2||') t2';
   -- count for the second table
   EXECUTE 'select count(*) from '||E'\n'||'        '||v_query2 INTO v_res2;
 
@@ -461,7 +461,11 @@ BEGIN
     v_txt2:=v_txt2||'(t1."'||identity1[i]||'" is null or t2."'||identity2[i]||'" is null)';
   END LOOP;
 
-  v_query3:='select count(*)'||E'\n'||' from '||v_query1||E'\n\n'||' full outer join '||v_query2||E'\n'||'              on '||v_txt||E'\n'||' where '||v_txt2;
+  v_query3:='select count(*)'||E'\n'
+          ||' from '||v_query1||E'\n'
+          ||' full outer join '||v_query2||E'\n'
+          ||'              on '||v_txt||E'\n'
+          ||' where ('||v_txt2||') or t1.txt <> t2.txt';
   RAISE NOTICE '%',v_query3;
   EXECUTE v_query3 INTO v_res1;
 
@@ -470,7 +474,7 @@ END; $BODY$
   LANGUAGE plpgsql STABLE
   COST 100;
 
-  
+
 
 -- Renames a column and properly handles cases where the table doesn't exist, source column doesn't exist, or dest column already exists.  
 -- Furthermore, the function handles a list of possible source names. For example, V2 of something renames a to b, and then V3 renames 
