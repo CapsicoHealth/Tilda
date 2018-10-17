@@ -908,7 +908,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         String aggr = VC._Aggregate == AggregateType.COUNT ? "sum"
         : VC._Aggregate == AggregateType.ARRAY ? "array_agg"
         : VC._Aggregate.name();
-        String Expr = aggr + "(\"" + VC.getName() + "\") filter (where \"" + P._VC.getName() + "\"= '" + VPV._Value + "') ";
+        String Expr = aggr + "(\"" + VC.getName() + "\") filter (where \"" + P._VC.getName() + "\"= '" + TextUtil.EscapeSingleQuoteBaseForSQL(VPV._Value) + "') ";
 
         if (TextUtil.isNullOrEmpty(VPV._Expression) == false)
           Expr = VPV._Expression.replace("?", Expr);
