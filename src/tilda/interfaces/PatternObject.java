@@ -21,6 +21,6 @@ import tilda.parsing.parts.View;
 
 public interface PatternObject
   {
-    public void Validate(ParserSession PS, View ParentView) throws Exception;
+    public boolean Validate(ParserSession PS, View ParentView) throws Exception;
     public String getColumnName();
   }

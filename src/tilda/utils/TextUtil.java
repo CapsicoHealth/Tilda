@@ -1670,5 +1670,22 @@ public class TextUtil
           }
         return Str.toString();
       }
+    
+    public static String[] partsSqlLike(String Val, String splitRegex, boolean lowerCase)
+      {
+        if (Val == null)
+          return null;
+        if (TextUtil.isNullOrEmpty(splitRegex) == true)
+         return new String[] { Val };
+        String[] Parts = Val.split(splitRegex);
+        for (int i = 0; i < Parts.length; ++i)
+          {
+            String s = Parts[i];
+            if (s != null)
+              Parts[i] = "%" + (lowerCase == false ? s : s.toLowerCase()) + "%";
+          }
+        return Parts;
+      }
+
 
   }
