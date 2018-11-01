@@ -17,22 +17,15 @@
 package tilda.parsing.parts;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.regex.Matcher;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
-import tilda.enums.ColumnType;
 import tilda.enums.FormulaPatternType;
-import tilda.interfaces.JSONable;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
@@ -81,7 +74,7 @@ public class FormulaTemplate
           PS.AddError("View " + _ParentView.getShortName() + " is defining a formula template without a name.");
 
         if (TextUtil.isNullOrEmpty(_PatternStr) == true)
-          PS.AddError("View " + _ParentView.getShortName() + " is defining a formula template'" + _Name + "' without a pattern.");
+          PS.AddError("View " + _ParentView.getShortName() + " is defining a formula template '" + _Name + "' without a pattern.");
         else if ((_Pattern = FormulaPatternType.parse(_PatternStr)) == null)
           PS.AddError("View " + _ParentView.getShortName() + " defined a formula template '" + _Name + "' with an invalid PatternType '" + _PatternStr + "'.");
         if (_Impls.isEmpty() == true)

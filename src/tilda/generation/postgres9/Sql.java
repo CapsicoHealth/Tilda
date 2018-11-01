@@ -1206,12 +1206,11 @@ public class Sql extends PostgreSQL implements CodeGenSql
               if (s.equals(VC._Name) == true)
                 {
                   ColumnType T = VC._SameAsObj == null && VC._SameAs.equals("_TS.p") == true ? ColumnType.DATE : VC._SameAsObj.getType();
-                  if (T == ColumnType.INTEGER || T == ColumnType.LONG || T == ColumnType.FLOAT || T == ColumnType.DOUBLE)
-                    {
-                      M.appendReplacement(Str, "coalesce(\"" + M.group(1) + "\", 0)");
-                      break;
-                    }
-                  M.appendReplacement(Str, '"' + M.group(1) + '"');
+                  boolean nullTest = FormulaStr.substring(M.end()).toLowerCase().matches("\\s*is\\s*(not)?\\s*null.*");
+                  if (nullTest == false && (T == ColumnType.INTEGER || T == ColumnType.LONG || T == ColumnType.FLOAT || T == ColumnType.DOUBLE))
+                   M.appendReplacement(Str, "coalesce(\"" + M.group(1) + "\", 0)");
+                  else
+                   M.appendReplacement(Str, '"' + M.group(1) + '"');
                   break;
                 }
           }

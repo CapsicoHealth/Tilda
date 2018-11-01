@@ -66,14 +66,17 @@ public class Binning implements PatternObject
         return this._ParentView.getShortName() + "." + this._Column;
       }
     
+    @Override
     public String getColumnName()
       {
         return this._Column;
       }
     
-    public void Validate(ParserSession PS, View ParentView)
+    @Override
+    public boolean Validate(ParserSession PS, View ParentView)
     {  
       _ParentView = ParentView; 
+      int Errs = PS.getErrorCount();
       
       if(TextUtil.isNullOrEmpty(_Column) == true)
         PS.AddError("View " + _ParentView.getShortName() + " is defining a formula pattern on Column '" + _Column + "'is defining a formula pattern without a Column. You must define a Column for the Formula to use.");
@@ -127,5 +130,6 @@ public class Binning implements PatternObject
          
           _ParentView._Formulas.add(F);               
         }
+      return PS.getErrorCount() == Errs;
     }
   }
