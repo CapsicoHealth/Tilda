@@ -336,7 +336,7 @@ This View contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Sep 28 2018, 09:34:12EDT
+ @generated Oct 12 2018, 22:44:17EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTINGVIEW implements tilda.interfaces.ReaderObject

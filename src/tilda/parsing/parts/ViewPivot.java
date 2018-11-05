@@ -1,5 +1,5 @@
 /* ===========================================================================
- * Copyright (C) 2016 CapsicoHealth Inc.
+ b * Copyright (C) 2016 CapsicoHealth Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -89,9 +89,8 @@ public class ViewPivot
           PS.AddError("View '" + ParentView.getFullName() + "' is defining a Pivot on column " + _VC.getShortName() + " without specifying any aggregate targets.");
 
         for (ViewPivotValue VPV : _Values)
-          {
+          if (VPV != null)
             VPV.Validate(PS, ParentView, "pivot value");
-          }
         
         return Errs == PS.getErrorCount();
       }

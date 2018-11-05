@@ -46,7 +46,7 @@ This View contains the following columns:<BLOCKQUOTE>
     <TD>1&nbsp;&nbsp;</TD>
 <TD onclick="onModalShowClicked('Testing3View-refnum')" align="right"><B id='Testing3View-refnum_DIV' class='columns realizedcolumns dotted_underline cursor_pointer'>refnum</B>&nbsp;&nbsp;</TD>
 <TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
-<TD align="center">&#x2611;&nbsp;&nbsp;</TD>
+<TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;<!--R-->&nbsp;&nbsp;</TD><TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
@@ -245,7 +245,7 @@ This View contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Sep 28 2018, 09:34:12EDT
+ @generated Oct 12 2018, 22:44:17EDT
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTING3VIEW implements tilda.interfaces.ReaderObject
@@ -294,7 +294,7 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing3View.refnum of type long</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing3View.refnum of type bigint</TD></TR>
 
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
@@ -314,7 +314,7 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing3View.refnum of type long</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing3View.refnum of type bigint</TD></TR>
 
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
@@ -329,32 +329,12 @@ This is the getter for:<BR>
 //   Field tilda.data.TILDA.Testing3View.refnum -> TILDA.Testing3View."refnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
-This is the isNull for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing3View.refnum of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing3View.refnum of type bigint</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-   public final boolean isNullRefnum()
-     { return __Nulls.intersects(TILDA__TESTING3VIEW_Factory.COLS.REFNUM._Mask); }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing3View.refnum -> TILDA.Testing3View."refnum"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
   <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing3View.refnum of type long</TD></TR>
   <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing3View.refnum of type bigint</TD></TR>
 
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
+  <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
@@ -372,34 +352,6 @@ This is the setter for:<BR>
           __Nulls.andNot(TILDA__TESTING3VIEW_Factory.COLS.REFNUM._Mask);
        _refnum = v;
         }
-       PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
-     }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.Testing3View.refnum -> TILDA.Testing3View."refnum"
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
-This is the null setter for:<BR>
-<TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.Testing3View.refnum of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.Testing3View.refnum of type bigint</TD></TR>
-
-  <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The primary key for this record</TD></TR>
-  <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
-  <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
-  <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-</TABLE>
-*/
-    void setNullRefnum()
-     {
-       long T0 = System.nanoTime();
-       if (__Nulls.intersects(TILDA__TESTING3VIEW_Factory.COLS.REFNUM._Mask) == true) // already NULL
-        return;
-       __Changes.or(TILDA__TESTING3VIEW_Factory.COLS.REFNUM._Mask);
-       __Nulls.or(TILDA__TESTING3VIEW_Factory.COLS.REFNUM._Mask);
-       _refnum=0L;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
@@ -1259,7 +1211,7 @@ This is the null setter for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "refnum"           + (__Nulls.intersects(TILDA__TESTING3VIEW_Factory.COLS.REFNUM._Mask) == true ? ": NULL" : ": " +                                   getRefnum        () )
+                   "refnum: "                                                                                                      +                                   getRefnum        () 
                + "; name"             + (__Nulls.intersects(TILDA__TESTING3VIEW_Factory.COLS.NAME._Mask) == true ? ": NULL" : ": " + TextUtil.PrintVariableStr        (getName          ()))
                + "; a8b"              + (__Nulls.intersects(TILDA__TESTING3VIEW_Factory.COLS.A8B._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getA8b           ()))
                + "; lastUpdated"      + (__Nulls.intersects(TILDA__TESTING3VIEW_Factory.COLS.LASTUPDATED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getLastUpdated   ()))

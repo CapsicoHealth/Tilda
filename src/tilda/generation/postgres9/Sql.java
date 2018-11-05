@@ -686,6 +686,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             OutFinal.println();
             String TName = V.getRealizedTableName(false);
             String RName = V.getRealizedTableName(true);
+
             OutFinal.append("DROP FUNCTION IF EXISTS " + V._ParentSchema._Name + ".Refill_" + TName + "();\n")
             .append("CREATE OR REPLACE FUNCTION " + V._ParentSchema._Name + ".Refill_" + TName + "() RETURNS boolean AS $$\n")
             .append("BEGIN\n")
@@ -716,9 +717,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
             else
               {
                 // String BV = DoFormulasSuperView(V, BV);
-                OutFinal.append("SELECT ").append(genRealizedColumnList(V, "\n                         " + PaddingUtil.getPad(RName.length()))
-                + "\n                    " + PaddingUtil.getPad(RName.length()));
-                OutFinal.append(" FROM " + V._ParentSchema._Name + "." + V._Name + ";\n");
+                OutFinal.append("SELECT ").append(genRealizedColumnList(V, "\n          "))
+                .append("\n     FROM " + V._ParentSchema._Name + "." + V._Name + ";\n");
               }
             // for (Index I : V._Realize._Indices)
             // if (I != null)
@@ -749,26 +749,36 @@ public class Sql extends PostgreSQL implements CodeGenSql
               continue;
             if (TextUtil.FindStarElement(V._Realize._Exclude, VC._Name, true, 0) != -1)
               continue;
+            if (V.isPivotColumn(VC) == true)
+              break;
             if (First == true)
               First = false;
             else
               Str.append(", ");
             Str.append("\"").append(VC._Name).append("\"");
           }
-        for (ViewRealizeMapping VRM : V._Realize._Mappings)
-          {
-            if (V.getColumn(VRM._Name) == null && V.getFormula(VRM._Name) == null)
-              {
-                Str.append(", \"").append(VRM._Name).append("\"");
-              }
-          }
+
         for (Formula F : V._Formulas)
+          if (F != null)
+            {
+              if (TextUtil.FindStarElement(V._Realize._Exclude, F._Name, true, 0) != -1)
+                continue;
+              if (First == true)
+                First = false;
+              else
+                Str.append(", ");
+              Str.append("\"").append(F._Name).append("\"");
+            }
+
+        for (Column C : V._PivotColumns)
           {
-            if (F == null)
+            if (TextUtil.FindStarElement(V._Realize._Exclude, C.getName(), true, 0) != -1)
               continue;
-            if (TextUtil.FindStarElement(V._Realize._Exclude, F._Name, true, 0) != -1)
-              continue;
-            Str.append(", \"").append(F._Name).append("\"");
+            if (First == true)
+              First = false;
+            else
+              Str.append(", ");
+            Str.append("\"").append(C.getName()).append("\"");
           }
         return Str.toString();
       }
@@ -776,7 +786,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
     private String DoFormulasSuperView(View V, String Str, boolean Realize)
       {
         StringBuilder b = new StringBuilder();
-        b.append("select \n");
+        b.append("select /*DoFormulasSuperView*/\n");
         boolean First = true;
         for (ViewColumn VC : V._ViewColumns)
           {
@@ -790,6 +800,11 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 b.append("--     \"").append(VC._Name).append("\"  REALIZE-EXCLUDED\n");
                 continue;
               }
+            if (V._Pivots.isEmpty() == false && (V.isPivotColumn(VC) == true || VC._Aggregate != null))
+              {
+                b.append("--     \"").append(VC._Name).append(VC._Aggregate != null ? "\"  PIVOT AGGREGATE\n" : "\"  PIVOTED ON\n");
+                continue;
+              }
             if (VC._SameAsObj != null && VC._SameAsObj._Mode == ColumnMode.CALCULATED || VC._JoinOnly == true)
               continue;
             if (First == true)
@@ -799,9 +814,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
             ViewRealizeMapping VRM = Realize == false ? null : V._Realize.getMapping(VC.getName());
             if (Realize == false || VRM == null)
-              b.append("\"" + VC._Name + "\" -- COLUMN\n");
+             b.append("\"" + VC._Name + "\" -- COLUMN\n");
             else
-              b.append(VRM.printMapping() + " -- COLUMN MAPPING OVERRIDE\n");
+             b.append(VRM.printMapping() + " -- COLUMN (MAPPING OVERRIDE)\n");
           }
 
         for (Formula F : V._Formulas)
@@ -816,6 +831,16 @@ public class Sql extends PostgreSQL implements CodeGenSql
               b.append("     , ");
             b.append("(").append(genFormulaCode(V, F)).append(")::" + FormulaType + " as \"").append(F._Name).append("\"\n");
           }
+
+        for (Column C : V._PivotColumns)
+          {
+            if (First == true)
+              First = false;
+            else
+              b.append(", ");
+            b.append("\"").append(C.getName()).append("\"");
+          }
+
         b.append("\n from (\n").append(Str).append("\n      ) as T;");
         if (V._Realize != null)
           b.append("\n-- Realized as " + genRealizedColumnList(V, " ") + "\n");
@@ -834,7 +859,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
               break;
             if (VC == null)
               continue;
-            if (VC._SameAs.equals("_TS.p") == true || VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false && VC._FormulaOnly == false)
+            if (VC._SameAs.equals("_TS.p") == true || VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false)// && VC._FormulaOnly == false)
               {
                 if (i != 0)
                   Str += "\n       , ";
@@ -845,24 +870,19 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
         for (ViewPivot P : V._Pivots)
           {
-            for (ViewPivotAggregate A : P._Aggregates)
+            if (P._Interleave == false)
               {
-                ViewColumn VC = V.getViewColumn(A._Name);
+                for (ViewPivotAggregate A : P._Aggregates)
+                  for (ViewPivotValue VPV : P._Values)
+                    if (VPV != null)
+                      Str += genPivotColumnSQL(V, P, A, VPV);
+              }
+            else
+              {
                 for (ViewPivotValue VPV : P._Values)
-                  {
-                    if (VPV == null)
-                      continue;
-                    String aggr = VC._Aggregate == AggregateType.COUNT ? "sum"
-                    : VC._Aggregate == AggregateType.ARRAY ? "array_agg"
-                    : VC._Aggregate.name();
-                    String Expr = aggr + "(\"" + VC.getName() + "\") filter (where \"" + P._VC.getName() + "\"= '" + VPV._Value + "') ";
-
-                    if (TextUtil.isNullOrEmpty(VPV._Expression) == false)
-                      Expr = VPV._Expression.replace("?", Expr);
-                    if (VPV._Type != null)
-                      Expr = "(" + Expr + ")::" + getColumnType(VPV._Type.getType(), VPV._Type._Size, ColumnMode.NORMAL, VPV._Type.isCollection());
-                    Str += "\n     , " + Expr + " as \"" + A.makeName(VPV) + "\"";
-                  }
+                  for (ViewPivotAggregate A : P._Aggregates)
+                    if (VPV != null)
+                      Str += genPivotColumnSQL(V, P, A, VPV);
               }
           }
         Str += "\n"
@@ -879,6 +899,22 @@ public class Sql extends PostgreSQL implements CodeGenSql
             }
         Str += "\n";
         return Str;
+      }
+
+    public String genPivotColumnSQL(View V, ViewPivot P, ViewPivotAggregate A, ViewPivotValue VPV)
+      {
+        ViewColumn VC = V.getViewColumn(A._Name);
+
+        String aggr = VC._Aggregate == AggregateType.COUNT ? "sum"
+        : VC._Aggregate == AggregateType.ARRAY ? "array_agg"
+        : VC._Aggregate.name();
+        String Expr = aggr + "(\"" + VC.getName() + "\") filter (where \"" + P._VC.getName() + "\"= '" + TextUtil.EscapeSingleQuoteBaseForSQL(VPV._Value) + "') ";
+
+        if (TextUtil.isNullOrEmpty(VPV._Expression) == false)
+          Expr = VPV._Expression.replace("?", Expr);
+        if (VPV._Type != null)
+          Expr = "(" + Expr + ")::" + getColumnType(VPV._Type.getType(), VPV._Type._Size, ColumnMode.NORMAL, VPV._Type.isCollection());
+        return "\n     , " + Expr + " as \"" + A.makeName(VPV) + "\"";
       }
 
 
@@ -1206,11 +1242,14 @@ public class Sql extends PostgreSQL implements CodeGenSql
     private String genRealizedColumnList(View V, String Lead)
       {
         StringBuilder Str = new StringBuilder();
+        Str.append("/*genRealizedColumnList*/");
         boolean First = true;
         boolean Blocked = false;
         // LOG.debug("View " + V._Name + ": " + TextUtil.Print(V.getColumnNames()));
         for (ViewColumn VC : V._ViewColumns)
           {
+            if (V.isPivotColumn(VC) == true)
+              break;
             if (VC == null || (VC._SameAsObj != null && VC._SameAsObj._Mode == ColumnMode.CALCULATED) || VC._JoinOnly == true || VC._FormulaOnly == true)
               {
                 if (VC != null)
@@ -1234,27 +1273,12 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 if (VRM == null)
                   Str.append(/* V._ParentSchema._Name + "." + V._Name + "."+ */"\"" + VC._Name + "\" -- COLUMN");
                 else
-                  Str.append(VRM.printMapping() + " -- COLUMN MAPPING OVERRIDE");
+                  Str.append(VRM.printMapping() + " -- COLUMN (REALIZE MAPPING OVERRIDE)");
               }
             else
               {
                 Blocked = true;
                 Str.append(Lead + "-- \"" + VC._Name + "\" -- REALIZE-EXCLUDED");
-              }
-          }
-        for (ViewRealizeMapping VRM : V._Realize._Mappings)
-          {
-            if (V.getColumn(VRM._Name) == null && V.getFormula(VRM._Name) == null)
-              {
-                if (First == false)
-                  Str.append(Lead).append(",");
-                else
-                  {
-                    if (Blocked == true)
-                      Str.append(Lead);
-                    First = false;
-                  }
-                Str.append(VRM.printMapping() + " -- COLUMN MAPPING OVERRIDE");
               }
           }
         for (Formula F : V._Formulas)
@@ -1273,11 +1297,22 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   }
                 ViewRealizeMapping VRM = V._Realize.getMapping(F._Name);
                 if (VRM == null)
-                  Str.append(/* V._ParentSchema._Name + "." + V._Name + "."+ */"\"" + F._Name + "\" -- FORMULA");
+                  Str.append("\"" + F._Name + "\" -- FORMULA");
                 else
-                  Str.append(VRM.printMapping() + " -- FORMULA MAPPING OVERRIDE");
+                  Str.append(VRM.printMapping() + " -- FORMULA (REALIZE MAPPING OVERRIDE)");
               }
           }
+        for (Column C : V._PivotColumns)
+          {
+            if (TextUtil.FindStarElement(V._Realize._Exclude, C.getName(), true, 0) != -1)
+              continue;
+            ViewRealizeMapping VRM = V._Realize.getMapping(C.getName());
+            if (VRM == null)
+              Str.append(Lead + ", \"" + C.getName() + "\" -- PIVOT COLUMN");
+            else
+              Str.append(Lead + ", " + VRM.printMapping() + " -- PIVOT (REALIZE MAPPING OVERRIDE)");
+          }
+
         return Str.toString();
       }
 

@@ -31,6 +31,7 @@ public class ViewPivotAggregate
     /*@formatter:off*/
 	@SerializedName("name"  ) public String  _Name;
     @SerializedName("prefix") public String  _Prefix;
+    @SerializedName("suffix") public String  _Suffix;
     /*@formatter:on*/
     
     public transient ViewPivot _ParentPivot;
@@ -46,15 +47,19 @@ public class ViewPivotAggregate
         
         if (TextUtil.isNullOrEmpty(_Name) == true)
          return PS.AddError("View '" + ParentPivot._ParentView.getFullName() + "' is defining a pivot on '"+_ParentPivot._ColumnName+"' with an aggregate without any 'name' column specified.");
-
+        
         return Errs == PS.getErrorCount();
       }    
 
     public String makeName(Value V)
       {
+        StringBuilder Str = new StringBuilder();
         if (TextUtil.isNullOrEmpty(_Prefix) == false)
-         return _Prefix + TextUtil.CapitalizeFirstCharacter(TextUtil.Print(V._Name, V._Value));
-        return TextUtil.Print(V._Name, V._Value);
+         Str.append(_Prefix);
+        Str.append(TextUtil.CapitalizeFirstCharacter(TextUtil.Print(V._Name, V._Value)));
+        if (TextUtil.isNullOrEmpty(_Suffix) == false)
+          Str.append(_Suffix);
+        return Str.toString();
       }
 
   }

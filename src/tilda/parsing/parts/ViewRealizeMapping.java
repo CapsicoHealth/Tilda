@@ -68,9 +68,7 @@ public class ViewRealizeMapping
         Matcher M = _ParentView._ViewColumnsRegEx.matcher(_Mapper);
         StringBuffer Str = new StringBuffer();
         while (M.find() == true)
-          {
-            M.appendReplacement(Str, '"' + M.group(1) + '"');
-          }
+          M.appendReplacement(Str, '"' + M.group(1) + '"');
         M.appendTail(Str);
 
         if (_ParentView._FormulasRegEx != null)
@@ -78,9 +76,7 @@ public class ViewRealizeMapping
             M = _ParentView._FormulasRegEx.matcher(Str.toString());
             Str.setLength(0);
             while (M.find() == true)
-              {
-                M.appendReplacement(Str, '"' + M.group(1) + '"');
-              }
+              M.appendReplacement(Str, '"' + M.group(1) + '"');
             M.appendTail(Str);
           }
         return Str + " as " + "\"" + _Name + "\"";
