@@ -538,8 +538,7 @@
                }
              ]
           }
-         ,{ 
-            "name":"Descritpion Bins"
+         ,{ "name":"Descritpion Bins"
            ,"pattern":"BINNING"
            ,"impls":[
                { "type": "DOUBLE"
@@ -551,7 +550,34 @@
                }
              ]
           }
-        ]
+         ,{ "name":"Nulls"
+           ,"pattern":"TEMPLATE"
+           ,"impls":[
+               { "name":"?_null"
+                ,"type":"INTEGER"
+                ,"formula":[ 
+                    "case when ? is null then 1"
+                   ,"     when ? is not null then 0"
+                   ,"end"
+                  ]
+                ,"values":[
+                    { "value":"1"  , "description":"The value is null" }
+                   ,{ "value":"0"  , "description":"The value is nmot null" }
+                  ]
+                ,"title":"Null ?"
+                ,"description":[
+                    "Whether ? is null or not"
+                  ]
+                ,"expansions":[
+                    { "name":"a5", "title":"a5", "expr":"a5", "description":"a5" }
+                   ,{ "name":"a6", "title":"a6", "expr":"a6" }
+                   ,{ "name":"a7", "title":"a7" }
+                   ,{ "name":"a8" }
+                  ]
+               }
+             ]
+          }
+        ]          
       ,"formulaColumns":[
           { "name": "a3"
            ,"type": "BOOLEAN"

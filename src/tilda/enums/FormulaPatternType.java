@@ -19,6 +19,8 @@ package tilda.enums;
 
 public enum FormulaPatternType
   {
+    TEMPLATE,
+
     FLAGGING,
     
     BINNING;
