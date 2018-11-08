@@ -1042,4 +1042,15 @@ public class PostgreSQL implements DBType
         C.unwrap(BaseConnection.class).cancelQuery();
       }
 
+    @Override
+    public int getMaxColumnNameSize()
+      {
+        return 63;
+      }
+    @Override
+    public int getMaxTableNameSize()
+      {
+        return 63;
+      }
+
   }

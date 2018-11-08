@@ -56,6 +56,8 @@ public interface DBType
     public boolean supportsSelectLimit();
     public boolean supportsSelectOffset();
     public String  getSelectLimitClause(int Start, int Size);
+    public int     getMaxColumnNameSize();
+    public int     getMaxTableNameSize();
     
     public CodeGenSql getSQlCodeGen();
 

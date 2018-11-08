@@ -34,7 +34,6 @@ import com.google.gson.annotations.SerializedName;
 import tilda.enums.ColumnType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.ObjectMode;
-import tilda.enums.OutputFormatType;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 

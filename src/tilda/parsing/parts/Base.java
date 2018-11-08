@@ -75,7 +75,7 @@ public abstract class Base
      */
     public String getFullName()
       {
-        return (_ParentSchema==null?"":(_ParentSchema.getFullName() + ".")) + _OriginalName;
+        return (_ParentSchema == null ? "" : (_ParentSchema.getFullName() + ".")) + _OriginalName;
       }
 
     /**
@@ -84,7 +84,7 @@ public abstract class Base
      */
     public String getShortName()
       {
-        return (_ParentSchema==null?"":(_ParentSchema.getShortName() + ".")) + _OriginalName;
+        return (_ParentSchema == null ? "" : (_ParentSchema.getShortName() + ".")) + _OriginalName;
       }
 
     /**
@@ -142,12 +142,16 @@ public abstract class Base
         _OriginalName = _Name;
         LOG.debug("  Validating " + _TildaType.name() + " " + getFullName() + ".");
 
+        if (_Name.length() > PS._CGSql.getMaxTableNameSize())
+          PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' with a name that's too long: max allowed by your database is " + PS._CGSql.getMaxColumnNameSize() + " vs "+_Name.length()+" for this identifier.");
+        if (_Name.equals(TextUtil.SanitizeName(_Name)) == false)
+          PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' with a name containing invalid characters (must all be alphanumeric or underscore).");
         if (ValidationHelper.isValidIdentifier(_Name) == false)
-          return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getFullName() + "' with a name '" + _Name + "' which is not valid. " + ValidationHelper._ValidIdentifierMessage);
-        if (TextUtil.isNullOrEmpty(_Description) == true)
-          return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getFullName() + "' without a description name.");
+          PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' with a name '" + _Name + "' which is not valid. " + ValidationHelper._ValidIdentifierMessage);
 
-        _OriginalName = _Name;
+        if (TextUtil.isNullOrEmpty(_Description) == true)
+          PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' without a description name.");
+
         // _Name = _Name.toUpperCase();
 
         _BaseClassName = "TILDA__" + _Name.toUpperCase();
