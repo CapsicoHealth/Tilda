@@ -87,6 +87,8 @@ public class Formula extends TypeDef
 
         if (TextUtil.isNullOrEmpty(_Name) == true)
           PS.AddError("View " + _ParentView.getShortName() + " is defining a formula without a name.");
+        else if (_Name.length() > PS._CGSql.getMaxColumnNameSize())
+          PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' with a name that's too long: max allowed by your database is "+PS._CGSql.getMaxColumnNameSize()+" vs "+_Name.length()+" for this identifier.");
 
         if (TextUtil.isNullOrEmpty(_TypeStr) == true)
           PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' without a type.");

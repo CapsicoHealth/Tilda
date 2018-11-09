@@ -30,6 +30,7 @@ import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.ObjectMode;
 import tilda.parsing.ParserSession;
+import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.TextUtil;
 
 public class ViewRealize
@@ -98,6 +99,15 @@ public class ViewRealize
         Object O = new Object();
         O._FST = FrameworkSourcedType.REALIZED;
         O._Name = ParentView.getRealizedTableName(false);
+
+        // If we don't do this and an error occurs, the user will get a message during the validation for the created object which will feel out of context.
+        if (O._Name.length() > PS._CGSql.getMaxTableNameSize())
+          PS.AddError("View '" + ParentView.getFullName() + "' is being realized to table '"+O._Name+"' with a name that's too long: max allowed by your database is " + PS._CGSql.getMaxColumnNameSize() + " vs "+O._Name.length()+" for this identifier.");
+        if (O._Name.equals(TextUtil.SanitizeName(O._Name)) == false)
+          PS.AddError("View '" + ParentView.getFullName() + "' is being realized to table '"+O._Name+"' with a name containing invalid characters (must all be alphanumeric or underscore).");
+        if (ValidationHelper.isValidIdentifier(O._Name) == false)
+          PS.AddError("View '" + ParentView.getFullName() + "' is being realized to table '"+O._Name+"' with a name which is not valid. " + ValidationHelper._ValidIdentifierMessage);
+          
         O._Description = "Realized table for view "+ParentView.getShortName()+": "+ParentRealized._O._Description;
         O.addQueries(ParentView._Queries);
         O._OutputMaps = ParentView._OutputMaps;

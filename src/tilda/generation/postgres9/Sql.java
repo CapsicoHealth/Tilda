@@ -1397,25 +1397,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
     @Override
     public void genIndex(PrintWriter Out, Index I)
+    throws Exception
       {
-        if (I._Db == false)
-          Out.print("-- app-level index only -- ");
-        Out.print("CREATE" + (I._Unique == true ? " UNIQUE" : "") + " INDEX " + I.getName() + " ON " + I._Parent.getShortName() + " (");
-        if (I._ColumnObjs.isEmpty() == false)
-          PrintColumnList(Out, I._ColumnObjs);
-        if (I._OrderByObjs.isEmpty() == false)
-          {
-            boolean First = I._ColumnObjs.isEmpty();
-            for (int i = 0; i < I._OrderByObjs.size(); ++i)
-              {
-                if (First == true)
-                  First = false;
-                else
-                  Out.print(", ");
-                Out.print("\"" + I._OrderByObjs.get(i).getName() + "\" " + I._OrderByOrders.get(i));
-              }
-          }
-        Out.println(");");
+        String DDLStr = alterTableAddIndexDDL(I);
+        Out.print(DDLStr);
       }
 
     @Override
@@ -1427,7 +1412,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         + "), " + O._PrimaryKey._KeyBatch + ", current_timestamp, current_timestamp);");
       }
 
-    private static boolean PrintColumnList(PrintWriter Out, List<Column> Columns)
+    public static boolean PrintColumnList(PrintWriter Out, List<Column> Columns)
       {
         boolean First = true;
         for (Column C : Columns)

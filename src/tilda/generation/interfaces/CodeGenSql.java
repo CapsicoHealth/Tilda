@@ -84,7 +84,7 @@ public interface CodeGenSql extends DBType, CodeGenBase
     public Query genViewJoin(StringBuilder Str, ViewJoin VJ)
     throws Exception;
 
-    public void genIndex(PrintWriter Out, Index I);
+    public void genIndex(PrintWriter Out, Index I) throws Exception;
 
     public void genKeysManagement(PrintWriter Out, Object O);
   }

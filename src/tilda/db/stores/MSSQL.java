@@ -535,4 +535,15 @@ public class MSSQL implements DBType
       {
         throw new UnsupportedOperationException();
       }
+
+    @Override
+    public int getMaxColumnNameSize()
+      {
+        return 63;
+      }
+    @Override
+    public int getMaxTableNameSize()
+      {
+        return 63;
+      }
   }

@@ -56,6 +56,8 @@ public interface DBType
     public boolean supportsSelectLimit();
     public boolean supportsSelectOffset();
     public String  getSelectLimitClause(int Start, int Size);
+    public int     getMaxColumnNameSize();
+    public int     getMaxTableNameSize();
     
     public CodeGenSql getSQlCodeGen();
 
@@ -75,6 +77,7 @@ public interface DBType
     public boolean alterTableDropFK               (Connection Con, Object Obj, FKMeta FK) throws Exception;
     public boolean alterTableAddFK                (Connection Con, ForeignKey FK) throws Exception;
     public boolean alterTableDropIndex            (Connection Con, Object Obj, IndexMeta IX) throws Exception;
+    public String  alterTableAddIndexDDL          (Index IX) throws Exception;
     public boolean alterTableAddIndex             (Connection Con, Index IX) throws Exception;
     public boolean alterTableRenameIndex          (Connection Con, Object Obj, String OldName, String NewName) throws Exception;
     public String  getHelperFunctionsScript       (Connection Con, boolean start) throws Exception;    
