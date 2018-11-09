@@ -74,7 +74,7 @@ public class ViewRealize
         for (Index I : _Indices)
           if (I != null)
             {
-//              I.Validate(PS, ParentRealized);
+              I.Validate(PS, ParentRealized);
               if (Names.add(I._Name) == false)
                 PS.AddError("Index '" + I._Name + "' is duplicated in the realize section for view '" + ParentView.getFullName() + "'.");
             }

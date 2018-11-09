@@ -102,6 +102,8 @@ public class Index
               for (Column C : _ColumnObjs)
                 Names.add(C.getName().toUpperCase());
 
+            _OrderByObjs.clear();
+            _OrderByOrders.clear();
             processOrderBy(PS, "Object '" + _Parent.getFullName() + "' defines index '" + _Name + "'", Names, _Parent, _OrderBy, _OrderByObjs, _OrderByOrders);
 
             if (TextUtil.isNullOrEmpty(_SubWhere) == false && _SubQuery != null)

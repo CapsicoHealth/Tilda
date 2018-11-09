@@ -951,14 +951,48 @@ public class PostgreSQL implements DBType
         return Con.ExecuteDDL(Obj._ParentSchema._Name, Obj.getBaseName(), Q);
       }
 
+
+    @Override
+    public String alterTableAddIndexDDL(Index IX)
+    throws Exception
+      {
+        StringWriter OutStr = new StringWriter();
+        PrintWriter Out = new PrintWriter(OutStr);
+        boolean Gin = true;
+        for (Column C : IX._ColumnObjs)
+          if (C.getType() != ColumnType.JSON && (C.getType() != ColumnType.STRING || C.isCollection() == false))
+            Gin = false;
+        for (Column C : IX._OrderByObjs)
+          if (C.getType() != ColumnType.JSON && (C.getType() != ColumnType.STRING || C.isCollection() == false))
+            Gin = false;
+        if (Gin == true && IX._Unique == true)
+          throw new Exception(IX._Parent.getFullName() + " is defining index '" + IX.getName() + "' which is GIN-Elligible and also defined as UNIQUE: GIN indices cannot be unique.");
+        if (IX._Db == false)
+          Out.print("-- app-level index only -- ");
+        Out.print("CREATE" + (IX._Unique == true ? " UNIQUE" : "") + " INDEX " + IX.getName() + " ON " + IX._Parent.getShortName() + (Gin ? " USING gin " : "") + " (");
+        if (IX._ColumnObjs.isEmpty() == false)
+          _SQL.PrintColumnList(Out, IX._ColumnObjs);
+        if (IX._OrderByObjs.isEmpty() == false)
+          {
+            boolean First = IX._ColumnObjs.isEmpty();
+            for (int i = 0; i < IX._OrderByObjs.size(); ++i)
+              {
+                if (First == true)
+                  First = false;
+                else
+                  Out.print(", ");
+                Out.print("\"" + IX._OrderByObjs.get(i).getName() + "\" " + (Gin ? "" : IX._OrderByOrders.get(i)));
+              }
+          }
+        Out.println(");");
+        return OutStr.toString();
+      }
+
     @Override
     public boolean alterTableAddIndex(Connection Con, Index IX)
     throws Exception
       {
-        StringWriter Out = new StringWriter();
-        _SQL.genIndex(new PrintWriter(Out), IX);
-        String Q = Out.toString();
-        return Con.ExecuteDDL(IX._Parent._ParentSchema._Name, IX._Parent.getBaseName(), Q);
+        return Con.ExecuteDDL(IX._Parent._ParentSchema._Name, IX._Parent.getBaseName(), alterTableAddIndexDDL(IX));
       }
 
 
@@ -1035,7 +1069,7 @@ public class PostgreSQL implements DBType
         return "on".equals(RP.getResult()) == true;
       }
 
-    
+
     public void cancel(Connection C)
     throws SQLException
       {
@@ -1047,6 +1081,7 @@ public class PostgreSQL implements DBType
       {
         return 63;
       }
+
     @Override
     public int getMaxTableNameSize()
       {
