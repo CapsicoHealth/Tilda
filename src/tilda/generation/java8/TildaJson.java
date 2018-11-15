@@ -17,9 +17,7 @@
 package tilda.generation.java8;
 
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -35,8 +33,8 @@ import tilda.generation.interfaces.CodeGenTildaJson;
 import tilda.parsing.parts.Base;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Index;
-import tilda.parsing.parts.OutputMapping;
 import tilda.parsing.parts.Object;
+import tilda.parsing.parts.OutputMapping;
 import tilda.utils.PaddingUtil;
 import tilda.utils.TextUtil;
 

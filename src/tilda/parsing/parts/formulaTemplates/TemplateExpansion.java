@@ -16,8 +16,6 @@
 
 package tilda.parsing.parts.formulaTemplates;
 
-import java.util.HashSet;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
