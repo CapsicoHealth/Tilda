@@ -546,4 +546,11 @@ public class MSSQL implements DBType
       {
         return 63;
       }
+
+    @Override
+    public String alterTableAddIndexDDL(Index IX)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
   }
