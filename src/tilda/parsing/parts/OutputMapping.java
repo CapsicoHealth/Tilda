@@ -18,6 +18,9 @@ package tilda.parsing.parts;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.ColumnType;
@@ -25,10 +28,12 @@ import tilda.enums.NVPSourceType;
 import tilda.enums.OutputFormatType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ValidationHelper;
+import tilda.utils.CollectionUtil;
 import tilda.utils.TextUtil;
 
 public class OutputMapping
   {
+    static final Logger LOG = LogManager.getLogger(OutputMapping.class.getName());
 
     public OutputMapping()
       {
@@ -47,19 +52,22 @@ public class OutputMapping
     public transient List<Column>           _ColumnObjs;
     public transient List<OutputFormatType> _OutputTypes;
     public transient NVPSourceType          _NVPSrc;
-    public transient ColumnType  			_NVPValueType;
-    
+    public transient ColumnType             _NVPValueType;
+
     public transient Base                   _ParentObject;
 
     public boolean Validate(ParserSession PS, Base ParentObject)
       {
         int Errs = PS.getErrorCount();
-        _ParentObject = ParentObject;      
+        _ParentObject = ParentObject;
 
         _OutputTypes = OutputFormatType.parse(_OutputTypeStrs);
         if (_OutputTypes.isEmpty() == true)
           _OutputTypes.add(OutputFormatType.JSON);
-        
+
+        if (_Columns != null && _Columns.length > 0)
+         _Columns = CollectionUtil.toStringArray(_ParentObject.expandColumnNames(_Columns));
+
         _ColumnObjs = ValidationHelper.ProcessColumn(PS, ParentObject, "OutputMapping '" + _Name + "'", _Columns, new ValidationHelper.Processor()
           {
             @Override
@@ -75,11 +83,12 @@ public class OutputMapping
 
         if (_OutputTypes.contains(OutputFormatType.NVP) == true)
           {
-        	
-        	// TODO: Moved to Column Based since that's really the only place required to have this attribute. Run by LDH.
-            //if (TextUtil.isNullOrEmpty(_NVPValueTypeStr))
-            //  PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP without an nvpValueType. A column type ('STRING', 'INTEGER', etc.) must be defined.");
-        	           
+
+            // TODO: Moved to Column Based since that's really the only place required to have this attribute. Run by LDH.
+            // if (TextUtil.isNullOrEmpty(_NVPValueTypeStr))
+            // PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP without an nvpValueType. A column type ('STRING',
+            // 'INTEGER', etc.) must be defined.");
+
             if (TextUtil.isNullOrEmpty(_NVPSrcStr) == true)
               PS.AddError(ParentObject._TildaType.name() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP without an NVP type of ROW or COLUMN. An nvpType attribute must be used with NVP outputMap.");
 
@@ -98,22 +107,25 @@ public class OutputMapping
                  * PS.AddError(ParentObject.getWhat()+" '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP with Key column \"" + _Key +
                  * "\" that is not found in the column mappings.");
                  */
-                
+
                 // TODO: Not really needed for Row based NVP. Run by LDH.
-                //if (_ColumnObjs.get(0).getType().equals(ColumnType.STRING) == false)
-                //  PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP that is ROWS-based with its 'Name' column \"" + _ColumnObjs.get(0)._Name + "\" that is not a String. The 'Name' columns in the name/value pair structure must be a String.");
-                
+                // if (_ColumnObjs.get(0).getType().equals(ColumnType.STRING) == false)
+                // PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP that is ROWS-based with its 'Name' column \"" +
+                // _ColumnObjs.get(0)._Name + "\" that is not a String. The 'Name' columns in the name/value pair structure must be a String.");
+
                 // TODO: Not really needed for Row based NVP. Run by LDH.
-                //if (_ColumnObjs.get(1).getType().isCompatible(_NVPValueTypeStr) == false)
-                //  PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP that is ROWS-based with its 'Value' column \"" + _ColumnObjs.get(1)._Name + "\" that is incompatible with the nvpValueType of '" + _NVPValueTypeStr + "'. Compatible types are " + _ColumnObjs.get(1).getType().getCompatibleTypes(_NVPValueTypeStr));
+                // if (_ColumnObjs.get(1).getType().isCompatible(_NVPValueTypeStr) == false)
+                // PS.AddError(ParentObject.getWhat() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP that is ROWS-based with its 'Value' column \"" +
+                // _ColumnObjs.get(1)._Name + "\" that is incompatible with the nvpValueType of '" + _NVPValueTypeStr + "'. Compatible types are " +
+                // _ColumnObjs.get(1).getType().getCompatibleTypes(_NVPValueTypeStr));
               }
             else if (_NVPSrc.equals(NVPSourceType.COLUMNS))
               {
                 _NVPValueType = ColumnType.parse(_NVPValueTypeStr);
-                
+
                 if (_NVPValueType == null)
-                    PS.AddError(ParentObject._TildaType.name() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP that is COLUMNS-based without a valid nvpValueType. An nvpValueType matching a column type ('STRING', 'INTEGER', etc.) must be defined.");    
-            	
+                  PS.AddError(ParentObject._TildaType.name() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping NVP that is COLUMNS-based without a valid nvpValueType. An nvpValueType matching a column type ('STRING', 'INTEGER', etc.) must be defined.");
+
                 for (Column C : _ColumnObjs)
                   if (C != null && C.getType().isCompatible(_NVPValueType) == false)
                     PS.AddError(ParentObject._TildaType.name() + " '" + _ParentObject.getFullName() + "' is defining an Output mapping that is COLUMNS-based with column '" + C.getName() + "'  that is incompatible with the nvpValueType of '" + _NVPValueTypeStr + "'. Compatible types are '" + C.getType().getCompatibleTypesString(_NVPValueType) + "'.");

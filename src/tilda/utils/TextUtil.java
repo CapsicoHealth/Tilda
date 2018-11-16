@@ -1331,7 +1331,7 @@ public class TextUtil
              continue;
             L.add(s!=null&&Trim==true ? s.trim() : s);
           }
-        return L.toArray(new String[L.size()]);
+        return CollectionUtil.toStringArray(L);
       }
 
     /**
