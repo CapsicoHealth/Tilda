@@ -334,7 +334,7 @@ public class TildaJson implements CodeGenTildaJson
                 break;
               case NVP:
                 genMethodToNVP(Out, G, OM);
-                break;                
+                break;
               default:
                 throw new Error("OutputFormatType " + OFT + " is not supported in the Output methog generation.");
             }
@@ -442,102 +442,107 @@ public class TildaJson implements CodeGenTildaJson
     public void genMethodToCSV(PrintWriter Out, GeneratorSession G, OutputMapping J)
     throws Exception
       {
-        Out.println("   public static void toCSV" + J._Name + "(java.io.Writer Out, List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L, boolean includeHeader) throws java.io.IOException");
+        Out.println("   public static String getCSVHeader" + J._Name + "()");
         Out.println("    {");
-        Out.println("      long T0 = System.nanoTime();");
-        Out.println("      if (includeHeader == true)");
         StringBuilder header = new StringBuilder();
         for (Column C : J._ColumnObjs)
           if (C != null)
             {
               if (C.getType() == ColumnType.JSON)
-               throw new Error("toCSV doesn't support export of JSON columns: this should have have come all the way here.");
+                throw new Error("toCSV doesn't support export of JSON columns: this should have have come all the way here.");
               if (header.length() != 0)
                 header.append(",");
               header.append(TextUtil.EscapeDoubleQuoteForCSV(C.getName()));
             }
-            Out.println("        Out.write(" + TextUtil.EscapeDoubleQuoteWithSlash(header.toString()+"\\n") + ");");
-            Out.println("      for (" + Helper.getFullAppDataClassName(J._ParentObject) + " O : L)");
-            Out.println("       if (O!=null)");
-            Out.println("        {");
-            Out.println("          toCSV" + J._Name + "(Out, O);");
-            Out.println("          Out.write(\"\\n\");");
-            Out.println("        }");
-            Out.println("      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);");
-            Out.println("    }");
+        Out.println("      return " + TextUtil.EscapeDoubleQuoteWithSlash(header.toString()) + ";");
+        Out.println("    }");
+        Out.println();
+        Out.println("   public static void toCSV" + J._Name + "(java.io.Writer Out, List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L, boolean includeHeader) throws java.io.IOException");
+        Out.println("    {");
+        Out.println("      long T0 = System.nanoTime();");
+        Out.println("      if (includeHeader == true)");
+        Out.println("        Out.write(getCSVHeader"+J._Name+"() + \"\\n\");");
+        Out.println("      for (" + Helper.getFullAppDataClassName(J._ParentObject) + " O : L)");
+        Out.println("       if (O!=null)");
+        Out.println("        {");
+        Out.println("          toCSV" + J._Name + "(Out, O);");
+        Out.println("          Out.write(\"\\n\");");
+        Out.println("        }");
+        Out.println("      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);");
+        Out.println("    }");
 
-            Out.println();
-            Out.println("   public static void toCSV" + J._Name + "(java.io.Writer Out, " + Helper.getFullAppDataClassName(J._ParentObject) + " Data) throws java.io.IOException");
-            Out.println("    {");
-            Out.println("      long T0 = System.nanoTime();");
-            Out.println("      StringBuilder Str = new StringBuilder();");
-            Out.println();
-            boolean First = true;
-            for (Column C : J._ColumnObjs)
-              if (C != null)
-                {
-                  First = Helper.CSVExport(Out, First, C);
-                }
-            Out.println("      Out.write(Str.toString());");
-            Out.println("      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);");
+        Out.println();
+        Out.println("   public static void toCSV" + J._Name + "(java.io.Writer Out, " + Helper.getFullAppDataClassName(J._ParentObject) + " Data) throws java.io.IOException");
+        Out.println("    {");
+        Out.println("      long T0 = System.nanoTime();");
+        Out.println("      StringBuilder Str = new StringBuilder();");
+        Out.println();
+        boolean First = true;
+        for (Column C : J._ColumnObjs)
+          if (C != null)
+            {
+              First = Helper.CSVExport(Out, First, C);
+            }
+        Out.println("      Out.write(Str.toString());");
+        Out.println("      PerfTracker.add(TransactionType.TILDA_TOCSV, System.nanoTime() - T0);");
         Out.println("    }");
       }
-    
-    
-    
-    
+
+
+
+
     public void genMethodToNVP(PrintWriter Out, GeneratorSession G, OutputMapping J)
     throws Exception
-      {   	
-    	if(J._NVPSrc.equals(NVPSourceType.ROWS))
-    	  {
+      {
+        if (J._NVPSrc.equals(NVPSourceType.ROWS))
+          {
 
-    		Column nameCol = J._ColumnObjs.get(0);
-    		Column valCol = J._ColumnObjs.get(1);
+            Column nameCol = J._ColumnObjs.get(0);
+            Column valCol = J._ColumnObjs.get(1);
 
-        	String nameType = TextUtil.NormalCapitalization(nameCol.getType().name());
-        	String valType = TextUtil.NormalCapitalization(valCol.getType().name());
-        	
-        	if(nameType.equalsIgnoreCase("Char"))
-        		nameType = "Character";
-        	if(valType.equalsIgnoreCase("Char"))
-        		valType = "Character";      	
-    		
-            Out.println("   public static Map<" + nameType +", " +valType+ "> toNVP" + J._Name + "(List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L) throws Exception");
+            String nameType = TextUtil.NormalCapitalization(nameCol.getType().name());
+            String valType = TextUtil.NormalCapitalization(valCol.getType().name());
+
+            if (nameType.equalsIgnoreCase("Char"))
+              nameType = "Character";
+            if (valType.equalsIgnoreCase("Char"))
+              valType = "Character";
+
+            Out.println("   public static Map<" + nameType + ", " + valType + "> toNVP" + J._Name + "(List<" + Helper.getFullAppDataClassName(J._ParentObject) + "> L) throws Exception");
             Out.println("    {");
-            Out.println("      Map<" + nameType +", " +valType+ "> M = new HashMap<" + nameType +", " +valType+ ">();");    	   
+            Out.println("      Map<" + nameType + ", " + valType + "> M = new HashMap<" + nameType + ", " + valType + ">();");
             Out.println("      for (" + Helper.getFullAppDataClassName(J._ParentObject) + " D : L)");
             Out.println("        {");
-            Out.println("          " +valType+ " val = M.get(D.get" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "());");
+            Out.println("          " + valType + " val = M.get(D.get" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "());");
             Out.println("          if(val != null)");
             Out.println("            throw new Exception(\"The key \" + D.get" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "() + \" with value \" + String.valueOf(val) + \" already exists in the Map. Key values must be unique.\");");
-            if(nameCol.getType().name().equalsIgnoreCase("STRING"))            
-            	Out.println("          if(TextUtil.isNullOrEmpty(D.get" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "()) == false)");
+            if (nameCol.getType().name().equalsIgnoreCase("STRING"))
+              Out.println("          if(TextUtil.isNullOrEmpty(D.get" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "()) == false)");
             else
-            	Out.println("          if(D.isNull" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "() == false)");
+              Out.println("          if(D.isNull" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "() == false)");
             Out.println("            M.put(D.get" + TextUtil.CapitalizeFirstCharacter(nameCol.getName()) + "(), D.get" + TextUtil.CapitalizeFirstCharacter(valCol.getName()) + "());");
-    		Out.println("        }");   		
-    		Out.println("      return M;");   	
+            Out.println("        }");
+            Out.println("      return M;");
             Out.println("    }");
-    	  }
-    	else  		
-    	  {
-        	String valType = TextUtil.NormalCapitalization(J._NVPValueTypeStr);
-        	
-        	if(valType.equalsIgnoreCase("Char"))
-        		valType = "Character";  
+          }
+        else
+          {
+            String valType = TextUtil.NormalCapitalization(J._NVPValueTypeStr);
 
-            Out.println("   public static Map<String, " +valType+ "> toNVP" + J._Name + "(" + Helper.getFullAppDataClassName(J._ParentObject) + " D) throws Exception");
+            if (valType.equalsIgnoreCase("Char"))
+              valType = "Character";
+
+            Out.println("   public static Map<String, " + valType + "> toNVP" + J._Name + "(" + Helper.getFullAppDataClassName(J._ParentObject) + " D) throws Exception");
             Out.println("    {");
-            Out.println("      Map<String, " +valType+ "> M = new HashMap<String, " +valType+ ">();");       	   
+            Out.println("      Map<String, " + valType + "> M = new HashMap<String, " + valType + ">();");
             for (Column C : J._ColumnObjs)
               if (C != null)
                 {
-            	  Out.println("      M.put(\"" + C.getName() + "\", " + Helper.NVPValueCast(C, J._NVPValueType) + ");");
+                  Out.println("      M.put(\"" + C.getName() + "\", " + Helper.NVPValueCast(C, J._NVPValueType) + ");");
                 }
-    		Out.println("      return M;");    	
-            Out.println("    }");		
-    	  }
+            Out.println("      return M;");
+            Out.println("    }");
+          }
       }
 
     public void genMethodToString(PrintWriter Out, GeneratorSession G, Object O)

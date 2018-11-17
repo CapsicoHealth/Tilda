@@ -196,10 +196,14 @@ public abstract class Base
       {
         String[] colNames = getColumnNames(); 
         List<String> L = new ArrayList<String>();
-        for (String colName : colNames)
+        for (String val : vals)
           {
-            if (TextUtil.FindStarElement(vals, colName, false, 0) != -1)
-             L.add(colName);
+            String[] valsA = new String[] { val };
+            for (String colName : colNames) 
+              {
+                if (TextUtil.FindStarElement(valsA, colName, false, 0) != -1)
+                 L.add(colName);
+              }
           }
         return L;
       }

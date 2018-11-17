@@ -110,7 +110,7 @@ public class ViewRealize
           
         O._Description = "Realized table for view "+ParentView.getShortName()+": "+ParentRealized._O._Description;
         O.addQueries(ParentView._Queries);
-        O._OutputMaps = ParentView._OutputMaps;
+        O._OutputMaps = OutputMapping.newInstances(ParentView._OutputMaps);
         O._LCStr = ObjectLifecycle.READONLY.name();
         O._PrimaryKey = _PrimaryKey;
         O._ForeignKeys = _ForeignKeys;
