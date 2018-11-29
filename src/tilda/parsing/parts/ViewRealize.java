@@ -38,16 +38,16 @@ public class ViewRealize
     static final Logger             LOG          = LogManager.getLogger(ViewRealize.class.getName());
 
     /*@formatter:off*/
-    @SerializedName("upsert"     ) public ViewRealizeUpsert _Upsert     = null;
     @SerializedName("name"       ) public String            _Name;
     @SerializedName("primary"    ) public PrimaryKey        _PrimaryKey = null;
     @SerializedName("foreign"    ) public List<ForeignKey>  _ForeignKeys= new ArrayList<ForeignKey>();
     @SerializedName("indices"    ) public List<Index>       _Indices    = new ArrayList<Index>();
     @SerializedName("subRealized") public String[]          _SubRealized= new String[] { };
     // It was "exclude" for view columns, so why was it ever "excludes" here? Not consistent.
-    @SerializedName("excludes") public String[]       _Excludes_DEPRECATED   = new String[] { };
-    @SerializedName("exclude" ) public String[]       _Exclude       = new String[] { };
-    @SerializedName("mappings") public List<ViewRealizeMapping> _Mappings = new ArrayList<>();
+    @SerializedName("excludes"   ) public String[]       _Excludes_DEPRECATED   = new String[] { };
+    @SerializedName("exclude"    ) public String[]       _Exclude       = new String[] { };
+    @SerializedName("mappings"   ) public List<ViewRealizeMapping> _Mappings = new ArrayList<>();
+    @SerializedName("upsert"     ) public ViewRealizeUpsert        _Upsert     = null;
     /*@formatter:on*/
 
 
