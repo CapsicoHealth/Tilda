@@ -69,6 +69,13 @@ public class Query
       }
 
 
+    public Query(Query q)
+      {
+        _DB = q._DB;
+        _Clause = q._Clause;
+      }
+
+
     protected static class Match
       {
         public Match(int start, int end, String name, char type)

@@ -32,6 +32,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.data.ZoneInfo_Data;
+import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.FKMeta;
 import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.PKMeta;
@@ -40,6 +41,7 @@ import tilda.db.stores.DBType;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.enums.DBStringType;
 import tilda.enums.TransactionType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
@@ -66,6 +68,7 @@ public final class Connection
       throws Exception,
       SQLException
       {
+        this(C, "SINGLE_CONN");
       }
 
     public Connection(java.sql.Connection C, String PoolId)
@@ -82,7 +85,7 @@ public final class Connection
         if (_DB == null)
           throw new Exception("Can't find the DBType based on URL " + _Url);
         _PoolId = PoolId;
-        _PoolName = PoolId + ": " + getURL() + "USER="+_C.getMetaData().getUserName()+", " + getDatabaseProductName() + " V" + getDatabaseProductVersion();
+        _PoolName = PoolId + ": " + getURL() + "USER=" + _C.getMetaData().getUserName() + ", " + getDatabaseProductName() + " V" + getDatabaseProductVersion();
       }
 
 
@@ -91,6 +94,12 @@ public final class Connection
     protected java.sql.Connection _C;
     protected DBType              _DB;
     protected String              _Url;
+
+    public <T> T unwrap(Class<T> clas)
+    throws SQLException
+      {
+        return _C.unwrap(clas);
+      }
 
     public final String getPoolId()
       {
@@ -460,27 +469,35 @@ public final class Connection
         return _DB.getSelectLimitClause(Start, Size);
       }
 
-    public int getCLOBThreshhold()
+
+    /**
+     * For String Columns, checks is the Database would type as a CHARACTER, VARCHAR, or TEXT
+     * (or whatever the equivalents are across different databases).
+     * 
+     * @param Size
+     * @return
+     */
+    public DBStringType getDBStringType(int Size)
       {
-        return _DB.getCLOBThreshhold();
+        return _DB.getDBStringType(Size);
       }
 
-    public boolean alterTableAlterColumnStringSize(Column Col, int DBSize)
+    public boolean alterTableAlterColumnStringSize(ColumnMeta ColMeta, Column Col)
     throws Exception
       {
-        return _DB.alterTableAlterColumnStringSize(this, Col, DBSize);
+        return _DB.alterTableAlterColumnStringSize(this, ColMeta, Col);
       }
 
-    public boolean alterTableAlterColumnType(ColumnType FromType, Column Col, ZoneInfo_Data defaultZI)
+    public boolean alterTableAlterColumnType(ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI)
     throws Exception
       {
-        return _DB.alterTableAlterColumnType(this, FromType, Col, defaultZI);
+        return _DB.alterTableAlterColumnType(this, ColMeta, Col, defaultZI);
       }
 
-    public String getHelperFunctionsScript()
+    public String getHelperFunctionsScript(boolean Start)
     throws Exception
       {
-        return _DB.getHelperFunctionsScript(this);
+        return _DB.getHelperFunctionsScript(this, Start);
       }
 
     public String getAclRolesScript(List<Schema> TildaList)
@@ -627,7 +644,7 @@ public final class Connection
       {
         return _DB.alterTableAddFK(this, FK);
       }
-    
+
     public boolean alterTableDropIndex(Object Obj, IndexMeta IX)
     throws Exception
       {
@@ -645,7 +662,7 @@ public final class Connection
       {
         return _DB.alterTableRenameIndex(this, Obj, OldName, NewName);
       }
-    
+
     public boolean isSuperUser()
     throws Exception
       {

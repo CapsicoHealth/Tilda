@@ -18,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+@SuppressWarnings({ "unused" })
 public class TILDA__FORMULADEPENDENCY_Factory
  {
    protected static final Logger LOG = LogManager.getLogger(TILDA__FORMULADEPENDENCY_Factory.class.getName());
@@ -26,20 +27,20 @@ public class TILDA__FORMULADEPENDENCY_Factory
 
    public static final Class<TILDA__FORMULADEPENDENCY> DATA_CLASS= TILDA__FORMULADEPENDENCY.class;
    public static final String SCHEMA_LABEL = TextUtil.Print("TILDA", "");
-   public static final String TABLENAME_LABEL = TextUtil.Print("FORMULADEPENDENCY", "");
-   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.FORMULADEPENDENCY", "");
-   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "FORMULADEPENDENCY"); }
+   public static final String TABLENAME_LABEL = TextUtil.Print("FormulaDependency", "");
+   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.FormulaDependency", "");
+   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "FormulaDependency"); }
 
    public static abstract class COLS {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULADEPENDENCY.formulaRefnum -> TILDA.FORMULADEPENDENCY."formulaRefnum"
+//   Field tilda.data.TILDA.FormulaDependency.formulaRefnum -> TILDA.FormulaDependency."formulaRefnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULADEPENDENCY.formulaRefnum of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULADEPENDENCY.formulaRefnum of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FormulaDependency.formulaRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FormulaDependency.formulaRefnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The parent formula.</TD></TR>
@@ -51,13 +52,13 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          FORMULAREFNUM   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formulaRefnum"   , 0/*0*/, "The parent formula.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULADEPENDENCY.dependencyRefnum -> TILDA.FORMULADEPENDENCY."dependencyRefnum"
+//   Field tilda.data.TILDA.FormulaDependency.dependencyRefnum -> TILDA.FormulaDependency."dependencyRefnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULADEPENDENCY.dependencyRefnum of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULADEPENDENCY.dependencyRefnum of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FormulaDependency.dependencyRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FormulaDependency.dependencyRefnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The dependent formula.</TD></TR>
@@ -69,16 +70,16 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          DEPENDENCYREFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "dependencyRefnum", 1/*1*/, "The dependent formula.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULADEPENDENCY.created -> TILDA.FORMULADEPENDENCY."created"
+//   Field tilda.data.TILDA.FormulaDependency.created -> TILDA.FormulaDependency."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULADEPENDENCY.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULADEPENDENCY.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FormulaDependency.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FormulaDependency.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.FormulaDependency)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -91,19 +92,19 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED         = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"         , 2/*2*/, "The timestamp for when the record was created.");
+     public static Type_DatetimePrimitive      CREATED         = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"         , 2/*2*/, "The timestamp for when the record was created. (TILDA.FormulaDependency)");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULADEPENDENCY.lastUpdated -> TILDA.FORMULADEPENDENCY."lastUpdated"
+//   Field tilda.data.TILDA.FormulaDependency.lastUpdated -> TILDA.FormulaDependency."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULADEPENDENCY.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULADEPENDENCY.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FormulaDependency.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FormulaDependency.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.FormulaDependency)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -116,25 +117,25 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED     = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"     , 3/*3*/, "The timestamp for when the record was last updated.");
+     public static Type_DatetimePrimitive      LASTUPDATED     = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"     , 3/*3*/, "The timestamp for when the record was last updated. (TILDA.FormulaDependency)");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.FORMULADEPENDENCY.deleted -> TILDA.FORMULADEPENDENCY."deleted"
+//   Field tilda.data.TILDA.FormulaDependency.deleted -> TILDA.FormulaDependency."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FORMULADEPENDENCY.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FORMULADEPENDENCY.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.FormulaDependency.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.FormulaDependency.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.FormulaDependency)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED         = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"         , 4/*4*/, "The timestamp for when the record was deleted.");
+     public static Type_DatetimePrimitiveNull  DELETED         = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"         , 4/*4*/, "The timestamp for when the record was deleted. (TILDA.FormulaDependency)");
 ;
    }
 
@@ -183,33 +184,47 @@ This is the column definition for:<BR>
         }
      }
 
+   protected static final ListResults<tilda.data.FormulaDependency_Data> ReadMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception
+     {
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
+       ReadMany(C, -77, RPI, null, FullSelectQuery, Start, Size);
+       return RPI._L;
+     }
+
    private static final void ReadMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__FORMULADEPENDENCY Obj, Object ExtraParams, int Start, int Size) throws Exception
      {
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
-       S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "FORMULADEPENDENCY", "formulaRefnum");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULADEPENDENCY", "dependencyRefnum");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULADEPENDENCY", "created");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULADEPENDENCY", "lastUpdated");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "FORMULADEPENDENCY", "deleted");
-       S.append(" from "); C.getFullTableVar(S, "TILDA", "FORMULADEPENDENCY");
-       switch (LookupId)
+       if (LookupId == -77)
         {
-          case -7:
-             String clause = ((SelectQuery)ExtraParams).getWhereClause();
-             if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
-             break;
-          case -666: break;
-          default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
+          S.append((String)ExtraParams);
+        }
+       else
+        {
+          S.append("select ");
+          S.append(" "); C.getFullColumnVar(S, "TILDA", "FormulaDependency", "formulaRefnum");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaDependency", "dependencyRefnum");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaDependency", "created");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaDependency", "lastUpdated");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "FormulaDependency", "deleted");
+          S.append(" from "); C.getFullTableVar(S, "TILDA", "FormulaDependency");
+          switch (LookupId)
+           {
+             case -7:
+                String clause = ((SelectQuery)ExtraParams).getWhereClause();
+                if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
+                break;
+             case -77: 
+             case -666: break;
+             default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
+           }
         }
 
-       
        String Q = S.toString() + C.getSelectLimitClause(Start, Size+1);
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(SCHEMA_TABLENAME_LABEL, Q);
-       QueryDetails.logQuery("TILDA.FORMULADEPENDENCY", Q, null);
+       QueryDetails.logQuery("TILDA.FormulaDependency", Q, null);
        java.sql.PreparedStatement PS=null;
        int count = 0;
        try
@@ -217,6 +232,7 @@ This is the column definition for:<BR>
           PS = C.prepareStatement(Q);
           switch (LookupId)
            {
+             case -77:
              case -7:
                 break;
              case -666: break;
@@ -282,6 +298,127 @@ This is the column definition for:<BR>
 
       return Obj;
      }
+   public static int WriteBatch(Connection C, List<tilda.data.FormulaDependency_Data> L, int batchSize, int commitSize) throws Exception
+     {
+       long T0 = System.nanoTime();
+
+       if (L == null || L.isEmpty() == true)
+         return -1;
+
+       java.sql.PreparedStatement PS = null;
+       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
+       int count = 0;
+       int batchStart = 0;
+       TILDA__FORMULADEPENDENCY lastObj = null;
+       BitSet firstChangeList = (BitSet) ((TILDA__FORMULADEPENDENCY) L.get(0)).__Changes.clone();
+       String firstTimeStampSignature = ((TILDA__FORMULADEPENDENCY) L.get(0)).getTimeStampSignature();
+
+       try
+         {
+           C.setSavepoint();
+           String Q = L.get(0).getWriteQuery(C);
+           PS = C.prepareStatement(Q);
+           int insertCount = 0;
+
+           int index = -1;
+           for (tilda.data.FormulaDependency_Data d : L)
+             {
+               ++index;
+               if (d == null || d.hasChanged() == false)
+                 continue;
+
+               lastObj = ((TILDA__FORMULADEPENDENCY) d);
+
+               if (((TILDA__FORMULADEPENDENCY) d).__Init != InitMode.CREATE)
+                 {
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.FormulaDependency_Data' object at positon #" + index + " was not in an insertable state. Only inserts are allowed in batch writes (i.e., no updates).");
+                   QueryDetails.setLastQuery(TILDA__FORMULADEPENDENCY_Factory.SCHEMA_TABLENAME_LABEL, "");
+                   return index;
+                 }
+
+               if (((TILDA__FORMULADEPENDENCY) d).BeforeWrite(C) == false)
+                 {
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.FormulaDependency_Data' object at positon #" + index + " failed in its BeforeWrite() method.");
+                   QueryDetails.setLastQuery(TILDA__FORMULADEPENDENCY_Factory.SCHEMA_TABLENAME_LABEL, "");
+                   return index;
+                 }
+
+               if (firstChangeList.equals(((TILDA__FORMULADEPENDENCY) d).__Changes) == false)
+                 {
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.FormulaDependency_Data' object at positon #" + index + " failed matching the list of columns being changed compared to the first object passed.");
+                   QueryDetails.setLastQuery(TILDA__FORMULADEPENDENCY_Factory.SCHEMA_TABLENAME_LABEL, "");
+                   return index;
+                 }
+
+               if (firstTimeStampSignature.equals(((TILDA__FORMULADEPENDENCY) d).getTimeStampSignature()) == false)
+                 {
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.FormulaDependency_Data' object at positon #" + index + " failed matching the list of updated current vs value based timestamps.");
+                   QueryDetails.setLastQuery(TILDA__FORMULADEPENDENCY_Factory.SCHEMA_TABLENAME_LABEL, "");
+                   return index;
+                 }
+
+               int i = d.populatePreparedStatement(C, PS, AllocatedArrays);
+
+               PS.addBatch();
+               if (index != 0 && (index + 1) % batchSize == 0)
+                 {
+                   int[] results = PS.executeBatch();
+                   int failedRec = JDBCHelper.BatchWriteDone(results, batchSize);
+                   if (failedRec != -1)
+                     {
+                       LOG.debug(QueryDetails._LOGGING_HEADER + "A batch of tilda.data.FormulaDependency_Data objects between positions #" + batchStart + " and #" + index + " failed being written to the database.");
+                       return insertCount+failedRec;
+                     }
+                   for (int index2 = batchStart; index2 <= index; ++index2)
+                     L.get(index2).stateUpdatePostWrite();
+                   LOG.debug("Batch-inserted objects between positions #" + insertCount + " and #" + index + ".");
+                   batchStart = 0;
+                   insertCount+=batchSize;
+                 }
+               if (commitSize > 0 && index != 0 && (index + 1) % commitSize == 0)
+                 {
+                   C.commit();
+                   LOG.debug("Commited " + commitSize + " batch records. At insert count " + (index-commitSize+1));
+                 }
+               PS.clearParameters();
+             }
+
+           if (index != 0 && (index + 1) % batchSize != 0)
+             {
+               int[] results = PS.executeBatch();
+               int failedRec = JDBCHelper.BatchWriteDone(results, L.size() - insertCount);
+               if (failedRec != -1)
+                 {
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "A batch of 'FormulaDependency_Data' objects ending at position #" + index + " failed being written to the database.");
+                   return L.size() - insertCount+failedRec;
+                 }
+               for (int index2 = batchStart; index2 <= index; ++index2)
+                 L.get(index2).stateUpdatePostWrite();
+
+               if(commitSize > 0)
+                 {
+                   C.commit();
+                   LOG.debug("Commited " + insertCount + " batch records.");
+                 }
+               LOG.debug("Final Batch-inserted objects between positions #" + insertCount + " and #" + index + ".");
+             }
+
+           C.releaseSavepoint(true);
+           return -1;
+         }
+       catch (java.sql.SQLException E)
+         {
+           C.releaseSavepoint(false);
+           TILDA__1_0.HandleCatch(C, E, "updated or inserted");
+           return 1;
+         }
+       finally
+         {
+           TILDA__1_0.HandleFinally(PS, T0, TILDA__FORMULADEPENDENCY_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+           PS = null;
+           AllocatedArrays = null;
+         }
+       }
 
    static public tilda.data.FormulaDependency_Data LookupByPrimaryKey(long formulaRefnum, long dependencyRefnum) throws Exception
      {

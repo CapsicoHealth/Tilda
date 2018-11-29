@@ -28,6 +28,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.db.processors.ObjectProcessor;
 import tilda.enums.ColumnMode;
+import tilda.enums.ObjectMode;
 import tilda.generation.java8.Helper;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.Object;
@@ -50,6 +51,8 @@ public class MasterFactory
         protected ObjectMetaData(String PackageName, Object Obj)
           throws Exception
           {
+            _Obj = Obj;
+            
             String FactoryClassName = Helper.getFullBaseClassName(Obj) + "_Factory";
             _FactoryClass = Class.forName(FactoryClassName);
 
@@ -59,7 +62,7 @@ public class MasterFactory
             Class<?> _ColsClass = Class.forName(ColsClassName);
 
             for (Column C : Obj._Columns)
-              if (C != null && C._FrameworkManaged == false && C._Mode != ColumnMode.CALCULATED)
+              if (C != null && C._FCT.isManaged() == false && C._Mode != ColumnMode.CALCULATED)
                 {
                   Field F = _ColsClass.getDeclaredField(C.getName().toUpperCase());
                   ColumnDefinition CD = (ColumnDefinition) F.get(null);
@@ -70,15 +73,64 @@ public class MasterFactory
             _RunSelectMethodOP = _FactoryClass.getMethod("runSelect", Connection.class, SelectQuery.class, ObjectProcessor.class, Integer.TYPE, Integer.TYPE);
           }
 
+        protected final Object              _Obj;
         public final String                 _ObjectName;
         public final Class<?>               _FactoryClass;
         public final Method                 _RunSelectMethodList;
         public final Method                 _RunSelectMethodOP;
         public final List<ColumnDefinition> _Cols = new ArrayList<ColumnDefinition>();
+        
+        public String getColumnDefaultCreateValue(String columnName)
+         {
+           Column Col = _Obj.getColumn(columnName);
+           if (Col != null && Col._DefaultCreateValue != null)
+            return Col._DefaultCreateValue._Value;
+           return null;
+         }
+        public String getColumnDefaultUpdateValue(String columnName)
+          {
+            Column Col = _Obj.getColumn(columnName);
+            if (Col != null && Col._DefaultUpdateValue != null)
+             return Col._DefaultUpdateValue._Value;
+            return null;
+          }
+        
       }
 
     protected static Map<String, ObjectMetaData> _M = new HashMap<String, ObjectMetaData>();
-
+        
+    public static ObjectMetaData GetTableObject(String SchemaName, String TableName)
+    {    	  	  
+      if(_M.get(SchemaName.toUpperCase() + "." + TableName) != null)  	
+  	     return _M.get(SchemaName.toUpperCase() + "." + TableName);	
+  	  return null;
+    }
+  
+    public static String GetDefaultCreateValue(String SchemaName, String TableName, String ColumnName)
+    {
+	  ObjectMetaData omd = GetTableObject(SchemaName, TableName);
+  	
+  	  String defaultCreateValue = omd.getColumnDefaultCreateValue(ColumnName);
+  	  if(defaultCreateValue != null)
+  	    return defaultCreateValue;
+  	  
+  	  LOG.error("No default create value found for " + SchemaName + "." + TableName + "." + ColumnName);
+  	  return null;    	
+    }
+    
+    public static String GetDefaultUpdateValue(String SchemaName, String TableName, String ColumnName)
+    {
+	  ObjectMetaData omd = GetTableObject(SchemaName, TableName);
+	
+	  String defaultUpdateValue = omd.getColumnDefaultUpdateValue(ColumnName);
+	  if(defaultUpdateValue != null)
+	    return defaultUpdateValue;
+	  
+	  LOG.error("No default update value found for " + SchemaName + "." + TableName + "." + ColumnName);
+	  return null;    	
+    }
+  
+  
     public static void register(String PackageName, Object Obj)
     throws Exception
       {
@@ -88,7 +140,7 @@ public class MasterFactory
             throw new Exception("Trying to register Tilda Object " + Key + " more than once!");
           }
 
-        if (Obj._DBOnly == false)
+        if (Obj._Mode != ObjectMode.DB_ONLY)
           {
             ObjectMetaData OMD = new ObjectMetaData(PackageName, Obj);
             _M.put(Key, OMD);

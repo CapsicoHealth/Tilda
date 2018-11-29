@@ -25,6 +25,7 @@ import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.ColumnMode;
 import tilda.enums.OrderType;
+import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.TextUtil;
@@ -46,11 +47,11 @@ public class Index
     public transient boolean         _Unique;
 
     public transient Base            _Parent;
-    
+
     public String getName()
-     {
-       return _Parent._OriginalName + "_" + _Name;
-     }
+      {
+        return _Parent._OriginalName + "_" + _Name;
+      }
 
     public boolean Validate(ParserSession PS, Base Parent)
       {
@@ -61,56 +62,67 @@ public class Index
         if (TextUtil.isNullOrEmpty(_Name) == true)
           return PS.AddError("Object '" + _Parent.getFullName() + "' is defining an index without a name.");
 
+        if (_Name.length() > PS._CGSql.getMaxColumnNameSize())
+          PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' with a name that's too long: max allowed by your database is "+PS._CGSql.getMaxColumnNameSize()+" vs "+_Name.length()+" for this identifier.");
+        if (_Name.equals(TextUtil.SanitizeName(_Name)) == false)
+         PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' with a name containing invalid characters (must all be alphanumeric or underscore).");
+        if (TextUtil.isJavaIdentifier(_Name) == false)
+         PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' with a name that is imcompatible with standard identifier convensions (for example, Java, JavaScript since Foreign Keys have programmatic equivalents in those languages).");
+
         if ((_Columns == null || _Columns.length == 0) && (_OrderBy == null || _OrderBy.length == 0))
-          return PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '"+_Name+"' without columns and/or order by.");
+         PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' without columns and/or order by.");
 
         _Unique = _OrderBy == null || _OrderBy.length == 0;
 
-        _ColumnObjs = ValidationHelper.ProcessColumn(PS, _Parent, "index '" + _Name + "'", _Columns, new ValidationHelper.Processor() {
-          @Override
-          public boolean process(ParserSession PS, Base ParentObject, String What, Column C)
-            {
-              if (C._Mode == ColumnMode.CALCULATED)
-                PS.AddError("Object '" + _Parent.getFullName() + "' is defining an index with column '" + C.getName() + "' which is calculated.");
-              else if (_Unique == true && C._Nullable == true && _Columns.length > 1)
-                PS.AddError("Object '" + _Parent.getFullName() + "' is using nullable column '" + C.getName() + "' in in a multi-column unique index.");
-              else
-                {
-                  if (_Unique == true)
-                    C._UniqueIndex = true;
-                }
-              return true;
-            }
-        });
-        
-        
+        _ColumnObjs = ValidationHelper.ProcessColumn(PS, _Parent, "index '" + _Name + "'", _Columns, new ValidationHelper.Processor()
+          {
+            @Override
+            public boolean process(ParserSession PS, Base ParentObject, String What, Column C)
+              {
+                if (C._Mode == ColumnMode.CALCULATED)
+                  PS.AddError("Object '" + _Parent.getFullName() + "' is defining an index with column '" + C.getName() + "' which is calculated.");
+// We think it's OK to have indices on null columns. Postgres will be smart about it for example, and SQLServer seems to handle it properly too.                
+//                else if (_Unique == true && C._Nullable == true && _Columns.length > 1)
+//                  PS.AddError("Object '" + _Parent.getFullName() + "' is using nullable column '" + C.getName() + "' in a multi-column unique index.");
+                else
+                  {
+                    if (_Unique == true)
+                      C._UniqueIndex = true;
+                  }
+                return true;
+              }
+          });
+
+
 
         if (_Unique == false)
           {
             Set<String> Names = new HashSet<String>();
             if (_ColumnObjs != null)
-             for (Column C : _ColumnObjs)
-              Names.add(C.getName().toUpperCase());
-            
+              for (Column C : _ColumnObjs)
+                Names.add(C.getName().toUpperCase());
+
+            _OrderByObjs.clear();
+            _OrderByOrders.clear();
             processOrderBy(PS, "Object '" + _Parent.getFullName() + "' defines index '" + _Name + "'", Names, _Parent, _OrderBy, _OrderByObjs, _OrderByOrders);
-            
+
             if (TextUtil.isNullOrEmpty(_SubWhere) == false && _SubQuery != null)
               PS.AddError("Object '" + _Parent.getFullName() + "' is defining unique index '" + _Name + "' with both a subWhere AND a subQuery: only one is allowed.");
             else
               {
                 if (_SubWhere != null)
-                 _SubQuery = new SubWhereClause(_SubWhere);
-                
+                  _SubQuery = new SubWhereClause(_SubWhere);
+
                 if (_SubQuery != null)
                   {
                     if (_SubQuery._OrderBy != null && _SubQuery._OrderBy.length != 0)
                       PS.AddError("Object '" + _Parent.getFullName() + "' defines index '" + _Name + "' with a subQuery that contains an orderBy: this is not allowed as the index already defines one.");
                     if (_SubQuery._From.length != 0)
                       PS.AddError("Object '" + _Parent.getFullName() + "' defines index '" + _Name + "' with a subQuery that contains a \"From\" clause: this is not allowed in an Index SubQuery.");
-                    for(Query SubWhere : _SubQuery._Wheres) 
+                    for (Query SubWhere : _SubQuery._Wheres)
                       {
-                    	if (SubWhere._Clause.contains("?"))
-                    		PS.AddError("Object '" + _Parent.getFullName() + "' defines index '" + _Name + "' with a subQuery that contains a \"?\" variable placeholder: this is not allowed in an Index SubQuery.");
+                        if (SubWhere._Clause.contains("?"))
+                          PS.AddError("Object '" + _Parent.getFullName() + "' defines index '" + _Name + "' with a subQuery that contains a \"?\" variable placeholder: this is not allowed in an Index SubQuery.");
                       }
                     _SubQuery.Validate(PS, _Parent, "Object " + _Parent.getFullName() + "'s index '" + _Name + "'", false);
                   }
@@ -147,40 +159,40 @@ public class Index
                 PS.AddError(What + " with an orderBy '" + ob + "' that is formatted incorrectly: asc or desc expected.");
                 continue;
               }
-            Column C = ParentObject.getColumn(Col);
-            if (C == null)
-              {
-                PS.AddError(What + " with orderby '" + Col + "' which cannot be found.");
-                continue;
-              }
             if (Names.add(Col.toUpperCase()) == false)
               {
                 PS.AddError(What + " with duplicated orderby '" + Col + "'.");
                 continue;
               }
-            if (C._Mode == ColumnMode.CALCULATED)
-              PS.AddError(What + " with orderby '" + Col + "' which is calculated.");
-            else
+            Column C = ParentObject.getColumn(Col);
+            if (C == null)
               {
-                OrderByObjs.add(C);
-                OrderByOrders.add(Order);
+                PS.AddError(What + " with orderby '" + Col + "' which cannot be found."+(ParentObject._TildaType!=TildaType.VIEW?"":" If you do need that column for the orderBy but do not want it in the final view, add it with \"joinOnly\"=true."));
+                continue;
               }
+            if (C._Mode == ColumnMode.CALCULATED)
+              {
+                PS.AddError(What + " with orderby '" + Col + "' which is calculated and therefore, not available at the database level.");
+                continue;
+              }
+            OrderByObjs.add(C);
+            OrderByOrders.add(Order);
           }
       }
-  
-    public String getSignature() 
+
+    public String getSignature()
       {
         StringBuilder Str = new StringBuilder();
         // Defined Columns
         for (Column C : _ColumnObjs)
           {
             if (Str.length() != 0)
-            {
-              Str.append("|");
-            }
+              {
+                Str.append("|");
+              }
             Str.append(C._Name).append("|asc");
-          }   	
-    	// Defined Order Bys
+          }
+        // Defined Order Bys
         for (int i = 0; i < _OrderByObjs.size(); ++i)
           {
             Column C = _OrderByObjs.get(i);
@@ -191,6 +203,6 @@ public class Index
               }
             Str.append(C._Name).append("|").append(O.name().toLowerCase());
           }
-    	return (_Unique ? "u" : "") + "i|" + Str.toString();
+        return (_Unique ? "u" : "") + "i|" + Str.toString();
       }
   }

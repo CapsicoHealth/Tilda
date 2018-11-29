@@ -46,6 +46,7 @@ public class Formula extends TypeDef
     /*@formatter:on*/
 
     protected transient View      _ParentView;
+    public boolean                _FormulaTemplate = false;
 
     public Formula()
       {
@@ -65,6 +66,7 @@ public class Formula extends TypeDef
             for (int i = 0; i < F._Values.length; ++i)
               _Values[i] = new Value(F._Values[i]);
           }
+        _FormulaTemplate = F._FormulaTemplate;
       }
 
     public View getParentView()
@@ -85,6 +87,8 @@ public class Formula extends TypeDef
 
         if (TextUtil.isNullOrEmpty(_Name) == true)
           PS.AddError("View " + _ParentView.getShortName() + " is defining a formula without a name.");
+        else if (_Name.length() > PS._CGSql.getMaxColumnNameSize())
+          PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' with a name that's too long: max allowed by your database is "+PS._CGSql.getMaxColumnNameSize()+" vs "+_Name.length()+" for this identifier.");
 
         if (TextUtil.isNullOrEmpty(_TypeStr) == true)
           PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' without a type.");
@@ -115,6 +119,8 @@ public class Formula extends TypeDef
     public List<ViewColumn> getDependencyColumns()
       {
         List<ViewColumn> L = new ArrayList<ViewColumn>();
+        if (getParentView()._ViewColumnsRegEx == null)
+          return L;
         Matcher M = getParentView()._ViewColumnsRegEx.matcher(String.join("\n", _FormulaStrs));
         Set<String> Names = new HashSet<String>();
         while (M.find() == true)
@@ -130,6 +136,8 @@ public class Formula extends TypeDef
     public List<Formula> getDependencyFormulas()
       {
         List<Formula> L = new ArrayList<Formula>();
+        if (getParentView()._FormulasRegEx == null)
+          return L;
         Matcher M = getParentView()._FormulasRegEx.matcher(String.join("\n", _FormulaStrs));
         Set<String> Names = new HashSet<String>();
         while (M.find() == true)

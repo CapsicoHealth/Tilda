@@ -7,7 +7,8 @@
 package tilda.data._Tilda;
 
 import java.time.*;
-import java.io.Writer;
+import java.sql.Timestamp;
+import java.util.*;
 
 import tilda.db.*;
 import tilda.enums.*;
@@ -23,28 +24,28 @@ import org.apache.logging.log4j.Logger;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
-<DIV>
-<DIV id='OBJECTPERF_DIV' class='tables'>
-<H2>OBJECTPERF&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 60%;"><A href="#">top</A></SUP></H2>
-</DIV>
-The generated Java 8/PostgreSQL Tilda data class <B>Data_OBJECTPERF</B> is mapped to the Table <B>TILDA.OBJECTPERF</B>.
-<UL>
-
-<LI>The Table has normal <B>read/write</B> capabilities.</LI>
-<LI>The Table is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
+<TABLE id="ObjectPerf_DIV" class="tables">
+<SCRIPT>registerStickyHeader("ObjectPerf_DIV");</SCRIPT>
+<TR valign="top"><TD><H2>ObjectPerf&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#ObjectPerf_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
+</TABLE>
+<DIV id="ObjectPerf_CNT" class="content">
+The Table TILDA.ObjectPerf:<UL>
+<LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>ObjectPerf_Factory</B>, <B>ObjectPerf_Data</B> in the package <B>tilda.data</B>.
+<LI>Is configured for normal <B>read/write</B> access.</LI>
+<LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
+<LI>Defines foreign key(s) to <A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A> </LI>
+<LI>Has the following identity:<UL><LI>Primary Key: schemaName, objectName, startPeriod</LI>
+</UL></LI>
 </UL>
 <B>Description</B>: Performance logs for the Tilda framework<BR>
 <BR>
-
-It contains the following columns:<BR>
- <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
-   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><!--TH align="left">Column</TH--><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
-
+This Table contains the following columns:<BLOCKQUOTE>
+ <TABLE id="ObjectPerf_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
-<TD align="right"><B id='OBJECTPERF-schemaName_DIV' class='columns'>schemaName</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD>
-<TD>varchar(64)&nbsp;&nbsp;</TD>
+<TD align="right"><B id='ObjectPerf-schemaName_DIV' class='columns'>schemaName</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(64)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -53,9 +54,8 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>2&nbsp;&nbsp;</TD>
-<TD align="right"><B id='OBJECTPERF-objectName_DIV' class='columns'>objectName</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD>
-<TD>varchar(64)&nbsp;&nbsp;</TD>
+<TD align="right"><B id='ObjectPerf-objectName_DIV' class='columns'>objectName</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(64)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -64,20 +64,20 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>3&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('OBJECTPERF-startPeriodTZ')" align="right"><B id='OBJECTPERF-startPeriodTZ_DIV' class='columns dotted_underline cursor_pointer'>startPeriodTZ</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD>
-<TD>character(5)&nbsp;&nbsp;</TD>
+<TD onclick="onModalShowClicked('ObjectPerf-startPeriodTZ')" align="right"><B id='ObjectPerf-startPeriodTZ_DIV' class='columns dotted_underline cursor_pointer'>startPeriodTZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'startPeriod'.</TD>
+<TD>Generated helper column to hold the time zone ID for 'startPeriod'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+</TABLE>
+</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>4&nbsp;&nbsp;</TD>
-<TD align="right"><B id='OBJECTPERF-startPeriod_DIV' class='columns'>startPeriod</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;&nbsp;</TD>
-<TD>timestamptz&nbsp;&nbsp;</TD>
+<TD align="right"><B id='ObjectPerf-startPeriod_DIV' class='columns'>startPeriod</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -86,20 +86,20 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>5&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('OBJECTPERF-endPeriodTZ')" align="right"><B id='OBJECTPERF-endPeriodTZ_DIV' class='columns dotted_underline cursor_pointer'>endPeriodTZ</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD>
-<TD>character(5)&nbsp;&nbsp;</TD>
+<TD onclick="onModalShowClicked('ObjectPerf-endPeriodTZ')" align="right"><B id='ObjectPerf-endPeriodTZ_DIV' class='columns dotted_underline cursor_pointer'>endPeriodTZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'endPeriod'.</TD>
+<TD>Generated helper column to hold the time zone ID for 'endPeriod'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+</TABLE>
+</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>6&nbsp;&nbsp;</TD>
-<TD align="right"><B id='OBJECTPERF-endPeriod_DIV' class='columns'>endPeriod</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;&nbsp;</TD>
-<TD>timestamptz&nbsp;&nbsp;</TD>
+<TD align="right"><B id='ObjectPerf-endPeriod_DIV' class='columns'>endPeriod</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -108,9 +108,8 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>7&nbsp;&nbsp;</TD>
-<TD align="right"><B id='OBJECTPERF-selectNano_DIV' class='columns'>selectNano</B>&nbsp;&nbsp;</TD>
-<TD>long&nbsp;&nbsp;</TD>
-<TD>bigint&nbsp;&nbsp;</TD>
+<TD align="right"><B id='ObjectPerf-selectNano_DIV' class='columns'>selectNano</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -119,9 +118,8 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>8&nbsp;&nbsp;</TD>
-<TD align="right"><B id='OBJECTPERF-selectCount_DIV' class='columns'>selectCount</B>&nbsp;&nbsp;</TD>
-<TD>long&nbsp;&nbsp;</TD>
-<TD>bigint&nbsp;&nbsp;</TD>
+<TD align="right"><B id='ObjectPerf-selectCount_DIV' class='columns'>selectCount</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -130,9 +128,8 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>9&nbsp;&nbsp;</TD>
-<TD align="right"><B id='OBJECTPERF-selectRecords_DIV' class='columns'>selectRecords</B>&nbsp;&nbsp;</TD>
-<TD>long&nbsp;&nbsp;</TD>
-<TD>bigint&nbsp;&nbsp;</TD>
+<TD align="right"><B id='ObjectPerf-selectRecords_DIV' class='columns'>selectRecords</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -141,9 +138,8 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>10&nbsp;&nbsp;</TD>
-<TD align="right"><B id='OBJECTPERF-insertNano_DIV' class='columns'>insertNano</B>&nbsp;&nbsp;</TD>
-<TD>long&nbsp;&nbsp;</TD>
-<TD>bigint&nbsp;&nbsp;</TD>
+<TD align="right"><B id='ObjectPerf-insertNano_DIV' class='columns'>insertNano</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -152,9 +148,8 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>11&nbsp;&nbsp;</TD>
-<TD align="right"><B id='OBJECTPERF-insertCount_DIV' class='columns'>insertCount</B>&nbsp;&nbsp;</TD>
-<TD>long&nbsp;&nbsp;</TD>
-<TD>bigint&nbsp;&nbsp;</TD>
+<TD align="right"><B id='ObjectPerf-insertCount_DIV' class='columns'>insertCount</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -163,9 +158,8 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>12&nbsp;&nbsp;</TD>
-<TD align="right"><B id='OBJECTPERF-insertRecords_DIV' class='columns'>insertRecords</B>&nbsp;&nbsp;</TD>
-<TD>long&nbsp;&nbsp;</TD>
-<TD>bigint&nbsp;&nbsp;</TD>
+<TD align="right"><B id='ObjectPerf-insertRecords_DIV' class='columns'>insertRecords</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -174,9 +168,8 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>13&nbsp;&nbsp;</TD>
-<TD align="right"><B id='OBJECTPERF-updateNano_DIV' class='columns'>updateNano</B>&nbsp;&nbsp;</TD>
-<TD>long&nbsp;&nbsp;</TD>
-<TD>bigint&nbsp;&nbsp;</TD>
+<TD align="right"><B id='ObjectPerf-updateNano_DIV' class='columns'>updateNano</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -185,9 +178,8 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>14&nbsp;&nbsp;</TD>
-<TD align="right"><B id='OBJECTPERF-updateCount_DIV' class='columns'>updateCount</B>&nbsp;&nbsp;</TD>
-<TD>long&nbsp;&nbsp;</TD>
-<TD>bigint&nbsp;&nbsp;</TD>
+<TD align="right"><B id='ObjectPerf-updateCount_DIV' class='columns'>updateCount</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -196,9 +188,8 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>15&nbsp;&nbsp;</TD>
-<TD align="right"><B id='OBJECTPERF-updateRecords_DIV' class='columns'>updateRecords</B>&nbsp;&nbsp;</TD>
-<TD>long&nbsp;&nbsp;</TD>
-<TD>bigint&nbsp;&nbsp;</TD>
+<TD align="right"><B id='ObjectPerf-updateRecords_DIV' class='columns'>updateRecords</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -207,9 +198,8 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>16&nbsp;&nbsp;</TD>
-<TD align="right"><B id='OBJECTPERF-deleteNano_DIV' class='columns'>deleteNano</B>&nbsp;&nbsp;</TD>
-<TD>long&nbsp;&nbsp;</TD>
-<TD>bigint&nbsp;&nbsp;</TD>
+<TD align="right"><B id='ObjectPerf-deleteNano_DIV' class='columns'>deleteNano</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -218,9 +208,8 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>17&nbsp;&nbsp;</TD>
-<TD align="right"><B id='OBJECTPERF-deleteCount_DIV' class='columns'>deleteCount</B>&nbsp;&nbsp;</TD>
-<TD>long&nbsp;&nbsp;</TD>
-<TD>bigint&nbsp;&nbsp;</TD>
+<TD align="right"><B id='ObjectPerf-deleteCount_DIV' class='columns'>deleteCount</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -229,9 +218,8 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>18&nbsp;&nbsp;</TD>
-<TD align="right"><B id='OBJECTPERF-deleteRecords_DIV' class='columns'>deleteRecords</B>&nbsp;&nbsp;</TD>
-<TD>long&nbsp;&nbsp;</TD>
-<TD>bigint&nbsp;&nbsp;</TD>
+<TD align="right"><B id='ObjectPerf-deleteRecords_DIV' class='columns'>deleteRecords</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -240,51 +228,38 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>19&nbsp;&nbsp;</TD>
-<TD align="right"><B id='OBJECTPERF-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;&nbsp;</TD>
-<TD>timestamptz&nbsp;&nbsp;</TD>
+<TD align="right"><B id='ObjectPerf-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The timestamp for when the record was created.</TD>
+<TD>The timestamp for when the record was created. (TILDA.ObjectPerf)</TD>
 </TR>
-  <TR bgcolor="#DFECF8"><TD></TD><TD></TD><TD colspan="10" align="center">
-<TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFF2CC"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Creation</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Creation&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Creation time</TD></TR>
-</TABLE>
-</TD></TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>20&nbsp;&nbsp;</TD>
-<TD align="right"><B id='OBJECTPERF-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;&nbsp;</TD>
-<TD>timestamptz&nbsp;&nbsp;</TD>
+<TD align="right"><B id='ObjectPerf-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The timestamp for when the record was last updated.</TD>
+<TD>The timestamp for when the record was last updated. (TILDA.ObjectPerf)</TD>
 </TR>
-  <TR bgcolor="#FFFFFF"><TD></TD><TD></TD><TD colspan="10" align="center">
-<TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFF2CC"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Update</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Update&nbsp;&nbsp;</TD><TD>ALWAYS&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Last updated time</TD></TR>
-</TABLE>
-</TD></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>21&nbsp;&nbsp;</TD>
-<TD align="right"><B id='OBJECTPERF-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;&nbsp;</TD>
-<TD>timestamptz&nbsp;&nbsp;</TD>
+<TD align="right"><B id='ObjectPerf-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The timestamp for when the record was deleted.</TD>
+<TD>The timestamp for when the record was deleted. (TILDA.ObjectPerf)</TD>
 </TR>
-</TABLE>
-<DIV id='OBJECTPERF-schemaName_MODAL' class='modal'>
+</TABLE></BLOCKQUOTE>
+<DIV id='ObjectPerf-schemaName_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('OBJECTPERF-schemaName_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('ObjectPerf-schemaName_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -294,14 +269,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF-schemaName_DIV'>schemaName</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-schemaName_DIV'>schemaName</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='OBJECTPERF-objectName_MODAL' class='modal'>
+<DIV id='ObjectPerf-objectName_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('OBJECTPERF-objectName_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('ObjectPerf-objectName_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -311,14 +286,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF-objectName_DIV'>objectName</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-objectName_DIV'>objectName</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='OBJECTPERF-startPeriodTZ_MODAL' class='modal'>
+<DIV id='ObjectPerf-startPeriodTZ_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('OBJECTPERF-startPeriodTZ_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('ObjectPerf-startPeriodTZ_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -328,20 +303,20 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF-startPeriodTZ_DIV'>startPeriodTZ</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-startPeriodTZ_DIV'>startPeriodTZ</a></td>
 </tr>
 <tr><td>&nbsp;</td></tr>
 <tr bgcolor="#DFECF8">
 <td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZONEINFO_DIV'>ZoneInfo</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZONEINFO-id_DIV'>id</a> -- STRING</td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZoneInfo_DIV'>ZoneInfo</a></td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZoneInfo-id_DIV'>id</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='OBJECTPERF-startPeriod_MODAL' class='modal'>
+<DIV id='ObjectPerf-startPeriod_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('OBJECTPERF-startPeriod_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('ObjectPerf-startPeriod_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -351,14 +326,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF-startPeriod_DIV'>startPeriod</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-startPeriod_DIV'>startPeriod</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='OBJECTPERF-endPeriodTZ_MODAL' class='modal'>
+<DIV id='ObjectPerf-endPeriodTZ_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('OBJECTPERF-endPeriodTZ_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('ObjectPerf-endPeriodTZ_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -368,20 +343,20 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF-endPeriodTZ_DIV'>endPeriodTZ</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-endPeriodTZ_DIV'>endPeriodTZ</a></td>
 </tr>
 <tr><td>&nbsp;</td></tr>
 <tr bgcolor="#DFECF8">
 <td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZONEINFO_DIV'>ZoneInfo</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZONEINFO-id_DIV'>id</a> -- STRING</td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZoneInfo_DIV'>ZoneInfo</a></td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZoneInfo-id_DIV'>id</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='OBJECTPERF-endPeriod_MODAL' class='modal'>
+<DIV id='ObjectPerf-endPeriod_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('OBJECTPERF-endPeriod_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('ObjectPerf-endPeriod_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -391,14 +366,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF-endPeriod_DIV'>endPeriod</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-endPeriod_DIV'>endPeriod</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='OBJECTPERF-selectNano_MODAL' class='modal'>
+<DIV id='ObjectPerf-selectNano_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('OBJECTPERF-selectNano_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('ObjectPerf-selectNano_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -408,14 +383,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF-selectNano_DIV'>selectNano</a> -- LONG</td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-selectNano_DIV'>selectNano</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='OBJECTPERF-selectCount_MODAL' class='modal'>
+<DIV id='ObjectPerf-selectCount_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('OBJECTPERF-selectCount_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('ObjectPerf-selectCount_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -425,14 +400,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF-selectCount_DIV'>selectCount</a> -- LONG</td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-selectCount_DIV'>selectCount</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='OBJECTPERF-selectRecords_MODAL' class='modal'>
+<DIV id='ObjectPerf-selectRecords_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('OBJECTPERF-selectRecords_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('ObjectPerf-selectRecords_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -442,14 +417,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF-selectRecords_DIV'>selectRecords</a> -- LONG</td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-selectRecords_DIV'>selectRecords</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='OBJECTPERF-insertNano_MODAL' class='modal'>
+<DIV id='ObjectPerf-insertNano_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('OBJECTPERF-insertNano_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('ObjectPerf-insertNano_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -459,14 +434,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF-insertNano_DIV'>insertNano</a> -- LONG</td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-insertNano_DIV'>insertNano</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='OBJECTPERF-insertCount_MODAL' class='modal'>
+<DIV id='ObjectPerf-insertCount_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('OBJECTPERF-insertCount_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('ObjectPerf-insertCount_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -476,14 +451,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF-insertCount_DIV'>insertCount</a> -- LONG</td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-insertCount_DIV'>insertCount</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='OBJECTPERF-insertRecords_MODAL' class='modal'>
+<DIV id='ObjectPerf-insertRecords_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('OBJECTPERF-insertRecords_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('ObjectPerf-insertRecords_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -493,14 +468,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF-insertRecords_DIV'>insertRecords</a> -- LONG</td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-insertRecords_DIV'>insertRecords</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='OBJECTPERF-updateNano_MODAL' class='modal'>
+<DIV id='ObjectPerf-updateNano_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('OBJECTPERF-updateNano_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('ObjectPerf-updateNano_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -510,14 +485,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF-updateNano_DIV'>updateNano</a> -- LONG</td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-updateNano_DIV'>updateNano</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='OBJECTPERF-updateCount_MODAL' class='modal'>
+<DIV id='ObjectPerf-updateCount_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('OBJECTPERF-updateCount_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('ObjectPerf-updateCount_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -527,14 +502,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF-updateCount_DIV'>updateCount</a> -- LONG</td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-updateCount_DIV'>updateCount</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='OBJECTPERF-updateRecords_MODAL' class='modal'>
+<DIV id='ObjectPerf-updateRecords_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('OBJECTPERF-updateRecords_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('ObjectPerf-updateRecords_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -544,14 +519,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF-updateRecords_DIV'>updateRecords</a> -- LONG</td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-updateRecords_DIV'>updateRecords</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='OBJECTPERF-deleteNano_MODAL' class='modal'>
+<DIV id='ObjectPerf-deleteNano_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('OBJECTPERF-deleteNano_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('ObjectPerf-deleteNano_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -561,14 +536,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF-deleteNano_DIV'>deleteNano</a> -- LONG</td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-deleteNano_DIV'>deleteNano</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='OBJECTPERF-deleteCount_MODAL' class='modal'>
+<DIV id='ObjectPerf-deleteCount_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('OBJECTPERF-deleteCount_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('ObjectPerf-deleteCount_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -578,14 +553,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF-deleteCount_DIV'>deleteCount</a> -- LONG</td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-deleteCount_DIV'>deleteCount</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='OBJECTPERF-deleteRecords_MODAL' class='modal'>
+<DIV id='ObjectPerf-deleteRecords_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('OBJECTPERF-deleteRecords_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('ObjectPerf-deleteRecords_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -595,14 +570,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF-deleteRecords_DIV'>deleteRecords</a> -- LONG</td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-deleteRecords_DIV'>deleteRecords</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='OBJECTPERF-created_MODAL' class='modal'>
+<DIV id='ObjectPerf-created_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('OBJECTPERF-created_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('ObjectPerf-created_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -612,14 +587,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF-created_DIV'>created</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-created_DIV'>created</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='OBJECTPERF-lastUpdated_MODAL' class='modal'>
+<DIV id='ObjectPerf-lastUpdated_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('OBJECTPERF-lastUpdated_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('ObjectPerf-lastUpdated_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -629,14 +604,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='OBJECTPERF-deleted_MODAL' class='modal'>
+<DIV id='ObjectPerf-deleted_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('OBJECTPERF-deleted_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('ObjectPerf-deleted_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -646,8 +621,8 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF_DIV'>ObjectPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#OBJECTPERF-deleted_DIV'>deleted</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf_DIV'>ObjectPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#ObjectPerf-deleted_DIV'>deleted</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
@@ -655,34 +630,25 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jan 22 2018, 15:28:02EST
+ @generated Nov 1 2018, 08:48:09EDT
 */
+@SuppressWarnings({ "unused" })
 public abstract class TILDA__OBJECTPERF implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
    protected static final Logger LOG = LogManager.getLogger(TILDA__OBJECTPERF.class.getName());
 
    public static final Class<TILDA__OBJECTPERF_Factory> FACTORY_CLASS= TILDA__OBJECTPERF_Factory.class;
-   public static final String TABLENAME = TextUtil.Print("TILDA.OBJECTPERF", "");
+   public static final String TABLENAME = TextUtil.Print("TILDA.ObjectPerf", "");
 
    protected TILDA__OBJECTPERF() { }
 
-   private InitMode __Init        = null;
-   private long     __Nulls1      = 0L;
-   private long     __Nulls2      = 0L;
-   private long     __Nulls3      = 0L;
-   private long     __Nulls4      = 0L;
-   private long     __Nulls5      = 0L;
-   private long     __Nulls6      = 0L;
-   private long     __Changes1    = 0L;
-   private long     __Changes2    = 0L;
-   private long     __Changes3    = 0L;
-   private long     __Changes4    = 0L;
-   private long     __Changes5    = 0L;
-   private long     __Changes6    = 0L;
+   InitMode __Init        = null;
+   private BitSet   __Nulls       = new BitSet(64);
+   BitSet   __Changes     = new BitSet(64);
    private boolean  __NewlyCreated= false;
    private int      __LookupId;
 
-   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L || __Changes3 != 0L || __Changes4 != 0L || __Changes5 != 0L || __Changes6 != 0L; }
+   public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
    public  boolean isNewlyCreated() { return __NewlyCreated; }
 
    void initForCreate()
@@ -705,13 +671,13 @@ public abstract class TILDA__OBJECTPERF implements tilda.interfaces.WriterObject
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.schemaName -> TILDA.OBJECTPERF."schemaName"
+//   Field tilda.data.TILDA.ObjectPerf.schemaName -> TILDA.ObjectPerf."schemaName"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.schemaName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.schemaName of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.schemaName of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.schemaName of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -726,13 +692,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.schemaName -> TILDA.OBJECTPERF."schemaName"
+//   Field tilda.data.TILDA.ObjectPerf.schemaName -> TILDA.ObjectPerf."schemaName"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.schemaName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.schemaName of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.schemaName of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.schemaName of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -747,13 +713,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.schemaName -> TILDA.OBJECTPERF."schemaName"
+//   Field tilda.data.TILDA.ObjectPerf.schemaName -> TILDA.ObjectPerf."schemaName"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.schemaName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.schemaName of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.schemaName of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.schemaName of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -767,15 +733,15 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.OBJECTPERF.schemaName to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.schemaName to null: it's not nullable.");
        else if (v.length() > 64)
-        throw new Exception("Cannot set tilda.data.TILDA.OBJECTPERF.schemaName: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
+        throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.schemaName: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_schemaName) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.OBJECTPERF.schemaName' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask1;
-          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask1;
+           throw new Exception("Cannot set field 'tilda.data.TILDA.ObjectPerf.schemaName' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask);
        _schemaName = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -789,13 +755,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.objectName -> TILDA.OBJECTPERF."objectName"
+//   Field tilda.data.TILDA.ObjectPerf.objectName -> TILDA.ObjectPerf."objectName"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.objectName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.objectName of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.objectName of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.objectName of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -810,13 +776,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.objectName -> TILDA.OBJECTPERF."objectName"
+//   Field tilda.data.TILDA.ObjectPerf.objectName -> TILDA.ObjectPerf."objectName"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.objectName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.objectName of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.objectName of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.objectName of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -831,13 +797,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.objectName -> TILDA.OBJECTPERF."objectName"
+//   Field tilda.data.TILDA.ObjectPerf.objectName -> TILDA.ObjectPerf."objectName"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.objectName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.objectName of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.objectName of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.objectName of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -851,15 +817,15 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.OBJECTPERF.objectName to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.objectName to null: it's not nullable.");
        else if (v.length() > 64)
-        throw new Exception("Cannot set tilda.data.TILDA.OBJECTPERF.objectName: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
+        throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.objectName: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_objectName) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.OBJECTPERF.objectName' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask1;
-          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask1;
+           throw new Exception("Cannot set field 'tilda.data.TILDA.ObjectPerf.objectName' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask);
        _objectName = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -873,13 +839,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.startPeriodTZ -> TILDA.OBJECTPERF."startPeriodTZ"
+//   Field tilda.data.TILDA.ObjectPerf.startPeriodTZ -> TILDA.ObjectPerf."startPeriodTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.startPeriodTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.startPeriodTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.startPeriodTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.startPeriodTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -893,13 +859,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.startPeriodTZ -> TILDA.OBJECTPERF."startPeriodTZ"
+//   Field tilda.data.TILDA.ObjectPerf.startPeriodTZ -> TILDA.ObjectPerf."startPeriodTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.startPeriodTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.startPeriodTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.startPeriodTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.startPeriodTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -914,13 +880,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.startPeriodTZ -> TILDA.OBJECTPERF."startPeriodTZ"
+//   Field tilda.data.TILDA.ObjectPerf.startPeriodTZ -> TILDA.ObjectPerf."startPeriodTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.startPeriodTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.startPeriodTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.startPeriodTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.startPeriodTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -934,15 +900,15 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.OBJECTPERF.startPeriodTZ to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.startPeriodTZ to null: it's not nullable.");
        else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.OBJECTPERF.startPeriodTZ: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
+        throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.startPeriodTZ: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
        else if (v.equals(_startPeriodTZ) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.OBJECTPERF.startPeriodTZ' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask1;
-          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask1;
+           throw new Exception("Cannot set field 'tilda.data.TILDA.ObjectPerf.startPeriodTZ' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask);
        _startPeriodTZ = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -950,13 +916,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.startPeriodTZ -> TILDA.OBJECTPERF."startPeriodTZ"
+//   Field tilda.data.TILDA.ObjectPerf.startPeriodTZ -> TILDA.ObjectPerf."startPeriodTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.startPeriodTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.startPeriodTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.startPeriodTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.startPeriodTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -967,7 +933,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedStartPeriodTZ()
-     { return (TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask); }
 
 
 
@@ -977,13 +943,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.startPeriod -> TILDA.OBJECTPERF."startPeriod"
+//   Field tilda.data.TILDA.ObjectPerf.startPeriod -> TILDA.ObjectPerf."startPeriod"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.startPeriod of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.startPeriod of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.startPeriod of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.startPeriod of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -997,13 +963,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.startPeriod -> TILDA.OBJECTPERF."startPeriod"
+//   Field tilda.data.TILDA.ObjectPerf.startPeriod -> TILDA.ObjectPerf."startPeriod"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.startPeriod of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.startPeriod of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.startPeriod of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.startPeriod of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -1017,13 +983,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.startPeriod -> TILDA.OBJECTPERF."startPeriod"
+//   Field tilda.data.TILDA.ObjectPerf.startPeriod -> TILDA.ObjectPerf."startPeriod"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.startPeriod of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.startPeriod of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.startPeriod of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.startPeriod of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -1036,17 +1002,17 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.OBJECTPERF.startPeriod to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.startPeriod to null: it's not nullable.");
        else if (v.equals(_startPeriod) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.OBJECTPERF.startPeriod' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask1;
-          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask1;
+           throw new Exception("Cannot set field 'tilda.data.TILDA.ObjectPerf.startPeriod' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask);
        _startPeriod = v;
           tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
           if (ZI == null)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.OBJECTPERF.startPeriod' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+           throw new Exception("Cannot set field 'tilda.data.TILDA.ObjectPerf.startPeriod' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
           setStartPeriodTZ(ZI.getId());
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1060,13 +1026,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.endPeriodTZ -> TILDA.OBJECTPERF."endPeriodTZ"
+//   Field tilda.data.TILDA.ObjectPerf.endPeriodTZ -> TILDA.ObjectPerf."endPeriodTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.endPeriodTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.endPeriodTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.endPeriodTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.endPeriodTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -1080,13 +1046,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.endPeriodTZ -> TILDA.OBJECTPERF."endPeriodTZ"
+//   Field tilda.data.TILDA.ObjectPerf.endPeriodTZ -> TILDA.ObjectPerf."endPeriodTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.endPeriodTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.endPeriodTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.endPeriodTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.endPeriodTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -1101,13 +1067,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.endPeriodTZ -> TILDA.OBJECTPERF."endPeriodTZ"
+//   Field tilda.data.TILDA.ObjectPerf.endPeriodTZ -> TILDA.ObjectPerf."endPeriodTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.endPeriodTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.endPeriodTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.endPeriodTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.endPeriodTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -1121,13 +1087,13 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.OBJECTPERF.endPeriodTZ to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.endPeriodTZ to null: it's not nullable.");
        else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.OBJECTPERF.endPeriodTZ: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
+        throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.endPeriodTZ: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
        else if (v.equals(_endPeriodTZ) == false)
         {
-          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask1;
-          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask1;
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask);
        _endPeriodTZ = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1135,13 +1101,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.endPeriodTZ -> TILDA.OBJECTPERF."endPeriodTZ"
+//   Field tilda.data.TILDA.ObjectPerf.endPeriodTZ -> TILDA.ObjectPerf."endPeriodTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.endPeriodTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.endPeriodTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.endPeriodTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.endPeriodTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -1152,7 +1118,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedEndPeriodTZ()
-     { return (TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask); }
 
 
 
@@ -1162,13 +1128,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.endPeriod -> TILDA.OBJECTPERF."endPeriod"
+//   Field tilda.data.TILDA.ObjectPerf.endPeriod -> TILDA.ObjectPerf."endPeriod"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.endPeriod of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.endPeriod of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.endPeriod of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.endPeriod of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -1181,13 +1147,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.endPeriod -> TILDA.OBJECTPERF."endPeriod"
+//   Field tilda.data.TILDA.ObjectPerf.endPeriod -> TILDA.ObjectPerf."endPeriod"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.endPeriod of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.endPeriod of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.endPeriod of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.endPeriod of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -1201,13 +1167,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.endPeriod -> TILDA.OBJECTPERF."endPeriod"
+//   Field tilda.data.TILDA.ObjectPerf.endPeriod -> TILDA.ObjectPerf."endPeriod"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.endPeriod of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.endPeriod of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.endPeriod of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.endPeriod of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -1220,15 +1186,15 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.OBJECTPERF.endPeriod to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.endPeriod to null: it's not nullable.");
        else if (v.equals(_endPeriod) == false)
         {
-          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask1;
-          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask1;
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask);
        _endPeriod = v;
           tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
           if (ZI == null)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.OBJECTPERF.endPeriod' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+           throw new Exception("Cannot set field 'tilda.data.TILDA.ObjectPerf.endPeriod' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
           setEndPeriodTZ(ZI.getId());
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1236,13 +1202,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.endPeriod -> TILDA.OBJECTPERF."endPeriod"
+//   Field tilda.data.TILDA.ObjectPerf.endPeriod -> TILDA.ObjectPerf."endPeriod"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the NOW setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.endPeriod of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.endPeriod of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.endPeriod of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.endPeriod of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -1258,13 +1224,13 @@ This is the NOW setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.endPeriod -> TILDA.OBJECTPERF."endPeriod"
+//   Field tilda.data.TILDA.ObjectPerf.endPeriod -> TILDA.ObjectPerf."endPeriod"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the UNDEFINED setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.endPeriod of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.endPeriod of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.endPeriod of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.endPeriod of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -1280,13 +1246,13 @@ This is the UNDEFINED setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.endPeriod -> TILDA.OBJECTPERF."endPeriod"
+//   Field tilda.data.TILDA.ObjectPerf.endPeriod -> TILDA.ObjectPerf."endPeriod"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.endPeriod of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.endPeriod of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.endPeriod of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.endPeriod of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -1302,13 +1268,13 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.endPeriod -> TILDA.OBJECTPERF."endPeriod"
+//   Field tilda.data.TILDA.ObjectPerf.endPeriod -> TILDA.ObjectPerf."endPeriod"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.endPeriod of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.endPeriod of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.endPeriod of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.endPeriod of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -1318,7 +1284,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedEndPeriod()
-     { return (TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask); }
 
 
 
@@ -1328,13 +1294,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.selectNano -> TILDA.OBJECTPERF."selectNano"
+//   Field tilda.data.TILDA.ObjectPerf.selectNano -> TILDA.ObjectPerf."selectNano"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.selectNano of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.selectNano of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.selectNano of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.selectNano of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1347,13 +1313,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.selectNano -> TILDA.OBJECTPERF."selectNano"
+//   Field tilda.data.TILDA.ObjectPerf.selectNano -> TILDA.ObjectPerf."selectNano"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.selectNano of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.selectNano of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.selectNano of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.selectNano of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1367,13 +1333,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.selectNano -> TILDA.OBJECTPERF."selectNano"
+//   Field tilda.data.TILDA.ObjectPerf.selectNano -> TILDA.ObjectPerf."selectNano"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.selectNano of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.selectNano of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.selectNano of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.selectNano of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1387,8 +1353,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _selectNano)
         {
-          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask1;
-          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask1;
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask);
        _selectNano = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1396,13 +1362,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.selectNano -> TILDA.OBJECTPERF."selectNano"
+//   Field tilda.data.TILDA.ObjectPerf.selectNano -> TILDA.ObjectPerf."selectNano"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.selectNano of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.selectNano of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.selectNano of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.selectNano of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1412,7 +1378,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedSelectNano()
-     { return (TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask); }
 
 
 
@@ -1422,13 +1388,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.selectCount -> TILDA.OBJECTPERF."selectCount"
+//   Field tilda.data.TILDA.ObjectPerf.selectCount -> TILDA.ObjectPerf."selectCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.selectCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.selectCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.selectCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.selectCount of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1441,13 +1407,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.selectCount -> TILDA.OBJECTPERF."selectCount"
+//   Field tilda.data.TILDA.ObjectPerf.selectCount -> TILDA.ObjectPerf."selectCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.selectCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.selectCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.selectCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.selectCount of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1461,13 +1427,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.selectCount -> TILDA.OBJECTPERF."selectCount"
+//   Field tilda.data.TILDA.ObjectPerf.selectCount -> TILDA.ObjectPerf."selectCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.selectCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.selectCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.selectCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.selectCount of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1481,8 +1447,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _selectCount)
         {
-          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask1;
-          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask1;
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask);
        _selectCount = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1490,13 +1456,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.selectCount -> TILDA.OBJECTPERF."selectCount"
+//   Field tilda.data.TILDA.ObjectPerf.selectCount -> TILDA.ObjectPerf."selectCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.selectCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.selectCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.selectCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.selectCount of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1506,7 +1472,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedSelectCount()
-     { return (TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask); }
 
 
 
@@ -1516,13 +1482,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.selectRecords -> TILDA.OBJECTPERF."selectRecords"
+//   Field tilda.data.TILDA.ObjectPerf.selectRecords -> TILDA.ObjectPerf."selectRecords"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.selectRecords of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.selectRecords of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.selectRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.selectRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1535,13 +1501,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.selectRecords -> TILDA.OBJECTPERF."selectRecords"
+//   Field tilda.data.TILDA.ObjectPerf.selectRecords -> TILDA.ObjectPerf."selectRecords"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.selectRecords of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.selectRecords of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.selectRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.selectRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1555,13 +1521,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.selectRecords -> TILDA.OBJECTPERF."selectRecords"
+//   Field tilda.data.TILDA.ObjectPerf.selectRecords -> TILDA.ObjectPerf."selectRecords"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.selectRecords of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.selectRecords of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.selectRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.selectRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1575,8 +1541,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _selectRecords)
         {
-          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask1;
-          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask1;
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask);
        _selectRecords = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1584,13 +1550,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.selectRecords -> TILDA.OBJECTPERF."selectRecords"
+//   Field tilda.data.TILDA.ObjectPerf.selectRecords -> TILDA.ObjectPerf."selectRecords"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.selectRecords of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.selectRecords of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.selectRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.selectRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1600,7 +1566,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedSelectRecords()
-     { return (TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask); }
 
 
 
@@ -1610,13 +1576,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.insertNano -> TILDA.OBJECTPERF."insertNano"
+//   Field tilda.data.TILDA.ObjectPerf.insertNano -> TILDA.ObjectPerf."insertNano"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.insertNano of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.insertNano of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.insertNano of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.insertNano of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1629,13 +1595,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.insertNano -> TILDA.OBJECTPERF."insertNano"
+//   Field tilda.data.TILDA.ObjectPerf.insertNano -> TILDA.ObjectPerf."insertNano"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.insertNano of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.insertNano of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.insertNano of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.insertNano of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1649,13 +1615,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.insertNano -> TILDA.OBJECTPERF."insertNano"
+//   Field tilda.data.TILDA.ObjectPerf.insertNano -> TILDA.ObjectPerf."insertNano"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.insertNano of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.insertNano of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.insertNano of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.insertNano of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1669,8 +1635,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _insertNano)
         {
-          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask1;
-          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask1;
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask);
        _insertNano = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1678,13 +1644,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.insertNano -> TILDA.OBJECTPERF."insertNano"
+//   Field tilda.data.TILDA.ObjectPerf.insertNano -> TILDA.ObjectPerf."insertNano"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.insertNano of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.insertNano of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.insertNano of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.insertNano of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1694,7 +1660,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedInsertNano()
-     { return (TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask); }
 
 
 
@@ -1704,13 +1670,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.insertCount -> TILDA.OBJECTPERF."insertCount"
+//   Field tilda.data.TILDA.ObjectPerf.insertCount -> TILDA.ObjectPerf."insertCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.insertCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.insertCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.insertCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.insertCount of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1723,13 +1689,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.insertCount -> TILDA.OBJECTPERF."insertCount"
+//   Field tilda.data.TILDA.ObjectPerf.insertCount -> TILDA.ObjectPerf."insertCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.insertCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.insertCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.insertCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.insertCount of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1743,13 +1709,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.insertCount -> TILDA.OBJECTPERF."insertCount"
+//   Field tilda.data.TILDA.ObjectPerf.insertCount -> TILDA.ObjectPerf."insertCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.insertCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.insertCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.insertCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.insertCount of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1763,8 +1729,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _insertCount)
         {
-          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask1;
-          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask1;
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask);
        _insertCount = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1772,13 +1738,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.insertCount -> TILDA.OBJECTPERF."insertCount"
+//   Field tilda.data.TILDA.ObjectPerf.insertCount -> TILDA.ObjectPerf."insertCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.insertCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.insertCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.insertCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.insertCount of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1788,7 +1754,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedInsertCount()
-     { return (TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask); }
 
 
 
@@ -1798,13 +1764,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.insertRecords -> TILDA.OBJECTPERF."insertRecords"
+//   Field tilda.data.TILDA.ObjectPerf.insertRecords -> TILDA.ObjectPerf."insertRecords"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.insertRecords of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.insertRecords of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.insertRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.insertRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1817,13 +1783,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.insertRecords -> TILDA.OBJECTPERF."insertRecords"
+//   Field tilda.data.TILDA.ObjectPerf.insertRecords -> TILDA.ObjectPerf."insertRecords"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.insertRecords of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.insertRecords of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.insertRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.insertRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1837,13 +1803,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.insertRecords -> TILDA.OBJECTPERF."insertRecords"
+//   Field tilda.data.TILDA.ObjectPerf.insertRecords -> TILDA.ObjectPerf."insertRecords"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.insertRecords of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.insertRecords of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.insertRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.insertRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1857,8 +1823,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _insertRecords)
         {
-          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask1;
-          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask1;
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask);
        _insertRecords = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1866,13 +1832,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.insertRecords -> TILDA.OBJECTPERF."insertRecords"
+//   Field tilda.data.TILDA.ObjectPerf.insertRecords -> TILDA.ObjectPerf."insertRecords"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.insertRecords of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.insertRecords of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.insertRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.insertRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1882,7 +1848,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedInsertRecords()
-     { return (TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask); }
 
 
 
@@ -1892,13 +1858,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.updateNano -> TILDA.OBJECTPERF."updateNano"
+//   Field tilda.data.TILDA.ObjectPerf.updateNano -> TILDA.ObjectPerf."updateNano"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.updateNano of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.updateNano of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.updateNano of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.updateNano of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1911,13 +1877,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.updateNano -> TILDA.OBJECTPERF."updateNano"
+//   Field tilda.data.TILDA.ObjectPerf.updateNano -> TILDA.ObjectPerf."updateNano"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.updateNano of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.updateNano of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.updateNano of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.updateNano of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1931,13 +1897,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.updateNano -> TILDA.OBJECTPERF."updateNano"
+//   Field tilda.data.TILDA.ObjectPerf.updateNano -> TILDA.ObjectPerf."updateNano"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.updateNano of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.updateNano of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.updateNano of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.updateNano of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1951,8 +1917,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _updateNano)
         {
-          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask1;
-          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask1;
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask);
        _updateNano = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1960,13 +1926,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.updateNano -> TILDA.OBJECTPERF."updateNano"
+//   Field tilda.data.TILDA.ObjectPerf.updateNano -> TILDA.ObjectPerf."updateNano"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.updateNano of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.updateNano of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.updateNano of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.updateNano of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1976,7 +1942,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedUpdateNano()
-     { return (TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask); }
 
 
 
@@ -1986,13 +1952,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.updateCount -> TILDA.OBJECTPERF."updateCount"
+//   Field tilda.data.TILDA.ObjectPerf.updateCount -> TILDA.ObjectPerf."updateCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.updateCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.updateCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.updateCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.updateCount of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -2005,13 +1971,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.updateCount -> TILDA.OBJECTPERF."updateCount"
+//   Field tilda.data.TILDA.ObjectPerf.updateCount -> TILDA.ObjectPerf."updateCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.updateCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.updateCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.updateCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.updateCount of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -2025,13 +1991,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.updateCount -> TILDA.OBJECTPERF."updateCount"
+//   Field tilda.data.TILDA.ObjectPerf.updateCount -> TILDA.ObjectPerf."updateCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.updateCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.updateCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.updateCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.updateCount of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -2045,8 +2011,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _updateCount)
         {
-          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask1;
-          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask1;
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask);
        _updateCount = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2054,13 +2020,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.updateCount -> TILDA.OBJECTPERF."updateCount"
+//   Field tilda.data.TILDA.ObjectPerf.updateCount -> TILDA.ObjectPerf."updateCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.updateCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.updateCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.updateCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.updateCount of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -2070,7 +2036,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedUpdateCount()
-     { return (TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask); }
 
 
 
@@ -2080,13 +2046,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.updateRecords -> TILDA.OBJECTPERF."updateRecords"
+//   Field tilda.data.TILDA.ObjectPerf.updateRecords -> TILDA.ObjectPerf."updateRecords"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.updateRecords of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.updateRecords of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.updateRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.updateRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -2099,13 +2065,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.updateRecords -> TILDA.OBJECTPERF."updateRecords"
+//   Field tilda.data.TILDA.ObjectPerf.updateRecords -> TILDA.ObjectPerf."updateRecords"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.updateRecords of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.updateRecords of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.updateRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.updateRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -2119,13 +2085,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.updateRecords -> TILDA.OBJECTPERF."updateRecords"
+//   Field tilda.data.TILDA.ObjectPerf.updateRecords -> TILDA.ObjectPerf."updateRecords"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.updateRecords of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.updateRecords of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.updateRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.updateRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -2139,8 +2105,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _updateRecords)
         {
-          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask1;
-          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask1;
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask);
        _updateRecords = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2148,13 +2114,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.updateRecords -> TILDA.OBJECTPERF."updateRecords"
+//   Field tilda.data.TILDA.ObjectPerf.updateRecords -> TILDA.ObjectPerf."updateRecords"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.updateRecords of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.updateRecords of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.updateRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.updateRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -2164,7 +2130,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedUpdateRecords()
-     { return (TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask); }
 
 
 
@@ -2174,13 +2140,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.deleteNano -> TILDA.OBJECTPERF."deleteNano"
+//   Field tilda.data.TILDA.ObjectPerf.deleteNano -> TILDA.ObjectPerf."deleteNano"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.deleteNano of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.deleteNano of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.deleteNano of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.deleteNano of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -2193,13 +2159,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.deleteNano -> TILDA.OBJECTPERF."deleteNano"
+//   Field tilda.data.TILDA.ObjectPerf.deleteNano -> TILDA.ObjectPerf."deleteNano"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.deleteNano of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.deleteNano of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.deleteNano of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.deleteNano of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -2213,13 +2179,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.deleteNano -> TILDA.OBJECTPERF."deleteNano"
+//   Field tilda.data.TILDA.ObjectPerf.deleteNano -> TILDA.ObjectPerf."deleteNano"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.deleteNano of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.deleteNano of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.deleteNano of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.deleteNano of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -2233,8 +2199,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _deleteNano)
         {
-          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask1;
-          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask1;
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask);
        _deleteNano = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2242,13 +2208,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.deleteNano -> TILDA.OBJECTPERF."deleteNano"
+//   Field tilda.data.TILDA.ObjectPerf.deleteNano -> TILDA.ObjectPerf."deleteNano"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.deleteNano of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.deleteNano of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.deleteNano of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.deleteNano of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -2258,7 +2224,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedDeleteNano()
-     { return (TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask); }
 
 
 
@@ -2268,13 +2234,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.deleteCount -> TILDA.OBJECTPERF."deleteCount"
+//   Field tilda.data.TILDA.ObjectPerf.deleteCount -> TILDA.ObjectPerf."deleteCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.deleteCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.deleteCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.deleteCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.deleteCount of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -2287,13 +2253,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.deleteCount -> TILDA.OBJECTPERF."deleteCount"
+//   Field tilda.data.TILDA.ObjectPerf.deleteCount -> TILDA.ObjectPerf."deleteCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.deleteCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.deleteCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.deleteCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.deleteCount of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -2307,13 +2273,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.deleteCount -> TILDA.OBJECTPERF."deleteCount"
+//   Field tilda.data.TILDA.ObjectPerf.deleteCount -> TILDA.ObjectPerf."deleteCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.deleteCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.deleteCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.deleteCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.deleteCount of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -2327,8 +2293,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _deleteCount)
         {
-          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask1;
-          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask1;
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask);
        _deleteCount = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2336,13 +2302,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.deleteCount -> TILDA.OBJECTPERF."deleteCount"
+//   Field tilda.data.TILDA.ObjectPerf.deleteCount -> TILDA.ObjectPerf."deleteCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.deleteCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.deleteCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.deleteCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.deleteCount of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -2352,7 +2318,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedDeleteCount()
-     { return (TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask); }
 
 
 
@@ -2362,13 +2328,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.deleteRecords -> TILDA.OBJECTPERF."deleteRecords"
+//   Field tilda.data.TILDA.ObjectPerf.deleteRecords -> TILDA.ObjectPerf."deleteRecords"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.deleteRecords of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.deleteRecords of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.deleteRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.deleteRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -2381,13 +2347,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.deleteRecords -> TILDA.OBJECTPERF."deleteRecords"
+//   Field tilda.data.TILDA.ObjectPerf.deleteRecords -> TILDA.ObjectPerf."deleteRecords"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.deleteRecords of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.deleteRecords of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.deleteRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.deleteRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -2401,13 +2367,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.deleteRecords -> TILDA.OBJECTPERF."deleteRecords"
+//   Field tilda.data.TILDA.ObjectPerf.deleteRecords -> TILDA.ObjectPerf."deleteRecords"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.deleteRecords of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.deleteRecords of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.deleteRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.deleteRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -2421,8 +2387,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _deleteRecords)
         {
-          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask1;
-          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask1;
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask);
        _deleteRecords = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2430,13 +2396,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.deleteRecords -> TILDA.OBJECTPERF."deleteRecords"
+//   Field tilda.data.TILDA.ObjectPerf.deleteRecords -> TILDA.ObjectPerf."deleteRecords"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.deleteRecords of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.deleteRecords of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.deleteRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.deleteRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -2446,7 +2412,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedDeleteRecords()
-     { return (TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask); }
 
 
 
@@ -2456,16 +2422,16 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.created -> TILDA.OBJECTPERF."created"
+//   Field tilda.data.TILDA.ObjectPerf.created -> TILDA.ObjectPerf."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.ObjectPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2482,16 +2448,16 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.created -> TILDA.OBJECTPERF."created"
+//   Field tilda.data.TILDA.ObjectPerf.created -> TILDA.ObjectPerf."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.ObjectPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2509,16 +2475,16 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.created -> TILDA.OBJECTPERF."created"
+//   Field tilda.data.TILDA.ObjectPerf.created -> TILDA.ObjectPerf."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.ObjectPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2535,13 +2501,13 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.OBJECTPERF.created to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.created to null: it's not nullable.");
        else if (v.equals(_created) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.OBJECTPERF.created' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask1;
-          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask1;
+           throw new Exception("Cannot set field 'tilda.data.TILDA.ObjectPerf.created' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask);
        _created = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2549,16 +2515,16 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.created -> TILDA.OBJECTPERF."created"
+//   Field tilda.data.TILDA.ObjectPerf.created -> TILDA.ObjectPerf."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the NOW setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.ObjectPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2578,16 +2544,16 @@ This is the NOW setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.created -> TILDA.OBJECTPERF."created"
+//   Field tilda.data.TILDA.ObjectPerf.created -> TILDA.ObjectPerf."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the UNDEFINED setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.ObjectPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2607,16 +2573,16 @@ This is the UNDEFINED setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.created -> TILDA.OBJECTPERF."created"
+//   Field tilda.data.TILDA.ObjectPerf.created -> TILDA.ObjectPerf."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.ObjectPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2636,16 +2602,16 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.created -> TILDA.OBJECTPERF."created"
+//   Field tilda.data.TILDA.ObjectPerf.created -> TILDA.ObjectPerf."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.ObjectPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2659,7 +2625,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedCreated()
-     { return (TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask); }
 
 
 
@@ -2669,16 +2635,16 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.lastUpdated -> TILDA.OBJECTPERF."lastUpdated"
+//   Field tilda.data.TILDA.ObjectPerf.lastUpdated -> TILDA.ObjectPerf."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.ObjectPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2695,16 +2661,16 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.lastUpdated -> TILDA.OBJECTPERF."lastUpdated"
+//   Field tilda.data.TILDA.ObjectPerf.lastUpdated -> TILDA.ObjectPerf."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.ObjectPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2722,16 +2688,16 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.lastUpdated -> TILDA.OBJECTPERF."lastUpdated"
+//   Field tilda.data.TILDA.ObjectPerf.lastUpdated -> TILDA.ObjectPerf."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.ObjectPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2748,11 +2714,11 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.OBJECTPERF.lastUpdated to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.ObjectPerf.lastUpdated to null: it's not nullable.");
        else if (v.equals(_lastUpdated) == false)
         {
-          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask1;
-          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask1;
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask);
        _lastUpdated = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2760,16 +2726,16 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.lastUpdated -> TILDA.OBJECTPERF."lastUpdated"
+//   Field tilda.data.TILDA.ObjectPerf.lastUpdated -> TILDA.ObjectPerf."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the NOW setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.ObjectPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2789,16 +2755,16 @@ This is the NOW setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.lastUpdated -> TILDA.OBJECTPERF."lastUpdated"
+//   Field tilda.data.TILDA.ObjectPerf.lastUpdated -> TILDA.ObjectPerf."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the UNDEFINED setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.ObjectPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2818,16 +2784,16 @@ This is the UNDEFINED setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.lastUpdated -> TILDA.OBJECTPERF."lastUpdated"
+//   Field tilda.data.TILDA.ObjectPerf.lastUpdated -> TILDA.ObjectPerf."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.ObjectPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2847,16 +2813,16 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.lastUpdated -> TILDA.OBJECTPERF."lastUpdated"
+//   Field tilda.data.TILDA.ObjectPerf.lastUpdated -> TILDA.ObjectPerf."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.ObjectPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2870,7 +2836,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedLastUpdated()
-     { return (TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask); }
 
 
 
@@ -2880,16 +2846,16 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.deleted -> TILDA.OBJECTPERF."deleted"
+//   Field tilda.data.TILDA.ObjectPerf.deleted -> TILDA.ObjectPerf."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.ObjectPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2899,16 +2865,16 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.deleted -> TILDA.OBJECTPERF."deleted"
+//   Field tilda.data.TILDA.ObjectPerf.deleted -> TILDA.ObjectPerf."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.ObjectPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2919,36 +2885,36 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.deleted -> TILDA.OBJECTPERF."deleted"
+//   Field tilda.data.TILDA.ObjectPerf.deleted -> TILDA.ObjectPerf."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.ObjectPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
    public final boolean isNullDeleted()
-     { return (TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask1 & __Nulls1) != 0L; }
+     { return __Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.deleted -> TILDA.OBJECTPERF."deleted"
+//   Field tilda.data.TILDA.ObjectPerf.deleted -> TILDA.ObjectPerf."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.ObjectPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2963,8 +2929,8 @@ This is the setter for:<BR>
         }
        else if (v.equals(_deleted) == false)
         {
-          __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask1;
-          __Nulls1   &= ~TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask1;
+          __Changes.or(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask);
+          __Nulls.andNot(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask);
        _deleted = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -2972,16 +2938,16 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.deleted -> TILDA.OBJECTPERF."deleted"
+//   Field tilda.data.TILDA.ObjectPerf.deleted -> TILDA.ObjectPerf."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.ObjectPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2990,26 +2956,26 @@ This is the null setter for:<BR>
    public final void setNullDeleted()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask1 & __Nulls1) != 0L)
+       if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask) == true) // already NULL
         return;
-       __Changes1 |= TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask1;
-       __Nulls1   |= TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask1;
+       __Changes.or(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask);
+       __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask);
        _deleted=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.deleted -> TILDA.OBJECTPERF."deleted"
+//   Field tilda.data.TILDA.ObjectPerf.deleted -> TILDA.ObjectPerf."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the NOW setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.ObjectPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3022,16 +2988,16 @@ This is the NOW setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.deleted -> TILDA.OBJECTPERF."deleted"
+//   Field tilda.data.TILDA.ObjectPerf.deleted -> TILDA.ObjectPerf."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the UNDEFINED setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.ObjectPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3044,16 +3010,16 @@ This is the UNDEFINED setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.deleted -> TILDA.OBJECTPERF."deleted"
+//   Field tilda.data.TILDA.ObjectPerf.deleted -> TILDA.ObjectPerf."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.ObjectPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -3066,23 +3032,23 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.deleted -> TILDA.OBJECTPERF."deleted"
+//   Field tilda.data.TILDA.ObjectPerf.deleted -> TILDA.ObjectPerf."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.ObjectPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
    public boolean hasChangedDeleted()
-     { return (TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask); }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3110,7 +3076,7 @@ This is the hasChanged for:<BR>
        Dst.setDeleteCount  (_deleteCount  );
        Dst.setDeleteRecords(_deleteRecords);
        Dst.setLastUpdated  (_lastUpdated  );
-       if ((TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask1       & __Nulls1) != 0L) Dst.setNullDeleted      (); else        Dst.setDeleted      (_deleted      );
+       if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask) == true) Dst.setNullDeleted      (); else        Dst.setDeleted      (_deleted      );
      }
 
 /**
@@ -3126,65 +3092,60 @@ This is the hasChanged for:<BR>
  Writes the object to the data store if any changes has occurred since the object was initially
  read from the data store or last written. 
 */
-   public final boolean Write(Connection C) throws Exception
+   protected String getTimeStampSignature() throws Exception
      {
-       long T0 = System.nanoTime();
-       if (hasChanged() == false)
-        {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.OBJECTPERF has not changed: no writing will occur.");
-          QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
-          return true;
-        }
-
        StringBuilder S = new StringBuilder(1024);
-
-       if (BeforeWrite(C) == false)
-        {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.OBJECTPERF object's BeforeWrite() failed.");
-          QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
-          return false;
-        }
+       if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_startPeriod) == true ? "C" : "X");
+       if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_endPeriod) == true ? "C" : "X");
+       if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_created) == true ? "C" : "X");
+       if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? "C" : "X");
+       if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_deleted) == true ? "C" : "X");
+       return S.toString();
+     }
+   protected String getWriteQuery(Connection C) throws Exception
+     {
+       StringBuilder S = new StringBuilder(1024);
 
        if (__Init == InitMode.CREATE)
         {
           StringBuilder V = new StringBuilder(1024);
-          S.append("insert into "); C.getFullTableVar(S, "TILDA", "OBJECTPERF");
+          S.append("insert into "); C.getFullTableVar(S, "TILDA", "ObjectPerf");
           int Pos = S.length();
-          if ((TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask1    & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask1    & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask1 & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
-          if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask1   & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD.getFullColumnVarForInsert(C, S);
-             V.append((TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_startPeriod) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD.getFullColumnVarForInsert(C, S);
+             V.append(__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask) == false && DateTimeUtil.isNowPlaceholder(_startPeriod) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask1   & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
-          if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask1     & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD.getFullColumnVarForInsert(C, S);
-             V.append((TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_endPeriod) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD.getFullColumnVarForInsert(C, S);
+             V.append(__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask) == false && DateTimeUtil.isNowPlaceholder(_endPeriod) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask1    & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.SELECTNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask1   & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask1 & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask1    & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.INSERTNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask1   & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask1 & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask1    & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.UPDATENANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask1   & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask1 & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask1    & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.DELETENANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask1   & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask1 & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.SELECTNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.INSERTNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.UPDATENANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.DELETENANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
-          if ((TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask1       & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
-             V.append((TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
+             V.append(__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
           else { TILDA__OBJECTPERF_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
-          if ((TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask1   & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
-             V.append((TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
+             V.append(__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
           else { TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
-          if ((TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask1       & __Changes1) != 0L) { TILDA__OBJECTPERF_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
-             V.append((TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask) == true) { TILDA__OBJECTPERF_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
+             V.append(__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
 
           S.setCharAt(Pos, '(');
@@ -3195,52 +3156,52 @@ This is the hasChanged for:<BR>
         }
        else // InitMode can be anything else
         {
-          S.append("update "); C.getFullTableVar(S, "TILDA", "OBJECTPERF"); S.append(" set");
+          S.append("update "); C.getFullTableVar(S, "TILDA", "ObjectPerf"); S.append(" set");
           int Pos = S.length();
-          if ((TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask1    & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask1    & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask1 & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask) == true) TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask) == true) TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask) == true) TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ.getFullColumnVarForUpdate(C, S);
 
-          if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask1 & __Changes1) != 0L)
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask) == true)
            {
-             if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_startPeriod) == true)
+             if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask) == false && DateTimeUtil.isNowPlaceholder(_startPeriod) == true)
               { TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
               TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD.getFullColumnVarForUpdate(C, S);
            }
-          if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask1   & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask) == true) TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ.getFullColumnVarForUpdate(C, S);
 
-          if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask1 & __Changes1) != 0L)
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask) == true)
            {
-             if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_endPeriod) == true)
+             if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask) == false && DateTimeUtil.isNowPlaceholder(_endPeriod) == true)
               { TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
               TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD.getFullColumnVarForUpdate(C, S);
            }
-          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask1    & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.SELECTNANO.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask1   & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask1 & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask1    & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.INSERTNANO.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask1   & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask1 & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask1    & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.UPDATENANO.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask1   & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask1 & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask1    & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.DELETENANO.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask1   & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask1 & __Changes1) != 0L) TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask) == true) TILDA__OBJECTPERF_Factory.COLS.SELECTNANO.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask) == true) TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask) == true) TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask) == true) TILDA__OBJECTPERF_Factory.COLS.INSERTNANO.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask) == true) TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask) == true) TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask) == true) TILDA__OBJECTPERF_Factory.COLS.UPDATENANO.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask) == true) TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask) == true) TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask) == true) TILDA__OBJECTPERF_Factory.COLS.DELETENANO.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask) == true) TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask) == true) TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS.getFullColumnVarForUpdate(C, S);
 
-          if ((TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask1 & __Changes1) != 0L)
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask) == true)
            {
-             if ((TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true)
+             if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true)
               { TILDA__OBJECTPERF_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
               TILDA__OBJECTPERF_Factory.COLS.CREATED.getFullColumnVarForUpdate(C, S);
            }
 
-          if ((TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask1 & __Changes1) != 0L)
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask) == true)
            {
-             if ((TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true)
+             if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true)
               { TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
               TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED.getFullColumnVarForUpdate(C, S);
@@ -3251,9 +3212,9 @@ This is the hasChanged for:<BR>
              setLastUpdatedNow();
            }
 
-          if ((TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask1 & __Changes1) != 0L)
+          if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask) == true)
            {
-             if ((TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true)
+             if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true)
               { TILDA__OBJECTPERF_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
               TILDA__OBJECTPERF_Factory.COLS.DELETED.getFullColumnVarForUpdate(C, S);
@@ -3262,8 +3223,9 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "objectName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "startPeriod"); S.append("=?)");
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "objectName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "startPeriod"); S.append("=?)");
                 break;
+             case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
            }
@@ -3274,97 +3236,151 @@ This is the hasChanged for:<BR>
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, Q);
-       QueryDetails.logQuery("TILDA.OBJECTPERF", Q, toString());
+       QueryDetails.logQuery("TILDA.ObjectPerf", Q, toString());
+
+       return Q;
+     }
+   protected int populatePreparedStatement(Connection C, java.sql.PreparedStatement PS, List<java.sql.Array> AllocatedArrays) throws Exception
+     {
+       int i = 0;
+       if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _schemaName);
+        } 
+       if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _objectName);
+        } 
+       if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _startPeriodTZ);
+        } 
+       if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_startPeriod) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_startPeriod.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+        } 
+       if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _endPeriodTZ);
+        } 
+       if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_endPeriod) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_endPeriod.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+        } 
+       if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _selectNano);
+        } 
+       if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _selectCount);
+        } 
+       if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _selectRecords);
+        } 
+       if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _insertNano);
+        } 
+       if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _insertCount);
+        } 
+       if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _insertRecords);
+        } 
+       if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _updateNano);
+        } 
+       if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _updateCount);
+        } 
+       if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _updateRecords);
+        } 
+       if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _deleteNano);
+        } 
+       if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _deleteCount);
+        } 
+       if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _deleteRecords);
+        } 
+       if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+        } 
+       if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_lastUpdated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+        } 
+       if (__Changes.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deleted.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+        } 
+       return i;
+     }
+   protected void stateUpdatePostWrite() throws Exception
+     {
+       if (__Init == InitMode.CREATE)
+        {
+          __Init = InitMode.WRITTEN;
+          __LookupId = 0;
+        }
+       else
+        {
+          __Init = __Init == InitMode.READ ? InitMode.READ_WRITTEN : InitMode.WRITTEN;
+        }
+
+       switch (__LookupId)
+        {
+          case 0:
+             __Saved_schemaName    = _schemaName   ;
+             __Saved_objectName    = _objectName   ;
+             __Saved_startPeriod   = _startPeriod  ;
+             break;
+          case -666: if (__Init == InitMode.CREATE) break;
+          default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
+        }
+
+       __Changes.clear();
+       __Nulls.clear();
+     }
+   public final boolean Write(Connection C) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (hasChanged() == false)
+        {
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.ObjectPerf has not changed: no writing will occur.");
+          QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
+          return true;
+        }
+
+       if (BeforeWrite(C) == false)
+        {
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.ObjectPerf object's BeforeWrite() failed.");
+          QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
+          return false;
+        }
+
+       String Q = getWriteQuery(C);
+
        java.sql.PreparedStatement PS = null;
        int count = 0;
+       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
        try
         {
           PS = C.prepareStatement(Q);
-          int i = 0;
-               if ((TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask1    & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask1    & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _schemaName);
-                } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask1    & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask1    & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _objectName);
-                } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask1 & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask1 & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _startPeriodTZ);
-                } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask1   & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask1   & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_startPeriod) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_startPeriod.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
-                } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask1   & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask1   & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _endPeriodTZ);
-                } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask1     & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask1     & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_endPeriod) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_endPeriod.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
-                } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask1    & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask1    & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _selectNano);
-                } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask1   & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask1   & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _selectCount);
-                } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask1 & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask1 & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _selectRecords);
-                } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask1    & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask1    & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _insertNano);
-                } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask1   & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask1   & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _insertCount);
-                } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask1 & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask1 & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _insertRecords);
-                } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask1    & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask1    & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _updateNano);
-                } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask1   & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask1   & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _updateCount);
-                } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask1 & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask1 & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _updateRecords);
-                } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask1    & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask1    & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _deleteNano);
-                } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask1   & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask1   & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _deleteCount);
-                } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask1 & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask1 & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _deleteRecords);
-                } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask1       & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask1       & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
-                } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask1   & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask1   & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_lastUpdated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
-                } 
-               if ((TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask1       & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask1       & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deleted.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
-                } 
+          int i = populatePreparedStatement(C, PS, AllocatedArrays);
 
           switch (__LookupId)
            {
@@ -3394,32 +3410,12 @@ This is the hasChanged for:<BR>
           PS = null;
         }
 
-       if (__Init == InitMode.CREATE)
-        {
-          __Init = InitMode.WRITTEN;
-          __LookupId = 0;
-        }
-       else
-        {
-          __Init = __Init == InitMode.READ ? InitMode.READ_WRITTEN : InitMode.WRITTEN;
-        }
-
-       switch (__LookupId)
-        {
-          case 0:
-             __Saved_schemaName    = _schemaName   ;
-             __Saved_objectName    = _objectName   ;
-             __Saved_startPeriod   = _startPeriod  ;
-             break;
-          case -666: if (__Init == InitMode.CREATE) break;
-          default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
-        }
-
-       __Changes1= __Changes2= __Changes3= __Changes4= __Changes5= __Changes6= __Nulls1= __Nulls2= __Nulls3= __Nulls4= __Nulls5= __Nulls6= 0L;
+       stateUpdatePostWrite();
        return true;
      }
 
    protected abstract boolean BeforeWrite(Connection C) throws Exception;
+
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3440,42 +3436,43 @@ This is the hasChanged for:<BR>
      {
        long T0 = System.nanoTime();
        if (__Init == InitMode.CREATE)
-        throw new Exception("This TILDA.OBJECTPERF object is being Read() after a Create(), which doesn't make sense.");
+        throw new Exception("This TILDA.ObjectPerf object is being Read() after a Create(), which doesn't make sense.");
        if (__Init == InitMode.READ == true && Force == false && hasChanged()==false)
         {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.OBJECTPERF object has already been read.");
+          LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.ObjectPerf object has already been read.");
           QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
           return true;
         }
        StringBuilder S = new StringBuilder(1024);
-       S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "schemaName");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "objectName");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "startPeriodTZ");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "startPeriod");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "endPeriodTZ");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "endPeriod");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "selectNano");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "selectCount");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "selectRecords");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "insertNano");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "insertCount");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "insertRecords");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "updateNano");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "updateCount");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "updateRecords");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "deleteNano");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "deleteCount");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "deleteRecords");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "created");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "lastUpdated");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "deleted");
-       S.append(" from "); C.getFullTableVar(S, "TILDA", "OBJECTPERF");
+          S.append("select ");
+          S.append(" "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "schemaName");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "objectName");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "startPeriodTZ");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "startPeriod");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "endPeriodTZ");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "endPeriod");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "selectNano");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "selectCount");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "selectRecords");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "insertNano");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "insertCount");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "insertRecords");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "updateNano");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "updateCount");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "updateRecords");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "deleteNano");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "deleteCount");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "deleteRecords");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "created");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "lastUpdated");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "deleted");
+          S.append(" from "); C.getFullTableVar(S, "TILDA", "ObjectPerf");
        switch (__LookupId)
         {
           case 0:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "objectName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "startPeriod"); S.append("=?)");
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "objectName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "startPeriod"); S.append("=?)");
              break;
+          case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
         }
@@ -3484,7 +3481,7 @@ This is the hasChanged for:<BR>
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, Q);
-       QueryDetails.logQuery("TILDA.OBJECTPERF", Q, toString());
+       QueryDetails.logQuery("TILDA.ObjectPerf", Q, toString());
        java.sql.PreparedStatement PS=null;
        java.sql.ResultSet RS=null;
        int count = 0;
@@ -3529,30 +3526,30 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_schemaName    = _schemaName    = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask1   ;
-      __Saved_objectName    = _objectName    = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask1   ;
-                              _startPeriodTZ = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask1; else _startPeriodTZ = _startPeriodTZ.trim();
-      __Saved_startPeriod   = _startPeriod   = ProcessZDT(_startPeriodTZ  , "tilda.data.TILDA.OBJECTPERF.startPeriod"  , RS, ++i, TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD  , TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ  );
-                              _endPeriodTZ   = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask1  ; else _endPeriodTZ   = _endPeriodTZ  .trim();
-                              _endPeriod     = ProcessZDT(_endPeriodTZ    , "tilda.data.TILDA.OBJECTPERF.endPeriod"    , RS, ++i, TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD    , TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ    );
-                              _selectNano    =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask1   ;
-                              _selectCount   =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask1  ;
-                              _selectRecords =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask1;
-                              _insertNano    =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask1   ;
-                              _insertCount   =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask1  ;
-                              _insertRecords =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask1;
-                              _updateNano    =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask1   ;
-                              _updateCount   =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask1  ;
-                              _updateRecords =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask1;
-                              _deleteNano    =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask1   ;
-                              _deleteCount   =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask1  ;
-                              _deleteRecords =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask1;
-                              _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
-                              _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
-                              _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
+      __Saved_schemaName    = _schemaName    = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.SCHEMANAME._Mask   );
+      __Saved_objectName    = _objectName    = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.OBJECTNAME._Mask   );
+                              _startPeriodTZ = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ._Mask); else _startPeriodTZ = _startPeriodTZ.trim();
+      __Saved_startPeriod   = _startPeriod   = ProcessZDT(_startPeriodTZ  , "tilda.data.TILDA.ObjectPerf.startPeriod"  , RS, ++i, TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD  , TILDA__OBJECTPERF_Factory.COLS.STARTPERIODTZ  ); if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.STARTPERIOD._Mask  );
+                              _endPeriodTZ   = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ._Mask  ); else _endPeriodTZ   = _endPeriodTZ  .trim();
+                              _endPeriod     = ProcessZDT(_endPeriodTZ    , "tilda.data.TILDA.ObjectPerf.endPeriod"    , RS, ++i, TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD    , TILDA__OBJECTPERF_Factory.COLS.ENDPERIODTZ    ); if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.ENDPERIOD._Mask    );
+                              _selectNano    =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.SELECTNANO._Mask   );
+                              _selectCount   =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.SELECTCOUNT._Mask  );
+                              _selectRecords =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.SELECTRECORDS._Mask);
+                              _insertNano    =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.INSERTNANO._Mask   );
+                              _insertCount   =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.INSERTCOUNT._Mask  );
+                              _insertRecords =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.INSERTRECORDS._Mask);
+                              _updateNano    =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.UPDATENANO._Mask   );
+                              _updateCount   =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.UPDATECOUNT._Mask  );
+                              _updateRecords =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.UPDATERECORDS._Mask);
+                              _deleteNano    =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.DELETENANO._Mask   );
+                              _deleteCount   =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.DELETECOUNT._Mask  );
+                              _deleteRecords =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.DELETERECORDS._Mask);
+                              _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.CREATED._Mask      );
+                              _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.LASTUPDATED._Mask  );
+                              _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask      );
      __LookupId = 0;
      __Init     = InitMode.READ;
-     __Changes1 = __Changes2 = __Changes3 = __Changes4 = __Changes5 = __Changes6 = 0L;
+     __Changes.clear();
      return AfterRead(C);
    }
 
@@ -3563,35 +3560,13 @@ This is the hasChanged for:<BR>
      if (ZI == null && TextUtil.isNullOrEmpty(TimezoneId) == false)
       throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + TimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
      ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(RS.getTimestamp(ColumnPos, DateTimeUtil._UTC_CALENDAR), ZI == null ? "null" : ZI.getValue());
+     boolean DTNull = false;
      if (RS.wasNull() == true)
-      if (DTField._MaskId == 1)
-       __Nulls1 |= DTField._Mask1;
-      else if (DTField._MaskId == 2)
-       __Nulls2 |= DTField._Mask2;
-      else if (DTField._MaskId == 3)
-       __Nulls3 |= DTField._Mask3;
-      else if (DTField._MaskId == 4)
-       __Nulls4 |= DTField._Mask4;
-      else if (DTField._MaskId == 5)
-       __Nulls5 |= DTField._Mask5;
-      else if (DTField._MaskId == 6)
-       __Nulls6 |= DTField._Mask6;
-      else
-       throw new Error("RUNTIME TILDA ERROR: Invalid MaskId="+DTField._MaskId+" for column "+DTFieldName+". Values should be between 1 and 4.");
-     boolean DTNull = DTField._MaskId == 1 ? (__Nulls1 & DTField._Mask1) != 0L
-                    : DTField._MaskId == 2 ? (__Nulls2 & DTField._Mask2) != 0L
-                    : DTField._MaskId == 3 ? (__Nulls3 & DTField._Mask3) != 0L
-                    : DTField._MaskId == 4 ? (__Nulls4 & DTField._Mask4) != 0L
-                    : DTField._MaskId == 5 ? (__Nulls5 & DTField._Mask5) != 0L
-                                           : (__Nulls6 & DTField._Mask6) != 0L
-                                           ;
-     boolean TZNull = TZField._MaskId == 1 ? (__Nulls1 & TZField._Mask1) != 0L
-                    : TZField._MaskId == 2 ? (__Nulls2 & TZField._Mask2) != 0L
-                    : TZField._MaskId == 3 ? (__Nulls3 & TZField._Mask3) != 0L
-                    : TZField._MaskId == 4 ? (__Nulls4 & TZField._Mask4) != 0L
-                    : TZField._MaskId == 5 ? (__Nulls5 & TZField._Mask5) != 0L
-                                           : (__Nulls6 & TZField._Mask6) != 0L
-                                           ;
+      {
+         __Nulls.or(DTField._Mask);
+         DTNull = true;
+      }
+     boolean TZNull = __Nulls.intersects(TZField._Mask);
      if (DTNull == false && TZNull == true)
       throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
      return ZDT;
@@ -3603,24 +3578,28 @@ This is the hasChanged for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "schemaName: "                                                                                               + TextUtil.PrintVariableStr        (getSchemaName   ())
-               + "; objectName: "                                                                                               + TextUtil.PrintVariableStr        (getObjectName   ())
-               + "; startPeriod: "                                                                                              + DateTimeUtil.printDateTimeForJSON(getStartPeriod  ())
-               + "; endPeriod: "                                                                                                + DateTimeUtil.printDateTimeForJSON(getEndPeriod    ())
-               + "; selectNano: "                                                                                               +                                   getSelectNano   () 
-               + "; selectCount: "                                                                                              +                                   getSelectCount  () 
-               + "; selectRecords: "                                                                                            +                                   getSelectRecords() 
-               + "; insertNano: "                                                                                               +                                   getInsertNano   () 
-               + "; insertCount: "                                                                                              +                                   getInsertCount  () 
-               + "; insertRecords: "                                                                                            +                                   getInsertRecords() 
-               + "; updateNano: "                                                                                               +                                   getUpdateNano   () 
-               + "; updateCount: "                                                                                              +                                   getUpdateCount  () 
-               + "; updateRecords: "                                                                                            +                                   getUpdateRecords() 
-               + "; deleteNano: "                                                                                               +                                   getDeleteNano   () 
-               + "; deleteCount: "                                                                                              +                                   getDeleteCount  () 
-               + "; deleteRecords: "                                                                                            +                                   getDeleteRecords() 
+                   "schemaName: "                                                                                              + TextUtil.PrintVariableStr        (getSchemaName   ())
+               + "; objectName: "                                                                                              + TextUtil.PrintVariableStr        (getObjectName   ())
+               + "; startPeriod: "                                                                                             + DateTimeUtil.printDateTimeForJSON(getStartPeriod  ())
+               + "; endPeriod: "                                                                                               + DateTimeUtil.printDateTimeForJSON(getEndPeriod    ())
+               + "; selectNano: "                                                                                              +                                   getSelectNano   () 
+               + "; selectCount: "                                                                                             +                                   getSelectCount  () 
+               + "; selectRecords: "                                                                                           +                                   getSelectRecords() 
+               + "; insertNano: "                                                                                              +                                   getInsertNano   () 
+               + "; insertCount: "                                                                                             +                                   getInsertCount  () 
+               + "; insertRecords: "                                                                                           +                                   getInsertRecords() 
+               + "; updateNano: "                                                                                              +                                   getUpdateNano   () 
+               + "; updateCount: "                                                                                             +                                   getUpdateCount  () 
+               + "; updateRecords: "                                                                                           +                                   getUpdateRecords() 
+               + "; deleteNano: "                                                                                              +                                   getDeleteNano   () 
+               + "; deleteCount: "                                                                                             +                                   getDeleteCount  () 
+               + "; deleteRecords: "                                                                                           +                                   getDeleteRecords() 
+               + "; created: "                                                                                                 + DateTimeUtil.printDateTimeForJSON(getCreated      ())
+               + "; lastUpdated: "                                                                                             + DateTimeUtil.printDateTimeForJSON(getLastUpdated  ())
+               + "; deleted"         + (__Nulls.intersects(TILDA__OBJECTPERF_Factory.COLS.DELETED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted      ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;
     }
+
  }

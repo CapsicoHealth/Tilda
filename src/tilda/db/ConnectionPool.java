@@ -149,7 +149,7 @@ public class ConnectionPool
 
     protected static Map<String, BasicDataSource> _DataSourcesById     = new HashMap<String, BasicDataSource>();
     protected static Map<String, BasicDataSource> _DataSourcesBySig    = new HashMap<String, BasicDataSource>();
-    protected static Map<String, String>          _SchemaPackage       = new HashMap<String, String>();
+    protected static Map<String, Schema>          _Schemas             = new HashMap<String, Schema>();
     protected static Map<String, String>          _EmailConfigDetails  = null;
     protected static boolean                      _InitDebug           = false;
     protected static boolean                      _SkipValidation      = false;
@@ -239,7 +239,7 @@ public class ConnectionPool
                         DatabaseMeta DBMeta = LoadDatabaseMetaData(C, TildaList);
                         Migrator.MigrateDatabase(C, Migrate.isMigrationActive() == false, TildaList, DBMeta, first, connectionUrls);
                       }
-                    if (first == true && Migrate.isMigrationActive() == false)
+                    if (/*first == true &&*/ Migrate.isMigrationActive() == false)
                       {
                         LOG.info("Initializing Schemas.");
                         for (Schema S : TildaList)
@@ -247,7 +247,8 @@ public class ConnectionPool
                             LOG.debug("  " + S.getFullName());
                             Method M = Class.forName(tilda.generation.java8.Helper.getSupportClassFullName(S)).getMethod("initSchema", Connection.class);
                             M.invoke(null, C);
-                            _SchemaPackage.put(S._Name.toUpperCase(), S._Package);
+                            if (_Schemas.get(S._Name.toUpperCase()) == null)
+                              _Schemas.put(S._Name.toUpperCase(), S);
                           }
                       }
                     first = false;
@@ -554,6 +555,7 @@ public class ConnectionPool
                     C = DriverManager.getConnection(BDS.getUrl(), userId, userPswd);
                     C.setAutoCommit(false);
                     C.setTransactionIsolation(java.sql.Connection.TRANSACTION_READ_COMMITTED);
+                    C.setClientInfo("defaultRowFetchSize", "1000");
                   }
                 PerfTracker.add(TransactionType.CONNECTION_GET, System.nanoTime() - T0);
                 break;
@@ -589,7 +591,8 @@ public class ConnectionPool
 
     public static String getSchemaPackage(String SchemaName)
       {
-        return _SchemaPackage.get(SchemaName.toUpperCase());
+        Schema S = _Schemas.get(SchemaName.toUpperCase());
+        return S == null ? null : S._Package;
       }
 
     public static Map<String, String> getEmailConfig()
@@ -636,5 +639,11 @@ public class ConnectionPool
     public static boolean isMultiTenant()
       {
         return getAllTenantDataSourceIds().size() > 0;
+      }
+
+    public static DatabaseMeta getDBMeta(String string)
+      {
+        // TODO Auto-generated method stub
+        return null;
       }
   }

@@ -18,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+@SuppressWarnings({ "unused" })
 public class TILDA__MEASUREFORMULA_Factory
  {
    protected static final Logger LOG = LogManager.getLogger(TILDA__MEASUREFORMULA_Factory.class.getName());
@@ -26,20 +27,20 @@ public class TILDA__MEASUREFORMULA_Factory
 
    public static final Class<TILDA__MEASUREFORMULA> DATA_CLASS= TILDA__MEASUREFORMULA.class;
    public static final String SCHEMA_LABEL = TextUtil.Print("TILDA", "");
-   public static final String TABLENAME_LABEL = TextUtil.Print("MEASUREFORMULA", "");
-   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.MEASUREFORMULA", "");
-   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "MEASUREFORMULA"); }
+   public static final String TABLENAME_LABEL = TextUtil.Print("MeasureFormula", "");
+   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.MeasureFormula", "");
+   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "MeasureFormula"); }
 
    public static abstract class COLS {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.MEASUREFORMULA.measureRefnum -> TILDA.MEASUREFORMULA."measureRefnum"
+//   Field tilda.data.TILDA.MeasureFormula.measureRefnum -> TILDA.MeasureFormula."measureRefnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MEASUREFORMULA.measureRefnum of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MEASUREFORMULA.measureRefnum of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MeasureFormula.measureRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MeasureFormula.measureRefnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The measure.</TD></TR>
@@ -51,13 +52,13 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          MEASUREREFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "measureRefnum", 0/*0*/, "The measure.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.MEASUREFORMULA.formulaRefnum -> TILDA.MEASUREFORMULA."formulaRefnum"
+//   Field tilda.data.TILDA.MeasureFormula.formulaRefnum -> TILDA.MeasureFormula."formulaRefnum"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MEASUREFORMULA.formulaRefnum of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MEASUREFORMULA.formulaRefnum of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MeasureFormula.formulaRefnum of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MeasureFormula.formulaRefnum of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The parent formula.</TD></TR>
@@ -69,16 +70,16 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          FORMULAREFNUM= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "formulaRefnum", 1/*1*/, "The parent formula.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.MEASUREFORMULA.created -> TILDA.MEASUREFORMULA."created"
+//   Field tilda.data.TILDA.MeasureFormula.created -> TILDA.MeasureFormula."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MEASUREFORMULA.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MEASUREFORMULA.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MeasureFormula.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MeasureFormula.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.MeasureFormula)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -91,19 +92,19 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 2/*2*/, "The timestamp for when the record was created.");
+     public static Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 2/*2*/, "The timestamp for when the record was created. (TILDA.MeasureFormula)");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.MEASUREFORMULA.lastUpdated -> TILDA.MEASUREFORMULA."lastUpdated"
+//   Field tilda.data.TILDA.MeasureFormula.lastUpdated -> TILDA.MeasureFormula."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MEASUREFORMULA.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MEASUREFORMULA.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MeasureFormula.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MeasureFormula.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.MeasureFormula)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -116,25 +117,25 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 3/*3*/, "The timestamp for when the record was last updated.");
+     public static Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 3/*3*/, "The timestamp for when the record was last updated. (TILDA.MeasureFormula)");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.MEASUREFORMULA.deleted -> TILDA.MEASUREFORMULA."deleted"
+//   Field tilda.data.TILDA.MeasureFormula.deleted -> TILDA.MeasureFormula."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MEASUREFORMULA.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MEASUREFORMULA.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.MeasureFormula.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.MeasureFormula.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.MeasureFormula)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED      = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 4/*4*/, "The timestamp for when the record was deleted.");
+     public static Type_DatetimePrimitiveNull  DELETED      = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 4/*4*/, "The timestamp for when the record was deleted. (TILDA.MeasureFormula)");
 ;
    }
 
@@ -183,33 +184,47 @@ This is the column definition for:<BR>
         }
      }
 
+   protected static final ListResults<tilda.data.MeasureFormula_Data> ReadMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception
+     {
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
+       ReadMany(C, -77, RPI, null, FullSelectQuery, Start, Size);
+       return RPI._L;
+     }
+
    private static final void ReadMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__MEASUREFORMULA Obj, Object ExtraParams, int Start, int Size) throws Exception
      {
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
-       S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "MEASUREFORMULA", "measureRefnum");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "MEASUREFORMULA", "formulaRefnum");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "MEASUREFORMULA", "created");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "MEASUREFORMULA", "lastUpdated");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "MEASUREFORMULA", "deleted");
-       S.append(" from "); C.getFullTableVar(S, "TILDA", "MEASUREFORMULA");
-       switch (LookupId)
+       if (LookupId == -77)
         {
-          case -7:
-             String clause = ((SelectQuery)ExtraParams).getWhereClause();
-             if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
-             break;
-          case -666: break;
-          default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
+          S.append((String)ExtraParams);
+        }
+       else
+        {
+          S.append("select ");
+          S.append(" "); C.getFullColumnVar(S, "TILDA", "MeasureFormula", "measureRefnum");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormula", "formulaRefnum");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormula", "created");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormula", "lastUpdated");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "MeasureFormula", "deleted");
+          S.append(" from "); C.getFullTableVar(S, "TILDA", "MeasureFormula");
+          switch (LookupId)
+           {
+             case -7:
+                String clause = ((SelectQuery)ExtraParams).getWhereClause();
+                if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
+                break;
+             case -77: 
+             case -666: break;
+             default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
+           }
         }
 
-       
        String Q = S.toString() + C.getSelectLimitClause(Start, Size+1);
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(SCHEMA_TABLENAME_LABEL, Q);
-       QueryDetails.logQuery("TILDA.MEASUREFORMULA", Q, null);
+       QueryDetails.logQuery("TILDA.MeasureFormula", Q, null);
        java.sql.PreparedStatement PS=null;
        int count = 0;
        try
@@ -217,6 +232,7 @@ This is the column definition for:<BR>
           PS = C.prepareStatement(Q);
           switch (LookupId)
            {
+             case -77:
              case -7:
                 break;
              case -666: break;
@@ -282,6 +298,127 @@ This is the column definition for:<BR>
 
       return Obj;
      }
+   public static int WriteBatch(Connection C, List<tilda.data.MeasureFormula_Data> L, int batchSize, int commitSize) throws Exception
+     {
+       long T0 = System.nanoTime();
+
+       if (L == null || L.isEmpty() == true)
+         return -1;
+
+       java.sql.PreparedStatement PS = null;
+       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
+       int count = 0;
+       int batchStart = 0;
+       TILDA__MEASUREFORMULA lastObj = null;
+       BitSet firstChangeList = (BitSet) ((TILDA__MEASUREFORMULA) L.get(0)).__Changes.clone();
+       String firstTimeStampSignature = ((TILDA__MEASUREFORMULA) L.get(0)).getTimeStampSignature();
+
+       try
+         {
+           C.setSavepoint();
+           String Q = L.get(0).getWriteQuery(C);
+           PS = C.prepareStatement(Q);
+           int insertCount = 0;
+
+           int index = -1;
+           for (tilda.data.MeasureFormula_Data d : L)
+             {
+               ++index;
+               if (d == null || d.hasChanged() == false)
+                 continue;
+
+               lastObj = ((TILDA__MEASUREFORMULA) d);
+
+               if (((TILDA__MEASUREFORMULA) d).__Init != InitMode.CREATE)
+                 {
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.MeasureFormula_Data' object at positon #" + index + " was not in an insertable state. Only inserts are allowed in batch writes (i.e., no updates).");
+                   QueryDetails.setLastQuery(TILDA__MEASUREFORMULA_Factory.SCHEMA_TABLENAME_LABEL, "");
+                   return index;
+                 }
+
+               if (((TILDA__MEASUREFORMULA) d).BeforeWrite(C) == false)
+                 {
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.MeasureFormula_Data' object at positon #" + index + " failed in its BeforeWrite() method.");
+                   QueryDetails.setLastQuery(TILDA__MEASUREFORMULA_Factory.SCHEMA_TABLENAME_LABEL, "");
+                   return index;
+                 }
+
+               if (firstChangeList.equals(((TILDA__MEASUREFORMULA) d).__Changes) == false)
+                 {
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.MeasureFormula_Data' object at positon #" + index + " failed matching the list of columns being changed compared to the first object passed.");
+                   QueryDetails.setLastQuery(TILDA__MEASUREFORMULA_Factory.SCHEMA_TABLENAME_LABEL, "");
+                   return index;
+                 }
+
+               if (firstTimeStampSignature.equals(((TILDA__MEASUREFORMULA) d).getTimeStampSignature()) == false)
+                 {
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.MeasureFormula_Data' object at positon #" + index + " failed matching the list of updated current vs value based timestamps.");
+                   QueryDetails.setLastQuery(TILDA__MEASUREFORMULA_Factory.SCHEMA_TABLENAME_LABEL, "");
+                   return index;
+                 }
+
+               int i = d.populatePreparedStatement(C, PS, AllocatedArrays);
+
+               PS.addBatch();
+               if (index != 0 && (index + 1) % batchSize == 0)
+                 {
+                   int[] results = PS.executeBatch();
+                   int failedRec = JDBCHelper.BatchWriteDone(results, batchSize);
+                   if (failedRec != -1)
+                     {
+                       LOG.debug(QueryDetails._LOGGING_HEADER + "A batch of tilda.data.MeasureFormula_Data objects between positions #" + batchStart + " and #" + index + " failed being written to the database.");
+                       return insertCount+failedRec;
+                     }
+                   for (int index2 = batchStart; index2 <= index; ++index2)
+                     L.get(index2).stateUpdatePostWrite();
+                   LOG.debug("Batch-inserted objects between positions #" + insertCount + " and #" + index + ".");
+                   batchStart = 0;
+                   insertCount+=batchSize;
+                 }
+               if (commitSize > 0 && index != 0 && (index + 1) % commitSize == 0)
+                 {
+                   C.commit();
+                   LOG.debug("Commited " + commitSize + " batch records. At insert count " + (index-commitSize+1));
+                 }
+               PS.clearParameters();
+             }
+
+           if (index != 0 && (index + 1) % batchSize != 0)
+             {
+               int[] results = PS.executeBatch();
+               int failedRec = JDBCHelper.BatchWriteDone(results, L.size() - insertCount);
+               if (failedRec != -1)
+                 {
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "A batch of 'MeasureFormula_Data' objects ending at position #" + index + " failed being written to the database.");
+                   return L.size() - insertCount+failedRec;
+                 }
+               for (int index2 = batchStart; index2 <= index; ++index2)
+                 L.get(index2).stateUpdatePostWrite();
+
+               if(commitSize > 0)
+                 {
+                   C.commit();
+                   LOG.debug("Commited " + insertCount + " batch records.");
+                 }
+               LOG.debug("Final Batch-inserted objects between positions #" + insertCount + " and #" + index + ".");
+             }
+
+           C.releaseSavepoint(true);
+           return -1;
+         }
+       catch (java.sql.SQLException E)
+         {
+           C.releaseSavepoint(false);
+           TILDA__1_0.HandleCatch(C, E, "updated or inserted");
+           return 1;
+         }
+       finally
+         {
+           TILDA__1_0.HandleFinally(PS, T0, TILDA__MEASUREFORMULA_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+           PS = null;
+           AllocatedArrays = null;
+         }
+       }
 
    static public tilda.data.MeasureFormula_Data LookupByPrimaryKey(long measureRefnum, long formulaRefnum) throws Exception
      {

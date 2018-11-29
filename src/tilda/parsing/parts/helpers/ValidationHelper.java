@@ -46,7 +46,7 @@ public class ValidationHelper
               Column C = ParentObject.getColumn(c);
               if (C == null)
                 {
-                  PS.AddError("Object '" + ParentObject.getFullName() + "' is defining " + What + " with column '" + c + "' which cannot be found.");
+                  PS.AddError ("Object '" + ParentObject.getFullName() + "' is defining " + What + " with column '" + c + "' which cannot be found.");
                   continue;
                 }
               if (C.hasBeenValidatedSuccessfully() == false)

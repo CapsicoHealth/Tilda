@@ -7,7 +7,8 @@
 package tilda.data._Tilda;
 
 import java.time.*;
-import java.io.Writer;
+import java.sql.Timestamp;
+import java.util.*;
 
 import tilda.db.*;
 import tilda.enums.*;
@@ -23,28 +24,28 @@ import org.apache.logging.log4j.Logger;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
-<DIV>
-<DIV id='TRANSPERF_DIV' class='tables'>
-<H2>TRANSPERF&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 60%;"><A href="#">top</A></SUP></H2>
-</DIV>
-The generated Java 8/PostgreSQL Tilda data class <B>Data_TRANSPERF</B> is mapped to the Table <B>TILDA.TRANSPERF</B>.
-<UL>
-
-<LI>The Table has normal <B>read/write</B> capabilities.</LI>
-<LI>The Table is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
+<TABLE id="TransPerf_DIV" class="tables">
+<SCRIPT>registerStickyHeader("TransPerf_DIV");</SCRIPT>
+<TR valign="top"><TD><H2>TransPerf&nbsp;&nbsp;&nbsp;&nbsp;<SUP style="font-size: 70%;"><SPAN class="BackToDetails"><A href="#TransPerf_CNT">details</A>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><A href="#">top</A></SUP></H2></TD><TD align="right"></TD></TR>
+</TABLE>
+<DIV id="TransPerf_CNT" class="content">
+The Table TILDA.TransPerf:<UL>
+<LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>TransPerf_Factory</B>, <B>TransPerf_Data</B> in the package <B>tilda.data</B>.
+<LI>Is configured for normal <B>read/write</B> access.</LI>
+<LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
+<LI>Defines foreign key(s) to <A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A> </LI>
+<LI>Has the following identity:<UL><LI>Primary Key: schemaName, objectName, startPeriod</LI>
+</UL></LI>
 </UL>
 <B>Description</B>: Performance logs for the Tilda framework<BR>
 <BR>
-
-It contains the following columns:<BR>
- <TABLE border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
-   <TR><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><!--TH align="left">Column</TH--><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
-
+This Table contains the following columns:<BLOCKQUOTE>
+ <TABLE id="TransPerf_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
+   <TR valign="bottom"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH align="left">Type</TH><TH align="left">Nullable</TH><TH align="left">Mode</TH><TH align="left">Invariant</TH><TH align="left">Protect</TH><TH align="left">Description</TH></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>1&nbsp;&nbsp;</TD>
-<TD align="right"><B id='TRANSPERF-schemaName_DIV' class='columns'>schemaName</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD>
-<TD>varchar(64)&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TransPerf-schemaName_DIV' class='columns'>schemaName</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(64)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -53,9 +54,8 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>2&nbsp;&nbsp;</TD>
-<TD align="right"><B id='TRANSPERF-objectName_DIV' class='columns'>objectName</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD>
-<TD>varchar(64)&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TransPerf-objectName_DIV' class='columns'>objectName</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;varchar(64)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -64,20 +64,20 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>3&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('TRANSPERF-startPeriodTZ')" align="right"><B id='TRANSPERF-startPeriodTZ_DIV' class='columns dotted_underline cursor_pointer'>startPeriodTZ</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD>
-<TD>character(5)&nbsp;&nbsp;</TD>
+<TD onclick="onModalShowClicked('TransPerf-startPeriodTZ')" align="right"><B id='TransPerf-startPeriodTZ_DIV' class='columns dotted_underline cursor_pointer'>startPeriodTZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'startPeriod'.</TD>
+<TD>Generated helper column to hold the time zone ID for 'startPeriod'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+</TABLE>
+</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>4&nbsp;&nbsp;</TD>
-<TD align="right"><B id='TRANSPERF-startPeriod_DIV' class='columns'>startPeriod</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;&nbsp;</TD>
-<TD>timestamptz&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TransPerf-startPeriod_DIV' class='columns'>startPeriod</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
@@ -86,20 +86,20 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>5&nbsp;&nbsp;</TD>
-<TD onclick="onModalShowClicked('TRANSPERF-endPeriodTZ')" align="right"><B id='TRANSPERF-endPeriodTZ_DIV' class='columns dotted_underline cursor_pointer'>endPeriodTZ</B>&nbsp;&nbsp;</TD>
-<TD>String&nbsp;&nbsp;</TD>
-<TD>character(5)&nbsp;&nbsp;</TD>
+<TD onclick="onModalShowClicked('TransPerf-endPeriodTZ')" align="right"><B id='TransPerf-endPeriodTZ_DIV' class='columns dotted_underline cursor_pointer'>endPeriodTZ</B>&nbsp;&nbsp;</TD>
+<TD>String&nbsp;/&nbsp;character(5)&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>Generated helper column to hold the time zone ID for 'endPeriod'.</TD>
+<TD>Generated helper column to hold the time zone ID for 'endPeriod'.<TABLE border="0px" style="margin:0px;margin-left:20px;font-size:75%;"><TR><TD><B style="color:white;background-color:fuchsia;">FK</B></TD><TD>&rarr;&nbsp;<A href="TILDA___Docs.TILDA.html#ZoneInfo_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>ZoneInfo</A>: id</TD></TR>
+</TABLE>
+</TD>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>6&nbsp;&nbsp;</TD>
-<TD align="right"><B id='TRANSPERF-endPeriod_DIV' class='columns'>endPeriod</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;&nbsp;</TD>
-<TD>timestamptz&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TransPerf-endPeriod_DIV' class='columns'>endPeriod</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -108,9 +108,8 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>7&nbsp;&nbsp;</TD>
-<TD align="right"><B id='TRANSPERF-commitNano_DIV' class='columns'>commitNano</B>&nbsp;&nbsp;</TD>
-<TD>long&nbsp;&nbsp;</TD>
-<TD>bigint&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TransPerf-commitNano_DIV' class='columns'>commitNano</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -119,9 +118,8 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>8&nbsp;&nbsp;</TD>
-<TD align="right"><B id='TRANSPERF-commitCount_DIV' class='columns'>commitCount</B>&nbsp;&nbsp;</TD>
-<TD>long&nbsp;&nbsp;</TD>
-<TD>bigint&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TransPerf-commitCount_DIV' class='columns'>commitCount</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -130,9 +128,8 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>9&nbsp;&nbsp;</TD>
-<TD align="right"><B id='TRANSPERF-rollbackNano_DIV' class='columns'>rollbackNano</B>&nbsp;&nbsp;</TD>
-<TD>long&nbsp;&nbsp;</TD>
-<TD>bigint&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TransPerf-rollbackNano_DIV' class='columns'>rollbackNano</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -141,9 +138,8 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>10&nbsp;&nbsp;</TD>
-<TD align="right"><B id='TRANSPERF-rollbackCount_DIV' class='columns'>rollbackCount</B>&nbsp;&nbsp;</TD>
-<TD>long&nbsp;&nbsp;</TD>
-<TD>bigint&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TransPerf-rollbackCount_DIV' class='columns'>rollbackCount</B>&nbsp;&nbsp;</TD>
+<TD>long&nbsp;/&nbsp;bigint&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">-&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
@@ -152,51 +148,38 @@ It contains the following columns:<BR>
 </TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>11&nbsp;&nbsp;</TD>
-<TD align="right"><B id='TRANSPERF-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;&nbsp;</TD>
-<TD>timestamptz&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TransPerf-created_DIV' class='columns'>created</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The timestamp for when the record was created.</TD>
+<TD>The timestamp for when the record was created. (TILDA.TransPerf)</TD>
 </TR>
-  <TR bgcolor="#DFECF8"><TD></TD><TD></TD><TD colspan="10" align="center">
-<TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFF2CC"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Creation</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Creation&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Creation time</TD></TR>
-</TABLE>
-</TD></TR>
   <TR valign="top" bgcolor="#FFFFFF">
     <TD>12&nbsp;&nbsp;</TD>
-<TD align="right"><B id='TRANSPERF-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;&nbsp;</TD>
-<TD>timestamptz&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TransPerf-lastUpdated_DIV' class='columns'>lastUpdated</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The timestamp for when the record was last updated.</TD>
+<TD>The timestamp for when the record was last updated. (TILDA.TransPerf)</TD>
 </TR>
-  <TR bgcolor="#FFFFFF"><TD></TD><TD></TD><TD colspan="10" align="center">
-<TABLE border="0px" cellpadding="2px" cellspacing="0px" style="border:1px solid #999;">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFF2CC"><TD>1&nbsp;&nbsp;</TD><TD align="right"><B>Update</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>Update&nbsp;&nbsp;</TD><TD>ALWAYS&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>Last updated time</TD></TR>
-</TABLE>
-</TD></TR>
   <TR valign="top" bgcolor="#DFECF8">
     <TD>13&nbsp;&nbsp;</TD>
-<TD align="right"><B id='TRANSPERF-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
-<TD>ZonedDateTime&nbsp;&nbsp;</TD>
-<TD>timestamptz&nbsp;&nbsp;</TD>
+<TD align="right"><B id='TransPerf-deleted_DIV' class='columns'>deleted</B>&nbsp;&nbsp;</TD>
+<TD>ZonedDateTime&nbsp;/&nbsp;timestamptz&nbsp;&nbsp;</TD>
 <TD align="center">&#x2611;&nbsp;&nbsp;</TD>
 <TD align="left">AUTO&nbsp;&nbsp;</TD>
 <TD align="center">&#x2610&nbsp;&nbsp;</TD>
 <TD align="center">-&nbsp;&nbsp;</TD>
-<TD>The timestamp for when the record was deleted.</TD>
+<TD>The timestamp for when the record was deleted. (TILDA.TransPerf)</TD>
 </TR>
-</TABLE>
-<DIV id='TRANSPERF-schemaName_MODAL' class='modal'>
+</TABLE></BLOCKQUOTE>
+<DIV id='TransPerf-schemaName_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('TRANSPERF-schemaName_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('TransPerf-schemaName_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -206,14 +189,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TRANSPERF_DIV'>TransPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TRANSPERF-schemaName_DIV'>schemaName</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#TransPerf_DIV'>TransPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#TransPerf-schemaName_DIV'>schemaName</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='TRANSPERF-objectName_MODAL' class='modal'>
+<DIV id='TransPerf-objectName_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('TRANSPERF-objectName_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('TransPerf-objectName_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -223,14 +206,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TRANSPERF_DIV'>TransPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TRANSPERF-objectName_DIV'>objectName</a> -- STRING</td>
+<td><a href='TILDA___Docs.TILDA.html#TransPerf_DIV'>TransPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#TransPerf-objectName_DIV'>objectName</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='TRANSPERF-startPeriodTZ_MODAL' class='modal'>
+<DIV id='TransPerf-startPeriodTZ_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('TRANSPERF-startPeriodTZ_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('TransPerf-startPeriodTZ_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -240,20 +223,20 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TRANSPERF_DIV'>TransPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TRANSPERF-startPeriodTZ_DIV'>startPeriodTZ</a></td>
+<td><a href='TILDA___Docs.TILDA.html#TransPerf_DIV'>TransPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#TransPerf-startPeriodTZ_DIV'>startPeriodTZ</a></td>
 </tr>
 <tr><td>&nbsp;</td></tr>
 <tr bgcolor="#DFECF8">
 <td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZONEINFO_DIV'>ZoneInfo</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZONEINFO-id_DIV'>id</a> -- STRING</td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZoneInfo_DIV'>ZoneInfo</a></td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZoneInfo-id_DIV'>id</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='TRANSPERF-startPeriod_MODAL' class='modal'>
+<DIV id='TransPerf-startPeriod_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('TRANSPERF-startPeriod_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('TransPerf-startPeriod_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -263,14 +246,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TRANSPERF_DIV'>TransPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TRANSPERF-startPeriod_DIV'>startPeriod</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#TransPerf_DIV'>TransPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#TransPerf-startPeriod_DIV'>startPeriod</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='TRANSPERF-endPeriodTZ_MODAL' class='modal'>
+<DIV id='TransPerf-endPeriodTZ_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('TRANSPERF-endPeriodTZ_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('TransPerf-endPeriodTZ_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -280,20 +263,20 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TRANSPERF_DIV'>TransPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TRANSPERF-endPeriodTZ_DIV'>endPeriodTZ</a></td>
+<td><a href='TILDA___Docs.TILDA.html#TransPerf_DIV'>TransPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#TransPerf-endPeriodTZ_DIV'>endPeriodTZ</a></td>
 </tr>
 <tr><td>&nbsp;</td></tr>
 <tr bgcolor="#DFECF8">
 <td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZONEINFO_DIV'>ZoneInfo</a></td>
-<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZONEINFO-id_DIV'>id</a> -- STRING</td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZoneInfo_DIV'>ZoneInfo</a></td>
+<td>&#9492;&#9472;<a href='TILDA___Docs.TILDA.html#ZoneInfo-id_DIV'>id</a> -- STRING</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='TRANSPERF-endPeriod_MODAL' class='modal'>
+<DIV id='TransPerf-endPeriod_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('TRANSPERF-endPeriod_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('TransPerf-endPeriod_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -303,14 +286,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TRANSPERF_DIV'>TransPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TRANSPERF-endPeriod_DIV'>endPeriod</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#TransPerf_DIV'>TransPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#TransPerf-endPeriod_DIV'>endPeriod</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='TRANSPERF-commitNano_MODAL' class='modal'>
+<DIV id='TransPerf-commitNano_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('TRANSPERF-commitNano_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('TransPerf-commitNano_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -320,14 +303,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TRANSPERF_DIV'>TransPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TRANSPERF-commitNano_DIV'>commitNano</a> -- LONG</td>
+<td><a href='TILDA___Docs.TILDA.html#TransPerf_DIV'>TransPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#TransPerf-commitNano_DIV'>commitNano</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='TRANSPERF-commitCount_MODAL' class='modal'>
+<DIV id='TransPerf-commitCount_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('TRANSPERF-commitCount_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('TransPerf-commitCount_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -337,14 +320,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TRANSPERF_DIV'>TransPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TRANSPERF-commitCount_DIV'>commitCount</a> -- LONG</td>
+<td><a href='TILDA___Docs.TILDA.html#TransPerf_DIV'>TransPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#TransPerf-commitCount_DIV'>commitCount</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='TRANSPERF-rollbackNano_MODAL' class='modal'>
+<DIV id='TransPerf-rollbackNano_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('TRANSPERF-rollbackNano_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('TransPerf-rollbackNano_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -354,14 +337,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TRANSPERF_DIV'>TransPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TRANSPERF-rollbackNano_DIV'>rollbackNano</a> -- LONG</td>
+<td><a href='TILDA___Docs.TILDA.html#TransPerf_DIV'>TransPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#TransPerf-rollbackNano_DIV'>rollbackNano</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='TRANSPERF-rollbackCount_MODAL' class='modal'>
+<DIV id='TransPerf-rollbackCount_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('TRANSPERF-rollbackCount_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('TransPerf-rollbackCount_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -371,14 +354,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TRANSPERF_DIV'>TransPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TRANSPERF-rollbackCount_DIV'>rollbackCount</a> -- LONG</td>
+<td><a href='TILDA___Docs.TILDA.html#TransPerf_DIV'>TransPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#TransPerf-rollbackCount_DIV'>rollbackCount</a> -- LONG</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='TRANSPERF-created_MODAL' class='modal'>
+<DIV id='TransPerf-created_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('TRANSPERF-created_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('TransPerf-created_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -388,14 +371,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TRANSPERF_DIV'>TransPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TRANSPERF-created_DIV'>created</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#TransPerf_DIV'>TransPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#TransPerf-created_DIV'>created</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='TRANSPERF-lastUpdated_MODAL' class='modal'>
+<DIV id='TransPerf-lastUpdated_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('TRANSPERF-lastUpdated_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('TransPerf-lastUpdated_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -405,14 +388,14 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TRANSPERF_DIV'>TransPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TRANSPERF-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#TransPerf_DIV'>TransPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#TransPerf-lastUpdated_DIV'>lastUpdated</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
-<DIV id='TRANSPERF-deleted_MODAL' class='modal'>
+<DIV id='TransPerf-deleted_MODAL' class='modal'>
 <DIV class='modal-content'>
-<SPAN onclick="onModalCloseClicked('TRANSPERF-deleted_MODAL')" class='close'>&times;</SPAN>
+<SPAN onclick="onModalCloseClicked('TransPerf-deleted_MODAL')" class='close'>&times;</SPAN>
 <DIV><CENTER><H2>Column Dependencies</H2></CENTER></DIV>
 <table style='margin: auto;'> 
   <tr> 
@@ -422,8 +405,8 @@ It contains the following columns:<BR>
   </tr> 
 <tr bgcolor="#a3c8eb">
 <td><a href='TILDA___Docs.TILDA.html'>TILDA</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TRANSPERF_DIV'>TransPerf</a></td>
-<td><a href='TILDA___Docs.TILDA.html#TRANSPERF-deleted_DIV'>deleted</a> -- DATETIME</td>
+<td><a href='TILDA___Docs.TILDA.html#TransPerf_DIV'>TransPerf</a></td>
+<td><a href='TILDA___Docs.TILDA.html#TransPerf-deleted_DIV'>deleted</a> -- DATETIME</td>
 </tr>
 </table>
 </DIV></DIV>
@@ -431,34 +414,25 @@ It contains the following columns:<BR>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jan 22 2018, 15:28:02EST
+ @generated Nov 1 2018, 08:48:09EDT
 */
+@SuppressWarnings({ "unused" })
 public abstract class TILDA__TRANSPERF implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
  {
    protected static final Logger LOG = LogManager.getLogger(TILDA__TRANSPERF.class.getName());
 
    public static final Class<TILDA__TRANSPERF_Factory> FACTORY_CLASS= TILDA__TRANSPERF_Factory.class;
-   public static final String TABLENAME = TextUtil.Print("TILDA.TRANSPERF", "");
+   public static final String TABLENAME = TextUtil.Print("TILDA.TransPerf", "");
 
    protected TILDA__TRANSPERF() { }
 
-   private InitMode __Init        = null;
-   private long     __Nulls1      = 0L;
-   private long     __Nulls2      = 0L;
-   private long     __Nulls3      = 0L;
-   private long     __Nulls4      = 0L;
-   private long     __Nulls5      = 0L;
-   private long     __Nulls6      = 0L;
-   private long     __Changes1    = 0L;
-   private long     __Changes2    = 0L;
-   private long     __Changes3    = 0L;
-   private long     __Changes4    = 0L;
-   private long     __Changes5    = 0L;
-   private long     __Changes6    = 0L;
+   InitMode __Init        = null;
+   private BitSet   __Nulls       = new BitSet(64);
+   BitSet   __Changes     = new BitSet(64);
    private boolean  __NewlyCreated= false;
    private int      __LookupId;
 
-   public  boolean hasChanged    () { return __Changes1 != 0L || __Changes2 != 0L || __Changes3 != 0L || __Changes4 != 0L || __Changes5 != 0L || __Changes6 != 0L; }
+   public  boolean hasChanged    () { return __Changes.isEmpty() == false; }
    public  boolean isNewlyCreated() { return __NewlyCreated; }
 
    void initForCreate()
@@ -481,13 +455,13 @@ public abstract class TILDA__TRANSPERF implements tilda.interfaces.WriterObject,
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.schemaName -> TILDA.TRANSPERF."schemaName"
+//   Field tilda.data.TILDA.TransPerf.schemaName -> TILDA.TransPerf."schemaName"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.schemaName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.schemaName of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.schemaName of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.schemaName of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -502,13 +476,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.schemaName -> TILDA.TRANSPERF."schemaName"
+//   Field tilda.data.TILDA.TransPerf.schemaName -> TILDA.TransPerf."schemaName"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.schemaName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.schemaName of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.schemaName of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.schemaName of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -523,13 +497,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.schemaName -> TILDA.TRANSPERF."schemaName"
+//   Field tilda.data.TILDA.TransPerf.schemaName -> TILDA.TransPerf."schemaName"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.schemaName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.schemaName of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.schemaName of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.schemaName of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -543,15 +517,15 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.TRANSPERF.schemaName to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.TransPerf.schemaName to null: it's not nullable.");
        else if (v.length() > 64)
-        throw new Exception("Cannot set tilda.data.TILDA.TRANSPERF.schemaName: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
+        throw new Exception("Cannot set tilda.data.TILDA.TransPerf.schemaName: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_schemaName) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.TRANSPERF.schemaName' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes1 |= TILDA__TRANSPERF_Factory.COLS.SCHEMANAME._Mask1;
-          __Nulls1   &= ~TILDA__TRANSPERF_Factory.COLS.SCHEMANAME._Mask1;
+           throw new Exception("Cannot set field 'tilda.data.TILDA.TransPerf.schemaName' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__TRANSPERF_Factory.COLS.SCHEMANAME._Mask);
+          __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.SCHEMANAME._Mask);
        _schemaName = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -565,13 +539,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.objectName -> TILDA.TRANSPERF."objectName"
+//   Field tilda.data.TILDA.TransPerf.objectName -> TILDA.TransPerf."objectName"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.objectName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.objectName of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.objectName of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.objectName of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -586,13 +560,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.objectName -> TILDA.TRANSPERF."objectName"
+//   Field tilda.data.TILDA.TransPerf.objectName -> TILDA.TransPerf."objectName"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.objectName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.objectName of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.objectName of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.objectName of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -607,13 +581,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.objectName -> TILDA.TRANSPERF."objectName"
+//   Field tilda.data.TILDA.TransPerf.objectName -> TILDA.TransPerf."objectName"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.objectName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.objectName of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.objectName of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.objectName of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -627,15 +601,15 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.TRANSPERF.objectName to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.TransPerf.objectName to null: it's not nullable.");
        else if (v.length() > 64)
-        throw new Exception("Cannot set tilda.data.TILDA.TRANSPERF.objectName: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
+        throw new Exception("Cannot set tilda.data.TILDA.TransPerf.objectName: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 64.");
        else if (v.equals(_objectName) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.TRANSPERF.objectName' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes1 |= TILDA__TRANSPERF_Factory.COLS.OBJECTNAME._Mask1;
-          __Nulls1   &= ~TILDA__TRANSPERF_Factory.COLS.OBJECTNAME._Mask1;
+           throw new Exception("Cannot set field 'tilda.data.TILDA.TransPerf.objectName' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__TRANSPERF_Factory.COLS.OBJECTNAME._Mask);
+          __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.OBJECTNAME._Mask);
        _objectName = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -649,13 +623,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.startPeriodTZ -> TILDA.TRANSPERF."startPeriodTZ"
+//   Field tilda.data.TILDA.TransPerf.startPeriodTZ -> TILDA.TransPerf."startPeriodTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.startPeriodTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.startPeriodTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.startPeriodTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.startPeriodTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -669,13 +643,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.startPeriodTZ -> TILDA.TRANSPERF."startPeriodTZ"
+//   Field tilda.data.TILDA.TransPerf.startPeriodTZ -> TILDA.TransPerf."startPeriodTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.startPeriodTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.startPeriodTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.startPeriodTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.startPeriodTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -690,13 +664,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.startPeriodTZ -> TILDA.TRANSPERF."startPeriodTZ"
+//   Field tilda.data.TILDA.TransPerf.startPeriodTZ -> TILDA.TransPerf."startPeriodTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.startPeriodTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.startPeriodTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.startPeriodTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.startPeriodTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -710,15 +684,15 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.TRANSPERF.startPeriodTZ to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.TransPerf.startPeriodTZ to null: it's not nullable.");
        else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.TRANSPERF.startPeriodTZ: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
+        throw new Exception("Cannot set tilda.data.TILDA.TransPerf.startPeriodTZ: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
        else if (v.equals(_startPeriodTZ) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.TRANSPERF.startPeriodTZ' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes1 |= TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ._Mask1;
-          __Nulls1   &= ~TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ._Mask1;
+           throw new Exception("Cannot set field 'tilda.data.TILDA.TransPerf.startPeriodTZ' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ._Mask);
+          __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ._Mask);
        _startPeriodTZ = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -726,13 +700,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.startPeriodTZ -> TILDA.TRANSPERF."startPeriodTZ"
+//   Field tilda.data.TILDA.TransPerf.startPeriodTZ -> TILDA.TransPerf."startPeriodTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.startPeriodTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.startPeriodTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.startPeriodTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.startPeriodTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -743,7 +717,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedStartPeriodTZ()
-     { return (TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ._Mask); }
 
 
 
@@ -753,13 +727,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.startPeriod -> TILDA.TRANSPERF."startPeriod"
+//   Field tilda.data.TILDA.TransPerf.startPeriod -> TILDA.TransPerf."startPeriod"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.startPeriod of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.startPeriod of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.startPeriod of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.startPeriod of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -773,13 +747,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.startPeriod -> TILDA.TRANSPERF."startPeriod"
+//   Field tilda.data.TILDA.TransPerf.startPeriod -> TILDA.TransPerf."startPeriod"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.startPeriod of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.startPeriod of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.startPeriod of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.startPeriod of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -793,13 +767,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.startPeriod -> TILDA.TRANSPERF."startPeriod"
+//   Field tilda.data.TILDA.TransPerf.startPeriod -> TILDA.TransPerf."startPeriod"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.startPeriod of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.startPeriod of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.startPeriod of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.startPeriod of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -812,17 +786,17 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.TRANSPERF.startPeriod to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.TransPerf.startPeriod to null: it's not nullable.");
        else if (v.equals(_startPeriod) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.TRANSPERF.startPeriod' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes1 |= TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask1;
-          __Nulls1   &= ~TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask1;
+           throw new Exception("Cannot set field 'tilda.data.TILDA.TransPerf.startPeriod' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask);
+          __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask);
        _startPeriod = v;
           tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
           if (ZI == null)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.TRANSPERF.startPeriod' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+           throw new Exception("Cannot set field 'tilda.data.TILDA.TransPerf.startPeriod' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
           setStartPeriodTZ(ZI.getId());
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -836,13 +810,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.endPeriodTZ -> TILDA.TRANSPERF."endPeriodTZ"
+//   Field tilda.data.TILDA.TransPerf.endPeriodTZ -> TILDA.TransPerf."endPeriodTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.endPeriodTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.endPeriodTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.endPeriodTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.endPeriodTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -856,13 +830,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.endPeriodTZ -> TILDA.TRANSPERF."endPeriodTZ"
+//   Field tilda.data.TILDA.TransPerf.endPeriodTZ -> TILDA.TransPerf."endPeriodTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.endPeriodTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.endPeriodTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.endPeriodTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.endPeriodTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -877,13 +851,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.endPeriodTZ -> TILDA.TRANSPERF."endPeriodTZ"
+//   Field tilda.data.TILDA.TransPerf.endPeriodTZ -> TILDA.TransPerf."endPeriodTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.endPeriodTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.endPeriodTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.endPeriodTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.endPeriodTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -897,13 +871,13 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.TRANSPERF.endPeriodTZ to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.TransPerf.endPeriodTZ to null: it's not nullable.");
        else if (v.length() > 5)
-        throw new Exception("Cannot set tilda.data.TILDA.TRANSPERF.endPeriodTZ: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
+        throw new Exception("Cannot set tilda.data.TILDA.TransPerf.endPeriodTZ: the value "+TextUtil.EscapeDoubleQuoteWithSlash(v)+" is larger than the max size allowed 5.");
        else if (v.equals(_endPeriodTZ) == false)
         {
-          __Changes1 |= TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ._Mask1;
-          __Nulls1   &= ~TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ._Mask1;
+          __Changes.or(TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ._Mask);
+          __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ._Mask);
        _endPeriodTZ = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -911,13 +885,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.endPeriodTZ -> TILDA.TRANSPERF."endPeriodTZ"
+//   Field tilda.data.TILDA.TransPerf.endPeriodTZ -> TILDA.TransPerf."endPeriodTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.endPeriodTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.endPeriodTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.endPeriodTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.endPeriodTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -928,7 +902,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedEndPeriodTZ()
-     { return (TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ._Mask); }
 
 
 
@@ -938,13 +912,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.endPeriod -> TILDA.TRANSPERF."endPeriod"
+//   Field tilda.data.TILDA.TransPerf.endPeriod -> TILDA.TransPerf."endPeriod"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.endPeriod of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.endPeriod of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.endPeriod of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.endPeriod of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -957,13 +931,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.endPeriod -> TILDA.TRANSPERF."endPeriod"
+//   Field tilda.data.TILDA.TransPerf.endPeriod -> TILDA.TransPerf."endPeriod"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.endPeriod of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.endPeriod of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.endPeriod of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.endPeriod of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -977,13 +951,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.endPeriod -> TILDA.TRANSPERF."endPeriod"
+//   Field tilda.data.TILDA.TransPerf.endPeriod -> TILDA.TransPerf."endPeriod"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.endPeriod of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.endPeriod of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.endPeriod of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.endPeriod of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -996,15 +970,15 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.TRANSPERF.endPeriod to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.TransPerf.endPeriod to null: it's not nullable.");
        else if (v.equals(_endPeriod) == false)
         {
-          __Changes1 |= TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask1;
-          __Nulls1   &= ~TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask1;
+          __Changes.or(TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask);
+          __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask);
        _endPeriod = v;
           tilda.data.ZoneInfo_Data ZI = tilda.data.ZoneInfo_Factory.getEnumerationByValue(v.getZone().getId());
           if (ZI == null)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.TRANSPERF.endPeriod' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
+           throw new Exception("Cannot set field 'tilda.data.TILDA.TransPerf.endPeriod' because the timezone value '"+v.getZone().getId()+"' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
           setEndPeriodTZ(ZI.getId());
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1012,13 +986,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.endPeriod -> TILDA.TRANSPERF."endPeriod"
+//   Field tilda.data.TILDA.TransPerf.endPeriod -> TILDA.TransPerf."endPeriod"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the NOW setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.endPeriod of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.endPeriod of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.endPeriod of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.endPeriod of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -1034,13 +1008,13 @@ This is the NOW setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.endPeriod -> TILDA.TRANSPERF."endPeriod"
+//   Field tilda.data.TILDA.TransPerf.endPeriod -> TILDA.TransPerf."endPeriod"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the UNDEFINED setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.endPeriod of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.endPeriod of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.endPeriod of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.endPeriod of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -1056,13 +1030,13 @@ This is the UNDEFINED setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.endPeriod -> TILDA.TRANSPERF."endPeriod"
+//   Field tilda.data.TILDA.TransPerf.endPeriod -> TILDA.TransPerf."endPeriod"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.endPeriod of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.endPeriod of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.endPeriod of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.endPeriod of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -1078,13 +1052,13 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.endPeriod -> TILDA.TRANSPERF."endPeriod"
+//   Field tilda.data.TILDA.TransPerf.endPeriod -> TILDA.TransPerf."endPeriod"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.endPeriod of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.endPeriod of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.endPeriod of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.endPeriod of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -1094,7 +1068,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedEndPeriod()
-     { return (TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask); }
 
 
 
@@ -1104,13 +1078,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.commitNano -> TILDA.TRANSPERF."commitNano"
+//   Field tilda.data.TILDA.TransPerf.commitNano -> TILDA.TransPerf."commitNano"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.commitNano of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.commitNano of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.commitNano of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.commitNano of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1123,13 +1097,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.commitNano -> TILDA.TRANSPERF."commitNano"
+//   Field tilda.data.TILDA.TransPerf.commitNano -> TILDA.TransPerf."commitNano"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.commitNano of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.commitNano of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.commitNano of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.commitNano of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1143,13 +1117,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.commitNano -> TILDA.TRANSPERF."commitNano"
+//   Field tilda.data.TILDA.TransPerf.commitNano -> TILDA.TransPerf."commitNano"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.commitNano of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.commitNano of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.commitNano of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.commitNano of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1163,8 +1137,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _commitNano)
         {
-          __Changes1 |= TILDA__TRANSPERF_Factory.COLS.COMMITNANO._Mask1;
-          __Nulls1   &= ~TILDA__TRANSPERF_Factory.COLS.COMMITNANO._Mask1;
+          __Changes.or(TILDA__TRANSPERF_Factory.COLS.COMMITNANO._Mask);
+          __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.COMMITNANO._Mask);
        _commitNano = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1172,13 +1146,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.commitNano -> TILDA.TRANSPERF."commitNano"
+//   Field tilda.data.TILDA.TransPerf.commitNano -> TILDA.TransPerf."commitNano"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.commitNano of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.commitNano of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.commitNano of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.commitNano of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1188,7 +1162,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedCommitNano()
-     { return (TILDA__TRANSPERF_Factory.COLS.COMMITNANO._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__TRANSPERF_Factory.COLS.COMMITNANO._Mask); }
 
 
 
@@ -1198,13 +1172,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.commitCount -> TILDA.TRANSPERF."commitCount"
+//   Field tilda.data.TILDA.TransPerf.commitCount -> TILDA.TransPerf."commitCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.commitCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.commitCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.commitCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.commitCount of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1217,13 +1191,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.commitCount -> TILDA.TRANSPERF."commitCount"
+//   Field tilda.data.TILDA.TransPerf.commitCount -> TILDA.TransPerf."commitCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.commitCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.commitCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.commitCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.commitCount of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1237,13 +1211,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.commitCount -> TILDA.TRANSPERF."commitCount"
+//   Field tilda.data.TILDA.TransPerf.commitCount -> TILDA.TransPerf."commitCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.commitCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.commitCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.commitCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.commitCount of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1257,8 +1231,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _commitCount)
         {
-          __Changes1 |= TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT._Mask1;
-          __Nulls1   &= ~TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT._Mask1;
+          __Changes.or(TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT._Mask);
+          __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT._Mask);
        _commitCount = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1266,13 +1240,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.commitCount -> TILDA.TRANSPERF."commitCount"
+//   Field tilda.data.TILDA.TransPerf.commitCount -> TILDA.TransPerf."commitCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.commitCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.commitCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.commitCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.commitCount of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1282,7 +1256,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedCommitCount()
-     { return (TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT._Mask); }
 
 
 
@@ -1292,13 +1266,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.rollbackNano -> TILDA.TRANSPERF."rollbackNano"
+//   Field tilda.data.TILDA.TransPerf.rollbackNano -> TILDA.TransPerf."rollbackNano"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.rollbackNano of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.rollbackNano of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.rollbackNano of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.rollbackNano of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1311,13 +1285,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.rollbackNano -> TILDA.TRANSPERF."rollbackNano"
+//   Field tilda.data.TILDA.TransPerf.rollbackNano -> TILDA.TransPerf."rollbackNano"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.rollbackNano of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.rollbackNano of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.rollbackNano of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.rollbackNano of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1331,13 +1305,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.rollbackNano -> TILDA.TRANSPERF."rollbackNano"
+//   Field tilda.data.TILDA.TransPerf.rollbackNano -> TILDA.TransPerf."rollbackNano"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.rollbackNano of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.rollbackNano of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.rollbackNano of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.rollbackNano of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1351,8 +1325,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _rollbackNano)
         {
-          __Changes1 |= TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO._Mask1;
-          __Nulls1   &= ~TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO._Mask1;
+          __Changes.or(TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO._Mask);
+          __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO._Mask);
        _rollbackNano = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1360,13 +1334,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.rollbackNano -> TILDA.TRANSPERF."rollbackNano"
+//   Field tilda.data.TILDA.TransPerf.rollbackNano -> TILDA.TransPerf."rollbackNano"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.rollbackNano of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.rollbackNano of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.rollbackNano of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.rollbackNano of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1376,7 +1350,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedRollbackNano()
-     { return (TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO._Mask); }
 
 
 
@@ -1386,13 +1360,13 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.rollbackCount -> TILDA.TRANSPERF."rollbackCount"
+//   Field tilda.data.TILDA.TransPerf.rollbackCount -> TILDA.TransPerf."rollbackCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.rollbackCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.rollbackCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.rollbackCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.rollbackCount of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1405,13 +1379,13 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.rollbackCount -> TILDA.TRANSPERF."rollbackCount"
+//   Field tilda.data.TILDA.TransPerf.rollbackCount -> TILDA.TransPerf."rollbackCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.rollbackCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.rollbackCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.rollbackCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.rollbackCount of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1425,13 +1399,13 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.rollbackCount -> TILDA.TRANSPERF."rollbackCount"
+//   Field tilda.data.TILDA.TransPerf.rollbackCount -> TILDA.TransPerf."rollbackCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.rollbackCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.rollbackCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.rollbackCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.rollbackCount of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1445,8 +1419,8 @@ This is the setter for:<BR>
        long T0 = System.nanoTime();
        if (v != _rollbackCount)
         {
-          __Changes1 |= TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT._Mask1;
-          __Nulls1   &= ~TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT._Mask1;
+          __Changes.or(TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT._Mask);
+          __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT._Mask);
        _rollbackCount = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1454,13 +1428,13 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.rollbackCount -> TILDA.TRANSPERF."rollbackCount"
+//   Field tilda.data.TILDA.TransPerf.rollbackCount -> TILDA.TransPerf."rollbackCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.rollbackCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.rollbackCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.rollbackCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.rollbackCount of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -1470,7 +1444,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedRollbackCount()
-     { return (TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT._Mask); }
 
 
 
@@ -1480,16 +1454,16 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.created -> TILDA.TRANSPERF."created"
+//   Field tilda.data.TILDA.TransPerf.created -> TILDA.TransPerf."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.TransPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1506,16 +1480,16 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.created -> TILDA.TRANSPERF."created"
+//   Field tilda.data.TILDA.TransPerf.created -> TILDA.TransPerf."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.TransPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1533,16 +1507,16 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.created -> TILDA.TRANSPERF."created"
+//   Field tilda.data.TILDA.TransPerf.created -> TILDA.TransPerf."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.TransPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1559,13 +1533,13 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.TRANSPERF.created to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.TransPerf.created to null: it's not nullable.");
        else if (v.equals(_created) == false)
         {
           if (__Init != InitMode.CREATE && __Init != InitMode.LOOKUP)
-           throw new Exception("Cannot set field 'tilda.data.TILDA.TRANSPERF.created' that is invariant, or part of a read-only or pre-existing WORM object.");
-          __Changes1 |= TILDA__TRANSPERF_Factory.COLS.CREATED._Mask1;
-          __Nulls1   &= ~TILDA__TRANSPERF_Factory.COLS.CREATED._Mask1;
+           throw new Exception("Cannot set field 'tilda.data.TILDA.TransPerf.created' that is invariant, or part of a read-only or pre-existing WORM object.");
+          __Changes.or(TILDA__TRANSPERF_Factory.COLS.CREATED._Mask);
+          __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.CREATED._Mask);
        _created = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1573,16 +1547,16 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.created -> TILDA.TRANSPERF."created"
+//   Field tilda.data.TILDA.TransPerf.created -> TILDA.TransPerf."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the NOW setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.TransPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1602,16 +1576,16 @@ This is the NOW setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.created -> TILDA.TRANSPERF."created"
+//   Field tilda.data.TILDA.TransPerf.created -> TILDA.TransPerf."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the UNDEFINED setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.TransPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1631,16 +1605,16 @@ This is the UNDEFINED setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.created -> TILDA.TRANSPERF."created"
+//   Field tilda.data.TILDA.TransPerf.created -> TILDA.TransPerf."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.TransPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1660,16 +1634,16 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.created -> TILDA.TRANSPERF."created"
+//   Field tilda.data.TILDA.TransPerf.created -> TILDA.TransPerf."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.TransPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1683,7 +1657,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedCreated()
-     { return (TILDA__TRANSPERF_Factory.COLS.CREATED._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__TRANSPERF_Factory.COLS.CREATED._Mask); }
 
 
 
@@ -1693,16 +1667,16 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.lastUpdated -> TILDA.TRANSPERF."lastUpdated"
+//   Field tilda.data.TILDA.TransPerf.lastUpdated -> TILDA.TransPerf."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.TransPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1719,16 +1693,16 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.lastUpdated -> TILDA.TRANSPERF."lastUpdated"
+//   Field tilda.data.TILDA.TransPerf.lastUpdated -> TILDA.TransPerf."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.TransPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1746,16 +1720,16 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.lastUpdated -> TILDA.TRANSPERF."lastUpdated"
+//   Field tilda.data.TILDA.TransPerf.lastUpdated -> TILDA.TransPerf."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.TransPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1772,11 +1746,11 @@ This is the setter for:<BR>
      {
        long T0 = System.nanoTime();
        if (v == null)
-        throw new Exception("Cannot set tilda.data.TILDA.TRANSPERF.lastUpdated to null: it's not nullable.");
+        throw new Exception("Cannot set tilda.data.TILDA.TransPerf.lastUpdated to null: it's not nullable.");
        else if (v.equals(_lastUpdated) == false)
         {
-          __Changes1 |= TILDA__TRANSPERF_Factory.COLS.LASTUPDATED._Mask1;
-          __Nulls1   &= ~TILDA__TRANSPERF_Factory.COLS.LASTUPDATED._Mask1;
+          __Changes.or(TILDA__TRANSPERF_Factory.COLS.LASTUPDATED._Mask);
+          __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.LASTUPDATED._Mask);
        _lastUpdated = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1784,16 +1758,16 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.lastUpdated -> TILDA.TRANSPERF."lastUpdated"
+//   Field tilda.data.TILDA.TransPerf.lastUpdated -> TILDA.TransPerf."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the NOW setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.TransPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1813,16 +1787,16 @@ This is the NOW setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.lastUpdated -> TILDA.TRANSPERF."lastUpdated"
+//   Field tilda.data.TILDA.TransPerf.lastUpdated -> TILDA.TransPerf."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the UNDEFINED setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.TransPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1842,16 +1816,16 @@ This is the UNDEFINED setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.lastUpdated -> TILDA.TRANSPERF."lastUpdated"
+//   Field tilda.data.TILDA.TransPerf.lastUpdated -> TILDA.TransPerf."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.TransPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1871,16 +1845,16 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.lastUpdated -> TILDA.TRANSPERF."lastUpdated"
+//   Field tilda.data.TILDA.TransPerf.lastUpdated -> TILDA.TransPerf."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.TransPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1894,7 +1868,7 @@ This is the hasChanged for:<BR>
 </TABLE>
 */
    public boolean hasChangedLastUpdated()
-     { return (TILDA__TRANSPERF_Factory.COLS.LASTUPDATED._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__TRANSPERF_Factory.COLS.LASTUPDATED._Mask); }
 
 
 
@@ -1904,16 +1878,16 @@ This is the hasChanged for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.deleted -> TILDA.TRANSPERF."deleted"
+//   Field tilda.data.TILDA.TransPerf.deleted -> TILDA.TransPerf."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.TransPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1923,16 +1897,16 @@ This is the definition for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.deleted -> TILDA.TRANSPERF."deleted"
+//   Field tilda.data.TILDA.TransPerf.deleted -> TILDA.TransPerf."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the getter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.TransPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1943,36 +1917,36 @@ This is the getter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.deleted -> TILDA.TRANSPERF."deleted"
+//   Field tilda.data.TILDA.TransPerf.deleted -> TILDA.TransPerf."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the isNull for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.TransPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
    public final boolean isNullDeleted()
-     { return (TILDA__TRANSPERF_Factory.COLS.DELETED._Mask1 & __Nulls1) != 0L; }
+     { return __Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask); }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.deleted -> TILDA.TRANSPERF."deleted"
+//   Field tilda.data.TILDA.TransPerf.deleted -> TILDA.TransPerf."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.TransPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -1987,8 +1961,8 @@ This is the setter for:<BR>
         }
        else if (v.equals(_deleted) == false)
         {
-          __Changes1 |= TILDA__TRANSPERF_Factory.COLS.DELETED._Mask1;
-          __Nulls1   &= ~TILDA__TRANSPERF_Factory.COLS.DELETED._Mask1;
+          __Changes.or(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask);
+          __Nulls.andNot(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask);
        _deleted = v;
         }
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
@@ -1996,16 +1970,16 @@ This is the setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.deleted -> TILDA.TRANSPERF."deleted"
+//   Field tilda.data.TILDA.TransPerf.deleted -> TILDA.TransPerf."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the null setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.TransPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2014,26 +1988,26 @@ This is the null setter for:<BR>
    public final void setNullDeleted()
      {
        long T0 = System.nanoTime();
-       if ((TILDA__TRANSPERF_Factory.COLS.DELETED._Mask1 & __Nulls1) != 0L)
+       if (__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask) == true) // already NULL
         return;
-       __Changes1 |= TILDA__TRANSPERF_Factory.COLS.DELETED._Mask1;
-       __Nulls1   |= TILDA__TRANSPERF_Factory.COLS.DELETED._Mask1;
+       __Changes.or(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask);
+       __Nulls.or(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask);
        _deleted=null;
        PerfTracker.add(TransactionType.TILDA_SETTER, System.nanoTime() - T0);
      }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.deleted -> TILDA.TRANSPERF."deleted"
+//   Field tilda.data.TILDA.TransPerf.deleted -> TILDA.TransPerf."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the NOW setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.TransPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2046,16 +2020,16 @@ This is the NOW setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.deleted -> TILDA.TRANSPERF."deleted"
+//   Field tilda.data.TILDA.TransPerf.deleted -> TILDA.TransPerf."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the UNDEFINED setter for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.TransPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2068,16 +2042,16 @@ This is the UNDEFINED setter for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.deleted -> TILDA.TRANSPERF."deleted"
+//   Field tilda.data.TILDA.TransPerf.deleted -> TILDA.TransPerf."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.TransPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -2090,23 +2064,23 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.TRANSPERF.deleted -> TILDA.TRANSPERF."deleted"
+//   Field tilda.data.TILDA.TransPerf.deleted -> TILDA.TransPerf."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the hasChanged for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TRANSPERF.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TRANSPERF.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.TransPerf.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.TransPerf.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.TransPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
    public boolean hasChangedDeleted()
-     { return (TILDA__TRANSPERF_Factory.COLS.DELETED._Mask1 & __Changes1) != 0L; }
+     { return __Changes.intersects(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask); }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2126,7 +2100,7 @@ This is the hasChanged for:<BR>
        Dst.setRollbackNano (_rollbackNano );
        Dst.setRollbackCount(_rollbackCount);
        Dst.setLastUpdated  (_lastUpdated  );
-       if ((TILDA__TRANSPERF_Factory.COLS.DELETED._Mask1       & __Nulls1) != 0L) Dst.setNullDeleted      (); else        Dst.setDeleted      (_deleted      );
+       if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask) == true) Dst.setNullDeleted      (); else        Dst.setDeleted      (_deleted      );
      }
 
 /**
@@ -2142,57 +2116,52 @@ This is the hasChanged for:<BR>
  Writes the object to the data store if any changes has occurred since the object was initially
  read from the data store or last written. 
 */
-   public final boolean Write(Connection C) throws Exception
+   protected String getTimeStampSignature() throws Exception
      {
-       long T0 = System.nanoTime();
-       if (hasChanged() == false)
-        {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.TRANSPERF has not changed: no writing will occur.");
-          QueryDetails.setLastQuery(TILDA__TRANSPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
-          return true;
-        }
-
        StringBuilder S = new StringBuilder(1024);
-
-       if (BeforeWrite(C) == false)
-        {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.TRANSPERF object's BeforeWrite() failed.");
-          QueryDetails.setLastQuery(TILDA__TRANSPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
-          return false;
-        }
+       if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_startPeriod) == true ? "C" : "X");
+       if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_endPeriod) == true ? "C" : "X");
+       if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.CREATED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_created) == true ? "C" : "X");
+       if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.LASTUPDATED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? "C" : "X");
+       if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask) == true) S.append(DateTimeUtil.isNowPlaceholder(_deleted) == true ? "C" : "X");
+       return S.toString();
+     }
+   protected String getWriteQuery(Connection C) throws Exception
+     {
+       StringBuilder S = new StringBuilder(1024);
 
        if (__Init == InitMode.CREATE)
         {
           StringBuilder V = new StringBuilder(1024);
-          S.append("insert into "); C.getFullTableVar(S, "TILDA", "TRANSPERF");
+          S.append("insert into "); C.getFullTableVar(S, "TILDA", "TransPerf");
           int Pos = S.length();
-          if ((TILDA__TRANSPERF_Factory.COLS.SCHEMANAME._Mask1    & __Changes1) != 0L) { TILDA__TRANSPERF_Factory.COLS.SCHEMANAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TRANSPERF_Factory.COLS.OBJECTNAME._Mask1    & __Changes1) != 0L) { TILDA__TRANSPERF_Factory.COLS.OBJECTNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ._Mask1 & __Changes1) != 0L) { TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.SCHEMANAME._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.SCHEMANAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.OBJECTNAME._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.OBJECTNAME.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
-          if ((TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask1   & __Changes1) != 0L) { TILDA__TRANSPERF_Factory.COLS.STARTPERIOD.getFullColumnVarForInsert(C, S);
-             V.append((TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_startPeriod) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.STARTPERIOD.getFullColumnVarForInsert(C, S);
+             V.append(__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask) == false && DateTimeUtil.isNowPlaceholder(_startPeriod) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          if ((TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ._Mask1   & __Changes1) != 0L) { TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
-          if ((TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask1     & __Changes1) != 0L) { TILDA__TRANSPERF_Factory.COLS.ENDPERIOD.getFullColumnVarForInsert(C, S);
-             V.append((TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_endPeriod) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.ENDPERIOD.getFullColumnVarForInsert(C, S);
+             V.append(__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask) == false && DateTimeUtil.isNowPlaceholder(_endPeriod) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          if ((TILDA__TRANSPERF_Factory.COLS.COMMITNANO._Mask1    & __Changes1) != 0L) { TILDA__TRANSPERF_Factory.COLS.COMMITNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT._Mask1   & __Changes1) != 0L) { TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO._Mask1  & __Changes1) != 0L) { TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
-          if ((TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT._Mask1 & __Changes1) != 0L) { TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.COMMITNANO._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.COMMITNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
 
-          if ((TILDA__TRANSPERF_Factory.COLS.CREATED._Mask1       & __Changes1) != 0L) { TILDA__TRANSPERF_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
-             V.append((TILDA__TRANSPERF_Factory.COLS.CREATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.CREATED._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S);
+             V.append(__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
           else { TILDA__TRANSPERF_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
-          if ((TILDA__TRANSPERF_Factory.COLS.LASTUPDATED._Mask1   & __Changes1) != 0L) { TILDA__TRANSPERF_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
-             V.append((TILDA__TRANSPERF_Factory.COLS.LASTUPDATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.LASTUPDATED._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S);
+             V.append(__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
           else { TILDA__TRANSPERF_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }
-          if ((TILDA__TRANSPERF_Factory.COLS.DELETED._Mask1       & __Changes1) != 0L) { TILDA__TRANSPERF_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
-             V.append((TILDA__TRANSPERF_Factory.COLS.DELETED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S);
+             V.append(__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
 
           S.setCharAt(Pos, '(');
@@ -2203,44 +2172,44 @@ This is the hasChanged for:<BR>
         }
        else // InitMode can be anything else
         {
-          S.append("update "); C.getFullTableVar(S, "TILDA", "TRANSPERF"); S.append(" set");
+          S.append("update "); C.getFullTableVar(S, "TILDA", "TransPerf"); S.append(" set");
           int Pos = S.length();
-          if ((TILDA__TRANSPERF_Factory.COLS.SCHEMANAME._Mask1    & __Changes1) != 0L) TILDA__TRANSPERF_Factory.COLS.SCHEMANAME.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TRANSPERF_Factory.COLS.OBJECTNAME._Mask1    & __Changes1) != 0L) TILDA__TRANSPERF_Factory.COLS.OBJECTNAME.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ._Mask1 & __Changes1) != 0L) TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.SCHEMANAME._Mask) == true) TILDA__TRANSPERF_Factory.COLS.SCHEMANAME.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.OBJECTNAME._Mask) == true) TILDA__TRANSPERF_Factory.COLS.OBJECTNAME.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ._Mask) == true) TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ.getFullColumnVarForUpdate(C, S);
 
-          if ((TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask1 & __Changes1) != 0L)
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask) == true)
            {
-             if ((TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_startPeriod) == true)
+             if (__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask) == false && DateTimeUtil.isNowPlaceholder(_startPeriod) == true)
               { TILDA__TRANSPERF_Factory.COLS.STARTPERIOD.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
               TILDA__TRANSPERF_Factory.COLS.STARTPERIOD.getFullColumnVarForUpdate(C, S);
            }
-          if ((TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ._Mask1   & __Changes1) != 0L) TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ._Mask) == true) TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ.getFullColumnVarForUpdate(C, S);
 
-          if ((TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask1 & __Changes1) != 0L)
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask) == true)
            {
-             if ((TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_endPeriod) == true)
+             if (__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask) == false && DateTimeUtil.isNowPlaceholder(_endPeriod) == true)
               { TILDA__TRANSPERF_Factory.COLS.ENDPERIOD.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
               TILDA__TRANSPERF_Factory.COLS.ENDPERIOD.getFullColumnVarForUpdate(C, S);
            }
-          if ((TILDA__TRANSPERF_Factory.COLS.COMMITNANO._Mask1    & __Changes1) != 0L) TILDA__TRANSPERF_Factory.COLS.COMMITNANO.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT._Mask1   & __Changes1) != 0L) TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO._Mask1  & __Changes1) != 0L) TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO.getFullColumnVarForUpdate(C, S);
-          if ((TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT._Mask1 & __Changes1) != 0L) TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.COMMITNANO._Mask) == true) TILDA__TRANSPERF_Factory.COLS.COMMITNANO.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT._Mask) == true) TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO._Mask) == true) TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO.getFullColumnVarForUpdate(C, S);
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT._Mask) == true) TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT.getFullColumnVarForUpdate(C, S);
 
-          if ((TILDA__TRANSPERF_Factory.COLS.CREATED._Mask1 & __Changes1) != 0L)
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.CREATED._Mask) == true)
            {
-             if ((TILDA__TRANSPERF_Factory.COLS.CREATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_created) == true)
+             if (__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.CREATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_created) == true)
               { TILDA__TRANSPERF_Factory.COLS.CREATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
               TILDA__TRANSPERF_Factory.COLS.CREATED.getFullColumnVarForUpdate(C, S);
            }
 
-          if ((TILDA__TRANSPERF_Factory.COLS.LASTUPDATED._Mask1 & __Changes1) != 0L)
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.LASTUPDATED._Mask) == true)
            {
-             if ((TILDA__TRANSPERF_Factory.COLS.LASTUPDATED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true)
+             if (__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.LASTUPDATED._Mask) == false && DateTimeUtil.isNowPlaceholder(_lastUpdated) == true)
               { TILDA__TRANSPERF_Factory.COLS.LASTUPDATED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
               TILDA__TRANSPERF_Factory.COLS.LASTUPDATED.getFullColumnVarForUpdate(C, S);
@@ -2251,9 +2220,9 @@ This is the hasChanged for:<BR>
              setLastUpdatedNow();
            }
 
-          if ((TILDA__TRANSPERF_Factory.COLS.DELETED._Mask1 & __Changes1) != 0L)
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask) == true)
            {
-             if ((TILDA__TRANSPERF_Factory.COLS.DELETED._Mask1 & __Nulls1) == 0L && DateTimeUtil.isNowPlaceholder(_deleted) == true)
+             if (__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask) == false && DateTimeUtil.isNowPlaceholder(_deleted) == true)
               { TILDA__TRANSPERF_Factory.COLS.DELETED.getFullColumnVarForInsert(C, S); S.append(C.getEqualCurrentTimestamp()); }
              else
               TILDA__TRANSPERF_Factory.COLS.DELETED.getFullColumnVarForUpdate(C, S);
@@ -2262,8 +2231,9 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "objectName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "startPeriod"); S.append("=?)");
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "TransPerf", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "TransPerf", "objectName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "TransPerf", "startPeriod"); S.append("=?)");
                 break;
+             case -77: 
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
            }
@@ -2274,65 +2244,119 @@ This is the hasChanged for:<BR>
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(TILDA__TRANSPERF_Factory.SCHEMA_TABLENAME_LABEL, Q);
-       QueryDetails.logQuery("TILDA.TRANSPERF", Q, toString());
+       QueryDetails.logQuery("TILDA.TransPerf", Q, toString());
+
+       return Q;
+     }
+   protected int populatePreparedStatement(Connection C, java.sql.PreparedStatement PS, List<java.sql.Array> AllocatedArrays) throws Exception
+     {
+       int i = 0;
+       if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.SCHEMANAME._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.SCHEMANAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _schemaName);
+        } 
+       if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.OBJECTNAME._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.OBJECTNAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _objectName);
+        } 
+       if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _startPeriodTZ);
+        } 
+       if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_startPeriod) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_startPeriod.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+        } 
+       if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _endPeriodTZ);
+        } 
+       if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_endPeriod) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_endPeriod.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+        } 
+       if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.COMMITNANO._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.COMMITNANO._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _commitNano);
+        } 
+       if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _commitCount);
+        } 
+       if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _rollbackNano);
+        } 
+       if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _rollbackCount);
+        } 
+       if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.CREATED._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.CREATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+        } 
+       if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.LASTUPDATED._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.LASTUPDATED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_lastUpdated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+        } 
+       if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask) == true) 
+        { 
+          if (__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask) == true) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deleted.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
+        } 
+       return i;
+     }
+   protected void stateUpdatePostWrite() throws Exception
+     {
+       if (__Init == InitMode.CREATE)
+        {
+          __Init = InitMode.WRITTEN;
+          __LookupId = 0;
+        }
+       else
+        {
+          __Init = __Init == InitMode.READ ? InitMode.READ_WRITTEN : InitMode.WRITTEN;
+        }
+
+       switch (__LookupId)
+        {
+          case 0:
+             __Saved_schemaName    = _schemaName   ;
+             __Saved_objectName    = _objectName   ;
+             __Saved_startPeriod   = _startPeriod  ;
+             break;
+          case -666: if (__Init == InitMode.CREATE) break;
+          default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
+        }
+
+       __Changes.clear();
+       __Nulls.clear();
+     }
+   public final boolean Write(Connection C) throws Exception
+     {
+       long T0 = System.nanoTime();
+       if (hasChanged() == false)
+        {
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.TransPerf has not changed: no writing will occur.");
+          QueryDetails.setLastQuery(TILDA__TRANSPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
+          return true;
+        }
+
+       if (BeforeWrite(C) == false)
+        {
+          LOG.debug(QueryDetails._LOGGING_HEADER + "The tilda.data.TILDA.TransPerf object's BeforeWrite() failed.");
+          QueryDetails.setLastQuery(TILDA__TRANSPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
+          return false;
+        }
+
+       String Q = getWriteQuery(C);
+
        java.sql.PreparedStatement PS = null;
        int count = 0;
+       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
        try
         {
           PS = C.prepareStatement(Q);
-          int i = 0;
-               if ((TILDA__TRANSPERF_Factory.COLS.SCHEMANAME._Mask1    & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__TRANSPERF_Factory.COLS.SCHEMANAME._Mask1    & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _schemaName);
-                } 
-               if ((TILDA__TRANSPERF_Factory.COLS.OBJECTNAME._Mask1    & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__TRANSPERF_Factory.COLS.OBJECTNAME._Mask1    & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _objectName);
-                } 
-               if ((TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ._Mask1 & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ._Mask1 & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _startPeriodTZ);
-                } 
-               if ((TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask1   & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask1   & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_startPeriod) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_startPeriod.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
-                } 
-               if ((TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ._Mask1   & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ._Mask1   & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _endPeriodTZ);
-                } 
-               if ((TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask1     & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask1     & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_endPeriod) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_endPeriod.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
-                } 
-               if ((TILDA__TRANSPERF_Factory.COLS.COMMITNANO._Mask1    & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__TRANSPERF_Factory.COLS.COMMITNANO._Mask1    & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _commitNano);
-                } 
-               if ((TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT._Mask1   & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT._Mask1   & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _commitCount);
-                } 
-               if ((TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO._Mask1  & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO._Mask1  & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _rollbackNano);
-                } 
-               if ((TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT._Mask1 & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT._Mask1 & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _rollbackCount);
-                } 
-               if ((TILDA__TRANSPERF_Factory.COLS.CREATED._Mask1       & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__TRANSPERF_Factory.COLS.CREATED._Mask1       & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_created) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_created.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
-                } 
-               if ((TILDA__TRANSPERF_Factory.COLS.LASTUPDATED._Mask1   & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__TRANSPERF_Factory.COLS.LASTUPDATED._Mask1   & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_lastUpdated) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_lastUpdated.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
-                } 
-               if ((TILDA__TRANSPERF_Factory.COLS.DELETED._Mask1       & __Changes1) != 0L) 
-                { 
-                  if ((TILDA__TRANSPERF_Factory.COLS.DELETED._Mask1       & __Nulls1  ) != 0L) PS.setNull(++i, java.sql.Types.TIMESTAMP_WITH_TIMEZONE); else if (DateTimeUtil.isNowPlaceholder(_deleted) == false) PS.setTimestamp(++i, new java.sql.Timestamp(_deleted.toInstant().toEpochMilli()), DateTimeUtil._UTC_CALENDAR);
-                } 
+          int i = populatePreparedStatement(C, PS, AllocatedArrays);
 
           switch (__LookupId)
            {
@@ -2362,32 +2386,12 @@ This is the hasChanged for:<BR>
           PS = null;
         }
 
-       if (__Init == InitMode.CREATE)
-        {
-          __Init = InitMode.WRITTEN;
-          __LookupId = 0;
-        }
-       else
-        {
-          __Init = __Init == InitMode.READ ? InitMode.READ_WRITTEN : InitMode.WRITTEN;
-        }
-
-       switch (__LookupId)
-        {
-          case 0:
-             __Saved_schemaName    = _schemaName   ;
-             __Saved_objectName    = _objectName   ;
-             __Saved_startPeriod   = _startPeriod  ;
-             break;
-          case -666: if (__Init == InitMode.CREATE) break;
-          default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
-        }
-
-       __Changes1= __Changes2= __Changes3= __Changes4= __Changes5= __Changes6= __Nulls1= __Nulls2= __Nulls3= __Nulls4= __Nulls5= __Nulls6= 0L;
+       stateUpdatePostWrite();
        return true;
      }
 
    protected abstract boolean BeforeWrite(Connection C) throws Exception;
+
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2408,34 +2412,35 @@ This is the hasChanged for:<BR>
      {
        long T0 = System.nanoTime();
        if (__Init == InitMode.CREATE)
-        throw new Exception("This TILDA.TRANSPERF object is being Read() after a Create(), which doesn't make sense.");
+        throw new Exception("This TILDA.TransPerf object is being Read() after a Create(), which doesn't make sense.");
        if (__Init == InitMode.READ == true && Force == false && hasChanged()==false)
         {
-          LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.TRANSPERF object has already been read.");
+          LOG.debug(QueryDetails._LOGGING_HEADER + "This TILDA.TransPerf object has already been read.");
           QueryDetails.setLastQuery(TILDA__TRANSPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
           return true;
         }
        StringBuilder S = new StringBuilder(1024);
-       S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "schemaName");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "objectName");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "startPeriodTZ");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "startPeriod");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "endPeriodTZ");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "endPeriod");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "commitNano");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "commitCount");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "rollbackNano");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "rollbackCount");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "created");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "lastUpdated");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "deleted");
-       S.append(" from "); C.getFullTableVar(S, "TILDA", "TRANSPERF");
+          S.append("select ");
+          S.append(" "); C.getFullColumnVar(S, "TILDA", "TransPerf", "schemaName");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "objectName");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "startPeriodTZ");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "startPeriod");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "endPeriodTZ");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "endPeriod");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "commitNano");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "commitCount");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "rollbackNano");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "rollbackCount");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "created");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "lastUpdated");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "TransPerf", "deleted");
+          S.append(" from "); C.getFullTableVar(S, "TILDA", "TransPerf");
        switch (__LookupId)
         {
           case 0:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "objectName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "TRANSPERF", "startPeriod"); S.append("=?)");
+             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "TransPerf", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "TransPerf", "objectName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "TransPerf", "startPeriod"); S.append("=?)");
              break;
+          case -77: 
           case -666: if (__Init == InitMode.CREATE) break;
           default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot create where clause.");
         }
@@ -2444,7 +2449,7 @@ This is the hasChanged for:<BR>
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(TILDA__TRANSPERF_Factory.SCHEMA_TABLENAME_LABEL, Q);
-       QueryDetails.logQuery("TILDA.TRANSPERF", Q, toString());
+       QueryDetails.logQuery("TILDA.TransPerf", Q, toString());
        java.sql.PreparedStatement PS=null;
        java.sql.ResultSet RS=null;
        int count = 0;
@@ -2489,22 +2494,22 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_schemaName    = _schemaName    = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__TRANSPERF_Factory.COLS.SCHEMANAME._Mask1   ;
-      __Saved_objectName    = _objectName    = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__TRANSPERF_Factory.COLS.OBJECTNAME._Mask1   ;
-                              _startPeriodTZ = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ._Mask1; else _startPeriodTZ = _startPeriodTZ.trim();
-      __Saved_startPeriod   = _startPeriod   = ProcessZDT(_startPeriodTZ  , "tilda.data.TILDA.TRANSPERF.startPeriod"  , RS, ++i, TILDA__TRANSPERF_Factory.COLS.STARTPERIOD  , TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ  );
-                              _endPeriodTZ   = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ._Mask1  ; else _endPeriodTZ   = _endPeriodTZ  .trim();
-                              _endPeriod     = ProcessZDT(_endPeriodTZ    , "tilda.data.TILDA.TRANSPERF.endPeriod"    , RS, ++i, TILDA__TRANSPERF_Factory.COLS.ENDPERIOD    , TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ    );
-                              _commitNano    =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__TRANSPERF_Factory.COLS.COMMITNANO._Mask1   ;
-                              _commitCount   =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT._Mask1  ;
-                              _rollbackNano  =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO._Mask1 ;
-                              _rollbackCount =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls1 |= TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT._Mask1;
-                              _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
-                              _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
-                              _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null);
+      __Saved_schemaName    = _schemaName    = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.SCHEMANAME._Mask   );
+      __Saved_objectName    = _objectName    = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.OBJECTNAME._Mask   );
+                              _startPeriodTZ = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ._Mask); else _startPeriodTZ = _startPeriodTZ.trim();
+      __Saved_startPeriod   = _startPeriod   = ProcessZDT(_startPeriodTZ  , "tilda.data.TILDA.TransPerf.startPeriod"  , RS, ++i, TILDA__TRANSPERF_Factory.COLS.STARTPERIOD  , TILDA__TRANSPERF_Factory.COLS.STARTPERIODTZ  ); if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.STARTPERIOD._Mask  );
+                              _endPeriodTZ   = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ._Mask  ); else _endPeriodTZ   = _endPeriodTZ  .trim();
+                              _endPeriod     = ProcessZDT(_endPeriodTZ    , "tilda.data.TILDA.TransPerf.endPeriod"    , RS, ++i, TILDA__TRANSPERF_Factory.COLS.ENDPERIOD    , TILDA__TRANSPERF_Factory.COLS.ENDPERIODTZ    ); if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask    );
+                              _commitNano    =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.COMMITNANO._Mask   );
+                              _commitCount   =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT._Mask  );
+                              _rollbackNano  =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO._Mask );
+                              _rollbackCount =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT._Mask);
+                              _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.CREATED._Mask      );
+                              _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.LASTUPDATED._Mask  );
+                              _deleted       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask      );
      __LookupId = 0;
      __Init     = InitMode.READ;
-     __Changes1 = __Changes2 = __Changes3 = __Changes4 = __Changes5 = __Changes6 = 0L;
+     __Changes.clear();
      return AfterRead(C);
    }
 
@@ -2515,35 +2520,13 @@ This is the hasChanged for:<BR>
      if (ZI == null && TextUtil.isNullOrEmpty(TimezoneId) == false)
       throw new Exception("Cannot set field '"+DTFieldName+"' because the timezone Id '" + TimezoneId + "' is unknown. Make sure it is mapped properly in the ZoneInfo table.");
      ZonedDateTime ZDT = DateTimeUtil.toZonedDateTime(RS.getTimestamp(ColumnPos, DateTimeUtil._UTC_CALENDAR), ZI == null ? "null" : ZI.getValue());
+     boolean DTNull = false;
      if (RS.wasNull() == true)
-      if (DTField._MaskId == 1)
-       __Nulls1 |= DTField._Mask1;
-      else if (DTField._MaskId == 2)
-       __Nulls2 |= DTField._Mask2;
-      else if (DTField._MaskId == 3)
-       __Nulls3 |= DTField._Mask3;
-      else if (DTField._MaskId == 4)
-       __Nulls4 |= DTField._Mask4;
-      else if (DTField._MaskId == 5)
-       __Nulls5 |= DTField._Mask5;
-      else if (DTField._MaskId == 6)
-       __Nulls6 |= DTField._Mask6;
-      else
-       throw new Error("RUNTIME TILDA ERROR: Invalid MaskId="+DTField._MaskId+" for column "+DTFieldName+". Values should be between 1 and 4.");
-     boolean DTNull = DTField._MaskId == 1 ? (__Nulls1 & DTField._Mask1) != 0L
-                    : DTField._MaskId == 2 ? (__Nulls2 & DTField._Mask2) != 0L
-                    : DTField._MaskId == 3 ? (__Nulls3 & DTField._Mask3) != 0L
-                    : DTField._MaskId == 4 ? (__Nulls4 & DTField._Mask4) != 0L
-                    : DTField._MaskId == 5 ? (__Nulls5 & DTField._Mask5) != 0L
-                                           : (__Nulls6 & DTField._Mask6) != 0L
-                                           ;
-     boolean TZNull = TZField._MaskId == 1 ? (__Nulls1 & TZField._Mask1) != 0L
-                    : TZField._MaskId == 2 ? (__Nulls2 & TZField._Mask2) != 0L
-                    : TZField._MaskId == 3 ? (__Nulls3 & TZField._Mask3) != 0L
-                    : TZField._MaskId == 4 ? (__Nulls4 & TZField._Mask4) != 0L
-                    : TZField._MaskId == 5 ? (__Nulls5 & TZField._Mask5) != 0L
-                                           : (__Nulls6 & TZField._Mask6) != 0L
-                                           ;
+      {
+         __Nulls.or(DTField._Mask);
+         DTNull = true;
+      }
+     boolean TZNull = __Nulls.intersects(TZField._Mask);
      if (DTNull == false && TZNull == true)
       throw new Exception("The field "+DTFieldName+" is not null while its associated timezone field '"+DTFieldName+"TZ' is null. A TZ is mandatory for not null timestamps.");
      return ZDT;
@@ -2555,16 +2538,20 @@ This is the hasChanged for:<BR>
     {
       long T0 = System.nanoTime();
       String Str = 
-                   "schemaName: "                                                                                              + TextUtil.PrintVariableStr        (getSchemaName   ())
-               + "; objectName: "                                                                                              + TextUtil.PrintVariableStr        (getObjectName   ())
-               + "; startPeriod: "                                                                                             + DateTimeUtil.printDateTimeForJSON(getStartPeriod  ())
-               + "; endPeriod: "                                                                                               + DateTimeUtil.printDateTimeForJSON(getEndPeriod    ())
-               + "; commitNano: "                                                                                              +                                   getCommitNano   () 
-               + "; commitCount: "                                                                                             +                                   getCommitCount  () 
-               + "; rollbackNano: "                                                                                            +                                   getRollbackNano () 
-               + "; rollbackCount: "                                                                                           +                                   getRollbackCount() 
+                   "schemaName: "                                                                                             + TextUtil.PrintVariableStr        (getSchemaName   ())
+               + "; objectName: "                                                                                             + TextUtil.PrintVariableStr        (getObjectName   ())
+               + "; startPeriod: "                                                                                            + DateTimeUtil.printDateTimeForJSON(getStartPeriod  ())
+               + "; endPeriod: "                                                                                              + DateTimeUtil.printDateTimeForJSON(getEndPeriod    ())
+               + "; commitNano: "                                                                                             +                                   getCommitNano   () 
+               + "; commitCount: "                                                                                            +                                   getCommitCount  () 
+               + "; rollbackNano: "                                                                                           +                                   getRollbackNano () 
+               + "; rollbackCount: "                                                                                          +                                   getRollbackCount() 
+               + "; created: "                                                                                                + DateTimeUtil.printDateTimeForJSON(getCreated      ())
+               + "; lastUpdated: "                                                                                            + DateTimeUtil.printDateTimeForJSON(getLastUpdated  ())
+               + "; deleted"         + (__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.DELETED._Mask) == true ? ": NULL" : ": " + DateTimeUtil.printDateTimeForJSON(getDeleted      ()))
          + ";";
       PerfTracker.add(TransactionType.TILDA_TOSTRING, System.nanoTime() - T0);
       return Str;
     }
+
  }

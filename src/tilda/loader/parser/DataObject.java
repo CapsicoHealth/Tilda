@@ -26,6 +26,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.data.ZoneInfo_Factory;
 import tilda.db.Connection;
 import tilda.db.metadata.SchemaMeta;
 import tilda.db.metadata.TableMeta;
@@ -113,6 +114,13 @@ public class DataObject
             errorMessages.add("Data definition for " + getTableFullName() + " is defining a mode='" + _mode + "' which is invalid. Must be one of 'INSERT', 'TRUNCATE_INSERT', 'UPSERT'. ");
             return false;
           }
+        
+        if (TextUtil.isNullOrEmpty(_zoneId) == false && ZoneInfo_Factory.getEnumerationById(_zoneId) == null)
+          {
+            errorMessages.add("Data definition for " + getTableFullName() + " is invalid: it defines zoneId='"+_zoneId+"' which cannot be found in the Tilda.ZoneInfo table.");
+            return false;
+          }
+        
 
         return true;
       }
@@ -133,12 +141,8 @@ public class DataObject
       {
         List<String> Headers = new ArrayList<String>();
         for (ColumnHeader ColumnHeader : _ColumnHeaderList)
-          {
-            if (ColumnHeader == null)
-              continue;
+          if (ColumnHeader != null)
             Headers.add(ColumnHeader._Header);
-          }
-
         return Headers.toArray(new String[Headers.size()]);
       }
 
@@ -146,9 +150,9 @@ public class DataObject
       {
         Map<String, ColumnHeader> MultiHeaderColMap = new HashMap<String, ColumnHeader>();
         for (ColumnHeader ColumnHeader : _ColumnHeaderList)
-          {
+          if (ColumnHeader != null)
             MultiHeaderColMap.put(ColumnHeader._Column, ColumnHeader);
-          }
+
         return MultiHeaderColMap;
       }
 

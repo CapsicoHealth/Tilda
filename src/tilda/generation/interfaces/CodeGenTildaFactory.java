@@ -123,4 +123,12 @@ public interface CodeGenTildaFactory extends CodeGenBase
      * @param O
      */
     public void genEnumerationSupport(PrintWriter Out, GeneratorSession G, Object O);
+
+    /**
+     * 
+     * @param out
+     * @param g
+     */
+    public void genBatchWrite(PrintWriter Out, GeneratorSession G, Object O)
+    throws Exception;
   }

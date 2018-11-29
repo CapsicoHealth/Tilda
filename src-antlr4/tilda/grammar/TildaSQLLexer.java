@@ -1,4 +1,4 @@
-// Generated from TildaSQL.g4 by ANTLR 4.5.3
+// Generated from TildaSQL.g4 by ANTLR 4.4
 package tilda.grammar;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
@@ -11,13 +11,13 @@ import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class TildaSQLLexer extends Lexer {
-	static { RuntimeMetaData.checkVersion("4.5.3", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.4", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, NUMERIC_LITERAL=8, 
+		T__6=1, T__5=2, T__4=3, T__3=4, T__2=5, T__1=6, T__0=7, NUMERIC_LITERAL=8, 
 		TIMESTAMP_LITERAL=9, CURRENT_TIMESTAMP=10, TIMESTAMP_YESTERDAY=11, TIMESTAMP_TODAY=12, 
 		TIMESTAMP_TOMORROW=13, LAST=14, STRING_LITERAL=15, BIND_PARAMETER=16, 
 		K_AND=17, K_BETWEEN=18, K_IN=19, K_IS=20, K_LIKE=21, K_NOT=22, K_NULL=23, 
@@ -29,8 +29,17 @@ public class TildaSQLLexer extends Lexer {
 		"DEFAULT_MODE"
 	};
 
+	public static final String[] tokenNames = {
+		"'\\u0000'", "'\\u0001'", "'\\u0002'", "'\\u0003'", "'\\u0004'", "'\\u0005'", 
+		"'\\u0006'", "'\\u0007'", "'\b'", "'\t'", "'\n'", "'\\u000B'", "'\f'", 
+		"'\r'", "'\\u000E'", "'\\u000F'", "'\\u0010'", "'\\u0011'", "'\\u0012'", 
+		"'\\u0013'", "'\\u0014'", "'\\u0015'", "'\\u0016'", "'\\u0017'", "'\\u0018'", 
+		"'\\u0019'", "'\\u001A'", "'\\u001B'", "'\\u001C'", "'\\u001D'", "'\\u001E'", 
+		"'\\u001F'", "' '", "'!'", "'\"'", "'#'", "'$'", "'%'", "'&'", "'''", 
+		"'('", "')'", "'*'", "'+'", "','", "'-'", "'.'"
+	};
 	public static final String[] ruleNames = {
-		"T__0", "T__1", "T__2", "T__3", "T__4", "T__5", "T__6", "NUMERIC_LITERAL", 
+		"T__6", "T__5", "T__4", "T__3", "T__2", "T__1", "T__0", "NUMERIC_LITERAL", 
 		"TIMESTAMP_LITERAL", "CURRENT_TIMESTAMP", "TIMESTAMP_YESTERDAY", "TIMESTAMP_TODAY", 
 		"TIMESTAMP_TOMORROW", "LAST", "STRING_LITERAL", "BIND_PARAMETER", "K_AND", 
 		"K_BETWEEN", "K_IN", "K_IS", "K_LIKE", "K_NOT", "K_NULL", "K_OR", "K_NULL_OR_EMPTY", 
@@ -42,55 +51,6 @@ public class TildaSQLLexer extends Lexer {
 		"R", "S", "T", "U", "V", "W", "X", "Y", "Z"
 	};
 
-	private static final String[] _LITERAL_NAMES = {
-		null, "'('", "')'", "'+'", "'||'", "','", "'*'", "'.'", null, null, null, 
-		null, null, null, null, null, null, null, null, null, null, null, null, 
-		null, null, null, null, "'<'", "'<='", "'>'", "'>='", null, null, "'/'", 
-		"'-'"
-	};
-	private static final String[] _SYMBOLIC_NAMES = {
-		null, null, null, null, null, null, null, null, "NUMERIC_LITERAL", "TIMESTAMP_LITERAL", 
-		"CURRENT_TIMESTAMP", "TIMESTAMP_YESTERDAY", "TIMESTAMP_TODAY", "TIMESTAMP_TOMORROW", 
-		"LAST", "STRING_LITERAL", "BIND_PARAMETER", "K_AND", "K_BETWEEN", "K_IN", 
-		"K_IS", "K_LIKE", "K_NOT", "K_NULL", "K_OR", "K_NULL_OR_EMPTY", "K_REGEXP", 
-		"K_LT", "K_LTE", "K_GT", "K_GTE", "K_EQ", "K_NEQ", "K_DIV", "K_MINUS", 
-		"K_LEN", "IDENTIFIER", "PLUS_MINUS", "YEAR_LITERAL", "MONTH_LITERAL", 
-		"DAY_LITERAL", "HOUR_LITERAL_24", "MINUTE_LITERAL", "SECOND_LITERAL", 
-		"HOUR_LITERAL_12", "SPACES", "UNEXPECTED_CHAR"
-	};
-	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
-
-	/**
-	 * @deprecated Use {@link #VOCABULARY} instead.
-	 */
-	@Deprecated
-	public static final String[] tokenNames;
-	static {
-		tokenNames = new String[_SYMBOLIC_NAMES.length];
-		for (int i = 0; i < tokenNames.length; i++) {
-			tokenNames[i] = VOCABULARY.getLiteralName(i);
-			if (tokenNames[i] == null) {
-				tokenNames[i] = VOCABULARY.getSymbolicName(i);
-			}
-
-			if (tokenNames[i] == null) {
-				tokenNames[i] = "<INVALID>";
-			}
-		}
-	}
-
-	@Override
-	@Deprecated
-	public String[] getTokenNames() {
-		return tokenNames;
-	}
-
-	@Override
-
-	public Vocabulary getVocabulary() {
-		return VOCABULARY;
-	}
-
 
 	public TildaSQLLexer(CharStream input) {
 		super(input);
@@ -99,6 +59,9 @@ public class TildaSQLLexer extends Lexer {
 
 	@Override
 	public String getGrammarFileName() { return "TildaSQL.g4"; }
+
+	@Override
+	public String[] getTokenNames() { return tokenNames; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
@@ -176,9 +139,9 @@ public class TildaSQLLexer extends Lexer {
 		"\u01be\3\2\2\2\u0085\u01c0\3\2\2\2\u0087\u01c2\3\2\2\2\u0089\u01c4\3\2"+
 		"\2\2\u008b\u01c6\3\2\2\2\u008d\u01c8\3\2\2\2\u008f\u01ca\3\2\2\2\u0091"+
 		"\u01cc\3\2\2\2\u0093\u01ce\3\2\2\2\u0095\u0096\7*\2\2\u0096\4\3\2\2\2"+
-		"\u0097\u0098\7+\2\2\u0098\6\3\2\2\2\u0099\u009a\7-\2\2\u009a\b\3\2\2\2"+
-		"\u009b\u009c\7~\2\2\u009c\u009d\7~\2\2\u009d\n\3\2\2\2\u009e\u009f\7."+
-		"\2\2\u009f\f\3\2\2\2\u00a0\u00a1\7,\2\2\u00a1\16\3\2\2\2\u00a2\u00a3\7"+
+		"\u0097\u0098\7+\2\2\u0098\6\3\2\2\2\u0099\u009a\7,\2\2\u009a\b\3\2\2\2"+
+		"\u009b\u009c\7~\2\2\u009c\u009d\7~\2\2\u009d\n\3\2\2\2\u009e\u009f\7-"+
+		"\2\2\u009f\f\3\2\2\2\u00a0\u00a1\7.\2\2\u00a1\16\3\2\2\2\u00a2\u00a3\7"+
 		"\60\2\2\u00a3\20\3\2\2\2\u00a4\u00a6\5_\60\2\u00a5\u00a4\3\2\2\2\u00a6"+
 		"\u00a7\3\2\2\2\u00a7\u00a5\3\2\2\2\u00a7\u00a8\3\2\2\2\u00a8\u00b0\3\2"+
 		"\2\2\u00a9\u00ad\7\60\2\2\u00aa\u00ac\5_\60\2\u00ab\u00aa\3\2\2\2\u00ac"+

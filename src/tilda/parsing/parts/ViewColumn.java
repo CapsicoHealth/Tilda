@@ -16,6 +16,11 @@
 
 package tilda.parsing.parts;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,29 +28,38 @@ import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnType;
+import tilda.enums.FrameworkColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.JoinType;
+import tilda.enums.OrderType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
+import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.TextUtil;
 
 public class ViewColumn
   {
-    static final Logger LOG        = LogManager.getLogger(ViewColumn.class.getName());
+    static final Logger LOG          = LogManager.getLogger(ViewColumn.class.getName());
 
     /*@formatter:off*/
 	@SerializedName("name"       ) public String         _Name         ;
-	@SerializedName("sameas"     ) public String         _SameAs       ;
+	@SerializedName("sameas"     ) public String         _Sameas_DEPRECATED;
+    @SerializedName("sameAs"     ) public String         _SameAs       ;
     @SerializedName("as"         ) public String         _As           ;
     @SerializedName("prefix"     ) public String         _Prefix       ;
     @SerializedName("exclude"    ) public String[]       _Exclude       = new String[] { };
+    @SerializedName("block"      ) public String[]       _Block         = new String[] { };
     @SerializedName("joinType"   ) public String         _JoinStr      ;
+    @SerializedName("formulaOnly") public boolean        _FormulaOnly   = false;
     @SerializedName("joinOnly"   ) public boolean        _JoinOnly      = false;
     @SerializedName("aggregate"  ) public String         _AggregateStr ;
-    @SerializedName("distinct"   ) public Boolean        _Distinct     ;
+    @SerializedName("orderBy"    ) public String[]       _OrderBy;
+    @SerializedName("coalesce"   ) public String         _Coalesce     = null;
+    @SerializedName("distinct"   ) public Boolean        _Distinct     = false;
     @SerializedName("filter"     ) public String         _Filter       ;
     @SerializedName("useMapper"  ) public boolean        _UseMapper     = false;
     @SerializedName("useEnum"    ) public boolean        _UseEnum       = false;
+    @SerializedName("description") public String         _Description   = null;
     /*@formatter:on*/
 
 
@@ -65,14 +79,16 @@ public class ViewColumn
      * }
      */
 
-    public transient View          _ParentView;
-    public transient Column        _SameAsObj;
-    public transient JoinType      _Join;
-    public transient AggregateType _Aggregate;
-    public transient boolean       _FailedValidation   = false;
+    public transient View                _ParentView;
+    public transient Column              _SameAsObj;
+    public transient JoinType            _Join;
+    public transient AggregateType       _Aggregate;
+    public transient List<Column>        _OrderByObjs      = new ArrayList<Column>();
+    public transient List<OrderType>     _OrderByOrders    = new ArrayList<OrderType>();
 
-    public boolean                 _FrameworkGenerated = false;
+    public transient boolean             _FailedValidation = false;
 
+    public transient FrameworkColumnType _FCT              = FrameworkColumnType.NONE;
 
     public String getFullName()
       {
@@ -91,34 +107,65 @@ public class ViewColumn
 
     public String getAggregateName()
       {
-        return _Aggregate == null ? getName() 
-             : _Aggregate == AggregateType.COUNT && _SameAsObj == null ? "COUNT(*)" 
-             : _Aggregate.name()+"("+(_SameAsObj ==null ? getShortName() : _SameAsObj.getShortName())+")";
+        if (_Aggregate == null)
+          return getName();
+        if (_Aggregate == AggregateType.COUNT && _SameAsObj == null)
+          return _Distinct == true ? "COUNT(DISTINCT " + getName() + ")" : "COUNT(*)";
+        return _Aggregate.name() + (_Distinct == true ? "(DISTINCT " : "(") + (_SameAsObj == null ? getShortName() : _SameAsObj.getShortName()) + ")";
       }
 
     public ColumnType getAggregateType()
       {
         return _Aggregate == null ? _SameAsObj.getType()
-             : _Aggregate == AggregateType.COUNT && _SameAsObj == null ? ColumnType.LONG 
-             : _Aggregate.getType(_SameAsObj.getType());
+        : _Aggregate == AggregateType.COUNT && _SameAsObj == null ? ColumnType.LONG
+        : _Aggregate.getType(_SameAsObj.getType());
       }
-    
+
+
+    public boolean FixSameAs(ParserSession PS)
+      {
+        if (TextUtil.isNullOrEmpty(_Sameas_DEPRECATED) == false)
+          {
+            if (TextUtil.isNullOrEmpty(_SameAs) == false)
+              return PS.AddError("View column '" + getFullName() + "' defined both a 'sameAs' and a 'sameas'. Only one is allowed, and preferrably 'sameAs' since 'sameas' has been deprecated.");
+            _SameAs = _Sameas_DEPRECATED;
+            _Sameas_DEPRECATED = null;
+          }
+        return true;
+      }
+
     public boolean Validate(ParserSession PS, View ParentView)
       {
         int Errs = PS.getErrorCount();
         _ParentView = ParentView;
 
+        if (FixSameAs(PS) == false)
+          return false;
+
         // Mandatories
-        if (TextUtil.isNullOrEmpty(_SameAs) == true && AggregateType.COUNT.name().equalsIgnoreCase(_AggregateStr) == false)
+        if (TextUtil.isNullOrEmpty(_SameAs) == true)
           return PS.AddError("View column '" + getFullName() + "' didn't define a 'sameAs'. It is mandatory.");
 
-        if (ValidateSameAs(PS) == false)
-          return false;
+        if (TextUtil.isNullOrEmpty(_SameAs) == false)
+          {
+            _SameAsObj = ValidateSameAs(PS, getFullName(), _SameAs, _ParentView);
+            if (_SameAsObj == null)
+              return false;
+            _FCT = _SameAsObj._FCT;
+          }
 
         if (TextUtil.isNullOrEmpty(_Name) == true)
           {
             _Name = _SameAsObj.getName();
           }
+
+        if (_Name.length() > PS._CGSql.getMaxColumnNameSize())
+          PS.AddError("View Column '" + getFullName() + "' has a name that's too long: max allowed by your database is " + PS._CGSql.getMaxColumnNameSize() + " vs "+_Name.length()+" for this identifier.");
+        if (_Name.equals(TextUtil.SanitizeName(_Name)) == false)
+          PS.AddError("View Column '" + getFullName() + "' has a name containing invalid characters (must all be alphanumeric or underscore).");
+        if (ValidationHelper.isValidIdentifier(_Name) == false)
+          PS.AddError("View Column '" + getFullName() + "' has a name '" + _Name + "' which is not valid. " + ValidationHelper._ValidIdentifierMessage);
+        
 
         if (_JoinStr != null)
           if ((_Join = JoinType.parse(_JoinStr)) == null)
@@ -134,39 +181,47 @@ public class ViewColumn
           }
         if (_Aggregate == null)
           {
-            if (_Distinct != null)
+            if (_Distinct == true)
               return PS.AddError("View Column '" + getFullName() + "' defined a distinct value without specifying an aggregate. Distincts without aggregates make no sense.");
             if (TextUtil.isNullOrEmpty(_Filter) == false)
               return PS.AddError("View Column '" + getFullName() + "' defined a filter without specifying an aggregate. Filters are only valid with aggregates.");
           }
 
+        if (TextUtil.isNullOrEmpty(_Description) == true && _SameAsObj != null)
+          _Description = _SameAsObj._Description;
+
+        if (_OrderBy != null && _OrderBy.length > 0)
+          {
+            if (_Aggregate == null)
+              PS.AddError("View Column '" + getFullName() + "' defined an orderBy value without specifying an aggregate. OrderBys are meant only for ARRAY, FIRST or LAST aggregates.");
+            else if (_Aggregate.isOrderable() == false)
+              PS.AddError("View Column '" + getFullName() + "' defined an orderBy value without specifying an ARRAY/FIRST/LAST aggregate. OrderBys are meant only for ARRAY, FIRST or LAST aggregates.");
+            else if (_Distinct == true)
+              PS.AddError("View Column '" + getFullName() + "' defined an orderBy value in a Distinct aggregate, which is not supported.");
+            Set<String> Names = new HashSet<String>();
+            Index.processOrderBy(PS, "View Column '" + getFullName() + "' array aggregate", Names, ParentView, _OrderBy, _OrderByObjs, _OrderByOrders);
+          }
+
+        if (_Exclude.length > 0 || _Block.length > 0)
+          if (_SameAs.endsWith("*") == true)
+            PS.AddError("View Column '" + getFullName() + "' defined an 'exclude' or 'block' attribute but the column is not a .*.");
+
         return Errs == PS.getErrorCount();
       }
 
 
-    private boolean ValidateSameAs(ParserSession PS)
+    public static Column ValidateSameAs(ParserSession PS, String ColFullName, String SameAs, View ParentView)
       {
-        if (TextUtil.isNullOrEmpty(_SameAs) == true)
-          return true;
+        ReferenceHelper R = ReferenceHelper.parseColumnReference(SameAs, ParentView);
 
-        int Errs = PS.getErrorCount();
-
-        ReferenceHelper R = ReferenceHelper.parseColumnReference(_SameAs, _ParentView);
-
-        if (_SameAs.equals("com.capsico.datamart.data.DATAMART.EPISODEMEDICALORDERSVIEW.medicalOrdersCount") == true)
-          {
-            LOG.debug("xxx");
-          }
         if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true || TextUtil.isNullOrEmpty(R._C) == true)
-          PS.AddError("Column '" + getFullName() + "' is declaring sameas '" + _SameAs + "' with an incorrect syntax. It should be '(((package\\.)?schema\\.)?object\\.)?column'.");
+          PS.AddError("Column '" + ColFullName + "' is declaring sameas '" + SameAs + "' with an incorrect syntax. It should be '(((package\\.)?schema\\.)?object\\.)?column'.");
         else
           {
             Column Col = null;
             Schema S = PS.getSchema(R._P, R._S);
             if (S == null)
-              {
-                LOG.error("Cannot find Schema '" + R._P + "." + R._S + "'.");
-              }
+              PS.AddError("Column '" + ColFullName + "' is declaring sameas '" + SameAs + "' resolving to '" + R.getFullName() + "' where schema '" + R._P + "." + R._S + "' cannot be found.");
             else
               {
                 Object O = S.getObject(R._O);
@@ -180,13 +235,12 @@ public class ViewColumn
                   }
               }
             if (Col == null)
-              PS.AddError("Column '" + getFullName() + "' is declaring sameas '" + _SameAs + "' resolving to '" + R.getFullName() + "' which cannot be found.");
+              PS.AddError("Column '" + ColFullName + "' is declaring sameas '" + SameAs + "' resolving to '" + R.getFullName() + "' which cannot be found.");
             else
-              _SameAsObj = Col;
-
+              return Col;
           }
 
-        return Errs == PS.getErrorCount();
+        return null;
       }
 
     public Column getSameAsRoot()
@@ -210,8 +264,34 @@ public class ViewColumn
         return _SameAsObj;
       }
 
+    public List<Column> getSameAsLineage()
+      {
+        return getSameAsLineage(this);
+      }
+
+    public static List<Column> getSameAsLineage(ViewColumn VC)
+      {
+        List<Column> L = new ArrayList<Column>();
+        Column C = VC._SameAsObj;
+        while (C != null)
+          {
+            L.add(C);
+            if (C.isForeignKey() == true || C._ParentObject._FST == FrameworkSourcedType.VIEW)
+              C = C._SameAsObj;
+            else
+              break;
+          }
+        return L;
+      }
+
+
     public String toString()
       {
-        return getClass().getName() + ":" + getFullName();
+        return getClass().getName() + ":" + _ParentView != null ? getFullName() : _Sameas_DEPRECATED != null ? _Sameas_DEPRECATED : _SameAs;
+      }
+
+    public boolean isSameAsLitteral()
+      {
+        return _SameAs != null && _SameAsObj == null && _FCT.isManaged() == true;
       }
   }

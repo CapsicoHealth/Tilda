@@ -32,6 +32,7 @@ import tilda.db.stores.MSSQL;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.enums.DBStringType;
 import tilda.generation.GeneratorSession;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Base;
@@ -91,18 +92,12 @@ public class Sql extends MSSQL implements CodeGenSql
         return Str.toString();
       }
 
-    public String getColumnType(ColumnType T, Integer S, ColumnMode M, boolean Collection)
-      {
-        if (T == ColumnType.STRING && M != ColumnMode.CALCULATED)
-          return Collection == true ? "nvarchar(max)" : S < 15 ? SQLServerType.CHAR._SQLType + "(" + S + ")" : S < getCLOBThreshhold() ? SQLServerType.STRING._SQLType + "(" + S + ")" : "nvarchar(max)";
-        return Collection == true ? SQLServerType.get(T)._SQLArrayType : SQLServerType.get(T)._SQLType;
-      }
-
     @Override
     public String getColumnType(Column C)
       {
         return getColumnType(C.getType(), C._Size, C._Mode, C.isCollection());
       }
+
     @Override
     public String getColumnType(Column C, ColumnType AggregateType)
       {
@@ -113,7 +108,13 @@ public class Sql extends MSSQL implements CodeGenSql
     public String getColumnTypeRaw(Column C, boolean MultiOverride)
       {
         if (C.getType() == ColumnType.STRING && C._Mode != ColumnMode.CALCULATED)
-          return C.isCollection() == true || MultiOverride == true ? "nvarchar(max)" : C._Size < 15 ? SQLServerType.CHAR._SQLType : C._Size < getCLOBThreshhold() ? SQLServerType.STRING._SQLType : "nvarchar(max)";
+          {
+            DBStringType DBT = getDBStringType(C._Size);
+            return C.isCollection() == true || MultiOverride == true ? "nvarchar(max)"
+            : DBT == DBStringType.CHARACTER ? SQLServerType.CHAR._SQLType
+            : DBT == DBStringType.VARCHAR ? SQLServerType.STRING._SQLType
+            : "nvarchar(max)";
+          }
         if (C.getType() == ColumnType.JSON)
           return "jsonb";
         return C.isCollection() == true ? SQLServerType.get(C.getType())._SQLArrayType : SQLServerType.get(C.getType())._SQLType;
@@ -123,7 +124,13 @@ public class Sql extends MSSQL implements CodeGenSql
     public String getColumnTypeRaw(ColumnType Type, int Size, boolean isArray)
       {
         if (Type == ColumnType.STRING)
-          return isArray == true ? "text" : Size < 15 ? SQLServerType.CHAR._SQLType : Size < 4096 ? SQLServerType.STRING._SQLType : "text";
+          {
+            DBStringType DBT = getDBStringType(Size);
+            return isArray == true ? "text"
+            : DBT == DBStringType.CHARACTER ? SQLServerType.CHAR._SQLType
+            : DBT == DBStringType.VARCHAR ? SQLServerType.STRING._SQLType
+            : "text";
+          }
         return isArray == true ? SQLServerType.get(Type)._SQLArrayType : SQLServerType.get(Type)._SQLType;
       }
 
@@ -134,6 +141,12 @@ public class Sql extends MSSQL implements CodeGenSql
         return C.getType() == ColumnType.STRING && C._Mode != ColumnMode.CALCULATED && C.isCollection() == false && C._Size < 15;
       }
 
+    @Override
+    public boolean stringArrayAggNeedsText(ViewColumn VC)
+      {
+        // Arrays are not supported in SALServer and the future logic of CSV-serialization of an array to varchar(max) will need more care.
+        throw new UnsupportedOperationException();
+      }
 
     @Override
     public String getBaseSelectStatement(List<Column> Columns)
@@ -330,7 +343,7 @@ public class Sql extends MSSQL implements CodeGenSql
               Out.print("     where " + q._Clause);
             Out.println();
           }
-        
+
         if (hasAggregates == true)
           {
             Out.print("     group by ");
@@ -354,13 +367,13 @@ public class Sql extends MSSQL implements CodeGenSql
         // Out.println("COMMENT ON VIEW " + V._ParentSchema._Name + "." + V._Name + " IS " + TextUtil.EscapeSingleQuoteForSQL(Str) + ";");
         OutStr.close();
       }
-    
+
     @Override
     public void genDDLComments(PrintWriter Out, View V)
     throws Exception
       {
         // TODO Auto-generated method stub
-        
+
       }
 
     @Override
@@ -368,7 +381,7 @@ public class Sql extends MSSQL implements CodeGenSql
     throws Exception
       {
         // TODO Auto-generated method stub
-        
+
       }
 
     private boolean CheckFK(PrintWriter Out, Object Obj1, Object Obj2, ViewColumn C, int JoinIndex)
@@ -461,9 +474,9 @@ public class Sql extends MSSQL implements CodeGenSql
     @Override
     public void genKeysManagement(PrintWriter Out, Object O)
       {
-        Out.println("delete from [TILDA].[KEY] where \"name\" = '" + O._ParentSchema._Name + "." + O._Name + "';");
-        Out.println("insert into [TILDA].[KEY] (\"refnum\", \"name\", \"max\", \"count\", \"created\", \"lastUpdated\") values ((select COALESCE(max(\"refnum\"),0)+1 from [TILDA].[KEY]), '"
-        + O._ParentSchema._Name + "." + O._Name + "',(select COALESCE(max(\"refnum\"),0)+1 from [" + O._ParentSchema._Name + "].[" + O._Name + "]"
+        Out.println("delete from [TILDA].[Key] where \"name\" = '" + O._ParentSchema._Name + "." + O._Name.toUpperCase() + "';");
+        Out.println("insert into [TILDA].[Key] (\"refnum\", \"name\", \"max\", \"count\", \"created\", \"lastUpdated\") values ((select COALESCE(max(\"refnum\"),0)+1 from [TILDA].[Key]), '"
+        + O._ParentSchema._Name + "." + O._Name.toUpperCase() + "',(select COALESCE(max(\"refnum\"),0)+1 from [" + O._ParentSchema._Name + "].[" + O._Name + "]"
         + "), " + O._PrimaryKey._KeyBatch + ", current_timestamp, current_timestamp);");
       }
 
@@ -488,4 +501,12 @@ public class Sql extends MSSQL implements CodeGenSql
     throws Exception
       {
       }
+
+    @Override
+    public Query genViewJoin(StringBuilder Str, ViewJoin VJ)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
   }

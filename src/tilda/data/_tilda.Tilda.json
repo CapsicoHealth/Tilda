@@ -1,17 +1,21 @@
 {
-  "package": "tilda.data",
-  "dependencies": null,
-
-  "enumerations": [
+  "package": "tilda.data"
+ ,"dependencies": null
+ ,"extraDDL":{
+     "before":[]
+    ,"after":["_tilda.Tilda.postgres.helpers-after.sql"]
+   }
+  
+ ,"enumerations": [
 
     { "name": "ZoneInfo",
       "description": "blah blah",
       "id"    : { "type": "STRING", "size":  5  },
       "value" : { "type": "STRING", "size":  50 }
     }
-   ],
+   ]
 
-  "objects":[
+ ,"objects":[
     { "name": "Key", "occ": false,
       "description": "The table to keep track of unique keys across distributed objects/tables",
       "columns":[
@@ -285,6 +289,73 @@
        ]
     }
 
+    ,{ "name": "DependencyDDLDummyTable"
+      ,"description": "A dummy Table created to generate JavaCode to handle results from the Tilda.getDependenciesDDLs() function output."
+      ,"columns":[
+           { "name":"srcSchemaName", "type":"STRING" , "nullable":false, "size":  100, "description":"The result value."  }
+          ,{ "name":"srcTVName"    , "type":"STRING" , "nullable":false, "size":  100, "description":"The result value."  }
+          ,{ "name":"seq"          , "type":"INTEGER", "nullable":false              , "description": "The blah"          }
+          ,{ "name":"depSchemaName", "type":"STRING" , "nullable":false, "size":  100, "description":"The result value."  }
+          ,{ "name":"depViewName"  , "type":"STRING" , "nullable":false, "size":  100, "description":"The result value."  }
+          ,{ "name":"restoreScript", "type":"STRING" , "nullable":false, "size":30000, "description":"The result value."  }
+       ]
+      ,"indices":[
+           { "name": "DepedencySequence", "columns": ["srcSchemaName" , "srcTVName", "seq"], "db": true }
+          ,{ "name": "DepedencySTV"     , "columns": ["srcSchemaName" , "srcTVName", "depSchemaName", "depViewName"], "db": true }
+       ]
+     }    
+
+
+   ,{ "name": "DateDim"
+     ,"description": "The Date dimension, capturing pre-calculated metrics on dates"
+     ,"columns":[
+          { "name":"dt"            , "type":"DATE"   , "nullable":false, "invariant":true, "description":"The Date date"  }
+         ,{ "name":"epoch"         , "type":"LONG"   , "nullable":false,             "description":"The epoch date"  }
+         ,{ "name":"dayName"       , "type":"STRING" , "nullable":true , "size":255, "description":"Day name (i.e., Monday, Tuesday...) of the date"  }
+         ,{ "name":"dayOfWeek"     , "type":"INTEGER", "nullable":true ,             "description":"ISO 8601 day of the week (Monday=1 to Sunday=7) of the date"  }
+         ,{ "name":"dayOfMonth"    , "type":"INTEGER", "nullable":true ,             "description":"ISO 8601 day of the month (starting with 1) of the date"  }
+         ,{ "name":"dayOfQuarter"  , "type":"INTEGER", "nullable":true ,             "description":"ISO 8601 day of the quarter (starting with 1) of the date"  }
+         ,{ "name":"dayOfYear"     , "type":"INTEGER", "nullable":true ,             "description":"ISO 8601 day of the year (starting with 1) of the date"  }
+         ,{ "name":"weekOfMonth"   , "type":"INTEGER", "nullable":true ,             "description":"ISO 8601 week of the month (starting with 1) of the date"  }
+         ,{ "name":"weekOfYear"    , "type":"INTEGER", "nullable":true ,             "description":"ISO 8601 week of the year (starting with 1) of the date"  }
+         ,{ "name":"monthOfYear"   , "type":"INTEGER", "nullable":true ,             "description":"ISO 8601 month of the year (starting with 1) of the date"  }
+         ,{ "name":"monthName"     , "type":"STRING" , "nullable":true , "size":255, "description":"Month name (i.e., January, February...) of the date."  }
+         ,{ "name":"monthNameShort", "type":"STRING" , "nullable":true , "size":255, "description":"Monday short name (i.e., Jan, Feb...) of the date."  }
+         ,{ "name":"quarterOfYear" , "type":"INTEGER", "nullable":true ,             "description":"ISO 8601 quarter of the year (starting with 1) of the date."  }
+         ,{ "name":"quarterName"   , "type":"STRING" , "nullable":true , "size":255, "description":"Quarter name (i.e., Q1, Q2...) of the date."  }
+         ,{ "name":"year"          , "type":"INTEGER", "nullable":true ,             "description":"ISO 8601 year (1.e., 2018) of the date."  }
+         ,{ "name":"mmyyyy"        , "type":"STRING" , "nullable":true , "size":  6, "description":"The mmyyyy printable version of a date."  }
+         ,{ "name":"mmddyyyy"      , "type":"STRING" , "nullable":true , "size":  8, "description":"The mmddyyyy printable version of a date."  }
+         ,{ "name":"yyyymmdd"      , "type":"STRING" , "nullable":true , "size":  8, "description":"The yyyymmdd sortable printable version of a date."  }
+         ,{ "name":"isWeekend"     , "type":"INTEGER", "nullable":true ,             "description":"1 if this is a weekend day, 0 otherwise."  }
+         ,{ "name":"isBusinessDay" , "type":"INTEGER", "nullable":true ,             "description":"1 if this is a business day, 0 otherwise."  }
+         ,{ "name":"isHoliday"     , "type":"INTEGER", "nullable":true ,             "description":"1 if this is a holiday, 0 otherwise."  }
+         ,{ "name":"holidayName"   , "type":"STRING" , "nullable":true , "size":255, "description":"The name of the holiday if applicable."  }
+      ]
+     ,"primary": { "autogen": false, "columns": ["dt"] } 
+    }
+
+   ,{ "name": "DateLimitDim"
+     ,"occ":false
+     ,"description": "A single row for min, max and invalid dates for the Date_Dim"
+     ,"columns":[
+          { "name":"invalidDate", "sameas":"DateDim.dt", "nullable":false, "description":"The invalid date"  }
+         ,{ "name":"minDate"    , "sameas":"DateDim.dt", "nullable":false, "description":"The min date"  }
+         ,{ "name":"maxDate"    , "sameas":"DateDim.dt", "nullable":false, "description":"The max date"  }
+      ]
+     ,"foreign": [
+          { "name":"InvalidDt" , "srcColumns":["invalidDate" ], "destObject": "DateDim" }
+         ,{ "name":"MinDt"     , "srcColumns":["minDate"     ], "destObject": "DateDim" }
+         ,{ "name":"MaxDt"     , "srcColumns":["maxDate"     ], "destObject": "DateDim" }
+       ]
+     ,"indices": [ 
+          { "name":"InvalidDate"  , "columns": ["invalidDate"] }
+       ]
+    }
+
+
+
+
    ,{ "name": "Testing",
       "description": "blah blah",
       "columns":[
@@ -295,7 +366,11 @@
         { "name": "desc3"        , "type": "STRING"     ,                    "size":  5000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
         { "name": "desc4"        , "type": "STRING"     ,                    "size":  9000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
         { "name": "desc5"        , "type": "STRING"     ,                    "size": 17000,                     "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
-        { "name": "desc6"        , "type": "STRING"     ,                    "size": 33000, "protect":"SMART",  "description": "The title for a person, i.e., Mr, Miss, Mrs..."},
+        { "name": "desc6"        , "type": "STRING"     ,                    "size": 33000, "protect":"SMART",  "description": "The title for a person, i.e., Mr, Miss, Mrs..."
+                                 , "values": [ { "name":"String"   , "value":"STR", "description": "String"    }
+                                              ,{ "name":"DateTime" , "value":"DTM", "description": "DateTime"  }
+                                             ]
+        },
         { "name": "tops"         , "type": "STRING[]"   ,                                                       "description": "The blah"},
         { "name": "tops2"        , "type": "STRING{}"   ,                                                       "description": "The blah"},
         { "name": "a1"           , "type": "BITFIELD"   ,                                                       "description": "The blah"},
@@ -311,12 +386,17 @@
         { "name": "a6"           , "type": "LONG"       ,                                                       "description": "The blah"},
         { "name": "a6b"          , "type": "LONG[]"     ,                                                       "description": "The blah"},
         { "name": "a6c"          , "type": "LONG{}"     ,                                                       "description": "The blah"},
+        { "name": "a6d"          , "type": "DATETIME"   ,                                                       "description": "The blah"},
         { "name": "a7"           , "type": "INTEGER"    ,                                                       "description": "The blah"},
         { "name": "a7b"          , "type": "INTEGER[]"  ,                                                       "description": "The blah"},
         { "name": "a8"           , "type": "BINARY"     ,                                                       "description": "The blah"},
-        { "name": "a9"           , "type": "DATETIME"   ,                                                       "description": "The blah"}
+        { "name": "a8b"          , "type": "DATETIME"   ,                                                       "description": "The blah"},
+        { "name": "a9"           , "type": "DATETIME"   ,                                                       "description": "The blah"},
+        { "name": "a9b"          , "type": "DATETIME[]" ,                                                       "description": "The blah"},
+        { "name": "a9c"          , "type": "DATE"       ,                                                       "description": "The blah"},
+        { "name": "a9d"          , "type": "DATE[]"     ,                                                       "description": "The blah"}
       ],
-      "primary": { "autogen": true },
+      "primary": { "autogen": true, "keyBatch": 25000 },
       "indices":[ 
         { "name": "AllByName" , "orderBy": ["name asc"], "db": false       },
         { "name": "AllByName2", "orderBy": ["name asc"], "db": true        },
@@ -327,24 +407,16 @@
       ],
       "json":[
         { "name": "AAA", "columns": ["refnum", "refnum2", "name", "description", "desc2", "desc3", "desc4", "desc5", "desc6", "tops", "tops2", "a1", "a2", "a2b", "a2c", "a3", "a3b", "a4", "a4b", "a5", "a5b", "a6", "a6b", "a6c", "a7", "a7b", "a9", "created", "lastUpdated"] }
-       ,{ "name": "BBB", "columns": ["refnum", "refnum2", "name", "description", "desc2", "desc3"] }
+       ,{ "name": "BBB", "columns": ["refnum", "refnum2", "name", "description", "desc2", "desc3"], "outTypes":["CSV"]}
+      ],
+      "outputMaps":[
+        { "name": "CCC", "columns": ["refnum", "name", "description", "desc2"], "outTypes":["CSV","JSON"] }
+       ,{ "name": "DDD", "columns": ["a2", "a5"], "outTypes":["NVP"], "nvpSrc":"ROWS"}
+       ,{ "name": "EEE", "columns": ["a4", "a6", "name", "a7"]        , "outTypes":["NVP"], "nvpSrc":"COLUMNS", "nvpValueType":"string"}
       ],
       "http":[
         { "name": "", "mandatories": ["refnum", "name", "description"] }
       ]
-    }
-    
-   ,{ "name":"Testing2",
-      "lc": "READONLY",
-      "dbOnly":true,
-      "description":"Testing",
-      "columns":[
-         { "name":"t1"  , "type":"STRING"  , "nullable": false, "size":   2, "description":"State code" }
-        ,{ "name":"t2"  , "type":"STRING"  , "nullable": false, "size":  60, "description":"State name" }
-       ]
-     ,"indices":[ 
-         { "name":"T1"   , "columns":["t1"] }
-       ]
     }
   ]
     
@@ -402,6 +474,197 @@
                    ]
          ,"description":["Active formulas and their sub-formulas"]
         }
-     }    
+     }       
+     
+     
+    ,{ "name": "TestingView"
+      ,"description": "A test view to test aggregates."
+      ,"columns":[
+          { "sameas": "Testing.name"                       }
+         ,{ "sameas": "Testing.lastUpdated", "joinOnly":true }
+         ,{ "sameas": "Testing.refnum"   ,                   "aggregate":"COUNT"  }
+         ,{ "sameas": "Testing.a2"       , "name":"a2Min"  , "aggregate":"MIN"    , "filter":"a2 is not null" , "coalesce":"AAA" }
+         ,{ "sameas": "Testing.a2"       , "name":"a2Max"  , "aggregate":"MAX"    , "filter":"a2 is not null" , "coalesce":"ZZZ"}
+         ,{ "sameas": "Testing.a9"       ,                   "aggregate":"ARRAY"  , "orderBy":["lastUpdated asc"] }
+         ,{ "sameas": "Testing.a9c"      ,                   "aggregate":"ARRAY"}
+         ,{ "sameas": "Testing.a6"       , "name":"a6First", "aggregate":"FIRST"  , "orderBy":["lastUpdated asc"] }
+         ,{ "sameas": "Testing.a6"       , "name":"a6Last" , "aggregate":"LAST"   , "orderBy":["lastUpdated asc"] }
+        ]
+      ,"subWhereX":{
+          "clause":["Testing.deleted is null"
+                   ]
+         ,"description":["Active test records"]
+        }
+     }
+     
+    ,{ "name": "Testing2View"
+      ,"description": "A test view to test .* and exclude and block."
+      ,"columns":[
+          { "sameas": "Testing.refnum"                     }
+         ,{ "sameas": "Testing.name"                       }
+         ,{ "sameas": "Testing.lastUpdated"                }
+         ,{ "sameas": "Testing.lastUpdated"                , "name":"xxxLastUpdated"}
+         ,{ "sameas": "Testing.created",   "joinOnly":true }
+         ,{ "sameas": "Testing.a*" 
+           ,"exclude":["a2*"]
+           ,"block"  :["a3", "a6*"]
+          }
+         ,{ "sameas": "Testing.desc*"                      }
+        ]
+      ,"subWhereX":{
+            "clause":["Testing.deleted is null"
+                     ]
+           ,"description":["Active test records"]
+        }
+                
+      ,"formulaTemplates":[
+          { "name":"Descritpion flags"
+           ,"pattern":"FLAGGING"
+           ,"impls": [
+               { "type": "DOUBLE"
+                ,"column":"desc2"
+                ,"ranges":[
+                    { "values":["a","b","c"], "name":"Cat1" }
+                   ,{ "values":["x","y","z"], "name":"Cat2" }
+                   ,{ "values":["x","y","z"], "name":"Cat3" }
+                  ]
+               }
+             ]
+          }
+         ,{ "name":"Descritpion Bins"
+           ,"pattern":"BINNING"
+           ,"impls":[
+               { "type": "DOUBLE"
+                ,"column":"a7"
+                ,"ranges":[
+                     { "min":"0" , "maxExclusive":"10", "name":"Cat4" }
+                    ,{ "min":"10", "maxExclusive":"20", "name":"Cat5" }
+                  ]
+               }
+             ]
+          }
+         ,{ "name":"Nulls"
+           ,"pattern":"TEMPLATE"
+           ,"impls":[
+               { "name":"?_null"
+                ,"type":"INTEGER"
+                ,"formula":[ 
+                    "case when ? is null then 1"
+                   ,"     when ? is not null then 0"
+                   ,"end"
+                  ]
+                ,"values":[
+                    { "value":"1"  , "description":"The value is null" }
+                   ,{ "value":"0"  , "description":"The value is nmot null" }
+                  ]
+                ,"title":"Null ?"
+                ,"description":[
+                    "Whether ? is null or not"
+                  ]
+                ,"expansions":[
+                    { "name":"a5", "title":"a5", "expr":"a5", "description":"a5" }
+                   ,{ "name":"a6", "title":"a6", "expr":"a6" }
+                   ,{ "name":"a7", "title":"a7" }
+                   ,{ "name":"a8" }
+                  ]
+               }
+             ]
+          }
+        ]          
+      ,"formulaColumns":[
+          { "name": "a3"
+           ,"type": "BOOLEAN"
+           ,"formula":[ 
+               "NOT a3"
+             ]
+           ,"title": "Not A3"
+           ,"description":[
+               "Blah..."
+             ]
+          }
+         ,{ "name": "bastille"
+           ,"type": "DATETIME"
+           ,"formula":[ 
+               "'1789-07-14'"
+             ]
+           ,"title": "Bastille Day"
+           ,"description":[
+               "Blah..."
+             ]
+          }
+         ,{ "name": "toto"
+           ,"type": "DATETIME"
+           ,"formula":[ 
+               "'2018-08-10'"
+             ]
+           ,"title": "Last Updated"
+           ,"description":[
+               "Blah..."
+             ]
+          }
+        ]
+      ,"realize": {
+          "indices":[ 
+              { "name": "Refnum", "columns":["refnum"] }
+             ,{ "name": "LastUpdated", "orderBy":["lastUpdated desc"] }
+           ]
+         ,"excludes":[ "a9*"
+                     ]
+        }
+     }
+    ,{ "name": "Testing3View"
+      ,"description": "A test view to test .* and exclude and block."
+      ,"columns":[
+          { "sameas": "Testing2Realized.refnum"      }
+         ,{ "sameas": "Testing2Realized.name"        }
+         ,{ "sameas": "Testing2Realized.a8b*"        }
+         ,{ "sameas": "Testing2Realized.lastUpdated" }
+         ,{ "sameas": "Testing2Realized.xxx*" }
+        ]
+      ,"realize": {
+          "indices":[ 
+              { "name": "Refnum", "columns":["refnum"] }
+             ,{ "name": "LastUpdated", "orderBy":["lastUpdated desc"] }
+           ]
+        }
+     }
+
+    ,{ "name": "Testing4View"
+      ,"description": "A test view to test .* and exclude and block."
+      ,"columns":[
+          { "sameas": "Testing2view.*"
+           ,"block":["a3", "*astUpdated"]   
+          }
+        ]
+      ,"formulaColumns":[
+          { "name": "a3"
+           ,"type": "BOOLEAN"
+           ,"formula":[ 
+               "NOT a3 OR A3"
+             ]
+           ,"title": "Always True"
+           ,"description":[
+               "Blah..."
+             ]
+          }
+         ,{ "name": "lastUpdated"
+           ,"type": "DATETIME"
+           ,"formula":[ 
+               "GREATEST(lastUpdated, xxxLastUpdated)"
+             ]
+           ,"title": "Always True"
+           ,"description":[
+               "Blah..."
+             ]
+          }
+        ]
+      ,"realize": {
+          "indices":[ 
+              { "name": "Refnum", "columns":["refnum"] }
+             ,{ "name": "LastUpdated", "orderBy":["lastUpdated desc"] }
+           ]
+        }
+     }
+
    ]
 }

@@ -203,11 +203,21 @@ public class JDBCHelper
           {
             String Name = RS.getMetaData().getColumnName(i);
             String Val = RS.getString(i);
-            Str.append(Name).append("=").append(TextUtil.toMaxLength(Val, 20)).append("; ");
+            Str.append(Name).append("=").append(TextUtil.toMaxLength(Val, 50)).append("; ");
           }
         return Str.toString();
       }
-
-
-
+    
+    public static int BatchWriteDone(int[] results, int size)
+    throws Exception
+      {
+        if(results.length != size)
+          return 0;
+        
+        for(int i = 0 ; i < results.length ; i++)
+            if(results[i] != -2 && results[i] <= 0)
+              return i;
+    
+        return -1;
+      }
   }

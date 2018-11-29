@@ -760,6 +760,22 @@ public class ParseUtil
           }
         return D;
       }
+    public static LocalDate[] parseLocalDate(String Name, boolean Mandatory, String Value, String Sep, List<StringStringPair> Errors)
+      {
+        if (Value == null)
+         return null;
+        
+        List<LocalDate> L = new ArrayList<LocalDate>();
+        String[] Values = Value.split(Sep);
+        for (String V : Values)
+          L.add(parseLocalDate(Name, Mandatory, V, Errors));
+        
+        if (L.isEmpty() == true && Mandatory == true)
+         return null;
+        
+        return L.toArray(new LocalDate[L.size()]);
+      }
+
     
 
     /**

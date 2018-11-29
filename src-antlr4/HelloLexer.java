@@ -1,4 +1,4 @@
-// Generated from Hello.g4 by ANTLR 4.5.3
+// Generated from Hello.g4 by ANTLR 4.4
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
@@ -10,59 +10,24 @@ import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class HelloLexer extends Lexer {
-	static { RuntimeMetaData.checkVersion("4.5.3", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.4", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, Number=7, WS=8;
+		T__5=1, T__4=2, T__3=3, T__2=4, T__1=5, T__0=6, Number=7, WS=8;
 	public static String[] modeNames = {
 		"DEFAULT_MODE"
 	};
 
+	public static final String[] tokenNames = {
+		"'\\u0000'", "'\\u0001'", "'\\u0002'", "'\\u0003'", "'\\u0004'", "'\\u0005'", 
+		"'\\u0006'", "'\\u0007'", "'\b'"
+	};
 	public static final String[] ruleNames = {
-		"T__0", "T__1", "T__2", "T__3", "T__4", "T__5", "Number", "WS"
+		"T__5", "T__4", "T__3", "T__2", "T__1", "T__0", "Number", "WS"
 	};
-
-	private static final String[] _LITERAL_NAMES = {
-		null, "'+'", "'-'", "'*'", "'/'", "'('", "')'"
-	};
-	private static final String[] _SYMBOLIC_NAMES = {
-		null, null, null, null, null, null, null, "Number", "WS"
-	};
-	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
-
-	/**
-	 * @deprecated Use {@link #VOCABULARY} instead.
-	 */
-	@Deprecated
-	public static final String[] tokenNames;
-	static {
-		tokenNames = new String[_SYMBOLIC_NAMES.length];
-		for (int i = 0; i < tokenNames.length; i++) {
-			tokenNames[i] = VOCABULARY.getLiteralName(i);
-			if (tokenNames[i] == null) {
-				tokenNames[i] = VOCABULARY.getSymbolicName(i);
-			}
-
-			if (tokenNames[i] == null) {
-				tokenNames[i] = "<INVALID>";
-			}
-		}
-	}
-
-	@Override
-	@Deprecated
-	public String[] getTokenNames() {
-		return tokenNames;
-	}
-
-	@Override
-
-	public Vocabulary getVocabulary() {
-		return VOCABULARY;
-	}
 
 
 	public HelloLexer(CharStream input) {
@@ -72,6 +37,9 @@ public class HelloLexer extends Lexer {
 
 	@Override
 	public String getGrammarFileName() { return "Hello.g4"; }
+
+	@Override
+	public String[] getTokenNames() { return tokenNames; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
@@ -93,9 +61,9 @@ public class HelloLexer extends Lexer {
 		"\n\3\2\3\5\2\13\f\17\17\"\"\60\2\3\3\2\2\2\2\5\3\2\2\2\2\7\3\2\2\2\2\t"+
 		"\3\2\2\2\2\13\3\2\2\2\2\r\3\2\2\2\2\17\3\2\2\2\2\21\3\2\2\2\3\23\3\2\2"+
 		"\2\5\25\3\2\2\2\7\27\3\2\2\2\t\31\3\2\2\2\13\33\3\2\2\2\r\35\3\2\2\2\17"+
-		" \3\2\2\2\21,\3\2\2\2\23\24\7-\2\2\24\4\3\2\2\2\25\26\7/\2\2\26\6\3\2"+
-		"\2\2\27\30\7,\2\2\30\b\3\2\2\2\31\32\7\61\2\2\32\n\3\2\2\2\33\34\7*\2"+
-		"\2\34\f\3\2\2\2\35\36\7+\2\2\36\16\3\2\2\2\37!\4\62;\2 \37\3\2\2\2!\""+
+		" \3\2\2\2\21,\3\2\2\2\23\24\7\61\2\2\24\4\3\2\2\2\25\26\7*\2\2\26\6\3"+
+		"\2\2\2\27\30\7+\2\2\30\b\3\2\2\2\31\32\7,\2\2\32\n\3\2\2\2\33\34\7-\2"+
+		"\2\34\f\3\2\2\2\35\36\7/\2\2\36\16\3\2\2\2\37!\4\62;\2 \37\3\2\2\2!\""+
 		"\3\2\2\2\" \3\2\2\2\"#\3\2\2\2#*\3\2\2\2$&\7\60\2\2%\'\4\62;\2&%\3\2\2"+
 		"\2\'(\3\2\2\2(&\3\2\2\2()\3\2\2\2)+\3\2\2\2*$\3\2\2\2*+\3\2\2\2+\20\3"+
 		"\2\2\2,-\t\2\2\2-\22\3\2\2\2\6\2\"(*\2";

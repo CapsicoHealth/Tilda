@@ -31,38 +31,65 @@ public enum ColumnType
   {
 
     /*@formatter:off*/
-    STRING  (true , false, "STR"),
-    JSON    (true , false, "JSN"),
-    CHAR    (true , true , "CHR"),
-    INTEGER (true , true , "INT"),
-    LONG    (true , true , "LNG"),
-    FLOAT   (true , true , "FLT"),
-    DOUBLE  (true , true , "DBL"),
-    BOOLEAN (true , true , "BOL"),
-    DATE    (false, false, "DT"),
-    DATETIME(false, false, "DTM"),
-    BINARY  (false, false, "BIN"),
-    BITFIELD(false, true , "BF");
+    STRING  (true , true , false, "STR"),
+    JSON    (true , false, false, "JSN"),
+    CHAR    (true , true , true , "CHR"),
+    INTEGER (true , true , true , "INT"),
+    LONG    (true , true , true , "LNG"),
+    FLOAT   (true , true , true , "FLT"),
+    DOUBLE  (true , true , true , "DBL"),
+    BOOLEAN (true , true , true , "BOL"),
+    DATE    (true , true , false, "DT"),
+    DATETIME(true , false, false, "DTM"), // Datetimes are stored as 2 columns in the DB, so SETs are not allowed because they are unordered.
+    BINARY  (false, false, false, "BIN"),
+    BITFIELD(false, true , true , "BF");
     /*@formatter:on*/
 
-    private ColumnType(boolean ArrayCompatible, boolean Primitive, String shortName)
+    private ColumnType(boolean ArrayCompatible, boolean SetCompatible, boolean Primitive, String shortName)
       {
         _ArrayCompatible = ArrayCompatible;
+        _SetCompatible = SetCompatible;
         _Primitive = Primitive;
         _SimpleName = TextUtil.CapitalizeFirstCharacter(name().toLowerCase());
         _ShortName = shortName;
       }
 
     public static  PaddingTracker  _PadderTypeNames = new PaddingTracker();
-    public final boolean _ArrayCompatible;
-    public final boolean _Primitive;
-    public final String  _SimpleName;
-    public final String  _ShortName;
+    public final boolean     _ArrayCompatible;
+    public final boolean     _SetCompatible;
+    public final boolean     _Primitive;
+    public final String      _SimpleName;
+    public final String      _ShortName;
+    public final static ColumnType[][]  _CompatibleTypes;
+
     
     static
       {
         for (ColumnType T : ColumnType.values())
          _PadderTypeNames.track(T.name());
+        
+        _CompatibleTypes = new ColumnType[][] 
+         {
+			{STRING, JSON, CHAR, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, DATE, DATETIME, BITFIELD}
+		   ,{JSON}
+		   ,{CHAR, STRING}
+		   ,{INTEGER}
+		   ,{LONG, INTEGER}
+		   ,{FLOAT, INTEGER}
+		   ,{DOUBLE, FLOAT, INTEGER, LONG}
+		   ,{BOOLEAN}
+		   ,{DATE}
+		   ,{DATETIME, DATE}
+		   ,{BINARY}
+		   ,{BITFIELD}   		   
+          };
+        ColumnType[] colsToValidate = new ColumnType[_CompatibleTypes.length];
+        for(int i = 0; i < _CompatibleTypes.length; i++)
+          {
+        	colsToValidate[i] = _CompatibleTypes[i][0];
+          }
+        ColumnType.validate(colsToValidate);
+        
       }
 
     public static ColumnType parse(String Str)
@@ -75,9 +102,11 @@ public enum ColumnType
         return null;
       }
 
-    public boolean isArrayCompatible()
+    public boolean isCollectionCompatible(MultiType CollectionType)
       {
-        return _ArrayCompatible;
+        return CollectionType == MultiType.LIST ? _ArrayCompatible
+              :CollectionType == MultiType.SET  ? _SetCompatible
+              :false;
       }
     
     public boolean isPrimitive()
@@ -85,7 +114,34 @@ public enum ColumnType
         return _Primitive;
       }
     
-
+    public boolean isCompatible(ColumnType Type) 
+      {
+    	if(Type != null)
+    	  {
+    	    if(Type == this)
+    	      return true;
+    		
+    	    for(int i = 0 ; i < _CompatibleTypes.length ; i++)
+    	      if(_CompatibleTypes[i][0] == Type)
+    	    	for(int j = 1 ; j < _CompatibleTypes[i].length ; j++)
+    		      if(_CompatibleTypes[i][j] == this)
+    	            return true;
+    	  }
+    	
+		return false;
+	  }
+    
+    public String getCompatibleTypesString(ColumnType Type) 
+      { 
+    	String compatibleTypes = Type.name();
+  	    for(int i = 0 ; i < _CompatibleTypes.length ; i++)
+  	    	if(_CompatibleTypes[i][0] == Type)
+    	      for(int j = 1 ; j < _CompatibleTypes[i].length ; j++)
+    	    	  compatibleTypes += (compatibleTypes.length() > 0 ? ", " + _CompatibleTypes[i][j].name() : _CompatibleTypes[i][j].name());
+  	    
+		return compatibleTypes;
+	  }    
+    
     public static <T> void validate(T[] Enums)
       {
         ColumnType[] Vals = ColumnType.values();

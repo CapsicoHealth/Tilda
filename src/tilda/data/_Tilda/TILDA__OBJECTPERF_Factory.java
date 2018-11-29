@@ -18,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 // THIS CODE IS GENERATED AND **MUST NOT** BE MODIFIED
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+@SuppressWarnings({ "unused" })
 public class TILDA__OBJECTPERF_Factory
  {
    protected static final Logger LOG = LogManager.getLogger(TILDA__OBJECTPERF_Factory.class.getName());
@@ -26,20 +27,20 @@ public class TILDA__OBJECTPERF_Factory
 
    public static final Class<TILDA__OBJECTPERF> DATA_CLASS= TILDA__OBJECTPERF.class;
    public static final String SCHEMA_LABEL = TextUtil.Print("TILDA", "");
-   public static final String TABLENAME_LABEL = TextUtil.Print("OBJECTPERF", "");
-   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.OBJECTPERF", "");
-   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "OBJECTPERF"); }
+   public static final String TABLENAME_LABEL = TextUtil.Print("ObjectPerf", "");
+   public static final String SCHEMA_TABLENAME_LABEL = TextUtil.Print("TILDA.ObjectPerf", "");
+   public static void getFullTableNameVar(Connection C, StringBuilder S) { C.getFullTableVar(S, "TILDA", "ObjectPerf"); }
 
    public static abstract class COLS {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.schemaName -> TILDA.OBJECTPERF."schemaName"
+//   Field tilda.data.TILDA.ObjectPerf.schemaName -> TILDA.ObjectPerf."schemaName"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.schemaName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.schemaName of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.schemaName of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.schemaName of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -52,13 +53,13 @@ This is the column definition for:<BR>
      public static Type_StringPrimitive        SCHEMANAME   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "schemaName"   , 0/*0*/, "The name of the schema tracked");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.objectName -> TILDA.OBJECTPERF."objectName"
+//   Field tilda.data.TILDA.ObjectPerf.objectName -> TILDA.ObjectPerf."objectName"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.objectName of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.objectName of type varchar(64)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.objectName of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.objectName of type varchar(64)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>64</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -71,13 +72,13 @@ This is the column definition for:<BR>
      public static Type_StringPrimitive        OBJECTNAME   = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "objectName"   , 1/*1*/, "The name of the table/object tracked");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.startPeriodTZ -> TILDA.OBJECTPERF."startPeriodTZ"
+//   Field tilda.data.TILDA.ObjectPerf.startPeriodTZ -> TILDA.ObjectPerf."startPeriodTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.startPeriodTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.startPeriodTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.startPeriodTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.startPeriodTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -90,13 +91,13 @@ This is the column definition for:<BR>
      public static Type_StringPrimitive        STARTPERIODTZ= new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "startPeriodTZ", 2/*2*/, "Generated helper column to hold the time zone ID for 'startPeriod'.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.startPeriod -> TILDA.OBJECTPERF."startPeriod"
+//   Field tilda.data.TILDA.ObjectPerf.startPeriod -> TILDA.ObjectPerf."startPeriod"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.startPeriod of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.startPeriod of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.startPeriod of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.startPeriod of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -108,13 +109,13 @@ This is the column definition for:<BR>
      public static Type_DatetimePrimitive      STARTPERIOD  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "startPeriod"  , 3/*3*/, "The timestamp for when the record was created.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.endPeriodTZ -> TILDA.OBJECTPERF."endPeriodTZ"
+//   Field tilda.data.TILDA.ObjectPerf.endPeriodTZ -> TILDA.ObjectPerf."endPeriodTZ"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.endPeriodTZ of type String</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.endPeriodTZ of type character(5)</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.endPeriodTZ of type String</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.endPeriodTZ of type character(5)</TD></TR>
 
   <TR><TD align="right"><B>Size</B></TD><TD>5</TD></TR>
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
@@ -127,13 +128,13 @@ This is the column definition for:<BR>
      public static Type_StringPrimitive        ENDPERIODTZ  = new Type_StringPrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "endPeriodTZ"  , 4/*4*/, "Generated helper column to hold the time zone ID for 'endPeriod'.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.endPeriod -> TILDA.OBJECTPERF."endPeriod"
+//   Field tilda.data.TILDA.ObjectPerf.endPeriod -> TILDA.ObjectPerf."endPeriod"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.endPeriod of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.endPeriod of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.endPeriod of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.endPeriod of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
@@ -145,13 +146,13 @@ This is the column definition for:<BR>
      public static Type_DatetimePrimitive      ENDPERIOD    = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "endPeriod"    , 5/*5*/, "The timestamp for when the record was created.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.selectNano -> TILDA.OBJECTPERF."selectNano"
+//   Field tilda.data.TILDA.ObjectPerf.selectNano -> TILDA.ObjectPerf."selectNano"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.selectNano of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.selectNano of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.selectNano of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.selectNano of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -163,13 +164,13 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          SELECTNANO   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "selectNano"   , 6/*6*/, "Blah...");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.selectCount -> TILDA.OBJECTPERF."selectCount"
+//   Field tilda.data.TILDA.ObjectPerf.selectCount -> TILDA.ObjectPerf."selectCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.selectCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.selectCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.selectCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.selectCount of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -181,13 +182,13 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          SELECTCOUNT  = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "selectCount"  , 7/*7*/, "Blah...");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.selectRecords -> TILDA.OBJECTPERF."selectRecords"
+//   Field tilda.data.TILDA.ObjectPerf.selectRecords -> TILDA.ObjectPerf."selectRecords"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.selectRecords of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.selectRecords of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.selectRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.selectRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -199,13 +200,13 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          SELECTRECORDS= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "selectRecords", 8/*8*/, "Blah...");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.insertNano -> TILDA.OBJECTPERF."insertNano"
+//   Field tilda.data.TILDA.ObjectPerf.insertNano -> TILDA.ObjectPerf."insertNano"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.insertNano of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.insertNano of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.insertNano of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.insertNano of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -217,13 +218,13 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          INSERTNANO   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "insertNano"   , 9/*9*/, "Blah...");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.insertCount -> TILDA.OBJECTPERF."insertCount"
+//   Field tilda.data.TILDA.ObjectPerf.insertCount -> TILDA.ObjectPerf."insertCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.insertCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.insertCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.insertCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.insertCount of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -235,13 +236,13 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          INSERTCOUNT  = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "insertCount"  , 10/*10*/, "Blah...");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.insertRecords -> TILDA.OBJECTPERF."insertRecords"
+//   Field tilda.data.TILDA.ObjectPerf.insertRecords -> TILDA.ObjectPerf."insertRecords"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.insertRecords of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.insertRecords of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.insertRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.insertRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -253,13 +254,13 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          INSERTRECORDS= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "insertRecords", 11/*11*/, "Blah...");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.updateNano -> TILDA.OBJECTPERF."updateNano"
+//   Field tilda.data.TILDA.ObjectPerf.updateNano -> TILDA.ObjectPerf."updateNano"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.updateNano of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.updateNano of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.updateNano of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.updateNano of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -271,13 +272,13 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          UPDATENANO   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "updateNano"   , 12/*12*/, "Blah...");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.updateCount -> TILDA.OBJECTPERF."updateCount"
+//   Field tilda.data.TILDA.ObjectPerf.updateCount -> TILDA.ObjectPerf."updateCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.updateCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.updateCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.updateCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.updateCount of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -289,13 +290,13 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          UPDATECOUNT  = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "updateCount"  , 13/*13*/, "Blah...");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.updateRecords -> TILDA.OBJECTPERF."updateRecords"
+//   Field tilda.data.TILDA.ObjectPerf.updateRecords -> TILDA.ObjectPerf."updateRecords"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.updateRecords of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.updateRecords of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.updateRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.updateRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -307,13 +308,13 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          UPDATERECORDS= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "updateRecords", 14/*14*/, "Blah...");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.deleteNano -> TILDA.OBJECTPERF."deleteNano"
+//   Field tilda.data.TILDA.ObjectPerf.deleteNano -> TILDA.ObjectPerf."deleteNano"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.deleteNano of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.deleteNano of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.deleteNano of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.deleteNano of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -325,13 +326,13 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          DELETENANO   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "deleteNano"   , 15/*15*/, "Blah...");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.deleteCount -> TILDA.OBJECTPERF."deleteCount"
+//   Field tilda.data.TILDA.ObjectPerf.deleteCount -> TILDA.ObjectPerf."deleteCount"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.deleteCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.deleteCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.deleteCount of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.deleteCount of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -343,13 +344,13 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          DELETECOUNT  = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "deleteCount"  , 16/*16*/, "Blah...");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.deleteRecords -> TILDA.OBJECTPERF."deleteRecords"
+//   Field tilda.data.TILDA.ObjectPerf.deleteRecords -> TILDA.ObjectPerf."deleteRecords"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.deleteRecords of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.deleteRecords of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.deleteRecords of type long</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.deleteRecords of type bigint</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
@@ -361,16 +362,16 @@ This is the column definition for:<BR>
      public static Type_LongPrimitive          DELETERECORDS= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "deleteRecords", 17/*17*/, "Blah...");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.created -> TILDA.OBJECTPERF."created"
+//   Field tilda.data.TILDA.ObjectPerf.created -> TILDA.ObjectPerf."created"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.created of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.created of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.created of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.created of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was created. (TILDA.ObjectPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>true</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -383,19 +384,19 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 18/*18*/, "The timestamp for when the record was created.");
+     public static Type_DatetimePrimitive      CREATED      = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"      , 18/*18*/, "The timestamp for when the record was created. (TILDA.ObjectPerf)");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.lastUpdated -> TILDA.OBJECTPERF."lastUpdated"
+//   Field tilda.data.TILDA.ObjectPerf.lastUpdated -> TILDA.ObjectPerf."lastUpdated"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.lastUpdated of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.lastUpdated of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.lastUpdated of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.lastUpdated of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was last updated. (TILDA.ObjectPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
@@ -408,25 +409,25 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 19/*19*/, "The timestamp for when the record was last updated.");
+     public static Type_DatetimePrimitive      LASTUPDATED  = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"  , 19/*19*/, "The timestamp for when the record was last updated. (TILDA.ObjectPerf)");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   Field tilda.data.TILDA.OBJECTPERF.deleted -> TILDA.OBJECTPERF."deleted"
+//   Field tilda.data.TILDA.ObjectPerf.deleted -> TILDA.ObjectPerf."deleted"
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.OBJECTPERF.deleted of type ZonedDateTime</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.OBJECTPERF.deleted of type timestamptz</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.deleted of type ZonedDateTime</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.deleted of type timestamptz</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>true</TD></TR>
-  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted.</TD></TR>
+  <TR valign="top"><TD align="right"><B>Description</B></TD><TD>The timestamp for when the record was deleted. (TILDA.ObjectPerf)</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>AUTO</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED      = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 20/*20*/, "The timestamp for when the record was deleted.");
+     public static Type_DatetimePrimitiveNull  DELETED      = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"      , 20/*20*/, "The timestamp for when the record was deleted. (TILDA.ObjectPerf)");
 ;
    }
 
@@ -475,57 +476,71 @@ This is the column definition for:<BR>
         }
      }
 
+   protected static final ListResults<tilda.data.ObjectPerf_Data> ReadMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception
+     {
+       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
+       ReadMany(C, -77, RPI, null, FullSelectQuery, Start, Size);
+       return RPI._L;
+     }
+
    private static final void ReadMany(Connection C, int LookupId, tilda.db.processors.RecordProcessor RP, tilda.data._Tilda.TILDA__OBJECTPERF Obj, Object ExtraParams, int Start, int Size) throws Exception
      {
        long T0 = System.nanoTime();
        StringBuilder S = new StringBuilder(1024);
-       S.append("select ");
-       S.append(" "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "schemaName");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "objectName");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "startPeriodTZ");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "startPeriod");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "endPeriodTZ");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "endPeriod");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "selectNano");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "selectCount");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "selectRecords");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "insertNano");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "insertCount");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "insertRecords");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "updateNano");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "updateCount");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "updateRecords");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "deleteNano");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "deleteCount");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "deleteRecords");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "created");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "lastUpdated");
-       S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "deleted");
-       S.append(" from "); C.getFullTableVar(S, "TILDA", "OBJECTPERF");
-       switch (LookupId)
+       if (LookupId == -77)
         {
-          case -7:
-             String clause = ((SelectQuery)ExtraParams).getWhereClause();
-             if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
-             break;
-          case 1:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "schemaName"); S.append("=?)");
-             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "objectName"); S.append(" ASC");S.append(", "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "startPeriod"); S.append(" DESC");
-             break;
-          case 2:
-             S.append(" where ("); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "objectName"); S.append("=?)");
-             S.append(" order by "); C.getFullColumnVar(S, "TILDA", "OBJECTPERF", "startPeriod"); S.append(" DESC");
-             break;
-          case -666: break;
-          default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
+          S.append((String)ExtraParams);
+        }
+       else
+        {
+          S.append("select ");
+          S.append(" "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "schemaName");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "objectName");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "startPeriodTZ");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "startPeriod");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "endPeriodTZ");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "endPeriod");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "selectNano");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "selectCount");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "selectRecords");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "insertNano");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "insertCount");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "insertRecords");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "updateNano");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "updateCount");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "updateRecords");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "deleteNano");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "deleteCount");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "deleteRecords");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "created");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "lastUpdated");
+          S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "deleted");
+          S.append(" from "); C.getFullTableVar(S, "TILDA", "ObjectPerf");
+          switch (LookupId)
+           {
+             case -7:
+                String clause = ((SelectQuery)ExtraParams).getWhereClause();
+                if (TextUtil.isNullOrEmpty(clause) == false) S.append(clause);
+                break;
+             case 1:
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "schemaName"); S.append("=?)");
+                S.append(" order by "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "objectName"); S.append(" ASC");S.append(", "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "startPeriod"); S.append(" DESC");
+                break;
+             case 2:
+                S.append(" where ("); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "schemaName"); S.append("=? AND "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "objectName"); S.append("=?)");
+                S.append(" order by "); C.getFullColumnVar(S, "TILDA", "ObjectPerf", "startPeriod"); S.append(" DESC");
+                break;
+             case -77: 
+             case -666: break;
+             default: throw new Exception("Invalid LookupId "+LookupId+" found. Cannot create where clause.");
+           }
         }
 
-       
        String Q = S.toString() + C.getSelectLimitClause(Start, Size+1);
        S.setLength(0);
        S = null;
        QueryDetails.setLastQuery(SCHEMA_TABLENAME_LABEL, Q);
-       QueryDetails.logQuery("TILDA.OBJECTPERF", Q, null);
+       QueryDetails.logQuery("TILDA.ObjectPerf", Q, null);
        java.sql.PreparedStatement PS=null;
        int count = 0;
        try
@@ -534,6 +549,7 @@ This is the column definition for:<BR>
           int i = 0;
           switch (LookupId)
            {
+             case -77:
              case -7:
                 break;
              case 1: {
@@ -650,6 +666,127 @@ This is the column definition for:<BR>
 
       return Obj;
      }
+   public static int WriteBatch(Connection C, List<tilda.data.ObjectPerf_Data> L, int batchSize, int commitSize) throws Exception
+     {
+       long T0 = System.nanoTime();
+
+       if (L == null || L.isEmpty() == true)
+         return -1;
+
+       java.sql.PreparedStatement PS = null;
+       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();
+       int count = 0;
+       int batchStart = 0;
+       TILDA__OBJECTPERF lastObj = null;
+       BitSet firstChangeList = (BitSet) ((TILDA__OBJECTPERF) L.get(0)).__Changes.clone();
+       String firstTimeStampSignature = ((TILDA__OBJECTPERF) L.get(0)).getTimeStampSignature();
+
+       try
+         {
+           C.setSavepoint();
+           String Q = L.get(0).getWriteQuery(C);
+           PS = C.prepareStatement(Q);
+           int insertCount = 0;
+
+           int index = -1;
+           for (tilda.data.ObjectPerf_Data d : L)
+             {
+               ++index;
+               if (d == null || d.hasChanged() == false)
+                 continue;
+
+               lastObj = ((TILDA__OBJECTPERF) d);
+
+               if (((TILDA__OBJECTPERF) d).__Init != InitMode.CREATE)
+                 {
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.ObjectPerf_Data' object at positon #" + index + " was not in an insertable state. Only inserts are allowed in batch writes (i.e., no updates).");
+                   QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
+                   return index;
+                 }
+
+               if (((TILDA__OBJECTPERF) d).BeforeWrite(C) == false)
+                 {
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.ObjectPerf_Data' object at positon #" + index + " failed in its BeforeWrite() method.");
+                   QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
+                   return index;
+                 }
+
+               if (firstChangeList.equals(((TILDA__OBJECTPERF) d).__Changes) == false)
+                 {
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.ObjectPerf_Data' object at positon #" + index + " failed matching the list of columns being changed compared to the first object passed.");
+                   QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
+                   return index;
+                 }
+
+               if (firstTimeStampSignature.equals(((TILDA__OBJECTPERF) d).getTimeStampSignature()) == false)
+                 {
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "The 'tilda.data.ObjectPerf_Data' object at positon #" + index + " failed matching the list of updated current vs value based timestamps.");
+                   QueryDetails.setLastQuery(TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, "");
+                   return index;
+                 }
+
+               int i = d.populatePreparedStatement(C, PS, AllocatedArrays);
+
+               PS.addBatch();
+               if (index != 0 && (index + 1) % batchSize == 0)
+                 {
+                   int[] results = PS.executeBatch();
+                   int failedRec = JDBCHelper.BatchWriteDone(results, batchSize);
+                   if (failedRec != -1)
+                     {
+                       LOG.debug(QueryDetails._LOGGING_HEADER + "A batch of tilda.data.ObjectPerf_Data objects between positions #" + batchStart + " and #" + index + " failed being written to the database.");
+                       return insertCount+failedRec;
+                     }
+                   for (int index2 = batchStart; index2 <= index; ++index2)
+                     L.get(index2).stateUpdatePostWrite();
+                   LOG.debug("Batch-inserted objects between positions #" + insertCount + " and #" + index + ".");
+                   batchStart = 0;
+                   insertCount+=batchSize;
+                 }
+               if (commitSize > 0 && index != 0 && (index + 1) % commitSize == 0)
+                 {
+                   C.commit();
+                   LOG.debug("Commited " + commitSize + " batch records. At insert count " + (index-commitSize+1));
+                 }
+               PS.clearParameters();
+             }
+
+           if (index != 0 && (index + 1) % batchSize != 0)
+             {
+               int[] results = PS.executeBatch();
+               int failedRec = JDBCHelper.BatchWriteDone(results, L.size() - insertCount);
+               if (failedRec != -1)
+                 {
+                   LOG.debug(QueryDetails._LOGGING_HEADER + "A batch of 'ObjectPerf_Data' objects ending at position #" + index + " failed being written to the database.");
+                   return L.size() - insertCount+failedRec;
+                 }
+               for (int index2 = batchStart; index2 <= index; ++index2)
+                 L.get(index2).stateUpdatePostWrite();
+
+               if(commitSize > 0)
+                 {
+                   C.commit();
+                   LOG.debug("Commited " + insertCount + " batch records.");
+                 }
+               LOG.debug("Final Batch-inserted objects between positions #" + insertCount + " and #" + index + ".");
+             }
+
+           C.releaseSavepoint(true);
+           return -1;
+         }
+       catch (java.sql.SQLException E)
+         {
+           C.releaseSavepoint(false);
+           TILDA__1_0.HandleCatch(C, E, "updated or inserted");
+           return 1;
+         }
+       finally
+         {
+           TILDA__1_0.HandleFinally(PS, T0, TILDA__OBJECTPERF_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);
+           PS = null;
+           AllocatedArrays = null;
+         }
+       }
 
    static public tilda.data.ObjectPerf_Data LookupByPrimaryKey(String schemaName, String objectName, ZonedDateTime startPeriod) throws Exception
      {

@@ -27,6 +27,7 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.ObjectLifecycle;
+import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ValidationHelper;
 import tilda.utils.PaddingTracker;
@@ -41,23 +42,32 @@ public abstract class Base
     @SerializedName("name"       ) public String               _Name       = null;
     @SerializedName("description") public String               _Description= null;
     @SerializedName("queries"    ) public List<SubWhereClause> _Queries    = new ArrayList<SubWhereClause>();
-    @SerializedName("json"       ) public List<JsonMapping>    _Json       = new ArrayList<JsonMapping   >();
+    @SerializedName("json"       ) public List<OutputMapping>  _JsonDEPRECATED = new ArrayList<OutputMapping >();
+    @SerializedName("outputMaps" ) public List<OutputMapping>  _OutputMaps = new ArrayList<OutputMapping>();
     /*@formatter:on*/
 
-    public transient Schema               _ParentSchema;
-    public transient PaddingTracker       _PadderColumnNames = new PaddingTracker();
-    public transient String               _OriginalName;
-    public transient String               _BaseClassName;
-    public transient String               _AppDataClassName;
-    public transient String               _AppFactoryClassName;
-    public transient String               _AppJsonClassName;
-    public transient boolean              _Validated = false;
+    public transient Schema          _ParentSchema;
+    public transient PaddingTracker  _PadderColumnNames = new PaddingTracker();
+    public transient String          _OriginalName;
+    public transient String          _BaseClassName;
+    public transient String          _AppDataClassName;
+    public transient String          _AppFactoryClassName;
+    public transient String          _AppJsonClassName;
+    public transient boolean         _Validated         = false;
+    public transient final TildaType _TildaType;
 
     public abstract Column getColumn(String name);
+
     public abstract String[] getColumnNames();
+
     public abstract ObjectLifecycle getLifecycle();
+
     public abstract boolean isOCC();
-    public abstract String getWhat();
+
+    public Base(TildaType Type)
+      {
+        _TildaType = Type;
+      }
 
     /**
      * 
@@ -65,7 +75,7 @@ public abstract class Base
      */
     public String getFullName()
       {
-        return _ParentSchema.getFullName() + "." + _Name;
+        return (_ParentSchema == null ? "" : (_ParentSchema.getFullName() + ".")) + _OriginalName;
       }
 
     /**
@@ -74,16 +84,16 @@ public abstract class Base
      */
     public String getShortName()
       {
-        return _ParentSchema.getShortName() + "." + _Name;
+        return (_ParentSchema == null ? "" : (_ParentSchema.getShortName() + ".")) + _OriginalName;
       }
-    
+
     /**
      * 
-     * @return simple the name of the object.
+     * @return simply the name of the object, i.e. _Name
      */
     public String getBaseName()
       {
-        return _Name;
+        return _OriginalName;
       }
 
     public Schema getSchema()
@@ -95,12 +105,12 @@ public abstract class Base
       {
         return _AppDataClassName;
       }
-    
+
     public String getAppFactoryClassName()
       {
         return _AppFactoryClassName;
       }
-    
+
     public String getAppJsonClassName()
       {
         return _AppJsonClassName;
@@ -115,49 +125,86 @@ public abstract class Base
       {
         return _PadderColumnNames.getPad(Name);
       }
-    
+
     protected boolean Validate(ParserSession PS, Schema ParentSchema)
       {
         if (_Validated == true)
-         return true;
-         
+          return true;
+
         int Errs = PS.getErrorCount();
 
         _ParentSchema = ParentSchema;
-        LOG.debug("  Validating "+getWhat()+" " + getFullName() + ".");
 
         // Mandatories
         if (TextUtil.isNullOrEmpty(_Name) == true)
-          return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring an "+getWhat()+" without a name.");
-        if (ValidationHelper.isValidIdentifier(_Name) == false)
-          return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring "+getWhat()+" '" + getFullName() + "' with a name '"+_Name+"' which is not valid. "+ValidationHelper._ValidIdentifierMessage);
-        if (TextUtil.isNullOrEmpty(_Description) == true)
-          return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring "+getWhat()+" '" + getFullName() + "' without a description name.");
+          return PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring an " + _TildaType.name() + " without a name.");
 
         _OriginalName = _Name;
-        _Name = _Name.toUpperCase();
+        LOG.debug("  Validating " + _TildaType.name() + " " + getFullName() + ".");
 
-        _BaseClassName = "TILDA__" + _Name;
-        _AppDataClassName    = _OriginalName+"_Data";
-        _AppFactoryClassName = _OriginalName+"_Factory";
-        _AppJsonClassName = _OriginalName+"_Json";
-        
+        if (_Name.length() > PS._CGSql.getMaxTableNameSize())
+          PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' with a name that's too long: max allowed by your database is " + PS._CGSql.getMaxColumnNameSize() + " vs " + _Name.length() + " for this identifier.");
+        if (_Name.equals(TextUtil.SanitizeName(_Name)) == false)
+          PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' with a name containing invalid characters (must all be alphanumeric or underscore).");
+        if (ValidationHelper.isValidIdentifier(_Name) == false)
+          PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' with a name '" + _Name + "' which is not valid. " + ValidationHelper._ValidIdentifierMessage);
+
+        if (TextUtil.isNullOrEmpty(_Description) == true)
+          PS.AddError("Schema '" + _ParentSchema.getFullName() + "' is declaring " + _TildaType.name() + " '" + getBaseName() + "' without a description name.");
+
+        // _Name = _Name.toUpperCase();
+
+        _BaseClassName = "TILDA__" + _Name.toUpperCase();
+        _AppDataClassName = _OriginalName + "_Data";
+        _AppFactoryClassName = _OriginalName + "_Factory";
+        _AppJsonClassName = _OriginalName + "_Json";
+
+        // LDH-NOTE: We do not validate the mappings at this time, because the whole parent object
+        // has not finished being validated. As such, columns and other generetated
+        // artifacts won't exist yet at this point.
+
+        if (_JsonDEPRECATED.isEmpty() == false)
+          for (OutputMapping J : _JsonDEPRECATED)
+            _OutputMaps.add(J);
+
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
       }
 
-    protected boolean ValidateJsonMappings(ParserSession PS)
+    protected boolean ValidateOutputMappings(ParserSession PS)
       {
         int Errs = PS.getErrorCount();
         Set<String> Names = new HashSet<String>();
-        for (JsonMapping J : _Json)
-          if (J != null)
+
+        for (OutputMapping OM : _OutputMaps)
+          if (OM != null)
             {
-              if (Names.add(J._Name) == false)
-                PS.AddError(getWhat()+" '" + getFullName() + "' is defining a duplicate JSON mapping '" + J._Name + "'.");
-              J.Validate(PS, this);
+              if (Names.add(OM._Name) == false)
+                PS.AddError(_TildaType.name() + " '" + getFullName() + "' is defining a duplicate Output mapping '" + OM._Name + "'.");
+              OM.Validate(PS, this);
             }
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
       }
- }
+
+    /**
+     * "colA", "abc*"
+     * @param vals
+     * @return
+     */
+    protected List<String> expandColumnNames(String[] vals)
+      {
+        String[] colNames = getColumnNames(); 
+        List<String> L = new ArrayList<String>();
+        for (String val : vals)
+          {
+            String[] valsA = new String[] { val };
+            for (String colName : colNames) 
+              {
+                if (TextUtil.FindStarElement(valsA, colName, false, 0) != -1)
+                 L.add(colName);
+              }
+          }
+        return L;
+      }
+  }

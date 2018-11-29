@@ -25,12 +25,14 @@ import java.util.List;
 
 import tilda.data.ZoneInfo_Data;
 import tilda.db.Connection;
+import tilda.db.metadata.ColumnMeta;
 import tilda.db.metadata.FKMeta;
 import tilda.db.metadata.IndexMeta;
 import tilda.db.metadata.PKMeta;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.enums.DBStringType;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
@@ -54,6 +56,8 @@ public interface DBType
     public boolean supportsSelectLimit();
     public boolean supportsSelectOffset();
     public String  getSelectLimitClause(int Start, int Size);
+    public int     getMaxColumnNameSize();
+    public int     getMaxTableNameSize();
     
     public CodeGenSql getSQlCodeGen();
 
@@ -67,15 +71,16 @@ public interface DBType
     public boolean alterTableDropColumn           (Connection Con, Object Obj, String ColumnName) throws Exception;
     public boolean alterTableAlterColumnNull      (Connection Con, Column Col, String DefaultValue) throws Exception;
     public boolean alterTableAlterColumnComment   (Connection Con, Column Col) throws Exception;
-    public boolean alterTableAlterColumnType      (Connection Con, ColumnType fromType, Column Col, ZoneInfo_Data defaultZI) throws Exception;
-    public boolean alterTableAlterColumnStringSize(Connection Con, Column Col, int DBSize) throws Exception;
+    public boolean alterTableAlterColumnType      (Connection Con, ColumnMeta ColMeta, Column Col, ZoneInfo_Data defaultZI) throws Exception;
+    public boolean alterTableAlterColumnStringSize(Connection Con, ColumnMeta ColMeta, Column Col) throws Exception;
     public boolean alterTableReplaceTablePK       (Connection Con, Object Obj, PKMeta oldPK) throws Exception;
     public boolean alterTableDropFK               (Connection Con, Object Obj, FKMeta FK) throws Exception;
     public boolean alterTableAddFK                (Connection Con, ForeignKey FK) throws Exception;
     public boolean alterTableDropIndex            (Connection Con, Object Obj, IndexMeta IX) throws Exception;
+    public String  alterTableAddIndexDDL          (Index IX) throws Exception;
     public boolean alterTableAddIndex             (Connection Con, Index IX) throws Exception;
     public boolean alterTableRenameIndex          (Connection Con, Object Obj, String OldName, String NewName) throws Exception;
-    public String  getHelperFunctionsScript       (Connection Con) throws Exception;    
+    public String  getHelperFunctionsScript       (Connection Con, boolean start) throws Exception;    
     public String  getAclRolesScript              (Connection Con, List<Schema> TildaList) throws Exception;
     public boolean isSuperUser                    (Connection C) throws Exception;
 
@@ -91,8 +96,7 @@ public interface DBType
     public boolean FullIdentifierOnUpdate();
     public String getAggregateStr(AggregateType AT);
 
-    public int getVarCharThreshhold();
-    public int getCLOBThreshhold();
+    public DBStringType getDBStringType(int Size);
 
     public StringStringPair getTypeMapping(int type, String name, int size, String typeName) throws Exception;
     public void             getFullColumnVar(StringBuilder Str, String SchemaName, String TableName, String ColumnName);

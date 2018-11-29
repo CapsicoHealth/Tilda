@@ -29,6 +29,7 @@ import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.MultiType;
 import tilda.enums.ObjectLifecycle;
+import tilda.enums.ObjectMode;
 import tilda.generation.interfaces.CodeGenAppData;
 import tilda.generation.interfaces.CodeGenAppFactory;
 import tilda.generation.interfaces.CodeGenAppJson;
@@ -45,7 +46,7 @@ import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
-import tilda.parsing.parts.JsonMapping;
+import tilda.parsing.parts.OutputMapping;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.SubWhereClause;
@@ -75,8 +76,9 @@ public class Generator
         genTildaSupport(G, GenFolder, S);
 
         for (Object O : S._Objects)
-          if (O != null && O._DBOnly == false)
+          if (O != null && O._Mode != ObjectMode.DB_ONLY)
             {
+              LOG.debug("  Generating Tilda classes for Object '" + O.getFullName() + "'.");
               genTildaData(G, GenFolder, O);
               genTildaFactory(G, GenFolder, O);
               genTildaJson(G, GenFolder, O);
@@ -112,7 +114,7 @@ public class Generator
         CG.genFileStart(Out, S);
 
         for (Object O : S._Objects)
-          if (O != null && O._FST != FrameworkSourcedType.VIEW)
+          if (O != null && O._FST != FrameworkSourcedType.VIEW && O._Mode != ObjectMode.CODE_ONLY)
             {
               Out.println();
               Out.println();
@@ -163,22 +165,25 @@ public class Generator
         Out.append("\n");
         getViewMetadataDDL(CG, Out, V);
       }
+
     public static void getViewBaseDDL(CodeGenSql CG, PrintWriter Out, View V)
     throws Exception
       {
         CG.genDDL(Out, V);
       }
+
     public static void getViewCommentsDDL(CodeGenSql CG, PrintWriter Out, View V)
     throws Exception
       {
         CG.genDDLComments(Out, V);
       }
+
     public static void getViewMetadataDDL(CodeGenSql CG, PrintWriter Out, View V)
     throws Exception
       {
         CG.genDDLMetadata(Out, V);
       }
-    
+
 
 
     protected static void genTildaSupport(GeneratorSession G, File GenFolder, Schema S)
@@ -212,8 +217,6 @@ public class Generator
 
         File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(O));
         PrintWriter Out = new PrintWriter(f);
-        LOG.debug("  Generating Tilda class for Object '" + O.getFullName() + "'.");
-        // LOG.debug(" -> " + f.getCanonicalPath());
 
         DG.DataFileDocs(Out, G);
         Out.println();
@@ -368,12 +371,9 @@ public class Generator
         DG.docMethodToString(Out, G, O);
         CG.genMethodToString(Out, G, O);
 
-        if (O._Json.isEmpty() == false)
-          {
-            Out.println();
-            DG.docMethodToJSON(Out, G, O);
-            CG.genMethodToJSON(Out, G, O);
-          }
+        Out.println();
+        DG.docMethodOutput(Out, G, O);
+        CG.genMethodOutput(Out, G, O);
 
         CG.genClassEnd(Out, G);
         Out.close();
@@ -387,8 +387,6 @@ public class Generator
 
         File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(O));
         PrintWriter Out = new PrintWriter(f);
-        LOG.debug("  Generating Tilda class for Object '" + O.getFullName() + "'.");
-        // LOG.debug(" -> " + f.getCanonicalPath());
 
         DG.FactoryFileDocs(Out, G);
         Out.println();
@@ -409,6 +407,8 @@ public class Generator
             Out.println();
             DG.docMethodCreate(Out, G, O, CreateColumns);
             CG.genMethodCreate(Out, G, O, CreateColumns, DefaultCreateColumns);
+            
+            CG.genBatchWrite(Out, G, O);
           }
 
         int LookupId = -1;
@@ -476,7 +476,7 @@ public class Generator
             DG.docEnumerationSupport(Out, G, O);
             CG.genEnumerationSupport(Out, G, O);
           }
-
+              
         CG.genClassEnd(Out, G);
         Out.close();
       }
@@ -489,8 +489,7 @@ public class Generator
 
         File f = new File(GenFolder.getAbsolutePath() + File.separator + CG.getFileName(O));
         PrintWriter Out = new PrintWriter(f);
-        LOG.debug("  Generating Tilda JSON class for Object '" + O.getFullName() + "'.");
-        // LOG.debug(" -> " + f.getCanonicalPath());
+
         DG.JsonFileDocs(Out, G, O);
         Out.println();
         CG.genFileStart(Out, O);
@@ -509,12 +508,12 @@ public class Generator
             Out.println();
             CG.genMethodToString(Out, G, O);
           }
-        for (JsonMapping J : O._Json)
-          if (J != null)
+        for (OutputMapping OM : O._OutputMaps)
+          if (OM != null)
             {
               Out.println();
-              DG.docMethodToJSON(Out, G, J);
-              CG.genMethodToJSON(Out, G, J);
+              DG.docMethodOutput(Out, G, OM);
+              CG.genMethodToOutput(Out, G, OM);
             }
         Out.println();
         for (Column Col : O._Columns)
@@ -539,8 +538,7 @@ public class Generator
         if (f.exists() == false)
           {
             PrintWriter Out = new PrintWriter(f);
-            LOG.debug("  Generating template App Data class for Object '" + O.getFullName() + "'.");
-            // LOG.debug(" -> " + f.getCanonicalPath());
+
             DG.AppFileDocs(Out, G);
             Out.println();
             CG.genFileStart(Out, O);
@@ -567,8 +565,7 @@ public class Generator
         if (f.exists() == false)
           {
             PrintWriter Out = new PrintWriter(f);
-            LOG.debug("  Generating template App Factory class for Object '" + O.getFullName() + "'.");
-            // LOG.debug(" -> " + f.getCanonicalPath());
+
             DG.AppFileDocs(Out, G);
             Out.println();
             CG.genFileStart(Out, O);
@@ -595,8 +592,7 @@ public class Generator
         if (f.exists() == false)
           {
             PrintWriter Out = new PrintWriter(f);
-            LOG.debug("  Generating template App Json class for Object '" + O.getFullName() + "'.");
-            // LOG.debug(" -> " + f.getCanonicalPath());
+
             DG.AppFileDocs(Out, G);
             Out.println();
             CG.genFileStart(Out, O);

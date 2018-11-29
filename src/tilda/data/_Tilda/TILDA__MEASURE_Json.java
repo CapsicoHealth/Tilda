@@ -1,7 +1,6 @@
 
 package tilda.data._Tilda;
 
-import java.io.*;
 import java.util.*;
 
 import org.apache.logging.log4j.LogManager;
@@ -15,6 +14,7 @@ import tilda.utils.*;
 import com.google.gson.annotations.SerializedName;
 
 
+@SuppressWarnings({ "unused" })
 public class TILDA__MEASURE_Json
  {
    static final Logger             LOG                = LogManager.getLogger(TILDA__MEASURE_Json.class.getName());
@@ -29,9 +29,9 @@ public class TILDA__MEASURE_Json
    public tilda.data.Measure_Data Write(Connection C) throws Exception
     {
       if (TextUtil.isNullOrEmpty(_schema     ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.MEASURE.schema' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Measure.schema' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_name       ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.MEASURE.name' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.Measure.name' was null or empty. It's not nullable in the model.\n"+toString());
 
       tilda.data.Measure_Data Obj = tilda.data.Measure_Factory.Create(_schema, _name);
       Update(Obj);
@@ -39,7 +39,7 @@ public class TILDA__MEASURE_Json
        {
          Obj = tilda.data.Measure_Factory.LookupByMeasure(_schema, _name);
          if (Obj.Read(C) == false)
-          throw new Exception("Cannot create the tilda.data.TILDA.MEASURE object.\n"+toString());
+          throw new Exception("Cannot create the tilda.data.TILDA.Measure object.\n"+toString());
          LOG.debug("Nothing has changed in the object, so no update necessary.");
 
        }

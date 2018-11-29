@@ -19,14 +19,17 @@ package tilda.db.metadata;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tilda.db.Connection;
+import tilda.utils.PaddingTracker;
 
 public class TableMeta
   {
@@ -42,11 +45,14 @@ public class TableMeta
     public final String            _SchemaName;
     public final String            _TableName;
     public final String            _Descr;
-    public Map<String, ColumnMeta> _Columns        = new HashMap<String, ColumnMeta>();
-    public Map<String, IndexMeta>  _Indices        = new HashMap<String, IndexMeta>();
-    public Map<String, FKMeta>     _ForeignKeysOut = new HashMap<String, FKMeta>();
-    public Map<String, FKMeta>     _ForeignKeysIn  = new HashMap<String, FKMeta>();
+    public Map<String, ColumnMeta> _ColumnsMap        = new HashMap<String, ColumnMeta>();
+    public List<ColumnMeta>        _ColumnsList       = new ArrayList<ColumnMeta>();
+    public Map<String, IndexMeta>  _Indices           = new HashMap<String, IndexMeta>();
+    public Map<String, FKMeta>     _ForeignKeysOut    = new HashMap<String, FKMeta>();
+    public Map<String, FKMeta>     _ForeignKeysIn     = new HashMap<String, FKMeta>();
     public PKMeta                  _PrimaryKey;
+    public PaddingTracker          _PadderColumnNames = new PaddingTracker();
+
 
     public void load(Connection C)
     throws Exception
@@ -55,8 +61,10 @@ public class TableMeta
         ResultSet RS = meta.getColumns(null, _SchemaName.toLowerCase(), _TableName.toLowerCase(), null);
         while (RS.next() != false)
           {
-            ColumnMeta CI = new ColumnMeta(C, RS);
-            _Columns.put(CI._Name, CI);
+            ColumnMeta CI = new ColumnMeta(C, RS, this, null);
+            _ColumnsMap.put(CI._Name.toLowerCase(), CI);
+            _ColumnsList.add(CI);
+            _PadderColumnNames.track(CI._Name);
           }
 
         RS = meta.getIndexInfo(null, _SchemaName.toLowerCase(), _TableName.toLowerCase(), true, true);
@@ -65,22 +73,22 @@ public class TableMeta
         loadIndices(RS);
 
         RS = meta.getImportedKeys(null, _SchemaName.toLowerCase(), _TableName.toLowerCase());
-        loadForeignKeys(RS, _ForeignKeysOut, true);
-        
+        loadForeignKeys(RS, _ForeignKeysOut, true, this);
+
         RS = meta.getExportedKeys(null, _SchemaName.toLowerCase(), _TableName.toLowerCase());
-        loadForeignKeys(RS, _ForeignKeysIn, false);
+        loadForeignKeys(RS, _ForeignKeysIn, false, this);
 
         RS = meta.getPrimaryKeys(null, _SchemaName.toLowerCase(), _TableName.toLowerCase());
         if (RS.next() == true)
-         _PrimaryKey = new PKMeta(RS);
-     }
+          _PrimaryKey = new PKMeta(RS);
+      }
 
     private void loadIndices(ResultSet RS)
     throws SQLException, Exception
       {
         while (RS.next() != false)
           {
-            IndexMeta IM = new IndexMeta(RS);
+            IndexMeta IM = new IndexMeta(RS, this);
             IndexMeta prevIM = _Indices.get(IM._Name);
             if (prevIM == null)
               _Indices.put(IM._Name, IM);
@@ -91,12 +99,12 @@ public class TableMeta
       }
 
 
-    private static void loadForeignKeys(ResultSet RS, Map<String, FKMeta> FKKeyList, boolean Outgoing)
+    private static void loadForeignKeys(ResultSet RS, Map<String, FKMeta> FKKeyList, boolean Outgoing, TableMeta parentTable)
     throws SQLException, Exception
       {
         while (RS.next() != false)
           {
-            FKMeta FKM = new FKMeta(RS, Outgoing);
+            FKMeta FKM = new FKMeta(RS, Outgoing, parentTable);
             FKMeta prevFKM = FKKeyList.get(FKM._Name);
             if (prevFKM == null)
               FKKeyList.put(FKM._Name, FKM);
@@ -106,13 +114,23 @@ public class TableMeta
           }
       }
 
-    
+
     public ColumnMeta getColumnMeta(String ColumnName)
       {
-        return _Columns.get(ColumnName.toLowerCase());
+        return _ColumnsMap.get(ColumnName.toLowerCase());
       }
 
-    
+    public List<ColumnMeta> getColumnMetaList()
+      {
+        return _ColumnsList;
+      }
+
+    public Map<String, ColumnMeta> getColumnMetaMap()
+      {
+        return _ColumnsMap;
+      }
+
+
     public IndexMeta getIndexMeta(String[] Columns, boolean Unique)
       {
         for (Map.Entry<String, IndexMeta> entry : _Indices.entrySet())
@@ -129,9 +147,9 @@ public class TableMeta
           }
         return null;
       }
-    
+
     public IndexMeta getIndexMeta(String Name)
-     {
-       return _Indices.get(Name);
-     }
+      {
+        return _Indices.get(Name);
+      }
   }

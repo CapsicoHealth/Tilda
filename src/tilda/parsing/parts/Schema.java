@@ -33,6 +33,7 @@ import com.google.gson.annotations.SerializedName;
 
 import tilda.enums.ColumnType;
 import tilda.enums.ObjectLifecycle;
+import tilda.enums.ObjectMode;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
@@ -118,6 +119,8 @@ public class Schema
         StringBuilder Str = new StringBuilder();
         for (Object O : _Objects)
           {
+            if (O == null)
+             continue;
             if (Str.length() != 0)
               Str.append(", ");
             Str.append(O.getFullName());
@@ -242,7 +245,7 @@ public class Schema
     private void CreateFormulaDocumentationTables(ParserSession PS)
       {
         Object O = new Object();
-        O._DBOnly = true;
+        O._ModeStr = ObjectMode.DB_ONLY.toString();
         O._Name = "TildaFormula";
         O._Description = "DEPRECATED: DO NOT USE! Generated table to hold documentation meta-data about formulas defined in this schema";
         O._LCStr = ObjectLifecycle.READONLY.name();
@@ -274,18 +277,19 @@ public class Schema
         I._Db = false;
         O._Indices.add(I);
         
-        O._Json = new ArrayList<JsonMapping>();
-        JsonMapping J = new JsonMapping();
-        J._Name = "";
-        J._Columns = new String[] { "viewName", "realizedTableName", "name", "title", "description", "formula", "html", "created", "lastUpdated"}; 
-        O._Json.add(J);
+        O._OutputMaps = new ArrayList<OutputMapping>();
+        OutputMapping OM = new OutputMapping();
+        OM._Name = "";
+        OM._OutputTypeStrs = new String[] {"JSON"};
+        OM._Columns = new String[] { "viewName", "realizedTableName", "name", "title", "description", "formula", "html", "created", "lastUpdated"}; 
+        O._OutputMaps.add(OM);
 
         _Objects.add(O);
         O.Validate(PS, this);
         
 
         O = new Object();
-        O._DBOnly = true;
+        O._ModeStr = ObjectMode.DB_ONLY.toString();
         O._Name = "TildaFormulaValue";
         O._Description = "DEPRECATED: DO NOT USE! Generated table to hold documentation meta-data about the values for the formulas defined in this schema";
         O._LCStr = ObjectLifecycle.READONLY.name();
@@ -317,17 +321,18 @@ public class Schema
         I._Db = false;
         O._Indices.add(I);
         
-        O._Json = new ArrayList<JsonMapping>();
-        J = new JsonMapping();
-        J._Name = "";
-        J._Columns = new String[] { "viewName", "formulaName", "value", "description", "created", "lastUpdated"}; 
-        O._Json.add(J);
+        O._OutputMaps = new ArrayList<OutputMapping>();
+        OM = new OutputMapping();
+        OM._Name = "";
+        OM._OutputTypeStrs = new String[] {"JSON"};
+        OM._Columns = new String[] { "viewName", "formulaName", "value", "description", "created", "lastUpdated"}; 
+        O._OutputMaps.add(OM);
 
         _Objects.add(O);
         O.Validate(PS, this);
 
         O = new Object();
-        O._DBOnly = true;
+        O._ModeStr = ObjectMode.DB_ONLY.toString();
         O._Name = "TildaFormulaReference";
         O._Description = "DEPRECATED: DO NOT USE! Generated table to hold documentation meta-data about the columns and other formulas referenced by a formula";
         O._LCStr = ObjectLifecycle.READONLY.name();
@@ -370,11 +375,12 @@ public class Schema
         I._Db = false;
         O._Indices.add(I);
         
-        O._Json = new ArrayList<JsonMapping>();
-        J = new JsonMapping();
-        J._Name = "";
-        J._Columns = new String[] { "viewName", "formulaName", "referenceName", "referenceType", "description", "created", "lastUpdated"}; 
-        O._Json.add(J);
+        O._OutputMaps = new ArrayList<OutputMapping>();
+        OM = new OutputMapping();
+        OM._Name = "";
+        OM._OutputTypeStrs = new String[] {"JSON"};
+        OM._Columns = new String[] { "viewName", "formulaName", "referenceName", "referenceType", "description", "created", "lastUpdated"}; 
+        O._OutputMaps.add(OM);
 
         _Objects.add(O);
         O.Validate(PS, this);

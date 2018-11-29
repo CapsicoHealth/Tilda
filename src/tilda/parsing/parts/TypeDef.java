@@ -98,7 +98,7 @@ public class TypeDef
                 PS.AddError(What + " is defined as an array type which is not supported in this context");
                 return;
               }
-            if (_Type.isArrayCompatible() == false)
+            if (_Type.isCollectionCompatible(_TypeCollection) == false)
               {
                 PS.AddError(What + "is defined as a 'type' '" + _Type + "' which is not supported as an Array.");
                 return;

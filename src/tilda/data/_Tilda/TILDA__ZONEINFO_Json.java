@@ -1,7 +1,6 @@
 
 package tilda.data._Tilda;
 
-import java.io.*;
 import java.time.*;
 import java.util.*;
 
@@ -16,6 +15,7 @@ import tilda.utils.*;
 import com.google.gson.annotations.SerializedName;
 
 
+@SuppressWarnings({ "unused" })
 public class TILDA__ZONEINFO_Json
  {
    static final Logger             LOG                = LogManager.getLogger(TILDA__ZONEINFO_Json.class.getName());
@@ -33,16 +33,16 @@ public class TILDA__ZONEINFO_Json
    public tilda.data.ZoneInfo_Data Write(Connection C) throws Exception
     {
       if (TextUtil.isNullOrEmpty(_id           ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.ZONEINFO.id' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.ZoneInfo.id' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_value        ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.ZONEINFO.value' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.ZoneInfo.value' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(_label        ) == true)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.ZONEINFO.label' was null or empty. It's not nullable in the model.\n"+toString());
+       throw new Exception("Incoming value for 'tilda.data.TILDA.ZoneInfo.label' was null or empty. It's not nullable in the model.\n"+toString());
       if (TextUtil.isNullOrEmpty(Str_deactivated  ) == false)
        {
          _deactivated   = DateTimeUtil.parsefromJSON(Str_deactivated  );
          if (   _deactivated   == null)
-          throw new Exception("Incoming value for 'tilda.data.TILDA.ZONEINFO.deactivated' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+          throw new Exception("Incoming value for 'tilda.data.TILDA.ZoneInfo.deactivated' was not in the expected format. Dates should follow the ISO format.\n"+toString());
        }
 
       tilda.data.ZoneInfo_Data Obj = tilda.data.ZoneInfo_Factory.Create(_id, _value, _label);
@@ -51,12 +51,12 @@ public class TILDA__ZONEINFO_Json
        {
          Obj = tilda.data.ZoneInfo_Factory.LookupById(_id);
          if (Obj.Read(C) == false)
-          throw new Exception("Cannot create the tilda.data.TILDA.ZONEINFO object.\n"+toString());
+          throw new Exception("Cannot create the tilda.data.TILDA.ZoneInfo object.\n"+toString());
          if (_value        != null) Obj.setValue        (_value        );
          if (_label        != null) Obj.setLabel        (_label        );
          if (_deactivated  != null) Obj.setDeactivated  (_deactivated  );
          if (Obj.Write(C) == false)
-          throw new Exception("Cannot update the tilda.data.TILDA.ZONEINFO object: "+Obj.toString());
+          throw new Exception("Cannot update the tilda.data.TILDA.ZoneInfo object: "+Obj.toString());
 
        }
       return Obj;

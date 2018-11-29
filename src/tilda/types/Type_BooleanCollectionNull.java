@@ -19,7 +19,7 @@ package tilda.types;
 
 public class Type_BooleanCollectionNull extends Type_BooleanCollection implements Nullable
   {
-    public Type_BooleanCollectionNull(String SchemaName, String TableName, String ColumnName, long Count, String Description)
+    public Type_BooleanCollectionNull(String SchemaName, String TableName, String ColumnName, int Count, String Description)
       {
         super(SchemaName, TableName, ColumnName, Count, Description);
       }

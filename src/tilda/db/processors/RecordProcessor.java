@@ -22,5 +22,7 @@ public interface RecordProcessor
  {
    public void    Start  ();
    public boolean Process(int Index, ResultSet RS) throws Exception;
-   public void    End    (boolean hasMore, int MaxIndex);
+   default void    End    (boolean hasMore, int MaxIndex)
+    {
+    }
  }

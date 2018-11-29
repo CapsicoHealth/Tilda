@@ -23,6 +23,7 @@ import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.Writer;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
@@ -222,8 +223,8 @@ public class TextUtil
       {
         EscapeSomethingWithSomething(X, '"', "\"", S, "\"", "\"");
       }
-    
-    
+
+
     public static final String EscapeSingleQuoteWithSlashDouble(String S)
       {
         StringBuilder X = new StringBuilder();
@@ -492,6 +493,15 @@ public class TextUtil
         return Index;
       }
 
+    /**
+     * Returns the index in A that matched the value of Val (strict equal case sensitive or not based on IgnoreCase).
+     * If no match is found, returns -1; 
+     * @param A
+     * @param Val
+     * @param IgnoreCase
+     * @param Start
+     * @return
+     */
     public static int FindElement(String[] A, String Val, boolean IgnoreCase, int Start)
       {
         if (A == null)
@@ -506,6 +516,52 @@ public class TextUtil
           }
         return -1;
       }
+    
+    /**
+     * Returns the index in A that matched the value of Val, either as a startsWith, if the element in A ends in '*', or
+     * a endsWith if the element in A starts with a '*', or a strict equal otherwise. The comparison is case-sensitive 
+     * or not based on IgnoreCase. -1 is returned is no match is found. If there are multiple matches (for example 
+     * comparing "aaaa" with "a*" and "aa*", only the first one will be returned. 
+     * @param A
+     * @param Val
+     * @param IgnoreCase
+     * @param Start
+     * @return
+     */
+    public static int FindStarElement(String[] A, String Val, boolean IgnoreCase, int Start)
+      {
+        if (A == null)
+          return -1;
+        if (IgnoreCase == true)
+         Val = Val.toLowerCase();
+        for (int i = Start; i < A.length; ++i)
+          {
+            String Str = A[i];
+            if (Str == null)
+              continue;
+            if (IgnoreCase == true)
+             Str = Str.toLowerCase();
+            if (Str.length() > 1 && Str.endsWith("*") == true && Str.startsWith("*") == true)
+              {
+                if (Val.indexOf(Str.substring(1, Str.length()-1)) != -1)
+                 return i;
+              }
+            if (Str.endsWith("*") == true)
+              {
+                if (Val.startsWith(Str.substring(0, Str.length()-1)) == true)
+                 return i;
+              }
+            else if (Str.startsWith("*") == true)
+              {
+                if (Val.endsWith(Str.substring(1)) == true)
+                 return i;
+              }
+            else if (Str.equals(Val) == true)
+              return i;
+          }
+        return -1;
+      }
+    
 
     public static int FindElement(String[][] A, String Val, int pos, boolean IgnoreCase, int Start)
       {
@@ -620,6 +676,19 @@ public class TextUtil
           {
             char c = Str.charAt(i);
             if (Character.isJavaIdentifierPart(c) == false)
+              return false;
+          }
+        return true;
+      }
+
+    public static boolean isJavaIdentifier(String Str)
+      {
+        if (Str == null || Str.length() == 0 || !Character.isJavaIdentifierStart(Str.charAt(0)))
+          return false;
+
+        for (int i = 1; i < Str.length(); i++)
+          {
+            if (!Character.isJavaIdentifierPart(Str.charAt(i)))
               return false;
           }
         return true;
@@ -879,6 +948,28 @@ public class TextUtil
         Print(I, s);
         return s.toString();
       }
+    
+    public static final String Print(Iterator<?> I, String Separator)
+    {	
+        if (I == null)
+          return null;
+        StringBuilder Str = new StringBuilder();
+        boolean First = true;
+        while (I.hasNext() == true)
+          {
+            Object O = I.next();
+            if (First == true)
+              First = false;
+            else
+            	Str.append(Separator);
+            if (O == null)
+            	Str.append("null");
+            else
+            	Str.append(O.getClass() == ZonedDateTime.class ? DateTimeUtil.printDateTimeCompact((ZonedDateTime) O, true, true) : O.toString());
+            }
+         return Str.toString();
+    }
+
 
     public static final void Print(Iterator<?> I, StringBuilder s)
       {
@@ -1033,23 +1124,6 @@ public class TextUtil
         return Str;
       }
 
-
-    /**
-     * Splits a string based on Splitter using the String.split() method. Additionally, calls trim() on all results.
-     * 
-     * @param Source
-     * @param Splitter
-     * @return
-     */
-    public static final String[] TrimSplit(String Source, String Splitter)
-      {
-        String[] S = Source.split(Splitter);
-        for (int i = 0; i < S.length; ++i)
-          {
-            S[i] = S[i].trim();
-          }
-        return S;
-      }
 
     public static final String StreamToString(InputStream In)
     throws IOException
@@ -1234,6 +1308,40 @@ public class TextUtil
         return Str.length() == 0 ? "" : Str.substring(2);
       }
 
+    /**
+     * Splits a string based on separator regex using the standard String.split() method. Implements a null-or-empty check
+     * on Str and returns null if true. Additionally, calls trim() on all results if Trim is true, and removes empties 
+     * from the final result if RemoveEmpties is true. 
+     * 
+     * @param Str
+     * @param SeparatorRegEx
+     * @param Trim
+     * @param RemoveEmpties
+     * @return
+     */
+    public static final String[] Split(String Str, String SeparatorRegEx, boolean Trim, boolean RemoveEmpties)
+      {
+        if (TextUtil.isNullOrEmpty(Str) == true)
+         return null;
+        List<String> L = new ArrayList<String>();
+        String[] SplitArray = Str.split(SeparatorRegEx);
+        for (String s : SplitArray)
+          {
+            if (RemoveEmpties == true && TextUtil.isNullOrEmpty(s) == true)
+             continue;
+            L.add(s!=null&&Trim==true ? s.trim() : s);
+          }
+        return CollectionUtil.toStringArray(L);
+      }
+
+    /**
+     * Splits a string based on separator regex using the standard String.split() method. Implements a null-or-empty check
+     * on Str and returns null if true.
+     *  
+     * @param Str
+     * @param SeparatorRegEx
+     * @return
+     */
     public static final String[] Split(String Str, String SeparatorRegEx)
       {
         return isNullOrEmpty(Str) == true ? null : Str.split(SeparatorRegEx);
@@ -1248,7 +1356,10 @@ public class TextUtil
           {
             if (Str.length() != 0)
               Str.append(Separator);
-            Str.append(o.toString());
+            if(o.getClass() != null)
+              Str.append(o.getClass().getName());
+            else
+              Str.append(o.toString());
           }
         return Str.toString();
       }
@@ -1577,5 +1688,22 @@ public class TextUtil
           }
         return Str.toString();
       }
+    
+    public static String[] partsSqlLike(String Val, String splitRegex, boolean lowerCase)
+      {
+        if (Val == null)
+          return null;
+        if (TextUtil.isNullOrEmpty(splitRegex) == true)
+         return new String[] { Val };
+        String[] Parts = Val.split(splitRegex);
+        for (int i = 0; i < Parts.length; ++i)
+          {
+            String s = Parts[i];
+            if (s != null)
+              Parts[i] = "%" + (lowerCase == false ? s : s.toLowerCase()) + "%";
+          }
+        return Parts;
+      }
+
 
   }

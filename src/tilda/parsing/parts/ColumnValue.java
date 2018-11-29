@@ -98,7 +98,7 @@ public class ColumnValue
           _Label = _Name;
 
         // if (_Raw == false)
-        ValueHelper.CheckColumnValue(PS, _ParentColumn, _Name, _Value, _Default);
+          ValueHelper.CheckColumnValue(PS, _ParentColumn, _Name, _Value, _Default);
       }
 
     public static ColumnValue[] deepCopy(ColumnValue[] _Values)
