@@ -404,4 +404,23 @@ public class IBMDB2 implements DBType
       {
         throw new UnsupportedOperationException();
       }
+    
+    @Override
+    public int getMaxColumnNameSize()
+      {
+        return 63;
+      }
+    @Override
+    public int getMaxTableNameSize()
+      {
+        return 63;
+      }
+
+
+    @Override
+    public String alterTableAddIndexDDL(Index IX)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
   }

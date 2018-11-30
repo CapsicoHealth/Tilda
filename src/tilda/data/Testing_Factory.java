@@ -16,15 +16,10 @@
 
 package tilda.data;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tilda.data._Tilda.TILDA__TESTING_Factory;
-import tilda.db.*;
-import tilda.enums.StatementType;
+import tilda.db.Connection;
 
 /**
  * This is the application class <B>Data_TESTING</B> mapped to the table <B>TILDA.TESTING</B>.

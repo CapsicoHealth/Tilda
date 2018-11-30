@@ -56,11 +56,14 @@ public class ForeignKey
           return PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a foreign key without a name.");
 
         if (_Name.equals(TextUtil.SanitizeName(_Name)) == false)
-          return PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining foreign key '" + _Name + "' with a name containing invalid characters (must all be alphanumeric or underscore).");
+          PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining foreign key '" + _Name + "' with a name containing invalid characters (must all be alphanumeric or underscore).");
 
         if (TextUtil.isJavaIdentifier(_Name) == false)
-          return PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining foreign key '" + _Name + "' with a name that is imcompatible with standard identifier convensions (for example, Java, JavaScript since Foreign Keys have programmatic equivalents in those languages).");
+          PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining foreign key '" + _Name + "' with a name that is imcompatible with standard identifier convensions (for example, Java, JavaScript since Foreign Keys have programmatic equivalents in those languages).");
 
+        if (_Name.length() > PS._CGSql.getMaxColumnNameSize())
+          PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining foreign key '" + _Name + "' with a name that's too long: max allowed by your database is "+PS._CGSql.getMaxColumnNameSize()+" vs "+_Name.length()+" for this identifier.");
+        
         ValidateSourceColumns(PS);
         ValidateDestinationObject(PS);
 

@@ -62,14 +62,15 @@ public class Index
         if (TextUtil.isNullOrEmpty(_Name) == true)
           return PS.AddError("Object '" + _Parent.getFullName() + "' is defining an index without a name.");
 
+        if (_Name.length() > PS._CGSql.getMaxColumnNameSize())
+          PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' with a name that's too long: max allowed by your database is "+PS._CGSql.getMaxColumnNameSize()+" vs "+_Name.length()+" for this identifier.");
         if (_Name.equals(TextUtil.SanitizeName(_Name)) == false)
-          return PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' with a name containing invalid characters (must all be alphanumeric or underscore).");
-
+         PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' with a name containing invalid characters (must all be alphanumeric or underscore).");
         if (TextUtil.isJavaIdentifier(_Name) == false)
-          return PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' with a name that is imcompatible with standard identifier convensions (for example, Java, JavaScript since Foreign Keys have programmatic equivalents in those languages).");
+         PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' with a name that is imcompatible with standard identifier convensions (for example, Java, JavaScript since Foreign Keys have programmatic equivalents in those languages).");
 
         if ((_Columns == null || _Columns.length == 0) && (_OrderBy == null || _OrderBy.length == 0))
-          return PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' without columns and/or order by.");
+         PS.AddError("Object '" + _Parent.getFullName() + "' is defining index '" + _Name + "' without columns and/or order by.");
 
         _Unique = _OrderBy == null || _OrderBy.length == 0;
 
@@ -101,6 +102,8 @@ public class Index
               for (Column C : _ColumnObjs)
                 Names.add(C.getName().toUpperCase());
 
+            _OrderByObjs.clear();
+            _OrderByOrders.clear();
             processOrderBy(PS, "Object '" + _Parent.getFullName() + "' defines index '" + _Name + "'", Names, _Parent, _OrderBy, _OrderByObjs, _OrderByOrders);
 
             if (TextUtil.isNullOrEmpty(_SubWhere) == false && _SubQuery != null)

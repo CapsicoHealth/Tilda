@@ -180,7 +180,7 @@ public class PostgreSQLCSVImporter extends CSVImporter
                                 value = value.trim();
                                 if (value.startsWith("{") == true && value.endsWith("}") == true)
                                  value = value.substring(1, value.length()-1);
-                                String[] colDataArray = TextUtil.TrimSplit(value, multiValueDelim);
+                                String[] colDataArray = TextUtil.Split(value, multiValueDelim, true, false);
                                 if (colDataArray != null && colDataArray.length > 0)
                                   {
                                     ColumnMeta CI = ColumnsMap.get(c.toLowerCase());

@@ -26,6 +26,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.util.StringBuilderWriter;
 
+import tilda.db.Connection;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
@@ -160,6 +161,59 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println(";");
         Out.println("   }");
         Out.println();
+        Out.print("   public static final ColumnDefinition[] COLUMNS = { ");
+        Counter = -1;
+        for (Column C : O._Columns)
+          if (C != null && C._Mode != ColumnMode.CALCULATED)
+            {
+              if (++Counter > 0)
+                Out.print(",");
+              Out.print("COLS." + C.getName().toUpperCase());
+            }
+        Out.println(" };");
+        
+        Out.println();
+        String FirstIdentityColumns = null;
+        Out.print("   public static final ColumnDefinition[] COLUMNS_PRIMARY = { ");
+        Counter = -1;
+        for (Column C : O._Columns)
+          if (C != null && C.isPrimaryKey() == true)
+            {
+              if (++Counter > 0)
+                Out.print(",");
+              Out.print("COLS." + C.getName().toUpperCase());
+            }
+        Out.println(" };");
+        Out.println();
+        if (Counter > 0)
+          FirstIdentityColumns="COLUMNS_PRIMARY";
+
+        Out.println("   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = { ");
+        Counter = -1;
+        for (Index I : O._Indices)
+          if (I != null && I._Unique == true)
+            {
+              Out.print("                   ");
+              if (++Counter > 0)
+                Out.print(",");
+              Out.print("{");
+              int counter2 = -1;
+              for (Column C : I._ColumnObjs)
+                if (C != null)
+                  {
+                    if (++counter2 > 0)
+                      Out.print(",");
+                    Out.print("COLS." + C.getName().toUpperCase());
+                  }
+              Out.println("}");
+              if (FirstIdentityColumns == null)
+                FirstIdentityColumns="COLUMNS_UNIQUE_INDICES[0]";
+            }
+        Out.println("        };");
+        Out.println();
+        Out.println("   public static final ColumnDefinition[] COLUMNS_FIRST_IDENTITY = "+(FirstIdentityColumns==null?"{}":FirstIdentityColumns)+";");
+        Out.println();
+
         Out.println("   private static Boolean  __INITIALIZED = false;");
         Out.println("   protected static void initObject(Connection C) throws Exception");
         Out.println("     {");
@@ -207,6 +261,11 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("        }");
         Out.println("     }");
         Out.println();
+        Out.println("   protected static final void ProcessMany(Connection C, String FullSelectQuery, int Start, int Size, tilda.db.processors.RecordProcessor RP) throws Exception");
+        Out.println("     {");
+        Out.println("       ReadMany(C, -77, RP, null, FullSelectQuery, Start, Size);");
+        Out.println("     }");
+
         Out.println("   protected static final ListResults<" + Helper.getFullAppDataClassName(O) + "> ReadMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception");
         Out.println("     {");
         Out.println("       RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);");
@@ -835,18 +894,18 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("         return -1;");
         Out.println();
         Out.println("       java.sql.PreparedStatement PS = null;");
-        Out.println("       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();");        
+        Out.println("       List<java.sql.Array> AllocatedArrays = new ArrayList<java.sql.Array>();");
         Out.println("       int count = 0;");
         Out.println("       int batchStart = 0;");
         Out.println("       " + O._BaseClassName + " lastObj = null;");
-        Out.println("       BitSet firstChangeList = (BitSet) (("+O._BaseClassName+") L.get(0)).__Changes.clone();");
-        Out.println("       String firstTimeStampSignature = (("+O._BaseClassName+") L.get(0)).getTimeStampSignature();");
+        Out.println("       BitSet firstChangeList = (BitSet) ((" + O._BaseClassName + ") L.get(0)).__Changes.clone();");
+        Out.println("       String firstTimeStampSignature = ((" + O._BaseClassName + ") L.get(0)).getTimeStampSignature();");
         Out.println();
         Out.println("       try");
         Out.println("         {");
-        if (G.getSql().needsSavepoint() == true)         
+        if (G.getSql().needsSavepoint() == true)
           Out.println("           C.setSavepoint();");
-        Out.println("           String Q = L.get(0).getWriteQuery(C);");         
+        Out.println("           String Q = L.get(0).getWriteQuery(C);");
         Out.println("           PS = C.prepareStatement(Q);");
         Out.println("           int insertCount = 0;");
         Out.println();
@@ -855,35 +914,35 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("             {");
         Out.println("               ++index;");
         Out.println("               if (d == null || d.hasChanged() == false)");
-        Out.println("                 continue;");     
+        Out.println("                 continue;");
         Out.println();
-        Out.println("               lastObj = ((" + O._BaseClassName + ") d);");            
-        Out.println();      
+        Out.println("               lastObj = ((" + O._BaseClassName + ") d);");
+        Out.println();
         Out.println("               if (((" + O._BaseClassName + ") d).__Init != InitMode.CREATE)");
         Out.println("                 {");
-        Out.println("                   LOG.debug(QueryDetails._LOGGING_HEADER + \"The '"+Helper.getFullAppDataClassName(O) +"' object at positon #\" + index + \" was not in an insertable state. Only inserts are allowed in batch writes (i.e., no updates).\");");
-        Out.println("                   QueryDetails.setLastQuery("+O.getBaseClassName() +"_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
+        Out.println("                   LOG.debug(QueryDetails._LOGGING_HEADER + \"The '" + Helper.getFullAppDataClassName(O) + "' object at positon #\" + index + \" was not in an insertable state. Only inserts are allowed in batch writes (i.e., no updates).\");");
+        Out.println("                   QueryDetails.setLastQuery(" + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
         Out.println("                   return index;");
         Out.println("                 }");
         Out.println();
         Out.println("               if (((" + O._BaseClassName + ") d).BeforeWrite(C) == false)");
         Out.println("                 {");
-        Out.println("                   LOG.debug(QueryDetails._LOGGING_HEADER + \"The '"+Helper.getFullAppDataClassName(O) +"' object at positon #\" + index + \" failed in its BeforeWrite() method.\");");
-        Out.println("                   QueryDetails.setLastQuery("+O.getBaseClassName() +"_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
-        Out.println("                   return index;");
-        Out.println("                 }");
-        Out.println();               
-        Out.println("               if (firstChangeList.equals((("+O._BaseClassName+") d).__Changes) == false)");
-        Out.println("                 {");
-        Out.println("                   LOG.debug(QueryDetails._LOGGING_HEADER + \"The '"+Helper.getFullAppDataClassName(O) +"' object at positon #\" + index + \" failed matching the list of columns being changed compared to the first object passed.\");");
-        Out.println("                   QueryDetails.setLastQuery("+O.getBaseClassName() +"_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
+        Out.println("                   LOG.debug(QueryDetails._LOGGING_HEADER + \"The '" + Helper.getFullAppDataClassName(O) + "' object at positon #\" + index + \" failed in its BeforeWrite() method.\");");
+        Out.println("                   QueryDetails.setLastQuery(" + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
         Out.println("                   return index;");
         Out.println("                 }");
         Out.println();
-        Out.println("               if (firstTimeStampSignature.equals((("+O._BaseClassName+") d).getTimeStampSignature()) == false)");
+        Out.println("               if (firstChangeList.equals(((" + O._BaseClassName + ") d).__Changes) == false)");
         Out.println("                 {");
-        Out.println("                   LOG.debug(QueryDetails._LOGGING_HEADER + \"The '"+Helper.getFullAppDataClassName(O) +"' object at positon #\" + index + \" failed matching the list of updated current vs value based timestamps.\");");
-        Out.println("                   QueryDetails.setLastQuery("+O.getBaseClassName() +"_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
+        Out.println("                   LOG.debug(QueryDetails._LOGGING_HEADER + \"The '" + Helper.getFullAppDataClassName(O) + "' object at positon #\" + index + \" failed matching the list of columns being changed compared to the first object passed.\");");
+        Out.println("                   QueryDetails.setLastQuery(" + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
+        Out.println("                   return index;");
+        Out.println("                 }");
+        Out.println();
+        Out.println("               if (firstTimeStampSignature.equals(((" + O._BaseClassName + ") d).getTimeStampSignature()) == false)");
+        Out.println("                 {");
+        Out.println("                   LOG.debug(QueryDetails._LOGGING_HEADER + \"The '" + Helper.getFullAppDataClassName(O) + "' object at positon #\" + index + \" failed matching the list of updated current vs value based timestamps.\");");
+        Out.println("                   QueryDetails.setLastQuery(" + O.getBaseClassName() + "_Factory.SCHEMA_TABLENAME_LABEL, \"\");");
         Out.println("                   return index;");
         Out.println("                 }");
         Out.println();
@@ -910,7 +969,7 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("                   C.commit();");
         Out.println("                   LOG.debug(\"Commited \" + commitSize + \" batch records. At insert count \" + (index-commitSize+1));");
         Out.println("                 }");
-        
+
         Out.println("               PS.clearParameters();");
         Out.println("             }");
         Out.println();
@@ -937,7 +996,7 @@ public class TildaFactory implements CodeGenTildaFactory
         if (G.getSql().needsSavepoint() == true)
           {
             Out.println("           C.releaseSavepoint(true);");
-          }     
+          }
         Out.println("           return -1;");
         Out.println("         }");
         Out.println("       catch (java.sql.SQLException E)");
@@ -950,8 +1009,8 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("         {");
         Out.println("           TILDA__1_0.HandleFinally(PS, T0, " + O._BaseClassName + "_Factory.SCHEMA_TABLENAME_LABEL, lastObj != null && lastObj.__Init == InitMode.CREATE ? StatementType.INSERT : StatementType.UPDATE, count, AllocatedArrays);");
         Out.println("           PS = null;");
-        Out.println("           AllocatedArrays = null;");  
+        Out.println("           AllocatedArrays = null;");
         Out.println("         }");
-        Out.println("       }");  
+        Out.println("       }");
       }
   }

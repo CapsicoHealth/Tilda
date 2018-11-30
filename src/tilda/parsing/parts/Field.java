@@ -65,6 +65,9 @@ public class Field extends TypeDef
         // Mandatories
         if (TextUtil.isNullOrEmpty(_Name) == true)
           return PS.AddError("Field '" + getFullName() + "' didn't define a 'name'. It is mandatory.");
+        
+        if (_Name.length() > PS._CGSql.getMaxColumnNameSize())
+          return PS.AddError("Field '" + getFullName() + "' has a name that's too long: max allowed by your database is "+PS._CGSql.getMaxColumnNameSize()+" vs "+_Name.length()+" for this identifier.");
 
         if (super.Validate(PS, "Column '" + getFullName() + "'", true, false) == false)
           return false;

@@ -84,7 +84,7 @@ public class IndexMeta
               Str.append("|");
             }
             Str.append(ICM._Col);
-            Str.append("|" + (ICM._Asc == null ? "**"+ICM._AscStr+"**" : ICM._Asc == true ? "asc" : "desc"));
+            Str.append("|" + (ICM._Asc == null || ICM._Asc == true ? "asc" : "desc"));
           }
 
         return (_Unique ? "u" : "") + "i|" + Str.toString();

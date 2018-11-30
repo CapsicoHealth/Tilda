@@ -23,6 +23,7 @@ import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.Writer;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
@@ -1124,23 +1125,6 @@ public class TextUtil
       }
 
 
-    /**
-     * Splits a string based on Splitter using the String.split() method. Additionally, calls trim() on all results.
-     * 
-     * @param Source
-     * @param Splitter
-     * @return
-     */
-    public static final String[] TrimSplit(String Source, String Splitter)
-      {
-        String[] S = Source.split(Splitter);
-        for (int i = 0; i < S.length; ++i)
-          {
-            S[i] = S[i].trim();
-          }
-        return S;
-      }
-
     public static final String StreamToString(InputStream In)
     throws IOException
       {
@@ -1324,6 +1308,40 @@ public class TextUtil
         return Str.length() == 0 ? "" : Str.substring(2);
       }
 
+    /**
+     * Splits a string based on separator regex using the standard String.split() method. Implements a null-or-empty check
+     * on Str and returns null if true. Additionally, calls trim() on all results if Trim is true, and removes empties 
+     * from the final result if RemoveEmpties is true. 
+     * 
+     * @param Str
+     * @param SeparatorRegEx
+     * @param Trim
+     * @param RemoveEmpties
+     * @return
+     */
+    public static final String[] Split(String Str, String SeparatorRegEx, boolean Trim, boolean RemoveEmpties)
+      {
+        if (TextUtil.isNullOrEmpty(Str) == true)
+         return null;
+        List<String> L = new ArrayList<String>();
+        String[] SplitArray = Str.split(SeparatorRegEx);
+        for (String s : SplitArray)
+          {
+            if (RemoveEmpties == true && TextUtil.isNullOrEmpty(s) == true)
+             continue;
+            L.add(s!=null&&Trim==true ? s.trim() : s);
+          }
+        return CollectionUtil.toStringArray(L);
+      }
+
+    /**
+     * Splits a string based on separator regex using the standard String.split() method. Implements a null-or-empty check
+     * on Str and returns null if true.
+     *  
+     * @param Str
+     * @param SeparatorRegEx
+     * @return
+     */
     public static final String[] Split(String Str, String SeparatorRegEx)
       {
         return isNullOrEmpty(Str) == true ? null : Str.split(SeparatorRegEx);

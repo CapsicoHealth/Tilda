@@ -44,13 +44,13 @@ public class PrimaryKey
         _ParentObject = O;
 
         if (_Autogen == null && _Columns == null)
-          return PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a primary key without any column or autogen setting: it needs one or the other.");
+         PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a primary key without any column or autogen setting: it needs one or the other.");
 
         if (_Autogen == false && (_Columns == null || _Columns.length == 0))
-          return PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a custom primary key (autogen is false) but doesn't have any columns listed.");
+          PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining a custom primary key (autogen is false) but doesn't have any columns listed.");
 
         if (_Autogen == true && _Columns != null)
-          return PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining an autogen primary key and also a list of columns. It's either one or the other.");
+          PS.AddError("Object '" + _ParentObject.getFullName() + "' is defining an autogen primary key and also a list of columns. It's either one or the other.");
 
         if (_Autogen == true)
           {
