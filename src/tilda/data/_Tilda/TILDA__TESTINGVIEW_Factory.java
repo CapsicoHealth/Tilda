@@ -197,6 +197,15 @@ This is the column definition for:<BR>
 ;
    }
 
+   public static final ColumnDefinition[] COLUMNS = { COLS.NAME,COLS.REFNUM,COLS.A2MIN,COLS.A2MAX,COLS.A9TZ,COLS.A9,COLS.A9C,COLS.A6FIRST,COLS.A6LAST };
+
+   public static final ColumnDefinition[] COLUMNS_PRIMARY = {  };
+
+   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = { 
+        };
+
+   public static final ColumnDefinition[] COLUMNS_FIRST_IDENTITY = {};
+
    private static Boolean  __INITIALIZED = false;
    protected static void initObject(Connection C) throws Exception
      {
@@ -242,6 +251,10 @@ This is the column definition for:<BR>
         }
      }
 
+   protected static final void ProcessMany(Connection C, String FullSelectQuery, int Start, int Size, tilda.db.processors.RecordProcessor RP) throws Exception
+     {
+       ReadMany(C, -77, RP, null, FullSelectQuery, Start, Size);
+     }
    protected static final ListResults<tilda.data.TestingView_Data> ReadMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);
