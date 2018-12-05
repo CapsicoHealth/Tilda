@@ -679,7 +679,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             Str = DoFormulasSuperView(V, Str, false);
           }
         OutFinal.println("create or replace view " + V._ParentSchema._Name + "." + V._Name + " as ");
-        OutFinal.println(Str + ";");
+        OutFinal.println(Str + ";\n");
 
         if (V._Realize != null)
           {
@@ -718,17 +718,23 @@ public class Sql extends PostgreSQL implements CodeGenSql
               {
                 // String BV = DoFormulasSuperView(V, BV);
                 OutFinal.append("SELECT ").append(genRealizedColumnList(V, "\n          "))
-                .append("\n     FROM " + V._ParentSchema._Name + "." + V._Name + ";\n");
+                .append("\n     FROM " + V._ParentSchema._Name + "." + V._Name + "\n");
               }
+            if (V._Realize._UpsertOnColumnObj != null)
+              {
+//                OutFinal.append("where ($1 is null or \"").append(V._Realize._UpsertOnColumnObj.getName()).append("\n >= $1) and ($2 is null or \"").append(V._Realize._UpsertOnColumnObj.getName()).append("\n < $2)\n");
+//                OutFinal.append("ON CONFLICT ()
+              }
+            OutFinal.append(";\n");
             // for (Index I : V._Realize._Indices)
             // if (I != null)
             // genIndex(OutFinal, I);
 
-            OutFinal.append("  GRANT ALL ON ").append(RName).append(" TO tilda_app;\n");
-            OutFinal.append("  GRANT SELECT ON ").append(RName).append(" TO tilda_read_only;\n");
-            OutFinal.append("  GRANT SELECT ON ").append(RName).append(" TO tilda_reporting;\n");
-            OutFinal.append("  ANALYZE " + RName + ";\n")
-            .append("  return true;\n")
+//            OutFinal.append("  GRANT ALL ON ").append(RName).append(" TO tilda_app;\n");
+//            OutFinal.append("  GRANT SELECT ON ").append(RName).append(" TO tilda_read_only;\n");
+//            OutFinal.append("  GRANT SELECT ON ").append(RName).append(" TO tilda_reporting;\n");
+//            OutFinal.append("  ANALYZE " + RName + ";\n")
+            OutFinal.append("  return true;\n")
             .append("END; $$\n")
             .append("LANGUAGE PLPGSQL;\n")
             .append("\n")
@@ -841,9 +847,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
             b.append("\"").append(C.getName()).append("\"");
           }
 
-        b.append("\n from (\n").append(Str).append("\n      ) as T;");
+        b.append("\n from (\n").append(Str).append("\n      ) as T\n");
         if (V._Realize != null)
-          b.append("\n-- Realized as " + genRealizedColumnList(V, " ") + "\n");
+          b.append("-- Realized as " + genRealizedColumnList(V, " ") + "\n");
         Str = b.toString();
         return Str;
       }

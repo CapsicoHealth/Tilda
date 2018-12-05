@@ -26,6 +26,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.ObjectMode;
@@ -44,10 +45,10 @@ public class ViewRealize
     @SerializedName("indices"    ) public List<Index>       _Indices    = new ArrayList<Index>();
     @SerializedName("subRealized") public String[]          _SubRealized= new String[] { };
     // It was "exclude" for view columns, so why was it ever "excludes" here? Not consistent.
-    @SerializedName("excludes"   ) public String[]       _Excludes_DEPRECATED   = new String[] { };
-    @SerializedName("exclude"    ) public String[]       _Exclude       = new String[] { };
+    @SerializedName("excludes"   ) public String[]          _Excludes_DEPRECATED   = new String[] { };
+    @SerializedName("exclude"    ) public String[]          _Exclude         = new String[] { };
     @SerializedName("mappings"   ) public List<ViewRealizeMapping> _Mappings = new ArrayList<>();
-    @SerializedName("upsert"     ) public ViewRealizeUpsert        _Upsert     = null;
+    @SerializedName("upsertOn"   ) public String            _UpsertOn        = null;
     /*@formatter:on*/
 
 
@@ -57,6 +58,8 @@ public class ViewRealize
 
     public transient View    _ParentView;
     public transient Base    _ParentRealized;
+    public transient Column _UpsertOnColumnObj;
+    public transient List<Column> _UpsertIdentityColumnObjs;
     public transient boolean _FailedValidation = false;
 
 
@@ -82,7 +85,17 @@ public class ViewRealize
         if (_PrimaryKey != null && _PrimaryKey._Autogen == true)
           PS.AddError("The realize section for view '" + ParentView.getFullName() + "' defines an autogen primary key: these are not allowed for realized tables.");
           
-        
+        if (TextUtil.isNullOrEmpty(_UpsertOn) == false)
+          {
+            Column C = _ParentRealized.getColumn(_UpsertOn);
+            if (C == null)
+             PS.AddError("The realize section for view '" + ParentView.getFullName() + "' defines an upsertOn column '"+_UpsertOn+"' which cannot be found.");
+            else if (C.getType() != ColumnType.DATE && C.getType() != ColumnType.DATETIME)
+              PS.AddError("The realize section for view '" + ParentView.getFullName() + "' defines an upsertOn column '"+_UpsertOn+"' which is not a date or datetime.");
+            else
+              _UpsertOnColumnObj = C;
+          }
+
         Names.clear();
         for (ViewRealizeMapping VRM : _Mappings)
           if (VRM != null)
@@ -138,6 +151,9 @@ public class ViewRealize
         O._ModeStr = ParentView._DBOnly==true?ObjectMode.DB_ONLY.toString():ObjectMode.NORMAL.toString();
         ParentView._ParentSchema._Objects.add(O);
         O.Validate(PS, ParentView._ParentSchema);
+        
+        if (_UpsertOnColumnObj != null)
+          _UpsertIdentityColumnObjs = O.getFirstIdentityColumns();
 
 //        if (O._Name.equals("Testing2Realized") == true)
 //          LOG.debug("yyyyy");

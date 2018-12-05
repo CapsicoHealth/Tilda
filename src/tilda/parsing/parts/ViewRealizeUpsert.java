@@ -24,14 +24,14 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.annotations.SerializedName;
 
 import tilda.parsing.ParserSession;
+import tilda.utils.TextUtil;
 
 public class ViewRealizeUpsert
   {
     static final Logger             LOG       = LogManager.getLogger(ViewRealizeUpsert.class.getName());
 
     /*@formatter:off*/
-    @SerializedName("columns"   ) public String[]  _Columns    = new String[] { };
-    @SerializedName("timestamps") public String[]  _Timestamps = new String[] { };
+    @SerializedName("timestamp") public String    _Timestamp  = null;
     /*@formatter:on*/
 
 
@@ -41,7 +41,7 @@ public class ViewRealizeUpsert
 
     public transient View             _ParentView;
     public transient Base             _ParentRealized;
-    public transient List<ViewColumn> _ViewColumns;
+    public transient List<ViewColumn> _IdentityViewColumns;
     public transient boolean          _FailedValidation = false;
 
 
@@ -51,13 +51,11 @@ public class ViewRealizeUpsert
         _ParentView = ParentView;
         _ParentRealized = ParentRealized;
 
-        for (String col : _Columns)
-          if (_ParentView.getColumn(col) == null)
-           PS.AddError("View '" + _ParentView.getFullName() + "' is defining an upsert column '" + col + "' which cannot be found.");
-           
-        for (String col : _Timestamps)
-          if (_ParentView.getColumn(col) == null)
-           PS.AddError("View '" + _ParentView.getFullName() + "' is defining an upsert timestamp '" + col + "' which cannot be found.");
+        if (TextUtil.isNullOrEmpty(_Timestamp) == true)
+         PS.AddError("View '" + _ParentView.getFullName() + "' is defining an upsert timestamp '" + _Timestamp + "' which cannot be found.");
+          
+          if (_ParentView.getColumn(_Timestamp) == null)
+           PS.AddError("View '" + _ParentView.getFullName() + "' is defining an upsert timestamp '" + _Timestamp + "' which cannot be found.");
 
         return Errs == PS.getErrorCount();
       }
