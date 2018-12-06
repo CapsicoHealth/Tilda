@@ -346,6 +346,11 @@ public final class Connection
         return JDBCHelper.ExecuteInsert(_C, SchemaName, TableName, Query);
       }
 
+    public int ExecuteDelete(String SchemaName, String TableName, String Query)
+    throws Exception
+      {
+        return JDBCHelper.ExecuteDelete(_C, SchemaName, TableName, Query);
+      }
 
     public boolean ExecuteDDL(String SchemaName, String TableName, String Query)
     throws Exception
