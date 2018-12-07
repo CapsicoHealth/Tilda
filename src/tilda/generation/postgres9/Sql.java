@@ -17,6 +17,7 @@
 package tilda.generation.postgres9;
 
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
@@ -55,6 +56,7 @@ import tilda.parsing.parts.ViewPivot;
 import tilda.parsing.parts.ViewPivotAggregate;
 import tilda.parsing.parts.ViewPivotValue;
 import tilda.parsing.parts.ViewRealizeMapping;
+import tilda.parsing.parts.ViewRealizeUpsert;
 import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.utils.PaddingTracker;
 import tilda.utils.PaddingUtil;
@@ -686,13 +688,24 @@ public class Sql extends PostgreSQL implements CodeGenSql
             OutFinal.println();
             String TName = V.getRealizedTableName(false);
             String RName = V.getRealizedTableName(true);
+            ViewRealizeUpsert Up = V._Realize._Upsert;
 
-            OutFinal.append("DROP FUNCTION IF EXISTS " + V._ParentSchema._Name + ".Refill_" + TName + "();\n")
-            .append("CREATE OR REPLACE FUNCTION " + V._ParentSchema._Name + ".Refill_" + TName + "() RETURNS boolean AS $$\n")
-            .append("BEGIN\n")
-            // .append(" DROP TABLE IF EXISTS " + RName + ";\n")
-            .append("  TRUNCATE " + RName + ";\n")
-            .append("  INSERT INTO " + RName + " (" + PrintInsertColumnNames(V) + ")\n     ");
+            if (Up != null)
+              {
+                String ColType = getColumnType(Up._UpsertTSColumnObj);
+                OutFinal.append("DROP FUNCTION IF EXISTS " + V._ParentSchema._Name + ".Refill_" + TName + "(fromInclusive " + ColType + ", toExclusive " + ColType + ");\n")
+                .append("CREATE OR REPLACE FUNCTION " + V._ParentSchema._Name + ".Refill_" + TName + "(fromInclusive " + ColType + ", toExclusive " + ColType + ")\n");
+              }
+            else
+              {
+                OutFinal.append("DROP FUNCTION IF EXISTS " + V._ParentSchema._Name + ".Refill_" + TName + "();\n")
+                .append("CREATE OR REPLACE FUNCTION " + V._ParentSchema._Name + ".Refill_" + TName + "()\n");
+              }
+            OutFinal.append(" RETURNS boolean AS $$\n")
+            .append("BEGIN\n");
+
+            StringWriter BaseLineInsert = new StringWriter();
+            BaseLineInsert.append("  INSERT INTO " + RName + " (" + PrintInsertColumnNames(V) + ")\n     ");
 
             if (V._Realize._SubRealized.length != 0)
               {
@@ -712,33 +725,80 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 BV = BV.replaceAll(r.toString(), "$1Realized");
                 if (V._Formulas != null && V._Formulas.isEmpty() == false)
                   BV = DoFormulasSuperView(V, BV, true);
-                OutFinal.append(BV);
+                BaseLineInsert.append(BV);
               }
             else
               {
                 // String BV = DoFormulasSuperView(V, BV);
-                OutFinal.append("SELECT ").append(genRealizedColumnList(V, "\n          "))
-                .append("\n     FROM " + V._ParentSchema._Name + "." + V._Name + "\n");
+                BaseLineInsert.append("SELECT ").append(genRealizedColumnList(V, "\n          "))
+                .append("\n     FROM ").append(V._ParentSchema._Name).append(".").append(V._Name);
               }
-            if (V._Realize._UpsertOnColumnObj != null)
+            
+            if (Up != null)
               {
-//                OutFinal.append("where ($1 is null or \"").append(V._Realize._UpsertOnColumnObj.getName()).append("\n >= $1) and ($2 is null or \"").append(V._Realize._UpsertOnColumnObj.getName()).append("\n < $2)\n");
-//                OutFinal.append("ON CONFLICT ()
+                OutFinal.append("  IF fromInclusive is null AND toExclusive is null\n");
+                OutFinal.append("  THEN\n");
               }
-            OutFinal.append(";\n");
+            OutFinal.append("  TRUNCATE ").append(RName).append(";\n");
+            OutFinal.append(BaseLineInsert.toString()).append(";\n");
+            OutFinal.append("  ANALYZE " + RName + ";\n");
+            if (Up != null)
+              {
+                OutFinal.append("  ELSE\n");
+                OutFinal.append(BaseLineInsert.toString());
+                OutFinal.append("\n    WHERE (fromInclusive is null or \"").append(Up._UpsertTSColumnObj.getName()).append("\" >= fromInclusive) and (toExclusive is null or \"").append(Up._UpsertTSColumnObj.getName()).append("\" < toExclusive)");
+                OutFinal.append("\n  ON CONFLICT (");
+                boolean First = true;
+                for (ViewColumn VC : Up._IdentityViewColumns)
+                  {
+                    if (First == true)
+                      First = false;
+                    else
+                      OutFinal.append(", ");
+                    OutFinal.append("\"").append(VC._Name).append("\"");
+                  }
+                OutFinal.append(")");
+                OutFinal.append("\n  DO UPDATE SET\n");
+                First = true;
+                for (String ColNames : V._Realize._ParentRealized.getColumnNames())
+                  {
+                    OutFinal.append("    ");
+                    if (First == true)
+                      First = false;
+                    else
+                      OutFinal.append(",");
+                    OutFinal.append("\"").append(ColNames).append("\"").append(" = EXCLUDED.").append("\"").append(ColNames).append("\"").append("\n");
+                  }
+                OutFinal.append("  ;\n");
+                if (Up._UpsertTSColumnObj != null)
+                 OutFinal.append("  DELETE FROM " + RName + " WHERE \"" + Up._DeleteTSColumnObj.getName() + "\" is not null;\n");
+                OutFinal.append("  END IF;\n");
+              }
             // for (Index I : V._Realize._Indices)
             // if (I != null)
             // genIndex(OutFinal, I);
 
-//            OutFinal.append("  GRANT ALL ON ").append(RName).append(" TO tilda_app;\n");
-//            OutFinal.append("  GRANT SELECT ON ").append(RName).append(" TO tilda_read_only;\n");
-//            OutFinal.append("  GRANT SELECT ON ").append(RName).append(" TO tilda_reporting;\n");
-//            OutFinal.append("  ANALYZE " + RName + ";\n")
+            // OutFinal.append(" GRANT ALL ON ").append(RName).append(" TO tilda_app;\n");
+            // OutFinal.append(" GRANT SELECT ON ").append(RName).append(" TO tilda_read_only;\n");
+            // OutFinal.append(" GRANT SELECT ON ").append(RName).append(" TO tilda_reporting;\n");
+            // OutFinal.append(" ANALYZE " + RName + ";\n")
             OutFinal.append("  return true;\n")
             .append("END; $$\n")
             .append("LANGUAGE PLPGSQL;\n")
-            .append("\n")
-            .append("-- SELECT " + V._ParentSchema._Name + ".Refill_" + TName + "();")
+            .append("\n");
+            if (Up != null)
+              {
+                String ColType = getColumnType(Up._UpsertTSColumnObj);
+                OutFinal.append("DROP FUNCTION IF EXISTS " + V._ParentSchema._Name + ".Refill_" + TName + "(fromInclusive " + ColType + ");\n")
+                .append("CREATE OR REPLACE FUNCTION " + V._ParentSchema._Name + ".Refill_" + TName + "(fromInclusive " + ColType + ")\n");
+                OutFinal.append(" RETURNS boolean AS $$\n")
+                .append("BEGIN\n");
+                OutFinal.append("  return " + V._ParentSchema._Name + ".Refill_" + TName + "(fromInclusive, null);\n")
+                .append("END; $$\n")
+                .append("LANGUAGE PLPGSQL;\n")
+                .append("\n");
+              }
+            OutFinal.append("-- SELECT " + V._ParentSchema._Name + ".Refill_" + TName + "();")
             .append("-- !!! THIS MAY TAKE SEVERAL MINUTES !!! --");
           }
       }
@@ -820,9 +880,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
             ViewRealizeMapping VRM = Realize == false ? null : V._Realize.getMapping(VC.getName());
             if (Realize == false || VRM == null)
-             b.append("\"" + VC._Name + "\" -- COLUMN\n");
+              b.append("\"" + VC._Name + "\" -- COLUMN\n");
             else
-             b.append(VRM.printMapping() + " -- COLUMN (MAPPING OVERRIDE)\n");
+              b.append(VRM.printMapping() + " -- COLUMN (MAPPING OVERRIDE)\n");
           }
 
         for (Formula F : V._Formulas)
@@ -1214,9 +1274,9 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   ColumnType T = VC._SameAsObj == null && VC._SameAs.equals("_TS.p") == true ? ColumnType.DATE : VC._SameAsObj.getType();
                   boolean nullTest = FormulaStr.substring(M.end()).toLowerCase().matches("\\s*is\\s*(not)?\\s*null.*");
                   if (nullTest == false && (T == ColumnType.INTEGER || T == ColumnType.LONG || T == ColumnType.FLOAT || T == ColumnType.DOUBLE))
-                   M.appendReplacement(Str, "coalesce(\"" + M.group(1) + "\", 0)");
+                    M.appendReplacement(Str, "coalesce(\"" + M.group(1) + "\", 0)");
                   else
-                   M.appendReplacement(Str, '"' + M.group(1) + '"');
+                    M.appendReplacement(Str, '"' + M.group(1) + '"');
                   break;
                 }
           }

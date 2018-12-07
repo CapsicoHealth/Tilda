@@ -26,6 +26,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.db.Connection;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkColumnType;
@@ -160,12 +161,12 @@ public class ViewColumn
           }
 
         if (_Name.length() > PS._CGSql.getMaxColumnNameSize())
-          PS.AddError("View Column '" + getFullName() + "' has a name that's too long: max allowed by your database is " + PS._CGSql.getMaxColumnNameSize() + " vs "+_Name.length()+" for this identifier.");
+          PS.AddError("View Column '" + getFullName() + "' has a name that's too long: max allowed by your database is " + PS._CGSql.getMaxColumnNameSize() + " vs " + _Name.length() + " for this identifier.");
         if (_Name.equals(TextUtil.SanitizeName(_Name)) == false)
           PS.AddError("View Column '" + getFullName() + "' has a name containing invalid characters (must all be alphanumeric or underscore).");
         if (ValidationHelper.isValidIdentifier(_Name) == false)
           PS.AddError("View Column '" + getFullName() + "' has a name '" + _Name + "' which is not valid. " + ValidationHelper._ValidIdentifierMessage);
-        
+
 
         if (_JoinStr != null)
           if ((_Join = JoinType.parse(_JoinStr)) == null)
@@ -293,5 +294,18 @@ public class ViewColumn
     public boolean isSameAsLitteral()
       {
         return _SameAs != null && _SameAsObj == null && _FCT.isManaged() == true;
+      }
+
+    /**
+     * returns a comma-separated string containing the <B>unescaped</B> column short names
+     * @param L
+     * @return
+     */
+    public static String PrintColumnList(List<ViewColumn> L)
+      {
+        StringBuilder Str = new StringBuilder();
+        for (ViewColumn VC : L)
+          Str.append(Str.length() == 0 ? "" : ", ").append(VC.getShortName());
+        return Str.toString();
       }
   }
