@@ -797,6 +797,14 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 .append("END; $$\n")
                 .append("LANGUAGE PLPGSQL;\n")
                 .append("\n");
+                OutFinal.append("DROP FUNCTION IF EXISTS " + V._ParentSchema._Name + ".Refill_" + TName + "();\n")
+                .append("CREATE OR REPLACE FUNCTION " + V._ParentSchema._Name + ".Refill_" + TName + "()\n");
+                OutFinal.append(" RETURNS boolean AS $$\n")
+                .append("BEGIN\n");
+                OutFinal.append("  return " + V._ParentSchema._Name + ".Refill_" + TName + "(null, null);\n")
+                .append("END; $$\n")
+                .append("LANGUAGE PLPGSQL;\n")
+                .append("\n");
               }
             OutFinal.append("-- SELECT " + V._ParentSchema._Name + ".Refill_" + TName + "();")
             .append("-- !!! THIS MAY TAKE SEVERAL MINUTES !!! --");
