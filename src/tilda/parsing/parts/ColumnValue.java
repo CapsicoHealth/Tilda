@@ -96,14 +96,14 @@ public class ColumnValue
           ValueHelper.CheckColumnValue(PS, _ParentColumn, _Name, _Value, _Default);
       }
 
-    public static ColumnValue[] deepCopy(ColumnValue[] _Values)
+    public static ColumnValue[] deepCopy(ColumnValue[] Values)
       {
-        if (_Values == null)
+        if (Values == null)
           return null;
-        ColumnValue[] A = new ColumnValue[_Values.length];
-        for (int i = 0; i < _Values.length; ++i)
+        ColumnValue[] A = new ColumnValue[Values.length];
+        for (int i = 0; i < Values.length; ++i)
           {
-            ColumnValue v = _Values[i];
+            ColumnValue v = Values[i];
             if (v != null)
              {
                A[i] = new ColumnValue(v._Name, v._Value, v._Label, v._Description, v._Groupings, v._Default);

@@ -61,60 +61,60 @@ public class TILDA__TRANSPERF_Json
       if (   _startPeriod            == null)
        throw new Exception("Incoming value for 'tilda.data.TILDA.TransPerf.startPeriod' was not in the expected format. Dates should follow the ISO format.\n"+toString());
       if (TextUtil.isNullOrEmpty(Str_endPeriod             ) == true)
-       _endPeriod=DateTimeUtil.NOW_PLACEHOLDER_ZDT;
+       throw new Exception("Incoming value for 'tilda.data.TILDA.TransPerf.endPeriod' was null or empty. It's not nullable in the model.\n"+toString());
       _endPeriod              = DateTimeUtil.parsefromJSON(Str_endPeriod             );
       if (   _endPeriod              == null)
        throw new Exception("Incoming value for 'tilda.data.TILDA.TransPerf.endPeriod' was not in the expected format. Dates should follow the ISO format.\n"+toString());
       if (_commitNano             == null)
-       _commitNano=0;
+       _commitNano=0l;
       if (_commitCount            == null)
        _commitCount=0;
       if (_rollbackNano           == null)
-       _rollbackNano=0;
+       _rollbackNano=0l;
       if (_rollbackCount          == null)
        _rollbackCount=0;
       if (_savepointSetNano       == null)
-       _savepointSetNano=0;
+       _savepointSetNano=0l;
       if (_savepointSetCount      == null)
        _savepointSetCount=0;
       if (_savepointCommitNano    == null)
-       _savepointCommitNano=0;
+       _savepointCommitNano=0l;
       if (_savepointCommitCount   == null)
        _savepointCommitCount=0;
       if (_savepointRollbackNano  == null)
-       _savepointRollbackNano=0;
+       _savepointRollbackNano=0l;
       if (_savepointRollbackCount == null)
        _savepointRollbackCount=0;
       if (_statementCloseNano     == null)
-       _statementCloseNano=0;
+       _statementCloseNano=0l;
       if (_statementCloseCount    == null)
        _statementCloseCount=0;
       if (_connectionCloseNano    == null)
-       _connectionCloseNano=0;
+       _connectionCloseNano=0l;
       if (_connectionCloseCount   == null)
        _connectionCloseCount=0;
       if (_connectionGetNano      == null)
-       _connectionGetNano=0;
+       _connectionGetNano=0l;
       if (_connectionGetCount     == null)
        _connectionGetCount=0;
       if (_tildaSetterNano        == null)
-       _tildaSetterNano=0;
+       _tildaSetterNano=0l;
       if (_tildaSetterCount       == null)
        _tildaSetterCount=0;
       if (_tildaToStringNano      == null)
-       _tildaToStringNano=0;
+       _tildaToStringNano=0l;
       if (_tildaToStringCount     == null)
        _tildaToStringCount=0;
       if (_tildaToJsonNano        == null)
-       _tildaToJsonNano=0;
+       _tildaToJsonNano=0l;
       if (_tildaToJsonCount       == null)
        _tildaToJsonCount=0;
       if (_tildaToCsvNano         == null)
-       _tildaToCsvNano=0;
+       _tildaToCsvNano=0l;
       if (_tildaToCsvCount        == null)
        _tildaToCsvCount=0;
 
-      tilda.data.TransPerf_Data Obj = tilda.data.TransPerf_Factory.Create(_startPeriod);
+      tilda.data.TransPerf_Data Obj = tilda.data.TransPerf_Factory.Create(_startPeriod, _endPeriod);
       Update(Obj);
       if (Obj.Write(C) == false)
        {

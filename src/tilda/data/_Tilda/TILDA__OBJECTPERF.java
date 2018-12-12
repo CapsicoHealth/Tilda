@@ -702,7 +702,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Dec 12 2018, 00:23:17EST
+ @generated Dec 12 2018, 01:25:03EST
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__OBJECTPERF implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -1399,7 +1399,7 @@ These are the enumerated values for tilda.data.TILDA.ObjectPerf.selectNano, whic
    public static final String[][] _selectNano_Values = {
                                                { "0", "selectNano_CreateDefault", "selectNano_CreateDefault", "" }
                                   };
-   public static final long _selectNanoSelectNano_CreateDefault = 0;
+   public static final long _selectNanoSelectNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1882,7 +1882,7 @@ These are the enumerated values for tilda.data.TILDA.ObjectPerf.insertNano, whic
    public static final String[][] _insertNano_Values = {
                                                { "0", "insertNano_CreateDefault", "insertNano_CreateDefault", "" }
                                   };
-   public static final long _insertNanoInsertNano_CreateDefault = 0;
+   public static final long _insertNanoInsertNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2365,7 +2365,7 @@ These are the enumerated values for tilda.data.TILDA.ObjectPerf.updateNano, whic
    public static final String[][] _updateNano_Values = {
                                                { "0", "updateNano_CreateDefault", "updateNano_CreateDefault", "" }
                                   };
-   public static final long _updateNanoUpdateNano_CreateDefault = 0;
+   public static final long _updateNanoUpdateNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2848,7 +2848,7 @@ These are the enumerated values for tilda.data.TILDA.ObjectPerf.deleteNano, whic
    public static final String[][] _deleteNano_Values = {
                                                { "0", "deleteNano_CreateDefault", "deleteNano_CreateDefault", "" }
                                   };
-   public static final long _deleteNanoDeleteNano_CreateDefault = 0;
+   public static final long _deleteNanoDeleteNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

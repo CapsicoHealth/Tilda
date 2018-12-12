@@ -103,13 +103,6 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
-
-<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>endPeriod_CreateDefault</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>endPeriod_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>endPeriod_CreateDefault</TD></TR>
-</TABLE>
-</TD></TR>
-
 </TABLE>
 */
      public static Type_DatetimePrimitive      ENDPERIOD             = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "endPeriod"             , 3/*3*/, "The timestamp for when the record was created.");
@@ -947,8 +940,9 @@ This is the column definition for:<BR>
  Creates a new object in memory, which you can subsequently {@link #Write()} to the data store.
  current object to the destination. 
  @param startPeriod            The timestamp for when the record was created.
+ @param endPeriod              The timestamp for when the record was created.
 */
-   static public tilda.data.TransPerf_Data Create(ZonedDateTime startPeriod) throws Exception
+   static public tilda.data.TransPerf_Data Create(ZonedDateTime startPeriod, ZonedDateTime endPeriod) throws Exception
      {
        tilda.data._Tilda.TILDA__TRANSPERF Obj = new tilda.data.TransPerf_Data();
        Obj.initForCreate();
@@ -956,9 +950,9 @@ This is the column definition for:<BR>
 
        // Explicit setters
        Obj.setStartPeriod           (startPeriod           );
+       Obj.setEndPeriod             (endPeriod             );
 
        // Default Create-time setters
-       Obj.setEndPeriodNow                                              ();
        Obj.setCommitNanoCommitNano_CreateDefault                        ();
        Obj.setCommitCountCommitCount_CreateDefault                      ();
        Obj.setRollbackNanoRollbackNano_CreateDefault                    ();
@@ -1024,9 +1018,8 @@ This is the column definition for:<BR>
        if (IncomingErrors != Errors.size())
         return null;
 
-      tilda.data.TransPerf_Data Obj = tilda.data.TransPerf_Factory.Create(_startPeriod);
+      tilda.data.TransPerf_Data Obj = tilda.data.TransPerf_Factory.Create(_startPeriod, _endPeriod);
 
-      if (_endPeriod             != null) Obj.setEndPeriod             (_endPeriod             );
       if (_commitNano            != null) Obj.setCommitNano            (_commitNano            );
       if (_commitCount           != null) Obj.setCommitCount           (_commitCount           );
       if (_rollbackNano          != null) Obj.setRollbackNano          (_rollbackNano          );

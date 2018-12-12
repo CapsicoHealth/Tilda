@@ -669,6 +669,12 @@ public final class Connection
         return _DB.isSuperUser(this);
       }
 
+    public boolean alterTableAlterColumnDefault(Column Col)
+    throws Exception
+      {
+        return _DB.alterTableAlterColumnDefault(this, Col);
+      }
+
   }
 
 

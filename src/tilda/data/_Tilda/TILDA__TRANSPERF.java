@@ -1044,7 +1044,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Dec 12 2018, 00:23:17EST
+ @generated Dec 12 2018, 01:25:03EST
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TRANSPERF implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -1387,13 +1387,6 @@ This is the definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
-
-<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>endPeriod_CreateDefault</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>endPeriod_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>endPeriod_CreateDefault</TD></TR>
-</TABLE>
-</TD></TR>
-
 </TABLE>
 */
    ZonedDateTime _endPeriod;
@@ -1413,13 +1406,6 @@ This is the getter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
-
-<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>endPeriod_CreateDefault</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>endPeriod_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>endPeriod_CreateDefault</TD></TR>
-</TABLE>
-</TD></TR>
-
 </TABLE>
 */
    public final ZonedDateTime getEndPeriod()
@@ -1440,13 +1426,6 @@ This is the setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
-
-<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>endPeriod_CreateDefault</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>endPeriod_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>endPeriod_CreateDefault</TD></TR>
-</TABLE>
-</TD></TR>
-
 </TABLE>
 */
    public void setEndPeriod(ZonedDateTime v) throws Exception
@@ -1482,13 +1461,6 @@ This is the NOW setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
-
-<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>endPeriod_CreateDefault</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>endPeriod_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>endPeriod_CreateDefault</TD></TR>
-</TABLE>
-</TD></TR>
-
 </TABLE>
 */
    public final void setEndPeriodNow() throws Exception
@@ -1511,13 +1483,6 @@ This is the UNDEFINED setter for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
-
-<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>endPeriod_CreateDefault</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>endPeriod_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>endPeriod_CreateDefault</TD></TR>
-</TABLE>
-</TD></TR>
-
 </TABLE>
 */
    public final void setEndPeriodUndefined() throws Exception
@@ -1540,13 +1505,6 @@ This is the explicit setter %%CALENDAR_SETTER%% for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
-
-<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>endPeriod_CreateDefault</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>endPeriod_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>endPeriod_CreateDefault</TD></TR>
-</TABLE>
-</TD></TR>
-
 </TABLE>
 */
    public final void setEndPeriod(int year, int month, int date, int hourOfDay, int minute, int second, int millis, ZoneId z) throws Exception
@@ -1569,13 +1527,6 @@ This is the hasChanged for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
-  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
-
-<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
-  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>endPeriod_CreateDefault</B>&nbsp;&nbsp;</TD><TD>NOW&nbsp;&nbsp;</TD><TD>endPeriod_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>endPeriod_CreateDefault</TD></TR>
-</TABLE>
-</TD></TR>
-
 </TABLE>
 */
    public boolean hasChangedEndPeriod()
@@ -1622,7 +1573,7 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.commitNano, which
    public static final String[][] _commitNano_Values = {
                                                { "0", "commitNano_CreateDefault", "commitNano_CreateDefault", "" }
                                   };
-   public static final long _commitNanoCommitNano_CreateDefault = 0;
+   public static final long _commitNanoCommitNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1944,7 +1895,7 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.rollbackNano, whi
    public static final String[][] _rollbackNano_Values = {
                                                { "0", "rollbackNano_CreateDefault", "rollbackNano_CreateDefault", "" }
                                   };
-   public static final long _rollbackNanoRollbackNano_CreateDefault = 0;
+   public static final long _rollbackNanoRollbackNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2266,7 +2217,7 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.savepointSetNano,
    public static final String[][] _savepointSetNano_Values = {
                                                { "0", "savepointSetNano_CreateDefault", "savepointSetNano_CreateDefault", "" }
                                   };
-   public static final long _savepointSetNanoSavepointSetNano_CreateDefault = 0;
+   public static final long _savepointSetNanoSavepointSetNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2588,7 +2539,7 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.savepointCommitNa
    public static final String[][] _savepointCommitNano_Values = {
                                                { "0", "savepointCommitNano_CreateDefault", "savepointCommitNano_CreateDefault", "" }
                                   };
-   public static final long _savepointCommitNanoSavepointCommitNano_CreateDefault = 0;
+   public static final long _savepointCommitNanoSavepointCommitNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2910,7 +2861,7 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.savepointRollback
    public static final String[][] _savepointRollbackNano_Values = {
                                                { "0", "savepointRollbackNano_CreateDefault", "savepointRollbackNano_CreateDefault", "" }
                                   };
-   public static final long _savepointRollbackNanoSavepointRollbackNano_CreateDefault = 0;
+   public static final long _savepointRollbackNanoSavepointRollbackNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3232,7 +3183,7 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.statementCloseNan
    public static final String[][] _statementCloseNano_Values = {
                                                { "0", "statementCloseNano_CreateDefault", "statementCloseNano_CreateDefault", "" }
                                   };
-   public static final long _statementCloseNanoStatementCloseNano_CreateDefault = 0;
+   public static final long _statementCloseNanoStatementCloseNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3554,7 +3505,7 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.connectionCloseNa
    public static final String[][] _connectionCloseNano_Values = {
                                                { "0", "connectionCloseNano_CreateDefault", "connectionCloseNano_CreateDefault", "" }
                                   };
-   public static final long _connectionCloseNanoConnectionCloseNano_CreateDefault = 0;
+   public static final long _connectionCloseNanoConnectionCloseNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3876,7 +3827,7 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.connectionGetNano
    public static final String[][] _connectionGetNano_Values = {
                                                { "0", "connectionGetNano_CreateDefault", "connectionGetNano_CreateDefault", "" }
                                   };
-   public static final long _connectionGetNanoConnectionGetNano_CreateDefault = 0;
+   public static final long _connectionGetNanoConnectionGetNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4198,7 +4149,7 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.tildaSetterNano, 
    public static final String[][] _tildaSetterNano_Values = {
                                                { "0", "tildaSetterNano_CreateDefault", "tildaSetterNano_CreateDefault", "" }
                                   };
-   public static final long _tildaSetterNanoTildaSetterNano_CreateDefault = 0;
+   public static final long _tildaSetterNanoTildaSetterNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4520,7 +4471,7 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.tildaToStringNano
    public static final String[][] _tildaToStringNano_Values = {
                                                { "0", "tildaToStringNano_CreateDefault", "tildaToStringNano_CreateDefault", "" }
                                   };
-   public static final long _tildaToStringNanoTildaToStringNano_CreateDefault = 0;
+   public static final long _tildaToStringNanoTildaToStringNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4842,7 +4793,7 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.tildaToJsonNano, 
    public static final String[][] _tildaToJsonNano_Values = {
                                                { "0", "tildaToJsonNano_CreateDefault", "tildaToJsonNano_CreateDefault", "" }
                                   };
-   public static final long _tildaToJsonNanoTildaToJsonNano_CreateDefault = 0;
+   public static final long _tildaToJsonNanoTildaToJsonNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -5164,7 +5115,7 @@ These are the enumerated values for tilda.data.TILDA.TransPerf.tildaToCsvNano, w
    public static final String[][] _tildaToCsvNano_Values = {
                                                { "0", "tildaToCsvNano_CreateDefault", "tildaToCsvNano_CreateDefault", "" }
                                   };
-   public static final long _tildaToCsvNanoTildaToCsvNano_CreateDefault = 0;
+   public static final long _tildaToCsvNanoTildaToCsvNano_CreateDefault = 0l;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -6164,7 +6115,7 @@ This is the hasChanged for:<BR>
           if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.ENDPERIOD.getFullColumnVarForInsert(C, S);
              V.append(__Nulls.intersects(TILDA__TRANSPERF_Factory.COLS.ENDPERIOD._Mask) == false && DateTimeUtil.isNowPlaceholder(_endPeriod) == true ? C.getCommaCurrentTimestamp() : tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);
            }
-          else { TILDA__TRANSPERF_Factory.COLS.ENDPERIOD.getFullColumnVarForInsert(C, S); V.append(C.getCommaCurrentTimestamp()); }          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.COMMITNANO._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.COMMITNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
+          if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.COMMITNANO._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.COMMITNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.COMMITCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.ROLLBACKNANO.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }
           if (__Changes.intersects(TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT._Mask) == true) { TILDA__TRANSPERF_Factory.COLS.ROLLBACKCOUNT.getFullColumnVarForInsert(C, S); V.append(tilda.data._Tilda.TILDA__1_0._COMMAQUESTION);  }

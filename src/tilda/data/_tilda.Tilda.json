@@ -409,7 +409,8 @@
         { "name": "a7b"          , "type": "INTEGER[]"  ,                                                       "description": "The blah"},
         { "name": "a8"           , "type": "BINARY"     ,                                                       "description": "The blah"},
         { "name": "a8b"          , "type": "DATETIME"   ,                                                       "description": "The blah"},
-        { "name": "a9"           , "type": "DATETIME"   ,                                                       "description": "The blah"},
+        { "name": "a9"           , "type": "DATETIME"   , "default":"NOW",                                      "description": "The blah"},
+        { "name": "a9a1"         , "type": "DATETIME"   , "default":"UNDEFINED",                                "description": "The blah"},
         { "name": "a9b"          , "type": "DATETIME[]" ,                                                       "description": "The blah"},
         { "name": "a9c"          , "type": "DATE"       ,                                                       "description": "The blah"},
         { "name": "a9d"          , "type": "DATE[]"     ,                                                       "description": "The blah"}
