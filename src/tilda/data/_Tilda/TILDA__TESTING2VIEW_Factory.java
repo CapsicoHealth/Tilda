@@ -768,6 +768,15 @@ This is the column definition for:<BR>
 ;
    }
 
+   public static final ColumnDefinition[] COLUMNS = { COLS.REFNUM,COLS.NAME,COLS.LASTUPDATED,COLS.XXXLASTUPDATED,COLS.A1,COLS.A3B,COLS.A4,COLS.A4B,COLS.A5,COLS.A5B,COLS.A7,COLS.A7B,COLS.A8,COLS.A8BTZ,COLS.A8B,COLS.A9TZ,COLS.A9,COLS.A9BTZ,COLS.A9B,COLS.A9C,COLS.A9D,COLS.DESCRIPTION,COLS.DESC2,COLS.DESC3,COLS.DESC4,COLS.DESC5,COLS.DESC6,COLS.A3,COLS.BASTILLE,COLS.TOTO,COLS.DESC2_CAT1,COLS.DESC2_CAT2,COLS.DESC2_CAT3,COLS.A7_CAT4,COLS.A7_CAT5,COLS.A5_NULL,COLS.A6_NULL,COLS.A7_NULL,COLS.A8_NULL };
+
+   public static final ColumnDefinition[] COLUMNS_PRIMARY = {  };
+
+   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = { 
+        };
+
+   public static final ColumnDefinition[] COLUMNS_FIRST_IDENTITY = {};
+
    private static Boolean  __INITIALIZED = false;
    protected static void initObject(Connection C) throws Exception
      {
@@ -813,6 +822,10 @@ This is the column definition for:<BR>
         }
      }
 
+   protected static final void ProcessMany(Connection C, String FullSelectQuery, int Start, int Size, tilda.db.processors.RecordProcessor RP) throws Exception
+     {
+       ReadMany(C, -77, RP, null, FullSelectQuery, Start, Size);
+     }
    protected static final ListResults<tilda.data.Testing2View_Data> ReadMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);

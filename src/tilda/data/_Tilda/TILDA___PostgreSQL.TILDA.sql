@@ -80,17 +80,17 @@ create table if not exists TILDA.ObjectPerf -- Performance logs for the Tilda fr
   , "endPeriodTZ"    character(5)  not null   -- Generated helper column to hold the time zone ID for 'endPeriod'.
   , "endPeriod"      timestamptz   not null   -- The timestamp for when the record was created.
   , "selectNano"     bigint        not null   -- Blah...
-  , "selectCount"    bigint        not null   -- Blah...
-  , "selectRecords"  bigint        not null   -- Blah...
+  , "selectCount"    integer       not null   -- Blah...
+  , "selectRecords"  integer       not null   -- Blah...
   , "insertNano"     bigint        not null   -- Blah...
-  , "insertCount"    bigint        not null   -- Blah...
-  , "insertRecords"  bigint        not null   -- Blah...
+  , "insertCount"    integer       not null   -- Blah...
+  , "insertRecords"  integer       not null   -- Blah...
   , "updateNano"     bigint        not null   -- Blah...
-  , "updateCount"    bigint        not null   -- Blah...
-  , "updateRecords"  bigint        not null   -- Blah...
+  , "updateCount"    integer       not null   -- Blah...
+  , "updateRecords"  integer       not null   -- Blah...
   , "deleteNano"     bigint        not null   -- Blah...
-  , "deleteCount"    bigint        not null   -- Blah...
-  , "deleteRecords"  bigint        not null   -- Blah...
+  , "deleteCount"    integer       not null   -- Blah...
+  , "deleteRecords"  integer       not null   -- Blah...
   , "created"        timestamptz   not null   -- The timestamp for when the record was created. (TILDA.ObjectPerf)
   , "lastUpdated"    timestamptz   not null   -- The timestamp for when the record was last updated. (TILDA.ObjectPerf)
   , "deleted"        timestamptz              -- The timestamp for when the record was deleted. (TILDA.ObjectPerf)
@@ -126,26 +126,42 @@ CREATE INDEX ObjectPerf_SchemaByObjectStart ON TILDA.ObjectPerf ("schemaName", "
 
 
 create table if not exists TILDA.TransPerf -- Performance logs for the Tilda framework
- (  "schemaName"     varchar(64)   not null   -- The name of the schema tracked
-  , "objectName"     varchar(64)   not null   -- The name of the table/object tracked
-  , "startPeriodTZ"  character(5)  not null   -- Generated helper column to hold the time zone ID for 'startPeriod'.
-  , "startPeriod"    timestamptz   not null   -- The timestamp for when the record was created.
-  , "endPeriodTZ"    character(5)  not null   -- Generated helper column to hold the time zone ID for 'endPeriod'.
-  , "endPeriod"      timestamptz   not null   -- The timestamp for when the record was created.
-  , "commitNano"     bigint        not null   -- Blah...
-  , "commitCount"    bigint        not null   -- Blah...
-  , "rollbackNano"   bigint        not null   -- Blah...
-  , "rollbackCount"  bigint        not null   -- Blah...
-  , "created"        timestamptz   not null   -- The timestamp for when the record was created. (TILDA.TransPerf)
-  , "lastUpdated"    timestamptz   not null   -- The timestamp for when the record was last updated. (TILDA.TransPerf)
-  , "deleted"        timestamptz              -- The timestamp for when the record was deleted. (TILDA.TransPerf)
-  , PRIMARY KEY("schemaName", "objectName", "startPeriod")
+ (  "startPeriodTZ"           character(5)  not null   -- Generated helper column to hold the time zone ID for 'startPeriod'.
+  , "startPeriod"             timestamptz   not null   -- The timestamp for when the record was created.
+  , "endPeriodTZ"             character(5)  not null   -- Generated helper column to hold the time zone ID for 'endPeriod'.
+  , "endPeriod"               timestamptz   not null   -- The timestamp for when the record was created.
+  , "commitNano"              bigint        not null   -- Blah...
+  , "commitCount"             integer       not null   -- Blah...
+  , "rollbackNano"            bigint        not null   -- Blah...
+  , "rollbackCount"           integer       not null   -- Blah...
+  , "savepointSetNano"        bigint        not null   -- Blah...
+  , "savepointSetCount"       integer       not null   -- Blah...
+  , "savepointCommitNano"     bigint        not null   -- Blah...
+  , "savepointCommitCount"    integer       not null   -- Blah...
+  , "savepointRollbackNano"   bigint        not null   -- Blah...
+  , "savepointRollbackCount"  integer       not null   -- Blah...
+  , "statementCloseNano"      bigint        not null   -- Blah...
+  , "statementCloseCount"     integer       not null   -- Blah...
+  , "connectionCloseNano"     bigint        not null   -- Blah...
+  , "connectionCloseCount"    integer       not null   -- Blah...
+  , "connectionGetNano"       bigint        not null   -- Blah...
+  , "connectionGetCount"      integer       not null   -- Blah...
+  , "tildaSetterNano"         bigint        not null   -- Blah...
+  , "tildaSetterCount"        integer       not null   -- Blah...
+  , "tildaToStringNano"       bigint        not null   -- Blah...
+  , "tildaToStringCount"      integer       not null   -- Blah...
+  , "tildaToJsonNano"         bigint        not null   -- Blah...
+  , "tildaToJsonCount"        integer       not null   -- Blah...
+  , "tildaToCsvNano"          bigint        not null   -- Blah...
+  , "tildaToCsvCount"         integer       not null   -- Blah...
+  , "created"                 timestamptz   not null   -- The timestamp for when the record was created. (TILDA.TransPerf)
+  , "lastUpdated"             timestamptz   not null   -- The timestamp for when the record was last updated. (TILDA.TransPerf)
+  , "deleted"                 timestamptz              -- The timestamp for when the record was deleted. (TILDA.TransPerf)
+  , PRIMARY KEY("startPeriod")
   , CONSTRAINT fk_TransPerf_startPeriod FOREIGN KEY ("startPeriodTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
   , CONSTRAINT fk_TransPerf_endPeriod FOREIGN KEY ("endPeriodTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
  );
 COMMENT ON TABLE TILDA.TransPerf IS E'Performance logs for the Tilda framework';
-COMMENT ON COLUMN TILDA.TransPerf."schemaName" IS E'The name of the schema tracked';
-COMMENT ON COLUMN TILDA.TransPerf."objectName" IS E'The name of the table/object tracked';
 COMMENT ON COLUMN TILDA.TransPerf."startPeriodTZ" IS E'Generated helper column to hold the time zone ID for ''startPeriod''.';
 COMMENT ON COLUMN TILDA.TransPerf."startPeriod" IS E'The timestamp for when the record was created.';
 COMMENT ON COLUMN TILDA.TransPerf."endPeriodTZ" IS E'Generated helper column to hold the time zone ID for ''endPeriod''.';
@@ -154,11 +170,29 @@ COMMENT ON COLUMN TILDA.TransPerf."commitNano" IS E'Blah...';
 COMMENT ON COLUMN TILDA.TransPerf."commitCount" IS E'Blah...';
 COMMENT ON COLUMN TILDA.TransPerf."rollbackNano" IS E'Blah...';
 COMMENT ON COLUMN TILDA.TransPerf."rollbackCount" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."savepointSetNano" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."savepointSetCount" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."savepointCommitNano" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."savepointCommitCount" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."savepointRollbackNano" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."savepointRollbackCount" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."statementCloseNano" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."statementCloseCount" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."connectionCloseNano" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."connectionCloseCount" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."connectionGetNano" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."connectionGetCount" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."tildaSetterNano" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."tildaSetterCount" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."tildaToStringNano" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."tildaToStringCount" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."tildaToJsonNano" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."tildaToJsonCount" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."tildaToCsvNano" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."tildaToCsvCount" IS E'Blah...';
 COMMENT ON COLUMN TILDA.TransPerf."created" IS E'The timestamp for when the record was created. (TILDA.TransPerf)';
 COMMENT ON COLUMN TILDA.TransPerf."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.TransPerf)';
 COMMENT ON COLUMN TILDA.TransPerf."deleted" IS E'The timestamp for when the record was deleted. (TILDA.TransPerf)';
-CREATE INDEX TransPerf_AllBySchemaName ON TILDA.TransPerf ("schemaName", "objectName" ASC, "startPeriod" DESC);
--- app-level index only -- CREATE INDEX TransPerf_AllByObjectName ON TILDA.TransPerf ("schemaName", "objectName", "startPeriod" DESC);
 
 
 
@@ -194,7 +228,7 @@ CREATE INDEX Connection_AllById ON TILDA.Connection ("id" ASC);
 
 
 
-create table if not exists TILDA.Jobs -- Kettle Jobs
+create table if not exists TILDA.Jobs -- Jobs
  (  "Id"            integer        not null   -- Id
   , "Name"          varchar(120)              -- Name
   , "StartTimeTZ"   character(5)              -- Generated helper column to hold the time zone ID for 'StartTime'.
@@ -210,7 +244,7 @@ create table if not exists TILDA.Jobs -- Kettle Jobs
   , CONSTRAINT fk_Jobs_StartTime FOREIGN KEY ("StartTimeTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
   , CONSTRAINT fk_Jobs_EndTime FOREIGN KEY ("EndTimeTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
  );
-COMMENT ON TABLE TILDA.Jobs IS E'Kettle Jobs';
+COMMENT ON TABLE TILDA.Jobs IS E'Jobs';
 COMMENT ON COLUMN TILDA.Jobs."Id" IS E'Id';
 COMMENT ON COLUMN TILDA.Jobs."Name" IS E'Name';
 COMMENT ON COLUMN TILDA.Jobs."StartTimeTZ" IS E'Generated helper column to hold the time zone ID for ''StartTime''.';
@@ -694,7 +728,7 @@ COMMENT ON COLUMN TILDA.Testing2Realized."a6_null" IS E'Formula column: Null a6'
 COMMENT ON COLUMN TILDA.Testing2Realized."a7_null" IS E'Formula column: Null a7';
 COMMENT ON COLUMN TILDA.Testing2Realized."a8_null" IS E'Formula column: Null a8';
 CREATE UNIQUE INDEX Testing2Realized_Refnum ON TILDA.Testing2Realized ("refnum");
-CREATE INDEX Testing2Realized_LastUpdated ON TILDA.Testing2Realized ("lastUpdated" DESC, "lastUpdated" DESC);
+CREATE INDEX Testing2Realized_LastUpdated ON TILDA.Testing2Realized ("lastUpdated" DESC);
 
 
 
@@ -714,7 +748,7 @@ COMMENT ON COLUMN TILDA.Testing3Realized."a8b" IS E'The blah';
 COMMENT ON COLUMN TILDA.Testing3Realized."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.Testing)';
 COMMENT ON COLUMN TILDA.Testing3Realized."xxxLastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.Testing)';
 CREATE UNIQUE INDEX Testing3Realized_Refnum ON TILDA.Testing3Realized ("refnum");
-CREATE INDEX Testing3Realized_LastUpdated ON TILDA.Testing3Realized ("lastUpdated" DESC, "lastUpdated" DESC);
+CREATE INDEX Testing3Realized_LastUpdated ON TILDA.Testing3Realized ("lastUpdated" DESC);
 
 
 
@@ -798,7 +832,7 @@ COMMENT ON COLUMN TILDA.Testing4Realized."a8_null" IS E'Formula column: Null a8'
 COMMENT ON COLUMN TILDA.Testing4Realized."a3" IS E'Formula column: Always True';
 COMMENT ON COLUMN TILDA.Testing4Realized."lastUpdated" IS E'Formula column: Always True';
 CREATE UNIQUE INDEX Testing4Realized_Refnum ON TILDA.Testing4Realized ("refnum");
-CREATE INDEX Testing4Realized_LastUpdated ON TILDA.Testing4Realized ("lastUpdated" DESC, "lastUpdated" DESC);
+CREATE INDEX Testing4Realized_LastUpdated ON TILDA.Testing4Realized ("lastUpdated" DESC);
 
 
 

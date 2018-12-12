@@ -175,11 +175,16 @@ public class TILDA__TESTING_Json
          + ";";
     }
 
+   public static String getCSVHeaderCCC()
+    {
+      return "\"refnum\",\"name\",\"description\",\"desc2\"";
+    }
+
    public static void toCSVCCC(java.io.Writer Out, List<tilda.data.Testing_Data> L, boolean includeHeader) throws java.io.IOException
     {
       long T0 = System.nanoTime();
       if (includeHeader == true)
-        Out.write("\"refnum\",\"name\",\"description\",\"desc2\"\n");
+        Out.write(getCSVHeaderCCC() + "\n");
       for (tilda.data.Testing_Data O : L)
        if (O!=null)
         {
@@ -386,11 +391,16 @@ public class TILDA__TESTING_Json
       PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
     }
 
+   public static String getCSVHeaderBBB()
+    {
+      return "\"refnum\",\"refnum2\",\"name\",\"description\",\"desc2\",\"desc3\"";
+    }
+
    public static void toCSVBBB(java.io.Writer Out, List<tilda.data.Testing_Data> L, boolean includeHeader) throws java.io.IOException
     {
       long T0 = System.nanoTime();
       if (includeHeader == true)
-        Out.write("\"refnum\",\"refnum2\",\"name\",\"description\",\"desc2\",\"desc3\"\n");
+        Out.write(getCSVHeaderBBB() + "\n");
       for (tilda.data.Testing_Data O : L)
        if (O!=null)
         {

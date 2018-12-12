@@ -30,17 +30,17 @@ public class TILDA__OBJECTPERF_Json
    @SerializedName("endPeriod"    ) public String  Str_endPeriod    ;
    transient                        public ZonedDateTime  _endPeriod    ;
    @SerializedName("selectNano"   ) public Long  _selectNano   ;
-   @SerializedName("selectCount"  ) public Long  _selectCount  ;
-   @SerializedName("selectRecords") public Long  _selectRecords;
+   @SerializedName("selectCount"  ) public Integer  _selectCount  ;
+   @SerializedName("selectRecords") public Integer  _selectRecords;
    @SerializedName("insertNano"   ) public Long  _insertNano   ;
-   @SerializedName("insertCount"  ) public Long  _insertCount  ;
-   @SerializedName("insertRecords") public Long  _insertRecords;
+   @SerializedName("insertCount"  ) public Integer  _insertCount  ;
+   @SerializedName("insertRecords") public Integer  _insertRecords;
    @SerializedName("updateNano"   ) public Long  _updateNano   ;
-   @SerializedName("updateCount"  ) public Long  _updateCount  ;
-   @SerializedName("updateRecords") public Long  _updateRecords;
+   @SerializedName("updateCount"  ) public Integer  _updateCount  ;
+   @SerializedName("updateRecords") public Integer  _updateRecords;
    @SerializedName("deleteNano"   ) public Long  _deleteNano   ;
-   @SerializedName("deleteCount"  ) public Long  _deleteCount  ;
-   @SerializedName("deleteRecords") public Long  _deleteRecords;
+   @SerializedName("deleteCount"  ) public Integer  _deleteCount  ;
+   @SerializedName("deleteRecords") public Integer  _deleteRecords;
    /*@formatter:on*/
 
    public tilda.data.ObjectPerf_Data Write(Connection C) throws Exception
@@ -60,31 +60,31 @@ public class TILDA__OBJECTPERF_Json
       if (   _endPeriod     == null)
        throw new Exception("Incoming value for 'tilda.data.TILDA.ObjectPerf.endPeriod' was not in the expected format. Dates should follow the ISO format.\n"+toString());
       if (_selectNano    == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.ObjectPerf.selectNano' was null or empty. It's not nullable in the model.\n"+toString());
+       _selectNano=0;
       if (_selectCount   == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.ObjectPerf.selectCount' was null or empty. It's not nullable in the model.\n"+toString());
+       _selectCount=0;
       if (_selectRecords == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.ObjectPerf.selectRecords' was null or empty. It's not nullable in the model.\n"+toString());
+       _selectRecords=0;
       if (_insertNano    == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.ObjectPerf.insertNano' was null or empty. It's not nullable in the model.\n"+toString());
+       _insertNano=0;
       if (_insertCount   == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.ObjectPerf.insertCount' was null or empty. It's not nullable in the model.\n"+toString());
+       _insertCount=0;
       if (_insertRecords == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.ObjectPerf.insertRecords' was null or empty. It's not nullable in the model.\n"+toString());
+       _insertRecords=0;
       if (_updateNano    == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.ObjectPerf.updateNano' was null or empty. It's not nullable in the model.\n"+toString());
+       _updateNano=0;
       if (_updateCount   == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.ObjectPerf.updateCount' was null or empty. It's not nullable in the model.\n"+toString());
+       _updateCount=0;
       if (_updateRecords == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.ObjectPerf.updateRecords' was null or empty. It's not nullable in the model.\n"+toString());
+       _updateRecords=0;
       if (_deleteNano    == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.ObjectPerf.deleteNano' was null or empty. It's not nullable in the model.\n"+toString());
+       _deleteNano=0;
       if (_deleteCount   == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.ObjectPerf.deleteCount' was null or empty. It's not nullable in the model.\n"+toString());
+       _deleteCount=0;
       if (_deleteRecords == null)
-       throw new Exception("Incoming value for 'tilda.data.TILDA.ObjectPerf.deleteRecords' was null or empty. It's not nullable in the model.\n"+toString());
+       _deleteRecords=0;
 
-      tilda.data.ObjectPerf_Data Obj = tilda.data.ObjectPerf_Factory.Create(_schemaName, _objectName, _startPeriod, _endPeriod, _selectNano, _selectCount, _selectRecords, _insertNano, _insertCount, _insertRecords, _updateNano, _updateCount, _updateRecords, _deleteNano, _deleteCount, _deleteRecords);
+      tilda.data.ObjectPerf_Data Obj = tilda.data.ObjectPerf_Factory.Create(_schemaName, _objectName, _startPeriod, _endPeriod);
       Update(Obj);
       if (Obj.Write(C) == false)
        {
