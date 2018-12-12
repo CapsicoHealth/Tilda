@@ -205,6 +205,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
     @Override
     public void genDDL(PrintWriter Out, Object O)
+    throws Exception
       {
         Out.println("create table if not exists " + O._ParentSchema._Name + "." + O._Name + " -- " + O._Description);
         Out.print(" (  ");
@@ -224,6 +225,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 Out.print("  , ");
               Out.print("\"" + C.getName() + "\"" + O._PadderColumnNames.getPad(C.getName()) + "  " + PadderColumnTypes.pad(getColumnType(C)));
               Out.print(C._Nullable == false ? "  not null" : "          ");
+              if (C._DefaultCreateValue != null)
+               Out.print(" DEFAULT " + ValueHelper.printValue(C.getName(), C.getType(), C._DefaultCreateValue._Value));
               Out.println("   -- " + C._Description);
             }
         if (O._PrimaryKey != null)

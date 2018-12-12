@@ -56,50 +56,68 @@
     },
 
 
-    { "name": "ObjectPerf", "occ": true,
-      "description": "Performance logs for the Tilda framework",
-      "columns":[
-        { "name": "schemaName"         , "type": "STRING"     , "nullable": false, "size": 64, "invariant": true, "description": "The name of the schema tracked" },
-        { "name": "objectName"         , "type": "STRING"     , "nullable": false, "size": 64, "invariant": true, "description": "The name of the table/object tracked" },
-        { "name": "startPeriod"        , "type": "DATETIME"   , "nullable": false,             "invariant": true, "description": "The timestamp for when the record was created." },
-        { "name": "endPeriod"          , "type": "DATETIME"   , "nullable": false,                            "description": "The timestamp for when the record was created." },
-        { "name": "selectNano"         , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
-        { "name": "selectCount"        , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
-        { "name": "selectRecords"      , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
-        { "name": "insertNano"         , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
-        { "name": "insertCount"        , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
-        { "name": "insertRecords"      , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
-        { "name": "updateNano"         , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
-        { "name": "updateCount"        , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
-        { "name": "updateRecords"      , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
-        { "name": "deleteNano"         , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
-        { "name": "deleteCount"        , "type": "LONG"       , "nullable": false,                            "description": "Blah..." },
-        { "name": "deleteRecords"      , "type": "LONG"       , "nullable": false,                            "description": "Blah..." }
-      ],
-      "primary": { "columns": ["schemaName", "objectName", "startPeriod"], "autogen": false },
-      "indices":[ 
-      	{ "name": "SchemaByObjectStart", "columns": ["schemaName"], "orderBy": ["objectName", "startPeriod desc"], "db": true },
-      	{ "name": "SchemaObjectByStart", "columns": ["schemaName", "objectName"], "orderBy": ["startPeriod desc"], "db": false }
+    { "name":"ObjectPerf"
+     ,"occ":true
+     ,"description":"Performance logs for the Tilda framework"
+     ,"columns":[
+         { "name":"schemaName"   , "type":"STRING"  , "nullable":false, "size": 64, "invariant":true, "description":"The name of the schema tracked" }
+        ,{ "name":"objectName"   , "type":"STRING"  , "nullable":false, "size": 64, "invariant":true, "description":"The name of the table/object tracked" }
+        ,{ "name":"startPeriod"  , "type":"DATETIME", "nullable":false,             "invariant":true, "description":"The timestamp for when the record was created." }
+        ,{ "name":"endPeriod"    , "type":"DATETIME", "nullable":false,                               "description":"The timestamp for when the record was created." }
+        ,{ "name":"selectNano"   , "type":"LONG"    , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"selectCount"  , "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"selectRecords", "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"insertNano"   , "type":"LONG"    , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"insertCount"  , "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"insertRecords", "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"updateNano"   , "type":"LONG"    , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"updateCount"  , "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"updateRecords", "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"deleteNano"   , "type":"LONG"    , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"deleteCount"  , "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
+        ,{ "name":"deleteRecords", "type":"INTEGER" , "nullable":false, "default":"0",                "description":"Blah..." }
+       ]
+     ,"primary":{ "columns":["schemaName", "objectName", "startPeriod"], "autogen":false }
+     ,"indices":[ 
+      	 { "name":"SchemaByObjectStart", "columns":["schemaName"              ], "orderBy":["objectName", "startPeriod desc"], "db":true  }
+      	,{ "name":"SchemaObjectByStart", "columns":["schemaName", "objectName"], "orderBy":["startPeriod desc"              ], "db":false }
       ]
     },
     
-    { "name": "TransPerf", "occ": true,
-      "description": "Performance logs for the Tilda framework",
-      "columns":[
-        { "name": "schemaName"         , "type": "STRING"     , "nullable": false, "size": 64, "invariant": true, "description": "The name of the schema tracked" },
-        { "name": "objectName"         , "type": "STRING"     , "nullable": false, "size": 64, "invariant": true, "description": "The name of the table/object tracked" },
-	    { "name": "startPeriod"        , "type": "DATETIME"   , "nullable": false,             "invariant": true, "description": "The timestamp for when the record was created." },
-        { "name": "endPeriod"          , "type": "DATETIME"   , "nullable": false,                                "description": "The timestamp for when the record was created." },
-        { "name": "commitNano"         , "type": "LONG"       , "nullable": false,                                "description": "Blah..." },
-        { "name": "commitCount"        , "type": "LONG"       , "nullable": false,                                "description": "Blah..." },
-        { "name": "rollbackNano"       , "type": "LONG"       , "nullable": false,                                "description": "Blah..." },
-        { "name": "rollbackCount"      , "type": "LONG"       , "nullable": false,                                "description": "Blah..." }
-      ],
-      "primary": { "columns": ["schemaName", "objectName", "startPeriod"], "autogen": false },
+    { "name":"TransPerf"
+     ,"occ":true
+     ,"description":"Performance logs for the Tilda framework"
+     ,"columns":[
+	      { "name":"startPeriod"           , "type":"DATETIME"   , "nullable":false,             "invariant": true, "description":"The timestamp for when the record was created." }
+         ,{ "name":"endPeriod"             , "type":"DATETIME"   , "nullable":false,                                "description":"The timestamp for when the record was created." }
+         ,{ "name":"commitNano"            , "type":"LONG"       , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"commitCount"           , "type":"INTEGER"    , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"rollbackNano"          , "type":"LONG"       , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"rollbackCount"         , "type":"INTEGER"    , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"savepointSetNano"      , "type":"LONG"       , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"savepointSetCount"     , "type":"INTEGER"    , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"savepointCommitNano"   , "type":"LONG"       , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"savepointCommitCount"  , "type":"INTEGER"    , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"savepointRollbackNano" , "type":"LONG"       , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"savepointRollbackCount", "type":"INTEGER"    , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"statementCloseNano"    , "type":"LONG"       , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"statementCloseCount"   , "type":"INTEGER"    , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"connectionCloseNano"   , "type":"LONG"       , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"connectionCloseCount"  , "type":"INTEGER"    , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"connectionGetNano"     , "type":"LONG"       , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"connectionGetCount"    , "type":"INTEGER"    , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"tildaSetterNano"       , "type":"LONG"       , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"tildaSetterCount"      , "type":"INTEGER"    , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"tildaToStringNano"     , "type":"LONG"       , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"tildaToStringCount"    , "type":"INTEGER"    , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"tildaToJsonNano"       , "type":"LONG"       , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"tildaToJsonCount"      , "type":"INTEGER"    , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"tildaToCsvNano"        , "type":"LONG"       , "nullable":false, "default":"0",                 "description":"Blah..." }
+         ,{ "name":"tildaToCsvCount"       , "type":"INTEGER"    , "nullable":false, "default":"0",                 "description":"Blah..." }
+       ],
+      "primary": { "columns": ["startPeriod"], "autogen": false },
       "indices":[ 
-      	{ "name": "AllBySchemaName", "columns": ["schemaName"], "orderBy": ["objectName", "startPeriod desc"], "db": true },
-      	{ "name": "AllByObjectName", "columns": ["schemaName", "objectName"], "orderBy": ["startPeriod desc"], "db": false }
-      ]
+       ]
     },
     {
       "name": "Connection",
@@ -134,7 +152,7 @@
     }
     
    ,{ "name":"Jobs",
-      "description":"Kettle Jobs",
+      "description":"Jobs",
       "columns":[
         { "name":"Id"                                   , "type":"INTEGER" , "nullable": false,                 "description":"Id" },        
         { "name":"Name"                                 , "type":"STRING"  , "nullable": true,  "size":   120,  "description":"Name" },
@@ -391,7 +409,8 @@
         { "name": "a7b"          , "type": "INTEGER[]"  ,                                                       "description": "The blah"},
         { "name": "a8"           , "type": "BINARY"     ,                                                       "description": "The blah"},
         { "name": "a8b"          , "type": "DATETIME"   ,                                                       "description": "The blah"},
-        { "name": "a9"           , "type": "DATETIME"   ,                                                       "description": "The blah"},
+        { "name": "a9"           , "type": "DATETIME"   , "default":"NOW",                                      "description": "The blah"},
+        { "name": "a9a1"         , "type": "DATETIME"   , "default":"UNDEFINED",                                "description": "The blah"},
         { "name": "a9b"          , "type": "DATETIME[]" ,                                                       "description": "The blah"},
         { "name": "a9c"          , "type": "DATE"       ,                                                       "description": "The blah"},
         { "name": "a9d"          , "type": "DATE[]"     ,                                                       "description": "The blah"}

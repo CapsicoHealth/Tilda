@@ -57,6 +57,7 @@ public class Column extends TypeDef
     @SerializedName("mapper"     ) public ColumnMapper   _Mapper     ;
     @SerializedName("enum"       ) public ColumnEnum     _Enum       ;
     @SerializedName("values"     ) public ColumnValue[]  _Values     ;
+    @SerializedName("default"    ) public String         _Default    ;
     @SerializedName("jsonSchema" ) public JsonSchema     _JsonSchema ;
     /*@formatter:on*/
 
@@ -168,10 +169,10 @@ public class Column extends TypeDef
             return;
           }
         if (N.length() > PS._CGSql.getMaxColumnNameSize())
-         PS.AddError("Column '" + getFullName() + "' has a name that's too long: max allowed by your database is "+PS._CGSql.getMaxColumnNameSize()+" vs "+N.length()+" for this identifier.");
+          PS.AddError("Column '" + getFullName() + "' has a name that's too long: max allowed by your database is " + PS._CGSql.getMaxColumnNameSize() + " vs " + N.length() + " for this identifier.");
 
         if (ValidationHelper.isValidIdentifier(N) == false)
-         PS.AddError("Column '" + getFullName() + "' has a name '" + N + "' which is not valid. " + ValidationHelper._ValidIdentifierMessage);
+          PS.AddError("Column '" + getFullName() + "' has a name '" + N + "' which is not valid. " + ValidationHelper._ValidIdentifierMessage);
 
         if (ValidateSameAs(PS) == false)
           return;
@@ -221,13 +222,13 @@ public class Column extends TypeDef
         if (_JsonSchema != null)
           _JsonSchema.Validate(PS, this);
 
-        if ((_Nullable == null || _Nullable == true)
-        && _Values != null
-        && (!_Name.equals("created") && !_Name.equals("lastUpdated"))
-        && _SameAs == null)
-          {
-            PS.AddNote("Column '" + getFullName() + "' is defining a default value for a nullable column.");
-          }
+        // if ((_Nullable == null || _Nullable == true)
+        // && _Values != null
+        // && (!_Name.equals("created") && !_Name.equals("lastUpdated"))
+        // && _SameAs == null)
+        // {
+        // PS.AddNote("Column '" + getFullName() + "' is defining a default value for a nullable column.");
+        // }
       }
 
 
@@ -377,6 +378,12 @@ public class Column extends TypeDef
 
     private boolean ValidateValues(ParserSession PS)
       {
+        if (_Values != null && _Values.length > 0 && TextUtil.isNullOrEmpty(_Default) == false)
+          return PS.AddError("Column '" + getFullName() + "' defines a 'default' and 'values' attributes. Only one or the other is alowed.");
+
+        if (TextUtil.isNullOrEmpty(_Default) == false)
+          _Values = new ColumnValue[] { new ColumnValue(_Name + "_CreateDefault", _Default, null, null, null, DefaultType.CREATE) };
+
         if (_Values == null || _Values.length == 0)
           return true;
 
