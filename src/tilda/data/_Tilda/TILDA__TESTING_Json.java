@@ -55,6 +55,8 @@ public class TILDA__TESTING_Json
    transient                      public ZonedDateTime  _a8b        ;
    @SerializedName("a9"         ) public String  Str_a9         ;
    transient                      public ZonedDateTime  _a9         ;
+   @SerializedName("a9a1"       ) public String  Str_a9a1       ;
+   transient                      public ZonedDateTime  _a9a1       ;
    @SerializedName("a9b"        ) public List<String>  Str_a9b        ;
    transient                      public List<ZonedDateTime>  _a9b        ;
    @SerializedName("a9c"        ) public LocalDate  _a9c        ;
@@ -84,6 +86,12 @@ public class TILDA__TESTING_Json
          _a9          = DateTimeUtil.parsefromJSON(Str_a9         );
          if (   _a9          == null)
           throw new Exception("Incoming value for 'tilda.data.TILDA.Testing.a9' was not in the expected format. Dates should follow the ISO format.\n"+toString());
+       }
+      if (TextUtil.isNullOrEmpty(Str_a9a1       ) == false)
+       {
+         _a9a1        = DateTimeUtil.parsefromJSON(Str_a9a1       );
+         if (   _a9a1        == null)
+          throw new Exception("Incoming value for 'tilda.data.TILDA.Testing.a9a1' was not in the expected format. Dates should follow the ISO format.\n"+toString());
        }
       if (TextUtil.isNullOrEmpty(Str_a9b        ) == false)
        {
@@ -132,6 +140,7 @@ public class TILDA__TESTING_Json
       if (_a8         != null) Obj.setA8         (_a8         );
       if (_a8b        != null) Obj.setA8b        (_a8b        );
       if (_a9         != null) Obj.setA9         (_a9         );
+      if (_a9a1       != null) Obj.setA9a1       (_a9a1       );
       if (_a9b        != null) Obj.setA9b        (_a9b        );
       if (_a9c        != null) Obj.setA9c        (_a9c        );
       if (_a9d        != null) Obj.setA9d        (_a9d        );
@@ -169,17 +178,23 @@ public class TILDA__TESTING_Json
          + "; a8"         + (_a8          == null ? ": NULL" : ": " + _a8         )
          + "; a8b"        + (_a8b         == null ? ": NULL" : ": "+DateTimeUtil.printDateTimeForSQL(_a8b))
          + "; a9"         + (_a9          == null ? ": NULL" : ": "+DateTimeUtil.printDateTimeForSQL(_a9))
+         + "; a9a1"       + (_a9a1        == null ? ": NULL" : ": "+DateTimeUtil.printDateTimeForSQL(_a9a1))
          + "; a9b"        + (_a9b         == null ? ": NULL" : ": "+DateTimeUtil.printDateTimeForSQL(_a9b))
          + "; a9c"        + (_a9c         == null ? ": NULL" : ": " + _a9c        )
          + "; a9d"        + (_a9d         == null ? ": NULL" : ": " + _a9d        )
          + ";";
     }
 
+   public static String getCSVHeaderCCC()
+    {
+      return "\"refnum\",\"name\",\"description\",\"desc2\"";
+    }
+
    public static void toCSVCCC(java.io.Writer Out, List<tilda.data.Testing_Data> L, boolean includeHeader) throws java.io.IOException
     {
       long T0 = System.nanoTime();
       if (includeHeader == true)
-        Out.write("\"refnum\",\"name\",\"description\",\"desc2\"\n");
+        Out.write(getCSVHeaderCCC() + "\n");
       for (tilda.data.Testing_Data O : L)
        if (O!=null)
         {
@@ -386,11 +401,16 @@ public class TILDA__TESTING_Json
       PerfTracker.add(TransactionType.TILDA_TOJSON, System.nanoTime() - T0);
     }
 
+   public static String getCSVHeaderBBB()
+    {
+      return "\"refnum\",\"refnum2\",\"name\",\"description\",\"desc2\",\"desc3\"";
+    }
+
    public static void toCSVBBB(java.io.Writer Out, List<tilda.data.Testing_Data> L, boolean includeHeader) throws java.io.IOException
     {
       long T0 = System.nanoTime();
       if (includeHeader == true)
-        Out.write("\"refnum\",\"refnum2\",\"name\",\"description\",\"desc2\",\"desc3\"\n");
+        Out.write(getCSVHeaderBBB() + "\n");
       for (tilda.data.Testing_Data O : L)
        if (O!=null)
         {

@@ -58,8 +58,8 @@ public class DateTimeUtil
       }
 
 
-    public static final ZonedDateTime UNDEFINED_PLACEHOLDER_ZDT = NewUTC(1, 1, 1, 0, 0, 0, 0);
-    public static final LocalDate     UNDEFINED_PLACEHOLDER_D   = LocalDate.of(1, 1, 1);
+    public static final ZonedDateTime UNDEFINED_PLACEHOLDER_ZDT = NewUTC(1111, 11, 11, 0, 0, 0, 0);
+    public static final LocalDate     UNDEFINED_PLACEHOLDER_D   = LocalDate.of(1111, 11, 11);
 
     public static boolean isUndefinedPlaceholder(ZonedDateTime ZDT)
       {

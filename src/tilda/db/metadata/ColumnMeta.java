@@ -11,6 +11,7 @@ public class ColumnMeta
     protected ColumnMeta(Connection C, ResultSet RS, TableMeta T, ViewMeta V)
       throws Exception
       {
+//        System.out.println(JDBCHelper.PrintResultSet(RS));
         _NameOriginal = RS.getString("COLUMN_NAME");
         _Name = _NameOriginal.toLowerCase();
         _Nullable = RS.getInt("NULLABLE");
@@ -18,6 +19,7 @@ public class ColumnMeta
         _TypeName = RS.getString("TYPE_NAME");
         _Type = RS.getInt("DATA_TYPE");
         _Descr = RS.getString("REMARKS");
+        _Default = RS.getString("COLUMN_DEF");
         StringStringPair SSP = C.getTypeMapping(_Type, _Name, _Size, _TypeName);
         _TypeSql = SSP._N;
         _TildaType = ColumnType.parse(SSP._V);
@@ -34,6 +36,7 @@ public class ColumnMeta
     public final String     _TypeSql;
     public final String     _TypeName;
     public final String     _Descr;
+    public final String     _Default;
     public final TableMeta  _ParentTable;
     public final ViewMeta   _ParentView;
 
@@ -44,7 +47,7 @@ public class ColumnMeta
 
     public String toString()
       {
-        return "Name: " + _Name + "; Nullable: " + _Nullable + "; Size: " + _Size + "; Type: " + _Type + "/" + _TypeSql + "; TypeName: " + _TypeName + "; Descr: " + _Descr + ";";
+        return "Name: " + _Name + "; Nullable: " + _Nullable + "; Size: " + _Size + "; Type: " + _Type + "/" + _TypeSql + "; TypeName: " + _TypeName + "; Default: " + _Default + "; Descr: " + _Descr + ";";
       }
 
     public FKColumnMeta getFKMeta()

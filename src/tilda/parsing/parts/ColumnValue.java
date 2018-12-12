@@ -46,7 +46,7 @@ public class ColumnValue
       {
       }
 
-    private ColumnValue(String Name, String Value, String Label, String Description, String[] Groupings, DefaultType Default)
+    public ColumnValue(String Name, String Value, String Label, String Description, String[] Groupings, DefaultType Default)
       {
         _Name        = Name;
         _Value       = Value;
@@ -86,29 +86,24 @@ public class ColumnValue
         if (TextUtil.isNullOrEmpty(_Value) == true)
           _Value = _Name;
 
-        if (TextUtil.isNullOrEmpty(_Description) == true)
-         {
-           if (TextUtil.isNullOrEmpty(_Label) == false)
-             _Description = _Label;
-           else
-             PS.AddError("Column '" + _ParentColumn.getFullName() + "' defines a Value without a 'description' or a 'label'.");
-         }
-
         if (TextUtil.isNullOrEmpty(_Label) == true)
           _Label = _Name;
+
+        if (TextUtil.isNullOrEmpty(_Description) == true)
+          _Description = _Label;
 
         // if (_Raw == false)
           ValueHelper.CheckColumnValue(PS, _ParentColumn, _Name, _Value, _Default);
       }
 
-    public static ColumnValue[] deepCopy(ColumnValue[] _Values)
+    public static ColumnValue[] deepCopy(ColumnValue[] Values)
       {
-        if (_Values == null)
+        if (Values == null)
           return null;
-        ColumnValue[] A = new ColumnValue[_Values.length];
-        for (int i = 0; i < _Values.length; ++i)
+        ColumnValue[] A = new ColumnValue[Values.length];
+        for (int i = 0; i < Values.length; ++i)
           {
-            ColumnValue v = _Values[i];
+            ColumnValue v = Values[i];
             if (v != null)
              {
                A[i] = new ColumnValue(v._Name, v._Value, v._Label, v._Description, v._Groupings, v._Default);

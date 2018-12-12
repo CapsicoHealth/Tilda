@@ -281,11 +281,13 @@ public class TildaData implements CodeGenTildaData
         switch (C.getType())
           {
             case BOOLEAN:
-            case DOUBLE:
             case FLOAT:
             case INTEGER:
-            case LONG:
               return V;
+            case LONG:
+              return V+"l";
+            case DOUBLE:
+              return V+"d";
             case CHAR:
               return TextUtil.EscapeSingleQuoteForSQL(V);
             case DATETIME:
