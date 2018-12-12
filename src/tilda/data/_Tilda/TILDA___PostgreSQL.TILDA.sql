@@ -9,8 +9,8 @@ create table if not exists TILDA.ZoneInfo -- blah blah
   , "label"          varchar(254)  not null   -- The label for this enumeration.
   , "deactivatedTZ"  character(5)             -- Generated helper column to hold the time zone ID for 'deactivated'.
   , "deactivated"    timestamptz              -- The label for this enumeration.
-  , "created"        timestamptz   not null DEFAULT NOW()   -- The timestamp for when the record was created. (TILDA.ZoneInfo)
-  , "lastUpdated"    timestamptz   not null DEFAULT NOW()   -- The timestamp for when the record was last updated. (TILDA.ZoneInfo)
+  , "created"        timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.ZoneInfo)
+  , "lastUpdated"    timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.ZoneInfo)
   , "deleted"        timestamptz              -- The timestamp for when the record was deleted. (TILDA.ZoneInfo)
   , PRIMARY KEY("id")
   , CONSTRAINT fk_ZoneInfo_deactivated FOREIGN KEY ("deactivatedTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
@@ -35,8 +35,8 @@ create table if not exists TILDA.Key -- The table to keep track of unique keys a
   , "name"            varchar(128)  not null   -- The name of the table/object tracked
   , "max"             bigint        not null   -- The pre-allocated max RefNum for this table/object.
   , "count"           integer       not null   -- The size of the pre-allocation required by this table/object.
-  , "created"         timestamptz   not null DEFAULT NOW()   -- The timestamp for when the record was created.
-  , "lastUpdated"     timestamptz   not null DEFAULT NOW()   -- The timestamp for when the record was last updated.
+  , "created"         timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created.
+  , "lastUpdated"     timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated.
   , "deleted"         timestamptz              -- The timestamp for when the record was deleted.
   , PRIMARY KEY("refnum")
  );
@@ -57,8 +57,8 @@ create table if not exists TILDA.Mapping -- Generalized Mapping table
  (  "type"         varchar(10)    not null   -- The type this mapping is for
   , "src"          varchar(1024)  not null   -- The source value for this mapping
   , "dst"          varchar(1024)  not null   -- The the destination (mapped) value for this mapping.
-  , "created"      timestamptz    not null DEFAULT NOW()   -- The timestamp for when the record was created. (TILDA.Mapping)
-  , "lastUpdated"  timestamptz    not null DEFAULT NOW()   -- The timestamp for when the record was last updated. (TILDA.Mapping)
+  , "created"      timestamptz    not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.Mapping)
+  , "lastUpdated"  timestamptz    not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.Mapping)
   , "deleted"      timestamptz               -- The timestamp for when the record was deleted. (TILDA.Mapping)
  );
 COMMENT ON TABLE TILDA.Mapping IS E'Generalized Mapping table';
@@ -91,8 +91,8 @@ create table if not exists TILDA.ObjectPerf -- Performance logs for the Tilda fr
   , "deleteNano"     bigint        not null DEFAULT 0   -- Blah...
   , "deleteCount"    integer       not null DEFAULT 0   -- Blah...
   , "deleteRecords"  integer       not null DEFAULT 0   -- Blah...
-  , "created"        timestamptz   not null DEFAULT NOW()   -- The timestamp for when the record was created. (TILDA.ObjectPerf)
-  , "lastUpdated"    timestamptz   not null DEFAULT NOW()   -- The timestamp for when the record was last updated. (TILDA.ObjectPerf)
+  , "created"        timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.ObjectPerf)
+  , "lastUpdated"    timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.ObjectPerf)
   , "deleted"        timestamptz              -- The timestamp for when the record was deleted. (TILDA.ObjectPerf)
   , PRIMARY KEY("schemaName", "objectName", "startPeriod")
   , CONSTRAINT fk_ObjectPerf_startPeriod FOREIGN KEY ("startPeriodTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
@@ -154,8 +154,8 @@ create table if not exists TILDA.TransPerf -- Performance logs for the Tilda fra
   , "tildaToJsonCount"        integer       not null DEFAULT 0   -- Blah...
   , "tildaToCsvNano"          bigint        not null DEFAULT 0   -- Blah...
   , "tildaToCsvCount"         integer       not null DEFAULT 0   -- Blah...
-  , "created"                 timestamptz   not null DEFAULT NOW()   -- The timestamp for when the record was created. (TILDA.TransPerf)
-  , "lastUpdated"             timestamptz   not null DEFAULT NOW()   -- The timestamp for when the record was last updated. (TILDA.TransPerf)
+  , "created"                 timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.TransPerf)
+  , "lastUpdated"             timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.TransPerf)
   , "deleted"                 timestamptz              -- The timestamp for when the record was deleted. (TILDA.TransPerf)
   , PRIMARY KEY("startPeriod")
   , CONSTRAINT fk_TransPerf_startPeriod FOREIGN KEY ("startPeriodTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
@@ -206,8 +206,8 @@ create table if not exists TILDA.Connection -- Tilda DB Connections Configuratio
   , "initial"      integer       not null   -- Minimum Connections
   , "max"          integer       not null   -- Maximum Connections
   , "schemas"      text[]        not null   -- Schemas
-  , "created"      timestamptz   not null DEFAULT NOW()   -- The timestamp for when the record was created. (TILDA.Connection)
-  , "lastUpdated"  timestamptz   not null DEFAULT NOW()   -- The timestamp for when the record was last updated. (TILDA.Connection)
+  , "created"      timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.Connection)
+  , "lastUpdated"  timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.Connection)
   , "deleted"      timestamptz              -- The timestamp for when the record was deleted. (TILDA.Connection)
   , PRIMARY KEY("id")
  );
@@ -238,8 +238,8 @@ create table if not exists TILDA.Jobs -- Jobs
   , "TotalRecords"  integer                   -- TotalRecords
   , "Status"        varchar(200)              -- Status
   , "Error"         varchar(1000)             -- Error
-  , "created"       timestamptz    not null DEFAULT NOW()   -- The timestamp for when the record was created. (TILDA.Jobs)
-  , "lastUpdated"   timestamptz    not null DEFAULT NOW()   -- The timestamp for when the record was last updated. (TILDA.Jobs)
+  , "created"       timestamptz    not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.Jobs)
+  , "lastUpdated"   timestamptz    not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.Jobs)
   , "deleted"       timestamptz               -- The timestamp for when the record was deleted. (TILDA.Jobs)
   , CONSTRAINT fk_Jobs_StartTime FOREIGN KEY ("StartTimeTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
   , CONSTRAINT fk_Jobs_EndTime FOREIGN KEY ("EndTimeTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
@@ -272,8 +272,8 @@ create table if not exists TILDA.Job_Detail -- Job Detail
   , "FileProcessEndTime"      timestamptz               -- FileProcessEndTime
   , "Status"                  varchar(200)              -- Status
   , "Error"                   varchar(1000)             -- Error
-  , "created"                 timestamptz    not null DEFAULT NOW()   -- The timestamp for when the record was created. (TILDA.Job_Detail)
-  , "lastUpdated"             timestamptz    not null DEFAULT NOW()   -- The timestamp for when the record was last updated. (TILDA.Job_Detail)
+  , "created"                 timestamptz    not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.Job_Detail)
+  , "lastUpdated"             timestamptz    not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.Job_Detail)
   , "deleted"                 timestamptz               -- The timestamp for when the record was deleted. (TILDA.Job_Detail)
   , CONSTRAINT fk_Job_Detail_FileProcessStartTime FOREIGN KEY ("FileProcessStartTimeTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
   , CONSTRAINT fk_Job_Detail_FileProcessEndTime FOREIGN KEY ("FileProcessEndTimeTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
@@ -306,8 +306,8 @@ create table if not exists TILDA.RefillPerf -- Performance logs for the Tilda Re
   , "timeAnalyzeMs"  bigint        not null   -- The time, in milliseconds, the analyze took.
   , "timeTotalMs"    bigint        not null   -- The time, in milliseconds, the whole refill took.
   , "columnsMs"      bigint        not null   -- The list of columns that were refilled.
-  , "created"        timestamptz   not null DEFAULT NOW()   -- The timestamp for when the record was created. (TILDA.RefillPerf)
-  , "lastUpdated"    timestamptz   not null DEFAULT NOW()   -- The timestamp for when the record was last updated. (TILDA.RefillPerf)
+  , "created"        timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.RefillPerf)
+  , "lastUpdated"    timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.RefillPerf)
   , "deleted"        timestamptz              -- The timestamp for when the record was deleted. (TILDA.RefillPerf)
   , PRIMARY KEY("schemaName", "objectName", "startPeriod")
   , CONSTRAINT fk_RefillPerf_startPeriod FOREIGN KEY ("startPeriodTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
@@ -334,8 +334,8 @@ create table if not exists TILDA.Maintenance -- Maintenance information
  (  "type"         varchar(64)   not null   -- The type of maintenance resource to track
   , "name"         varchar(512)  not null   -- The name of the maintenance resource to track.
   , "value"        text                     -- The value of the maintenance resource to track.
-  , "created"      timestamptz   not null DEFAULT NOW()   -- The timestamp for when the record was created. (TILDA.Maintenance)
-  , "lastUpdated"  timestamptz   not null DEFAULT NOW()   -- The timestamp for when the record was last updated. (TILDA.Maintenance)
+  , "created"      timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.Maintenance)
+  , "lastUpdated"  timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.Maintenance)
   , "deleted"      timestamptz              -- The timestamp for when the record was deleted. (TILDA.Maintenance)
   , PRIMARY KEY("type", "name")
  );
@@ -359,8 +359,8 @@ create table if not exists TILDA.Formula -- Master formula information
   , "description"  text          not null   -- The description of the formula/column.
   , "formula"      text                     -- The formula.
   , "htmlDoc"      text                     -- Pre-rendered html fragment with the full documentation for this formula.
-  , "created"      timestamptz   not null DEFAULT NOW()   -- The timestamp for when the record was created. (TILDA.Formula)
-  , "lastUpdated"  timestamptz   not null DEFAULT NOW()   -- The timestamp for when the record was last updated. (TILDA.Formula)
+  , "created"      timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.Formula)
+  , "lastUpdated"  timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.Formula)
   , "deleted"      timestamptz              -- The timestamp for when the record was deleted. (TILDA.Formula)
   , PRIMARY KEY("refnum")
  );
@@ -387,8 +387,8 @@ create table if not exists TILDA.Measure -- Master Measure information
  (  "refnum"       bigint       not null   -- The primary key for this record
   , "schema"       varchar(64)  not null   -- The Schema wher ethe measure is defined.
   , "name"         varchar(64)  not null   -- The name of the measure.
-  , "created"      timestamptz  not null DEFAULT NOW()   -- The timestamp for when the record was created. (TILDA.Measure)
-  , "lastUpdated"  timestamptz  not null DEFAULT NOW()   -- The timestamp for when the record was last updated. (TILDA.Measure)
+  , "created"      timestamptz  not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.Measure)
+  , "lastUpdated"  timestamptz  not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.Measure)
   , "deleted"      timestamptz             -- The timestamp for when the record was deleted. (TILDA.Measure)
   , PRIMARY KEY("refnum")
  );
@@ -408,8 +408,8 @@ insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated
 create table if not exists TILDA.MeasureFormula -- Master Measure information
  (  "measureRefnum"  bigint       not null   -- The measure.
   , "formulaRefnum"  bigint       not null   -- The parent formula.
-  , "created"        timestamptz  not null DEFAULT NOW()   -- The timestamp for when the record was created. (TILDA.MeasureFormula)
-  , "lastUpdated"    timestamptz  not null DEFAULT NOW()   -- The timestamp for when the record was last updated. (TILDA.MeasureFormula)
+  , "created"        timestamptz  not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.MeasureFormula)
+  , "lastUpdated"    timestamptz  not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.MeasureFormula)
   , "deleted"        timestamptz             -- The timestamp for when the record was deleted. (TILDA.MeasureFormula)
   , PRIMARY KEY("measureRefnum", "formulaRefnum")
   , CONSTRAINT fk_MeasureFormula_Measure FOREIGN KEY ("measureRefnum") REFERENCES TILDA.Measure ON DELETE restrict ON UPDATE cascade
@@ -427,8 +427,8 @@ COMMENT ON COLUMN TILDA.MeasureFormula."deleted" IS E'The timestamp for when the
 create table if not exists TILDA.FormulaDependency -- Master formula dependency information
  (  "formulaRefnum"     bigint       not null   -- The parent formula.
   , "dependencyRefnum"  bigint       not null   -- The dependent formula.
-  , "created"           timestamptz  not null DEFAULT NOW()   -- The timestamp for when the record was created. (TILDA.FormulaDependency)
-  , "lastUpdated"       timestamptz  not null DEFAULT NOW()   -- The timestamp for when the record was last updated. (TILDA.FormulaDependency)
+  , "created"           timestamptz  not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.FormulaDependency)
+  , "lastUpdated"       timestamptz  not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.FormulaDependency)
   , "deleted"           timestamptz             -- The timestamp for when the record was deleted. (TILDA.FormulaDependency)
   , PRIMARY KEY("formulaRefnum", "dependencyRefnum")
   , CONSTRAINT fk_FormulaDependency_Formula1 FOREIGN KEY ("formulaRefnum") REFERENCES TILDA.Formula ON DELETE restrict ON UPDATE cascade
@@ -447,8 +447,8 @@ create table if not exists TILDA.FormulaResult -- Master formula result informat
  (  "formulaRefnum"  bigint        not null   -- The parent formula.
   , "value"          varchar(100)  not null   -- The result value.
   , "description"    text          not null   -- The description of the result value.
-  , "created"        timestamptz   not null DEFAULT NOW()   -- The timestamp for when the record was created. (TILDA.FormulaResult)
-  , "lastUpdated"    timestamptz   not null DEFAULT NOW()   -- The timestamp for when the record was last updated. (TILDA.FormulaResult)
+  , "created"        timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.FormulaResult)
+  , "lastUpdated"    timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.FormulaResult)
   , "deleted"        timestamptz              -- The timestamp for when the record was deleted. (TILDA.FormulaResult)
   , PRIMARY KEY("formulaRefnum", "value")
   , CONSTRAINT fk_FormulaResult_Formula FOREIGN KEY ("formulaRefnum") REFERENCES TILDA.Formula ON DELETE restrict ON UPDATE cascade
@@ -470,8 +470,8 @@ create table if not exists TILDA.DependencyDDLDummyTable -- A dummy Table create
   , "depSchemaName"  varchar(100)  not null   -- The result value.
   , "depViewName"    varchar(100)  not null   -- The result value.
   , "restoreScript"  text          not null   -- The result value.
-  , "created"        timestamptz   not null DEFAULT NOW()   -- The timestamp for when the record was created. (TILDA.DependencyDDLDummyTable)
-  , "lastUpdated"    timestamptz   not null DEFAULT NOW()   -- The timestamp for when the record was last updated. (TILDA.DependencyDDLDummyTable)
+  , "created"        timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.DependencyDDLDummyTable)
+  , "lastUpdated"    timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.DependencyDDLDummyTable)
   , "deleted"        timestamptz              -- The timestamp for when the record was deleted. (TILDA.DependencyDDLDummyTable)
  );
 COMMENT ON TABLE TILDA.DependencyDDLDummyTable IS E'A dummy Table created to generate JavaCode to handle results from the Tilda.getDependenciesDDLs() function output.';
@@ -512,8 +512,8 @@ create table if not exists TILDA.DateDim -- The Date dimension, capturing pre-ca
   , "isBusinessDay"   integer                  -- 1 if this is a business day, 0 otherwise.
   , "isHoliday"       integer                  -- 1 if this is a holiday, 0 otherwise.
   , "holidayName"     varchar(255)             -- The name of the holiday if applicable.
-  , "created"         timestamptz   not null DEFAULT NOW()   -- The timestamp for when the record was created. (TILDA.DateDim)
-  , "lastUpdated"     timestamptz   not null DEFAULT NOW()   -- The timestamp for when the record was last updated. (TILDA.DateDim)
+  , "created"         timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.DateDim)
+  , "lastUpdated"     timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.DateDim)
   , "deleted"         timestamptz              -- The timestamp for when the record was deleted. (TILDA.DateDim)
   , PRIMARY KEY("dt")
  );
@@ -595,15 +595,15 @@ create table if not exists TILDA.Testing -- blah blah
   , "a8bTZ"        character(5)                   -- Generated helper column to hold the time zone ID for 'a8b'.
   , "a8b"          timestamptz                    -- The blah
   , "a9TZ"         character(5)                   -- Generated helper column to hold the time zone ID for 'a9'.
-  , "a9"           timestamptz                  DEFAULT NOW()   -- The blah
+  , "a9"           timestamptz                  DEFAULT now()   -- The blah
   , "a9a1TZ"       character(5)                   -- Generated helper column to hold the time zone ID for 'a9a1'.
   , "a9a1"         timestamptz                  DEFAULT '1111-11-11T00:00:00Z'   -- The blah
   , "a9bTZ"        text[]                         -- Generated helper column to hold the time zone ID for 'a9b'.
   , "a9b"          timestamptz[]                  -- The blah
   , "a9c"          date                           -- The blah
   , "a9d"          date[]                         -- The blah
-  , "created"      timestamptz         not null DEFAULT NOW()   -- The timestamp for when the record was created. (TILDA.Testing)
-  , "lastUpdated"  timestamptz         not null DEFAULT NOW()   -- The timestamp for when the record was last updated. (TILDA.Testing)
+  , "created"      timestamptz         not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.Testing)
+  , "lastUpdated"  timestamptz         not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.Testing)
   , "deleted"      timestamptz                    -- The timestamp for when the record was deleted. (TILDA.Testing)
   , PRIMARY KEY("refnum")
   , CONSTRAINT fk_Testing_a6d FOREIGN KEY ("a6dTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
@@ -666,8 +666,8 @@ insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated
 create table if not exists TILDA.Testing2Realized -- Realized table for view TILDA.Testing2View: A test view to test .* and exclude and block.
  (  "refnum"          bigint              not null   -- The primary key for this record
   , "name"            varchar(10)                    -- Medical system unique enterprise id
-  , "lastUpdated"     timestamptz                  DEFAULT NOW()   -- The timestamp for when the record was last updated. (TILDA.Testing)
-  , "xxxLastUpdated"  timestamptz                  DEFAULT NOW()   -- The timestamp for when the record was last updated. (TILDA.Testing)
+  , "lastUpdated"     timestamptz                  DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.Testing)
+  , "xxxLastUpdated"  timestamptz                  DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.Testing)
   , "a1"              INTEGER                        -- The blah
   , "a3b"             boolean[]                      -- The blah
   , "a4"              double precision               -- The blah
@@ -742,8 +742,8 @@ create table if not exists TILDA.Testing3Realized -- Realized table for view TIL
   , "name"            varchar(10)              -- Medical system unique enterprise id
   , "a8bTZ"           character(5)             -- Generated helper column to hold the time zone ID for 'a8b'.
   , "a8b"             timestamptz              -- The blah
-  , "lastUpdated"     timestamptz            DEFAULT NOW()   -- The timestamp for when the record was last updated. (TILDA.Testing)
-  , "xxxLastUpdated"  timestamptz            DEFAULT NOW()   -- The timestamp for when the record was last updated. (TILDA.Testing)
+  , "lastUpdated"     timestamptz            DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.Testing)
+  , "xxxLastUpdated"  timestamptz            DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.Testing)
  );
 COMMENT ON TABLE TILDA.Testing3Realized IS E'Realized table for view TILDA.Testing3View: A test view to test .* and exclude and block.';
 COMMENT ON COLUMN TILDA.Testing3Realized."refnum" IS E'The primary key for this record';
@@ -772,7 +772,7 @@ create table if not exists TILDA.Testing4Realized -- Realized table for view TIL
   , "a8bTZ"        character(5)                   -- Generated helper column to hold the time zone ID for 'a8b'.
   , "a8b"          timestamptz                    -- The blah
   , "a9TZ"         character(5)                   -- Generated helper column to hold the time zone ID for 'a9'.
-  , "a9"           timestamptz                  DEFAULT NOW()   -- The blah
+  , "a9"           timestamptz                  DEFAULT now()   -- The blah
   , "a9a1TZ"       character(5)                   -- Generated helper column to hold the time zone ID for 'a9a1'.
   , "a9a1"         timestamptz                  DEFAULT '1111-11-11T00:00:00Z'   -- The blah
   , "a9bTZ"        text[]                         -- Generated helper column to hold the time zone ID for 'a9b'.
@@ -853,8 +853,8 @@ create table if not exists TILDA.TildaFormula -- DEPRECATED: DO NOT USE! Generat
   , "description"        text          not null   -- DEPRECATED: DO NOT USE! The description of the formula/column
   , "formula"            text          not null   -- DEPRECATED: DO NOT USE! The formula
   , "html"               text          not null   -- DEPRECATED: DO NOT USE! A pre-rendered html fragment with the full documentation for this formula
-  , "created"            timestamptz   not null DEFAULT NOW()   -- The timestamp for when the record was created. (TILDA.TildaFormula)
-  , "lastUpdated"        timestamptz   not null DEFAULT NOW()   -- The timestamp for when the record was last updated. (TILDA.TildaFormula)
+  , "created"            timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.TildaFormula)
+  , "lastUpdated"        timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.TildaFormula)
   , "deleted"            timestamptz              -- The timestamp for when the record was deleted. (TILDA.TildaFormula)
   , PRIMARY KEY("viewName", "name")
  );
@@ -878,8 +878,8 @@ create table if not exists TILDA.TildaFormulaValue -- DEPRECATED: DO NOT USE! Ge
   , "formulaName"  varchar(64)  not null   -- DEPRECATED: DO NOT USE! The name of the formula/column this value is defined for
   , "value"        varchar(64)  not null   -- DEPRECATED: DO NOT USE! The value
   , "description"  text         not null   -- DEPRECATED: DO NOT USE! The description of the value
-  , "created"      timestamptz  not null DEFAULT NOW()   -- The timestamp for when the record was created. (TILDA.TildaFormulaValue)
-  , "lastUpdated"  timestamptz  not null DEFAULT NOW()   -- The timestamp for when the record was last updated. (TILDA.TildaFormulaValue)
+  , "created"      timestamptz  not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.TildaFormulaValue)
+  , "lastUpdated"  timestamptz  not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.TildaFormulaValue)
   , "deleted"      timestamptz             -- The timestamp for when the record was deleted. (TILDA.TildaFormulaValue)
   , PRIMARY KEY("viewName", "formulaName", "value")
  );
@@ -901,8 +901,8 @@ create table if not exists TILDA.TildaFormulaReference -- DEPRECATED: DO NOT USE
   , "referenceName"  varchar(64)   not null   -- DEPRECATED: DO NOT USE! The name of the column or other formula refence
   , "referenceType"  character(4)  not null   -- DEPRECATED: DO NOT USE! The type of the refence
   , "description"    text          not null   -- DEPRECATED: DO NOT USE! The description of the reference
-  , "created"        timestamptz   not null DEFAULT NOW()   -- The timestamp for when the record was created. (TILDA.TildaFormulaReference)
-  , "lastUpdated"    timestamptz   not null DEFAULT NOW()   -- The timestamp for when the record was last updated. (TILDA.TildaFormulaReference)
+  , "created"        timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.TildaFormulaReference)
+  , "lastUpdated"    timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.TildaFormulaReference)
   , "deleted"        timestamptz              -- The timestamp for when the record was deleted. (TILDA.TildaFormulaReference)
   , PRIMARY KEY("viewName", "formulaName", "referenceName", "referenceType")
  );
