@@ -460,13 +460,16 @@ public class Migrator
                               {
                                 String Sig1 = ix.getSignature();
 
-                                if (Sig.equals(Sig1) == true)
+                                if (Sig.equals(Sig1) == true && Signatures.add(ix.getSignature()) == false)
                                   {
                                     Found = true;
                                     if (ix._Name.equals(ix._Name.toLowerCase()) == false // name in the DB is not lowercase, i.e., case insensitive
                                     || ix._Name.equalsIgnoreCase(IX.getName()) == false // same sig, but new index name
                                     )
                                       {
+                                        if(TMeta._Indices.containsKey(IX.getName().toLowerCase()))
+                                          Errors.add("Index " + ix._Name + "is attempting to be renamed to " + IX.getName() + " but an index with that name already exists with a different signature in the database.");
+                                        
                                         Actions.add(new TableIndexRename(Obj, ix._Name, IX.getName()));
                                       }
                                     break;

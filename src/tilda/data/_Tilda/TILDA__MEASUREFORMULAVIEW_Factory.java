@@ -254,6 +254,15 @@ This is the column definition for:<BR>
 ;
    }
 
+   public static final ColumnDefinition[] COLUMNS = { COLS.MEASUREREFNUM,COLS.MEASURESCHEMA,COLS.MEASURENAME,COLS.FORMULAREFNUM,COLS.FORMULALOCATION,COLS.FORMULALOCATION2,COLS.FORMULANAME,COLS.TITLE,COLS.DESCRIPTION,COLS.TYPE,COLS.FORMULA };
+
+   public static final ColumnDefinition[] COLUMNS_PRIMARY = {  };
+
+   public static final ColumnDefinition[][] COLUMNS_UNIQUE_INDICES = { 
+        };
+
+   public static final ColumnDefinition[] COLUMNS_FIRST_IDENTITY = {};
+
    private static Boolean  __INITIALIZED = false;
    protected static void initObject(Connection C) throws Exception
      {
@@ -299,6 +308,10 @@ This is the column definition for:<BR>
         }
      }
 
+   protected static final void ProcessMany(Connection C, String FullSelectQuery, int Start, int Size, tilda.db.processors.RecordProcessor RP) throws Exception
+     {
+       ReadMany(C, -77, RP, null, FullSelectQuery, Start, Size);
+     }
    protected static final ListResults<tilda.data.MeasureFormulaView_Data> ReadMany(Connection C, String FullSelectQuery, int Start, int Size) throws Exception
      {
        RecordProcessorInternal RPI = new RecordProcessorInternal(C, Start);

@@ -694,7 +694,7 @@ COMMENT ON COLUMN TILDA.Testing2Realized."a6_null" IS E'Formula column: Null a6'
 COMMENT ON COLUMN TILDA.Testing2Realized."a7_null" IS E'Formula column: Null a7';
 COMMENT ON COLUMN TILDA.Testing2Realized."a8_null" IS E'Formula column: Null a8';
 CREATE UNIQUE INDEX Testing2Realized_Refnum ON TILDA.Testing2Realized ("refnum");
-CREATE INDEX Testing2Realized_LastUpdated ON TILDA.Testing2Realized ("lastUpdated" DESC, "lastUpdated" DESC);
+CREATE INDEX Testing2Realized_LastUpdated ON TILDA.Testing2Realized ("lastUpdated" DESC);
 
 
 
@@ -714,7 +714,7 @@ COMMENT ON COLUMN TILDA.Testing3Realized."a8b" IS E'The blah';
 COMMENT ON COLUMN TILDA.Testing3Realized."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.Testing)';
 COMMENT ON COLUMN TILDA.Testing3Realized."xxxLastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.Testing)';
 CREATE UNIQUE INDEX Testing3Realized_Refnum ON TILDA.Testing3Realized ("refnum");
-CREATE INDEX Testing3Realized_LastUpdated ON TILDA.Testing3Realized ("lastUpdated" DESC, "lastUpdated" DESC);
+CREATE INDEX Testing3Realized_LastUpdated ON TILDA.Testing3Realized ("lastUpdated" DESC);
 
 
 
@@ -798,7 +798,7 @@ COMMENT ON COLUMN TILDA.Testing4Realized."a8_null" IS E'Formula column: Null a8'
 COMMENT ON COLUMN TILDA.Testing4Realized."a3" IS E'Formula column: Always True';
 COMMENT ON COLUMN TILDA.Testing4Realized."lastUpdated" IS E'Formula column: Always True';
 CREATE UNIQUE INDEX Testing4Realized_Refnum ON TILDA.Testing4Realized ("refnum");
-CREATE INDEX Testing4Realized_LastUpdated ON TILDA.Testing4Realized ("lastUpdated" DESC, "lastUpdated" DESC);
+CREATE INDEX Testing4Realized_LastUpdated ON TILDA.Testing4Realized ("lastUpdated" DESC);
 
 
 
