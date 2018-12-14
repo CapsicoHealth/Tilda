@@ -276,6 +276,21 @@ public class PostgreSQL implements DBType
       }
 
     @Override
+    public boolean alterTableAlterColumnDefault(Connection Con, Column Col)
+    throws Exception
+      {
+        String Q = "ALTER TABLE " + Col._ParentObject.getShortName() + " ALTER COLUMN \"" + Col.getName() + "\" ";
+        if (Col._DefaultCreateValue == null)
+         Q += "DROP DEFAULT;";
+        else
+         Q += "SET DEFAULT "+ValueHelper.printValue(Col.getName(), Col.getType(), Col._DefaultCreateValue._Value)+";";
+          
+        return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
+      }
+
+
+
+    @Override
     public boolean alterTableAlterColumnComment(Connection Con, Column Col)
     throws Exception
       {

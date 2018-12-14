@@ -159,6 +159,13 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>selectNano_CreateDefault</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>selectNano_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>selectNano_CreateDefault</TD></TR>
+</TABLE>
+</TD></TR>
+
 </TABLE>
 */
      public static Type_LongPrimitive          SELECTNANO   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "selectNano"   , 6/*6*/, "Blah...");
@@ -169,17 +176,24 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.selectCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.selectCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.selectCount of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.selectCount of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>selectCount_CreateDefault</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>selectCount_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>selectCount_CreateDefault</TD></TR>
+</TABLE>
+</TD></TR>
+
 </TABLE>
 */
-     public static Type_LongPrimitive          SELECTCOUNT  = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "selectCount"  , 7/*7*/, "Blah...");
+     public static Type_IntegerPrimitive       SELECTCOUNT  = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "selectCount"  , 7/*7*/, "Blah...");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.ObjectPerf.selectRecords -> TILDA.ObjectPerf."selectRecords"
@@ -187,17 +201,24 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.selectRecords of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.selectRecords of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.selectRecords of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.selectRecords of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>selectRecords_CreateDefault</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>selectRecords_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>selectRecords_CreateDefault</TD></TR>
+</TABLE>
+</TD></TR>
+
 </TABLE>
 */
-     public static Type_LongPrimitive          SELECTRECORDS= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "selectRecords", 8/*8*/, "Blah...");
+     public static Type_IntegerPrimitive       SELECTRECORDS= new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "selectRecords", 8/*8*/, "Blah...");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.ObjectPerf.insertNano -> TILDA.ObjectPerf."insertNano"
@@ -213,6 +234,13 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>insertNano_CreateDefault</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>insertNano_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>insertNano_CreateDefault</TD></TR>
+</TABLE>
+</TD></TR>
+
 </TABLE>
 */
      public static Type_LongPrimitive          INSERTNANO   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "insertNano"   , 9/*9*/, "Blah...");
@@ -223,17 +251,24 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.insertCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.insertCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.insertCount of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.insertCount of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>insertCount_CreateDefault</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>insertCount_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>insertCount_CreateDefault</TD></TR>
+</TABLE>
+</TD></TR>
+
 </TABLE>
 */
-     public static Type_LongPrimitive          INSERTCOUNT  = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "insertCount"  , 10/*10*/, "Blah...");
+     public static Type_IntegerPrimitive       INSERTCOUNT  = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "insertCount"  , 10/*10*/, "Blah...");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.ObjectPerf.insertRecords -> TILDA.ObjectPerf."insertRecords"
@@ -241,17 +276,24 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.insertRecords of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.insertRecords of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.insertRecords of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.insertRecords of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>insertRecords_CreateDefault</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>insertRecords_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>insertRecords_CreateDefault</TD></TR>
+</TABLE>
+</TD></TR>
+
 </TABLE>
 */
-     public static Type_LongPrimitive          INSERTRECORDS= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "insertRecords", 11/*11*/, "Blah...");
+     public static Type_IntegerPrimitive       INSERTRECORDS= new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "insertRecords", 11/*11*/, "Blah...");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.ObjectPerf.updateNano -> TILDA.ObjectPerf."updateNano"
@@ -267,6 +309,13 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>updateNano_CreateDefault</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>updateNano_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>updateNano_CreateDefault</TD></TR>
+</TABLE>
+</TD></TR>
+
 </TABLE>
 */
      public static Type_LongPrimitive          UPDATENANO   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "updateNano"   , 12/*12*/, "Blah...");
@@ -277,17 +326,24 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.updateCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.updateCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.updateCount of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.updateCount of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>updateCount_CreateDefault</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>updateCount_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>updateCount_CreateDefault</TD></TR>
+</TABLE>
+</TD></TR>
+
 </TABLE>
 */
-     public static Type_LongPrimitive          UPDATECOUNT  = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "updateCount"  , 13/*13*/, "Blah...");
+     public static Type_IntegerPrimitive       UPDATECOUNT  = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "updateCount"  , 13/*13*/, "Blah...");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.ObjectPerf.updateRecords -> TILDA.ObjectPerf."updateRecords"
@@ -295,17 +351,24 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.updateRecords of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.updateRecords of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.updateRecords of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.updateRecords of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>updateRecords_CreateDefault</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>updateRecords_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>updateRecords_CreateDefault</TD></TR>
+</TABLE>
+</TD></TR>
+
 </TABLE>
 */
-     public static Type_LongPrimitive          UPDATERECORDS= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "updateRecords", 14/*14*/, "Blah...");
+     public static Type_IntegerPrimitive       UPDATERECORDS= new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "updateRecords", 14/*14*/, "Blah...");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.ObjectPerf.deleteNano -> TILDA.ObjectPerf."deleteNano"
@@ -321,6 +384,13 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>deleteNano_CreateDefault</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>deleteNano_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>deleteNano_CreateDefault</TD></TR>
+</TABLE>
+</TD></TR>
+
 </TABLE>
 */
      public static Type_LongPrimitive          DELETENANO   = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "deleteNano"   , 15/*15*/, "Blah...");
@@ -331,17 +401,24 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.deleteCount of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.deleteCount of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.deleteCount of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.deleteCount of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>deleteCount_CreateDefault</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>deleteCount_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>deleteCount_CreateDefault</TD></TR>
+</TABLE>
+</TD></TR>
+
 </TABLE>
 */
-     public static Type_LongPrimitive          DELETECOUNT  = new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "deleteCount"  , 16/*16*/, "Blah...");
+     public static Type_IntegerPrimitive       DELETECOUNT  = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "deleteCount"  , 16/*16*/, "Blah...");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.ObjectPerf.deleteRecords -> TILDA.ObjectPerf."deleteRecords"
@@ -349,17 +426,24 @@ This is the column definition for:<BR>
 /**
 This is the column definition for:<BR>
 <TABLE border="0px" cellpadding="3px" cellspacing="0px">
-  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.deleteRecords of type long</TD></TR>
-  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.deleteRecords of type bigint</TD></TR>
+  <TR><TD align="right"><B>Name</B></TD><TD>tilda.data.TILDA.ObjectPerf.deleteRecords of type int</TD></TR>
+  <TR><TD align="right"><B>Column</B></TD><TD>TILDA.ObjectPerf.deleteRecords of type integer</TD></TR>
 
   <TR><TD align="right"><B>Nullable</B></TD><TD>false</TD></TR>
   <TR valign="top"><TD align="right"><B>Description</B></TD><TD>Blah...</TD></TR>
   <TR><TD align="right"><B>Mode</B></TD><TD>NORMAL</TD></TR>
   <TR><TD align="right"><B>Invariant</B></TD><TD>false</TD></TR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
+  <TR valign="top"><TD align="right"><B>Values</B></TD><TD>
+
+<TABLE border="0px" cellpadding="2px" cellspacing="0px">   <TR align="left"><TH>&nbsp;</TH><TH align="right">Name&nbsp;&nbsp;</TH><TH>Value&nbsp;&nbsp;</TH><TH>Label&nbsp;&nbsp;</TH><TH>Default&nbsp;&nbsp;</TH><TH>Groupings&nbsp;&nbsp;</TH><TH>Description</TH></TR>
+  <TR bgcolor="#FFFFFF"><TD>0&nbsp;&nbsp;</TD><TD align="right"><B>deleteRecords_CreateDefault</B>&nbsp;&nbsp;</TD><TD>0&nbsp;&nbsp;</TD><TD>deleteRecords_CreateDefault&nbsp;&nbsp;</TD><TD>CREATE&nbsp;&nbsp;</TD><TD>&nbsp;&nbsp;</TD><TD>deleteRecords_CreateDefault</TD></TR>
+</TABLE>
+</TD></TR>
+
 </TABLE>
 */
-     public static Type_LongPrimitive          DELETERECORDS= new Type_LongPrimitive         (SCHEMA_LABEL, TABLENAME_LABEL, "deleteRecords", 17/*17*/, "Blah...");
+     public static Type_IntegerPrimitive       DELETERECORDS= new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "deleteRecords", 17/*17*/, "Blah...");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.ObjectPerf.created -> TILDA.ObjectPerf."created"
@@ -605,20 +689,8 @@ This is the column definition for:<BR>
  @param objectName    (max size 64) The name of the table/object tracked
  @param startPeriod   The timestamp for when the record was created.
  @param endPeriod     The timestamp for when the record was created.
- @param selectNano    Blah...
- @param selectCount   Blah...
- @param selectRecords Blah...
- @param insertNano    Blah...
- @param insertCount   Blah...
- @param insertRecords Blah...
- @param updateNano    Blah...
- @param updateCount   Blah...
- @param updateRecords Blah...
- @param deleteNano    Blah...
- @param deleteCount   Blah...
- @param deleteRecords Blah...
 */
-   static public tilda.data.ObjectPerf_Data Create(String schemaName, String objectName, ZonedDateTime startPeriod, ZonedDateTime endPeriod, long selectNano, long selectCount, long selectRecords, long insertNano, long insertCount, long insertRecords, long updateNano, long updateCount, long updateRecords, long deleteNano, long deleteCount, long deleteRecords) throws Exception
+   static public tilda.data.ObjectPerf_Data Create(String schemaName, String objectName, ZonedDateTime startPeriod, ZonedDateTime endPeriod) throws Exception
      {
        tilda.data._Tilda.TILDA__OBJECTPERF Obj = new tilda.data.ObjectPerf_Data();
        Obj.initForCreate();
@@ -629,22 +701,22 @@ This is the column definition for:<BR>
        Obj.setObjectName   (objectName   );
        Obj.setStartPeriod  (startPeriod  );
        Obj.setEndPeriod    (endPeriod    );
-       Obj.setSelectNano   (selectNano   );
-       Obj.setSelectCount  (selectCount  );
-       Obj.setSelectRecords(selectRecords);
-       Obj.setInsertNano   (insertNano   );
-       Obj.setInsertCount  (insertCount  );
-       Obj.setInsertRecords(insertRecords);
-       Obj.setUpdateNano   (updateNano   );
-       Obj.setUpdateCount  (updateCount  );
-       Obj.setUpdateRecords(updateRecords);
-       Obj.setDeleteNano   (deleteNano   );
-       Obj.setDeleteCount  (deleteCount  );
-       Obj.setDeleteRecords(deleteRecords);
 
        // Default Create-time setters
-       Obj.setCreatedNow       ();
-       Obj.setLastUpdatedNow   ();
+       Obj.setSelectNanoSelectNano_CreateDefault      ();
+       Obj.setSelectCountSelectCount_CreateDefault    ();
+       Obj.setSelectRecordsSelectRecords_CreateDefault();
+       Obj.setInsertNanoInsertNano_CreateDefault      ();
+       Obj.setInsertCountInsertCount_CreateDefault    ();
+       Obj.setInsertRecordsInsertRecords_CreateDefault();
+       Obj.setUpdateNanoUpdateNano_CreateDefault      ();
+       Obj.setUpdateCountUpdateCount_CreateDefault    ();
+       Obj.setUpdateRecordsUpdateRecords_CreateDefault();
+       Obj.setDeleteNanoDeleteNano_CreateDefault      ();
+       Obj.setDeleteCountDeleteCount_CreateDefault    ();
+       Obj.setDeleteRecordsDeleteRecords_CreateDefault();
+       Obj.setCreatedNow                              ();
+       Obj.setLastUpdatedNow                          ();
 
        return (tilda.data.ObjectPerf_Data) Obj;
      }
@@ -659,23 +731,35 @@ This is the column definition for:<BR>
        ZonedDateTime        _startPeriod   =                       ParseUtil.parseZonedDateTime("startPeriod"  , true , Values.get("startPeriod"  ), Errors );
        ZonedDateTime        _endPeriod     =                       ParseUtil.parseZonedDateTime("endPeriod"    , true , Values.get("endPeriod"    ), Errors );
        Long        _selectNano    =                       ParseUtil.parseLong("selectNano"   , true , Values.get("selectNano"   ), Errors );
-       Long        _selectCount   =                       ParseUtil.parseLong("selectCount"  , true , Values.get("selectCount"  ), Errors );
-       Long        _selectRecords =                       ParseUtil.parseLong("selectRecords", true , Values.get("selectRecords"), Errors );
+       Integer        _selectCount   =                       ParseUtil.parseInteger("selectCount"  , true , Values.get("selectCount"  ), Errors );
+       Integer        _selectRecords =                       ParseUtil.parseInteger("selectRecords", true , Values.get("selectRecords"), Errors );
        Long        _insertNano    =                       ParseUtil.parseLong("insertNano"   , true , Values.get("insertNano"   ), Errors );
-       Long        _insertCount   =                       ParseUtil.parseLong("insertCount"  , true , Values.get("insertCount"  ), Errors );
-       Long        _insertRecords =                       ParseUtil.parseLong("insertRecords", true , Values.get("insertRecords"), Errors );
+       Integer        _insertCount   =                       ParseUtil.parseInteger("insertCount"  , true , Values.get("insertCount"  ), Errors );
+       Integer        _insertRecords =                       ParseUtil.parseInteger("insertRecords", true , Values.get("insertRecords"), Errors );
        Long        _updateNano    =                       ParseUtil.parseLong("updateNano"   , true , Values.get("updateNano"   ), Errors );
-       Long        _updateCount   =                       ParseUtil.parseLong("updateCount"  , true , Values.get("updateCount"  ), Errors );
-       Long        _updateRecords =                       ParseUtil.parseLong("updateRecords", true , Values.get("updateRecords"), Errors );
+       Integer        _updateCount   =                       ParseUtil.parseInteger("updateCount"  , true , Values.get("updateCount"  ), Errors );
+       Integer        _updateRecords =                       ParseUtil.parseInteger("updateRecords", true , Values.get("updateRecords"), Errors );
        Long        _deleteNano    =                       ParseUtil.parseLong("deleteNano"   , true , Values.get("deleteNano"   ), Errors );
-       Long        _deleteCount   =                       ParseUtil.parseLong("deleteCount"  , true , Values.get("deleteCount"  ), Errors );
-       Long        _deleteRecords =                       ParseUtil.parseLong("deleteRecords", true , Values.get("deleteRecords"), Errors );
+       Integer        _deleteCount   =                       ParseUtil.parseInteger("deleteCount"  , true , Values.get("deleteCount"  ), Errors );
+       Integer        _deleteRecords =                       ParseUtil.parseInteger("deleteRecords", true , Values.get("deleteRecords"), Errors );
 
        if (IncomingErrors != Errors.size())
         return null;
 
-      tilda.data.ObjectPerf_Data Obj = tilda.data.ObjectPerf_Factory.Create(_schemaName, _objectName, _startPeriod, _endPeriod, _selectNano, _selectCount, _selectRecords, _insertNano, _insertCount, _insertRecords, _updateNano, _updateCount, _updateRecords, _deleteNano, _deleteCount, _deleteRecords);
+      tilda.data.ObjectPerf_Data Obj = tilda.data.ObjectPerf_Factory.Create(_schemaName, _objectName, _startPeriod, _endPeriod);
 
+      if (_selectNano   != null) Obj.setSelectNano   (_selectNano   );
+      if (_selectCount  != null) Obj.setSelectCount  (_selectCount  );
+      if (_selectRecords!= null) Obj.setSelectRecords(_selectRecords);
+      if (_insertNano   != null) Obj.setInsertNano   (_insertNano   );
+      if (_insertCount  != null) Obj.setInsertCount  (_insertCount  );
+      if (_insertRecords!= null) Obj.setInsertRecords(_insertRecords);
+      if (_updateNano   != null) Obj.setUpdateNano   (_updateNano   );
+      if (_updateCount  != null) Obj.setUpdateCount  (_updateCount  );
+      if (_updateRecords!= null) Obj.setUpdateRecords(_updateRecords);
+      if (_deleteNano   != null) Obj.setDeleteNano   (_deleteNano   );
+      if (_deleteCount  != null) Obj.setDeleteCount  (_deleteCount  );
+      if (_deleteRecords!= null) Obj.setDeleteRecords(_deleteRecords);
 
       return Obj;
      }

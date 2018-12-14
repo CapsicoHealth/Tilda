@@ -48,6 +48,7 @@ import tilda.migration.actions.ColumnAlterStringSize;
 import tilda.migration.actions.ColumnAlterType;
 import tilda.migration.actions.ColumnAlterMulti;
 import tilda.migration.actions.ColumnComment;
+import tilda.migration.actions.ColumnDefault;
 import tilda.migration.actions.DDLDependencyPostManagement;
 import tilda.migration.actions.DDLDependencyPreManagement;
 import tilda.migration.actions.SchemaCreate;
@@ -74,6 +75,7 @@ import tilda.parsing.parts.Object;
 import tilda.parsing.parts.PrimaryKey;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
+import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.utils.AsciiArt;
 import tilda.utils.FileUtil;
 import tilda.utils.pairs.ColMetaColPair;
@@ -319,7 +321,11 @@ public class Migrator
                       {
                         if (Col._Description.equalsIgnoreCase(CMeta._Descr) == false)
                           Actions.add(new ColumnComment(Col));
-
+                        
+                        // Check default values
+                        checkDefaultValue(Actions, Col, CMeta);
+                        
+                        // Check arrays
                         if (CheckArrays(DBMeta, Errors, Col, CMeta) == false)
                           continue;
 
@@ -549,6 +555,37 @@ public class Migrator
             throw new Exception("Database couldn't be migrated.");
           }
         return Actions;
+      }
+
+    private static void checkDefaultValue(List<MigrationAction> Actions, Column Col, ColumnMeta CMeta)
+    throws Exception
+      {
+        // Default values are a pain because (1) typing, and (2) the DB often rewrites the values. Therefore
+        // we have to some unholy gymnastics here. It's also hard-coded to Postgres knowledge here, which should be 
+        // fixed when going multi-db.
+        String defaultValue =  Col._DefaultCreateValue == null
+                             ? null
+                             : Col.getType() == ColumnType.DATE || Col.getType() == ColumnType.DATETIME || Col.getType() == ColumnType.CHAR || Col.getType() == ColumnType.STRING
+                             ? ValueHelper.printValue(Col.getName(), Col.getType(), Col._DefaultCreateValue._Value)
+                             : Col._DefaultCreateValue._Value;
+        String defaultValueDB = CMeta._Default;
+        if (defaultValueDB != null)
+         {
+           int i = defaultValueDB.lastIndexOf("::");
+           if (i != -1)
+             defaultValueDB = defaultValueDB.substring(0, i);
+         }
+        // The "UNDEFINED" value is 1111-11-11, but with timezones, it can change inside the database. So we truncate to 9 characters so we get '1111-11-1'
+        if (Col.getType() == ColumnType.DATE || Col.getType() == ColumnType.DATETIME)
+         if (Col._DefaultCreateValue != null && Col._DefaultCreateValue._Value.equalsIgnoreCase("UNDEFINED") == true && defaultValueDB != null && defaultValueDB.length() > 9)
+          {
+            defaultValue = defaultValue.substring(0,10);
+            defaultValueDB = defaultValueDB.substring(0,10);
+          }
+        if (   defaultValue == null && defaultValueDB != null
+            || defaultValue != null && defaultValue.equals(defaultValueDB) == false
+           )
+          Actions.add(new ColumnDefault(Col));
       }
 
     private static Object CheckForeignKeys(List<Schema> TildaList, List<String> Errors, Object Obj, FKMeta fk)

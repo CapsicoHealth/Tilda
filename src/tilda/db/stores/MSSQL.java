@@ -560,4 +560,11 @@ public class MSSQL implements DBType
       {
         throw new UnsupportedOperationException();
       }
+    
+    @Override
+    public boolean alterTableAlterColumnDefault(Connection Con, Column Col)
+    throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
   }
