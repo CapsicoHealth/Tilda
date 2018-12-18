@@ -26,7 +26,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
-import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.ObjectMode;
@@ -43,7 +42,7 @@ public class ViewRealize
     @SerializedName("primary"    ) public PrimaryKey        _PrimaryKey = null;
     @SerializedName("foreign"    ) public List<ForeignKey>  _ForeignKeys= new ArrayList<ForeignKey>();
     @SerializedName("indices"    ) public List<Index>       _Indices    = new ArrayList<Index>();
-    @SerializedName("subRealized") public String[]          _SubRealized= new String[] { };
+    @SerializedName("subRealized") public String[]          _SubRealized_DEPRECATED= new String[] { };
     // It was "exclude" for view columns, so why was it ever "excludes" here? Not consistent.
     @SerializedName("excludes"   ) public String[]          _Excludes_DEPRECATED   = new String[] { };
     @SerializedName("exclude"    ) public String[]          _Exclude         = new String[] { };
@@ -66,6 +65,9 @@ public class ViewRealize
         int Errs = PS.getErrorCount();
         _ParentView = ParentView;
         _ParentRealized = ParentRealized;
+        
+        if (TextUtil.isNullOrEmpty(_SubRealized_DEPRECATED) == false)
+          PS.AddError("The realize section for view '" + ParentView.getFullName() + "' uses the deprecated feature 'subrealize'. Use dependent Realized tables directly.");
         
         // Taking care of deprecated stuff...
         if (_Exclude.length == 0)
