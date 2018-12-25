@@ -695,7 +695,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
             if (Up != null)
               {
-                String ColType = getColumnType(Up._UpsertTSColumnObj);
+                String ColType = getColumnType(Up._UpsertTSColumnObj._SameAsObj);
                 OutFinal.append("DROP FUNCTION IF EXISTS " + V._ParentSchema._Name + ".Refill_" + TName + "(fromInclusive " + ColType + ", toExclusive " + ColType + ");\n")
                 .append("CREATE OR REPLACE FUNCTION " + V._ParentSchema._Name + ".Refill_" + TName + "(fromInclusive " + ColType + ", toExclusive " + ColType + ")\n");
               }
@@ -791,7 +791,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             .append("\n");
             if (Up != null)
               {
-                String ColType = getColumnType(Up._UpsertTSColumnObj);
+                String ColType = getColumnType(Up._UpsertTSColumnObj._SameAsObj);
                 OutFinal.append("DROP FUNCTION IF EXISTS " + V._ParentSchema._Name + ".Refill_" + TName + "(fromInclusive " + ColType + ");\n")
                 .append("CREATE OR REPLACE FUNCTION " + V._ParentSchema._Name + ".Refill_" + TName + "(fromInclusive " + ColType + ")\n");
                 OutFinal.append(" RETURNS boolean AS $$\n")

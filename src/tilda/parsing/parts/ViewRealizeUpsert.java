@@ -44,8 +44,8 @@ public class ViewRealizeUpsert
 
     public transient View             _ParentView;
     public transient Base             _ParentRealized;
-    public transient Column           _UpsertTSColumnObj;
-    public transient Column           _DeleteTSColumnObj;
+    public transient ViewColumn       _UpsertTSColumnObj;
+    public transient ViewColumn       _DeleteTSColumnObj;
     public transient List<ViewColumn> _IdentityViewColumns;
     public transient boolean          _FailedValidation = false;
 
@@ -65,17 +65,17 @@ public class ViewRealizeUpsert
           PS.AddError("View '" + _ParentView.getFullName() + "' is defining an upserted realization with no 'deleteTS' value.");
 
         // Upsert timestamp must be a valid column and a date or timestamp
-        _UpsertTSColumnObj = _ParentView.getColumn(_UpsertTS);
+        _UpsertTSColumnObj = _ParentView.getViewColumn(_UpsertTS);
         if (_UpsertTSColumnObj == null)
           PS.AddError("View '" + _ParentView.getFullName() + "' is defining an upserted realization with an upsert timestamp column '" + _UpsertTS + "' which cannot be found.");
-        else if (_UpsertTSColumnObj.getType() != ColumnType.DATE && _UpsertTSColumnObj.getType() != ColumnType.DATETIME)
+        else if (_UpsertTSColumnObj._SameAsObj.getType() != ColumnType.DATE && _UpsertTSColumnObj._SameAsObj.getType() != ColumnType.DATETIME)
           PS.AddError("View '" + _ParentView.getFullName() + "' is defining an upserted realization with an upsert timestamp column '" + _UpsertTS + "' which is not a date or timestamp.");
 
         // Delete timestamp must be a valid column and a date or timestamp
-        _DeleteTSColumnObj = _ParentView.getColumn(_DeleteTS);
+        _DeleteTSColumnObj = _ParentView.getViewColumn(_DeleteTS);
         if (_DeleteTSColumnObj == null)
           PS.AddError("View '" + _ParentView.getFullName() + "' is defining an upserted realization with a delete timestamp column '" + _DeleteTS + "' which cannot be found.");
-        else if (_DeleteTSColumnObj.getType() != ColumnType.DATE && _DeleteTSColumnObj.getType() != ColumnType.DATETIME)
+        else if (_DeleteTSColumnObj._SameAsObj.getType() != ColumnType.DATE && _DeleteTSColumnObj._SameAsObj.getType() != ColumnType.DATETIME)
           PS.AddError("View '" + _ParentView.getFullName() + "' is defining an upserted realization with an upsert timestamp column '" + _DeleteTS + "' which is not a date or timestamp.");
 
         // The realized table must have an identity

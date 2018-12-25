@@ -327,7 +327,7 @@ public class View extends Base
               if (VJ == null)
                 continue;
               VJ.Validate(PS, this);
-              if (JoinObjectNames.add(VJ._ObjectObj.getShortName() + " on " + VJ.getQuery(DBType.Postgres)) == false)
+              if (VJ._ObjectObj != null && JoinObjectNames.add(VJ._ObjectObj.getShortName() + " on " + VJ.getQuery(DBType.Postgres)) == false)
                 PS.AddError("View '" + getFullName() + "' is defining a duplicate join with object " + VJ._ObjectObj.getShortName() + ".");
             }
 
