@@ -253,15 +253,15 @@ CREATE OR REPLACE FUNCTION TILDA.ageBetween(timestamptz, timestamptz, float, flo
   IMMUTABLE LANGUAGE SQL AS
 'SELECT TILDA.Age($1, $2) >= $3 AND TILDA.Age($1, $2) < $4';
 
+
+
+-----------------------------------------------------------------------------------------------------------------
+-- TILDA FIRST/LAST aggregates
 CREATE OR REPLACE FUNCTION TILDA.first_agg (anyelement, anyelement)
 RETURNS anyelement LANGUAGE SQL IMMUTABLE STRICT AS $$
         SELECT $1;
 $$;
 
-
-
------------------------------------------------------------------------------------------------------------------
--- TILDA FIRST/LAST aggregates
 DO $$ BEGIN
 if not exists (SELECT 1 FROM pg_proc WHERE proname = 'first' AND proisagg=true) THEN
 CREATE AGGREGATE public.FIRST (
@@ -271,7 +271,8 @@ CREATE AGGREGATE public.FIRST (
 );
 END IF;
 END $$;
- 
+
+
 CREATE OR REPLACE FUNCTION TILDA.last_agg ( anyelement, anyelement )
 RETURNS anyelement LANGUAGE SQL IMMUTABLE STRICT AS $$
         SELECT $2;
@@ -285,6 +286,18 @@ CREATE AGGREGATE public.LAST (
 );
 END IF;
 END $$;
+
+
+
+-----------------------------------------------------------------------------------------------------------------
+-- TILDA array concatenation aggregate aggregates
+CREATE AGGREGATE public.array_cat_agg (anyarray)
+(
+    sfunc = array_cat,
+    stype = anyarray,
+    initcond = '{}'
+);  
+
 
 
 -----------------------------------------------------------------------------------------------------------------
