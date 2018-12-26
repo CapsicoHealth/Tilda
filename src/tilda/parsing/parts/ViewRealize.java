@@ -90,7 +90,7 @@ public class ViewRealize
         if (_Upsert != null && indexOnDeleted == false)
           {
             Index I = new Index();
-            I._Name="TILDA_REALIZED_UPSERT_ON_DELETE_INDEX";
+            I._Name="TILDA_RUOD_IDX";
             I._OrderBy= new String[] { _Upsert._DeleteTS };
             I.Validate(PS, ParentRealized);
             _Indices.add(I);
