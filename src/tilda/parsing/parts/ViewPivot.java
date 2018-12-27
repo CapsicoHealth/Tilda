@@ -77,11 +77,12 @@ public class ViewPivot
               continue;
             ViewColumn VC = ParentView.getViewColumn(A._Name);
             if (VC == null)
-              PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot on " + _ColumnName + " for an aggregate " + A._Name + " which cannot be found in the view.");
+              return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot on " + _ColumnName + " for an aggregate " + A._Name + " which cannot be found in the view.");
             else if (VC._Aggregate == null)
               return PS.AddError("View '" + ParentView.getFullName() + "' is defining a pivot on " + _ColumnName + " for " + A._Name + " which is not an aggregate.");
             else if (VC._Aggregate.getType(VC._SameAsObj.getType()) != ColumnType.STRING)
               StringAgg = false;
+            A._VC = VC;
             if (AggregateNames.add(A._Name) == false)
               PS.AddError("View '" + ParentView.getFullName() + "' is defining a Pivot on column " + _VC.getShortName() + " with a duplicate aggregate name '"+A._Name+"'.");
           }
