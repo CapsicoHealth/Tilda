@@ -291,12 +291,16 @@ END $$;
 
 -----------------------------------------------------------------------------------------------------------------
 -- TILDA array concatenation aggregate aggregates
+DO $$ BEGIN
+if not exists (SELECT 1 FROM pg_proc WHERE proname = 'array_cat_agg' AND proisagg=true) THEN
 CREATE AGGREGATE public.array_cat_agg (anyarray)
 (
     sfunc = array_cat,
     stype = anyarray,
     initcond = '{}'
 );  
+END IF;
+END $$;
 
 
 
