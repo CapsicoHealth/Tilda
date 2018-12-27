@@ -36,6 +36,8 @@ public class ViewPivotAggregate
     
     public transient ViewPivot _ParentPivot;
 
+    public transient ViewColumn _VC; // aggregate column from parent view.
+
     public ViewPivotAggregate()
       {
       }

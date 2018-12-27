@@ -715,7 +715,7 @@ public class View extends Base
                     for (ViewPivotValue VPV : P._Values)
                       {
                         ColumnType Type = VPV._Type != null ? VPV._Type._Type : AggregateType;
-                        Column C = new Column(A.makeName(VPV), Type.name(), Type == ColumnType.STRING ? P._VC._SameAsObj._Size : 0, true, ColumnMode.NORMAL, true, null,
+                        Column C = new Column(A.makeName(VPV), Type.name(), Type == ColumnType.STRING ? A._VC._SameAsObj._Size : 0, true, ColumnMode.NORMAL, true, null,
                         VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')");
                         O._Columns.add(C);
                         _PivotColumns.add(C);
@@ -740,7 +740,7 @@ public class View extends Base
                           }
                         ColumnType AggregateType = VC.getAggregateType();
                         ColumnType Type = VPV._Type != null ? VPV._Type._Type : AggregateType;
-                        Column C = new Column(A.makeName(VPV), Type.name(), Type == ColumnType.STRING ? P._VC._SameAsObj._Size : 0, true, ColumnMode.NORMAL, true, null,
+                        Column C = new Column(A.makeName(VPV), Type.name(), Type == ColumnType.STRING ? A._VC._SameAsObj._Size : 0, true, ColumnMode.NORMAL, true, null,
                         VPV._Description + " (pivot of " + VC.getAggregateName() + " on " + P._VC._SameAsObj.getShortName() + "='" + VPV._Value + "')");
                         O._Columns.add(C);
                         _PivotColumns.add(C);

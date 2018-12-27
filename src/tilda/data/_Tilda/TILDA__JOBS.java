@@ -37,7 +37,7 @@ The Table TILDA.Jobs:<UL>
 <LI>Has the following identity:<UL><LI>Unique Index: Id</LI>
 </UL></LI>
 </UL>
-<B>Description</B>: Kettle Jobs<BR>
+<B>Description</B>: Jobs<BR>
 <BR>
 This Table contains the following columns:<BLOCKQUOTE>
  <TABLE id="Jobs_TBL" border="0px" cellpadding="3px" cellspacing="0px" style="border:1px solid grey;">
@@ -387,7 +387,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Dec 14 2018, 09:15:54EST
+ @generated Dec 27 2018, 11:57:00EST
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__JOBS implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject

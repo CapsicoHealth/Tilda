@@ -9,8 +9,8 @@ create table if not exists TILDA.ZoneInfo -- blah blah
   , "label"          varchar(254)  not null   -- The label for this enumeration.
   , "deactivatedTZ"  character(5)             -- Generated helper column to hold the time zone ID for 'deactivated'.
   , "deactivated"    timestamptz              -- The label for this enumeration.
-  , "created"        timestamptz   not null   -- The timestamp for when the record was created. (TILDA.ZoneInfo)
-  , "lastUpdated"    timestamptz   not null   -- The timestamp for when the record was last updated. (TILDA.ZoneInfo)
+  , "created"        timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.ZoneInfo)
+  , "lastUpdated"    timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.ZoneInfo)
   , "deleted"        timestamptz              -- The timestamp for when the record was deleted. (TILDA.ZoneInfo)
   , PRIMARY KEY("id")
   , CONSTRAINT fk_ZoneInfo_deactivated FOREIGN KEY ("deactivatedTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
@@ -35,8 +35,8 @@ create table if not exists TILDA.Key -- The table to keep track of unique keys a
   , "name"            varchar(128)  not null   -- The name of the table/object tracked
   , "max"             bigint        not null   -- The pre-allocated max RefNum for this table/object.
   , "count"           integer       not null   -- The size of the pre-allocation required by this table/object.
-  , "created"         timestamptz   not null   -- The timestamp for when the record was created.
-  , "lastUpdated"     timestamptz   not null   -- The timestamp for when the record was last updated.
+  , "created"         timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created.
+  , "lastUpdated"     timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated.
   , "deleted"         timestamptz              -- The timestamp for when the record was deleted.
   , PRIMARY KEY("refnum")
  );
@@ -57,8 +57,8 @@ create table if not exists TILDA.Mapping -- Generalized Mapping table
  (  "type"         varchar(10)    not null   -- The type this mapping is for
   , "src"          varchar(1024)  not null   -- The source value for this mapping
   , "dst"          varchar(1024)  not null   -- The the destination (mapped) value for this mapping.
-  , "created"      timestamptz    not null   -- The timestamp for when the record was created. (TILDA.Mapping)
-  , "lastUpdated"  timestamptz    not null   -- The timestamp for when the record was last updated. (TILDA.Mapping)
+  , "created"      timestamptz    not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.Mapping)
+  , "lastUpdated"  timestamptz    not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.Mapping)
   , "deleted"      timestamptz               -- The timestamp for when the record was deleted. (TILDA.Mapping)
  );
 COMMENT ON TABLE TILDA.Mapping IS E'Generalized Mapping table';
@@ -79,20 +79,20 @@ create table if not exists TILDA.ObjectPerf -- Performance logs for the Tilda fr
   , "startPeriod"    timestamptz   not null   -- The timestamp for when the record was created.
   , "endPeriodTZ"    character(5)  not null   -- Generated helper column to hold the time zone ID for 'endPeriod'.
   , "endPeriod"      timestamptz   not null   -- The timestamp for when the record was created.
-  , "selectNano"     bigint        not null   -- Blah...
-  , "selectCount"    bigint        not null   -- Blah...
-  , "selectRecords"  bigint        not null   -- Blah...
-  , "insertNano"     bigint        not null   -- Blah...
-  , "insertCount"    bigint        not null   -- Blah...
-  , "insertRecords"  bigint        not null   -- Blah...
-  , "updateNano"     bigint        not null   -- Blah...
-  , "updateCount"    bigint        not null   -- Blah...
-  , "updateRecords"  bigint        not null   -- Blah...
-  , "deleteNano"     bigint        not null   -- Blah...
-  , "deleteCount"    bigint        not null   -- Blah...
-  , "deleteRecords"  bigint        not null   -- Blah...
-  , "created"        timestamptz   not null   -- The timestamp for when the record was created. (TILDA.ObjectPerf)
-  , "lastUpdated"    timestamptz   not null   -- The timestamp for when the record was last updated. (TILDA.ObjectPerf)
+  , "selectNano"     bigint        not null DEFAULT 0   -- Blah...
+  , "selectCount"    integer       not null DEFAULT 0   -- Blah...
+  , "selectRecords"  integer       not null DEFAULT 0   -- Blah...
+  , "insertNano"     bigint        not null DEFAULT 0   -- Blah...
+  , "insertCount"    integer       not null DEFAULT 0   -- Blah...
+  , "insertRecords"  integer       not null DEFAULT 0   -- Blah...
+  , "updateNano"     bigint        not null DEFAULT 0   -- Blah...
+  , "updateCount"    integer       not null DEFAULT 0   -- Blah...
+  , "updateRecords"  integer       not null DEFAULT 0   -- Blah...
+  , "deleteNano"     bigint        not null DEFAULT 0   -- Blah...
+  , "deleteCount"    integer       not null DEFAULT 0   -- Blah...
+  , "deleteRecords"  integer       not null DEFAULT 0   -- Blah...
+  , "created"        timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.ObjectPerf)
+  , "lastUpdated"    timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.ObjectPerf)
   , "deleted"        timestamptz              -- The timestamp for when the record was deleted. (TILDA.ObjectPerf)
   , PRIMARY KEY("schemaName", "objectName", "startPeriod")
   , CONSTRAINT fk_ObjectPerf_startPeriod FOREIGN KEY ("startPeriodTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
@@ -126,26 +126,42 @@ CREATE INDEX ObjectPerf_SchemaByObjectStart ON TILDA.ObjectPerf ("schemaName", "
 
 
 create table if not exists TILDA.TransPerf -- Performance logs for the Tilda framework
- (  "schemaName"     varchar(64)   not null   -- The name of the schema tracked
-  , "objectName"     varchar(64)   not null   -- The name of the table/object tracked
-  , "startPeriodTZ"  character(5)  not null   -- Generated helper column to hold the time zone ID for 'startPeriod'.
-  , "startPeriod"    timestamptz   not null   -- The timestamp for when the record was created.
-  , "endPeriodTZ"    character(5)  not null   -- Generated helper column to hold the time zone ID for 'endPeriod'.
-  , "endPeriod"      timestamptz   not null   -- The timestamp for when the record was created.
-  , "commitNano"     bigint        not null   -- Blah...
-  , "commitCount"    bigint        not null   -- Blah...
-  , "rollbackNano"   bigint        not null   -- Blah...
-  , "rollbackCount"  bigint        not null   -- Blah...
-  , "created"        timestamptz   not null   -- The timestamp for when the record was created. (TILDA.TransPerf)
-  , "lastUpdated"    timestamptz   not null   -- The timestamp for when the record was last updated. (TILDA.TransPerf)
-  , "deleted"        timestamptz              -- The timestamp for when the record was deleted. (TILDA.TransPerf)
-  , PRIMARY KEY("schemaName", "objectName", "startPeriod")
+ (  "startPeriodTZ"           character(5)  not null   -- Generated helper column to hold the time zone ID for 'startPeriod'.
+  , "startPeriod"             timestamptz   not null   -- The timestamp for when the record was created.
+  , "endPeriodTZ"             character(5)  not null   -- Generated helper column to hold the time zone ID for 'endPeriod'.
+  , "endPeriod"               timestamptz   not null   -- The timestamp for when the record was created.
+  , "commitNano"              bigint        not null DEFAULT 0   -- Blah...
+  , "commitCount"             integer       not null DEFAULT 0   -- Blah...
+  , "rollbackNano"            bigint        not null DEFAULT 0   -- Blah...
+  , "rollbackCount"           integer       not null DEFAULT 0   -- Blah...
+  , "savepointSetNano"        bigint        not null DEFAULT 0   -- Blah...
+  , "savepointSetCount"       integer       not null DEFAULT 0   -- Blah...
+  , "savepointCommitNano"     bigint        not null DEFAULT 0   -- Blah...
+  , "savepointCommitCount"    integer       not null DEFAULT 0   -- Blah...
+  , "savepointRollbackNano"   bigint        not null DEFAULT 0   -- Blah...
+  , "savepointRollbackCount"  integer       not null DEFAULT 0   -- Blah...
+  , "statementCloseNano"      bigint        not null DEFAULT 0   -- Blah...
+  , "statementCloseCount"     integer       not null DEFAULT 0   -- Blah...
+  , "connectionCloseNano"     bigint        not null DEFAULT 0   -- Blah...
+  , "connectionCloseCount"    integer       not null DEFAULT 0   -- Blah...
+  , "connectionGetNano"       bigint        not null DEFAULT 0   -- Blah...
+  , "connectionGetCount"      integer       not null DEFAULT 0   -- Blah...
+  , "tildaSetterNano"         bigint        not null DEFAULT 0   -- Blah...
+  , "tildaSetterCount"        integer       not null DEFAULT 0   -- Blah...
+  , "tildaToStringNano"       bigint        not null DEFAULT 0   -- Blah...
+  , "tildaToStringCount"      integer       not null DEFAULT 0   -- Blah...
+  , "tildaToJsonNano"         bigint        not null DEFAULT 0   -- Blah...
+  , "tildaToJsonCount"        integer       not null DEFAULT 0   -- Blah...
+  , "tildaToCsvNano"          bigint        not null DEFAULT 0   -- Blah...
+  , "tildaToCsvCount"         integer       not null DEFAULT 0   -- Blah...
+  , "created"                 timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.TransPerf)
+  , "lastUpdated"             timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.TransPerf)
+  , "deleted"                 timestamptz              -- The timestamp for when the record was deleted. (TILDA.TransPerf)
+  , PRIMARY KEY("startPeriod")
   , CONSTRAINT fk_TransPerf_startPeriod FOREIGN KEY ("startPeriodTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
   , CONSTRAINT fk_TransPerf_endPeriod FOREIGN KEY ("endPeriodTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
  );
 COMMENT ON TABLE TILDA.TransPerf IS E'Performance logs for the Tilda framework';
-COMMENT ON COLUMN TILDA.TransPerf."schemaName" IS E'The name of the schema tracked';
-COMMENT ON COLUMN TILDA.TransPerf."objectName" IS E'The name of the table/object tracked';
 COMMENT ON COLUMN TILDA.TransPerf."startPeriodTZ" IS E'Generated helper column to hold the time zone ID for ''startPeriod''.';
 COMMENT ON COLUMN TILDA.TransPerf."startPeriod" IS E'The timestamp for when the record was created.';
 COMMENT ON COLUMN TILDA.TransPerf."endPeriodTZ" IS E'Generated helper column to hold the time zone ID for ''endPeriod''.';
@@ -154,11 +170,29 @@ COMMENT ON COLUMN TILDA.TransPerf."commitNano" IS E'Blah...';
 COMMENT ON COLUMN TILDA.TransPerf."commitCount" IS E'Blah...';
 COMMENT ON COLUMN TILDA.TransPerf."rollbackNano" IS E'Blah...';
 COMMENT ON COLUMN TILDA.TransPerf."rollbackCount" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."savepointSetNano" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."savepointSetCount" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."savepointCommitNano" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."savepointCommitCount" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."savepointRollbackNano" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."savepointRollbackCount" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."statementCloseNano" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."statementCloseCount" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."connectionCloseNano" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."connectionCloseCount" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."connectionGetNano" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."connectionGetCount" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."tildaSetterNano" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."tildaSetterCount" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."tildaToStringNano" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."tildaToStringCount" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."tildaToJsonNano" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."tildaToJsonCount" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."tildaToCsvNano" IS E'Blah...';
+COMMENT ON COLUMN TILDA.TransPerf."tildaToCsvCount" IS E'Blah...';
 COMMENT ON COLUMN TILDA.TransPerf."created" IS E'The timestamp for when the record was created. (TILDA.TransPerf)';
 COMMENT ON COLUMN TILDA.TransPerf."lastUpdated" IS E'The timestamp for when the record was last updated. (TILDA.TransPerf)';
 COMMENT ON COLUMN TILDA.TransPerf."deleted" IS E'The timestamp for when the record was deleted. (TILDA.TransPerf)';
-CREATE INDEX TransPerf_AllBySchemaName ON TILDA.TransPerf ("schemaName", "objectName" ASC, "startPeriod" DESC);
--- app-level index only -- CREATE INDEX TransPerf_AllByObjectName ON TILDA.TransPerf ("schemaName", "objectName", "startPeriod" DESC);
 
 
 
@@ -172,8 +206,8 @@ create table if not exists TILDA.Connection -- Tilda DB Connections Configuratio
   , "initial"      integer       not null   -- Minimum Connections
   , "max"          integer       not null   -- Maximum Connections
   , "schemas"      text[]        not null   -- Schemas
-  , "created"      timestamptz   not null   -- The timestamp for when the record was created. (TILDA.Connection)
-  , "lastUpdated"  timestamptz   not null   -- The timestamp for when the record was last updated. (TILDA.Connection)
+  , "created"      timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.Connection)
+  , "lastUpdated"  timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.Connection)
   , "deleted"      timestamptz              -- The timestamp for when the record was deleted. (TILDA.Connection)
   , PRIMARY KEY("id")
  );
@@ -194,7 +228,7 @@ CREATE INDEX Connection_AllById ON TILDA.Connection ("id" ASC);
 
 
 
-create table if not exists TILDA.Jobs -- Kettle Jobs
+create table if not exists TILDA.Jobs -- Jobs
  (  "Id"            integer        not null   -- Id
   , "Name"          varchar(120)              -- Name
   , "StartTimeTZ"   character(5)              -- Generated helper column to hold the time zone ID for 'StartTime'.
@@ -204,13 +238,13 @@ create table if not exists TILDA.Jobs -- Kettle Jobs
   , "TotalRecords"  integer                   -- TotalRecords
   , "Status"        varchar(200)              -- Status
   , "Error"         varchar(1000)             -- Error
-  , "created"       timestamptz    not null   -- The timestamp for when the record was created. (TILDA.Jobs)
-  , "lastUpdated"   timestamptz    not null   -- The timestamp for when the record was last updated. (TILDA.Jobs)
+  , "created"       timestamptz    not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.Jobs)
+  , "lastUpdated"   timestamptz    not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.Jobs)
   , "deleted"       timestamptz               -- The timestamp for when the record was deleted. (TILDA.Jobs)
   , CONSTRAINT fk_Jobs_StartTime FOREIGN KEY ("StartTimeTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
   , CONSTRAINT fk_Jobs_EndTime FOREIGN KEY ("EndTimeTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
  );
-COMMENT ON TABLE TILDA.Jobs IS E'Kettle Jobs';
+COMMENT ON TABLE TILDA.Jobs IS E'Jobs';
 COMMENT ON COLUMN TILDA.Jobs."Id" IS E'Id';
 COMMENT ON COLUMN TILDA.Jobs."Name" IS E'Name';
 COMMENT ON COLUMN TILDA.Jobs."StartTimeTZ" IS E'Generated helper column to hold the time zone ID for ''StartTime''.';
@@ -238,8 +272,8 @@ create table if not exists TILDA.Job_Detail -- Job Detail
   , "FileProcessEndTime"      timestamptz               -- FileProcessEndTime
   , "Status"                  varchar(200)              -- Status
   , "Error"                   varchar(1000)             -- Error
-  , "created"                 timestamptz    not null   -- The timestamp for when the record was created. (TILDA.Job_Detail)
-  , "lastUpdated"             timestamptz    not null   -- The timestamp for when the record was last updated. (TILDA.Job_Detail)
+  , "created"                 timestamptz    not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.Job_Detail)
+  , "lastUpdated"             timestamptz    not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.Job_Detail)
   , "deleted"                 timestamptz               -- The timestamp for when the record was deleted. (TILDA.Job_Detail)
   , CONSTRAINT fk_Job_Detail_FileProcessStartTime FOREIGN KEY ("FileProcessStartTimeTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
   , CONSTRAINT fk_Job_Detail_FileProcessEndTime FOREIGN KEY ("FileProcessEndTimeTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
@@ -272,8 +306,8 @@ create table if not exists TILDA.RefillPerf -- Performance logs for the Tilda Re
   , "timeAnalyzeMs"  bigint        not null   -- The time, in milliseconds, the analyze took.
   , "timeTotalMs"    bigint        not null   -- The time, in milliseconds, the whole refill took.
   , "columnsMs"      bigint        not null   -- The list of columns that were refilled.
-  , "created"        timestamptz   not null   -- The timestamp for when the record was created. (TILDA.RefillPerf)
-  , "lastUpdated"    timestamptz   not null   -- The timestamp for when the record was last updated. (TILDA.RefillPerf)
+  , "created"        timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.RefillPerf)
+  , "lastUpdated"    timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.RefillPerf)
   , "deleted"        timestamptz              -- The timestamp for when the record was deleted. (TILDA.RefillPerf)
   , PRIMARY KEY("schemaName", "objectName", "startPeriod")
   , CONSTRAINT fk_RefillPerf_startPeriod FOREIGN KEY ("startPeriodTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
@@ -300,8 +334,8 @@ create table if not exists TILDA.Maintenance -- Maintenance information
  (  "type"         varchar(64)   not null   -- The type of maintenance resource to track
   , "name"         varchar(512)  not null   -- The name of the maintenance resource to track.
   , "value"        text                     -- The value of the maintenance resource to track.
-  , "created"      timestamptz   not null   -- The timestamp for when the record was created. (TILDA.Maintenance)
-  , "lastUpdated"  timestamptz   not null   -- The timestamp for when the record was last updated. (TILDA.Maintenance)
+  , "created"      timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.Maintenance)
+  , "lastUpdated"  timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.Maintenance)
   , "deleted"      timestamptz              -- The timestamp for when the record was deleted. (TILDA.Maintenance)
   , PRIMARY KEY("type", "name")
  );
@@ -325,8 +359,8 @@ create table if not exists TILDA.Formula -- Master formula information
   , "description"  text          not null   -- The description of the formula/column.
   , "formula"      text                     -- The formula.
   , "htmlDoc"      text                     -- Pre-rendered html fragment with the full documentation for this formula.
-  , "created"      timestamptz   not null   -- The timestamp for when the record was created. (TILDA.Formula)
-  , "lastUpdated"  timestamptz   not null   -- The timestamp for when the record was last updated. (TILDA.Formula)
+  , "created"      timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.Formula)
+  , "lastUpdated"  timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.Formula)
   , "deleted"      timestamptz              -- The timestamp for when the record was deleted. (TILDA.Formula)
   , PRIMARY KEY("refnum")
  );
@@ -353,8 +387,8 @@ create table if not exists TILDA.Measure -- Master Measure information
  (  "refnum"       bigint       not null   -- The primary key for this record
   , "schema"       varchar(64)  not null   -- The Schema wher ethe measure is defined.
   , "name"         varchar(64)  not null   -- The name of the measure.
-  , "created"      timestamptz  not null   -- The timestamp for when the record was created. (TILDA.Measure)
-  , "lastUpdated"  timestamptz  not null   -- The timestamp for when the record was last updated. (TILDA.Measure)
+  , "created"      timestamptz  not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.Measure)
+  , "lastUpdated"  timestamptz  not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.Measure)
   , "deleted"      timestamptz             -- The timestamp for when the record was deleted. (TILDA.Measure)
   , PRIMARY KEY("refnum")
  );
@@ -374,8 +408,8 @@ insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated
 create table if not exists TILDA.MeasureFormula -- Master Measure information
  (  "measureRefnum"  bigint       not null   -- The measure.
   , "formulaRefnum"  bigint       not null   -- The parent formula.
-  , "created"        timestamptz  not null   -- The timestamp for when the record was created. (TILDA.MeasureFormula)
-  , "lastUpdated"    timestamptz  not null   -- The timestamp for when the record was last updated. (TILDA.MeasureFormula)
+  , "created"        timestamptz  not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.MeasureFormula)
+  , "lastUpdated"    timestamptz  not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.MeasureFormula)
   , "deleted"        timestamptz             -- The timestamp for when the record was deleted. (TILDA.MeasureFormula)
   , PRIMARY KEY("measureRefnum", "formulaRefnum")
   , CONSTRAINT fk_MeasureFormula_Measure FOREIGN KEY ("measureRefnum") REFERENCES TILDA.Measure ON DELETE restrict ON UPDATE cascade
@@ -393,8 +427,8 @@ COMMENT ON COLUMN TILDA.MeasureFormula."deleted" IS E'The timestamp for when the
 create table if not exists TILDA.FormulaDependency -- Master formula dependency information
  (  "formulaRefnum"     bigint       not null   -- The parent formula.
   , "dependencyRefnum"  bigint       not null   -- The dependent formula.
-  , "created"           timestamptz  not null   -- The timestamp for when the record was created. (TILDA.FormulaDependency)
-  , "lastUpdated"       timestamptz  not null   -- The timestamp for when the record was last updated. (TILDA.FormulaDependency)
+  , "created"           timestamptz  not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.FormulaDependency)
+  , "lastUpdated"       timestamptz  not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.FormulaDependency)
   , "deleted"           timestamptz             -- The timestamp for when the record was deleted. (TILDA.FormulaDependency)
   , PRIMARY KEY("formulaRefnum", "dependencyRefnum")
   , CONSTRAINT fk_FormulaDependency_Formula1 FOREIGN KEY ("formulaRefnum") REFERENCES TILDA.Formula ON DELETE restrict ON UPDATE cascade
@@ -413,8 +447,8 @@ create table if not exists TILDA.FormulaResult -- Master formula result informat
  (  "formulaRefnum"  bigint        not null   -- The parent formula.
   , "value"          varchar(100)  not null   -- The result value.
   , "description"    text          not null   -- The description of the result value.
-  , "created"        timestamptz   not null   -- The timestamp for when the record was created. (TILDA.FormulaResult)
-  , "lastUpdated"    timestamptz   not null   -- The timestamp for when the record was last updated. (TILDA.FormulaResult)
+  , "created"        timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.FormulaResult)
+  , "lastUpdated"    timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.FormulaResult)
   , "deleted"        timestamptz              -- The timestamp for when the record was deleted. (TILDA.FormulaResult)
   , PRIMARY KEY("formulaRefnum", "value")
   , CONSTRAINT fk_FormulaResult_Formula FOREIGN KEY ("formulaRefnum") REFERENCES TILDA.Formula ON DELETE restrict ON UPDATE cascade
@@ -436,8 +470,8 @@ create table if not exists TILDA.DependencyDDLDummyTable -- A dummy Table create
   , "depSchemaName"  varchar(100)  not null   -- The result value.
   , "depViewName"    varchar(100)  not null   -- The result value.
   , "restoreScript"  text          not null   -- The result value.
-  , "created"        timestamptz   not null   -- The timestamp for when the record was created. (TILDA.DependencyDDLDummyTable)
-  , "lastUpdated"    timestamptz   not null   -- The timestamp for when the record was last updated. (TILDA.DependencyDDLDummyTable)
+  , "created"        timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.DependencyDDLDummyTable)
+  , "lastUpdated"    timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.DependencyDDLDummyTable)
   , "deleted"        timestamptz              -- The timestamp for when the record was deleted. (TILDA.DependencyDDLDummyTable)
  );
 COMMENT ON TABLE TILDA.DependencyDDLDummyTable IS E'A dummy Table created to generate JavaCode to handle results from the Tilda.getDependenciesDDLs() function output.';
@@ -478,8 +512,8 @@ create table if not exists TILDA.DateDim -- The Date dimension, capturing pre-ca
   , "isBusinessDay"   integer                  -- 1 if this is a business day, 0 otherwise.
   , "isHoliday"       integer                  -- 1 if this is a holiday, 0 otherwise.
   , "holidayName"     varchar(255)             -- The name of the holiday if applicable.
-  , "created"         timestamptz   not null   -- The timestamp for when the record was created. (TILDA.DateDim)
-  , "lastUpdated"     timestamptz   not null   -- The timestamp for when the record was last updated. (TILDA.DateDim)
+  , "created"         timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.DateDim)
+  , "lastUpdated"     timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.DateDim)
   , "deleted"         timestamptz              -- The timestamp for when the record was deleted. (TILDA.DateDim)
   , PRIMARY KEY("dt")
  );
@@ -561,18 +595,21 @@ create table if not exists TILDA.Testing -- blah blah
   , "a8bTZ"        character(5)                   -- Generated helper column to hold the time zone ID for 'a8b'.
   , "a8b"          timestamptz                    -- The blah
   , "a9TZ"         character(5)                   -- Generated helper column to hold the time zone ID for 'a9'.
-  , "a9"           timestamptz                    -- The blah
+  , "a9"           timestamptz                  DEFAULT now()   -- The blah
+  , "a9a1TZ"       character(5)                   -- Generated helper column to hold the time zone ID for 'a9a1'.
+  , "a9a1"         timestamptz                  DEFAULT '1111-11-11T00:00:00Z'   -- The blah
   , "a9bTZ"        text[]                         -- Generated helper column to hold the time zone ID for 'a9b'.
   , "a9b"          timestamptz[]                  -- The blah
   , "a9c"          date                           -- The blah
   , "a9d"          date[]                         -- The blah
-  , "created"      timestamptz         not null   -- The timestamp for when the record was created. (TILDA.Testing)
-  , "lastUpdated"  timestamptz         not null   -- The timestamp for when the record was last updated. (TILDA.Testing)
+  , "created"      timestamptz         not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.Testing)
+  , "lastUpdated"  timestamptz         not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.Testing)
   , "deleted"      timestamptz                    -- The timestamp for when the record was deleted. (TILDA.Testing)
   , PRIMARY KEY("refnum")
   , CONSTRAINT fk_Testing_a6d FOREIGN KEY ("a6dTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
   , CONSTRAINT fk_Testing_a8b FOREIGN KEY ("a8bTZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
   , CONSTRAINT fk_Testing_a9 FOREIGN KEY ("a9TZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
+  , CONSTRAINT fk_Testing_a9a1 FOREIGN KEY ("a9a1TZ") REFERENCES TILDA.ZoneInfo ON DELETE restrict ON UPDATE cascade
  );
 COMMENT ON TABLE TILDA.Testing IS E'blah blah';
 COMMENT ON COLUMN TILDA.Testing."refnum" IS E'The primary key for this record';
@@ -608,6 +645,8 @@ COMMENT ON COLUMN TILDA.Testing."a8bTZ" IS E'Generated helper column to hold the
 COMMENT ON COLUMN TILDA.Testing."a8b" IS E'The blah';
 COMMENT ON COLUMN TILDA.Testing."a9TZ" IS E'Generated helper column to hold the time zone ID for ''a9''.';
 COMMENT ON COLUMN TILDA.Testing."a9" IS E'The blah';
+COMMENT ON COLUMN TILDA.Testing."a9a1TZ" IS E'Generated helper column to hold the time zone ID for ''a9a1''.';
+COMMENT ON COLUMN TILDA.Testing."a9a1" IS E'The blah';
 COMMENT ON COLUMN TILDA.Testing."a9bTZ" IS E'Generated helper column to hold the time zone ID for ''a9b''.';
 COMMENT ON COLUMN TILDA.Testing."a9b" IS E'The blah';
 COMMENT ON COLUMN TILDA.Testing."a9c" IS E'The blah';
@@ -627,8 +666,8 @@ insert into TILDA.Key ("refnum", "name", "max", "count", "created", "lastUpdated
 create table if not exists TILDA.Testing2Realized -- Realized table for view TILDA.Testing2View: A test view to test .* and exclude and block.
  (  "refnum"          bigint              not null   -- The primary key for this record
   , "name"            varchar(10)                    -- Medical system unique enterprise id
-  , "lastUpdated"     timestamptz                    -- The timestamp for when the record was last updated. (TILDA.Testing)
-  , "xxxLastUpdated"  timestamptz                    -- The timestamp for when the record was last updated. (TILDA.Testing)
+  , "lastUpdated"     timestamptz                  DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.Testing)
+  , "xxxLastUpdated"  timestamptz                  DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.Testing)
   , "a1"              INTEGER                        -- The blah
   , "a3b"             boolean[]                      -- The blah
   , "a4"              double precision               -- The blah
@@ -703,8 +742,8 @@ create table if not exists TILDA.Testing3Realized -- Realized table for view TIL
   , "name"            varchar(10)              -- Medical system unique enterprise id
   , "a8bTZ"           character(5)             -- Generated helper column to hold the time zone ID for 'a8b'.
   , "a8b"             timestamptz              -- The blah
-  , "lastUpdated"     timestamptz              -- The timestamp for when the record was last updated. (TILDA.Testing)
-  , "xxxLastUpdated"  timestamptz              -- The timestamp for when the record was last updated. (TILDA.Testing)
+  , "lastUpdated"     timestamptz            DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.Testing)
+  , "xxxLastUpdated"  timestamptz            DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.Testing)
  );
 COMMENT ON TABLE TILDA.Testing3Realized IS E'Realized table for view TILDA.Testing3View: A test view to test .* and exclude and block.';
 COMMENT ON COLUMN TILDA.Testing3Realized."refnum" IS E'The primary key for this record';
@@ -733,7 +772,9 @@ create table if not exists TILDA.Testing4Realized -- Realized table for view TIL
   , "a8bTZ"        character(5)                   -- Generated helper column to hold the time zone ID for 'a8b'.
   , "a8b"          timestamptz                    -- The blah
   , "a9TZ"         character(5)                   -- Generated helper column to hold the time zone ID for 'a9'.
-  , "a9"           timestamptz                    -- The blah
+  , "a9"           timestamptz                  DEFAULT now()   -- The blah
+  , "a9a1TZ"       character(5)                   -- Generated helper column to hold the time zone ID for 'a9a1'.
+  , "a9a1"         timestamptz                  DEFAULT '1111-11-11T00:00:00Z'   -- The blah
   , "a9bTZ"        text[]                         -- Generated helper column to hold the time zone ID for 'a9b'.
   , "a9b"          timestamptz[]                  -- The blah
   , "a9c"          date                           -- The blah
@@ -774,6 +815,8 @@ COMMENT ON COLUMN TILDA.Testing4Realized."a8bTZ" IS E'Generated helper column to
 COMMENT ON COLUMN TILDA.Testing4Realized."a8b" IS E'The blah';
 COMMENT ON COLUMN TILDA.Testing4Realized."a9TZ" IS E'Generated helper column to hold the time zone ID for ''a9''.';
 COMMENT ON COLUMN TILDA.Testing4Realized."a9" IS E'The blah';
+COMMENT ON COLUMN TILDA.Testing4Realized."a9a1TZ" IS E'Generated helper column to hold the time zone ID for ''a9a1''.';
+COMMENT ON COLUMN TILDA.Testing4Realized."a9a1" IS E'The blah';
 COMMENT ON COLUMN TILDA.Testing4Realized."a9bTZ" IS E'Generated helper column to hold the time zone ID for ''a9b''.';
 COMMENT ON COLUMN TILDA.Testing4Realized."a9b" IS E'The blah';
 COMMENT ON COLUMN TILDA.Testing4Realized."a9c" IS E'The blah';
@@ -810,8 +853,8 @@ create table if not exists TILDA.TildaFormula -- DEPRECATED: DO NOT USE! Generat
   , "description"        text          not null   -- DEPRECATED: DO NOT USE! The description of the formula/column
   , "formula"            text          not null   -- DEPRECATED: DO NOT USE! The formula
   , "html"               text          not null   -- DEPRECATED: DO NOT USE! A pre-rendered html fragment with the full documentation for this formula
-  , "created"            timestamptz   not null   -- The timestamp for when the record was created. (TILDA.TildaFormula)
-  , "lastUpdated"        timestamptz   not null   -- The timestamp for when the record was last updated. (TILDA.TildaFormula)
+  , "created"            timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.TildaFormula)
+  , "lastUpdated"        timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.TildaFormula)
   , "deleted"            timestamptz              -- The timestamp for when the record was deleted. (TILDA.TildaFormula)
   , PRIMARY KEY("viewName", "name")
  );
@@ -835,8 +878,8 @@ create table if not exists TILDA.TildaFormulaValue -- DEPRECATED: DO NOT USE! Ge
   , "formulaName"  varchar(64)  not null   -- DEPRECATED: DO NOT USE! The name of the formula/column this value is defined for
   , "value"        varchar(64)  not null   -- DEPRECATED: DO NOT USE! The value
   , "description"  text         not null   -- DEPRECATED: DO NOT USE! The description of the value
-  , "created"      timestamptz  not null   -- The timestamp for when the record was created. (TILDA.TildaFormulaValue)
-  , "lastUpdated"  timestamptz  not null   -- The timestamp for when the record was last updated. (TILDA.TildaFormulaValue)
+  , "created"      timestamptz  not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.TildaFormulaValue)
+  , "lastUpdated"  timestamptz  not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.TildaFormulaValue)
   , "deleted"      timestamptz             -- The timestamp for when the record was deleted. (TILDA.TildaFormulaValue)
   , PRIMARY KEY("viewName", "formulaName", "value")
  );
@@ -858,8 +901,8 @@ create table if not exists TILDA.TildaFormulaReference -- DEPRECATED: DO NOT USE
   , "referenceName"  varchar(64)   not null   -- DEPRECATED: DO NOT USE! The name of the column or other formula refence
   , "referenceType"  character(4)  not null   -- DEPRECATED: DO NOT USE! The type of the refence
   , "description"    text          not null   -- DEPRECATED: DO NOT USE! The description of the reference
-  , "created"        timestamptz   not null   -- The timestamp for when the record was created. (TILDA.TildaFormulaReference)
-  , "lastUpdated"    timestamptz   not null   -- The timestamp for when the record was last updated. (TILDA.TildaFormulaReference)
+  , "created"        timestamptz   not null DEFAULT now()   -- The timestamp for when the record was created. (TILDA.TildaFormulaReference)
+  , "lastUpdated"    timestamptz   not null DEFAULT now()   -- The timestamp for when the record was last updated. (TILDA.TildaFormulaReference)
   , "deleted"        timestamptz              -- The timestamp for when the record was deleted. (TILDA.TildaFormulaReference)
   , PRIMARY KEY("viewName", "formulaName", "referenceName", "referenceType")
  );
@@ -1014,6 +1057,8 @@ select /*DoFormulasSuperView*/
      , "a8b" -- COLUMN
      , "a9TZ" -- COLUMN
      , "a9" -- COLUMN
+     , "a9a1TZ" -- COLUMN
+     , "a9a1" -- COLUMN
      , "a9bTZ" -- COLUMN
      , "a9b" -- COLUMN
      , "a9c" -- COLUMN
@@ -1074,6 +1119,8 @@ select TILDA.Testing."refnum" as "refnum" -- The primary key for this record
      , TILDA.Testing."a8b" as "a8b" -- The blah
      , trim(TILDA.Testing."a9TZ") as "a9TZ" -- Generated helper column to hold the time zone ID for 'a9'.
      , TILDA.Testing."a9" as "a9" -- The blah
+     , trim(TILDA.Testing."a9a1TZ") as "a9a1TZ" -- Generated helper column to hold the time zone ID for 'a9a1'.
+     , TILDA.Testing."a9a1" as "a9a1" -- The blah
      , TILDA.Testing."a9bTZ" as "a9bTZ" -- Generated helper column to hold the time zone ID for 'a9b'.
      , TILDA.Testing."a9b" as "a9b" -- The blah
      , TILDA.Testing."a9c" as "a9c" -- The blah
@@ -1088,7 +1135,7 @@ select TILDA.Testing."refnum" as "refnum" -- The primary key for this record
  where (TILDA.Testing."deleted" is null)
 
       ) as T;
--- Realized as /*genRealizedColumnList*/"refnum" -- COLUMN ,"name" -- COLUMN ,"lastUpdated" -- COLUMN ,"xxxLastUpdated" -- COLUMN -- "created" -- VIEW-EXCLUDED ,"a1" -- COLUMN -- "a3" -- BLOCKED ,"a3b" -- COLUMN ,"a4" -- COLUMN ,"a4b" -- COLUMN ,"a5" -- COLUMN ,"a5b" -- COLUMN -- "a6" -- BLOCKED -- "a6b" -- BLOCKED -- "a6c" -- BLOCKED -- "a6dTZ" -- BLOCKED -- "a6d" -- BLOCKED ,"a7" -- COLUMN ,"a7b" -- COLUMN ,"a8" -- COLUMN ,"a8bTZ" -- COLUMN ,"a8b" -- COLUMN -- "a9TZ" -- REALIZE-EXCLUDED -- "a9" -- REALIZE-EXCLUDED -- "a9bTZ" -- REALIZE-EXCLUDED -- "a9b" -- REALIZE-EXCLUDED -- "a9c" -- REALIZE-EXCLUDED -- "a9d" -- REALIZE-EXCLUDED ,"description" -- COLUMN ,"desc2" -- COLUMN ,"desc3" -- COLUMN ,"desc4" -- COLUMN ,"desc5" -- COLUMN ,"desc6" -- COLUMN ,"a3" -- FORMULA ,"bastille" -- FORMULA ,"toto" -- FORMULA ,"desc2_Cat1" -- FORMULA ,"desc2_Cat2" -- FORMULA ,"desc2_Cat3" -- FORMULA ,"a7_Cat4" -- FORMULA ,"a7_Cat5" -- FORMULA ,"a5_null" -- FORMULA ,"a6_null" -- FORMULA ,"a7_null" -- FORMULA ,"a8_null" -- FORMULA
+-- Realized as /*genRealizedColumnList*/"refnum" -- COLUMN ,"name" -- COLUMN ,"lastUpdated" -- COLUMN ,"xxxLastUpdated" -- COLUMN -- "created" -- VIEW-EXCLUDED ,"a1" -- COLUMN -- "a3" -- BLOCKED ,"a3b" -- COLUMN ,"a4" -- COLUMN ,"a4b" -- COLUMN ,"a5" -- COLUMN ,"a5b" -- COLUMN -- "a6" -- BLOCKED -- "a6b" -- BLOCKED -- "a6c" -- BLOCKED -- "a6dTZ" -- BLOCKED -- "a6d" -- BLOCKED ,"a7" -- COLUMN ,"a7b" -- COLUMN ,"a8" -- COLUMN ,"a8bTZ" -- COLUMN ,"a8b" -- COLUMN -- "a9TZ" -- REALIZE-EXCLUDED -- "a9" -- REALIZE-EXCLUDED -- "a9a1TZ" -- REALIZE-EXCLUDED -- "a9a1" -- REALIZE-EXCLUDED -- "a9bTZ" -- REALIZE-EXCLUDED -- "a9b" -- REALIZE-EXCLUDED -- "a9c" -- REALIZE-EXCLUDED -- "a9d" -- REALIZE-EXCLUDED ,"description" -- COLUMN ,"desc2" -- COLUMN ,"desc3" -- COLUMN ,"desc4" -- COLUMN ,"desc5" -- COLUMN ,"desc6" -- COLUMN ,"a3" -- FORMULA ,"bastille" -- FORMULA ,"toto" -- FORMULA ,"desc2_Cat1" -- FORMULA ,"desc2_Cat2" -- FORMULA ,"desc2_Cat3" -- FORMULA ,"a7_Cat4" -- FORMULA ,"a7_Cat5" -- FORMULA ,"a5_null" -- FORMULA ,"a6_null" -- FORMULA ,"a7_null" -- FORMULA ,"a8_null" -- FORMULA
 ;
 
 DROP FUNCTION IF EXISTS TILDA.Refill_Testing2Realized();
@@ -1120,6 +1167,8 @@ BEGIN
           ,"a8b" -- COLUMN
           -- "a9TZ" -- REALIZE-EXCLUDED
           -- "a9" -- REALIZE-EXCLUDED
+          -- "a9a1TZ" -- REALIZE-EXCLUDED
+          -- "a9a1" -- REALIZE-EXCLUDED
           -- "a9bTZ" -- REALIZE-EXCLUDED
           -- "a9b" -- REALIZE-EXCLUDED
           -- "a9c" -- REALIZE-EXCLUDED
@@ -1152,7 +1201,7 @@ END; $$
 LANGUAGE PLPGSQL;
 
 -- SELECT TILDA.Refill_Testing2Realized();-- !!! THIS MAY TAKE SEVERAL MINUTES !!! --
-COMMENT ON VIEW TILDA.Testing2View IS E'create or replace view TILDA.Testing2View as \nselect /*DoFormulasSuperView*/\n"refnum" -- COLUMN\n     , "name" -- COLUMN\n     , "lastUpdated" -- COLUMN\n     , "xxxLastUpdated" -- COLUMN\n     , "a1" -- COLUMN\n--     "a3"  BLOCKED\n     , "a3b" -- COLUMN\n     , "a4" -- COLUMN\n     , "a4b" -- COLUMN\n     , "a5" -- COLUMN\n     , "a5b" -- COLUMN\n--     "a6"  BLOCKED\n--     "a6b"  BLOCKED\n--     "a6c"  BLOCKED\n--     "a6dTZ"  BLOCKED\n--     "a6d"  BLOCKED\n     , "a7" -- COLUMN\n     , "a7b" -- COLUMN\n     , "a8" -- COLUMN\n     , "a8bTZ" -- COLUMN\n     , "a8b" -- COLUMN\n     , "a9TZ" -- COLUMN\n     , "a9" -- COLUMN\n     , "a9bTZ" -- COLUMN\n     , "a9b" -- COLUMN\n     , "a9c" -- COLUMN\n     , "a9d" -- COLUMN\n     , "description" -- COLUMN\n     , "desc2" -- COLUMN\n     , "desc3" -- COLUMN\n     , "desc4" -- COLUMN\n     , "desc5" -- COLUMN\n     , "desc6" -- COLUMN\n     -- Blah...\n     , (NOT "a3")::boolean as "a3"\n     -- Blah...\n     , (''1789-07-14'')::timestamptz as "bastille"\n     -- Blah...\n     , (''2018-08-10'')::timestamptz as "toto"\n     -- This formula checks whether the column ''desc2'' contains the values ''a'', ''b'', ''c'' for the View TILDA.Testing2View.\n     , (case when "desc2"  in (''a'', ''b'', ''c'') then 1 else 0 end)::double precision as "desc2_Cat1"\n     -- This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDA.Testing2View.\n     , (case when "desc2"  in (''x'', ''y'', ''z'') then 1 else 0 end)::double precision as "desc2_Cat2"\n     -- This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDA.Testing2View.\n     , (case when "desc2"  in (''x'', ''y'', ''z'') then 1 else 0 end)::double precision as "desc2_Cat3"\n     -- This formula checks whether the column ''a7'' value falls in the range of 0.0 and 10.0.\n     , (case when coalesce("a7", 0) >= 0.0 and coalesce("a7", 0) < 10.0 then 1 else 0 end)::double precision as "a7_Cat4"\n     -- This formula checks whether the column ''a7'' value falls in the range of 10.0 and 20.0.\n     , (case when coalesce("a7", 0) >= 10.0 and coalesce("a7", 0) < 20.0 then 1 else 0 end)::double precision as "a7_Cat5"\n     -- Whether a5 is null or not\n     , (case when "a5" is null then 1 when "a5" is not null then 0 end)::integer as "a5_null"\n     -- Whether a6 is null or not\n     , (case when "a6" is null then 1 when "a6" is not null then 0 end)::integer as "a6_null"\n     -- Whether a7 is null or not\n     , (case when "a7" is null then 1 when "a7" is not null then 0 end)::integer as "a7_null"\n     -- Whether a8 is null or not\n     , (case when "a8" is null then 1 when "a8" is not null then 0 end)::integer as "a8_null"\n\n from (\n-- ''A test view to test .* and exclude and block.''\nselect TILDA.Testing."refnum" as "refnum" -- The primary key for this record\n     , TILDA.Testing."name" as "name" -- Medical system unique enterprise id\n     , TILDA.Testing."lastUpdated" as "lastUpdated" -- The timestamp for when the record was last updated. (TILDA.Testing)\n     , TILDA.Testing."lastUpdated" as "xxxLastUpdated" -- The timestamp for when the record was last updated. (TILDA.Testing)\n     , TILDA.Testing."a1" as "a1" -- The blah\n     , TILDA.Testing."a3" as "a3" -- The blah -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing."a3b" as "a3b" -- The blah\n     , TILDA.Testing."a4" as "a4" -- The blah\n     , TILDA.Testing."a4b" as "a4b" -- The blah\n     , TILDA.Testing."a5" as "a5" -- The blah\n     , TILDA.Testing."a5b" as "a5b" -- The blah\n     , TILDA.Testing."a6" as "a6" -- The blah -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing."a6b" as "a6b" -- The blah -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing."a6c" as "a6c" -- The blah -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , trim(TILDA.Testing."a6dTZ") as "a6dTZ" -- Generated helper column to hold the time zone ID for ''a6d''. -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing."a6d" as "a6d" -- The blah -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing."a7" as "a7" -- The blah\n     , TILDA.Testing."a7b" as "a7b" -- The blah\n     , TILDA.Testing."a8" as "a8" -- The blah\n     , trim(TILDA.Testing."a8bTZ") as "a8bTZ" -- Generated helper column to hold the time zone ID for ''a8b''.\n     , TILDA.Testing."a8b" as "a8b" -- The blah\n     , trim(TILDA.Testing."a9TZ") as "a9TZ" -- Generated helper column to hold the time zone ID for ''a9''.\n     , TILDA.Testing."a9" as "a9" -- The blah\n     , TILDA.Testing."a9bTZ" as "a9bTZ" -- Generated helper column to hold the time zone ID for ''a9b''.\n     , TILDA.Testing."a9b" as "a9b" -- The blah\n     , TILDA.Testing."a9c" as "a9c" -- The blah\n     , TILDA.Testing."a9d" as "a9d" -- The blah\n     , TILDA.Testing."description" as "description" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDA.Testing."desc2" as "desc2" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDA.Testing."desc3" as "desc3" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDA.Testing."desc4" as "desc4" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDA.Testing."desc5" as "desc5" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDA.Testing."desc6" as "desc6" -- The title for a person, i.e., Mr, Miss, Mrs...\n  from TILDA.Testing\n where (TILDA.Testing."deleted" is null)\n\n      ) as T;\n-- Realized as /*genRealizedColumnList*/"refnum" -- COLUMN ,"name" -- COLUMN ,"lastUpdated" -- COLUMN ,"xxxLastUpdated" -- COLUMN -- "created" -- VIEW-EXCLUDED ,"a1" -- COLUMN -- "a3" -- BLOCKED ,"a3b" -- COLUMN ,"a4" -- COLUMN ,"a4b" -- COLUMN ,"a5" -- COLUMN ,"a5b" -- COLUMN -- "a6" -- BLOCKED -- "a6b" -- BLOCKED -- "a6c" -- BLOCKED -- "a6dTZ" -- BLOCKED -- "a6d" -- BLOCKED ,"a7" -- COLUMN ,"a7b" -- COLUMN ,"a8" -- COLUMN ,"a8bTZ" -- COLUMN ,"a8b" -- COLUMN -- "a9TZ" -- REALIZE-EXCLUDED -- "a9" -- REALIZE-EXCLUDED -- "a9bTZ" -- REALIZE-EXCLUDED -- "a9b" -- REALIZE-EXCLUDED -- "a9c" -- REALIZE-EXCLUDED -- "a9d" -- REALIZE-EXCLUDED ,"description" -- COLUMN ,"desc2" -- COLUMN ,"desc3" -- COLUMN ,"desc4" -- COLUMN ,"desc5" -- COLUMN ,"desc6" -- COLUMN ,"a3" -- FORMULA ,"bastille" -- FORMULA ,"toto" -- FORMULA ,"desc2_Cat1" -- FORMULA ,"desc2_Cat2" -- FORMULA ,"desc2_Cat3" -- FORMULA ,"a7_Cat4" -- FORMULA ,"a7_Cat5" -- FORMULA ,"a5_null" -- FORMULA ,"a6_null" -- FORMULA ,"a7_null" -- FORMULA ,"a8_null" -- FORMULA\n;\n\nDROP FUNCTION IF EXISTS TILDA.Refill_Testing2Realized();\nCREATE OR REPLACE FUNCTION TILDA.Refill_Testing2Realized() RETURNS boolean AS $$\nBEGIN\n  TRUNCATE TILDA.Testing2Realized;\n  INSERT INTO TILDA.Testing2Realized ("refnum", "name", "lastUpdated", "xxxLastUpdated", "a1", "a3b", "a4", "a4b", "a5", "a5b", "a7", "a7b", "a8", "a8bTZ", "a8b", "description", "desc2", "desc3", "desc4", "desc5", "desc6", "a3", "bastille", "toto", "desc2_Cat1", "desc2_Cat2", "desc2_Cat3", "a7_Cat4", "a7_Cat5", "a5_null", "a6_null", "a7_null", "a8_null")\n     SELECT /*genRealizedColumnList*/"refnum" -- COLUMN\n          ,"name" -- COLUMN\n          ,"lastUpdated" -- COLUMN\n          ,"xxxLastUpdated" -- COLUMN\n          -- "created" -- VIEW-EXCLUDED\n          ,"a1" -- COLUMN\n          -- "a3" -- BLOCKED\n          ,"a3b" -- COLUMN\n          ,"a4" -- COLUMN\n          ,"a4b" -- COLUMN\n          ,"a5" -- COLUMN\n          ,"a5b" -- COLUMN\n          -- "a6" -- BLOCKED\n          -- "a6b" -- BLOCKED\n          -- "a6c" -- BLOCKED\n          -- "a6dTZ" -- BLOCKED\n          -- "a6d" -- BLOCKED\n          ,"a7" -- COLUMN\n          ,"a7b" -- COLUMN\n          ,"a8" -- COLUMN\n          ,"a8bTZ" -- COLUMN\n          ,"a8b" -- COLUMN\n          -- "a9TZ" -- REALIZE-EXCLUDED\n          -- "a9" -- REALIZE-EXCLUDED\n          -- "a9bTZ" -- REALIZE-EXCLUDED\n          -- "a9b" -- REALIZE-EXCLUDED\n          -- "a9c" -- REALIZE-EXCLUDED\n          -- "a9d" -- REALIZE-EXCLUDED\n          ,"description" -- COLUMN\n          ,"desc2" -- COLUMN\n          ,"desc3" -- COLUMN\n          ,"desc4" -- COLUMN\n          ,"desc5" -- COLUMN\n          ,"desc6" -- COLUMN\n          ,"a3" -- FORMULA\n          ,"bastille" -- FORMULA\n          ,"toto" -- FORMULA\n          ,"desc2_Cat1" -- FORMULA\n          ,"desc2_Cat2" -- FORMULA\n          ,"desc2_Cat3" -- FORMULA\n          ,"a7_Cat4" -- FORMULA\n          ,"a7_Cat5" -- FORMULA\n          ,"a5_null" -- FORMULA\n          ,"a6_null" -- FORMULA\n          ,"a7_null" -- FORMULA\n          ,"a8_null" -- FORMULA\n     FROM TILDA.Testing2View;\n  GRANT ALL ON TILDA.Testing2Realized TO tilda_app;\n  GRANT SELECT ON TILDA.Testing2Realized TO tilda_read_only;\n  GRANT SELECT ON TILDA.Testing2Realized TO tilda_reporting;\n  ANALYZE TILDA.Testing2Realized;\n  return true;\nEND; $$\nLANGUAGE PLPGSQL;\n\n-- SELECT TILDA.Refill_Testing2Realized();-- !!! THIS MAY TAKE SEVERAL MINUTES !!! --';
+COMMENT ON VIEW TILDA.Testing2View IS E'create or replace view TILDA.Testing2View as \nselect /*DoFormulasSuperView*/\n"refnum" -- COLUMN\n     , "name" -- COLUMN\n     , "lastUpdated" -- COLUMN\n     , "xxxLastUpdated" -- COLUMN\n     , "a1" -- COLUMN\n--     "a3"  BLOCKED\n     , "a3b" -- COLUMN\n     , "a4" -- COLUMN\n     , "a4b" -- COLUMN\n     , "a5" -- COLUMN\n     , "a5b" -- COLUMN\n--     "a6"  BLOCKED\n--     "a6b"  BLOCKED\n--     "a6c"  BLOCKED\n--     "a6dTZ"  BLOCKED\n--     "a6d"  BLOCKED\n     , "a7" -- COLUMN\n     , "a7b" -- COLUMN\n     , "a8" -- COLUMN\n     , "a8bTZ" -- COLUMN\n     , "a8b" -- COLUMN\n     , "a9TZ" -- COLUMN\n     , "a9" -- COLUMN\n     , "a9a1TZ" -- COLUMN\n     , "a9a1" -- COLUMN\n     , "a9bTZ" -- COLUMN\n     , "a9b" -- COLUMN\n     , "a9c" -- COLUMN\n     , "a9d" -- COLUMN\n     , "description" -- COLUMN\n     , "desc2" -- COLUMN\n     , "desc3" -- COLUMN\n     , "desc4" -- COLUMN\n     , "desc5" -- COLUMN\n     , "desc6" -- COLUMN\n     -- Blah...\n     , (NOT "a3")::boolean as "a3"\n     -- Blah...\n     , (''1789-07-14'')::timestamptz as "bastille"\n     -- Blah...\n     , (''2018-08-10'')::timestamptz as "toto"\n     -- This formula checks whether the column ''desc2'' contains the values ''a'', ''b'', ''c'' for the View TILDA.Testing2View.\n     , (case when "desc2"  in (''a'', ''b'', ''c'') then 1 else 0 end)::double precision as "desc2_Cat1"\n     -- This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDA.Testing2View.\n     , (case when "desc2"  in (''x'', ''y'', ''z'') then 1 else 0 end)::double precision as "desc2_Cat2"\n     -- This formula checks whether the column ''desc2'' contains the values ''x'', ''y'', ''z'' for the View TILDA.Testing2View.\n     , (case when "desc2"  in (''x'', ''y'', ''z'') then 1 else 0 end)::double precision as "desc2_Cat3"\n     -- This formula checks whether the column ''a7'' value falls in the range of 0.0 and 10.0.\n     , (case when coalesce("a7", 0) >= 0.0 and coalesce("a7", 0) < 10.0 then 1 else 0 end)::double precision as "a7_Cat4"\n     -- This formula checks whether the column ''a7'' value falls in the range of 10.0 and 20.0.\n     , (case when coalesce("a7", 0) >= 10.0 and coalesce("a7", 0) < 20.0 then 1 else 0 end)::double precision as "a7_Cat5"\n     -- Whether a5 is null or not\n     , (case when "a5" is null then 1 when "a5" is not null then 0 end)::integer as "a5_null"\n     -- Whether a6 is null or not\n     , (case when "a6" is null then 1 when "a6" is not null then 0 end)::integer as "a6_null"\n     -- Whether a7 is null or not\n     , (case when "a7" is null then 1 when "a7" is not null then 0 end)::integer as "a7_null"\n     -- Whether a8 is null or not\n     , (case when "a8" is null then 1 when "a8" is not null then 0 end)::integer as "a8_null"\n\n from (\n-- ''A test view to test .* and exclude and block.''\nselect TILDA.Testing."refnum" as "refnum" -- The primary key for this record\n     , TILDA.Testing."name" as "name" -- Medical system unique enterprise id\n     , TILDA.Testing."lastUpdated" as "lastUpdated" -- The timestamp for when the record was last updated. (TILDA.Testing)\n     , TILDA.Testing."lastUpdated" as "xxxLastUpdated" -- The timestamp for when the record was last updated. (TILDA.Testing)\n     , TILDA.Testing."a1" as "a1" -- The blah\n     , TILDA.Testing."a3" as "a3" -- The blah -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing."a3b" as "a3b" -- The blah\n     , TILDA.Testing."a4" as "a4" -- The blah\n     , TILDA.Testing."a4b" as "a4b" -- The blah\n     , TILDA.Testing."a5" as "a5" -- The blah\n     , TILDA.Testing."a5b" as "a5b" -- The blah\n     , TILDA.Testing."a6" as "a6" -- The blah -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing."a6b" as "a6b" -- The blah -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing."a6c" as "a6c" -- The blah -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , trim(TILDA.Testing."a6dTZ") as "a6dTZ" -- Generated helper column to hold the time zone ID for ''a6d''. -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing."a6d" as "a6d" -- The blah -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing."a7" as "a7" -- The blah\n     , TILDA.Testing."a7b" as "a7b" -- The blah\n     , TILDA.Testing."a8" as "a8" -- The blah\n     , trim(TILDA.Testing."a8bTZ") as "a8bTZ" -- Generated helper column to hold the time zone ID for ''a8b''.\n     , TILDA.Testing."a8b" as "a8b" -- The blah\n     , trim(TILDA.Testing."a9TZ") as "a9TZ" -- Generated helper column to hold the time zone ID for ''a9''.\n     , TILDA.Testing."a9" as "a9" -- The blah\n     , trim(TILDA.Testing."a9a1TZ") as "a9a1TZ" -- Generated helper column to hold the time zone ID for ''a9a1''.\n     , TILDA.Testing."a9a1" as "a9a1" -- The blah\n     , TILDA.Testing."a9bTZ" as "a9bTZ" -- Generated helper column to hold the time zone ID for ''a9b''.\n     , TILDA.Testing."a9b" as "a9b" -- The blah\n     , TILDA.Testing."a9c" as "a9c" -- The blah\n     , TILDA.Testing."a9d" as "a9d" -- The blah\n     , TILDA.Testing."description" as "description" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDA.Testing."desc2" as "desc2" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDA.Testing."desc3" as "desc3" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDA.Testing."desc4" as "desc4" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDA.Testing."desc5" as "desc5" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDA.Testing."desc6" as "desc6" -- The title for a person, i.e., Mr, Miss, Mrs...\n  from TILDA.Testing\n where (TILDA.Testing."deleted" is null)\n\n      ) as T;\n-- Realized as /*genRealizedColumnList*/"refnum" -- COLUMN ,"name" -- COLUMN ,"lastUpdated" -- COLUMN ,"xxxLastUpdated" -- COLUMN -- "created" -- VIEW-EXCLUDED ,"a1" -- COLUMN -- "a3" -- BLOCKED ,"a3b" -- COLUMN ,"a4" -- COLUMN ,"a4b" -- COLUMN ,"a5" -- COLUMN ,"a5b" -- COLUMN -- "a6" -- BLOCKED -- "a6b" -- BLOCKED -- "a6c" -- BLOCKED -- "a6dTZ" -- BLOCKED -- "a6d" -- BLOCKED ,"a7" -- COLUMN ,"a7b" -- COLUMN ,"a8" -- COLUMN ,"a8bTZ" -- COLUMN ,"a8b" -- COLUMN -- "a9TZ" -- REALIZE-EXCLUDED -- "a9" -- REALIZE-EXCLUDED -- "a9a1TZ" -- REALIZE-EXCLUDED -- "a9a1" -- REALIZE-EXCLUDED -- "a9bTZ" -- REALIZE-EXCLUDED -- "a9b" -- REALIZE-EXCLUDED -- "a9c" -- REALIZE-EXCLUDED -- "a9d" -- REALIZE-EXCLUDED ,"description" -- COLUMN ,"desc2" -- COLUMN ,"desc3" -- COLUMN ,"desc4" -- COLUMN ,"desc5" -- COLUMN ,"desc6" -- COLUMN ,"a3" -- FORMULA ,"bastille" -- FORMULA ,"toto" -- FORMULA ,"desc2_Cat1" -- FORMULA ,"desc2_Cat2" -- FORMULA ,"desc2_Cat3" -- FORMULA ,"a7_Cat4" -- FORMULA ,"a7_Cat5" -- FORMULA ,"a5_null" -- FORMULA ,"a6_null" -- FORMULA ,"a7_null" -- FORMULA ,"a8_null" -- FORMULA\n;\n\nDROP FUNCTION IF EXISTS TILDA.Refill_Testing2Realized();\nCREATE OR REPLACE FUNCTION TILDA.Refill_Testing2Realized() RETURNS boolean AS $$\nBEGIN\n  TRUNCATE TILDA.Testing2Realized;\n  INSERT INTO TILDA.Testing2Realized ("refnum", "name", "lastUpdated", "xxxLastUpdated", "a1", "a3b", "a4", "a4b", "a5", "a5b", "a7", "a7b", "a8", "a8bTZ", "a8b", "description", "desc2", "desc3", "desc4", "desc5", "desc6", "a3", "bastille", "toto", "desc2_Cat1", "desc2_Cat2", "desc2_Cat3", "a7_Cat4", "a7_Cat5", "a5_null", "a6_null", "a7_null", "a8_null")\n     SELECT /*genRealizedColumnList*/"refnum" -- COLUMN\n          ,"name" -- COLUMN\n          ,"lastUpdated" -- COLUMN\n          ,"xxxLastUpdated" -- COLUMN\n          -- "created" -- VIEW-EXCLUDED\n          ,"a1" -- COLUMN\n          -- "a3" -- BLOCKED\n          ,"a3b" -- COLUMN\n          ,"a4" -- COLUMN\n          ,"a4b" -- COLUMN\n          ,"a5" -- COLUMN\n          ,"a5b" -- COLUMN\n          -- "a6" -- BLOCKED\n          -- "a6b" -- BLOCKED\n          -- "a6c" -- BLOCKED\n          -- "a6dTZ" -- BLOCKED\n          -- "a6d" -- BLOCKED\n          ,"a7" -- COLUMN\n          ,"a7b" -- COLUMN\n          ,"a8" -- COLUMN\n          ,"a8bTZ" -- COLUMN\n          ,"a8b" -- COLUMN\n          -- "a9TZ" -- REALIZE-EXCLUDED\n          -- "a9" -- REALIZE-EXCLUDED\n          -- "a9a1TZ" -- REALIZE-EXCLUDED\n          -- "a9a1" -- REALIZE-EXCLUDED\n          -- "a9bTZ" -- REALIZE-EXCLUDED\n          -- "a9b" -- REALIZE-EXCLUDED\n          -- "a9c" -- REALIZE-EXCLUDED\n          -- "a9d" -- REALIZE-EXCLUDED\n          ,"description" -- COLUMN\n          ,"desc2" -- COLUMN\n          ,"desc3" -- COLUMN\n          ,"desc4" -- COLUMN\n          ,"desc5" -- COLUMN\n          ,"desc6" -- COLUMN\n          ,"a3" -- FORMULA\n          ,"bastille" -- FORMULA\n          ,"toto" -- FORMULA\n          ,"desc2_Cat1" -- FORMULA\n          ,"desc2_Cat2" -- FORMULA\n          ,"desc2_Cat3" -- FORMULA\n          ,"a7_Cat4" -- FORMULA\n          ,"a7_Cat5" -- FORMULA\n          ,"a5_null" -- FORMULA\n          ,"a6_null" -- FORMULA\n          ,"a7_null" -- FORMULA\n          ,"a8_null" -- FORMULA\n     FROM TILDA.Testing2View;\n  GRANT ALL ON TILDA.Testing2Realized TO tilda_app;\n  GRANT SELECT ON TILDA.Testing2Realized TO tilda_read_only;\n  GRANT SELECT ON TILDA.Testing2Realized TO tilda_reporting;\n  ANALYZE TILDA.Testing2Realized;\n  return true;\nEND; $$\nLANGUAGE PLPGSQL;\n\n-- SELECT TILDA.Refill_Testing2Realized();-- !!! THIS MAY TAKE SEVERAL MINUTES !!! --';
 
 COMMENT ON COLUMN TILDA.Testing2View."refnum" IS E'The primary key for this record';
 COMMENT ON COLUMN TILDA.Testing2View."name" IS E'Medical system unique enterprise id';
@@ -1171,6 +1220,8 @@ COMMENT ON COLUMN TILDA.Testing2View."a8bTZ" IS E'Generated helper column to hol
 COMMENT ON COLUMN TILDA.Testing2View."a8b" IS E'The blah';
 COMMENT ON COLUMN TILDA.Testing2View."a9TZ" IS E'Generated helper column to hold the time zone ID for ''a9''.';
 COMMENT ON COLUMN TILDA.Testing2View."a9" IS E'The blah';
+COMMENT ON COLUMN TILDA.Testing2View."a9a1TZ" IS E'Generated helper column to hold the time zone ID for ''a9a1''.';
+COMMENT ON COLUMN TILDA.Testing2View."a9a1" IS E'The blah';
 COMMENT ON COLUMN TILDA.Testing2View."a9bTZ" IS E'Generated helper column to hold the time zone ID for ''a9b''.';
 COMMENT ON COLUMN TILDA.Testing2View."a9b" IS E'The blah';
 COMMENT ON COLUMN TILDA.Testing2View."a9c" IS E'The blah';
@@ -1334,6 +1385,8 @@ select /*DoFormulasSuperView*/
      , "a8b" -- COLUMN
      , "a9TZ" -- COLUMN
      , "a9" -- COLUMN
+     , "a9a1TZ" -- COLUMN
+     , "a9a1" -- COLUMN
      , "a9bTZ" -- COLUMN
      , "a9b" -- COLUMN
      , "a9c" -- COLUMN
@@ -1380,6 +1433,8 @@ select TILDA.Testing2View."refnum" as "refnum" -- The primary key for this recor
      , TILDA.Testing2View."a8b" as "a8b" -- The blah
      , trim(TILDA.Testing2View."a9TZ") as "a9TZ" -- Generated helper column to hold the time zone ID for 'a9'.
      , TILDA.Testing2View."a9" as "a9" -- The blah
+     , trim(TILDA.Testing2View."a9a1TZ") as "a9a1TZ" -- Generated helper column to hold the time zone ID for 'a9a1'.
+     , TILDA.Testing2View."a9a1" as "a9a1" -- The blah
      , TILDA.Testing2View."a9bTZ" as "a9bTZ" -- Generated helper column to hold the time zone ID for 'a9b'.
      , TILDA.Testing2View."a9b" as "a9b" -- The blah
      , TILDA.Testing2View."a9c" as "a9c" -- The blah
@@ -1405,14 +1460,14 @@ select TILDA.Testing2View."refnum" as "refnum" -- The primary key for this recor
   from TILDA.Testing2View
 
       ) as T;
--- Realized as /*genRealizedColumnList*/"refnum" -- COLUMN ,"name" -- COLUMN -- "lastUpdated" -- BLOCKED -- "xxxLastUpdated" -- BLOCKED ,"a1" -- COLUMN ,"a3b" -- COLUMN ,"a4" -- COLUMN ,"a4b" -- COLUMN ,"a5" -- COLUMN ,"a5b" -- COLUMN ,"a7" -- COLUMN ,"a7b" -- COLUMN ,"a8" -- COLUMN ,"a8bTZ" -- COLUMN ,"a8b" -- COLUMN ,"a9TZ" -- COLUMN ,"a9" -- COLUMN ,"a9bTZ" -- COLUMN ,"a9b" -- COLUMN ,"a9c" -- COLUMN ,"a9d" -- COLUMN ,"description" -- COLUMN ,"desc2" -- COLUMN ,"desc3" -- COLUMN ,"desc4" -- COLUMN ,"desc5" -- COLUMN ,"desc6" -- COLUMN -- "a3" -- BLOCKED ,"bastille" -- COLUMN ,"toto" -- COLUMN ,"desc2_Cat1" -- COLUMN ,"desc2_Cat2" -- COLUMN ,"desc2_Cat3" -- COLUMN ,"a7_Cat4" -- COLUMN ,"a7_Cat5" -- COLUMN ,"a5_null" -- COLUMN ,"a6_null" -- COLUMN ,"a7_null" -- COLUMN ,"a8_null" -- COLUMN ,"a3" -- FORMULA ,"lastUpdated" -- FORMULA
+-- Realized as /*genRealizedColumnList*/"refnum" -- COLUMN ,"name" -- COLUMN -- "lastUpdated" -- BLOCKED -- "xxxLastUpdated" -- BLOCKED ,"a1" -- COLUMN ,"a3b" -- COLUMN ,"a4" -- COLUMN ,"a4b" -- COLUMN ,"a5" -- COLUMN ,"a5b" -- COLUMN ,"a7" -- COLUMN ,"a7b" -- COLUMN ,"a8" -- COLUMN ,"a8bTZ" -- COLUMN ,"a8b" -- COLUMN ,"a9TZ" -- COLUMN ,"a9" -- COLUMN ,"a9a1TZ" -- COLUMN ,"a9a1" -- COLUMN ,"a9bTZ" -- COLUMN ,"a9b" -- COLUMN ,"a9c" -- COLUMN ,"a9d" -- COLUMN ,"description" -- COLUMN ,"desc2" -- COLUMN ,"desc3" -- COLUMN ,"desc4" -- COLUMN ,"desc5" -- COLUMN ,"desc6" -- COLUMN -- "a3" -- BLOCKED ,"bastille" -- COLUMN ,"toto" -- COLUMN ,"desc2_Cat1" -- COLUMN ,"desc2_Cat2" -- COLUMN ,"desc2_Cat3" -- COLUMN ,"a7_Cat4" -- COLUMN ,"a7_Cat5" -- COLUMN ,"a5_null" -- COLUMN ,"a6_null" -- COLUMN ,"a7_null" -- COLUMN ,"a8_null" -- COLUMN ,"a3" -- FORMULA ,"lastUpdated" -- FORMULA
 ;
 
 DROP FUNCTION IF EXISTS TILDA.Refill_Testing4Realized();
 CREATE OR REPLACE FUNCTION TILDA.Refill_Testing4Realized() RETURNS boolean AS $$
 BEGIN
   TRUNCATE TILDA.Testing4Realized;
-  INSERT INTO TILDA.Testing4Realized ("refnum", "name", "a1", "a3b", "a4", "a4b", "a5", "a5b", "a7", "a7b", "a8", "a8bTZ", "a8b", "a9TZ", "a9", "a9bTZ", "a9b", "a9c", "a9d", "description", "desc2", "desc3", "desc4", "desc5", "desc6", "bastille", "toto", "desc2_Cat1", "desc2_Cat2", "desc2_Cat3", "a7_Cat4", "a7_Cat5", "a5_null", "a6_null", "a7_null", "a8_null", "a3", "lastUpdated")
+  INSERT INTO TILDA.Testing4Realized ("refnum", "name", "a1", "a3b", "a4", "a4b", "a5", "a5b", "a7", "a7b", "a8", "a8bTZ", "a8b", "a9TZ", "a9", "a9a1TZ", "a9a1", "a9bTZ", "a9b", "a9c", "a9d", "description", "desc2", "desc3", "desc4", "desc5", "desc6", "bastille", "toto", "desc2_Cat1", "desc2_Cat2", "desc2_Cat3", "a7_Cat4", "a7_Cat5", "a5_null", "a6_null", "a7_null", "a8_null", "a3", "lastUpdated")
      SELECT /*genRealizedColumnList*/"refnum" -- COLUMN
           ,"name" -- COLUMN
           -- "lastUpdated" -- BLOCKED
@@ -1430,6 +1485,8 @@ BEGIN
           ,"a8b" -- COLUMN
           ,"a9TZ" -- COLUMN
           ,"a9" -- COLUMN
+          ,"a9a1TZ" -- COLUMN
+          ,"a9a1" -- COLUMN
           ,"a9bTZ" -- COLUMN
           ,"a9b" -- COLUMN
           ,"a9c" -- COLUMN
@@ -1464,7 +1521,7 @@ END; $$
 LANGUAGE PLPGSQL;
 
 -- SELECT TILDA.Refill_Testing4Realized();-- !!! THIS MAY TAKE SEVERAL MINUTES !!! --
-COMMENT ON VIEW TILDA.Testing4View IS E'create or replace view TILDA.Testing4View as \nselect /*DoFormulasSuperView*/\n"refnum" -- COLUMN\n     , "name" -- COLUMN\n--     "lastUpdated"  BLOCKED\n--     "xxxLastUpdated"  BLOCKED\n     , "a1" -- COLUMN\n     , "a3b" -- COLUMN\n     , "a4" -- COLUMN\n     , "a4b" -- COLUMN\n     , "a5" -- COLUMN\n     , "a5b" -- COLUMN\n     , "a7" -- COLUMN\n     , "a7b" -- COLUMN\n     , "a8" -- COLUMN\n     , "a8bTZ" -- COLUMN\n     , "a8b" -- COLUMN\n     , "a9TZ" -- COLUMN\n     , "a9" -- COLUMN\n     , "a9bTZ" -- COLUMN\n     , "a9b" -- COLUMN\n     , "a9c" -- COLUMN\n     , "a9d" -- COLUMN\n     , "description" -- COLUMN\n     , "desc2" -- COLUMN\n     , "desc3" -- COLUMN\n     , "desc4" -- COLUMN\n     , "desc5" -- COLUMN\n     , "desc6" -- COLUMN\n--     "a3"  BLOCKED\n     , "bastille" -- COLUMN\n     , "toto" -- COLUMN\n     , "desc2_Cat1" -- COLUMN\n     , "desc2_Cat2" -- COLUMN\n     , "desc2_Cat3" -- COLUMN\n     , "a7_Cat4" -- COLUMN\n     , "a7_Cat5" -- COLUMN\n     , "a5_null" -- COLUMN\n     , "a6_null" -- COLUMN\n     , "a7_null" -- COLUMN\n     , "a8_null" -- COLUMN\n     -- Blah...\n     , (NOT "a3" OR A3)::boolean as "a3"\n     -- Blah...\n     , (GREATEST("lastUpdated", "xxxLastUpdated"))::timestamptz as "lastUpdated"\n\n from (\n-- ''A test view to test .* and exclude and block.''\nselect TILDA.Testing2View."refnum" as "refnum" -- The primary key for this record\n     , TILDA.Testing2View."name" as "name" -- Medical system unique enterprise id\n     , TILDA.Testing2View."lastUpdated" as "lastUpdated" -- The timestamp for when the record was last updated. (TILDA.Testing) -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing2View."xxxLastUpdated" as "xxxLastUpdated" -- The timestamp for when the record was last updated. (TILDA.Testing) -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing2View."a1" as "a1" -- The blah\n     , TILDA.Testing2View."a3b" as "a3b" -- The blah\n     , TILDA.Testing2View."a4" as "a4" -- The blah\n     , TILDA.Testing2View."a4b" as "a4b" -- The blah\n     , TILDA.Testing2View."a5" as "a5" -- The blah\n     , TILDA.Testing2View."a5b" as "a5b" -- The blah\n     , TILDA.Testing2View."a7" as "a7" -- The blah\n     , TILDA.Testing2View."a7b" as "a7b" -- The blah\n     , TILDA.Testing2View."a8" as "a8" -- The blah\n     , trim(TILDA.Testing2View."a8bTZ") as "a8bTZ" -- Generated helper column to hold the time zone ID for ''a8b''.\n     , TILDA.Testing2View."a8b" as "a8b" -- The blah\n     , trim(TILDA.Testing2View."a9TZ") as "a9TZ" -- Generated helper column to hold the time zone ID for ''a9''.\n     , TILDA.Testing2View."a9" as "a9" -- The blah\n     , TILDA.Testing2View."a9bTZ" as "a9bTZ" -- Generated helper column to hold the time zone ID for ''a9b''.\n     , TILDA.Testing2View."a9b" as "a9b" -- The blah\n     , TILDA.Testing2View."a9c" as "a9c" -- The blah\n     , TILDA.Testing2View."a9d" as "a9d" -- The blah\n     , TILDA.Testing2View."description" as "description" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDA.Testing2View."desc2" as "desc2" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDA.Testing2View."desc3" as "desc3" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDA.Testing2View."desc4" as "desc4" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDA.Testing2View."desc5" as "desc5" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDA.Testing2View."desc6" as "desc6" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDA.Testing2View."a3" as "a3" -- Formula column: Not A3 -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing2View."bastille" as "bastille" -- Formula column: Bastille Day\n     , TILDA.Testing2View."toto" as "toto" -- Formula column: Last Updated\n     , TILDA.Testing2View."desc2_Cat1" as "desc2_Cat1" -- Formula column: desc2_Cat1 Title\n     , TILDA.Testing2View."desc2_Cat2" as "desc2_Cat2" -- Formula column: desc2_Cat2 Title\n     , TILDA.Testing2View."desc2_Cat3" as "desc2_Cat3" -- Formula column: desc2_Cat3 Title\n     , TILDA.Testing2View."a7_Cat4" as "a7_Cat4" -- Formula column: a7_Cat4 Title\n     , TILDA.Testing2View."a7_Cat5" as "a7_Cat5" -- Formula column: a7_Cat5 Title\n     , TILDA.Testing2View."a5_null" as "a5_null" -- Formula column: Null a5\n     , TILDA.Testing2View."a6_null" as "a6_null" -- Formula column: Null a6\n     , TILDA.Testing2View."a7_null" as "a7_null" -- Formula column: Null a7\n     , TILDA.Testing2View."a8_null" as "a8_null" -- Formula column: Null a8\n  from TILDA.Testing2View\n\n      ) as T;\n-- Realized as /*genRealizedColumnList*/"refnum" -- COLUMN ,"name" -- COLUMN -- "lastUpdated" -- BLOCKED -- "xxxLastUpdated" -- BLOCKED ,"a1" -- COLUMN ,"a3b" -- COLUMN ,"a4" -- COLUMN ,"a4b" -- COLUMN ,"a5" -- COLUMN ,"a5b" -- COLUMN ,"a7" -- COLUMN ,"a7b" -- COLUMN ,"a8" -- COLUMN ,"a8bTZ" -- COLUMN ,"a8b" -- COLUMN ,"a9TZ" -- COLUMN ,"a9" -- COLUMN ,"a9bTZ" -- COLUMN ,"a9b" -- COLUMN ,"a9c" -- COLUMN ,"a9d" -- COLUMN ,"description" -- COLUMN ,"desc2" -- COLUMN ,"desc3" -- COLUMN ,"desc4" -- COLUMN ,"desc5" -- COLUMN ,"desc6" -- COLUMN -- "a3" -- BLOCKED ,"bastille" -- COLUMN ,"toto" -- COLUMN ,"desc2_Cat1" -- COLUMN ,"desc2_Cat2" -- COLUMN ,"desc2_Cat3" -- COLUMN ,"a7_Cat4" -- COLUMN ,"a7_Cat5" -- COLUMN ,"a5_null" -- COLUMN ,"a6_null" -- COLUMN ,"a7_null" -- COLUMN ,"a8_null" -- COLUMN ,"a3" -- FORMULA ,"lastUpdated" -- FORMULA\n;\n\nDROP FUNCTION IF EXISTS TILDA.Refill_Testing4Realized();\nCREATE OR REPLACE FUNCTION TILDA.Refill_Testing4Realized() RETURNS boolean AS $$\nBEGIN\n  TRUNCATE TILDA.Testing4Realized;\n  INSERT INTO TILDA.Testing4Realized ("refnum", "name", "a1", "a3b", "a4", "a4b", "a5", "a5b", "a7", "a7b", "a8", "a8bTZ", "a8b", "a9TZ", "a9", "a9bTZ", "a9b", "a9c", "a9d", "description", "desc2", "desc3", "desc4", "desc5", "desc6", "bastille", "toto", "desc2_Cat1", "desc2_Cat2", "desc2_Cat3", "a7_Cat4", "a7_Cat5", "a5_null", "a6_null", "a7_null", "a8_null", "a3", "lastUpdated")\n     SELECT /*genRealizedColumnList*/"refnum" -- COLUMN\n          ,"name" -- COLUMN\n          -- "lastUpdated" -- BLOCKED\n          -- "xxxLastUpdated" -- BLOCKED\n          ,"a1" -- COLUMN\n          ,"a3b" -- COLUMN\n          ,"a4" -- COLUMN\n          ,"a4b" -- COLUMN\n          ,"a5" -- COLUMN\n          ,"a5b" -- COLUMN\n          ,"a7" -- COLUMN\n          ,"a7b" -- COLUMN\n          ,"a8" -- COLUMN\n          ,"a8bTZ" -- COLUMN\n          ,"a8b" -- COLUMN\n          ,"a9TZ" -- COLUMN\n          ,"a9" -- COLUMN\n          ,"a9bTZ" -- COLUMN\n          ,"a9b" -- COLUMN\n          ,"a9c" -- COLUMN\n          ,"a9d" -- COLUMN\n          ,"description" -- COLUMN\n          ,"desc2" -- COLUMN\n          ,"desc3" -- COLUMN\n          ,"desc4" -- COLUMN\n          ,"desc5" -- COLUMN\n          ,"desc6" -- COLUMN\n          -- "a3" -- BLOCKED\n          ,"bastille" -- COLUMN\n          ,"toto" -- COLUMN\n          ,"desc2_Cat1" -- COLUMN\n          ,"desc2_Cat2" -- COLUMN\n          ,"desc2_Cat3" -- COLUMN\n          ,"a7_Cat4" -- COLUMN\n          ,"a7_Cat5" -- COLUMN\n          ,"a5_null" -- COLUMN\n          ,"a6_null" -- COLUMN\n          ,"a7_null" -- COLUMN\n          ,"a8_null" -- COLUMN\n          ,"a3" -- FORMULA\n          ,"lastUpdated" -- FORMULA\n     FROM TILDA.Testing4View;\n  GRANT ALL ON TILDA.Testing4Realized TO tilda_app;\n  GRANT SELECT ON TILDA.Testing4Realized TO tilda_read_only;\n  GRANT SELECT ON TILDA.Testing4Realized TO tilda_reporting;\n  ANALYZE TILDA.Testing4Realized;\n  return true;\nEND; $$\nLANGUAGE PLPGSQL;\n\n-- SELECT TILDA.Refill_Testing4Realized();-- !!! THIS MAY TAKE SEVERAL MINUTES !!! --';
+COMMENT ON VIEW TILDA.Testing4View IS E'create or replace view TILDA.Testing4View as \nselect /*DoFormulasSuperView*/\n"refnum" -- COLUMN\n     , "name" -- COLUMN\n--     "lastUpdated"  BLOCKED\n--     "xxxLastUpdated"  BLOCKED\n     , "a1" -- COLUMN\n     , "a3b" -- COLUMN\n     , "a4" -- COLUMN\n     , "a4b" -- COLUMN\n     , "a5" -- COLUMN\n     , "a5b" -- COLUMN\n     , "a7" -- COLUMN\n     , "a7b" -- COLUMN\n     , "a8" -- COLUMN\n     , "a8bTZ" -- COLUMN\n     , "a8b" -- COLUMN\n     , "a9TZ" -- COLUMN\n     , "a9" -- COLUMN\n     , "a9a1TZ" -- COLUMN\n     , "a9a1" -- COLUMN\n     , "a9bTZ" -- COLUMN\n     , "a9b" -- COLUMN\n     , "a9c" -- COLUMN\n     , "a9d" -- COLUMN\n     , "description" -- COLUMN\n     , "desc2" -- COLUMN\n     , "desc3" -- COLUMN\n     , "desc4" -- COLUMN\n     , "desc5" -- COLUMN\n     , "desc6" -- COLUMN\n--     "a3"  BLOCKED\n     , "bastille" -- COLUMN\n     , "toto" -- COLUMN\n     , "desc2_Cat1" -- COLUMN\n     , "desc2_Cat2" -- COLUMN\n     , "desc2_Cat3" -- COLUMN\n     , "a7_Cat4" -- COLUMN\n     , "a7_Cat5" -- COLUMN\n     , "a5_null" -- COLUMN\n     , "a6_null" -- COLUMN\n     , "a7_null" -- COLUMN\n     , "a8_null" -- COLUMN\n     -- Blah...\n     , (NOT "a3" OR A3)::boolean as "a3"\n     -- Blah...\n     , (GREATEST("lastUpdated", "xxxLastUpdated"))::timestamptz as "lastUpdated"\n\n from (\n-- ''A test view to test .* and exclude and block.''\nselect TILDA.Testing2View."refnum" as "refnum" -- The primary key for this record\n     , TILDA.Testing2View."name" as "name" -- Medical system unique enterprise id\n     , TILDA.Testing2View."lastUpdated" as "lastUpdated" -- The timestamp for when the record was last updated. (TILDA.Testing) -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing2View."xxxLastUpdated" as "xxxLastUpdated" -- The timestamp for when the record was last updated. (TILDA.Testing) -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing2View."a1" as "a1" -- The blah\n     , TILDA.Testing2View."a3b" as "a3b" -- The blah\n     , TILDA.Testing2View."a4" as "a4" -- The blah\n     , TILDA.Testing2View."a4b" as "a4b" -- The blah\n     , TILDA.Testing2View."a5" as "a5" -- The blah\n     , TILDA.Testing2View."a5b" as "a5b" -- The blah\n     , TILDA.Testing2View."a7" as "a7" -- The blah\n     , TILDA.Testing2View."a7b" as "a7b" -- The blah\n     , TILDA.Testing2View."a8" as "a8" -- The blah\n     , trim(TILDA.Testing2View."a8bTZ") as "a8bTZ" -- Generated helper column to hold the time zone ID for ''a8b''.\n     , TILDA.Testing2View."a8b" as "a8b" -- The blah\n     , trim(TILDA.Testing2View."a9TZ") as "a9TZ" -- Generated helper column to hold the time zone ID for ''a9''.\n     , TILDA.Testing2View."a9" as "a9" -- The blah\n     , trim(TILDA.Testing2View."a9a1TZ") as "a9a1TZ" -- Generated helper column to hold the time zone ID for ''a9a1''.\n     , TILDA.Testing2View."a9a1" as "a9a1" -- The blah\n     , TILDA.Testing2View."a9bTZ" as "a9bTZ" -- Generated helper column to hold the time zone ID for ''a9b''.\n     , TILDA.Testing2View."a9b" as "a9b" -- The blah\n     , TILDA.Testing2View."a9c" as "a9c" -- The blah\n     , TILDA.Testing2View."a9d" as "a9d" -- The blah\n     , TILDA.Testing2View."description" as "description" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDA.Testing2View."desc2" as "desc2" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDA.Testing2View."desc3" as "desc3" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDA.Testing2View."desc4" as "desc4" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDA.Testing2View."desc5" as "desc5" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDA.Testing2View."desc6" as "desc6" -- The title for a person, i.e., Mr, Miss, Mrs...\n     , TILDA.Testing2View."a3" as "a3" -- Formula column: Not A3 -- (BLOCKED IN SECONDARY VIEW FOR FORMULAS)\n     , TILDA.Testing2View."bastille" as "bastille" -- Formula column: Bastille Day\n     , TILDA.Testing2View."toto" as "toto" -- Formula column: Last Updated\n     , TILDA.Testing2View."desc2_Cat1" as "desc2_Cat1" -- Formula column: desc2_Cat1 Title\n     , TILDA.Testing2View."desc2_Cat2" as "desc2_Cat2" -- Formula column: desc2_Cat2 Title\n     , TILDA.Testing2View."desc2_Cat3" as "desc2_Cat3" -- Formula column: desc2_Cat3 Title\n     , TILDA.Testing2View."a7_Cat4" as "a7_Cat4" -- Formula column: a7_Cat4 Title\n     , TILDA.Testing2View."a7_Cat5" as "a7_Cat5" -- Formula column: a7_Cat5 Title\n     , TILDA.Testing2View."a5_null" as "a5_null" -- Formula column: Null a5\n     , TILDA.Testing2View."a6_null" as "a6_null" -- Formula column: Null a6\n     , TILDA.Testing2View."a7_null" as "a7_null" -- Formula column: Null a7\n     , TILDA.Testing2View."a8_null" as "a8_null" -- Formula column: Null a8\n  from TILDA.Testing2View\n\n      ) as T;\n-- Realized as /*genRealizedColumnList*/"refnum" -- COLUMN ,"name" -- COLUMN -- "lastUpdated" -- BLOCKED -- "xxxLastUpdated" -- BLOCKED ,"a1" -- COLUMN ,"a3b" -- COLUMN ,"a4" -- COLUMN ,"a4b" -- COLUMN ,"a5" -- COLUMN ,"a5b" -- COLUMN ,"a7" -- COLUMN ,"a7b" -- COLUMN ,"a8" -- COLUMN ,"a8bTZ" -- COLUMN ,"a8b" -- COLUMN ,"a9TZ" -- COLUMN ,"a9" -- COLUMN ,"a9a1TZ" -- COLUMN ,"a9a1" -- COLUMN ,"a9bTZ" -- COLUMN ,"a9b" -- COLUMN ,"a9c" -- COLUMN ,"a9d" -- COLUMN ,"description" -- COLUMN ,"desc2" -- COLUMN ,"desc3" -- COLUMN ,"desc4" -- COLUMN ,"desc5" -- COLUMN ,"desc6" -- COLUMN -- "a3" -- BLOCKED ,"bastille" -- COLUMN ,"toto" -- COLUMN ,"desc2_Cat1" -- COLUMN ,"desc2_Cat2" -- COLUMN ,"desc2_Cat3" -- COLUMN ,"a7_Cat4" -- COLUMN ,"a7_Cat5" -- COLUMN ,"a5_null" -- COLUMN ,"a6_null" -- COLUMN ,"a7_null" -- COLUMN ,"a8_null" -- COLUMN ,"a3" -- FORMULA ,"lastUpdated" -- FORMULA\n;\n\nDROP FUNCTION IF EXISTS TILDA.Refill_Testing4Realized();\nCREATE OR REPLACE FUNCTION TILDA.Refill_Testing4Realized() RETURNS boolean AS $$\nBEGIN\n  TRUNCATE TILDA.Testing4Realized;\n  INSERT INTO TILDA.Testing4Realized ("refnum", "name", "a1", "a3b", "a4", "a4b", "a5", "a5b", "a7", "a7b", "a8", "a8bTZ", "a8b", "a9TZ", "a9", "a9a1TZ", "a9a1", "a9bTZ", "a9b", "a9c", "a9d", "description", "desc2", "desc3", "desc4", "desc5", "desc6", "bastille", "toto", "desc2_Cat1", "desc2_Cat2", "desc2_Cat3", "a7_Cat4", "a7_Cat5", "a5_null", "a6_null", "a7_null", "a8_null", "a3", "lastUpdated")\n     SELECT /*genRealizedColumnList*/"refnum" -- COLUMN\n          ,"name" -- COLUMN\n          -- "lastUpdated" -- BLOCKED\n          -- "xxxLastUpdated" -- BLOCKED\n          ,"a1" -- COLUMN\n          ,"a3b" -- COLUMN\n          ,"a4" -- COLUMN\n          ,"a4b" -- COLUMN\n          ,"a5" -- COLUMN\n          ,"a5b" -- COLUMN\n          ,"a7" -- COLUMN\n          ,"a7b" -- COLUMN\n          ,"a8" -- COLUMN\n          ,"a8bTZ" -- COLUMN\n          ,"a8b" -- COLUMN\n          ,"a9TZ" -- COLUMN\n          ,"a9" -- COLUMN\n          ,"a9a1TZ" -- COLUMN\n          ,"a9a1" -- COLUMN\n          ,"a9bTZ" -- COLUMN\n          ,"a9b" -- COLUMN\n          ,"a9c" -- COLUMN\n          ,"a9d" -- COLUMN\n          ,"description" -- COLUMN\n          ,"desc2" -- COLUMN\n          ,"desc3" -- COLUMN\n          ,"desc4" -- COLUMN\n          ,"desc5" -- COLUMN\n          ,"desc6" -- COLUMN\n          -- "a3" -- BLOCKED\n          ,"bastille" -- COLUMN\n          ,"toto" -- COLUMN\n          ,"desc2_Cat1" -- COLUMN\n          ,"desc2_Cat2" -- COLUMN\n          ,"desc2_Cat3" -- COLUMN\n          ,"a7_Cat4" -- COLUMN\n          ,"a7_Cat5" -- COLUMN\n          ,"a5_null" -- COLUMN\n          ,"a6_null" -- COLUMN\n          ,"a7_null" -- COLUMN\n          ,"a8_null" -- COLUMN\n          ,"a3" -- FORMULA\n          ,"lastUpdated" -- FORMULA\n     FROM TILDA.Testing4View;\n  GRANT ALL ON TILDA.Testing4Realized TO tilda_app;\n  GRANT SELECT ON TILDA.Testing4Realized TO tilda_read_only;\n  GRANT SELECT ON TILDA.Testing4Realized TO tilda_reporting;\n  ANALYZE TILDA.Testing4Realized;\n  return true;\nEND; $$\nLANGUAGE PLPGSQL;\n\n-- SELECT TILDA.Refill_Testing4Realized();-- !!! THIS MAY TAKE SEVERAL MINUTES !!! --';
 
 COMMENT ON COLUMN TILDA.Testing4View."refnum" IS E'The primary key for this record';
 COMMENT ON COLUMN TILDA.Testing4View."name" IS E'Medical system unique enterprise id';
@@ -1481,6 +1538,8 @@ COMMENT ON COLUMN TILDA.Testing4View."a8bTZ" IS E'Generated helper column to hol
 COMMENT ON COLUMN TILDA.Testing4View."a8b" IS E'The blah';
 COMMENT ON COLUMN TILDA.Testing4View."a9TZ" IS E'Generated helper column to hold the time zone ID for ''a9''.';
 COMMENT ON COLUMN TILDA.Testing4View."a9" IS E'The blah';
+COMMENT ON COLUMN TILDA.Testing4View."a9a1TZ" IS E'Generated helper column to hold the time zone ID for ''a9a1''.';
+COMMENT ON COLUMN TILDA.Testing4View."a9a1" IS E'The blah';
 COMMENT ON COLUMN TILDA.Testing4View."a9bTZ" IS E'Generated helper column to hold the time zone ID for ''a9b''.';
 COMMENT ON COLUMN TILDA.Testing4View."a9b" IS E'The blah';
 COMMENT ON COLUMN TILDA.Testing4View."a9c" IS E'The blah';
