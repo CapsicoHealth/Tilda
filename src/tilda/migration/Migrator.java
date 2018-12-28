@@ -429,7 +429,7 @@ public class Migrator
                 // Actions.add(new CommitPoint());
 
                 // Cleaning any Indices that share the same signature, but differing names. Cleaning up Indices that are not unique, but share a name defined in the schema.
-                Set<String> Signatures = new HashSet<String>();
+                Set<String> DroppedSignatures = new HashSet<String>(); //Dropped Signatures
                 for (Index IX : Obj._Indices)
                   {
                     if (IX._Db)
@@ -445,7 +445,7 @@ public class Migrator
                                   {
                                     Errors.add("Index " + ix._Name + " is unique and contains the same signature as " + IX.getName() + " in the " + IX._Parent._Name + " schema definition");
                                   }
-                                else if (Signatures.add(ix.getSignature()) == false) // catches duplicate signatures by different names in db. First will be renamed below
+                                else if (DroppedSignatures.add(ix.getSignature()) == false) // catches duplicate signatures by different names in db. First will be renamed below
                                   Actions.add(new TableIndexDrop(Obj, ix));
                               }
                           }
@@ -466,7 +466,7 @@ public class Migrator
                               {
                                 String Sig1 = ix.getSignature();
 
-                                if (Sig.equals(Sig1) == true && Signatures.add(ix.getSignature()) == false)
+                                if (Sig.equals(Sig1) == true && DroppedSignatures.add(ix.getSignature()) == false)
                                   {
                                     Found = true;
                                     if (ix._Name.equals(ix._Name.toLowerCase()) == false // name in the DB is not lowercase, i.e., case insensitive
@@ -474,7 +474,7 @@ public class Migrator
                                     )
                                       {
                                         if(TMeta._Indices.containsKey(IX.getName().toLowerCase()))
-                                          Errors.add("Index " + ix._Name + "is attempting to be renamed to " + IX.getName() + " but an index with that name already exists with a different signature in the database.");
+                                          Errors.add("Index " + ix._Name + " is attempting to be renamed to " + IX.getName() + " but an index with that name already exists with a different signature in the database");
                                         
                                         Actions.add(new TableIndexRename(Obj, ix._Name, IX.getName()));
                                       }
