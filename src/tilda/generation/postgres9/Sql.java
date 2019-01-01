@@ -499,12 +499,12 @@ public class Sql extends PostgreSQL implements CodeGenSql
               if (P != null)
                 {
                   if (P != V._Pivots.get(0))
-                    Str.append("    or ");
+                    Str.append("        or ");
                   Str.append(getFullColumnVar(P._VC._SameAsObj));
                   Str.append(" in (").append(PrintValueList(P)).append(")\n");
                 }
             if (V._SubQuery != null)
-              Str.append(")\n");
+              Str.append("       )\n");
           }
 
         if (hasAggregates == true)
