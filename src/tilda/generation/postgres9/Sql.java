@@ -750,8 +750,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
               continue;
             if (TextUtil.FindStarElement(V._Realize._Exclude, VC._Name, true, 0) != -1)
               continue;
-            if (V.isPivotColumn(VC) == true)
-              break;
+            if (V.isPivotColumn(VC) == true || V.isPivotAggregate(VC) == true)
+              continue;
             if (First == true)
               First = false;
             else
@@ -801,7 +801,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 b.append("--     \"").append(VC._Name).append("\"  REALIZE-EXCLUDED\n");
                 continue;
               }
-            if (V._Pivots.isEmpty() == false && (V.isPivotColumn(VC) == true || VC._Aggregate != null))
+            if (V._Pivots.isEmpty() == false && (V.isPivotColumn(VC) == true || V.isPivotAggregate(VC) == true))
               {
                 b.append("--     \"").append(VC._Name).append(VC._Aggregate != null ? "\"  PIVOT AGGREGATE\n" : "\"  PIVOTED ON\n");
                 continue;
@@ -861,13 +861,12 @@ public class Sql extends PostgreSQL implements CodeGenSql
               continue;
             if (V.isPivotColumn(VC) == true)
               break;
-
             if (VC._SameAs.equals("_TS.p") == true || VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false)// && VC._FormulaOnly == false)
                   {
                     if (i != 0)
                       Str += "\n       , ";
                     Str += "\"" + VC.getName() + "\" "; // Date";
-                    ++i;
+//                    ++i;
                   }
           }
         for (; i < V._ViewColumns.size(); ++i)
@@ -955,8 +954,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
         for (int i = 0; i < V._ViewColumns.size(); ++i)
           {
             ViewColumn VC = V._ViewColumns.get(i);
-            if (V._Pivots.isEmpty() == false && (V.isPivotColumn(VC) == true || VC._Aggregate != null))
-              break;
+            if (V._Pivots.isEmpty() == false && (V.isPivotColumn(VC) == true || V.isPivotAggregate(VC) == true))
+              continue;
             if (VC != null && VC._SameAsObj != null && VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false && VC._FormulaOnly == false)
               OutFinal.println("COMMENT ON COLUMN " + V.getShortName() + ".\"" + VC.getName() + "\" IS E" + TextUtil.EscapeSingleQuoteForSQL(VC._SameAsObj._Description) + ";");
           }
@@ -1270,8 +1269,8 @@ public class Sql extends PostgreSQL implements CodeGenSql
         // LOG.debug("View " + V._Name + ": " + TextUtil.Print(V.getColumnNames()));
         for (ViewColumn VC : V._ViewColumns)
           {
-            if (V.isPivotColumn(VC) == true)
-              break;
+            if (V.isPivotColumn(VC) == true || V.isPivotAggregate(VC) == true)
+              continue;
             if (VC == null || (VC._SameAsObj != null && VC._SameAsObj._Mode == ColumnMode.CALCULATED) || VC._JoinOnly == true || VC._FormulaOnly == true)
               {
                 if (VC != null)

@@ -389,31 +389,7 @@ public class View extends Base
 
     private void HandlePivots(ParserSession PS, Set<String> ColumnNames)
       {
-        // First, pivots need to be defined a certain way, i.e., grouped-by columns first, then aggregates.
-        boolean aggregates = false;
-        int i = 0;
-        boolean composableAggregates = true;
-        for (ViewColumn VC : _ViewColumns)
-          {
-            if (VC._Aggregate != null)
-              {
-                if (VC._Aggregate.isComposable() == false || VC._Distinct == true)
-                  composableAggregates = false;
-                if (aggregates == false) // switch from grouped-by columns to pivot columns
-                  aggregates = true;
-              }
-            else
-              {
-                ++i;
-                if (aggregates == true)
-                  {
-                    PS.AddError("View '" + getFullName() + "' is defining a non-aggregate view column " + VC.getShortName() + " after the aggregate section started. Please define grouped-by columns first, followed by aggregates.");
-                  }
-              }
-          }
-        if (composableAggregates == false && _Pivots.size() > 1)
-          PS.AddError("View '" + getFullName() + "' is defining multiple Pivots but uses distinct or non-composable (e.g., avg, dev...) aggregates.");
-
+        // First, let's validate and link all the Pivot info
         Set<String> PivotNames = new HashSet<String>();
         Set<String> PivotFixes = new HashSet<String>();
         // Let's validate
@@ -429,7 +405,39 @@ public class View extends Base
                   PS.AddError("View '" + getFullName() + "' is defining a Pivot on column " + P._VC.getShortName() + " with an aggregate-prefix/suffix combination '" + fixes + "' which has already been used.");
               }
           }
-        // Then let's fold the Pivotted-on columns back into the main view.
+
+        // then let's check the order of columns: pivots need to be defined a certain way, i.e., grouped-by columns first, then aggregates that pass through, then pivot aggregates
+        int aggregateLevel = 0; // 0=baseline cols, 1=non-pivot-aggregates, 2=pivot-aggregates.
+        int i = 0;
+        boolean composableAggregates = true;
+        for (ViewColumn VC : _ViewColumns)
+          {
+            if (VC._Aggregate != null) // We are hitting an aggregate
+              {
+                if (isPivotAggregate(VC) == false) // non pivot aggregate, we are starting or already in zone 1.
+                  {
+                    if (aggregateLevel == 2) // This is non pivot aggregate and yet we are already in zone 2.
+                      PS.AddError("View '" + getFullName() + "' is defining a non-pivot aggregate view column " + VC.getShortName() + " after the pivot aggregate section started. Please define grouped-by columns first, followed by non-pivoted aggregates, then pivoted aggregates.");
+                    else
+                      aggregateLevel = 1; // switch to the non-pivoted aggregates zone
+                  }
+                else // pivot aggregate, last zone (danger zone).
+                  aggregateLevel = 2; // switch to the pivoted aggregates zone (the danger zone!)
+
+                if (VC._Aggregate.isComposable() == false || VC._Distinct == true)
+                  composableAggregates = false;
+              }
+            else // non aggregate column
+              {
+                ++i;
+                if (aggregateLevel != 0) // We better still be in zone 0
+                  PS.AddError("View '" + getFullName() + "' is defining a non-aggregate view column " + VC.getShortName() + " after the aggregate section started. Please define grouped-by columns first, followed by non-pivoted aggregates, then pivoted aggregates.");
+              }
+          }
+        if (composableAggregates == false && _Pivots.size() > 1)
+          PS.AddError("View '" + getFullName() + "' is defining multiple Pivots but uses distinct or non-composable (e.g., avg, dev...) aggregates.");
+
+        // Finally let's fold the Pivotted-on columns back into the main view.
         for (ViewPivot P : _Pivots)
           {
             if (ColumnNames.add(P._VC.getName().toUpperCase()) == false)
@@ -437,6 +445,7 @@ public class View extends Base
             _ViewColumns.add(i++, P._VC);
           }
       }
+
 
     private void HandleTimeSeries(ParserSession PS)
       {
@@ -505,16 +514,16 @@ public class View extends Base
         int Counter = -1;
         for (ViewColumn VC : _ViewColumns)
           {
-            // Skip intermediary pivot-making columns (pivot columns and aggregates) so we capture only the "grouped-by" columns
-            if (_Pivots.isEmpty() == false && (isPivotColumn(VC) == true || VC._Aggregate != null))
-              break;
+            // Skip intermediary pivot-making columns (i.e., pivoted aggregate columns) so we capture only the "grouped-by" and "non-pivoted aggregate" columns
+            if (_Pivots.isEmpty() == false && (isPivotColumn(VC) == true || isPivotAggregate(VC) == true))
+              continue;
 
             // LOG.debug(VC._Name+": VC._SameAsObj="+(VC._SameAsObj != null ? VC._SameAsObj.getFullName():"NULL")+"; isOCCGenerated="+(VC._SameAsObj == null ?
             // "false":VC._SameAsObj.isOCCGenerated())+"; _FrameworkGenerated="+VC._FrameworkGenerated+"; _JoinOnly="+VC._JoinOnly+"; _FormulaOnly="+VC._FormulaOnly+";");
             if (VC != null
             && (VC._FCT.isOCC() == true || VC._FCT != FrameworkColumnType.TZ) // either an OC column or not a TZ column
             && VC._JoinOnly == false // not join only
-            && VC._FormulaOnly == false // not formula
+            && VC._FormulaOnly == false // not formula only
             && (_TimeSeries == null || VC._FCT != FrameworkColumnType.TS) // not time series for this current view (could be from the imported view though)
             )
               {
@@ -523,7 +532,6 @@ public class View extends Base
               }
             // else
             // LOG.debug(" --> "+VC._Name +" IGNORED ");
-
           }
 
         if (_TimeSeries != null)
@@ -602,7 +610,7 @@ public class View extends Base
 
         // LOG.debug(O._Name+": "+TextUtil.Print(O.getColumnNames()));
         genPivotColumns(PS, O);
-        
+
         PrepRegexes();
 
         for (Formula F : _Formulas)
@@ -688,7 +696,7 @@ public class View extends Base
           }
 
         _FormulasRegEx = Str.length() == 0 ? null : Pattern.compile("\\b(" + Str.toString() + ")\\b");
-        
+
       }
 
     private void genPivotColumns(ParserSession PS, Object O)
@@ -1122,4 +1130,14 @@ public class View extends Base
             return C;
         return null;
       }
+    
+    public boolean isPivotAggregate(ViewColumn VC)
+      {
+        for (ViewPivot P : _Pivots)
+          for (ViewPivotAggregate A : P._Aggregates)
+           if (A._Name.equals(VC._Name) == true)
+            return true;
+        return false;
+      }
+    
   }
