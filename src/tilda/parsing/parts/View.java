@@ -397,7 +397,7 @@ public class View extends Base
           {
             if (VC._Aggregate != null)
               {
-                if (VC._Aggregate.isComposable() == false)
+                if (VC._Aggregate.isComposable() == false || VC._Distinct == true)
                   composableAggregates = false;
                 if (aggregates == false) // switch from grouped-by columns to pivot columns
                   aggregates = true;
@@ -412,7 +412,7 @@ public class View extends Base
               }
           }
         if (composableAggregates == false && _Pivots.size() > 1)
-          PS.AddError("View '" + getFullName() + "' is defining multiple Pivots but uses non-composable aggregateds (e.g., avg, dev...).");
+          PS.AddError("View '" + getFullName() + "' is defining multiple Pivots but uses distinct or non-composable (e.g., avg, dev...) aggregates.");
 
         Set<String> PivotNames = new HashSet<String>();
         Set<String> PivotFixes = new HashSet<String>();
