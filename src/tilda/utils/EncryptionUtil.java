@@ -37,7 +37,7 @@ public class EncryptionUtil
     /**
      * For text-base hashing, for example for a password to be saved in a database text field, this method
      * uses the strongest available SHA function (i.e., at this time, SHA-512). You are responsible for
-     * salting the plaintext for stronger pswd protection.
+     * salting the plaintext for stronger pswd protection. A Base64 String is returned.
      * 
      * @param plaintext
      * @return
