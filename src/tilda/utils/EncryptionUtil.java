@@ -31,11 +31,16 @@ public class EncryptionUtil
 
     public static String hash(String plaintext)
       {
+    	return hash(plaintext, "SHA-512");
+      }
+    
+    public static String hash(String plaintext, String algo)
+      {
         if (TextUtil.isNullOrEmpty(plaintext) == true)
           return null;
         try
           {
-            MessageDigest md = MessageDigest.getInstance("SHA-512");
+            MessageDigest md = MessageDigest.getInstance(algo);
             md.update(plaintext.getBytes("UTF-8"));
             return new String(Base64.getEncoder().encodeToString(md.digest()));
           }
@@ -44,6 +49,23 @@ public class EncryptionUtil
             LOG.error(e);
             return null;
           }
+      }
+    
+    public static byte[] sha(String plainText, String shaAlgo) 
+      {
+          if (TextUtil.isNullOrEmpty(plainText) == true)
+            return null;
+          try
+            {
+        	    MessageDigest md5 = MessageDigest.getInstance(shaAlgo);
+        	    byte[] digest = md5.digest(plainText.getBytes("UTF-8"));
+        	    return digest;
+            }
+          catch (Exception e)
+            {
+              LOG.error(e);
+              return null;
+            }
       }
 
     /**
@@ -71,4 +93,23 @@ public class EncryptionUtil
         : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~`!@#$%^&*()-_=+[{]}\\|;:\'\",<.>/?")).toCharArray();
         return RandomStringUtils.random(size, 0, possibleCharacters.length - 1, false, false, possibleCharacters, new SecureRandom());
       }
+    
+    public static String bytesToHex(byte[] digest) {
+	    StringBuilder sb = new StringBuilder();
+	    for (int i = 0; i < digest.length; ++i) {
+	        sb.append(Integer.toHexString((digest[i] & 0xFF) | 0x100).substring(1, 3));
+	    }
+    	return sb.toString();
+    }
+    
+    public static byte[] hexStringToByteArray(String s) {
+        byte[] b = new byte[s.length() / 2];
+        for (int i = 0; i < b.length; i++) {
+          int index = i * 2;
+          int v = Integer.parseInt(s.substring(index, index + 2), 16);
+          b[i] = (byte) v;
+        }
+        return b;
+    }
+    
   }
