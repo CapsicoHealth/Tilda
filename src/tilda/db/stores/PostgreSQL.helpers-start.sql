@@ -291,12 +291,16 @@ END $$;
 
 -----------------------------------------------------------------------------------------------------------------
 -- TILDA array concatenation aggregate aggregates
+DO $$ BEGIN
+if not exists (SELECT 1 FROM pg_proc WHERE proname = 'array_cat_agg' AND proisagg=true) THEN
 CREATE AGGREGATE public.array_cat_agg (anyarray)
 (
     sfunc = array_cat,
     stype = anyarray,
     initcond = '{}'
 );  
+END IF;
+END $$;
 
 
 
@@ -537,6 +541,58 @@ BEGIN
   RETURN (1, 'Column '||schemaName||'.'||tableName||'.'||_columnNames[1]||' has been successfully renamed to '||newColumnName||'.');
 END
 $$ LANGUAGE plpgsql;
+
+
+
+
+
+
+
+-- Copies the contents of srcColumnName to destColumnName and if successful, drops srcColumnName.
+-- Return values:
+--     1: the operation was completed successfully and the column was renamed
+--     0: the source column cannot be found and the dest column already exists. We assume a previous operation was already performed successfully.
+--    -1: the table couldn't be found
+--    -3: source columns can be found.
+--    -4: the destination column cannot be found.
+drop FUNCTION IF EXISTS tilda.copyColumnAndDrop(schemaName varchar, tableName varchar, srcColumnName varchar, destColumnName varchar);
+CREATE FUNCTION tilda.copyColumnAndDrop(schemaName varchar, tableName varchar, srcColumnName varchar, destColumnName varchar) 
+RETURNS RECORD AS $$
+DECLARE
+  _tableName varchar;
+  _srcColumnName varchar;
+  _destColumnName varchar;
+BEGIN
+  SELECT tables.table_name, C1.column_name, C2.column_name
+    INTO   _tableName, _srcColumnName, _destColumnName
+    FROM information_schema.tables
+      LEFT join information_schema.columns C1 on C1.table_schema=tables.table_schema and C1.table_name=tables.table_name and C1.column_name=srcColumnName
+      LEFT join information_schema.columns C2 on C2.table_schema=tables.table_schema and C2.table_name=tables.table_name and C2.column_name=destColumnName
+   WHERE lower(tables.table_schema)=lower(schemaName) and lower(tables.table_name)=lower(tableName)
+   GROUP BY 1,2
+  ;
+   -- Does the table exist?
+  IF _tableName is null
+  THEN RETURN (-1, 'Table '||schemaName||'.'||tableName||' cannot be found.');
+  -- Does the src column not exist and dest column exist?
+  ELSEIF _srcColumnName is null AND _destColumnName is not null
+  THEN RETURN (0, 'Source column '||_destColumnName||' does not exist and destination column '||_destColumnName||' exists. Maybe it has been copied and dropped already?');
+  -- Does the src column not exist and neither the dest column?
+  ELSEIF _srcColumnName is null
+  THEN RETURN (-3, 'Source column(s) '||schemaName||'.'||tableName||'.'||srcColumnName||' cannot be found.');
+  -- the source column exists, but does the destination column already exists?
+  ELSEIF _destColumnName is null
+  THEN RETURN (-4, 'Destination column '||schemaName||'.'||tableName||'.'||destColumnName||' does not exist.');
+  END IF;
+  -- good to go
+  EXECUTE 'update '||schemaName||'.'||tableName||' set "'||_destColumnName||'"="'||_srcColumnName||'"';
+  EXECUTE 'ALTER TABLE '||schemaName||'.'||tableName||' DROP COLUMN "'||_srcColumnName||'"';  
+  RETURN (1, 'Column '||_srcColumnName[1]||' has been copied to '||_destColumnName||' and then dropped.');
+END
+$$ LANGUAGE plpgsql;
+
+
+
 
 
 

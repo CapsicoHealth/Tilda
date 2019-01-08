@@ -148,6 +148,27 @@ public class JDBCHelper
           }
       }
 
+    public static int ExecuteDelete(Connection C, String SchemaName, String TableName, String Query)
+    throws Exception
+      {
+        TableName = SchemaName + "." + TableName;
+        QueryDetails.logQuery(TableName, Query, null);
+        Statement S = null;
+        try
+          {
+            long T0 = System.nanoTime();
+            QueryDetails.setLastQuery(TableName, Query);
+            S = C.createStatement();
+            int count = S.executeUpdate(Query);
+            PerfTracker.add(TableName, StatementType.DELETE, System.nanoTime() - T0, count);
+            return count;
+          }
+        finally
+          {
+            JDBCHelper.CloseStatement(S);
+          }
+      }
+
     public static boolean ExecuteDDL(Connection C, String SchemaName, String TableName, String Query)
     throws Exception
       {

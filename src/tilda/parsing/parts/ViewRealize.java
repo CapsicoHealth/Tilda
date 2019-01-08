@@ -42,12 +42,12 @@ public class ViewRealize
     @SerializedName("primary"    ) public PrimaryKey        _PrimaryKey = null;
     @SerializedName("foreign"    ) public List<ForeignKey>  _ForeignKeys= new ArrayList<ForeignKey>();
     @SerializedName("indices"    ) public List<Index>       _Indices    = new ArrayList<Index>();
-    @SerializedName("subRealized") public String[]          _SubRealized= new String[] { };
-    
+    @SerializedName("subRealized") public String[]          _SubRealized_DEPRECATED= new String[] { };
     // It was "exclude" for view columns, so why was it ever "excludes" here? Not consistent.
-    @SerializedName("excludes") public String[]       _Excludes_DEPRECATED   = new String[] { };
-    @SerializedName("exclude" ) public String[]       _Exclude       = new String[] { };
-    @SerializedName("mappings") public List<ViewRealizeMapping> _Mappings = new ArrayList<>();
+    @SerializedName("excludes"   ) public String[]          _Excludes_DEPRECATED   = new String[] { };
+    @SerializedName("exclude"    ) public String[]          _Exclude         = new String[] { };
+    @SerializedName("mappings"   ) public List<ViewRealizeMapping> _Mappings = new ArrayList<>();
+    @SerializedName("upsert"     ) public ViewRealizeUpsert _Upsert = null;
     /*@formatter:on*/
 
 
@@ -66,23 +66,40 @@ public class ViewRealize
         _ParentView = ParentView;
         _ParentRealized = ParentRealized;
         
+        if (TextUtil.isNullOrEmpty(_SubRealized_DEPRECATED) == false)
+          PS.AddError("The realize section for view '" + ParentView.getFullName() + "' uses the deprecated feature 'subrealize'. Use dependent Realized tables directly.");
+        
         // Taking care of deprecated stuff...
         if (_Exclude.length == 0)
           _Exclude = _Excludes_DEPRECATED;
 
         Set<String> Names = new HashSet<String>();
+        boolean indexOnDeleted = false;
         for (Index I : _Indices)
           if (I != null)
             {
-              I.Validate(PS, ParentRealized);
+              if (I.Validate(PS, ParentRealized) == false)
+               continue;
               if (Names.add(I._Name) == false)
                 PS.AddError("Index '" + I._Name + "' is duplicated in the realize section for view '" + ParentView.getFullName() + "'.");
+              if (_Upsert != null && (   I._ColumnObjs.size() > 0 && I._ColumnObjs.get(0)._Name.equals(_Upsert._DeleteTS) == true
+                                      || I._ColumnObjs.size() == 0 && I._OrderByObjs.get(0)._Name.equals(_Upsert._DeleteTS) == true
+                                     )
+                 )
+                indexOnDeleted = true;
             }
+        if (_Upsert != null && indexOnDeleted == false)
+          {
+            Index I = new Index();
+            I._Name="TILDA_RUOD_IDX";
+            I._OrderBy= new String[] { _Upsert._DeleteTS };
+            I.Validate(PS, ParentRealized);
+            _Indices.add(I);
+          }
         
         if (_PrimaryKey != null && _PrimaryKey._Autogen == true)
           PS.AddError("The realize section for view '" + ParentView.getFullName() + "' defines an autogen primary key: these are not allowed for realized tables.");
           
-        
         Names.clear();
         for (ViewRealizeMapping VRM : _Mappings)
           if (VRM != null)
@@ -138,6 +155,9 @@ public class ViewRealize
         O._ModeStr = ParentView._DBOnly==true?ObjectMode.DB_ONLY.toString():ObjectMode.NORMAL.toString();
         ParentView._ParentSchema._Objects.add(O);
         O.Validate(PS, ParentView._ParentSchema);
+        
+        if (_Upsert != null)
+          _Upsert.Validate(PS, ParentView, ParentRealized, O.getFirstIdentityColumns());
 
 //        if (O._Name.equals("Testing2Realized") == true)
 //          LOG.debug("yyyyy");

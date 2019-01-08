@@ -143,7 +143,6 @@ public class DataObject
         for (ColumnHeader ColumnHeader : _ColumnHeaderList)
           if (ColumnHeader != null)
             Headers.add(ColumnHeader._Header);
-
         return Headers.toArray(new String[Headers.size()]);
       }
 

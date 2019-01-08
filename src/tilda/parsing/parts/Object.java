@@ -533,4 +533,25 @@ public class Object extends Base
             addQuery(SWC);
       }
 
+    /**
+     * Returns the list of columns that represent the first identity of the object. If a PK is defined,
+     * the columns defined for it will be returned. Otherwise, the columns for the first defined unique index
+     * will be returned. Null is returned otherwise, that that should never happen because all Objects are required
+     * to have at least one identity.<BR>
+     * <BR>
+     * This method should only be called <B>AFTER</B> {@link Object#Validate(ParserSession, Schema)} has been called first.
+     * 
+     * @return
+     */
+    public List<Column> getFirstIdentityColumns()
+      {
+        if (_PrimaryKey != null)
+          return _PrimaryKey._ColumnObjs;
+        if (_Indices != null)
+          for (Index I : _Indices)
+            if (I._Unique == true)
+              return I._ColumnObjs;
+        return null;
+      }
+
   }

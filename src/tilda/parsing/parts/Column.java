@@ -520,6 +520,11 @@ public class Column extends TypeDef
         return _SequenceOrder;
       }
 
+    /**
+     * returns a comma-separated string containing the <B>unescaped</B> column short names
+     * @param L
+     * @return
+     */
     public static String PrintColumnList(List<Column> L)
       {
         StringBuilder Str = new StringBuilder();
