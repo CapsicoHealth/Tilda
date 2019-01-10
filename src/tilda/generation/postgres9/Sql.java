@@ -681,6 +681,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
           {
             Str = DoFormulasSuperView(V, Str, false);
           }
+        OutFinal.println("-- " + getDDLMetadataVersion());
         OutFinal.println("create or replace view " + V._ParentSchema._Name + "." + V._Name + " as ");
         OutFinal.println(Str + ";\n");
 
@@ -708,33 +709,33 @@ public class Sql extends PostgreSQL implements CodeGenSql
             StringWriter BaseLineInsert = new StringWriter();
             BaseLineInsert.append("  INSERT INTO " + RName + " (" + PrintInsertColumnNames(V) + ")\n     ");
 
-//            if (V._Realize._SubRealized.length != 0)
-//              {
-//                StringBuilder r = new StringBuilder();
-//                r.append("(?i)\\b(");
-//                boolean First = true;
-//                for (String s : V._Realize._SubRealized)
-//                  {
-//                    if (First == false)
-//                      r.append("|");
-//                    else
-//                      First = false;
-//                    r.append(View.getRootViewName(s).toUpperCase());
-//                  }
-//                r.append(")(PIVOT)?VIEW\\b");
-//                String BV = PrintBaseView(V, false);
-//                BV = BV.replaceAll(r.toString(), "$1Realized");
-//                if (V._Formulas != null && V._Formulas.isEmpty() == false)
-//                  BV = DoFormulasSuperView(V, BV, true);
-//                BaseLineInsert.append(BV);
-//              }
-//            else
-//              {
-                // String BV = DoFormulasSuperView(V, BV);
-                BaseLineInsert.append("SELECT ").append(genRealizedColumnList(V, "\n          "))
-                .append("\n     FROM ").append(V._ParentSchema._Name).append(".").append(V._Name);
-//              }
-            
+            // if (V._Realize._SubRealized.length != 0)
+            // {
+            // StringBuilder r = new StringBuilder();
+            // r.append("(?i)\\b(");
+            // boolean First = true;
+            // for (String s : V._Realize._SubRealized)
+            // {
+            // if (First == false)
+            // r.append("|");
+            // else
+            // First = false;
+            // r.append(View.getRootViewName(s).toUpperCase());
+            // }
+            // r.append(")(PIVOT)?VIEW\\b");
+            // String BV = PrintBaseView(V, false);
+            // BV = BV.replaceAll(r.toString(), "$1Realized");
+            // if (V._Formulas != null && V._Formulas.isEmpty() == false)
+            // BV = DoFormulasSuperView(V, BV, true);
+            // BaseLineInsert.append(BV);
+            // }
+            // else
+            // {
+            // String BV = DoFormulasSuperView(V, BV);
+            BaseLineInsert.append("SELECT ").append(genRealizedColumnList(V, "\n          "))
+            .append("\n     FROM ").append(V._ParentSchema._Name).append(".").append(V._Name);
+            // }
+
             if (Up != null)
               {
                 OutFinal.append("  IF fromInclusive is null AND toExclusive is null\n");
@@ -772,7 +773,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   }
                 OutFinal.append("  ;\n");
                 if (Up._UpsertTSColumnObj != null)
-                 OutFinal.append("  DELETE FROM " + RName + " WHERE \"" + Up._DeleteTSColumnObj.getName() + "\" is not null;\n");
+                  OutFinal.append("  DELETE FROM " + RName + " WHERE \"" + Up._DeleteTSColumnObj.getName() + "\" is not null;\n");
                 OutFinal.append("  END IF;\n");
               }
             // for (Index I : V._Realize._Indices)
@@ -807,8 +808,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 .append("LANGUAGE PLPGSQL;\n")
                 .append("\n");
               }
-            OutFinal.append("-- SELECT " + V._ParentSchema._Name + ".Refill_" + TName + "();")
-            .append("-- !!! THIS MAY TAKE SEVERAL MINUTES !!! --");
+            OutFinal.append("-- SELECT " + V._ParentSchema._Name + ".Refill_" + TName + "(); -- !!! THIS MAY TAKE SEVERAL MINUTES !!!\n");
           }
       }
 
@@ -936,20 +936,20 @@ public class Sql extends PostgreSQL implements CodeGenSql
             if (V.isPivotColumn(VC) == true)
               break;
             if (VC._SameAs.equals("_TS.p") == true || VC._SameAsObj._Mode != ColumnMode.CALCULATED && VC._JoinOnly == false)// && VC._FormulaOnly == false)
-                  {
-                    if (i != 0)
-                      Str += "\n       , ";
-                    Str += "\"" + VC.getName() + "\" "; // Date";
-//                    ++i;
-                  }
+              {
+                if (i != 0)
+                  Str += "\n       , ";
+                Str += "\"" + VC.getName() + "\" "; // Date";
+                // ++i;
+              }
           }
         for (; i < V._ViewColumns.size(); ++i)
           {
             ViewColumn VC = V._ViewColumns.get(i);
             if (VC._Aggregate != null)
-             {
-               Str += genCompositeAggregateColumnSQL(VC);
-             }
+              {
+                Str += genCompositeAggregateColumnSQL(VC);
+              }
           }
 
 
@@ -1011,7 +1011,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         : VC._Aggregate == AggregateType.ARRAY ? "array_agg"
         : VC._Aggregate.name();
 
-        return "\n     , "+ aggr + "(\"" + VC.getName() + "\") as \"" + VC._Name + "\"";
+        return "\n     , " + aggr + "(\"" + VC.getName() + "\") as \"" + VC._Name + "\"";
       }
 
 
@@ -1054,11 +1054,28 @@ public class Sql extends PostgreSQL implements CodeGenSql
       }
 
     @Override
+    public String getDDLMetadataVersion()
+      {
+        return "DDL META DATA VERSION 2019-01-09";
+      }
+
+    @Override
     public void genDDLMetadata(PrintWriter OutFinal, View V)
     throws Exception
       {
         if (V._Formulas == null || V._Formulas.isEmpty() == true)
-          return;
+          {
+            OutFinal.println("DO $$");
+            OutFinal.println("-- This view doesn't have any formula, but just in case it used to and they were all repoved from the model, we still have to do some cleanup.");
+            OutFinal.println("DECLARE");
+            OutFinal.println("  ts timestamp;");
+            OutFinal.println("BEGIN");
+            OutFinal.println("  select into ts current_timestamp;");
+            OutFinal.println("  UPDATE TILDA.Formula set deleted = current_timestamp where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()) + " AND \"lastUpdated\" < ts;");
+            OutFinal.println("END; $$");
+            OutFinal.println("LANGUAGE PLPGSQL;");
+            return;
+          }
 
         // OutFinal.println("DROP TABLE IF EXISTS " + V._ParentSchema._Name + ".TildaFormulaValue;");
         // OutFinal.println("DROP TABLE IF EXISTS " + V._ParentSchema._Name + ".TildaFormulaReference;");
@@ -1066,6 +1083,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
 
         OutFinal.println("DO $$");
+        OutFinal.println("-- This view has formulas and we need to update all its meta-data.");
         OutFinal.println("DECLARE");
         OutFinal.println("  k bigint;");
         OutFinal.println("  ts timestamp;");
@@ -1087,7 +1105,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
             if (++count == 0)
               {
-                OutFinal.println("INSERT INTO TILDA.Formula (\"refnum\", \"location\", \"location2\", \"name\", \"type\", \"title\", \"description\", \"formula\", \"htmlDoc\", \"created\", \"lastUpdated\", \"deleted\")");
+                OutFinal.println("INSERT INTO TILDA.Formula (\"refnum\", \"location\", \"location2\", \"name\", \"type\", \"title\", \"description\", \"formula\", \"htmlDoc\", \"referencedColumns\", \"created\", \"lastUpdated\", \"deleted\")");
                 OutFinal.print("    VALUES (");
               }
             else
@@ -1105,6 +1123,18 @@ public class Sql extends PostgreSQL implements CodeGenSql
             OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(String.join("\n", F._Description)));
             OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL(String.join("\n", F._FormulaStrs)));
             OutFinal.print(", " + TextUtil.EscapeSingleQuoteForSQL("<B>N/A</B>"));
+            List<ViewColumn> L = F.getDependencyColumns();
+            if (L.isEmpty() == false)
+              {
+                String[] VCNames = new String[L.size()];
+                for (int i = 0; i < L.size(); ++i)
+                  VCNames[i] = L.get(i)._ParentView.getShortName() + "." + L.get(i)._Name;
+                OutFinal.print(", ARRAY[" + TextUtil.EscapeSingleQuoteForSQL(VCNames, true) + "]");
+              }
+            else
+              {
+                OutFinal.print(", null");
+              }
             OutFinal.println(", current_timestamp, current_timestamp, null)");
           }
         if (count >= 0)
@@ -1116,11 +1146,12 @@ public class Sql extends PostgreSQL implements CodeGenSql
             OutFinal.println("      , \"description\" = EXCLUDED.\"description\"");
             OutFinal.println("      , \"formula\" = EXCLUDED.\"formula\"");
             OutFinal.println("      , \"htmlDoc\" = EXCLUDED.\"htmlDoc\"");
+            OutFinal.println("      , \"referencedColumns\" = EXCLUDED.\"referencedColumns\"");
             OutFinal.println("      , \"lastUpdated\" = current_timestamp");
             OutFinal.println("      , \"deleted\" = null");
             OutFinal.println("   ;");
           }
-        OutFinal.println("UPDATE TILDA.Formula set deleted = current_timestamp where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V._Name) + " AND \"lastUpdated\" < ts;");
+        OutFinal.println("UPDATE TILDA.Formula set deleted = current_timestamp where \"location\" = " + TextUtil.EscapeSingleQuoteForSQL(V.getShortName()) + " AND \"lastUpdated\" < ts;");
         OutFinal.println();
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

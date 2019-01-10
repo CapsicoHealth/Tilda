@@ -138,7 +138,7 @@ $$ LANGUAGE plpgsql IMMUTABLE;
 
 
 -----------------------------------------------------------------------------------------------------------------
--- TILDA Like() functions
+-- TILDA Like() and ilike() functions
 CREATE OR REPLACE FUNCTION TILDA.Like(v text[], val text)
   RETURNS boolean
   IMMUTABLE LANGUAGE SQL AS
@@ -152,7 +152,20 @@ CREATE OR REPLACE FUNCTION TILDA.Like(v text, val text[])
   IMMUTABLE LANGUAGE SQL AS
   'select v like ANY(val);';
 
+CREATE OR REPLACE FUNCTION TILDA.ILike(v text[], val text)
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select exists (select * from unnest(v) x_ where x_ ilike val);';
+CREATE OR REPLACE FUNCTION TILDA.ILike(v text[], val text[])
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select exists (select * from unnest(v) x_ where x_ ilike ANY(val));';
+CREATE OR REPLACE FUNCTION TILDA.ILike(v text, val text[])
+  RETURNS boolean
+  IMMUTABLE LANGUAGE SQL AS
+  'select v ilike ANY(val);';
 
+  
 -----------------------------------------------------------------------------------------------------------------
 --- TILDA KEY-related functions
 CREATE OR REPLACE FUNCTION TILDA.getKeyBatch(t text, c integer) 
