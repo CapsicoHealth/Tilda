@@ -220,29 +220,31 @@
      ,"occ":true
      ,"description":"Master formula information"
      ,"columns":[
-         { "name":"location"   , "type":"STRING" , "nullable":false, "size":   64, "invariant":true, "description":"The name of the primary table/view this formula is defined in."  }
-        ,{ "name":"location2"  , "type":"STRING" , "nullable":false, "size":   64, "invariant":true, "description":"The name of the secondary table/view (a derived view, a realized table), if appropriate."   }
-        ,{ "name":"name"       , "type":"STRING" , "nullable":false, "size":   64,                   "description":"The name of the formula/column."  }
-        ,{ "name":"type"       , "type":"STRING" , "nullable":false, "size":    3,                   "description":"The type of the formula/column value/outcome."
-                               , "values": [ { "name":"String"   , "value":"STR", "description": "String"    }
-                                            ,{ "name":"Character", "value":"CHR", "description": "Character" }
-                                            ,{ "name":"Boolean"  , "value":"BOL", "description": "Boolean"   }
-                                            ,{ "name":"Integer"  , "value":"INT", "description": "Integer"   }
-                                            ,{ "name":"Long"     , "value":"LNG", "description": "Long"      }
-                                            ,{ "name":"Float"    , "value":"FLT", "description": "Float"     }
-                                            ,{ "name":"Double"   , "value":"DBL", "description": "Double"    }
-                                            ,{ "name":"Date"     , "value":"DT" , "description": "Date"      }
-                                            ,{ "name":"DateTime" , "value":"DTM", "description": "DateTime"  }
-                                           ]
+         { "name":"location"         , "type":"STRING"  , "nullable":false, "size":   64, "invariant":true, "description":"The name of the primary table/view this formula is defined in."  }
+        ,{ "name":"location2"        , "type":"STRING"  , "nullable":false, "size":   64, "invariant":true, "description":"The name of the secondary table/view (a derived view, a realized table), if appropriate."   }
+        ,{ "name":"name"             , "type":"STRING"  , "nullable":false, "size":   64,                   "description":"The name of the formula/column."  }
+        ,{ "name":"type"             , "type":"STRING"  , "nullable":false, "size":    3,                   "description":"The type of the formula/column value/outcome."
+                                     , "values": [ { "name":"String"   , "value":"STR", "description": "String"    }
+                                                  ,{ "name":"Character", "value":"CHR", "description": "Character" }
+                                                  ,{ "name":"Boolean"  , "value":"BOL", "description": "Boolean"   }
+                                                  ,{ "name":"Integer"  , "value":"INT", "description": "Integer"   }
+                                                  ,{ "name":"Long"     , "value":"LNG", "description": "Long"      }
+                                                  ,{ "name":"Float"    , "value":"FLT", "description": "Float"     }
+                                                  ,{ "name":"Double"   , "value":"DBL", "description": "Double"    }
+                                                  ,{ "name":"Date"     , "value":"DT" , "description": "Date"      }
+                                                  ,{ "name":"DateTime" , "value":"DTM", "description": "DateTime"  }
+                                                 ]
          }
-        ,{ "name":"title"      , "type":"STRING" , "nullable":false, "size":  128,                   "description":"The title of the formula/column."  }
-        ,{ "name":"description", "type":"STRING" , "nullable":false, "size":32000,                   "description":"The description of the formula/column."  }
-        ,{ "name":"formula"    , "type":"STRING" , "nullable":true , "size":32000,                   "description":"The formula."  }
-        ,{ "name":"htmlDoc"    , "type":"STRING" , "nullable":true , "size":32000,                   "description":"Pre-rendered html fragment with the full documentation for this formula."  }
+        ,{ "name":"title"            , "type":"STRING"  , "nullable":false, "size":  128,                   "description":"The title of the formula/column."  }
+        ,{ "name":"description"      , "type":"STRING"  , "nullable":false, "size":32000,                   "description":"The description of the formula/column."  }
+        ,{ "name":"formula"          , "type":"STRING"  , "nullable":true , "size":32000,                   "description":"The formula."  }
+        ,{ "name":"htmlDoc"          , "type":"STRING"  , "nullable":true , "size":32000,                   "description":"Pre-rendered html fragment with the full documentation for this formula."  }
+        ,{ "name":"referencedColumns", "type":"STRING[]", "nullable":true ,                                 "description":"The list of columns this formula depends on."  }
        ]
      ,"primary": { "autogen": true }
      ,"indices":[
          { "name": "Formula", "columns": ["location" , "name"], "db": true }
+        ,{ "name": "RefCols", "orderBy": ["referencedColumns"], "db": true }
       ]
     }
     
@@ -463,8 +465,11 @@
           { "sameas": "FormulaDependency.formulaRefnum"    }
          ,{ "sameas": "Formula.location"                   }
          ,{ "sameas": "Formula.name"                       }
+         ,{ "sameas": "Formula.referencedColumns"          }
          ,{ "sameas": "FormulaDependency.dependencyRefnum" }
          ,{ "sameas": "Formula.name"                       , "name":"dependentFormulaName"}
+         ,{ "sameas": "Formula.location"                   , "name":"dependentFormulaLocation"}
+         ,{ "sameas": "Formula.referencedColumns"          , "name":"dependentReferencedColumns"}
         ]
       ,"subWhereX":{
           "clause":["Formula.deleted is null"
