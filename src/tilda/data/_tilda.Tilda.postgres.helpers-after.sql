@@ -106,7 +106,7 @@ CREATE OR REPLACE FUNCTION Tilda.isInvalidDate("dt" TIMESTAMP WITH TIME ZONE)
   LANGUAGE sql IMMUTABLE;
 
 
-CREATE OR REPLACE VIEW Tilda.FormulaDependenciesFull_View as
+CREATE OR REPLACE VIEW Tilda.FormulaDependencyFullView as
 with recursive R("formulaRefnum", "formulaLocation", "formulaName", "formulaDependencies", "columnDependencies") as (
 select FormulaDependencyView."formulaRefnum", "location" as "formulaLocation", "name" as "formulaName", ARRAY["dependentFormulaLocation"||'.'||"dependentFormulaName"] as "formulaDependencies", "referencedColumns" as "columnDependencies"
   from Tilda.FormulaDependencyView

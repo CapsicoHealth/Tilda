@@ -944,7 +944,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jan 9 2019, 23:20:18EST
+ @generated Jan 10 2019, 00:28:17EST
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTING2REALIZED implements tilda.interfaces.ReaderObject

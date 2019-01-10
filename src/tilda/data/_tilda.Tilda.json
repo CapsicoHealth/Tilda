@@ -460,7 +460,7 @@
      }    
 
     ,{ "name": "FormulaDependencyView"
-      ,"description": "A view of formulas and their dependencies."
+      ,"description": "A view of formulas and their direct dependencies."
       ,"columns":[
           { "sameas": "FormulaDependency.formulaRefnum"    }
          ,{ "sameas": "Formula.location"                   }
@@ -476,7 +476,26 @@
                    ]
          ,"description":["Active formulas and their sub-formulas"]
         }
+     }
+
+/*
+    ,{ "name": "FormulaDependencyFullView"
+      ,"dbOnly": true
+      ,"description": "A view of formulas and their full hierarchical formula dna column dependencies."
+      ,"columns":[
+          { "sameas": "FormulaDependencyView.formulaRefnum"                                             }
+         ,{ "sameas": "FormulaDependencyView.location"                   , "name":"formulaLocation"     }
+         ,{ "sameas": "FormulaDependencyView.name"                       , "name":"formulaName"         }
+         ,{ "sameas": "FormulaDependencyView.dependentReferencedColumns" , "name":"formulaDependencies" }
+         ,{ "sameas": "FormulaDependencyView.referencedColumns"          , "name":"columnDependencies"  }
+        ]
+      ,"subWhereX":{
+          "clause":["Formula.deleted is null"
+                   ]
+         ,"description":["Active formulas and their full hierarchical dependent formulas and columns"]
+        }
      }    
+*/     
 
     ,{ "name": "MeasureFormulaView"
       ,"description": "A view of formulas and their dependencies."
