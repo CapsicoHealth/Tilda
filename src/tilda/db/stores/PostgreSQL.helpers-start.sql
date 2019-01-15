@@ -276,7 +276,7 @@ RETURNS anyelement LANGUAGE SQL IMMUTABLE STRICT AS $$
 $$;
 
 DO $$ BEGIN
-if not exists (SELECT 1 FROM pg_proc WHERE proname = 'first' AND proisagg=true) THEN
+if not exists (SELECT 1 FROM pg_aggregate WHERE aggfnoid::TEXT = 'first') THEN
 CREATE AGGREGATE public.FIRST (
         sfunc    = TILDA.first_agg,
         basetype = anyelement,
@@ -291,7 +291,7 @@ RETURNS anyelement LANGUAGE SQL IMMUTABLE STRICT AS $$
         SELECT $2;
 $$;
 DO $$ BEGIN
-if not exists (SELECT 1 FROM pg_proc WHERE proname = 'last' AND proisagg=true) THEN
+if not exists (SELECT 1 FROM pg_aggregate WHERE aggfnoid::TEXT = 'last') THEN
 CREATE AGGREGATE public.LAST (
         sfunc    = TILDA.last_agg,
         basetype = anyelement,
@@ -305,8 +305,8 @@ END $$;
 -----------------------------------------------------------------------------------------------------------------
 -- TILDA array concatenation aggregate aggregates
 DO $$ BEGIN
-if not exists (SELECT 1 FROM pg_proc WHERE proname = 'array_cat_agg' AND proisagg=true) THEN
-CREATE AGGREGATE public.array_cat_agg (anyarray)
+if not exists (SELECT 1 FROM pg_aggregate WHERE aggfnoid::TEXT = 'array_cat_agg') THEN
+CREATE AGGREGATE TILDA.array_cat_agg (anyarray)
 (
     sfunc = array_cat,
     stype = anyarray,
@@ -319,7 +319,7 @@ END $$;
 
 -----------------------------------------------------------------------------------------------------------------
 -- Loading the TableFunc extension
-CREATE extension if not exists tablefunc;
+--CREATE extension if not exists tablefunc;
 
 
 -----------------------------------------------------------------------------------------------------------------
