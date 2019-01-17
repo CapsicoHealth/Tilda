@@ -1139,5 +1139,25 @@ public class View extends Base
             return true;
         return false;
       }
+
+    /**
+     * Returns a list of the root names (as per {@link #getRootViewName(String)}) of all views referenced by this view that are realized.
+     * @return
+     */
+    public List<String> getSubRealizedViewRootNames()
+      {
+        List<String> L = new ArrayList<String>();
+        for (ViewColumn VC : _ViewColumns)
+          {
+            View V = VC._SameAsObj == null ? null : VC._SameAsView;
+            if (V == null || V._Realize == null)
+             continue;
+            String N = getRootViewName(V._Name);
+            if (L.contains(N) == false)
+              L.add(N);
+            
+          }
+        return L;
+      }
     
   }

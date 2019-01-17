@@ -658,11 +658,11 @@
     ,{ "name": "Testing3View"
       ,"description": "A test view to test .* and exclude and block."
       ,"columns":[
-          { "sameas": "Testing2Realized.refnum"      }
-         ,{ "sameas": "Testing2Realized.name"        }
-         ,{ "sameas": "Testing2Realized.a8b*"        }
-         ,{ "sameas": "Testing2Realized.lastUpdated" }
-         ,{ "sameas": "Testing2Realized.xxx*" }
+          { "sameas": "Testing2View.refnum"      }
+         ,{ "sameas": "Testing2View.name"        }
+         ,{ "sameas": "Testing2View.a8b*"        }
+         ,{ "sameas": "Testing2View.lastUpdated" }
+         ,{ "sameas": "Testing2View.xxx*" }
         ]
       ,"realize": {
           "indices":[ 

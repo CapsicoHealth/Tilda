@@ -709,32 +709,33 @@ public class Sql extends PostgreSQL implements CodeGenSql
             StringWriter BaseLineInsert = new StringWriter();
             BaseLineInsert.append("  INSERT INTO " + RName + " (" + PrintInsertColumnNames(V) + ")\n     ");
 
-            // if (V._Realize._SubRealized.length != 0)
-            // {
-            // StringBuilder r = new StringBuilder();
-            // r.append("(?i)\\b(");
-            // boolean First = true;
-            // for (String s : V._Realize._SubRealized)
-            // {
-            // if (First == false)
-            // r.append("|");
-            // else
-            // First = false;
-            // r.append(View.getRootViewName(s).toUpperCase());
-            // }
-            // r.append(")(PIVOT)?VIEW\\b");
-            // String BV = PrintBaseView(V, false);
-            // BV = BV.replaceAll(r.toString(), "$1Realized");
-            // if (V._Formulas != null && V._Formulas.isEmpty() == false)
-            // BV = DoFormulasSuperView(V, BV, true);
-            // BaseLineInsert.append(BV);
-            // }
-            // else
-            // {
-            // String BV = DoFormulasSuperView(V, BV);
-            BaseLineInsert.append("SELECT ").append(genRealizedColumnList(V, "\n          "))
-            .append("\n     FROM ").append(V._ParentSchema._Name).append(".").append(V._Name);
-            // }
+            List<String> L = V.getSubRealizedViewRootNames();
+            if (L.isEmpty() == false)
+              {
+                StringBuilder r = new StringBuilder();
+                r.append("(?i)\\b(");
+                boolean First = true;
+                for (String s : L)
+                  {
+                    if (First == false)
+                      r.append("|");
+                    else
+                      First = false;
+                    r.append(s.toUpperCase());
+                  }
+                r.append(")(PIVOT)?VIEW\\b");
+                String BV = PrintBaseView(V, false);
+                BV = BV.replaceAll(r.toString(), "$1Realized");
+                if (V._Formulas != null && V._Formulas.isEmpty() == false)
+                  BV = DoFormulasSuperView(V, BV, true);
+                BaseLineInsert.append(BV);
+              }
+            else
+              {
+                //String BV = DoFormulasSuperView(V, BV, true);
+                BaseLineInsert.append("SELECT ").append(genRealizedColumnList(V, "\n          "));
+                BaseLineInsert.append("\n     FROM ").append(V._ParentSchema._Name).append(".").append(V._Name);
+              }
 
             if (Up != null)
               {
