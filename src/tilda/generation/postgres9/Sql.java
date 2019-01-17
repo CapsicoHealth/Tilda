@@ -710,7 +710,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             BaseLineInsert.append("  INSERT INTO " + RName + " (" + PrintInsertColumnNames(V) + ")\n     ");
 
             List<String> L = V.getSubRealizedViewRootNames();
-            if (L.isEmpty() == false)
+            if (L.isEmpty() == false) // View depends on realized views.
               {
                 StringBuilder r = new StringBuilder();
                 r.append("(?i)\\b(");
