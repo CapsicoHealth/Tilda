@@ -140,9 +140,9 @@ public class View extends Base
         return _Realize == null ? null : (includeSchemaName == true ? _ParentSchema._Name + "." : "") + (TextUtil.isNullOrEmpty(_Realize._Name) == false ? _Realize._Name : _Name.substring(0, _Name.length() - (_Pivots.isEmpty() == false ? "PivotView" : "View").length()) + "Realized");
       }
 
-    public static String getRootViewName(String Name)
+    public String getRootViewName()
       {
-        return Name.substring(0, Name.length() - (Name.endsWith("PivotView") == true ? "PivotView" : "View").length());
+        return _Name.substring(0, _Name.length() - (_Name.endsWith("PivotView") == true ? "PivotView" : "View").length());
       }
 
     public boolean Validate(ParserSession PS, Schema ParentSchema)
@@ -1141,23 +1141,40 @@ public class View extends Base
       }
 
     /**
-     * Returns a list of the root names (as per {@link #getRootViewName(String)}) of all views referenced by this view that are realized.
+     * Returns a list of the views directly referenced by this view that are realized, or null if no such views were found.
      * @return
      */
-    public List<String> getSubRealizedViewRootNames()
+    public Set<View> getSubRealizedViewRootNames()
       {
-        List<String> L = new ArrayList<String>();
+        Set<View> S = new HashSet<View>();
         for (ViewColumn VC : _ViewColumns)
           {
             View V = VC._SameAsObj == null ? null : VC._SameAsView;
             if (V == null || V._Realize == null)
              continue;
-            String N = getRootViewName(V._Name);
-            if (L.contains(N) == false)
-              L.add(N);
-            
+            S.add(V);
           }
-        return L;
+        return S.isEmpty() == true ? null : S;
       }
+    
+    /**
+     * Returns a set of the views directly referenced by this view that are not realized, but have an ancestor that is, or null
+     * if no such views were found.
+     * @return
+     */
+    public Set<View> getAncestorRealizedViews()
+      {
+        Set<View> S = new HashSet<View>();
+        for (ViewColumn VC : _ViewColumns)
+          {
+            View V = VC._SameAsObj == null ? null : VC._SameAsView;
+            if (V == null || V._Realize != null)
+             continue;
+            if (V.getAncestorRealizedViews() != null)
+             S.add(V);
+          }
+        return S.isEmpty() == true ? null : S;
+      }
+    
     
   }

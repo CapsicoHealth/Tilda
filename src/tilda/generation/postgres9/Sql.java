@@ -23,6 +23,7 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 
 import org.apache.commons.io.output.StringBuilderWriter;
@@ -666,6 +667,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
         return hasAggregates;
       }
 
+    protected static String getViewSubRealizeName(View V)
+      {
+        return "TILDA_TMP." + V._ParentSchema._Name + "_" + V._Name + "_R";
+      }
 
 
     @Override
@@ -684,7 +689,34 @@ public class Sql extends PostgreSQL implements CodeGenSql
         OutFinal.println("-- " + getDDLMetadataVersion());
         OutFinal.println("create or replace view " + V._ParentSchema._Name + "." + V._Name + " as ");
         OutFinal.println(Str + ";\n");
+        Set<View> SubRealizedViews = V.getSubRealizedViewRootNames();
+        Set<View> AncestorRealizedViews = V.getAncestorRealizedViews();
+        if (SubRealizedViews != null || AncestorRealizedViews != null) // View depends on realized views.
+          {
+            StringBuilder r = new StringBuilder();
+            if (SubRealizedViews != null)
+              {
+                r.append("(?i)\\b(");
+                boolean First = true;
+                for (View srv : SubRealizedViews)
+                  {
+                    if (First == false)
+                      r.append("|");
+                    else
+                      First = false;
+                    r.append(srv.getRootViewName().toUpperCase());
+                  }
+                r.append(")(PIVOT)?VIEW\\b");
+                Str = Str.replaceAll(r.toString(), "$1Realized");
+              }
 
+            if (AncestorRealizedViews != null)
+              for (View arv : AncestorRealizedViews)
+               Str = Str.replaceAll(arv.getShortName().replace(".", "\\."), getViewSubRealizeName(arv));
+
+            OutFinal.println("create or replace view " + getViewSubRealizeName(V) + " as ");
+            OutFinal.println(Str + ";\n");
+          }
         if (V._Realize != null)
           {
             OutFinal.println();
@@ -708,34 +740,12 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
             StringWriter BaseLineInsert = new StringWriter();
             BaseLineInsert.append("  INSERT INTO " + RName + " (" + PrintInsertColumnNames(V) + ")\n     ");
+            BaseLineInsert.append("SELECT ").append(genRealizedColumnList(V, "\n          "));
 
-            List<String> L = V.getSubRealizedViewRootNames();
-            if (L.isEmpty() == false) // View depends on realized views.
-              {
-                StringBuilder r = new StringBuilder();
-                r.append("(?i)\\b(");
-                boolean First = true;
-                for (String s : L)
-                  {
-                    if (First == false)
-                      r.append("|");
-                    else
-                      First = false;
-                    r.append(s.toUpperCase());
-                  }
-                r.append(")(PIVOT)?VIEW\\b");
-                String BV = PrintBaseView(V, false);
-                BV = BV.replaceAll(r.toString(), "$1Realized");
-                if (V._Formulas != null && V._Formulas.isEmpty() == false)
-                  BV = DoFormulasSuperView(V, BV, true);
-                BaseLineInsert.append(BV);
-              }
+            if (SubRealizedViews != null || AncestorRealizedViews != null) // View depends on realized views.
+              BaseLineInsert.append("\n     FROM " + getViewSubRealizeName(V));
             else
-              {
-                //String BV = DoFormulasSuperView(V, BV, true);
-                BaseLineInsert.append("SELECT ").append(genRealizedColumnList(V, "\n          "));
-                BaseLineInsert.append("\n     FROM ").append(V._ParentSchema._Name).append(".").append(V._Name);
-              }
+              BaseLineInsert.append("\n     FROM ").append(V._ParentSchema._Name).append(".").append(V._Name);
 
             if (Up != null)
               {
