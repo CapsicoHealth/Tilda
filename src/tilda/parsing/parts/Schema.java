@@ -413,7 +413,15 @@ public class Schema
           {
             Schema S = L.get(i);
             // LOG.info("Checking out " + S._Name + ".");
+            //Tilda and TildaTmp are special internal schemas, so we do the ordering manually.
             if (S._Name.equals("TILDA") == true)
+              {
+                L.add(L.get(0)._Name.equals("TILDATMP") ? 1 : 0, L.remove(i));
+                // LOG.info("Moving " + S._Name + " to the top.");
+                // PrintSchemaList(L);
+                continue;
+              }
+            else if (S._Name.equals("TILDATMP") == true)
               {
                 L.add(0, L.remove(i));
                 // LOG.info("Moving " + S._Name + " to the top.");

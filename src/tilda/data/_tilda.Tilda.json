@@ -1,6 +1,6 @@
 {
   "package": "tilda.data"
- ,"dependencies": null
+ ,"dependencies":["tilda/data/tmp/_tilda.TildaTmp.json"]
  ,"extraDDL":{
      "before":[]
     ,"after":["_tilda.Tilda.postgres.helpers-after.sql"]

@@ -267,7 +267,6 @@ CREATE OR REPLACE FUNCTION TILDA.ageBetween(timestamptz, timestamptz, float, flo
 'SELECT TILDA.Age($1, $2) >= $3 AND TILDA.Age($1, $2) < $4';
 
 
-
 -----------------------------------------------------------------------------------------------------------------
 -- TILDA FIRST/LAST aggregates
 CREATE OR REPLACE FUNCTION TILDA.first_agg (anyelement, anyelement)

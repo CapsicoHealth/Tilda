@@ -669,7 +669,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
     protected static String getViewSubRealizeName(View V)
       {
-        return "TILDA_TMP." + V._ParentSchema._Name + "_" + V._Name + "_R";
+        return "TILDATMP." + V._ParentSchema._Name + "_" + V._Name + "_R";
       }
 
 

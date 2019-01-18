@@ -1170,7 +1170,7 @@ public class View extends Base
             View V = VC._SameAsObj == null ? null : VC._SameAsView;
             if (V == null || V._Realize != null)
              continue;
-            if (V.getAncestorRealizedViews() != null)
+            if (V.getSubRealizedViewRootNames() != null || V.getAncestorRealizedViews() != null)
              S.add(V);
           }
         return S.isEmpty() == true ? null : S;
