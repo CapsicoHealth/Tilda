@@ -833,7 +833,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
               continue;
             if (VC._SameAsObj != null && VC._SameAsObj._Mode == ColumnMode.CALCULATED || VC._JoinOnly == true)
               continue;
-            if (TextUtil.FindStarElement(V._Realize._Exclude, VC._Name, true, 0) != -1)
+            if (TextUtil.FindStarElement(V._Realize._Exclude_DEPRECATED, VC._Name, true, 0) != -1)
               continue;
             if (V.isPivotColumn(VC) == true || V.isPivotAggregate(VC) == true)
               continue;
@@ -847,7 +847,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
         for (Formula F : V._Formulas)
           if (F != null)
             {
-              if (TextUtil.FindStarElement(V._Realize._Exclude, F._Name, true, 0) != -1)
+              if (TextUtil.FindStarElement(V._Realize._Exclude_DEPRECATED, F._Name, true, 0) != -1)
                 continue;
               if (First == true)
                 First = false;
@@ -858,7 +858,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
         for (Column C : V._PivotColumns)
           {
-            if (TextUtil.FindStarElement(V._Realize._Exclude, C.getName(), true, 0) != -1)
+            if (TextUtil.FindStarElement(V._Realize._Exclude_DEPRECATED, C.getName(), true, 0) != -1)
               continue;
             if (First == true)
               First = false;
@@ -881,7 +881,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                 b.append("--     \"").append(VC._Name).append("\"  BLOCKED\n");
                 continue;
               }
-            if (Realize == true && TextUtil.FindStarElement(V._Realize._Exclude, VC.getName(), true, 0) != -1)
+            if (Realize == true && TextUtil.FindStarElement(V._Realize._Exclude_DEPRECATED, VC.getName(), true, 0) != -1)
               {
                 b.append("--     \"").append(VC._Name).append("\"  REALIZE-EXCLUDED\n");
                 continue;
@@ -1396,7 +1396,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
                   }
                 continue;
               }
-            if (TextUtil.FindStarElement(V._Realize._Exclude, VC.getName(), true, 0) == -1)
+            if (TextUtil.FindStarElement(V._Realize._Exclude_DEPRECATED, VC.getName(), true, 0) == -1)
               {
                 if (First == false)
                   Str.append(Lead).append(",");
@@ -1422,7 +1422,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
           {
             if (F == null)
               continue;
-            if (TextUtil.FindStarElement(V._Realize._Exclude, F._Name, true, 0) == -1)
+            if (TextUtil.FindStarElement(V._Realize._Exclude_DEPRECATED, F._Name, true, 0) == -1)
               {
                 if (First == false)
                   Str.append(Lead).append(",");
@@ -1441,7 +1441,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
           }
         for (Column C : V._PivotColumns)
           {
-            if (TextUtil.FindStarElement(V._Realize._Exclude, C.getName(), true, 0) != -1)
+            if (TextUtil.FindStarElement(V._Realize._Exclude_DEPRECATED, C.getName(), true, 0) != -1)
               continue;
             ViewRealizeMapping VRM = V._Realize.getMapping(C.getName());
             if (VRM == null)

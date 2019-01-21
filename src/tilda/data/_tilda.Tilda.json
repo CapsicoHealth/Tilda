@@ -651,8 +651,6 @@
               { "name": "Refnum", "columns":["refnum"] }
              ,{ "name": "LastUpdated", "orderBy":["lastUpdated desc"] }
            ]
-         ,"excludes":[ "a9*"
-                     ]
         }
      }
     ,{ "name": "Testing3View"

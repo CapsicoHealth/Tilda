@@ -44,8 +44,8 @@ public class ViewRealize
     @SerializedName("indices"    ) public List<Index>       _Indices    = new ArrayList<Index>();
     @SerializedName("subRealized") public String[]          _SubRealized_DEPRECATED= new String[] { };
     // It was "exclude" for view columns, so why was it ever "excludes" here? Not consistent.
-    @SerializedName("excludes"   ) public String[]          _Excludes_DEPRECATED   = new String[] { };
-    @SerializedName("exclude"    ) public String[]          _Exclude         = new String[] { };
+    @SerializedName("excludes"   ) public String[]          _Excludes_DEPRECATED   = null;
+    @SerializedName("exclude"    ) public String[]          _Exclude_DEPRECATED    = null;
     @SerializedName("mappings"   ) public List<ViewRealizeMapping> _Mappings = new ArrayList<>();
     @SerializedName("upsert"     ) public ViewRealizeUpsert _Upsert = null;
     /*@formatter:on*/
@@ -70,8 +70,8 @@ public class ViewRealize
           PS.AddError("The realize section for view '" + ParentView.getFullName() + "' uses the deprecated feature 'subrealize'. Use dependent Realized tables directly.");
         
         // Taking care of deprecated stuff...
-        if (_Exclude.length == 0)
-          _Exclude = _Excludes_DEPRECATED;
+        if (_Exclude_DEPRECATED != null || _Excludes_DEPRECATED != null)
+          PS.AddError("The realize section for view '" + ParentView.getFullName() + "' uses the deprecated feature 'exclude' or 'excludes'. Use view columns with \"block\":[...] instead.");
 
         Set<String> Names = new HashSet<String>();
         boolean indexOnDeleted = false;
@@ -109,7 +109,7 @@ public class ViewRealize
                 PS.AddError("Mapping '" + VRM._Name + "' is duplicated in the realize section for view '" + ParentView.getFullName() + "'.");
               if (ParentView.getColumn(VRM._Name) == null && ParentView.getFormula(VRM._Name) == null && ParentView.getPivottedColumn(VRM._Name) == null)
                 PS.AddError("Mapping for column '" + VRM._Name + "' is defined without a matching column/formula/pivot in the main view '" + ParentView.getFullName() + "'.");
-              if (TextUtil.FindStarElement(_Exclude, VRM._Name, true, 0) != -1)
+              if (TextUtil.FindStarElement(_Exclude_DEPRECATED, VRM._Name, true, 0) != -1)
                 PS.AddError("Mapping for column '" + VRM._Name + "' is defined while also being excluded.");
             }
         
@@ -137,7 +137,7 @@ public class ViewRealize
 //        LOG.debug(ParentRealized._O.getFullName()+": "+TextUtil.Print(ParentRealized._O.getColumnNames()));
         for (Column C : ParentRealized._O._Columns)
           {
-            if (TextUtil.FindStarElement(_Exclude, C._Name, false, 0) == -1)
+            if (TextUtil.FindStarElement(_Exclude_DEPRECATED, C._Name, false, 0) == -1)
               {
                 if (C._FCT.isOCC() == true)
                  OCC = true;
