@@ -11,6 +11,10 @@ import tilda.performance.*;
 import tilda.utils.*;
 
 
+/** @author    Tilda code gen for Java 8/PostgreSQL
+    @version   Tilda 1.0
+    @generated Jan 24 2019, 21:26:48EST
+*/
 public final class TILDA__1_0
  {
    protected static final Logger LOG = LogManager.getLogger(TILDA__1_0.class.getName());

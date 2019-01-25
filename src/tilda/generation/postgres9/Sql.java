@@ -712,7 +712,10 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
             if (AncestorRealizedViews != null)
               for (View arv : AncestorRealizedViews)
-               Str = Str.replaceAll(arv.getShortName().replace(".", "\\."), getViewSubRealizeName(arv));
+                {
+                  String regex = "(?i)\\b("+arv.getShortName().replace(".", "\\.)?")+"\\b";
+                  Str = Str.replaceAll(regex, getViewSubRealizeName(arv));
+                }
 
             OutFinal.println("create or replace view " + getViewSubRealizeName(V) + " as ");
             OutFinal.println(Str + ";\n");

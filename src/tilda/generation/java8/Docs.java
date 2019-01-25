@@ -141,9 +141,6 @@ public class Docs implements CodeGenDocs
         Out.println(Helper.getMultiLineDocCommentStart());
         tilda.generation.html.Docs.DataClassDocs(Out, G, O);
         Out.println(SystemValues.NEWLINE
-                   +" @author   Tilda code gen for " + Helper.getCodeGenLanguage() + "/" + G.getSql().getName() + SystemValues.NEWLINE
-                   +" @version  Tilda 1.0" + SystemValues.NEWLINE
-                   +" @generated " + DateTimeUtil.printDateTimeFriendly(SystemValues.STARTUP_DATE, true, true) + SystemValues.NEWLINE
                    + Helper.getMultiLineCommentEnd()
                    );
       }

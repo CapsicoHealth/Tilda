@@ -305,7 +305,7 @@ END $$;
 -- TILDA array concatenation aggregate aggregates
 DO $$ BEGIN
 if not exists (SELECT 1 FROM pg_aggregate WHERE aggfnoid::TEXT = 'array_cat_agg') THEN
-CREATE AGGREGATE TILDA.array_cat_agg (anyarray)
+CREATE AGGREGATE public.array_cat_agg (anyarray)
 (
     sfunc = array_cat,
     stype = anyarray,

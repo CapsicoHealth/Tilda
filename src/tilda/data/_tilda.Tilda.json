@@ -550,7 +550,7 @@
          ,{ "sameas": "Testing.created",   "joinOnly":true }
          ,{ "sameas": "Testing.a*" 
            ,"exclude":["a2*"]
-           ,"block"  :["a3", "a6*"]
+           ,"block"  :["a3", "a6*", "a9*"]
           }
          ,{ "sameas": "Testing.desc*"                      }
         ]
@@ -673,7 +673,7 @@
     ,{ "name": "Testing4View"
       ,"description": "A test view to test .* and exclude and block."
       ,"columns":[
-          { "sameas": "Testing2view.*"
+          { "sameas": "Testing2View.*"
            ,"block":["a3", "*astUpdated"]   
           }
         ]

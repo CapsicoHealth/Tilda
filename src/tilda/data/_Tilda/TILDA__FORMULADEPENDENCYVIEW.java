@@ -315,9 +315,6 @@ This View contains the following columns:<BLOCKQUOTE>
 </DIV></DIV>
 </DIV>
 
- @author   Tilda code gen for Java 8/PostgreSQL
- @version  Tilda 1.0
- @generated Jan 18 2019, 15:32:16EST
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__FORMULADEPENDENCYVIEW implements tilda.interfaces.ReaderObject
