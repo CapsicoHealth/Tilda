@@ -16,7 +16,11 @@ import tilda.generation.graphviz.GraphvizUtil;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
+import tilda.parsing.parts.View;
+import tilda.parsing.parts.View.DepWrapper;
 import tilda.utils.FileUtil;
+import tilda.utils.Graph;
+import tilda.utils.Graph.Node;
 
 public class DocGen
   {
@@ -103,6 +107,7 @@ public class DocGen
           }
 
         WriteTablesAndViews(PS, writer);
+        WriteRealizeSchedule(PS, writer);
 
         writer.println("<BR><BR><BR><BR><BR><HR>- End -<BR><BR><BR>");
         writeFooter(writer, PS);
@@ -110,13 +115,34 @@ public class DocGen
         writer.println("</HTML>");
         writer.close();
       }
-    
-    
-    private void writeHeader(PrintWriter writer, ParserSession PS) throws Exception
+
+
+    private void WriteRealizeSchedule(ParserSession PS, PrintWriter writer)
+    throws Exception
+      {
+        boolean hasRealized = false;
+        for (View V : schema._Views)
+          if (V._Realize != null)
+            {
+              hasRealized = true;
+              break;
+            }
+        if (hasRealized == false)
+          return;
+
+        writer.println("<BR><BR><BR><BR><BR><HR><H1>Realized Views Summary</H1><BLOCKQUOTE>");
+        Docs.writeRealizedSummary(writer, PS, schema);
+        writer.println("</BLOCKQUOTE>");
+      }
+
+    private void writeHeader(PrintWriter writer, ParserSession PS)
+    throws Exception
       {
         Docs.writeHeader(writer, PS._Main);
       }
-    private void writeFooter(PrintWriter writer, ParserSession PS) throws Exception
+
+    private void writeFooter(PrintWriter writer, ParserSession PS)
+    throws Exception
       {
         Docs.writeFooter(writer, PS._Main);
       }
@@ -127,30 +153,30 @@ public class DocGen
         WriteObjectDocsList(writer, FrameworkSourcedType.MAPPER, "Mappers");
         WriteObjectDocsList(writer, FrameworkSourcedType.NONE, "Tables");
         WriteObjectDocsList(writer, FrameworkSourcedType.VIEW, "Views");
-/*
-        boolean First = true;
-        for (View V : schema._Views)
-          {
-            if (V._Realize == null)
-              continue;
-            if (First == true)
-              {
-                writer.println("<BR><BR><BR><BR><BR><HR><H1>Views</H1>");
-                First = false;
-              }
-//            try
-//              {
-//                writer.println("<BR><BR><BR><BR><BR><BR>");
-//                Docs.RealizedDataMartTableDocs(writer, PS, V);
-//              }
-//            catch (Exception e)
-//              {
-//                // TODO Auto-generated catch block
-//                LOG.warn("FYI: this can be ignored for now:\n", e);
-//              }
-          }
-*/
-        }
+        /*
+         * boolean First = true;
+         * for (View V : schema._Views)
+         * {
+         * if (V._Realize == null)
+         * continue;
+         * if (First == true)
+         * {
+         * writer.println("<BR><BR><BR><BR><BR><HR><H1>Views</H1>");
+         * First = false;
+         * }
+         * // try
+         * // {
+         * // writer.println("<BR><BR><BR><BR><BR><BR>");
+         * // Docs.RealizedDataMartTableDocs(writer, PS, V);
+         * // }
+         * // catch (Exception e)
+         * // {
+         * // // TODO Auto-generated catch block
+         * // LOG.warn("FYI: this can be ignored for now:\n", e);
+         * // }
+         * }
+         */
+      }
 
     private void WriteObjectDocsList(PrintWriter writer, FrameworkSourcedType Filter, String TitleLabel)
       {
@@ -161,7 +187,7 @@ public class DocGen
               continue;
             if (First == true)
               {
-                writer.println("<BR><BR><BR><BR><BR><HR><H1>"+TitleLabel+"</H1><BLOCKQUOTE>");
+                writer.println("<BR><BR><BR><BR><BR><HR><H1>" + TitleLabel + "</H1><BLOCKQUOTE>");
                 First = false;
               }
             else
@@ -191,8 +217,8 @@ public class DocGen
         writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener()\", id=\"realized_check\">&nbsp;Realized</label></TD></TR>");
         writer.println("<TR><TD colspan=\"2\"><table id=\"__SEARCH_BOX_RESULTS__\" class=\"search_results\" border=\"0px\" cellspacing=\"0px\"></table>");
         writer.println("</TD></TR></TABLE></DIV>");
-//        writer.println("<SCRIPT>registerStickyHeader(\"__SEARCH_BOX__\");</SCRIPT>");
-//hideIfEsc(event, '__SEARCH_BOX_RESULTS__');
+        // writer.println("<SCRIPT>registerStickyHeader(\"__SEARCH_BOX__\");</SCRIPT>");
+        // hideIfEsc(event, '__SEARCH_BOX_RESULTS__');
       }
 
   }

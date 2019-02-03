@@ -1023,7 +1023,7 @@ public class View extends Base
           }
       }
 
-    public Graph<DepWrapper> getDependencyGraph()
+    public Graph<DepWrapper> getDependencyGraph(boolean onlyRealizedViews)
       {
         Object Obj = _ParentSchema.getObject(_Name);
         DepWrapper DW = new DepWrapper(Obj, null);
@@ -1034,11 +1034,11 @@ public class View extends Base
         Graph.Node<DepWrapper> N = Root;
         for (ViewColumn VC : _ViewColumns)
           {
-            // LOG.debug("Looking at VC " + VC.getShortName() + ".");
+//            LOG.debug("Looking at VC " + VC.getShortName() + ".");
             List<Column> L = VC.getSameAsLineage();
             for (Column C : L)
               {
-                // LOG.debug(" Ancestor " + C.getShortName() + ".");
+//                LOG.debug(" Ancestor " + C.getShortName() + ".");
                 Graph.Node<DepWrapper> n = null;
                 boolean foundObj = false;
                 for (int i = 0; i < N.getChildrenNodes().size(); ++i) // Searching for a node at that level matching the incoming object definition
@@ -1052,7 +1052,7 @@ public class View extends Base
                   }
                 if (foundObj == true)
                   {
-                    // LOG.debug(" Found, moving on to Graph node " + n.getValue()._Obj.getShortName());
+//                    LOG.debug(" Found, moving on to Graph node " + n.getValue()._Obj.getShortName());
                     boolean foundCol = false;
                     for (Column c : n.getValue()._Columns)
                       if (c == C)
@@ -1066,13 +1066,17 @@ public class View extends Base
                   }
                 else
                   {
-                    // LOG.debug(" Creating new Graph node " + C._ParentObject.getShortName());
-                    DepWrapper SubDW = new DepWrapper(C._ParentObject, VC._As);
-                    SubDW.addColumn(C);
-                    N = N.addChild(SubDW);
+                    View V = DW.getObj()._ParentSchema.getSourceView(C._ParentObject);
+                    if (onlyRealizedViews == false || V != null && (V._Realize != null))// || V.hasAncestorRealizedViews() == true))
+                      {
+//                        LOG.debug(" Creating new Graph node " + C._ParentObject.getShortName());
+                        DepWrapper SubDW = new DepWrapper(C._ParentObject, VC._As);
+                        SubDW.addColumn(C);
+                        N = N.addChild(SubDW);
+                      }
                   }
               }
-            // LOG.debug(" Resetting to graph root for next VC");
+            LOG.debug(" Resetting to graph root for next VC");
             N = Root;
           }
 
@@ -1130,18 +1134,19 @@ public class View extends Base
             return C;
         return null;
       }
-    
+
     public boolean isPivotAggregate(ViewColumn VC)
       {
         for (ViewPivot P : _Pivots)
           for (ViewPivotAggregate A : P._Aggregates)
-           if (A._Name.equals(VC._Name) == true)
-            return true;
+            if (A._Name.equals(VC._Name) == true)
+              return true;
         return false;
       }
 
     /**
      * Returns a list of the views directly referenced by this view that are realized, or null if no such views were found.
+     * 
      * @return
      */
     public Set<View> getSubRealizedViewRootNames()
@@ -1151,15 +1156,16 @@ public class View extends Base
           {
             View V = VC._SameAsObj == null ? null : VC._SameAsView;
             if (V == null || V._Realize == null)
-             continue;
+              continue;
             S.add(V);
           }
         return S.isEmpty() == true ? null : S;
       }
-    
+
     /**
      * Returns a set of the views directly referenced by this view that are not realized, but have an ancestor that is, or null
      * if no such views were found.
+     * 
      * @return
      */
     public Set<View> getAncestorRealizedViews()
@@ -1169,12 +1175,19 @@ public class View extends Base
           {
             View V = VC._SameAsObj == null ? null : VC._SameAsView;
             if (V == null || V._Realize != null)
-             continue;
+              continue;
             if (V.getSubRealizedViewRootNames() != null || V.getAncestorRealizedViews() != null)
-             S.add(V);
+              S.add(V);
           }
         return S.isEmpty() == true ? null : S;
       }
+
+    public boolean hasAncestorRealizedViews()
+      {
+        Set<View> S1 = getAncestorRealizedViews();
+        Set<View> S2 = getSubRealizedViewRootNames();
+        return S1!=null && S1.isEmpty() == false || S2!=null && S2.isEmpty() == false;
+      }
     
-    
+
   }

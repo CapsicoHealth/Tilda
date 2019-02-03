@@ -17,6 +17,7 @@
 package tilda.generation.html;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,6 +35,7 @@ import tilda.generation.GeneratorSession;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.generation.java8.Helper;
 import tilda.generation.java8.JavaJDBCType;
+import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
 import tilda.parsing.parts.ForeignKey;
@@ -46,11 +48,13 @@ import tilda.parsing.parts.View;
 import tilda.parsing.parts.ViewColumn;
 import tilda.parsing.parts.ViewJoin;
 import tilda.parsing.parts.ViewPivot;
+import tilda.parsing.parts.View.DepWrapper;
 import tilda.utils.FileUtil;
 import tilda.utils.Graph;
 import tilda.utils.PaddingUtil;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
+import tilda.utils.Graph.Node;
 
 public class Docs
   {
@@ -948,9 +952,9 @@ public class Docs
     private static void DoSubWhereDetails(PrintWriter Out, View V, CodeGenSql Sql)
     throws Exception
       {
-        Graph<View.DepWrapper> G = V.getDependencyGraph();
+        Graph<View.DepWrapper> G = V.getDependencyGraph(false);
         DependencyPrinter DepPrinter = new DependencyPrinter(Sql);
-        G.Traverse(DepPrinter);
+        G.Traverse(DepPrinter, true);
 
         /*
          * if (V._SubWhereX != null)
@@ -977,6 +981,78 @@ public class Docs
             Out.println("</TABLE></PRE></BLOCKQUOTE>");
           }
 
+      }
+
+
+
+    protected static class DependencyRealizedPrinter implements Graph.Visitor<View.DepWrapper>
+      {
+        public DependencyRealizedPrinter()
+          {
+          }
+
+        protected StringBuilder _Str = new StringBuilder();
+
+        @Override
+        public void visitNode(int level, int FirstMiddleLast, View.DepWrapper DW, List<View.DepWrapper> Path)
+        throws Exception
+          {
+//            View V = DW.getObj()._ParentSchema.getView(DW.getObj()._Name);
+//            if (V == null || V._Realize == null)
+//              return;
+            _Str.append("<TR><TD><PRE>").append(PaddingUtil.getPad(level * 4)).append(makeObjectLink(DW.getObj())).append("</PRE></TD><TD>");
+            _Str.append("</TD></TR>\n");
+          }
+
+        public String getPrintout()
+          {
+            return _Str.toString();
+          }
+      }
+
+    public static void writeRealizedSummary(PrintWriter Out, ParserSession PS, Schema S)
+    throws Exception
+      {
+        // Just print the list of realized dependencies for each realized view and gather the graphs
+        List<Graph<DepWrapper>> GL = new ArrayList<Graph<DepWrapper>>();
+        for (View V : S._Views)
+          if (V._Realize != null)
+            {
+              Out.println("<H2>" + V.getShortName() + "</H2>");
+              Graph<DepWrapper> G = V.getDependencyGraph(true);
+              DependencyRealizedPrinter DRP = new DependencyRealizedPrinter();
+              G.Traverse(DRP, true);
+              Out.println("<TABLE class=\"TreeTable Rowed\" border=\"0px\" cellspacing=\"0px\" cellpadding=\"2px\">" + DRP.getPrintout() + "</TABLE>");
+              GL.add(G);
+            }
+
+        // Start ordering the graphs
+        int Level = 0;
+        while (true)
+          {
+            Set<DepWrapper> Leaves = new HashSet<DepWrapper>();
+            for (Graph<DepWrapper> G : GL)
+              Leaves.addAll(G.getLeaves(true));
+
+            if (Leaves.isEmpty() == true)
+              break;
+
+            Set<DepWrapper> TrueLeaves = new HashSet<DepWrapper>();
+            for (DepWrapper DW : Leaves)
+              for (Graph<DepWrapper> G : GL)
+                if (G.contains(DW) == false)
+                  TrueLeaves.add(DW);
+
+            Set<String> Names = new HashSet<String>();
+            if (TrueLeaves.isEmpty() == false)
+              {
+                ++Level;
+                Out.println("<BR><B>Level "+Level+"</B><BR>");
+                for (DepWrapper DW : TrueLeaves)
+                  if (Names.add(DW.getObj().getShortName()) == true)
+                   Out.println("&nbsp;&nbsp;&nbsp;"+makeObjectLink(DW.getObj())+"<BR>");
+              }
+          }
       }
 
   }
