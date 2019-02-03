@@ -24,6 +24,8 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import tilda.parsing.parts.View.DepWrapper;
+
 /**
  * @author ldh
  *
@@ -125,14 +127,40 @@ public class Graph<T>
           return false;
         if (N._v == t)
          return true;
-        else for (int i = 0; i < N.getChildrenNodes().size(); ++i)
+        else for (int i = 0; i < N._children.size(); ++i)
           {
-            Node<T> Child = N.getChildrenNodes().get(i);
+            Node<T> Child = N._children.get(i);
             if (contains(t, Child) == true)
              return true;
           }
         return false;
       }
+    
+    public boolean remove(T t)
+      {
+        return remove(t, _Root);
+      }
+
+    protected boolean remove(T t, Node<T> N)
+      {
+        if (N == null)
+          return false;
+        boolean found = false;
+        for (int i = 0; i < N._children.size(); ++i)
+          {
+            Node<T> Child = N._children.get(i);
+            if (Child._v == t)
+              {
+                found = true;
+                N._children.remove(i);
+                --i;
+              }
+            else if (remove(t, Child) == true)
+              found = true;
+          }
+        return found;
+      }
+    
     
     protected static <T> void Traverse(Visitor<T> V, int Level, int FirstMiddleLast, Node<T> N, List<T> Path, boolean pre)
     throws Exception

@@ -128,9 +128,17 @@ public class DocGen
               break;
             }
         if (hasRealized == false)
-          return;
+          {
+            writer.println("<BR><BR><BR><BR><BR><HR><H1>Parallel Refill Schedule</H1><BLOCKQUOTE>");
+            writer.println("This schema doesn't contain any realized views.\n");
+            writer.println("</BLOCKQUOTE>");
+            return;
+          }
 
-        writer.println("<BR><BR><BR><BR><BR><HR><H1>Realized Views Summary</H1><BLOCKQUOTE>");
+        writer.println("<BR><BR><BR><BR><BR><HR><H1>Parallel Refill Schedule</H1><BLOCKQUOTE>");
+        writer.println("Use the following grouping(s) if you want to refill all the realized tables in this schema and dependencies. ");
+        writer.println("For example, you can execute in parallel (maybe from some ETL tool) all Refill functions from group 1, then ");
+        writer.println("all from group 2 etc...<BR><BR>\n");
         Docs.writeRealizedSummary(writer, PS, schema);
         writer.println("</BLOCKQUOTE>");
       }

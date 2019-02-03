@@ -969,90 +969,55 @@ public class Docs
         if (V._Pivots.isEmpty() == false)
           {
             Out.println("A pivot was done as part of this view explicitly on the following columns and values:"
-            + "<BLOCKQUOTE><PRE><TABLE class=\"Rowed\" border=\"0px\">");
+            + "<BLOCKQUOTE><PRE><TABLE class=\"Rowed\" cellspacing=\"0px\" border=\"0px\">");
             for (ViewPivot P : V._Pivots)
               {
-                Out.println("<TR valign=\"top\"><TD>" + P._VC._SameAsObj.getName() + "</TD><TD>" + P._VC._Description + "</TD><TR>");
-                Out.print("<TR><TD></TD><TD><TABLE class=\"NoRowed\" border=\"0px\"");
+                Out.println("<TR valign=\"top\" class=\"RowedSection\"><TD><B>" + P._VC._SameAsObj.getName() + "</B></TD><TD colspan=\"2\">" + P._VC._Description + "</TD></TR>");
                 for (Value Val : P._Values)
-                  Out.println("<TR><TD>" + Val._Value + "&nbsp;&nbsp;&nbsp;</TD><TD>" + Val._Description + "</TD></TR>");
-                Out.println("</TABLE></TD></TR>");
+                  Out.println("<TR><TD></TD><TD>" + Val._Value + "</TD><TD>" + Val._Description + "</TD></TR>");
               }
             Out.println("</TABLE></PRE></BLOCKQUOTE>");
           }
 
       }
 
-
-
-    protected static class DependencyRealizedPrinter implements Graph.Visitor<View.DepWrapper>
-      {
-        public DependencyRealizedPrinter()
-          {
-          }
-
-        protected StringBuilder _Str = new StringBuilder();
-
-        @Override
-        public void visitNode(int level, int FirstMiddleLast, View.DepWrapper DW, List<View.DepWrapper> Path)
-        throws Exception
-          {
-//            View V = DW.getObj()._ParentSchema.getView(DW.getObj()._Name);
-//            if (V == null || V._Realize == null)
-//              return;
-            _Str.append("<TR><TD><PRE>").append(PaddingUtil.getPad(level * 4)).append(makeObjectLink(DW.getObj())).append("</PRE></TD><TD>");
-            _Str.append("</TD></TR>\n");
-          }
-
-        public String getPrintout()
-          {
-            return _Str.toString();
-          }
-      }
-
     public static void writeRealizedSummary(PrintWriter Out, ParserSession PS, Schema S)
     throws Exception
       {
-        // Just print the list of realized dependencies for each realized view and gather the graphs
+        // Accumulate the Realize dependency graphs of all realized views
         List<Graph<DepWrapper>> GL = new ArrayList<Graph<DepWrapper>>();
         for (View V : S._Views)
           if (V._Realize != null)
-            {
-              Out.println("<H2>" + V.getShortName() + "</H2>");
-              Graph<DepWrapper> G = V.getDependencyGraph(true);
-              DependencyRealizedPrinter DRP = new DependencyRealizedPrinter();
-              G.Traverse(DRP, true);
-              Out.println("<TABLE class=\"TreeTable Rowed\" border=\"0px\" cellspacing=\"0px\" cellpadding=\"2px\">" + DRP.getPrintout() + "</TABLE>");
-              GL.add(G);
-            }
+            GL.add(V.getDependencyGraph(true));
 
         // Start ordering the graphs
-        int Level = 0;
+        int group = 0;
+        Out.println("<TABLE BORDER=\"0\">");
         while (true)
           {
+            // Get all the leaves across all realized views dependency graphs
             Set<DepWrapper> Leaves = new HashSet<DepWrapper>();
             for (Graph<DepWrapper> G : GL)
               Leaves.addAll(G.getLeaves(true));
 
+            // If there were no leaves left, then we have nothing to do anymore. We are done.
             if (Leaves.isEmpty() == true)
               break;
 
-            Set<DepWrapper> TrueLeaves = new HashSet<DepWrapper>();
-            for (DepWrapper DW : Leaves)
-              for (Graph<DepWrapper> G : GL)
-                if (G.contains(DW) == false)
-                  TrueLeaves.add(DW);
-
+            // The leaves are DepWrapper nodes, so the set may include duplicates.
+            // Print the members of the group and make sure we track dupes.
             Set<String> Names = new HashSet<String>();
-            if (TrueLeaves.isEmpty() == false)
-              {
-                ++Level;
-                Out.println("<BR><B>Level "+Level+"</B><BR>");
-                for (DepWrapper DW : TrueLeaves)
-                  if (Names.add(DW.getObj().getShortName()) == true)
-                   Out.println("&nbsp;&nbsp;&nbsp;"+makeObjectLink(DW.getObj())+"<BR>");
-              }
+            ++group;
+            Out.println("<TR><TD COLSPAN=\"2\"><B>Group " + group + "</B></TD></TR>");
+            for (DepWrapper DW : Leaves)
+              if (Names.add(DW.getObj().getShortName()) == true)
+                {
+                  View V = DW.getObj()._ParentSchema.getView(DW.getObj()._Name);
+                  String TName = V.getRealizedTableName(false);
+                  Out.println("<TR><TD>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Refill_" + TName + "();</TD><TD>&nbsp;&nbsp;&nbsp;&nbsp;" + makeObjectLink(DW.getObj()) + "</TD></TR>");
+                }
           }
+        Out.println("</TABLE>");
       }
 
   }
