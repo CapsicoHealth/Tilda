@@ -1009,13 +1009,17 @@ public class Docs
             Set<String> Names = new HashSet<String>();
             ++group;
             Out.println("<TR><TD COLSPAN=\"2\"><B>Group " + group + "</B></TD></TR>");
+            StringBuilder Str1 = new StringBuilder();
+            StringBuilder Str2 = new StringBuilder();
             for (DepWrapper DW : Leaves)
               if (Names.add(DW.getObj().getShortName()) == true)
                 {
                   View V = DW.getObj()._ParentSchema.getView(DW.getObj()._Name);
                   String TName = V.getRealizedTableName(false);
-                  Out.println("<TR><TD>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Refill_" + TName + "();</TD><TD>&nbsp;&nbsp;&nbsp;&nbsp;" + makeObjectLink(DW.getObj()) + "</TD></TR>");
+                  Str1.append("select "+V._ParentSchema._Name+".Refill_" + TName + "();<BR>\n");
+                  Str2.append(makeObjectLink(DW.getObj()) + "<BR>\n");
                 }
+            Out.println("<TR><TD style=\"padding-left:30px;\">"+Str1.toString()+"</TD><TD style=\"padding-left:10px;\">"+Str2.toString()+"</TD></TR>");
           }
         Out.println("</TABLE>");
       }
