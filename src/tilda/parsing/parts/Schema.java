@@ -31,9 +31,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
-import tilda.enums.ColumnType;
-import tilda.enums.ObjectLifecycle;
-import tilda.enums.ObjectMode;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
@@ -213,7 +210,7 @@ public class Schema
               O.Validate(PS, this);
             }
 
-        boolean hasFormulas = false;
+//        boolean hasFormulas = false;
         Map<String, Formula> Measures = new HashMap<String, Formula>();
         for (View V : _Views)
           if (V != null)
@@ -223,7 +220,7 @@ public class Schema
               V.Validate(PS, this);
               if (V._Formulas != null && V._Formulas.isEmpty() == false)
                 {
-                  hasFormulas = true;
+//                  hasFormulas = true;
                   for (Formula F : V._Formulas)
                     if (F != null && F._Measure == true)
                       {
@@ -234,14 +231,15 @@ public class Schema
                 }
             }
 
+/*        
         if (hasFormulas == true)
          CreateFormulaDocumentationTables(PS);
-        
+*/        
         _Validated = Errs == PS.getErrorCount();
         return _Validated;
       }
     
-    
+/*
     private void CreateFormulaDocumentationTables(ParserSession PS)
       {
         Object O = new Object();
@@ -385,7 +383,8 @@ public class Schema
         _Objects.add(O);
         O.Validate(PS, this);
       }
-
+*/
+    
     public Documentation getDocumentation()
       {
         if (_Documentation == null)

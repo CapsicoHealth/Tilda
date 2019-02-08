@@ -55,6 +55,7 @@ import tilda.utils.PaddingUtil;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
 import tilda.utils.Graph.Node;
+import tilda.utils.Graph.Visitor;
 
 public class Docs
   {
@@ -88,7 +89,7 @@ public class Docs
         String JS = FileUtil.getFileOfResourceContents("tilda/generation/html/TildaDocs.js");
         Out.println(
         "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\"/>\n"
-        + "<title>Tilda Docs: " + S.getFullName() + "</title>\n"
+        + "<title>Tilda Docs: " + S._Name + " ("+S._Package+")</title>\n"
         + "<STYLE>\n"
         + CSS
         + "</STYLE>\n"
@@ -986,9 +987,9 @@ public class Docs
       {
         // Accumulate the Realize dependency graphs of all realized views
         List<Graph<DepWrapper>> GL = new ArrayList<Graph<DepWrapper>>();
-        for (View V : S._Views)
-          if (V._Realize != null)
-            GL.add(V.getDependencyGraph(true));
+        Set<String> VisitedSchemas = new HashSet<String>();
+        VisitedSchemas.add(S._Name);
+        CollectRealizedViews(GL, VisitedSchemas, S);
 
         // Start ordering the graphs
         int group = 0;
@@ -1024,4 +1025,23 @@ public class Docs
         Out.println("</TABLE>");
       }
 
+    private static void CollectRealizedViews(List<Graph<DepWrapper>> GL, Set<String> VisitedSchemas, Schema S) throws Exception
+      {
+        for (View V : S._Views)
+          if (V._Realize != null)
+            {
+              Graph<DepWrapper> G = V.getDependencyGraph(true);
+              GL.add(G);
+              G.Traverse(new Visitor<DepWrapper>()
+                {
+                  @Override
+                  public void visitNode(int level, int FirstMiddleLast, DepWrapper v, List<DepWrapper> Path)
+                  throws Exception
+                    {
+                      if (VisitedSchemas.add(v.getObj()._ParentSchema._Name) == true)
+                        CollectRealizedViews(GL, VisitedSchemas, v.getObj()._ParentSchema);
+                    }
+                }, true);
+            }
+      }
   }

@@ -17,10 +17,7 @@ import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
-import tilda.parsing.parts.View.DepWrapper;
 import tilda.utils.FileUtil;
-import tilda.utils.Graph;
-import tilda.utils.Graph.Node;
 
 public class DocGen
   {
@@ -135,9 +132,9 @@ public class DocGen
             return;
           }
 
-        writer.println("<BR><BR><BR><BR><BR><HR><H1>Parallel Refill Schedule</H1><BLOCKQUOTE>");
-        writer.println("Use the following grouping(s) if you want to refill all the realized tables in this schema and dependencies. ");
-        writer.println("For example, you can execute in parallel (maybe from some ETL tool) all Refill functions from group 1, then ");
+        writer.println("<BR><BR><BR><BR><BR><HR><H1 id=\"PARALLEL_REFILL_DIV\">Parallel Refill Schedule</H1><BLOCKQUOTE>");
+        writer.println("Use the following grouping(s) if you want to refill all the realized tables in this schema and their dependencies. ");
+        writer.println("For example, you can execute in parallel (maybe from some ETL tool or Java code) all Refill functions from group 1, then ");
         writer.println("all from group 2 etc...<BR><BR>\n");
         Docs.writeRealizedSummary(writer, PS, schema);
         writer.println("</BLOCKQUOTE>");
