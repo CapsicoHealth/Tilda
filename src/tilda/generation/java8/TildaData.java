@@ -191,6 +191,7 @@ public class TildaData implements CodeGenTildaData
                   case DOUBLE:
                   case FLOAT:
                   case INTEGER:
+                  case SHORT:  
                   case LONG:
                     Out.print("= SystemValues.EVIL_VALUE");
                     break;
@@ -282,6 +283,7 @@ public class TildaData implements CodeGenTildaData
           {
             case BOOLEAN:
             case FLOAT:
+            case SHORT:
             case INTEGER:
               return V;
             case LONG:
@@ -368,6 +370,7 @@ public class TildaData implements CodeGenTildaData
               case DOUBLE:
               case FLOAT:
               case INTEGER:
+              case SHORT:
               case LONG:
                 Out.println("      { return _" + V._ParentColumn.getName() + " == " + ValueNameVar + "; }");
                 break;
@@ -578,6 +581,7 @@ public class TildaData implements CodeGenTildaData
                 case DOUBLE:
                 case FLOAT:
                 case LONG:
+                case SHORT:
                 case INTEGER:
                   if (C.isSet() == true)
                     Out.println("       if (_" + C.getName() + ".contains(v) == false)");
@@ -768,6 +772,7 @@ public class TildaData implements CodeGenTildaData
             case DOUBLE:
             case FLOAT:
             case INTEGER:
+            case SHORT:
             case LONG:
             case STRING:
               if (V._ParentColumn.isCollection() == false)
@@ -860,6 +865,7 @@ public class TildaData implements CodeGenTildaData
               case FLOAT:
               case BITFIELD:
               case INTEGER:
+              case SHORT:
                 Out.println("       _" + C.getName() + "=0;");
                 break;
               case DATETIME:
@@ -966,6 +972,7 @@ public class TildaData implements CodeGenTildaData
                   case DOUBLE:
                   case FLOAT:
                   case INTEGER:
+                  case SHORT:
                   case LONG:
                   case STRING:
                     Out.println(" V.append(" + Helper.getSupportClassFullName(O._ParentSchema) + "._COMMAQUESTION);  }");
@@ -1028,6 +1035,7 @@ public class TildaData implements CodeGenTildaData
                   case FLOAT:
                   case DOUBLE:
                   case INTEGER:
+                  case SHORT:
                   case LONG:
                   case STRING:
                     if (C._DefaultUpdateValue == null)
@@ -1097,6 +1105,7 @@ public class TildaData implements CodeGenTildaData
                   case BOOLEAN:
                   case DOUBLE:
                   case FLOAT:
+                  case SHORT:
                   case INTEGER:
                   case LONG:
                   case CHAR:
@@ -1332,6 +1341,7 @@ public class TildaData implements CodeGenTildaData
                   case DOUBLE:
                   case FLOAT:
                   case INTEGER:
+                  case SHORT:  
                   case LONG:
                   case BINARY:
                   case BITFIELD:

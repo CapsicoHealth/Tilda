@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.math.BigDecimal;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -96,9 +97,113 @@ public class ParseUtil
         return parseString(Name, Mandatory, Values == null ? null : Values.split(Separator), Errors);
       }
 
+    /************************************************************************************************************************
+     * SHORTS
+     ************************************************************************************************************************/
+      
+    /**
+     * 
+     * @param Val
+     * @param Default
+     * @return
+     */
+    public static short parseShort(String Val, short Default)
+      {
+        if (TextUtil.isNullOrEmpty(Val) == false)
+          try
+            {
+              return Short.parseShort(Val);
+            }
+          catch (NumberFormatException E)
+            {
+            }
+        return Default;
+      }   
     
     
-
+    /**
+     * @param Name
+     * @param Mandatory
+     * @param Value
+     * @param Errors
+     * @return
+     */
+    public static short parseShort(String Name, boolean Mandatory, String Value, List<StringStringPair> Errors)
+      {
+        if (ParseUtil.parseString(Name, Mandatory, Value, Errors) == null)
+         return SystemValues.EVIL_VALUE;
+        
+        short v = ParseUtil.parseShort(Value, (short)SystemValues.EVIL_VALUE);
+        if (v == SystemValues.EVIL_VALUE && Mandatory == true)
+          {
+            LOG.error("Invalid value '" + Value + "' for parameter '" + Name + "'.");
+            Errors.add(new StringStringPair(Name, "Invalid parameter value '" + Value + "': expecting a short."));
+          }
+        return v;
+      }
+    
+    /**
+     * 
+     * @param Name
+     * @param Mandatory
+     * @param Default
+     * @param Value
+     * @param Errors
+     * @return
+     */
+    public static short[] parseShort(String Name, boolean Mandatory, String[] Values, List<StringStringPair> Errors)
+      {
+        if (Values == null || Values.length == 0)
+          {
+            if (Mandatory == true)
+              {
+                LOG.error("Missing parameter '" + Name + "'.");
+                Errors.add(new StringStringPair(Name, "Mandatory Parameter"));
+              }
+            return null;
+          }
+        short[] result = new short[Values.length];
+        for (short i = 0; i < Values.length; ++i)
+          {
+            String v = Values[i];
+            short r = ParseUtil.parseShort(v, (short)SystemValues.EVIL_VALUE);
+            if (r == SystemValues.EVIL_VALUE)
+              {
+                LOG.error("Invalid value '" + v + "' for parameter '" + Name + "'.");
+                Errors.add(new StringStringPair(Name, "Invalid parameter value '" + v + "': expecting an int."));
+              }
+            result[i] = r; 
+          }
+        return result;
+      }        
+    
+    /**
+     * 
+     * @param Name
+     * @param Mandatory
+     * @param Values
+     * @param Separator
+     * @param Errors
+     * @return
+     */
+    public static short[] parseShort(String Name, boolean Mandatory, String Values, String Separator, List<StringStringPair> Errors)
+      {
+        return parseShort(Name, Mandatory, Values == null ? null : Values.split(Separator), Errors);
+      }
+    
+    public static short parseShortFlexible(String Val, short Default)
+      {
+        short v = parseShort(Val, Default);
+        if (v != Default)
+         return v;
+        float f = parseFloat(Val, SystemValues.EVIL_VALUE);
+        v = (short) Math.round(f);
+        if (v != Default && v == f)
+         return v;
+        return Default;
+      }
+    
+    
     /************************************************************************************************************************
      * INTS
      ************************************************************************************************************************/
@@ -142,7 +247,7 @@ public class ParseUtil
           }
         return v;
       }
-
+    
     /**
      * 
      * @param Name
@@ -330,7 +435,21 @@ public class ParseUtil
         return Default;
       }
     
-    
+    /************************************************************************************************************************
+     * NUMERICS
+     ************************************************************************************************************************/   
+//    public static BigDecimal parseNumeric(String Val, float Default)
+//      {
+//        if (TextUtil.isNullOrEmpty(Val) == false)
+//          try
+//            {
+//              return BigDecimal.parseNumeric(Val);
+//            }
+//          catch (NumberFormatException E)
+//            {
+//            }
+//        return Default;
+//      }
 
     /************************************************************************************************************************
      * FLOATS

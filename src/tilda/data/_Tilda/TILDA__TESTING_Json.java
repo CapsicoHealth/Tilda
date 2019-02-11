@@ -61,6 +61,8 @@ public class TILDA__TESTING_Json
    transient                      public List<ZonedDateTime>  _a9b        ;
    @SerializedName("a9c"        ) public LocalDate  _a9c        ;
    @SerializedName("a9d"        ) public List<LocalDate>  _a9d        ;
+   @SerializedName("a10"        ) public Short  _a10        ;
+   @SerializedName("a10b"       ) public List<Short>  _a10b       ;
    /*@formatter:on*/
 
    public tilda.data.Testing_Data Write(Connection C) throws Exception
@@ -144,6 +146,8 @@ public class TILDA__TESTING_Json
       if (_a9b        != null) Obj.setA9b        (_a9b        );
       if (_a9c        != null) Obj.setA9c        (_a9c        );
       if (_a9d        != null) Obj.setA9d        (_a9d        );
+      if (_a10        != null) Obj.setA10        (_a10        );
+      if (_a10b       != null) Obj.setA10b       (_a10b       );
     }
 
    public String toString()
@@ -182,6 +186,8 @@ public class TILDA__TESTING_Json
          + "; a9b"        + (_a9b         == null ? ": NULL" : ": "+DateTimeUtil.printDateTimeForSQL(_a9b))
          + "; a9c"        + (_a9c         == null ? ": NULL" : ": " + _a9c        )
          + "; a9d"        + (_a9d         == null ? ": NULL" : ": " + _a9d        )
+         + "; a10"        + (_a10         == null ? ": NULL" : ": " + _a10        )
+         + "; a10b"       + (_a10b        == null ? ": NULL" : ": " + _a10b       )
          + ";";
     }
 

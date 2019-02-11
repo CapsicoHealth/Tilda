@@ -24,6 +24,7 @@ public enum SQLServerType
     STRING  ("nvarchar"        , "nvarchar", ColumnType.STRING  ),
     JSON    ("nvarchar(max)"   , null      , ColumnType.JSON    ),
     CHAR    ("character"       , "nvarchar", ColumnType.CHAR    ),
+    SHORT   ("smallint"        , "varchar" , ColumnType.SHORT   ),
     INTEGER ("integer"         , "varchar" , ColumnType.INTEGER ),
     LONG    ("bigint"          , "varchar" , ColumnType.LONG    ),
     FLOAT   ("real"            , "varchar" , ColumnType.FLOAT   ),

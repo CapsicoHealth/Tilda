@@ -290,7 +290,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jan 10 2019, 00:28:17EST
+ @generated Feb 11 2019, 11:57:03EST
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__KEY implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -1517,19 +1517,19 @@ This is the hasChanged for:<BR>
        int i = 0;
        if (__Changes.intersects(TILDA__KEY_Factory.COLS.REFNUM._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__KEY_Factory.COLS.REFNUM._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _refnum);
+          if (__Nulls.intersects(TILDA__KEY_Factory.COLS.REFNUM._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT  ); else PS.setLong     (++i, _refnum);
         } 
        if (__Changes.intersects(TILDA__KEY_Factory.COLS.NAME._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__KEY_Factory.COLS.NAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _name);
+          if (__Nulls.intersects(TILDA__KEY_Factory.COLS.NAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _name);
         } 
        if (__Changes.intersects(TILDA__KEY_Factory.COLS.MAX._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__KEY_Factory.COLS.MAX._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _max);
+          if (__Nulls.intersects(TILDA__KEY_Factory.COLS.MAX._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT  ); else PS.setLong     (++i, _max);
         } 
        if (__Changes.intersects(TILDA__KEY_Factory.COLS.COUNT._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__KEY_Factory.COLS.COUNT._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _count);
+          if (__Nulls.intersects(TILDA__KEY_Factory.COLS.COUNT._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER ); else PS.setInt      (++i, _count);
         } 
        if (__Changes.intersects(TILDA__KEY_Factory.COLS.CREATED._Mask) == true) 
         { 

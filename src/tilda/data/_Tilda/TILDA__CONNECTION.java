@@ -370,7 +370,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jan 10 2019, 00:28:17EST
+ @generated Feb 11 2019, 11:57:03EST
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__CONNECTION implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -2156,39 +2156,39 @@ This is the hasChanged for:<BR>
        int i = 0;
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask) == true) PS.setNull(++i, java.sql.Types.BOOLEAN); else PS.setBoolean  (++i, _active);
+          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.ACTIVE._Mask) == true) PS.setNull(++i, java.sql.Types.BOOLEAN ); else PS.setBoolean  (++i, _active);
         } 
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.ID._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.ID._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _id);
+          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.ID._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _id);
         } 
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _driver);
+          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.DRIVER._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _driver);
         } 
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.DB._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.DB._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _db);
+          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.DB._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _db);
         } 
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.USER._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.USER._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _user);
+          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.USER._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _user);
         } 
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.PSWD._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.PSWD._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _pswd);
+          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.PSWD._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _pswd);
         } 
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _initial);
+          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.INITIAL._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER ); else PS.setInt      (++i, _initial);
         } 
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.MAX._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.MAX._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _max);
+          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.MAX._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER ); else PS.setInt      (++i, _max);
         } 
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR   ); else C.setArray(PS, ++i, TILDA__CONNECTION_Factory.COLS.SCHEMAS._Type, AllocatedArrays, _schemas);
+          if (__Nulls.intersects(TILDA__CONNECTION_Factory.COLS.SCHEMAS._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR    ); else C.setArray(PS, ++i, TILDA__CONNECTION_Factory.COLS.SCHEMAS._Type, AllocatedArrays, _schemas);
         } 
        if (__Changes.intersects(TILDA__CONNECTION_Factory.COLS.CREATED._Mask) == true) 
         { 

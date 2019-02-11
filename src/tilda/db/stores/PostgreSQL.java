@@ -733,6 +733,7 @@ public class PostgreSQL implements DBType
             case java.sql.Types.DECIMAL      : TypeSql = "DECIMAL"      ; TildaType = ColumnType.DOUBLE; break;
             case java.sql.Types.DOUBLE       : TypeSql = "DOUBLE"       ; TildaType = ColumnType.DOUBLE; break;
             case java.sql.Types.FLOAT        : TypeSql = "FLOAT"        ; TildaType = ColumnType.FLOAT; break;
+            case java.sql.Types.SMALLINT     : TypeSql = "SMALLINT"     ; TildaType = ColumnType.SHORT; break;
             case java.sql.Types.INTEGER      : TypeSql = "INTEGER"      ; TildaType = ColumnType.INTEGER; break;
             case java.sql.Types.JAVA_OBJECT  : TypeSql = "JAVA_OBJECT"  ; TildaType = null; break;
             case java.sql.Types.LONGNVARCHAR : TypeSql = "LONGNVARCHAR" ; TildaType = ColumnType.STRING; break;
@@ -758,7 +759,6 @@ public class PostgreSQL implements DBType
             case java.sql.Types.REAL         : TypeSql = "REAL"         ; TildaType = ColumnType.FLOAT; break;
             case java.sql.Types.REF          : TypeSql = "REF"          ; TildaType = null; break;
             case java.sql.Types.ROWID        : TypeSql = "ROWID"        ; TildaType = null; break;
-            case java.sql.Types.SMALLINT     : TypeSql = "SMALLINT"     ; TildaType = null; break;
             case java.sql.Types.SQLXML       : TypeSql = "SQLXML"       ; TildaType = null; break;
             case java.sql.Types.STRUCT       : TypeSql = "STRUCT"       ; TildaType = null; break;
             case java.sql.Types.TIME         : TypeSql = "TIME"         ; TildaType = null; break;
@@ -778,6 +778,9 @@ public class PostgreSQL implements DBType
       {
         switch (TypeName)
           {
+            case "_int2":
+              TildaType = ColumnType.SHORT;
+              break;            
             case "_int4":
               TildaType = ColumnType.INTEGER;
               break;

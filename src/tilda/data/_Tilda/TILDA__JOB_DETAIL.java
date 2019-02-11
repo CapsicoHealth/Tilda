@@ -414,7 +414,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jan 10 2019, 00:28:17EST
+ @generated Feb 11 2019, 11:57:03EST
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__JOB_DETAIL implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -2794,23 +2794,23 @@ This is the hasChanged for:<BR>
        int i = 0;
        if (__Changes.intersects(TILDA__JOB_DETAIL_Factory.COLS.ID._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOB_DETAIL_Factory.COLS.ID._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _Id);
+          if (__Nulls.intersects(TILDA__JOB_DETAIL_Factory.COLS.ID._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER ); else PS.setInt      (++i, _Id);
         } 
        if (__Changes.intersects(TILDA__JOB_DETAIL_Factory.COLS.JOB_ID._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOB_DETAIL_Factory.COLS.JOB_ID._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _Job_Id);
+          if (__Nulls.intersects(TILDA__JOB_DETAIL_Factory.COLS.JOB_ID._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER ); else PS.setInt      (++i, _Job_Id);
         } 
        if (__Changes.intersects(TILDA__JOB_DETAIL_Factory.COLS.FILENAME._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOB_DETAIL_Factory.COLS.FILENAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _FileName);
+          if (__Nulls.intersects(TILDA__JOB_DETAIL_Factory.COLS.FILENAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _FileName);
         } 
        if (__Changes.intersects(TILDA__JOB_DETAIL_Factory.COLS.FILERECORDS._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOB_DETAIL_Factory.COLS.FILERECORDS._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER); else PS.setInt      (++i, _FileRecords);
+          if (__Nulls.intersects(TILDA__JOB_DETAIL_Factory.COLS.FILERECORDS._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER ); else PS.setInt      (++i, _FileRecords);
         } 
        if (__Changes.intersects(TILDA__JOB_DETAIL_Factory.COLS.FILEPROCESSSTARTTIMETZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOB_DETAIL_Factory.COLS.FILEPROCESSSTARTTIMETZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _FileProcessStartTimeTZ);
+          if (__Nulls.intersects(TILDA__JOB_DETAIL_Factory.COLS.FILEPROCESSSTARTTIMETZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _FileProcessStartTimeTZ);
         } 
        if (__Changes.intersects(TILDA__JOB_DETAIL_Factory.COLS.FILEPROCESSSTARTTIME._Mask) == true) 
         { 
@@ -2818,7 +2818,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__JOB_DETAIL_Factory.COLS.FILEPROCESSENDTIMETZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOB_DETAIL_Factory.COLS.FILEPROCESSENDTIMETZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _FileProcessEndTimeTZ);
+          if (__Nulls.intersects(TILDA__JOB_DETAIL_Factory.COLS.FILEPROCESSENDTIMETZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _FileProcessEndTimeTZ);
         } 
        if (__Changes.intersects(TILDA__JOB_DETAIL_Factory.COLS.FILEPROCESSENDTIME._Mask) == true) 
         { 
@@ -2826,11 +2826,11 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__JOB_DETAIL_Factory.COLS.STATUS._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOB_DETAIL_Factory.COLS.STATUS._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _Status);
+          if (__Nulls.intersects(TILDA__JOB_DETAIL_Factory.COLS.STATUS._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _Status);
         } 
        if (__Changes.intersects(TILDA__JOB_DETAIL_Factory.COLS.ERROR._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOB_DETAIL_Factory.COLS.ERROR._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _Error);
+          if (__Nulls.intersects(TILDA__JOB_DETAIL_Factory.COLS.ERROR._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _Error);
         } 
        if (__Changes.intersects(TILDA__JOB_DETAIL_Factory.COLS.CREATED._Mask) == true) 
         { 

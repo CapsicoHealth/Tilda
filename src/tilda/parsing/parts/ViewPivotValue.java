@@ -31,6 +31,8 @@ public class ViewPivotValue extends Value
     @SerializedName("type"      ) public String  _TypeStr   ;
     @SerializedName("size"      ) public Integer _Size      ;
     @SerializedName("expression") public String  _Expression;
+    @SerializedName("scale"     ) public Integer  _Scale     ;
+    @SerializedName("precision" ) public Integer  _Precision ;
     /*@formatter:on*/
 
     public transient TypeDef _Type;    
@@ -47,7 +49,7 @@ public class ViewPivotValue extends Value
         
         if (_TypeStr != null)
           {
-            _Type = new TypeDef(_TypeStr, _Size);
+            _Type = new TypeDef(_TypeStr, _Size, _Scale, _Precision);
             _Type.Validate(PS, What, true, false);
           }
                 

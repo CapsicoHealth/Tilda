@@ -87,14 +87,14 @@ public class Column extends TypeDef
 
     public Column(String Name, String TypeStr, Integer Size, String Description)
       {
-        super(TypeStr, Size);
+        super(TypeStr, Size, Size, Size);
         _Name = Name;
         _Description = Description;
       }
 
     public Column(String Name, String TypeStr, Integer Size, boolean Nullable, ColumnMode Mode, boolean Invariant, ProtectionType Protect, String Description)
       {
-        super(TypeStr, Size);
+        super(TypeStr, Size, Size, Size);
         _Name = Name;
         _Nullable = Nullable;
         _ModeStr = Mode == null ? null : Mode.name();

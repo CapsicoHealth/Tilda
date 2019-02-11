@@ -54,7 +54,7 @@ public class Formula extends TypeDef
 
     public Formula(Formula F)
       {
-        super(F._TypeStr, F._Size);
+        super(F._TypeStr, F._Size, F._Scale, F._Precision);
         _Name = F._Name;
         _FormulaStrs = F._FormulaStrs;
         _Title = F._Title;

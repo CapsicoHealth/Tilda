@@ -24,6 +24,7 @@ public enum PostgresType
     STRING  ("varchar"         , "varchar"    , ColumnType.STRING  ),
     JSON    ("jsonb"           , null         , ColumnType.JSON    ),
     CHAR    ("character"       , "bpchar"     , ColumnType.CHAR    ),
+    SHORT   ("smallint"        , "int2"       , ColumnType.SHORT   ),
     INTEGER ("integer"         , "int4"       , ColumnType.INTEGER ),
     LONG    ("bigint"          , "int8"       , ColumnType.LONG    ),
     FLOAT   ("real"            , "float4"     , ColumnType.FLOAT   ),

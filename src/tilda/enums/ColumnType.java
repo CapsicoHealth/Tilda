@@ -34,11 +34,13 @@ public enum ColumnType
     STRING  (true , true , false, "STR"),
     JSON    (true , false, false, "JSN"),
     CHAR    (true , true , true , "CHR"),
+    SHORT   (true , true , true , "SHT"),
     INTEGER (true , true , true , "INT"),
     LONG    (true , true , true , "LNG"),
     FLOAT   (true , true , true , "FLT"),
     DOUBLE  (true , true , true , "DBL"),
     BOOLEAN (true , true , true , "BOL"),
+    //NUMERIC (true , true , false, "NUM"),
     DATE    (true , true , false, "DT"),
     DATETIME(true , false, false, "DTM"), // Datetimes are stored as 2 columns in the DB, so SETs are not allowed because they are unordered.
     BINARY  (false, false, false, "BIN"),
@@ -70,14 +72,16 @@ public enum ColumnType
         
         _CompatibleTypes = new ColumnType[][] 
          {
-			{STRING, JSON, CHAR, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, DATE, DATETIME, BITFIELD}
+			{STRING, JSON, CHAR, INTEGER, LONG, FLOAT, DOUBLE, BOOLEAN, DATE, DATETIME, BITFIELD, SHORT}
 		   ,{JSON}
 		   ,{CHAR, STRING}
-		   ,{INTEGER}
-		   ,{LONG, INTEGER}
-		   ,{FLOAT, INTEGER}
-		   ,{DOUBLE, FLOAT, INTEGER, LONG}
+	       ,{SHORT}
+		   ,{INTEGER, SHORT}
+		   ,{LONG, INTEGER, SHORT}
+		   ,{FLOAT, INTEGER, SHORT}
+		   ,{DOUBLE, FLOAT, INTEGER, LONG, SHORT}
 		   ,{BOOLEAN}
+		   //,{NUMERIC, DOUBLE, FLOAT, INTEGER, LONG, SHORT}
 		   ,{DATE}
 		   ,{DATETIME, DATE}
 		   ,{BINARY}
@@ -201,6 +205,13 @@ public enum ColumnType
                   throw new Exception(Errors.get(0)._V);
                 return isSet == true ? CollectionUtil.toSet(val) : CollectionUtil.toList(val);
               }
+            case SHORT:
+            {
+              short[] val = ParseUtil.parseShort("SQLShortArray", true, parts, Errors);
+              if (Errors.isEmpty() == false)
+                throw new Exception(Errors.get(0)._V);
+              return isSet == true ? CollectionUtil.toSet(val) : CollectionUtil.toList(val);
+            }              
             case INTEGER:
               {
                 int[] val = ParseUtil.parseInteger("SQLIntegerArray", true, parts, Errors);
@@ -215,6 +226,13 @@ public enum ColumnType
                   throw new Exception(Errors.get(0)._V);
                 return isSet == true ? CollectionUtil.toSet(val) : CollectionUtil.toList(val);
               }
+//            case NUMERIC:
+//            {
+//              long[] val = ParseUtil.parseNumeric("SQLNumericArray", true, parts, Errors);
+//              if (Errors.isEmpty() == false)
+//                throw new Exception(Errors.get(0)._V);
+//              return isSet == true ? CollectionUtil.toSet(val) : CollectionUtil.toList(val);
+//            }              
             case JSON:
             case STRING:
               return isSet == true ? CollectionUtil.toSet(parts) : CollectionUtil.toList(parts);

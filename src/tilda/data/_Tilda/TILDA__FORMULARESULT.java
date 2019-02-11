@@ -217,7 +217,7 @@ This Table contains the following columns:<BLOCKQUOTE>
 
  @author   Tilda code gen for Java 8/PostgreSQL
  @version  Tilda 1.0
- @generated Jan 10 2019, 00:28:17EST
+ @generated Feb 11 2019, 11:57:03EST
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__FORMULARESULT implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -1279,15 +1279,15 @@ This is the hasChanged for:<BR>
        int i = 0;
        if (__Changes.intersects(TILDA__FORMULARESULT_Factory.COLS.FORMULAREFNUM._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__FORMULARESULT_Factory.COLS.FORMULAREFNUM._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT ); else PS.setLong     (++i, _formulaRefnum);
+          if (__Nulls.intersects(TILDA__FORMULARESULT_Factory.COLS.FORMULAREFNUM._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT  ); else PS.setLong     (++i, _formulaRefnum);
         } 
        if (__Changes.intersects(TILDA__FORMULARESULT_Factory.COLS.VALUE._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__FORMULARESULT_Factory.COLS.VALUE._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _value);
+          if (__Nulls.intersects(TILDA__FORMULARESULT_Factory.COLS.VALUE._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _value);
         } 
        if (__Changes.intersects(TILDA__FORMULARESULT_Factory.COLS.DESCRIPTION._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__FORMULARESULT_Factory.COLS.DESCRIPTION._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR   ); else PS.setString   (++i, _description);
+          if (__Nulls.intersects(TILDA__FORMULARESULT_Factory.COLS.DESCRIPTION._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _description);
         } 
        if (__Changes.intersects(TILDA__FORMULARESULT_Factory.COLS.CREATED._Mask) == true) 
         { 
