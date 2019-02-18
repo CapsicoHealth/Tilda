@@ -128,7 +128,8 @@ public abstract class QueryHelper
     protected StringBuilder       _QueryStr       = null;
     protected S                   _Section        = null;
     protected boolean             _Where          = false;
-    protected int                 _WherePos       = -1;
+    protected boolean             _NoWhereClause  = false;
+    protected int                 _WherePos       = -1; // There Wolf.
     protected int                 _Cardinality    = 0;
     List<ColumnDefinition>        _Columns        = new ArrayList<ColumnDefinition>();
     Set<String>                   _Froms          = new HashSet<String>();
@@ -634,7 +635,7 @@ public abstract class QueryHelper
         if (_ST == StatementType.SELECT && _FullSelect == false)
           {
             String Str = _QueryStr.toString();
-            if (_Where == false && withWhere == true && TextUtil.isNullOrEmpty(Str) == false)
+            if (_Where == false && withWhere == true && _NoWhereClause == false && TextUtil.isNullOrEmpty(Str) == false)
               Str = " where " + Str;
             return Str;
           }
@@ -2590,8 +2591,14 @@ public abstract class QueryHelper
     public QueryHelper groupBy(ColumnDefinition Col)
     throws Exception
       {
-        if (_Section != S.WHERE && _Section != S.GROUPBY || _ST != StatementType.SELECT)
+        if (_Section != S.WHERE && _Section != S.FROM && _Section != S.GROUPBY || _ST != StatementType.SELECT)
           throw new Exception("Invalid query syntax: GroupBy after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+
+        // Check if we are just starting the query. For "WhereClause" queries, it's possible to have the select and from and then straight
+        // to an OrderBy or a GroupBy.  This will check whether we jumped straight to such a clause without having done a where.
+        if (_QueryStr.length() == 0)
+          _NoWhereClause = true;
+
         if (_Section == S.GROUPBY)
           _QueryStr.append(",");
         else
@@ -2619,8 +2626,14 @@ public abstract class QueryHelper
     protected void orderByBase()
     throws Exception
       {
-        if (_Section != S.WHERE && _Section != S.GROUPBY && _Section != S.ORDERBY || _ST != StatementType.SELECT)
+        if (_Section != S.WHERE && _Section != S.FROM && _Section != S.GROUPBY && _Section != S.ORDERBY || _ST != StatementType.SELECT)
           throw new Exception("Invalid query syntax: OrderBy after a " + _Section + " in a query of type " + _ST + ": " + _QueryStr.toString());
+
+        // Check if we are just starting the query. For "WhereClause" queries, it's possible to have the select and from and then straight
+        // to an OrderBy or a GroupBy.  This will check whether we jumped straight to such a clause without having done a where.
+        if (_QueryStr.length() == 0)
+          _NoWhereClause = true;
+
         if (_Section == S.ORDERBY)
           _QueryStr.append(",");
         else
