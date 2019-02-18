@@ -744,13 +744,18 @@ public class TildaFactory implements CodeGenTildaFactory
         Out.println("     {");
         Out.println("       __MAPPINGS.clear();");
         Out.println("       ListResults<" + Helper.getFullAppDataClassName(O) + "> L = LookupWhereAll(C, 0, -1);");
+        Out.println("       boolean mismatch = false;");
         Out.println("       for (" + Helper.getFullAppDataClassName(O) + " obj : L)");
         Out.println("        {");
         if (O.getColumn("group") != null)
           {
             Out.println("          if (TextUtil.FindElement(" + Helper.getFullAppDataClassName(O) + "._group_Values, obj.getGroup(), 0, true, 0) == -1)");
-            Out.println("           throw new Exception(\"Could not validate against the model. Invalid group value in object \"+obj+\". Allowed values are: \"+TextUtil.Print(" + Helper.getFullAppDataClassName(O)
-            + "._group_Values, 0)+\".\");");
+            Out.println("           {");
+            Out.println("             if (mismatch == false)");
+            Out.println("              LOG.warn(\"Could not validate against the model.\");");
+            Out.println("             LOG.warn(\"    Invalid group value '\"+obj.getGroup()+\"' in object \"+obj+\".\");");
+            Out.println("             mismatch = true;");
+            Out.println("           }");
           }
         Out.print("          __MAPPINGS.put(");
         First = true;
@@ -765,6 +770,8 @@ public class TildaFactory implements CodeGenTildaFactory
             }
         Out.println(", obj);");
         Out.println("        }");
+        Out.println("       if (mismatch == true)");
+        Out.println("        LOG.warn(\"Currently modeled values are: \"+TextUtil.Print(" + Helper.getFullAppDataClassName(O) + "._group_Values, 0)+\".\");");
         Out.println("     }");
 
         Out.println("   private static " + Helper.getFullAppDataClassName(O) + " getMapping(" + FuncParams + ")");
