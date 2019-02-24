@@ -241,7 +241,8 @@ public class ViewColumn
               PS.AddError("View column '" + ColFullName + "' is declaring sameas '" + SameAs + "' resolving to '" + R.getFullName() + "' which cannot be found.");
             else
               {
-                if (Col._ParentObject._TildaType==TildaType.REALIZED_VIEW || Col._ParentObject._FST == FrameworkSourcedType.REALIZED)
+                //If the view is realized, it should not have direct dependencies on other realized views since the system can handle automatically these dependencies 
+                if (ParentView._Realize != null && (Col._ParentObject._TildaType==TildaType.REALIZED_VIEW || Col._ParentObject._FST == FrameworkSourcedType.REALIZED))
                   PS.AddError("View column '" + ColFullName + "' is declaring sameas '" + SameAs + "' resolving to a realized view '" + R.getFullObjectName() + "', which is not allowed. Refills automatically handle this.");
                 else
                   return Col;

@@ -1187,6 +1187,34 @@ public class View extends Base
           }
         return S.isEmpty() == true ? null : S;
       }
+    
+    /**
+     * Returns a set of the first ancestor views referenced by this view that are realized.
+     * if no such views were found.
+     * 
+     * @return
+     */
+    public Set<View> getFirstAncestorRealizedViews()
+      {
+        Set<View> S = new HashSet<View>();
+        Set<String> Names = new HashSet<String>();
+        for (ViewColumn VC : _ViewColumns)
+          {
+            View V = VC._SameAsObj == null ? null : VC._SameAsView;
+            if (V == null || Names.add(V.getShortName()) == false)
+              continue;
+            if (V._Realize != null)
+             S.add(V);
+            else
+              {
+                Set<View> S2 = V.getFirstAncestorRealizedViews();
+                if (S2 != null && S2.isEmpty() == false)
+                 S.addAll(S2);
+              }
+          }
+        return S.isEmpty() == true ? null : S;
+      }
+    
 
     public boolean hasAncestorRealizedViews()
       {

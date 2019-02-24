@@ -27,7 +27,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
-import tilda.enums.ColumnType;
 import tilda.parsing.ParserSession;
 import tilda.utils.TextUtil;
 
@@ -90,10 +89,10 @@ public class Formula extends TypeDef
         else if (_Name.length() > PS._CGSql.getMaxColumnNameSize())
           PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' with a name that's too long: max allowed by your database is "+PS._CGSql.getMaxColumnNameSize()+" vs "+_Name.length()+" for this identifier.");
 
-        if (TextUtil.isNullOrEmpty(_TypeStr) == true)
-          PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' without a type.");
-        else if ((_Type = ColumnType.parse(_TypeStr)) == null)
-          PS.AddError("View " + _ParentView.getShortName() + " defined a formula '" + _Name + "' with an invalid type '" + _TypeStr + "'.");
+//        if (TextUtil.isNullOrEmpty(_TypeStr) == true)
+//          PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' without a type.");
+//        else if ((_Type = ColumnType.parse(_TypeStr)) == null)
+//          PS.AddError("View " + _ParentView.getShortName() + " defined a formula '" + _Name + "' with an invalid type '" + _TypeStr + "'.");
 
         if (_FormulaStrs == null || _FormulaStrs.length == 0)
           PS.AddError("View " + _ParentView.getShortName() + " is defining a formula '" + _Name + "' without a formula.");

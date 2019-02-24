@@ -46,7 +46,7 @@ public class ViewRealize
     // It was "exclude" for view columns, so why was it ever "excludes" here? Not consistent.
     @SerializedName("excludes"   ) public String[]          _Excludes_DEPRECATED   = null;
     @SerializedName("exclude"    ) public String[]          _Exclude_DEPRECATED    = null;
-    @SerializedName("mappings"   ) public List<ViewRealizeMapping> _Mappings = new ArrayList<>();
+    @SerializedName("mappings"   ) public List<ViewRealizeMapping> _Mappings_DEPRECATED = null;
     @SerializedName("upsert"     ) public ViewRealizeUpsert _Upsert = null;
     /*@formatter:on*/
 
@@ -101,6 +101,9 @@ public class ViewRealize
           PS.AddError("The realize section for view '" + ParentView.getFullName() + "' defines an autogen primary key: these are not allowed for realized tables.");
           
         Names.clear();
+        if (_Mappings_DEPRECATED != null)
+          PS.AddError("The realize section for view '" + ParentView.getFullName() + "' defines a mapping which has been DEPRECATED. Use formulas instead in the main view.");
+/*         
         for (ViewRealizeMapping VRM : _Mappings)
           if (VRM != null)
             {
@@ -112,7 +115,7 @@ public class ViewRealize
               if (TextUtil.FindStarElement(_Exclude_DEPRECATED, VRM._Name, true, 0) != -1)
                 PS.AddError("Mapping for column '" + VRM._Name + "' is defined while also being excluded.");
             }
-        
+*/
         Object O = new Object();
         O._FST = FrameworkSourcedType.REALIZED;
         O._Name = ParentView.getRealizedTableName(false);
@@ -171,6 +174,7 @@ public class ViewRealize
         return Errs == PS.getErrorCount();
       }
 
+/*
     public ViewRealizeMapping getMapping(String ColumnName)
       {
         for (ViewRealizeMapping VRM : _Mappings)
@@ -178,5 +182,5 @@ public class ViewRealize
             return VRM;
         return null;
       }
-
+*/
   }

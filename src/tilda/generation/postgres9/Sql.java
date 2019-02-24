@@ -910,11 +910,11 @@ public class Sql extends PostgreSQL implements CodeGenSql
             else
               b.append("     , ");
 
-            ViewRealizeMapping VRM = Realize == false ? null : V._Realize.getMapping(VC.getName());
-            if (Realize == false || VRM == null)
+//            ViewRealizeMapping VRM = Realize == false ? null : V._Realize.getMapping(VC.getName());
+//            if (Realize == false || VRM == null)
               b.append("\"" + VC._Name + "\" -- COLUMN\n");
-            else
-              b.append(VRM.printMapping() + " -- COLUMN (MAPPING OVERRIDE)\n");
+//            else
+//              b.append(VRM.printMapping() + " -- COLUMN (MAPPING OVERRIDE)\n");
           }
 
         for (Formula F : V._Formulas)
@@ -1418,11 +1418,11 @@ public class Sql extends PostgreSQL implements CodeGenSql
                       Str.append(Lead);
                     First = false;
                   }
-                ViewRealizeMapping VRM = V._Realize.getMapping(VC.getName());
-                if (VRM == null)
+//                ViewRealizeMapping VRM = V._Realize.getMapping(VC.getName());
+//                if (VRM == null)
                   Str.append(/* V._ParentSchema._Name + "." + V._Name + "."+ */"\"" + VC._Name + "\" -- COLUMN");
-                else
-                  Str.append(VRM.printMapping() + " -- COLUMN (REALIZE MAPPING OVERRIDE)");
+//                else
+//                  Str.append(VRM.printMapping() + " -- COLUMN (REALIZE MAPPING OVERRIDE)");
               }
             else
               {
@@ -1444,22 +1444,22 @@ public class Sql extends PostgreSQL implements CodeGenSql
                       Str.append(Lead);
                     First = false;
                   }
-                ViewRealizeMapping VRM = V._Realize.getMapping(F._Name);
-                if (VRM == null)
+//                ViewRealizeMapping VRM = V._Realize.getMapping(F._Name);
+//                if (VRM == null)
                   Str.append("\"" + F._Name + "\" -- FORMULA");
-                else
-                  Str.append(VRM.printMapping() + " -- FORMULA (REALIZE MAPPING OVERRIDE)");
+//                else
+//                  Str.append(VRM.printMapping() + " -- FORMULA (REALIZE MAPPING OVERRIDE)");
               }
           }
         for (Column C : V._PivotColumns)
           {
             if (TextUtil.FindStarElement(V._Realize._Exclude_DEPRECATED, C.getName(), true, 0) != -1)
               continue;
-            ViewRealizeMapping VRM = V._Realize.getMapping(C.getName());
-            if (VRM == null)
+//            ViewRealizeMapping VRM = V._Realize.getMapping(C.getName());
+//            if (VRM == null)
               Str.append(Lead + ", \"" + C.getName() + "\" -- PIVOT COLUMN");
-            else
-              Str.append(Lead + ", " + VRM.printMapping() + " -- PIVOT (REALIZE MAPPING OVERRIDE)");
+//            else
+//              Str.append(Lead + ", " + VRM.printMapping() + " -- PIVOT (REALIZE MAPPING OVERRIDE)");
           }
 
         return Str.toString();

@@ -28,18 +28,10 @@ public class DocGen
 
     GeneratorSession              G;
 
-    public DocGen(Schema schema, GeneratorSession G)
+    public DocGen(Schema schema, GeneratorSession G) throws ParserConfigurationException
       {
         this.schema = schema;
-        try
-          {
-            this.builder = factory.newDocumentBuilder();
-          }
-        catch (ParserConfigurationException e)
-          {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-          }
+        this.builder = factory.newDocumentBuilder();
         this.G = G;
       }
 

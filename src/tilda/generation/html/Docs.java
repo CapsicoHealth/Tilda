@@ -88,7 +88,7 @@ public class Docs
         String JS = FileUtil.getFileOfResourceContents("tilda/generation/html/TildaDocs.js");
         Out.println(
         "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\"/>\n"
-        + "<title>Tilda Docs: " + S._Name + " ("+S._Package+")</title>\n"
+        + "<title>Tilda Docs: " + S._Name + " (" + S._Package + ")</title>\n"
         + "<STYLE>\n"
         + CSS
         + "</STYLE>\n"
@@ -993,6 +993,7 @@ public class Docs
         // Start ordering the graphs
         int group = 0;
         Out.println("<TABLE BORDER=\"0\">");
+        Out.println("<TR align=\"left\" style=\"font-weight:bold;background-color:#AAA;\"><TH>Refill Calls</TH><TH>Dependency Links</TH><TH>Refill Dependencies From Prior Group</TH></TR>");
         while (true)
           {
             // Get all the leaves across all realized views dependency graphs
@@ -1008,24 +1009,36 @@ public class Docs
             // Print the members of the group and make sure we track dupes.
             Set<String> Names = new HashSet<String>();
             ++group;
-            
-            Out.println("<TR><TD COLSPAN=\"2\"><B>Group " + group + "</B></TD></TR>");
+
+            Out.println("<TR valign=\"top\"><TD COLSPAN=\"2\"><B>Group " + group + "</B></TD></TR>");
             StringBuilder Str1 = new StringBuilder();
             StringBuilder Str2 = new StringBuilder();
+            Set<View> AncestorViews = new HashSet<View>();
             for (DepWrapper DW : Leaves)
               if (Names.add(DW.getObj().getShortName()) == true)
                 {
                   View V = DW.getObj()._ParentSchema.getView(DW.getObj()._Name);
                   String TName = V.getRealizedTableName(false);
-                  Str1.append("select "+V._ParentSchema._Name+".Refill_" + TName + "();<BR>\n");
+                  Str1.append("select " + V._ParentSchema._Name + ".Refill_" + TName + "();<BR>\n");
                   Str2.append(makeObjectLink(DW.getObj()) + "<BR>\n");
+                  Set<View> A = V.getFirstAncestorRealizedViews();
+                  if (A != null && A.isEmpty() == false)
+                    AncestorViews.addAll(A);
                 }
-            Out.println("<TR><TD style=\"padding-left:30px;\">"+Str1.toString()+"</TD><TD style=\"padding-left:10px;\">"+Str2.toString()+"</TD></TR>");
+            Out.println("<TR valign=\"top\"><TD style=\"padding-left:30px;\">" + Str1.toString() + "</TD><TD style=\"padding-left:10px;\">" + Str2.toString() + "</TD><TD>");
+            for (View V : AncestorViews)
+              {
+                String TName = V.getRealizedTableName(false);
+                Out.println(V._ParentSchema._Name + ".Refill_" + TName + "();<BR>");
+//                Out.println(V.getShortName() + "<BR>");
+              }
+            Out.println("</TD></TR>");
           }
         Out.println("</TABLE>");
       }
 
-    private static void CollectRealizedViews(List<Graph<DepWrapper>> GL, Set<String> VisitedSchemas, Schema S) throws Exception
+    private static void CollectRealizedViews(List<Graph<DepWrapper>> GL, Set<String> VisitedSchemas, Schema S)
+    throws Exception
       {
         for (View V : S._Views)
           if (V._Realize != null)
@@ -1041,7 +1054,8 @@ public class Docs
                       if (VisitedSchemas.add(v.getObj()._ParentSchema._Name) == true)
                         CollectRealizedViews(GL, VisitedSchemas, v.getObj()._ParentSchema);
                     }
-                }, true);
+                },
+              true);
             }
       }
   }
