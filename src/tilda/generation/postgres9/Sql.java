@@ -667,9 +667,18 @@ public class Sql extends PostgreSQL implements CodeGenSql
         return hasAggregates;
       }
 
-    protected static String getViewSubRealizeName(View V)
+    public static String getViewSubRealizeSchemaName()
       {
-        return "TILDATMP." + V._ParentSchema._Name + "_" + V._Name + "_R";
+        return "TILDATMP";
+      }
+    public static String getViewSubRealizeViewName(View V)
+      {
+        return V._ParentSchema._Name + "_" + V._Name + "_R";
+      }
+
+    public static String getViewSubRealizeName(View V)
+      {
+        return getViewSubRealizeSchemaName()+"."+getViewSubRealizeViewName(V);
       }
 
 

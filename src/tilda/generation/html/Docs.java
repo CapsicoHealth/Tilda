@@ -45,17 +45,16 @@ import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.Value;
 import tilda.parsing.parts.View;
+import tilda.parsing.parts.View.DepWrapper;
 import tilda.parsing.parts.ViewColumn;
 import tilda.parsing.parts.ViewJoin;
 import tilda.parsing.parts.ViewPivot;
-import tilda.parsing.parts.View.DepWrapper;
 import tilda.utils.FileUtil;
 import tilda.utils.Graph;
+import tilda.utils.Graph.Visitor;
 import tilda.utils.PaddingUtil;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
-import tilda.utils.Graph.Node;
-import tilda.utils.Graph.Visitor;
 
 public class Docs
   {
@@ -997,7 +996,7 @@ public class Docs
         while (true)
           {
             // Get all the leaves across all realized views dependency graphs
-            Set<DepWrapper> Leaves = new HashSet<DepWrapper>();
+            SortedSet<DepWrapper> Leaves = new TreeSet<DepWrapper>();
             for (Graph<DepWrapper> G : GL)
               Leaves.addAll(G.getLeaves(true));
 
@@ -1009,6 +1008,7 @@ public class Docs
             // Print the members of the group and make sure we track dupes.
             Set<String> Names = new HashSet<String>();
             ++group;
+            
             Out.println("<TR><TD COLSPAN=\"2\"><B>Group " + group + "</B></TD></TR>");
             StringBuilder Str1 = new StringBuilder();
             StringBuilder Str2 = new StringBuilder();

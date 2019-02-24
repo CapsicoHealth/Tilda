@@ -994,7 +994,7 @@ public class View extends Base
      */
 
 
-    public static class DepWrapper
+    public static class DepWrapper implements Comparable<DepWrapper>
       {
         public DepWrapper(Object Obj, String As)
           {
@@ -1020,6 +1020,12 @@ public class View extends Base
         public void addColumn(Column C)
           {
             _Columns.add(C);
+          }
+
+        @Override
+        public int compareTo(DepWrapper DW)
+          {
+            return _Obj.getShortName().compareTo(DW._Obj.getShortName());
           }
       }
 
@@ -1076,7 +1082,7 @@ public class View extends Base
                       }
                   }
               }
-            LOG.debug(" Resetting to graph root for next VC");
+//            LOG.debug(" Resetting to graph root for next VC");
             N = Root;
           }
 
