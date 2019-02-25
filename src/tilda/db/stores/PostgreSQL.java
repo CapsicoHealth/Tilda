@@ -336,6 +336,7 @@ public class PostgreSQL implements DBType
         return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
       }
 
+    @Override
     public DBStringType getDBStringType(int Size)
       {
         return Size <= 8 ? DBStringType.CHARACTER

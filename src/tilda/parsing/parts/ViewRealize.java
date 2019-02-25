@@ -26,11 +26,13 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
+import tilda.enums.ColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectLifecycle;
 import tilda.enums.ObjectMode;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ValidationHelper;
+import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
 
 public class ViewRealize
@@ -118,6 +120,7 @@ public class ViewRealize
 */
         Object O = new Object();
         O._FST = FrameworkSourcedType.REALIZED;
+        O._SourceView=ParentView;
         O._Name = ParentView.getRealizedTableName(false);
 
         // If we don't do this and an error occurs, the user will get a message during the validation for the created object which will feel out of context.
@@ -144,6 +147,14 @@ public class ViewRealize
               {
                 if (C._FCT.isOCC() == true)
                  OCC = true;
+                // LDH-NTE: This is problematic because we are making an assumption here when generating the model that "8" is the threshold
+                //         to go from CHAR to VARCHAR, but we made this a dynamic configuration at code-gen time and so each DB impl can
+                //         change that. We need a more robust mechanism here to make this work. The problem is that fundamentally, we want to
+                //         make realized tables friendly to data scientists and dealing with trailing blanks (from CHAR values) is not good.
+                //         Here, we are effectively changing the type of the final column to be a VARCHAR instead of a CHAR and will do a trim
+                //         at GEN time. Gotta encode this better in the model.
+                if (C._Type == ColumnType.STRING && C._Size != null && C._Size <= 8)
+                 C._Size = 10;
 //              Column newCol = new Column(C._Name, C._TypeStr, C._Size, true, C._Mode, C._Invariant, C._Protect, C._Description);
                 Column newCol = new Column(C._Name, C._TypeStr, C._Size, C._Description);
                 newCol._Nullable = O.isUniqueIndexColumn(C._Name) == false && O.isPrimaryKey(C._Name) == false;

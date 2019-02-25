@@ -599,7 +599,7 @@ public class View extends Base
                 else
                   {
                     F.Validate(PS, this);
-                    Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "Formula column: " + F._Title);
+                    Column C = new Column(F._Name, F._TypeStr, F._Size, true, ColumnMode.NORMAL, true, null, "Formula column '<B>" + F._Title+"</B>'");
                     if (F.getType() == ColumnType.DATETIME)
                       C._FCT = FrameworkColumnType.DT_FORMULA;
                     else if (F._FormulaTemplate == true)

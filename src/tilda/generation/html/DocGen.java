@@ -149,6 +149,7 @@ public class DocGen
         WriteObjectDocsList(writer, FrameworkSourcedType.ENUMERATION, "Enumerations");
         WriteObjectDocsList(writer, FrameworkSourcedType.MAPPER, "Mappers");
         WriteObjectDocsList(writer, FrameworkSourcedType.NONE, "Tables");
+        WriteObjectDocsList(writer, FrameworkSourcedType.REALIZED, "Realized Tables");
         WriteObjectDocsList(writer, FrameworkSourcedType.VIEW, "Views");
         /*
          * boolean First = true;

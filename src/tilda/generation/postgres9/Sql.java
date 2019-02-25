@@ -56,7 +56,6 @@ import tilda.parsing.parts.ViewJoin;
 import tilda.parsing.parts.ViewPivot;
 import tilda.parsing.parts.ViewPivotAggregate;
 import tilda.parsing.parts.ViewPivotValue;
-import tilda.parsing.parts.ViewRealizeMapping;
 import tilda.parsing.parts.ViewRealizeUpsert;
 import tilda.parsing.parts.helpers.ValueHelper;
 import tilda.utils.PaddingTracker;
@@ -671,6 +670,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
       {
         return "TILDATMP";
       }
+
     public static String getViewSubRealizeViewName(View V)
       {
         return V._ParentSchema._Name + "_" + V._Name + "_R";
@@ -678,7 +678,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
 
     public static String getViewSubRealizeName(View V)
       {
-        return getViewSubRealizeSchemaName()+"."+getViewSubRealizeViewName(V);
+        return getViewSubRealizeSchemaName() + "." + getViewSubRealizeViewName(V);
       }
 
 
@@ -722,7 +722,7 @@ public class Sql extends PostgreSQL implements CodeGenSql
             if (AncestorRealizedViews != null)
               for (View arv : AncestorRealizedViews)
                 {
-                  String regex = "(?i)\\b("+arv.getShortName().replace(".", "\\.)?")+"\\b";
+                  String regex = "(?i)\\b(" + arv.getShortName().replace(".", "\\.)?") + "\\b";
                   Str = Str.replaceAll(regex, getViewSubRealizeName(arv));
                 }
 
@@ -910,11 +910,11 @@ public class Sql extends PostgreSQL implements CodeGenSql
             else
               b.append("     , ");
 
-//            ViewRealizeMapping VRM = Realize == false ? null : V._Realize.getMapping(VC.getName());
-//            if (Realize == false || VRM == null)
-              b.append("\"" + VC._Name + "\" -- COLUMN\n");
-//            else
-//              b.append(VRM.printMapping() + " -- COLUMN (MAPPING OVERRIDE)\n");
+            // ViewRealizeMapping VRM = Realize == false ? null : V._Realize.getMapping(VC.getName());
+            // if (Realize == false || VRM == null)
+            b.append("\"" + VC._Name + "\" -- COLUMN\n");
+            // else
+            // b.append(VRM.printMapping() + " -- COLUMN (MAPPING OVERRIDE)\n");
           }
 
         for (Formula F : V._Formulas)
@@ -1418,11 +1418,11 @@ public class Sql extends PostgreSQL implements CodeGenSql
                       Str.append(Lead);
                     First = false;
                   }
-//                ViewRealizeMapping VRM = V._Realize.getMapping(VC.getName());
-//                if (VRM == null)
-                  Str.append(/* V._ParentSchema._Name + "." + V._Name + "."+ */"\"" + VC._Name + "\" -- COLUMN");
-//                else
-//                  Str.append(VRM.printMapping() + " -- COLUMN (REALIZE MAPPING OVERRIDE)");
+                // ViewRealizeMapping VRM = V._Realize.getMapping(VC.getName());
+                // if (VRM == null)
+                Str.append(/* V._ParentSchema._Name + "." + V._Name + "."+ */"\"" + VC._Name + "\" -- COLUMN");
+                // else
+                // Str.append(VRM.printMapping() + " -- COLUMN (REALIZE MAPPING OVERRIDE)");
               }
             else
               {
@@ -1444,22 +1444,22 @@ public class Sql extends PostgreSQL implements CodeGenSql
                       Str.append(Lead);
                     First = false;
                   }
-//                ViewRealizeMapping VRM = V._Realize.getMapping(F._Name);
-//                if (VRM == null)
-                  Str.append("\"" + F._Name + "\" -- FORMULA");
-//                else
-//                  Str.append(VRM.printMapping() + " -- FORMULA (REALIZE MAPPING OVERRIDE)");
+                // ViewRealizeMapping VRM = V._Realize.getMapping(F._Name);
+                // if (VRM == null)
+                Str.append("\"" + F._Name + "\" -- FORMULA");
+                // else
+                // Str.append(VRM.printMapping() + " -- FORMULA (REALIZE MAPPING OVERRIDE)");
               }
           }
         for (Column C : V._PivotColumns)
           {
             if (TextUtil.FindStarElement(V._Realize._Exclude_DEPRECATED, C.getName(), true, 0) != -1)
               continue;
-//            ViewRealizeMapping VRM = V._Realize.getMapping(C.getName());
-//            if (VRM == null)
-              Str.append(Lead + ", \"" + C.getName() + "\" -- PIVOT COLUMN");
-//            else
-//              Str.append(Lead + ", " + VRM.printMapping() + " -- PIVOT (REALIZE MAPPING OVERRIDE)");
+            // ViewRealizeMapping VRM = V._Realize.getMapping(C.getName());
+            // if (VRM == null)
+            Str.append(Lead + ", \"" + C.getName() + "\" -- PIVOT COLUMN");
+            // else
+            // Str.append(Lead + ", " + VRM.printMapping() + " -- PIVOT (REALIZE MAPPING OVERRIDE)");
           }
 
         return Str.toString();

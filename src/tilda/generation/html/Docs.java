@@ -30,6 +30,7 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectMode;
 import tilda.generation.GeneratorSession;
 import tilda.generation.interfaces.CodeGenSql;
@@ -114,13 +115,21 @@ public class Docs
         Out.println("</TABLE>");
         Out.println("<DIV id=\"" + O._Name + "_CNT\" class=\"content\">");
         Out.println("The " + ObjType + " " + O.getShortName() + ":<UL>");
-        if (view == null || view._DBOnly == false)
+        if (O._Mode != ObjectMode.DB_ONLY) // view == null || view._DBOnly == false)
           Out.println("<LI>Is mapped to the generated " + Helper.getCodeGenLanguage() + "/" + G.getSql().getName() + " Tilda classes <B>" + O.getAppFactoryClassName() + "</B>, <B>" + O.getAppDataClassName() + "</B> in the package <B>" + O._ParentSchema._Package + "</B>.");
         else
           Out.println("<LI>Is not mapped to any generated code (i.e., Java code) and only exists in the database.</LI>");
 
         if (view != null && view._Realize != null)
-          Out.println("<LI>Configured to be Realized to <B>" + coolPrint(view.getRealizedTableName(true)) + "</B> through DB function <B>" + coolPrint(view._ParentSchema.getShortName() + ".Refill_" + view.getRealizedTableName(false)) + "()</B>.</LI>");
+          {
+            Object OR = O._ParentSchema.getObject(view.getRealizedTableName(false));
+            Out.println("<LI>Configured to be Realized to <B>" + makeObjectLink(OR) + "</B> through DB function <B>" + coolPrint(view._ParentSchema.getShortName() + ".Refill_" + view.getRealizedTableName(false)) + "()</B>.</LI>");
+          }
+        else if (O._FST == FrameworkSourcedType.REALIZED)
+          {
+            Object OR = O._ParentSchema.getObject(O._SourceView._Name);
+            Out.println("<LI>Is Realized from <B>" + makeObjectLink(OR) + "</B> through DB function <B>" + coolPrint(O._ParentSchema.getShortName() + ".Refill_" + O._Name) + "()</B>.</LI>");
+          }
 
         if (view == null)
           {
@@ -264,7 +273,27 @@ public class Docs
               }
 
             Out.print("<TD>" + C._Description);
-            if (view != null)
+            if (O._SourceView != null)
+              {
+                Formula F = O._SourceView.getFormula(C.getName());
+                if (F != null)
+                  {
+                    Object OR = O._ParentSchema.getObject(O._SourceView._Name);
+                    if (OR != null)
+                      {
+                        Column c = OR.getColumn(C.getName());
+                        if (c != null)
+                          {
+                            Out.print("<BR>&nbsp;&nbsp;&rarr;&nbsp;");
+                            Out.print(makeColumnLink(c));
+                          }
+                      }
+//                    Out.println("<BLOCKQUOTE>");
+//                    PrintFormulaDetails(Out, O._SourceView, O._SourceView._Name, F, false);
+//                    Out.println("</BLOCKQUOTE>");
+                  }
+              }
+            else if (view != null)
               {
                 Formula F = view.getFormula(C.getName());
                 if (F != null)
@@ -1030,7 +1059,7 @@ public class Docs
               {
                 String TName = V.getRealizedTableName(false);
                 Out.println(V._ParentSchema._Name + ".Refill_" + TName + "();<BR>");
-//                Out.println(V.getShortName() + "<BR>");
+                // Out.println(V.getShortName() + "<BR>");
               }
             Out.println("</TD></TR>");
           }
