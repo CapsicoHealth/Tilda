@@ -28,6 +28,7 @@ import com.google.gson.annotations.SerializedName;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.enums.DBStringType;
 import tilda.enums.DefaultType;
 import tilda.enums.FrameworkColumnType;
 import tilda.enums.MultiType;
@@ -310,8 +311,8 @@ public class Column extends TypeDef
          * }
          */
 
-        if (_Size != null && _Size != 0 && _Size != _SameAsObj._Size)
-          PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining a size '" + _Size + "' which doesn't match the destination column's size '" + _SameAsObj._Size + "'. Note that redefining a size for a sameas column is superfluous in the first place.");
+        if (_Size != null && _Size != 0 && _Size < _SameAsObj._Size)
+          PS.AddError("Column '" + getFullName() + "' is a 'sameas' and is redefining a size '" + _Size + "' that is lower that the origianal column's size '" + _SameAsObj._Size + "'. You can only enlarge a column (for example to go from a CHAR to a VARCHAR), not shrink it.");
         else if (_Mapper != null && _Mapper._Multi != MultiType.NONE)
           {
             _TypeStr += _Mapper._Multi == MultiType.LIST ? "[]"
@@ -556,5 +557,4 @@ public class Column extends TypeDef
       {
         return getType() == ColumnType.DATETIME && _FCT == FrameworkColumnType.NONE;
       }
-
   }

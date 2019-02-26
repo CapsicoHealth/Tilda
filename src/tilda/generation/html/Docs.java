@@ -17,6 +17,7 @@
 package tilda.generation.html;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,11 +30,13 @@ import org.apache.logging.log4j.Logger;
 
 import tilda.enums.ColumnMode;
 import tilda.enums.ColumnType;
+import tilda.enums.FrameworkSourcedType;
 import tilda.enums.ObjectMode;
 import tilda.generation.GeneratorSession;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.generation.java8.Helper;
 import tilda.generation.java8.JavaJDBCType;
+import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ColumnValue;
 import tilda.parsing.parts.ForeignKey;
@@ -43,11 +46,13 @@ import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.Value;
 import tilda.parsing.parts.View;
+import tilda.parsing.parts.View.DepWrapper;
 import tilda.parsing.parts.ViewColumn;
 import tilda.parsing.parts.ViewJoin;
 import tilda.parsing.parts.ViewPivot;
 import tilda.utils.FileUtil;
 import tilda.utils.Graph;
+import tilda.utils.Graph.Visitor;
 import tilda.utils.PaddingUtil;
 import tilda.utils.SystemValues;
 import tilda.utils.TextUtil;
@@ -84,7 +89,7 @@ public class Docs
         String JS = FileUtil.getFileOfResourceContents("tilda/generation/html/TildaDocs.js");
         Out.println(
         "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\"/>\n"
-        + "<title>Tilda Docs: " + S.getFullName() + "</title>\n"
+        + "<title>Tilda Docs: " + S._Name + " (" + S._Package + ")</title>\n"
         + "<STYLE>\n"
         + CSS
         + "</STYLE>\n"
@@ -110,13 +115,21 @@ public class Docs
         Out.println("</TABLE>");
         Out.println("<DIV id=\"" + O._Name + "_CNT\" class=\"content\">");
         Out.println("The " + ObjType + " " + O.getShortName() + ":<UL>");
-        if (view == null || view._DBOnly == false)
+        if (O._Mode != ObjectMode.DB_ONLY) // view == null || view._DBOnly == false)
           Out.println("<LI>Is mapped to the generated " + Helper.getCodeGenLanguage() + "/" + G.getSql().getName() + " Tilda classes <B>" + O.getAppFactoryClassName() + "</B>, <B>" + O.getAppDataClassName() + "</B> in the package <B>" + O._ParentSchema._Package + "</B>.");
         else
           Out.println("<LI>Is not mapped to any generated code (i.e., Java code) and only exists in the database.</LI>");
 
         if (view != null && view._Realize != null)
-          Out.println("<LI>Configured to be Realized to <B>" + coolPrint(view.getRealizedTableName(true)) + "</B> through DB function <B>" + coolPrint(view._ParentSchema.getShortName() + ".Refill_" + view.getRealizedTableName(false)) + "()</B>.</LI>");
+          {
+            Object OR = O._ParentSchema.getObject(view.getRealizedTableName(false));
+            Out.println("<LI>Configured to be Realized to <B>" + makeObjectLink(OR) + "</B> through DB function <B>" + coolPrint(view._ParentSchema.getShortName() + ".Refill_" + view.getRealizedTableName(false)) + "()</B>.</LI>");
+          }
+        else if (O._FST == FrameworkSourcedType.REALIZED)
+          {
+            Object OR = O._ParentSchema.getObject(O._SourceView._Name);
+            Out.println("<LI>Is Realized from <B>" + makeObjectLink(OR) + "</B> through DB function <B>" + coolPrint(O._ParentSchema.getShortName() + ".Refill_" + O._Name) + "()</B>.</LI>");
+          }
 
         if (view == null)
           {
@@ -227,7 +240,7 @@ public class Docs
             if (C == null)
               continue;
             String FieldType = view != null && view.getFormula(C.getName()) != null ? "formulae" : "columns";
-            if (view != null && view._Realize != null && TextUtil.FindStarElement(view._Realize._Exclude, C.getName(), false, 0) == -1)
+            if (view != null && view._Realize != null && TextUtil.FindStarElement(view._Realize._Exclude_DEPRECATED, C.getName(), false, 0) == -1)
               FieldType = FieldType + " realized" + FieldType;
             Out.println("  <TR valign=\"top\" bgcolor=\"" + (i % 2 == 0 ? "#FFFFFF" : "#DFECF8") + "\">");
             Out.println("    <TD>" + i + "&nbsp;&nbsp;</TD>");
@@ -250,7 +263,7 @@ public class Docs
             Out.println("<TD align=\"center\">" + (C._Nullable == true ? "&#x2611;" : "&#x2610") + "&nbsp;&nbsp;</TD>");
             if (view != null && view._Realize != null)
               {
-                Out.print("<TD align=\"center\">" + (TextUtil.FindStarElement(view._Realize._Exclude, C.getName(), false, 0) == -1 ? "&#x2611;<!--R-->" : "&#x2610;") + "&nbsp;&nbsp;</TD>");
+                Out.print("<TD align=\"center\">" + (TextUtil.FindStarElement(view._Realize._Exclude_DEPRECATED, C.getName(), false, 0) == -1 ? "&#x2611;<!--R-->" : "&#x2610;") + "&nbsp;&nbsp;</TD>");
               }
             if (O._Mode != ObjectMode.DB_ONLY)
               {
@@ -260,7 +273,27 @@ public class Docs
               }
 
             Out.print("<TD>" + C._Description);
-            if (view != null)
+            if (O._SourceView != null)
+              {
+                Formula F = O._SourceView.getFormula(C.getName());
+                if (F != null)
+                  {
+                    Object OR = O._ParentSchema.getObject(O._SourceView._Name);
+                    if (OR != null)
+                      {
+                        Column c = OR.getColumn(C.getName());
+                        if (c != null)
+                          {
+                            Out.print("<BR>&nbsp;&nbsp;&rarr;&nbsp;");
+                            Out.print(makeColumnLink(c));
+                          }
+                      }
+//                    Out.println("<BLOCKQUOTE>");
+//                    PrintFormulaDetails(Out, O._SourceView, O._SourceView._Name, F, false);
+//                    Out.println("</BLOCKQUOTE>");
+                  }
+              }
+            else if (view != null)
               {
                 Formula F = view.getFormula(C.getName());
                 if (F != null)
@@ -948,9 +981,9 @@ public class Docs
     private static void DoSubWhereDetails(PrintWriter Out, View V, CodeGenSql Sql)
     throws Exception
       {
-        Graph<View.DepWrapper> G = V.getDependencyGraph();
+        Graph<View.DepWrapper> G = V.getDependencyGraph(false);
         DependencyPrinter DepPrinter = new DependencyPrinter(Sql);
-        G.Traverse(DepPrinter);
+        G.Traverse(DepPrinter, true);
 
         /*
          * if (V._SubWhereX != null)
@@ -965,18 +998,93 @@ public class Docs
         if (V._Pivots.isEmpty() == false)
           {
             Out.println("A pivot was done as part of this view explicitly on the following columns and values:"
-            + "<BLOCKQUOTE><PRE><TABLE class=\"Rowed\" border=\"0px\">");
+            + "<BLOCKQUOTE><PRE><TABLE class=\"Rowed\" cellspacing=\"0px\" border=\"0px\">");
             for (ViewPivot P : V._Pivots)
               {
-                Out.println("<TR valign=\"top\"><TD>" + P._VC._SameAsObj.getName() + "</TD><TD>" + P._VC._Description + "</TD><TR>");
-                Out.print("<TR><TD></TD><TD><TABLE class=\"NoRowed\" border=\"0px\"");
+                Out.println("<TR valign=\"top\" class=\"RowedSection\"><TD><B>" + P._VC._SameAsObj.getName() + "</B></TD><TD colspan=\"2\">" + P._VC._Description + "</TD></TR>");
                 for (Value Val : P._Values)
-                  Out.println("<TR><TD>" + Val._Value + "&nbsp;&nbsp;&nbsp;</TD><TD>" + Val._Description + "</TD></TR>");
-                Out.println("</TABLE></TD></TR>");
+                  Out.println("<TR><TD></TD><TD>" + Val._Value + "</TD><TD>" + Val._Description + "</TD></TR>");
               }
             Out.println("</TABLE></PRE></BLOCKQUOTE>");
           }
 
       }
 
+    public static void writeRealizedSummary(PrintWriter Out, ParserSession PS, Schema S)
+    throws Exception
+      {
+        // Accumulate the Realize dependency graphs of all realized views
+        List<Graph<DepWrapper>> GL = new ArrayList<Graph<DepWrapper>>();
+        Set<String> VisitedSchemas = new HashSet<String>();
+        VisitedSchemas.add(S._Name);
+        CollectRealizedViews(GL, VisitedSchemas, S);
+
+        // Start ordering the graphs
+        int group = 0;
+        Out.println("<TABLE BORDER=\"0\">");
+        Out.println("<TR align=\"left\" style=\"font-weight:bold;background-color:#AAA;\"><TH>Refill Calls</TH><TH>Dependency Links</TH><TH>Refill Dependencies From Prior Group</TH></TR>");
+        while (true)
+          {
+            // Get all the leaves across all realized views dependency graphs
+            SortedSet<DepWrapper> Leaves = new TreeSet<DepWrapper>();
+            for (Graph<DepWrapper> G : GL)
+              Leaves.addAll(G.getLeaves(true));
+
+            // If there were no leaves left, then we have nothing to do anymore. We are done.
+            if (Leaves.isEmpty() == true)
+              break;
+
+            // The leaves are DepWrapper nodes, so the set may include duplicates.
+            // Print the members of the group and make sure we track dupes.
+            Set<String> Names = new HashSet<String>();
+            ++group;
+
+            Out.println("<TR valign=\"top\"><TD COLSPAN=\"2\"><B>Group " + group + "</B></TD></TR>");
+            StringBuilder Str1 = new StringBuilder();
+            StringBuilder Str2 = new StringBuilder();
+            Set<View> AncestorViews = new HashSet<View>();
+            for (DepWrapper DW : Leaves)
+              if (Names.add(DW.getObj().getShortName()) == true)
+                {
+                  View V = DW.getObj()._ParentSchema.getView(DW.getObj()._Name);
+                  String TName = V.getRealizedTableName(false);
+                  Str1.append("select " + V._ParentSchema._Name + ".Refill_" + TName + "();<BR>\n");
+                  Str2.append(makeObjectLink(DW.getObj()) + "<BR>\n");
+                  Set<View> A = V.getFirstAncestorRealizedViews();
+                  if (A != null && A.isEmpty() == false)
+                    AncestorViews.addAll(A);
+                }
+            Out.println("<TR valign=\"top\"><TD style=\"padding-left:30px;\">" + Str1.toString() + "</TD><TD style=\"padding-left:10px;\">" + Str2.toString() + "</TD><TD>");
+            for (View V : AncestorViews)
+              {
+                String TName = V.getRealizedTableName(false);
+                Out.println(V._ParentSchema._Name + ".Refill_" + TName + "();<BR>");
+                // Out.println(V.getShortName() + "<BR>");
+              }
+            Out.println("</TD></TR>");
+          }
+        Out.println("</TABLE>");
+      }
+
+    private static void CollectRealizedViews(List<Graph<DepWrapper>> GL, Set<String> VisitedSchemas, Schema S)
+    throws Exception
+      {
+        for (View V : S._Views)
+          if (V._Realize != null)
+            {
+              Graph<DepWrapper> G = V.getDependencyGraph(true);
+              GL.add(G);
+              G.Traverse(new Visitor<DepWrapper>()
+                {
+                  @Override
+                  public void visitNode(int level, int FirstMiddleLast, DepWrapper v, List<DepWrapper> Path)
+                  throws Exception
+                    {
+                      if (VisitedSchemas.add(v.getObj()._ParentSchema._Name) == true)
+                        CollectRealizedViews(GL, VisitedSchemas, v.getObj()._ParentSchema);
+                    }
+                },
+              true);
+            }
+      }
   }

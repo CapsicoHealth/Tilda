@@ -62,6 +62,7 @@ public class Object extends Base
     public transient boolean              _HasUniqueIndex;
     public transient boolean              _HasUniqueQuery;
     public transient FrameworkSourcedType _FST         = FrameworkSourcedType.NONE;
+    public transient View                 _SourceView  = null; // For tables such as Realized tables generated out of views.
     public transient ObjectLifecycle      _LC;
     public transient ObjectMode           _Mode;
 

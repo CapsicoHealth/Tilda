@@ -477,6 +477,8 @@ public class ConnectionPool
 
         for (Schema S : TildaList)
           {
+            if (S._Name.equalsIgnoreCase("LDAP") == true)
+              LOG.error("XXX");
             CodeGenSql Sql = C.getSQlCodeGen();
             ParserSession PS = new ParserSession(S, Sql);
             if (S._Dependencies != null)
@@ -502,12 +504,14 @@ public class ConnectionPool
                       throw new Exception("Schema " + S._Name + " depends on " + DepdencySchemaName + " which hasn't been loaded.");
                     }
                 }
-            else
+            else //if (S._Name.equals("TILDATMP") == false)
               {
                 PS.addDependencySchema(TildaList.get(0));
+                PS.addDependencySchema(TildaList.get(1));
                 PS.addDependencySchema(S);
               }
-            S._DependencySchemas.add(TildaList.get(0));
+            if (S._Name.equals("TILDA") == false && S._Name.equals("TILDATMP") == false)
+             S._DependencySchemas.add(TildaList.get(1));
             if (S.Validate(PS) == false)
               throw new Exception("Schema " + S._Name + " from resource " + S._ResourceName + " failed validation.");
             for (Object Obj : S._Objects)

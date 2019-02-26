@@ -26,13 +26,13 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.annotations.SerializedName;
 
-import tilda.db.Connection;
 import tilda.enums.AggregateType;
 import tilda.enums.ColumnType;
 import tilda.enums.FrameworkColumnType;
 import tilda.enums.FrameworkSourcedType;
 import tilda.enums.JoinType;
 import tilda.enums.OrderType;
+import tilda.enums.TildaType;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.helpers.ReferenceHelper;
 import tilda.parsing.parts.helpers.ValidationHelper;
@@ -81,7 +81,8 @@ public class ViewColumn
      */
 
     public transient View                _ParentView;
-    public transient Column              _SameAsObj;
+    public transient Column              _SameAsObj;  // The column this ViewColumn matches to, which could be to an object column OR a view column.
+    public transient View                _SameAsView; // If a View column, this is the view from which it came. Otherwise. _SameAsObj._ParentObject is the source object.
     public transient JoinType            _Join;
     public transient AggregateType       _Aggregate;
     public transient List<Column>        _OrderByObjs      = new ArrayList<Column>();
@@ -153,6 +154,7 @@ public class ViewColumn
             if (_SameAsObj == null)
               return false;
             _FCT = _SameAsObj._FCT;
+            _SameAsView = _SameAsObj._ParentObject._ParentSchema.getView(_SameAsObj._ParentObject._Name);
           }
 
         if (TextUtil.isNullOrEmpty(_Name) == true)
@@ -216,13 +218,13 @@ public class ViewColumn
         ReferenceHelper R = ReferenceHelper.parseColumnReference(SameAs, ParentView);
 
         if (TextUtil.isNullOrEmpty(R._S) == true || TextUtil.isNullOrEmpty(R._O) == true || TextUtil.isNullOrEmpty(R._C) == true)
-          PS.AddError("Column '" + ColFullName + "' is declaring sameas '" + SameAs + "' with an incorrect syntax. It should be '(((package\\.)?schema\\.)?object\\.)?column'.");
+          PS.AddError("View column '" + ColFullName + "' is declaring sameas '" + SameAs + "' with an incorrect syntax. It should be '(((package\\.)?schema\\.)?object\\.)?column'.");
         else
           {
             Column Col = null;
             Schema S = PS.getSchema(R._P, R._S);
             if (S == null)
-              PS.AddError("Column '" + ColFullName + "' is declaring sameas '" + SameAs + "' resolving to '" + R.getFullName() + "' where schema '" + R._P + "." + R._S + "' cannot be found.");
+              PS.AddError("View column '" + ColFullName + "' is declaring sameas '" + SameAs + "' resolving to '" + R.getFullName() + "' where schema '" + R._P + "." + R._S + "' cannot be found.");
             else
               {
                 Object O = S.getObject(R._O);
@@ -236,9 +238,15 @@ public class ViewColumn
                   }
               }
             if (Col == null)
-              PS.AddError("Column '" + ColFullName + "' is declaring sameas '" + SameAs + "' resolving to '" + R.getFullName() + "' which cannot be found.");
+              PS.AddError("View column '" + ColFullName + "' is declaring sameas '" + SameAs + "' resolving to '" + R.getFullName() + "' which cannot be found.");
             else
-              return Col;
+              {
+                //If the view is realized, it should not have direct dependencies on other realized views since the system can handle automatically these dependencies 
+                if (ParentView._Realize != null && (Col._ParentObject._TildaType==TildaType.REALIZED_VIEW || Col._ParentObject._FST == FrameworkSourcedType.REALIZED))
+                  PS.AddError("View column '" + ColFullName + "' is declaring sameas '" + SameAs + "' resolving to a realized view '" + R.getFullObjectName() + "', which is not allowed. Refills automatically handle this.");
+                else
+                  return Col;
+              }
           }
 
         return null;

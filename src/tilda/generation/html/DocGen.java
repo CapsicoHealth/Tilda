@@ -16,6 +16,7 @@ import tilda.generation.graphviz.GraphvizUtil;
 import tilda.parsing.ParserSession;
 import tilda.parsing.parts.Object;
 import tilda.parsing.parts.Schema;
+import tilda.parsing.parts.View;
 import tilda.utils.FileUtil;
 
 public class DocGen
@@ -27,18 +28,10 @@ public class DocGen
 
     GeneratorSession              G;
 
-    public DocGen(Schema schema, GeneratorSession G)
+    public DocGen(Schema schema, GeneratorSession G) throws ParserConfigurationException
       {
         this.schema = schema;
-        try
-          {
-            this.builder = factory.newDocumentBuilder();
-          }
-        catch (ParserConfigurationException e)
-          {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-          }
+        this.builder = factory.newDocumentBuilder();
         this.G = G;
       }
 
@@ -103,6 +96,7 @@ public class DocGen
           }
 
         WriteTablesAndViews(PS, writer);
+        WriteRealizeSchedule(PS, writer);
 
         writer.println("<BR><BR><BR><BR><BR><HR>- End -<BR><BR><BR>");
         writeFooter(writer, PS);
@@ -110,13 +104,42 @@ public class DocGen
         writer.println("</HTML>");
         writer.close();
       }
-    
-    
-    private void writeHeader(PrintWriter writer, ParserSession PS) throws Exception
+
+
+    private void WriteRealizeSchedule(ParserSession PS, PrintWriter writer)
+    throws Exception
+      {
+        boolean hasRealized = false;
+        for (View V : schema._Views)
+          if (V._Realize != null)
+            {
+              hasRealized = true;
+              break;
+            }
+        if (hasRealized == false)
+          {
+            writer.println("<BR><BR><BR><BR><BR><HR><H1>Parallel Refill Schedule</H1><BLOCKQUOTE>");
+            writer.println("This schema doesn't contain any realized views.\n");
+            writer.println("</BLOCKQUOTE>");
+            return;
+          }
+
+        writer.println("<BR><BR><BR><BR><BR><HR><H1 id=\"PARALLEL_REFILL_DIV\">Parallel Refill Schedule</H1><BLOCKQUOTE>");
+        writer.println("Use the following grouping(s) if you want to refill all the realized tables in this schema and their dependencies. ");
+        writer.println("For example, you can execute in parallel (maybe from some ETL tool or Java code) all Refill functions from group 1, then ");
+        writer.println("all from group 2 etc...<BR><BR>\n");
+        Docs.writeRealizedSummary(writer, PS, schema);
+        writer.println("</BLOCKQUOTE>");
+      }
+
+    private void writeHeader(PrintWriter writer, ParserSession PS)
+    throws Exception
       {
         Docs.writeHeader(writer, PS._Main);
       }
-    private void writeFooter(PrintWriter writer, ParserSession PS) throws Exception
+
+    private void writeFooter(PrintWriter writer, ParserSession PS)
+    throws Exception
       {
         Docs.writeFooter(writer, PS._Main);
       }
@@ -126,31 +149,32 @@ public class DocGen
         WriteObjectDocsList(writer, FrameworkSourcedType.ENUMERATION, "Enumerations");
         WriteObjectDocsList(writer, FrameworkSourcedType.MAPPER, "Mappers");
         WriteObjectDocsList(writer, FrameworkSourcedType.NONE, "Tables");
+        WriteObjectDocsList(writer, FrameworkSourcedType.REALIZED, "Realized Tables");
         WriteObjectDocsList(writer, FrameworkSourcedType.VIEW, "Views");
-/*
-        boolean First = true;
-        for (View V : schema._Views)
-          {
-            if (V._Realize == null)
-              continue;
-            if (First == true)
-              {
-                writer.println("<BR><BR><BR><BR><BR><HR><H1>Views</H1>");
-                First = false;
-              }
-//            try
-//              {
-//                writer.println("<BR><BR><BR><BR><BR><BR>");
-//                Docs.RealizedDataMartTableDocs(writer, PS, V);
-//              }
-//            catch (Exception e)
-//              {
-//                // TODO Auto-generated catch block
-//                LOG.warn("FYI: this can be ignored for now:\n", e);
-//              }
-          }
-*/
-        }
+        /*
+         * boolean First = true;
+         * for (View V : schema._Views)
+         * {
+         * if (V._Realize == null)
+         * continue;
+         * if (First == true)
+         * {
+         * writer.println("<BR><BR><BR><BR><BR><HR><H1>Views</H1>");
+         * First = false;
+         * }
+         * // try
+         * // {
+         * // writer.println("<BR><BR><BR><BR><BR><BR>");
+         * // Docs.RealizedDataMartTableDocs(writer, PS, V);
+         * // }
+         * // catch (Exception e)
+         * // {
+         * // // TODO Auto-generated catch block
+         * // LOG.warn("FYI: this can be ignored for now:\n", e);
+         * // }
+         * }
+         */
+      }
 
     private void WriteObjectDocsList(PrintWriter writer, FrameworkSourcedType Filter, String TitleLabel)
       {
@@ -161,7 +185,7 @@ public class DocGen
               continue;
             if (First == true)
               {
-                writer.println("<BR><BR><BR><BR><BR><HR><H1>"+TitleLabel+"</H1><BLOCKQUOTE>");
+                writer.println("<BR><BR><BR><BR><BR><HR><H1>" + TitleLabel + "</H1><BLOCKQUOTE>");
                 First = false;
               }
             else
@@ -191,8 +215,8 @@ public class DocGen
         writer.println("&nbsp;&nbsp;&nbsp;&nbsp;<label><input type=\"checkbox\" oninput=\"eventListener()\", id=\"realized_check\">&nbsp;Realized</label></TD></TR>");
         writer.println("<TR><TD colspan=\"2\"><table id=\"__SEARCH_BOX_RESULTS__\" class=\"search_results\" border=\"0px\" cellspacing=\"0px\"></table>");
         writer.println("</TD></TR></TABLE></DIV>");
-//        writer.println("<SCRIPT>registerStickyHeader(\"__SEARCH_BOX__\");</SCRIPT>");
-//hideIfEsc(event, '__SEARCH_BOX_RESULTS__');
+        // writer.println("<SCRIPT>registerStickyHeader(\"__SEARCH_BOX__\");</SCRIPT>");
+        // hideIfEsc(event, '__SEARCH_BOX_RESULTS__');
       }
 
   }

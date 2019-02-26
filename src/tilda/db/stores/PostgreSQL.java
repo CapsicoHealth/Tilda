@@ -24,6 +24,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.logging.log4j.LogManager;
@@ -46,6 +47,7 @@ import tilda.enums.DBStringType;
 import tilda.generation.Generator;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.generation.postgres9.PostgresType;
+import tilda.generation.postgres9.Sql;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
@@ -213,7 +215,13 @@ public class PostgreSQL implements DBType
     public boolean dropView(Connection Con, View V)
     throws Exception
       {
-        return Con.ExecuteDDL(V._ParentSchema._Name, V.getBaseName(), "DROP VIEW IF EXISTS " + V.getShortName() + " CASCADE");
+        Set<View> SubRealizedViews = V.getSubRealizedViewRootNames();
+        Set<View> AncestorRealizedViews = V.getAncestorRealizedViews();
+        boolean OK = true;
+        if (SubRealizedViews != null || AncestorRealizedViews != null) // View depends on realized views.
+         OK = Con.ExecuteDDL(Sql.getViewSubRealizeSchemaName(), Sql.getViewSubRealizeViewName(V), "DROP VIEW IF EXISTS " + Sql.getViewSubRealizeName(V) + " CASCADE");
+
+        return OK == false? OK : Con.ExecuteDDL(V._ParentSchema._Name, V.getBaseName(), "DROP VIEW IF EXISTS " + V.getShortName() + " CASCADE");
       }
 
     @Override
@@ -328,6 +336,7 @@ public class PostgreSQL implements DBType
         return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
       }
 
+    @Override
     public DBStringType getDBStringType(int Size)
       {
         return Size <= 8 ? DBStringType.CHARACTER
