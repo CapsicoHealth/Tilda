@@ -79,7 +79,7 @@ public class EncryptionUtil
           }
         catch (Exception e)
           {
-            LOG.error(e);
+            LOG.error("Exception in HashByteArrray()", e);
             return null;
           }
       }
@@ -139,7 +139,7 @@ public class EncryptionUtil
           }
         catch (Exception e)
           {
-            LOG.error(e);
+            LOG.error("Exception in aes()", e);
             return null;
           }
       }
