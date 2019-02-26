@@ -28,19 +28,20 @@ public enum JavaJDBCType
   {
 
     /*@formatter:off*/
-    STRING  ("String"       , String.class       , "String   ", "CHAR    "               , ColumnType.STRING  ),
-    JSON    ("String"       , String.class       , "String   ", "CHAR    "               , ColumnType.JSON    ),
-    CHAR    ("char"         , Character.class    , "String   ", "CHAR    "               , ColumnType.CHAR    ),
-    SHORT   ("short"        , Short.class        , "Short    ", "SMALLINT"               , ColumnType.SHORT   ),
-    INTEGER ("int"          , Integer.class      , "Int      ", "INTEGER "               , ColumnType.INTEGER ),
-    LONG    ("long"         , Long.class         , "Long     ", "BIGINT  "               , ColumnType.LONG    ),
-    FLOAT   ("float"        , Float.class        , "Float    ", "FLOAT   "               , ColumnType.FLOAT   ),
-    DOUBLE  ("double"       , Double.class       , "Double   ", "DOUBLE  "               , ColumnType.DOUBLE  ),
-    BOOLEAN ("boolean"      , Boolean.class      , "Boolean  ", "BOOLEAN "               , ColumnType.BOOLEAN ),
-    DATE    ("LocalDate"    , LocalDate.class    , "Date     ", "DATE"                   , ColumnType.DATE    ),
-    DATETIME("ZonedDateTime", ZonedDateTime.class, "Timestamp", "TIMESTAMP_WITH_TIMEZONE", ColumnType.DATETIME),
-    BINARY  ("byte[]"       , byte[].class       , "Bytes    ", "BINARY  "               , ColumnType.BINARY  ),
-    BITFIELD("int"          , Integer.class      , "Int      ", "BIGINT  "               , ColumnType.BITFIELD);
+    STRING    ("String"       , String.class       , "String    ", "CHAR      "             , ColumnType.STRING  ),
+    JSON      ("String"       , String.class       , "String    ", "CHAR      "             , ColumnType.JSON    ),
+    CHAR      ("char"         , Character.class    , "String    ", "CHAR      "             , ColumnType.CHAR    ),
+    SHORT     ("short"        , Short.class        , "Short     ", "SMALLINT  "             , ColumnType.SHORT   ),
+    INTEGER   ("int"          , Integer.class      , "Int       ", "INTEGER   "             , ColumnType.INTEGER ),
+    LONG      ("long"         , Long.class         , "Long      ", "BIGINT    "             , ColumnType.LONG    ),
+    FLOAT     ("float"        , Float.class        , "Float     ", "FLOAT     "             , ColumnType.FLOAT   ),
+    DOUBLE    ("double"       , Double.class       , "Double    ", "DOUBLE    "             , ColumnType.DOUBLE  ),
+    BIGDECIMAL("BigDecimal"   , Math.class         , "BigDecimal", "BIGDECIMAL"             , ColumnType.BIGDECIMAL  ),
+    BOOLEAN   ("boolean"      , Boolean.class      , "Boolean   ", "BOOLEAN   "             , ColumnType.BOOLEAN ),
+    DATE      ("LocalDate"    , LocalDate.class    , "Date      ", "DATE"                   , ColumnType.DATE    ),
+    DATETIME  ("ZonedDateTime", ZonedDateTime.class, "Timestamp ", "TIMESTAMP_WITH_TIMEZONE", ColumnType.DATETIME),
+    BINARY    ("byte[]"       , byte[].class       , "Bytes     ", "BINARY    "             , ColumnType.BINARY  ),
+    BITFIELD  ("int"          , Integer.class      , "Int       ", "BIGINT    "             , ColumnType.BITFIELD);
     /*@formatter:on*/
 
     static {

@@ -211,9 +211,6 @@ This View contains the following columns:<BLOCKQUOTE>
 </DIV></DIV>
 </DIV>
 
- @author   Tilda code gen for Java 8/PostgreSQL
- @version  Tilda 1.0
- @generated Feb 11 2019, 11:57:03EST
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__FORMULARESULTVIEW implements tilda.interfaces.ReaderObject
@@ -743,11 +740,11 @@ This is the setter for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-                              _formulaRefnum =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULARESULTVIEW_Factory.COLS.FORMULAREFNUM._Mask);
-                              _value         = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULARESULTVIEW_Factory.COLS.VALUE._Mask        );
-                              _description   = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULARESULTVIEW_Factory.COLS.DESCRIPTION._Mask  );
-                              _location      = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULARESULTVIEW_Factory.COLS.LOCATION._Mask     );
-                              _name          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULARESULTVIEW_Factory.COLS.NAME._Mask         );
+                              _formulaRefnum =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULARESULTVIEW_Factory.COLS.FORMULAREFNUM._Mask);
+                              _value         = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULARESULTVIEW_Factory.COLS.VALUE._Mask        );
+                              _description   = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULARESULTVIEW_Factory.COLS.DESCRIPTION._Mask  );
+                              _location      = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULARESULTVIEW_Factory.COLS.LOCATION._Mask     );
+                              _name          = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULARESULTVIEW_Factory.COLS.NAME._Mask         );
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();

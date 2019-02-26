@@ -385,9 +385,6 @@ This Table contains the following columns:<BLOCKQUOTE>
 </DIV></DIV>
 </DIV>
 
- @author   Tilda code gen for Java 8/PostgreSQL
- @version  Tilda 1.0
- @generated Feb 11 2019, 11:57:03EST
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__JOBS implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -2669,15 +2666,15 @@ This is the hasChanged for:<BR>
        int i = 0;
        if (__Changes.intersects(TILDA__JOBS_Factory.COLS.ID._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.ID._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER ); else PS.setInt      (++i, _Id);
+          if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.ID._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER   ); else PS.setInt       (++i, _Id);
         } 
        if (__Changes.intersects(TILDA__JOBS_Factory.COLS.NAME._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.NAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _Name);
+          if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.NAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _Name);
         } 
        if (__Changes.intersects(TILDA__JOBS_Factory.COLS.STARTTIMETZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.STARTTIMETZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _StartTimeTZ);
+          if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.STARTTIMETZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _StartTimeTZ);
         } 
        if (__Changes.intersects(TILDA__JOBS_Factory.COLS.STARTTIME._Mask) == true) 
         { 
@@ -2685,7 +2682,7 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__JOBS_Factory.COLS.ENDTIMETZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.ENDTIMETZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _EndTimeTZ);
+          if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.ENDTIMETZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _EndTimeTZ);
         } 
        if (__Changes.intersects(TILDA__JOBS_Factory.COLS.ENDTIME._Mask) == true) 
         { 
@@ -2693,15 +2690,15 @@ This is the hasChanged for:<BR>
         } 
        if (__Changes.intersects(TILDA__JOBS_Factory.COLS.TOTALRECORDS._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.TOTALRECORDS._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER ); else PS.setInt      (++i, _TotalRecords);
+          if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.TOTALRECORDS._Mask) == true) PS.setNull(++i, java.sql.Types.INTEGER   ); else PS.setInt       (++i, _TotalRecords);
         } 
        if (__Changes.intersects(TILDA__JOBS_Factory.COLS.STATUS._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.STATUS._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _Status);
+          if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.STATUS._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _Status);
         } 
        if (__Changes.intersects(TILDA__JOBS_Factory.COLS.ERROR._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.ERROR._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _Error);
+          if (__Nulls.intersects(TILDA__JOBS_Factory.COLS.ERROR._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _Error);
         } 
        if (__Changes.intersects(TILDA__JOBS_Factory.COLS.CREATED._Mask) == true) 
         { 
@@ -2771,7 +2768,7 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setInt      (++i, _Id          );
+               PS.setInt       (++i, _Id          );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -2868,7 +2865,7 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setInt      (++i, _Id          );
+               PS.setInt       (++i, _Id          );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -2899,15 +2896,15 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_Id           = _Id           =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.ID._Mask          );
-                             _Name         = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.NAME._Mask        );
-                             _StartTimeTZ  = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.STARTTIMETZ._Mask ); else _StartTimeTZ  = _StartTimeTZ .trim();
+      __Saved_Id           = _Id           =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.ID._Mask          );
+                             _Name         = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.NAME._Mask        );
+                             _StartTimeTZ  = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.STARTTIMETZ._Mask ); else _StartTimeTZ  = _StartTimeTZ .trim();
                              _StartTime    = ProcessZDT(_StartTimeTZ   , "tilda.data.TILDA.Jobs.StartTime"   , RS, ++i, TILDA__JOBS_Factory.COLS.STARTTIME   , TILDA__JOBS_Factory.COLS.STARTTIMETZ   ); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.STARTTIME._Mask   );
-                             _EndTimeTZ    = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.ENDTIMETZ._Mask   ); else _EndTimeTZ    = _EndTimeTZ   .trim();
+                             _EndTimeTZ    = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.ENDTIMETZ._Mask   ); else _EndTimeTZ    = _EndTimeTZ   .trim();
                              _EndTime      = ProcessZDT(_EndTimeTZ     , "tilda.data.TILDA.Jobs.EndTime"     , RS, ++i, TILDA__JOBS_Factory.COLS.ENDTIME     , TILDA__JOBS_Factory.COLS.ENDTIMETZ     ); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.ENDTIME._Mask     );
-                             _TotalRecords =                              RS.getInt      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.TOTALRECORDS._Mask);
-                             _Status       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.STATUS._Mask      );
-                             _Error        = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.ERROR._Mask       );
+                             _TotalRecords =                              RS.getInt       (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.TOTALRECORDS._Mask);
+                             _Status       = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.STATUS._Mask      );
+                             _Error        = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.ERROR._Mask       );
                              _created      = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.CREATED._Mask     );
                              _lastUpdated  = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.LASTUPDATED._Mask );
                              _deleted      = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__JOBS_Factory.COLS.DELETED._Mask     );

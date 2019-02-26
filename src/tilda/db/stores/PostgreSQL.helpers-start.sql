@@ -267,7 +267,6 @@ CREATE OR REPLACE FUNCTION TILDA.ageBetween(timestamptz, timestamptz, float, flo
 'SELECT TILDA.Age($1, $2) >= $3 AND TILDA.Age($1, $2) < $4';
 
 
-
 -----------------------------------------------------------------------------------------------------------------
 -- TILDA FIRST/LAST aggregates
 CREATE OR REPLACE FUNCTION TILDA.first_agg (anyelement, anyelement)
@@ -306,7 +305,7 @@ END $$;
 -- TILDA array concatenation aggregate aggregates
 DO $$ BEGIN
 if not exists (SELECT 1 FROM pg_aggregate WHERE aggfnoid::TEXT = 'array_cat_agg') THEN
-CREATE AGGREGATE TILDA.array_cat_agg (anyarray)
+CREATE AGGREGATE public.array_cat_agg (anyarray)
 (
     sfunc = array_cat,
     stype = anyarray,

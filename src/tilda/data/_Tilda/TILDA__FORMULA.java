@@ -411,9 +411,6 @@ This Table contains the following columns:<BLOCKQUOTE>
 </DIV></DIV>
 </DIV>
 
- @author   Tilda code gen for Java 8/PostgreSQL
- @version  Tilda 1.0
- @generated Feb 11 2019, 11:57:03EST
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__FORMULA implements tilda.interfaces.WriterObject, tilda.interfaces.OCCObject
@@ -2818,43 +2815,43 @@ This is the hasChanged for:<BR>
        int i = 0;
        if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.REFNUM._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.REFNUM._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT  ); else PS.setLong     (++i, _refnum);
+          if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.REFNUM._Mask) == true) PS.setNull(++i, java.sql.Types.BIGINT    ); else PS.setLong      (++i, _refnum);
         } 
        if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.LOCATION._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.LOCATION._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _location);
+          if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.LOCATION._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _location);
         } 
        if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.LOCATION2._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.LOCATION2._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _location2);
+          if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.LOCATION2._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _location2);
         } 
        if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.NAME._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.NAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _name);
+          if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.NAME._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _name);
         } 
        if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.TYPE._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.TYPE._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _type);
+          if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.TYPE._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _type);
         } 
        if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.TITLE._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.TITLE._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _title);
+          if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.TITLE._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _title);
         } 
        if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.DESCRIPTION._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.DESCRIPTION._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _description);
+          if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.DESCRIPTION._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _description);
         } 
        if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.FORMULA._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.FORMULA._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _formula);
+          if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.FORMULA._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _formula);
         } 
        if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _htmlDoc);
+          if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _htmlDoc);
         } 
        if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR    ); else C.setArray(PS, ++i, TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Type, AllocatedArrays, _referencedColumns);
+          if (__Nulls.intersects(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask) == true) PS.setNull(++i, C.supportsArrays()?java.sql.Types.ARRAY:java.sql.Types.CHAR      ); else C.setArray(PS, ++i, TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Type, AllocatedArrays, _referencedColumns);
         } 
        if (__Changes.intersects(TILDA__FORMULA_Factory.COLS.CREATED._Mask) == true) 
         { 
@@ -2928,11 +2925,11 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setLong     (++i, _refnum           );
+               PS.setLong      (++i, _refnum           );
                break;
              case 1:
-               PS.setString   (++i, _location         );
-               PS.setString   (++i, _name             );
+               PS.setString    (++i, _location         );
+               PS.setString    (++i, _name             );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -3035,11 +3032,11 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setLong     (++i, _refnum           );
+               PS.setLong      (++i, _refnum           );
                break;
              case 1:
-               PS.setString   (++i, _location         );
-               PS.setString   (++i, _name             );
+               PS.setString    (++i, _location         );
+               PS.setString    (++i, _name             );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -3072,15 +3069,15 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_refnum            = _refnum            =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.REFNUM._Mask           );
-      __Saved_location          = _location          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.LOCATION._Mask         );
-                                  _location2         = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.LOCATION2._Mask        );
-      __Saved_name              = _name              = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.NAME._Mask             );
-                                  _type              = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.TYPE._Mask             ); else _type              = _type             .trim();
-                                  _title             = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.TITLE._Mask            );
-                                  _description       = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.DESCRIPTION._Mask      );
-                                  _formula           = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.FORMULA._Mask          );
-                                  _htmlDoc           = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask          );
+      __Saved_refnum            = _refnum            =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.REFNUM._Mask           );
+      __Saved_location          = _location          = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.LOCATION._Mask         );
+                                  _location2         = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.LOCATION2._Mask        );
+      __Saved_name              = _name              = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.NAME._Mask             );
+                                  _type              = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.TYPE._Mask             ); else _type              = _type             .trim();
+                                  _title             = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.TITLE._Mask            );
+                                  _description       = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.DESCRIPTION._Mask      );
+                                  _formula           = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.FORMULA._Mask          );
+                                  _htmlDoc           = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.HTMLDOC._Mask          );
                                   _referencedColumns = (List<String>) C.getArray(RS, ++i, TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.REFERENCEDCOLUMNS._Mask);
                                   _created           = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.CREATED._Mask          );
                                   _lastUpdated       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__FORMULA_Factory.COLS.LASTUPDATED._Mask      );

@@ -150,9 +150,6 @@ This Table contains the following columns:<BLOCKQUOTE>
 </DIV></DIV>
 </DIV>
 
- @author   Tilda code gen for Java 8/PostgreSQL
- @version  Tilda 1.0
- @generated Feb 11 2019, 11:57:03EST
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__DATELIMITDIM implements tilda.interfaces.WriterObject

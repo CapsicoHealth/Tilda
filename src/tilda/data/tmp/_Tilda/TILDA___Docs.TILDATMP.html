@@ -1,0 +1,50 @@
+<HTML>
+<HEAD>
+<STYLE>
+.svgs > svg {
+  padding-right: 60px;
+  padding-left: 60px;
+}
+</STYLE>
+<SCRIPT>
+document.addEventListener('click', function(evt) {
+var target = evt.target;
+  if(target.tagName != 'g'){
+   target = target.closest('g')
+ }
+var tagName = target.tagName;
+
+if(tagName == 'g' && target.className.baseVal == 'node' && !target.id.startsWith('other_')){
+    location.href = "#";
+    openDiv(target.id+"_DIV");
+  }
+ }, false);
+
+</SCRIPT>
+</HEAD>
+<BODY>
+<BR><BR>
+<DIV id="__SEARCH_BOX_BASE__"><TABLE id="__SEARCH_BOX__" border="0px" cellspacing="0px" cellpadding="0px"><TR valign="top"><TD width="1px" style="font-size: 125%; font-weight:bold;">SEARCH</TD><TD>
+<input type="text" onfocus="showSearchResults(true);eventListener()" oninput="eventListener()", id="search_input" placeholder="Search Tables/Views, Fields, Formulae" autocomplete="off">
+&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" oninput="eventListener()", id="cols_check" checked>&nbsp;Fields</label>
+&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" oninput="eventListener()", id="formulas_check" checked>&nbsp;Formulas</label>
+&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" oninput="eventListener()", id="realized_check">&nbsp;Realized</label></TD></TR>
+<TR><TD colspan="2"><table id="__SEARCH_BOX_RESULTS__" class="search_results" border="0px" cellspacing="0px"></table>
+</TD></TR></TABLE></DIV>
+<BR><BR><HR>
+<DIV class='svgs'>
+</DIV>
+<BR><BR><BR><BR><HR><HR>End.<BR><BR><BR>
+<SCRIPT>
+(function(){
+  var a = document.getElementsByTagName("svg");
+  for(i=0;i<a.length;++i){
+    var p = a[i];
+    if(p.height.baseVal.valueInSpecifiedUnits <=50 ){
+      p.parentElement.removeChild(p);
+    }
+  }
+ })()
+</SCRIPT>
+</BODY>
+</HTML>

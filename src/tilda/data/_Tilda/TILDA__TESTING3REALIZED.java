@@ -31,6 +31,7 @@ import org.apache.logging.log4j.Logger;
 <DIV id="Testing3Realized_CNT" class="content">
 The Table TILDA.Testing3Realized:<UL>
 <LI>Is mapped to the generated Java 8/PostgreSQL Tilda classes <B>Testing3Realized_Factory</B>, <B>Testing3Realized_Data</B> in the package <B>tilda.data</B>.
+<LI>Is Realized from <B><A href="TILDA___Docs.TILDA.html#Testing3View_CNT">TILDA<B>&nbsp;&#8226;&nbsp;</B>Testing3View</A></B> through DB function <B>TILDA<B>&nbsp;&#8226;&nbsp;</B>Refill_Testing3Realized()</B>.</LI>
 <LI>Is configured for <B>ReadOnly</B> access.</LI>
 <LI>Is OCC-enabled. Default created/lastUpdated/deleted columns have been automatically generated.</LI>
 <LI>Has the following identity:<UL><LI>Unique Index: refnum</LI>
@@ -206,9 +207,6 @@ This Table contains the following columns:<BLOCKQUOTE>
 </DIV></DIV>
 </DIV>
 
- @author   Tilda code gen for Java 8/PostgreSQL
- @version  Tilda 1.0
- @generated Feb 11 2019, 11:57:03EST
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTING3REALIZED implements tilda.interfaces.ReaderObject
@@ -1113,7 +1111,7 @@ This is the null setter for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setLong     (++i, _refnum        );
+               PS.setLong      (++i, _refnum        );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -1144,9 +1142,9 @@ This is the null setter for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_refnum         = _refnum         =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.REFNUM._Mask        );
-                               _name           = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.NAME._Mask          );
-                               _a8bTZ          = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.A8BTZ._Mask         ); else _a8bTZ          = _a8bTZ         .trim();
+      __Saved_refnum         = _refnum         =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.REFNUM._Mask        );
+                               _name           = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.NAME._Mask          );
+                               _a8bTZ          = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.A8BTZ._Mask         ); else _a8bTZ          = _a8bTZ         .trim();
                                _a8b            = ProcessZDT(_a8bTZ           , "tilda.data.TILDA.Testing3Realized.a8b"           , RS, ++i, TILDA__TESTING3REALIZED_Factory.COLS.A8B           , TILDA__TESTING3REALIZED_Factory.COLS.A8BTZ           ); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.A8B._Mask           );
                                _lastUpdated    = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.LASTUPDATED._Mask   );
                                _xxxLastUpdated = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTING3REALIZED_Factory.COLS.XXXLASTUPDATED._Mask);

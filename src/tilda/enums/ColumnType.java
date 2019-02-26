@@ -40,13 +40,13 @@ public enum ColumnType
     LONG       (true , true , true , "LNG"),
     FLOAT      (true , true , true , "FLT"),
     DOUBLE     (true , true , true , "DBL"),
+    BIGDECIMAL (true , true , false, "BD" ),
     BOOLEAN    (true , true , true , "BOL"),
-    NUMERIC    (true , true , false, "NUM"),
     DATE       (true , true , false, "DT" ),
     DATETIME   (true , false, false, "DTM"), // Datetimes are stored as 2 columns in the DB, so SETs are not allowed because they are unordered.
     BINARY     (false, false, false, "BIN"),
-    BITFIELD   (false, true , true , "BF" ),
-    _UNMAPPED_ (false, false, false, "UNM");
+    BITFIELD   (false, true , true , "BF" );
+    //_UNMAPPED_ (false, false, false, "UNM");
     /*@formatter:on*/
 
     private ColumnType(boolean ArrayCompatible, boolean SetCompatible, boolean Primitive, String shortName)
@@ -82,13 +82,13 @@ public enum ColumnType
 		   ,{LONG, INTEGER, SHORT}
 		   ,{FLOAT, INTEGER, SHORT}
 		   ,{DOUBLE, FLOAT, INTEGER, LONG, SHORT}
+           ,{BIGDECIMAL, DOUBLE, FLOAT, INTEGER, LONG, SHORT}
 		   ,{BOOLEAN}
-		   ,{NUMERIC, DOUBLE, FLOAT, INTEGER, LONG, SHORT}
 		   ,{DATE}
 		   ,{DATETIME, DATE}
 		   ,{BINARY}
 		   ,{BITFIELD}
-		   ,{_UNMAPPED_} 
+		   //,{_UNMAPPED_} 
           };
         ColumnType[] colsToValidate = new ColumnType[_CompatibleTypes.length];
         for(int i = 0; i < _CompatibleTypes.length; i++)
@@ -229,7 +229,7 @@ public enum ColumnType
                   throw new Exception(Errors.get(0)._V);
                 return isSet == true ? CollectionUtil.toSet(val) : CollectionUtil.toList(val);
               }
-            case NUMERIC:
+            case BIGDECIMAL:
             {
               BigDecimal[] val = ParseUtil.parseNumeric("SQLNumericArray", true, parts, Errors);
               if (Errors.isEmpty() == false)
@@ -241,7 +241,7 @@ public enum ColumnType
               return isSet == true ? CollectionUtil.toSet(parts) : CollectionUtil.toList(parts);
             case BINARY:
             case BITFIELD:
-            case _UNMAPPED_:
+            //case _UNMAPPED_:
             default:
               throw new Exception("Cannot handle getArray() with a column type '" + this.name() + "'.");
           }

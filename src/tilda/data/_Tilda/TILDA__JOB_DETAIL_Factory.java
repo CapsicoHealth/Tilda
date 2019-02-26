@@ -49,7 +49,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitive       ID                    = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "Id"                    , 0/*0*/, "Id");
+     public static Type_IntegerPrimitive         ID                    = new Type_IntegerPrimitive        (SCHEMA_LABEL, TABLENAME_LABEL, "Id"                    , 0/*0*/, "Id");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Job_Detail.Job_Id -> TILDA.Job_Detail."Job_Id"
@@ -67,7 +67,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitive       JOB_ID                = new Type_IntegerPrimitive      (SCHEMA_LABEL, TABLENAME_LABEL, "Job_Id"                , 1/*1*/, "Job Id");
+     public static Type_IntegerPrimitive         JOB_ID                = new Type_IntegerPrimitive        (SCHEMA_LABEL, TABLENAME_LABEL, "Job_Id"                , 1/*1*/, "Job Id");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Job_Detail.FileName -> TILDA.Job_Detail."FileName"
@@ -86,7 +86,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    FILENAME              = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "FileName"              , 2/*2*/, "FileName");
+     public static Type_StringPrimitiveNull      FILENAME              = new Type_StringPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "FileName"              , 2/*2*/, "FileName");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Job_Detail.FileRecords -> TILDA.Job_Detail."FileRecords"
@@ -104,7 +104,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_IntegerPrimitiveNull   FILERECORDS           = new Type_IntegerPrimitiveNull  (SCHEMA_LABEL, TABLENAME_LABEL, "FileRecords"           , 3/*3*/, "FileRecords");
+     public static Type_IntegerPrimitiveNull     FILERECORDS           = new Type_IntegerPrimitiveNull    (SCHEMA_LABEL, TABLENAME_LABEL, "FileRecords"           , 3/*3*/, "FileRecords");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Job_Detail.FileProcessStartTimeTZ -> TILDA.Job_Detail."FileProcessStartTimeTZ"
@@ -123,7 +123,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    FILEPROCESSSTARTTIMETZ= new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "FileProcessStartTimeTZ", 4/*4*/, "Generated helper column to hold the time zone ID for 'FileProcessStartTime'.");
+     public static Type_StringPrimitiveNull      FILEPROCESSSTARTTIMETZ= new Type_StringPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "FileProcessStartTimeTZ", 4/*4*/, "Generated helper column to hold the time zone ID for 'FileProcessStartTime'.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Job_Detail.FileProcessStartTime -> TILDA.Job_Detail."FileProcessStartTime"
@@ -141,7 +141,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  FILEPROCESSSTARTTIME  = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "FileProcessStartTime"  , 5/*5*/, "FileProcessStartTime");
+     public static Type_DatetimePrimitiveNull    FILEPROCESSSTARTTIME  = new Type_DatetimePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "FileProcessStartTime"  , 5/*5*/, "FileProcessStartTime");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Job_Detail.FileProcessEndTimeTZ -> TILDA.Job_Detail."FileProcessEndTimeTZ"
@@ -160,7 +160,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    FILEPROCESSENDTIMETZ  = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "FileProcessEndTimeTZ"  , 6/*6*/, "Generated helper column to hold the time zone ID for 'FileProcessEndTime'.");
+     public static Type_StringPrimitiveNull      FILEPROCESSENDTIMETZ  = new Type_StringPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "FileProcessEndTimeTZ"  , 6/*6*/, "Generated helper column to hold the time zone ID for 'FileProcessEndTime'.");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Job_Detail.FileProcessEndTime -> TILDA.Job_Detail."FileProcessEndTime"
@@ -178,7 +178,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  FILEPROCESSENDTIME    = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "FileProcessEndTime"    , 7/*7*/, "FileProcessEndTime");
+     public static Type_DatetimePrimitiveNull    FILEPROCESSENDTIME    = new Type_DatetimePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "FileProcessEndTime"    , 7/*7*/, "FileProcessEndTime");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Job_Detail.Status -> TILDA.Job_Detail."Status"
@@ -197,7 +197,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    STATUS                = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "Status"                , 8/*8*/, "Status");
+     public static Type_StringPrimitiveNull      STATUS                = new Type_StringPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "Status"                , 8/*8*/, "Status");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Job_Detail.Error -> TILDA.Job_Detail."Error"
@@ -216,7 +216,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_StringPrimitiveNull    ERROR                 = new Type_StringPrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "Error"                 , 9/*9*/, "Error");
+     public static Type_StringPrimitiveNull      ERROR                 = new Type_StringPrimitiveNull     (SCHEMA_LABEL, TABLENAME_LABEL, "Error"                 , 9/*9*/, "Error");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Job_Detail.created -> TILDA.Job_Detail."created"
@@ -241,7 +241,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      CREATED               = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "created"               , 10/*10*/, "The timestamp for when the record was created. (TILDA.Job_Detail)");
+     public static Type_DatetimePrimitive        CREATED               = new Type_DatetimePrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "created"               , 10/*10*/, "The timestamp for when the record was created. (TILDA.Job_Detail)");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Job_Detail.lastUpdated -> TILDA.Job_Detail."lastUpdated"
@@ -266,7 +266,7 @@ This is the column definition for:<BR>
 
 </TABLE>
 */
-     public static Type_DatetimePrimitive      LASTUPDATED           = new Type_DatetimePrimitive     (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"           , 11/*11*/, "The timestamp for when the record was last updated. (TILDA.Job_Detail)");
+     public static Type_DatetimePrimitive        LASTUPDATED           = new Type_DatetimePrimitive       (SCHEMA_LABEL, TABLENAME_LABEL, "lastUpdated"           , 11/*11*/, "The timestamp for when the record was last updated. (TILDA.Job_Detail)");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   Field tilda.data.TILDA.Job_Detail.deleted -> TILDA.Job_Detail."deleted"
@@ -284,7 +284,7 @@ This is the column definition for:<BR>
   <TR><TD align="right"><B>Protect</B></TD><TD>NONE</TD></TR>
 </TABLE>
 */
-     public static Type_DatetimePrimitiveNull  DELETED               = new Type_DatetimePrimitiveNull (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"               , 12/*12*/, "The timestamp for when the record was deleted. (TILDA.Job_Detail)");
+     public static Type_DatetimePrimitiveNull    DELETED               = new Type_DatetimePrimitiveNull   (SCHEMA_LABEL, TABLENAME_LABEL, "deleted"               , 12/*12*/, "The timestamp for when the record was deleted. (TILDA.Job_Detail)");
 ;
    }
 

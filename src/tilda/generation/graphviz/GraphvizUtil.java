@@ -212,6 +212,8 @@ public class GraphvizUtil
     private LinkedHashSet<String> getViewObjects(View view)
       {
         LinkedHashSet<String> lhs = new LinkedHashSet<String>();
+        if (view == null)
+          return lhs;
         for (ViewColumn viewColumn : view._ViewColumns)
           {
             if (viewColumn._SameAsObj == null)

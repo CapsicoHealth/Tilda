@@ -24,6 +24,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.logging.log4j.LogManager;
@@ -46,6 +47,7 @@ import tilda.enums.DBStringType;
 import tilda.generation.Generator;
 import tilda.generation.interfaces.CodeGenSql;
 import tilda.generation.postgres9.PostgresType;
+import tilda.generation.postgres9.Sql;
 import tilda.parsing.parts.Column;
 import tilda.parsing.parts.ForeignKey;
 import tilda.parsing.parts.Index;
@@ -213,7 +215,13 @@ public class PostgreSQL implements DBType
     public boolean dropView(Connection Con, View V)
     throws Exception
       {
-        return Con.ExecuteDDL(V._ParentSchema._Name, V.getBaseName(), "DROP VIEW IF EXISTS " + V.getShortName() + " CASCADE");
+        Set<View> SubRealizedViews = V.getSubRealizedViewRootNames();
+        Set<View> AncestorRealizedViews = V.getAncestorRealizedViews();
+        boolean OK = true;
+        if (SubRealizedViews != null || AncestorRealizedViews != null) // View depends on realized views.
+         OK = Con.ExecuteDDL(Sql.getViewSubRealizeSchemaName(), Sql.getViewSubRealizeViewName(V), "DROP VIEW IF EXISTS " + Sql.getViewSubRealizeName(V) + " CASCADE");
+
+        return OK == false? OK : Con.ExecuteDDL(V._ParentSchema._Name, V.getBaseName(), "DROP VIEW IF EXISTS " + V.getShortName() + " CASCADE");
       }
 
     @Override
@@ -328,6 +336,7 @@ public class PostgreSQL implements DBType
         return Con.ExecuteDDL(Col._ParentObject._ParentSchema._Name, Col._ParentObject.getBaseName(), Q);
       }
 
+    @Override
     public DBStringType getDBStringType(int Size)
       {
         return Size <= 8 ? DBStringType.CHARACTER
@@ -742,7 +751,7 @@ public class PostgreSQL implements DBType
             case java.sql.Types.NCHAR        : TypeSql = "NCHAR"        ; TildaType = Size==1 ? ColumnType.CHAR : ColumnType.STRING; break;
             case java.sql.Types.NCLOB        : TypeSql = "NCLOB"        ; TildaType = ColumnType.STRING; break;
             case java.sql.Types.NULL         : TypeSql = "NULL"         ; TildaType = null; break;
-            case java.sql.Types.NUMERIC      : TypeSql = "NUMERIC"      ; TildaType = ColumnType.DOUBLE; break;
+            case java.sql.Types.NUMERIC      : TypeSql = "NUMERIC"      ; TildaType = ColumnType.BIGDECIMAL; break;
             case java.sql.Types.NVARCHAR     : TypeSql = "NVARCHAR"     ; TildaType = ColumnType.STRING; break;
             case java.sql.Types.OTHER        :
               if (TypeName != null && TypeName.equalsIgnoreCase("jsonb") == true)
@@ -766,7 +775,9 @@ public class PostgreSQL implements DBType
             case java.sql.Types.TINYINT      : TypeSql = "TINYINT"      ; TildaType = null; break;
             case java.sql.Types.VARBINARY    : TypeSql = "VARBINARY"    ; TildaType = ColumnType.BINARY; break;
             case java.sql.Types.VARCHAR      : TypeSql = "VARCHAR"      ; TildaType = ColumnType.STRING; break;
-            default: throw new Exception("Cannot map SQL Type "+Type+" for column "+Name+"("+TypeName+").");
+            default:
+              TildaType = null;
+              LOG.warn("Cannot map SQL Type "+Type+" for column "+Name+"("+TypeName+"). Has been set to UNMAPPED column type.");
             /*@formatter:on*/
           }
         return new StringStringPair(TypeSql, TildaType == null ? null : TildaType.name());
@@ -793,6 +804,9 @@ public class PostgreSQL implements DBType
             case "_float8":
               TildaType = ColumnType.DOUBLE;
               break;
+            case "_numeric":
+              TildaType = ColumnType.BIGDECIMAL;
+              break;              
             case "_bpchar":
               TildaType = ColumnType.CHAR;
               break;
@@ -811,7 +825,8 @@ public class PostgreSQL implements DBType
               TildaType = ColumnType.DATETIME;
               break;
             default:
-              throw new Exception("Cannot map SQL TypeName " + TypeName + " for array column '" + Name + "'.");
+              TildaType = null;
+              LOG.warn("Cannot map SQL TypeName " + TypeName + " for array column '" + Name + "'. Set to UNMAPPED column type.");
           }
         return TildaType;
       }

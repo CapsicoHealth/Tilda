@@ -271,9 +271,6 @@ This Table contains the following columns:<BLOCKQUOTE>
 </DIV></DIV>
 </DIV>
 
- @author   Tilda code gen for Java 8/PostgreSQL
- @version  Tilda 1.0
- @generated Feb 11 2019, 11:57:03EST
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__ZONEINFO implements tilda.interfaces.WriterObject
@@ -1757,19 +1754,19 @@ This is the hasChanged for:<BR>
        int i = 0;
        if (__Changes.intersects(TILDA__ZONEINFO_Factory.COLS.ID._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.ID._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _id);
+          if (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.ID._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _id);
         } 
        if (__Changes.intersects(TILDA__ZONEINFO_Factory.COLS.VALUE._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.VALUE._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _value);
+          if (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.VALUE._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _value);
         } 
        if (__Changes.intersects(TILDA__ZONEINFO_Factory.COLS.LABEL._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.LABEL._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _label);
+          if (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.LABEL._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _label);
         } 
        if (__Changes.intersects(TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask) == true) 
         { 
-          if (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR    ); else PS.setString   (++i, _deactivatedTZ);
+          if (__Nulls.intersects(TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask) == true) PS.setNull(++i, java.sql.Types.CHAR      ); else PS.setString    (++i, _deactivatedTZ);
         } 
        if (__Changes.intersects(TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask) == true) 
         { 
@@ -1849,13 +1846,13 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setString   (++i, _id           );
+               PS.setString    (++i, _id           );
                break;
              case 1:
-               PS.setString   (++i, _id           );
+               PS.setString    (++i, _id           );
                break;
              case 2:
-               PS.setString   (++i, _value        );
+               PS.setString    (++i, _value        );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -1954,13 +1951,13 @@ This is the hasChanged for:<BR>
           switch (__LookupId)
            {
              case 0:
-               PS.setString   (++i, _id           );
+               PS.setString    (++i, _id           );
                break;
              case 1:
-               PS.setString   (++i, _id           );
+               PS.setString    (++i, _id           );
                break;
              case 2:
-               PS.setString   (++i, _value        );
+               PS.setString    (++i, _value        );
                break;
              case -666: if (__Init == InitMode.CREATE) break;
              default: throw new Exception("Invalid LookupId "+__LookupId+" found. Cannot prepare statement.");
@@ -1991,10 +1988,10 @@ This is the hasChanged for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-      __Saved_id            = _id            = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__ZONEINFO_Factory.COLS.ID._Mask           ); else _id            = _id           .trim();
-      __Saved_value         = _value         = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__ZONEINFO_Factory.COLS.VALUE._Mask        );
-                              _label         = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__ZONEINFO_Factory.COLS.LABEL._Mask        );
-                              _deactivatedTZ = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask); else _deactivatedTZ = _deactivatedTZ.trim();
+      __Saved_id            = _id            = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__ZONEINFO_Factory.COLS.ID._Mask           ); else _id            = _id           .trim();
+      __Saved_value         = _value         = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__ZONEINFO_Factory.COLS.VALUE._Mask        );
+                              _label         = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__ZONEINFO_Factory.COLS.LABEL._Mask        );
+                              _deactivatedTZ = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ._Mask); else _deactivatedTZ = _deactivatedTZ.trim();
                               _deactivated   = ProcessZDT(_deactivatedTZ  , "tilda.data.TILDA.ZoneInfo.deactivated"  , RS, ++i, TILDA__ZONEINFO_Factory.COLS.DEACTIVATED  , TILDA__ZONEINFO_Factory.COLS.DEACTIVATEDTZ  ); if (RS.wasNull() == true) __Nulls.or(TILDA__ZONEINFO_Factory.COLS.DEACTIVATED._Mask  );
                               _created       = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__ZONEINFO_Factory.COLS.CREATED._Mask      );
                               _lastUpdated   = DateTimeUtil.toZonedDateTime(RS.getTimestamp(++i, DateTimeUtil._UTC_CALENDAR), null); if (RS.wasNull() == true) __Nulls.or(TILDA__ZONEINFO_Factory.COLS.LASTUPDATED._Mask  );

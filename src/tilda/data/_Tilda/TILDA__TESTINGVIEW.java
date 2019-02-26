@@ -334,9 +334,6 @@ This View contains the following columns:<BLOCKQUOTE>
 </DIV></DIV>
 </DIV>
 
- @author   Tilda code gen for Java 8/PostgreSQL
- @version  Tilda 1.0
- @generated Feb 11 2019, 11:57:03EST
 */
 @SuppressWarnings({ "unused" })
 public abstract class TILDA__TESTINGVIEW implements tilda.interfaces.ReaderObject
@@ -1706,15 +1703,15 @@ This is the null setter for:<BR>
     {
       int i = 0;
      __Init = InitMode.LOOKUP;
-                        _name    = TextUtil.Trim               (RS.getString   (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.NAME._Mask   );
-                        _refnum  =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.REFNUM._Mask );
-                        _a2Min   = ParseUtil.parseCharacter    (RS.getString   (++i));  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A2MIN._Mask  );
-                        _a2Max   = ParseUtil.parseCharacter    (RS.getString   (++i));  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A2MAX._Mask  );
+                        _name    = TextUtil.Trim               (RS.getString    (++i)) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.NAME._Mask   );
+                        _refnum  =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.REFNUM._Mask );
+                        _a2Min   = ParseUtil.parseCharacter    (RS.getString    (++i));  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A2MIN._Mask  );
+                        _a2Max   = ParseUtil.parseCharacter    (RS.getString    (++i));  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A2MAX._Mask  );
                         _a9TZ = (List<String>) C.getArray(RS, ++i, TILDA__TESTINGVIEW_Factory.COLS.A9TZ._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9TZ._Mask   );
                         _a9      = ProcessZDTs(C, _a9TZ     , "tilda.data.TILDA.TestingView.a9"     , RS, ++i, TILDA__TESTINGVIEW_Factory.COLS.A9     , TILDA__TESTINGVIEW_Factory.COLS.A9TZ     ); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9._Mask     );
                         _a9c = (List<LocalDate>) C.getArray(RS, ++i, TILDA__TESTINGVIEW_Factory.COLS.A9C._Type, false); if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A9C._Mask    );
-                        _a6First =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A6FIRST._Mask);
-                        _a6Last  =                              RS.getLong     (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A6LAST._Mask );
+                        _a6First =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A6FIRST._Mask);
+                        _a6Last  =                              RS.getLong      (++i) ;  if (RS.wasNull() == true) __Nulls.or(TILDA__TESTINGVIEW_Factory.COLS.A6LAST._Mask );
      __LookupId = 0;
      __Init     = InitMode.READ;
      __Changes.clear();

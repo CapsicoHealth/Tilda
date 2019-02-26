@@ -16,8 +16,11 @@
 
 package tilda.migration.actions;
 
+import java.util.Set;
+
 import tilda.db.Connection;
 import tilda.migration.MigrationAction;
+import tilda.parsing.parts.Schema;
 import tilda.parsing.parts.View;
 
 public class ViewDrop extends MigrationAction

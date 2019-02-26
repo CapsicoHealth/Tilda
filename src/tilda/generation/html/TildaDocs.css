@@ -114,14 +114,18 @@ input[type=text]:focus {
    padding-right: 5px;
    text-align: left;
  }
+.Rowed TR TD {
+   padding-left: 10px;
+}
 .Rowed TR:nth-child(odd) TD {
-   border-bottom: 2px #666 solid;
    background-color: #f0fdf0;
 }
 .Rowed TR:nth-child(even) TD {
-   border-bottom: 2px #666 solid;
    background-color:#FFFFFF;
  }
+.RowedSection TD {
+   border-top: 2px #666 solid;
+}
 .NoRowed TR TD{
    border-bottom: 0px;
    background-color: none;
