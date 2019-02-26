@@ -21,6 +21,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -436,20 +437,93 @@ public class ParseUtil
       }
     
     /************************************************************************************************************************
-     * NUMERICS
+     * NUMERICS (BigDecimal)
      ************************************************************************************************************************/   
-//    public static BigDecimal parseNumeric(String Val, float Default)
-//      {
-//        if (TextUtil.isNullOrEmpty(Val) == false)
-//          try
-//            {
-//              return BigDecimal.parseNumeric(Val);
-//            }
-//          catch (NumberFormatException E)
-//            {
-//            }
-//        return Default;
-//      }
+    
+    public static BigDecimal parseNumeric(String Val, BigDecimal Default)
+      {
+        if (TextUtil.isNullOrEmpty(Val) == false)
+          try
+            {
+              return new BigDecimal(Val.replaceAll(",",""));
+            }
+          catch (NumberFormatException E)
+            {
+            }
+        return Default;
+      }
+
+    /**
+     * @param Name
+     * @param Mandatory
+     * @param Value
+     * @param Errors
+     * @return
+     */
+    public static BigDecimal parseNumeric(String Name, boolean Mandatory, String Value, List<StringStringPair> Errors)
+      {
+        if (ParseUtil.parseString(Name, Mandatory, Value, Errors) == null)
+         return new BigDecimal(SystemValues.EVIL_VALUE);
+        
+        BigDecimal v = ParseUtil.parseNumeric(Value, new BigDecimal(SystemValues.EVIL_VALUE));
+        if (v == new BigDecimal(SystemValues.EVIL_VALUE) && Mandatory == true)
+          {
+            LOG.error("Invalid value '" + Value + "' for parameter '" + Name + "'.");
+            Errors.add(new StringStringPair(Name, "Invalid parameter value '" + Value + "': expecting a Numeric value (BigDecimal)."));
+          }
+        return v;
+      }
+
+    /**
+     * 
+     * @param Name
+     * @param Mandatory
+     * @param Default
+     * @param Value
+     * @param Errors
+     * @return
+     */
+    public static BigDecimal[] parseNumeric(String Name, boolean Mandatory, String[] Values, List<StringStringPair> Errors)
+      {
+        if (Values == null || Values.length == 0)
+          {
+            if (Mandatory == true)
+              {
+                LOG.error("Missing parameter '" + Name + "'.");
+                Errors.add(new StringStringPair(Name, "Mandatory Parameter"));
+              }
+            return null;
+          }
+        BigDecimal[] result = new BigDecimal[Values.length];
+        for (int i = 0; i < Values.length; ++i)
+          {
+            String v = Values[i];
+            BigDecimal r = ParseUtil.parseNumeric(v, new BigDecimal(SystemValues.EVIL_VALUE));
+            if (r == new BigDecimal(SystemValues.EVIL_VALUE))
+              {
+                LOG.error("Invalid value '" + v + "' for parameter '" + Name + "'.");
+                Errors.add(new StringStringPair(Name, "Invalid parameter value '" + v + "': expecting a float."));
+              }
+            result[i] = r; 
+          }
+        return result;
+      }
+
+    /**
+     * 
+     * @param Name
+     * @param Mandatory
+     * @param Values
+     * @param Separator
+     * @param Errors
+     * @return
+     */
+    public static BigDecimal[] BigDecimal(String Name, boolean Mandatory, String Values, String Separator, List<StringStringPair> Errors)
+      {
+        return parseNumeric(Name, Mandatory, Values == null ? null : Values.split(Separator), Errors);
+      }
+    
+    
 
     /************************************************************************************************************************
      * FLOATS
