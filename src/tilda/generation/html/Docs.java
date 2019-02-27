@@ -81,6 +81,11 @@ public class Docs
         return "<A href=\"TILDA___Docs." + C._ParentObject.getSchema().getShortName() + ".html#"
         + C._ParentObject._Name + "-" + C.getName() + "_DIV\">" + coolPrint(C.getShortName()) + "</A>";
       }
+    protected static String makeFormulaLink(Formula F)
+      {
+        return "<A href=\"TILDA___Docs." + F._ParentView.getSchema().getShortName() + ".html#"
+        + F._ParentView._Name + "-" + F._Name + "_DIV\">" + coolPrint(F.getShortName()) + "</A>";
+      }
 
     public static void writeHeader(PrintWriter Out, Schema S)
     throws Exception
@@ -275,17 +280,19 @@ public class Docs
             Out.print("<TD>" + C._Description);
             if (O._SourceView != null)
               {
-                Formula F = O._SourceView.getFormula(C.getName());
+                Formula F = O._SourceView.getFormula(C.getName(), true);
                 if (F != null)
                   {
-                    Object OR = O._ParentSchema.getObject(O._SourceView._Name);
+                    Object OR = F._ParentView._ParentSchema.getObject(F._ParentView._Name);
                     if (OR != null)
                       {
                         Column c = OR.getColumn(C.getName());
                         if (c != null)
                           {
-                            Out.print("<BR>&nbsp;&nbsp;&rarr;&nbsp;");
+                            Out.print("<DIV style=\"margin:0px;margin-left:20px;font-size:75%;\">");
+                            Out.print("&nbsp;&nbsp;&rarr;&nbsp;");
                             Out.print(makeColumnLink(c));
+                            Out.print("</DIV>");
                           }
                       }
 //                    Out.println("<BLOCKQUOTE>");
@@ -297,11 +304,7 @@ public class Docs
               {
                 Formula F = view.getFormula(C.getName());
                 if (F != null)
-                  {
-                    Out.println("<BLOCKQUOTE>");
-                    PrintFormulaDetails(Out, view, view._Name, F, false);
-                    Out.println("</BLOCKQUOTE>");
-                  }
+                 PrintFormulaDetails(Out, view, view._Name, F, false);
 
                 ViewColumn VC = view.getViewColumn(C.getName());
                 if (VC != null)
@@ -838,7 +841,7 @@ public class Docs
         String FormulaStr = Str.toString();
 
         // Start Table
-        Out.println("<TABLE class=\"RowedTable\" border=\"0px\" cellspacing=\"0px\" cellpadding=\"2px\" width=\"75%\">");
+        Out.println("<TABLE border=\"1px\" style=\"border-collapse:collapse; border: 1px solid #AAA;\" cellspacing=\"0px\" cellpadding=\"2px\" width=\"98%\">");
 
         // Start Rows
         // Out.println("<TR style=\"height: 40px;\"><TD style=\"border: 0px !Important;\" colspan=\"2\">&nbsp;</TD></TR>");
@@ -855,43 +858,47 @@ public class Docs
                 Out.println("<TD style=\"text-align:left !important;\" colspan=\"2\"><B id='" + TName + "-" + F._Name + "_DIV' class='formula'>Term " + F._Name + "</B>" + (TextUtil.isNullOrEmpty(F._Id) == true ? "" : (" &nbsp;&nbsp;&nbsp; (#" + F._Id + ")")) + "</TD>");
               }
             Out.println("</TR>");
+            Out.println("<TR valign=\"top\"><TD width=\"1px\" align=\"right\"><B>Title</B></TD><TD>" + F._Title + "</TD></TR>");
           }
-        Out.println("<TR><TD><B>Title</B></TD><TD>" + F._Title + "</TD></TR>"
-        + "<TR><TD><B>Description</B></TD><TD>" + CleanForHTML(F._Description) + "</TD></TR>"
-        + "<TR><TD><B>Formula</B></TD><TD><PRE style=\"padding-top: 3px;\">" + FormulaStr + "</PRE></TD><TR>");
+        Out.println("<TR valign=\"top\"><TD width=\"1px\" align=\"right\"><B>Description</B></TD><TD>" + CleanForHTML(F._Description) + "</TD></TR>"
+        + "<TR valign=\"top\"><TD width=\"1px\" align=\"right\"><B>Formula</B></TD><TD><PRE style=\"padding-top: 3px; font-size:110%;\">" + FormulaStr + "</PRE></TD><TR>");
         if (F._Values != null && F._Values.length > 0)
           {
-            Out.println("<TR valign=\"top\"><TD><B>Values</B></TD><TD><TABLE border=\"0px\">");
+            Out.println("<TR valign=\"top\"><TD width=\"1px\" align=\"right\"><B>Values</B></TD><TD><TABLE border=\"0px\">");
             for (Value Val : F._Values)
-              Out.println("<TR><TD>" + Val._Value + "</TD><TD>" + Val._Description + "</TD><TR>");
+              Out.println("<TR valign=\"top\"><TD>" + Val._Value + "</TD><TD>" + Val._Description + "</TD><TR>");
             Out.println("</TABLE></TD></TR>");
           }
-        Out.println("<TR valign=\"top\"><TD><B>Referenced Columns</B></TD><TD>");
-        if (ColumnMatches.isEmpty() == true)
-          Out.println("None");
-        else
+        if (ColumnMatches.isEmpty() == false)
           {
-            Out.println("<TABLE border=\"0px\">");
+            Out.println("<TR valign=\"top\"><TD width=\"1px\" align=\"right\"><B>Ref&nbsp;Columns</B></TD><TD>");
             for (String ColName : ColumnMatches)
               {
-                Column C = V.getColumn(ColName);
-                Out.println("<TR><TD valign=\"top\" align=\"right\"><B style=\"color:#00AA00;\">" + ColName + "</B>:</TD>");
-                Out.println("<TD>" + (C == null ? "" : C._Description) + "</TD></TR>");
+                ViewColumn VC = V.getViewColumn(ColName);
+                List<Column> L = VC.getSameAsLineage();
+                Out.println("<B style=\"color:#00AA00;\">" + ColName + "</B><BR>");
+                Out.println("<DIV style=\"padding-left:10px; font-size:75%;\">&nbsp;&nbsp;&rarr;&nbsp;"+makeColumnLink(L.get(0)));
+                if (L.size() > 2)
+                 Out.println("&nbsp;&nbsp;&rarr;&nbsp;&nbsp;&hellip;");
+                if (L.size() >= 2)
+                  Out.println("&nbsp;&nbsp;&rarr;&nbsp;"+makeColumnLink(L.get(L.size()-1)));
+                Out.println("</DIV>");
+                Out.println("<DIV style=\"padding-left:10px;\">"+L.get(0)._Description + "</DIV>");
               }
-            Out.println("</TABLE>");
+            Out.println("</TD></TR>");
           }
-        Out.println("</TD></TR>");
-        Out.println("<TR valign=\"top\"><TD><B>Referenced Terms</B></TD><TD>");
-        if (FormulaMatches.isEmpty() == true)
-          Out.println("None");
-        else
+        if (FormulaMatches.isEmpty() == false)
           {
-            Out.println("<TABLE border=\"0px\">");
+            Out.println("<TR valign=\"top\"><TD width=\"1px\" align=\"right\"><B>Ref&nbsp;Formulas</B></TD><TD>");
             for (String FormulaName : FormulaMatches)
-              Out.println("<TR><TD valign=\"top\" align=\"right\"><B style=\"color:#0000AA;\">" + FormulaName + "</B>:</TD><TD>" + CleanForHTML(V.getFormula(FormulaName)._Description) + "</TD></TR>");
-            Out.println("</TABLE>");
+              {
+                Formula subF = V.getFormula(FormulaName, true);
+                Out.println("<B style=\"color:#0000AA;\">" + subF._Name + "</B><BR>");
+                Out.println("<DIV style=\"padding-left:10px; font-size:75%;\">&nbsp;&nbsp;&rarr;&nbsp;"+makeFormulaLink(subF)+"</DIV>");
+                Out.println("<DIV style=\"padding-left:10px;\">"+CleanForHTML(subF._Description) + "</DIV>");
+              }
+            Out.println("</TD></TR>");
           }
-        Out.println("</TD></TR>");
 
         // End Table
         Out.println("</TABLE>");
